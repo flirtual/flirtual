@@ -12,7 +12,8 @@ import type { ConnectionType } from "~/api/connections";
 import { Button } from "~/components/button";
 import { device } from "~/hooks/use-device";
 import { useNavigate } from "~/i18n";
-import { toAbsoluteUrl } from "~/urls";
+import { sessionKey, invalidate } from "~/query";
+import { toAbsoluteUrl, toRelativeUrl } from "~/urls";
 
 export interface LoginConnectionButtonProps {
 	type: ConnectionType;
@@ -78,8 +79,10 @@ export const LoginConnectionButton: FC<LoginConnectionButtonProps> = ({
 								redirect: "manual"
 							});
 
+							await invalidate({ queryKey: sessionKey() });
+
 							const next = response.headers.get("location");
-							if (next) navigate(next);
+							if (next) navigate(toRelativeUrl(new URL(next)));
 
 							await InAppBrowser.removeAllListeners();
 							await InAppBrowser.close();

@@ -16,6 +16,7 @@ import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { useNavigate } from "~/i18n";
 import { invalidate, sessionKey } from "~/query";
+import { toRelativeUrl } from "~/urls";
 
 export interface ConnectionButtonProps {
 	type: ConnectionType;
@@ -87,7 +88,7 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 								});
 
 								const next = response.headers.get("location");
-								if (next) navigate(next);
+								if (next) navigate(toRelativeUrl(new URL(next)));
 
 								await invalidate({ queryKey: sessionKey() });
 
