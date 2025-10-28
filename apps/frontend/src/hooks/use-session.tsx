@@ -32,6 +32,8 @@ export async function logout() {
 
 	await evictQueries();
 	await invalidate();
+
+	window.location.reload();
 }
 
 export const getSession = () => queryClient.ensureQueryData<Session | null>({ queryKey: sessionKey() });
