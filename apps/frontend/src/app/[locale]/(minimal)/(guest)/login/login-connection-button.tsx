@@ -12,7 +12,7 @@ import type { ConnectionType } from "~/api/connections";
 import { Button } from "~/components/button";
 import { device } from "~/hooks/use-device";
 import { useNavigate } from "~/i18n";
-import { sessionKey, invalidate } from "~/query";
+import { invalidate, sessionKey } from "~/query";
 import { toAbsoluteUrl, toRelativeUrl } from "~/urls";
 
 export interface LoginConnectionButtonProps {
