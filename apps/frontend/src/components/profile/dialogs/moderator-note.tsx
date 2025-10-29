@@ -1,0 +1,131 @@
+import type { FC } from "react";
+import { useTranslation } from "react-i18next";
+
+import { User } from "~/api/user";
+import { Button } from "~/components/button";
+import {
+	Dialog,
+	DialogBody,
+	DialogContent,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle
+} from "~/components/dialog/dialog";
+import { Form, FormButton } from "~/components/forms";
+import { InputLabel, InputTextArea } from "~/components/inputs";
+import { UserThumbnail } from "~/components/user-avatar";
+import { useSession } from "~/hooks/use-session";
+import { useToast } from "~/hooks/use-toast";
+import { invalidate, userKey } from "~/query";
+
+export const ModeratorNoteDialog: FC<{ user: User; onClose: () => void }> = ({ user, onClose }) => {
+	const toasts = useToast();
+	const { t } = useTranslation();
+	const { user: { profile: { displayName: moderatorDisplayName } } } = useSession();
+
+	return (
+		<Dialog
+			defaultOpen
+			onOpenChange={(open) => {
+				if (!open) {
+					onClose();
+				}
+			}}
+		>
+			<DialogContent>
+				<DialogHeader>
+					<DialogTitle>Moderator note</DialogTitle>
+				</DialogHeader>
+				<DialogBody>
+					<Form
+						fields={{
+							targetId: user.id,
+							message: user.moderatorNote || ""
+						}}
+						className="flex flex-col gap-8"
+						requireChange={false}
+						onSubmit={async ({ targetId, message }) => {
+							if (!message && !!user.moderatorNote) {
+								await User.deleteNote(targetId)
+									.then(() => toasts.add(t("note_deleted")))
+									.catch(toasts.addError);
+
+								await invalidate({ queryKey: userKey(user.id) });
+								onClose();
+								return;
+							}
+
+							const trimmedMessage = message.trim();
+							const hasChanged = trimmedMessage !== (user.moderatorNote || "").trim();
+
+							let finalMessage = trimmedMessage;
+							if (hasChanged && trimmedMessage) {
+								const now = new Date();
+								const timestamp = now.toISOString().replace("T", " ").split(".")[0];
+								const moduleName = moderatorDisplayName;
+								finalMessage = `${trimmedMessage}\n${timestamp} ${moduleName}`;
+							}
+
+							await User.note(targetId, { message: finalMessage })
+								.then(() => toasts.add(t("note_updated")))
+								.catch(toasts.addError);
+
+							await invalidate({ queryKey: userKey(user.id) });
+							onClose();
+						}}
+					>
+						{({ FormField }) => (
+							<>
+								<FormField name="targetId">
+									{(field) => (
+										<>
+											<InputLabel {...field.labelProps}>Target</InputLabel>
+											<div className="flex items-center gap-4">
+												<UserThumbnail user={user} />
+												<div className="flex flex-col">
+													<span
+														data-mask
+														className="text-lg font-semibold leading-none"
+													>
+														{user.profile.displayName || t("unnamed_user")}
+													</span>
+													<span className="font-mono text-sm brightness-75">
+														{user.id}
+													</span>
+												</div>
+											</div>
+										</>
+									)}
+								</FormField>
+								<FormField name="message">
+									{(field) => (
+										<>
+											<InputLabel {...field.labelProps}>
+												Note
+											</InputLabel>
+											<InputTextArea
+												{...field.props}
+												placeholder="Write a private moderator note about this user."
+												rows={6}
+											/>
+										</>
+									)}
+								</FormField>
+								<DialogFooter>
+									<Button
+										kind="tertiary"
+										size="sm"
+										onClick={() => onClose()}
+									>
+										Cancel
+									</Button>
+									<FormButton size="sm">Save</FormButton>
+								</DialogFooter>
+							</>
+						)}
+					</Form>
+				</DialogBody>
+			</DialogContent>
+		</Dialog>
+	);
+};

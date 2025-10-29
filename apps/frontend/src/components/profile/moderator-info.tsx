@@ -1,30 +1,37 @@
-import { Dialog } from "@capacitor/dialog";
 import { Eye, EyeOff } from "lucide-react";
 import { useMemo } from "react";
 import type { FC } from "react";
-import { useTranslation } from "react-i18next";
 import { capitalize } from "remeda";
 import { twMerge } from "tailwind-merge";
 
-import { User } from "~/api/user";
 import { useAttributeTranslation } from "~/hooks/use-attribute";
+import { useDialog } from "~/hooks/use-dialog";
 import { usePreferences } from "~/hooks/use-preferences";
 import { useOptionalSession } from "~/hooks/use-session";
-import { useToast } from "~/hooks/use-toast";
 import { useUser } from "~/hooks/use-user";
 import { useLocale } from "~/i18n";
-import { invalidate, userKey } from "~/query";
 
 import { CopyClick } from "../copy-click";
 import { DateTimeRelative } from "../datetime-relative";
 import { InlineLink } from "../inline-link";
+import { ModeratorNoteDialog } from "./dialogs/moderator-note";
+
+function stripTimestamps(note: string | undefined): string {
+	if (!note) return "None";
+
+	const lines = note.split("\n");
+	const filteredLines = lines.filter((line) =>
+		!/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} /.test(line.trim())
+	);
+
+	return filteredLines.join("\n").trim() || "None";
+}
 
 export const ProfileModeratorInfo: FC<{
 	userId: string;
 }> = ({ userId }) => {
 	const session = useOptionalSession();
-	const toasts = useToast();
-	const { t } = useTranslation();
+	const dialogs = useDialog();
 	const tAttributes = useAttributeTranslation();
 	const user = useUser(userId);
 	const [systemLanguage] = useLocale();
@@ -65,32 +72,12 @@ export const ProfileModeratorInfo: FC<{
 									"cursor-pointer hover:underline",
 									user.moderatorNote && "text-yellow-600"
 								)}
-								onClick={async () => {
-									const { value: message, cancelled } = await Dialog.prompt({
-										message: "Moderator Note",
-										inputText: user.moderatorNote,
-										title: "Moderator Note"
-									});
-
-									if (cancelled) return;
-
-									if (!message && !!user.moderatorNote) {
-										await User.deleteNote(user.id)
-											.then(() => toasts.add(t("note_deleted")))
-											.catch(toasts.addError);
-
-										await invalidate({ queryKey: userKey(user.id) });
-										return;
-									}
-
-									await User.note(user.id, { message })
-										.then(() => toasts.add(t("note_updated")))
-										.catch(toasts.addError);
-
-									await invalidate({ queryKey: userKey(user.id) });
+								onClick={() => {
+									const dialog = <ModeratorNoteDialog user={user} onClose={() => dialogs.remove(dialog)} />;
+									dialogs.add(dialog);
 								}}
 							>
-								{user.moderatorNote || "None"}
+								{stripTimestamps(user.moderatorNote)}
 							</span>
 						</span>
 					</div>
