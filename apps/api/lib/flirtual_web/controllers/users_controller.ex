@@ -477,7 +477,13 @@ defmodule FlirtualWeb.UsersController do
     else
       with {:ok, attrs} <- Warn.apply(attrs),
            {:ok, user} <-
-             User.warn(user, attrs.reason, attrs.message, attrs.shadowban, conn.assigns[:session].user) do
+             User.warn(
+               user,
+               attrs.reason,
+               attrs.message,
+               attrs.shadowban,
+               conn.assigns[:session].user
+             ) do
         conn |> json(Policy.transform(conn, user))
       end
     end
