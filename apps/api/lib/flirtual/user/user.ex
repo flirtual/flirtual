@@ -732,6 +732,7 @@ defmodule Flirtual.User do
 
   def warn(
         %User{} = user,
+        reason,
         message,
         shadowban,
         %User{} = moderator
@@ -756,6 +757,7 @@ defmodule Flirtual.User do
              Discord.deliver_webhook(:warned,
                user: user,
                moderator: moderator,
+               reason: reason,
                message: message,
                shadowbanned: shadowban,
                at: now

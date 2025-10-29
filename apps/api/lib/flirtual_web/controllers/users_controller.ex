@@ -454,10 +454,14 @@ defmodule FlirtualWeb.UsersController do
     embedded_schema do
       field(:message, :string)
       field(:shadowban, :boolean)
+
+      field(:reason_id, :string)
+      field(:reason, :map, virtual: true)
     end
 
     def changeset(value, _, _) do
       value
+      |> validate_attribute(:reason_id, "warn-reason")
       |> validate_length(:message, min: 8, max: 10_000)
     end
   end
@@ -473,7 +477,7 @@ defmodule FlirtualWeb.UsersController do
     else
       with {:ok, attrs} <- Warn.apply(attrs),
            {:ok, user} <-
-             User.warn(user, attrs.message, attrs.shadowban, conn.assigns[:session].user) do
+             User.warn(user, attrs.reason, attrs.message, attrs.shadowban, conn.assigns[:session].user) do
         conn |> json(Policy.transform(conn, user))
       end
     end

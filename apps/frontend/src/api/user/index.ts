@@ -273,6 +273,7 @@ export const User = {
 	warn(
 		userId: string,
 		options: {
+			reasonId: string;
 			message: string;
 			shadowban: boolean;
 		}

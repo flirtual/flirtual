@@ -345,6 +345,7 @@ defmodule Flirtual.Discord do
   def deliver_webhook(:warned,
         user: %User{} = user,
         moderator: %User{} = moderator,
+        reason: %Attribute{type: "warn-reason"} = reason,
         message: message,
         shadowbanned: shadowbanned,
         at: warned_at
@@ -355,6 +356,13 @@ defmodule Flirtual.Discord do
           author: webhook_author(user),
           title: "User warned" <> if(shadowbanned, do: " + shadowbanned", else: ""),
           description: message,
+          fields: [
+            %{
+              name: "Reason",
+              value: Map.get(Attribute.warn_reasons(), reason.id),
+              inline: true
+            }
+          ],
           color: @warn_color,
           footer: webhook_author_footer(moderator),
           timestamp: warned_at |> DateTime.to_iso8601()

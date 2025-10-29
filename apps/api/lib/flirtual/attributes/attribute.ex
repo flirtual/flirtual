@@ -295,6 +295,20 @@ defmodule Flirtual.Attribute do
       "8P2pi5232LTpzGTDWkBprc" => "Other"
     }
 
+  def warn_reasons(),
+    do: %{
+      "V7VcQEiYkiwHr5CHSVx5aS" => "Spam bio & pics",
+      "aUurnuPnvjTwU2W3K5Se7X" => "NSFW pic removed",
+      "MjxDKasduf9iHTctStGzYA" => "NSFW bio",
+      "CnaCPAcsLptyUgVVugubdf" => "Advertising",
+      "f8v44XrBausmXe6XybTVHd" => "Soliciting",
+      "RdHQQqrswesTTwyh4QZqbH" => "Hateful content",
+      "KNJu36SMz87wA5DrJZyc4L" => "Be kind & respectful",
+      "dC6h3tWeZueVwHGKLhC2sk" => "Inactive account",
+      "AhPZwBpeTm5HMf96bkVszj" => "Upload evidence",
+      "pDBkaykWpfYk9w7ZfPzMrb" => "Other"
+    }
+
   # endregion [todo: replace with translations]
 end
 

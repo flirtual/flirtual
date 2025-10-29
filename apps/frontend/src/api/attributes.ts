@@ -21,7 +21,8 @@ export const attributeTypes = [
 	"prompt",
 	"relationship",
 	"report-reason",
-	"sexuality"
+	"sexuality",
+	"warn-reason"
 ] as const;
 
 export type AttributeType = (typeof attributeTypes)[number];
@@ -66,6 +67,10 @@ export interface AttributeMetadata {
 	};
 	"delete-reason"?: {
 		fallback?: boolean;
+	};
+	"warn-reason"?: {
+		fallback?: boolean;
+		shadowban?: boolean;
 	};
 }
 

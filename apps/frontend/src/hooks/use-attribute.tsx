@@ -28,6 +28,9 @@ export interface AttributeTranslationMetadata {
 	"ban-reason": {
 		details: string;
 	};
+	"warn-reason": {
+		details: string;
+	};
 }
 
 export type AttributeTranslation<T extends AttributeType> = {
