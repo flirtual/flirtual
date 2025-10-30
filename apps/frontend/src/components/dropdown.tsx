@@ -3,6 +3,8 @@ import { Check, ChevronRight, Circle } from "lucide-react";
 import * as React from "react";
 import { twMerge } from "tailwind-merge";
 
+import { useSafeArea } from "~/hooks/use-safe-area";
+
 const DropdownMenu = DropdownMenuPrimitive.Root;
 
 const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger;
@@ -52,6 +54,8 @@ DropdownMenuSubContent.displayName
 	= DropdownMenuPrimitive.SubContent.displayName;
 
 function DropdownMenuContent({ ref: reference, className, sideOffset = 3, ...props }: { ref?: React.Ref<React.ComponentRef<typeof DropdownMenuPrimitive.Content> | null> } & React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content>) {
+	const safeArea = useSafeArea();
+
 	return (
 		<DropdownMenuPrimitive.Portal>
 			<DropdownMenuPrimitive.Content
@@ -59,6 +63,7 @@ function DropdownMenuContent({ ref: reference, className, sideOffset = 3, ...pro
 					"z-50 min-w-40 overflow-hidden rounded-lg bg-white-10 p-2 font-nunito text-black-80 shadow-brand-1 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:bg-black-60 dark:text-white-20",
 					className
 				)}
+				collisionPadding={safeArea}
 				ref={reference}
 				sideOffset={sideOffset}
 				{...props}
