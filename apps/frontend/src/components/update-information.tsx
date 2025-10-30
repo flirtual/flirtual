@@ -31,7 +31,8 @@ export const UpdateInformation: React.FC = withSuspense(() => {
 		queryFn: async () => {
 			try {
 				return await AppUpdate.getAppUpdateInfo();
-			} catch (error) {
+			}
+			catch {
 				// Ignore errors (e.g. Google Play isn't available)
 				return null;
 			}
