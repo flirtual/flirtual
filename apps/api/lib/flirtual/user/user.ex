@@ -26,7 +26,7 @@ defmodule Flirtual.User do
   }
 
   alias Flirtual.User.Profile.{Block, Image, LikesAndPasses}
-  alias Flirtual.User.{Profile, Relationship, Session}
+  alias Flirtual.User.{Login, Profile, Relationship, Session}
 
   @tags [
     :admin,
@@ -853,11 +853,12 @@ defmodule Flirtual.User do
 
   def update_platforms(%User{} = user) do
     platforms =
-      user
-      |> Repo.preload(:sessions)
-      |> Map.get(:sessions)
-      |> Enum.map(& &1.platform)
-      |> Enum.uniq()
+      Login
+      |> where(user_id: ^user.id, status: "successful")
+      |> where([login], not is_nil(login.platform))
+      |> select([login], login.platform)
+      |> distinct(true)
+      |> Repo.all()
 
     Repo.transaction(fn ->
       with {:ok, user} <-

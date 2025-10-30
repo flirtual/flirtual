@@ -16,6 +16,7 @@ export type Session = {
 export interface LoginOptions {
 	login: string;
 	password: string;
+	deviceId?: string;
 }
 
 export interface ConfirmResetPasswordOptions {
@@ -41,6 +42,7 @@ export interface AuthenticatePasskeyOptions {
 		clientDataJSON: string;
 		signature: string;
 	};
+	deviceId?: string;
 }
 
 interface PublicKeyCredentialCreationOptionsBase64

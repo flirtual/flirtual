@@ -666,10 +666,11 @@ defmodule Flirtual.Discord do
       ) do
     color =
       cond do
-        duplicates == "Banned user" ->
+        type === "IP address" or
+            duplicates == "Banned user" ->
           @warn_color
 
-        type in ["email", "APNS token", "FCM token", "Discord ID"] or
+        type in ["email", "APNS token", "FCM token", "Discord ID", "device ID"] or
             String.ends_with?(type, "(connection updated)") ->
           @destructive_color
 

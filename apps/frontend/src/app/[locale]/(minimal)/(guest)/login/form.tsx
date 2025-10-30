@@ -13,6 +13,7 @@ import { Form, FormButton } from "~/components/forms";
 import { FormInputMessages } from "~/components/forms/input-messages";
 import { InlineLink } from "~/components/inline-link";
 import { InputLabel, InputLabelHint, InputText } from "~/components/inputs";
+import { useDevice } from "~/hooks/use-device";
 import { useToast } from "~/hooks/use-toast";
 import { useNavigate } from "~/i18n";
 import { invalidate, mutate, sessionKey } from "~/query";
@@ -33,6 +34,7 @@ function useKylesWebAuthnImplementation() {
 	const navigate = useNavigate();
 	const toasts = useToast();
 	const challengeGenerated = useRef(false);
+	const { id: deviceId } = useDevice();
 
 	const { t } = useTranslation();
 
@@ -82,7 +84,8 @@ function useKylesWebAuthnImplementation() {
 								signature: btoa(
 									String.fromCharCode(...new Uint8Array(response.signature))
 								)
-							}
+							},
+							deviceId
 						})
 						.then(async (session) => {
 							await mutate(sessionKey(), session);
@@ -101,7 +104,7 @@ function useKylesWebAuthnImplementation() {
 			}
 		}
 		void webAuthnAuthenticate();
-	}, [toasts, t, navigate]);
+	}, [toasts, t, navigate, deviceId]);
 }
 
 const OAuthError: FC = withSuspense(() => {
@@ -123,6 +126,7 @@ const OAuthError: FC = withSuspense(() => {
 
 export const LoginForm: FC = () => {
 	const { t } = useTranslation();
+	const device = useDevice();
 
 	useKylesWebAuthnImplementation();
 
@@ -140,7 +144,10 @@ export const LoginForm: FC = () => {
 				formErrorMessages={false}
 				renderCaptcha={false}
 				onSubmit={async (body) => {
-					const value = await Authentication.login(body);
+					const value = await Authentication.login({
+						...body,
+						deviceId: device.id
+					});
 
 					if ("error" in value) {
 						if (value.error === "invalid_credentials")

@@ -99,4 +99,45 @@ defmodule FlirtualWeb.Utilities do
       |> to_string()
     end
   end
+
+  def get_conn_region(conn) do
+    region =
+      conn
+      |> get_req_header("cf-region")
+      |> List.first()
+
+    country =
+      conn
+      |> get_req_header("cf-ipcountry")
+      |> List.first()
+
+    case {region, country} do
+      {_, "XX"} -> "Unknown"
+      {_, "T1"} -> "Tor"
+      {nil, nil} -> nil
+      {nil, country} -> country
+      {region, nil} -> region
+      {region, country} -> "#{region}, #{country}"
+    end
+  end
+
+  def get_conn_platform(conn) do
+    user_agent =
+      conn
+      |> get_req_header("user-agent")
+      |> List.first()
+      |> to_string()
+      |> String.downcase()
+
+    case String.split(user_agent) |> List.last() do
+      "flirtual-native" ->
+        if(String.contains?(user_agent, "android"), do: "android", else: "ios")
+
+      "flirtual-vision" ->
+        "vision"
+
+      _ ->
+        "web"
+    end
+  end
 end

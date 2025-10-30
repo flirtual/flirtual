@@ -8,10 +8,8 @@ defmodule FlirtualWeb.SessionController do
   import FlirtualWeb.Utilities
   import Flirtual.Utilities.Changeset
 
-  alias Flirtual.User.Session
-  alias Flirtual.Policy
-  alias Flirtual.Users
-  alias Flirtual.User
+  alias Flirtual.{Policy, User, Users}
+  alias Flirtual.User.{Login, Session}
 
   action_fallback(FlirtualWeb.FallbackController)
 
@@ -33,7 +31,8 @@ defmodule FlirtualWeb.SessionController do
                  %{
                    login: :string,
                    password: :string,
-                   remember_me: :boolean
+                   remember_me: :boolean,
+                   device_id: :string
                  },
                  params
                )
@@ -45,19 +44,23 @@ defmodule FlirtualWeb.SessionController do
                  attrs[:password]
                ),
              false <- LeakedPasswords.leaked?(attrs[:password]),
-             {session, conn} = create(conn, user, attrs[:remember_me]) do
+             {session, conn} = create(conn, user, attrs[:remember_me], attrs[:device_id]) do
           conn
           |> put_status(:created)
           |> json(Policy.transform(conn, session))
         else
-          %User{} ->
+          %User{banned_at: banned_at} = user when not is_nil(banned_at) ->
+            Login.log_login_attempt(conn, user.id, nil, params["device_id"])
             {:error, {:unauthorized, :account_banned}}
 
           leak_count when is_integer(leak_count) ->
-            # deliver_leaked_password_alert(params["login"], get_conn_ip(conn))
+            user = Users.get_by_username(params["login"]) || Users.get_by_email(params["login"])
+            Login.log_login_attempt(conn, user && user.id, nil, params["device_id"])
             {:error, {:unauthorized, :leaked_login_password}}
 
           _ ->
+            user = Users.get_by_username(params["login"]) || Users.get_by_email(params["login"])
+            Login.log_login_attempt(conn, user && user.id, nil, params["device_id"])
             {:error, {:unauthorized, :invalid_credentials}}
         end
 
@@ -101,23 +104,11 @@ defmodule FlirtualWeb.SessionController do
     end
   end
 
-  def create(%Plug.Conn{} = conn, %User{} = user, remember_me \\ false) do
-    user_agent = get_req_header(conn, "user-agent") |> List.first() |> String.downcase()
-
-    platform =
-      case String.split(user_agent) |> List.last() do
-        "flirtual-native" ->
-          if(String.contains?(user_agent, "android"), do: "android", else: "ios")
-
-        "flirtual-vision" ->
-          "vision"
-
-        _ ->
-          "web"
-      end
-
-    session = Session.create(user, platform)
+  def create(%Plug.Conn{} = conn, %User{} = user, remember_me \\ false, device_id \\ nil) do
+    session = Session.create(user)
     User.update_platforms(user)
+
+    Login.log_login_attempt(conn, user.id, session.id, device_id)
 
     conn =
       conn

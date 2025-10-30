@@ -16,7 +16,6 @@ defmodule Flirtual.User.Session do
     field(:token, :string, virtual: true, redact: true)
     field(:hashed_token, :string, redact: true)
     field(:expire_at, :utc_datetime)
-    field(:platform, :string)
 
     timestamps()
   end
@@ -42,15 +41,14 @@ defmodule Flirtual.User.Session do
   @hash_algorithm :sha256
   @rand_size 32
 
-  def create(%User{} = user, platform) do
+  def create(%User{} = user) do
     raw_token = new_token()
 
     %Session{
       hashed_token: hash_token(raw_token),
       token: encode_token(raw_token),
       user_id: user.id,
-      expire_at: new_expire_at(),
-      platform: platform
+      expire_at: new_expire_at()
     }
     |> Repo.insert!()
     |> Repo.preload(Session.default_assoc())

@@ -41,6 +41,7 @@ defmodule Flirtual.MixProject do
       {:cors_plug, "~> 3.0"},
       {:shortuuid, "~> 2.0"},
       {:ecto_shortuuid, "~> 0.2"},
+      {:ecto_network, "~> 1.6"},
       {:ecto_sql, "~> 3.10"},
       {:postgrex, ">= 0.0.0"},
       {:oban, "~> 2.16"},

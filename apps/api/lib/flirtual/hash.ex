@@ -69,6 +69,13 @@ defmodule Flirtual.Hash do
     |> Repo.all()
   end
 
+  defp anonymize_ip(ip_address) when is_binary(ip_address) do
+    case String.split(ip_address, ".") do
+      [_oct1, _oct2, oct3, oct4] -> "xxx.xxx.#{oct3}.#{oct4}"
+      _ -> ip_address
+    end
+  end
+
   def check_hash(_, _, nil), do: :ok
 
   def check_hash(_, _, ""), do: :ok
@@ -95,7 +102,7 @@ defmodule Flirtual.Hash do
           user: Users.get(user_id),
           duplicates: if(duplicates == "", do: "Banned user", else: duplicates),
           type: type,
-          text: text
+          text: if(type == "IP address", do: anonymize_ip(text), else: text)
         )
 
         :ok

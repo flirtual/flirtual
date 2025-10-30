@@ -3,7 +3,7 @@ defmodule FlirtualWeb.PasskeyController do
 
   alias Ecto.UUID
   alias Flirtual.User
-  alias Flirtual.User.Passkey
+  alias Flirtual.User.{Login, Passkey}
   alias FlirtualWeb.SessionController
 
   action_fallback(FlirtualWeb.FallbackController)
@@ -124,11 +124,12 @@ defmodule FlirtualWeb.PasskeyController do
     end
   end
 
-  def authenticate(conn, %{"raw_id" => raw_id, "response" => response}) do
+  def authenticate(conn, %{"raw_id" => raw_id, "response" => response} = params) do
     raw_id = Base.decode64!(raw_id)
     authenticator_data = Base.decode64!(response["authenticator_data"])
     signature = Base.decode64!(response["signature"])
     client_data_json = Base.decode64!(response["client_data_json"])
+    device_id = params["device_id"]
 
     challenge = get_session(conn, :authentication_challenge)
     conn = delete_session(conn, :authentication_challenge)
@@ -146,16 +147,18 @@ defmodule FlirtualWeb.PasskeyController do
            ),
          login_user <- User.get(user_id),
          %User{banned_at: nil} <- login_user do
-      {session, conn} = SessionController.create(conn, login_user)
+      {session, conn} = SessionController.create(conn, login_user, false, device_id)
 
       conn
       |> put_status(:ok)
       |> json(session)
     else
-      %User{} ->
+      %User{} = user ->
+        Login.log_login_attempt(conn, user.id, nil, device_id)
         {:error, {:unauthorized, :account_banned}}
 
       _ ->
+        Login.log_login_attempt(conn, nil, nil, device_id)
         {:error, {:unauthorized, :passkey_login_failed}}
     end
   end
