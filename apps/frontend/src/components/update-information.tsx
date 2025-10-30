@@ -28,7 +28,14 @@ export const UpdateInformation: React.FC = withSuspense(() => {
 
 	const updateInformation = useQuery({
 		queryKey: ["update-information"],
-		queryFn: () => AppUpdate.getAppUpdateInfo(),
+		queryFn: async () => {
+			try {
+				return await AppUpdate.getAppUpdateInfo();
+			} catch (error) {
+				// Ignore errors (e.g. Google Play isn't available)
+				return null;
+			}
+		},
 		enabled: client && device.native,
 		refetchInterval: ms("1m"),
 		staleTime: 0,
