@@ -4,6 +4,7 @@ defmodule Flirtual.ObanWorkers.Daily do
   import Ecto.Query
 
   alias Flirtual.{Repo, User}
+  alias Flirtual.User.Session
 
   @impl Oban.Worker
   def perform(%Oban.Job{}) do
@@ -26,6 +27,18 @@ defmodule Flirtual.ObanWorkers.Daily do
         |> Flirtual.ObanWorkers.PruneBanned.new()
         |> Oban.insert()
       end)
+    end
+
+    if Enum.member?(enabled_cron_tasks, :prune_sessions) do
+      now = DateTime.utc_now()
+      absolute_expire_at = DateTime.add(now, -Session.max_age(:absolute), :second)
+
+      Session
+      |> where(
+        [session],
+        session.expire_at <= ^now or session.created_at <= ^absolute_expire_at
+      )
+      |> Repo.delete_all()
     end
 
     :ok
