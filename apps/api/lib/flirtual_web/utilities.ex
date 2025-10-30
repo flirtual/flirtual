@@ -86,16 +86,13 @@ defmodule FlirtualWeb.Utilities do
   end
 
   def get_conn_ip(conn) do
-    forwarded_for =
+    connecting_ip =
       conn
-      |> get_req_header("x-forwarded-for")
+      |> get_req_header("cf-connecting-ip")
       |> List.first()
 
-    if forwarded_for do
-      forwarded_for
-      |> String.split(",")
-      |> Enum.map(&String.trim/1)
-      |> List.first()
+    if connecting_ip do
+      connecting_ip
     else
       conn.remote_ip
       |> :inet_parse.ntoa()
