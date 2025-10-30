@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -22,6 +23,8 @@ export const ModeratorNoteDialog: FC<{ user: User; onClose: () => void }> = ({ u
 	const toasts = useToast();
 	const { t } = useTranslation();
 	const { user: { profile: { displayName: moderatorDisplayName } } } = useSession();
+	const timestampAppended = useRef(false);
+	const caretReference = useRef(0);
 
 	return (
 		<Dialog
@@ -55,18 +58,7 @@ export const ModeratorNoteDialog: FC<{ user: User; onClose: () => void }> = ({ u
 								return;
 							}
 
-							const trimmedMessage = message.trim();
-							const hasChanged = trimmedMessage !== (user.moderatorNote || "").trim();
-
-							let finalMessage = trimmedMessage;
-							if (hasChanged && trimmedMessage) {
-								const now = new Date();
-								const timestamp = now.toISOString().replace("T", " ").split(".")[0];
-								const moduleName = moderatorDisplayName;
-								finalMessage = `${trimmedMessage}\n${timestamp} ${moduleName}`;
-							}
-
-							await User.note(targetId, { message: finalMessage })
+							await User.note(targetId, { message: message.trim() })
 								.then(() => toasts.add(t("note_updated")))
 								.catch(toasts.addError);
 
@@ -107,6 +99,24 @@ export const ModeratorNoteDialog: FC<{ user: User; onClose: () => void }> = ({ u
 												{...field.props}
 												placeholder="Write a private moderator note about this user."
 												rows={6}
+												onChange={(value) => {
+													if (!timestampAppended.current && value !== (user.moderatorNote || "")) {
+														timestampAppended.current = true;
+														const timestamp = `\n${new Date().toISOString().replace("T", " ").split(".")[0]} ${moderatorDisplayName}`;
+														field.props.onChange(value + timestamp);
+
+														requestAnimationFrame(() => {
+															const textarea = document.activeElement as HTMLTextAreaElement;
+															textarea.setSelectionRange(caretReference.current, caretReference.current);
+														});
+														return;
+													}
+													field.props.onChange(value);
+												}}
+												onInput={(event) => {
+													const target = event.target as HTMLTextAreaElement;
+													caretReference.current = target.selectionStart;
+												}}
 											/>
 										</>
 									)}
