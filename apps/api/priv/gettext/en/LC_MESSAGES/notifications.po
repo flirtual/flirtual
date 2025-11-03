@@ -11,215 +11,230 @@ msgstr ""
 "Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: lib/flirtual/mailer.ex:48
-#: lib/flirtual/mailer.ex:295
+#: lib/flirtual/mailer.ex:42
+#: lib/flirtual/mailer.ex:289
 #, elixir-autogen, elixir-format, fuzzy
 msgid "discord"
 msgstr "Discord"
 
-#: lib/flirtual/mailer.ex:291
+#: lib/flirtual/mailer.ex:285
 #, elixir-autogen, elixir-format
 msgid "if_the_link_does_not_work"
 msgstr "If the link above doesn't work, try copying this URL into your browser:"
 
-#: lib/flirtual/mailer.ex:49
-#: lib/flirtual/mailer.ex:296
+#: lib/flirtual/mailer.ex:43
+#: lib/flirtual/mailer.ex:290
 #, elixir-autogen, elixir-format, fuzzy
 msgid "unsubscribe"
 msgstr "Unsubscribe"
 
-#: lib/flirtual/mailer.ex:47
-#: lib/flirtual/mailer.ex:294
+#: lib/flirtual/mailer.ex:41
+#: lib/flirtual/mailer.ex:288
 #, elixir-autogen, elixir-format
 msgid "x"
 msgstr "X (Twitter)"
 
-#: lib/flirtual/user/email.ex:12
+#: lib/flirtual/user/email.ex:14
 #, elixir-autogen, elixir-format
 msgid "suspended.subject"
 msgstr "Account disabled"
 
-#: lib/flirtual/user/email.ex:43
+#: lib/flirtual/user/email.ex:44
 #, elixir-autogen, elixir-format
 msgid "confirm_email.body_html"
 msgstr "<p>Almost done—confirm your email address by tapping the button below. Once you do, you’ll be all set to start matchmaking!</p>\n\n<p><a href=\"%{action_url}\" class=\"btn\">Continue</a></p>"
 
-#: lib/flirtual/user/email.ex:41
+#: lib/flirtual/user/email.ex:42
 #, elixir-autogen, elixir-format
 msgid "confirm_email.body_text"
 msgstr "Almost done—confirm your email address by opening the link below.\nOnce you do, you’ll be all set to start matchmaking!\n\n%{action_url}"
 
-#: lib/flirtual/user/email.ex:36
-#: lib/flirtual/user/email.ex:49
+#: lib/flirtual/user/email.ex:37
+#: lib/flirtual/user/email.ex:50
 #, elixir-autogen, elixir-format
 msgid "confirm_email.subject"
 msgstr "Confirm your account"
 
-#: lib/flirtual/user/email.ex:88
+#: lib/flirtual/user/email.ex:89
 #, elixir-autogen, elixir-format
 msgid "reset_password.body_html"
 msgstr "<p>Almost done—reset your password by tapping the button below. Once you do, you’ll be ready to login!</p>\n\n<p><a href=\"%{action_url}\" class=\"btn\">Continue</a></p>\n\n<p>If you didn't request this, you can safely ignore this email.</p>"
 
-#: lib/flirtual/user/email.ex:86
+#: lib/flirtual/user/email.ex:87
 #, elixir-autogen, elixir-format
 msgid "reset_password.body_text"
 msgstr "Almost done—reset your password by opening the link below.\nOnce you do, you’ll be ready to login!\n\n%{action_url}\n\nIf you didn't request this, you can safely ignore this email."
 
-#: lib/flirtual/user/email.ex:81
-#: lib/flirtual/user/email.ex:94
+#: lib/flirtual/user/email.ex:82
+#: lib/flirtual/user/email.ex:95
 #, elixir-autogen, elixir-format
 msgid "reset_password.subject"
 msgstr "Password reset request"
 
-#: lib/flirtual/user/email.ex:16
+#: lib/flirtual/user/email.ex:18
 #, elixir-autogen, elixir-format
 msgid "suspended.body_html"
 msgstr "<p>Our moderation team has found your Flirtual account in violation of our rules.</p>\n\n<p><strong>Reason</strong>: %{message}</p>\n\n<p>Your account data will be kept for 30 days. Please reply to this message within 30 days if you would like to appeal this moderation decision to unban your account, or if you would like us to delete your account immediately. If you have not received a response to your appeal within 30 days, it has been reviewed and denied.</p><p>The Flirtual Team</p>"
 
-#: lib/flirtual/user/email.ex:15
+#: lib/flirtual/user/email.ex:17
 #, elixir-autogen, elixir-format
 msgid "suspended.body_text"
 msgstr "Our moderation team has found your Flirtual account in violation of our rules.\n\nReason: %{message}\n\nYour account data will be kept for 30 days. Please reply to this message within 30 days if you would like to appeal this moderation decision to unban your account, or if you would like us to delete your account immediately. If you have not received a response to your appeal within 30 days, it has been reviewed and denied.\n\nThe Flirtual Team"
 
-#: lib/flirtual/user/email.ex:53
-#: lib/flirtual/user/email.ex:98
-#: lib/flirtual/user/email.ex:310
+#: lib/flirtual/user/email.ex:54
+#: lib/flirtual/user/email.ex:99
+#: lib/flirtual/user/email.ex:342
 #, elixir-autogen, elixir-format
 msgid "continue"
 msgstr "Continue"
 
-#: lib/flirtual/user/email.ex:154
+#: lib/flirtual/user/email.ex:186
 #, elixir-autogen, elixir-format
 msgid "email_changed.body_html"
 msgstr "<p>The email address on your Flirtual account has been changed to %{email}.</p>\n\n <p>If you did not make this request, please reply to this email immediately so we can secure your account.</p>"
 
-#: lib/flirtual/user/email.ex:153
+#: lib/flirtual/user/email.ex:185
 #, elixir-autogen, elixir-format
 msgid "email_changed.body_text"
 msgstr "The email address on your Flirtual account has been changed to %{email}.\n\nIf you did not make this request, please reply to this email immediately so we can secure your account."
 
-#: lib/flirtual/user/email.ex:152
+#: lib/flirtual/user/email.ex:184
 #, elixir-autogen, elixir-format
 msgid "email_changed.subject"
 msgstr "Your email address was changed"
 
-#: lib/flirtual/user/email.ex:134
+#: lib/flirtual/user/email.ex:166
 #, elixir-autogen, elixir-format
 msgid "password_changed.body_html"
 msgstr "<p>Someone, hopefully you, has changed the password on your Flirtual account.</p>\n\n<p>If you did not make this request, please <a href=\"#{action_url}\">reset your password</a> immediately or reply to this email if you need assistance.</p>"
 
-#: lib/flirtual/user/email.ex:132
+#: lib/flirtual/user/email.ex:164
 #, elixir-autogen, elixir-format
 msgid "password_changed.body_text"
 msgstr "Someone, hopefully you, has changed the password on your Flirtual account.\n\n If you did not make this request, please reset your password immediately at %{action_url} or reply to this email if you need assistance."
 
-#: lib/flirtual/user/email.ex:130
+#: lib/flirtual/user/email.ex:162
 #, elixir-autogen, elixir-format
 msgid "password_changed.subject"
 msgstr "Your password was changed"
 
-#: lib/flirtual/user/email.ex:205
-#: lib/flirtual/user/email.ex:217
+#: lib/flirtual/user/email.ex:237
+#: lib/flirtual/user/email.ex:249
 #, elixir-autogen, elixir-format
 msgid "message"
 msgstr "Message"
 
-#: lib/flirtual/user/email.ex:191
+#: lib/flirtual/user/email.ex:223
 #, elixir-autogen, elixir-format
 msgid "new_match.looking_for_date_ideas"
 msgstr "Looking for date ideas? Check out the #date-worlds channel in our Discord server: https://discord.gg/flirtual"
 
-#: lib/flirtual/user/email.ex:200
+#: lib/flirtual/user/email.ex:232
 #, elixir-autogen, elixir-format
 msgid "new_match.looking_for_date_ideas_html"
 msgstr "<p>Looking for date ideas? Check out the #date-worlds channel in our <a href=\"https://discord.gg/flirtual\">Discord server</a>.</p>"
 
-#: lib/flirtual/user/email.ex:213
+#: lib/flirtual/user/email.ex:245
 #, elixir-autogen, elixir-format
 msgid "send_them_a_message"
 msgstr "Send them a message"
 
-#: lib/flirtual/user/push.ex:13
+#: lib/flirtual/user/push.ex:14
 #, elixir-autogen, elixir-format
 msgid "daily_profiles_ready"
 msgstr "Your daily profiles are ready!"
 
-#: lib/flirtual/user/push.ex:15
+#: lib/flirtual/user/push.ex:16
 #, elixir-autogen, elixir-format
 msgid "daily_profiles_ready_message"
 msgstr "We've worked our matchmaking magic on a fresh batch of profiles just for you. Tap to check them out!"
 
-#: lib/flirtual/user/email.ex:189
-#: lib/flirtual/user/email.ex:198
-#: lib/flirtual/user/push.ex:46
+#: lib/flirtual/user/email.ex:221
+#: lib/flirtual/user/email.ex:230
+#: lib/flirtual/user/push.ex:48
 #, elixir-autogen, elixir-format
 msgid "homied_you"
 msgstr "%{name} homied you back. Send them a message!"
 
-#: lib/flirtual/user/email.ex:182
-#: lib/flirtual/user/push.ex:40
+#: lib/flirtual/user/email.ex:214
+#: lib/flirtual/user/push.ex:42
 #, elixir-autogen, elixir-format
 msgid "its_a_match"
 msgstr "It's a match! 💞"
 
-#: lib/flirtual/user/email.ex:183
-#: lib/flirtual/user/push.ex:41
+#: lib/flirtual/user/email.ex:215
+#: lib/flirtual/user/push.ex:43
 #, elixir-autogen, elixir-format
 msgid "its_a_match_homie"
 msgstr "It's a match! ✌️"
 
-#: lib/flirtual/user/email.ex:188
-#: lib/flirtual/user/email.ex:197
-#: lib/flirtual/user/push.ex:45
+#: lib/flirtual/user/email.ex:220
+#: lib/flirtual/user/email.ex:229
+#: lib/flirtual/user/push.ex:47
 #, elixir-autogen, elixir-format
 msgid "liked_you"
 msgstr "%{name} liked you back. Send them a message!"
 
-#: lib/flirtual/user/email.ex:276
-#: lib/flirtual/user/push.ex:68
+#: lib/flirtual/user/email.ex:308
+#: lib/flirtual/user/push.ex:70
 #, elixir-autogen, elixir-format
 msgid "someone_liked_you"
 msgid_plural "x_people_liked_you"
 msgstr[0] "Someone liked you!"
 msgstr[1] "%{count} people liked you this week!"
 
-#: lib/flirtual/user/email.ex:285
-#: lib/flirtual/user/push.ex:76
+#: lib/flirtual/user/email.ex:317
+#: lib/flirtual/user/push.ex:78
 #, elixir-autogen, elixir-format
 msgid "browse_profiles_to_see_if_its_a_match"
 msgstr "Browse profiles to see if it's a match."
 
-#: lib/flirtual/user/push.ex:74
+#: lib/flirtual/user/push.ex:76
 #, elixir-autogen, elixir-format
 msgid "see_who_likes_you_and_match"
 msgstr "See who likes you and match."
 
-#: lib/flirtual/user/email.ex:306
+#: lib/flirtual/user/email.ex:338
 #, elixir-autogen, elixir-format, fuzzy
 msgid "browse_profiles"
 msgstr "Browse profiles"
 
-#: lib/flirtual/user/email.ex:295
+#: lib/flirtual/user/email.ex:327
 #, elixir-autogen, elixir-format, fuzzy
 msgid "browse_profiles_to_see_if_its_a_match_html"
 msgstr "<a href=\"%{action_url}\">Browse profiles</a> to see if it's a match.</p> <p>Or <a href=\"https://flirtu.al/subscription\">upgrade to Premium</a> to see who likes you right away and never miss another match."
 
-#: lib/flirtual/user/email.ex:288
+#: lib/flirtual/user/email.ex:320
 #, elixir-autogen, elixir-format
 msgid "or_upgrade_to_premium"
 msgstr "Or upgrade to Premium to see who likes you right away and never miss another match: https://flirtu.al/subscription"
 
-#: lib/flirtual/user/email.ex:284
-#: lib/flirtual/user/email.ex:294
-#: lib/flirtual/user/email.ex:305
+#: lib/flirtual/user/email.ex:316
+#: lib/flirtual/user/email.ex:326
+#: lib/flirtual/user/email.ex:337
 #, elixir-autogen, elixir-format, fuzzy
 msgid "see_who_likes_you"
 msgstr "See who likes you"
 
-#: lib/flirtual/user/email.ex:281
-#: lib/flirtual/user/email.ex:291
+#: lib/flirtual/user/email.ex:313
+#: lib/flirtual/user/email.ex:323
 #, elixir-autogen, elixir-format, fuzzy
 msgid "this_week_1_person_liked_you"
 msgid_plural "this_week_x_people_liked_you"
 msgstr[0] "This week 1 person liked or homied your profile on Flirtual!"
 msgstr[1] "This week %{count} people liked or homied your profile on Flirtual!"
+
+#: lib/flirtual/user/email.ex:137
+#, elixir-autogen, elixir-format
+msgid "verification_code.body_html"
+msgstr "<p>We detected a suspicious login. If that was you, enter the verification code below:</p>\n\n<p style=\"font-size: 24px; font-weight: bold; letter-spacing: 0.2em; margin: 20px 0;\">%{code}</p>\n\n<p>This code will expire in 15 minutes.</p>\n\n<p>Wasn't you? Please change your password in the Flirtual Settings to secure your account.</p>"
+
+#: lib/flirtual/user/email.ex:132
+#, elixir-autogen, elixir-format
+msgid "verification_code.body_text"
+msgstr "We detected a suspicious login. If that was you, enter the verification code below:\n\n%{code}\n\nThis code will expire in 15 minutes.\n\nWasn't you? Please change your password in the Flirtual Settings to secure your account."
+
+#: lib/flirtual/user/email.ex:130
+#, elixir-autogen, elixir-format
+msgid "verification_code.subject"
+msgstr "Your Flirtual login code is %{code}"

@@ -112,6 +112,24 @@ defmodule Flirtual.User.Email do
     end)
   end
 
+  def deliver(%User{} = user, :verification_code, code) do
+    language = user.preferences.language || "en"
+
+    Gettext.with_locale(language, fn ->
+      %{
+        "user_id" => user.id,
+        "from" => "security@flirtu.al",
+        "language" => language,
+        "type" => "transactional",
+        "subject" => dgettext("notifications", "verification_code.subject", code: code),
+        "body_text" => dgettext("notifications", "verification_code.body_text", code: code),
+        "body_html" => dgettext("notifications", "verification_code.body_html", code: code)
+      }
+      |> Flirtual.ObanWorkers.Email.new()
+      |> Oban.insert()
+    end)
+  end
+
   def deliver(%User{} = user, :password_changed) do
     language = user.preferences.language || "en"
 

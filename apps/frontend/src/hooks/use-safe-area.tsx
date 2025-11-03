@@ -22,7 +22,7 @@ export function useSafeArea(): SafeArea {
 	document.body.removeChild(element);
 	return safeArea;
 
-	// Waiting on ionic-team/capacitor#8180
+	// TODO: Waiting on ionic-team/capacitor#8180
 	// const [safeArea, setSafeArea] = useState<SafeArea>({
 	// 	top: 0,
 	// 	right: 0,

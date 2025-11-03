@@ -24,7 +24,7 @@ defmodule Flirtual.Users do
     User
   }
 
-  alias Flirtual.User.Preferences
+  alias Flirtual.User.{Login, Preferences}
 
   def get(id)
       when is_binary(id) do
@@ -192,6 +192,10 @@ defmodule Flirtual.Users do
       with {:ok, attrs} <- ConfirmResetPassword.apply(attrs),
            {:ok, user} <- User.update_password(attrs.user, attrs.password),
            {:ok, _} <- User.Email.deliver(user, :password_changed) do
+        Login.untrust(user.id)
+        ExRated.delete_bucket("verify:#{user.id}")
+        ExRated.delete_bucket("send_verification:#{user.id}")
+
         user
       else
         {:error, reason} -> Repo.rollback(reason)

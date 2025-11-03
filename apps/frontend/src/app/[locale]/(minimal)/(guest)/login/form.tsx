@@ -1,6 +1,6 @@
 /* eslint-disable no-throw-literal */
 import { MoveRight } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { FC } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router";
@@ -20,8 +20,9 @@ import { invalidate, mutate, sessionKey } from "~/query";
 import { isInternalHref, urls } from "~/urls";
 
 import { LoginConnectionButton } from "./login-connection-button";
+import { VerificationForm } from "./verification";
 
-function next() {
+export function next() {
 	const defaultNext = urls.discover("dates");
 
 	const next = new URL(location.href).searchParams.get("next") || defaultNext;
@@ -127,8 +128,22 @@ const OAuthError: FC = withSuspense(() => {
 export const LoginForm: FC = () => {
 	const { t } = useTranslation();
 	const device = useDevice();
+	const [verification, setVerification] = useState<{ loginId: string; email: string } | null>(null);
 
 	useKylesWebAuthnImplementation();
+
+	if (verification) {
+		return (
+			<>
+				<OAuthError />
+				<VerificationForm
+					email={verification.email}
+					loginId={verification.loginId}
+					onBack={() => setVerification(null)}
+				/>
+			</>
+		);
+	}
 
 	return (
 		<>
@@ -191,7 +206,7 @@ export const LoginForm: FC = () => {
 								/>
 							];
 
-						if (value.error === "login_rate_limit")
+						if (value.error === "login_rate_limit" || value.error === "verification_rate_limit")
 							throw [
 								<Trans
 									key=""
@@ -204,11 +219,16 @@ export const LoginForm: FC = () => {
 											/>
 										)
 									}}
-									i18nKey="errors.login_rate_limit"
+									i18nKey={`errors.${value.error}`}
 								/>
 							];
 
 						throw [t(`errors.${value.error}` as any)];
+					}
+
+					if ("loginId" in value) {
+						setVerification({ loginId: value.loginId, email: value.email });
+						return;
 					}
 
 					await invalidate({ refetchType: "none" });

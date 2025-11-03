@@ -177,6 +177,11 @@ defmodule FlirtualWeb.Router do
               get("/", CannyController, :login)
             end
           end
+
+          scope "/verification" do
+            post("/", SessionController, :verify)
+            post("/resend", SessionController, :resend_verification)
+          end
         end
 
         scope "/translate" do

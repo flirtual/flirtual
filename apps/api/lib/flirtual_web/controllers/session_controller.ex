@@ -9,7 +9,7 @@ defmodule FlirtualWeb.SessionController do
   import Flirtual.Utilities.Changeset
 
   alias Flirtual.{Policy, User, Users}
-  alias Flirtual.User.{Login, Session}
+  alias Flirtual.User.{Login, Session, Verification}
 
   action_fallback(FlirtualWeb.FallbackController)
 
@@ -43,11 +43,24 @@ defmodule FlirtualWeb.SessionController do
                  attrs[:login],
                  attrs[:password]
                ),
-             false <- LeakedPasswords.leaked?(attrs[:password]),
-             {session, conn} = create(conn, user, attrs[:remember_me], attrs[:device_id]) do
-          conn
-          |> put_status(:created)
-          |> json(Policy.transform(conn, session))
+             false <- LeakedPasswords.leaked?(attrs[:password]) do
+          if Login.suspicious?(user.id, conn) do
+            with login_id when is_binary(login_id) <-
+                   Verification.send_verification(conn, user, attrs[:device_id]) do
+              conn
+              |> put_status(:accepted)
+              |> json(%{login_id: login_id, email: user.email})
+            else
+              {:error, :verification_rate_limit} ->
+                {:error, {:unauthorized, :verification_rate_limit}}
+            end
+          else
+            {session, conn} = create(conn, user, attrs[:remember_me], attrs[:device_id])
+
+            conn
+            |> put_status(:created)
+            |> json(Policy.transform(conn, session))
+          end
         else
           %User{banned_at: banned_at} = user when not is_nil(banned_at) ->
             Login.log_login_attempt(conn, user.id, nil, params["device_id"])
@@ -65,7 +78,50 @@ defmodule FlirtualWeb.SessionController do
         end
 
       {:error, _} ->
+        user = Users.get_by_email(params["login"]) || Users.get_by_username(params["login"])
+        if user, do: Login.untrust(user.id)
         {:error, {:unauthorized, :login_rate_limit}}
+    end
+  end
+
+  def resend_verification(conn, %{"login_id" => login_id}) do
+    with {:ok, login_id} <- Verification.resend_verification(login_id) do
+      conn
+      |> put_status(:ok)
+      |> json(%{login_id: login_id})
+    else
+      {:error, :verification_rate_limit} ->
+        {:error, {:unauthorized, :verification_rate_limit}}
+
+      {:error, _} ->
+        {:error, {:unauthorized, :verification_invalid_code}}
+    end
+  end
+
+  def verify(conn, %{"login_id" => login_id, "code" => code} = params) do
+    with %Login{user_id: user_id, device_id: device_id} <- Login.get(login_id),
+         %User{} = user <- Users.get(user_id),
+         :ok <- Verification.verify(login_id, code) do
+      {session, conn} = create(conn, user, params["remember_me"] || false, device_id)
+
+      Login.verify(login_id, session.id)
+
+      conn
+      |> put_status(:created)
+      |> json(Policy.transform(conn, session))
+    else
+      nil ->
+        {:error, {:unauthorized, :verification_invalid_code}}
+
+      {:error, :verification_rate_limit} ->
+        with %Login{user_id: user_id} <- Login.get(login_id) do
+          Login.untrust(user_id)
+        end
+
+        {:error, {:unauthorized, :verification_rate_limit}}
+
+      {:error, _} ->
+        {:error, {:unauthorized, :verification_invalid_code}}
     end
   end
 
@@ -106,9 +162,9 @@ defmodule FlirtualWeb.SessionController do
 
   def create(%Plug.Conn{} = conn, %User{} = user, remember_me \\ false, device_id \\ nil) do
     session = Session.create(user)
-    User.update_platforms(user)
 
     Login.log_login_attempt(conn, user.id, session.id, device_id)
+    User.update_platforms(user)
 
     conn =
       conn
