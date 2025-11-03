@@ -17,6 +17,8 @@ defmodule FlirtualWeb.UsersController do
   alias Flirtual.User.Profile.Block
   alias FlirtualWeb.SessionController
 
+  @one_hour 3_600_000
+
   action_fallback(FlirtualWeb.FallbackController)
 
   def create(conn, params) do
@@ -223,10 +225,14 @@ defmodule FlirtualWeb.UsersController do
   end
 
   def reset_password(conn, %{"email" => email}) do
+    ip = get_conn_ip(conn)
     user = Users.get_by_email(email)
 
-    with {:ok, _} <- Users.reset_password(user) do
+    with {:ok, _} <- ExRated.check_rate("reset_password:#{ip}", @one_hour, 10),
+         {:ok, _} <- Users.reset_password(user) do
       conn |> json(%{success: true})
+    else
+      {:error, _} -> {:error, {:unauthorized, :reset_password_rate_limit}}
     end
   end
 

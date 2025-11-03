@@ -358,6 +358,7 @@
 		"login_rate_limit": "Too many login attempts, please try again in 15 minutes or <reset>reset your password</reset>.",
 		"verification_invalid_code": "Invalid or expired verification code. Please request a new code.",
 		"verification_rate_limit": "Too many verification attempts. Please try again later or <reset>reset your password</reset>.",
+		"reset_password_rate_limit": "Too many password reset requests. Please try again later.",
 		"is_still_associated_with_this_entry": "Still associated with this entry.",
 		"are_still_associated_with_this_entry": "Still associated with this entry.",
 		"should_be_{count}_character(s)": "Must be {count, plural, =0 {empty} =1 {one character long} other {# characters long}}.",
