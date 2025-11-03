@@ -31,7 +31,6 @@ defmodule FlirtualWeb.SessionController do
                  %{
                    login: :string,
                    password: :string,
-                   remember_me: :boolean,
                    device_id: :string
                  },
                  params
@@ -55,7 +54,7 @@ defmodule FlirtualWeb.SessionController do
                 {:error, {:unauthorized, :verification_rate_limit}}
             end
           else
-            {session, conn} = create(conn, user, attrs[:remember_me], attrs[:device_id])
+            {session, conn} = create(conn, user, method: :password, device_id: attrs[:device_id])
 
             conn
             |> put_status(:created)
@@ -63,17 +62,31 @@ defmodule FlirtualWeb.SessionController do
           end
         else
           %User{banned_at: banned_at} = user when not is_nil(banned_at) ->
-            Login.log_login_attempt(conn, user.id, nil, params["device_id"])
+            Login.log_login_attempt(conn, user.id, nil,
+              method: :password,
+              device_id: params["device_id"]
+            )
+
             {:error, {:unauthorized, :account_banned}}
 
           leak_count when is_integer(leak_count) ->
             user = Users.get_by_username(params["login"]) || Users.get_by_email(params["login"])
-            Login.log_login_attempt(conn, user && user.id, nil, params["device_id"])
+
+            Login.log_login_attempt(conn, user && user.id, nil,
+              method: :password,
+              device_id: params["device_id"]
+            )
+
             {:error, {:unauthorized, :leaked_login_password}}
 
           _ ->
             user = Users.get_by_username(params["login"]) || Users.get_by_email(params["login"])
-            Login.log_login_attempt(conn, user && user.id, nil, params["device_id"])
+
+            Login.log_login_attempt(conn, user && user.id, nil,
+              method: :password,
+              device_id: params["device_id"]
+            )
+
             {:error, {:unauthorized, :invalid_credentials}}
         end
 
@@ -98,11 +111,11 @@ defmodule FlirtualWeb.SessionController do
     end
   end
 
-  def verify(conn, %{"login_id" => login_id, "code" => code} = params) do
+  def verify(conn, %{"login_id" => login_id, "code" => code}) do
     with %Login{user_id: user_id, device_id: device_id} <- Login.get(login_id),
          %User{} = user <- Users.get(user_id),
          :ok <- Verification.verify(login_id, code) do
-      {session, conn} = create(conn, user, params["remember_me"] || false, device_id)
+      {session, conn} = create(conn, user, method: :password, device_id: device_id)
 
       Login.verify(login_id, session.id)
 
@@ -160,10 +173,10 @@ defmodule FlirtualWeb.SessionController do
     end
   end
 
-  def create(%Plug.Conn{} = conn, %User{} = user, remember_me \\ false, device_id \\ nil) do
+  def create(%Plug.Conn{} = conn, %User{} = user, opts \\ []) do
     session = Session.create(user)
 
-    Login.log_login_attempt(conn, user.id, session.id, device_id)
+    Login.log_login_attempt(conn, user.id, session.id, opts)
     User.update_platforms(user)
 
     conn =
@@ -172,25 +185,8 @@ defmodule FlirtualWeb.SessionController do
       |> renew_session()
       |> assign(:session, session)
       |> put_session(:token, session.token)
-      |> maybe_write_remember_me_cookie(session.token, remember_me)
 
     {session, conn}
-  end
-
-  @remember_me_cookie "remember_me"
-  @max_age 60 * 60 * 24 * 60
-
-  defp maybe_write_remember_me_cookie(conn, token, true) do
-    put_resp_cookie(conn, @remember_me_cookie, token,
-      domain: Application.fetch_env!(:flirtual, :root_origin).host,
-      sign: true,
-      max_age: @max_age,
-      same_site: "Lax"
-    )
-  end
-
-  defp maybe_write_remember_me_cookie(conn, _token, _params) do
-    conn
   end
 
   def delete(%Plug.Conn{} = conn, _params) do
@@ -205,7 +201,6 @@ defmodule FlirtualWeb.SessionController do
     |> clear_session()
     |> configure_session(drop: true)
     |> delete_resp_cookie("session")
-    |> delete_resp_cookie(@remember_me_cookie)
   end
 
   defp renew_session(conn) do
@@ -215,7 +210,7 @@ defmodule FlirtualWeb.SessionController do
   end
 
   def fetch_current_session(conn, _) do
-    with {token, conn} when not is_nil(token) <- ensure_session_token(conn),
+    with token when not is_nil(token) <- get_session(conn, :token),
          %Session{} = session <- Session.get(token: token),
          {:ok, session} <- Session.maybe_update_activity(session),
          %User{} = user <- session.user do
@@ -231,20 +226,6 @@ defmodule FlirtualWeb.SessionController do
         conn
         |> assign(:session, nil)
         |> assign(:user, nil)
-    end
-  end
-
-  defp ensure_session_token(conn) do
-    if token = get_session(conn, :token) do
-      {token, conn}
-    else
-      conn = fetch_cookies(conn, signed: [@remember_me_cookie])
-
-      if token = conn.cookies[@remember_me_cookie] do
-        {token, put_session(conn, :token, token)}
-      else
-        {nil, conn}
-      end
     end
   end
 end

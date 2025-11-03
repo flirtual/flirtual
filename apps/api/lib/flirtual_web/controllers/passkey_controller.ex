@@ -147,18 +147,19 @@ defmodule FlirtualWeb.PasskeyController do
            ),
          login_user <- User.get(user_id),
          %User{banned_at: nil} <- login_user do
-      {session, conn} = SessionController.create(conn, login_user, false, device_id)
+      {session, conn} =
+        SessionController.create(conn, login_user, method: :passkey, device_id: device_id)
 
       conn
       |> put_status(:ok)
       |> json(session)
     else
       %User{} = user ->
-        Login.log_login_attempt(conn, user.id, nil, device_id)
+        Login.log_login_attempt(conn, user.id, nil, method: :passkey, device_id: device_id)
         {:error, {:unauthorized, :account_banned}}
 
       _ ->
-        Login.log_login_attempt(conn, nil, nil, device_id)
+        Login.log_login_attempt(conn, nil, nil, method: :passkey, device_id: device_id)
         {:error, {:unauthorized, :passkey_login_failed}}
     end
   end

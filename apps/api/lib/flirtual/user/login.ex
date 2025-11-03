@@ -13,6 +13,7 @@ defmodule Flirtual.User.Login do
     belongs_to(:session, Session)
 
     field(:status, :string)
+    field(:method, :string)
     field(:ip_address, EctoNetwork.INET)
     field(:ip_region, :string)
     field(:device_id, :string)
@@ -27,6 +28,7 @@ defmodule Flirtual.User.Login do
       :user_id,
       :session_id,
       :status,
+      :method,
       :ip_address,
       :ip_region,
       :device_id,
@@ -45,10 +47,14 @@ defmodule Flirtual.User.Login do
     Repo.get(Login, login_id)
   end
 
-  def log_login_attempt(conn, user_id, session_id, device_id, opts \\ []) do
+  def log_login_attempt(conn, user_id, session_id, opts \\ []) do
     ip_address = get_conn_ip(conn)
     ip_region = get_conn_region(conn)
     platform = get_conn_platform(conn)
+
+    method = Keyword.get(opts, :method)
+    method = if method, do: Atom.to_string(method), else: nil
+    device_id = Keyword.get(opts, :device_id)
 
     status =
       cond do
@@ -63,6 +69,7 @@ defmodule Flirtual.User.Login do
                user_id: user_id,
                session_id: session_id,
                status: status,
+               method: method,
                ip_address: ip_address,
                ip_region: ip_region,
                device_id: device_id,

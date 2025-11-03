@@ -27,7 +27,6 @@ export interface VerificationResponse {
 export interface VerifyOptions {
 	loginId: string;
 	code: string;
-	rememberMe?: boolean;
 }
 
 export interface ConfirmResetPasswordOptions {

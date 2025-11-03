@@ -62,7 +62,11 @@ defmodule Flirtual.User.Verification do
     with {:ok, _} <-
            ExRated.check_rate("send_verification:#{user.id}", @twelve_hours, 10),
          {:ok, login} <-
-           Login.log_login_attempt(conn, user.id, nil, device_id, needs_verification: true),
+           Login.log_login_attempt(conn, user.id, nil,
+             method: :password,
+             device_id: device_id,
+             needs_verification: true
+           ),
          {:ok, verification} <- create(login.id),
          {:ok, _} <- User.Email.deliver(user, :verification_code, verification.code) do
       login.id

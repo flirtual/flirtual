@@ -23,7 +23,7 @@ defmodule FlirtualWeb.UsersController do
 
   def create(conn, params) do
     with {:ok, user} <- Users.create(params),
-         {_, conn} = SessionController.create(conn, user) do
+         {_, conn} = SessionController.create(conn, user, method: :password) do
       conn
       |> put_status(:created)
       |> json(Policy.transform(conn, user))

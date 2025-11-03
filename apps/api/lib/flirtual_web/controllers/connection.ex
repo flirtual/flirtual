@@ -83,7 +83,12 @@ defmodule FlirtualWeb.ConnectionController do
     |> halt()
   end
 
-  defp grant_error(conn, redirect_type, message) do
+  defp grant_error(conn, redirect_type, message, type \\ nil, connection \\ nil) do
+    if type do
+      user_id = if connection && connection.user, do: connection.user.id, else: nil
+      Flirtual.User.Login.log_login_attempt(conn, user_id, nil, method: type)
+    end
+
     conn
     |> delete_session(:next)
     |> put_resp_header("access-control-expose-headers", "location")
@@ -166,21 +171,25 @@ defmodule FlirtualWeb.ConnectionController do
 
         {nil, %Connection{user: %User{banned_at: nil} = login_user}} ->
           next = get_session(conn, :next)
-          {_, conn} = SessionController.create(conn, login_user)
+          {_, conn} = SessionController.create(conn, login_user, method: type)
           grant_next(conn, redirect_type, next)
 
-        {nil, %Connection{user: %User{}}} ->
+        {nil, %Connection{user: %User{}} = connection} ->
           grant_error(
             conn,
             redirect_type,
-            :account_banned
+            :account_banned,
+            type,
+            connection
           )
 
         {nil, nil} ->
           grant_error(
             conn,
             redirect_type,
-            :connection_account_not_found
+            :connection_account_not_found,
+            type,
+            nil
           )
       end
     else
@@ -198,17 +207,17 @@ defmodule FlirtualWeb.ConnectionController do
         grant_error(conn, redirect_type, :authorize_not_supported)
 
       {:error, :invalid_grant} ->
-        grant_error(conn, redirect_type, :invalid_grant)
+        grant_error(conn, redirect_type, :invalid_grant, type)
 
       {:error, :upstream} ->
-        grant_error(conn, redirect_type, :upstream_error)
+        grant_error(conn, redirect_type, :upstream_error, type)
 
       {:error, {status, message}} when is_atom(status) and is_binary(message) ->
-        grant_error(conn, redirect_type, message)
+        grant_error(conn, redirect_type, message, type)
 
       reason ->
         log(:error, [:grant], reason: reason)
-        grant_error(conn, redirect_type, :internal_server_error)
+        grant_error(conn, redirect_type, :internal_server_error, type)
     end
   end
 end
