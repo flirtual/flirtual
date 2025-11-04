@@ -287,7 +287,8 @@ defmodule Flirtual.Users do
            {:ok, user} <- User.update_status(user),
            {:ok, _} <-
              ObanWorkers.update_user(user.id, [:chargebee, :elasticsearch, :listmonk, :talkjs]),
-           {:ok, _} <- User.Email.deliver(user, :email_changed) do
+           {:ok, _} <- User.Email.deliver(user, :email_changed),
+           :ok <- Flag.check_new_email_domain(user.id, user.email) do
         user
       else
         {:error, reason} -> Repo.rollback(reason)

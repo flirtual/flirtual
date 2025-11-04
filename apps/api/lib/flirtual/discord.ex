@@ -658,6 +658,39 @@ defmodule Flirtual.Discord do
     })
   end
 
+  def deliver_webhook(:flagged_domain, user: %User{} = user, domain: domain) do
+    webhook(:moderation_flags, %{
+      embeds: [
+        %{
+          author: webhook_author(user),
+          title: "New email domain",
+          description: domain,
+          color: @default_color,
+          timestamp: DateTime.utc_now() |> DateTime.to_iso8601()
+        }
+      ],
+      components: [
+        %{
+          type: 1,
+          components: [
+            %{
+              type: 2,
+              label: "View profile",
+              style: 5,
+              url: User.url(user) |> URI.to_string()
+            },
+            %{
+              type: 2,
+              label: "Check domain",
+              style: 5,
+              url: "https://verifymail.io/domain/#{domain}"
+            }
+          ]
+        }
+      ]
+    })
+  end
+
   def deliver_webhook(:flagged_duplicate,
         user: %User{} = user,
         duplicates: duplicates,

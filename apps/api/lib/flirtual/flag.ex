@@ -251,6 +251,26 @@ defmodule Flirtual.Flag do
     :ok
   end
 
+  def check_new_email_domain(_, nil), do: :ok
+
+  def check_new_email_domain(user_id, email) do
+    domain = email |> String.split("@") |> List.last()
+
+    existing_domain? =
+      User
+      |> where([user], user.id != ^user_id)
+      |> where([user], not is_nil(user.email_confirmed_at))
+      |> where([user], ilike(user.email, ^"%@#{domain}"))
+      |> Repo.exists?()
+
+    if not existing_domain? do
+      user = Users.get(user_id)
+      Discord.deliver_webhook(:flagged_domain, user: user, domain: domain)
+    end
+
+    :ok
+  end
+
   def check_openai_moderation(_, nil), do: :ok
 
   def check_openai_moderation(user_id, text) do
