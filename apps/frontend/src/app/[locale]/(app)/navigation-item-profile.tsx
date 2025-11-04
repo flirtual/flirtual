@@ -1,5 +1,6 @@
 import {
 	Download,
+	FlagTriangleRight,
 	LineChart,
 	Search,
 	Settings,
@@ -159,6 +160,10 @@ export const NavigationItemProfile: FC = () => {
 									<ProfileNavigationItem href={urls.moderation.search}>
 										<Search className="size-6 shrink-0" />
 										<span className="whitespace-nowrap">{t("search")}</span>
+									</ProfileNavigationItem>
+									<ProfileNavigationItem href={urls.moderation.flags}>
+										<FlagTriangleRight className="size-6 shrink-0" />
+										<span className="whitespace-nowrap">{t("flags")}</span>
 									</ProfileNavigationItem>
 								</>
 							)}

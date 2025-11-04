@@ -684,6 +684,15 @@ defmodule Flirtual.Discord do
               label: "Check domain",
               style: 5,
               url: "https://verifymail.io/domain/#{domain}"
+            },
+            %{
+              type: 2,
+              label: "Add flag",
+              style: 5,
+              url:
+                Application.fetch_env!(:flirtual, :frontend_origin)
+                |> URI.merge("/flags")
+                |> URI.to_string()
             }
           ]
         }

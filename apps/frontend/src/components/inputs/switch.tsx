@@ -1,5 +1,6 @@
 import { m } from "motion/react";
 import { useTranslation } from "react-i18next";
+import { twMerge } from "tailwind-merge";
 
 export type SwitchValue = boolean | null;
 
@@ -8,18 +9,22 @@ export interface InputSwitchProps {
 	onChange: React.Dispatch<boolean>;
 	yes?: string;
 	no?: string;
+	className?: string;
 }
 
 export const InputSwitch: React.FC<InputSwitchProps> = (props) => {
-	const { yes, no, value, onChange } = props;
+	const { yes, no, value, onChange, className } = props;
 	const { t } = useTranslation();
 
 	const ariaChecked = value === null ? "mixed" : value;
 
 	return (
 		<div
+			className={twMerge(
+				"group focusable-within relative isolate grid size-fit h-11 shrink-0 grow-0 cursor-pointer grid-cols-2 items-center overflow-hidden rounded-xl bg-white-30 shadow-brand-1 vision:bg-white-30/70 dark:bg-black-60",
+				className
+			)}
 			aria-checked={ariaChecked}
-			className="group focusable-within relative isolate grid size-fit h-11 shrink-0 grow-0 cursor-pointer grid-cols-2 items-center overflow-hidden rounded-xl bg-white-30 shadow-brand-1 vision:bg-white-30/70 dark:bg-black-60"
 			data-checked={ariaChecked}
 			role="checkbox"
 			tabIndex={0}

@@ -330,6 +330,7 @@
 	"get_app": "アプリを入手",
 	"reports": "報告",
 	"search": "検索",
+	"flags": "旗",
 	"stats": "統計",
 	"hide": "隠す",
 	"yes": "はい",
@@ -345,7 +346,7 @@
 	"errors": {
 		"internal_server_error": "申し訳ありませんが、何か問題が発生しました！後でもう一度お試しください。",
 		"cant_be_blank": "空白にすることはできません。",
-		"has_already_been_taken": "他のユーザーによってすでに使用されています。",
+		"has_already_been_taken": "すでに取られています。",
 		"is_invalid": "無効な入力です。",
 		"must_be_accepted": "必須です。",
 		"has_invalid_format": "無効な形式です。",

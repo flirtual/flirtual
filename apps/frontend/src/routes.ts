@@ -93,6 +93,7 @@ export default [
 					page("stats", "(app)/(authenticated)/(admin)/stats"),
 				]),
 				layout("(app)/(authenticated)/(moderator)", [
+					page("flags", "(app)/(authenticated)/(moderator)/flags"),
 					page("reports", "(app)/(authenticated)/(moderator)/reports"),
 					page("search", "(app)/(authenticated)/(moderator)/search"),
 				]),

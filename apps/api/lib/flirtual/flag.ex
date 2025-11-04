@@ -7,6 +7,7 @@ defmodule Flirtual.Flag do
   alias Flirtual.{Connection, Discord, Disposable, Flag, Hash, Repo, User, Users}
   alias Flirtual.User.Profile
 
+  @derive {Jason.Encoder, only: [:id, :type, :flag, :updated_at]}
   schema "flags" do
     field(:type, :string)
     field(:flag, :string)
@@ -18,13 +19,78 @@ defmodule Flirtual.Flag do
     flag
     |> cast(attrs, [:type, :flag])
     |> validate_required([:type, :flag])
-    |> unique_constraint([:type, :flag])
+    |> unique_constraint(:flag, name: :flags_type_flag_index)
   end
 
   def get(flag, type) when is_binary(flag) and is_binary(type) do
     Flag
     |> where(flag: ^flag, type: ^type)
     |> Repo.one()
+  end
+
+  def search(params \\ %{}) do
+    type = Map.get(params, "type")
+    search = Map.get(params, "search", "")
+    sort = Map.get(params, "sort", "updated_at")
+    order = Map.get(params, "order", "desc")
+    page = Map.get(params, "page", "1") |> String.to_integer()
+    limit = Map.get(params, "limit", "15") |> String.to_integer()
+
+    query =
+      Flag
+      |> then(fn query ->
+        if type && type != "" do
+          where(query, [f], f.type == ^type)
+        else
+          query
+        end
+      end)
+      |> then(fn query ->
+        if search && search != "" do
+          where(query, [f], ilike(f.flag, ^"%#{search}%"))
+        else
+          query
+        end
+      end)
+      |> then(fn query ->
+        case {sort, order} do
+          {"flag", "asc"} -> order_by(query, [f], asc: f.flag)
+          {"flag", "desc"} -> order_by(query, [f], desc: f.flag)
+          {"updated_at", "asc"} -> order_by(query, [f], asc: f.updated_at)
+          {"updated_at", "desc"} -> order_by(query, [f], desc: f.updated_at)
+          _ -> order_by(query, [f], desc: f.updated_at)
+        end
+      end)
+
+    offset = (page - 1) * limit
+
+    entries =
+      query
+      |> limit(^limit)
+      |> offset(^offset)
+      |> Repo.all()
+
+    {:ok,
+     %{
+       entries: entries,
+       metadata: %{
+         page: page,
+         limit: limit
+       }
+     }}
+  end
+
+  def create(attrs) do
+    %Flag{}
+    |> changeset(attrs)
+    |> Repo.insert()
+  end
+
+  def delete(flag_id) when is_binary(flag_id) do
+    case Repo.get(Flag, flag_id) do
+      nil -> {:error, :not_found}
+      flag -> Repo.delete(flag)
+    end
   end
 
   def validate_allowed_email(changeset, field) do

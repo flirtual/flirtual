@@ -179,6 +179,7 @@ export const urls = {
 	},
 
 	moderation: {
+		flags: "/flags",
 		search: "/search",
 		reports: (options: { userId?: string; targetId?: string } = {}) =>
 			url("/reports", options)

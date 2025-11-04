@@ -330,6 +330,7 @@
 	"get_app": "Get app",
 	"reports": "Reports",
 	"search": "Search",
+	"flags": "Flags",
 	"stats": "Stats",
 	"hide": "Hide",
 	"yes": "Yes",
@@ -345,7 +346,7 @@
 	"errors": {
 		"internal_server_error": "Sorry, something went wrong! Please try again later.",
 		"cant_be_blank": "Cannot be empty.",
-		"has_already_been_taken": "Already taken by another user.",
+		"has_already_been_taken": "Already taken.",
 		"is_invalid": "Invalid input.",
 		"must_be_accepted": "Required.",
 		"has_invalid_format": "Invalid format.",

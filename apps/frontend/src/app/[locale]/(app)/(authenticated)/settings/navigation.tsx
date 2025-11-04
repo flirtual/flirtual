@@ -4,6 +4,7 @@ import {
 	Brain,
 	Contact,
 	EyeOff,
+	FlagTriangleRight,
 	Flame,
 	KeyRound,
 	LineChart,
@@ -69,6 +70,9 @@ export const SettingsNavigation: FC = () => {
 									</NavigationLink>
 									<NavigationLink href={urls.moderation.search} Icon={Search}>
 										{t("search")}
+									</NavigationLink>
+									<NavigationLink href={urls.moderation.flags} Icon={FlagTriangleRight}>
+										{t("flags")}
 									</NavigationLink>
 								</>
 							)}
