@@ -12,7 +12,7 @@ defmodule FlirtualWeb.UsersController do
   import Flirtual.Utilities
   import Flirtual.Attribute, only: [validate_attribute: 3]
 
-  alias Flirtual.{ObanWorkers, Policy, Repo, User, Users}
+  alias Flirtual.{IpAddress, ObanWorkers, Policy, Repo, User, Users}
   alias Flirtual.User.Session
   alias Flirtual.User.Profile.Block
   alias FlirtualWeb.SessionController
@@ -228,7 +228,8 @@ defmodule FlirtualWeb.UsersController do
     ip = get_conn_ip(conn)
     user = Users.get_by_email(email)
 
-    with {:ok, _} <- ExRated.check_rate("reset_password:#{ip}", @one_hour, 10),
+    with {:ok, _} <-
+           ExRated.check_rate("reset_password:#{IpAddress.normalize(ip)}", @one_hour, 10),
          {:ok, _} <- Users.reset_password(user) do
       conn |> json(%{success: true})
     else

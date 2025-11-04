@@ -5,7 +5,7 @@ defmodule Flirtual.User.Login do
   import Ecto.Query
   import FlirtualWeb.Utilities
 
-  alias Flirtual.{Hash, Repo}
+  alias Flirtual.{Hash, IpAddress, Repo}
   alias Flirtual.User.{Login, Session}
 
   schema "logins" do
@@ -77,7 +77,7 @@ defmodule Flirtual.User.Login do
              }),
            :ok <-
              if(status == "successful" and not is_nil(user_id),
-               do: Hash.check_hash(user_id, "IP address", ip_address),
+               do: Hash.check_hash(user_id, "IP address", IpAddress.normalize(ip_address)),
                else: :ok
              ),
            :ok <-
