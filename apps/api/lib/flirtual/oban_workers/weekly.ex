@@ -66,6 +66,10 @@ defmodule Flirtual.ObanWorkers.Weekly do
       end)
     end
 
+    if Enum.member?(enabled_cron_tasks, :update_disposable) do
+      Flirtual.Disposable.update()
+    end
+
     :ok
   end
 end

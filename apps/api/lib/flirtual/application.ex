@@ -50,7 +50,9 @@ defmodule Flirtual.Application do
         # {Flirtual.Worker, arg}
         Flirtual.AttributeOrderWorker,
         # Start VRChat session manager
-        Flirtual.VRChatSession
+        Flirtual.VRChatSession,
+        # Start disposable email ETS
+        Flirtual.Disposable
       ]
       |> List.flatten()
       |> Enum.reject(&is_nil/1)

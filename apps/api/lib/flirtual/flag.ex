@@ -4,7 +4,7 @@ defmodule Flirtual.Flag do
   import Ecto.Changeset
   import Ecto.Query
 
-  alias Flirtual.{Connection, Discord, Flag, Hash, Repo, User, Users}
+  alias Flirtual.{Connection, Discord, Disposable, Flag, Hash, Repo, User, Users}
   alias Flirtual.User.Profile
 
   schema "flags" do
@@ -29,12 +29,16 @@ defmodule Flirtual.Flag do
 
   def validate_allowed_email(changeset, field) do
     domain = get_field(changeset, field) |> String.split("@") |> List.last()
-    flag = get(domain, "email")
 
-    if is_nil(flag) do
-      changeset
-    else
-      add_error(changeset, field, "email_domain_blocked")
+    cond do
+      Disposable.disposable?(domain) ->
+        add_error(changeset, field, "email_domain_blocked")
+
+      not is_nil(get(domain, "email")) ->
+        add_error(changeset, field, "email_domain_blocked")
+
+      true ->
+        changeset
     end
   end
 
