@@ -8,7 +8,7 @@ defmodule FlirtualWeb.SessionController do
   import FlirtualWeb.Utilities
   import Flirtual.Utilities.Changeset
 
-  alias Flirtual.{IpAddress, Policy, User, Users}
+  alias Flirtual.{IpAddress, Policy, Repo, User, Users}
   alias Flirtual.User.{Login, Session, Verification}
 
   action_fallback(FlirtualWeb.FallbackController)
@@ -112,12 +112,19 @@ defmodule FlirtualWeb.SessionController do
   end
 
   def verify(conn, %{"login_id" => login_id, "code" => code}) do
-    with %Login{user_id: user_id, device_id: device_id} <- Login.get(login_id),
+    with %Login{user_id: user_id} <- Login.get(login_id),
          %User{} = user <- Users.get(user_id),
          :ok <- Verification.verify(login_id, code) do
-      {session, conn} = create(conn, user, method: :password, device_id: device_id)
+      session = Session.create(user)
 
       Login.verify(login_id, session.id)
+
+      conn =
+        conn
+        |> fetch_session()
+        |> renew_session()
+        |> assign(:session, session)
+        |> put_session(:token, session.token)
 
       conn
       |> put_status(:created)
