@@ -74,7 +74,7 @@ defmodule Flirtual.Hash do
   def check_hash(_, _, ""), do: :ok
 
   def check_hash(user_id, type, text) when is_binary(type) and is_binary(text) do
-    hashed = hash(type, text)
+    hashed = hash(type, if(type == "IP address", do: IpAddress.normalize(text), else: text))
 
     {self, duplicates} =
       get(type, hashed) |> Enum.split_with(fn %{user_id: id} -> id == user_id end)
