@@ -34,7 +34,7 @@ function useAaguid() {
 
 export const PasswordPasskeyForm: React.FC = () => {
 	const session = useSession();
-	const { native } = useDevice();
+	const { native, android } = useDevice();
 	const toasts = useToast();
 	const { t } = useTranslation();
 
@@ -111,7 +111,7 @@ export const PasswordPasskeyForm: React.FC = () => {
 				<span className="text-black-50 vision:text-white-50 dark:text-white-50">
 					{t("broad_upper_ox_drum")}
 				</span>
-				{native && (
+				{native && android && (
 					<span className="text-black-50 dark:text-white-50">
 						⚠️
 						{" "}

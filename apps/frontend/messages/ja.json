@@ -803,7 +803,7 @@
 	"confirm_new_password": "新しいパスワードを確認",
 	"passkeys": "パスキー",
 	"broad_upper_ox_drum": "パスキーを使用すると、パスワードの代わりに指紋、顔、デバイスの PIN、またはセキュリティ キーを使用して、便利かつ安全にログインできます。パスキーは信頼できるデバイスにのみ追加してください。",
-	"large_simple_penguin_learn": "パスキーはモバイルではまだサポートされていません。",
+	"large_simple_penguin_learn": "Androidではパスキーはまだサポートされていません。",
 	"add_passkey": "パスキーを追加",
 	"unsupported_device": "(サポートされていないデバイス)",
 	"unsupported_browser": "(サポートされていないブラウザ)",
