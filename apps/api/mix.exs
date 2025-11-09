@@ -82,6 +82,7 @@ defmodule Flirtual.MixProject do
       {:fast_html, "~> 2.0"},
       {:ex_check, "~> 0.16.0", only: [:dev], runtime: false},
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
+      {:tidewave, "~> 0.5", only: :dev},
       {:kadabra, "~> 0.6"},
       {:vrchat, "~> 1.20.0"}
     ]

@@ -28,6 +28,7 @@ export default defineConfig((config) => {
 
 	const {
 		VITE_ORIGIN: origin,
+		VITE_API_URL: apiUrl,
 		VITE_SENTRY_ORGANIZATION: sentryOrganization,
 		VITE_SENTRY_PROJECT_ID: sentryProjectId,
 		SENTRY_AUTH_TOKEN: sentryAuthToken
@@ -81,7 +82,15 @@ export default defineConfig((config) => {
 					"ios/**",
 					"visionos/**"
 				]
-			}
+			},
+			...(mode === "development" && {
+				proxy: {
+					"/tidewave": {
+						target: new URL(apiUrl).origin,
+						secure: false
+					}
+				}
+			})
 		},
 		plugins: [
 			hush([
