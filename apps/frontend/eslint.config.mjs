@@ -6,6 +6,9 @@ export default configure({
 	settings: {
 		react: {
 			version: 19
+		},
+		tailwindcss: {
+			config: "tailwind.config.js"
 		}
 	},
 	ignores: [

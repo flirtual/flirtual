@@ -1,0 +1,45 @@
+{
+	"languages": {
+		"JavaScript": {
+			"formatter": [],
+			"code_actions_on_format": {
+				"source.fixAll.eslint": true
+			}
+		},
+		"TypeScript": {
+			"formatter": [],
+			"code_actions_on_format": {
+				"source.fixAll.eslint": true
+			}
+		},
+		"TSX": {
+			"formatter": [],
+			"code_actions_on_format": {
+				"source.fixAll.eslint": true
+			}
+		}
+	},
+	"lsp": {
+		"elixir-ls": {
+			"settings": {
+				"projectDir": "apps/api"
+			}
+		}
+	},
+	"context_servers": {
+		"tidewave-mcp": {
+			"source": "custom",
+			"enabled": true,
+			"command": "mcp-proxy",
+			"args": ["https://localhost:4001/tidewave/mcp"],
+			"env": {}
+		},
+		"postgres-context-server": {
+			"source": "extension",
+			"enabled": true,
+			"settings": {
+				"database_url": "postgresql://postgres:postgres@localhost:5432/flirtual_dev"
+			}
+		}
+	}
+}
