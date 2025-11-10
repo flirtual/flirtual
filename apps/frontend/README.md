@@ -33,3 +33,27 @@ Windows Subsystem for Linux (WSL) doesn't work nicely with Android Studio, so yo
 * In PowerShell, run `` adb logcat --pid=$(adb shell pidof -s zone.homie.flirtual.pwa)`` to view the client logs.
 
 * Now you can open the app on your device.
+
+### mkcert
+
+You can use [mkcert](https://github.com/FiloSottile/mkcert) to generate a certificate with a trusted local CA.
+
+```sh
+mkcert -install
+mkcert -cert-file certificates/localhost.pem \
+       -key-file certificates/localhost-key.pem \
+       $(hostname) localhost 127.0.0.1 ::1
+cat certificates/localhost.pem certificates/localhost-key.pem > certificates/_cert.pem
+```
+
+To trust the CA on iOS/iPadOS/visionOS:
+
+1. `open "$(mkcert -CAROOT)"`
+2. AirDrop or otherwise transfer rootCA.pem to your device.
+3. In the Settings app on your device, navigate to Profile Downloaded > Install.
+
+To trust the CA on Android:
+
+1. `open "$(mkcert -CAROOT)"`
+2. Transfer rootCA.pem to your device.
+3. In the Settings app on your device, navigate to Security & Privacy > More security & privacy > Encryption & credentials > Install a certificate > CA certificate, and select the file.

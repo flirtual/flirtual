@@ -1,7 +1,7 @@
 # api.flirtu.al
 
 ## Contribution
-### Initial installation and setup.
+### Initial installation and setup
 * Install [Docker](https://docs.docker.com/get-docker/) and the [asdf version manager](https://asdf-vm.com/guide/getting-started.html).
 
   * ``asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git``
@@ -9,9 +9,9 @@
   * ``asdf plugin add erlang https://github.com/asdf-vm/asdf-erlang.git``
 
   * Use ``asdf install`` to install Elixir and Erlang.
-	
+
 * Configure the required environment variables.
-  
+
 	* Copy `.env.example` to `.env.local`.
 
   * Fill in all the required values.
@@ -30,7 +30,7 @@
 
 * Now you can visit [`127.0.0.1:4001`](https://127.0.0.1:4001) from your browser.
 
-### Stripe/subscription testing.
+### Stripe/subscription testing
 
 * Install the [Stripe CLI](https://stripe.com/docs/stripe-cli#install) and login using ``stripe login``.
 
@@ -40,7 +40,7 @@
 
 * ``stripe listen --forward-to localhost:4001/v1/stripe``
 
-### Database snapshots.
+### Database snapshots
 
 When doing long-running operations, like dumping the database, it is recommended to fork the database on [fly.io, our database provider](https://fly.io), then run the operation on the forked database to avoid downtime.
 
@@ -61,7 +61,7 @@ pg_dump -Fc -h localhost -p 5433 -U postgres \
 ```
 The dump file will be saved in the current directory.
 
-#### Restoring a database snapshot to a local database.
+#### Restoring a database snapshot to a local database
 
 ```sh
 pg_restore -Fc -C --no-privileges --no-owner \
@@ -79,7 +79,13 @@ alter database "flirtual" rename to "flirtual_dev";
 EOF
 ```
 
-### Common issues.
+### mkcert
 
-#### Plug.SSL.configure/1 encountered error: the file .../priv/cert/selfsigned_key.pem required by SSL's :keyfile either does not exist, or the application does not have permission to access it.
-This error is caused by the absence of the self-signed certificate. To fix this, run `mix phx.gen.cert` to generate the certificate.
+As an alternative to `mix phx.gen.cert`, you can use [mkcert](https://github.com/FiloSottile/mkcert) to generate a certificate with a trusted local CA.
+
+```sh
+mkcert -install
+mkcert -cert-file priv/cert/selfsigned.pem \
+       -key-file priv/cert/selfsigned_key.pem \
+       $(hostname) localhost 127.0.0.1 ::1
+```
