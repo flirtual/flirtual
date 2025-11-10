@@ -51,6 +51,7 @@ To trust the CA on iOS/iPadOS/visionOS:
 1. `open "$(mkcert -CAROOT)"`
 2. AirDrop or otherwise transfer rootCA.pem to your device.
 3. In the Settings app on your device, navigate to Profile Downloaded > Install.
+4. Navigate to General > About > Certificate Trust Settings, and select the mkcert certificate under Enable Full Trust for Root certificates.
 
 To trust the CA on Android:
 
