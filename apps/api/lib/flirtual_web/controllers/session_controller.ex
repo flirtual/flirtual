@@ -8,7 +8,7 @@ defmodule FlirtualWeb.SessionController do
   import FlirtualWeb.Utilities
   import Flirtual.Utilities.Changeset
 
-  alias Flirtual.{IpAddress, Policy, Repo, User, Users}
+  alias Flirtual.{IpAddress, Policy, User, Users}
   alias Flirtual.User.{Login, Session, Verification}
 
   action_fallback(FlirtualWeb.FallbackController)
@@ -36,6 +36,7 @@ defmodule FlirtualWeb.SessionController do
                  params
                )
                |> validate_required([:login, :password])
+               |> update_change(:login, &String.trim/1)
                |> apply_action(:update),
              %User{banned_at: nil} = user <-
                Users.get_by_login_and_password(
@@ -70,7 +71,8 @@ defmodule FlirtualWeb.SessionController do
             {:error, {:unauthorized, :account_banned}}
 
           leak_count when is_integer(leak_count) ->
-            user = Users.get_by_username(params["login"]) || Users.get_by_email(params["login"])
+            login = String.trim(params["login"] || "")
+            user = Users.get_by_username(login) || Users.get_by_email(login)
 
             Login.log_login_attempt(conn, user && user.id, nil,
               method: :password,
@@ -80,7 +82,8 @@ defmodule FlirtualWeb.SessionController do
             {:error, {:unauthorized, :leaked_login_password}}
 
           _ ->
-            user = Users.get_by_username(params["login"]) || Users.get_by_email(params["login"])
+            login = String.trim(params["login"] || "")
+            user = Users.get_by_username(login) || Users.get_by_email(login)
 
             Login.log_login_attempt(conn, user && user.id, nil,
               method: :password,
@@ -91,7 +94,8 @@ defmodule FlirtualWeb.SessionController do
         end
 
       {:error, _} ->
-        user = Users.get_by_email(params["login"]) || Users.get_by_username(params["login"])
+        login = String.trim(params["login"] || "")
+        user = Users.get_by_email(login) || Users.get_by_username(login)
         if user, do: Login.untrust(user.id)
         {:error, {:unauthorized, :login_rate_limit}}
     end
