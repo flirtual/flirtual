@@ -2,7 +2,7 @@ defmodule FlirtualWeb.Session do
   def init(opts), do: opts
 
   def call(conn, _opts) do
-    same_site = if Mix.env() == :dev, do: "None", else: "Lax"
+    same_site = Application.fetch_env!(:flirtual, FlirtualWeb.Session)[:same_site]
 
     runtime_opts =
       [store: :cookie, same_site: same_site, max_age: 3_888_000, key: "session"]

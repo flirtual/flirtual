@@ -135,6 +135,9 @@ config :flirtual, FlirtualWeb.Endpoint,
     port: origin.port
   ]
 
+config :flirtual, FlirtualWeb.Session,
+  same_site: if(config_env() == :dev, do: "None", else: "Lax")
+
 if config_env() == :prod do
   app_name =
     System.get_env("FLY_APP_NAME") ||
