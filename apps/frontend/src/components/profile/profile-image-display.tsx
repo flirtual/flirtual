@@ -327,7 +327,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 								{images.map((image) => (
 									<button
 										key={image.id}
-										className="group grow px-1 py-6 pt-[max(var(--safe-area-inset-top,0rem),1.5rem)]"
+										className="group grow px-1 py-6 pt-[max(calc(var(--safe-area-inset-top,0rem)+0.25rem),1.5rem)]"
 										type="button"
 										onClick={() => set(0, image.id)}
 									>

@@ -12,8 +12,8 @@ importers:
         specifier: ^7.0.1
         version: 7.0.1(@capacitor/core@7.4.3)
       '@capacitor-community/safe-area':
-        specifier: 7.0.0-alpha.1
-        version: 7.0.0-alpha.1(@capacitor/core@7.4.3)
+        specifier: 7.0.0-beta.3
+        version: 7.0.0-beta.3(@capacitor/core@7.4.3)
       '@capacitor/android':
         specifier: ^7.4.3
         version: 7.4.3(@capacitor/core@7.4.3)
@@ -632,9 +632,8 @@ packages:
     peerDependencies:
       '@capacitor/core': '>=7.0.0'
 
-  '@capacitor-community/safe-area@7.0.0-alpha.1':
-    resolution: {integrity: sha512-N6ktkRiofqrt+N/vQzh4jcWY8IzJ4TVw1tKAPssvbddWFTyZzXzSdBeX/l/nracJF0PZqmLdA7JYTBfnOxXQYw==}
-    deprecated: 'The Chromium team promised the bug has been fixed as of Chromium M140. Now it''s up to the Capacitor team to correctly implement this and provide some documentation around it. See the following issue for more info: https://github.com/ionic-team/capacitor/issues/8121'
+  '@capacitor-community/safe-area@7.0.0-beta.3':
+    resolution: {integrity: sha512-LIUm9TiuX0xR/kB2n9isibm+cF9XljCVDdXaN4JdvpC6fEZuZ/XVLaVMEyIXfDXmojjG2mPBpmSbbEck6Us5xA==}
     peerDependencies:
       '@capacitor/core': '>=7.0.0'
 
@@ -7661,7 +7660,7 @@ snapshots:
     dependencies:
       '@capacitor/core': 7.4.3
 
-  '@capacitor-community/safe-area@7.0.0-alpha.1(@capacitor/core@7.4.3)':
+  '@capacitor-community/safe-area@7.0.0-beta.3(@capacitor/core@7.4.3)':
     dependencies:
       '@capacitor/core': 7.4.3
 

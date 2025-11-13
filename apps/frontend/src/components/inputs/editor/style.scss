@@ -106,7 +106,7 @@
     @apply relative;
 
     .ql-editor {
-      @apply rounded-xl h-96 overflow-y-auto bg-white-40 vision:bg-transparent text-black-80 dark:text-white-20 dark:bg-black-60 p-4 font-nunito outline-none text-base;
+      @apply rounded-xl h-96 max-h-[calc(100vh-14.75rem-var(--safe-area-inset-top,0px)-var(--safe-area-inset-bottom,0px))] min-h-48 overflow-y-auto bg-white-40 vision:bg-transparent text-black-80 dark:text-white-20 dark:bg-black-60 p-4 font-nunito outline-none text-base;
 
       tab-size: 4;
       -moz-tab-size: 4;

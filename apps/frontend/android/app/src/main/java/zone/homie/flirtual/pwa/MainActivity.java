@@ -11,6 +11,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.activity.SystemBarStyle;
 import androidx.core.splashscreen.SplashScreen;
 import com.getcapacitor.BridgeActivity;
+import com.getcapacitor.community.safearea.SafeAreaPlugin;
 
 public class MainActivity extends BridgeActivity {
 
@@ -23,8 +24,8 @@ public class MainActivity extends BridgeActivity {
         }
         SplashScreen splashScreen = SplashScreen.installSplashScreen(this);
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this, SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT),
-                SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT));
+        EdgeToEdge.enable(this);
+        SafeAreaPlugin.setSystemBarsStyle(this, SafeAreaPlugin.SystemBarsStyle.DARK);
         createNotificationChannel();
     }
 

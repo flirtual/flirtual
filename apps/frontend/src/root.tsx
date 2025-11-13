@@ -1,4 +1,3 @@
-import { SafeArea } from "@capacitor-community/safe-area";
 import montserratNormal from "@fontsource-variable/montserrat/files/montserrat-latin-wght-normal.woff2?url";
 import nunitoNormal from "@fontsource-variable/nunito/files/nunito-latin-wght-normal.woff2?url";
 import { LazyMotion } from "motion/react";
@@ -36,6 +35,7 @@ import {
 	siteOrigin
 } from "./const";
 import { device } from "./hooks/use-device";
+import { useKeyboardVisible } from "./hooks/use-keyboard-visible";
 import { logOnce } from "./hooks/use-log";
 import { usePreferences } from "./hooks/use-preferences";
 import { useTheme } from "./hooks/use-theme";
@@ -196,6 +196,8 @@ export function Layout({ children }: PropsWithChildren) {
 
 	const [fontSize] = usePreferences<number>("font_size", 16);
 
+	const keyboardVisible = useKeyboardVisible();
+
 	const { t } = useTranslation();
 
 	if (client)
@@ -208,19 +210,13 @@ export function Layout({ children }: PropsWithChildren) {
 	return (
 		<html
 			suppressHydrationWarning
-			ref={() => {
-				SafeArea.enable({
-					config: {
-						customColorsForSystemBars: true,
-						statusBarColor: "#00000000",
-						navigationBarColor: "#00000000",
-						offset: 10
-					}
-				});
-			}}
 			style={{
+				"--safe-area-inset-top": "env(safe-area-inset-top, 0px)",
+				"--safe-area-inset-left": "env(safe-area-inset-left, 0px)",
+				"--safe-area-inset-right": "env(safe-area-inset-right, 0px)",
+				"--safe-area-inset-bottom": keyboardVisible ? "0px" : "env(safe-area-inset-bottom, 0px)",
 				fontSize: `${fontSize || 16}px`
-			}}
+			} as React.CSSProperties}
 			lang={locale}
 		>
 			<head>

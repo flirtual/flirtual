@@ -22,10 +22,5 @@ export default {
 	ios: {
 		scheme: "Flirtual"
 	},
-	appendUserAgent: "Flirtual-Native",
-	plugins: {
-		Keyboard: {
-			resizeOnFullScreen: true
-		}
-	}
+	appendUserAgent: "Flirtual-Native"
 } satisfies CapacitorConfig;

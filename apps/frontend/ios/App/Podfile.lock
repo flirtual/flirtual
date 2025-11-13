@@ -7,7 +7,7 @@ PODS:
     - Capacitor
   - CapacitorCommunityInAppReview (7.0.1):
     - Capacitor
-  - CapacitorCommunitySafeArea (7.0.0-alpha.1):
+  - CapacitorCommunitySafeArea (7.0.0-beta.3):
     - Capacitor
   - CapacitorCordova (7.4.3)
   - CapacitorDevice (7.0.2):
@@ -44,7 +44,7 @@ DEPENDENCIES:
   - "CapacitorApp (from `../../node_modules/.pnpm/@capacitor+app@7.1.0_@capacitor+core@7.4.3/node_modules/@capacitor/app`)"
   - "CapacitorClipboard (from `../../node_modules/.pnpm/@capacitor+clipboard@7.0.2_@capacitor+core@7.4.3/node_modules/@capacitor/clipboard`)"
   - "CapacitorCommunityInAppReview (from `../../node_modules/.pnpm/@capacitor-community+in-app-review@7.0.1_@capacitor+core@7.4.3/node_modules/@capacitor-community/in-app-review`)"
-  - "CapacitorCommunitySafeArea (from `../../node_modules/.pnpm/@capacitor-community+safe-area@7.0.0-alpha.1_@capacitor+core@7.4.3/node_modules/@capacitor-community/safe-area`)"
+  - "CapacitorCommunitySafeArea (from `../../node_modules/.pnpm/@capacitor-community+safe-area@7.0.0-beta.3_@capacitor+core@7.4.3/node_modules/@capacitor-community/safe-area`)"
   - "CapacitorCordova (from `../../node_modules/.pnpm/@capacitor+ios@7.4.3_@capacitor+core@7.4.3/node_modules/@capacitor/ios`)"
   - "CapacitorDevice (from `../../node_modules/.pnpm/@capacitor+device@7.0.2_@capacitor+core@7.4.3/node_modules/@capacitor/device`)"
   - "CapacitorDialog (from `../../node_modules/.pnpm/@capacitor+dialog@7.0.2_@capacitor+core@7.4.3/node_modules/@capacitor/dialog`)"
@@ -74,7 +74,7 @@ EXTERNAL SOURCES:
   CapacitorCommunityInAppReview:
     :path: "../../node_modules/.pnpm/@capacitor-community+in-app-review@7.0.1_@capacitor+core@7.4.3/node_modules/@capacitor-community/in-app-review"
   CapacitorCommunitySafeArea:
-    :path: "../../node_modules/.pnpm/@capacitor-community+safe-area@7.0.0-alpha.1_@capacitor+core@7.4.3/node_modules/@capacitor-community/safe-area"
+    :path: "../../node_modules/.pnpm/@capacitor-community+safe-area@7.0.0-beta.3_@capacitor+core@7.4.3/node_modules/@capacitor-community/safe-area"
   CapacitorCordova:
     :path: "../../node_modules/.pnpm/@capacitor+ios@7.4.3_@capacitor+core@7.4.3/node_modules/@capacitor/ios"
   CapacitorDevice:
@@ -107,7 +107,7 @@ SPEC CHECKSUMS:
   CapacitorApp: 26587c2ce485d88ddb39adb21cac64f8e481afe3
   CapacitorClipboard: 7e227702976d4435a5a40df54f65e154d0dfc1f3
   CapacitorCommunityInAppReview: a8f26c4e48a8ccc9df0acf1c7bca39844c325572
-  CapacitorCommunitySafeArea: 3f049619072ab5d0da2529bcb05b358ff6c13dc1
+  CapacitorCommunitySafeArea: 0594cf23a9685bd52a0a8495f30f2e2716a37b14
   CapacitorCordova: 435121e81a2df4d0034f0fb11fcefab5104cfdb5
   CapacitorDevice: 81ae78d5d1942707caad79276badd458bf6ec603
   CapacitorDialog: 5bf72a94b747fb339df6f64ef60812e5e4630ad2
@@ -124,6 +124,6 @@ SPEC CHECKSUMS:
   RevenueCat: 4be87c151dff652d2a5b7af46073db11f01ad93f
   RevenuecatPurchasesCapacitor: 85b6f9412913f2688169e0baebf42b773be5d119
 
-PODFILE CHECKSUM: 69327437176cb6795586798241401b6c5f1fc986
+PODFILE CHECKSUM: 5d78c21e1988534b0a4710dfc1fd421a0d7d6f19
 
 COCOAPODS: 1.16.2
