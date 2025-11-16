@@ -39,11 +39,11 @@ export const PlanButtonLink: FC<
 				>
 					<DialogTitle className="sr-only">{t("purchase")}</DialogTitle>
 					<DialogContent className="max-w-[min(489px,95svw)] overflow-hidden desktop:w-fit" closable={false}>
-						<div className="flex items-center justify-center rounded-[1.25rem] bg-white-10">
+						<div className="flex items-center justify-center rounded-2.5xl bg-white-10">
 							<Loading light className="absolute min-h-0 p-6 text-black-90" />
 							{/* eslint-disable-next-line react-dom/no-missing-iframe-sandbox */}
 							<iframe
-								className="z-10 max-h-[90vh] max-w-full rounded-[1.25rem] bg-transparent"
+								className="z-10 max-h-[90vh] max-w-full rounded-2.5xl bg-transparent"
 								height={630}
 								src={purchaseUrl}
 								width={479}

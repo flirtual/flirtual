@@ -2,7 +2,7 @@
   @apply flex flex-col rounded-xl bg-white-40 vision:bg-white-40/70 text-black-80 shadow-brand-1 dark:bg-black-60 dark:text-white-20;
 
   .ql-toolbar {
-    @apply shrink-0 flex m-1 p-2 gap-2 rounded-[0.625rem] bg-brand-gradient text-white-20 flex-wrap shadow-brand-1;
+    @apply shrink-0 flex m-1 p-2 gap-2 rounded-0.5xl bg-brand-gradient text-white-20 flex-wrap shadow-brand-1;
     -ms-overflow-style: none;
     scrollbar-width: none;
 

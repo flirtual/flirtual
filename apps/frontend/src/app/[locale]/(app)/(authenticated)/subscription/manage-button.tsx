@@ -44,7 +44,7 @@ export const ManageButton: FC = () => {
 					<DialogContent className="w-fit overflow-hidden p-0">
 						{/* eslint-disable-next-line react-dom/no-missing-iframe-sandbox */}
 						<iframe
-							className="max-h-[90vh] max-w-full rounded-[1.25rem] bg-[#f4f5f9]"
+							className="max-h-[90vh] max-w-full rounded-2.5xl bg-[#f4f5f9]"
 							height={561}
 							src={manageUrl}
 							width={479}

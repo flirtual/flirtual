@@ -59,7 +59,9 @@ module.exports = {
 				"brand-gradient-green": `linear-gradient(to right, var(--friend-theme-1), var(--friend-theme-2))`
 			},
 			borderRadius: {
-				half: "50%"
+				half: "50%",
+				"0.5xl": "0.625rem",
+				"2.5xl": "1.25rem"
 			},
 			boxShadow: {
 				"brand-1":
@@ -205,6 +207,54 @@ module.exports = {
 					"@apply [&_*]:select-text select-text": {}
 				}
 			});
+		}),
+		plugin(({ matchUtilities, theme }) => {
+			const superellipseFactor = 1.5;
+
+			const directions = {
+				"": ["border-start-start-radius", "border-start-end-radius", "border-end-start-radius", "border-end-end-radius"],
+				t: ["border-start-start-radius", "border-start-end-radius"],
+				b: ["border-end-start-radius", "border-end-end-radius"],
+				l: ["border-start-start-radius", "border-end-start-radius"],
+				r: ["border-start-end-radius", "border-end-end-radius"],
+				s: ["border-start-start-radius", "border-end-start-radius"],
+				e: ["border-start-end-radius", "border-end-end-radius"],
+				tl: ["border-start-start-radius"],
+				tr: ["border-start-end-radius"],
+				bl: ["border-end-start-radius"],
+				br: ["border-end-end-radius"],
+				ss: ["border-start-start-radius"],
+				se: ["border-start-end-radius"],
+				es: ["border-end-start-radius"],
+				ee: ["border-end-end-radius"]
+			};
+
+			for (const [direction, properties] of Object.entries(directions)) {
+				const utilityName = direction ? `rounded-${direction}` : "rounded";
+
+				matchUtilities(
+					{
+						[utilityName]: (value) => {
+							const isFull = value === "9999px";
+							const sizeValue = isFull ? value : `calc(${value} * ${superellipseFactor})`;
+							const cornerShape = isFull ? "superellipse(1)" : `superellipse(${superellipseFactor})`;
+
+							return {
+								"@supports (corner-shape: superellipse(1))": {
+									...properties.reduce((accumulator, property) => {
+										accumulator[property] = `${sizeValue} !important`;
+										return accumulator;
+									}, {}),
+									"corner-shape": cornerShape
+								}
+							};
+						}
+					},
+					{
+						values: theme("borderRadius")
+					}
+				);
+			}
 		})
 	]
 };

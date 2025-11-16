@@ -8,7 +8,7 @@ export function ProfileSkeleton({ className }: { className?: string }) {
 				className
 			)}
 		>
-			<div className="flex w-full flex-col overflow-hidden bg-transparent text-black-70 dark:text-white-20 desktop:rounded-[1.25rem] desktop:bg-white-20 desktop:shadow-brand-inset dark:desktop:bg-black-70">
+			<div className="flex w-full flex-col overflow-hidden bg-transparent text-black-70 dark:text-white-20 desktop:rounded-2.5xl desktop:bg-white-20 desktop:shadow-brand-inset dark:desktop:bg-black-70">
 				{/* Profile picture */}
 				<div className="relative w-full shrink-0 overflow-hidden">
 					<div className="relative flex aspect-square w-full shrink-0 bg-black-70">

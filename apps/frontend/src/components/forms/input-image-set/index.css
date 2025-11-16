@@ -1,5 +1,5 @@
 .uppy-Root {
-  font-family: var(--font-nunito) !important;
+  font-family: 'Nunito Variable', sans-serif !important;
 }
 
 .uppy-Dashboard-inner,
@@ -52,7 +52,7 @@
   color: rgb(235 235 235) !important;
   border-radius: 12px !important;
   box-shadow: rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 3px 1px -2px, rgba(0, 0, 0, 0.2) 0px 1px 5px 0px !important;
-  font-family: var(--font-montserrat) !important;
+  font-family: 'Montserrat Variable', sans-serif !important;
   font-weight: 600 !important;
 }
 
@@ -130,10 +130,17 @@
 
 .uppy-DragDrop-label {
   color: rgb(245, 245, 245) !important;
-  font-family: var(--font-nunito) !important;
+  font-family: 'Nunito Variable', sans-serif !important;
 }
 
 .uppy-DragDrop-browse {
   color: rgb(245, 245, 245) !important;
   border-bottom: 1px solid rgb(245, 245, 245) !important;
+}
+
+@supports (corner-shape: superellipse(1)) {
+  .uppy-StatusBar-actionBtn {
+    border-radius: calc(0.75rem * 1.5) !important;
+    corner-shape: superellipse(1.5);
+  }
 }

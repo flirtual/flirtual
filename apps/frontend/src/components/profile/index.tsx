@@ -112,7 +112,7 @@ export const Profile = withSuspense(({
 				className
 			)}
 		>
-			<div className="flex w-full flex-col overflow-hidden bg-transparent text-black-70 dark:text-white-20 desktop:rounded-[1.25rem] desktop:bg-white-20 desktop:shadow-brand-inset dark:desktop:bg-black-70">
+			<div className="flex w-full flex-col overflow-hidden bg-transparent text-black-70 dark:text-white-20 desktop:rounded-2.5xl desktop:bg-white-20 desktop:shadow-brand-inset dark:desktop:bg-black-70">
 				<ProfileImageDisplay
 					current={id !== "next-profile"}
 					user={user}

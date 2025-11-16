@@ -22,7 +22,7 @@ export const ArrangeableImagePreview: React.FC<
 		<UserImage
 			{...props}
 			className={twMerge(
-				"size-full rounded-md object-cover shadow-brand-1",
+				"size-full rounded-xl object-cover shadow-brand-1",
 				className
 			)}
 			alt=""
