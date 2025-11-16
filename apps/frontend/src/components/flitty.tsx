@@ -324,7 +324,8 @@ export default function Flitty() {
 					{activeSpeech}
 					<div className="mt-1 border-t border-t-[#a4a195] p-1 pt-2 text-center">
 						<button
-							className="cursor-pointer rounded-[3px] border border-[#a4a195] px-2"
+							className="cursor-pointer border border-[#a4a195] px-2"
+							style={{ borderRadius: "3px" }}
 							type="button"
 							onClick={(event) => {
 								event.stopPropagation();
@@ -346,9 +347,10 @@ export default function Flitty() {
 
 			<div
 				style={{
-					backgroundImage: `url(${Image2})`
+					backgroundImage: `url(${Image2})`,
+					borderRadius: "4px"
 				}}
-				className="absolute bottom-0 right-0 size-[21px] cursor-pointer rounded-[4px]"
+				className="absolute bottom-0 right-0 size-[21px] cursor-pointer"
 				data-close="true"
 				onClick={(event) => {
 					event.stopPropagation();
