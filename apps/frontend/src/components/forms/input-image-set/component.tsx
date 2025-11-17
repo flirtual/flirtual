@@ -271,11 +271,6 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 													theme={theme}
 													uppy={uppy}
 												/>
-												{android && native && (
-													<span className="text-sm opacity-75">
-														{t("patchy_flaky_giraffe_dream")}
-													</span>
-												)}
 											</DialogBody>
 										</DialogContent>
 									</Dialog>
