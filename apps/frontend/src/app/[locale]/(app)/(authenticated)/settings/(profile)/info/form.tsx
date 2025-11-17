@@ -18,9 +18,8 @@ import {
 	InputCountrySelect,
 	InputLanguageAutocomplete
 } from "~/components/inputs/specialized";
-import { endOfYear } from "~/date";
+import { endOfYear, toLocalDateString } from "~/date";
 import {
-
 	useAttributes,
 	useAttributeTranslation
 } from "~/hooks/use-attribute";
@@ -68,7 +67,7 @@ export const InfoForm: FC = () => {
 			onSubmit={async ({ bornAt, country, ...values }) => {
 				const [newUser, newProfile] = await Promise.all([
 					User.update(user.id, {
-						bornAt: bornAt.toISOString()
+						bornAt: toLocalDateString(bornAt)
 					}),
 					Profile.update(user.id, {
 						required: ["new"],

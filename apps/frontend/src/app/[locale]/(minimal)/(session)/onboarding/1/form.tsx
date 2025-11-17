@@ -14,9 +14,8 @@ import {
 } from "~/components/inputs";
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
 import { InputCountrySelect } from "~/components/inputs/specialized";
-import { endOfYear } from "~/date";
+import { endOfYear, toLocalDateString } from "~/date";
 import {
-
 	useAttributes,
 	useAttributeTranslation
 } from "~/hooks/use-attribute";
@@ -63,7 +62,7 @@ export const Onboarding1Form: FC = () => {
 			onSubmit={async ({ bornAt, ...values }) => {
 				await Promise.all([
 					User.update(user.id, {
-						bornAt: bornAt.toISOString(),
+						bornAt: toLocalDateString(bornAt),
 						required: ["bornAt"]
 					}),
 					Profile.update(user.id, {
