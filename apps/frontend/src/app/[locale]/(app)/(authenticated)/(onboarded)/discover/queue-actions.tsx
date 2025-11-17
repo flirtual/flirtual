@@ -95,7 +95,6 @@ export const QueueActions: FC<{
 				if (event.key === "j") void like();
 				if (event.key === "k") void like("friend");
 				if (event.key === "l") void pass();
-				event.preventDefault();
 			},
 			[like, pass, undo, previous, tooFast]
 		)
