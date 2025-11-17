@@ -234,7 +234,21 @@ defmodule Flirtual.Conversation do
     alias Flirtual.Policy
     alias Flirtual.User.Session
 
-    def authorize(:read, _, _), do: false
+    def authorize(
+          action,
+          %Plug.Conn{
+            assigns: %{
+              session: %Session{
+                user_id: user_id
+              }
+            }
+          },
+          %Conversation{participants: participants}
+        )
+        when action in [:read, :send_message] do
+      user_id in participants
+    end
+
     def authorize(_, _, _), do: false
 
     def transform(

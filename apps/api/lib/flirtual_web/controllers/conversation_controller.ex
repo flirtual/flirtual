@@ -11,12 +11,16 @@ defmodule FlirtualWeb.ConversationController do
 
   def get(conn, %{"conversation_id" => conversation_id}) do
     with {:ok, conversation} <- Conversation.get(conversation_id),
+         :ok <- Policy.can(conn, :read, conversation),
          conversation <- Policy.transform(conn, conversation) do
       conn
       |> json_with_etag(conversation)
     else
       {:error, :not_found} ->
         {:error, {:not_found, :conversation_not_found}}
+
+      {:error, :unauthorized} ->
+        {:error, {:forbidden, :not_conversation_participant}}
 
       reason ->
         reason
@@ -42,6 +46,32 @@ defmodule FlirtualWeb.ConversationController do
   def list_messages(conn, %{"user_id" => user_id}) do
     conversation_id = Talkjs.new_conversation_id(conn.assigns[:session].user.id, user_id)
     conn |> json_with_etag(Talkjs.list_messages(conversation_id))
+  end
+
+  def send_message(conn, %{"conversation_id" => conversation_id, "text" => text}) do
+    with user <- conn.assigns[:session].user,
+         {:ok, conversation} <- Conversation.get(conversation_id),
+         :ok <- Policy.can(conn, :send_message, conversation),
+         conversation <- Policy.transform(conn, conversation),
+         {:ok, result} <-
+           Talkjs.create_messages(conversation_id, [
+             %{
+               "text" => text,
+               "sender" => ShortUUID.decode!(user.id),
+               "type" => "UserMessage"
+             }
+           ]) do
+      conn |> json(result)
+    else
+      {:error, :not_found} ->
+        {:error, {:not_found, :conversation_not_found}}
+
+      {:error, :unauthorized} ->
+        {:error, {:forbidden, :not_conversation_participant}}
+
+      reason ->
+        reason
+    end
   end
 
   def mark_read(conn, _) do

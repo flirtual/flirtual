@@ -10,6 +10,9 @@ const frontendScheme = frontendUrl.protocol.slice(0, -1);
 const appId = process.env.VITE_APP_BUNDLE_ID;
 invariant(appId, "VITE_APP_BUNDLE_ID is not set");
 
+const apiUrl = process.env.VITE_API_URL;
+invariant(apiUrl, "VITE_API_URL is not set");
+
 export default {
 	appId,
 	appName: "Flirtual",
@@ -22,5 +25,10 @@ export default {
 	ios: {
 		scheme: "Flirtual"
 	},
-	appendUserAgent: "Flirtual-Native"
+	appendUserAgent: "Flirtual-Native",
+	plugins: {
+		Flirtual: {
+			apiUrl
+		}
+	}
 } satisfies CapacitorConfig;
