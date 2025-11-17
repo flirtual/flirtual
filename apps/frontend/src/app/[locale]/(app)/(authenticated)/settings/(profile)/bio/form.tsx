@@ -149,7 +149,6 @@ export const BiographyForm: FC = () => {
 					<FormField name="prompts">
 						{(field) => (
 							<InputPrompts
-								newBadge
 								labelId={field.labelProps.htmlFor}
 								{...field.props}
 							/>

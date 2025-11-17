@@ -13,7 +13,7 @@ import {
 	ProfileMonopolyList,
 	ProfileRelationshipList
 } from "~/api/user/profile";
-import { NewBadge, PremiumBadge } from "~/components/badge";
+import { PremiumBadge } from "~/components/badge";
 import { Button } from "~/components/button";
 import {
 	AlertDialog,
@@ -203,10 +203,7 @@ export const MatchmakingForm: FC = () => {
 					<FormField name="relationships">
 						{(field) => (
 							<>
-								<InputLabel className="items-center">
-									{t("im_open_to")}
-									<NewBadge />
-								</InputLabel>
+								<InputLabel className="items-center">{t("im_open_to")}</InputLabel>
 								<InputCheckboxList
 									{...field.props}
 									items={ProfileRelationshipList.map((item) => ({

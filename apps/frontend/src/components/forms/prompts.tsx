@@ -11,7 +11,6 @@ import { SortableGrid, SortableItem } from "~/components/forms/sortable";
 import { InputLabel, InputSelect, InputTextArea } from "~/components/inputs";
 import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
 
-import { NewBadge } from "../badge";
 import {
 	DialogBody,
 	DialogDescription,
@@ -107,7 +106,6 @@ interface InputPromptsProps {
 	value: Array<ProfilePrompt>;
 	onChange: Dispatch<Array<ProfilePrompt>>;
 	labelId: string;
-	newBadge?: boolean;
 }
 
 export const InputPrompts: FC<InputPromptsProps> = (props) => {
@@ -132,12 +130,9 @@ export const InputPrompts: FC<InputPromptsProps> = (props) => {
 						<Plus className="size-5" />
 					</Button>
 				)}
-				className="items-center"
 				htmlFor={props.labelId}
 			>
 				{t("prompts")}
-				{" "}
-				{props.newBadge && <NewBadge />}
 			</InputLabel>
 			<SortableGrid
 				values={props.value.map(({ promptId }) => promptId)}

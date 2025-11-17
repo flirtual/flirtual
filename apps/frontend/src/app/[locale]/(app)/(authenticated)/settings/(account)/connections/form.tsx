@@ -6,7 +6,6 @@ import { withSuspense } from "with-suspense";
 
 import type { Session } from "~/api/auth";
 import { Profile } from "~/api/user/profile";
-import { NewBadge } from "~/components/badge";
 import { Form, FormButton } from "~/components/forms";
 import { AddConnectionButton } from "~/components/forms/add-connection-button";
 import { FaceTimeIcon, VRChatIcon } from "~/components/icons";
@@ -145,7 +144,6 @@ export const ConnectionsForm: FC = () => {
 									<span className="flex text-xl">
 										{t("tough_plain_squirrel_persist")}
 									</span>
-									<NewBadge />
 								</div>
 								<span className="text-black-50 vision:text-white-50 dark:text-white-50">
 									{t("proof_knotty_cockroach_commend")}
