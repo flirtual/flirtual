@@ -75,7 +75,7 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 
 	const session = useOptionalSession();
 	const [theme] = useTheme();
-	const { android, native } = useDevice();
+	const { native } = useDevice();
 	const [uppy, setUppy] = useState<Uppy<UppyfileMeta, UppyfileData> | null>(null);
 	const [uppyVisible, setUppyVisible] = useState(false);
 	const [dragging, setDragging] = useState(false);
