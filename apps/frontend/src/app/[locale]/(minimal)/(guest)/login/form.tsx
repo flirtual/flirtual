@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 /* eslint-disable no-throw-literal */
 import { MoveRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
