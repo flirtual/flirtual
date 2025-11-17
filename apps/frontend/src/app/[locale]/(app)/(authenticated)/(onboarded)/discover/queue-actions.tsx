@@ -88,16 +88,16 @@ export const QueueActions: FC<{
 		"keydown",
 		useCallback(
 			(event) => {
-				if (document.querySelector("[data-radix-focus-guard]") || event.ctrlKey || event.metaKey)
+				if (document.querySelector("[data-radix-focus-guard]") || event.ctrlKey || event.metaKey || tooFast)
 					return;
 
-				if (event.key === "h") void undo();
+				if (event.key === "h" && previous) void undo();
 				if (event.key === "j") void like();
 				if (event.key === "k") void like("friend");
 				if (event.key === "l") void pass();
 				event.preventDefault();
 			},
-			[like, pass, undo]
+			[like, pass, undo, previous, tooFast]
 		)
 	);
 
