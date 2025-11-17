@@ -40,6 +40,7 @@ import { emptyArray } from "~/utilities";
 
 import { useDevice } from "./use-device";
 import { warnOnce } from "./use-log";
+import { usePreferences } from "./use-preferences";
 import { useOptionalSession } from "./use-session";
 import { useTheme } from "./use-theme";
 
@@ -177,6 +178,7 @@ export const ConversationChatbox: React.FC<
 	const { native, vision } = useDevice();
 	const { t } = useTranslation();
 	const [locale] = useLocale();
+	const [fontSize] = usePreferences<number>("font_size", 16);
 
 	const chatbox = useMemo(() => {
 		if (!session) return null;
@@ -188,6 +190,7 @@ export const ConversationChatbox: React.FC<
 					: theme,
 				custom: {
 					language: locale,
+					fontSize: `${fontSize}px`,
 					matchMessage: t("talkjs_match_message"),
 					inputPlaceholder: t("talkjs_input_placeholder")
 				}
@@ -195,7 +198,7 @@ export const ConversationChatbox: React.FC<
 			messageField: { spellcheck: true, enterSendsMessage: !native },
 			customEmojis
 		} as ChatboxOptions);
-	}, [session, theme, vision, locale, t, native]);
+	}, [session, theme, vision, locale, fontSize, t, native]);
 
 	const conversation = useMemo(() => {
 		if (!session || !conversationId) return null;
