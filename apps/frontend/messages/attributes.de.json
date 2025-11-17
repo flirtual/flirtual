@@ -2693,50 +2693,61 @@
 		},
 		"GJitRtRoYWT6DfVasptK7N": {
 			"definition": "Ein Mann, dessen Geschlechtsidentität mit seinem Geschlecht bei der Geburt zugewiesen entspricht.",
-			"name": "Cis Man"
+			"name": "Cis Man",
+			"definitionLink": "https://nonbinary.wiki/wiki/Cisgender_men"
 		},
 		"wJdnfUvuvACEWRSV4KBdzS": {
 			"name": "Hijra",
-			"definition": "Ein drittes Geschlecht in südasiatischen Kulturen."
+			"definition": "Ein drittes Geschlecht in südasiatischen Kulturen.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Hijra"
 		},
 		"rGFyY9WbvBBJSUAUpY5iUE": {
 			"name": "Transfeminin",
-			"definition": "Jemand mit einer weiblichen Geschlechtsidentität, der männlich bei der Geburt zugewiesen wurde."
+			"definition": "Jemand mit einer weiblichen Geschlechtsidentität, der männlich bei der Geburt zugewiesen wurde.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Transfeminine"
 		},
 		"JL8AaDCJMVApbEuAfwG86Y": {
 			"name": "Zwei Geist",
-			"definition": "Ein drittes Geschlecht in in indigenen nordamerikanischen Kulturen."
+			"definition": "Ein drittes Geschlecht in in indigenen nordamerikanischen Kulturen.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Two-spirit"
 		},
 		"w3t9h2SyNhr2rBWouXim8c": {
 			"name": "Intersex",
-			"definition": "Jemand geboren mit Geschlechtsmerkmalen, die nicht den typischen Definitionen von männlichen oder weiblichen Körpern entsprechen."
+			"definition": "Jemand geboren mit Geschlechtsmerkmalen, die nicht den typischen Definitionen von männlichen oder weiblichen Körpern entsprechen.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Intersex"
 		},
 		"tyrdBY4Rbfitznr65hpRPR": {
 			"name": "Transgener",
-			"definition": "Jemand, dessen Geschlechtsidentität nicht mit ihrem bei der Geburt zugewiesenen Geschlecht übereinstimmt."
+			"definition": "Jemand, dessen Geschlechtsidentität nicht mit ihrem bei der Geburt zugewiesenen Geschlecht übereinstimmt.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Transgender"
 		},
 		"XTVsHQMWXiJGEc5xCf7RUb": {
 			"name": "Transen Mann",
-			"definition": "Ein Mann, der bei der Geburt weiblich wurde."
+			"definition": "Ein Mann, der bei der Geburt weiblich wurde.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Transgender_men"
 		},
 		"mosDhQUt8JGumiup4yQWbZ": {
 			"name": "Sie/sie"
 		},
 		"aKEzfuPY6TaMkmnugQWLUd": {
 			"name": "Geschlechtskrankheiten",
-			"definition": "Jemand, dessen Geschlecht im Laufe der Zeit variiert."
+			"definition": "Jemand, dessen Geschlecht im Laufe der Zeit variiert.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Genderfluid"
 		},
 		"zMta3qtGyqW4hFdcDFUHik": {
 			"name": "Geschlechtsverkehr",
-			"definition": "Jemand, dessen Geschlecht außerhalb des traditionellen Geschlechts binär fällt."
+			"definition": "Jemand, dessen Geschlecht außerhalb des traditionellen Geschlechts binär fällt.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Genderqueer"
 		},
 		"fAPzVgy7VyGPgAPhkwSkSU": {
 			"name": "Geschlechtsverkehr",
-			"definition": "Jemand, der die gesellschaftlichen Geschlechterererwartungen oder Normen nicht abonniert."
+			"definition": "Jemand, der die gesellschaftlichen Geschlechterererwartungen oder Normen nicht abonniert.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Gender_nonconformity"
 		},
 		"PFEmTKdmxAoPuxttYPwFZb": {
 			"definition": "Jemand, der mit mehreren oder allen Geschlechtern identifiziert.",
-			"name": "Pangender"
+			"name": "Pangender",
+			"definitionLink": "https://nonbinary.wiki/wiki/Pangender"
 		},
 		"tpkW7r8PZ2RUuYGUSYi82N": {
 			"plural": "Frauen",
@@ -2748,34 +2759,41 @@
 		},
 		"879KtanHc548synGhcNE7J": {
 			"definition": "Jemand, der sich nicht mit einem Geschlecht identifiziert oder ein Geschlecht erlebt.",
-			"name": "Agender"
+			"name": "Agender",
+			"definitionLink": "https://nonbinary.wiki/wiki/Agender"
 		},
 		"RdMpwqWGydDgk9X2u32BBW": {
 			"definition": "Jemand mit einer Kombination aus maskulinen und femininen Eigenschaften.",
-			"name": "Androgyn"
+			"name": "Androgyn",
+			"definitionLink": "https://nonbinary.wiki/wiki/Androgyny"
 		},
 		"YBkoUyfKJd6jJGwbekY3HN": {
 			"name": "Großer Gott",
-			"definition": "Jemand, der zwei Geschlechteridentitäten erlebt."
+			"definition": "Jemand, der zwei Geschlechteridentitäten erlebt.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Bigender"
 		},
 		"CHkgoEoKzTSeVaLVByviBZ": {
 			"name": "Transmasculin",
-			"definition": "Jemand mit einer männlichen Geschlechtsidentität, die bei der Geburt weiblich wurde."
+			"definition": "Jemand mit einer männlichen Geschlechtsidentität, die bei der Geburt weiblich wurde.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Transmasculine"
 		},
 		"hv43aTXJZjMHfXRXvTcYiH": {
 			"name": "Er/Him"
 		},
 		"2ETbJJJ3shADLphvncUwSL": {
 			"name": "Cis Frau",
-			"definition": "Eine Frau, deren Geschlechtsidentität mit ihrem bei der Geburt zugewiesenen Geschlecht übereinstimmt."
+			"definition": "Eine Frau, deren Geschlechtsidentität mit ihrem bei der Geburt zugewiesenen Geschlecht übereinstimmt.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Cisgender_women"
 		},
 		"QwXvxjisosKeTP97ouczoZ": {
 			"name": "Nichtbinär",
-			"definition": "Jemand, dessen Geschlecht außerhalb des Geschlechts binär fällt."
+			"definition": "Jemand, dessen Geschlecht außerhalb des Geschlechts binär fällt.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Nonbinary"
 		},
 		"HWte4cB6TUzzXZoJeuxJuf": {
 			"name": "Transen Frau",
-			"definition": "Eine Frau, die männlich bei der Geburt zugewiesen wurde."
+			"definition": "Eine Frau, die männlich bei der Geburt zugewiesen wurde.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Transgender_women"
 		},
 		"jAL62ePbibxaG4FPu7S8LG": {
 			"name": "Sonstige"
@@ -2937,19 +2955,23 @@
 	"sexuality": {
 		"UxY3zSKrwKpts6cfZ3wYjM": {
 			"definition": "Jemand zog andere des gleichen Geschlechts an.",
-			"name": "Homosexuell"
+			"name": "Homosexuell",
+			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Gay"
 		},
 		"vu2pJzRmKRroA3GPZRsLxM": {
 			"name": "Heteroflexibel",
-			"definition": "Jemand, der überwiegend auf das entgegengesetzte Geschlecht angezogen wird, aber manchmal erfährt Attraktion für das gleiche Geschlecht."
+			"definition": "Jemand, der überwiegend auf das entgegengesetzte Geschlecht angezogen wird, aber manchmal erfährt Attraktion für das gleiche Geschlecht.",
+			"definitionLink": "https://www.merriam-webster.com/words-at-play/homoflexible-heteroflexible-meaning-slang-definition"
 		},
 		"rN7DERN6NdNQzNQ99pQUN4": {
 			"name": "Fragen",
-			"definition": "Jemand, der im Prozess der Untersuchung ihrer sexuellen Orientierung ist."
+			"definition": "Jemand, der im Prozess der Untersuchung ihrer sexuellen Orientierung ist.",
+			"definitionLink": "https://en.wikipedia.org/wiki/Questioning_%28sexuality_and_gender%29"
 		},
 		"neMSEFPb9zvFRhoZLUobW9": {
 			"definition": "Jemand, der wenig oder keine sexuelle Attraktion erlebt.",
-			"name": "Asexuell"
+			"name": "Asexuell",
+			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Asexuality"
 		},
 		"4yJadhjWkDN6WSxbDcp33G": {
 			"definition": "Jemand, der ihre sexuelle Orientierung in VR erkundet oder dessen Sexualität sich in VR und persönlich unterscheidet.",
@@ -2957,90 +2979,116 @@
 		},
 		"gkKfqSoBJ7dUHtaKJ5Cfmk": {
 			"definition": "Jemand zog andere Frauen oder weibliche Menschen an.",
-			"name": "Lesben"
+			"name": "Lesben",
+			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Lesbian"
 		},
 		"wPATvG4t9CJhW2goGmBznU": {
 			"name": "Demonstrativ",
-			"definition": "Jemand, der nur sexuelle Attraktion erfährt, nachdem er eine emotionale Verbindung mit jemandem bildet."
+			"definition": "Jemand, der nur sexuelle Attraktion erfährt, nachdem er eine emotionale Verbindung mit jemandem bildet.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Demisexuality_and_Gray-Asexuality"
 		},
 		"t5hhQahW7HQVKnhQX7xRqn": {
 			"name": "Gerade",
-			"definition": "Jemand zog sich zum anderen Geschlecht an."
+			"definition": "Jemand zog sich zum anderen Geschlecht an.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Heterosexuality"
 		},
 		"a29qas632KmMpQ8T6arLxa": {
 			"definition": "Jemand zog mehrere Geschlechter an.",
-			"name": "Bisexuell"
+			"name": "Bisexuell",
+			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Bisexuality"
 		},
 		"NC5wiUcxGavten9E8gw64n": {
 			"definition": "Jemand zog andere an, unabhängig von ihrem Geschlecht.",
-			"name": "Pansexuell"
+			"name": "Pansexuell",
+			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Pansexuality"
 		},
 		"3cWT9ob4r7Zpikkd9kVPEg": {
 			"name": "Quest",
-			"definition": "Jemand mit einer nicht-normativen sexuellen Orientierung."
+			"definition": "Jemand mit einer nicht-normativen sexuellen Orientierung.",
+			"definitionLink": "https://en.wikipedia.org/wiki/Queer"
 		},
 		"ndxSn4BdATmm5droBw6iQG": {
 			"name": "Homoflexibel",
-			"definition": "Jemand, der überwiegend zum gleichen Geschlecht angezogen wird, aber manchmal erfährt Attraktion für das entgegengesetzte Geschlecht."
+			"definition": "Jemand, der überwiegend zum gleichen Geschlecht angezogen wird, aber manchmal erfährt Attraktion für das entgegengesetzte Geschlecht.",
+			"definitionLink": "https://www.merriam-webster.com/words-at-play/homoflexible-heteroflexible-meaning-slang-definition"
 		}
 	},
 	"kink": {
 		"nEDgGpz9eHcomwcbsCaCZP": {
-			"name": "Eigentümer"
+			"name": "Eigentümer",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Owner,for%20the%20pet)."
 		},
 		"cKzdEwXmCY3naeYdHuowJ7": {
-			"name": "Haustier"
+			"name": "Haustier",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=its%20predator%20(you).-,Pet,play%20(puppy%2C%20kitten%2C%20etc.)%2C%20although%20that%20is%20not%20a%20strict%20necessity.,-Primal%20(Prey)"
 		},
 		"pnebwXNPvGr56PEZwSRbHi": {
-			"name": "Slawen"
+			"name": "Slawen",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=a%20sexual%20context.-,Slave,primary%20focus%20in%20life%20and%20they%20rarely%20have%20limits%20for%20them.,-Submissive"
 		},
 		"2D9uSBJtgiRRfgdwXhyvm5": {
-			"name": "Rigger"
+			"name": "Rigger",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Rigger,at%20their%20mercy."
 		},
 		"9civt22SpMr7z4nuPcuL3V": {
-			"name": "Sadist"
+			"name": "Sadist",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Sadist,a%20sexual%20context."
 		},
 		"HEPqnrrPsMqx9nQvDk5rHT": {
-			"name": "Masochist"
+			"name": "Masochist",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Masochist,levels%20of%20pain."
 		},
 		"wZ4AXSmb3hufSDxGVEkoNo": {
-			"name": "Brat Tamer"
+			"name": "Brat Tamer",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Brat%20tamer,the%20first%20place)."
 		},
 		"werFoPERXyXK9J6roSzCXG": {
-			"name": "Ich weiß nicht"
+			"name": "Ich weiß nicht",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Rope%20bunny,their%20partner(s)."
 		},
 		"7WBnwThpTkEHyQHDZTbw47": {
-			"name": "Prediger"
+			"name": "Prediger",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Primal%20(Prey),from%20its%20predator."
 		},
 		"RE2twp4mgYSXjhya266npP": {
-			"name": "Abbau"
+			"name": "Abbau",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Degradee,they%20consider%20degrading."
 		},
 		"rGDn478bBZCDajvQRYAkLf": {
-			"name": "Daddy/Mommy"
+			"name": "Daddy/Mommy",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Daddy/Mommy,littles%20into%20obedience."
 		},
 		"yamRiwkspejx4mnzbtMdxN": {
-			"name": "Junge/Girl"
+			"name": "Junge/Girl",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=they%20consider%20degrading.-,Little,can%20go%20a%20lot%20deeper%20and%20sometimes%20rival%20those%20of%20slaves.,-Masochist"
 		},
 		"dXxUHt5t69rNeg2g7EE3bR": {
-			"name": "Meister/Herrin"
+			"name": "Meister/Herrin",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Master/Mistress,allow%20optimal%20servitude."
 		},
 		"FDiw6WUePpHDckmVG5coKF": {
-			"name": "Experimentalist"
+			"name": "Experimentalist",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Experimentalist,try%20them%20out."
 		},
 		"ANgPHfEKZqZZUspmgfKjdf": {
-			"name": "Ausstellung"
+			"name": "Ausstellung",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Exhibitionist,to%20other%20people."
 		},
 		"Jyy988TnEA8J2FeG5ZSyDh": {
-			"name": "Voyeur"
+			"name": "Voyeur",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Voyeur,of%20other%20people."
 		},
 		"nSPurHtFp8dpHKvW4Ux9Q9": {
-			"name": "Hunter"
+			"name": "Hunter",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Primal%20(Hunter),its%20predator%20(you)."
 		},
 		"sNdx2sNbnG5RmNZDtTVNCg": {
-			"name": "Messing"
+			"name": "Messing",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Brat,change%20this%20behavior."
 		},
 		"9mbQ4hxFEMBL4bHVYomPz3": {
-			"name": "Abbau"
+			"name": "Abbau",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Degrader,they%20consider%20degrading."
 		}
 	},
 	"relationship": {

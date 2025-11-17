@@ -2594,55 +2594,68 @@
 	"gender": {
 		"aKEzfuPY6TaMkmnugQWLUd": {
 			"name": "젠더유체",
-			"definition": "시간이 지남에 따라 성별이 달라지는 사람."
+			"definition": "시간이 지남에 따라 성별이 달라지는 사람.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Genderfluid"
 		},
 		"879KtanHc548synGhcNE7J": {
 			"definition": "어떤 성별과도 동일시하거나 경험하지 않는 사람.",
-			"name": "Agender"
+			"name": "Agender",
+			"definitionLink": "https://nonbinary.wiki/wiki/Agender"
 		},
 		"2ETbJJJ3shADLphvncUwSL": {
 			"definition": "성 정체성이 태어날 때 부여된 성별과 일치하는 여성.",
-			"name": "시스 우먼"
+			"name": "시스 우먼",
+			"definitionLink": "https://nonbinary.wiki/wiki/Cisgender_women"
 		},
 		"GJitRtRoYWT6DfVasptK7N": {
 			"name": "Cis Man",
-			"definition": "성 정체성이 태어날 때 부여된 성별과 일치하는 남성."
+			"definition": "성 정체성이 태어날 때 부여된 성별과 일치하는 남성.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Cisgender_men"
 		},
 		"QwXvxjisosKeTP97ouczoZ": {
 			"name": "비바이너리",
-			"definition": "성별이 성별 이분법에서 벗어난 사람."
+			"definition": "성별이 성별 이분법에서 벗어난 사람.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Nonbinary"
 		},
 		"PFEmTKdmxAoPuxttYPwFZb": {
 			"name": "Pangender",
-			"definition": "여러 성별 또는 모든 성별을 가진 사람."
+			"definition": "여러 성별 또는 모든 성별을 가진 사람.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Pangender"
 		},
 		"tyrdBY4Rbfitznr65hpRPR": {
 			"definition": "성 정체성이 출생 시 부여된 성별과 일치하지 않는 사람.",
-			"name": "트랜스젠더"
+			"name": "트랜스젠더",
+			"definitionLink": "https://nonbinary.wiki/wiki/Transgender"
 		},
 		"HWte4cB6TUzzXZoJeuxJuf": {
 			"definition": "태어날 때 남성을 지정받은 여성.",
-			"name": "트랜스 여성"
+			"name": "트랜스 여성",
+			"definitionLink": "https://nonbinary.wiki/wiki/Transgender_women"
 		},
 		"XTVsHQMWXiJGEc5xCf7RUb": {
 			"definition": "태어날 때 성별이 여성으로 지정된 남자.",
-			"name": "트랜스 맨"
+			"name": "트랜스 맨",
+			"definitionLink": "https://nonbinary.wiki/wiki/Transgender_men"
 		},
 		"CHkgoEoKzTSeVaLVByviBZ": {
 			"name": "트랜스매스큘린",
-			"definition": "태어날 때 여성으로 지정된 남성적 성 정체성을 가진 사람."
+			"definition": "태어날 때 여성으로 지정된 남성적 성 정체성을 가진 사람.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Transmasculine"
 		},
 		"fAPzVgy7VyGPgAPhkwSkSU": {
 			"name": "성별 부적합",
-			"definition": "사회적 성에 대한 기대나 규범을 따르지 않는 사람."
+			"definition": "사회적 성에 대한 기대나 규범을 따르지 않는 사람.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Gender_nonconformity"
 		},
 		"wJdnfUvuvACEWRSV4KBdzS": {
 			"name": "Hijra",
-			"definition": "남아시아 문화권의 제3의 성입니다."
+			"definition": "남아시아 문화권의 제3의 성입니다.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Hijra"
 		},
 		"w3t9h2SyNhr2rBWouXim8c": {
 			"name": "Intersex",
-			"definition": "남성 또는 여성의 신체에 대한 일반적인 정의에 맞지 않는 성적인 특징을 가지고 태어난 사람."
+			"definition": "남성 또는 여성의 신체에 대한 일반적인 정의에 맞지 않는 성적인 특징을 가지고 태어난 사람.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Intersex"
 		},
 		"mosDhQUt8JGumiup4yQWbZ": {
 			"name": "그녀/그녀"
@@ -2652,19 +2665,23 @@
 		},
 		"RdMpwqWGydDgk9X2u32BBW": {
 			"name": "Androgynous",
-			"definition": "남성적인 특성과 여성적인 특성이 결합된 사람."
+			"definition": "남성적인 특성과 여성적인 특성이 결합된 사람.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Androgyny"
 		},
 		"YBkoUyfKJd6jJGwbekY3HN": {
 			"definition": "두 가지 성 정체성을 경험하는 사람.",
-			"name": "Bigender"
+			"name": "Bigender",
+			"definitionLink": "https://nonbinary.wiki/wiki/Bigender"
 		},
 		"rGFyY9WbvBBJSUAUpY5iUE": {
 			"definition": "태어날 때 성별이 남성으로 지정된 여성 성 정체성을 가진 사람.",
-			"name": "트랜스페미니즘"
+			"name": "트랜스페미니즘",
+			"definitionLink": "https://nonbinary.wiki/wiki/Transfeminine"
 		},
 		"JL8AaDCJMVApbEuAfwG86Y": {
 			"name": "두 개의 정신",
-			"definition": "북미 원주민 문화의 제3의 성입니다."
+			"definition": "북미 원주민 문화의 제3의 성입니다.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Two-spirit"
 		},
 		"jAL62ePbibxaG4FPu7S8LG": {
 			"name": "기타"
@@ -2682,7 +2699,8 @@
 		},
 		"zMta3qtGyqW4hFdcDFUHik": {
 			"name": "젠더퀴어",
-			"definition": "성별이 전통적인 성별 이분법에서 벗어난 사람."
+			"definition": "성별이 전통적인 성별 이분법에서 벗어난 사람.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Genderqueer"
 		}
 	},
 	"ban-reason": {
@@ -2818,61 +2836,80 @@
 	},
 	"kink": {
 		"rGDn478bBZCDajvQRYAkLf": {
-			"name": "아빠/엄마"
+			"name": "아빠/엄마",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Daddy/Mommy,littles%20into%20obedience."
 		},
 		"HEPqnrrPsMqx9nQvDk5rHT": {
-			"name": "마조히스트"
+			"name": "마조히스트",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Masochist,levels%20of%20pain."
 		},
 		"ANgPHfEKZqZZUspmgfKjdf": {
-			"name": "전시주의자"
+			"name": "전시주의자",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Exhibitionist,to%20other%20people."
 		},
 		"Jyy988TnEA8J2FeG5ZSyDh": {
-			"name": "Voyeur"
+			"name": "Voyeur",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Voyeur,of%20other%20people."
 		},
 		"nSPurHtFp8dpHKvW4Ux9Q9": {
-			"name": "Hunter"
+			"name": "Hunter",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Primal%20(Hunter),its%20predator%20(you)."
 		},
 		"7WBnwThpTkEHyQHDZTbw47": {
-			"name": "Prey"
+			"name": "Prey",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Primal%20(Prey),from%20its%20predator."
 		},
 		"9mbQ4hxFEMBL4bHVYomPz3": {
-			"name": "Degrader"
+			"name": "Degrader",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Degrader,they%20consider%20degrading."
 		},
 		"wZ4AXSmb3hufSDxGVEkoNo": {
-			"name": "Brat Tamer"
+			"name": "Brat Tamer",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Brat%20tamer,the%20first%20place)."
 		},
 		"sNdx2sNbnG5RmNZDtTVNCg": {
-			"name": "Brat"
+			"name": "Brat",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Brat,change%20this%20behavior."
 		},
 		"nEDgGpz9eHcomwcbsCaCZP": {
-			"name": "소유자"
+			"name": "소유자",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Owner,for%20the%20pet)."
 		},
 		"cKzdEwXmCY3naeYdHuowJ7": {
-			"name": "애완동물"
+			"name": "애완동물",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=its%20predator%20(you).-,Pet,play%20(puppy%2C%20kitten%2C%20etc.)%2C%20although%20that%20is%20not%20a%20strict%20necessity.,-Primal%20(Prey)"
 		},
 		"2D9uSBJtgiRRfgdwXhyvm5": {
-			"name": "Rigger"
+			"name": "Rigger",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Rigger,at%20their%20mercy."
 		},
 		"FDiw6WUePpHDckmVG5coKF": {
-			"name": "실험가"
+			"name": "실험가",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Experimentalist,try%20them%20out."
 		},
 		"yamRiwkspejx4mnzbtMdxN": {
-			"name": "소년/소녀"
+			"name": "소년/소녀",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=they%20consider%20degrading.-,Little,can%20go%20a%20lot%20deeper%20and%20sometimes%20rival%20those%20of%20slaves.,-Masochist"
 		},
 		"dXxUHt5t69rNeg2g7EE3bR": {
-			"name": "마스터/미스트리스"
+			"name": "마스터/미스트리스",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Master/Mistress,allow%20optimal%20servitude."
 		},
 		"pnebwXNPvGr56PEZwSRbHi": {
-			"name": "Slave"
+			"name": "Slave",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=a%20sexual%20context.-,Slave,primary%20focus%20in%20life%20and%20they%20rarely%20have%20limits%20for%20them.,-Submissive"
 		},
 		"werFoPERXyXK9J6roSzCXG": {
-			"name": "로프 버니"
+			"name": "로프 버니",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Rope%20bunny,their%20partner(s)."
 		},
 		"9civt22SpMr7z4nuPcuL3V": {
-			"name": "Sadist"
+			"name": "Sadist",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Sadist,a%20sexual%20context."
 		},
 		"RE2twp4mgYSXjhya266npP": {
-			"name": "Degradee"
+			"name": "Degradee",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Degradee,they%20consider%20degrading."
 		}
 	},
 	"platform": {
@@ -3048,15 +3085,18 @@
 	"sexuality": {
 		"t5hhQahW7HQVKnhQX7xRqn": {
 			"name": "Straight",
-			"definition": "이성에 끌린 사람."
+			"definition": "이성에 끌린 사람.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Heterosexuality"
 		},
 		"gkKfqSoBJ7dUHtaKJ5Cfmk": {
 			"name": "레즈비언",
-			"definition": "다른 여성이나 여성스러운 사람에게 끌리는 사람."
+			"definition": "다른 여성이나 여성스러운 사람에게 끌리는 사람.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Lesbian"
 		},
 		"ndxSn4BdATmm5droBw6iQG": {
 			"name": "호모플렉서블",
-			"definition": "주로 동성에게 매력을 느끼지만 때때로 이성에 대한 매력을 경험하는 사람."
+			"definition": "주로 동성에게 매력을 느끼지만 때때로 이성에 대한 매력을 경험하는 사람.",
+			"definitionLink": "https://www.merriam-webster.com/words-at-play/homoflexible-heteroflexible-meaning-slang-definition"
 		},
 		"4yJadhjWkDN6WSxbDcp33G": {
 			"name": "VR 실험하기",
@@ -3064,35 +3104,43 @@
 		},
 		"3cWT9ob4r7Zpikkd9kVPEg": {
 			"name": "Queer",
-			"definition": "비규범적인 성적 지향을 가진 사람."
+			"definition": "비규범적인 성적 지향을 가진 사람.",
+			"definitionLink": "https://en.wikipedia.org/wiki/Queer"
 		},
 		"NC5wiUcxGavten9E8gw64n": {
 			"name": "범성애자",
-			"definition": "성별에 관계없이 다른 사람에게 매력을 느끼는 사람."
+			"definition": "성별에 관계없이 다른 사람에게 매력을 느끼는 사람.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Pansexuality"
 		},
 		"neMSEFPb9zvFRhoZLUobW9": {
 			"name": "Asexual",
-			"definition": "성적 매력을 거의 또는 전혀 경험하지 않는 사람."
+			"definition": "성적 매력을 거의 또는 전혀 경험하지 않는 사람.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Asexuality"
 		},
 		"wPATvG4t9CJhW2goGmBznU": {
 			"name": "데미섹슈얼",
-			"definition": "누군가와 정서적 유대감을 형성한 후에야 성적 매력을 경험하는 사람."
+			"definition": "누군가와 정서적 유대감을 형성한 후에야 성적 매력을 경험하는 사람.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Demisexuality_and_Gray-Asexuality"
 		},
 		"vu2pJzRmKRroA3GPZRsLxM": {
 			"name": "이종 유연성",
-			"definition": "주로 이성에 매력을 느끼지만 때로는 동성에게도 매력을 느끼는 사람."
+			"definition": "주로 이성에 매력을 느끼지만 때로는 동성에게도 매력을 느끼는 사람.",
+			"definitionLink": "https://www.merriam-webster.com/words-at-play/homoflexible-heteroflexible-meaning-slang-definition"
 		},
 		"UxY3zSKrwKpts6cfZ3wYjM": {
 			"name": "게이",
-			"definition": "같은 성별의 다른 사람에게 끌리는 사람."
+			"definition": "같은 성별의 다른 사람에게 끌리는 사람.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Gay"
 		},
 		"a29qas632KmMpQ8T6arLxa": {
 			"name": "양성애자",
-			"definition": "여러 성별에 매력을 느끼는 사람."
+			"definition": "여러 성별에 매력을 느끼는 사람.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Bisexuality"
 		},
 		"rN7DERN6NdNQzNQ99pQUN4": {
 			"name": "질문",
-			"definition": "성적 지향을 검토하는 과정에 있는 사람."
+			"definition": "성적 지향을 검토하는 과정에 있는 사람.",
+			"definitionLink": "https://en.wikipedia.org/wiki/Questioning_%28sexuality_and_gender%29"
 		}
 	},
 	"plans": {

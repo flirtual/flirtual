@@ -2594,19 +2594,23 @@
 	"gender": {
 		"YBkoUyfKJd6jJGwbekY3HN": {
 			"name": "Bigender",
-			"definition": "Тот, кто испытывает две гендерные идентичности."
+			"definition": "Тот, кто испытывает две гендерные идентичности.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Bigender"
 		},
 		"fAPzVgy7VyGPgAPhkwSkSU": {
 			"name": "Гендерные несоответствия",
-			"definition": "Тот, кто не поддерживает социальные гендерные ожидания или нормы."
+			"definition": "Тот, кто не поддерживает социальные гендерные ожидания или нормы.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Gender_nonconformity"
 		},
 		"w3t9h2SyNhr2rBWouXim8c": {
 			"name": "Интерсекс",
-			"definition": "Кто-то, рожденный с половыми характеристиками, которые не соответствуют типичным определениям мужского или женского тела."
+			"definition": "Кто-то, рожденный с половыми характеристиками, которые не соответствуют типичным определениям мужского или женского тела.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Intersex"
 		},
 		"PFEmTKdmxAoPuxttYPwFZb": {
 			"name": "Pangender",
-			"definition": "Тот, кто идентифицирует себя с несколькими или всеми полами."
+			"definition": "Тот, кто идентифицирует себя с несколькими или всеми полами.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Pangender"
 		},
 		"mosDhQUt8JGumiup4yQWbZ": {
 			"name": "She/Her"
@@ -2623,59 +2627,73 @@
 		},
 		"879KtanHc548synGhcNE7J": {
 			"name": "Agender",
-			"definition": "Тот, кто не идентифицирует себя или не испытывает какого-либо пола."
+			"definition": "Тот, кто не идентифицирует себя или не испытывает какого-либо пола.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Agender"
 		},
 		"RdMpwqWGydDgk9X2u32BBW": {
 			"name": "Андрогин",
-			"definition": "Кто-то с комбинацией мужских и женских черт."
+			"definition": "Кто-то с комбинацией мужских и женских черт.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Androgyny"
 		},
 		"tyrdBY4Rbfitznr65hpRPR": {
 			"name": "Переводчик",
-			"definition": "Тот, чья гендерная идентичность не совпадает с их полом, назначенным при рождении."
+			"definition": "Тот, чья гендерная идентичность не совпадает с их полом, назначенным при рождении.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Transgender"
 		},
 		"XTVsHQMWXiJGEc5xCf7RUb": {
 			"name": "Trans Man",
-			"definition": "Мужчина, которому при рождении была назначена женщина."
+			"definition": "Мужчина, которому при рождении была назначена женщина.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Transgender_men"
 		},
 		"JL8AaDCJMVApbEuAfwG86Y": {
 			"name": "Два духа",
-			"definition": "Третий пол в культурах коренных народов Северной Америки."
+			"definition": "Третий пол в культурах коренных народов Северной Америки.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Two-spirit"
 		},
 		"aKEzfuPY6TaMkmnugQWLUd": {
 			"name": "Genderfluid",
-			"definition": "Кто-то, чей пол меняется с течением времени."
+			"definition": "Кто-то, чей пол меняется с течением времени.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Genderfluid"
 		},
 		"zMta3qtGyqW4hFdcDFUHik": {
 			"name": "Genderqueer",
-			"definition": "Кто-то, чей пол выходит за рамки традиционной гендерной бинарности."
+			"definition": "Кто-то, чей пол выходит за рамки традиционной гендерной бинарности.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Genderqueer"
 		},
 		"2ETbJJJ3shADLphvncUwSL": {
 			"name": "Женщина",
-			"definition": "Женщина, чья гендерная идентичность соответствует ее полу, назначенному при рождении."
+			"definition": "Женщина, чья гендерная идентичность соответствует ее полу, назначенному при рождении.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Cisgender_women"
 		},
 		"GJitRtRoYWT6DfVasptK7N": {
 			"name": "Cis Man",
-			"definition": "Мужчина, чья гендерная идентичность соответствует его полу, назначенному при рождении."
+			"definition": "Мужчина, чья гендерная идентичность соответствует его полу, назначенному при рождении.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Cisgender_men"
 		},
 		"wJdnfUvuvACEWRSV4KBdzS": {
 			"name": "Hijra",
-			"definition": "Третий пол в культурах Южной Азии."
+			"definition": "Третий пол в культурах Южной Азии.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Hijra"
 		},
 		"QwXvxjisosKeTP97ouczoZ": {
 			"name": "Небинарные",
-			"definition": "Кто-то, чей пол выходит за рамки гендерного двойника."
+			"definition": "Кто-то, чей пол выходит за рамки гендерного двойника.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Nonbinary"
 		},
 		"HWte4cB6TUzzXZoJeuxJuf": {
 			"name": "Транс женщина",
-			"definition": "Женщина, которая была назначена мужчиной при рождении."
+			"definition": "Женщина, которая была назначена мужчиной при рождении.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Transgender_women"
 		},
 		"rGFyY9WbvBBJSUAUpY5iUE": {
 			"name": "Трансфемин",
-			"definition": "Кто-то с женской гендерной идентичностью, который был назначен мужчиной при рождении."
+			"definition": "Кто-то с женской гендерной идентичностью, который был назначен мужчиной при рождении.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Transfeminine"
 		},
 		"CHkgoEoKzTSeVaLVByviBZ": {
 			"name": "Transmasculine",
-			"definition": "Кто-то с мужской гендерной идентичностью, которому была назначена женщина при рождении."
+			"definition": "Кто-то с мужской гендерной идентичностью, которому была назначена женщина при рождении.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Transmasculine"
 		},
 		"jAL62ePbibxaG4FPu7S8LG": {
 			"name": "Прочие"
@@ -2879,23 +2897,28 @@
 	"sexuality": {
 		"t5hhQahW7HQVKnhQX7xRqn": {
 			"definition": "Кто-то привлек к противоположному полу.",
-			"name": "Прямо"
+			"name": "Прямо",
+			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Heterosexuality"
 		},
 		"gkKfqSoBJ7dUHtaKJ5Cfmk": {
 			"name": "Лесбиянки",
-			"definition": "Кто-то привлек других женщин или женщин."
+			"definition": "Кто-то привлек других женщин или женщин.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Lesbian"
 		},
 		"UxY3zSKrwKpts6cfZ3wYjM": {
 			"definition": "Кто-то притягивался к другим из того же пола.",
-			"name": "Гей"
+			"name": "Гей",
+			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Gay"
 		},
 		"a29qas632KmMpQ8T6arLxa": {
 			"name": "Бисексуалы",
-			"definition": "Кто-то притягивался к нескольким полам."
+			"definition": "Кто-то притягивался к нескольким полам.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Bisexuality"
 		},
 		"rN7DERN6NdNQzNQ99pQUN4": {
 			"name": "Вопрос",
-			"definition": "Кто-то, кто находится в процессе изучения своей сексуальной ориентации."
+			"definition": "Кто-то, кто находится в процессе изучения своей сексуальной ориентации.",
+			"definitionLink": "https://en.wikipedia.org/wiki/Questioning_%28sexuality_and_gender%29"
 		},
 		"4yJadhjWkDN6WSxbDcp33G": {
 			"name": "Эксперимент в VR",
@@ -2903,86 +2926,111 @@
 		},
 		"NC5wiUcxGavten9E8gw64n": {
 			"name": "Пансексуалы",
-			"definition": "Кто-то привлекал других, независимо от их пола."
+			"definition": "Кто-то привлекал других, независимо от их пола.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Pansexuality"
 		},
 		"neMSEFPb9zvFRhoZLUobW9": {
 			"name": "Асексуалы",
-			"definition": "Тот, кто испытывает малое или отсутствие сексуального влечения."
+			"definition": "Тот, кто испытывает малое или отсутствие сексуального влечения.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Asexuality"
 		},
 		"wPATvG4t9CJhW2goGmBznU": {
 			"name": "Демисексуалы",
-			"definition": "Тот, кто испытывает сексуальное влечение только после формирования эмоциональной связи с кем-то."
+			"definition": "Тот, кто испытывает сексуальное влечение только после формирования эмоциональной связи с кем-то.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Demisexuality_and_Gray-Asexuality"
 		},
 		"vu2pJzRmKRroA3GPZRsLxM": {
 			"name": "Heteroflexible",
-			"definition": "Кто-то, который в основном привлекает противоположный пол, но иногда испытывает привлекательность для одного и того же пола."
+			"definition": "Кто-то, который в основном привлекает противоположный пол, но иногда испытывает привлекательность для одного и того же пола.",
+			"definitionLink": "https://www.merriam-webster.com/words-at-play/homoflexible-heteroflexible-meaning-slang-definition"
 		},
 		"3cWT9ob4r7Zpikkd9kVPEg": {
 			"name": "Queer",
-			"definition": "Кто-то с ненормативной сексуальной ориентацией."
+			"definition": "Кто-то с ненормативной сексуальной ориентацией.",
+			"definitionLink": "https://en.wikipedia.org/wiki/Queer"
 		},
 		"ndxSn4BdATmm5droBw6iQG": {
 			"name": "Homoflexible",
-			"definition": "Кто-то, который преимущественно привлекает один и тот же пол, но иногда испытывает привлекательность к противоположному полу."
+			"definition": "Кто-то, который преимущественно привлекает один и тот же пол, но иногда испытывает привлекательность к противоположному полу.",
+			"definitionLink": "https://www.merriam-webster.com/words-at-play/homoflexible-heteroflexible-meaning-slang-definition"
 		}
 	},
 	"kink": {
 		"wZ4AXSmb3hufSDxGVEkoNo": {
-			"name": "Brat Tamer"
+			"name": "Brat Tamer",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Brat%20tamer,the%20first%20place)."
 		},
 		"HEPqnrrPsMqx9nQvDk5rHT": {
-			"name": "Masochist"
+			"name": "Masochist",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Masochist,levels%20of%20pain."
 		},
 		"7WBnwThpTkEHyQHDZTbw47": {
-			"name": "Prey"
+			"name": "Prey",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Primal%20(Prey),from%20its%20predator."
 		},
 		"nEDgGpz9eHcomwcbsCaCZP": {
-			"name": "Владелец"
+			"name": "Владелец",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Owner,for%20the%20pet)."
 		},
 		"cKzdEwXmCY3naeYdHuowJ7": {
-			"name": "Pet"
+			"name": "Pet",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=its%20predator%20(you).-,Pet,play%20(puppy%2C%20kitten%2C%20etc.)%2C%20although%20that%20is%20not%20a%20strict%20necessity.,-Primal%20(Prey)"
 		},
 		"rGDn478bBZCDajvQRYAkLf": {
-			"name": "Папа/ мамочка"
+			"name": "Папа/ мамочка",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Daddy/Mommy,littles%20into%20obedience."
 		},
 		"yamRiwkspejx4mnzbtMdxN": {
-			"name": "Boy/Girl"
+			"name": "Boy/Girl",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=they%20consider%20degrading.-,Little,can%20go%20a%20lot%20deeper%20and%20sometimes%20rival%20those%20of%20slaves.,-Masochist"
 		},
 		"dXxUHt5t69rNeg2g7EE3bR": {
-			"name": "Магистр/магистр"
+			"name": "Магистр/магистр",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Master/Mistress,allow%20optimal%20servitude."
 		},
 		"pnebwXNPvGr56PEZwSRbHi": {
-			"name": "Рабы"
+			"name": "Рабы",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=a%20sexual%20context.-,Slave,primary%20focus%20in%20life%20and%20they%20rarely%20have%20limits%20for%20them.,-Submissive"
 		},
 		"2D9uSBJtgiRRfgdwXhyvm5": {
-			"name": "Rigger"
+			"name": "Rigger",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Rigger,at%20their%20mercy."
 		},
 		"werFoPERXyXK9J6roSzCXG": {
-			"name": "Rope Bunny"
+			"name": "Rope Bunny",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Rope%20bunny,their%20partner(s)."
 		},
 		"9civt22SpMr7z4nuPcuL3V": {
-			"name": "Садист"
+			"name": "Садист",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Sadist,a%20sexual%20context."
 		},
 		"RE2twp4mgYSXjhya266npP": {
-			"name": "Деградация"
+			"name": "Деградация",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Degradee,they%20consider%20degrading."
 		},
 		"FDiw6WUePpHDckmVG5coKF": {
-			"name": "Экспериментальный"
+			"name": "Экспериментальный",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Experimentalist,try%20them%20out."
 		},
 		"sNdx2sNbnG5RmNZDtTVNCg": {
-			"name": "Браслет"
+			"name": "Браслет",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Brat,change%20this%20behavior."
 		},
 		"ANgPHfEKZqZZUspmgfKjdf": {
-			"name": "Выставочный"
+			"name": "Выставочный",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Exhibitionist,to%20other%20people."
 		},
 		"Jyy988TnEA8J2FeG5ZSyDh": {
-			"name": "Вуайерист"
+			"name": "Вуайерист",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Voyeur,of%20other%20people."
 		},
 		"nSPurHtFp8dpHKvW4Ux9Q9": {
-			"name": "Охотник"
+			"name": "Охотник",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Primal%20(Hunter),its%20predator%20(you)."
 		},
 		"9mbQ4hxFEMBL4bHVYomPz3": {
-			"name": "Деградатор"
+			"name": "Деградатор",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Degrader,they%20consider%20degrading."
 		}
 	},
 	"delete-reason": {

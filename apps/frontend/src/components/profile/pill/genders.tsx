@@ -61,33 +61,37 @@ export const GenderPills: FC<GenderPillsProps> = ({
 	return (
 		<>
 			{visibleGenders.map((gender, genderIndex) => {
-				const { name, definition } = tAttributes[gender.id] ?? {};
+				const { name, definition, definitionLink } = tAttributes[gender.id] ?? {};
 				if (!name) return null;
 
 				return (
 					<Tooltip key={gender.id}>
 						<TooltipTrigger asChild>
-							<Pill
-								className={twMerge(
-									className,
-									genderIndex !== 0 && small && simple && "hidden desktop:flex"
-								)}
-								hocusable={false}
-								small={small}
-							>
-								{name}
-							</Pill>
+							<div>
+								<Pill
+									className={twMerge(
+										className,
+										genderIndex !== 0 && small && simple && "hidden desktop:flex"
+									)}
+									hocusable={false}
+									small={small}
+								>
+									{name}
+								</Pill>
+							</div>
 						</TooltipTrigger>
-						{(definition || gender.definitionLink) && (
+						{(definition || definitionLink) && (
 							<TooltipContent>
 								{definition}
 								{" "}
-								<InlineLink
-									className="pointer-events-auto"
-									href={gender.definitionLink}
-								>
-									{t("learn_more")}
-								</InlineLink>
+								{definitionLink && (
+									<InlineLink
+										className="pointer-events-auto"
+										href={definitionLink}
+									>
+										{t("learn_more")}
+									</InlineLink>
+								)}
 							</TooltipContent>
 						)}
 					</Tooltip>

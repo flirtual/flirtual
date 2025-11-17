@@ -2594,47 +2594,58 @@
 	"gender": {
 		"fAPzVgy7VyGPgAPhkwSkSU": {
 			"definition": "Någon som inte följer samhällets könsförväntningar eller normer.",
-			"name": "Icke-konform könstillhörighet"
+			"name": "Icke-konform könstillhörighet",
+			"definitionLink": "https://nonbinary.wiki/wiki/Gender_nonconformity"
 		},
 		"wJdnfUvuvACEWRSV4KBdzS": {
 			"name": "Hijra",
-			"definition": "Ett tredje kön i sydasiatiska kulturer."
+			"definition": "Ett tredje kön i sydasiatiska kulturer.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Hijra"
 		},
 		"QwXvxjisosKeTP97ouczoZ": {
 			"name": "Icke-binär",
-			"definition": "Någon vars kön faller utanför den binära könsuppdelningen."
+			"definition": "Någon vars kön faller utanför den binära könsuppdelningen.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Nonbinary"
 		},
 		"PFEmTKdmxAoPuxttYPwFZb": {
 			"definition": "Någon som identifierar sig med flera eller alla kön.",
-			"name": "Pangender"
+			"name": "Pangender",
+			"definitionLink": "https://nonbinary.wiki/wiki/Pangender"
 		},
 		"YBkoUyfKJd6jJGwbekY3HN": {
 			"definition": "Någon som upplever två könsidentiteter.",
-			"name": "Bigender"
+			"name": "Bigender",
+			"definitionLink": "https://nonbinary.wiki/wiki/Bigender"
 		},
 		"2ETbJJJ3shADLphvncUwSL": {
 			"name": "Cis-kvinna",
-			"definition": "En kvinna vars könsidentitet överensstämmer med det kön hon tilldelades vid födseln."
+			"definition": "En kvinna vars könsidentitet överensstämmer med det kön hon tilldelades vid födseln.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Cisgender_women"
 		},
 		"w3t9h2SyNhr2rBWouXim8c": {
 			"name": "Intersexuell",
-			"definition": "Någon som föds med könskarakteristika som inte passar de typiska definitionerna av manliga eller kvinnliga kroppar."
+			"definition": "Någon som föds med könskarakteristika som inte passar de typiska definitionerna av manliga eller kvinnliga kroppar.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Intersex"
 		},
 		"tyrdBY4Rbfitznr65hpRPR": {
 			"name": "Transgender",
-			"definition": "En person vars könsidentitet inte stämmer överens med det kön som tilldelades vid födseln."
+			"definition": "En person vars könsidentitet inte stämmer överens med det kön som tilldelades vid födseln.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Transgender"
 		},
 		"rGFyY9WbvBBJSUAUpY5iUE": {
 			"definition": "En person med feminin könsidentitet som vid födseln tilldelades en manlig identitet.",
-			"name": "Transfeminin"
+			"name": "Transfeminin",
+			"definitionLink": "https://nonbinary.wiki/wiki/Transfeminine"
 		},
 		"CHkgoEoKzTSeVaLVByviBZ": {
 			"name": "Transmasculine",
-			"definition": "En person med maskulin könsidentitet som tilldelades kvinnlig könstillhörighet vid födseln."
+			"definition": "En person med maskulin könsidentitet som tilldelades kvinnlig könstillhörighet vid födseln.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Transmasculine"
 		},
 		"JL8AaDCJMVApbEuAfwG86Y": {
 			"definition": "Ett tredje kön i nordamerikanska urfolkskulturer.",
-			"name": "Två andar"
+			"name": "Två andar",
+			"definitionLink": "https://nonbinary.wiki/wiki/Two-spirit"
 		},
 		"jAL62ePbibxaG4FPu7S8LG": {
 			"name": "Övriga"
@@ -2645,19 +2656,23 @@
 		},
 		"GJitRtRoYWT6DfVasptK7N": {
 			"definition": "En man vars könsidentitet överensstämmer med det kön han tilldelades vid födseln.",
-			"name": "Cis Man"
+			"name": "Cis Man",
+			"definitionLink": "https://nonbinary.wiki/wiki/Cisgender_men"
 		},
 		"aKEzfuPY6TaMkmnugQWLUd": {
 			"name": "Genderfluid",
-			"definition": "Någon vars kön varierar över tid."
+			"definition": "Någon vars kön varierar över tid.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Genderfluid"
 		},
 		"zMta3qtGyqW4hFdcDFUHik": {
 			"name": "Genderqueer",
-			"definition": "Någon vars kön faller utanför den traditionella könsbinären."
+			"definition": "Någon vars kön faller utanför den traditionella könsbinären.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Genderqueer"
 		},
 		"XTVsHQMWXiJGEc5xCf7RUb": {
 			"definition": "En man som tilldelades kvinnlig könstillhörighet vid födseln.",
-			"name": "Trans Man"
+			"name": "Trans Man",
+			"definitionLink": "https://nonbinary.wiki/wiki/Transgender_men"
 		},
 		"mosDhQUt8JGumiup4yQWbZ": {
 			"name": "Hon/Han"
@@ -2674,74 +2689,96 @@
 		},
 		"RdMpwqWGydDgk9X2u32BBW": {
 			"definition": "Någon med en kombination av maskulina och feminina drag.",
-			"name": "Androgyn"
+			"name": "Androgyn",
+			"definitionLink": "https://nonbinary.wiki/wiki/Androgyny"
 		},
 		"879KtanHc548synGhcNE7J": {
 			"name": "Agender",
-			"definition": "Någon som inte identifierar sig med eller upplever något kön."
+			"definition": "Någon som inte identifierar sig med eller upplever något kön.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Agender"
 		},
 		"HWte4cB6TUzzXZoJeuxJuf": {
 			"name": "Trans kvinna",
-			"definition": "En kvinna som tilldelades en man vid födseln."
+			"definition": "En kvinna som tilldelades en man vid födseln.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Transgender_women"
 		}
 	},
 	"kink": {
 		"FDiw6WUePpHDckmVG5coKF": {
-			"name": "Experimentalist"
+			"name": "Experimentalist",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Experimentalist,try%20them%20out."
 		},
 		"sNdx2sNbnG5RmNZDtTVNCg": {
-			"name": "Brat"
+			"name": "Brat",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Brat,change%20this%20behavior."
 		},
 		"nEDgGpz9eHcomwcbsCaCZP": {
-			"name": "Ägare"
+			"name": "Ägare",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Owner,for%20the%20pet)."
 		},
 		"9civt22SpMr7z4nuPcuL3V": {
-			"name": "Sadist"
+			"name": "Sadist",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Sadist,a%20sexual%20context."
 		},
 		"7WBnwThpTkEHyQHDZTbw47": {
-			"name": "Byte"
+			"name": "Byte",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Primal%20(Prey),from%20its%20predator."
 		},
 		"9mbQ4hxFEMBL4bHVYomPz3": {
-			"name": "Degrader"
+			"name": "Degrader",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Degrader,they%20consider%20degrading."
 		},
 		"RE2twp4mgYSXjhya266npP": {
-			"name": "Degradee"
+			"name": "Degradee",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Degradee,they%20consider%20degrading."
 		},
 		"cKzdEwXmCY3naeYdHuowJ7": {
-			"name": "Husdjur"
+			"name": "Husdjur",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=its%20predator%20(you).-,Pet,play%20(puppy%2C%20kitten%2C%20etc.)%2C%20although%20that%20is%20not%20a%20strict%20necessity.,-Primal%20(Prey)"
 		},
 		"yamRiwkspejx4mnzbtMdxN": {
-			"name": "Pojke/Flicka"
+			"name": "Pojke/Flicka",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=they%20consider%20degrading.-,Little,can%20go%20a%20lot%20deeper%20and%20sometimes%20rival%20those%20of%20slaves.,-Masochist"
 		},
 		"dXxUHt5t69rNeg2g7EE3bR": {
-			"name": "Mästare/Mästarinna"
+			"name": "Mästare/Mästarinna",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Master/Mistress,allow%20optimal%20servitude."
 		},
 		"pnebwXNPvGr56PEZwSRbHi": {
-			"name": "Slav"
+			"name": "Slav",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=a%20sexual%20context.-,Slave,primary%20focus%20in%20life%20and%20they%20rarely%20have%20limits%20for%20them.,-Submissive"
 		},
 		"2D9uSBJtgiRRfgdwXhyvm5": {
-			"name": "Riggare"
+			"name": "Riggare",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Rigger,at%20their%20mercy."
 		},
 		"rGDn478bBZCDajvQRYAkLf": {
-			"name": "Pappa/Mamma"
+			"name": "Pappa/Mamma",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Daddy/Mommy,littles%20into%20obedience."
 		},
 		"Jyy988TnEA8J2FeG5ZSyDh": {
-			"name": "Voyeur"
+			"name": "Voyeur",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Voyeur,of%20other%20people."
 		},
 		"wZ4AXSmb3hufSDxGVEkoNo": {
-			"name": "Brat Tamer"
+			"name": "Brat Tamer",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Brat%20tamer,the%20first%20place)."
 		},
 		"werFoPERXyXK9J6roSzCXG": {
-			"name": "Rep kanin"
+			"name": "Rep kanin",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Rope%20bunny,their%20partner(s)."
 		},
 		"HEPqnrrPsMqx9nQvDk5rHT": {
-			"name": "Masochist"
+			"name": "Masochist",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Masochist,levels%20of%20pain."
 		},
 		"ANgPHfEKZqZZUspmgfKjdf": {
-			"name": "Exhibitionist"
+			"name": "Exhibitionist",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Exhibitionist,to%20other%20people."
 		},
 		"nSPurHtFp8dpHKvW4Ux9Q9": {
-			"name": "Jägare"
+			"name": "Jägare",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Primal%20(Hunter),its%20predator%20(you)."
 		}
 	},
 	"platform": {
@@ -2903,27 +2940,33 @@
 	"sexuality": {
 		"a29qas632KmMpQ8T6arLxa": {
 			"definition": "Någon som attraheras av flera kön.",
-			"name": "Bisexuell"
+			"name": "Bisexuell",
+			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Bisexuality"
 		},
 		"NC5wiUcxGavten9E8gw64n": {
 			"name": "Pansexuell",
-			"definition": "Någon som attraheras av andra oavsett deras kön."
+			"definition": "Någon som attraheras av andra oavsett deras kön.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Pansexuality"
 		},
 		"t5hhQahW7HQVKnhQX7xRqn": {
 			"name": "Rak",
-			"definition": "Någon som attraheras av det motsatta könet."
+			"definition": "Någon som attraheras av det motsatta könet.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Heterosexuality"
 		},
 		"gkKfqSoBJ7dUHtaKJ5Cfmk": {
 			"definition": "Någon som attraheras av andra kvinnor eller feminina människor.",
-			"name": "Lesbisk"
+			"name": "Lesbisk",
+			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Lesbian"
 		},
 		"UxY3zSKrwKpts6cfZ3wYjM": {
 			"name": "Gay",
-			"definition": "Någon som attraheras av andra av samma kön."
+			"definition": "Någon som attraheras av andra av samma kön.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Gay"
 		},
 		"vu2pJzRmKRroA3GPZRsLxM": {
 			"definition": "En person som främst attraheras av det motsatta könet men som ibland upplever attraktion till samma kön.",
-			"name": "Heteroflexibel"
+			"name": "Heteroflexibel",
+			"definitionLink": "https://www.merriam-webster.com/words-at-play/homoflexible-heteroflexible-meaning-slang-definition"
 		},
 		"4yJadhjWkDN6WSxbDcp33G": {
 			"name": "Experimentera i VR",
@@ -2931,23 +2974,28 @@
 		},
 		"wPATvG4t9CJhW2goGmBznU": {
 			"definition": "Någon som bara upplever sexuell attraktion efter att ha bildat ett känslomässigt band med någon.",
-			"name": "Demisexuell"
+			"name": "Demisexuell",
+			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Demisexuality_and_Gray-Asexuality"
 		},
 		"ndxSn4BdATmm5droBw6iQG": {
 			"definition": "En person som främst attraheras av samma kön men som ibland upplever attraktion till det motsatta könet.",
-			"name": "Homoflexibel"
+			"name": "Homoflexibel",
+			"definitionLink": "https://www.merriam-webster.com/words-at-play/homoflexible-heteroflexible-meaning-slang-definition"
 		},
 		"3cWT9ob4r7Zpikkd9kVPEg": {
 			"name": "Queer",
-			"definition": "Någon med en icke-normativ sexuell läggning."
+			"definition": "Någon med en icke-normativ sexuell läggning.",
+			"definitionLink": "https://en.wikipedia.org/wiki/Queer"
 		},
 		"neMSEFPb9zvFRhoZLUobW9": {
 			"name": "Asexuell",
-			"definition": "Någon som upplever liten eller ingen sexuell attraktion."
+			"definition": "Någon som upplever liten eller ingen sexuell attraktion.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Asexuality"
 		},
 		"rN7DERN6NdNQzNQ99pQUN4": {
 			"name": "Ifrågasättande",
-			"definition": "Någon som är i färd med att undersöka sin sexuella läggning."
+			"definition": "Någon som är i färd med att undersöka sin sexuella läggning.",
+			"definitionLink": "https://en.wikipedia.org/wiki/Questioning_%28sexuality_and_gender%29"
 		}
 	},
 	"ban-reason": {

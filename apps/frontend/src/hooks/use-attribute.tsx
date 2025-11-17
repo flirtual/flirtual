@@ -21,9 +21,14 @@ export interface AttributeTranslationMetadata {
 	gender: {
 		plural?: string;
 		definition?: string;
+		definitionLink?: string;
 	};
 	sexuality: {
-		definition: string;
+		definition?: string;
+		definitionLink?: string;
+	};
+	kink: {
+		definitionLink?: string;
 	};
 	"ban-reason": {
 		details: string;

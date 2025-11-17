@@ -38,9 +38,9 @@ export const PillAttributeList: FC<PillAttributeListProps> = ({
 	return (
 		<div className="flex w-full flex-wrap gap-2">
 			{attributes.map((attribute) => {
-				const { id, ...metadata }
-					= typeof attribute === "object" ? attribute : { id: attribute };
-				const meta = metadata as {
+				const id = typeof attribute === "object" ? attribute.id : attribute;
+				const { name, definition, definitionLink } = (tAttributes[id] ?? {}) as {
+					name?: string;
 					definition?: string;
 					definitionLink?: string;
 				};
@@ -58,19 +58,18 @@ export const PillAttributeList: FC<PillAttributeListProps> = ({
 									className="vision:bg-white-30/70"
 									href={href}
 								>
-									{getName?.(id) || tAttributes[id]?.name || id}
+									{getName?.(id) || name || id}
 								</Pill>
 							</div>
 						</TooltipTrigger>
-						{metadata !== undefined
-							&& (meta.definition || meta.definitionLink) && (
+						{(definition || definitionLink) && (
 							<TooltipContent>
-								{meta.definition}
+								{definition}
 								{" "}
-								{meta.definitionLink && (
+								{definitionLink && (
 									<InlineLink
 										className="pointer-events-auto"
-										href={meta.definitionLink}
+										href={definitionLink}
 									>
 										{t("learn_more")}
 									</InlineLink>

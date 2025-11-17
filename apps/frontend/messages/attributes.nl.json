@@ -2594,47 +2594,58 @@
 	"gender": {
 		"wJdnfUvuvACEWRSV4KBdzS": {
 			"name": "Hijra",
-			"definition": "Een derde geslacht in Zuid-Aziatische culturen."
+			"definition": "Een derde geslacht in Zuid-Aziatische culturen.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Hijra"
 		},
 		"w3t9h2SyNhr2rBWouXim8c": {
 			"name": "Interseks",
-			"definition": "Iemand die geboren is met geslachtskenmerken die niet passen bij de typische definities van een mannelijk of vrouwelijk lichaam."
+			"definition": "Iemand die geboren is met geslachtskenmerken die niet passen bij de typische definities van een mannelijk of vrouwelijk lichaam.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Intersex"
 		},
 		"PFEmTKdmxAoPuxttYPwFZb": {
 			"name": "Pangender",
-			"definition": "Iemand die zich identificeert met meerdere of alle genders."
+			"definition": "Iemand die zich identificeert met meerdere of alle genders.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Pangender"
 		},
 		"tyrdBY4Rbfitznr65hpRPR": {
 			"name": "Transgender",
-			"definition": "Iemand wiens genderidentiteit niet overeenkomt met het geslacht dat hem bij zijn geboorte is toegewezen."
+			"definition": "Iemand wiens genderidentiteit niet overeenkomt met het geslacht dat hem bij zijn geboorte is toegewezen.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Transgender"
 		},
 		"fAPzVgy7VyGPgAPhkwSkSU": {
 			"definition": "Iemand die zich niet houdt aan maatschappelijke genderverwachtingen of -normen.",
-			"name": "Geslachtsloos"
+			"name": "Geslachtsloos",
+			"definitionLink": "https://nonbinary.wiki/wiki/Gender_nonconformity"
 		},
 		"aKEzfuPY6TaMkmnugQWLUd": {
 			"name": "Geslachtsgebonden",
-			"definition": "Iemand van wie het geslacht in de loop van de tijd varieert."
+			"definition": "Iemand van wie het geslacht in de loop van de tijd varieert.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Genderfluid"
 		},
 		"2ETbJJJ3shADLphvncUwSL": {
 			"name": "Cis vrouw",
-			"definition": "Een vrouw wiens genderidentiteit overeenkomt met het geslacht dat haar bij de geboorte werd toegewezen."
+			"definition": "Een vrouw wiens genderidentiteit overeenkomt met het geslacht dat haar bij de geboorte werd toegewezen.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Cisgender_women"
 		},
 		"zMta3qtGyqW4hFdcDFUHik": {
 			"definition": "Iemand wiens geslacht buiten het traditionele geslacht valt.",
-			"name": "Geslachtsgebonden"
+			"name": "Geslachtsgebonden",
+			"definitionLink": "https://nonbinary.wiki/wiki/Genderqueer"
 		},
 		"QwXvxjisosKeTP97ouczoZ": {
 			"name": "Niet-binaire",
-			"definition": "Iemand wiens geslacht buiten het binaire geslacht valt."
+			"definition": "Iemand wiens geslacht buiten het binaire geslacht valt.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Nonbinary"
 		},
 		"XTVsHQMWXiJGEc5xCf7RUb": {
 			"definition": "Een man die bij zijn geboorte een vrouw kreeg toegewezen.",
-			"name": "Trans Man"
+			"name": "Trans Man",
+			"definitionLink": "https://nonbinary.wiki/wiki/Transgender_men"
 		},
 		"JL8AaDCJMVApbEuAfwG86Y": {
 			"name": "Twee geesten",
-			"definition": "Een derde geslacht in inheemse Noord-Amerikaanse culturen."
+			"definition": "Een derde geslacht in inheemse Noord-Amerikaanse culturen.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Two-spirit"
 		},
 		"jAL62ePbibxaG4FPu7S8LG": {
 			"name": "Andere"
@@ -2648,23 +2659,28 @@
 		},
 		"RdMpwqWGydDgk9X2u32BBW": {
 			"name": "Androgyn",
-			"definition": "Iemand met een combinatie van mannelijke en vrouwelijke trekken."
+			"definition": "Iemand met een combinatie van mannelijke en vrouwelijke trekken.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Androgyny"
 		},
 		"GJitRtRoYWT6DfVasptK7N": {
 			"definition": "Een man wiens genderidentiteit overeenkomt met het geslacht dat hem bij zijn geboorte is toegewezen.",
-			"name": "Cis Man"
+			"name": "Cis Man",
+			"definitionLink": "https://nonbinary.wiki/wiki/Cisgender_men"
 		},
 		"HWte4cB6TUzzXZoJeuxJuf": {
 			"definition": "Een vrouw die bij haar geboorte een man kreeg toegewezen.",
-			"name": "Transvrouw"
+			"name": "Transvrouw",
+			"definitionLink": "https://nonbinary.wiki/wiki/Transgender_women"
 		},
 		"rGFyY9WbvBBJSUAUpY5iUE": {
 			"definition": "Iemand met een vrouwelijke genderidentiteit die bij de geboorte een man kreeg toegewezen.",
-			"name": "Transvrouwelijk"
+			"name": "Transvrouwelijk",
+			"definitionLink": "https://nonbinary.wiki/wiki/Transfeminine"
 		},
 		"CHkgoEoKzTSeVaLVByviBZ": {
 			"definition": "Iemand met een mannelijke genderidentiteit aan wie bij de geboorte een vrouw is toegewezen.",
-			"name": "Transmasculien"
+			"name": "Transmasculien",
+			"definitionLink": "https://nonbinary.wiki/wiki/Transmasculine"
 		},
 		"pAzAxxF4UYr3qN6F4tPYec": {
 			"name": "Zij/Hij"
@@ -2675,14 +2691,16 @@
 		},
 		"YBkoUyfKJd6jJGwbekY3HN": {
 			"definition": "Iemand die twee genderidentiteiten ervaart.",
-			"name": "Bigender"
+			"name": "Bigender",
+			"definitionLink": "https://nonbinary.wiki/wiki/Bigender"
 		},
 		"hv43aTXJZjMHfXRXvTcYiH": {
 			"name": "Hij/Hij"
 		},
 		"879KtanHc548synGhcNE7J": {
 			"name": "Agender",
-			"definition": "Iemand die zich niet identificeert met een geslacht en er ook geen ervaring mee heeft."
+			"definition": "Iemand die zich niet identificeert met een geslacht en er ook geen ervaring mee heeft.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Agender"
 		}
 	},
 	"interest-category": {
@@ -2722,61 +2740,80 @@
 	},
 	"kink": {
 		"2D9uSBJtgiRRfgdwXhyvm5": {
-			"name": "Rigger"
+			"name": "Rigger",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Rigger,at%20their%20mercy."
 		},
 		"HEPqnrrPsMqx9nQvDk5rHT": {
-			"name": "Masochist"
+			"name": "Masochist",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Masochist,levels%20of%20pain."
 		},
 		"wZ4AXSmb3hufSDxGVEkoNo": {
-			"name": "Rattenvanger"
+			"name": "Rattenvanger",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Brat%20tamer,the%20first%20place)."
 		},
 		"sNdx2sNbnG5RmNZDtTVNCg": {
-			"name": "Brat"
+			"name": "Brat",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Brat,change%20this%20behavior."
 		},
 		"nEDgGpz9eHcomwcbsCaCZP": {
-			"name": "Eigenaar"
+			"name": "Eigenaar",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Owner,for%20the%20pet)."
 		},
 		"cKzdEwXmCY3naeYdHuowJ7": {
-			"name": "Huisdier"
+			"name": "Huisdier",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=its%20predator%20(you).-,Pet,play%20(puppy%2C%20kitten%2C%20etc.)%2C%20although%20that%20is%20not%20a%20strict%20necessity.,-Primal%20(Prey)"
 		},
 		"rGDn478bBZCDajvQRYAkLf": {
-			"name": "Papa/Mama"
+			"name": "Papa/Mama",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Daddy/Mommy,littles%20into%20obedience."
 		},
 		"ANgPHfEKZqZZUspmgfKjdf": {
-			"name": "Exhibitionist"
+			"name": "Exhibitionist",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Exhibitionist,to%20other%20people."
 		},
 		"7WBnwThpTkEHyQHDZTbw47": {
-			"name": "Prooi"
+			"name": "Prooi",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Primal%20(Prey),from%20its%20predator."
 		},
 		"9mbQ4hxFEMBL4bHVYomPz3": {
-			"name": "Degrader"
+			"name": "Degrader",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Degrader,they%20consider%20degrading."
 		},
 		"RE2twp4mgYSXjhya266npP": {
-			"name": "Degradee"
+			"name": "Degradee",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Degradee,they%20consider%20degrading."
 		},
 		"werFoPERXyXK9J6roSzCXG": {
-			"name": "Touwkonijntje"
+			"name": "Touwkonijntje",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Rope%20bunny,their%20partner(s)."
 		},
 		"9civt22SpMr7z4nuPcuL3V": {
-			"name": "Sadist"
+			"name": "Sadist",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Sadist,a%20sexual%20context."
 		},
 		"FDiw6WUePpHDckmVG5coKF": {
-			"name": "Experimenteer"
+			"name": "Experimenteer",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Experimentalist,try%20them%20out."
 		},
 		"yamRiwkspejx4mnzbtMdxN": {
-			"name": "Jongen/meisje"
+			"name": "Jongen/meisje",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=they%20consider%20degrading.-,Little,can%20go%20a%20lot%20deeper%20and%20sometimes%20rival%20those%20of%20slaves.,-Masochist"
 		},
 		"dXxUHt5t69rNeg2g7EE3bR": {
-			"name": "Meesteres/juffrouw"
+			"name": "Meesteres/juffrouw",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Master/Mistress,allow%20optimal%20servitude."
 		},
 		"pnebwXNPvGr56PEZwSRbHi": {
-			"name": "Slaaf"
+			"name": "Slaaf",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=a%20sexual%20context.-,Slave,primary%20focus%20in%20life%20and%20they%20rarely%20have%20limits%20for%20them.,-Submissive"
 		},
 		"Jyy988TnEA8J2FeG5ZSyDh": {
-			"name": "Voyeur"
+			"name": "Voyeur",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Voyeur,of%20other%20people."
 		},
 		"nSPurHtFp8dpHKvW4Ux9Q9": {
-			"name": "Jager"
+			"name": "Jager",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Primal%20(Hunter),its%20predator%20(you)."
 		}
 	},
 	"platform": {
@@ -2900,7 +2937,8 @@
 	"sexuality": {
 		"3cWT9ob4r7Zpikkd9kVPEg": {
 			"name": "Queer",
-			"definition": "Iemand met een niet-normatieve seksuele geaardheid."
+			"definition": "Iemand met een niet-normatieve seksuele geaardheid.",
+			"definitionLink": "https://en.wikipedia.org/wiki/Queer"
 		},
 		"4yJadhjWkDN6WSxbDcp33G": {
 			"definition": "Iemand die zijn seksuele geaardheid onderzoekt in VR of wiens seksualiteit verschilt in VR en in levenden lijve.",
@@ -2908,43 +2946,53 @@
 		},
 		"neMSEFPb9zvFRhoZLUobW9": {
 			"name": "Aseksueel",
-			"definition": "Iemand die weinig of geen seksuele aantrekkingskracht ervaart."
+			"definition": "Iemand die weinig of geen seksuele aantrekkingskracht ervaart.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Asexuality"
 		},
 		"wPATvG4t9CJhW2goGmBznU": {
 			"name": "Biseksueel",
-			"definition": "Iemand die pas seksuele aantrekkingskracht ervaart nadat hij een emotionele band met iemand heeft opgebouwd."
+			"definition": "Iemand die pas seksuele aantrekkingskracht ervaart nadat hij een emotionele band met iemand heeft opgebouwd.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Demisexuality_and_Gray-Asexuality"
 		},
 		"t5hhQahW7HQVKnhQX7xRqn": {
 			"definition": "Iemand die zich aangetrokken voelt tot het andere geslacht.",
-			"name": "Hetero"
+			"name": "Hetero",
+			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Heterosexuality"
 		},
 		"gkKfqSoBJ7dUHtaKJ5Cfmk": {
 			"name": "Lesbisch",
-			"definition": "Iemand die zich aangetrokken voelt tot andere vrouwen of vrouwelijke mensen."
+			"definition": "Iemand die zich aangetrokken voelt tot andere vrouwen of vrouwelijke mensen.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Lesbian"
 		},
 		"a29qas632KmMpQ8T6arLxa": {
 			"definition": "Iemand die zich aangetrokken voelt tot meerdere geslachten.",
-			"name": "Biseksueel"
+			"name": "Biseksueel",
+			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Bisexuality"
 		},
 		"NC5wiUcxGavten9E8gw64n": {
 			"name": "Panseksueel",
-			"definition": "Iemand die zich aangetrokken voelt tot anderen, ongeacht hun geslacht."
+			"definition": "Iemand die zich aangetrokken voelt tot anderen, ongeacht hun geslacht.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Pansexuality"
 		},
 		"vu2pJzRmKRroA3GPZRsLxM": {
 			"name": "Heteroflexibel",
-			"definition": "Iemand die zich voornamelijk aangetrokken voelt tot het andere geslacht, maar soms ook tot hetzelfde geslacht."
+			"definition": "Iemand die zich voornamelijk aangetrokken voelt tot het andere geslacht, maar soms ook tot hetzelfde geslacht.",
+			"definitionLink": "https://www.merriam-webster.com/words-at-play/homoflexible-heteroflexible-meaning-slang-definition"
 		},
 		"ndxSn4BdATmm5droBw6iQG": {
 			"definition": "Iemand die zich voornamelijk aangetrokken voelt tot hetzelfde geslacht, maar soms ook tot het andere geslacht.",
-			"name": "Homoflexibel"
+			"name": "Homoflexibel",
+			"definitionLink": "https://www.merriam-webster.com/words-at-play/homoflexible-heteroflexible-meaning-slang-definition"
 		},
 		"rN7DERN6NdNQzNQ99pQUN4": {
 			"definition": "Iemand die bezig is met het onderzoeken van zijn of haar seksuele geaardheid.",
-			"name": "Vragen stellen"
+			"name": "Vragen stellen",
+			"definitionLink": "https://en.wikipedia.org/wiki/Questioning_%28sexuality_and_gender%29"
 		},
 		"UxY3zSKrwKpts6cfZ3wYjM": {
 			"name": "Homo",
-			"definition": "Iemand die zich aangetrokken voelt tot anderen van hetzelfde geslacht."
+			"definition": "Iemand die zich aangetrokken voelt tot anderen van hetzelfde geslacht.",
+			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Gay"
 		}
 	},
 	"ban-reason": {

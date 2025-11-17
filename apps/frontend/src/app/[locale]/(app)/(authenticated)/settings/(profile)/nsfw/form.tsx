@@ -111,7 +111,7 @@ export const NsfwForm: React.FC = () => {
 										<InputAutocomplete
 											{...field.props}
 											options={kinks.map(({ id, definitionLink }) => {
-												const { name, definition } = (tAttribute[
+												const { name } = (tAttribute[
 													id
 												] as AttributeTranslation<"kink">) ?? {
 													name: id
@@ -120,7 +120,6 @@ export const NsfwForm: React.FC = () => {
 												return {
 													key: id,
 													label: name,
-													definition,
 													definitionLink
 												};
 											})}

@@ -1215,75 +1215,93 @@
 		},
 		"879KtanHc548synGhcNE7J": {
 			"name": "アジェンダ",
-			"definition": "いかなる性別にも当てはまらない、または性別自体を持たない人。"
+			"definition": "いかなる性別にも当てはまらない、または性別自体を持たない人。",
+			"definitionLink": "https://nonbinary.wiki/wiki/Agender"
 		},
 		"RdMpwqWGydDgk9X2u32BBW": {
 			"name": "アンドロジナス",
-			"definition": "男性的要素と女性的要素を併せ持つ人。"
+			"definition": "男性的要素と女性的要素を併せ持つ人。",
+			"definitionLink": "https://nonbinary.wiki/wiki/Androgyny"
 		},
 		"YBkoUyfKJd6jJGwbekY3HN": {
 			"name": "バイジェンダー",
-			"definition": "2つの性別アイデンティティを持つ人。"
+			"definition": "2つの性別アイデンティティを持つ人。",
+			"definitionLink": "https://nonbinary.wiki/wiki/Bigender"
 		},
 		"2ETbJJJ3shADLphvncUwSL": {
 			"name": "シス女性",
-			"definition": "出生時に割り当てられた性別が女性であり、自身の性自認も女性である人。"
+			"definition": "出生時に割り当てられた性別が女性であり、自身の性自認も女性である人。",
+			"definitionLink": "https://nonbinary.wiki/wiki/Cisgender_women"
 		},
 		"GJitRtRoYWT6DfVasptK7N": {
 			"name": "シス男性",
-			"definition": "出生時に割り当てられた性別が男性であり、自身の性自認も男性である人。"
+			"definition": "出生時に割り当てられた性別が男性であり、自身の性自認も男性である人。",
+			"definitionLink": "https://nonbinary.wiki/wiki/Cisgender_men"
 		},
 		"aKEzfuPY6TaMkmnugQWLUd": {
 			"name": "ジェンダーフルイド",
-			"definition": "時間の経過とともに性自認が変化する人。"
+			"definition": "時間の経過とともに性自認が変化する人。",
+			"definitionLink": "https://nonbinary.wiki/wiki/Genderfluid"
 		},
 		"zMta3qtGyqW4hFdcDFUHik": {
 			"name": "ジェンダークィア",
-			"definition": "伝統的な男女の二元性に当てはまらない人。"
+			"definition": "伝統的な男女の二元性に当てはまらない人。",
+			"definitionLink": "https://nonbinary.wiki/wiki/Genderqueer"
 		},
 		"fAPzVgy7VyGPgAPhkwSkSU": {
 			"name": "ジェンダーノンコンフォーミング",
-			"definition": "社会的に期待される性別の役割や規範に従わない人。"
+			"definition": "社会的に期待される性別の役割や規範に従わない人。",
+			"definitionLink": "https://nonbinary.wiki/wiki/Gender_nonconformity"
 		},
 		"wJdnfUvuvACEWRSV4KBdzS": {
 			"name": "ヒジュラ",
-			"definition": "南アジアの文化における第3の性。"
+			"definition": "南アジアの文化における第3の性。",
+			"definitionLink": "https://nonbinary.wiki/wiki/Hijra"
 		},
 		"w3t9h2SyNhr2rBWouXim8c": {
 			"name": "インターセックス",
-			"definition": "典型的な男性または女性の身体的特徴に当てはまらない性特性を持って生まれた人。"
+			"definition": "典型的な男性または女性の身体的特徴に当てはまらない性特性を持って生まれた人。",
+			"definitionLink": "https://nonbinary.wiki/wiki/Intersex"
 		},
 		"QwXvxjisosKeTP97ouczoZ": {
 			"name": "ノンバイナリー",
-			"definition": "性自認が男女の二元に当てはまらない人。"
+			"definition": "性自認が男女の二元に当てはまらない人。",
+			"definitionLink": "https://nonbinary.wiki/wiki/Nonbinary"
 		},
 		"PFEmTKdmxAoPuxttYPwFZb": {
 			"name": "パンジェンダー",
-			"definition": "複数、またはあらゆる性別を自認する人。"
+			"definition": "複数、またはあらゆる性別を自認する人。",
+			"definitionLink": "https://nonbinary.wiki/wiki/Pangender"
 		},
 		"tyrdBY4Rbfitznr65hpRPR": {
 			"name": "トランスジェンダー",
-			"definition": "出生時に割り当てられた性別と自身の性自認が異なる人。"
+			"definition": "出生時に割り当てられた性別と自身の性自認が異なる人。",
+			"definitionLink": "https://nonbinary.wiki/wiki/Transgender"
 		},
 		"HWte4cB6TUzzXZoJeuxJuf": {
 			"name": "トランス女性",
-			"definition": "出生時に割り当てられた性別が男性であり、女性として自認する人。"
+			"definition": "出生時に割り当てられた性別が男性であり、女性として自認する人。",
+			"definitionLink": "https://nonbinary.wiki/wiki/Transgender_women"
 		},
 		"XTVsHQMWXiJGEc5xCf7RUb": {
 			"name": "トランス男性",
-			"definition": "出生時に割り当てられた性別が女性であり、男性として自認する人。"
+			"definition": "出生時に割り当てられた性別が女性であり、男性として自認する人。",
+			"definitionLink": "https://nonbinary.wiki/wiki/Transgender_men"
 		},
 		"rGFyY9WbvBBJSUAUpY5iUE": {
 			"name": "トランスフェミニン",
-			"definition": "出生時の性別が男性であり、女性的な性自認を持つ人。"
+			"definition": "出生時の性別が男性であり、女性的な性自認を持つ人。",
+			"definitionLink": "https://nonbinary.wiki/wiki/Transfeminine"
 		},
 		"CHkgoEoKzTSeVaLVByviBZ": {
 			"name": "トランスマスキュリン",
-			"definition": "出生時の性別が女性であり、男性的な性自認を持つ人。"
+			"definition": "出生時の性別が女性であり、男性的な性自認を持つ人。",
+			"definitionLink": "https://nonbinary.wiki/wiki/Transmasculine"
 		},
 		"JL8AaDCJMVApbEuAfwG86Y": {
 			"name": "ツースピリット",
-			"definition": "北米先住民族の文化における第3の性。"
+			"definition": "北米先住民族の文化における第3の性。",
+			"definitionLink": "https://nonbinary.wiki/wiki/Two-spirit"
 		},
 		"jAL62ePbibxaG4FPu7S8LG": {
 			"name": "その他"
@@ -2159,61 +2177,80 @@
 	},
 	"kink": {
 		"wZ4AXSmb3hufSDxGVEkoNo": {
-			"name": "ブラットテイマー"
+			"name": "ブラットテイマー",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Brat%20tamer,the%20first%20place)."
 		},
 		"sNdx2sNbnG5RmNZDtTVNCg": {
-			"name": "ブラット"
+			"name": "ブラット",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Brat,change%20this%20behavior."
 		},
 		"nEDgGpz9eHcomwcbsCaCZP": {
-			"name": "オーナー"
+			"name": "オーナー",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Owner,for%20the%20pet)."
 		},
 		"cKzdEwXmCY3naeYdHuowJ7": {
-			"name": "ペット"
+			"name": "ペット",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=its%20predator%20(you).-,Pet,play%20(puppy%2C%20kitten%2C%20etc.)%2C%20although%20that%20is%20not%20a%20strict%20necessity.,-Primal%20(Prey)"
 		},
 		"rGDn478bBZCDajvQRYAkLf": {
-			"name": "ダディ / マミー"
+			"name": "ダディ / マミー",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Daddy/Mommy,littles%20into%20obedience."
 		},
 		"yamRiwkspejx4mnzbtMdxN": {
-			"name": "ボーイ / ガール"
+			"name": "ボーイ / ガール",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=they%20consider%20degrading.-,Little,can%20go%20a%20lot%20deeper%20and%20sometimes%20rival%20those%20of%20slaves.,-Masochist"
 		},
 		"dXxUHt5t69rNeg2g7EE3bR": {
-			"name": "マスター / ミストレス"
+			"name": "マスター / ミストレス",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Master/Mistress,allow%20optimal%20servitude."
 		},
 		"pnebwXNPvGr56PEZwSRbHi": {
-			"name": "スレイブ"
+			"name": "スレイブ",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=a%20sexual%20context.-,Slave,primary%20focus%20in%20life%20and%20they%20rarely%20have%20limits%20for%20them.,-Submissive"
 		},
 		"2D9uSBJtgiRRfgdwXhyvm5": {
-			"name": "リガー"
+			"name": "リガー",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Rigger,at%20their%20mercy."
 		},
 		"werFoPERXyXK9J6roSzCXG": {
-			"name": "ロープバニー"
+			"name": "ロープバニー",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Rope%20bunny,their%20partner(s)."
 		},
 		"9civt22SpMr7z4nuPcuL3V": {
-			"name": "サディスト"
+			"name": "サディスト",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Sadist,a%20sexual%20context."
 		},
 		"HEPqnrrPsMqx9nQvDk5rHT": {
-			"name": "マゾヒスト"
+			"name": "マゾヒスト",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Masochist,levels%20of%20pain."
 		},
 		"ANgPHfEKZqZZUspmgfKjdf": {
-			"name": "エキシビショニスト"
+			"name": "エキシビショニスト",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Exhibitionist,to%20other%20people."
 		},
 		"Jyy988TnEA8J2FeG5ZSyDh": {
-			"name": "ヴォイイヤー"
+			"name": "ヴォイイヤー",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Voyeur,of%20other%20people."
 		},
 		"nSPurHtFp8dpHKvW4Ux9Q9": {
-			"name": "ハンター"
+			"name": "ハンター",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Primal%20(Hunter),its%20predator%20(you)."
 		},
 		"7WBnwThpTkEHyQHDZTbw47": {
-			"name": "プレイ"
+			"name": "プレイ",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Primal%20(Prey),from%20its%20predator."
 		},
 		"9mbQ4hxFEMBL4bHVYomPz3": {
-			"name": "デグレイダー"
+			"name": "デグレイダー",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Degrader,they%20consider%20degrading."
 		},
 		"RE2twp4mgYSXjhya266npP": {
-			"name": "デグラディー"
+			"name": "デグラディー",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Degradee,they%20consider%20degrading."
 		},
 		"FDiw6WUePpHDckmVG5coKF": {
-			"name": "エクスペリメンタリスト"
+			"name": "エクスペリメンタリスト",
+			"definitionLink": "https://bdsmtest.org/info#:~:text=Experimentalist,try%20them%20out."
 		}
 	},
 	"platform": {
@@ -2389,47 +2426,58 @@
 	"sexuality": {
 		"t5hhQahW7HQVKnhQX7xRqn": {
 			"name": "ストレート",
-			"definition": "異性に対してのみ性的に惹かれる人。"
+			"definition": "異性に対してのみ性的に惹かれる人。",
+			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Heterosexuality"
 		},
 		"gkKfqSoBJ7dUHtaKJ5Cfmk": {
 			"name": "レズビアン",
-			"definition": "女性や女性的な人に惹かれる女性。"
+			"definition": "女性や女性的な人に惹かれる女性。",
+			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Lesbian"
 		},
 		"UxY3zSKrwKpts6cfZ3wYjM": {
 			"name": "ゲイ",
-			"definition": "同性に惹かれる人。"
+			"definition": "同性に惹かれる人。",
+			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Gay"
 		},
 		"a29qas632KmMpQ8T6arLxa": {
 			"name": "バイセクシュアル",
-			"definition": "複数の性に惹かれる人。"
+			"definition": "複数の性に惹かれる人。",
+			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Bisexuality"
 		},
 		"NC5wiUcxGavten9E8gw64n": {
 			"name": "パンセクシュアル",
-			"definition": "相手の性別にかかわらず惹かれる人。"
+			"definition": "相手の性別にかかわらず惹かれる人。",
+			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Pansexuality"
 		},
 		"neMSEFPb9zvFRhoZLUobW9": {
 			"name": "アセクシュアル",
-			"definition": "性的魅力をほとんど、あるいはまったく感じない人。"
+			"definition": "性的魅力をほとんど、あるいはまったく感じない人。",
+			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Asexuality"
 		},
 		"wPATvG4t9CJhW2goGmBznU": {
 			"name": "デミセクシュアル",
-			"definition": "強い感情的つながりができてからでないと性的魅力を感じない人。"
+			"definition": "強い感情的つながりができてからでないと性的魅力を感じない人。",
+			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Demisexuality_and_Gray-Asexuality"
 		},
 		"vu2pJzRmKRroA3GPZRsLxM": {
 			"name": "ヘテロフレキシブル",
-			"definition": "主に異性に惹かれるが、時々同性にも惹かれる人。"
+			"definition": "主に異性に惹かれるが、時々同性にも惹かれる人。",
+			"definitionLink": "https://www.merriam-webster.com/words-at-play/homoflexible-heteroflexible-meaning-slang-definition"
 		},
 		"ndxSn4BdATmm5droBw6iQG": {
 			"name": "ホモフレキシブル",
-			"definition": "主に同性に惹かれるが、時々異性にも惹かれる人。"
+			"definition": "主に同性に惹かれるが、時々異性にも惹かれる人。",
+			"definitionLink": "https://www.merriam-webster.com/words-at-play/homoflexible-heteroflexible-meaning-slang-definition"
 		},
 		"3cWT9ob4r7Zpikkd9kVPEg": {
 			"name": "クィア",
-			"definition": "従来の枠組みに当てはまらない性的指向を持つ人。"
+			"definition": "従来の枠組みに当てはまらない性的指向を持つ人。",
+			"definitionLink": "https://en.wikipedia.org/wiki/Queer"
 		},
 		"rN7DERN6NdNQzNQ99pQUN4": {
 			"name": "クエスチョニング",
-			"definition": "自分の性的指向を模索中の人。"
+			"definition": "自分の性的指向を模索中の人。",
+			"definitionLink": "https://en.wikipedia.org/wiki/Questioning_%28sexuality_and_gender%29"
 		},
 		"4yJadhjWkDN6WSxbDcp33G": {
 			"name": "VRで探求中",
