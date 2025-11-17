@@ -43,7 +43,7 @@ export const NavigationLink: React.FC<NavigationLinkProps> = ({
 			type={onClick ? "button" : undefined}
 			onClick={onClick}
 		>
-			<div className="flex gap-2">
+			<div className="flex items-center gap-2">
 				{Icon && <Icon className="w-6" />}
 				{children}
 				{newBadge && (<NewBadge small white={active} />)}

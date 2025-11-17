@@ -58,7 +58,7 @@ export const NewBadge: FC<BadgeProps> = ({ className, children, ...props }) => {
 	const { t } = useTranslation();
 
 	return (
-		<Badge className={twMerge("uppercase", className)} {...props}>
+		<Badge className={twMerge("self-stretch uppercase", className)} {...props}>
 			{t("new")}
 		</Badge>
 	);
