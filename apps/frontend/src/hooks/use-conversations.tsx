@@ -4,8 +4,12 @@ import { Conversation } from "~/api/conversations";
 import { conversationFetcher, conversationKey, conversationsKey, invalidate, queryClient, useInfiniteQuery, useQuery } from "~/query";
 
 export function preloadConversations() {
+	const queryKey = conversationsKey();
+
+	if (queryClient.getQueryState(queryKey)) return;
+
 	return queryClient.prefetchInfiniteQuery({
-		queryKey: conversationsKey(),
+		queryKey,
 		queryFn: ({ pageParam }) => Conversation.list(pageParam),
 		initialPageParam: undefined as unknown as string
 	});
