@@ -11,11 +11,8 @@ import { Form } from "~/components/forms";
 import { FormInputMessages } from "~/components/forms/input-messages";
 import { InlineLink } from "~/components/inline-link";
 import { useInterval } from "~/hooks/use-interval";
-import { useNavigate } from "~/i18n";
 import { invalidate, mutate, sessionKey } from "~/query";
 import { urls } from "~/urls";
-
-import { next } from "./form";
 
 export interface VerificationFormProps {
 	loginId: string;
@@ -25,7 +22,6 @@ export interface VerificationFormProps {
 
 export const VerificationForm: FC<VerificationFormProps> = ({ loginId, email, onBack }) => {
 	const { t } = useTranslation();
-	const navigate = useNavigate();
 	const firstInputReference = useRef<HTMLInputElement>(null);
 	const [code, setCode] = useState("");
 	const [resendCountdown, setResendCountdown] = useState(60);
