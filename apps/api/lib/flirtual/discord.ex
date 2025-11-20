@@ -495,8 +495,7 @@ defmodule Flirtual.Discord do
           image:
             if(report.images !== [],
               do: %{
-                url:
-                  "https://pfpup.flirtu.al/#{report.images |> List.first() |> URI.encode()}"
+                url: "https://pfpup.flirtu.al/#{report.images |> List.first() |> URI.encode()}"
               },
               else: nil
             ),
