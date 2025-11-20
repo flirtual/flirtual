@@ -226,7 +226,7 @@ public class NotificationService extends FirebaseMessagingService {
     ShortcutInfoCompat.Builder shortcutBuilder = new ShortcutInfoCompat.Builder(this, shortcutId)
         .setLongLived(true)
         .setIntent(intent)
-        .setShortLabel(shortLabel.length() > 10 ? shortLabel.substring(0, 10) : shortLabel)
+        .setShortLabel(shortLabel)
         .setPerson(person);
 
     if (icon != null) {
