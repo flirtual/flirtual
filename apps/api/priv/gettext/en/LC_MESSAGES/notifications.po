@@ -37,7 +37,7 @@ msgstr "X (Twitter)"
 #: lib/flirtual/user/email.ex:14
 #, elixir-autogen, elixir-format
 msgid "suspended.subject"
-msgstr "Account disabled"
+msgstr "Your account has been disabled"
 
 #: lib/flirtual/user/email.ex:44
 #, elixir-autogen, elixir-format
