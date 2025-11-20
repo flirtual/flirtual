@@ -6,6 +6,7 @@ defmodule Flirtual.User.Email do
 
   def deliver(%User{} = user, :suspended, message) do
     language = user.preferences.language || "en"
+    message = message |> Plug.HTML.html_escape()
 
     Gettext.with_locale(language, fn ->
       %{
@@ -185,7 +186,7 @@ defmodule Flirtual.User.Email do
 
       target_user = Keyword.fetch!(options, :target_user)
       target_thumbnail = User.avatar_url(target_user, "icon")
-      target_display_name = User.display_name(target_user)
+      target_display_name = User.display_name(target_user) |> Plug.HTML.html_escape()
 
       action_url =
         Application.fetch_env!(:flirtual, :frontend_origin)
