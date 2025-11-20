@@ -6,6 +6,7 @@ import { HydratedRouter } from "react-router/dom";
 
 import { log } from "./log";
 import { preloadAll } from "./query";
+import { isRedirectError } from "./redirect";
 
 App.addListener("appUrlOpen", async (event) => {
 	const url = new URL(event.url);
@@ -35,6 +36,12 @@ flushSync(() => {
 			<StrictMode>
 				<HydratedRouter />
 			</StrictMode>,
+			{
+				onCaughtError: (reason) => {
+					if (isRedirectError(reason)) return;
+					console.error(reason);
+				}
+			}
 		);
 	});
 });
