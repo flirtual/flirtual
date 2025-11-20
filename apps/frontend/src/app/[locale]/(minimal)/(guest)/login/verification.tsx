@@ -78,7 +78,6 @@ export const VerificationForm: FC<VerificationFormProps> = ({ loginId, email, on
 
 				await invalidate({ refetchType: "none" });
 				await mutate(sessionKey(), value);
-				await navigate(next());
 			}}
 		>
 			{({ errors, submitting, setErrors }) => {
