@@ -7,7 +7,8 @@
 *.aab
 
 # Build metadata
-app/release/output-metadata.json
+app/**/release/output-metadata.json
+app/**/release/baselineProfiles/
 
 # Files for the ART/Dalvik VM
 *.dex
