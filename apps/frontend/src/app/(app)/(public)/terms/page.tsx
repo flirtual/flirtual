@@ -5,6 +5,8 @@ import type { ReactNode } from "react";
 import { InlineLink } from "~/components/inline-link";
 import { MachineTranslatedLegal } from "~/components/machine-translated";
 import { ModelCard } from "~/components/model-card";
+import { PolicyDates } from "~/components/policy-dates";
+import { siteOrigin } from "~/const";
 import { urls } from "~/urls";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -19,17 +21,16 @@ export default async function TermsPage() {
 	const t = await getTranslations();
 
 	return (
-		<ModelCard className="w-full desktop:max-w-2xl" title={t("terms_of_service")}>
+		<ModelCard className="select-children w-full desktop:max-w-2xl" title={t("terms_of_service")}>
 			<div className="flex flex-col gap-4">
+				<PolicyDates
+					introduced={new Date("2025-12-04")}
+					otherPolicy="/terms-20231011"
+				/>
 				<MachineTranslatedLegal
 					original={`${urls.resources.termsOfService}?language=en`}
 				/>
 				{t.rich("committee_trucks_welcome_approval", {
-					section: (children: ReactNode) => (
-						<section className="select-children flex flex-col gap-2">
-							{children}
-						</section>
-					),
 					h1: (children: ReactNode) => (
 						<h1 className="text-2xl font-semibold">{children}</h1>
 					),
@@ -48,6 +49,11 @@ export default async function TermsPage() {
 							{children}
 						</InlineLink>
 					),
+					payments: (children) => (
+						<InlineLink href={urls.resources.paymentTerms}>
+							{children}
+						</InlineLink>
+					),
 					contact: (children) => (
 						<InlineLink href={urls.resources.contact}>{children}</InlineLink>
 					),
@@ -57,7 +63,7 @@ export default async function TermsPage() {
 						</InlineLink>
 					),
 					ssltest: (children) => (
-						<InlineLink href="https://www.ssllabs.com/ssltest/analyze.html?d=flirtu.al&latest">
+						<InlineLink href={`https://www.ssllabs.com/ssltest/analyze.html?d=${siteOrigin}&latest`}>
 							{children}
 						</InlineLink>
 					)

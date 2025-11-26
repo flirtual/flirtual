@@ -165,6 +165,7 @@ export const urls = {
 		networkStatus: "https://status.flirtual.net",
 		press: "/press",
 		pressEmail: "mailto:press@flirtu.al",
+		privacyEmail: "mailto:privacy@flirtu.al",
 		branding: "/branding",
 		developers: "https://github.com/flirtual",
 		about: "/about",
