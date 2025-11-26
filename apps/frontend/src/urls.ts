@@ -202,6 +202,7 @@ export const urls = {
 		networkStatus: "https://status.flirtual.net",
 		press: "/press",
 		pressEmail: "mailto:press@flirtu.al",
+		privacyEmail: "mailto:privacy@flirtu.al",
 		branding: "/branding",
 		developers: "https://github.com/flirtual/flirtual",
 		translate: (locale?: Locale) => `https://hosted.weblate.org/projects/flirtual/flirtual${locale && locale !== defaultLocale ? `/${locale}` : ""}`,

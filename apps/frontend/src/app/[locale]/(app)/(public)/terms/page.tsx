@@ -4,6 +4,7 @@ import invariant from "tiny-invariant";
 import { InlineLink } from "~/components/inline-link";
 import { MachineTranslatedLegal } from "~/components/machine-translated";
 import { ModelCard } from "~/components/model-card";
+import { PolicyDates } from "~/components/policy-dates";
 import { siteOrigin } from "~/const";
 import { i18n } from "~/i18n";
 import { isLocale } from "~/i18n/languages";
@@ -26,18 +27,22 @@ export default function TermsPage() {
 	const { t } = useTranslation();
 
 	return (
-		<ModelCard className="w-full desktop:max-w-2xl" title={t("terms_of_service")}>
+		<ModelCard className="select-children w-full desktop:max-w-2xl" title={t("terms_of_service")}>
 			<div className="flex flex-col gap-4">
+				<PolicyDates
+					introduced={new Date("2025-12-04")}
+					otherPolicy="/terms-20231011"
+				/>
 				<MachineTranslatedLegal />
 				<Trans
 					components={{
-						section: <section className="select-children flex flex-col gap-2" />,
 						h1: <h1 className="text-2xl font-semibold" />,
 						p: <p className="select-text" />,
 						ol: <ol className="list-decimal pl-4" />,
 						li: <li />,
 						privacy: <InlineLink href={urls.resources.privacyPolicy} />,
 						guidelines: <InlineLink href={urls.resources.communityGuidelines} />,
+						payments: <InlineLink href={urls.resources.paymentTerms} />,
 						contact: <InlineLink href={urls.resources.contact} />,
 						"delete-account": <InlineLink href={urls.settings.deleteAccount} />,
 						ssltest: <InlineLink href={`https://www.ssllabs.com/ssltest/analyze.html?d=${siteOrigin}&latest`} />

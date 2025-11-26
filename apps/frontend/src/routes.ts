@@ -114,9 +114,9 @@ export default [
 				page("payments", "(app)/(public)/payments"),
 				page("press", "(app)/(public)/press"),
 				page("privacy", "(app)/(public)/privacy"),
-				page("privacy-20221022", "(app)/(public)/privacy-20221022"),
+				page("privacy-20230605", "(app)/(public)/privacy-20230605"),
 				page("terms", "(app)/(public)/terms"),
-				page("terms-20230530", "(app)/(public)/terms-20230530"),
+				page("terms-20231011", "(app)/(public)/terms-20231011"),
 			]),
 			route("*", "not-found")
 		])
