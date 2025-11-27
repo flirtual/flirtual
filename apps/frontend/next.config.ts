@@ -169,16 +169,6 @@ let nextConfig: NextConfig = {
 				permanent: true
 			},
 			{
-				source: "/terms-20230605",
-				destination: "/terms",
-				permanent: true
-			},
-			{
-				source: "/privacy-20230605",
-				destination: "/privacy",
-				permanent: true
-			},
-			{
 				source: "/.well-known/change-password",
 				destination: "/settings/password",
 				permanent: false
