@@ -25,7 +25,8 @@ export default async function PrivacyPage() {
 		>
 			<p className="font-semibold">
 				This policy goes into effect December 4, 2025. Please view the
-				<InlineLink href="/en/privacy-20230605">current version of this policy</InlineLink>
+				{" "}
+				<InlineLink href="/privacy-20230605">current version of this policy</InlineLink>
 				.
 			</p>
 			<MachineTranslatedLegal original={urls.resources.privacyPolicy} />
@@ -35,6 +36,7 @@ export default async function PrivacyPage() {
 				),
 				p: (children) => <p className="select-children">{children}</p>,
 				strong: (children) => <strong>{children}</strong>,
+				br: () => <br />,
 				settings: (children) => (
 					<InlineLink href={urls.settings.list()}>{children}</InlineLink>
 				),

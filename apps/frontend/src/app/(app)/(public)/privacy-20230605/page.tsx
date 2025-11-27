@@ -32,7 +32,8 @@ export default async function PrivacyPage() {
 		>
 			<p className="font-semibold">
 				This policy is in effect June 5, 2023&thinsp;–&thinsp;December 4, 2025. Please view the
-				<InlineLink href="/en/privacy">upcoming version of this policy</InlineLink>
+				{" "}
+				<InlineLink href={urls.resources.privacyPolicy}>upcoming version of this policy</InlineLink>
 				.
 			</p>
 			<p>

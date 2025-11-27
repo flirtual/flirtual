@@ -29,7 +29,8 @@ export default async function TermsPage() {
 		>
 			<p className="font-semibold">
 				This policy is in effect October 11, 2023&thinsp;–&thinsp;December 4, 2025. Please view the
-				<InlineLink href="/en/terms">upcoming version of this policy</InlineLink>
+				{" "}
+				<InlineLink href={urls.resources.termsOfService}>upcoming version of this policy</InlineLink>
 				.
 			</p>
 			<p>

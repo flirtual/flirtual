@@ -24,7 +24,8 @@ export default async function TermsPage() {
 			<div className="flex flex-col gap-4">
 				<p className="font-semibold">
 					This policy goes into effect December 4, 2025. Please view the
-					<InlineLink href="/en/terms-20231011">current version of this policy</InlineLink>
+					{" "}
+					<InlineLink href="/terms-20231011">current version of this policy</InlineLink>
 					.
 				</p>
 				<MachineTranslatedLegal
