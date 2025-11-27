@@ -3,7 +3,6 @@ import { getTranslations } from "next-intl/server";
 
 import { InlineLink } from "~/components/inline-link";
 import { ModelCard } from "~/components/model-card";
-import { PolicyDates } from "~/components/policy-dates";
 import { siteOrigin } from "~/const";
 import { urls } from "~/urls";
 
@@ -28,11 +27,11 @@ export default async function TermsPage() {
 			containerProps={{ className: "gap-4" }}
 			title={t(titleKey)}
 		>
-			<PolicyDates
-				introduced={new Date("2023-10-11")}
-				otherPolicy={urls.resources.termsOfService}
-				superseded={superseded}
-			/>
+			<p className="font-semibold">
+				This policy is in effect October 11, 2023&thinsp;–&thinsp;December 4, 2025. Please view the
+				<InlineLink href="/en/terms">upcoming version of this policy</InlineLink>
+				.
+			</p>
 			<p>
 				This service (the &apos;Service&apos;) is operated by ROVR LABS INC.,
 				doing business as Flirtual (&apos;us&apos;, &apos;we&apos;, or

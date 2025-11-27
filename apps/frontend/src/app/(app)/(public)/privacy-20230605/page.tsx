@@ -3,7 +3,6 @@ import { getTranslations } from "next-intl/server";
 
 import { InlineLink } from "~/components/inline-link";
 import { ModelCard } from "~/components/model-card";
-import { PolicyDates } from "~/components/policy-dates";
 import { urls } from "~/urls";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -31,11 +30,11 @@ export default async function PrivacyPage() {
 			containerProps={{ className: "gap-4" }}
 			title={t(titleKey)}
 		>
-			<PolicyDates
-				introduced={new Date("2023-06-05")}
-				otherPolicy={urls.resources.privacyPolicy}
-				superseded={superseded}
-			/>
+			<p className="font-semibold">
+				This policy is in effect June 5, 2023&thinsp;–&thinsp;December 4, 2025. Please view the
+				<InlineLink href="/en/privacy">upcoming version of this policy</InlineLink>
+				.
+			</p>
 			<p>
 				Your username, your display name, your profile pictures, your bio, your
 				age, your gender, your matchmaking preferences, your personal interest

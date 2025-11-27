@@ -4,7 +4,6 @@ import { getTranslations } from "next-intl/server";
 import { InlineLink } from "~/components/inline-link";
 import { MachineTranslatedLegal } from "~/components/machine-translated";
 import { ModelCard } from "~/components/model-card";
-import { PolicyDates } from "~/components/policy-dates";
 import { urls } from "~/urls";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -24,17 +23,18 @@ export default async function PrivacyPage() {
 			containerProps={{ className: "gap-4" }}
 			title={t("privacy_policy")}
 		>
-			<PolicyDates
-				introduced={new Date("2025-12-04")}
-				otherPolicy="/privacy-20230605"
-			/>
+			<p className="font-semibold">
+				This policy goes into effect December 4, 2025. Please view the
+				<InlineLink href="/en/privacy-20230605">current version of this policy</InlineLink>
+				.
+			</p>
 			<MachineTranslatedLegal original={urls.resources.privacyPolicy} />
 			{t.rich("sticks_protect_zinc_explain", {
-				h1: (children: ReactNode) => (
+				h1: (children) => (
 					<h1 className="text-2xl font-semibold">{children}</h1>
 				),
-				p: (children: ReactNode) => <p className="select-children">{children}</p>,
-				strong: (children: ReactNode) => <strong>{children}</strong>,
+				p: (children) => <p className="select-children">{children}</p>,
+				strong: (children) => <strong>{children}</strong>,
 				settings: (children) => (
 					<InlineLink href={urls.settings.list()}>{children}</InlineLink>
 				),

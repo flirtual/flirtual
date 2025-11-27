@@ -5,7 +5,6 @@ import type { ReactNode } from "react";
 import { InlineLink } from "~/components/inline-link";
 import { MachineTranslatedLegal } from "~/components/machine-translated";
 import { ModelCard } from "~/components/model-card";
-import { PolicyDates } from "~/components/policy-dates";
 import { siteOrigin } from "~/const";
 import { urls } from "~/urls";
 
@@ -23,10 +22,11 @@ export default async function TermsPage() {
 	return (
 		<ModelCard className="select-children w-full desktop:max-w-2xl" title={t("terms_of_service")}>
 			<div className="flex flex-col gap-4">
-				<PolicyDates
-					introduced={new Date("2025-12-04")}
-					otherPolicy="/terms-20231011"
-				/>
+				<p className="font-semibold">
+					This policy goes into effect December 4, 2025. Please view the
+					<InlineLink href="/en/terms-20231011">current version of this policy</InlineLink>
+					.
+				</p>
 				<MachineTranslatedLegal
 					original={`${urls.resources.termsOfService}?language=en`}
 				/>
