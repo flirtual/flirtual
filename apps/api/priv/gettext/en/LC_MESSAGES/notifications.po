@@ -74,12 +74,12 @@ msgstr "Password reset request"
 #: lib/flirtual/user/email.ex:18
 #, elixir-autogen, elixir-format
 msgid "suspended.body_html"
-msgstr "<p>Our moderation team has found your Flirtual account in violation of our rules.</p>\n\n<p><strong>Reason</strong>: %{message}</p>\n\n<p>Your account data will be kept for 30 days. Please reply to this message within 30 days if you would like to appeal this moderation decision to unban your account, or if you would like us to delete your account immediately. If you have not received a response to your appeal within 30 days, it has been reviewed and denied.</p><p>The Flirtual Team</p>"
+msgstr "<p>Our moderation team has found your Flirtual account in violation of our rules.</p>\n\n<p><strong>Reason</strong>: %{message}</p>\n\n<p>Your account data will be kept for 30 days, and then deleted as described in our Privacy Policy.</p><p>Please reply to this message within 30 days if you would like to appeal this moderation decision to unban your account. We review all appeals, and will notify you if your appeal is accepted. If you do not hear from us within 30 days, our moderation decision has been upheld.</p><p>The Flirtual Team</p>"
 
 #: lib/flirtual/user/email.ex:17
 #, elixir-autogen, elixir-format
 msgid "suspended.body_text"
-msgstr "Our moderation team has found your Flirtual account in violation of our rules.\n\nReason: %{message}\n\nYour account data will be kept for 30 days. Please reply to this message within 30 days if you would like to appeal this moderation decision to unban your account, or if you would like us to delete your account immediately. If you have not received a response to your appeal within 30 days, it has been reviewed and denied.\n\nThe Flirtual Team"
+msgstr "Our moderation team has found your Flirtual account in violation of our rules.\n\nReason: %{message}\n\nYour account data will be kept for 30 days, and then deleted as described in our Privacy Policy.\n\nPlease reply to this message within 30 days if you would like to appeal this moderation decision to unban your account. We review all appeals, and will notify you if your appeal is accepted. If you do not hear from us within 30 days, our moderation decision has been upheld.\n\nThe Flirtual Team"
 
 #: lib/flirtual/user/email.ex:54
 #: lib/flirtual/user/email.ex:99
