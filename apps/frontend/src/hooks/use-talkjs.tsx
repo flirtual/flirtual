@@ -30,6 +30,7 @@ import EmojiPatient from "virtual:remote/static/emoji/patient.png";
 import EmojiPride from "virtual:remote/static/emoji/pride.png";
 import EmojiRose from "virtual:remote/static/emoji/rose.png";
 import EmojiThink from "virtual:remote/static/emoji/think.png";
+import EmojiThumbsup from "virtual:remote/static/emoji/thumbsup.png";
 import EmojiYonk from "virtual:remote/static/emoji/yonk.png";
 
 import { talkjsAppId } from "~/const";
@@ -153,6 +154,7 @@ const emojis: Array<{ name: string; url: string; hidden?: boolean }> = [
 	{ name: "pride", url: EmojiPride },
 	{ name: "rose", url: EmojiRose },
 	{ name: "think", url: EmojiThink },
+	{ name: "thumbsup", url: EmojiThumbsup },
 	{ name: "yonk", url: EmojiYonk }
 ];
 
