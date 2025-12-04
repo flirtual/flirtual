@@ -27,6 +27,9 @@ kill_timeout = 5
   [[services.ports]]
     port = 443
     handlers = ["tls", "http"]
+    [services.ports.http_options]
+      h2_backend = true
+
   [services.concurrency]
     type = "connections"
     hard_limit = 1000
