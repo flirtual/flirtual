@@ -4,7 +4,7 @@ defmodule Flirtual.User.Profile.Block do
   import Ecto.Query
   import Ecto.Changeset
 
-  alias Flirtual.{ObanWorkers, Repo, User}
+  alias Flirtual.{Matchmaking, ObanWorkers, Repo, Subscription, User}
   alias Flirtual.User.Profile
   alias Flirtual.User.Profile.{Block, LikesAndPasses, Prospect}
 
@@ -17,27 +17,27 @@ defmodule Flirtual.User.Profile.Block do
     timestamps(updated_at: false)
   end
 
-  def create(user: %User{id: user_id}, target: %User{id: target_id}) do
-    create(user_id: user_id, target_id: target_id)
-  end
+  def create(user: %User{} = user, target: %User{id: target_id}) do
+    premium = Subscription.active?(user.subscription)
 
-  def create(user_id: user_id, target_id: target_id) do
     prospect_kinds =
       Prospect
-      |> where(profile_id: ^user_id, target_id: ^target_id, completed: false)
+      |> where(profile_id: ^user.id, target_id: ^target_id, completed: false)
       |> select([p], p.kind)
       |> Repo.all()
+      |> Enum.filter(fn kind ->
+        premium or Matchmaking.get_queue_fields(user.profile, kind).passes_left > 0
+      end)
 
     Repo.transaction(fn repo ->
       with {:ok, item} <-
              %Block{}
-             |> change(%{profile_id: user_id, target_id: target_id})
+             |> change(%{profile_id: user.id, target_id: target_id})
              |> unsafe_validate_unique([:profile_id, :target_id], repo)
              |> Repo.insert(),
-           {:ok, _} <- LikesAndPasses.delete_all(profile_id: user_id, target_id: target_id),
-           {:ok, _} <- Prospect.delete_all(profile_id: user_id, target_id: target_id),
-           :ok <- increment_passes(user_id, prospect_kinds),
-           {:ok, _} <- ObanWorkers.update_user([user_id, target_id], [:elasticsearch, :talkjs]) do
+           {:ok, _} <- LikesAndPasses.delete_all(profile_id: user.id, target_id: target_id),
+           :ok <- handle_prospects(user.id, target_id, prospect_kinds),
+           {:ok, _} <- ObanWorkers.update_user([user.id, target_id], [:elasticsearch, :talkjs]) do
         item
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -46,9 +46,13 @@ defmodule Flirtual.User.Profile.Block do
     end)
   end
 
-  defp increment_passes(_, []), do: :ok
+  defp handle_prospects(_, _, []), do: :ok
 
-  defp increment_passes(user_id, kinds) do
+  defp handle_prospects(user_id, target_id, kinds) do
+    Prospect
+    |> where([p], p.profile_id == ^user_id and p.target_id == ^target_id and p.kind in ^kinds)
+    |> Repo.update_all(set: [completed: true])
+
     queue_increments =
       Enum.map(kinds, fn
         :love -> {:queue_love_passes, 1}
