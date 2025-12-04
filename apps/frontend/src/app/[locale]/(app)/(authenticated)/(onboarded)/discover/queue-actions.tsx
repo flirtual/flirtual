@@ -4,6 +4,7 @@ import ms from "ms.macro";
 import { useCallback, useState } from "react";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
+import { twMerge } from "tailwind-merge";
 
 import type {
 	ProspectKind,
@@ -16,6 +17,7 @@ import { useGlobalEventListener } from "~/hooks/use-event-listener";
 import { useTimeout } from "~/hooks/use-interval";
 import { useQueue } from "~/hooks/use-queue";
 import { useSession } from "~/hooks/use-session";
+import { useRelationship } from "~/hooks/use-user";
 
 function Key({ label }: { label: string }) {
 	return (
@@ -70,11 +72,15 @@ export const QueueActions: FC<{
 	const { t } = useTranslation();
 	const {
 		previous,
+		next: [current],
 		like,
 		pass,
 		undo,
 		mutating
 	} = useQueue(mode);
+
+	const relationship = useRelationship(explicitUserId ?? current!);
+	const blocked = relationship?.blocked ?? false;
 
 	const [didAction, setDidAction] = useState(false);
 
@@ -92,11 +98,11 @@ export const QueueActions: FC<{
 					return;
 
 				if (event.key === "h" && previous) void undo();
-				if (event.key === "j") void like();
-				if (event.key === "k") void like("friend");
+				if (event.key === "j" && !blocked) void like();
+				if (event.key === "k" && !blocked) void like("friend");
 				if (event.key === "l") void pass();
 			},
-			[like, pass, undo, previous, tooFast]
+			[like, pass, undo, previous, tooFast, blocked]
 		)
 	);
 
@@ -131,8 +137,11 @@ export const QueueActions: FC<{
 							<TooltipTrigger asChild>
 								<m.button
 									id="like-button"
-									className="flex items-center justify-center rounded-full border border-black-50/25 bg-brand-gradient p-4 shadow-brand-1 transition-all disabled:brightness-90 dark:disabled:brightness-[80%]"
-									disabled={tooFast}
+									className={twMerge(
+										"flex items-center justify-center rounded-full border border-black-50/25 bg-brand-gradient p-4 shadow-brand-1 transition-all disabled:brightness-90 dark:disabled:brightness-[80%]",
+										blocked && "grayscale-[0.75]"
+									)}
+									disabled={tooFast || blocked}
 									type="button"
 									whileHover={{ scale: 1.05 }}
 									whileTap={{ scale: 0.95 }}
@@ -154,8 +163,11 @@ export const QueueActions: FC<{
 						<TooltipTrigger asChild>
 							<m.button
 								id="friend-button"
-								className="flex items-center justify-center rounded-full border border-black-50/25 bg-gradient-to-tr from-theme-friend-1 to-theme-friend-2 p-4 shadow-brand-1 transition-all disabled:brightness-90 dark:disabled:brightness-[80%]"
-								disabled={tooFast}
+								className={twMerge(
+									"flex items-center justify-center rounded-full border border-black-50/25 bg-gradient-to-tr from-theme-friend-1 to-theme-friend-2 p-4 shadow-brand-1 transition-all disabled:brightness-90 dark:disabled:brightness-[80%]",
+									blocked && "grayscale-[0.75]"
+								)}
+								disabled={tooFast || blocked}
 								type="button"
 								whileHover={{ scale: 1.05 }}
 								whileTap={{ scale: 0.95 }}
