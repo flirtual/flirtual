@@ -136,7 +136,8 @@ config :flirtual, FlirtualWeb.Endpoint,
   ]
 
 config :flirtual, FlirtualWeb.Session,
-  same_site: if(config_env() == :dev, do: "None", else: "Lax")
+  same_site: if(config_env() == :dev, do: "None", else: "Lax"),
+  secure: origin.scheme == "https"
 
 if config_env() == :prod do
   app_name =
