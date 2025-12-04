@@ -118,7 +118,7 @@ i18n
 		defaultNS: defaultNamespace,
 
 		interpolation: {
-			escapeValue: true
+			escapeValue: false
 		},
 	});
 

@@ -11,6 +11,7 @@ import { useSession } from "~/hooks/use-session";
 import { useRelationship, useUser } from "~/hooks/use-user";
 import { attributeFetcher, attributeKey, preload, relationshipFetcher, relationshipKey, userFetcher, userKey } from "~/query";
 import { urls } from "~/urls";
+import { escapeHtml } from "~/utilities";
 
 import { CopyClick } from "../copy-click";
 import { DiscordIcon, VRChatOutlineIcon } from "../icons";
@@ -183,6 +184,7 @@ export const Profile = withSuspense(({
 								<div className="flex items-center gap-2">
 									<DiscordIcon className="size-6 shrink-0" />
 									<Trans
+										shouldUnescape
 										components={{
 											copy: (
 												<CopyClick
@@ -198,7 +200,7 @@ export const Profile = withSuspense(({
 											)
 										}}
 										i18nKey="that_proud_butterfly_find"
-										values={{ name: discordConnection?.displayName || user.profile.discord! }}
+										values={{ name: escapeHtml(discordConnection?.displayName || user.profile.discord!) }}
 									/>
 									{discordConnection && (
 										<ProfileVerificationBadge
@@ -217,6 +219,7 @@ export const Profile = withSuspense(({
 									<div className="flex items-center gap-2">
 										<VRChatOutlineIcon className="size-6 shrink-0 text-black-90" />
 										<Trans
+											shouldUnescape
 											components={{
 												copy: (
 													<InlineLink
@@ -227,7 +230,7 @@ export const Profile = withSuspense(({
 												)
 											}}
 											i18nKey="zany_salty_cheetah_lead"
-											values={{ name }}
+											values={{ name: escapeHtml(name) }}
 										/>
 									</div>
 								);
