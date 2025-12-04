@@ -318,23 +318,17 @@ defmodule FlirtualWeb.UsersController do
     if is_nil(target) or Policy.cannot?(conn, :read, target) do
       {:error, {:forbidden, :cannot_block_user, %{user_id: user_id}}}
     else
-      Repo.transaction(fn ->
-        options = [user: conn.assigns[:session].user, target: target]
+      options = [user: conn.assigns[:session].user, target: target]
 
-        with nil <- Block.get(options),
-             {:ok, item} <- Block.create(options) do
-          conn |> json(item)
-        else
-          %Block{} ->
-            Repo.rollback({:bad_request, "Profile already blocked", %{user_id: user_id}})
+      case Block.get(options) do
+        nil ->
+          with {:ok, item} <- Block.create(options) do
+            conn |> json(item)
+          end
 
-          {:error, reason} ->
-            Repo.rollback(reason)
-
-          reason ->
-            Repo.rollback(reason)
-        end
-      end)
+        %Block{} ->
+          {:error, {:bad_request, :profile_already_blocked, %{user_id: user_id}}}
+      end
     end
   end
 
@@ -344,20 +338,17 @@ defmodule FlirtualWeb.UsersController do
     if is_nil(target) or Policy.cannot?(conn, :read, target) do
       {:error, {:forbidden, :cannot_unblock_user, %{user_id: user_id}}}
     else
-      Repo.transaction(fn ->
-        with %Block{} = item <-
-               Block.get(
-                 user: conn.assigns[:session].user,
-                 target: target
-               ),
-             {:ok, item} <- Block.delete(item) do
-          conn |> json(item)
-        else
-          nil -> {:error, {:bad_request, :profile_not_blocked, %{user_id: user_id}}}
-          {:error, reason} -> Repo.rollback(reason)
-          reason -> Repo.rollback(reason)
-        end
-      end)
+      options = [user: conn.assigns[:session].user, target: target]
+
+      case Block.get(options) do
+        %Block{} = item ->
+          with {:ok, item} <- Block.delete(item) do
+            conn |> json(item)
+          end
+
+        nil ->
+          {:error, {:bad_request, :profile_not_blocked, %{user_id: user_id}}}
+      end
     end
   end
 
