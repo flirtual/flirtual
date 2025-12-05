@@ -6,7 +6,6 @@
 		"typegen": "wrangler types --include-runtime false && react-router typegen",
 		"build": "rm -rf .sonda && pnpm typegen && react-router build",
 		"build:preview": "sh -c 'name=${1:-$(whoami)} && VITE_PREVIEW=\"$name\" pnpm -s build --mode=\"$name\"' --",
-		"release": "sh -c 'branch=${WORKERS_CI_BRANCH:-$(git rev-parse --abbrev-ref HEAD)}; [ -z \"$branch\" ] || [ \"$branch\" = \"HEAD\" ] && { echo \"Error: No branch detected or in detached HEAD state\" >&2; exit 1; }; [ \"$branch\" = \"production\" ] && pnpm production || ([ \"$branch\" = \"main\" ] && pnpm canary || pnpm preview \"$branch\")'",
 		"production": "pnpm -s build --mode=production && wrangler deploy --env=production -c ./dist/client/wrangler.json",
 		"preview": "sh -c 'name=${1:-$(whoami)} && pnpm -s build:preview $name && wrangler versions upload --env=canary -c ./dist/client/wrangler.json --preview-alias=\"$name\"' --",
 		"canary": "pnpm -s build:preview canary && wrangler deploy --env=canary -c ./dist/client/wrangler.json",
