@@ -1,0 +1,7 @@
+/*
+  x-dns-prefetch-control: on
+  strict-transport-security: max-age=63072000; includeSubDomains; preload
+  x-content-type-options: nosniff
+  referrer-policy: strict-origin-when-cross-origin
+  permissions-policy: autoplay=(self), fullscreen=(self), idle-detection=(self), picture-in-picture=(self), publickey-credentials-create=(self), publickey-credentials-get=(self), web-share=(self), camera=(), microphone=(), geolocation=(), browsing-topics=()
+  content-security-policy: default-src 'self'; script-src 'self' 'unsafe-inline' cdn.jsdelivr.net/npm/@tailwindcss/browser@4 challenges.cloudflare.com static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' blob: data: static.flirtual.com; connect-src 'self' cloudflareinsights.com static.cloudflareinsights.com static.flirtual.com; font-src 'self'; object-src 'self' data:; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; frame-src challenges.cloudflare.com; upgrade-insecure-requests

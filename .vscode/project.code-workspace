@@ -43,6 +43,10 @@
 		{
 			"name": "👷 Trace",
 			"path": "../apps/trace"
+		},
+		{
+			"name": "🚧 Maintenance",
+			"path": "../apps/maintenance"
 		}
 	],
 	"settings": {

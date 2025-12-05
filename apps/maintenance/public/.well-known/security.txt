@@ -1,0 +1,4 @@
+Canonical: https://flirtu.al/.well-known/security.txt
+
+Contact: https://hello.flirtu.al/support/tickets/new
+Contact: https://github.com/flirtual/flirtual/security/advisories/new

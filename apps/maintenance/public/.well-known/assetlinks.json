@@ -1,0 +1,27 @@
+[
+	{
+		"relation": [
+			"delegate_permission/common.get_login_creds"
+		],
+		"target": {
+			"namespace": "web",
+			"site": "https://flirtu.al"
+		}
+	},
+	{
+		"relation": [
+			"delegate_permission/common.handle_all_urls",
+			"delegate_permission/common.get_login_creds"
+		],
+		"target": {
+			"namespace": "android_app",
+			"package_name": "zone.homie.flirtual.pwa",
+			"sha256_cert_fingerprints": [
+				"E8:A1:BC:8D:DD:4E:C5:2B:55:39:A0:1B:29:A4:48:32:6A:F0:43:7B:CF:39:7E:4A:65:48:6F:3F:28:6C:BB:CD",
+				"DB:80:DC:6B:46:52:7F:AF:33:26:BA:3B:EC:6B:02:72:BC:13:6A:09:64:D4:92:A1:B7:4D:13:42:A3:62:29:74",
+				"D8:88:1F:A0:B2:E2:91:4C:A1:94:F4:2D:7F:E0:89:D9:FA:E7:0F:83:77:D7:DC:15:6C:C4:E3:17:3B:F6:CE:5B",
+				"7B:B2:77:FE:7C:FF:D4:98:6D:97:92:04:A7:05:05:80:4C:CE:34:A3:BD:F4:7B:79:45:58:D9:5B:96:CE:7D:21"
+			]
+		}
+	}
+]

@@ -1,0 +1,23 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "maintenance",
+  "compatibility_date": "2025-12-02",
+  "routes": [],
+  "main": "./src/index.ts",
+  "assets": {
+    "binding": "ASSETS",
+    "run_worker_first": [
+      "/*",
+      "!/security.txt",
+      "!/ios",
+      "!/discord",
+      "!/club",
+      "!/speeddate",
+    ],
+    "not_found_handling": "single-page-application",
+    "directory": "./public",
+  },
+  "observability": {
+    "enabled": true,
+  },
+}

@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Flirtual</title>
+		<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+	</head>
+	<body class="bg-[#111111] flex flex-col items-center justify-center min-h-screen p-4 text-white">
+		<main class="flex flex-col gap-8 max-w-md text-center">
+			<img
+				src="https://static.flirtual.com/b25d8377-7035-4a23-84f1-faa095fa8104"
+				alt="Flirtual's mascot"
+				class="w-24 pettable mx-auto"
+			/>
+			<div class="flex flex-col gap-4">
+				<h1 class="font-semibold">Flirtual is temporarily offline for scheduled maintenance</h1>
+				<div class="flex flex-col gap-2">
+					<p>
+						We're upgrading some things, but we'll be right back! Look forward to major performance improvements and bug
+						fixes.
+					</p>
+					<p>Thank you for your patience &lt;3</p>
+				</div>
+			</div>
+			<footer class="flex flex-col items-center">
+				<a href="/">
+					<img class="w-48" src="https://static.flirtual.com/flirtual-white.png" alt="Flirtual" />
+				</a>
+				<div class="flex flex-col items-center justify-center">
+					<span>&copy; 2025 Flirtual</span>
+					<div>
+						<a href="/terms">Terms of Service</a> |
+						<a href="/privacy">Privacy Policy</a>
+					</div>
+				</div>
+			</footer>
+		</main>
+
+		<style type="text/tailwindcss">
+			a {
+				color: #fffafa;
+			}
+
+			footer {
+				text-align: center;
+			}
+
+			@layer components {
+				.pettable {
+					cursor: grab;
+					user-select: none;
+					transform-origin: bottom center;
+					@apply transition-transform;
+				}
+
+				.pettable:active {
+					cursor: grabbing;
+					@apply scale-y-90 scale-x-110;
+				}
+			}
+		</style>
+	</body>
+</html>
