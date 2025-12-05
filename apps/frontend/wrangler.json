@@ -9,7 +9,7 @@
 		"production": {
 			"routes": [
 				{
-					"pattern": "temp.flirtual.com",
+					"pattern": "flirtu.al",
 					"custom_domain": true
 				}
 			],

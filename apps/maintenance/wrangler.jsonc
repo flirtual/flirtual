@@ -3,6 +3,7 @@
   "name": "maintenance",
   "compatibility_date": "2025-12-02",
   "routes": [],
+  "preview_urls": false,
   "main": "./src/index.ts",
   "assets": {
     "binding": "ASSETS",
