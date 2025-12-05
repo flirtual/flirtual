@@ -19,12 +19,16 @@ export const redirects = [
 		destination: "/sign-up"
 	},
 	{
-		source: "/homies",
-		destination: "/discover/homies"
+		source: "/discover/homies",
+		destination: "/homies"
 	},
 	{
 		source: "/browse",
-		destination: "/discover/dates"
+		destination: "/dates"
+	},
+	{
+		source: "/discover/dates",
+		destination: "/dates"
 	},
 	{
 		source: "/discord",
@@ -79,11 +83,11 @@ export const redirects = [
 		destination: "/guides/mental-health"
 	},
 	{
-		source: "/terms-20230605",
+		source: "/terms-20230530",
 		destination: "/terms"
 	},
 	{
-		source: "/privacy-20230605",
+		source: "/privacy-20221022",
 		destination: "/privacy"
 	},
 	{
