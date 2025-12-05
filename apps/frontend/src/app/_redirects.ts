@@ -7,6 +7,10 @@ import { urls } from "~/urls";
 
 export const redirects = [
 	{
+		source: "/home",
+		destination: "/en/"
+	},
+	{
 		source: "/register",
 		destination: "/sign-up"
 	},
