@@ -6,6 +6,31 @@
 	"compatibility_date": "2025-09-01",
 	"compatibility_flags": [],
 	"env": {
+		"production": {
+			"routes": [
+				{
+					"pattern": "temp.flirtual.com",
+					"custom_domain": true
+				}
+			],
+			"queues": {
+				"consumers": [
+					{
+						"queue": "pfp-upload"
+					}
+				]
+			},
+			"r2_buckets": [
+				{
+					"binding": "SOURCE_BUCKET",
+					"bucket_name": "pfpup"
+				},
+				{
+					"binding": "DESTINATION_BUCKET",
+					"bucket_name": "pfp"
+				}
+			]
+		},
 		"canary": {
 			"routes": [
 				{
