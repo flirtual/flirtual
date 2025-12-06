@@ -109,6 +109,8 @@ export function useQueue(mode: ProspectKind = "love") {
 	}>({
 		mutationKey: queryKey,
 		onMutate: ({ action, userId }) => {
+			setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 0);
+
 			if (userId !== current)
 				return remove(userId);
 
@@ -188,9 +190,9 @@ export function useQueue(mode: ProspectKind = "love") {
 		error,
 		previous,
 		next,
-		like: (kind: ProspectKind = mode, userId: string = current!) => mutateAsync({ action: "like", userId, kind }).then(() => window.scrollTo({ top: 0, behavior: "smooth" })),
-		pass: (kind: ProspectKind = mode, userId: string = current!) => mutateAsync({ action: "pass", userId, kind }).then(() => window.scrollTo({ top: 0, behavior: "smooth" })),
-		undo: (kind: ProspectKind = mode) => mutateAsync({ action: "undo", userId: current!, kind }).then(() => window.scrollTo({ top: 0, behavior: "smooth" })),
+		like: (kind: ProspectKind = mode, userId: string = current!) => mutateAsync({ action: "like", userId, kind }),
+		pass: (kind: ProspectKind = mode, userId: string = current!) => mutateAsync({ action: "pass", userId, kind }),
+		undo: (kind: ProspectKind = mode) => mutateAsync({ action: "undo", userId: current!, kind }),
 		invalidate: () => invalidateQueue(mode),
 		mutating,
 		forward,
