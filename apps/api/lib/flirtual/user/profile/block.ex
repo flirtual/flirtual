@@ -36,7 +36,7 @@ defmodule Flirtual.User.Profile.Block do
              |> unsafe_validate_unique([:profile_id, :target_id], repo)
              |> Repo.insert(),
            {:ok, _} <- LikesAndPasses.delete_all(profile_id: user.id, target_id: target_id),
-           :ok <- handle_prospects(user.id, target_id, prospect_kinds),
+           :ok <- handle_prospects(user, target_id, prospect_kinds),
            {:ok, _} <- ObanWorkers.update_user([user.id, target_id], [:elasticsearch, :talkjs]) do
         item
       else
@@ -48,9 +48,9 @@ defmodule Flirtual.User.Profile.Block do
 
   defp handle_prospects(_, _, []), do: :ok
 
-  defp handle_prospects(user_id, target_id, kinds) do
+  defp handle_prospects(%User{} = user, target_id, kinds) do
     Prospect
-    |> where([p], p.profile_id == ^user_id and p.target_id == ^target_id and p.kind in ^kinds)
+    |> where([p], p.profile_id == ^user.id and p.target_id == ^target_id and p.kind in ^kinds)
     |> Repo.update_all(set: [completed: true])
 
     queue_increments =
@@ -60,12 +60,14 @@ defmodule Flirtual.User.Profile.Block do
       end)
 
     Profile
-    |> where(user_id: ^user_id)
+    |> where(user_id: ^user.id)
     |> Repo.update_all(inc: queue_increments)
 
     User
-    |> where(id: ^user_id)
+    |> where(id: ^user.id)
     |> Repo.update_all(inc: [passes_count: 1])
+
+    Enum.each(kinds, fn kind -> Matchmaking.queue_information(user, kind) end)
 
     :ok
   end
