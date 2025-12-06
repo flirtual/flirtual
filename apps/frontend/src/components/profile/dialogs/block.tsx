@@ -50,6 +50,8 @@ export const BlockDialog: FC<PropsWithChildren<{ user: User }>> = ({
 									.then(() => toasts.add(t("blocked_name", { name: user.profile.displayName || t("unnamed_user") })))
 									.catch(toasts.addError);
 
+								window.scrollTo({ top: 0, behavior: "smooth" });
+
 								await Promise.all([
 									invalidateMatch(user.id),
 									invalidateQueue("love"),

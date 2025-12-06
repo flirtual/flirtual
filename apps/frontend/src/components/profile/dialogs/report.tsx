@@ -81,6 +81,8 @@ export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 								removeFromQueue(user.id)
 							]);
 
+							window.scrollTo({ top: 0, behavior: "smooth" });
+
 							toasts.add(t("day_front_cat_cry"));
 							setOpen(false);
 						}}
