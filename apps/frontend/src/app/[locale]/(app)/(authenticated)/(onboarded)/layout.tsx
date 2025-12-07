@@ -1,5 +1,6 @@
 import { Outlet } from "react-router";
 
+import { NewsDialog } from "~/components/profile/dialogs/news";
 import { useSession } from "~/hooks/use-session";
 import { throwRedirect } from "~/redirect";
 import { urls } from "~/urls";
@@ -12,5 +13,10 @@ export default function OnboardedLayout() {
 	if (user.deactivatedAt)
 		return throwRedirect(urls.settings.deactivateAccount);
 
-	return <Outlet />;
+	return (
+		<>
+			<Outlet />
+			<NewsDialog />
+		</>
+	);
 }

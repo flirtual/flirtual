@@ -28,7 +28,6 @@ import { twMerge } from "tailwind-merge";
 import { Authentication } from "~/api/auth";
 import { InlineLink } from "~/components/inline-link";
 import { commitIdShort } from "~/const";
-import { openFeedback } from "~/hooks/use-canny";
 import { useDevice } from "~/hooks/use-device";
 import { useFreshworks } from "~/hooks/use-freshworks";
 import { logout, useSession } from "~/hooks/use-session";
@@ -175,7 +174,7 @@ export const SettingsNavigation: FC = () => {
 					<div className="desktop:hidden">
 						<NavigationCategory name={t("help")}>
 							<NavigationLink onClick={openFreshworks}>{t("support")}</NavigationLink>
-							<NavigationLink onClick={openFeedback}>
+							<NavigationLink href={urls.socials.discord}>
 								{t("feedback")}
 							</NavigationLink>
 							<NavigationLink href={urls.resources.networkStatus}>

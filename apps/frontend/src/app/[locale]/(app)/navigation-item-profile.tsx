@@ -2,6 +2,7 @@ import {
 	Download,
 	FlagTriangleRight,
 	LineChart,
+	Newspaper,
 	Search,
 	Settings,
 	ShieldAlert,
@@ -17,11 +18,9 @@ import { twMerge } from "tailwind-merge";
 
 import { Authentication } from "~/api/auth";
 import { DiscordOutlineIcon } from "~/components/icons";
-import { ProfileNavigationCannyButton } from "~/components/layout/canny-button";
 import { Link } from "~/components/link";
 import { UserAvatar } from "~/components/user-avatar";
 import { useBreakpoint } from "~/hooks/use-breakpoint";
-import { closeChangelog, openChangelog } from "~/hooks/use-canny";
 import { useClickOutside } from "~/hooks/use-click-outside";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
 import { useSession } from "~/hooks/use-session";
@@ -75,11 +74,6 @@ export const NavigationItemProfile: FC = () => {
 	useEffect(() => {
 		setVisible(false);
 	}, [location]);
-
-	useEffect(() => {
-		if (visible) return void openChangelog();
-		closeChangelog();
-	}, [visible]);
 
 	const isDesktop = useBreakpoint("desktop");
 
@@ -138,7 +132,10 @@ export const NavigationItemProfile: FC = () => {
 								<Sparkles className="size-6 shrink-0" />
 								<span className="whitespace-nowrap">{t("premium")}</span>
 							</ProfileNavigationItem>
-							<ProfileNavigationCannyButton />
+							<ProfileNavigationItem href={urls.news}>
+								<Newspaper className="size-6 shrink-0" />
+								<span className="whitespace-nowrap">{t("updates")}</span>
+							</ProfileNavigationItem>
 							<ProfileNavigationItem href={urls.socials.discord}>
 								<DiscordOutlineIcon className="size-6 shrink-0" />
 								<span className="whitespace-nowrap">{t("discord")}</span>

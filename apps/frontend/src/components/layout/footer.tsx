@@ -16,7 +16,6 @@ import { InlineLink } from "../inline-link";
 import { InlineLanguageSelect } from "../inputs/specialized/language-select";
 import { Link } from "../link";
 import { FlirtualLogo } from "../logo";
-import { FooterCannyLink } from "./canny-button";
 import { MadeWithLove } from "./made-with-love";
 import { FooterIconSupportLink, FooterSupportLink } from "./support-button";
 
@@ -131,7 +130,7 @@ export const Footer: React.FC<FooterProps> = ({
 					<ul>
 						<FooterListLink href={urls.resources.events} label={t("events")} />
 						<FooterSupportLink />
-						<FooterCannyLink />
+						<FooterListLink href={urls.socials.discord} label={t("feedback")} />
 						<FooterListLink
 							href={urls.resources.networkStatus}
 							label={t("status")}

@@ -360,6 +360,7 @@ defmodule FlirtualWeb.Router do
             post("/push-token", UsersController, :add_push_token)
             delete("/push-count", UsersController, :reset_push_count)
             post("/rating-prompts", UsersController, :update_rating_prompts)
+            delete("/news", UsersController, :remove_news)
 
             scope "/preferences" do
               post("/", UsersController, :update_preferences)

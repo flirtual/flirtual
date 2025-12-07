@@ -147,6 +147,7 @@ export const urls = {
 		default: "/subscription",
 		success: url("/subscription", { success: "true" })
 	},
+	news: "/news",
 	confirmEmail: (
 		query: any = {}
 	) => url("/confirm-email", query),
@@ -223,7 +224,7 @@ export const urls = {
 	},
 
 	socials: {
-		discord: "https://discord.com/invite/flirtual",
+		discord: "https://discord.gg/flirtual",
 		vrchat: "https://vrc.group/FLIRT.4525",
 		twitter: "https://twitter.com/getflirtual"
 	},

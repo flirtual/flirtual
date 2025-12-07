@@ -57,6 +57,7 @@ export default [
 				page("finish/4", "(app)/(authenticated)/finish/4"),
 				page("finish/5", "(app)/(authenticated)/finish/5"),
 				page("subscription", "(app)/(authenticated)/subscription"),
+				page("news", "(app)/(authenticated)/news"),
 				layout("(app)/(authenticated)/(onboarded)", [
 					page(":slug", "(app)/(authenticated)/(onboarded)/[slug]"),
 					// page("discover/:group", "(app)/(authenticated)/(onboarded)/discover/[group]"),

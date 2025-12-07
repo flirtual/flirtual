@@ -61,6 +61,7 @@ export type User = {
 	platforms?: Array<string>;
 	pushCount?: number;
 	ratingPrompts?: number;
+	news?: Array<string>;
 	chargebeeId?: string;
 	stripeId?: string;
 	revenuecatId?: string;
@@ -311,6 +312,9 @@ export const User = {
 			.json(options)
 			.post()
 			.json<User>();
+	},
+	removeNews(userId: string, news: Array<string>) {
+		return this.api.url(`/${userId}/news`).json({ news }).delete().json<User>();
 	},
 	deleteSelf(options: {
 		reasonId: string;

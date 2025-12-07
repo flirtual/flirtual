@@ -355,6 +355,22 @@ defmodule Flirtual.Users do
     end
   end
 
+  def add_news(user_ids, news) when is_list(user_ids) and is_binary(news) do
+    {count, _} =
+      User
+      |> where([u], u.id in ^user_ids)
+      |> where([u], ^news not in u.news)
+      |> Repo.update_all(push: [news: news])
+
+    {:ok, count}
+  end
+
+  def remove_news(%User{} = user, news) when is_list(news) do
+    user
+    |> change(%{news: Enum.reject(user.news, &(&1 in news))})
+    |> Repo.update()
+  end
+
   def deactivate(%User{} = user) do
     now = DateTime.utc_now() |> DateTime.truncate(:second)
 

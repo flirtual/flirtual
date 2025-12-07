@@ -79,6 +79,7 @@ defmodule Flirtual.User do
     field(:tns_discord_in_biography, :utc_datetime)
     field(:likes_count, :integer, default: 0)
     field(:passes_count, :integer, default: 0)
+    field(:news, {:array, :string}, default: [])
 
     field(:password, :string, virtual: true, redact: true)
     field(:relationship, :map, virtual: true)
@@ -1233,6 +1234,7 @@ defimpl Jason.Encoder, for: Flirtual.User do
       :platforms,
       :push_count,
       :rating_prompts,
+      :news,
       :talkjs_id,
       :stripe_id,
       :chargebee_id,
