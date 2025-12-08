@@ -7,7 +7,6 @@ import { invalidate, relationshipKey } from "~/query";
 
 import { Button } from "../button";
 import { DialogTrigger } from "../dialog/dialog";
-import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
 import { ReportDialog } from "./dialogs/report";
 
 export const BlockedActions: React.FC<{ user: User }> = ({ user }) => {
@@ -29,18 +28,14 @@ export const BlockedActions: React.FC<{ user: User }> = ({ user }) => {
 			>
 				{t("unblock")}
 			</Button>
-			<Tooltip>
-				<ReportDialog user={user}>
-					<TooltipTrigger asChild>
-						<DialogTrigger asChild>
-							<button className="w-fit gap-2" type="button">
-								<Flag className="size-5" />
-							</button>
-						</DialogTrigger>
-					</TooltipTrigger>
-				</ReportDialog>
-				<TooltipContent>{t("report_profile")}</TooltipContent>
-			</Tooltip>
+			<ReportDialog user={user}>
+				<DialogTrigger asChild>
+					<Button className="gap-2 px-4" kind="tertiary" size="sm">
+						<Flag className="size-6" />
+						{t("report")}
+					</Button>
+				</DialogTrigger>
+			</ReportDialog>
 		</div>
 	);
 };

@@ -34,12 +34,12 @@ export const ProfileActionBar: FC<{ user: User; hideModeratorInfo?: boolean }> =
 					&& (
 						<ProfileDropdown userId={user.id} />
 					)}
-				<div className="flex w-full justify-center gap-6 vision:text-white-20">
+				<div className="flex w-full justify-center gap-2 vision:text-white-20">
 					{session.user.id !== user.id && (
 						<>
 							<BlockDialog user={user}>
 								<AlertDialogTrigger asChild>
-									<Button className="gap-2 p-0" kind="tertiary" size="sm">
+									<Button className="gap-2 px-4" kind="tertiary" size="sm">
 										<Ban className="size-6" />
 										{t("block")}
 									</Button>
@@ -47,7 +47,7 @@ export const ProfileActionBar: FC<{ user: User; hideModeratorInfo?: boolean }> =
 							</BlockDialog>
 							<ReportDialog user={user}>
 								<DialogTrigger asChild>
-									<Button className="gap-2 p-0" kind="tertiary" size="sm">
+									<Button className="gap-2 px-4" kind="tertiary" size="sm">
 										<Flag className="size-6" />
 										{t("report")}
 									</Button>
