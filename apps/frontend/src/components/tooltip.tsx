@@ -2,12 +2,14 @@ import * as PopoverPrimitive from "@radix-ui/react-popover";
 import * as React from "react";
 import { twMerge } from "tailwind-merge";
 
+let closeCurrentTooltip: (() => void) | null = null;
+
 function Tooltip({
 	children,
 	open: controlledOpen,
 	onOpenChange,
 	openDelay = 300,
-	closeDelay = 0,
+	closeDelay = 150,
 	...props
 }: {
 	open?: boolean;
@@ -35,6 +37,7 @@ function Tooltip({
 	}, [handleOpenChange, openDelay]);
 
 	const handleOpenImmediate = React.useCallback(() => {
+		closeCurrentTooltip?.();
 		clearTimeout(closeTimeoutReference.current);
 		clearTimeout(openTimeoutReference.current);
 		handleOpenChange(true);
@@ -44,6 +47,19 @@ function Tooltip({
 		clearTimeout(openTimeoutReference.current);
 		closeTimeoutReference.current = setTimeout(() => handleOpenChange(false), closeDelay);
 	}, [handleOpenChange, closeDelay]);
+
+	const close = React.useCallback(() => handleOpenChange(false), [handleOpenChange]);
+
+	React.useEffect(() => {
+		if (open) {
+			closeCurrentTooltip = close;
+		}
+		return () => {
+			if (closeCurrentTooltip === close) {
+				closeCurrentTooltip = null;
+			}
+		};
+	}, [open, close]);
 
 	React.useEffect(() => {
 		return () => {
