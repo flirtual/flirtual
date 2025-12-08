@@ -2,6 +2,9 @@ import * as PopoverPrimitive from "@radix-ui/react-popover";
 import * as React from "react";
 import { twMerge } from "tailwind-merge";
 
+import { useBreakpoint } from "~/hooks/use-breakpoint";
+import { useSafeArea } from "~/hooks/use-safe-area";
+
 let closeCurrentTooltip: (() => void) | null = null;
 
 function Tooltip({
@@ -133,14 +136,22 @@ function TooltipContent({
 	...props
 }: { ref?: React.Ref<React.ComponentRef<typeof PopoverPrimitive.Content> | null> } & React.ComponentPropsWithoutRef<typeof PopoverPrimitive.Content>) {
 	const context = React.use(TooltipContext);
+	const safeArea = useSafeArea();
+	const desktop = useBreakpoint("desktop");
 
 	return (
 		<PopoverPrimitive.Portal>
 			<PopoverPrimitive.Content
 				className={twMerge(
-					"z-[60] max-w-[95vw] overflow-hidden rounded-lg bg-black-80 px-3 py-1 font-nunito text-base text-white-20 shadow-brand-1 animate-in fade-in-50 data-[side=bottom]:slide-in-from-top-1 data-[side=left]:slide-in-from-right-1 data-[side=right]:slide-in-from-left-1 data-[side=top]:slide-in-from-bottom-1 dark:bg-white-20 dark:text-black-80",
+					"z-20 max-w-[95vw] overflow-hidden rounded-lg bg-black-80 px-3 py-1 font-nunito text-base text-white-20 shadow-brand-1 animate-in fade-in-50 data-[side=bottom]:slide-in-from-top-1 data-[side=left]:slide-in-from-right-1 data-[side=right]:slide-in-from-left-1 data-[side=top]:slide-in-from-bottom-1 dark:bg-white-20 dark:text-black-80",
 					className
 				)}
+				collisionPadding={{
+					top: safeArea.top + (desktop ? 84 : 4),
+					right: safeArea.right + 4,
+					bottom: safeArea.bottom + (desktop ? 4 : 76),
+					left: safeArea.left + 4
+				}}
 				align={align}
 				ref={ref}
 				side={side}

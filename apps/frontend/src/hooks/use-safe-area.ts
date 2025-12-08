@@ -9,6 +9,10 @@ export interface SafeArea {
 
 export function useSafeArea(): SafeArea {
 	// Temporary @capacitor-community/safe-area implementation
+	if (typeof document === "undefined") {
+		return { top: 0, right: 0, bottom: 0, left: 0 };
+	}
+
 	const element = document.createElement("div");
 	element.style.cssText = "position:absolute;visibility:hidden;top:var(--safe-area-inset-top,0);right:var(--safe-area-inset-right,0);bottom:var(--safe-area-inset-bottom,0);left:var(--safe-area-inset-left,0)";
 	document.body.appendChild(element);
