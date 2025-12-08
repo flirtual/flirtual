@@ -1,33 +1,41 @@
-import { Children, useRef } from "react";
-import type { Dispatch } from "react";
+import * as PopoverPrimitive from "@radix-ui/react-popover";
+import * as React from "react";
+import { twMerge } from "tailwind-merge";
 
-import type { Breakpoint } from "~/hooks/use-breakpoint";
-import { useClickOutside } from "~/hooks/use-click-outside";
+const Popover = PopoverPrimitive.Root;
+const PopoverTrigger = PopoverPrimitive.Trigger;
+const PopoverAnchor = PopoverPrimitive.Anchor;
+const PopoverClose = PopoverPrimitive.Close;
 
-export interface PopoverProps {
-	children: React.ReactNode;
-	breakpoint?: Breakpoint;
-	open: boolean;
-	onOpenChange: Dispatch<boolean>;
+function PopoverContent({
+	ref,
+	className,
+	align = "center",
+	sideOffset = 16,
+	...props
+}: { ref?: React.Ref<React.ComponentRef<typeof PopoverPrimitive.Content> | null> } & React.ComponentPropsWithoutRef<typeof PopoverPrimitive.Content>) {
+	return (
+		<PopoverPrimitive.Portal>
+			<PopoverPrimitive.Content
+				className={twMerge(
+					"z-20 max-w-[95vw] animate-in fade-in-50 data-[side=bottom]:slide-in-from-top-1 data-[side=left]:slide-in-from-right-1 data-[side=right]:slide-in-from-left-1 data-[side=top]:slide-in-from-bottom-1",
+					className
+				)}
+				align={align}
+				ref={ref}
+				sideOffset={sideOffset}
+				{...props}
+			/>
+		</PopoverPrimitive.Portal>
+	);
 }
 
-export const Popover: React.FC<PopoverProps> = (props) => {
-	const { children, open, onOpenChange } = props;
+PopoverContent.displayName = PopoverPrimitive.Content.displayName;
 
-	// eslint-disable-next-line react/no-children-to-array
-	const [overlayNode, contentNode] = Children.toArray(children);
-
-	const overlayParentReference = useRef<HTMLDivElement>(null);
-	useClickOutside(overlayParentReference, () => onOpenChange(false));
-
-	return (
-		<div className="relative">
-			{contentNode}
-			{open && (
-				<div className="absolute z-10 mt-4" ref={overlayParentReference}>
-					{overlayNode}
-				</div>
-			)}
-		</div>
-	);
+export {
+	Popover,
+	PopoverAnchor,
+	PopoverClose,
+	PopoverContent,
+	PopoverTrigger
 };

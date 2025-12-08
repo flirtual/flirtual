@@ -3,7 +3,6 @@ import { Outlet } from "react-router";
 
 import { InsetPreview } from "./components/inset-preview";
 import { Loading } from "./components/loading";
-import { TooltipProvider } from "./components/tooltip";
 import { development } from "./const";
 import { DialogProvider } from "./hooks/use-dialog";
 import { ToastProvider } from "./hooks/use-toast";
@@ -21,11 +20,9 @@ export function App() {
 				<UpdateInformation />
 				<ToastProvider>
 					<DialogProvider>
-						<TooltipProvider>
-							<Suspense fallback={<Loading />}>
-								<Outlet />
-							</Suspense>
-						</TooltipProvider>
+						<Suspense fallback={<Loading />}>
+							<Outlet />
+						</Suspense>
 					</DialogProvider>
 				</ToastProvider>
 			</QueryProvider>

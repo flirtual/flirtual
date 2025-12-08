@@ -1,17 +1,13 @@
 import { DatetimePicker, ErrorCode } from "@capawesome-team/capacitor-datetime-picker";
 import { useCallback, useRef, useState } from "react";
 
-import { useClickOutside } from "~/hooks/use-click-outside";
 import { useDevice } from "~/hooks/use-device";
 import { useTheme } from "~/hooks/use-theme";
 import { useToast } from "~/hooks/use-toast";
 import { useMutation } from "~/query";
 
-import { Popover } from "../popover";
-import {
-	InputCalendar
-
-} from "./calendar";
+import { Popover, PopoverAnchor, PopoverContent } from "../popover";
+import { InputCalendar } from "./calendar";
 import type { InputCalendarProps, MinmaxDate } from "./calendar";
 import { InputText } from "./text";
 
@@ -64,13 +60,87 @@ export const InputDateSelect: React.FC<InputDateSelectProps> = (props) => {
 		[props.value, props.onChange]
 	);
 
-	useClickOutside(reference, () => setDrawerVisible(false), drawerVisible);
-
 	if (native) return <InputDateSelectNative {...props} />;
 
 	return (
 		<Popover open={drawerVisible} onOpenChange={setDrawerVisible}>
-			<div className="flex size-full justify-center" ref={reference}>
+			<PopoverAnchor ref={reference}>
+				<InputText
+					className="w-full"
+					type="date"
+					value={inputValue}
+					onBlur={() => {
+						const value = fromDateString(inputValue);
+
+						if (!Number.isNaN(value.getTime())) return;
+						const now = new Date();
+
+						setInputValue(toDateString(now));
+						props.onChange(now);
+					}}
+					onChange={(value) => {
+						setDrawerVisible(true);
+
+						const date = fromDateString(value);
+						setInputValue(value);
+
+						if (Number.isNaN(date.getTime())) return;
+						props.onChange(date);
+					}}
+					onClick={() => setDrawerVisible(true)}
+					onFocus={() => setDrawerVisible(true)}
+					onKeyDown={(event) => {
+						const { currentTarget } = event;
+
+						const type = [
+							...inputValue
+								.slice(currentTarget.selectionStart ?? 0, inputValue.length)
+								.matchAll(/\//g)
+						].length;
+
+						/**
+						 * When an input field in changed, the input selection is
+						 * reset to the end of the field, this function returns the selection
+						 * to where it was prior to updating the input field on the next frame.
+						 */
+						const preserveSelection = () => {
+							const { currentTarget } = event;
+							const { selectionStart, selectionEnd } = currentTarget;
+
+							setTimeout(
+								() =>
+									currentTarget.setSelectionRange(selectionStart, selectionEnd),
+								0
+							);
+						};
+
+						switch (event.key) {
+							case "ArrowUp": {
+								progressDate(type, 1);
+								preserveSelection();
+
+								event.preventDefault();
+								return;
+							}
+							case "ArrowDown": {
+								progressDate(type, -1);
+								preserveSelection();
+
+								event.preventDefault();
+							}
+						}
+					}}
+				/>
+			</PopoverAnchor>
+			<PopoverContent
+				align="start"
+				onInteractOutside={(event) => {
+					if (reference.current?.contains(event.target as Node)) {
+						event.preventDefault();
+					}
+				}}
+				onOpenAutoFocus={(event) => event.preventDefault()}
+			>
 				<InputCalendar
 					className="w-fit shadow-brand-1"
 					{...props}
@@ -83,73 +153,7 @@ export const InputDateSelect: React.FC<InputDateSelectProps> = (props) => {
 						setDrawerVisible(false);
 					}}
 				/>
-			</div>
-			<InputText
-				className="w-full"
-				type="date"
-				value={inputValue}
-				onBlur={() => {
-					const value = fromDateString(inputValue);
-
-					if (!Number.isNaN(value.getTime())) return;
-					const now = new Date();
-
-					setInputValue(toDateString(now));
-					props.onChange(now);
-				}}
-				onChange={(value) => {
-					setDrawerVisible(true);
-
-					const date = fromDateString(value);
-					setInputValue(value);
-
-					if (Number.isNaN(date.getTime())) return;
-					props.onChange(date);
-				}}
-				onClick={() => setDrawerVisible(true)}
-				onFocus={() => setDrawerVisible(true)}
-				onKeyDown={(event) => {
-					const { currentTarget } = event;
-
-					const type = [
-						...inputValue
-							.slice(currentTarget.selectionStart ?? 0, inputValue.length)
-							.matchAll(/\//g)
-					].length;
-
-					/**
-					 * When an input field in changed, the input selection is
-					 * reset to the end of the field, this function returns the selection
-					 * to where it was prior to updating the input field on the next frame.
-					 */
-					const preserveSelection = () => {
-						const { currentTarget } = event;
-						const { selectionStart, selectionEnd } = currentTarget;
-
-						setTimeout(
-							() =>
-								currentTarget.setSelectionRange(selectionStart, selectionEnd),
-							0
-						);
-					};
-
-					switch (event.key) {
-						case "ArrowUp": {
-							progressDate(type, 1);
-							preserveSelection();
-
-							event.preventDefault();
-							return;
-						}
-						case "ArrowDown": {
-							progressDate(type, -1);
-							preserveSelection();
-
-							event.preventDefault();
-						}
-					}
-				}}
-			/>
+			</PopoverContent>
 		</Popover>
 	);
 };
