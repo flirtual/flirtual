@@ -16,7 +16,8 @@ import {
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
 import {
 	InputCountrySelect,
-	InputLanguageAutocomplete
+	InputLanguageAutocomplete,
+	InputTimezoneSelect
 } from "~/components/inputs/specialized";
 import { endOfYear, toLocalDateString } from "~/date";
 import {
@@ -57,6 +58,7 @@ export const InfoForm: FC = () => {
 					: new Date(),
 				new: profile.new ?? false,
 				country: profile.country ?? null,
+				timezone: profile.timezone ?? null,
 				languages: profile.languages ?? [],
 				gender: profile.attributes.gender || [],
 				sexuality: profile.attributes.sexuality || [],
@@ -64,7 +66,7 @@ export const InfoForm: FC = () => {
 				game: profile.attributes.game || []
 			}}
 			className="flex flex-col gap-8"
-			onSubmit={async ({ bornAt, country, ...values }) => {
+			onSubmit={async ({ bornAt, country, timezone, ...values }) => {
 				const [newUser, newProfile] = await Promise.all([
 					User.update(user.id, {
 						bornAt: toLocalDateString(bornAt)
@@ -72,6 +74,7 @@ export const InfoForm: FC = () => {
 					Profile.update(user.id, {
 						required: ["new"],
 						country: country ?? "none",
+						timezone: timezone ?? "none",
 						languages: values.languages,
 						new: values.new,
 						...fromEntries(
@@ -207,8 +210,16 @@ export const InfoForm: FC = () => {
 					<FormField name="country">
 						{(field) => (
 							<>
-								<InputLabel>{t("location")}</InputLabel>
+								<InputLabel>{t("country")}</InputLabel>
 								<InputCountrySelect {...field.props} />
+							</>
+						)}
+					</FormField>
+					<FormField name="timezone">
+						{(field) => (
+							<>
+								<InputLabel>{t("timezone")}</InputLabel>
+								<InputTimezoneSelect {...field.props} />
 							</>
 						)}
 					</FormField>

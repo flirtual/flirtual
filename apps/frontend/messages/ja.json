@@ -952,5 +952,7 @@
 	"ideal_super_skunk_empower": "プレミアムプランでプロフィールカラーをカスタマイズしよう！",
 	"default": "デフォルト",
 	"each_ideal_seahorse_bump": "1つ以上の画像のアップロードに失敗しました。後ほど再度お試しください。",
-	"lost_sour_moose_tend": "<world/>で<name/>が撮影"
+	"lost_sour_moose_tend": "<world/>で<name/>が撮影",
+	"timezone": "タイムゾーン",
+	"select_timezone": "タイムゾーンを選択…"
 }
