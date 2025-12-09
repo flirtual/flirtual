@@ -57,6 +57,8 @@ config :flirtual, Flirtual.Elasticsearch,
     }
   }
 
+config :elixir, :time_zone_database, Tz.TimeZoneDatabase
+
 config :floki, :html_parser, Floki.HTMLParser.FastHtml
 
 config :bodyguard,

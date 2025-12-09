@@ -177,7 +177,7 @@ defmodule Flirtual.Profiles do
       |> validate_attributes(:platform_id, "platform")
       |> validate_length(:platform, max: 8)
       |> validate_attributes(:interest_id, "interest")
-      |> validate_inclusion(:timezone, Timex.timezones())
+      |> validate_inclusion(:timezone, TzExtra.time_zone_ids(include_aliases: true))
       |> then(fn changeset ->
         if not changed?(changeset, :interest_id) and not changed?(changeset, :custom_interests) do
           changeset

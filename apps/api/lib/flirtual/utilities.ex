@@ -31,6 +31,12 @@ defmodule Flirtual.Utilities do
   def get_years_since(%NaiveDateTime{} = date),
     do: get_years_since(NaiveDateTime.to_date(date))
 
+  def timezone_offset(timezone) do
+    now = DateTime.utc_now()
+    {:ok, dt} = DateTime.shift_zone(now, timezone)
+    dt.utc_offset + dt.std_offset
+  end
+
   def map_exclude_keys(map, keys) do
     Map.filter(map, &(elem(&1, 0) not in keys))
   end

@@ -291,7 +291,7 @@ defmodule Flirtual.User do
         nil
 
       {user_tz, target_tz} ->
-        Timex.Timezone.get(user_tz).offset_utc - Timex.Timezone.get(target_tz).offset_utc
+        timezone_offset(user_tz) - timezone_offset(target_tz)
     end
   end
 
@@ -312,7 +312,7 @@ defmodule Flirtual.User do
         nil
 
       {user_tz, target_tz} ->
-        Timex.Timezone.get(user_tz).offset_utc - Timex.Timezone.get(target_tz).offset_utc
+        timezone_offset(user_tz) - timezone_offset(target_tz)
     end
   end
 
