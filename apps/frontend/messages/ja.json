@@ -437,7 +437,11 @@
 		"turnstile_required": "あなたはロボットですか？",
 		"turnstile_invalid": "認証に失敗しました。もう一度お試しください。",
 		"turnstile_expired": "認証が期限切れです。もう一度お試しください。",
-		"invalid_playlist_url": "無効なプレイリストのURLです。"
+		"invalid_playlist_url": "無効なプレイリストのURLです。",
+		"geolocation_failed": "位置情報の更新に失敗しました。",
+		"geolocation_rate_limit": "位置情報の更新は週に3回までです。",
+		"geolocation_permission_denied": "位置情報の許可が拒否されました。",
+		"geolocation_not_supported": "お使いの端末では位置情報サービスがサポートされていません。"
 	},
 	"support": "サポート",
 	"forgot_your_password": "パスワードを忘れましたか？",
@@ -955,5 +959,13 @@
 	"lost_sour_moose_tend": "<world/>で<name/>が撮影",
 	"timezone": "タイムゾーン",
 	"select_timezone": "タイムゾーンを選択…",
-	"country": "国"
+	"country": "国",
+	"geolocation": "位置情報",
+	"geolocation_hint": "位置情報を共有すると、他のメンバーがどれほど近くにいるか確認できます。正確な位置情報は常に非公開です。",
+	"share_location": "位置情報を共有",
+	"update_location": "位置情報を更新",
+	"updating": "更新中…",
+	"remove": "削除",
+	"geolocation_updated": "位置情報を更新しました。",
+	"geolocation_removed": "位置情報を削除しました。"
 }

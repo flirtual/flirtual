@@ -23,6 +23,7 @@
 		"@capacitor/core": "^7.4.3",
 		"@capacitor/device": "^7.0.2",
 		"@capacitor/dialog": "^7.0.2",
+		"@capacitor/geolocation": "^7.1.6",
 		"@capacitor/ios": "^7.4.3",
 		"@capacitor/keyboard": "^7.0.2",
 		"@capacitor/preferences": "^7.0.2",

@@ -16,6 +16,7 @@ import {
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
 import {
 	InputCountrySelect,
+	InputGeolocation,
 	InputLanguageAutocomplete,
 	InputTimezoneSelect
 } from "~/components/inputs/specialized";
@@ -215,6 +216,13 @@ export const InfoForm: FC = () => {
 							</>
 						)}
 					</FormField>
+					<div className="flex flex-col gap-2">
+						<InputLabel>{t("geolocation")}</InputLabel>
+						<InputLabelHint className="-mt-2">
+							{t("geolocation_hint")}
+						</InputLabelHint>
+						<InputGeolocation />
+					</div>
 					<FormField name="timezone">
 						{(field) => (
 							<>

@@ -30,6 +30,12 @@
 	<string>Your camera is used to capture and upload your profile picture.</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>© 2025 Flirtual</string>
+	<key>NSLocationDefaultAccuracyReduced</key>
+	<true/>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Your location is used to show how close other members are. Your exact location is always private.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Your location is used to show how close other members are. Your exact location is always private.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Flirtual needs permission to download images.</string>
 	<key>UIBackgroundModes</key>

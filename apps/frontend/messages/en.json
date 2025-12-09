@@ -437,7 +437,11 @@
 		"turnstile_required": "Are you a robot?",
 		"turnstile_invalid": "Verification failed, please try again.",
 		"turnstile_expired": "Verification expired, please try again.",
-		"invalid_playlist_url": "Invalid playlist URL."
+		"invalid_playlist_url": "Invalid playlist URL.",
+		"geolocation_failed": "Failed to update location.",
+		"geolocation_rate_limit": "You can only update your location 3 times per week.",
+		"geolocation_permission_denied": "Location permission denied.",
+		"geolocation_not_supported": "Geolocation is not supported by your device."
 	},
 	"support": "Support",
 	"forgot_your_password": "Forgot your password?",
@@ -958,5 +962,13 @@
 	"lost_sour_moose_tend": "Taken by <name/> in <world/>.",
 	"timezone": "Timezone",
 	"select_timezone": "Select your timezone…",
-	"country": "Country"
+	"country": "Country",
+	"geolocation": "Geolocation",
+	"geolocation_hint": "Share your location to see how close other members are. Your exact location is always private.",
+	"share_location": "Share location",
+	"update_location": "Update location",
+	"updating": "Updating…",
+	"remove": "Remove",
+	"geolocation_updated": "Location updated.",
+	"geolocation_removed": "Location removed."
 }

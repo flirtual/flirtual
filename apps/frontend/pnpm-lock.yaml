@@ -32,6 +32,9 @@ importers:
       '@capacitor/dialog':
         specifier: ^7.0.2
         version: 7.0.2(@capacitor/core@7.4.3)
+      '@capacitor/geolocation':
+        specifier: ^7.1.6
+        version: 7.1.6(@capacitor/core@7.4.3)
       '@capacitor/ios':
         specifier: ^7.4.3
         version: 7.4.3(@capacitor/core@7.4.3)
@@ -680,6 +683,11 @@ packages:
     peerDependencies:
       '@capacitor/core': '>=7.0.0'
 
+  '@capacitor/geolocation@7.1.6':
+    resolution: {integrity: sha512-K+SXF8X01sEyCLb1ITqir5Gi3qMNnua7TMdxKmxYBAJATUGoHzJQ0itslkoP4HM6JZac+f8lTpRl1RMWKErRIg==}
+    peerDependencies:
+      '@capacitor/core': '>=7.0.0'
+
   '@capacitor/ios@7.4.3':
     resolution: {integrity: sha512-VNm7cHODgh3KK/4ZC2rXU9gBlvHii/mYFLI+XMXwq24nhB679QxHhz+pUuI7PatYoM2q4MAL0NR/dRgehKCaSA==}
     peerDependencies:
@@ -704,6 +712,9 @@ packages:
     resolution: {integrity: sha512-VyNPo/9831xnL17IMDeft5yNdBjoKNb451P95sRcr69hulRDqHc+kndqOVaMXnaA6IyBdWnnFv/n1HUf4cXpGw==}
     peerDependencies:
       '@capacitor/core': '>=7.0.0'
+
+  '@capacitor/synapse@1.0.4':
+    resolution: {integrity: sha512-/C1FUo8/OkKuAT4nCIu/34ny9siNHr9qtFezu4kxm6GY1wNFxrCFWjfYx5C1tUhVGz3fxBABegupkpjXvjCHrw==}
 
   '@capacitor/toast@7.0.2':
     resolution: {integrity: sha512-BPzxZNI1Qg58/yZzx8Y/iz1m6hBudx+vlbMkfWvcg3Z2Ph62xoSnQXE/28y54yE+c6JzAqH37NZeA8R8p9NW9A==}
@@ -7756,6 +7767,11 @@ snapshots:
     dependencies:
       '@capacitor/core': 7.4.3
 
+  '@capacitor/geolocation@7.1.6(@capacitor/core@7.4.3)':
+    dependencies:
+      '@capacitor/core': 7.4.3
+      '@capacitor/synapse': 1.0.4
+
   '@capacitor/ios@7.4.3(@capacitor/core@7.4.3)':
     dependencies:
       '@capacitor/core': 7.4.3
@@ -7775,6 +7791,8 @@ snapshots:
   '@capacitor/share@7.0.2(@capacitor/core@7.4.3)':
     dependencies:
       '@capacitor/core': 7.4.3
+
+  '@capacitor/synapse@1.0.4': {}
 
   '@capacitor/toast@7.0.2(@capacitor/core@7.4.3)':
     dependencies:

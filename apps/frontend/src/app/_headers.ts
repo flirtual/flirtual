@@ -53,7 +53,7 @@ const data = [
 					"web-share": ["self"],
 					camera: [],
 					microphone: [],
-					geolocation: [],
+					geolocation: ["self"],
 					"browsing-topics": []
 				})
 					.map(([key, value]) => `${key}=(${value.join(" ")})`)
