@@ -47,6 +47,7 @@ defmodule Flirtual.MixProject do
       {:oban, "~> 2.16"},
       {:tz, "~> 0.28.1"},
       {:tz_extra, "~> 0.45.0"},
+      {:distance, "~> 1.1"},
       {:ex_rated, "~> 2.1"},
       {:paginator, "~> 1.2.0"},
       {:fly_postgres, "~> 0.3.4"},

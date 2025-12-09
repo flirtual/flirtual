@@ -387,6 +387,8 @@ defmodule FlirtualWeb.Router do
               post("/preferences", ProfileController, :update_preferences)
               post("/custom-weights", ProfileController, :update_custom_weights)
               post("/custom-filters", ProfileController, :update_custom_filters)
+              post("/geolocation", ProfileController, :update_geolocation)
+              delete("/geolocation", ProfileController, :delete_geolocation)
             end
           end
         end

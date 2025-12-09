@@ -6,6 +6,7 @@ export type Relationship = {
 	type?: ProspectRespondType;
 	kind?: ProspectKind;
 	timeDiff?: number;
+	distance?: string;
 } & (
 	| {
 		matched: false;

@@ -49,6 +49,8 @@ export type Profile = {
 	agreeableness?: number;
 	languages: Array<string>;
 	timezone?: string;
+	longitude?: number;
+	latitude?: number;
 	attributes: GroupedAttributeCollection;
 	customInterests: Array<string>;
 	preferences?: ProfilePreferences;
@@ -224,5 +226,18 @@ export const Profile = {
 			.json(options)
 			.post()
 			.json<ProfilePreferences>();
+	},
+	updateGeolocation(userId: string, coords: { longitude: number; latitude: number }) {
+		return api
+			.url(`users/${userId}/profile/geolocation`)
+			.json(coords)
+			.post()
+			.json<{ success: boolean; geolocation: boolean }>();
+	},
+	deleteGeolocation(userId: string) {
+		return api
+			.url(`users/${userId}/profile/geolocation`)
+			.delete()
+			.json<{ success: boolean }>();
 	}
 };

@@ -19,6 +19,7 @@ import { InlineLink } from "../inline-link";
 import { ProfileActionBar } from "./action-bar";
 import { ActivityIndicator } from "./activity-indicator";
 import { BlockedProfile } from "./blocked";
+import { Distance } from "./distance";
 import { PersonalActions } from "./personal-actions";
 import { PillCollection } from "./pill/collection";
 import { CountryPill } from "./pill/country";
@@ -154,17 +155,22 @@ export const Profile = withSuspense(({
 								/>
 							)}
 						</div>
-						<div className="flex gap-4">
-							{user.activeAt && (
-								<ActivityIndicator lastActiveAt={new Date(user.activeAt)} />
-							)}
-							{relationship?.timeDiff !== undefined && (
-								<TimeDiff
-									diff={relationship.timeDiff}
-									displayName={user.profile.displayName || t("unnamed_user")}
-								/>
-							)}
-						</div>
+						{!myProfile && (
+							<div className="flex gap-4">
+								{user.activeAt && (
+									<ActivityIndicator lastActiveAt={new Date(user.activeAt)} />
+								)}
+								{relationship?.distance !== undefined && (
+									<Distance distance={relationship.distance} />
+								)}
+								{relationship?.timeDiff !== undefined && (
+									<TimeDiff
+										diff={relationship.timeDiff}
+										displayName={user.profile.displayName || t("unnamed_user")}
+									/>
+								)}
+							</div>
+						)}
 					</div>
 				</ProfileImageDisplay>
 				<div className="h-1 shrink-0 bg-brand-gradient desktop:hidden" />

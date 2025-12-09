@@ -89,6 +89,8 @@ defmodule Flirtual.User.Profile do
     field(:new, :boolean)
     field(:languages, {:array, Ecto.Enum}, values: Languages.list(:bcp_47))
     field(:timezone, :string)
+    field(:longitude, :float)
+    field(:latitude, :float)
     field(:custom_interests, {:array, :string})
 
     field(:vrchat, :string)
@@ -213,6 +215,8 @@ defimpl Jason.Encoder, for: Flirtual.User.Profile do
       :attributes,
       :languages,
       :timezone,
+      :longitude,
+      :latitude,
       :custom_interests,
       :preferences,
       :custom_weights,

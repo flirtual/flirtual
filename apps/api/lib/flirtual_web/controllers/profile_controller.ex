@@ -153,4 +153,43 @@ defmodule FlirtualWeb.ProfileController do
       end
     end
   end
+
+  def update_geolocation(conn, %{"user_id" => user_id} = params) do
+    user = Users.get(user_id)
+    profile = %Profile{user.profile | user: user}
+
+    if is_nil(user) or Policy.cannot?(conn, :update, profile) do
+      {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
+    else
+      geolocation =
+        case params do
+          %{"longitude" => lon, "latitude" => lat} -> %{"longitude" => lon, "latitude" => lat}
+          _ -> nil
+        end
+
+      case Profiles.update_geolocation(profile, geolocation) do
+        {:ok, profile} ->
+          conn |> json(%{success: true, geolocation: not is_nil(profile.longitude)})
+
+        {:error, :geolocation_rate_limit} ->
+          {:error, {:too_many_requests, :geolocation_rate_limit}}
+
+        {:error, reason} ->
+          {:error, reason}
+      end
+    end
+  end
+
+  def delete_geolocation(conn, %{"user_id" => user_id}) do
+    user = Users.get(user_id)
+    profile = %Profile{user.profile | user: user}
+
+    if is_nil(user) or Policy.cannot?(conn, :update, profile) do
+      {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
+    else
+      with {:ok, _} <- Profiles.update_geolocation(profile, nil) do
+        conn |> json(%{success: true})
+      end
+    end
+  end
 end

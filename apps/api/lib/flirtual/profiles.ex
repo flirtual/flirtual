@@ -531,6 +531,41 @@ defmodule Flirtual.Profiles do
     end)
   end
 
+  @one_week 604_800_000
+
+  def update_geolocation(%Profile{} = profile, nil) do
+    profile
+    |> change(%{longitude: nil, latitude: nil})
+    |> Repo.update()
+  end
+
+  def update_geolocation(%Profile{} = profile, %{"longitude" => longitude, "latitude" => latitude})
+      when is_number(longitude) and is_number(latitude) do
+    # Rate limit changes and add 5-15km in a random direction for privacy
+    case ExRated.check_rate("update_geolocation:#{profile.user_id}", @one_week, 3) do
+      {:ok, _} ->
+        offset_km = 5 + :rand.uniform() * 10
+        angle = :rand.uniform() * 2 * :math.pi()
+
+        lat_offset = offset_km / 111.0 * :math.cos(angle)
+
+        lon_offset =
+          offset_km / (111.0 * :math.cos(latitude * :math.pi() / 180)) * :math.sin(angle)
+
+        profile
+        |> change(%{
+          longitude: longitude + lon_offset,
+          latitude: latitude + lat_offset
+        })
+        |> Repo.update()
+
+      {:error, _} ->
+        {:error, :geolocation_rate_limit}
+    end
+  end
+
+  def update_geolocation(_, _), do: {:error, :invalid_geolocation}
+
   def update_prompts(%Profile{user_id: profile_id}, prompts) when is_list(prompts) do
     Repo.transaction(fn ->
       Prompt

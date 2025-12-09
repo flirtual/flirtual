@@ -316,6 +316,62 @@ defmodule Flirtual.User do
     end
   end
 
+  @miles_countries [:us, :gb, :lr, :mm]
+  @miles_buckets [50, 100, 250, 500, 1000, 2000, 3000, 4000, 5000]
+  @km_buckets [100, 250, 500, 1000, 2000, 3000, 4000, 5000]
+
+  defp round_to_nearest(value, [last]), do: if(value > last, do: :max, else: last)
+
+  defp round_to_nearest(value, [a, b | rest]) do
+    if value <= (a + b) / 2, do: a, else: round_to_nearest(value, [b | rest])
+  end
+
+  defp format_distance(meters, country) when country in @miles_countries do
+    mi = meters / 1609.34
+
+    case round_to_nearest(mi, @miles_buckets) do
+      :max -> "5000mi+"
+      n -> "#{n}mi"
+    end
+  end
+
+  defp format_distance(meters, _) do
+    km = meters / 1000
+
+    case round_to_nearest(km, @km_buckets) do
+      :max -> "5000km+"
+      n -> "#{n}km"
+    end
+  end
+
+  def distance(%User{profile: %{longitude: lon1, latitude: lat1, country: country}}, %User{
+        profile: %{longitude: lon2, latitude: lat2}
+      })
+      when is_number(lon1) and is_number(lat1) and is_number(lon2) and is_number(lat2) do
+    Distance.GreatCircle.distance({lon1, lat1}, {lon2, lat2})
+    |> format_distance(country)
+  end
+
+  def distance(%User{}, %User{}), do: nil
+
+  def distance(user_id, target_id) do
+    data =
+      Repo.all(
+        from p in Profile,
+          where: p.user_id in ^[user_id, target_id],
+          select: {p.user_id, p.longitude, p.latitude, p.country}
+      )
+      |> Map.new(fn {id, lon, lat, country} -> {id, {lon, lat, country}} end)
+
+    with {lon1, lat1, country} when is_number(lon1) and is_number(lat1) <- data[user_id],
+         {lon2, lat2, _} when is_number(lon2) and is_number(lat2) <- data[target_id] do
+      Distance.GreatCircle.distance({lon1, lat1}, {lon2, lat2})
+      |> format_distance(country)
+    else
+      _ -> nil
+    end
+  end
+
   def relationship(%User{} = user, %User{} = target) do
     Relationship.get(user, target)
   end

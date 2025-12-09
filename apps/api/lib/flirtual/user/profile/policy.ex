@@ -61,6 +61,8 @@ defmodule Flirtual.User.Profile.Policy do
   @own_property_keys [
                        :country,
                        :timezone,
+                       :longitude,
+                       :latitude,
                        :preferences,
                        :custom_weights,
                        :custom_filters,
