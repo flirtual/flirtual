@@ -31,7 +31,11 @@ defmodule Flirtual.Utilities do
   def get_years_since(%NaiveDateTime{} = date),
     do: get_years_since(NaiveDateTime.to_date(date))
 
-  def timezone_offset(timezone) do
+  def timezone_offset(timezone) when is_atom(timezone) do
+    timezone_offset(Atom.to_string(timezone))
+  end
+
+  def timezone_offset(timezone) when is_binary(timezone) do
     now = DateTime.utc_now()
     {:ok, dt} = DateTime.shift_zone(now, timezone)
     dt.utc_offset + dt.std_offset

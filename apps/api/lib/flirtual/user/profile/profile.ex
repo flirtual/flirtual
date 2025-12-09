@@ -88,7 +88,11 @@ defmodule Flirtual.User.Profile do
     field(:relationships, {:array, :string})
     field(:new, :boolean)
     field(:languages, {:array, Ecto.Enum}, values: Languages.list(:bcp_47))
-    field(:timezone, :string)
+
+    field(:timezone, Ecto.Enum,
+      values: TzExtra.time_zone_ids(include_aliases: true) |> Enum.map(&String.to_atom/1)
+    )
+
     field(:longitude, :float)
     field(:latitude, :float)
     field(:custom_interests, {:array, :string})

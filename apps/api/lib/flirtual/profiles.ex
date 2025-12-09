@@ -95,7 +95,13 @@ defmodule Flirtual.Profiles do
       field(:relationships, {:array, :string})
       field(:new, :boolean)
       field(:languages, {:array, Ecto.Enum}, values: Languages.list(:bcp_47))
-      field(:timezone, :string)
+
+      field(:timezone, Ecto.Enum,
+        values: [
+          :none | TzExtra.time_zone_ids(include_aliases: true) |> Enum.map(&String.to_atom/1)
+        ]
+      )
+
       field(:custom_interests, {:array, :string})
 
       @attribute_keys |> Enum.map(fn key -> field(key, {:array, :string}) end)
@@ -177,7 +183,6 @@ defmodule Flirtual.Profiles do
       |> validate_attributes(:platform_id, "platform")
       |> validate_length(:platform, max: 8)
       |> validate_attributes(:interest_id, "interest")
-      |> validate_inclusion(:timezone, TzExtra.time_zone_ids(include_aliases: true))
       |> then(fn changeset ->
         if not changed?(changeset, :interest_id) and not changed?(changeset, :custom_interests) do
           changeset
