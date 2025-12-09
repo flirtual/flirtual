@@ -72,6 +72,27 @@ defmodule Flirtual.User.Profile.Policy do
                      ] ++ @personality_keys ++ @nsfw_keys ++ @connection_keys
 
   def transform(
+        :timezone,
+        %Plug.Conn{
+          assigns: %{
+            session: %{
+              user_id: user_id
+            }
+          }
+        },
+        %Profile{
+          user_id: user_id,
+          timezone: timezone
+        }
+      )
+      when not is_nil(timezone) do
+    case TzExtra.canonical_time_zone_id(timezone) do
+      {:ok, canonical} -> canonical
+      _ -> timezone
+    end
+  end
+
+  def transform(
         key,
         %Plug.Conn{
           assigns: %{
