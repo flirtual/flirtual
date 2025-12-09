@@ -70,7 +70,7 @@ export const InputText: React.FC<InputTextProps> = (props) => {
 			/>
 			{props.endContent}
 			{props.type === "password" && (
-				<Tooltip>
+				<Tooltip touchable={false}>
 					<TooltipTrigger asChild>
 						<button
 							className="mr-4"

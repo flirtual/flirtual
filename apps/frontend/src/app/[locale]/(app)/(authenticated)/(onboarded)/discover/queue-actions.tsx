@@ -112,7 +112,7 @@ export const QueueActions: FC<{
 				<QueueDebugger kind={mode} />
 				<div className="flex items-center gap-2 text-white-10">
 					{!explicitUserId && (
-						<Tooltip>
+						<Tooltip touchable={false}>
 							<TooltipTrigger asChild>
 								<m.button
 									id="undo-button"
@@ -133,7 +133,7 @@ export const QueueActions: FC<{
 						</Tooltip>
 					)}
 					{mode === "love" && (
-						<Tooltip>
+						<Tooltip touchable={false}>
 							<TooltipTrigger asChild>
 								<m.button
 									id="like-button"
@@ -159,7 +159,7 @@ export const QueueActions: FC<{
 							</TooltipContent>
 						</Tooltip>
 					)}
-					<Tooltip>
+					<Tooltip touchable={false}>
 						<TooltipTrigger asChild>
 							<m.button
 								id="friend-button"
@@ -184,7 +184,7 @@ export const QueueActions: FC<{
 							<Key label={mode === "love" ? "K" : "J"} />
 						</TooltipContent>
 					</Tooltip>
-					<Tooltip>
+					<Tooltip touchable={false}>
 						<TooltipTrigger asChild>
 							<m.button
 								id="pass-button"

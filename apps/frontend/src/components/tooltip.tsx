@@ -13,12 +13,14 @@ function Tooltip({
 	onOpenChange,
 	openDelay = 300,
 	closeDelay = 150,
+	touchable = true,
 	...props
 }: {
 	open?: boolean;
 	onOpenChange?: (open: boolean) => void;
 	openDelay?: number;
 	closeDelay?: number;
+	touchable?: boolean;
 } & Omit<React.ComponentPropsWithoutRef<typeof PopoverPrimitive.Root>, "onOpenChange" | "open">) {
 	const [internalOpen, setInternalOpen] = React.useState(false);
 	const openTimeoutReference = React.useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
@@ -27,7 +29,7 @@ function Tooltip({
 	const isControlled = controlledOpen !== undefined;
 	const open = isControlled ? controlledOpen : internalOpen;
 
-	const handleOpenChange = React.useCallback((newOpen: boolean) => {
+	const setOpen = React.useCallback((newOpen: boolean) => {
 		if (!isControlled) {
 			setInternalOpen(newOpen);
 		}
@@ -36,22 +38,26 @@ function Tooltip({
 
 	const handleOpen = React.useCallback(() => {
 		clearTimeout(closeTimeoutReference.current);
-		openTimeoutReference.current = setTimeout(() => handleOpenChange(true), openDelay);
-	}, [handleOpenChange, openDelay]);
+		openTimeoutReference.current = setTimeout(() => setOpen(true), openDelay);
+	}, [setOpen, openDelay]);
 
 	const handleOpenImmediate = React.useCallback(() => {
 		closeCurrentTooltip?.();
 		clearTimeout(closeTimeoutReference.current);
 		clearTimeout(openTimeoutReference.current);
-		handleOpenChange(true);
-	}, [handleOpenChange]);
+		setOpen(true);
+	}, [setOpen]);
 
 	const handleClose = React.useCallback(() => {
 		clearTimeout(openTimeoutReference.current);
-		closeTimeoutReference.current = setTimeout(() => handleOpenChange(false), closeDelay);
-	}, [handleOpenChange, closeDelay]);
+		closeTimeoutReference.current = setTimeout(() => setOpen(false), closeDelay);
+	}, [setOpen, closeDelay]);
 
-	const close = React.useCallback(() => handleOpenChange(false), [handleOpenChange]);
+	const close = React.useCallback(() => {
+		clearTimeout(openTimeoutReference.current);
+		clearTimeout(closeTimeoutReference.current);
+		setOpen(false);
+	}, [setOpen]);
 
 	React.useEffect(() => {
 		if (open) {
@@ -71,11 +77,11 @@ function Tooltip({
 		};
 	}, []);
 
-	const contextValue = React.useMemo(() => ({ handleOpen, handleOpenImmediate, handleClose }), [handleOpen, handleOpenImmediate, handleClose]);
+	const contextValue = React.useMemo(() => ({ handleOpen, handleOpenImmediate, handleClose, close, touchable }), [handleOpen, handleOpenImmediate, handleClose, close, touchable]);
 
 	return (
 		<TooltipContext value={contextValue}>
-			<PopoverPrimitive.Root open={open} onOpenChange={handleOpenChange} {...props}>
+			<PopoverPrimitive.Root open={open} {...props}>
 				{children}
 			</PopoverPrimitive.Root>
 		</TooltipContext>
@@ -86,34 +92,40 @@ interface TooltipContextValue {
 	handleOpen: () => void;
 	handleOpenImmediate: () => void;
 	handleClose: () => void;
+	close: () => void;
+	touchable: boolean;
 }
 
 const TooltipContext = React.createContext<TooltipContextValue | null>(null);
 
-function TooltipTrigger({ ref, onPointerEnter, onPointerLeave, onPointerDown, onClick, ...props }: { ref?: React.RefObject<React.ComponentRef<typeof PopoverPrimitive.Trigger> | null> } & React.ComponentPropsWithoutRef<typeof PopoverPrimitive.Trigger>) {
+function TooltipTrigger({ ref, onPointerEnter, onPointerLeave, onPointerDown, ...props }: { ref?: React.RefObject<React.ComponentRef<typeof PopoverPrimitive.Anchor> | null> } & React.ComponentPropsWithoutRef<typeof PopoverPrimitive.Anchor>) {
 	const context = React.use(TooltipContext);
 
+	const canHover = typeof window !== "undefined" && window.matchMedia("(hover: hover)").matches;
+
 	return (
-		<PopoverPrimitive.Trigger
+		<PopoverPrimitive.Anchor
+			data-tooltip-trigger=""
 			ref={ref}
-			onClick={(event) => {
-				event.preventDefault();
-				onClick?.(event);
-			}}
 			onPointerDown={(event) => {
-				if (event.pointerType === "touch") {
+				if (event.pointerType === "touch" && context?.touchable) {
 					context?.handleOpenImmediate();
 				}
 				onPointerDown?.(event);
 			}}
 			onPointerEnter={(event) => {
-				if (event.pointerType !== "touch") {
+				if (event.pointerType === "touch") {
+					if (context?.touchable) {
+						context?.handleOpenImmediate();
+					}
+				}
+				else if (canHover) {
 					context?.handleOpen();
 				}
 				onPointerEnter?.(event);
 			}}
 			onPointerLeave={(event) => {
-				if (event.pointerType !== "touch") {
+				if (event.pointerType !== "touch" && canHover) {
 					context?.handleClose();
 				}
 				onPointerLeave?.(event);
@@ -133,11 +145,14 @@ function TooltipContent({
 	sideOffset = 1,
 	onPointerEnter,
 	onPointerLeave,
+	onPointerDownOutside,
 	...props
 }: { ref?: React.Ref<React.ComponentRef<typeof PopoverPrimitive.Content> | null> } & React.ComponentPropsWithoutRef<typeof PopoverPrimitive.Content>) {
 	const context = React.use(TooltipContext);
 	const safeArea = useSafeArea();
 	const desktop = useBreakpoint("desktop");
+
+	const canHover = typeof window !== "undefined" && window.matchMedia("(hover: hover)").matches;
 
 	return (
 		<PopoverPrimitive.Portal>
@@ -158,14 +173,23 @@ function TooltipContent({
 				sideOffset={sideOffset}
 				onCloseAutoFocus={(event) => event.preventDefault()}
 				onOpenAutoFocus={(event) => event.preventDefault()}
+				onPointerDownOutside={(event) => {
+					const target = event.target as HTMLElement;
+					if (target.closest("[data-tooltip-trigger]")) {
+						event.preventDefault();
+						return;
+					}
+					context?.close();
+					onPointerDownOutside?.(event);
+				}}
 				onPointerEnter={(event) => {
-					if (event.pointerType !== "touch") {
+					if (event.pointerType !== "touch" && canHover) {
 						context?.handleOpen();
 					}
 					onPointerEnter?.(event);
 				}}
 				onPointerLeave={(event) => {
-					if (event.pointerType !== "touch") {
+					if (event.pointerType !== "touch" && canHover) {
 						context?.handleClose();
 					}
 					onPointerLeave?.(event);

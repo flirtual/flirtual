@@ -84,7 +84,7 @@ export const DefaultOptionItem: FC<OptionItemProps<unknown>> = (props) => {
 	const { t } = useTranslation();
 
 	return (
-		<Tooltip>
+		<Tooltip touchable={false}>
 			<TooltipTrigger asChild>
 				<button
 					{...elementProps}
