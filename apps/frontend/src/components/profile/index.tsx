@@ -158,11 +158,10 @@ export const Profile = withSuspense(({
 							{user.activeAt && (
 								<ActivityIndicator lastActiveAt={new Date(user.activeAt)} />
 							)}
-							{relationship?.timeDiff !== undefined && user.profile.timezone && (
+							{relationship?.timeDiff !== undefined && (
 								<TimeDiff
 									diff={relationship.timeDiff}
 									displayName={user.profile.displayName || t("unnamed_user")}
-									timezone={user.profile.timezone}
 								/>
 							)}
 						</div>

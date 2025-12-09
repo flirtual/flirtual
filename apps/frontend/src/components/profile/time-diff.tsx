@@ -2,13 +2,10 @@ import type { LucideProps } from "lucide-react";
 import { Clock1, Clock2, Clock3, Clock4, Clock5, Clock6, Clock7, Clock8, Clock9, Clock10, Clock11, Clock12 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
-import { useLocale } from "~/i18n";
-
 import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
 
 export interface TimeDiffProps {
 	diff: number;
-	timezone: string;
 	displayName: string;
 }
 
@@ -28,9 +25,8 @@ const clockIcons: Array<React.FC<LucideProps> | null> = [
 	Clock12,
 ];
 
-export const TimeDiff: React.FC<TimeDiffProps> = ({ diff, timezone, displayName }) => {
+export const TimeDiff: React.FC<TimeDiffProps> = ({ diff, displayName }) => {
 	const { t } = useTranslation();
-	const [locale] = useLocale();
 
 	const sign = diff < 0 ? "-" : "+";
 	const absDiff = Math.abs(diff);
@@ -38,20 +34,14 @@ export const TimeDiff: React.FC<TimeDiffProps> = ({ diff, timezone, displayName 
 	const minutes = Math.floor((absDiff % 3600) / 60);
 	const formattedDiff = `${sign}${hours}:${minutes.toString().padStart(2, "0")}`;
 
-	const formattedTime = new Intl.DateTimeFormat(locale, {
-		timeZone: timezone,
+	const now = new Date();
+	const theirTime = new Date(now.getTime() + diff * 1000);
+	const formattedTime = theirTime.toLocaleTimeString(undefined, {
 		hour: "numeric",
 		minute: "numeric"
-	}).format(new Date());
+	});
 
-	const hourHand = Number.parseInt(
-		new Date().toLocaleString("en-US", {
-			timeZone: timezone,
-			hour: "numeric"
-		}),
-		10
-	);
-
+	const hourHand = theirTime.getHours() % 12 || 12;
 	const ClockIcon = clockIcons[hourHand] || Clock4;
 
 	return (
