@@ -957,5 +957,6 @@
 	"each_ideal_seahorse_bump": "One or more images failed to upload, please try again later.",
 	"lost_sour_moose_tend": "Taken by <name/> in <world/>.",
 	"timezone": "Timezone",
-	"select_timezone": "Select your timezone…"
+	"select_timezone": "Select your timezone…",
+	"country": "Country"
 }
