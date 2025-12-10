@@ -72,7 +72,7 @@ export const MatchmakingForm: FC = () => {
 				relationships: user.profile.relationships ?? [],
 				monopoly: user.profile.monopoly,
 				languages: user.profile.languages,
-				weightCountry: customWeights.country,
+				weightLocation: customWeights.location,
 				weightCustomInterests: customWeights.customInterests,
 				weightDefaultInterests: customWeights.defaultInterests,
 				weightDomsub: customWeights.domsub,
@@ -106,7 +106,7 @@ export const MatchmakingForm: FC = () => {
 						]
 					}),
 					Profile.updateCustomWeights(user.id, {
-						country: values.weightCountry,
+						location: values.weightLocation,
 						customInterests: values.weightCustomInterests,
 						defaultInterests: values.weightDefaultInterests,
 						domsub: values.weightDomsub,
@@ -319,7 +319,7 @@ export const MatchmakingForm: FC = () => {
 											<span>
 												{
 													{
-														country: t("same_country"),
+														location: t("location"),
 														games: t("shared_vr_games"),
 														defaultInterests: t("shared_interests"),
 														customInterests: t("shared_custom_interests"),
@@ -347,7 +347,7 @@ export const MatchmakingForm: FC = () => {
 										<Slider
 											{...props}
 											disabled={
-												key === "country" ? false : !user.subscription?.active
+												key === "location" ? false : !user.subscription?.active
 											}
 											max={2}
 											min={0}

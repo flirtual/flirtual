@@ -8,7 +8,7 @@ defmodule Flirtual.User.Profile.CustomWeights do
 
   @derive {Jason.Encoder,
            only: [
-             :country,
+             :location,
              :monopoly,
              :games,
              :default_interests,
@@ -24,7 +24,7 @@ defmodule Flirtual.User.Profile.CustomWeights do
   schema "profile_custom_weights" do
     belongs_to(:profile, Profile, primary_key: true, references: :user_id)
 
-    field(:country, :float, default: 1.0)
+    field(:location, :float, default: 1.0)
     field(:monopoly, :float, default: 1.0)
     field(:games, :float, default: 1.0)
     field(:default_interests, :float, default: 1.0)
@@ -39,7 +39,7 @@ defmodule Flirtual.User.Profile.CustomWeights do
 
   def changeset(%Profile.CustomWeights{} = custom_weights, attrs) do
     cast(custom_weights, attrs, [
-      :country,
+      :location,
       :monopoly,
       :games,
       :default_interests,
@@ -51,7 +51,7 @@ defmodule Flirtual.User.Profile.CustomWeights do
       :kinks,
       :likes
     ])
-    |> validate(:country)
+    |> validate(:location)
     |> validate(:monopoly)
     |> validate(:games)
     |> validate(:default_interests)
@@ -71,7 +71,7 @@ defmodule Flirtual.User.Profile.CustomWeights do
     |> validate_number(name, greater_than_or_equal_to: 0, less_than_or_equal_to: 2)
     |> validate_number_divisible(name, 0.25)
     |> validate_change(name, fn _, _ ->
-      if name !== :country and not Subscription.active?(subscription) do
+      if name !== :location and not Subscription.active?(subscription) do
         [{name, "Subscription required"}]
       else
         []

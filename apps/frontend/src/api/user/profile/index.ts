@@ -105,7 +105,7 @@ export type ProfileColors = {
 };
 
 export const CustomWeightList = [
-	"country",
+	"location",
 	"monopoly",
 	"games",
 	"defaultInterests",

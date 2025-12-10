@@ -751,7 +751,7 @@ defmodule Flirtual.Matchmaking do
         :interests,
         :custom_interests,
         :games,
-        :country,
+        :location,
         :monopoly,
         :relationships,
         :domsub,
@@ -898,7 +898,7 @@ defmodule Flirtual.Matchmaking do
     )
   end
 
-  def query(:country, %User{} = user) do
+  def query(:location, %User{} = user) do
     %{profile: %{country: country, custom_weights: custom_weights}} = user
 
     # Are $a and $b from the same country?
@@ -912,7 +912,7 @@ defmodule Flirtual.Matchmaking do
               }
             }
           },
-          "boost" => 20 * (Map.get(custom_weights, :country) || 1)
+          "boost" => 20 * (Map.get(custom_weights, :location) || 1)
         }
       },
       else: []
