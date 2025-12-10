@@ -68,67 +68,82 @@ export const NewsDialog: FC<NewsDialogProps> = (props) => {
 		props.onClose?.();
 	};
 
-	const CurrentComponent = newsItems[news[currentIndex]].Component;
-
 	return (
-		<Dialog open onOpenChange={(open) => !open && currentIndex >= news.length - 1 && handleClose()}>
-			<DialogContent className="desktop:max-w-xl" closable={currentIndex >= news.length - 1}>
-				<DialogHeader>
-					<DialogTitle>{t(`news.${news[currentIndex]}.title` as any)}</DialogTitle>
-				</DialogHeader>
-				<DialogBody className="max-h-[60svh] gap-4">
-					<Suspense fallback={null}>
-						<CurrentComponent onSaved={news.length === 1 ? handleClose : undefined} />
-					</Suspense>
+		<Suspense fallback={null}>
+			<Dialog open onOpenChange={(open) => !open && currentIndex >= news.length - 1 && handleClose()}>
+				<DialogContent className="desktop:max-w-xl" closable={currentIndex >= news.length - 1}>
+					<DialogHeader>
+						<DialogTitle>{t(`news.${news[currentIndex]}.title` as any)}</DialogTitle>
+					</DialogHeader>
+					<DialogBody className="max-h-[60svh] gap-4">
+						{news.map((id, index) => {
+							const Component = newsItems[id].Component;
+							const isActive = index === currentIndex;
 
-					{news.length > 1 && (
-						<div className="relative flex items-center justify-between gap-2 pt-2">
-							{currentIndex > 0
-								? (
-										<Button
-											kind="tertiary"
-											size="sm"
-											onClick={() => setCurrentIndex((index) => index - 1)}
-										>
-											<ChevronLeft className="size-4" />
-											{t("previous")}
-										</Button>
-									)
-								: <div />}
+							return (
+								<div key={id} className={isActive ? "contents" : "hidden"}>
+									{isActive
+										? (
+												<Component onSaved={news.length === 1 ? handleClose : undefined} />
+											)
+										: (
+												<Suspense>
+													<Component />
+												</Suspense>
+											)}
+								</div>
+							);
+						})}
 
-							<div className="absolute left-1/2 flex -translate-x-1/2 gap-1.5">
-								{news.map((id, index) => (
-									<button
-										key={id}
-										className={`focusable size-2 rounded-full transition-colors ${
-											index === currentIndex ? "bg-theme-2" : "bg-white-40 dark:bg-black-40"
-										}`}
-										tabIndex={-1}
-										type="button"
-										onClick={() => setCurrentIndex(index)}
-									/>
-								))}
+						{news.length > 1 && (
+							<div className="relative flex items-center justify-between gap-2 pt-2">
+								{currentIndex > 0
+									? (
+											<Button
+												kind="tertiary"
+												size="sm"
+												onClick={() => setCurrentIndex((index) => index - 1)}
+											>
+												<ChevronLeft className="size-4" />
+												{t("previous")}
+											</Button>
+										)
+									: <div />}
+
+								<div className="absolute left-1/2 flex -translate-x-1/2 gap-1.5">
+									{news.map((id, index) => (
+										<button
+											key={id}
+											className={`focusable size-2 rounded-full transition-colors ${
+												index === currentIndex ? "bg-theme-2" : "bg-white-40 dark:bg-black-40"
+											}`}
+											tabIndex={-1}
+											type="button"
+											onClick={() => setCurrentIndex(index)}
+										/>
+									))}
+								</div>
+
+								{currentIndex < news.length - 1
+									? (
+											<Button
+												size="sm"
+												onClick={() => setCurrentIndex((index) => index + 1)}
+											>
+												{t("next")}
+												<ChevronRight className="size-4" />
+											</Button>
+										)
+									: (
+											<Button size="sm" onClick={handleClose}>
+												{t("close")}
+											</Button>
+										)}
 							</div>
-
-							{currentIndex < news.length - 1
-								? (
-										<Button
-											size="sm"
-											onClick={() => setCurrentIndex((index) => index + 1)}
-										>
-											{t("next")}
-											<ChevronRight className="size-4" />
-										</Button>
-									)
-								: (
-										<Button size="sm" onClick={handleClose}>
-											{t("close")}
-										</Button>
-									)}
-						</div>
-					)}
-				</DialogBody>
-			</DialogContent>
-		</Dialog>
+						)}
+					</DialogBody>
+				</DialogContent>
+			</Dialog>
+		</Suspense>
 	);
 };
