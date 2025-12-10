@@ -50,11 +50,18 @@ defmodule Flirtual.User.Profile.Image.Policy do
   # Any other action, or credentials are disallowed.
   def authorize(_, _, _), do: false
 
-  @own_property_keys [
-    :original_file,
-    :created_at,
-    :updated_at
-  ]
+  @own_property_keys (if Mix.env() == :dev do
+                        [
+                          :created_at,
+                          :updated_at
+                        ]
+                      else
+                        [
+                          :original_file,
+                          :created_at,
+                          :updated_at
+                        ]
+                      end)
 
   def transform(
         key,
@@ -72,16 +79,24 @@ defmodule Flirtual.User.Profile.Image.Policy do
       when key in @own_property_keys,
       do: image[key]
 
-  @moderator_property_keys [
-    :original_file,
-    :scanned,
-    :created_at,
-    :updated_at,
-    :author_id,
-    :author_name,
-    :world_id,
-    :world_name
-  ]
+  @moderator_property_keys (if Mix.env() == :dev do
+                              [
+                                :scanned,
+                                :created_at,
+                                :updated_at,
+                                :author_id,
+                                :author_name
+                              ]
+                            else
+                              [
+                                :original_file,
+                                :scanned,
+                                :created_at,
+                                :updated_at,
+                                :author_id,
+                                :author_name
+                              ]
+                            end)
 
   def transform(
         key,
