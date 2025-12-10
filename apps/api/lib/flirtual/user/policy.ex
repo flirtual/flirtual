@@ -188,6 +188,7 @@ defmodule Flirtual.User.Policy do
     :platforms,
     :push_count,
     :rating_prompts,
+    :news,
     :subscription,
     :revenuecat_id,
     :moderator_message,
