@@ -1,6 +1,6 @@
 import { Outlet } from "react-router";
 
-import { NewsDialog } from "~/components/profile/dialogs/news";
+import { NewsDialog } from "~/components/modals/news";
 import { useSession } from "~/hooks/use-session";
 import { throwRedirect } from "~/redirect";
 import { urls } from "~/urls";

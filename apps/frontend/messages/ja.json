@@ -83,7 +83,7 @@
 	},
 	"news": {
 		"footer": "<p>💡 Flirtualのアイデアがありますか？<discord>Discord</discord>（#feedbackチャンネル）で新機能を提案・投票できます。</p><p>❓ バグを見つけた、またはサポートが必要ですか？<contact>お知らせください</contact>。</p><p>💻 Flirtualがオープンソースだとご存知でしたか？開発者の方は<github>Flirtualの未来を一緒に作りましょう</github>。</p><p>💬 イベントなどの情報は<discord>Discordコミュニティ</discord>と<vrchat>VRChatグループ</vrchat>に参加してください！</p>",
-		"catch_up": {
+		"2025_catch_up": {
 			"title": "新しいプロフィールタグ！",
 			"body": "<p>お気づきかもしれませんが、少し前にこれらの関係タグを追加しました。このような新しい情報をお知らせする方法ができましたので、ぜひご確認ください。あなたが何を求めているかを知らせましょう！</p><form /><p>見逃したかもしれない最近の更新：</p><ul><li><bio>プロフィールにプロンプトの回答を追加</bio></li><li><connections>プロフィールに音楽プレイリストを追加</connections></li></ul>"
 		},

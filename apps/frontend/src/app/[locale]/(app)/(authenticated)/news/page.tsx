@@ -2,11 +2,9 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import invariant from "tiny-invariant";
 
+import { NewsDialog } from "~/components/modals/news";
+import { newsItems } from "~/components/modals/news-items/index";
 import { ModelCard } from "~/components/model-card";
-import {
-	NewsDialog,
-	newsItems
-} from "~/components/profile/dialogs/news";
 import { i18n } from "~/i18n";
 import { isLocale } from "~/i18n/languages";
 import { metaMerge, rootMeta } from "~/meta";
@@ -26,11 +24,11 @@ export const meta: Route.MetaFunction = (options) => {
 const publicNews = [
 	"2024_wrapped",
 	"2024_100k",
-	"2024_homies_day",
-	"2023_apps_themes",
-	"2023_matchmaking",
-	"2023_rewrite"
-];
+	// "2024_homies_day",
+	// "2023_apps_themes",
+	// "2023_matchmaking",
+	// "2023_rewrite"
+] as const;
 
 export default function NewsPage() {
 	const { t } = useTranslation();
@@ -52,7 +50,7 @@ export default function NewsPage() {
 							onClick={() => setSelectedNews(news)}
 						>
 							<span className="font-montserrat font-semibold">
-								{t(`news.${news}.title` as any)}
+								{t(`news.${news}.title`)}
 							</span>
 							<span className="text-sm text-black-50 dark:text-white-40">
 								{new Date(newsItems[news].date).toLocaleDateString(undefined, {
