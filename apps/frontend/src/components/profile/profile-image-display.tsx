@@ -15,6 +15,7 @@ import { invalidate, userKey } from "~/query";
 import { urls } from "~/urls";
 
 import { Dialog, DialogContent, DialogTitle } from "../dialog/dialog";
+import { VRChatIcon } from "../icons";
 import { InlineLink } from "../inline-link";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
 import { UserImage } from "../user-avatar";
@@ -295,6 +296,15 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 										className="touch-callout-default !relative mx-auto aspect-auto !size-auto max-h-[80vh] object-cover"
 										image={currentImage}
 									/>
+									{currentImage.worldId && currentImage.worldName && (
+										<InlineLink
+											className="absolute bottom-2 right-2 z-20 flex items-center gap-1.5 rounded-full bg-black-70/80 px-2 pb-[3px] pt-1 text-xs text-white-20 opacity-80 shadow-brand-1 transition-opacity hover:opacity-100 desktop:bottom-4 desktop:right-4 desktop:gap-2 desktop:pb-1.5 desktop:pl-3 desktop:pr-3.5 desktop:pt-2 desktop:text-sm"
+											href={urls.vrchatWorld(currentImage.worldId)}
+										>
+											<VRChatIcon className="size-3.5 desktop:size-4" />
+											<span className="max-w-56 truncate desktop:max-w-80 desktop:pb-0">{currentImage.worldName}</span>
+										</InlineLink>
+									)}
 								</div>
 								{session?.user?.tags?.includes("moderator") && (
 									<ImageToolbar image={currentImage} user={user} />
