@@ -229,6 +229,9 @@ export const InfoForm: FC = () => {
 								{(field) => (
 									<>
 										<InputLabel>{t("timezone")}</InputLabel>
+										<InputLabelHint className="-mt-2">
+											{t("timezone_hint")}
+										</InputLabelHint>
 										<InputTimezoneSelect {...field.props} />
 									</>
 								)}

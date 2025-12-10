@@ -26,7 +26,7 @@ export const CatchUp2025: FC<{ onSaved?: () => void }> = ({ onSaved }) => {
 						fields={{
 							relationships: user.profile.relationships ?? []
 						}}
-						className="mb-2 flex flex-col gap-4"
+						className="mb-2 flex flex-col gap-6"
 						onSubmit={async (values) => {
 							await Profile.update(user.id, {
 								required: ["relationships"],
@@ -34,7 +34,6 @@ export const CatchUp2025: FC<{ onSaved?: () => void }> = ({ onSaved }) => {
 							});
 							await invalidate({ queryKey: sessionKey() });
 							toasts.add(t("saved"));
-							onSaved?.();
 						}}
 					>
 						{({ FormField }) => (

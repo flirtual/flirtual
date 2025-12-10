@@ -7,6 +7,10 @@ export interface NewsItem {
 }
 
 export const newsItems: Record<string, NewsItem> = {
+	"2025_location": {
+		date: "2025-12-09",
+		Component: lazy(() => import("./2025-location").then(({ Location2025 }) => ({ default: Location2025 })))
+	},
 	"2025_catch_up": {
 		date: "2025-12-07",
 		Component: lazy(() => import("./2025-catch-up").then(({ CatchUp2025 }) => ({ default: CatchUp2025 })))

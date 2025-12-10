@@ -83,6 +83,12 @@
 	},
 	"news": {
 		"footer": "<p>💡 Have an idea for Flirtual? Suggest and vote on new features on <discord>Discord</discord> (in our #feedback channel).</p><p>❓ Found a bug or need help? <contact>Let us know</contact>.</p><p>💻 Did you know Flirtual is open source? If you're a developer, you can <github>help build the future of Flirtual</github>.</p><p>💬 Join our <discord>Discord community</discord> and <vrchat>VRChat group</vrchat> for events and more!</p>",
+		"2025_location": {
+			"title": "Location, location, location",
+			"body": "<p>You can now optionally add your location and timezone to see how close people are and what time it is for them.</p><form />",
+			"location_priority": "Location priority",
+			"location_priority_help": "Slide right to see more people nearby, or left to see more people we think you'll like farther away."
+		},
 		"2025_catch_up": {
 			"title": "New-ish profile tags!",
 			"body": "<p>In case you didn't notice, we added these relationship tags a while back. Now we have a way to show you new things like this, so here they are. Let people know what you're looking for!</p><form /><p>More recent stuff you may have missed:</p><ul><li><bio>Answer some prompts on your profile</bio></li><li><connections>Add a music playlist to your profile</connections></li></ul>"
@@ -960,10 +966,11 @@
 	"each_ideal_seahorse_bump": "One or more images failed to upload, please try again later.",
 	"lost_sour_moose_tend": "Taken by <name/> in <world/>.",
 	"timezone": "Timezone",
+	"timezone_hint": "Only your current time will be visible to others.",
 	"select_timezone": "Select your timezone…",
 	"country": "Country",
 	"geolocation": "Geolocation",
-	"geolocation_hint": "Share your location to see how close other members are. Your exact location is always private.",
+	"geolocation_hint": "Share your location to see people nearby. Your exact location is always private.",
 	"share_location": "Share location",
 	"update_location": "Update location",
 	"updating": "Updating…",

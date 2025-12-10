@@ -83,6 +83,12 @@
 	},
 	"news": {
 		"footer": "<p>💡 Flirtualのアイデアがありますか？<discord>Discord</discord>（#feedbackチャンネル）で新機能を提案・投票できます。</p><p>❓ バグを見つけた、またはサポートが必要ですか？<contact>お知らせください</contact>。</p><p>💻 Flirtualがオープンソースだとご存知でしたか？開発者の方は<github>Flirtualの未来を一緒に作りましょう</github>。</p><p>💬 イベントなどの情報は<discord>Discordコミュニティ</discord>と<vrchat>VRChatグループ</vrchat>に参加してください！</p>",
+		"2025_location": {
+			"title": "場所、場所、場所",
+			"body": "<p>位置情報とタイムゾーンを追加して、他のユーザーとの距離や現地時間を確認できるようになりました。</p><form />",
+			"location_priority": "場所の優先度",
+			"location_priority_help": "右にスライドすると近くのユーザーが多く表示され、左にスライドすると遠くにいる気の合いそうなユーザーが多く表示されます。"
+		},
 		"2025_catch_up": {
 			"title": "新しいプロフィールタグ！",
 			"body": "<p>お気づきかもしれませんが、少し前にこれらの関係タグを追加しました。このような新しい情報をお知らせする方法ができましたので、ぜひご確認ください。あなたが何を求めているかを知らせましょう！</p><form /><p>見逃したかもしれない最近の更新：</p><ul><li><bio>プロフィールにプロンプトの回答を追加</bio></li><li><connections>プロフィールに音楽プレイリストを追加</connections></li></ul>"
@@ -957,10 +963,11 @@
 	"each_ideal_seahorse_bump": "1つ以上の画像のアップロードに失敗しました。後ほど再度お試しください。",
 	"lost_sour_moose_tend": "<world/>で<name/>が撮影",
 	"timezone": "タイムゾーン",
+	"timezone_hint": "現在の時刻のみが他のユーザーに表示されます。",
 	"select_timezone": "タイムゾーンを選択…",
 	"country": "国",
 	"geolocation": "位置情報",
-	"geolocation_hint": "位置情報を共有すると、他のメンバーがどれほど近くにいるか確認できます。正確な位置情報は常に非公開です。",
+	"geolocation_hint": "位置情報を共有すると、近くのユーザーを見つけられます。正確な位置情報は常に非公開です。",
 	"share_location": "位置情報を共有",
 	"update_location": "位置情報を更新",
 	"updating": "更新中…",
