@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import { Trans } from "react-i18next";
-import ImageWrapped from "virtual:remote/static/news/wrapped.png";
+import ImageWrapped from "virtual:remote/static/news/wrapped.png?as=metadata";
 
 import { Image } from "~/components/image";
 
@@ -11,7 +11,7 @@ export const Wrapped2024: FC<{ onSaved?: () => void }> = () => (
 		components={{
 			...commonComponents,
 			"image-wrapped": (
-				<Image className="w-full rounded-lg" src={ImageWrapped} />
+				<Image className="w-full rounded-lg" height={ImageWrapped.height} src={ImageWrapped.src} width={ImageWrapped.width} />
 			)
 		}}
 		i18nKey="news.2024_wrapped.body"

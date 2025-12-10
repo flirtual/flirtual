@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import { Trans } from "react-i18next";
-import ImageProfileUpdates from "virtual:remote/static/news/profile-updates.png";
+import ImageProfileUpdates from "virtual:remote/static/news/profile-updates.png?as=metadata";
 
 import { Image } from "~/components/image";
 
@@ -11,7 +11,7 @@ export const HundredK2024: FC<{ onSaved?: () => void }> = () => (
 		components={{
 			...commonComponents,
 			"image-profile-updates": (
-				<Image className="w-full rounded-lg" src={ImageProfileUpdates} />
+				<Image className="w-full rounded-lg" height={ImageProfileUpdates.height} src={ImageProfileUpdates.src} width={ImageProfileUpdates.width} />
 			)
 		}}
 		i18nKey="news.2024_100k.body"
