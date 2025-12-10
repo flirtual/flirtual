@@ -24,10 +24,10 @@ export const meta: Route.MetaFunction = (options) => {
 const publicNews = [
 	"2024_wrapped",
 	"2024_100k",
-	// "2024_homies_day",
-	// "2023_apps_themes",
-	// "2023_matchmaking",
-	// "2023_rewrite"
+	"2024_homies_day",
+	"2023_apps_themes",
+	"2023_matchmaking",
+	"2023_rewrite"
 ] as const;
 
 export default function NewsPage() {
