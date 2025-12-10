@@ -85,6 +85,7 @@ As an alternative to `mix phx.gen.cert`, you can use [mkcert](https://github.com
 
 ```sh
 mkcert -install
+mkdir priv/cert
 mkcert -cert-file priv/cert/selfsigned.pem \
        -key-file priv/cert/selfsigned_key.pem \
        $(hostname) localhost 127.0.0.1 ::1

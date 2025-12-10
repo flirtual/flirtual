@@ -1,3 +1,5 @@
+import { existsSync, readFileSync } from "node:fs";
+
 import { reactRouter } from "@react-router/dev/vite";
 import { sentryReactRouter } from "@sentry/react-router";
 import basicSsl from "@vitejs/plugin-basic-ssl";
@@ -12,6 +14,13 @@ import { ViteImageOptimizer as imageOptimize } from "vite-plugin-image-optimizer
 import tsconfigPaths from "vite-tsconfig-paths";
 
 import { hush } from "./vite-plugin-hush";
+
+const mkcertPaths = {
+	cert: "./certificates/localhost.pem",
+	key: "./certificates/localhost-key.pem"
+};
+
+const mkcertExists = existsSync(mkcertPaths.cert) && existsSync(mkcertPaths.key);
 
 function getManualChunk(moduleId: string) {
 	const [,, language] = /(?:\/@uppy\/locales\/lib\/|\/messages\/(attributes\.)?)([a-z-_]+)\.(?:json|js)$/i.exec(moduleId) || [];
@@ -84,6 +93,9 @@ export default defineConfig((config) => {
 				]
 			},
 			...(mode === "development" && {
+				https: mkcertExists
+					? { cert: readFileSync(mkcertPaths.cert), key: readFileSync(mkcertPaths.key) }
+					: undefined,
 				proxy: {
 					"/tidewave": {
 						target: new URL(apiUrl).origin,
@@ -122,7 +134,7 @@ export default defineConfig((config) => {
 					}
 				]
 			}),
-			mode === "development" && basicSsl({
+			mode === "development" && !mkcertExists && basicSsl({
 				name: "flirtual",
 				domains: [hostname],
 				certDir: "./certificates",

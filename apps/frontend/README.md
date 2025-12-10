@@ -40,10 +40,10 @@ You can use [mkcert](https://github.com/FiloSottile/mkcert) to generate a certif
 
 ```sh
 mkcert -install
+mkdir certificates
 mkcert -cert-file certificates/localhost.pem \
        -key-file certificates/localhost-key.pem \
        $(hostname) localhost 127.0.0.1 ::1
-cat certificates/localhost.pem certificates/localhost-key.pem > certificates/_cert.pem
 ```
 
 To trust the CA on iOS/iPadOS/visionOS:
