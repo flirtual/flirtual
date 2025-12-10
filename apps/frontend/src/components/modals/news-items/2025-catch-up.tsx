@@ -12,7 +12,7 @@ import { invalidate, sessionKey } from "~/query";
 
 import { commonComponents } from "./common";
 
-export const CatchUp2025: FC<{ onSaved?: () => void }> = ({ onSaved }) => {
+export const CatchUp2025: FC<{ onSaved?: () => void }> = () => {
 	const { t } = useTranslation();
 	const toasts = useToast();
 	const { user } = useSession();
