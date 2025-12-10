@@ -914,7 +914,7 @@
 	"same_honest_seal_renew": "バーチャルデート、<highlight>本当のつながり</highlight>",
 	"copy": "コピー",
 	"connection": "繋がり",
-	"its_currently_time_for_name": "現在、{name} の {time} です",
+	"its_time_for_name": "{name} の {time} です",
 	"formal_dark_camel_hunt": "パスワードがリセットされました。新しいパスワードでログインできます。",
 	"main_fit_lark_imagine": "Flirtualの通知を許可してください",
 	"round_crazy_haddock_mix": "おっと！お探しのものが見つかりませんでした。移動したか、削除または非表示のプロフィールに遭遇した可能性があります。",

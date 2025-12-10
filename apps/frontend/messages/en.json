@@ -915,7 +915,7 @@
 	"same_honest_seal_renew": "Virtual dates, <highlight>real connections</highlight>",
 	"copy": "Copy",
 	"connection": "Connection",
-	"its_currently_time_for_name": "It's currently {time} for {name}",
+	"its_time_for_name": "It's {time} for {name}",
 	"formal_dark_camel_hunt": "Your password has been reset. You can now login with your new password.",
 	"main_fit_lark_imagine": "Please allow notifications for Flirtual",
 	"round_crazy_haddock_mix": "Oops! We couldn't find what you're looking for. It may have moved, or you've stumbled upon a deleted or hidden profile.",

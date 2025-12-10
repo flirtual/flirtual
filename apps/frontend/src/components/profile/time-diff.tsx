@@ -54,7 +54,7 @@ export const TimeDiff: React.FC<TimeDiffProps> = ({ diff, displayName }) => {
 					</span>
 				</div>
 			</TooltipTrigger>
-			<TooltipContent>{t("its_currently_time_for_name", { time: formattedTime, name: displayName })}</TooltipContent>
+			<TooltipContent>{t("its_time_for_name", { time: formattedTime, name: displayName })}</TooltipContent>
 		</Tooltip>
 	);
 };

@@ -331,6 +331,7 @@ defmodule Flirtual.User do
 
     case round_to_nearest(mi, @miles_buckets) do
       :max -> "5000mi+"
+      50 -> "<50mi"
       n -> "#{n}mi"
     end
   end
@@ -340,6 +341,7 @@ defmodule Flirtual.User do
 
     case round_to_nearest(km, @km_buckets) do
       :max -> "5000km+"
+      100 -> "<100km"
       n -> "#{n}km"
     end
   end
