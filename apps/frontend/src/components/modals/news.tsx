@@ -36,7 +36,7 @@ export const NewsDialog: FC<NewsDialogProps> = (props) => {
 		if (!session?.user.news?.length) return [];
 		if (!tourCompleted) return [];
 
-		return session.user.news.filter((id) => newsItems[id]);
+		return session.user.news.filter((id) => newsItems[id]).toReversed();
 	}, [props.news, session?.user.news, tourCompleted]);
 
 	useGlobalEventListener(
