@@ -13,8 +13,7 @@ export function isLocale(locale: string): locale is Locale {
 	return locales.includes(locale as Locale);
 }
 
-// eslint-disable-next-line regexp/no-optional-assertion
-export const localePathnameRegex = new RegExp(`^\/(${locales.join("|")})?(\/|$)?`);
+export const localePathnameRegex = new RegExp(`^\/((${locales.join("|")})?(\/|$))?`);
 
 export const localeNames: Record<Locale, string> = {
 	en: "English",
@@ -44,7 +43,7 @@ export function replaceLanguage(to: To, locale: Locale | null, relativeTo: strin
 	let { pathname, ...path } = resolvePath(to, relativeTo);
 
 	pathname = pathname.replace(localePathnameRegex, locale ? `/${locale}/` : "/");
-	if (pathname.endsWith("/")) pathname = pathname.slice(0, -1);
+	if (pathname.endsWith("/") && pathname !== "/") pathname = pathname.slice(0, -1);
 
 	return { ...path, pathname };
 }
