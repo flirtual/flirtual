@@ -57,11 +57,6 @@ const reverseSearchEngines = [
 			`https://www.bing.com/images/search?q=imgurl:${encodeURIComponent(
 				url
 			)}&view=detailv2&iss=sbi&FORM=IRSBIQ`
-	},
-	{
-		name: "TinEye",
-		url: (url: string) =>
-			`https://www.tineye.com/search?url=${encodeURIComponent(url)}`
 	}
 ];
 
