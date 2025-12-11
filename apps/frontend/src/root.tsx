@@ -161,6 +161,7 @@ const BeforeRenderScript: FC = memo(() => {
 		const themeStyle = globalThis.themeStyle = location.pathname.replace(localePathnameRegex, "/") === friendsPathname ? "friend" : "default";
 
 		Object.assign(document.body.dataset, { theme, themeStyle });
+		Object.assign(document.documentElement.dataset, { theme });
 
 		const fontSize = globalThis.fontSize = Number.parseFloat(JSON.parse(localStorage.getItem(".font_size") || "16") as string) || 16;
 		document.documentElement.style.setProperty("font-size", `${fontSize}px`);
@@ -210,6 +211,7 @@ export function Layout({ children }: PropsWithChildren) {
 	return (
 		<html
 			suppressHydrationWarning
+			className="bg-white-20 data-[theme=dark]:bg-black-70 desktop:bg-cream desktop:data-[theme=dark]:bg-black-80"
 			style={{
 				"--safe-area-inset-top": "env(safe-area-inset-top, 0px)",
 				"--safe-area-inset-left": "env(safe-area-inset-left, 0px)",
@@ -218,6 +220,7 @@ export function Layout({ children }: PropsWithChildren) {
 				fontSize: `${fontSize || 16}px`
 			} as React.CSSProperties}
 			lang={locale}
+			data-theme={theme}
 		>
 			<head>
 				<Meta />
