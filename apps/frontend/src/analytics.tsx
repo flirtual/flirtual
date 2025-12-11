@@ -30,7 +30,9 @@ export function initializeAnalytics() {
 			siteOrigin,
 			apiOrigin,
 		],
-		ignoreErrors: [],
+		ignoreErrors: [
+			"must be caught by a redirect boundary"
+		],
 		environment: preview || "production",
 		sendDefaultPii: !production
 	});
