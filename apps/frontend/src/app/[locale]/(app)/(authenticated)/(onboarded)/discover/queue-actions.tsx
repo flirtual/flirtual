@@ -9,6 +9,7 @@ import { twMerge } from "tailwind-merge";
 import type {
 	ProspectKind,
 } from "~/api/matchmaking";
+import type { Relationship } from "~/api/user/relationship";
 import { Button } from "~/components/button";
 import { HeartIcon } from "~/components/icons/gradient/heart";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
@@ -17,7 +18,7 @@ import { useGlobalEventListener } from "~/hooks/use-event-listener";
 import { useTimeout } from "~/hooks/use-interval";
 import { useQueue } from "~/hooks/use-queue";
 import { useSession } from "~/hooks/use-session";
-import { useRelationship } from "~/hooks/use-user";
+import { relationshipKey, useQueryState } from "~/query";
 
 function Key({ label }: { label: string }) {
 	return (
@@ -79,7 +80,7 @@ export const QueueActions: FC<{
 		mutating
 	} = useQueue(mode);
 
-	const relationship = useRelationship(explicitUserId ?? current!);
+	const { data: relationship } = useQueryState<Relationship>(relationshipKey(explicitUserId ?? current!));
 	const blocked = relationship?.blocked ?? false;
 
 	const [didAction, setDidAction] = useState(false);

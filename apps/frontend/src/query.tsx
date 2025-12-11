@@ -289,16 +289,16 @@ export function useQuery<
 	return use(promise);
 }
 
-export function useQueryState(queryKey: QueryKey) {
+export function useQueryState<T>(queryKey: QueryKey): Partial<QueryState<T>> {
 	const queryHash = hashKey(queryKey);
-	const [state, setState] = useState(() => queryClient.getQueryState(queryKey));
+	const [state, setState] = useState(() => queryClient.getQueryState<T>(queryKey));
 
 	useEffect(() => queryCache.subscribe(({ query, }) => {
 		if (query.queryHash !== queryHash) return;
 		setState(query.state);
 	}));
 
-	return state;
+	return state || {};
 }
 
 export function useMutation<T = unknown, Variables = void, Context = unknown>({
