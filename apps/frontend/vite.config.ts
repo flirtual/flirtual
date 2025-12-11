@@ -181,9 +181,8 @@ export default defineConfig((config) => {
 				telemetry: false,
 				sourceMapsUploadOptions: {
 					filesToDeleteAfterUpload: [
-						"**/*.data",
-						mode === "production" && "**/*.map"
-					].filter(Boolean)
+						"**/*.data"
+					]
 				},
 				bundleSizeOptimizations: {
 					excludeDebugStatements: true
