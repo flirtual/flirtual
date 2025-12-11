@@ -225,9 +225,15 @@ export function Layout({ children }: PropsWithChildren) {
 			</head>
 			<body
 				suppressHydrationWarning
+				ref={(element) => {
+					if (!element) return;
+
+					const native = nativeOverride || device.native;
+					if (native) element.dataset.native = "";
+
+					element.dataset.platform = platformOverride || device.platform;
+				}}
 				className="flex min-h-screen flex-col bg-white-20 font-nunito text-black-80 antialiased data-[theme=dark]:bg-black-70 data-[vision]:bg-transparent data-[theme=dark]:text-white-20 desktop:bg-cream desktop:data-[theme=dark]:bg-black-80"
-				data-native={nativeOverride || (client && device.native) || undefined}
-				data-platform={platformOverride || (client && device.platform) || undefined}
 				data-theme={theme}
 				data-theme-style={themeStyle}
 			>
