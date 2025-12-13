@@ -44,7 +44,7 @@ export const CountryPill: FC<CountryPillProps> = ({
 		<Pill
 			small
 			className={twMerge(
-				"shrink-0",
+				"shrink-0 py-0",
 				flagOnly && "overflow-hidden p-0",
 				className
 			)}
