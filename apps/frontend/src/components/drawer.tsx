@@ -38,7 +38,7 @@ function DrawerContent({ ref: reference, className, children, ...props }: { ref?
 			<DrawerOverlay />
 			<DrawerPrimitive.Content
 				className={twMerge(
-					"fixed inset-x-0 bottom-0 z-40 mt-24 flex h-auto max-h-[75vh] flex-col rounded-t-3xl bg-white-30 p-4 font-nunito text-black-80 shadow-brand-1 dark:bg-black-70 dark:text-white-20",
+					"fixed inset-x-0 bottom-0 z-40 mt-24 flex h-auto max-h-[75vh] flex-col rounded-t-3xl bg-white-30 p-4 pb-[calc(var(--safe-area-inset-bottom,0rem)+1rem)] font-nunito text-black-80 shadow-brand-1 dark:bg-black-70 dark:text-white-20",
 					className
 				)}
 				ref={reference}
