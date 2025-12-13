@@ -18,14 +18,14 @@ import { useOptionalSession } from "~/hooks/use-session";
 
 import { log } from "./log";
 
-export function initializeAnalytics() {
+export function initializeMonitoring() {
 	Sentry.init({
 		enabled: sentryEnabled,
 		dsn: sentryDsn,
 		sampleRate: 1,
 		tracesSampleRate: 1,
 		replaysOnErrorSampleRate: 1,
-		replaysSessionSampleRate: preview ? 1 : 0,
+		replaysSessionSampleRate: 0,
 		tracePropagationTargets: [
 			siteOrigin,
 			apiOrigin,
@@ -34,29 +34,33 @@ export function initializeAnalytics() {
 			"must be caught by a redirect boundary"
 		],
 		environment: preview || "production",
-		sendDefaultPii: !production
+		integrations: [Sentry.replayIntegration({
+			mask: ["[data-mask]"],
+			unmask: ["[data-unmask]"],
+			block: ["[data-block]"],
+			unblock: ["[data-unblock]"],
+			ignore: ["[data-ignore]"],
+			maskAttributes: ["title", "placeholder", "aria-label", "alt", "href"]
+		})]
 	});
 
-	log("Analytics initialized");
+	log("Monitoring initialized");
 }
 
 function Identity() {
 	const session = useOptionalSession();
-
 	const userId = session?.user.id || null;
-	const optIn = session?.user.preferences?.privacy.analytics || true;
 
 	if (client) {
 		Sentry.setTag("native", device.native ? "yes" : "no");
 		Sentry.setTag("vision", device.vision ? "yes" : "no");
-
-		Sentry.setUser((userId && optIn) ? { id: userId } : null);
+		Sentry.setUser(userId ? { id: userId } : null);
 	}
 
 	return null;
 }
 
-export function Analytics() {
+export function Monitoring() {
 	return (
 		<>
 			<Suspense>

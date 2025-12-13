@@ -20,7 +20,7 @@ export const BlockedProfile: React.FC<{ user: User }> = ({ user }) => {
 				<Trans
 					shouldUnescape
 					components={{
-						highlight: <span data-mask className="font-semibold" />
+						highlight: <span className="font-semibold" />
 					}}
 					i18nKey="giant_strong_thrush_startle"
 					values={{ name: escapeHtml(user.profile.displayName || t("unnamed_user")) }}

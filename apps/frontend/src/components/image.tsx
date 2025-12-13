@@ -11,7 +11,6 @@ export const Image: FC<ImageProps> = ({ src, priority, ...props }) => {
 	return (
 		<img
 			{...props}
-			data-block
 			fetchPriority={priority ? "high" : "low"}
 			loading={priority ? "eager" : "lazy"}
 			src={src}

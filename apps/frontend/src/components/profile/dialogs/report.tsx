@@ -94,10 +94,7 @@ export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 										<div className="flex items-center gap-4">
 											<UserThumbnail user={user} />
 											<div className="flex flex-col">
-												<span
-													data-mask
-													className="text-lg font-semibold leading-none"
-												>
+												<span className="text-lg font-semibold leading-none">
 													{user.profile.displayName || t("unnamed_user")}
 												</span>
 												{session?.user.tags?.includes("moderator") && (

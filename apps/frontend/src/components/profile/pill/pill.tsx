@@ -58,7 +58,6 @@ export function Pill(props: PillProps) {
 			>
 				{Icon && <Icon className="h-4" />}
 				<m.div
-					data-block
 					animate={
 						href && hocused ? { marginRight: "1.5rem" } : { marginRight: 0 }
 					}

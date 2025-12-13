@@ -61,6 +61,7 @@ export const InputText: React.FC<InputTextProps> = (props) => {
 					&& "[appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none",
 					props.className
 				)}
+				data-ignore={props.type === "password" || undefined}
 				ref={inputReference}
 				type={type}
 				onChange={(event) => {

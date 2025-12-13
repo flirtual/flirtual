@@ -46,10 +46,7 @@ export const ItsAMatch: FC<ItsAMatchProps> = ({ userId, conversationId, kind, on
 							<Trans
 								components={{
 									name: (
-										<InlineLink
-											data-block
-											href={urls.profile(user)}
-										>
+										<InlineLink href={urls.profile(user)}>
 											{user.profile.displayName || t("unnamed_user")}
 										</InlineLink>
 									)

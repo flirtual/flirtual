@@ -108,7 +108,7 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 			</button>
 			<div className="pointer-events-none flex flex-col overflow-hidden whitespace-nowrap px-4 py-2 font-nunito leading-none vision:text-black-80">
 				<span className="text-sm leading-none opacity-75">{t(type)}</span>
-				<span data-mask>{connection?.displayName ?? t("connect_account")}</span>
+				<span>{connection?.displayName ?? t("connect_account")}</span>
 			</div>
 			{connection && (
 				<button

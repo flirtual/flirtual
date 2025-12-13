@@ -15,7 +15,7 @@ App.addListener("appUrlOpen", async (event) => {
 	location.href = href;
 });
 
-import("./analytics").then(({ initializeAnalytics }) => initializeAnalytics());
+import("./monitoring").then(({ initializeMonitoring }) => initializeMonitoring());
 
 // await restoreQueries();
 //

@@ -75,10 +75,7 @@ export const ModeratorNoteDialog: FC<{ user: User; onClose: () => void }> = ({ u
 											<div className="flex items-center gap-4">
 												<UserThumbnail user={user} />
 												<div className="flex flex-col">
-													<span
-														data-mask
-														className="text-lg font-semibold leading-none"
-													>
+													<span className="text-lg font-semibold leading-none">
 														{user.profile.displayName || t("unnamed_user")}
 													</span>
 													<span className="font-mono text-sm brightness-75">
