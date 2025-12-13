@@ -27,8 +27,10 @@ import { twMerge } from "tailwind-merge";
 
 import { Authentication } from "~/api/auth";
 import { InlineLink } from "~/components/inline-link";
+import { IdeasDialog } from "~/components/modals/ideas";
 import { commitIdShort } from "~/const";
 import { useDevice } from "~/hooks/use-device";
+import { useDialog } from "~/hooks/use-dialog";
 import { useFreshworks } from "~/hooks/use-freshworks";
 import { logout, useSession } from "~/hooks/use-session";
 import { evictQueries, invalidate, mutate, sessionKey } from "~/query";
@@ -47,6 +49,7 @@ export const SettingsNavigation: FC = () => {
 
 	const { openFreshworks } = useFreshworks();
 	const { t } = useTranslation();
+	const dialogs = useDialog();
 
 	// if (user.status === "onboarded") throwRedirect(urls.finish(1));
 
@@ -174,8 +177,13 @@ export const SettingsNavigation: FC = () => {
 					<div className="desktop:hidden">
 						<NavigationCategory name={t("help")}>
 							<NavigationLink onClick={openFreshworks}>{t("support")}</NavigationLink>
-							<NavigationLink href={urls.socials.discord}>
-								{t("feedback")}
+							<NavigationLink
+								onClick={() => {
+									const dialog = <IdeasDialog onClose={() => dialogs.remove(dialog)} />;
+									dialogs.add(dialog);
+								}}
+							>
+								{t("ideas")}
 							</NavigationLink>
 							<NavigationLink href={urls.resources.networkStatus}>
 								{t("network_status")}

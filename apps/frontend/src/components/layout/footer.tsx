@@ -9,6 +9,7 @@ import {
 } from "~/components/icons";
 import type { IconComponent } from "~/components/icons";
 import { commitIdShort } from "~/const";
+import { useDialog } from "~/hooks/use-dialog";
 import type { Theme } from "~/hooks/use-theme";
 import { urls } from "~/urls";
 
@@ -16,6 +17,7 @@ import { InlineLink } from "../inline-link";
 import { InlineLanguageSelect } from "../inputs/specialized/language-select";
 import { Link } from "../link";
 import { FlirtualLogo } from "../logo";
+import { IdeasDialog } from "../modals/ideas";
 import { MadeWithLove } from "./made-with-love";
 import { FooterIconSupportLink, FooterSupportLink } from "./support-button";
 
@@ -91,6 +93,7 @@ export const Footer: React.FC<FooterProps> = ({
 	...props
 }) => {
 	const { t } = useTranslation();
+	const dialogs = useDialog();
 
 	return (
 		<footer
@@ -130,7 +133,13 @@ export const Footer: React.FC<FooterProps> = ({
 					<ul>
 						<FooterListLink href={urls.resources.events} label={t("events")} />
 						<FooterSupportLink />
-						<FooterListLink href={urls.socials.discord} label={t("feedback")} />
+						<FooterListLink
+							label={t("ideas")}
+							onClick={() => {
+								const dialog = <IdeasDialog onClose={() => dialogs.remove(dialog)} />;
+								dialogs.add(dialog);
+							}}
+						/>
 						<FooterListLink
 							href={urls.resources.networkStatus}
 							label={t("status")}
