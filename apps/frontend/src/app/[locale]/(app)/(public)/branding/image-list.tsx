@@ -21,7 +21,7 @@ function ImageListItem({ name, sources, dark }: ImageListItemProps) {
 				download={`flirtual-${name}.${defaultKind}`}
 				href={sources[defaultKind]}
 			>
-				<img className="h-fit w-full" src={sources[defaultKind]} />
+				<img className="w-full object-contain" src={sources[defaultKind]} />
 			</a>
 			<div className="flex gap-2">
 				{Object.entries(sources).map(([kind, source]) => (
