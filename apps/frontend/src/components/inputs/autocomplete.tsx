@@ -130,7 +130,7 @@ export function InputAutocomplete<K extends string>(
 						return (
 							<button
 								key={option.key}
-								className="focusable h-fit rounded-xl bg-brand-gradient px-3 py-1 shadow-brand-1"
+								className="focusable h-fit rounded-xl bg-brand-gradient px-3 py-1 text-left shadow-brand-1"
 								type="button"
 								onClick={() => onChange(values.filter((v) => v !== option.key))}
 							>

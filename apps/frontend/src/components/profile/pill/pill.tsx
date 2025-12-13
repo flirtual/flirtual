@@ -39,7 +39,7 @@ export function Pill(props: PillProps) {
 			<Component
 				{...elementProps as any}
 				className={twMerge(
-					"group pointer-events-auto relative flex h-8 items-center gap-2 rounded-xl font-montserrat text-sm font-medium shadow-brand-1 transition-all vision:!bg-white-30/70 desktop:text-base",
+					"group pointer-events-auto relative flex items-center gap-2 rounded-xl font-montserrat text-sm font-medium shadow-brand-1 transition-all vision:!bg-white-30/70 desktop:text-base",
 					(href || onClick) && "cursor-pointer",
 					hocusable && (active || (hocused && (href || onClick)))
 						? "bg-brand-gradient text-theme-overlay"
