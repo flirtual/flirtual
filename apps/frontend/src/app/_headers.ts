@@ -145,6 +145,9 @@ const data = [
 						// Music platforms.
 						...playlistPlatforms.map(({ embed }) => new URL(embed("example", "light", "en")).host),
 					],
+					// https://docs.sentry.io/platforms/javascript/session-replay/#content-security-policy-csp
+					"worker-src": ["'self'", "blob:"],
+					"child-src": ["'self'", "blob:"],
 					"upgrade-insecure-requests": [],
 					...(contentSecurityPolicyReportTo
 						? {
