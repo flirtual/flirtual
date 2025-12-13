@@ -173,12 +173,6 @@ defmodule FlirtualWeb.Router do
             delete("/", SessionController, :revoke_sudo)
           end
 
-          scope "/sso" do
-            scope "/canny" do
-              get("/", CannyController, :login)
-            end
-          end
-
           scope "/verification" do
             post("/", SessionController, :verify)
             post("/resend", SessionController, :resend_verification)

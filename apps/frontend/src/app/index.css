@@ -79,16 +79,8 @@ iframe {
   user-select: none;
 }
 
-#canny-changelog-iframe,
 #freshworks-frame-wrapper>iframe {
   @apply p-[var(--safe-area-inset-top)_var(--safe-area-inset-right)_var(--safe-area-inset-bottom)_var(--safe-area-inset-left)];
-}
-
-.Canny_Badge {
-  background-color: var(--brand-theme-2) !important;
-  left: 15px !important;
-  top: 4px !important;
-  right: auto !important;
 }
 
 #freshworks-frame-wrapper>iframe {

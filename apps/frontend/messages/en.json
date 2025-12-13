@@ -4,7 +4,7 @@
 	"knotty_direct_mongoose_bend": "The first VR dating app. Join over 100,000 people for dates in VR apps like VRChat.",
 	"green_plain_mongoose_lend": "Meet new people in Virtual Reality ❤️ Flirtual helps you go on dates in VR and VRChat…",
 	"about_us": "About us",
-	"hard_cause_trick_puzzling": "<section><h1>Our story</h1><p>Hey, we're Kyle and Tony, the creators of Flirtual. Kyle has been obsessed with VR since the early days of Oculus, but it really changed his life when he joined VRChat and met some of his closest friends (including his wife!) there. Right before COVID hit, Kyle brought his childhood best friend Tony along for the journey, and VR also changed his life. We set out to help others meet awesome people around the world too, starting with VRLFP (Virtual Reality Looking For Partner).</p><p>Immersive presence in VR helps you form deep connections with people anywhere in the world. By bridging geographic distance and putting personality first, our mission is to find the very best people for you, wherever they are. And to make dating safer and more magical!</p><p>In 2022, VRLFP became Flirtual. Rebuilt from the ground up, we've enhanced matchmaking, added personality & interest tags, and launched improved apps. Whether you're looking for a serious relationship that transitions into real life, something more casual in VR, or just new homies, we're ready to help find your perfect match.</p><group><logo/><p>❤ kfarwell, Tony & The Flirtual Team</p><discord>Join our Discord</discord></group><p><italic>P.S. We've come a long way from VRLFP's humble beginnings, but we're still a small team rooted in the VR community. <br/><br/>We appreciate your patience as we work hard to make Flirtual as awesome as it can be. Please let us know if you <contact>find any bugs</contact> or <feedback>have any suggestions</feedback>!</italic></p></section><section><h1>The team</h1><team-list/></section><section><h1>Timeline</h1><timeline/></section>",
+	"hard_cause_trick_puzzling": "<section><h1>Our story</h1><p>Hey, we're Kyle and Tony, the creators of Flirtual. Kyle has been obsessed with VR since the early days of Oculus, but it really changed his life when he joined VRChat and met some of his closest friends (including his wife!) there. Right before COVID hit, Kyle brought his childhood best friend Tony along for the journey, and VR also changed his life. We set out to help others meet awesome people around the world too, starting with VRLFP (Virtual Reality Looking For Partner).</p><p>Immersive presence in VR helps you form deep connections with people anywhere in the world. By bridging geographic distance and putting personality first, our mission is to find the very best people for you, wherever they are. And to make dating safer and more magical!</p><p>In 2022, VRLFP became Flirtual. Rebuilt from the ground up, we've enhanced matchmaking, added personality & interest tags, and launched improved apps. Whether you're looking for a serious relationship that transitions into real life, something more casual in VR, or just new homies, we're ready to help find your perfect match.</p><group><logo/><p>❤ kfarwell, Tony & The Flirtual Team</p><discord>Join our Discord</discord></group><p><italic>P.S. We've come a long way from VRLFP's humble beginnings, but we're still a small team rooted in the VR community. <br/><br/>We appreciate your patience as we work hard to make Flirtual as awesome as it can be. Please let us know if you <contact>find any bugs</contact> or <ideas>have any suggestions</ideas>!</italic></p></section><section><h1>The team</h1><team-list/></section><section><h1>Timeline</h1><timeline/></section>",
 	"extra_moving_jackdaw_twist": "{name}'s avatar",
 	"voice_spiritual_polite_entertaining": "Picture of the Flirtual Team in VRChat",
 	"copy_frighten_wobble_futuristic": {
@@ -82,7 +82,7 @@
 		}
 	},
 	"news": {
-		"footer": "<p>💡 Have an idea for Flirtual? Suggest and vote on new features on <discord>Discord</discord> (in our #feedback channel).</p><p>❓ Found a bug or need help? <contact>Let us know</contact>.</p><p>💻 Did you know Flirtual is open source? If you're a developer, you can <github>help build the future of Flirtual</github>.</p><p>💬 Join our <discord>Discord community</discord> and <vrchat>VRChat group</vrchat> for events and more!</p>",
+		"footer": "<p>💡 Have an idea for Flirtual? <ideas>Suggest and vote</ideas> on new features and improvements.</p><p>❓ Found a bug or need help? <contact>Let us know</contact>.</p><p>💻 Did you know Flirtual is open source? If you're a developer, you can <github>help build the future of Flirtual</github>.</p><p>💬 Join our <discord>Discord community</discord> and <vrchat>VRChat group</vrchat> for events and more!</p>",
 		"2025_location": {
 			"title": "Location, location, location",
 			"body": "<p>You can now optionally add your location and timezone to see how close people are and what time it is for them.</p><form />",
@@ -215,7 +215,7 @@
 		"15": "If you homie someone, and they like you, you'll still match (as homies).",
 		"16": "Did you know? We have weekly events in VRChat. Speed dating, DJ nights, and more!",
 		"17": "Click \"Events\" at the bottom of the page for more info.",
-		"18": "Have an idea for Flirtual? Click \"Feedback\" at the bottom of the page to let us know!",
+		"18": "Have an idea for Flirtual? Click \"Ideas\" at the bottom of the page to let us know!",
 		"19": "Why are you still here?",
 		"20": "Achievement unlocked: 100 pats 🏆",
 		"21": "There are achievements?",
@@ -536,7 +536,6 @@
 	"network_status": "Network Status",
 	"info": "Info",
 	"legal": "Legal",
-	"feedback": "Feedback",
 	"ideas": "Ideas",
 	"ideas_dialog_title": "Ideas",
 	"ideas_dialog_description": "<p>Want to help shape the future of Flirtual? Join our Discord to suggest or vote on new features and improvements in the <strong>#ideas</strong> channel.</p><p>We're a very small team and can't get to everything, but we try to prioritize updates based on votes.</p>",

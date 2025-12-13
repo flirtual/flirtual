@@ -41,7 +41,6 @@ export const sentryEnabled = production
 // Miscellaneous
 export const cloudflareBeaconId = import.meta.env.VITE_CLOUDFLARE_BEACON_ID as string;
 
-export const cannyAppId = import.meta.env.VITE_CANNY_APP_ID as string;
 export const freshworksWidgetId = import.meta.env.VITE_FRESHWORKS_WIDGET_ID as string;
 
 export const rcAppleKey = import.meta.env.VITE_RC_APPL_PUBLIC_KEY as string;

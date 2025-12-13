@@ -1,8 +1,8 @@
 on:
   push:
-    paths: [ "apps/frontend/**", ".github/workflows/frontend.yaml" ]
+    paths: ["apps/frontend/**", ".github/workflows/frontend.yaml"]
   pull_request:
-    paths: [ "apps/frontend/**", ".github/workflows/frontend.yaml" ]
+    paths: ["apps/frontend/**", ".github/workflows/frontend.yaml"]
   workflow_dispatch:
 
 concurrency:
@@ -113,7 +113,6 @@ jobs:
       VITE_SENTRY_PROJECT_ID: ${{ vars.VITE_SENTRY_PROJECT_ID }}
       VITE_SENTRY_REPORT_TO: ${{ vars.VITE_SENTRY_REPORT_TO }}
       VITE_CLOUDFLARE_BEACON_ID: ${{ vars.VITE_CLOUDFLARE_BEACON_ID }}
-      VITE_CANNY_APP_ID: ${{ vars.VITE_CANNY_APP_ID }}
       VITE_FRESHWORKS_WIDGET_ID: ${{ vars.VITE_FRESHWORKS_WIDGET_ID }}
       VITE_UPPY_COMPANION_URL: ${{ vars.VITE_UPPY_COMPANION_URL }}
       VITE_UPPY_BUCKET_ORIGIN: ${{ vars.VITE_UPPY_BUCKET_ORIGIN }}

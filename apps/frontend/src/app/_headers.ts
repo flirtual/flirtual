@@ -74,8 +74,6 @@ const data = [
 						polyfillBaseUrl.href.replace(polyfillBaseUrl.origin, polyfillBaseUrl.host),
 						// https://talkjs.com/docs/Features/Security_Settings/Content_Security_Policy/
 						"*.talkjs.com",
-						// https://developers.canny.io/
-						"canny.io",
 						// https://developers.freshdesk.com/widget-api/
 						"*.freshworks.com",
 						"*.freshdesk.com",
@@ -117,8 +115,6 @@ const data = [
 						"*.talkjs.com",
 						"wss://*.talkjs.com",
 						"capture.trackjs.com",
-						// https://developers.canny.io/
-						"api.canny.io",
 						// https://developers.freshdesk.com/widget-api/
 						"*.freshworks.com",
 						"*.freshdesk.com",
@@ -141,9 +137,6 @@ const data = [
 						"challenges.cloudflare.com",
 						// https://talkjs.com/docs/Features/Security_Settings/Content_Security_Policy/
 						"*.talkjs.com",
-						// https://developers.canny.io/
-						"canny.io",
-						"*.canny.io",
 						// https://www.chargebee.com/docs/2.0/embedded-checkout.html
 						"chargebee.com",
 						"*.chargebee.com",

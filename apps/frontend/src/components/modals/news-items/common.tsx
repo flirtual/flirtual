@@ -1,6 +1,7 @@
 import { Trans } from "react-i18next";
 
 import { InlineLink } from "~/components/inline-link";
+import { IdeasLink } from "~/components/modals/ideas";
 import { urls } from "~/urls";
 
 export const commonComponents = {
@@ -14,7 +15,7 @@ export const commonComponents = {
 				p: <p className="select-children" />,
 				discord: <InlineLink href={urls.socials.discord} />,
 				vrchat: <InlineLink href={urls.socials.vrchat} />,
-				feedback: <InlineLink href={urls.resources.feedback} />,
+				ideas: <IdeasLink />,
 				contact: <InlineLink href={urls.resources.contact} />,
 				github: <InlineLink href={urls.resources.developers} />
 			}}
@@ -22,7 +23,6 @@ export const commonComponents = {
 		/>
 	),
 	discord: <InlineLink href={urls.socials.discord} />,
-	feedback: <InlineLink href={urls.resources.feedback} />,
 	contact: <InlineLink href={urls.resources.contact} />,
 	github: <InlineLink href={urls.resources.developers} />,
 	premium: <InlineLink href={urls.subscription.default} />,

@@ -8,7 +8,7 @@ For non-security bugs, first [search existing issues](https://github.com/flirtua
 
 ## Feature requests
 
-Suggest it on [Canny](https://flirtual.canny.io/features) for discussion first. If you're interested in writing the code to make it happen, let us know.
+Suggest it in [Discord](https://discord.gg/flirtual) (#ideas channel) for discussion first. If you're interested in writing the code to make it happen, let us know.
 
 For technical, non-user-facing changes, [open an issue](https://github.com/flirtual/flirtual/issues/new).
 

@@ -61,10 +61,6 @@ config :flirtual, Flirtual.Turnstile,
   app_id: System.fetch_env!("TURNSTILE_APP_ID"),
   access_token: System.fetch_env!("TURNSTILE_ACCESS_TOKEN")
 
-config :flirtual, Flirtual.Canny,
-  company_id: System.fetch_env!("CANNY_COMPANY_ID"),
-  access_token: System.fetch_env!("CANNY_SECRET")
-
 config :flirtual, Flirtual.Listmonk,
   url: System.fetch_env!("LISTMONK_URL"),
   username: System.fetch_env!("LISTMONK_USERNAME"),

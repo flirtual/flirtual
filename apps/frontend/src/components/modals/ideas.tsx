@@ -1,6 +1,7 @@
-import type { FC } from "react";
+import type { FC, PropsWithChildren } from "react";
 import { Trans, useTranslation } from "react-i18next";
 
+import { useDialog } from "~/hooks/use-dialog";
 import { urls } from "~/urls";
 
 import { ButtonLink } from "../button";
@@ -45,5 +46,23 @@ export const IdeasDialog: FC<IdeasDialogProps> = ({ onClose }) => {
 				</DialogBody>
 			</>
 		</DrawerOrDialog>
+	);
+};
+
+export const IdeasLink: FC<PropsWithChildren> = ({ children }) => {
+	const dialogs = useDialog();
+
+	return (
+		<button
+			className="cursor-pointer text-pink hover:underline"
+			style={{ fontStyle: "inherit" }}
+			type="button"
+			onClick={() => {
+				const dialog = <IdeasDialog onClose={() => dialogs.remove(dialog)} />;
+				dialogs.add(dialog);
+			}}
+		>
+			{children}
+		</button>
 	);
 };

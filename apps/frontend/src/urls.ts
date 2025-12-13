@@ -214,7 +214,6 @@ export const urls = {
 		paymentTerms: "/payments",
 		contact: "https://hello.flirtu.al/",
 		contactDirect: "https://hello.flirtu.al/support/tickets/new",
-		feedback: "https://flirtual.canny.io",
 		vulnerabilityReport:
 			"https://github.com/flirtual/flirtual/security/advisories/new"
 	},
