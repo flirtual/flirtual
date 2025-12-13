@@ -1263,7 +1263,9 @@ defimpl Elasticsearch.Document, for: Flirtual.User do
             |> where(profile_id: ^profile.user_id, type: :like)
             |> select([item], item.target_id)
             |> Repo.all(),
-          hidden_from_nonvisible: user.tns_discord_in_biography !== nil
+          hidden_from_nonvisible:
+            user.tns_discord_in_biography !== nil and :moderator not in user.tags and
+              :admin not in user.tags
         },
         if(user.preferences.nsfw,
           do: %{

@@ -66,7 +66,12 @@ export const DiscordSpamDialog: FC = withSuspense(() => {
 		await mutate<Session>(sessionKey(), (session) => ({ ...session, user }));
 	};
 
-	if (!session?.user.tnsDiscordInBiography || new Date(session?.user.tnsDiscordInBiography).getTime() > Date.now())
+	if (
+		!session?.user.tnsDiscordInBiography
+		|| new Date(session?.user.tnsDiscordInBiography).getTime() > Date.now()
+		|| session.user.tags?.includes("moderator")
+		|| session.user.tags?.includes("admin")
+	)
 		return null;
 
 	return (
