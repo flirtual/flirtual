@@ -23,7 +23,7 @@ const stats = [
 	"bans",
 	"visible",
 	...[1, 2, 7, 14, 30, 60, 90, 180, 365, "bracket"].map(
-		(n) => `retention_${n}`
+		(n) => `retention_all_${n}`
 	),
 	...[1, 2, 7, 14, 30, 60, 90, 180, 365, "bracket"].map(
 		(n) => `retention_visible_${n}`
@@ -39,7 +39,7 @@ const stats = [
 	),
 	...[
 		{ min: 18, max: 21 },
-		{ min: 18, max: 25 },
+		{ min: 22, max: 25 },
 		{ min: 26, max: 29 },
 		{ min: 30, max: 34 },
 		{ min: 35, max: Number.POSITIVE_INFINITY }
