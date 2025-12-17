@@ -36,8 +36,18 @@ defmodule Flirtual.User do
     :verified,
     :legacy_vrlfp,
     :translating,
-    :official
+    :official,
+    :reminder_670,
+    :reminder_700,
+    :reminder_723
   ]
+
+  @reminder_tags [
+    :reminder_670,
+    :reminder_700,
+    :reminder_723
+  ]
+  def reminder_tags, do: @reminder_tags
 
   @statuses [
     "visible",

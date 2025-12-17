@@ -34,107 +34,107 @@ msgstr "Unsubscribe"
 msgid "x"
 msgstr "X (Twitter)"
 
-#: lib/flirtual/user/email.ex:14
+#: lib/flirtual/user/email.ex:15
 #, elixir-autogen, elixir-format
 msgid "suspended.subject"
 msgstr "Your account has been disabled"
 
-#: lib/flirtual/user/email.ex:44
+#: lib/flirtual/user/email.ex:45
 #, elixir-autogen, elixir-format
 msgid "confirm_email.body_html"
-msgstr "<p>Almost done—confirm your email address by tapping the button below. Once you do, you’ll be all set to start matchmaking!</p>\n\n<p><a href=\"%{action_url}\" class=\"btn\">Continue</a></p>"
+msgstr "<p>Almost done—confirm your email address by tapping the button below. Once you do, you'll be all set to start matchmaking!</p>\n\n<p><a href=\"%{action_url}\" class=\"btn\">Continue</a></p>"
 
-#: lib/flirtual/user/email.ex:42
+#: lib/flirtual/user/email.ex:43
 #, elixir-autogen, elixir-format
 msgid "confirm_email.body_text"
-msgstr "Almost done—confirm your email address by opening the link below.\nOnce you do, you’ll be all set to start matchmaking!\n\n%{action_url}"
+msgstr "Almost done—confirm your email address by opening the link below.\nOnce you do, you'll be all set to start matchmaking!\n\n%{action_url}"
 
-#: lib/flirtual/user/email.ex:37
-#: lib/flirtual/user/email.ex:50
+#: lib/flirtual/user/email.ex:38
+#: lib/flirtual/user/email.ex:51
 #, elixir-autogen, elixir-format
 msgid "confirm_email.subject"
 msgstr "Confirm your account"
 
-#: lib/flirtual/user/email.ex:89
+#: lib/flirtual/user/email.ex:90
 #, elixir-autogen, elixir-format
 msgid "reset_password.body_html"
-msgstr "<p>Almost done—reset your password by tapping the button below. Once you do, you’ll be ready to login!</p>\n\n<p><a href=\"%{action_url}\" class=\"btn\">Continue</a></p>\n\n<p>If you didn't request this, you can safely ignore this email.</p>"
+msgstr "<p>Almost done—reset your password by tapping the button below. Once you do, you'll be ready to login!</p>\n\n<p><a href=\"%{action_url}\" class=\"btn\">Continue</a></p>\n\n<p>If you didn't request this, you can safely ignore this email.</p>"
 
-#: lib/flirtual/user/email.ex:87
+#: lib/flirtual/user/email.ex:88
 #, elixir-autogen, elixir-format
 msgid "reset_password.body_text"
-msgstr "Almost done—reset your password by opening the link below.\nOnce you do, you’ll be ready to login!\n\n%{action_url}\n\nIf you didn't request this, you can safely ignore this email."
+msgstr "Almost done—reset your password by opening the link below.\nOnce you do, you'll be ready to login!\n\n%{action_url}\n\nIf you didn't request this, you can safely ignore this email."
 
-#: lib/flirtual/user/email.ex:82
-#: lib/flirtual/user/email.ex:95
+#: lib/flirtual/user/email.ex:83
+#: lib/flirtual/user/email.ex:96
 #, elixir-autogen, elixir-format
 msgid "reset_password.subject"
 msgstr "Password reset request"
 
-#: lib/flirtual/user/email.ex:18
+#: lib/flirtual/user/email.ex:19
 #, elixir-autogen, elixir-format
 msgid "suspended.body_html"
 msgstr "<p>Our moderation team has found your Flirtual account in violation of our rules.</p>\n\n<p><strong>Reason</strong>: %{message}</p>\n\n<p>Your account data will be kept for 30 days, and then deleted as described in our Privacy Policy.</p><p>Please reply to this message within 30 days if you would like to appeal this moderation decision to unban your account. We review all appeals, and will notify you if your appeal is accepted. If you do not hear from us within 30 days, our moderation decision has been upheld.</p><p>The Flirtual Team</p>"
 
-#: lib/flirtual/user/email.ex:17
+#: lib/flirtual/user/email.ex:18
 #, elixir-autogen, elixir-format
 msgid "suspended.body_text"
 msgstr "Our moderation team has found your Flirtual account in violation of our rules.\n\nReason: %{message}\n\nYour account data will be kept for 30 days, and then deleted as described in our Privacy Policy.\n\nPlease reply to this message within 30 days if you would like to appeal this moderation decision to unban your account. We review all appeals, and will notify you if your appeal is accepted. If you do not hear from us within 30 days, our moderation decision has been upheld.\n\nThe Flirtual Team"
 
-#: lib/flirtual/user/email.ex:54
-#: lib/flirtual/user/email.ex:99
-#: lib/flirtual/user/email.ex:342
+#: lib/flirtual/user/email.ex:55
+#: lib/flirtual/user/email.ex:100
+#: lib/flirtual/user/email.ex:329
 #, elixir-autogen, elixir-format
 msgid "continue"
 msgstr "Continue"
 
-#: lib/flirtual/user/email.ex:186
+#: lib/flirtual/user/email.ex:173
 #, elixir-autogen, elixir-format
 msgid "email_changed.body_html"
 msgstr "<p>The email address on your Flirtual account has been changed to %{email}.</p>\n\n <p>If you did not make this request, please reply to this email immediately so we can secure your account.</p>"
 
-#: lib/flirtual/user/email.ex:185
+#: lib/flirtual/user/email.ex:172
 #, elixir-autogen, elixir-format
 msgid "email_changed.body_text"
 msgstr "The email address on your Flirtual account has been changed to %{email}.\n\nIf you did not make this request, please reply to this email immediately so we can secure your account."
 
-#: lib/flirtual/user/email.ex:184
+#: lib/flirtual/user/email.ex:171
 #, elixir-autogen, elixir-format
 msgid "email_changed.subject"
 msgstr "Your email address was changed"
 
-#: lib/flirtual/user/email.ex:166
+#: lib/flirtual/user/email.ex:153
 #, elixir-autogen, elixir-format
 msgid "password_changed.body_html"
 msgstr "<p>Someone, hopefully you, has changed the password on your Flirtual account.</p>\n\n<p>If you did not make this request, please <a href=\"#{action_url}\">reset your password</a> immediately or reply to this email if you need assistance.</p>"
 
-#: lib/flirtual/user/email.ex:164
+#: lib/flirtual/user/email.ex:151
 #, elixir-autogen, elixir-format
 msgid "password_changed.body_text"
 msgstr "Someone, hopefully you, has changed the password on your Flirtual account.\n\n If you did not make this request, please reset your password immediately at %{action_url} or reply to this email if you need assistance."
 
-#: lib/flirtual/user/email.ex:162
+#: lib/flirtual/user/email.ex:149
 #, elixir-autogen, elixir-format
 msgid "password_changed.subject"
 msgstr "Your password was changed"
 
-#: lib/flirtual/user/email.ex:237
-#: lib/flirtual/user/email.ex:249
+#: lib/flirtual/user/email.ex:224
+#: lib/flirtual/user/email.ex:236
 #, elixir-autogen, elixir-format
 msgid "message"
 msgstr "Message"
 
-#: lib/flirtual/user/email.ex:223
+#: lib/flirtual/user/email.ex:210
 #, elixir-autogen, elixir-format
 msgid "new_match.looking_for_date_ideas"
 msgstr "Looking for date ideas? Check out the #date-worlds channel in our Discord server: https://discord.gg/flirtual"
 
-#: lib/flirtual/user/email.ex:232
+#: lib/flirtual/user/email.ex:219
 #, elixir-autogen, elixir-format
 msgid "new_match.looking_for_date_ideas_html"
 msgstr "<p>Looking for date ideas? Check out the #date-worlds channel in our <a href=\"https://discord.gg/flirtual\">Discord server</a>.</p>"
 
-#: lib/flirtual/user/email.ex:245
+#: lib/flirtual/user/email.ex:232
 #, elixir-autogen, elixir-format
 msgid "send_them_a_message"
 msgstr "Send them a message"
@@ -149,33 +149,33 @@ msgstr "Your daily profiles are ready!"
 msgid "daily_profiles_ready_message"
 msgstr "We've worked our matchmaking magic on a fresh batch of profiles just for you. Tap to check them out!"
 
-#: lib/flirtual/user/email.ex:221
-#: lib/flirtual/user/email.ex:230
+#: lib/flirtual/user/email.ex:208
+#: lib/flirtual/user/email.ex:217
 #: lib/flirtual/user/push.ex:48
 #, elixir-autogen, elixir-format
 msgid "homied_you"
 msgstr "%{name} homied you back. Send them a message!"
 
-#: lib/flirtual/user/email.ex:214
+#: lib/flirtual/user/email.ex:201
 #: lib/flirtual/user/push.ex:42
 #, elixir-autogen, elixir-format
 msgid "its_a_match"
 msgstr "It's a match! 💞"
 
-#: lib/flirtual/user/email.ex:215
+#: lib/flirtual/user/email.ex:202
 #: lib/flirtual/user/push.ex:43
 #, elixir-autogen, elixir-format
 msgid "its_a_match_homie"
 msgstr "It's a match! ✌️"
 
-#: lib/flirtual/user/email.ex:220
-#: lib/flirtual/user/email.ex:229
+#: lib/flirtual/user/email.ex:207
+#: lib/flirtual/user/email.ex:216
 #: lib/flirtual/user/push.ex:47
 #, elixir-autogen, elixir-format
 msgid "liked_you"
 msgstr "%{name} liked you back. Send them a message!"
 
-#: lib/flirtual/user/email.ex:308
+#: lib/flirtual/user/email.ex:295
 #: lib/flirtual/user/push.ex:70
 #, elixir-autogen, elixir-format
 msgid "someone_liked_you"
@@ -183,7 +183,7 @@ msgid_plural "x_people_liked_you"
 msgstr[0] "Someone liked you!"
 msgstr[1] "%{count} people liked you this week!"
 
-#: lib/flirtual/user/email.ex:317
+#: lib/flirtual/user/email.ex:304
 #: lib/flirtual/user/push.ex:78
 #, elixir-autogen, elixir-format
 msgid "browse_profiles_to_see_if_its_a_match"
@@ -194,47 +194,122 @@ msgstr "Browse profiles to see if it's a match."
 msgid "see_who_likes_you_and_match"
 msgstr "See who likes you and match."
 
-#: lib/flirtual/user/email.ex:338
+#: lib/flirtual/user/email.ex:325
 #, elixir-autogen, elixir-format, fuzzy
 msgid "browse_profiles"
 msgstr "Browse profiles"
 
-#: lib/flirtual/user/email.ex:327
+#: lib/flirtual/user/email.ex:314
 #, elixir-autogen, elixir-format, fuzzy
 msgid "browse_profiles_to_see_if_its_a_match_html"
 msgstr "<a href=\"%{action_url}\">Browse profiles</a> to see if it's a match.</p> <p>Or <a href=\"https://flirtu.al/subscription\">upgrade to Premium</a> to see who likes you right away and never miss another match."
 
-#: lib/flirtual/user/email.ex:320
+#: lib/flirtual/user/email.ex:307
 #, elixir-autogen, elixir-format
 msgid "or_upgrade_to_premium"
 msgstr "Or upgrade to Premium to see who likes you right away and never miss another match: https://flirtu.al/subscription"
 
-#: lib/flirtual/user/email.ex:316
-#: lib/flirtual/user/email.ex:326
-#: lib/flirtual/user/email.ex:337
+#: lib/flirtual/user/email.ex:303
+#: lib/flirtual/user/email.ex:313
+#: lib/flirtual/user/email.ex:324
 #, elixir-autogen, elixir-format, fuzzy
 msgid "see_who_likes_you"
 msgstr "See who likes you"
 
-#: lib/flirtual/user/email.ex:313
-#: lib/flirtual/user/email.ex:323
+#: lib/flirtual/user/email.ex:300
+#: lib/flirtual/user/email.ex:310
 #, elixir-autogen, elixir-format, fuzzy
 msgid "this_week_1_person_liked_you"
 msgid_plural "this_week_x_people_liked_you"
 msgstr[0] "This week 1 person liked or homied your profile on Flirtual!"
 msgstr[1] "This week %{count} people liked or homied your profile on Flirtual!"
 
-#: lib/flirtual/user/email.ex:137
+#: lib/flirtual/user/email.ex:127
 #, elixir-autogen, elixir-format
 msgid "verification_code.body_html"
 msgstr "<p>We detected a suspicious login. If that was you, enter the verification code below:</p>\n\n<p style=\"font-size: 24px; font-weight: bold; letter-spacing: 0.2em; margin: 20px 0;\">%{code}</p>\n\n<p>This code will expire in 15 minutes.</p>\n\n<p>Wasn't you? Please change your password in the Flirtual Settings to secure your account.</p>"
 
-#: lib/flirtual/user/email.ex:132
+#: lib/flirtual/user/email.ex:126
 #, elixir-autogen, elixir-format
 msgid "verification_code.body_text"
 msgstr "We detected a suspicious login. If that was you, enter the verification code below:\n\n%{code}\n\nThis code will expire in 15 minutes.\n\nWasn't you? Please change your password in the Flirtual Settings to secure your account."
 
-#: lib/flirtual/user/email.ex:130
+#: lib/flirtual/user/email.ex:125
 #, elixir-autogen, elixir-format
 msgid "verification_code.subject"
 msgstr "Your Flirtual login code is %{code}"
+
+#: lib/flirtual/user/email.ex:372
+#, elixir-autogen, elixir-format
+msgid "deletion_reminder_670.body_html"
+msgstr "<p>It's been a while since you last logged in. There have been many updates to Flirtual over the last couple years such as improvements to our matchmaking system and Homie Mode (making friends). We think you'd enjoy reconnecting with our community!</p><p>Logging in anytime in the next 60 days will keep your account active and save all your profile information.</p><p>If we don't see you log in within 60 days, we'll need to delete your account and data in accordance with our privacy policy. But we're hoping you'll come back and give Flirtual another try!</p><p><a href=\"%{action_url}\">Log in</a> anytime to keep your account.</p>"
+
+#: lib/flirtual/user/email.ex:371
+#, elixir-autogen, elixir-format
+msgid "deletion_reminder_670.body_text"
+msgstr "It's been a while since you last logged in. There have been many updates to Flirtual over the last couple years such as improvements to our matchmaking system and Homie Mode (making friends). We think you'd enjoy reconnecting with our community!\n\nLogging in anytime in the next 60 days will keep your account active and save all your profile information.\n\nIf we don't see you log in within 60 days, we'll need to delete your account and data in accordance with our privacy policy. But we're hoping you'll come back and give Flirtual another try!\n\nLog in anytime to keep your account: %{action_url}"
+
+#: lib/flirtual/user/push.ex:107
+#, elixir-autogen, elixir-format
+msgid "deletion_reminder_670.push_message"
+msgstr "Your account will be deleted in 60 days if you do not log in"
+
+#: lib/flirtual/user/push.ex:106
+#, elixir-autogen, elixir-format
+msgid "deletion_reminder_670.push_title"
+msgstr "We miss you! Come back soon"
+
+#: lib/flirtual/user/email.ex:370
+#, elixir-autogen, elixir-format
+msgid "deletion_reminder_670.subject"
+msgstr "ACTION REQUIRED: Your Flirtual account will be deleted soon"
+
+#: lib/flirtual/user/email.ex:380
+#, elixir-autogen, elixir-format
+msgid "deletion_reminder_700.body_html"
+msgstr "<p>To keep your Flirtual account, log in anytime in the next 30 days: that's all you need to do.</p><p>If you don't log in, your account and data will be permanently deleted in accordance with our privacy policy.</p><p><a href=\"%{action_url}\">Log in now</a> to save your account!</p>"
+
+#: lib/flirtual/user/email.ex:379
+#, elixir-autogen, elixir-format
+msgid "deletion_reminder_700.body_text"
+msgstr "To keep your Flirtual account, log in anytime in the next 30 days: that's all you need to do.\n\nIf you don't log in, your account and data will be permanently deleted in accordance with our privacy policy.\n\nLog in now to save your account: %{action_url}"
+
+#: lib/flirtual/user/push.ex:114
+#, elixir-autogen, elixir-format
+msgid "deletion_reminder_700.push_message"
+msgstr "Your account will be deleted in 30 days if you do not log in"
+
+#: lib/flirtual/user/push.ex:113
+#, elixir-autogen, elixir-format
+msgid "deletion_reminder_700.push_title"
+msgstr "Come back to Flirtual! 30 days left"
+
+#: lib/flirtual/user/email.ex:378
+#, elixir-autogen, elixir-format
+msgid "deletion_reminder_700.subject"
+msgstr "ACTION REQUIRED: Your Flirtual account will be deleted in one month"
+
+#: lib/flirtual/user/email.ex:388
+#, elixir-autogen, elixir-format
+msgid "deletion_reminder_723.body_html"
+msgstr "<p><strong>This is your final reminder.</strong> Your Flirtual account will be permanently deleted in 7 days.</p><p>You only need to log in once in the next 7 days to prevent your account from being deleted: no other action is required.</p><p>We've improved our matchmaking system to get better matches for you, and you can make friends in our Homie Mode.</p><p>If you don't log in, your account and data will be permanently deleted in accordance with our privacy policy.</p><p>Don't lose your account. <a href=\"%{action_url}\">Log in today!</a></p>"
+
+#: lib/flirtual/user/email.ex:387
+#, elixir-autogen, elixir-format
+msgid "deletion_reminder_723.body_text"
+msgstr "This is your final reminder. Your Flirtual account will be permanently deleted in 7 days.\n\nYou only need to log in once in the next 7 days to prevent your account from being deleted: no other action is required.\n\nWe've improved our matchmaking system to get better matches for you, and you can make friends in our Homie Mode.\n\nIf you don't log in, your account and data will be permanently deleted in accordance with our privacy policy.\n\nDon't lose your account. Log in today: %{action_url}"
+
+#: lib/flirtual/user/push.ex:121
+#, elixir-autogen, elixir-format
+msgid "deletion_reminder_723.push_message"
+msgstr "Your account will be deleted in 7 days if you do not log in"
+
+#: lib/flirtual/user/push.ex:120
+#, elixir-autogen, elixir-format
+msgid "deletion_reminder_723.push_title"
+msgstr "Final chance! Log in to Flirtual today"
+
+#: lib/flirtual/user/email.ex:386
+#, elixir-autogen, elixir-format
+msgid "deletion_reminder_723.subject"
+msgstr "ACTION REQUIRED: Your Flirtual account will be deleted in one week"

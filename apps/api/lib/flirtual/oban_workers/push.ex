@@ -28,11 +28,18 @@ defmodule Flirtual.ObanWorkers.Push do
         is_daily_profiles_ready_notification? =
           Map.get(args, "daily_profiles_ready_notification", false)
 
-        if is_daily_profiles_ready_notification? and
-             DateTime.after?(user.active_at, DateTime.add(scheduled_at, -7 * 60 * 60)) do
-          {:cancel, "seen"}
-        else
-          PushNotification.send(user, title, message, url)
+        is_reminder_notification? = Map.get(args, "reminder") == "true"
+
+        cond do
+          is_daily_profiles_ready_notification? and
+              DateTime.after?(user.active_at, DateTime.add(scheduled_at, -7 * 60 * 60)) ->
+            {:cancel, "seen"}
+
+          is_reminder_notification? and not user.preferences.push_notifications.reminders ->
+            :ok
+
+          true ->
+            PushNotification.send(user, title, message, url)
         end
     end
   end

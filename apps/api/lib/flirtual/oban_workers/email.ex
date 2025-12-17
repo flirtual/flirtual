@@ -50,16 +50,21 @@ defmodule Flirtual.ObanWorkers.Email do
       }) do
     user = User.get(user_id)
 
-    send_email(
-      user,
-      from: Map.get(args, "from"),
-      language: Map.get(args, "language", user.preferences.language),
-      subject: subject,
-      action_url: Map.get(args, "action_url"),
-      unsubscribe_token: if(type === "marketing", do: user.unsubscribe_token),
-      body_text: body_text,
-      body_html: body_html
-    )
+    if Map.get(args, "reminder") == "true" and
+         not user.preferences.email_notifications.reminders do
+      :ok
+    else
+      send_email(
+        user,
+        from: Map.get(args, "from"),
+        language: Map.get(args, "language", user.preferences.language),
+        subject: subject,
+        action_url: Map.get(args, "action_url"),
+        unsubscribe_token: if(type === "marketing", do: user.unsubscribe_token),
+        body_text: body_text,
+        body_html: body_html
+      )
+    end
   end
 
   @impl Oban.Worker

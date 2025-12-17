@@ -83,4 +83,42 @@ defmodule Flirtual.User.Push do
       |> Oban.insert()
     end)
   end
+
+  def deliver(%User{} = user, :deletion_reminder, days: days) do
+    language = user.preferences.language || "en"
+
+    Gettext.with_locale(language, fn ->
+      {title, message} = get_reminder(days)
+
+      %{
+        "user_id" => user.id,
+        "title" => title,
+        "message" => message,
+        "url" => "flirtual://browse"
+      }
+      |> Flirtual.ObanWorkers.Push.new()
+      |> Oban.insert()
+    end)
+  end
+
+  defp get_reminder(670) do
+    {
+      dgettext("notifications", "deletion_reminder_670.push_title"),
+      dgettext("notifications", "deletion_reminder_670.push_message")
+    }
+  end
+
+  defp get_reminder(700) do
+    {
+      dgettext("notifications", "deletion_reminder_700.push_title"),
+      dgettext("notifications", "deletion_reminder_700.push_message")
+    }
+  end
+
+  defp get_reminder(723) do
+    {
+      dgettext("notifications", "deletion_reminder_723.push_title"),
+      dgettext("notifications", "deletion_reminder_723.push_message")
+    }
+  end
 end

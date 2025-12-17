@@ -165,10 +165,13 @@ defmodule Flirtual.User.Session do
     ) do
       {:ok, session}
     else
+      reminder_tags = User.reminder_tags()
+      new_tags = Enum.reject(session.user.tags, &(&1 in reminder_tags))
+
       Repo.transaction(fn ->
         with {:ok, user} <-
                session.user
-               |> change(%{active_at: now})
+               |> change(%{active_at: now, tags: new_tags})
                |> Repo.update(),
              {:ok, session} <-
                session

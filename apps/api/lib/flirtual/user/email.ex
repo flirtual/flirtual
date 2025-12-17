@@ -341,4 +341,52 @@ defmodule Flirtual.User.Email do
       |> Oban.insert()
     end)
   end
+
+  def deliver(%User{} = user, :deletion_reminder, days: days) do
+    language = user.preferences.language || "en"
+
+    Gettext.with_locale(language, fn ->
+      action_url =
+        Application.fetch_env!(:flirtual, :frontend_origin)
+        |> URI.merge("/login")
+        |> URI.to_string()
+
+      {subject, body_text, body_html} = get_reminder(days, action_url)
+
+      %{
+        "user_id" => user.id,
+        "type" => "transactional",
+        "subject" => subject,
+        "action_url" => action_url,
+        "body_text" => body_text,
+        "body_html" => body_html
+      }
+      |> Flirtual.ObanWorkers.Email.new()
+      |> Oban.insert()
+    end)
+  end
+
+  defp get_reminder(670, action_url) do
+    {
+      dgettext("notifications", "deletion_reminder_670.subject"),
+      dgettext("notifications", "deletion_reminder_670.body_text", action_url: action_url),
+      dgettext("notifications", "deletion_reminder_670.body_html", action_url: action_url)
+    }
+  end
+
+  defp get_reminder(700, action_url) do
+    {
+      dgettext("notifications", "deletion_reminder_700.subject"),
+      dgettext("notifications", "deletion_reminder_700.body_text", action_url: action_url),
+      dgettext("notifications", "deletion_reminder_700.body_html", action_url: action_url)
+    }
+  end
+
+  defp get_reminder(723, action_url) do
+    {
+      dgettext("notifications", "deletion_reminder_723.subject"),
+      dgettext("notifications", "deletion_reminder_723.body_text", action_url: action_url),
+      dgettext("notifications", "deletion_reminder_723.body_html", action_url: action_url)
+    }
+  end
 end
