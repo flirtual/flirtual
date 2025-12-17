@@ -146,10 +146,32 @@ defmodule Flirtual.Flag do
       |> Enum.map(& &1.flag)
 
     if flags != [] do
-      Discord.deliver_webhook(:flagged_keyword, user: user, flags: Enum.join(flags, ", "))
+      flags_with_context =
+        flags
+        |> Enum.map(fn flag -> extract_flag_context(text, flag) end)
+        |> Enum.join("\n")
+
+      Discord.deliver_webhook(:flagged_keyword, user: user, flags: flags_with_context)
     end
 
     :ok
+  end
+
+  defp extract_flag_context(text, flag) do
+    words = String.split(text, ~r/\s+/)
+    pattern = ~r/(?<![[:alnum:]])#{Regex.escape(flag)}(?![[:alnum:]])/i
+
+    words
+    |> Enum.with_index()
+    |> Enum.filter(fn {word, _} -> Regex.match?(pattern, word) end)
+    |> Enum.map(fn {_, idx} ->
+      words
+      |> Enum.slice(max(0, idx - 6)..min(length(words) - 1, idx + 6))
+      |> List.update_at(min(idx, 6), &"**#{&1}**")
+      |> Enum.join(" ")
+    end)
+    |> Enum.join("\n")
+    |> then(&if(&1 == "", do: flag, else: &1))
   end
 
   def check_discord_in_biography(
