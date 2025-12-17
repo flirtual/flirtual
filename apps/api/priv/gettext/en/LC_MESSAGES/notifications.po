@@ -242,7 +242,7 @@ msgstr "Your Flirtual login code is %{code}"
 #: lib/flirtual/user/email.ex:372
 #, elixir-autogen, elixir-format
 msgid "deletion_reminder_670.body_html"
-msgstr "<p>It's been a while since you last logged in. There have been many updates to Flirtual over the last couple years such as improvements to our matchmaking system and Homie Mode (making friends). We think you'd enjoy reconnecting with our community!</p><p>Logging in anytime in the next 60 days will keep your account active and save all your profile information.</p><p>If we don't see you log in within 60 days, we'll need to delete your account and data in accordance with our privacy policy. But we're hoping you'll come back and give Flirtual another try!</p><p><a href=\"%{action_url}\">Log in</a> anytime to keep your account.</p>"
+msgstr "<p>It's been a while since you last logged in. There have been many updates to Flirtual over the last couple years such as improvements to our matchmaking system and Homie Mode (making friends). We think you'd enjoy reconnecting with our community!</p><p>Logging in anytime in the next 60 days will keep your account active and save all your profile information.</p><p>If we don't see you log in within 60 days, we'll need to delete your account and data in accordance with our privacy policy. But we're hoping you'll come back and give Flirtual another try!</p><p><a href=\"%{action_url}\" class=\"btn\">Log in</a></p>"
 
 #: lib/flirtual/user/email.ex:371
 #, elixir-autogen, elixir-format
@@ -267,7 +267,7 @@ msgstr "ACTION REQUIRED: Your Flirtual account will be deleted soon"
 #: lib/flirtual/user/email.ex:380
 #, elixir-autogen, elixir-format
 msgid "deletion_reminder_700.body_html"
-msgstr "<p>To keep your Flirtual account, log in anytime in the next 30 days: that's all you need to do.</p><p>If you don't log in, your account and data will be permanently deleted in accordance with our privacy policy.</p><p><a href=\"%{action_url}\">Log in now</a> to save your account!</p>"
+msgstr "<p>To keep your Flirtual account, log in anytime in the next 30 days: that's all you need to do.</p><p>If you don't log in, your account and data will be permanently deleted in accordance with our privacy policy.</p><p><a href=\"%{action_url}\" class=\"btn\">Log in</a></p>"
 
 #: lib/flirtual/user/email.ex:379
 #, elixir-autogen, elixir-format
@@ -292,7 +292,7 @@ msgstr "ACTION REQUIRED: Your Flirtual account will be deleted in one month"
 #: lib/flirtual/user/email.ex:388
 #, elixir-autogen, elixir-format
 msgid "deletion_reminder_723.body_html"
-msgstr "<p><strong>This is your final reminder.</strong> Your Flirtual account will be permanently deleted in 7 days.</p><p>You only need to log in once in the next 7 days to prevent your account from being deleted: no other action is required.</p><p>We've improved our matchmaking system to get better matches for you, and you can make friends in our Homie Mode.</p><p>If you don't log in, your account and data will be permanently deleted in accordance with our privacy policy.</p><p>Don't lose your account. <a href=\"%{action_url}\">Log in today!</a></p>"
+msgstr "<p><strong>This is your final reminder.</strong> Your Flirtual account will be permanently deleted in 7 days.</p><p>You only need to log in once in the next 7 days to prevent your account from being deleted: no other action is required.</p><p>We've improved our matchmaking system to get better matches for you, and you can make friends in our Homie Mode.</p><p>If you don't log in, your account and data will be permanently deleted in accordance with our privacy policy.</p><p><a href=\"%{action_url}\" class=\"btn\">Log in</a></p>"
 
 #: lib/flirtual/user/email.ex:387
 #, elixir-autogen, elixir-format
