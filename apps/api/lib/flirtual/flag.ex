@@ -158,20 +158,33 @@ defmodule Flirtual.Flag do
   end
 
   defp extract_flag_context(text, flag) do
-    words = String.split(text, ~r/\s+/)
     pattern = ~r/(?<![[:alnum:]])#{Regex.escape(flag)}(?![[:alnum:]])/i
 
-    words
-    |> Enum.with_index()
-    |> Enum.filter(fn {word, _} -> Regex.match?(pattern, word) end)
-    |> Enum.map(fn {_, idx} ->
-      words
-      |> Enum.slice(max(0, idx - 6)..min(length(words) - 1, idx + 6))
-      |> List.update_at(min(idx, 6), &"**#{&1}**")
-      |> Enum.join(" ")
-    end)
-    |> Enum.join("\n")
-    |> then(&if(&1 == "", do: flag, else: &1))
+    case Regex.scan(pattern, text, return: :index) do
+      [] ->
+        flag
+
+      matches ->
+        matches
+        |> Enum.map(fn [{start, len}] ->
+          context_before =
+            text
+            |> String.slice(0, start)
+            |> String.split()
+            |> Enum.take(-6)
+
+          context_after =
+            text
+            |> String.slice(start + len, String.length(text))
+            |> String.split()
+            |> Enum.take(6)
+
+          matched = "**#{String.slice(text, start, len)}**"
+
+          (context_before ++ [matched] ++ context_after) |> Enum.join(" ")
+        end)
+        |> Enum.join("\n")
+    end
   end
 
   def check_discord_in_biography(
