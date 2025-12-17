@@ -140,6 +140,8 @@ defmodule FlirtualWeb.Router do
         end
 
         scope "/auth" do
+          post("/magic", SessionController, :magic_login)
+
           scope "/email/confirm" do
             post("/", UsersController, :confirm_email)
 

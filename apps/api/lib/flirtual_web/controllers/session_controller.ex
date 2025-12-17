@@ -8,7 +8,7 @@ defmodule FlirtualWeb.SessionController do
   import FlirtualWeb.Utilities
   import Flirtual.Utilities.Changeset
 
-  alias Flirtual.{IpAddress, Policy, User, Users}
+  alias Flirtual.{IpAddress, Jwt, Policy, User, Users}
   alias Flirtual.User.{Login, Session, Verification}
 
   action_fallback(FlirtualWeb.FallbackController)
@@ -146,6 +146,24 @@ defmodule FlirtualWeb.SessionController do
 
       {:error, _} ->
         {:error, {:unauthorized, :verification_invalid_code}}
+    end
+  end
+
+  def magic_login(conn, %{"token" => token}) do
+    with {:ok, claims} <-
+           Joken.verify_and_validate(Jwt.config("magic-login", 30 * 24 * 60 * 60), token),
+         %User{banned_at: nil} = user <- Users.get(claims["sub"]) do
+      {session, conn} = create(conn, user, method: :magic)
+
+      conn
+      |> put_status(:created)
+      |> json(Policy.transform(conn, session))
+    else
+      %User{banned_at: banned_at} when not is_nil(banned_at) ->
+        {:error, {:unauthorized, :account_banned}}
+
+      _ ->
+        {:error, {:unauthorized, :invalid_token}}
     end
   end
 

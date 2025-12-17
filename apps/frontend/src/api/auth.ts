@@ -125,6 +125,16 @@ export const Authentication = {
 			})
 			.json<Issue<"account_banned"> | Issue<"invalid_credentials"> | Issue<"leaked_login_password"> | Issue<"login_rate_limit"> | Issue<"verification_rate_limit"> | Session | VerificationResponse>();
 	},
+	magicLogin(token: string) {
+		return this.api
+			.url("/magic")
+			.json({ token })
+			.post()
+			.unauthorized((reason) => {
+				if (isWretchError(reason)) return reason.json;
+			})
+			.json<Issue<"account_banned"> | Issue<"invalid_token"> | Session>();
+	},
 	logout() {
 		return api.url("session").delete().res();
 	},

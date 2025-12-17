@@ -1,8 +1,7 @@
 defmodule Flirtual.User.Email do
   use Gettext, backend: Flirtual.Gettext
 
-  alias Flirtual.Subscription
-  alias Flirtual.User
+  alias Flirtual.{Jwt, Subscription, User}
 
   def deliver(%User{} = user, :suspended, message) do
     language = user.preferences.language || "en"
@@ -345,10 +344,13 @@ defmodule Flirtual.User.Email do
   def deliver(%User{} = user, :deletion_reminder, days: days) do
     language = user.preferences.language || "en"
 
+    {:ok, token} = Jwt.sign(Jwt.config("magic-login", 30 * 24 * 60 * 60), %{"sub" => user.id})
+
     Gettext.with_locale(language, fn ->
       action_url =
         Application.fetch_env!(:flirtual, :frontend_origin)
         |> URI.merge("/login")
+        |> URI.append_query("token=#{token}")
         |> URI.to_string()
 
       {subject, body_text, body_html} = get_reminder(days, action_url)

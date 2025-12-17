@@ -574,6 +574,7 @@
 	"email_address": "メールアドレス",
 	"anonymous": "匿名",
 	"log_in": "ログイン",
+	"logging_in": "ログイン中…",
 	"sign_up": "サインアップ",
 	"expand_image": "画像を拡大",
 	"image_deleted": "画像が削除されました",

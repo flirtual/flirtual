@@ -21,6 +21,7 @@ import { invalidate, mutate, sessionKey } from "~/query";
 import { isInternalHref, urls } from "~/urls";
 
 import { LoginConnectionButton } from "./login-connection-button";
+import { MagicLogin } from "./magic-login";
 import { VerificationForm } from "./verification";
 
 export function next() {
@@ -129,9 +130,31 @@ const OAuthError: FC = withSuspense(() => {
 export const LoginForm: FC = () => {
 	const { t } = useTranslation();
 	const device = useDevice();
+	const [searchParameters, setSearchParameters] = useSearchParams();
+	const [tokenInvalid, setTokenInvalid] = useState(false);
 	const [verification, setVerification] = useState<{ loginId: string; email: string } | null>(null);
 
+	const token = searchParameters.get("token");
+
 	useKylesWebAuthnImplementation();
+
+	if (token && !tokenInvalid) {
+		return (
+			<>
+				<OAuthError />
+				<MagicLogin
+					token={token}
+					onInvalid={() => {
+						setTokenInvalid(true);
+						setSearchParameters((previous) => {
+							previous.delete("token");
+							return previous;
+						}, { replace: true });
+					}}
+				/>
+			</>
+		);
+	}
 
 	if (verification) {
 		return (
