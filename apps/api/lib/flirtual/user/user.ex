@@ -427,11 +427,14 @@ defmodule Flirtual.User do
         not is_nil(user.born_at) ->
           %{born_at: "already_set"}
 
-        Date.compare(born_at, Date.new!(1900, 1, 2)) === :lt ->
-          %{born_at: "too_old"}
+        Date.compare(born_at, Date.new!(1901, 1, 3)) === :lt ->
+          %{born_at: "invalid_age"}
+
+        Date.compare(born_at, Date.add(Date.utc_today(), -367)) === :gt ->
+          %{born_at: "invalid_age"}
 
         underage?(born_at) === :maybe ->
-          %{born_at: "too_young"}
+          %{born_at: "ambiguous_age"}
 
         true ->
           %{}
