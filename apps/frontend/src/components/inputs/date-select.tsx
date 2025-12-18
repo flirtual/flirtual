@@ -33,7 +33,10 @@ function fromDateString(value: string): globalThis.Date {
 	return new Date(year, month, day);
 }
 
-export type InputDateSelectProps = Pick<
+export type InputDateSelectProps = {
+	disabled?: boolean;
+	onDisabledClick?: () => void;
+} & Pick<
 	InputCalendarProps,
 	"max" | "min" | "onChange" | "value"
 >;
@@ -63,74 +66,80 @@ export const InputDateSelect: React.FC<InputDateSelectProps> = (props) => {
 	if (native) return <InputDateSelectNative {...props} />;
 
 	return (
-		<Popover open={drawerVisible} onOpenChange={setDrawerVisible}>
+		<Popover open={drawerVisible && !props.disabled} onOpenChange={setDrawerVisible}>
 			<PopoverAnchor ref={reference}>
-				<InputText
-					className="w-full"
-					type="date"
-					value={inputValue}
-					onBlur={() => {
-						const value = fromDateString(inputValue);
+				<div className={props.disabled ? "[&_input]:pointer-events-none" : undefined} onClick={() => props.disabled && props.onDisabledClick?.()}>
+					<InputText
+						className="w-full"
+						disabled={props.disabled}
+						type="date"
+						value={inputValue}
+						onBlur={() => {
+							if (props.disabled) return;
+							const value = fromDateString(inputValue);
 
-						if (!Number.isNaN(value.getTime())) return;
-						const now = new Date();
+							if (!Number.isNaN(value.getTime())) return;
+							const now = new Date();
 
-						setInputValue(toDateString(now));
-						props.onChange(now);
-					}}
-					onChange={(value) => {
-						setDrawerVisible(true);
+							setInputValue(toDateString(now));
+							props.onChange(now);
+						}}
+						onChange={(value) => {
+							if (props.disabled) return;
+							setDrawerVisible(true);
 
-						const date = fromDateString(value);
-						setInputValue(value);
+							const date = fromDateString(value);
+							setInputValue(value);
 
-						if (Number.isNaN(date.getTime())) return;
-						props.onChange(date);
-					}}
-					onClick={() => setDrawerVisible(true)}
-					onFocus={() => setDrawerVisible(true)}
-					onKeyDown={(event) => {
-						const { currentTarget } = event;
-
-						const type = [
-							...inputValue
-								.slice(currentTarget.selectionStart ?? 0, inputValue.length)
-								.matchAll(/\//g)
-						].length;
-
-						/**
-						 * When an input field in changed, the input selection is
-						 * reset to the end of the field, this function returns the selection
-						 * to where it was prior to updating the input field on the next frame.
-						 */
-						const preserveSelection = () => {
+							if (Number.isNaN(date.getTime())) return;
+							props.onChange(date);
+						}}
+						onClick={() => !props.disabled && setDrawerVisible(true)}
+						onFocus={() => !props.disabled && setDrawerVisible(true)}
+						onKeyDown={(event) => {
+							if (props.disabled) return;
 							const { currentTarget } = event;
-							const { selectionStart, selectionEnd } = currentTarget;
 
-							setTimeout(
-								() =>
-									currentTarget.setSelectionRange(selectionStart, selectionEnd),
-								0
-							);
-						};
+							const type = [
+								...inputValue
+									.slice(currentTarget.selectionStart ?? 0, inputValue.length)
+									.matchAll(/\//g)
+							].length;
 
-						switch (event.key) {
-							case "ArrowUp": {
-								progressDate(type, 1);
-								preserveSelection();
+							/**
+							 * When an input field in changed, the input selection is
+							 * reset to the end of the field, this function returns the selection
+							 * to where it was prior to updating the input field on the next frame.
+							 */
+							const preserveSelection = () => {
+								const { currentTarget } = event;
+								const { selectionStart, selectionEnd } = currentTarget;
 
-								event.preventDefault();
-								return;
+								setTimeout(
+									() =>
+										currentTarget.setSelectionRange(selectionStart, selectionEnd),
+									0
+								);
+							};
+
+							switch (event.key) {
+								case "ArrowUp": {
+									progressDate(type, 1);
+									preserveSelection();
+
+									event.preventDefault();
+									return;
+								}
+								case "ArrowDown": {
+									progressDate(type, -1);
+									preserveSelection();
+
+									event.preventDefault();
+								}
 							}
-							case "ArrowDown": {
-								progressDate(type, -1);
-								preserveSelection();
-
-								event.preventDefault();
-							}
-						}
-					}}
-				/>
+						}}
+					/>
+				</div>
 			</PopoverAnchor>
 			<PopoverContent
 				align="start"
@@ -163,13 +172,17 @@ interface InputDateSelectNativeProps {
 	onChange: (value: Date) => void;
 	min?: MinmaxDate;
 	max?: MinmaxDate;
+	disabled?: boolean;
+	onDisabledClick?: () => void;
 }
 
 const InputDateSelectNative: React.FC<InputDateSelectNativeProps> = ({
 	value,
 	onChange,
 	min,
-	max
+	max,
+	disabled,
+	onDisabledClick
 }) => {
 	const [selectedDate, setSelectedDate] = useState(value);
 	const [theme] = useTheme();
@@ -203,13 +216,16 @@ const InputDateSelectNative: React.FC<InputDateSelectNativeProps> = ({
 	});
 
 	return (
-		<InputText
-			readOnly
-			className="w-full"
-			type="date"
-			value={selectedDate.toLocaleDateString(undefined, { weekday: undefined })}
-			onClick={() => mutate()}
-		/>
+		<div className={disabled ? "[&_input]:pointer-events-none" : undefined} onClick={() => disabled && onDisabledClick?.()}>
+			<InputText
+				readOnly
+				className="w-full"
+				disabled={disabled}
+				type="date"
+				value={selectedDate.toLocaleDateString(undefined, { weekday: undefined })}
+				onClick={() => !disabled && mutate()}
+			/>
+		</div>
 	);
 };
 

@@ -88,26 +88,49 @@ defmodule Flirtual.Users do
   end
 
   def update(%User{} = user, attrs, options \\ []) do
-    Repo.transaction(fn ->
-      with :ok <- Flag.check_user_slug(user, attrs["slug"]),
-           {:ok, user} <-
-             user
-             |> User.changeset(attrs, options)
-             |> Repo.update(),
-           {:ok, user} <- User.update_status(user),
-           {:ok, _} <-
-             ObanWorkers.update_user(user.id, [
-               :elasticsearch,
-               :listmonk,
-               :refresh_prospects,
-               :talkjs
-             ]) do
-        user
-      else
-        {:error, reason} -> Repo.rollback(reason)
-        reason -> Repo.rollback(reason)
+    born_at = attrs["born_at"] && Date.from_iso8601!(attrs["born_at"])
+
+    if is_nil(user.born_at) and not is_nil(born_at) and User.underage?(born_at) === true do
+      case Flirtual.Attribute.get("muXMqNjneKnwqxT8nqcy4d", "ban-reason") do
+        %Flirtual.Attribute{} = reason ->
+          user
+          |> Ecto.Changeset.change(%{born_at: born_at})
+          |> Repo.update()
+
+          User.suspend(
+            user,
+            reason,
+            "Underaged. You must be at least 18 years of age to use Flirtual. If you believe you have been banned in error, you can reply to this email to appeal and we'll send you a secure link to verify your I.D. in order to unban your account.",
+            user
+          )
+
+          {:error, {:forbidden, :banned_underage}}
+
+        _ ->
+          {:error, {:internal_error, :attribute_not_found}}
       end
-    end)
+    else
+      Repo.transaction(fn ->
+        with :ok <- Flag.check_user_slug(user, attrs["slug"]),
+             {:ok, user} <-
+               user
+               |> User.changeset(attrs, options)
+               |> Repo.update(),
+             {:ok, user} <- User.update_status(user),
+             {:ok, _} <-
+               ObanWorkers.update_user(user.id, [
+                 :elasticsearch,
+                 :listmonk,
+                 :refresh_prospects,
+                 :talkjs
+               ]) do
+          user
+        else
+          {:error, reason} -> Repo.rollback(reason)
+          reason -> Repo.rollback(reason)
+        end
+      end)
+    end
   end
 
   defmodule UpdatePassword do

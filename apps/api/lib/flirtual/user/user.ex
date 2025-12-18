@@ -423,30 +423,38 @@ defmodule Flirtual.User do
     ])
     |> validate_required(Keyword.get(options, :required, []))
     |> validate_change(:born_at, fn _, born_at ->
-      now = Date.utc_today()
+      cond do
+        not is_nil(user.born_at) ->
+          %{born_at: "already_set"}
 
-      if Date.compare(
-           born_at,
-           Date.new!(
-             now.year - 18,
-             now.month,
-             if(
-               Date.leap_year?(now) and now.month == 2 and now.day == 29,
-               do: 28,
-               else: now.day
-             )
-           )
-         ) === :gt do
-        %{born_at: "too_young"}
-      else
-        if Date.compare(born_at, Date.new!(1900, 1, 2)) === :lt do
+        Date.compare(born_at, Date.new!(1900, 1, 2)) === :lt ->
           %{born_at: "too_old"}
-        else
+
+        underage?(born_at) === :maybe ->
+          %{born_at: "too_young"}
+
+        true ->
           %{}
-        end
       end
     end)
     |> validate_unique_slug()
+  end
+
+  def underage?(born_at) do
+    turns_18_utc =
+      skip_invalid_leap_day(born_at.year + 18, born_at.month, born_at.day)
+      |> DateTime.new!(~T[00:00:00], "Etc/UTC")
+
+    hours = DateTime.diff(turns_18_utc, DateTime.utc_now(), :hour)
+
+    cond do
+      # Users under 18 in all timezones are suspended automatically.
+      hours >= 12 -> true
+      # Users over 18 in all timezones are allowed.
+      hours <= -14 -> false
+      # Users who may be under or over 18 get an error, but are not suspended.
+      true -> :maybe
+    end
   end
 
   def get(id) when is_uid(id) do

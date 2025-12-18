@@ -43,6 +43,7 @@ export default [
 				page("login", "(minimal)/(guest)/login"),
 				page("sign-up", "(minimal)/(guest)/sign-up"),
 				page("forgot", "(minimal)/(guest)/forgot"),
+				page("underage", "(minimal)/(guest)/underage"),
 			]),
 			layout("(minimal)/(session)", [
 				page("onboarding/1", "(minimal)/(session)/onboarding/1"),

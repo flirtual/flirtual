@@ -38,7 +38,8 @@ export const InputText: React.FC<InputTextProps> = (props) => {
 			{Icon && (
 				<div
 					className={twMerge(
-						"flex aspect-square h-full shrink-0 items-center justify-center bg-brand-gradient p-2 text-white-20"
+						"flex aspect-square h-full shrink-0 items-center justify-center bg-brand-gradient p-2 text-white-20",
+						props.disabled && "bg-black-10 dark:bg-black-40"
 						// props.connection && "h-12 w-14"
 					)}
 					style={{ background: props.iconColor }}
@@ -56,7 +57,7 @@ export const InputText: React.FC<InputTextProps> = (props) => {
 					"iconColor"
 				])}
 				className={twMerge(
-					"w-full border-none bg-transparent px-4 py-2 font-nunito caret-theme-2 placeholder:text-black-30 focus:outline-none focus:ring-0 disabled:text-black-20 dark:placeholder:text-white-50 dark:disabled:text-white-50",
+					"w-full border-none bg-transparent px-4 py-2 font-nunito caret-theme-2 placeholder:text-black-30 focus:outline-none focus:ring-0 disabled:text-black-20 dark:placeholder:text-white-50 dark:disabled:text-black-10",
 					type === "number"
 					&& "[appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none",
 					props.className

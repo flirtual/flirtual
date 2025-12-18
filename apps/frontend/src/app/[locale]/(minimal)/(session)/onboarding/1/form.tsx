@@ -2,6 +2,7 @@ import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { fromEntries } from "remeda";
 
+import { isWretchError } from "~/api/common";
 import { User } from "~/api/user";
 import { Profile } from "~/api/user/profile";
 import { Form } from "~/components/forms";
@@ -22,6 +23,7 @@ import {
 import type { AttributeTranslation } from "~/hooks/use-attribute";
 import { useConfig } from "~/hooks/use-config";
 import { useSession } from "~/hooks/use-session";
+import { useToast } from "~/hooks/use-toast";
 import { useNavigate } from "~/i18n";
 import { useOptimisticRoute } from "~/preload";
 import { invalidate, sessionKey } from "~/query";
@@ -35,6 +37,7 @@ export const Onboarding1Form: FC = () => {
 
 	const { t } = useTranslation();
 	const navigate = useNavigate();
+	const toasts = useToast();
 
 	const { country } = useConfig();
 
@@ -78,11 +81,18 @@ export const Onboarding1Form: FC = () => {
 							})
 						)
 					})
-				]).finally(async () => {
-					await invalidate({ queryKey: sessionKey() });
-				});
-
-				navigate(urls.onboarding(2));
+				])
+					.then(async () => {
+						await invalidate({ queryKey: sessionKey() });
+						navigate(urls.onboarding(2));
+					})
+					.catch((reason) => {
+						if (isWretchError(reason) && reason.json?.error === "banned_underage") {
+							window.location.href = urls.underage;
+							return;
+						}
+						throw reason;
+					});
 			}}
 		>
 			{({ FormField }) => (
@@ -98,8 +108,10 @@ export const Onboarding1Form: FC = () => {
 								</InputLabel>
 								<InputDateSelect
 									{...field.props}
+									disabled={!!user.bornAt}
 									max={endOfYear()}
 									min={new Date("1900/01/01")}
+									onDisabledClick={() => toasts.add({ type: "warning", value: t("dob_contact_to_correct") })}
 								/>
 							</>
 						)}
