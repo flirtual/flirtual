@@ -97,8 +97,8 @@ export const ToastProvider: React.FC<PropsWithChildren> = ({ children }) => {
 						type === "success"
 							? value
 							: type === "warning"
-								? `warning: ${value}`
-								: `Error: ${value}`,
+								? `⚠️ ${value}`
+								: `🚫 ${value}`,
 					// Android only supports bottom position.
 					position: "bottom"
 				});
