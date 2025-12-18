@@ -65,81 +65,88 @@ export const InputDateSelect: React.FC<InputDateSelectProps> = (props) => {
 
 	if (native) return <InputDateSelectNative {...props} />;
 
+	const inputField = (
+		<InputText
+			className="w-full"
+			disabled={props.disabled}
+			type="date"
+			value={inputValue}
+			onBlur={() => {
+				const value = fromDateString(inputValue);
+
+				if (!Number.isNaN(value.getTime())) return;
+				const now = new Date();
+
+				setInputValue(toDateString(now));
+				props.onChange(now);
+			}}
+			onChange={(value) => {
+				setDrawerVisible(true);
+
+				const date = fromDateString(value);
+				setInputValue(value);
+
+				if (Number.isNaN(date.getTime())) return;
+				props.onChange(date);
+			}}
+			onClick={() => setDrawerVisible(true)}
+			onFocus={() => setDrawerVisible(true)}
+			onKeyDown={(event) => {
+				const { currentTarget } = event;
+
+				const type = [
+					...inputValue
+						.slice(currentTarget.selectionStart ?? 0, inputValue.length)
+						.matchAll(/\//g)
+				].length;
+
+				/**
+				 * When an input field in changed, the input selection is
+				 * reset to the end of the field, this function returns the selection
+				 * to where it was prior to updating the input field on the next frame.
+				 */
+				const preserveSelection = () => {
+					const { currentTarget } = event;
+					const { selectionStart, selectionEnd } = currentTarget;
+
+					setTimeout(
+						() =>
+							currentTarget.setSelectionRange(selectionStart, selectionEnd),
+						0
+					);
+				};
+
+				switch (event.key) {
+					case "ArrowUp": {
+						progressDate(type, 1);
+						preserveSelection();
+
+						event.preventDefault();
+						return;
+					}
+					case "ArrowDown": {
+						progressDate(type, -1);
+						preserveSelection();
+
+						event.preventDefault();
+					}
+				}
+			}}
+		/>
+	);
+
+	if (props.disabled) {
+		return (
+			<div className="[&_input]:pointer-events-none" onClick={() => props.onDisabledClick?.()}>
+				{inputField}
+			</div>
+		);
+	}
+
 	return (
-		<Popover open={drawerVisible && !props.disabled} onOpenChange={setDrawerVisible}>
+		<Popover open={drawerVisible} onOpenChange={setDrawerVisible}>
 			<PopoverAnchor ref={reference}>
-				<div className={props.disabled ? "[&_input]:pointer-events-none" : undefined} onClick={() => props.disabled && props.onDisabledClick?.()}>
-					<InputText
-						className="w-full"
-						disabled={props.disabled}
-						type="date"
-						value={inputValue}
-						onBlur={() => {
-							if (props.disabled) return;
-							const value = fromDateString(inputValue);
-
-							if (!Number.isNaN(value.getTime())) return;
-							const now = new Date();
-
-							setInputValue(toDateString(now));
-							props.onChange(now);
-						}}
-						onChange={(value) => {
-							if (props.disabled) return;
-							setDrawerVisible(true);
-
-							const date = fromDateString(value);
-							setInputValue(value);
-
-							if (Number.isNaN(date.getTime())) return;
-							props.onChange(date);
-						}}
-						onClick={() => !props.disabled && setDrawerVisible(true)}
-						onFocus={() => !props.disabled && setDrawerVisible(true)}
-						onKeyDown={(event) => {
-							if (props.disabled) return;
-							const { currentTarget } = event;
-
-							const type = [
-								...inputValue
-									.slice(currentTarget.selectionStart ?? 0, inputValue.length)
-									.matchAll(/\//g)
-							].length;
-
-							/**
-							 * When an input field in changed, the input selection is
-							 * reset to the end of the field, this function returns the selection
-							 * to where it was prior to updating the input field on the next frame.
-							 */
-							const preserveSelection = () => {
-								const { currentTarget } = event;
-								const { selectionStart, selectionEnd } = currentTarget;
-
-								setTimeout(
-									() =>
-										currentTarget.setSelectionRange(selectionStart, selectionEnd),
-									0
-								);
-							};
-
-							switch (event.key) {
-								case "ArrowUp": {
-									progressDate(type, 1);
-									preserveSelection();
-
-									event.preventDefault();
-									return;
-								}
-								case "ArrowDown": {
-									progressDate(type, -1);
-									preserveSelection();
-
-									event.preventDefault();
-								}
-							}
-						}}
-					/>
-				</div>
+				{inputField}
 			</PopoverAnchor>
 			<PopoverContent
 				align="start"
