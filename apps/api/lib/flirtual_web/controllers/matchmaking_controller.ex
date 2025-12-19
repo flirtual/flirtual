@@ -139,12 +139,30 @@ defmodule FlirtualWeb.MatchmakingController do
     end
   end
 
-  def list_likes(conn, %{"cursor" => cursor}) do
+  def list_likes(conn, params) do
     user = conn.assigns[:session].user
-    cursor = LikesAndPasses.Cursor.decode(cursor)
+    cursor = LikesAndPasses.Cursor.decode(params["cursor"])
+
+    filters =
+      %{}
+      |> then(fn filter ->
+        case params["kind"] do
+          "love" -> Map.put(filter, :kind, :love)
+          "friend" -> Map.put(filter, :kind, :friend)
+          _ -> filter
+        end
+      end)
+      |> then(fn filter ->
+        case params["gender"] do
+          "woman" -> Map.put(filter, :gender, :woman)
+          "man" -> Map.put(filter, :gender, :man)
+          "other" -> Map.put(filter, :gender, :other)
+          _ -> filter
+        end
+      end)
 
     {items, metadata} =
-      LikesAndPasses.list_unrequited(profile_id: user.id, cursor: cursor)
+      LikesAndPasses.list_unrequited(profile_id: user.id, cursor: cursor, filters: filters)
 
     items = items |> Policy.filter(conn, :read) |> then(&Policy.transform(conn, &1))
 
@@ -154,8 +172,6 @@ defmodule FlirtualWeb.MatchmakingController do
       metadata: metadata
     })
   end
-
-  def list_likes(conn, _), do: list_likes(conn, %{"cursor" => nil})
 
   def preview_likes(conn, _) do
     user = conn.assigns[:session].user

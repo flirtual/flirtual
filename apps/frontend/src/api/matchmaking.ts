@@ -10,6 +10,14 @@ export const ProspectKind = ["love", "friend"] as const;
 export const prospectKinds = ProspectKind;
 export type ProspectKind = (typeof ProspectKind)[number];
 
+export const LikesYouGenderFilter = ["man", "woman", "other"] as const;
+export type LikesYouGenderFilter = (typeof LikesYouGenderFilter)[number];
+
+export interface LikesYouFilters {
+	kind?: ProspectKind;
+	gender?: LikesYouGenderFilter;
+}
+
 export type ProspectRespondType = "like" | "pass";
 
 export interface LikeAndPassItem {
@@ -86,10 +94,10 @@ export const Matchmaking = {
 	resetPasses() {
 		return api.url("passes").delete().res();
 	},
-	likesYou(cursor?: string) {
+	likesYou(cursor?: string, filters?: LikesYouFilters) {
 		return api
 			.url("likes")
-			.query(cursor ? { cursor } : {})
+			.query({ ...filters, ...(cursor ? { cursor } : {}) })
 			.get()
 			.json<LikesYouList>();
 	},

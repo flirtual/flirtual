@@ -1,12 +1,13 @@
-import { use } from "react";
+import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
+import { useDeferredValue } from "react";
 
+import type { LikesYouFilters } from "~/api/matchmaking";
 import { Matchmaking } from "~/api/matchmaking";
 import {
 	invalidate,
 	likesYouKey,
 	likesYouPreviewKey,
 	queryClient,
-	useInfiniteQuery,
 	useQuery
 } from "~/query";
 
@@ -28,30 +29,32 @@ export function useLikesYouPreview() {
 	});
 }
 
-export function preloadLikesYou() {
-	const queryKey = likesYouKey();
+export function preloadLikesYou(filters?: LikesYouFilters) {
+	const queryKey = likesYouKey(filters);
 
 	if (queryClient.getQueryState(queryKey)) return;
 
 	return queryClient.prefetchInfiniteQuery({
 		queryKey,
-		queryFn: ({ pageParam }) => Matchmaking.likesYou(pageParam),
+		queryFn: ({ pageParam }) => Matchmaking.likesYou(pageParam, filters),
 		initialPageParam: undefined as unknown as string
 	});
 }
 
-export function useLikesYou() {
-	const { promise, fetchNextPage } = useInfiniteQuery({
-		queryKey: likesYouKey(),
-		queryFn: ({ pageParam }) => Matchmaking.likesYou(pageParam),
+export function useLikesYou(filters?: LikesYouFilters) {
+	const queryKey = likesYouKey(filters);
+	const deferredQueryKey = useDeferredValue(queryKey);
+
+	const { data, fetchNextPage } = useSuspenseInfiniteQuery({
+		queryKey: deferredQueryKey,
+		queryFn: ({ pageParam }) => Matchmaking.likesYou(pageParam, filters),
 		initialPageParam: undefined as unknown as string,
 		getNextPageParam: ({ metadata: { next } }) => next,
 		getPreviousPageParam: ({ metadata: { previous } }) => previous
 	});
-	const { pages } = use(promise);
 
 	return {
-		data: pages,
+		data: data.pages,
 		loadMore: fetchNextPage,
 		invalidate: () => invalidate({ queryKey: likesYouKey() })
 	};

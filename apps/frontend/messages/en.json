@@ -983,5 +983,8 @@
 	"updating": "Updating…",
 	"remove": "Remove",
 	"geolocation_updated": "Location updated.",
-	"geolocation_removed": "Location removed."
+	"geolocation_removed": "Location removed.",
+	"no_results": "No results",
+	"no_likes_yet": "No one has liked you yet 😔",
+	"no_likes_yet_description": "But it's only a matter of time."
 }

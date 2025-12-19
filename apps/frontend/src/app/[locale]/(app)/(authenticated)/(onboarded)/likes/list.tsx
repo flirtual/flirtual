@@ -1,13 +1,20 @@
 import type { FC } from "react";
 import { useLayoutEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { useInView } from "react-intersection-observer";
 
+import type { LikesYouFilters } from "~/api/matchmaking";
 import { useLikesYou, useLikesYouPreview } from "~/hooks/use-likes-you";
 
 import { LikeListItem } from "./list-item";
 
-export const LikesList: FC = () => {
-	const { data, loadMore } = useLikesYou();
+export interface LikesListProps {
+	filters: LikesYouFilters;
+}
+
+export const LikesList: FC<LikesListProps> = ({ filters }) => {
+	const { t } = useTranslation();
+	const { data, loadMore } = useLikesYou(filters);
 	const { count } = useLikesYouPreview();
 	const items = data.flatMap((page) => page.data);
 	const total = (count.love ?? 0) + (count.friend ?? 0);
@@ -19,12 +26,20 @@ export const LikesList: FC = () => {
 		void loadMore();
 	}, [loadMoreInView, loadMore]);
 
+	const hasFilters = filters.kind || filters.gender;
+
 	if (items.length === 0) return (
 		<div className="flex flex-col gap-1 px-4 desktop:px-0">
-			<span className="text-xl font-semibold">
-				No one has liked you yet 😔
-			</span>
-			<span>But it&apos;s only a matter of time.</span>
+			{hasFilters
+				? <span className="text-xl font-semibold">{t("no_results")}</span>
+				: (
+						<>
+							<span className="text-xl font-semibold">
+								{t("no_likes_yet")}
+							</span>
+							<span>{t("no_likes_yet_description")}</span>
+						</>
+					)}
 		</div>
 	);
 

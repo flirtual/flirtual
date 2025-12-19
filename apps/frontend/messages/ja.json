@@ -980,5 +980,8 @@
 	"updating": "更新中…",
 	"remove": "削除",
 	"geolocation_updated": "位置情報を更新しました。",
-	"geolocation_removed": "位置情報を削除しました。"
+	"geolocation_removed": "位置情報を削除しました。",
+	"no_results": "結果なし",
+	"no_likes_yet": "まだ誰もいいねしていません 😔",
+	"no_likes_yet_description": "でも、きっとすぐに誰かが現れますよ。"
 }

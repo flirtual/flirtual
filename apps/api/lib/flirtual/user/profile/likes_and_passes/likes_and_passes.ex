@@ -5,7 +5,7 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
   import Ecto.Query
 
   alias Flirtual.{ObanWorkers, Repo, Talkjs, User}
-  alias Flirtual.User.Profile.{Block, LikesAndPasses}
+  alias Flirtual.User.Profile.{Attributes, Block, LikesAndPasses}
 
   schema "likes_and_passes" do
     belongs_to(:profile, Flirtual.User.Profile, references: :user_id, primary_key: true)
@@ -93,7 +93,11 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
     |> Repo.all()
   end
 
-  def list_unrequited(profile_id: profile_id, cursor: cursor) do
+  @gender_woman "tpkW7r8PZ2RUuYGUSYi82N"
+  @gender_man "rhw3rcbheU7vc9vcSy6W6V"
+  @gender_other "jAL62ePbibxaG4FPu7S8LG"
+
+  def list_unrequited(profile_id: profile_id, cursor: cursor, filters: filters) do
     query =
       LikesAndPasses
       |> where(target_id: ^profile_id, type: :like)
@@ -102,6 +106,46 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
       |> join(:left, [lap, _, _], user in User, on: lap.profile_id == user.id)
       |> where([_, _, _, user], user.status == :visible)
       |> order_by([lap], desc: lap.created_at, desc: lap.profile_id)
+
+    query =
+      if filters[:kind] do
+        where(query, [lap], lap.kind == ^filters[:kind])
+      else
+        query
+      end
+
+    query =
+      if filters[:gender] do
+        gender_ids =
+          case filters[:gender] do
+            :woman ->
+              Flirtual.Attribute.list(type: "gender")
+              |> Enum.filter(
+                &(&1.metadata["alias_of"] == @gender_woman or &1.id == @gender_woman)
+              )
+              |> Enum.map(& &1.id)
+
+            :man ->
+              Flirtual.Attribute.list(type: "gender")
+              |> Enum.filter(&(&1.metadata["alias_of"] == @gender_man or &1.id == @gender_man))
+              |> Enum.map(& &1.id)
+
+            :other ->
+              Flirtual.Attribute.list(type: "gender")
+              |> Enum.filter(
+                &(&1.metadata["alias_of"] == @gender_other or &1.id == @gender_other)
+              )
+              |> Enum.map(& &1.id)
+          end
+
+        query
+        |> join(:inner, [lap, _, _, _], pa in Attributes,
+          on: lap.profile_id == pa.profile_id and pa.attribute_id in ^gender_ids
+        )
+        |> distinct([lap], desc: lap.created_at, desc: lap.profile_id)
+      else
+        query
+      end
 
     query =
       if cursor.before && cursor.before_id do
@@ -123,6 +167,10 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
       |> Repo.all()
 
     {items, LikesAndPasses.Cursor.map(cursor, items)}
+  end
+
+  def list_unrequited(profile_id: profile_id, cursor: cursor) do
+    list_unrequited(profile_id: profile_id, cursor: cursor, filters: %{})
   end
 
   def list_unrequited(profile_id: profile_id, since: since) do
