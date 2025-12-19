@@ -51,7 +51,6 @@ defmodule Flirtual.MixProject do
       {:ex_rated, "~> 2.1"},
       {:paginator, "~> 1.2.0"},
       {:fly_postgres, "~> 0.3.4"},
-      {:redisgraph, "~> 0.1.0"},
       {:elasticsearch, "~> 1.1.0"},
       {:ex_aws, "~> 2.5"},
       {:ex_aws_s3, "~> 2.5"},
