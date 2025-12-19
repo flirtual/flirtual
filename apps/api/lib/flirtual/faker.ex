@@ -71,18 +71,21 @@ defmodule Flirtual.Faker do
   ]
 
   def create_user(options \\ []) do
-    file_id_offset = Keyword.get(options, :file_id_offset, 0)
     file_ids = Keyword.get(options, :file_ids)
+    existing_images = Keyword.get(options, :existing_images)
 
-    file_ids =
-      if file_ids && length(file_ids) > 0 do
-        offset = rem(file_id_offset, length(file_ids))
-        image_count = Enum.random(1..min(8, length(file_ids)))
+    {image_source, images_to_use} =
+      cond do
+        existing_images && length(existing_images) > 0 ->
+          image_count = Enum.random(1..min(8, length(existing_images)))
+          {:copy, Enum.take_random(existing_images, image_count)}
 
-        file_ids
-        |> Enum.slice(offset, image_count)
-      else
-        get_random_images(Enum.random(1..3))
+        file_ids && length(file_ids) > 0 ->
+          image_count = Enum.random(1..min(8, length(file_ids)))
+          {:new, Enum.take_random(file_ids, image_count)}
+
+        true ->
+          {:new, get_random_images(Enum.random(1..3))}
       end
 
     now =
@@ -249,10 +252,7 @@ defmodule Flirtual.Faker do
                attributes: random_n_of(1..3, simple_genders |> Enum.map(& &1.id))
              }),
            {:ok, _} <-
-             Profiles.create_images(
-               profile,
-               file_ids |> Enum.map(&%{"id" => &1})
-             ),
+             create_profile_images(profile, image_source, images_to_use, now),
            user <- User.get(user.id),
            {:ok, user} <- User.update_status(user) do
         log(:info, ["create-user"], user.id)
@@ -270,16 +270,35 @@ defmodule Flirtual.Faker do
   end
 
   def create_users(n, opts \\ []) do
+    reuse_images = Keyword.get(opts, :reuse_images, false)
+
+    existing_images =
+      if reuse_images do
+        Image
+        |> Repo.all()
+        |> Enum.shuffle()
+        |> Enum.map(&%{
+          original_file: &1.original_file,
+          external_id: &1.external_id,
+          blur_id: &1.blur_id
+        })
+      else
+        nil
+      end
+
     file_ids =
-      if Keyword.get(opts, :reuse_images, false) do
-        Image |> Repo.all() |> Enum.map(& &1.original_file)
+      if reuse_images do
+        nil
       else
         total_images = max(n * 3, 10)
         get_random_images(total_images)
       end
 
-    Enum.map(1..n, fn index ->
-      create_user(file_ids: file_ids, file_id_offset: index * 3)
+    Enum.map(1..n, fn _ ->
+      create_user(
+        file_ids: file_ids,
+        existing_images: existing_images
+      )
     end)
   end
 
@@ -298,6 +317,32 @@ defmodule Flirtual.Faker do
 
   defp random_n_of(range, list) do
     Enum.shuffle(list) |> Enum.take(Enum.random(range))
+  end
+
+  defp create_profile_images(profile, :new, file_ids, _now) do
+    Profiles.create_images(profile, file_ids |> Enum.map(&%{"id" => &1}))
+  end
+
+  defp create_profile_images(profile, :copy, existing_images, now) do
+    images =
+      existing_images
+      |> Enum.with_index()
+      |> Enum.map(fn {img, idx} ->
+        %{
+          id: Ecto.ShortUUID.generate(),
+          profile_id: profile.user_id,
+          original_file: img.original_file,
+          external_id: img.external_id,
+          blur_id: img.blur_id,
+          scanned: true,
+          order: idx,
+          created_at: now,
+          updated_at: now
+        }
+      end)
+
+    {count, _} = Repo.insert_all(Image, images)
+    {:ok, count}
   end
 
   defp generate_biography(display_name) do
