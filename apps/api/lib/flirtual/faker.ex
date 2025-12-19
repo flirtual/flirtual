@@ -2,15 +2,19 @@ defmodule Flirtual.Faker do
   use Flirtual.Logger, :faker
 
   alias Flirtual.User.Profile.Image
+  alias Flirtual.User.Profile.LikesAndPasses
+  alias Flirtual.User.Profile.Prospect
   alias Flirtual.User
   alias Flirtual.Attribute
   alias Flirtual.Countries
   alias Flirtual.Languages
+  alias Flirtual.Matchmaking
   alias Flirtual.Profiles
   alias Flirtual.Users
   alias Flirtual.Repo
 
   import Ecto.Changeset
+  import Ecto.Query
   import Flirtual.Utilities
 
   @custom_interests [
@@ -277,11 +281,13 @@ defmodule Flirtual.Faker do
         Image
         |> Repo.all()
         |> Enum.shuffle()
-        |> Enum.map(&%{
-          original_file: &1.original_file,
-          external_id: &1.external_id,
-          blur_id: &1.blur_id
-        })
+        |> Enum.map(
+          &%{
+            original_file: &1.original_file,
+            external_id: &1.external_id,
+            blur_id: &1.blur_id
+          }
+        )
       else
         nil
       end
@@ -413,4 +419,110 @@ defmodule Flirtual.Faker do
       end
     end
   end
+
+  def create_likes_passes(options) do
+    profile_id = Keyword.get(options, :profile_id)
+    target_id = Keyword.get(options, :target_id)
+    count = Keyword.get(options, :count)
+    action_type = Keyword.get(options, :type)
+
+    if is_nil(profile_id) == is_nil(target_id) do
+      raise ArgumentError, "Must provide exactly one of :profile_id or :target_id"
+    end
+
+    existing_subquery =
+      if target_id do
+        LikesAndPasses
+        |> where([lp], lp.target_id == ^target_id)
+        |> select([lp], lp.profile_id)
+      else
+        LikesAndPasses
+        |> where([lp], lp.profile_id == ^profile_id)
+        |> select([lp], lp.target_id)
+      end
+
+    query =
+      User
+      |> where([u], not is_nil(u.email_confirmed_at))
+      |> where([u], like(u.email, "%@example.com"))
+      |> where([u], u.id not in subquery(existing_subquery))
+      |> order_by(fragment("RANDOM()"))
+      |> select([u], u.id)
+
+    query = if count, do: limit(query, ^count), else: query
+
+    fake_profiles = Repo.all(query)
+
+    now = DateTime.utc_now() |> DateTime.truncate(:second)
+
+    entries =
+      Enum.map(fake_profiles, fn fake_id ->
+        {type, kind} = resolve_like_pass_type(action_type)
+
+        if profile_id do
+          %{
+            profile_id: profile_id,
+            target_id: fake_id,
+            type: type,
+            kind: kind,
+            created_at: now
+          }
+        else
+          %{
+            profile_id: fake_id,
+            target_id: target_id,
+            type: type,
+            kind: kind,
+            created_at: now
+          }
+        end
+      end)
+
+    {inserted, _} = Repo.insert_all(LikesAndPasses, entries, on_conflict: :nothing)
+
+    Enum.each(entries, fn entry ->
+      Prospect
+      |> where(profile_id: ^entry.profile_id, target_id: ^entry.target_id)
+      |> Repo.update_all(set: [completed: true])
+    end)
+
+    matches =
+      entries
+      |> Enum.filter(&(&1.type == :like))
+      |> Enum.map(fn entry ->
+        opposite =
+          LikesAndPasses
+          |> where(
+            profile_id: ^entry.target_id,
+            target_id: ^entry.profile_id,
+            type: :like
+          )
+          |> limit(1)
+          |> Repo.one()
+
+        if opposite do
+          user_a = User.get(entry.profile_id)
+          user_b = User.get(entry.target_id)
+          match_kind = Matchmaking.reduce_kind(entry.kind, opposite.kind)
+
+          case Matchmaking.create_match_conversation(user_a, user_b, match_kind) do
+            {:ok, _} -> 1
+            _ -> 0
+          end
+        else
+          0
+        end
+      end)
+      |> Enum.sum()
+
+    log(:info, ["create-likes-passes"], "Created #{inserted} likes/passes, #{matches} matches")
+    %{inserted: inserted, matches: matches}
+  end
+
+  defp resolve_like_pass_type(nil),
+    do: resolve_like_pass_type(Enum.random([:love, :friend, :pass]))
+
+  defp resolve_like_pass_type(:love), do: {:like, :love}
+  defp resolve_like_pass_type(:friend), do: {:like, :friend}
+  defp resolve_like_pass_type(:pass), do: {:pass, :love}
 end
