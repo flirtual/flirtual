@@ -7,6 +7,7 @@ defmodule Flirtual.DatabaseSeeder do
 
   def seed_all() do
     seed_by_file!(:attributes)
+    seed_by_file!(:plans)
   end
 
   defp query_all!(queries) when is_list(queries) do
