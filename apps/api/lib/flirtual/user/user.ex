@@ -464,10 +464,6 @@ defmodule Flirtual.User do
     User |> where(id: ^id) |> preload(^default_assoc()) |> Repo.one()
   end
 
-  def get(stripe_id: stripe_id) when is_binary(stripe_id) do
-    User |> where(stripe_id: ^stripe_id) |> preload(^default_assoc()) |> Repo.one()
-  end
-
   def get(chargebee_id: chargebee_id) when is_binary(chargebee_id) do
     User |> where(chargebee_id: ^chargebee_id) |> preload(^default_assoc()) |> Repo.one()
   end

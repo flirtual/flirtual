@@ -44,12 +44,6 @@ defmodule FlirtualWeb.Endpoint do
   plug(Plug.RequestId, http_header: "fly-request-id")
   plug(Plug.Telemetry, event_prefix: [:phoenix, :endpoint])
 
-  plug(Stripe.WebhookPlug,
-    at: "/v1/stripe",
-    handler: Flirtual.Stripe,
-    secret: {Application, :fetch_env!, [:stripity_stripe, :signing_secret]}
-  )
-
   plug(Plug.MethodOverride)
   plug(Plug.Head)
 

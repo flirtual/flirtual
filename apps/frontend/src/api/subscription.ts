@@ -6,7 +6,6 @@ type SubscriptionPlatform
 	= | "android"
 		| "chargebee"
 		| "ios"
-		| "stripe"
 		| "unknown";
 
 export type Subscription = {
@@ -24,8 +23,5 @@ export const Subscription = {
 	},
 	manageUrl() {
 		return this.api.url("/manage")._url;
-	},
-	cancel() {
-		return this.api.post().res();
 	}
 };

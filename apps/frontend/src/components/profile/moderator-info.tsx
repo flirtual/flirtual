@@ -327,6 +327,17 @@ export const ProfileModeratorInfo: FC<{
 					{session.user.tags.includes("admin") && (
 						<div className="flex flex-col">
 							<span>
+								<span className="font-bold">RevenueCat customer:</span>
+								{" "}
+								<InlineLink
+									className="underline"
+									highlight={false}
+									href={`https://app.revenuecat.com/customers/cf0649d1/${user.revenuecatId}`}
+								>
+									{user.revenuecatId}
+								</InlineLink>
+							</span>
+							<span>
 								<span className="font-bold">Chargebee customer:</span>
 								{" "}
 								<InlineLink
@@ -346,17 +357,6 @@ export const ProfileModeratorInfo: FC<{
 									href={`https://dashboard.stripe.com/customers/${user.stripeId}`}
 								>
 									{user.stripeId}
-								</InlineLink>
-							</span>
-							<span>
-								<span className="font-bold">RevenueCat customer:</span>
-								{" "}
-								<InlineLink
-									className="underline"
-									highlight={false}
-									href={`https://app.revenuecat.com/customers/cf0649d1/${user.revenuecatId}`}
-								>
-									{user.revenuecatId}
 								</InlineLink>
 							</span>
 							<span>

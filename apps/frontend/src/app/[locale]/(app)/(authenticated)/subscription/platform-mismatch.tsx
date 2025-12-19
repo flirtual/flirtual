@@ -29,8 +29,7 @@ export const PlatformMismatchMessage: FC = () => {
 		!subscription
 		|| !subscription.active
 		|| subscription.platform === "unknown"
-		|| (["chargebee", "stripe"].includes(subscription.platform)
-			&& (platform === "web" || !native))
+		|| (subscription.platform === "chargebee" && (platform === "web" || !native))
 		|| (subscription.platform === "ios" && platform === "apple" && native)
 		|| (subscription.platform === "android" && platform === "android" && native)
 	)
@@ -39,13 +38,12 @@ export const PlatformMismatchMessage: FC = () => {
 	return (
 		<div className="rounded-lg bg-brand-gradient px-6 py-4">
 			<span className="font-montserrat text-lg text-white-10">
-				{(platform !== "web" && !["chargebee", "stripe"].includes(subscription.platform))
+				{(platform !== "web" && subscription.platform !== "chargebee")
 					? t("caring_smug_felix_gleam", {
 							currentPlatform: t(osName[platform]),
-							// @ts-expect-error: "chargebee" is not assignable.
 							otherPlatform: t(subscription.platform)
 						})
-					: (platform !== "web" && ["chargebee", "stripe"].includes(subscription.platform))
+					: (platform !== "web" && subscription.platform === "chargebee")
 							? t("gross_each_cobra_talk", {
 									platform: t(osName[platform])
 								})
@@ -71,8 +69,7 @@ export const MatchSubscriptionPlatform: FC<PropsWithChildren> = ({
 	if (
 		!subscription
 		|| !subscription.active
-		|| (["chargebee", "stripe"].includes(subscription.platform)
-			&& (platform === "web" || !native))
+		|| (subscription.platform === "chargebee" && (platform === "web" || !native))
 		|| (subscription.platform === "ios" && platform === "apple" && native)
 		|| (subscription.platform === "android" && platform === "android" && native)
 	)

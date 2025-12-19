@@ -227,7 +227,6 @@ defmodule FlirtualWeb.Router do
 
           get("/checkout", SubscriptionController, :checkout)
           get("/manage", SubscriptionController, :manage)
-          post("/cancel", SubscriptionController, :cancel)
         end
 
         scope "/reports" do

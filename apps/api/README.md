@@ -30,16 +30,6 @@
 
 * Now you can visit [`127.0.0.1:4001`](https://127.0.0.1:4001) from your browser.
 
-### Stripe/subscription testing
-
-* Install the [Stripe CLI](https://stripe.com/docs/stripe-cli#install) and login using ``stripe login``.
-
-* Configure the required environment variables.
-
-* Restart the server.
-
-* ``stripe listen --forward-to localhost:4001/v1/stripe``
-
 ### Database snapshots
 
 When doing long-running operations, like dumping the database, it is recommended to fork the database on [fly.io, our database provider](https://fly.io), then run the operation on the forked database to avoid downtime.

@@ -8,7 +8,7 @@ defmodule Flirtual.Subscription do
   import Ecto.Changeset
   import Ecto.Query
 
-  alias Flirtual.{Plan, Profiles, Repo, Stripe, Subscription, User}
+  alias Flirtual.{Plan, Profiles, Repo, Subscription, User}
 
   schema "subscriptions" do
     belongs_to(:user, User)
@@ -17,7 +17,6 @@ defmodule Flirtual.Subscription do
     field(:active, :string, virtual: true)
     field(:platform, :string, virtual: true)
 
-    field(:stripe_id, :string)
     field(:chargebee_id, :string)
     field(:google_id, :string)
     field(:apple_id, :string)
@@ -43,100 +42,14 @@ defmodule Flirtual.Subscription do
 
   defp update_platform_id(platform_id, event_id) do
     case platform_id do
-      "CHARGEBEE" -> %{apple_id: nil, google_id: nil, stripe_id: nil, chargebee_id: event_id}
-      "APP_STORE" -> %{apple_id: event_id, google_id: nil, stripe_id: nil, chargebee_id: nil}
-      "MAC_APP_STORE" -> %{apple_id: event_id, google_id: nil, stripe_id: nil, chargebee_id: nil}
-      "PLAY_STORE" -> %{google_id: event_id, apple_id: nil, stripe_id: nil, chargebee_id: nil}
+      "CHARGEBEE" -> %{apple_id: nil, google_id: nil, chargebee_id: event_id}
+      "APP_STORE" -> %{apple_id: event_id, google_id: nil, chargebee_id: nil}
+      "MAC_APP_STORE" -> %{apple_id: event_id, google_id: nil, chargebee_id: nil}
+      "PLAY_STORE" -> %{google_id: event_id, apple_id: nil, chargebee_id: nil}
     end
   end
 
   def apply(source, user, plan, _ \\ nil)
-
-  # Stripe: Update subscription, stripe_id didn't change.
-  def apply(
-        :stripe,
-        %User{
-          subscription:
-            %Subscription{
-              stripe_id: stripe_id
-            } = subscription
-        } = user,
-        %Plan{} = plan,
-        stripe_id
-      ) do
-    Repo.transaction(fn ->
-      with {:ok, subscription} <-
-             change(subscription, %{
-               plan_id: plan.id,
-               apple_id: nil,
-               google_id: nil,
-               cancelled_at: nil
-             })
-             |> Repo.update(),
-           {:ok, _} <-
-             reset_matchmaking_timer(user.profile) do
-        {:ok, subscription}
-      else
-        {:error, reason} -> Repo.rollback(reason)
-        reason -> Repo.rollback(reason)
-      end
-    end)
-  end
-
-  # Stripe: Update subscription, and supersede existing Stripe subscription.
-  def apply(
-        :stripe,
-        %User{
-          subscription:
-            %Subscription{
-              cancelled_at: nil
-            } = subscription
-        } = user,
-        %Plan{} = plan,
-        stripe_id
-      ) do
-    Repo.transaction(fn ->
-      with {:ok, _} <- Stripe.cancel_subscription(subscription, superseded: true),
-           {:ok, subscription} <-
-             subscription
-             |> change(%{
-               plan_id: plan.id,
-               stripe_id: stripe_id || subscription.stripe_id,
-               apple_id: nil,
-               google_id: nil,
-               cancelled_at: nil
-             })
-             |> Repo.update(),
-           {:ok, _} <- reset_matchmaking_timer(user.profile) do
-        {:ok, subscription}
-      else
-        {:error, reason} -> Repo.rollback(reason)
-        reason -> Repo.rollback(reason)
-      end
-    end)
-  end
-
-  # Stripe: Renew subscription, previous subscription already cancelled.
-  def apply(:stripe, %User{subscription: subscription} = user, %Plan{} = plan, stripe_id) do
-    Repo.transaction(fn ->
-      with {:ok, subscription} <-
-             subscription
-             |> change(%{
-               plan_id: plan.id,
-               stripe_id: stripe_id || subscription.stripe_id,
-               apple_id: nil,
-               google_id: nil,
-               cancelled_at: nil
-             })
-             |> Repo.update(),
-           {:ok, _} <- reset_matchmaking_timer(user.profile) do
-        {:ok, subscription}
-      else
-        {:error, reason} -> Repo.rollback(reason)
-        reason -> Repo.rollback(reason)
-      end
-    end)
-  end
 
   # Chargebee: Create subscription, since user doesn't have an existing one.
   def apply(:chargebee, %User{subscription: nil} = user, %Plan{} = plan, chargebee_id) do
@@ -313,13 +226,6 @@ defmodule Flirtual.Subscription do
     |> Repo.one()
   end
 
-  def get(stripe_id: stripe_id) when is_binary(stripe_id) do
-    Subscription
-    |> where(stripe_id: ^stripe_id)
-    |> preload(^Subscription.default_assoc())
-    |> Repo.one()
-  end
-
   def get(chargebee_id: chargebee_id) when is_binary(chargebee_id) do
     Subscription
     |> where(chargebee_id: ^chargebee_id)
@@ -363,9 +269,6 @@ defmodule Flirtual.Subscription.Policy do
 
   def transform(:platform, _, %Subscription{google_id: google_id}) when is_binary(google_id),
     do: :android
-
-  def transform(:platform, _, %Subscription{stripe_id: stripe_id}) when is_binary(stripe_id),
-    do: :stripe
 
   def transform(:platform, _, %Subscription{chargebee_id: chargebee_id})
       when is_binary(chargebee_id),

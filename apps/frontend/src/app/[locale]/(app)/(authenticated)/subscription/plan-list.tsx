@@ -8,7 +8,7 @@ import { useOptionalSession } from "~/hooks/use-session";
 import { PlanCard } from "./plan-card";
 
 export const PlanList: FC = () => {
-	const { native, vision } = useDevice();
+	const { vision } = useDevice();
 	const session = useOptionalSession();
 	const [purchasePending, setPurchasePending] = useState(false);
 	const { t } = useTranslation();
@@ -17,10 +17,6 @@ export const PlanList: FC = () => {
 
 	const user = session.user;
 	const { subscription } = user;
-
-	if (!native && subscription?.platform === "stripe" && subscription?.active) {
-		return null;
-	}
 
 	if (
 		subscription

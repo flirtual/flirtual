@@ -89,11 +89,6 @@ config :ex_aws,
     region: "auto"
   ]
 
-config :stripity_stripe,
-  api_key: System.fetch_env!("STRIPE_ACCESS_TOKEN"),
-  signing_secret: System.fetch_env!("STRIPE_SIGNING_SECRET"),
-  json_library: Poison
-
 config :chargebeex,
   namespace: System.fetch_env!("CHARGEBEE_NAMESPACE"),
   api_key: System.fetch_env!("CHARGEBEE_ACCESS_TOKEN")

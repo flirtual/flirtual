@@ -5,7 +5,7 @@ defmodule FlirtualWeb.SubscriptionController do
   import FlirtualWeb.Utilities
   import Phoenix.Controller
 
-  alias Flirtual.{Chargebee, Plan, Policy, Stripe}
+  alias Flirtual.{Chargebee, Plan, Policy}
 
   action_fallback(FlirtualWeb.FallbackController)
 
@@ -50,18 +50,6 @@ defmodule FlirtualWeb.SubscriptionController do
       conn |> redirect(external: url)
     else
       value -> value
-    end
-  end
-
-  def cancel(conn, _) do
-    subscription = conn.assigns[:session].user.subscription
-
-    if is_nil(subscription) do
-      {:error, {:not_found, :subscription_not_found}}
-    else
-      with {:ok, _} <- Stripe.cancel_subscription_at_period_end(subscription) do
-        conn |> json(%{success: true})
-      end
     end
   end
 end

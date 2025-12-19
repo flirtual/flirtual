@@ -97,6 +97,16 @@ export const ProfileDropdown: FC<ProfileDropdownProps> = ({ userId }) => {
 							</Link>
 						</DropdownMenuItem>
 						<DropdownMenuSeparator />
+						<DropdownMenuItem asChild>
+							<Link
+								className="gap-2"
+								href={`https://app.revenuecat.com/customers/cf0649d1/${user.revenuecatId}`}
+								target="_blank"
+							>
+								<Gem className="size-5" />
+								View RevenueCat customer
+							</Link>
+						</DropdownMenuItem>
 						<DropdownMenuItem asChild disabled={!user.chargebeeId}>
 							<Link
 								className="gap-2"
@@ -115,16 +125,6 @@ export const ProfileDropdown: FC<ProfileDropdownProps> = ({ userId }) => {
 							>
 								<Gem className="size-5" />
 								View Stripe customer
-							</Link>
-						</DropdownMenuItem>
-						<DropdownMenuItem asChild>
-							<Link
-								className="gap-2"
-								href={`https://app.revenuecat.com/customers/cf0649d1/${user.revenuecatId}`}
-								target="_blank"
-							>
-								<Gem className="size-5" />
-								View RevenueCat customer
 							</Link>
 						</DropdownMenuItem>
 						<DropdownMenuSeparator />

@@ -19,7 +19,6 @@ defmodule Flirtual.Users do
     ObanWorkers,
     Repo,
     RevenueCat,
-    Stripe,
     Talkjs,
     User
   }
@@ -472,7 +471,6 @@ defmodule Flirtual.Users do
            :ok <- Elasticsearch.delete(:users, user.id),
            {:ok, _} <- Talkjs.delete_user(user),
            {:ok, _} <- Listmonk.delete_subscriber(user),
-           {:ok, _} <- Stripe.delete_customer(user),
            {:ok, _} <- Chargebee.delete_customer(user),
            :ok <- RevenueCat.delete_customer(user),
            :ok <-
@@ -496,7 +494,6 @@ defmodule Flirtual.Users do
            :ok <- Elasticsearch.delete(:users, user.id),
            {:ok, _} <- Talkjs.delete_user(user),
            {:ok, _} <- Listmonk.delete_subscriber(user),
-           {:ok, _} <- Stripe.delete_customer(user),
            {:ok, _} <- Chargebee.delete_customer(user),
            :ok <- RevenueCat.delete_customer(user) do
         {:ok, user}
