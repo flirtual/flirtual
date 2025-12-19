@@ -43,6 +43,17 @@ export type PaginateOptions<T> = {
 	page?: number;
 } & T;
 
+export interface CursorPaginateMetadata {
+	next?: string;
+	previous?: string;
+	page?: number;
+}
+
+export interface CursorPaginate<T> {
+	data: Array<T>;
+	metadata: CursorPaginateMetadata;
+}
+
 export const api = wretch(urls.api)
 	.addon(QueryAddon)
 	.addon(AbortAddon())

@@ -1,12 +1,23 @@
 import type { FC } from "react";
+import { useLayoutEffect } from "react";
+import { useInView } from "react-intersection-observer";
 
-import { useLikesYou } from "~/hooks/use-likes-you";
+import { useLikesYou, useLikesYouPreview } from "~/hooks/use-likes-you";
 
 import { LikeListItem } from "./list-item";
 
 export const LikesList: FC = () => {
-	const { items, count } = useLikesYou();
+	const { data, loadMore } = useLikesYou();
+	const { count } = useLikesYouPreview();
+	const items = data.flatMap((page) => page.data);
 	const total = (count.love ?? 0) + (count.friend ?? 0);
+
+	const [loadMoreReference, loadMoreInView] = useInView();
+
+	useLayoutEffect(() => {
+		if (!loadMoreInView) return;
+		void loadMore();
+	}, [loadMoreInView, loadMore]);
 
 	if (items.length === 0) return (
 		<div className="flex flex-col gap-1 px-4 desktop:px-0">
@@ -20,12 +31,8 @@ export const LikesList: FC = () => {
 	return (
 		<div className="flex flex-col gap-2 desktop:gap-4">
 			{items.map((item) => <LikeListItem {...item} key={item.profileId} />)}
-			{items.length >= 100 && total > 100 && (
-				<span className="text-center text-sm opacity-75">
-					Like or pass profiles above to load older likes (showing 100/
-					{total}
-					)
-				</span>
+			{total > items.length && (
+				<div className="h-4" ref={loadMoreReference} />
 			)}
 		</div>
 	);

@@ -1,7 +1,7 @@
 import type { WretchOptions } from "wretch";
 
 import { api } from "./common";
-import type { CreatedAtModel } from "./common";
+import type { CreatedAtModel, CursorPaginate } from "./common";
 import type { ProspectKind } from "./matchmaking";
 
 export type Message = {
@@ -20,25 +20,7 @@ export type Conversation = {
 	userId: string;
 } & CreatedAtModel;
 
-export interface PaginateMetadata {
-	total: number;
-	cursor: {
-		next?: string;
-		previous?: string;
-		self: {
-			before?: string;
-			limit: number;
-			page: number;
-		};
-	};
-}
-
-export interface Paginate<T> {
-	data: Array<T>;
-	metadata: PaginateMetadata;
-}
-
-export type ConversationList = Paginate<Conversation>;
+export type ConversationList = CursorPaginate<Conversation>;
 
 export const Conversation = {
 	api: api.url("conversations"),

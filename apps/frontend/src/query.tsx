@@ -68,7 +68,7 @@ export function queueFetcher({ queryKey: [, kind], signal }: QueryFunctionContex
 }
 
 export const likesYouKey = () => ["likes-you"] as const;
-export const likesYouFetcher = () => Matchmaking.likesYou();
+export const likesYouPreviewKey = () => ["likes-you-preview"] as const;
 
 export const conversationsKey = () => ["conversations"] as const;
 

@@ -5,7 +5,7 @@ import { ButtonLink } from "~/components/button";
 import { InlineLink } from "~/components/inline-link";
 import { ModelCard } from "~/components/model-card";
 import { preloadConversations, useConversations } from "~/hooks/use-conversations";
-import { likesYouFetcher, likesYouKey, preload } from "~/query";
+import { preloadLikesYouPreview } from "~/hooks/use-likes-you";
 import { urls } from "~/urls";
 
 import { LikesYouButton } from "./likes-you-button";
@@ -13,7 +13,7 @@ import { LikesYouButton } from "./likes-you-button";
 export const handle = {
 	preload: () => Promise.all([
 		preloadConversations(),
-		preload({ queryKey: likesYouKey(), queryFn: likesYouFetcher })
+		preloadLikesYouPreview()
 	])
 };
 

@@ -65,7 +65,7 @@ defmodule Flirtual.Conversation do
       %{
         previous: self |> previous(data) |> encode(),
         next: self |> next(data) |> encode(),
-        self: self
+        page: self.page
       }
       |> exclude_nil()
     end
@@ -191,23 +191,13 @@ defmodule Flirtual.Conversation do
          %{"data" => data} when is_list(data) <- body do
       data = data |> decode() |> Enum.reject(&is_nil/1)
 
-      {:ok,
-       {data,
-        %{
-          cursor: Cursor.map(cursor, data),
-          total: length(data)
-        }}}
+      {:ok, {data, Cursor.map(cursor, data)}}
     else
       %{"errorCode" => "LIMIT_OUT_OF_BOUNDS"} ->
         {:error, :invalid_limit}
 
       {:error, :not_configured} ->
-        {:ok,
-         {[],
-          %{
-            cursor: Cursor.map(cursor, []),
-            total: 0
-          }}}
+        {:ok, {[], Cursor.map(cursor, [])}}
 
       reason ->
         log(:error, [:list], reason: reason)

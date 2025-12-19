@@ -20,8 +20,8 @@ export function useConversations() {
 		queryKey: conversationsKey(),
 		queryFn: ({ pageParam }) => Conversation.list(pageParam),
 		initialPageParam: undefined as unknown as string,
-		getNextPageParam: ({ metadata: { cursor: { next } } }) => next,
-		getPreviousPageParam: ({ metadata: { cursor: { previous } } }) => previous
+		getNextPageParam: ({ metadata: { next } }) => next,
+		getPreviousPageParam: ({ metadata: { previous } }) => previous
 	});
 	const { pages } = use(promise);
 

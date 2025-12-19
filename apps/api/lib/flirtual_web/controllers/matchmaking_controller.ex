@@ -139,36 +139,49 @@ defmodule FlirtualWeb.MatchmakingController do
     end
   end
 
-  def list_likes(conn, _) do
-    with items <-
-           LikesAndPasses.list_unrequited(profile_id: conn.assigns[:session].user_id)
-           |> Policy.filter(conn, :count) do
-      thumbnails =
-        items
-        |> Enum.take(3)
-        |> Enum.reverse()
-        |> Enum.map(fn item ->
-          if Subscription.active?(conn.assigns[:session].user.subscription) do
-            item.profile_id |> User.get() |> User.avatar_url("icon")
-          else
-            item.profile_id |> User.get() |> User.avatar_url("blur")
-          end
-        end)
+  def list_likes(conn, %{"cursor" => cursor}) do
+    user = conn.assigns[:session].user
+    cursor = LikesAndPasses.Cursor.decode(cursor)
 
-      conn
-      |> json_with_etag(%{
-        count:
-          items
-          |> Enum.group_by(& &1.kind)
-          |> Map.new(fn {k, v} -> {k, length(v)} end),
-        items:
-          items
-          |> Policy.filter(conn, :read)
-          |> then(&Policy.transform(conn, &1))
-          |> Enum.take(100),
-        thumbnails: thumbnails
-      })
-    end
+    {items, metadata} =
+      LikesAndPasses.list_unrequited(profile_id: user.id, cursor: cursor)
+
+    items = items |> Policy.filter(conn, :read) |> then(&Policy.transform(conn, &1))
+
+    conn
+    |> json_with_etag(%{
+      data: items,
+      metadata: metadata
+    })
+  end
+
+  def list_likes(conn, _), do: list_likes(conn, %{"cursor" => nil})
+
+  def preview_likes(conn, _) do
+    user = conn.assigns[:session].user
+
+    count = LikesAndPasses.count_unrequited(profile_id: user.id)
+
+    thumbnails =
+      LikesAndPasses.list_unrequited(
+        profile_id: user.id,
+        cursor: %LikesAndPasses.Cursor{limit: 3}
+      )
+      |> elem(0)
+      |> Enum.reverse()
+      |> Enum.map(fn item ->
+        if Subscription.active?(user.subscription) do
+          item.profile_id |> User.get() |> User.avatar_url("icon")
+        else
+          item.profile_id |> User.get() |> User.avatar_url("blur")
+        end
+      end)
+
+    conn
+    |> json_with_etag(%{
+      count: count,
+      thumbnails: thumbnails
+    })
   end
 
   # def list_matches(conn, _) do

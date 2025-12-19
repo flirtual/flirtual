@@ -8,7 +8,7 @@ import { ButtonLink } from "~/components/button";
 import { HeartIcon } from "~/components/icons/gradient/heart";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
 import { Image } from "~/components/image";
-import { useLikesYou } from "~/hooks/use-likes-you";
+import { useLikesYouPreview } from "~/hooks/use-likes-you";
 import { useSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 
@@ -16,7 +16,7 @@ export const LikesYouButton: FC = withSuspense(() => {
 	const { t } = useTranslation();
 
 	const { user } = useSession();
-	const likes = useLikesYou();
+	const preview = useLikesYouPreview();
 
 	return (
 		<ButtonLink
@@ -25,9 +25,9 @@ export const LikesYouButton: FC = withSuspense(() => {
 			size="sm"
 		>
 			<div className="flex gap-8">
-				{likes.thumbnails && likes.thumbnails.length > 0 && (
+				{preview.thumbnails && preview.thumbnails.length > 0 && (
 					<div className="flex items-center -space-x-2">
-						{likes.thumbnails?.map((thumbnail) => (
+						{preview.thumbnails?.map((thumbnail) => (
 							<Image
 								key={thumbnail}
 								alt="Like preview"
@@ -42,27 +42,27 @@ export const LikesYouButton: FC = withSuspense(() => {
 				)}
 				<div
 					className={twMerge(
-						likes.thumbnails
-						&& likes.thumbnails.length > 0
+						preview.thumbnails
+						&& preview.thumbnails.length > 0
 						&& "flex flex-col items-center"
 					)}
 				>
 					{t("see_who_likes_you")}
 					{" "}
 					<span data-mask className="-mt-1 whitespace-nowrap">
-						{likes.count.love && (
+						{preview.count.love && (
 							<>
 								(
-								{likes.count.love > 99 ? "99+" : likes.count.love}
+								{preview.count.love > 99 ? "99+" : preview.count.love}
 								<HeartIcon className="inline h-4" gradient={false} />
 								)
 							</>
 						)}
 						{" "}
-						{likes.count.friend && (
+						{preview.count.friend && (
 							<>
 								(
-								{likes.count.friend > 99 ? "99+" : likes.count.friend}
+								{preview.count.friend > 99 ? "99+" : preview.count.friend}
 								<PeaceIcon className="inline h-4" gradient={false} />
 								)
 							</>

@@ -11,6 +11,7 @@ import {
 	conversationsKey,
 	invalidate,
 	likesYouKey,
+	likesYouPreviewKey,
 	mutate,
 	queueFetcher,
 	queueKey,
@@ -32,6 +33,7 @@ export function invalidateMatch(userId: string) {
 		invalidate({ queryKey: userKey(userId) }),
 		invalidate({ queryKey: relationshipKey(userId) }),
 		invalidate({ queryKey: likesYouKey() }),
+		invalidate({ queryKey: likesYouPreviewKey() }),
 		invalidate({ queryKey: conversationsKey() })
 	]);
 }

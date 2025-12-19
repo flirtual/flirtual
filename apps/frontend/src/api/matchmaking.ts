@@ -4,7 +4,7 @@ import {
 	api
 
 } from "./common";
-import type { Issue } from "./common";
+import type { CursorPaginate, Issue } from "./common";
 
 export const ProspectKind = ["love", "friend"] as const;
 export const prospectKinds = ProspectKind;
@@ -86,13 +86,26 @@ export const Matchmaking = {
 	resetPasses() {
 		return api.url("passes").delete().res();
 	},
-	likesYou() {
-		return api.url("likes").get().json<{
-			count: {
-				[K in ProspectKind]?: number;
-			};
-			items: Array<LikeAndPassItem>;
-			thumbnails?: Array<string>;
-		}>();
+	likesYou(cursor?: string) {
+		return api
+			.url("likes")
+			.query(cursor ? { cursor } : {})
+			.get()
+			.json<LikesYouList>();
+	},
+	likesYouPreview() {
+		return api
+			.url("likes/preview")
+			.get()
+			.json<LikesYouPreview>();
 	}
 };
+
+export type LikesYouList = CursorPaginate<LikeAndPassItem>;
+
+export interface LikesYouPreview {
+	count: {
+		[K in ProspectKind]?: number;
+	};
+	thumbnails: Array<string>;
+}

@@ -93,15 +93,36 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
     |> Repo.all()
   end
 
-  def list_unrequited(profile_id: profile_id) do
-    LikesAndPasses
-    |> where(target_id: ^profile_id, type: :like)
-    |> with_opposite(nil: true)
-    |> exclude_blocked()
-    |> join(:left, [lap, _, _], user in User, on: lap.profile_id == user.id)
-    |> where([_, _, _, user], user.status == :visible)
-    |> order_by(desc: :created_at)
-    |> Repo.all()
+  def list_unrequited(profile_id: profile_id, cursor: cursor) do
+    query =
+      LikesAndPasses
+      |> where(target_id: ^profile_id, type: :like)
+      |> with_opposite(nil: true)
+      |> exclude_blocked()
+      |> join(:left, [lap, _, _], user in User, on: lap.profile_id == user.id)
+      |> where([_, _, _, user], user.status == :visible)
+      |> order_by([lap], desc: lap.created_at, desc: lap.profile_id)
+
+    query =
+      if cursor.before && cursor.before_id do
+        before_datetime = DateTime.from_unix!(cursor.before, :millisecond)
+
+        where(
+          query,
+          [lap],
+          lap.created_at < ^before_datetime or
+            (lap.created_at == ^before_datetime and lap.profile_id < ^cursor.before_id)
+        )
+      else
+        query
+      end
+
+    items =
+      query
+      |> limit(^cursor.limit)
+      |> Repo.all()
+
+    {items, LikesAndPasses.Cursor.map(cursor, items)}
   end
 
   def list_unrequited(profile_id: profile_id, since: since) do
@@ -140,6 +161,27 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
       )
 
     Repo.all(query)
+  end
+
+  def count_unrequited(profile_id: profile_id) do
+    LikesAndPasses
+    |> where(target_id: ^profile_id, type: :like)
+    |> join(:left, [lap], opposite in LikesAndPasses,
+      on: lap.profile_id == opposite.target_id and lap.target_id == opposite.profile_id
+    )
+    |> where([_, opposite], is_nil(opposite))
+    |> join(:left, [lap, _], block in Block,
+      on:
+        (lap.profile_id == block.profile_id and lap.target_id == block.target_id) or
+          (lap.profile_id == block.target_id and lap.target_id == block.profile_id)
+    )
+    |> where([_, _, block], is_nil(block))
+    |> join(:left, [lap, _, _], user in User, on: lap.profile_id == user.id)
+    |> where([_, _, _, user], user.status == :visible)
+    |> group_by([lap], lap.kind)
+    |> select([lap], {lap.kind, count(lap.profile_id)})
+    |> Repo.all()
+    |> Map.new()
   end
 
   def delete_unrequited_likes(profile_id: profile_id) do
@@ -225,6 +267,79 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
         false -> where(&1, [_, opposite], not is_nil(opposite))
       end
     )
+  end
+
+  defmodule Cursor do
+    import Flirtual.Utilities
+
+    alias Flirtual.User.Profile.LikesAndPasses.Cursor
+
+    @derive [{Jason.Encoder, only: [:page, :limit]}]
+    defstruct before: nil, before_id: nil, page: 0, limit: 20
+
+    def map(self, data) do
+      %{
+        next: self |> next(data) |> encode(),
+        page: self.page
+      }
+      |> exclude_nil()
+    end
+
+    def first(), do: %Cursor{}
+
+    def encode(nil), do: nil
+
+    def encode(%Cursor{page: page} = cursor)
+        when is_integer(page) and page > 0 do
+      :erlang.term_to_binary(
+        {
+          cursor.before,
+          cursor.before_id,
+          cursor.page,
+          cursor.limit
+        },
+        [:compressed]
+      )
+      |> Base.url_encode64()
+    end
+
+    def encode(_), do: nil
+
+    def decode(token) when is_binary(token) do
+      with {:ok, binary} <- Base.url_decode64(token),
+           {before, before_id, page, limit}
+           when (is_nil(before) or is_integer(before)) and
+                  (is_nil(before_id) or is_binary(before_id)) and
+                  is_integer(page) and is_integer(limit) <-
+             :erlang.binary_to_term(binary, [:safe]) do
+        %Cursor{
+          before: before,
+          before_id: before_id,
+          page: page,
+          limit: limit
+        }
+      else
+        _ -> first()
+      end
+    end
+
+    def decode(_), do: first()
+
+    def next(_, []), do: nil
+
+    def next(%Cursor{} = self, data) do
+      if length(data) == self.limit do
+        last_item = List.last(data)
+
+        %Cursor{
+          before: DateTime.to_unix(last_item.created_at, :millisecond),
+          before_id: last_item.profile_id,
+          page: self.page + 1
+        }
+      else
+        nil
+      end
+    end
   end
 
   defimpl Jason.Encoder do

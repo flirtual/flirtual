@@ -86,7 +86,7 @@ export const ConversationAside: FC<ConversationAsideProps> = (props) => {
 					</div>
 					<div className="flex flex-col gap-2">
 						{data.map(({ data: conversations, metadata }, dataIndex) => (
-							<Fragment key={metadata.cursor.self.page}>
+							<Fragment key={metadata.page}>
 								{conversations.map((conversation, conversationIndex) => (
 									<Suspense
 										key={conversation.id}
