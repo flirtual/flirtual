@@ -251,6 +251,9 @@ importers:
       react-shepherd:
         specifier: ^4.3.0
         version: 4.3.0(react-dom@19.1.2(react@19.1.2))(react@19.1.2)
+      react-snowfall:
+        specifier: ^2.4.0
+        version: 2.4.0(react-dom@19.1.2(react@19.1.2))(react@19.1.2)
       react-swipeable:
         specifier: ^7.0.2
         version: 7.0.2(react@19.1.2)
@@ -6108,6 +6111,9 @@ packages:
     peerDependencies:
       react: '>=16.13.1'
 
+  react-fast-compare@3.2.2:
+    resolution: {integrity: sha512-nsO+KSNgo1SbJqJEYRE9ERzo7YtYbou/OqjSQKxV7jcKox7+usiUVZOAC+XnDOABXggQTno0Y1CpVnuWEc1boQ==}
+
   react-i18next@15.7.4:
     resolution: {integrity: sha512-nyU8iKNrI5uDJch0z9+Y5XEr34b0wkyYj3Rp+tfbahxtlswxSCjcUL9H0nqXo9IR3/t5Y5PKIA3fx3MfUyR9Xw==}
     peerDependencies:
@@ -6189,6 +6195,12 @@ packages:
     peerDependencies:
       react: ^17.0.2 || 18.x
       react-dom: ^17.0.2 || 18.x
+
+  react-snowfall@2.4.0:
+    resolution: {integrity: sha512-KAPMiGnxt11PEgC2pTVrTQsvk5jt1kLUtG+ZamiKLphTZ7GiYT1Aa5kX6jp4jKWq1kqJHchnGT9CDm4g86A5Gg==}
+    peerDependencies:
+      react: "^16.8 ||\_17.x || 18.x || 19.x"
+      react-dom: ^16.8 || 17.x || 18.x || 19.x
 
   react-style-singleton@2.2.3:
     resolution: {integrity: sha512-b6jSvxvVnyptAiLjbkWLE/lOnR4lfTtDAl+eUC7RZy+QQWc6wRzIV2CE6xBuMmDxc2qIihtDCZD5NPOFl7fRBQ==}
@@ -13590,6 +13602,8 @@ snapshots:
       '@babel/runtime': 7.28.4
       react: 19.1.2
 
+  react-fast-compare@3.2.2: {}
+
   react-i18next@15.7.4(i18next@25.5.2(typescript@5.9.2))(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(typescript@5.9.2):
     dependencies:
       '@babel/runtime': 7.28.4
@@ -13657,6 +13671,12 @@ snapshots:
       react-dom: 19.1.2(react@19.1.2)
       resize-observer-polyfill: 1.5.1
       shepherd.js: 11.2.0
+
+  react-snowfall@2.4.0(react-dom@19.1.2(react@19.1.2))(react@19.1.2):
+    dependencies:
+      react: 19.1.2
+      react-dom: 19.1.2(react@19.1.2)
+      react-fast-compare: 3.2.2
 
   react-style-singleton@2.2.3(@types/react@19.1.8)(react@19.1.2):
     dependencies:

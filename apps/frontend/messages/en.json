@@ -986,5 +986,9 @@
 	"geolocation_removed": "Location removed.",
 	"no_results": "No results",
 	"no_likes_yet": "No one has liked you yet 😔",
-	"no_likes_yet_description": "But it's only a matter of time."
+	"no_likes_yet_description": "But it's only a matter of time.",
+	"snowfall": "Snowfall",
+	"snowfall_option_auto": "Auto",
+	"snowfall_option_always": "Always",
+	"snowfall_option_never": "Never"
 }

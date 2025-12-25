@@ -25,6 +25,7 @@ import type { Route } from "./+types/root";
 import { App } from "./app";
 import { HavingIssuesViewport } from "./components/error";
 import { Loading } from "./components/loading";
+import { ConditionalSnowfall } from "./components/snowfall";
 import {
 	apiOrigin,
 	client,
@@ -239,6 +240,7 @@ export function Layout({ children }: PropsWithChildren) {
 			>
 				<BeforeRenderScript />
 				<PolyfillScript locale={locale} />
+				<ConditionalSnowfall />
 				<RedirectBoundary>
 					<LazyMotion
 						strict
