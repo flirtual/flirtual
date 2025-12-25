@@ -4,8 +4,10 @@ import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import {
 	InputLabel,
+	InputSelect,
 	InputSwitch
 } from "~/components/inputs";
+import { snowfallOptions, useSnowfall } from "~/components/snowfall";
 import { usePreferences } from "~/hooks/use-preferences";
 import { useToast } from "~/hooks/use-toast";
 
@@ -41,14 +43,17 @@ export const FunForm: React.FC = () => {
 		false
 	);
 
+	const { snowfall, setSnowfall } = useSnowfall();
+
 	return (
 		<Form
 			fields={{
 				assistant: assistantVisible === true,
-				ranked: rankedMode === true
+				ranked: rankedMode === true,
+				snowfall
 			}}
 			className="flex flex-col gap-8"
-			onSubmit={async ({ assistant, ranked }) => {
+			onSubmit={async ({ assistant, ranked, snowfall }) => {
 				if (assistant && !assistantVisible) {
 					setAssistantVisible(true);
 					setAssistantPosition(null);
@@ -60,12 +65,29 @@ export const FunForm: React.FC = () => {
 				}
 
 				setRankedMode(ranked);
+				setSnowfall(snowfall);
 
 				toasts.add(t("have_fun"));
 			}}
 		>
 			{({ FormField }) => (
 				<>
+					<FormField name="snowfall">
+						{(field) => (
+							<>
+								<InputLabel
+									{...field.labelProps}
+									inline
+								>
+									{t("snowfall")}
+								</InputLabel>
+								<InputSelect
+									{...field.props}
+									options={snowfallOptions.map((id) => ({ id, name: t(`snowfall_option_${id}`) }))}
+								/>
+							</>
+						)}
+					</FormField>
 					<FormField name="assistant">
 						{(field) => (
 							<>
