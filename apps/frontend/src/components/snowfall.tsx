@@ -19,8 +19,15 @@ function isCheerful() {
 export function useSnowfall() {
 	const [snowfall, setSnowfall] = usePreferences<SnowfallOption>("snowfall", "auto");
 
-	const on = snowfall === "always" || (snowfall === "auto" && isCheerful());
-	return { on, snowfall, setSnowfall };
+	const autoOn = isCheerful();
+	const on = snowfall !== "never" && (snowfall === "auto" && autoOn);
+
+	return {
+		on,
+		autoOn,
+		snowfall,
+		setSnowfall
+	};
 }
 
 const Snowfall = lazy(() => import("react-snowfall"));
@@ -29,5 +36,13 @@ export const ConditionalSnowfall = withSuspense(() => {
 	const { on } = useSnowfall();
 	if (!on) return null;
 
-	return <Snowfall />;
+	return (
+		<Snowfall
+			style={{
+				position: "fixed",
+				width: "100vw",
+				height: "100vh",
+			}}
+		/>
+	);
 });
