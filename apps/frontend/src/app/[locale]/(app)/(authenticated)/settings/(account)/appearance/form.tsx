@@ -11,9 +11,10 @@ import { Profile } from "~/api/user/profile";
 import type { ProfileColors } from "~/api/user/profile";
 import { NewBadge, PremiumBadge } from "~/components/badge";
 import { InlineLink } from "~/components/inline-link";
-import { InputLabel, InputLabelHint } from "~/components/inputs";
+import { InputLabel, InputLabelHint, InputSwitch } from "~/components/inputs";
 import { Slider } from "~/components/inputs/slider";
 import { InputLanguageSelect } from "~/components/inputs/specialized/language-select";
+import { useSnowfall } from "~/components/snowfall";
 import { useAttributeTranslation } from "~/hooks/use-attribute";
 import { usePreferences } from "~/hooks/use-preferences";
 import { useSession } from "~/hooks/use-session";
@@ -291,6 +292,26 @@ const InputFontSize: FC = () => {
 	);
 };
 
+function InputSnowfall() {
+	const { t } = useTranslation();
+	const { autoOn, snowfall, setSnowfall } = useSnowfall();
+
+	// Only shown during the cheerful period.
+	if (!autoOn) return;
+
+	return (
+		<div className="flex flex-col gap-2">
+			<InputLabel>
+				{t("snowfall")}
+			</InputLabel>
+			<InputSwitch
+				value={snowfall === "auto"}
+				onChange={(value) => setSnowfall(value ? "auto" : "never")}
+			/>
+		</div>
+	);
+}
+
 export const AppearanceForm: FC = () => {
 	const [locale] = useLocale();
 	const { user: { tags } } = useSession();
@@ -333,6 +354,7 @@ export const AppearanceForm: FC = () => {
 					))}
 				</div>
 			</div>
+			<InputSnowfall />
 			<InputFontSize />
 			<ProfileColorSelect />
 		</div>
