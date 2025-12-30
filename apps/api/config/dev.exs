@@ -10,7 +10,7 @@ config :flirtual, Flirtual.Repo,
   hostname: "localhost",
   database: "flirtual_dev",
   show_sensitive_data_on_connection_error: true,
-  pool_size: 200,
+  pool_size: 20,
   queue_target: 15_000,
   queue_interval: 5000
 
