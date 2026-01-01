@@ -15,6 +15,10 @@ export const newsItems: Record<string, NewsItem> = {
 		date: "2025-12-07",
 		Component: lazy(() => import("./2025-catch-up").then(({ CatchUp2025 }) => ({ default: CatchUp2025 })))
 	},
+	"2025_wrapped": {
+		date: "2026-01-01",
+		Component: lazy(() => import("./2025-wrapped").then(({ Wrapped2025 }) => ({ default: Wrapped2025 })))
+	},
 	"2024_wrapped": {
 		date: "2025-01-01",
 		Component: lazy(() => import("./2024-wrapped").then(({ Wrapped2024 }) => ({ default: Wrapped2024 })))

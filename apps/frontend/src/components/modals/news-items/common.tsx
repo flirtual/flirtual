@@ -1,8 +1,42 @@
-import { Trans } from "react-i18next";
+/* eslint-disable react-refresh/only-export-components */
+import type { ComponentProps, FC } from "react";
+import { useState } from "react";
+import { Trans, useTranslation } from "react-i18next";
 
+import {
+	Dialog,
+	DialogContent
+} from "~/components/dialog/dialog";
+import { Image } from "~/components/image";
 import { InlineLink } from "~/components/inline-link";
 import { IdeasLink } from "~/components/modals/ideas";
 import { urls } from "~/urls";
+
+export const ExpandableImage: FC<ComponentProps<typeof Image>> = (props) => {
+	const [open, setOpen] = useState(false);
+	const { t } = useTranslation();
+
+	return (
+		<>
+			<button
+				className="cursor-zoom-in"
+				type="button"
+				onClick={() => setOpen(true)}
+			>
+				<Image {...props} />
+			</button>
+			<Dialog open={open} onOpenChange={setOpen}>
+				<DialogContent border={false} className="pointer-events-none w-fit bg-transparent p-0 shadow-none desktop:max-w-fit">
+					<img
+						alt={props.alt ?? t("profile_picture")}
+						className="mx-auto max-h-[95svh] max-w-[95svw] rounded-2.5xl object-contain shadow-brand-1 ring-4 ring-theme-1"
+						src={props.src}
+					/>
+				</DialogContent>
+			</Dialog>
+		</>
+	);
+};
 
 export const commonComponents = {
 	p: <p className="select-children" />,

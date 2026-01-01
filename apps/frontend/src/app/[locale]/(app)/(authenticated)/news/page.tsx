@@ -22,6 +22,7 @@ export const meta: Route.MetaFunction = (options) => {
 };
 
 const publicNews = [
+	"2025_wrapped",
 	"2024_wrapped",
 	"2024_100k",
 	"2024_homies_day",
