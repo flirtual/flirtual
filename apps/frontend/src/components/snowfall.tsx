@@ -20,7 +20,7 @@ export function useSnowfall() {
 	const [snowfall, setSnowfall] = usePreferences<SnowfallOption>("snowfall", "auto");
 
 	const autoOn = isCheerful();
-	const on = snowfall !== "never" && (snowfall === "auto" && autoOn);
+	const on = snowfall === "always" || (snowfall === "auto" && autoOn);
 
 	return {
 		on,
