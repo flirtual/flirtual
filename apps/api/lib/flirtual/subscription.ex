@@ -40,6 +40,36 @@ defmodule Flirtual.Subscription do
     |> Repo.update()
   end
 
+  def reset_premium_settings(profile) do
+    with {:ok, _} <-
+           if(profile.custom_weights,
+             do:
+               profile.custom_weights
+               |> change(%{
+                 monopoly: 1.0,
+                 games: 1.0,
+                 default_interests: 1.0,
+                 custom_interests: 1.0,
+                 personality: 1.0,
+                 relationships: 1.0,
+                 domsub: 1.0,
+                 kinks: 1.0,
+                 languages: 1.0,
+                 likes: 1.0
+               })
+               |> Repo.update(),
+             else: {:ok, :skipped}
+           ),
+         {:ok, _} <-
+           profile
+           |> Profiles.update_colors(%{
+             color_1: "#ff8975",
+             color_2: "#e9658b"
+           }) do
+      {:ok, profile}
+    end
+  end
+
   defp update_platform_id(platform_id, event_id) do
     case platform_id do
       "CHARGEBEE" -> %{apple_id: nil, google_id: nil, chargebee_id: event_id}
@@ -179,31 +209,7 @@ defmodule Flirtual.Subscription do
 
     Repo.transaction(fn ->
       with user <- User.get(subscription.user_id),
-           {:ok, _} <-
-             if(user.profile.custom_weights,
-               do:
-                 user.profile.custom_weights
-                 |> change(%{
-                   monopoly: 1.0,
-                   games: 1.0,
-                   default_interests: 1.0,
-                   custom_interests: 1.0,
-                   personality: 1.0,
-                   relationships: 1.0,
-                   domsub: 1.0,
-                   kinks: 1.0,
-                   languages: 1.0,
-                   likes: 1.0
-                 })
-                 |> Repo.update(),
-               else: {:ok, :skipped}
-             ),
-           {:ok, _} <-
-             user.profile
-             |> Profiles.update_colors(%{
-               color_1: "#ff8975",
-               color_2: "#e9658b"
-             }),
+           {:ok, _} <- reset_premium_settings(user.profile),
            {:ok, _} <-
              subscription
              |> change(%{cancelled_at: now})
@@ -218,6 +224,35 @@ defmodule Flirtual.Subscription do
 
   def cancel(%Subscription{} = subscription), do: {:ok, subscription}
   def cancel(_), do: {:error, nil}
+
+  def transfer(user_id, target_id) when is_uid(user_id) and is_uid(target_id) do
+    case get(user_id: user_id) do
+      nil ->
+        {:error, :no_subscription}
+
+      %Subscription{} = subscription ->
+        source = User.get(user_id)
+        target = User.get(target_id)
+
+        if is_nil(target) do
+          {:error, :target_not_found}
+        else
+          Repo.transaction(fn ->
+            with {:ok, subscription} <-
+                   subscription
+                   |> change(%{user_id: target_id})
+                   |> Repo.update(),
+                 {:ok, _} <- reset_premium_settings(source.profile),
+                 {:ok, _} <- reset_matchmaking_timer(target.profile) do
+              {:ok, subscription}
+            else
+              {:error, reason} -> Repo.rollback(reason)
+              reason -> Repo.rollback(reason)
+            end
+          end)
+        end
+    end
+  end
 
   def get(user_id: user_id) when is_uid(user_id) do
     Subscription
