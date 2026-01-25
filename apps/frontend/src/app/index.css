@@ -6,7 +6,7 @@
   min-width: 0;
   -webkit-tap-highlight-color: transparent;
   user-drag: none;
-  overscroll-behavior: none;
+  /* overscroll-behavior: none; */
 }
 
 * {
