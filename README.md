@@ -2,7 +2,7 @@
 
 [![Flirtual](https://static.flirtual.com/flirtual-background.svg)](https://flirtual.com)
 
-[![AGPL-3.0](https://img.shields.io/github/license/flirtual/flirtual?color=663366&label=%C2%A9%202018-2025%20Flirtual&logo=gnu)](LICENSE)
+[![AGPL-3.0](https://img.shields.io/github/license/flirtual/flirtual?color=663366&label=%C2%A9%202018-2026%20Flirtual&logo=gnu)](LICENSE)
 [![Discord](https://img.shields.io/discord/455219574036496404?color=5865f2&label=Discord&logo=discord&logoColor=5865f2&style=flat)](https://discord.gg/flirtual)
 [![Twitter](https://img.shields.io/static/v1?color=1da1f2&label=Twitter&message=%40getflirtual&logo=twitter&style=flat)](https://twitter.com/getflirtual)
 
@@ -29,7 +29,7 @@ Flirtual is a monorepo, with the following applications:
 See the [contribution guide](/.github/CONTRIBUTING.md) for more information.
 
 ## License
-Copyright (C) 2018-2025 Flirtual
+Copyright (C) 2018-2026 Flirtual
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published
