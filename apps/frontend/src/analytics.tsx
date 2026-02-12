@@ -46,6 +46,7 @@ function initializeAnalytics() {
 			return event;
 		},
 	});
+	posthog.opt_out_capturing();
 
 	logOnce(`Anonymous analytics enabled, you can opt out at ${absoluteUrl(urls.settings.privacy)}.`);
 	ready = true;
