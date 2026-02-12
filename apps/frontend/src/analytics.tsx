@@ -8,9 +8,9 @@ import { commitId, posthogHost, posthogKey, server } from "~/const";
 
 import type { Session } from "./api/auth";
 import { logOnce } from "./hooks/use-log";
+import { log } from "./log";
 import { queryClient, sessionFetcher, sessionKey } from "./query";
 import { absoluteUrl, urls } from "./urls";
-import { log } from "./log";
 
 let ready = false;
 
