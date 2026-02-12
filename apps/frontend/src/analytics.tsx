@@ -15,6 +15,7 @@ import { absoluteUrl, urls } from "./urls";
 let ready = false;
 
 function initializeAnalytics() {
+	return;
 	if (ready) return;
 
 	posthog.init(posthogKey, {
