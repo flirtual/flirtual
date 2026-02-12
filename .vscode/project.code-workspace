@@ -47,6 +47,10 @@
 		{
 			"name": "🚧 Maintenance",
 			"path": "../apps/maintenance"
+		},
+		{
+			"name": "🦔 PostHog Proxy",
+			"path": "../apps/posthog-proxy"
 		}
 	],
 	"settings": {
