@@ -33,6 +33,10 @@ export const sentryOrganization = import.meta.env.VITE_SENTRY_ORGANIZATION as st
 export const sentryProjectId = Number.parseInt(import.meta.env.VITE_SENTRY_PROJECT_ID as string || "0");
 export const sentryReportTo = import.meta.env.VITE_SENTRY_REPORT_TO as string;
 
+// PostHog
+export const posthogKey = import.meta.env.VITE_POSTHOG_KEY as string;
+export const posthogHost = import.meta.env.VITE_POSTHOG_HOST as string;
+
 export const sentryEnabled = production
 	&& !!sentryDsn
 	&& !!sentryOrganization

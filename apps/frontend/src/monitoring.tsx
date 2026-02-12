@@ -44,7 +44,7 @@ export function initializeMonitoring() {
 		})]
 	});
 
-	log("Monitoring initialized");
+	log("Error monitoring initialized");
 }
 
 function Identity() {

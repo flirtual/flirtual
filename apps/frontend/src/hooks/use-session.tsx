@@ -26,9 +26,11 @@ export async function logout() {
 	await mutate(sessionKey(), null);
 
 	const { native } = device;
-	if (native) await PushNotifications.unregister();
 
-	await Authentication.logout().catch(() => null);
+	await Promise.all([
+		native && PushNotifications.unregister(),
+		Authentication.logout().catch(() => null)
+	]);
 
 	await evictQueries();
 	await invalidate();
@@ -48,14 +50,18 @@ export function useOptionalSession(queryOptions: MinimalQueryOptions<Session | n
 		queryFn: sessionFetcher,
 	});
 
-	if (client)
-		session
-			? cookieStore.set({
-					name: "logged_in",
-					value: "",
-					expires: (Date.now() + ms("1y"))
-				})
-			: cookieStore.delete("logged_in");
+	if (client) {
+		if (!session) {
+			cookieStore.delete("logged_in");
+			return null;
+		}
+
+		cookieStore.set({
+			name: "logged_in",
+			value: "",
+			expires: (Date.now() + ms("1y"))
+		});
+	}
 
 	return session;
 }

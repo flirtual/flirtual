@@ -52,6 +52,9 @@ export default defineConfig((config) => {
 			legalComments: "external",
 		},
 		appType: "mpa",
+		ssr: {
+			noExternal: ["posthog-js", "@posthog/react"]
+		},
 		build: {
 			assetsDir: "static",
 			minify: true,

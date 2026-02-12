@@ -16,7 +16,7 @@ For technical, non-user-facing changes, [open an issue](https://github.com/flirt
 
 Feel free to take an [open issue](https://github.com/flirtual/flirtual/issues)! Contributions are welcome.
 
-Flirtual's back-end API is written in Elixir using the Phoenix framework, and our front-end is written in TypeScript using Next.js. Check the [README](https://github.com/flirtual/flirtual/blob/main/README.md) to get set up.
+Flirtual's back-end API is written in Elixir using the Phoenix framework, and our front-end is written in TypeScript using React Router. Check the [README](https://github.com/flirtual/flirtual/blob/main/README.md) to get set up.
 
 Development discussion happens on Discord. Join the [Flirtual server](https://discord.gg/flirtual) and visit the [#developers channel](https://discord.com/channels/455219574036496404/1105960009365471313). Let us know what you're working on and we'll be happy to help you get acquainted and answer any questions you might have.
 
