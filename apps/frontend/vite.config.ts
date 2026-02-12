@@ -63,7 +63,7 @@ export default defineConfig((config) => {
 				"chrome106",
 				"edge106",
 				"firefox104",
-				"safari16"
+				"safari15"
 			],
 			chunkSizeWarningLimit: 100,
 			// cssMinify: "lightningcss",
