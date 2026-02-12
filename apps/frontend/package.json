@@ -6,7 +6,7 @@
 		"typegen": "wrangler types --include-runtime false && react-router typegen",
 		"build": "rm -rf .sonda && pnpm typegen && react-router build",
 		"build:preview": "sh -c 'name=${1:-$(whoami)} && VITE_PREVIEW=\"$name\" pnpm -s build --mode=\"$name\"' --",
-		"production": "pnpm -s build --mode=production && wrangler deploy --env=production -c ./dist/client/wrangler.json",
+		"production": "pnpm -s build --mode=production && wrangler deploy --env=production --old-asset-ttl=2592000 -c ./dist/client/wrangler.json",
 		"preview": "sh -c 'name=${1:-$(whoami)} && pnpm -s build:preview $name && wrangler versions upload --env=canary -c ./dist/client/wrangler.json --preview-alias=\"$name\"' --",
 		"canary": "pnpm -s build:preview canary && wrangler deploy --env=canary -c ./dist/client/wrangler.json",
 		"android:build": "cap sync android && cd ./android && ./gradlew build",
