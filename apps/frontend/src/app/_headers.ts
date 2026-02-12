@@ -6,6 +6,7 @@ import {
 	bucketUploadsSignedOrigin,
 	commitId,
 	development,
+	posthogHost,
 	preview,
 	sentryDsn,
 	sentryEnabled,
@@ -80,7 +81,9 @@ const data = [
 						// https://developers.cloudflare.com/turnstile/reference/content-security-policy/
 						"challenges.cloudflare.com",
 						// https://developers.cloudflare.com/web-analytics/
-						"static.cloudflareinsights.com"
+						"static.cloudflareinsights.com",
+						// https://posthog.com/docs/advanced/content-security-policy
+						posthogHost && new URL(posthogHost).host
 					],
 					"style-src": [
 						"'self'",
@@ -125,6 +128,8 @@ const data = [
 						"static.cloudflareinsights.com",
 						// https://docs.sentry.io/concepts/key-terms/dsn-explainer/
 						sentryEnabled && new URL(sentryDsn).host,
+						// https://posthog.com/docs/advanced/content-security-policy
+						posthogHost && new URL(posthogHost).host
 					],
 					"font-src": ["'self'"],
 					"object-src": ["'self'", "data:"],

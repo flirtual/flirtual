@@ -1,6 +1,7 @@
 import { lazy, Suspense } from "react";
 import { Outlet } from "react-router";
 
+import { AnalyticsProvider } from "./analytics";
 import { InsetPreview } from "./components/inset-preview";
 import { Loading } from "./components/loading";
 import { development } from "./const";
@@ -17,14 +18,16 @@ export function App() {
 			<Monitoring />
 			{development && <InsetPreview />}
 			<QueryProvider>
-				<UpdateInformation />
-				<ToastProvider>
-					<DialogProvider>
-						<Suspense fallback={<Loading />}>
-							<Outlet />
-						</Suspense>
-					</DialogProvider>
-				</ToastProvider>
+				<AnalyticsProvider>
+					<UpdateInformation />
+					<ToastProvider>
+						<DialogProvider>
+							<Suspense fallback={<Loading />}>
+								<Outlet />
+							</Suspense>
+						</DialogProvider>
+					</ToastProvider>
+				</AnalyticsProvider>
 			</QueryProvider>
 		</>
 	);
