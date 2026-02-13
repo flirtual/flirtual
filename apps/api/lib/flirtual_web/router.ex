@@ -104,6 +104,14 @@ defmodule FlirtualWeb.Router do
         end
       end
 
+      scope "/vrchat" do
+        pipe_through(:fetch_authorization_token)
+
+        scope "/instances" do
+          post("/random", VRChatController, :create_random_instance)
+        end
+      end
+
       scope "/chargebee" do
         pipe_through(:fetch_authorization_token)
 

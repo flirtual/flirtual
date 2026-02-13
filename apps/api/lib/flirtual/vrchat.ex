@@ -1,5 +1,6 @@
 defmodule Flirtual.VRChat do
   use Flirtual.Connection.Provider, :vrchat
+  use Flirtual.Logger, :vrchat
 
   alias Flirtual.Connection
 
@@ -94,6 +95,50 @@ defmodule Flirtual.VRChat do
         notag: "admin_spotlight_xplat"
       )
     )
+  end
+
+  def create_instance(vrchat, world_id) do
+    current_user =
+      case VRChat.Authentication.get_current_user(vrchat) do
+        {:ok, _vrchat, user} ->
+          user.id
+
+        {:ok, user} ->
+          user.id
+
+        _ ->
+          case Tesla.get(vrchat, "/auth/user") do
+            {:ok, %Tesla.Env{status: 200, body: user}} -> user.id
+            _ -> nil
+          end
+      end
+
+    if is_nil(current_user) do
+      {:error, "Unable to authenticate to VRChat"}
+    else
+      body = %{
+        worldId: world_id,
+        type: "private",
+        region: "use",
+        canRequestInvite: true,
+        ownerId: current_user
+      }
+
+      case Tesla.post(vrchat, "/instances", body) do
+        {:ok, %Tesla.Env{status: status, body: response}} when status in [200, 201] ->
+          case Jason.decode(response) do
+            {:ok, decoded} -> {:ok, decoded}
+            {:error, _} -> {:ok, response}
+          end
+
+        {:ok, %Tesla.Env{status: status, body: error_body}} ->
+          {:error, %{status: status, body: error_body}}
+
+        {:error, reason} ->
+          log(:error, [:create_instance], reason: reason)
+          {:error, :upstream}
+      end
+    end
   end
 
   @character_map %{
