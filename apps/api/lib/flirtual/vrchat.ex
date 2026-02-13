@@ -92,7 +92,8 @@ defmodule Flirtual.VRChat do
       params
       |> Keyword.merge(
         sort: "shuffle",
-        notag: "admin_spotlight_xplat"
+        notag: "admin_spotlight_xplat",
+        platform: "android"
       )
     )
   end
