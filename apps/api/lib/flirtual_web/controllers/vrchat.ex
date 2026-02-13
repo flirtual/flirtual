@@ -98,55 +98,7 @@ defmodule FlirtualWeb.VRChatController do
          {:conversation_id, false} <-
            {:conversation_id, is_nil(conversation_id) or String.trim(conversation_id) == ""},
          user when not is_nil(user) <- conn.assigns[:session].user do
-      case Flirtual.VRChat.with_session(fn vrchat ->
-             # Get current user ID for ownerId
-             current_user =
-               case VRChat.Authentication.get_current_user(vrchat) do
-                 {:ok, _vrchat, user} ->
-                   user.id
-
-                 {:ok, user} ->
-                   user.id
-
-                 _ ->
-                   # Try alternative approach - make the request directly through the conn
-                   case Tesla.get(vrchat, "/auth/user") do
-                     {:ok, %Tesla.Env{status: 200, body: user}} -> user.id
-                     _ -> nil
-                   end
-               end
-
-             if is_nil(current_user) do
-               {:error, "Unable to get current user ID"}
-             else
-               # Build request body with only the required fields
-               body = %{
-                 worldId: world_id,
-                 type: "private",
-                 region: "use",
-                 canRequestInvite: true,
-                 ownerId: current_user
-               }
-
-               # Make the request using the VRChat Tesla client directly
-               case Tesla.post(vrchat, "/instances", body) do
-                 {:ok, %Tesla.Env{status: status, body: response}} when status in [200, 201] ->
-                   # The response is a JSON string, we need to decode it
-                   case Jason.decode(response) do
-                     {:ok, decoded} -> {:ok, decoded}
-                     # fallback if already decoded
-                     {:error, _} -> {:ok, response}
-                   end
-
-                 {:ok, %Tesla.Env{status: status, body: error_body}} ->
-                   {:error, %{status: status, body: error_body}}
-
-                 {:error, reason} ->
-                   Logger.error("Failed to create instance: #{inspect(reason)}")
-                   {:error, :upstream}
-               end
-             end
-           end) do
+      case Flirtual.VRChat.with_session(&Flirtual.VRChat.create_instance(&1, world_id)) do
         {:ok, instance} ->
           short_name = Map.get(instance, "shortName", "")
 
@@ -184,9 +136,6 @@ defmodule FlirtualWeb.VRChatController do
           end
 
         {:error, reason} ->
-          require Logger
-          Logger.error("Failed to create VRChat instance: #{inspect(reason)}")
-
           conn
           |> put_status(:internal_server_error)
           |> json(%{error: "Failed to create instance", details: inspect(reason)})
@@ -206,6 +155,46 @@ defmodule FlirtualWeb.VRChatController do
         conn
         |> put_status(:unauthorized)
         |> json(%{error: "Invalid credentials"})
+    end
+  end
+
+  def create_random_instance(conn, _params) do
+    random_offset = :rand.uniform(1000) - 1
+
+    case Flirtual.VRChat.with_session(fn vrchat ->
+           case Flirtual.VRChat.get_worlds_by_category(vrchat, "random",
+                  n: 1,
+                  offset: random_offset
+                ) do
+             {:ok, [world | _]} ->
+               case Flirtual.VRChat.create_instance(vrchat, world.id) do
+                 {:ok, instance} -> {:ok, instance, world}
+                 {:error, reason} -> {:error, reason}
+               end
+
+             {:ok, []} ->
+               {:error, "No worlds found"}
+
+             {:error, reason} ->
+               {:error, reason}
+           end
+         end) do
+      {:ok, instance, world} ->
+        short_name = Map.get(instance, "shortName", "")
+
+        json(conn, %{
+          instanceId: Map.get(instance, "id", Map.get(instance, "instanceId", "")),
+          shortName: short_name,
+          inviteUrl: "https://vrch.at/#{short_name}",
+          worldId: world.id,
+          worldName: world.name,
+          worldImageUrl: world.thumbnailImageUrl
+        })
+
+      {:error, reason} ->
+        conn
+        |> put_status(:internal_server_error)
+        |> json(%{error: "Failed to create instance", details: inspect(reason)})
     end
   end
 end
