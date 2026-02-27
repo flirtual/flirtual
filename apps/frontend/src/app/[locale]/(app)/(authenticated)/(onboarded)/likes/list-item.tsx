@@ -2,28 +2,39 @@ import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { withSuspense } from "with-suspense";
 
-import type { LikeAndPassItem } from "~/api/matchmaking";
+import type { LikeAndPassItem, LikesYouFilters } from "~/api/matchmaking";
 import { HeartIcon } from "~/components/icons/gradient/heart";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
-import { Link } from "~/components/link";
 import { CountryPill } from "~/components/profile/pill/country";
 import { GenderPills } from "~/components/profile/pill/genders";
 import { Pill } from "~/components/profile/pill/pill";
 import { UserAvatar } from "~/components/user-avatar";
 import { yearsAgo } from "~/date";
 import { useUser } from "~/hooks/use-user";
+import { useNavigate } from "~/i18n";
 import { urls } from "~/urls";
 
-export const LikeListItem: FC<LikeAndPassItem> = withSuspense(({ kind, profileId: userId }) => {
+export interface LikeListItemProps extends LikeAndPassItem {
+	filters?: LikesYouFilters;
+}
+
+export const LikeListItem: FC<LikeListItemProps> = withSuspense(({ kind, profileId: userId, filters }) => {
 	const user = useUser(userId);
 	const { t } = useTranslation();
+	const navigate = useNavigate();
 
 	if (!user) return null;
 
 	const Icon = kind === "love" ? HeartIcon : PeaceIcon;
 
 	return (
-		<Link key={user.id} className="flex items-center gap-4 bg-white-10 p-4 vision:bg-white-10/10 dark:bg-black-80 desktop:rounded-xl desktop:shadow-brand-1" href={urls.profile(user)}>
+		<button
+			className="flex w-full items-center gap-4 bg-white-10 p-4 text-left vision:bg-white-10/10 dark:bg-black-80 desktop:rounded-xl desktop:shadow-brand-1"
+			type="button"
+			onClick={() => navigate(urls.likesBrowse, {
+				state: { filters, initialUserId: user.id }
+			})}
+		>
 			<UserAvatar
 				className="aspect-square h-16 rounded-lg"
 				height={64}
@@ -53,7 +64,7 @@ export const LikeListItem: FC<LikeAndPassItem> = withSuspense(({ kind, profileId
 				</div>
 			</div>
 			<Icon className="h-8 shrink-0 pr-4 desktop:mr-2" />
-		</Link>
+		</button>
 	);
 }, {
 	fallback: (

@@ -13,6 +13,7 @@ import {
 	likesYouKey,
 	likesYouPreviewKey,
 	mutate,
+	queryClient,
 	queueFetcher,
 	queueKey,
 	relationshipKey,
@@ -29,10 +30,10 @@ import { useUnreadConversations } from "./use-talkjs";
 export const invalidateQueue = (mode: ProspectKind = "love") => invalidate({ queryKey: queueKey(mode) });
 
 export function invalidateMatch(userId: string) {
+	queryClient.removeQueries({ queryKey: likesYouKey() });
 	return Promise.all([
 		invalidate({ queryKey: userKey(userId) }),
 		invalidate({ queryKey: relationshipKey(userId) }),
-		invalidate({ queryKey: likesYouKey() }),
 		invalidate({ queryKey: likesYouPreviewKey() }),
 		invalidate({ queryKey: conversationsKey() })
 	]);

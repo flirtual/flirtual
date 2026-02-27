@@ -6,7 +6,6 @@ import { invalidateMatch, invalidateQueue } from "~/hooks/use-queue";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { useRelationship, useUser } from "~/hooks/use-user";
-import { invalidate, relationshipKey } from "~/query";
 import { urls } from "~/urls";
 
 import { Button, ButtonLink } from "../button";
@@ -77,7 +76,7 @@ export const RelationActions: React.FC<{ userId: string; direct: boolean }> = ({
 					onClick={async () => {
 						await Matchmaking.unmatch(user.id).catch(toasts.addError);
 						await Promise.all([
-							invalidate({ queryKey: relationshipKey(user.id) }),
+							invalidateMatch(user.id),
 							invalidateQueue("love"),
 							invalidateQueue("friend")
 						]);
