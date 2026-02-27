@@ -1,5 +1,5 @@
 import { CheckCheck, ChevronLeft, X } from "lucide-react";
-import { Fragment, Suspense, useLayoutEffect } from "react";
+import { Fragment, Suspense, useLayoutEffect, useState } from "react";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { useInView } from "react-intersection-observer";
@@ -34,6 +34,7 @@ export const ConversationAside: FC<ConversationAsideProps> = (props) => {
 	const [loadMoreReference, loadMoreInView] = useInView();
 
 	const { unreadConversations } = useUnreadConversations();
+	const [markingRead, setMarkingRead] = useState(false);
 
 	useLayoutEffect(() => {
 		if (!loadMoreInView) return;
@@ -73,11 +74,16 @@ export const ConversationAside: FC<ConversationAsideProps> = (props) => {
 						{unreadConversations.length > 0 && (
 							<Button
 								Icon={CheckCheck}
+								pending={markingRead}
 								size="sm"
 								onClick={async () => {
+									setMarkingRead(true);
 									await Conversation.markRead()
 										.catch(toasts.addError)
-										.finally(invalidate);
+										.finally(() => {
+											setMarkingRead(false);
+											invalidate();
+										});
 								}}
 							>
 								{t("mark_all_as_read")}
