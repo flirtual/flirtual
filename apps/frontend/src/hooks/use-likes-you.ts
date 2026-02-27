@@ -45,7 +45,7 @@ export function useLikesYou(filters?: LikesYouFilters) {
 	const queryKey = likesYouKey(filters);
 	const deferredQueryKey = useDeferredValue(queryKey);
 
-	const { data, fetchNextPage } = useSuspenseInfiniteQuery({
+	const { data, fetchNextPage, hasNextPage } = useSuspenseInfiniteQuery({
 		queryKey: deferredQueryKey,
 		queryFn: ({ pageParam }) => Matchmaking.likesYou(pageParam, filters),
 		initialPageParam: undefined as unknown as string,
@@ -56,6 +56,7 @@ export function useLikesYou(filters?: LikesYouFilters) {
 	return {
 		data: data.pages,
 		loadMore: fetchNextPage,
+		hasMore: hasNextPage,
 		invalidate: () => invalidate({ queryKey: likesYouKey() })
 	};
 }

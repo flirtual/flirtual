@@ -142,6 +142,7 @@ export const urls = {
 		of: (conversationId: string) => `/matches/${conversationId}`
 	},
 	likes: "/likes",
+	likesBrowse: "/likes/browse",
 	onboarding: (onboardingIndex: 1 | 2) => `/onboarding/${onboardingIndex}`,
 	finish: (finishIndex: FinishPage) => `/finish/${finishIndex}`,
 	subscription: {
