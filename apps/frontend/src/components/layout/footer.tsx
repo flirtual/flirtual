@@ -141,8 +141,8 @@ export const Footer: React.FC<FooterProps> = ({
 							}}
 						/>
 						<FooterListLink
-							href={urls.resources.networkStatus}
-							label={t("status")}
+							href={urls.news}
+							label={t("updates")}
 						/>
 					</ul>
 					<ul>
@@ -169,6 +169,10 @@ export const Footer: React.FC<FooterProps> = ({
 						<FooterListLink
 							href={urls.resources.privacyPolicy}
 							label={t("privacy_policy")}
+						/>
+						<FooterListLink
+							href={urls.resources.networkStatus}
+							label={t("status")}
 						/>
 					</ul>
 				</div>

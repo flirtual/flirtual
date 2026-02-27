@@ -15,7 +15,7 @@ import {
 } from "~/components/dialog/dialog";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
 import { usePreferences } from "~/hooks/use-preferences";
-import { useOptionalSession, useSession } from "~/hooks/use-session";
+import { useOptionalSession } from "~/hooks/use-session";
 import { mutate, sessionKey } from "~/query";
 
 import { newsItems } from "./news-items/index";
@@ -27,7 +27,6 @@ export type NewsDialogProps
 export const NewsDialog: FC<NewsDialogProps> = (props) => {
 	const { t } = useTranslation();
 	const session = useOptionalSession();
-	const { user } = useSession();
 	const [tourCompleted] = usePreferences("tour-browsing-completed", false);
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const news = useMemo(() => {
@@ -61,8 +60,8 @@ export const NewsDialog: FC<NewsDialogProps> = (props) => {
 	if (news.length === 0 || !newsItems[news[currentIndex]]) return null;
 
 	const handleClose = async () => {
-		if (!props.news) {
-			const updatedUser = await User.removeNews(user.id, news);
+		if (!props.news && session) {
+			const updatedUser = await User.removeNews(session.user.id, news);
 			await mutate<Session>(sessionKey(), (session) => session && { ...session, user: updatedUser });
 		}
 		props.onClose?.();

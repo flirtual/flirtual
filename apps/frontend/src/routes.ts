@@ -58,7 +58,6 @@ export default [
 				page("finish/4", "(app)/(authenticated)/finish/4"),
 				page("finish/5", "(app)/(authenticated)/finish/5"),
 				page("subscription", "(app)/(authenticated)/subscription"),
-				page("news", "(app)/(authenticated)/news"),
 				layout("(app)/(authenticated)/(onboarded)", [
 					page(":slug", "(app)/(authenticated)/(onboarded)/[slug]"),
 					// page("discover/:group", "(app)/(authenticated)/(onboarded)/discover/[group]"),
@@ -108,6 +107,7 @@ export default [
 				page("branding", "(app)/(public)/branding"),
 				page("confirm-email", "(app)/(public)/confirm-email"),
 				page("debugger", "(app)/(public)/debugger"),
+				page("news", "(app)/(public)/news"),
 				page("download", "(app)/(public)/download"),
 				page("events", "(app)/(public)/events"),
 				page("guidelines", "(app)/(public)/guidelines"),
