@@ -37,6 +37,7 @@ defmodule Flirtual.User do
     :legacy_vrlfp,
     :translating,
     :official,
+    :dob_locked,
     :reminder_670,
     :reminder_700,
     :reminder_723
@@ -424,7 +425,7 @@ defmodule Flirtual.User do
     |> validate_required(Keyword.get(options, :required, []))
     |> validate_change(:born_at, fn _, born_at ->
       cond do
-        not is_nil(user.born_at) ->
+        not is_nil(user.born_at) and :dob_locked in user.tags ->
           %{born_at: "already_set"}
 
         Date.compare(born_at, Date.new!(1901, 1, 3)) === :lt ->
@@ -658,6 +659,19 @@ defmodule Flirtual.User do
   end
 
   def search(_, _), do: []
+
+  def add_tag(user_id, tag) when is_atom(tag) do
+    User
+    |> where([u], u.id == ^user_id)
+    |> where([u], fragment("NOT ? @> ARRAY[?]::citext[]", u.tags, ^to_string(tag)))
+    |> Repo.update_all(push: [tags: to_string(tag)])
+  end
+
+  def remove_tag(user_id, tag) when is_atom(tag) do
+    User
+    |> where([u], u.id == ^user_id)
+    |> Repo.update_all(pull: [tags: to_string(tag)])
+  end
 
   def suspend(
         %User{} = user,

@@ -108,7 +108,7 @@ export const Onboarding1Form: FC = () => {
 								</InputLabel>
 								<InputDateSelect
 									{...field.props}
-									disabled={!!user.bornAt}
+									disabled={!!user.bornAt && !!user.tags?.includes("dob_locked")}
 									max={endOfYear()}
 									min={new Date("1900/01/01")}
 									onDisabledClick={() => toasts.add({ type: "warning", value: t("dob_contact_to_correct") })}

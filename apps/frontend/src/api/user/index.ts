@@ -21,7 +21,8 @@ export const userTags = [
 	"verified",
 	"legacy_vrlfp",
 	"translating",
-	"official"
+	"official",
+	"dob_locked"
 ] as const;
 
 export const userTagNames: Record<UserTags, string> = {
@@ -32,7 +33,8 @@ export const userTagNames: Record<UserTags, string> = {
 	verified: "Verified",
 	legacy_vrlfp: "Legacy VRLFP",
 	translating: "Translating",
-	official: "Official"
+	official: "Official",
+	dob_locked: "DOB Locked"
 };
 
 export type UserTags = (typeof userTags)[number];

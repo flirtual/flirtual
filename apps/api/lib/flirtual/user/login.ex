@@ -5,7 +5,7 @@ defmodule Flirtual.User.Login do
   import Ecto.Query
   import FlirtualWeb.Utilities
 
-  alias Flirtual.{Hash, Repo}
+  alias Flirtual.{Hash, Repo, User}
   alias Flirtual.User.{Login, Session}
 
   schema "logins" do
@@ -84,6 +84,11 @@ defmodule Flirtual.User.Login do
              if(status == "successful" and not is_nil(user_id),
                do: Hash.check_hash(user_id, "device ID", device_id),
                else: :ok
+             ),
+           :ok <-
+             if(status == "successful" and not is_nil(user_id),
+               do: maybe_lock_dob(user_id, ip_region),
+               else: :ok
              ) do
         login
       else
@@ -91,6 +96,20 @@ defmodule Flirtual.User.Login do
         reason -> Repo.rollback(reason)
       end
     end)
+  end
+
+  defp maybe_lock_dob(user_id, ip_region) do
+    if region_matches?(ip_region, "Texas, US") do
+      User.add_tag(user_id, :dob_locked)
+    end
+
+    :ok
+  end
+
+  defp region_matches?(nil, _), do: false
+
+  defp region_matches?(ip_region, match) do
+    ip_region == match or String.ends_with?(ip_region, ", #{match}")
   end
 
   def verify(login_id, session_id) do
