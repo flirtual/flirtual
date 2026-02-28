@@ -14,7 +14,7 @@ const ReactQuill = lazy(
 		// which are not available in other pages.
 		const AlignStyle = Quill.import("attributors/style/align");
 		// @ts-expect-error: Broken types in migration to v3.
-		Quill.register(AlignStyle);
+		Quill.register(AlignStyle, true);
 
 		return ReactQuill;
 	},
