@@ -75,7 +75,7 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 
 	const session = useOptionalSession();
 	const [theme] = useTheme();
-	const { native } = useDevice();
+	const { native, apple } = useDevice();
 	const [uppy, setUppy] = useState<Uppy<UppyfileMeta, UppyfileData> | null>(null);
 	const [uppyVisible, setUppyVisible] = useState(false);
 	const [dragging, setDragging] = useState(false);
@@ -179,21 +179,25 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 			})
 			.use(Compressor, {
 				quality: 0.6
-			})
-			.use(GoldenRetriever, {})
-			.use(AwsS3, {
-				shouldUseMultipart: false,
-				limit: 15,
-				async getUploadParameters(file) {
-					const { id, signedUrl } = await Image.upload();
-					file.meta.id = id;
+			});
 
-					return {
-						url: signedUrl,
-						method: "PUT"
-					};
-				},
-			})
+		if (!(native && apple)) {
+			uppyInstance.use(GoldenRetriever, {});
+		}
+
+		uppyInstance.use(AwsS3, {
+			shouldUseMultipart: false,
+			limit: 15,
+			async getUploadParameters(file) {
+				const { id, signedUrl } = await Image.upload();
+				file.meta.id = id;
+
+				return {
+					url: signedUrl,
+					method: "PUT"
+				};
+			},
+		})
 			.on("complete", ({ successful = [], failed = [] }) => {
 				if (failed.length > 0) toast.add({
 					type: "error",
