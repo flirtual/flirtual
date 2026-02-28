@@ -29,56 +29,62 @@ export const LikeListItem: FC<LikeListItemProps> = withSuspense(({ kind, profile
 
 	return (
 		<button
-			className="flex w-full items-center gap-4 bg-white-10 p-4 text-left vision:bg-white-10/10 dark:bg-black-80 desktop:rounded-xl desktop:shadow-brand-1"
+			className="relative w-full text-left desktop:rounded-xl desktop:shadow-brand-1"
 			type="button"
 			onClick={() => navigate(urls.likesBrowse, {
 				state: { filters, initialUserId: user.id }
 			})}
 		>
-			<UserAvatar
-				className="aspect-square h-16 rounded-lg"
-				height={64}
-				user={user}
-				variant="thumb"
-				width={64}
-			/>
-			<div className="flex w-full grow flex-col">
-				<h1 data-mask className="text-xl font-semibold desktop:text-2xl">
-					{user.profile.displayName || t("unnamed_user")}
-				</h1>
-				<div className="flex w-full gap-2">
-					{user.bornAt && (
-						<Pill small className="vision:bg-white-30/70">
-							{yearsAgo(new Date(user.bornAt))}
-						</Pill>
-					)}
-					<GenderPills
-						simple
-						small
-						attributes={user.profile.attributes.gender || []}
-						className="vision:bg-white-30/70"
-					/>
-					{user.profile.country && (
-						<CountryPill id={user.profile.country} flagOnly />
-					)}
+			<div className="flex items-center bg-white-30 vision:bg-white-10/50 dark:bg-black-60 desktop:rounded-xl">
+				<UserAvatar
+					className="my-2 ml-2 mr-0 size-[4.5rem] shrink-0 rounded-lg desktop:m-0 desktop:size-20 desktop:rounded-none desktop:rounded-l-xl"
+					height={80}
+					user={user}
+					variant="thumb"
+					width={80}
+				/>
+				<div className="flex w-1 grow flex-col justify-center gap-1 px-4">
+					<span data-mask className="truncate font-montserrat text-lg font-semibold leading-tight">
+						{user.profile.displayName || t("unnamed_user")}
+					</span>
+					<div className="flex items-center justify-between gap-4">
+						<div className="flex flex-wrap gap-2">
+							{user.bornAt && (
+								<Pill small className="h-8 bg-white-20 vision:bg-white-30/70 dark:bg-black-40">
+									{yearsAgo(new Date(user.bornAt))}
+								</Pill>
+							)}
+							<GenderPills
+								simple
+								small
+								attributes={user.profile.attributes.gender || []}
+								className="h-8 bg-white-20 vision:bg-white-30/70 dark:bg-black-40"
+							/>
+							{user.profile.country && (
+								<CountryPill id={user.profile.country} flagOnly className="bg-white-20 dark:bg-black-40" />
+							)}
+						</div>
+					</div>
 				</div>
+				<Icon className="ml-4 mr-6 inline h-7 shrink-0" />
 			</div>
-			<Icon className="h-8 shrink-0 pr-4 desktop:mr-2" />
 		</button>
 	);
 }, {
 	fallback: (
-		<div className="flex items-center gap-4 bg-white-10 p-4 vision:bg-white-10/10 dark:bg-black-80 desktop:rounded-xl desktop:shadow-brand-1">
-			<div className="size-16 shrink-0 animate-pulse rounded-lg bg-black-90/10 bg-brand-gradient dark:bg-white-10/20" />
-			<div className="flex w-full grow flex-col gap-2">
-				<span className="h-6 w-32 animate-pulse rounded-xl bg-black-90/10 text-xl font-semibold dark:bg-white-10/20 desktop:text-2xl" />
-				<div className="flex w-full gap-2">
-					<div className="h-8 w-10 animate-pulse rounded-xl bg-black-80/10 dark:bg-white-10/10" />
-					<div className="h-8 w-20 animate-pulse rounded-xl bg-black-80/10 dark:bg-white-10/10" />
-					<div className="h-8 w-11 animate-pulse rounded-xl bg-black-80/10 dark:bg-white-10/10" />
+		<div className="relative rounded-xl shadow-brand-1">
+			<div className="flex rounded-xl bg-white-30 vision:bg-white-10/50 dark:bg-black-60">
+				<div className="size-20 shrink-0 animate-pulse rounded-l-xl bg-white-20 vision:bg-white-20/50 dark:bg-black-50" />
+				<div className="flex w-1 grow flex-col gap-1 p-4">
+					<div className="flex justify-between gap-4">
+						<span className="h-5 w-1/2 animate-pulse rounded bg-white-20 vision:bg-white-20/50 dark:bg-black-50" />
+						<span className="size-5 animate-pulse rounded bg-white-20 vision:bg-white-20/50 dark:bg-black-50" />
+					</div>
+					<div className="flex items-baseline justify-between gap-4">
+						<span className="h-5 w-full animate-pulse rounded bg-white-20 vision:bg-white-20/50 dark:bg-black-50" />
+					</div>
 				</div>
 			</div>
-			<div className="size-10 shrink-0 animate-pulse rounded-3xl bg-black-90/10 pr-4 dark:bg-white-10/20 desktop:mr-5" />
 		</div>
 	)
 });
