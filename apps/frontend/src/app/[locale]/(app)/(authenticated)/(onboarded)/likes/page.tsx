@@ -72,7 +72,7 @@ export default function LikesPage() {
 					<div className="flex flex-col gap-8 py-8 desktop:py-0">
 						<div className="flex flex-col gap-2 px-4 desktop:flex-row desktop:items-center desktop:p-0">
 							<ButtonLink
-								className="w-fit"
+								className="w-full desktop:w-fit"
 								href={urls.conversations.list()}
 								size="sm"
 							>

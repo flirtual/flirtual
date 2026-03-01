@@ -15,7 +15,7 @@ interface FilterButtonProps {
 const FilterButton: FC<FilterButtonProps> = ({ active, onClick, children }) => (
 	<button
 		className={twMerge(
-			"flex h-full items-center justify-center px-3 transition-colors first:pl-4 last:pr-4",
+			"flex size-full items-center justify-center px-3 transition-colors first:pl-4 last:pr-4 desktop:w-auto",
 			active
 				? "bg-brand-gradient text-white-20"
 				: "text-black-70 hocus:bg-white-40 dark:text-white-20 dark:hocus:bg-black-50"
@@ -31,11 +31,16 @@ interface FilterGroupProps<T extends string> {
 	value: T | undefined;
 	onChange: (value: T | undefined) => void;
 	options: Array<{ key: T; label: ReactNode }>;
+	className?: string;
 }
 
-function FilterGroup<T extends string>({ value, onChange, options }: FilterGroupProps<T>) {
+function FilterGroup<T extends string>({ value, onChange, options, className }: FilterGroupProps<T>) {
 	return (
-		<div className="flex h-11 shrink-0 overflow-hidden rounded-xl bg-white-30 shadow-brand-1 vision:bg-white-30/70 dark:bg-black-60">
+		<div className={twMerge(
+			"flex h-11 flex-1 shrink-0 overflow-hidden rounded-xl bg-white-30 shadow-brand-1 vision:bg-white-30/70 dark:bg-black-60 desktop:flex-none",
+			className
+		)}
+		>
 			{options.map((option) => (
 				<FilterButton
 					key={option.key}
@@ -65,7 +70,7 @@ export const LikesFilters: FC<LikesFiltersProps> = ({
 	const tAttribute = useAttributeTranslation("gender");
 
 	return (
-		<div className="flex flex-wrap gap-2">
+		<div className="grid grid-cols-3 flex-wrap gap-2 desktop:flex">
 			<FilterGroup
 				options={[
 					{ key: "love", label: <HeartIcon className="h-5" gradient={false} /> },
@@ -80,6 +85,7 @@ export const LikesFilters: FC<LikesFiltersProps> = ({
 					{ key: "man", label: tAttribute.rhw3rcbheU7vc9vcSy6W6V?.plural ?? "Men" },
 					{ key: "other", label: tAttribute.jAL62ePbibxaG4FPu7S8LG?.name ?? "Other" }
 				]}
+				className="col-span-2"
 				value={gender}
 				onChange={onGenderChange}
 			/>
