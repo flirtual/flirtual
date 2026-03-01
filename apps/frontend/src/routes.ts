@@ -64,6 +64,7 @@ export default [
 					page("dates", "(app)/(authenticated)/(onboarded)/discover", { id: "dates" }),
 					page("homies", "(app)/(authenticated)/(onboarded)/discover", { id: "homies" }),
 					page("likes", "(app)/(authenticated)/(onboarded)/likes"),
+					page("likes/browse", "(app)/(authenticated)/(onboarded)/likes/browse"),
 					layout("(app)/(authenticated)/(onboarded)/matches", [
 						page("matches", "(app)/(authenticated)/(onboarded)/matches"),
 						page("matches/:conversationId", "(app)/(authenticated)/(onboarded)/matches/[conversationId]")
