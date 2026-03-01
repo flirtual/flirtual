@@ -46,6 +46,15 @@ export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 
 	const [open, setOpen] = useState(false);
 
+	const detailsRequiredReasons = new Set([
+		"AFe9ijRg9MYGubm2Efi4Ki",
+		"Ec5fqqgVo5X3s4QCeFUJ6D",
+		"MyexHAyY8gzQjBQ6agCSx3",
+		"zu6HcxQxmJDDq4rmvJazkf",
+		"BtJvp62cJ5vm6CeuCPTP5H",
+		"9iwmQ8huhkngyY9BgLDE9W"
+	]);
+
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
 			{children}
@@ -87,86 +96,91 @@ export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 							setOpen(false);
 						}}
 					>
-						{({ FormField }) => (
-							<>
-								<FormField name="targetId">
-									{() => (
-										<div className="flex items-center gap-4">
-											<UserThumbnail user={user} />
-											<div className="flex flex-col">
-												<span className="text-lg font-semibold leading-none">
-													{user.profile.displayName || t("unnamed_user")}
-												</span>
-												{session?.user.tags?.includes("moderator") && (
-													<span className="font-mono text-sm brightness-75">
-														{user.id}
+						{({ FormField, fields }) => {
+							const detailsRequired = detailsRequiredReasons.has(fields.reasonId.props.value as string);
+
+							return (
+								<>
+									<FormField name="targetId">
+										{() => (
+											<div className="flex items-center gap-4">
+												<UserThumbnail user={user} />
+												<div className="flex flex-col">
+													<span className="text-lg font-semibold leading-none">
+														{user.profile.displayName || t("unnamed_user")}
 													</span>
-												)}
+													{session?.user.tags?.includes("moderator") && (
+														<span className="font-mono text-sm brightness-75">
+															{user.id}
+														</span>
+													)}
+												</div>
 											</div>
-										</div>
-									)}
-								</FormField>
-								<FormField name="reasonId">
-									{(field) => (
-										<InputSelect
-											{...field.props}
-											options={reasons.map((reason) => {
-												const id
-													= typeof reason === "object" ? reason.id : reason;
-
-												return {
-													id,
-													name: tAttributes[id]?.name || id
-												};
-											})}
-										/>
-									)}
-								</FormField>
-								<FormField name="message">
-									{(field) => (
-										<>
-											<InputLabel {...field.labelProps}>
-												{t("details")}
-											</InputLabel>
-											<InputTextArea
+										)}
+									</FormField>
+									<FormField name="reasonId">
+										{(field) => (
+											<InputSelect
 												{...field.props}
-												placeholder={t("jolly_moving_stork_love")}
-												rows={6}
-											/>
-										</>
-									)}
-								</FormField>
-								<FormField name="images">
-									{(field) => (
-										<>
-											<InputLabel
-												{...field.labelProps}
-												inline
-												hint={(
-													<InputLabelHint className="vision:text-black-50">
-														{t("ok_gross_ostrich_work")}
-													</InputLabelHint>
-												)}
+												options={reasons.map((reason) => {
+													const id
+														= typeof reason === "object" ? reason.id : reason;
 
-											>
-												{t("attachments")}
-											</InputLabel>
-											<InputImageSet type="report" {...field.props} />
-										</>
-									)}
-								</FormField>
-								<DialogFooter>
-									<Button
-										kind="tertiary"
-										size="sm"
-										onClick={() => setOpen(false)}
-									>
-										{t("cancel")}
-									</Button>
-									<FormButton size="sm">{t("report")}</FormButton>
-								</DialogFooter>
-							</>
-						)}
+													return {
+														id,
+														name: tAttributes[id]?.name || id
+													};
+												})}
+											/>
+										)}
+									</FormField>
+									<FormField name="message">
+										{(field) => (
+											<>
+												<InputLabel {...field.labelProps}>
+													{t("details")}
+												</InputLabel>
+												<InputTextArea
+													{...field.props}
+													placeholder={detailsRequired ? t("report_details_required_placeholder") : t("report_details_optional_placeholder")}
+													required={detailsRequired}
+													rows={6}
+												/>
+											</>
+										)}
+									</FormField>
+									<FormField name="images">
+										{(field) => (
+											<>
+												<InputLabel
+													{...field.labelProps}
+													inline
+													hint={(
+														<InputLabelHint className="vision:text-black-50">
+															{t("ok_gross_ostrich_work")}
+														</InputLabelHint>
+													)}
+
+												>
+													{t("attachments")}
+												</InputLabel>
+												<InputImageSet type="report" {...field.props} />
+											</>
+										)}
+									</FormField>
+									<DialogFooter>
+										<Button
+											kind="tertiary"
+											size="sm"
+											onClick={() => setOpen(false)}
+										>
+											{t("cancel")}
+										</Button>
+										<FormButton size="sm">{t("report")}</FormButton>
+									</DialogFooter>
+								</>
+							);
+						}}
 					</Form>
 				</DialogBody>
 			</DialogContent>
