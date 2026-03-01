@@ -988,5 +988,7 @@
 	"geolocation_removed": "位置情報を削除しました。",
 	"no_results": "結果なし",
 	"no_likes_yet": "まだ誰もいいねしていません 😔",
-	"no_likes_yet_description": "でも、きっとすぐに誰かが現れますよ。"
+	"no_likes_yet_description": "でも、きっとすぐに誰かが現れますよ。",
+	"no_likes_yet_filters": "このフィルターに一致する人からのいいねはまだありません 😔",
+	"no_likes_yet_description_filters": "フィルターを変更するか、後でもう一度確認してみてください。"
 }

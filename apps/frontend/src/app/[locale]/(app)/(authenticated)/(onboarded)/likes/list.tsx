@@ -31,7 +31,14 @@ export const LikesList: FC<LikesListProps> = ({ filters }) => {
 	if (items.length === 0) return (
 		<div className="flex flex-col gap-1 px-4 desktop:px-0">
 			{hasFilters
-				? <span className="text-xl font-semibold">{t("no_results")}</span>
+				? (
+						<>
+							<span className="text-xl font-semibold">
+								{t("no_likes_yet_filters")}
+							</span>
+							<span>{t("no_likes_yet_description_filters")}</span>
+						</>
+					)
 				: (
 						<>
 							<span className="text-xl font-semibold">
