@@ -1,13 +1,15 @@
 export function yearsAgo(date: Date): number {
-	const today = new Date();
-	const currentYear = today.getUTCFullYear();
-	const dateThisYear = new Date(
-		currentYear,
-		date.getUTCMonth(),
-		date.getUTCDate()
-	);
+	const now = new Date();
+	const currentYear = now.getUTCFullYear();
+	const currentMonth = now.getUTCMonth();
+	const birthMonth = date.getUTCMonth();
+
 	let diff = currentYear - date.getUTCFullYear();
-	if (today.getTime() < dateThisYear.getTime()) diff--;
+	if (currentMonth < birthMonth
+		|| (currentMonth === birthMonth
+			&& now.getUTCDate() < date.getUTCDate()))
+		diff--;
+
 	return diff;
 }
 
