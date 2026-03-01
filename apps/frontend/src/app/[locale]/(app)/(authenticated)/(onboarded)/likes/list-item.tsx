@@ -5,6 +5,7 @@ import { withSuspense } from "with-suspense";
 import type { LikeAndPassItem, LikesYouFilters } from "~/api/matchmaking";
 import { HeartIcon } from "~/components/icons/gradient/heart";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
+import { Link } from "~/components/link";
 import { CountryPill } from "~/components/profile/pill/country";
 import { GenderPills } from "~/components/profile/pill/genders";
 import { Pill } from "~/components/profile/pill/pill";
