@@ -5,6 +5,7 @@ defmodule Flirtual.ObanWorkers.Daily do
 
   alias Flirtual.{Repo, User}
   alias Flirtual.User.{Email, Login, Push, Session}
+  alias Flirtual.User.Profile.Attributes
 
   # Delay deletion for users 670+ days inactive when pruning introduced
   @grace_period_cutoff ~U[2024-02-16 00:00:00Z]
@@ -23,6 +24,7 @@ defmodule Flirtual.ObanWorkers.Daily do
     if :prune_banned in enabled, do: prune_banned()
     if :prune_inactive in enabled, do: prune_inactive()
     if :prune_sessions in enabled, do: prune_sessions()
+    if :update_attribute_order in enabled, do: update_attribute_order()
 
     :ok
   end
@@ -180,5 +182,15 @@ defmodule Flirtual.ObanWorkers.Daily do
     %{"user_id" => user_id}
     |> Flirtual.ObanWorkers.PruneAccount.new()
     |> Oban.insert()
+  end
+
+  defp update_attribute_order do
+    Attributes.update_order("game",
+      order_by: :trending,
+      recent_days: 90,
+      recent_boost: 10,
+      release_days: 180,
+      release_boost: 0.01
+    )
   end
 end

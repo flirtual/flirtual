@@ -46,9 +46,6 @@ defmodule Flirtual.Application do
         # Start the Endpoint (http/https)
         FlirtualWeb.Endpoint,
         {Finch, name: Swoosh.Finch},
-        # Start a worker by calling: Flirtual.Worker.start_link(arg)
-        # {Flirtual.Worker, arg}
-        Flirtual.AttributeOrderWorker,
         # Start VRChat session manager
         Flirtual.VRChatSession,
         # Start disposable email ETS

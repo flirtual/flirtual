@@ -14,13 +14,14 @@ defmodule Flirtual.Attribute do
   alias Flirtual.Languages
 
   @derive {Inspect, only: [:id, :type, :metadata]}
+  @internal_metadata_keys ["curated"]
 
   schema "attributes" do
     field(:type, :string)
     field(:order, :integer)
     field(:metadata, :map)
 
-    timestamps(inserted_at: false)
+    timestamps()
   end
 
   def get(attribute_id) when is_uid(attribute_id) do
@@ -110,12 +111,13 @@ defmodule Flirtual.Attribute do
 
   def compress(attributes) when is_list(attributes), do: Enum.map(attributes, &compress/1)
 
-  def compress(%Attribute{id: id, metadata: metadata})
-      when is_nil(metadata) or map_size(metadata) == 0,
-      do: id
+  def compress(%Attribute{id: id, metadata: metadata}) do
+    metadata = (metadata || %{}) |> Map.drop(@internal_metadata_keys)
 
-  def compress(%Attribute{id: id, metadata: metadata}),
-    do: Map.put(metadata || %{}, :id, id)
+    if map_size(metadata) == 0,
+      do: id,
+      else: Map.put(metadata, :id, id)
+  end
 
   def group(attributes) do
     Enum.reduce(attributes, %{}, fn %{id: id, type: type}, acc ->

@@ -22,8 +22,20 @@ config :flirtual, Flirtual.ObanWorkers,
     ),
   enabled_cron_tasks:
     if(config_env() == :prod,
-      do: [:like_digest, :update_disposable, :prune_sessions, :prune_banned, :prune_inactive],
-      else: [:like_digest, :update_disposable, :prune_sessions]
+      do: [
+        :like_digest,
+        :update_disposable,
+        :prune_sessions,
+        :prune_banned,
+        :prune_inactive,
+        :update_attribute_order
+      ],
+      else: [
+        :like_digest,
+        :update_disposable,
+        :prune_sessions,
+        :update_attribute_order
+      ]
     ),
   email_rate_limit: System.fetch_env!("EMAIL_RATE_LIMIT") |> String.to_integer()
 
