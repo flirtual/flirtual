@@ -1,4 +1,3 @@
-import { Sparkles } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 import { Matchmaking } from "~/api/matchmaking";
@@ -9,6 +8,8 @@ import { useRelationship, useUser } from "~/hooks/use-user";
 import { urls } from "~/urls";
 
 import { Button, ButtonLink } from "../button";
+import { HeartIcon } from "../icons/gradient/heart";
+import { PeaceIcon } from "../icons/gradient/peace";
 
 export const RelationActions: React.FC<{ userId: string; direct: boolean }> = ({
 	userId,
@@ -87,10 +88,12 @@ export const RelationActions: React.FC<{ userId: string; direct: boolean }> = ({
 			</div>
 		);
 
-	if (relationship.likedMe && current?.subscription?.active)
+	if (relationship.likedMe && current?.subscription?.active) {
+		const Icon = relationship.likedMe === "love" ? HeartIcon : PeaceIcon;
+
 		return (
-			<div className="flex items-center gap-3 rounded-xl bg-brand-gradient px-4 py-2 shadow-brand-1">
-				<Sparkles className="size-6 shrink-0 text-theme-overlay" />
+			<div className="flex items-center gap-2.5 rounded-xl bg-brand-gradient px-4 py-2 shadow-brand-1">
+				<Icon className="size-6 shrink-0 text-theme-overlay" gradient={false} />
 				<span className="text-xl text-theme-overlay [overflow-wrap:anywhere]">
 					{t(`mint_colossal_kettle_sense`, {
 						status: relationship.likedMe === "love" ? "liked" : "homied",
@@ -99,6 +102,7 @@ export const RelationActions: React.FC<{ userId: string; direct: boolean }> = ({
 				</span>
 			</div>
 		);
+	}
 
 	return null;
 };
