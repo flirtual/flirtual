@@ -209,7 +209,7 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 			});
 
 		setUppy(uppyInstance);
-	}, [session, handleUppyComplete, type, native, t, uppyLocale, toast]);
+	}, [session, handleUppyComplete, type, native, apple, t, uppyLocale, toast]);
 
 	const sortableItems = value.map(({ id }, index) => id || index);
 
