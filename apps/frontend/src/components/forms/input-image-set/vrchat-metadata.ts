@@ -78,7 +78,10 @@ export default class VRChatMetadata<M extends Meta, B extends Body> extends Base
 			return null;
 		}
 		catch (reason: any) {
-			console.warn(`[VRC] Failed to extract metadata: ${reason.message}`);
+			const error = new Error("Failed to extract metadata", {
+				cause: reason
+			});
+			console.warn("[VRC]", error);
 			return null;
 		}
 	}
