@@ -20,7 +20,7 @@ import { useQueue } from "~/hooks/use-queue";
 import { useSession } from "~/hooks/use-session";
 import { relationshipKey, useQueryState } from "~/query";
 
-function Key({ label }: { label: string }) {
+export function Key({ label }: { label: string }) {
 	return (
 		<kbd className="mb-0.5 inline-block size-7 rounded-md bg-white-20 pt-0.5 text-center font-nunito font-bold text-black-60 shadow-[0_1px_1px_2px_rgba(255,255,255,0.75)] dark:bg-black-60 dark:text-white-20">
 			{label}

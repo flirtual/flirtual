@@ -5,14 +5,15 @@ import { withSuspense } from "with-suspense";
 import type { LikeAndPassItem, LikesYouFilters } from "~/api/matchmaking";
 import { HeartIcon } from "~/components/icons/gradient/heart";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
+import { Link } from "~/components/link";
 import { CountryPill } from "~/components/profile/pill/country";
 import { GenderPills } from "~/components/profile/pill/genders";
 import { Pill } from "~/components/profile/pill/pill";
 import { UserAvatar } from "~/components/user-avatar";
 import { yearsAgo } from "~/date";
 import { useUser } from "~/hooks/use-user";
-import { useNavigate } from "~/i18n";
-import { urls } from "~/urls";
+import { useLocale } from "~/i18n";
+import { hrefWithQuery } from "~/urls";
 
 export interface LikeListItemProps extends LikeAndPassItem {
 	filters?: LikesYouFilters;
@@ -21,19 +22,27 @@ export interface LikeListItemProps extends LikeAndPassItem {
 export const LikeListItem: FC<LikeListItemProps> = withSuspense(({ kind, profileId: userId, filters }) => {
 	const user = useUser(userId);
 	const { t } = useTranslation();
-	const navigate = useNavigate();
+	const [locale] = useLocale();
 
 	if (!user) return null;
 
 	const Icon = kind === "love" ? HeartIcon : PeaceIcon;
 
+	const href = hrefWithQuery("/:locale/likes", {
+		params: {
+			locale
+		},
+		query: {
+			...filters?.kind && { kind: filters.kind },
+			...filters?.gender && { gender: filters.gender },
+			start: user.id
+		}
+	});
+
 	return (
-		<button
+		<Link
 			className="relative w-full text-left desktop:rounded-xl desktop:shadow-brand-1"
-			type="button"
-			onClick={() => navigate(urls.likesBrowse, {
-				state: { filters, initialUserId: user.id }
-			})}
+			href={href}
 		>
 			<div className="flex items-center bg-white-30 vision:bg-white-10/50 dark:bg-black-60 desktop:rounded-xl">
 				<UserAvatar
@@ -68,7 +77,7 @@ export const LikeListItem: FC<LikeListItemProps> = withSuspense(({ kind, profile
 				</div>
 				<Icon className="ml-4 mr-6 inline h-7 shrink-0" />
 			</div>
-		</button>
+		</Link>
 	);
 }, {
 	fallback: (
