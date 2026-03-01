@@ -324,6 +324,15 @@ export const ProfileModeratorInfo: FC<{
 							}
 						</span>
 					</span>
+					<span>
+						<span className="font-bold">Tags:</span>
+						{" "}
+						<span>
+							{user.tags && user.tags.length > 0
+								? user.tags?.join(", ")
+								: "None"}
+						</span>
+					</span>
 					{session.user.tags.includes("admin") && (
 						<div className="flex flex-col">
 							<span>
@@ -358,15 +367,6 @@ export const ProfileModeratorInfo: FC<{
 								>
 									{user.stripeId}
 								</InlineLink>
-							</span>
-							<span>
-								<span className="font-bold">Tags:</span>
-								{" "}
-								<span>
-									{user.tags && user.tags.length > 0
-										? user.tags?.join(", ")
-										: "None"}
-								</span>
 							</span>
 						</div>
 					)}
