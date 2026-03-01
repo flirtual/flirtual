@@ -45,7 +45,7 @@ export const LikesList: FC<LikesListProps> = ({ filters }) => {
 
 	return (
 		<div className="flex flex-col gap-2 desktop:gap-4">
-			{items.map((item) => <LikeListItem {...item} key={item.profileId} />)}
+			{items.map((item) => <LikeListItem {...item} key={item.profileId} filters={filters} />)}
 			{total > items.length && (
 				<div className="h-4" ref={loadMoreReference} />
 			)}

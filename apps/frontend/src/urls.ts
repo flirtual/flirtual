@@ -1,4 +1,4 @@
-import { createPath } from "react-router";
+import { createPath, href } from "react-router";
 import type { Path, To } from "react-router";
 import { entries, fromEntries } from "remeda";
 import FallbackAvatar from "virtual:remote/8d120672-c717-49d2-b9f3-2d4479bbacf6";
@@ -65,6 +65,33 @@ function url(
 
 export function isInternalHref(to: To) {
 	return toAbsoluteUrl(to.toString()).origin === siteOrigin;
+}
+
+export { href };
+
+export type Page = Parameters<typeof href>[0];
+export type PageParameters<T extends Page> = Parameters<typeof href<T>>[1];
+
+type Query = ConstructorParameters<typeof URLSearchParams>[0];
+
+type HrefWithQueryOptions<T extends Page> = {
+	query?: Query;
+} & (PageParameters<T> extends undefined
+	? { params?: undefined }
+	: { params: PageParameters<T> }
+);
+
+export function hrefWithQuery<T extends Page>(
+	path: T,
+	{ params, query }: HrefWithQueryOptions<T>
+) {
+	// @ts-expect-error: ??
+	const pathname = href(path, params);
+
+	const searchParameters = new URLSearchParams(query);
+	if (searchParameters.size === 0) return pathname;
+
+	return `${pathname}?${searchParameters.toString()}`;
 }
 
 export type FinishPage = 1 | 2 | 3 | 4 | 5;
@@ -142,6 +169,7 @@ export const urls = {
 		of: (conversationId: string) => `/matches/${conversationId}`
 	},
 	likes: "/likes",
+	likesBrowse: "/likes/browse",
 	onboarding: (onboardingIndex: 1 | 2) => `/onboarding/${onboardingIndex}`,
 	finish: (finishIndex: FinishPage) => `/finish/${finishIndex}`,
 	subscription: {

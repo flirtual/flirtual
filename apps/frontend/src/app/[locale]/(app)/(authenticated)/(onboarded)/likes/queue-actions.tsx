@@ -1,4 +1,4 @@
-import { MoveLeft, MoveRight, RefreshCw, Undo2, X } from "lucide-react";
+import { Undo2, X } from "lucide-react";
 import { m } from "motion/react";
 import ms from "ms.macro";
 import { useCallback, useState } from "react";
@@ -6,81 +6,34 @@ import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
-import type {
-	ProspectKind,
-} from "~/api/matchmaking";
+import type { LikesYouFilters, ProspectKind } from "~/api/matchmaking";
 import type { Relationship } from "~/api/user/relationship";
-import { Button } from "~/components/button";
 import { HeartIcon } from "~/components/icons/gradient/heart";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
 import { useTimeout } from "~/hooks/use-interval";
-import { useQueue } from "~/hooks/use-queue";
-import { useSession } from "~/hooks/use-session";
+import { useLikesQueue } from "~/hooks/use-likes-queue";
 import { relationshipKey, useQueryState } from "~/query";
 
-export function Key({ label }: { label: string }) {
-	return (
-		<kbd className="mb-0.5 inline-block size-7 rounded-md bg-white-20 pt-0.5 text-center font-nunito font-bold text-black-60 shadow-[0_1px_1px_2px_rgba(255,255,255,0.75)] dark:bg-black-60 dark:text-white-20">
-			{label}
-		</kbd>
-	);
-}
+import { Key } from "../discover/queue-actions";
 
-const QueueDebugger: FC<{ kind: ProspectKind }> = ({ kind }) => {
-	const {
-		next: [current],
-		previous,
-		forward,
-		backward,
-		invalidate
-	} = useQueue(kind);
-
-	const { user: { tags } } = useSession();
-	if (!tags?.includes("debugger")) return null;
-
-	return (
-		<div className="flex gap-2">
-			<Button
-				className="disabled:brightness-90"
-				disabled={!previous}
-				Icon={MoveLeft}
-				size="xs"
-				onClick={backward}
-			/>
-			<Button
-				className="disabled:brightness-90"
-				Icon={RefreshCw}
-				size="xs"
-				onClick={invalidate}
-			/>
-			<Button
-				className="disabled:brightness-90"
-				disabled={!current}
-				Icon={MoveRight}
-				size="xs"
-				onClick={forward}
-			/>
-		</div>
-	);
-};
-
-export const QueueActions: FC<{
+export const LikesQueueActions: FC<{
 	kind: ProspectKind;
-	explicitUserId?: string;
-}> = ({ kind: mode, explicitUserId }) => {
+	filters?: LikesYouFilters;
+	initialUserId?: string;
+}> = ({ kind: mode, filters, initialUserId }) => {
 	const { t } = useTranslation();
 	const {
 		previous,
-		next: [current],
+		current,
 		like,
 		pass,
 		undo,
 		mutating
-	} = useQueue(mode);
+	} = useLikesQueue(mode, { filters, initialUserId });
 
-	const { data: relationship } = useQueryState<Relationship>(relationshipKey(explicitUserId ?? current!));
+	const { data: relationship } = useQueryState<Relationship>(relationshipKey(current!));
 	const blocked = relationship?.blocked ?? false;
 
 	const [didAction, setDidAction] = useState(false);
@@ -110,29 +63,26 @@ export const QueueActions: FC<{
 	return (
 		<div className="flex h-20 w-full items-center justify-center">
 			<div className="fixed bottom-[max(calc(var(--safe-area-inset-bottom,0rem)+5.5rem),6rem)] z-20 flex flex-col items-center justify-center gap-2 desktop:bottom-12">
-				<QueueDebugger kind={mode} />
 				<div className="flex items-center gap-2 text-white-10">
-					{!explicitUserId && (
-						<Tooltip touchable={false}>
-							<TooltipTrigger asChild>
-								<m.button
-									id="undo-button"
-									className="flex h-fit items-center rounded-full border border-black-50/25 bg-white-30 p-3 text-black-50 shadow-brand-1 transition-all disabled:!scale-100 disabled:text-black-10 dark:bg-black-50 dark:text-white-10 dark:disabled:text-black-10"
-									disabled={!previous || tooFast}
-									type="button"
-									whileHover={{ scale: 1.05 }}
-									whileTap={{ scale: 0.95 }}
-									onClick={() => undo()}
-								>
-									<Undo2 className="size-7" strokeWidth={3} />
-								</m.button>
-							</TooltipTrigger>
-							<TooltipContent className="flex gap-3 px-3 py-1.5 native:hidden">
-								<span className="pt-1">{t("undo")}</span>
-								<Key label="H" />
-							</TooltipContent>
-						</Tooltip>
-					)}
+					<Tooltip touchable={false}>
+						<TooltipTrigger asChild>
+							<m.button
+								id="undo-button"
+								className="flex h-fit items-center rounded-full border border-black-50/25 bg-white-30 p-3 text-black-50 shadow-brand-1 transition-all disabled:!scale-100 disabled:text-black-10 dark:bg-black-50 dark:text-white-10 dark:disabled:text-black-10"
+								disabled={!previous || tooFast}
+								type="button"
+								whileHover={{ scale: 1.05 }}
+								whileTap={{ scale: 0.95 }}
+								onClick={() => undo()}
+							>
+								<Undo2 className="size-7" strokeWidth={3} />
+							</m.button>
+						</TooltipTrigger>
+						<TooltipContent className="flex gap-3 px-3 py-1.5 native:hidden">
+							<span className="pt-1">{t("undo")}</span>
+							<Key label="H" />
+						</TooltipContent>
+					</Tooltip>
 					{mode === "love" && (
 						<Tooltip touchable={false}>
 							<TooltipTrigger asChild>
@@ -146,7 +96,7 @@ export const QueueActions: FC<{
 									type="button"
 									whileHover={{ scale: 1.05 }}
 									whileTap={{ scale: 0.95 }}
-									onClick={() => like("love", explicitUserId)}
+									onClick={() => like("love")}
 								>
 									<HeartIcon
 										className="w-[2.125rem] shrink-0"
@@ -172,7 +122,7 @@ export const QueueActions: FC<{
 								type="button"
 								whileHover={{ scale: 1.05 }}
 								whileTap={{ scale: 0.95 }}
-								onClick={() => like("friend", explicitUserId)}
+								onClick={() => like("friend")}
 							>
 								<PeaceIcon
 									className="w-[2.125rem] shrink-0"
@@ -194,7 +144,7 @@ export const QueueActions: FC<{
 								type="button"
 								whileHover={{ scale: 1.05 }}
 								whileTap={{ scale: 0.95 }}
-								onClick={() => pass(undefined, explicitUserId)}
+								onClick={() => pass()}
 							>
 								<X className="size-7" strokeWidth={3} />
 							</m.button>
