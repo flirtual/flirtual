@@ -70,7 +70,7 @@ export const InfoForm: FC = () => {
 			}}
 			className="flex flex-col gap-8"
 			onSubmit={async ({ bornAt, country, timezone, ...values }) => {
-				const [newUser, newProfile] = await Promise.all([
+				const result = await Promise.all([
 					User.update(user.id, {
 						bornAt: toLocalDateString(bornAt)
 					}),
@@ -99,7 +99,8 @@ export const InfoForm: FC = () => {
 					throw reason;
 				});
 
-				if (!newUser || !newProfile) return;
+				if (!result) return;
+				const [newUser, newProfile] = result;
 
 				toasts.add(t("awake_few_wren_skip"));
 
