@@ -22,7 +22,10 @@ export const userTags = [
 	"legacy_vrlfp",
 	"translating",
 	"official",
-	"dob_locked"
+	"dob_locked",
+	"reminder_670",
+	"reminder_700",
+	"reminder_723"
 ] as const;
 
 export const userTagNames: Record<UserTags, string> = {
@@ -34,7 +37,10 @@ export const userTagNames: Record<UserTags, string> = {
 	legacy_vrlfp: "Legacy VRLFP",
 	translating: "Translating",
 	official: "Official",
-	dob_locked: "DOB Locked"
+	dob_locked: "DOB Locked",
+	reminder_670: "Reminder 670",
+	reminder_700: "Reminder 700",
+	reminder_723: "Reminder 723"
 };
 
 export type UserTags = (typeof userTags)[number];
@@ -294,6 +300,12 @@ export const User = {
 	},
 	deleteNote(userId: string) {
 		return this.api.url(`/${userId}/note`).delete().json<User>();
+	},
+	addTag(userId: string, tag: string) {
+		return this.api.url(`/${userId}/tags`).json({ tag }).post().json<User>();
+	},
+	removeTag(userId: string, tag: string) {
+		return this.api.url(`/${userId}/tags`).json({ tag }).delete().json<User>();
 	},
 	addPushToken(
 		userId: string,

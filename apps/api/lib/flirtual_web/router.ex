@@ -356,6 +356,11 @@ defmodule FlirtualWeb.Router do
               delete("/", UsersController, :remove_note)
             end
 
+            scope "/tags" do
+              post("/", UsersController, :add_tag)
+              delete("/", UsersController, :remove_tag)
+            end
+
             scope "/email" do
               post("/", UsersController, :update_email)
             end

@@ -1,8 +1,6 @@
 import type { FC, PropsWithChildren } from "react";
-import { useTranslation } from "react-i18next";
 
-import { userTagNames, userTags } from "~/api/user";
-import type { User } from "~/api/user";
+import { User, userTagNames, userTags } from "~/api/user";
 import {
 	DropdownMenuCheckboxItem,
 	DropdownMenuLabel,
@@ -10,13 +8,15 @@ import {
 	DropdownMenuSub,
 	DropdownMenuSubContent
 } from "~/components/dropdown";
+import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
+import { invalidate, sessionKey, userKey } from "~/query";
 
 export const ProfileDropdownTagsSubmenu: FC<
 	PropsWithChildren<{ user: User }>
 > = ({ user, children }) => {
+	const session = useSession();
 	const toasts = useToast();
-	const { t } = useTranslation();
 
 	return (
 		<DropdownMenuSub>
@@ -24,19 +24,28 @@ export const ProfileDropdownTagsSubmenu: FC<
 			<DropdownMenuSubContent>
 				<DropdownMenuLabel>Profile tags</DropdownMenuLabel>
 				<DropdownMenuSeparator />
-				{userTags.map((tag) => (
-					<DropdownMenuCheckboxItem
-						key={tag}
-						checked={user.tags?.includes(tag)}
-						onCheckedChange={() =>
-							toasts.add({
-								type: "error",
-								value: t("not_implemented")
-							})}
-					>
-						{userTagNames[tag]}
-					</DropdownMenuCheckboxItem>
-				))}
+				{userTags.map((tag) => {
+					const active = user.tags?.includes(tag);
+					return (
+						<DropdownMenuCheckboxItem
+							key={tag}
+							checked={active}
+							onCheckedChange={async () => {
+								await (active
+									? User.removeTag(user.id, tag)
+									: User.addTag(user.id, tag)
+								).catch(toasts.addError);
+
+								await invalidate({ queryKey: userKey(user.id) });
+								if (user.id === session.user.id)
+									await invalidate({ queryKey: sessionKey() });
+								toasts.add(`${active ? "Removed" : "Added"} ${userTagNames[tag]} tag`);
+							}}
+						>
+							{userTagNames[tag]}
+						</DropdownMenuCheckboxItem>
+					);
+				})}
 			</DropdownMenuSubContent>
 		</DropdownMenuSub>
 	);

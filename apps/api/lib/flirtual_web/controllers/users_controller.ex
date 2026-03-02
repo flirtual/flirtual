@@ -558,6 +558,32 @@ defmodule FlirtualWeb.UsersController do
     end
   end
 
+  def add_tag(conn, %{"user_id" => user_id, "tag" => tag}) do
+    user = Users.get(user_id)
+    tag = to_atom(tag)
+
+    if is_nil(user) or is_nil(tag) or Policy.cannot?(conn, :update_tags, user) do
+      {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
+    else
+      User.add_tag(user_id, tag)
+      user = Users.get(user_id)
+      conn |> json(Policy.transform(conn, user))
+    end
+  end
+
+  def remove_tag(conn, %{"user_id" => user_id, "tag" => tag}) do
+    user = Users.get(user_id)
+    tag = to_atom(tag)
+
+    if is_nil(user) or is_nil(tag) or Policy.cannot?(conn, :update_tags, user) do
+      {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
+    else
+      User.remove_tag(user_id, tag)
+      user = Users.get(user_id)
+      conn |> json(Policy.transform(conn, user))
+    end
+  end
+
   def add_push_token(conn, %{"user_id" => user_id, "type" => type, "token" => token}) do
     type = to_atom(type)
 
