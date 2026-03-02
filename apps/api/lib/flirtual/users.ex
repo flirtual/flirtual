@@ -93,7 +93,7 @@ defmodule Flirtual.Users do
          %Ecto.Changeset{valid?: true} <- changeset do
       born_at = Ecto.Changeset.get_change(changeset, :born_at)
 
-      if is_nil(user.born_at) and not is_nil(born_at) and User.underage?(born_at) === true do
+      if not is_nil(born_at) and User.underage?(born_at) === true do
         case Flirtual.Attribute.get("muXMqNjneKnwqxT8nqcy4d", "ban-reason") do
           %Flirtual.Attribute{} = reason ->
             Repo.update(changeset)

@@ -2,6 +2,7 @@ import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { fromEntries } from "remeda";
 
+import { isWretchError } from "~/api/common";
 import { User } from "~/api/user";
 import { Profile } from "~/api/user/profile";
 import { Form } from "~/components/forms";
@@ -29,6 +30,7 @@ import type { AttributeTranslation } from "~/hooks/use-attribute";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { mutate, sessionKey } from "~/query";
+import { urls } from "~/urls";
 
 const AttributeKeys = [
 	...(["gender", "sexuality", "platform", "game"] as const)
@@ -89,7 +91,15 @@ export const InfoForm: FC = () => {
 							})
 						)
 					})
-				]);
+				]).catch((reason) => {
+					if (isWretchError(reason) && reason.json?.error === "banned_underage") {
+						window.location.href = urls.underage;
+						return;
+					}
+					throw reason;
+				});
+
+				if (!newUser || !newProfile) return;
 
 				toasts.add(t("awake_few_wren_skip"));
 
