@@ -622,6 +622,54 @@ defmodule Flirtual.Discord do
     })
   end
 
+  def deliver_webhook(:flagged_registered_underage,
+        user: %User{} = user,
+        previous_born_at: previous_born_at,
+        born_at: born_at,
+        created_at: created_at
+      ) do
+    webhook(:moderation_flags, %{
+      embeds: [
+        %{
+          author: webhook_author(user),
+          title: "Date of birth flagged (previously underage)",
+          fields: [
+            %{
+              name: "Previous date of birth",
+              value: Date.to_iso8601(previous_born_at),
+              inline: true
+            },
+            %{
+              name: "New date of birth",
+              value: Date.to_iso8601(born_at),
+              inline: true
+            },
+            %{
+              name: "Registered",
+              value: Date.to_iso8601(created_at),
+              inline: true
+            }
+          ],
+          color: @warn_color,
+          timestamp: DateTime.utc_now() |> DateTime.to_iso8601()
+        }
+      ],
+      components: [
+        %{
+          type: 1,
+          components: [
+            %{
+              type: 2,
+              label: "View profile",
+              style: 5,
+              url: User.url(user) |> URI.to_string()
+            }
+          ]
+        }
+      ]
+    })
+  end
+
   def deliver_webhook(:honeypot, user: %User{} = user) do
     webhook(:moderation_flags, %{
       embeds: [

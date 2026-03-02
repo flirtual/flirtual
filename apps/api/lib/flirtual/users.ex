@@ -1,4 +1,7 @@
 defmodule Flirtual.Users do
+  require Flirtual.Utilities
+  import Flirtual.Utilities
+
   import Ecto.Query
   import Ecto.Changeset
   import Flirtual.Utilities.Changeset
@@ -111,6 +114,8 @@ defmodule Flirtual.Users do
             {:error, {:internal_error, :attribute_not_found}}
         end
       else
+        previous_born_at = user.born_at
+
         Repo.transaction(fn ->
           with {:ok, user} <- Repo.update(changeset),
                {:ok, user} <- User.update_status(user),
@@ -121,6 +126,21 @@ defmodule Flirtual.Users do
                    :refresh_prospects,
                    :talkjs
                  ]) do
+            if not is_nil(born_at) do
+              turns_18_utc =
+                skip_invalid_leap_day(born_at.year + 18, born_at.month, born_at.day)
+                |> DateTime.new!(~T[00:00:00], "Etc/UTC")
+
+              if DateTime.after?(turns_18_utc, user.created_at) do
+                Discord.deliver_webhook(:flagged_registered_underage,
+                  user: user,
+                  previous_born_at: previous_born_at,
+                  born_at: born_at,
+                  created_at: user.created_at
+                )
+              end
+            end
+
             user
           else
             {:error, reason} -> Repo.rollback(reason)
