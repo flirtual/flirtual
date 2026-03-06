@@ -34,7 +34,8 @@ function useVersionCheck() {
 		refetchInterval: ms("5m"),
 		refetchOnWindowFocus: "always",
 		staleTime: 0,
-		meta: { cacheTime: 0 }
+		meta: { cacheTime: 0 },
+		placeholderData: null
 	});
 }
 
