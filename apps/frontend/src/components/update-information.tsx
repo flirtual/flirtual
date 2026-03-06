@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { withSuspense, } from "with-suspense";
 
-import { client } from "~/const";
+import { client, commitId, siteOrigin } from "~/const";
 import { device } from "~/hooks/use-device";
 import { useQuery } from "~/query";
 
@@ -23,8 +23,26 @@ import {
 } from "./dialog/alert";
 import { DialogFooter } from "./dialog/dialog";
 
+function useVersionCheck() {
+	return useQuery({
+		queryKey: ["version-check"],
+		queryFn: async () => {
+			const response = await fetch(`${siteOrigin}/manifest.json`, { method: "HEAD" });
+			return response.headers.get("x-flirtual-version");
+		},
+		enabled: client,
+		refetchInterval: ms("5m"),
+		refetchOnWindowFocus: "always",
+		staleTime: 0,
+		meta: { cacheTime: 0 }
+	});
+}
+
 export const UpdateInformation: React.FC = withSuspense(() => {
 	const { t } = useTranslation();
+
+	const serverVersion = useVersionCheck();
+	const webUpdateAvailable = !!serverVersion && serverVersion !== commitId;
 
 	const updateInformation = useQuery({
 		queryKey: ["update-information"],
@@ -54,11 +72,11 @@ export const UpdateInformation: React.FC = withSuspense(() => {
 			void AppUpdate.startFlexibleUpdate();
 	}, [updateInformation]);
 
-	if (
-		!updateInformation
-		|| updateInformation.updateAvailability !== AppUpdateAvailability.UPDATE_AVAILABLE
-		|| updateInformation.flexibleUpdateAllowed
-	)
+	const nativeUpdateAvailable = updateInformation
+		&& updateInformation.updateAvailability === AppUpdateAvailability.UPDATE_AVAILABLE
+		&& !updateInformation.flexibleUpdateAllowed;
+
+	if (!webUpdateAvailable && !nativeUpdateAvailable)
 		return null;
 
 	return (
@@ -77,7 +95,15 @@ export const UpdateInformation: React.FC = withSuspense(() => {
 						</Button>
 					</AlertDialogCancel>
 					<AlertDialogAction asChild>
-						<Button size="sm" onClick={() => AppUpdate.openAppStore()}>
+						<Button
+							size="sm"
+							onClick={() => {
+								if (nativeUpdateAvailable)
+									AppUpdate.openAppStore();
+								else
+									window.location.reload();
+							}}
+						>
 							{t("update")}
 						</Button>
 					</AlertDialogAction>
