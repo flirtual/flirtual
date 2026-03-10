@@ -1,7 +1,7 @@
 defmodule Flirtual.RevenueCat do
   use Flirtual.Logger, :revenuecat
 
-  alias Flirtual.{Plan, Subscription, User}
+  alias Flirtual.{Discord, Plan, Subscription, User}
 
   defp config(key) do
     Application.get_env(:flirtual, FlirtualWeb.RevenueCatController)[key]
@@ -88,6 +88,28 @@ defmodule Flirtual.RevenueCat do
     with %User{} = user <- User.get(revenuecat_id: customer_id),
          {:ok, _} <-
            Subscription.cancel(user.subscription) do
+      :ok
+    end
+  end
+
+  def handle_event(%{
+        "event" =>
+          %{
+            "type" => "TRANSFER"
+          } = event
+      }) do
+    from_id = event |> Map.get("transferred_from", []) |> List.first()
+    to_id = event |> Map.get("transferred_to", []) |> List.first()
+    store = Map.get(event, "store")
+
+    with :ok <-
+           Discord.deliver_webhook(:subscription_transferred,
+             from_user: if(from_id, do: User.get(revenuecat_id: from_id)),
+             from_revenuecat_id: from_id,
+             to_user: if(to_id, do: User.get(revenuecat_id: to_id)),
+             to_revenuecat_id: to_id,
+             store: store
+           ) do
       :ok
     end
   end

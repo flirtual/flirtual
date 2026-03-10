@@ -793,6 +793,63 @@ defmodule Flirtual.Discord do
     })
   end
 
+  def deliver_webhook(:subscription_transferred,
+        from_user: from_user,
+        from_revenuecat_id: from_revenuecat_id,
+        to_user: to_user,
+        to_revenuecat_id: to_revenuecat_id,
+        store: store
+      ) do
+    format_user = fn
+      %User{} = user -> "[#{user.id}](#{User.url(user) |> URI.to_string()})"
+      _ -> "Not found"
+    end
+
+    format_rc = fn
+      id when is_binary(id) -> "[#{id}](https://app.revenuecat.com/customers/cf0649d1/#{id})"
+      _ -> "Not found"
+    end
+
+    webhook(:moderation_duplicates, %{
+      content: "<@&458465845887369243>",
+      embeds: [
+        %{
+          title: "Subscription transferred",
+          fields: [
+            %{
+              name: "From user",
+              value: format_user.(from_user),
+              inline: true
+            },
+            %{
+              name: "RC customer",
+              value: format_rc.(from_revenuecat_id),
+              inline: true
+            },
+            %{name: "\u200b", value: "\u200b", inline: true},
+            %{
+              name: "To user",
+              value: format_user.(to_user),
+              inline: true
+            },
+            %{
+              name: "RC customer",
+              value: format_rc.(to_revenuecat_id),
+              inline: true
+            },
+            %{name: "\u200b", value: "\u200b", inline: true},
+            %{
+              name: "Store",
+              value: store
+            }
+          ],
+          color: @destructive_color,
+          timestamp: DateTime.utc_now() |> DateTime.to_iso8601()
+        }
+      ]
+    })
+  end
+
   def deliver_webhook(:flagged_image,
         user: %User{} = user,
         image: %Image{} = image,
