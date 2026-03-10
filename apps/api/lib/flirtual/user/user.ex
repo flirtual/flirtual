@@ -485,9 +485,9 @@ defmodule Flirtual.User do
   def or_where_ilike(query, key, value, similarity_order) when is_atom(key) do
     case User.__schema__(:type, key) do
       Ecto.ShortUUID ->
-        case is_uid(value) do
-          true -> or_where(query, [user], field(user, ^key) == ^value)
-          false -> query
+        case Ecto.ShortUUID.cast(value) do
+          {:ok, _} -> or_where(query, [user], field(user, ^key) == ^value)
+          _ -> query
         end
 
       _ ->
