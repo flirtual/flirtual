@@ -7,7 +7,7 @@ import {
 	useReactTable
 } from "@tanstack/react-table";
 import type { ColumnDef } from "@tanstack/react-table";
-import { Eye, EyeOff, Gavel, Gem, Search, ShieldEllipsis } from "lucide-react";
+import { Eye, EyeOff, Gavel, Gem, Loader2, Search, ShieldEllipsis } from "lucide-react";
 import { Suspense, useDeferredValue, useEffect, useState } from "react";
 import type { FC } from "react";
 import { capitalize } from "remeda";
@@ -240,10 +240,11 @@ export const columns: Array<ColumnDef<string>> = [
 	}
 ];
 
-const DataTable: FC<{ data: Array<string>; admin: boolean; limit: number }> = ({
+const DataTable: FC<{ data: Array<string>; admin: boolean; limit: number; pending?: boolean }> = ({
 	data,
 	admin,
-	limit
+	limit,
+	pending
 }) => {
 	const table = useReactTable({
 		data,
@@ -299,7 +300,7 @@ const DataTable: FC<{ data: Array<string>; admin: boolean; limit: number }> = ({
 						)
 					: (
 							<>
-								{Array.from({ length: limit }).map((_, index) => (
+								{Array.from({ length: Math.max(limit, 1) }).map((_, index) => (
 								// eslint-disable-next-line react/no-array-index-key
 									<TableRow key={index}className="h-20">
 										{columns.map((column) => (
@@ -309,7 +310,9 @@ const DataTable: FC<{ data: Array<string>; admin: boolean; limit: number }> = ({
 								))}
 								<tr>
 									<td className="absolute inset-0 flex items-center justify-center">
-										<span>No results.</span>
+										{pending
+											? <Loader2 className="size-6 animate-spin" />
+											: <span>No results.</span>}
 									</td>
 								</tr>
 							</>
@@ -358,6 +361,7 @@ export const SearchView: React.FC = () => {
 			cacheTime: 0
 		}
 	});
+	const pending = data.metadata.limit === 0;
 
 	return (
 		<ModelCard
@@ -455,6 +459,7 @@ export const SearchView: React.FC = () => {
 					admin={user?.tags?.includes("admin") ?? false}
 					data={data.entries}
 					limit={data.metadata.limit}
+					pending={pending}
 				/>
 				<div className="flex items-center justify-end gap-2">
 					<div className="grow brightness-75">
