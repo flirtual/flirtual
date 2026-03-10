@@ -4,7 +4,8 @@ import {
 	ChevronRight,
 	ExternalLink,
 	MessagesSquare,
-	ShieldCheck
+	ShieldCheck,
+	X
 } from "lucide-react";
 import type {
 	ComponentProps,
@@ -16,6 +17,7 @@ import {
 	useState
 } from "react";
 import { useTranslation } from "react-i18next";
+import { useSearchParams } from "react-router";
 import { entries, groupBy, prop, sortBy } from "remeda";
 import { twMerge } from "tailwind-merge";
 import { withSuspense } from "with-suspense";
@@ -45,6 +47,7 @@ import { newConversationId } from "~/utilities";
 interface ProfileReportViewProps {
 	targetId?: string;
 	reports: Array<Report>;
+	filtered?: boolean;
 }
 
 const reportsKey = (options: ListReportOptions) => ["reports", options] as const;
@@ -98,9 +101,10 @@ const UserShadowban: FC<{ userId?: string }> = withSuspense(({ userId = "" }) =>
 
 const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 	targetId,
-	reports
+	reports,
+	filtered
 }) => {
-	const [collapsed, setCollapsed] = useState(reports.length >= 2);
+	const [collapsed, setCollapsed] = useState(!filtered && reports.length >= 2);
 	const [observedConversation, setObservedConversation] = useState<
 		string | null
 	>(null);
@@ -340,10 +344,19 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 };
 
 export const ReportView: React.FC = () => {
-	const [options, setOptions] = useState<ListReportOptions>({
-		reviewed: false,
-		indefShadowbanned: false
-	});
+	const [searchParameters, setSearchParameters] = useSearchParams();
+	const targetId = searchParameters.get("targetId") || undefined;
+	const userId = searchParameters.get("userId") || undefined;
+	const filtered = !!(targetId || userId);
+
+	const [toggles, setToggles] = useState<{ reviewed?: boolean; indefShadowbanned?: boolean }>({});
+
+	const options = useMemo<ListReportOptions>(() => ({
+		reviewed: toggles.reviewed ?? filtered,
+		indefShadowbanned: toggles.indefShadowbanned ?? filtered,
+		...(targetId && { targetId }),
+		...(userId && { userId })
+	}), [toggles, filtered, targetId, userId]);
 
 	const reports = useReports(options);
 
@@ -360,14 +373,56 @@ export const ReportView: React.FC = () => {
 			containerProps={{ className: "gap-8 min-h-screen" }}
 			title="Reports"
 		>
+			{filtered && (
+				<div className="flex flex-wrap gap-2">
+					{targetId && (
+						<span className="flex items-center gap-1 rounded-full bg-white-40 px-3 py-1 text-sm dark:bg-black-60">
+							Target:
+							{" "}
+							<UserDisplayName userId={targetId} />
+							<button
+								type="button"
+								onClick={() => {
+									setSearchParameters((previous) => {
+										previous.delete("targetId");
+										return previous;
+									});
+									if (!userId) setToggles({});
+								}}
+							>
+								<X className="size-4" />
+							</button>
+						</span>
+					)}
+					{userId && (
+						<span className="flex items-center gap-1 rounded-full bg-white-40 px-3 py-1 text-sm dark:bg-black-60">
+							Reporter:
+							{" "}
+							<UserDisplayName userId={userId} />
+							<button
+								type="button"
+								onClick={() => {
+									setSearchParameters((previous) => {
+										previous.delete("userId");
+										return previous;
+									});
+									if (!targetId) setToggles({});
+								}}
+							>
+								<X className="size-4" />
+							</button>
+						</span>
+					)}
+				</div>
+			)}
 			<div className="flex gap-8">
 				<div className="flex items-center gap-4">
 					<InputCheckbox
 						id="reviewed"
 						value={options.reviewed}
 						onChange={(value) => {
-							setOptions((options) => ({
-								...options,
+							setToggles((previous) => ({
+								...previous,
 								reviewed: value
 							}));
 						}}
@@ -381,8 +436,8 @@ export const ReportView: React.FC = () => {
 						id="indefShadowbanned"
 						value={options.indefShadowbanned}
 						onChange={(value) => {
-							setOptions((options) => ({
-								...options,
+							setToggles((previous) => ({
+								...previous,
 								indefShadowbanned: value
 							}));
 						}}
@@ -403,6 +458,7 @@ export const ReportView: React.FC = () => {
 				{entries(grouped).map(([targetId, reports]) => (
 					<ProfileReportView
 						key={targetId}
+						filtered={filtered}
 						reports={reports}
 						targetId={reports[0]?.targetId}
 					/>

@@ -227,14 +227,25 @@ defmodule Flirtual.Report do
       include_reviewed = attrs[:reviewed] || false
       include_indef_shadowbanned = attrs[:indef_shadowbanned] || false
 
-      {:ok,
-       from(report in Report,
-         where: ^include_reviewed or is_nil(report.reviewed_at),
-         join: user in assoc(report, :target),
-         where: ^include_indef_shadowbanned or is_nil(user.indef_shadowbanned_at),
-         order_by: [desc: report.created_at]
-       )
-       |> Repo.all()}
+      query =
+        from(report in Report,
+          where: ^include_reviewed or is_nil(report.reviewed_at),
+          join: user in assoc(report, :target),
+          where: ^include_indef_shadowbanned or is_nil(user.indef_shadowbanned_at),
+          order_by: [desc: report.created_at]
+        )
+
+      query =
+        if attrs[:user_id],
+          do: where(query, user_id: ^attrs[:user_id]),
+          else: query
+
+      query =
+        if attrs[:target_id],
+          do: where(query, target_id: ^attrs[:target_id]),
+          else: query
+
+      {:ok, Repo.all(query)}
     end
   end
 
