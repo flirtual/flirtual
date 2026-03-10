@@ -12,7 +12,7 @@ defmodule FlirtualWeb.UsersController do
   import Flirtual.Utilities
   import Flirtual.Attribute, only: [validate_attribute: 3]
 
-  alias Flirtual.{IpAddress, ObanWorkers, Policy, Repo, User, Users}
+  alias Flirtual.{Discord, IpAddress, ObanWorkers, Policy, Repo, User, Users}
   alias Flirtual.User.Session
   alias Flirtual.User.Profile.Block
   alias FlirtualWeb.SessionController
@@ -658,6 +658,11 @@ defmodule FlirtualWeb.UsersController do
     else
       with {:ok, _} <-
              Users.admin_delete(user) do
+        Discord.deliver_webhook(:admin_deleted,
+          user: user,
+          moderator: conn.assigns[:session].user
+        )
+
         conn |> json(%{deleted: true})
       end
     end

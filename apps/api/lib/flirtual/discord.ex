@@ -984,4 +984,29 @@ defmodule Flirtual.Discord do
       ]
     })
   end
+
+  def deliver_webhook(:admin_deleted, user: %User{} = user, moderator: %User{} = moderator) do
+    webhook(:admin, %{
+      content: "<@&458465845887369243>",
+      embeds: [
+        %{
+          title: "Admin deleted user",
+          fields: [
+            %{
+              name: "User",
+              value: user.id,
+              inline: true
+            },
+            %{
+              name: "Admin",
+              value: md_display_name(moderator),
+              inline: true
+            }
+          ],
+          color: @destructive_color,
+          timestamp: DateTime.utc_now() |> DateTime.to_iso8601()
+        }
+      ]
+    })
+  end
 end
