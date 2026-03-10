@@ -380,6 +380,7 @@ export const SearchView: React.FC = () => {
 						<div className="grid grid-cols-3 gap-2">
 							<div className="col-span-3">
 								<InputText
+									autoFocus
 									Icon={Search}
 									placeholder="Search"
 									value={searchOptions.search}
