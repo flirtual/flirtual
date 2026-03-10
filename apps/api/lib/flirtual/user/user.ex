@@ -1360,6 +1360,9 @@ defimpl Swoosh.Email.Recipient, for: Flirtual.User do
   alias Flirtual.User
 
   def format(%User{} = user) do
-    {User.display_name(user), user.email}
+    case user.profile[:display_name] do
+      nil -> {"", user.email}
+      name -> {name, user.email}
+    end
   end
 end

@@ -68,7 +68,7 @@ defmodule Flirtual.Listmonk do
   def create_subscriber(%User{} = user) do
     body = %{
       "email" => user.email,
-      "name" => User.display_name(user),
+      "name" => user.profile[:display_name] || "_",
       "status" =>
         if is_nil(user.email_confirmed_at) do
           "disabled"
@@ -136,7 +136,7 @@ defmodule Flirtual.Listmonk do
 
         body = %{
           "email" => user.email,
-          "name" => User.display_name(user),
+          "name" => user.profile[:display_name] || "_",
           "status" => status,
           "preconfirm_subscriptions" => true,
           "lists" => get_subscriber_lists(user)
