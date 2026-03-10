@@ -28,7 +28,7 @@ defmodule Flirtual.Discord do
     config(String.to_existing_atom("webhook_#{name}"))
   end
 
-  def webhook(name, body) when is_atom(name) do
+  def webhook(name, body, opts \\ []) when is_atom(name) do
     log(:debug, ["webhook", name], body)
 
     case webhook_token(name) do
@@ -42,19 +42,31 @@ defmodule Flirtual.Discord do
         :ok
 
       token ->
-        deliver_webhook(name, body, token)
+        deliver_webhook(name, body, token, opts)
     end
   end
 
-  defp deliver_webhook(name, body, token) do
-    with {:ok, %HTTPoison.Response{status_code: 204}} <-
-           HTTPoison.post(
-             url("webhooks/" <> token <> "?with_components=true"),
-             Poison.encode!(body),
-             [{"content-type", "application/json"}]
-           ) do
-      :ok
-    else
+  defp deliver_webhook(name, body, token, opts \\ []) do
+    wait = Keyword.get(opts, :wait, false)
+    query = "?with_components=true" <> if(wait, do: "&wait=true", else: "")
+
+    case HTTPoison.post(
+           url("webhooks/" <> token <> query),
+           Poison.encode!(body),
+           [{"content-type", "application/json"}]
+         ) do
+      {:ok, %HTTPoison.Response{status_code: 204}} ->
+        :ok
+
+      {:ok, %HTTPoison.Response{status_code: 200, body: response_body}} when wait ->
+        case Poison.decode(response_body) do
+          {:ok, %{"id" => message_id, "channel_id" => channel_id}} ->
+            {:ok, "https://discord.com/channels/455219574036496404/#{channel_id}/#{message_id}"}
+
+          _ ->
+            :ok
+        end
+
       {:ok, %HTTPoison.Response{} = response} ->
         log(:error, ["webhook", name], response)
         {:error, :upstream}
@@ -176,61 +188,65 @@ defmodule Flirtual.Discord do
         reason: %Attribute{type: "ban-reason"} = reason,
         message: message
       ) do
-    webhook(:moderation_actions, %{
-      content:
-        if(Subscription.active?(user.subscription), do: "<@&458465845887369243>", else: ""),
-      embeds: [
-        %{
-          author: webhook_author(user),
-          title: "User banned",
-          description: message,
-          fields:
-            [
+    webhook(
+      :moderation_actions,
+      %{
+        content:
+          if(Subscription.active?(user.subscription), do: "<@&458465845887369243>", else: ""),
+        embeds: [
+          %{
+            author: webhook_author(user),
+            title: "User banned",
+            description: message,
+            fields:
+              [
+                %{
+                  name: "Reason",
+                  value: Map.get(Attribute.ban_reasons(), reason.id),
+                  inline: true
+                }
+              ] ++
+                if(Subscription.active?(user.subscription),
+                  do: [
+                    %{
+                      name: "Active subscription",
+                      value:
+                        if(user.subscription.chargebee_id,
+                          do:
+                            "[Issue refund](https://flirtual.chargebee.com/d/subscriptions/#{user.subscription.chargebee_id})",
+                          else:
+                            if(user.subscription.google_id,
+                              do:
+                                "[Issue refund](https://app.revenuecat.com/customers/cf0649d1/#{user.revenuecat_id})",
+                              else:
+                                "[Send refund reminder](https://hello.flirtu.al/a/tickets/compose-email)"
+                            )
+                        )
+                    }
+                  ],
+                  else: []
+                ),
+            color: @destructive_color,
+            footer: webhook_author_footer(moderator),
+            timestamp: DateTime.to_iso8601(user.banned_at)
+          }
+        ],
+        components: [
+          %{
+            type: 1,
+            components: [
               %{
-                name: "Reason",
-                value: Map.get(Attribute.ban_reasons(), reason.id),
-                inline: true
+                type: 2,
+                label: "View profile",
+                style: 5,
+                url: User.url(user) |> URI.to_string()
               }
-            ] ++
-              if(Subscription.active?(user.subscription),
-                do: [
-                  %{
-                    name: "Active subscription",
-                    value:
-                      if(user.subscription.chargebee_id,
-                        do:
-                          "[Issue refund](https://flirtual.chargebee.com/d/subscriptions/#{user.subscription.chargebee_id})",
-                        else:
-                          if(user.subscription.google_id,
-                            do:
-                              "[Issue refund](https://app.revenuecat.com/customers/cf0649d1/#{user.revenuecat_id})",
-                            else:
-                              "[Send refund reminder](https://hello.flirtu.al/a/tickets/compose-email)"
-                          )
-                      )
-                  }
-                ],
-                else: []
-              ),
-          color: @destructive_color,
-          footer: webhook_author_footer(moderator),
-          timestamp: DateTime.to_iso8601(user.banned_at)
-        }
-      ],
-      components: [
-        %{
-          type: 1,
-          components: [
-            %{
-              type: 2,
-              label: "View profile",
-              style: 5,
-              url: User.url(user) |> URI.to_string()
-            }
-          ]
-        }
-      ]
-    })
+            ]
+          }
+        ]
+      },
+      wait: true
+    )
   end
 
   def deliver_webhook(:unsuspended,

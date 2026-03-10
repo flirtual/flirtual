@@ -11,6 +11,7 @@ defmodule Flirtual.Hash do
 
     field(:type, :string)
     field(:hash, :string)
+    field(:suspended_url, :string)
 
     timestamps(inserted_at: false)
   end
@@ -55,6 +56,14 @@ defmodule Flirtual.Hash do
     |> Repo.insert()
   end
 
+  def add_suspended_url(user_id, url) when is_binary(user_id) and is_binary(url) do
+    Hash
+    |> where(user_id: ^user_id)
+    |> Repo.update_all(set: [suspended_url: url])
+
+    :ok
+  end
+
   def delete(user_id) when is_binary(user_id) do
     case Hash |> where(user_id: ^user_id) |> Repo.delete_all() do
       {_, nil} -> :ok
@@ -88,12 +97,22 @@ defmodule Flirtual.Hash do
       _ ->
         duplicates =
           duplicates
-          |> Enum.filter(fn user -> not is_nil(user.user_id) end)
-          |> Enum.map_join(", ", fn user -> "https://flirtu.al/#{user.user_id}" end)
+          |> Enum.map(fn
+            %{user_id: id} when not is_nil(id) ->
+              url = Application.fetch_env!(:flirtual, :frontend_origin) |> URI.merge("/#{id}")
+              "[#{id}](#{url})"
+
+            %{suspended_url: url} when not is_nil(url) ->
+              "[Banned user](#{url})"
+
+            _ ->
+              "Banned user"
+          end)
+          |> Enum.join(", ")
 
         Discord.deliver_webhook(:flagged_duplicate,
           user: Users.get(user_id),
-          duplicates: if(duplicates == "", do: "Banned user", else: duplicates),
+          duplicates: duplicates,
           type: type,
           text: if(type == "IP address", do: IpAddress.anonymize(text), else: text)
         )
