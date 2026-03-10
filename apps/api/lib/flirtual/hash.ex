@@ -95,20 +95,39 @@ defmodule Flirtual.Hash do
         :ok
 
       _ ->
-        duplicates =
+        {named, anonymous} =
           duplicates
+          |> Enum.split_with(fn
+            %{user_id: id} when not is_nil(id) -> true
+            %{suspended_url: url} when not is_nil(url) -> true
+            _ -> false
+          end)
+
+        named =
+          named
           |> Enum.map(fn
             %{user_id: id} when not is_nil(id) ->
-              url = Application.fetch_env!(:flirtual, :frontend_origin) |> URI.merge("/#{id}")
-              "[#{id}](#{url})"
+              case Users.get(id) do
+                %User{} = user ->
+                  Discord.md_display_name(user)
+
+                _ ->
+                  url = Application.fetch_env!(:flirtual, :frontend_origin) |> URI.merge("/#{id}")
+                  "[#{id}](#{url})"
+              end
 
             %{suspended_url: url} when not is_nil(url) ->
               "[Banned user](#{url})"
-
-            _ ->
-              "Banned user"
           end)
-          |> Enum.join(", ")
+
+        anonymous =
+          case length(anonymous) do
+            0 -> []
+            1 -> ["Banned user (not found)"]
+            n -> ["#{n}x Banned user (not found)"]
+          end
+
+        duplicates = Enum.join(named ++ anonymous, "\n")
 
         Discord.deliver_webhook(:flagged_duplicate,
           user: Users.get(user_id),
