@@ -6,7 +6,12 @@ defmodule FlirtualWeb.UnsubscribeController do
   def get(conn, _) do
     conn
     |> put_status(:found)
-    |> redirect(external: "https://flirtu.al/settings/notifications")
+    |> redirect(
+      external:
+        Application.fetch_env!(:flirtual, :frontend_origin)
+        |> URI.merge("/settings/notifications")
+        |> URI.to_string()
+    )
   end
 
   def post(conn, %{"token" => token}) do

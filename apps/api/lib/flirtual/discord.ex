@@ -554,7 +554,8 @@ defmodule Flirtual.Discord do
               },
               %{
                 name: "Report",
-                value: "[View report](https://flirtu.al/reports/#{report.id})",
+                value:
+                  "[View report](#{Application.fetch_env!(:flirtual, :frontend_origin) |> URI.merge("/reports/#{report.id}")})",
                 inline: true
               },
               if(was_shadow_banned,

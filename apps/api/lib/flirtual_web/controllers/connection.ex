@@ -158,7 +158,8 @@ defmodule FlirtualWeb.ConnectionController do
         {%User{} = user, %Connection{user: %User{id: user_id}}} when user_id != user.id ->
           Discord.deliver_webhook(:flagged_duplicate,
             user: user,
-            duplicates: "https://flirtu.al/#{user_id}",
+            duplicates:
+              "[#{user_id}](#{Application.fetch_env!(:flirtual, :frontend_origin) |> URI.merge("/#{user_id}")})",
             type: "#{Connection.provider_name!(type)} (connection updated)",
             text: "#{profile.display_name} (#{profile.uid})"
           )
