@@ -10,6 +10,7 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { Eye, EyeOff, Gavel, Gem, Loader2, Search, ShieldEllipsis } from "lucide-react";
 import { Suspense, useDeferredValue, useEffect, useState } from "react";
 import type { FC } from "react";
+import { useSearchParams } from "react-router";
 import { capitalize } from "remeda";
 import { twMerge } from "tailwind-merge";
 
@@ -325,12 +326,14 @@ const DataTable: FC<{ data: Array<string>; admin: boolean; limit: number; pendin
 
 export const SearchView: React.FC = () => {
 	const { user } = useSession();
+	const [searchParameters] = useSearchParams();
+	const q = searchParameters.get("q") || "";
 
 	const [searchOptions, setSearchOptions] = useState({
-		search: "",
+		search: q,
 		status: "" as const,
 		tags: [],
-		sort: "created_at",
+		sort: q ? "similarity" : "created_at",
 		order: "desc"
 	} as unknown as SearchOptions);
 
