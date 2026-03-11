@@ -7,11 +7,6 @@ defmodule Flirtual.User.Policy do
   alias Flirtual.User
   alias Flirtual.User.Session
 
-  defp truncate_date(date) do
-    now = Date.utc_today()
-    Date.new!(now.year - get_years_since(date), now.month, min(now.day, 28))
-  end
-
   def authorize(
         _,
         %Plug.Conn{
@@ -271,7 +266,17 @@ defmodule Flirtual.User.Policy do
         |> DateTime.new!(Time.new!(0, 0, 0))
   end
 
-  # Truncate born at to year, to hide user's exact birthday.
+  # Return computed age for all users.
+  def transform(
+        :age,
+        _,
+        %User{born_at: born_at}
+      )
+      when not is_nil(born_at) do
+    get_years_since(born_at)
+  end
+
+  # Only return exact born_at to self and moderators.
   def transform(
         :born_at,
         %Plug.Conn{
@@ -279,12 +284,12 @@ defmodule Flirtual.User.Policy do
             session: session
           }
         },
-        %User{born_at: born_at}
+        %User{born_at: born_at} = user
       )
       when not is_nil(born_at) do
-    if :moderator in session.user.tags,
+    if session.user.id == user.id or :moderator in session.user.tags,
       do: born_at,
-      else: truncate_date(born_at)
+      else: nil
   end
 
   def transform(

@@ -94,6 +94,7 @@ defmodule Flirtual.User do
 
     field(:password, :string, virtual: true, redact: true)
     field(:relationship, :map, virtual: true)
+    field(:age, :integer, virtual: true)
 
     field(:tags, {:array, Ecto.Enum},
       values: @tags,
@@ -1319,6 +1320,7 @@ defimpl Jason.Encoder, for: Flirtual.User do
       :id,
       :email,
       :slug,
+      :age,
       :born_at,
       :moderator_message,
       :moderator_note,

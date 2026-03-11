@@ -10,7 +10,6 @@ import { CountryPill } from "~/components/profile/pill/country";
 import { GenderPills } from "~/components/profile/pill/genders";
 import { Pill } from "~/components/profile/pill/pill";
 import { UserAvatar } from "~/components/user-avatar";
-import { yearsAgo } from "~/date";
 import { useUser } from "~/hooks/use-user";
 import { useLocale } from "~/i18n";
 import { hrefWithQuery } from "~/urls";
@@ -58,9 +57,9 @@ export const LikeListItem: FC<LikeListItemProps> = withSuspense(({ kind, profile
 					</span>
 					<div className="flex items-center justify-between gap-4">
 						<div className="flex flex-wrap gap-2">
-							{user.bornAt && (
+							{user.age && (
 								<Pill small className="h-8 bg-white-20 vision:bg-white-30/70 dark:bg-black-40">
-									{yearsAgo(new Date(user.bornAt))}
+									{user.age}
 								</Pill>
 							)}
 							<GenderPills

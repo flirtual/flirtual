@@ -77,6 +77,7 @@ export type User = {
 	moderatorNote?: string;
 	status: UserStatus;
 	// relationship?: Relationship;
+	age?: number;
 	bornAt?: string;
 	activeAt?: string;
 	emailConfirmedAt?: string;

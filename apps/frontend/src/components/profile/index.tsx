@@ -5,7 +5,6 @@ import { withSuspense } from "with-suspense";
 
 import { gradientTextColor } from "~/colors";
 import { Html } from "~/components/html";
-import { yearsAgo } from "~/date";
 import { usePreferences } from "~/hooks/use-preferences";
 import { useSession } from "~/hooks/use-session";
 import { useRelationship, useUser } from "~/hooks/use-user";
@@ -130,10 +129,10 @@ export const Profile = withSuspense(({
 								{user.profile.displayName || t("unnamed_user")}
 								{" "}
 							</span>
-							{user.bornAt && (
+							{user.age && (
 								<div className="col-span-2 flex h-fit shrink-0 items-center gap-2">
 									<span className="text-shadow-brand text-3xl leading-none">
-										{yearsAgo(new Date(user.bornAt))}
+										{user.age}
 									</span>
 									{user.tags?.includes("verified") && (
 										<ProfileVerificationBadge
