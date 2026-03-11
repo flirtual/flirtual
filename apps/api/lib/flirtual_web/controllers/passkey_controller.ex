@@ -2,6 +2,7 @@ defmodule FlirtualWeb.PasskeyController do
   use FlirtualWeb, :controller
 
   alias Ecto.UUID
+  alias Flirtual.Policy
   alias Flirtual.User
   alias Flirtual.User.{Login, Passkey}
   alias FlirtualWeb.SessionController
@@ -152,7 +153,7 @@ defmodule FlirtualWeb.PasskeyController do
 
       conn
       |> put_status(:ok)
-      |> json(session)
+      |> json(Policy.transform(conn, session))
     else
       %User{} = user ->
         Login.log_login_attempt(conn, user.id, nil, method: :passkey, device_id: device_id)

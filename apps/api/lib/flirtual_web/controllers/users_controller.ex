@@ -47,7 +47,10 @@ defmodule FlirtualWeb.UsersController do
   end
 
   def get_relationship(conn, %{"user_id" => user_id}) do
-    conn |> json_with_etag(User.Relationship.get(conn.assigns[:session].user[:id], user_id))
+    conn
+    |> json_with_etag(
+      Policy.transform(conn, User.Relationship.get(conn.assigns[:session].user[:id], user_id))
+    )
   end
 
   def get(conn, %{"slug" => slug}) do

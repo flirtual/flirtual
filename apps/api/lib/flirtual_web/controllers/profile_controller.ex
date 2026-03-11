@@ -46,7 +46,7 @@ defmodule FlirtualWeb.ProfileController do
       {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
     else
       with {:ok, profile} <- Profiles.update_personality(profile, params) do
-        conn |> json(profile)
+        conn |> json(Policy.transform(conn, profile))
       end
     end
   end
@@ -63,7 +63,7 @@ defmodule FlirtualWeb.ProfileController do
                required: split_to_atom_list(params["required"]),
                required_attributes: split_to_atom_list(params["required_attributes"])
              ) do
-        conn |> json(preferences)
+        conn |> json(Policy.transform(conn, preferences))
       end
     end
   end
