@@ -116,27 +116,17 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
 
     query =
       if filters[:gender] do
-        gender_ids =
+        alias_of =
           case filters[:gender] do
-            :woman ->
-              Flirtual.Attribute.list(type: "gender")
-              |> Enum.filter(
-                &(&1.metadata["alias_of"] == @gender_woman or &1.id == @gender_woman)
-              )
-              |> Enum.map(& &1.id)
-
-            :man ->
-              Flirtual.Attribute.list(type: "gender")
-              |> Enum.filter(&(&1.metadata["alias_of"] == @gender_man or &1.id == @gender_man))
-              |> Enum.map(& &1.id)
-
-            :other ->
-              Flirtual.Attribute.list(type: "gender")
-              |> Enum.filter(
-                &(&1.metadata["alias_of"] == @gender_other or &1.id == @gender_other)
-              )
-              |> Enum.map(& &1.id)
+            :woman -> @gender_woman
+            :man -> @gender_man
+            :other -> @gender_other
           end
+
+        gender_ids =
+          Flirtual.Attribute.list(type: "gender")
+          |> Enum.filter(&(&1.metadata["alias_of"] == alias_of or &1.id == alias_of))
+          |> Enum.map(& &1.id)
 
         query
         |> join(:inner, [lap, _, _, _], pa in Attributes,

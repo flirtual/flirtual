@@ -1,7 +1,9 @@
 defmodule Flirtual.ObanWorkers.Talkjs do
   use Oban.Worker, unique: [period: :infinity, states: [:available, :scheduled]]
 
-  alias Flirtual.{Talkjs, User}
+  import Ecto.Query
+
+  alias Flirtual.{Repo, Talkjs, User}
 
   @impl Oban.Worker
   def perform(%Oban.Job{args: %{"user_id" => user_id}}) do
@@ -14,8 +16,10 @@ defmodule Flirtual.ObanWorkers.Talkjs do
   end
 
   def process_users(user_ids) do
-    user_ids
-    |> Enum.map(&User.get/1)
+    User
+    |> where([user], user.id in ^user_ids)
+    |> preload(^User.default_assoc())
+    |> Repo.all()
     |> Enum.each(&Talkjs.update_user/1)
   end
 end

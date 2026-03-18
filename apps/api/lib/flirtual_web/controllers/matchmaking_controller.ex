@@ -4,9 +4,12 @@ defmodule FlirtualWeb.MatchmakingController do
   import FlirtualWeb.Utilities
   import Flirtual.Utilities
 
+  import Ecto.Query
+
+  alias Flirtual.{Policy, Repo, Subscription, User, Users}
   alias Flirtual.Matchmaking
+  alias Flirtual.User.Profile.Image
   alias Flirtual.User.Profile.LikesAndPasses
-  alias Flirtual.{Policy, Subscription, User, Users}
 
   action_fallback(FlirtualWeb.FallbackController)
 
@@ -178,19 +181,30 @@ defmodule FlirtualWeb.MatchmakingController do
 
     count = LikesAndPasses.count_unrequited(profile_id: user.id)
 
-    thumbnails =
+    variant = if Subscription.active?(user.subscription), do: "icon", else: "blur"
+
+    profile_ids =
       LikesAndPasses.list_unrequited(
         profile_id: user.id,
         cursor: %LikesAndPasses.Cursor{limit: 3}
       )
       |> elem(0)
       |> Enum.reverse()
-      |> Enum.map(fn item ->
-        if Subscription.active?(user.subscription) do
-          item.profile_id |> User.get() |> User.avatar_url("icon")
-        else
-          item.profile_id |> User.get() |> User.avatar_url("blur")
-        end
+      |> Enum.map(& &1.profile_id)
+
+    images_by_profile =
+      Image
+      |> where([i], i.profile_id in ^profile_ids)
+      |> order_by([i], [i.profile_id, i.order])
+      |> Repo.all()
+      |> Enum.group_by(& &1.profile_id)
+
+    thumbnails =
+      Enum.map(profile_ids, fn profile_id ->
+        images_by_profile
+        |> Map.get(profile_id, [])
+        |> List.first()
+        |> Image.url(variant)
       end)
 
     conn
