@@ -168,22 +168,17 @@ defmodule Flirtual.User.Session do
       reminder_tags = User.reminder_tags()
       new_tags = Enum.reject(session.user.tags, &(&1 in reminder_tags))
 
-      Repo.transaction(fn ->
-        with {:ok, user} <-
-               session.user
-               |> change(%{active_at: now, tags: new_tags})
-               |> Repo.update(),
-             {:ok, session} <-
-               session
-               |> change(%{expire_at: new_expire_at()})
-               |> Repo.update(),
-             {:ok, _} <- ObanWorkers.update_user(user.id, [:elasticsearch]) do
-          Map.put(session, :user, user)
-        else
-          {:error, reason} -> Repo.rollback(reason)
-          reason -> Repo.rollback(reason)
-        end
-      end)
+      with {:ok, user} <-
+             session.user
+             |> change(%{active_at: now, tags: new_tags})
+             |> Repo.update(),
+           {:ok, session} <-
+             session
+             |> change(%{expire_at: new_expire_at()})
+             |> Repo.update(),
+           {:ok, _} <- ObanWorkers.update_user(user.id, [:elasticsearch]) do
+        {:ok, Map.put(session, :user, user)}
+      end
     end
   end
 
