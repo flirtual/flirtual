@@ -86,7 +86,7 @@ defmodule Flirtual.ObanWorkers.Daily do
         )
         |> Repo.update_all([])
 
-        Enum.each(user_ids, &queue_reminder(&1, days))
+        queue_reminders(user_ids, days)
       end
     end
 
@@ -132,7 +132,7 @@ defmodule Flirtual.ObanWorkers.Daily do
           )
           |> Repo.update_all([])
 
-          Enum.each(user_ids, &queue_reminder(&1, days))
+          queue_reminders(user_ids, days)
         end
       end
     end
@@ -171,11 +171,15 @@ defmodule Flirtual.ObanWorkers.Daily do
     |> Repo.delete_all()
   end
 
-  defp queue_reminder(user_id, days) do
-    if user = User.get(user_id) do
+  defp queue_reminders(user_ids, days) do
+    User
+    |> where([u], u.id in ^user_ids)
+    |> preload(^User.default_assoc())
+    |> Repo.all()
+    |> Enum.each(fn user ->
       Email.deliver(user, :deletion_reminder, days: days)
       Push.deliver(user, :deletion_reminder, days: days)
-    end
+    end)
   end
 
   defp queue_deletion(user_id) do
