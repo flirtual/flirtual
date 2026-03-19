@@ -20,20 +20,28 @@ defmodule FlirtualWeb.ImageController do
     end
   end
 
+  @twelve_hours 43_200_000
+
   def upload(conn, _) do
-    id = UUID.generate()
+    user_id = conn.assigns[:session] && conn.assigns[:session].user_id
 
-    bucket =
-      case Application.get_env(:flirtual, :canary) do
-        true -> "pfpup-canary"
-        _ -> "pfpup"
-      end
+    with {:ok, _} <- ExRated.check_rate("upload_image:#{user_id}", @twelve_hours, 100) do
+      id = UUID.generate()
 
-    {:ok, signed_url} =
-      ExAws.Config.new(:s3, []) |> ExAws.S3.presigned_url(:put, bucket, id, [])
+      bucket =
+        case Application.get_env(:flirtual, :canary) do
+          true -> "pfpup-canary"
+          _ -> "pfpup"
+        end
 
-    conn
-    |> json(%{id: id, signed_url: signed_url})
+      {:ok, signed_url} =
+        ExAws.Config.new(:s3, []) |> ExAws.S3.presigned_url(:put, bucket, id, [])
+
+      conn
+      |> json(%{id: id, signed_url: signed_url})
+    else
+      {:error, _} -> {:error, {:unauthorized, :upload_rate_limit}}
+    end
   end
 
   def view(conn, %{"image_id" => image_id, "type" => variant}) do
@@ -82,8 +90,10 @@ defmodule FlirtualWeb.ImageController do
 
   def authenticated?(conn) do
     String.match?(conn.assigns[:authorization_token_type], ~r/bearer/i) and
-      conn.assigns[:authorization_token] ==
+      Plug.Crypto.secure_compare(
+        conn.assigns[:authorization_token],
         Application.fetch_env!(:flirtual, :image_access_token)
+      )
   end
 
   def update_variants(conn, %{

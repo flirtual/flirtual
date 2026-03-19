@@ -404,6 +404,8 @@
 		"verification_invalid_code": "無効または期限切れの確認コードです。新しいコードをリクエストしてください。",
 		"verification_rate_limit": "確認試行回数が多すぎます。しばらくしてから再試行するか、<reset>パスワードをリセット</reset>してください。",
 		"reset_password_rate_limit": "パスワードリセットのリクエストが多すぎます。しばらくしてから再試行してください。",
+		"registration_rate_limit": "登録試行回数が多すぎます。しばらくしてから再試行してください。",
+		"upload_rate_limit": "画像のアップロードが多すぎます！しばらくしてから再試行してください。",
 		"is_still_associated_with_this_entry": "このエントリに関連付けられています。",
 		"are_still_associated_with_this_entry": "このエントリに関連付けられています。",
 		"should_be_{count}_character(s)": "{count, plural, =0 {空白である必要があります} =1 {1文字である必要があります} other {#文字である必要があります}}。",

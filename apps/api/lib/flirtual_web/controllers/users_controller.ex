@@ -18,15 +18,23 @@ defmodule FlirtualWeb.UsersController do
   alias FlirtualWeb.SessionController
 
   @one_hour 3_600_000
+  @twelve_hours 43_200_000
 
   action_fallback(FlirtualWeb.FallbackController)
 
   def create(conn, params) do
-    with {:ok, user} <- Users.create(params),
+    ip = get_conn_ip(conn)
+
+    with {:ok, _} <-
+           ExRated.check_rate("create_user:#{IpAddress.normalize(ip)}", @twelve_hours, 10),
+         {:ok, user} <- Users.create(params),
          {_, conn} = SessionController.create(conn, user, method: :password) do
       conn
       |> put_status(:created)
       |> json(Policy.transform(conn, user))
+    else
+      {:error, _} -> {:error, {:unauthorized, :registration_rate_limit}}
+      value -> value
     end
   end
 
