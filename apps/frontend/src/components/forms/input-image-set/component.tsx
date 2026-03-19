@@ -16,6 +16,7 @@ import { useTranslation } from "react-i18next";
 import { groupBy } from "remeda";
 import { twMerge } from "tailwind-merge";
 
+import { isWretchError } from "~/api/common";
 import { Image } from "~/api/images";
 import type { ProfileImageMetadata } from "~/api/user/profile/images";
 import { useDevice } from "~/hooks/use-device";
@@ -189,19 +190,29 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 			shouldUseMultipart: false,
 			limit: 15,
 			async getUploadParameters(file) {
-				const { id, signedUrl } = await Image.upload();
-				file.meta.id = id;
+				try {
+					const { id, signedUrl } = await Image.upload();
+					file.meta.id = id;
 
-				return {
-					url: signedUrl,
-					method: "PUT"
-				};
+					return {
+						url: signedUrl,
+						method: "PUT"
+					};
+				}
+				catch (reason) {
+					if (isWretchError(reason) && reason.json?.error) {
+						const key = `errors.${reason.json.error}` as any;
+						const translated = t(key);
+						if (translated !== key) throw new Error(translated);
+					}
+					throw new Error(t("each_ideal_seahorse_bump"));
+				}
 			},
 		})
 			.on("complete", ({ successful = [], failed = [] }) => {
 				if (failed.length > 0) toast.add({
 					type: "error",
-					value: t("each_ideal_seahorse_bump")
+					value: failed[0]?.error || t("each_ideal_seahorse_bump")
 				});
 
 				void handleUppyComplete(successful.map((file) => file.meta));
