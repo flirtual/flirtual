@@ -27,7 +27,9 @@ defmodule Flirtual.User.Verification do
 
   defp generate_code do
     code =
-      (:rand.uniform(1_000_000) - 1)
+      :crypto.strong_rand_bytes(4)
+      |> :binary.decode_unsigned()
+      |> rem(1_000_000)
       |> Integer.to_string()
       |> String.pad_leading(6, "0")
 
