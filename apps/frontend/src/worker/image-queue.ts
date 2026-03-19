@@ -93,7 +93,7 @@ export const queue: ExportedHandler<Env, {
 				await env.DESTINATION_BUCKET.put(`${option.name === "blur" ? blurId : id}/${option.name}`, blob);
 			}));
 
-			await fetch(`${apiUrl}/images/variants`, {
+			const apiResponse = await fetch(`${apiUrl}/images/variants`, {
 				method: "post",
 				headers: {
 					authorization: `Bearer ${imageAccessToken}`,
@@ -106,11 +106,15 @@ export const queue: ExportedHandler<Env, {
 				})
 			});
 
+			if (!apiResponse.ok) {
+				throw new Error(`API returned ${apiResponse.status} for ${key}`);
+			}
+
 			message.ack();
 		}
 		catch (reason) {
 			console.error(reason);
-			message.retry({ delaySeconds: attempts ** 2 });
+			message.retry({ delaySeconds: Math.min(attempts ** 2, 900) });
 		}
 	}));
 };
