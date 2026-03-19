@@ -8,8 +8,10 @@ defmodule FlirtualWeb.FeedbackController do
 
   def authenticated?(conn) do
     String.match?(conn.assigns[:authorization_token_type], ~r/bearer/i) and
-      conn.assigns[:authorization_token] ==
+      Plug.Crypto.secure_compare(
+        conn.assigns[:authorization_token],
         Application.fetch_env!(:flirtual, :feedback_access_token)
+      )
   end
 
   def feedback_profile(conn, %{"slug" => slug}) do

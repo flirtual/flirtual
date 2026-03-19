@@ -94,10 +94,12 @@ defmodule Flirtual.User.Verification do
   def verify(login_id, code) when is_binary(code) do
     with %Login{user_id: user_id} <- Login.get(login_id),
          {:ok, _} <- ExRated.check_rate("verify:#{user_id}", @twelve_hours, 10),
-         %Verification{code: ^code} <- get(login_id) do
+         %Verification{code: stored_code} <- get(login_id),
+         true <- Plug.Crypto.secure_compare(code, stored_code) do
       :ok
     else
       nil -> {:error, :verification_invalid_code}
+      false -> {:error, :verification_invalid_code}
       %Verification{} -> {:error, :verification_invalid_code}
       {:error, _} -> {:error, :verification_rate_limit}
       error -> error
