@@ -561,7 +561,7 @@ defmodule Flirtual.Matchmaking do
           &1,
           :profile,
           &1.profile
-          |> Repo.preload([attributes: from(Attribute)])
+          |> Repo.preload(attributes: from(Attribute))
           |> Map.put(:custom_weights, &1.profile.custom_weights || %{})
         )
       )

@@ -10,7 +10,10 @@ defmodule FlirtualWeb.RevenueCatController do
   def webhook(conn, params) do
     with true <-
            String.match?(conn.assigns[:authorization_token_type], ~r/bearer/i) and
-             Plug.Crypto.secure_compare(conn.assigns[:authorization_token], config(:signing_secret)),
+             Plug.Crypto.secure_compare(
+               conn.assigns[:authorization_token],
+               config(:signing_secret)
+             ),
          :ok <- RevenueCat.handle_event(params) do
       conn
       |> put_status(:ok)

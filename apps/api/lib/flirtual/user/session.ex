@@ -197,7 +197,6 @@ defmodule Flirtual.User.Session do
   def hash_token(token) do
     :crypto.hash(@hash_algorithm, token)
   end
-
 end
 
 defimpl Jason.Encoder, for: Flirtual.User.Session do
