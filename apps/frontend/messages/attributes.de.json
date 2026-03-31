@@ -989,9 +989,6 @@
 		"ht3FF4tuWvsrSTwMXp5ujb": {
 			"name": "IronWolf VR"
 		},
-		"qzcXZATsnTgW29grR2fJ36": {
-			"name": "DiRT Rally"
-		},
 		"4rGM6uz7KwSnSoDCSjtFMT": {
 			"name": "FOREWARNED"
 		},
@@ -1376,17 +1373,11 @@
 		"uSKh9xCtykee2xADbmrodC": {
 			"name": "VZfit"
 		},
-		"p36v7ZTdy4uXN34gfArbQo": {
-			"name": "NERF Ultimate Championship"
-		},
 		"bFhFf6dKrnXwaob93HNGn2": {
 			"name": "The Unspoken"
 		},
 		"6ZBqAmK3V3PCp2dLxUTRB9": {
 			"name": "IRONSTRIKE"
-		},
-		"CYykpUUDfcKppKtCLAccrW": {
-			"name": "INVERSE"
 		},
 		"RwfdcvqjWW6aK2Upo5wNt3": {
 			"name": "Wands: Alliances"
@@ -1419,7 +1410,7 @@
 			"name": "SOUL COVENANT"
 		},
 		"eR5qPKfQ8answShFLd5Rj6": {
-			"name": "REQUISITION VR"
+			"name": "Requisition VR"
 		},
 		"33Tn42vj5imwGddPLnc8zP": {
 			"name": "NFL PRO ERA II"
@@ -1509,7 +1500,7 @@
 			"name": "The Wizards - Dark Times: Brotherhood"
 		},
 		"JS2xfAazDZXswSqR7AnMoB": {
-			"name": "Yeeps: Hide and Seek"
+			"name": "Yeeps"
 		},
 		"2eRxYQuuivHeVcZrCVZU8Q": {
 			"name": "Headspace XR"
@@ -1704,7 +1695,7 @@
 			"name": "Fros"
 		},
 		"QK9NxbH624bqndnd6km3C7": {
-			"name": "Grim"
+			"name": "GRIM"
 		},
 		"sFqtrBkyBXBMpKxyQ8CPtY": {
 			"name": "OmniCards"
@@ -1719,7 +1710,7 @@
 			"name": "StageTime"
 		},
 		"oSdX45iK42jPfXVXzrSsQH": {
-			"name": "Table Tennis X"
+			"name": "Ping Pong Club"
 		},
 		"ZrpacaWqQTP27GzowYAEyc": {
 			"name": "Virtual Hunter"
@@ -1777,9 +1768,6 @@
 		},
 		"YX8XwXs45gnHbLKEzDoUE3": {
 			"name": "MotoX"
-		},
-		"Evdb6StL4nVwAuck5tBdJf": {
-			"name": "Zombie Army VR"
 		},
 		"kACoE5h6cNfpe3YixemiHc": {
 			"name": "Basis"
@@ -1852,6 +1840,42 @@
 		},
 		"bAV6YcniiCzS85ua6iNeaA": {
 			"name": "ZIX"
+		},
+		"vrs7Sim89hgFhCFBPYRzY7": {
+			"name": "Aces of Thunder"
+		},
+		"iBhmMvafe3xZpDb3bjLTiM": {
+			"name": "Deadly Delivery"
+		},
+		"6GVSUyEZHjx4pB86SozBXe": {
+			"name": "Demeo x Dungeons & Dragons: Battlemarked"
+		},
+		"KmFuVctFYXysnMPp6hMzn8": {
+			"name": "Dread Meridian"
+		},
+		"45ZCnRNM263sv7y9XkbkTZ": {
+			"name": "Legendary Tales"
+		},
+		"wuJBKBouDtyXUdsRrKDGeP": {
+			"name": "NightClub Simulator VR"
+		},
+		"GbHAdzAjvV46B46H6FxAWb": {
+			"name": "Ninja Warrior VR"
+		},
+		"QkQzYZB3uqgFFLkyK2TaiL": {
+			"name": "PoligonVR"
+		},
+		"55XreduJ6GCvDgn4ysY4Ao": {
+			"name": "RUMBLE"
+		},
+		"itAqFvzYvyQMDg8FpNwHmG": {
+			"name": "Tower Tag"
+		},
+		"rAsonTNGiQsWGe3V4snY7F": {
+			"name": "Virtual Fighter Maneuvers"
+		},
+		"Rpkub7Hfj2wDvcHauR2mjZ": {
+			"name": "VMX"
 		}
 	},
 	"interest": {
