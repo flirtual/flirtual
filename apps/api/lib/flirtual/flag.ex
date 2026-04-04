@@ -370,5 +370,4 @@ defmodule Flirtual.Flag do
 
     :ok
   end
-
 end
