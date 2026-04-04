@@ -296,7 +296,6 @@ defmodule Flirtual.Flag do
   def check_profile_biography(profile, biography) do
     with biography_text <- biography |> Floki.parse_fragment!() |> Floki.text(),
          :ok <- check_flags(profile.user_id, biography_text),
-         :ok <- check_openai_moderation(profile.user_id, biography),
          :ok <- check_discord_in_biography(profile, biography) do
       :ok
     end
@@ -372,38 +371,4 @@ defmodule Flirtual.Flag do
     :ok
   end
 
-  def check_openai_moderation(_, nil), do: :ok
-
-  def check_openai_moderation(user_id, text) do
-    user = Users.get(user_id)
-
-    case OpenAI.moderations(input: text, model: "omni-moderation-latest") do
-      {:ok, %{results: [%{"categories" => categories, "category_scores" => scores}]}} ->
-        flagged_categories =
-          categories
-          |> Enum.reject(fn {category, _} -> category == "sexual" end)
-          |> Enum.filter(fn {category, _} -> scores[category] >= 0.9 end)
-
-        if Enum.any?(flagged_categories) do
-          flags =
-            flagged_categories
-            |> Enum.map(fn {category, _flagged} ->
-              "#{category} (#{Float.round(scores[category], 2)})"
-            end)
-            |> Enum.join(", ")
-
-          Discord.deliver_webhook(:flagged_bio, user: user, flags: flags)
-        end
-
-        :ok
-
-      {:error, reason} ->
-        Discord.deliver_webhook(:flagged_bio,
-          user: user,
-          flags: "error: #{inspect(reason)}"
-        )
-
-        :ok
-    end
-  end
 end

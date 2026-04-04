@@ -607,38 +607,6 @@ defmodule Flirtual.Discord do
     })
   end
 
-  def deliver_webhook(:flagged_bio, user: %User{} = user, flags: flags) do
-    webhook(:moderation_flags, %{
-      embeds: [
-        %{
-          author: webhook_author(user),
-          title: "Bio content flagged",
-          fields: [
-            %{
-              name: "Flags",
-              value: flags
-            }
-          ],
-          color: @default_color,
-          timestamp: DateTime.utc_now() |> DateTime.to_iso8601()
-        }
-      ],
-      components: [
-        %{
-          type: 1,
-          components: [
-            %{
-              type: 2,
-              label: "View profile",
-              style: 5,
-              url: User.url(user) |> URI.to_string()
-            }
-          ]
-        }
-      ]
-    })
-  end
-
   def deliver_webhook(:flagged_registered_underage,
         user: %User{} = user,
         previous_born_at: previous_born_at,
