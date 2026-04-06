@@ -78,6 +78,9 @@ const data = [
 						// https://developers.freshdesk.com/widget-api/
 						"*.freshworks.com",
 						"*.freshdesk.com",
+						// https://developers.google.com/recaptcha/docs/faq (Freshworks captcha)
+						"https://www.google.com/recaptcha/",
+						"https://www.gstatic.com/recaptcha/",
 						// https://developers.cloudflare.com/turnstile/reference/content-security-policy/
 						"challenges.cloudflare.com",
 						// https://developers.cloudflare.com/web-analytics/
@@ -121,6 +124,8 @@ const data = [
 						// https://developers.freshdesk.com/widget-api/
 						"*.freshworks.com",
 						"*.freshdesk.com",
+						// https://developers.google.com/recaptcha/docs/faq (Freshworks captcha)
+						"https://www.google.com/recaptcha/",
 						// https://github.com/passkeydeveloper/passkey-authenticator-aaguids
 						"raw.githubusercontent.com/passkeydeveloper/passkey-authenticator-aaguids/main/combined_aaguid.json",
 						// https://developers.cloudflare.com/web-analytics/
@@ -140,6 +145,9 @@ const data = [
 						new URL(apiOrigin).host,
 						// https://developers.cloudflare.com/turnstile/reference/content-security-policy/
 						"challenges.cloudflare.com",
+						// https://developers.google.com/recaptcha/docs/faq (Freshworks captcha)
+						"https://www.google.com/recaptcha/",
+						"https://recaptcha.google.com/recaptcha/",
 						// https://talkjs.com/docs/Features/Security_Settings/Content_Security_Policy/
 						"*.talkjs.com",
 						// https://www.chargebee.com/docs/2.0/embedded-checkout.html
