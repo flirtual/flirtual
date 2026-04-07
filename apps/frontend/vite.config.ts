@@ -1,4 +1,5 @@
 import { existsSync, readFileSync } from "node:fs";
+import { hostname as osHostname } from "node:os";
 
 import { reactRouter } from "@react-router/dev/vite";
 import { sentryReactRouter } from "@sentry/react-router";
@@ -35,16 +36,19 @@ function getManualChunk(moduleId: string) {
 export default defineConfig((config) => {
 	const { mode } = config;
 
-	const {
-		VITE_ORIGIN: origin,
-		VITE_API_URL: apiUrl,
-		VITE_SENTRY_ORGANIZATION: sentryOrganization,
-		VITE_SENTRY_PROJECT_ID: sentryProjectId,
-		SENTRY_AUTH_TOKEN: sentryAuthToken
-	} = loadEnv(mode, process.cwd(), "");
+	const env = loadEnv(mode, process.cwd(), "");
 
-	invariant(origin, "VITE_ORIGIN is required");
+	const defaultHost = osHostname();
+	const origin = env.VITE_ORIGIN || `https://${defaultHost}:3000`;
+	const apiUrl = env.VITE_API_URL || `https://${defaultHost}:4001/v1/`;
+	const sentryOrganization = env.VITE_SENTRY_ORGANIZATION;
+	const sentryProjectId = env.VITE_SENTRY_PROJECT_ID;
+	const sentryAuthToken = env.SENTRY_AUTH_TOKEN;
+
 	const { hostname } = new URL(origin);
+
+	if (!env.VITE_ORIGIN) process.env.VITE_ORIGIN = origin;
+	if (!env.VITE_API_URL) process.env.VITE_API_URL = apiUrl;
 
 	return {
 		esbuild: {
