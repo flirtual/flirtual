@@ -39,6 +39,18 @@ To trust the CA on Android:
 2. Transfer rootCA.pem to your device.
 3. In the Settings app on your device, navigate to Security & Privacy > More security & privacy > Encryption & credentials > Install a certificate > CA certificate, and select the file.
 
+### iOS app
+
+* Install [Xcode](https://developer.apple.com/xcode/) with iOS platform support, and `brew install cocoapods`.
+
+* Source the environment: `source .env.local`.
+
+* Sync Capacitor: `pnpm cap sync`.
+
+* Build and run the app: `pnpm cap run ios`.
+
+* You can view the client logs with `xcrun simctl spawn booted log stream --predicate 'process == "Flirtual"'` (simulator) or `idevicesyslog --process Flirtual` (physical device).
+
 ### Android app
 Tip: Windows Subsystem for Linux (WSL) doesn't work nicely with Android Studio, so you'll have to run all device commands in a Windows terminal.
 
@@ -53,15 +65,3 @@ Tip: Windows Subsystem for Linux (WSL) doesn't work nicely with Android Studio, 
 * Build and run the app: `pnpm cap run android`.
 
 * You can view the client logs with `adb logcat --pid=$(adb shell pidof -s zone.homie.flirtual.pwa)`.
-
-### iOS app
-
-* Install [Xcode](https://developer.apple.com/xcode/) with iOS platform support, and `brew install cocoapods`.
-
-* Source the environment: `source .env.local`.
-
-* Sync Capacitor: `pnpm cap sync`.
-
-* Build and run the app: `pnpm cap run ios`.
-
-* You can view the client logs with `xcrun simctl spawn booted log stream --predicate 'process == "Flirtual"'` (simulator) or `idevicesyslog --process Flirtual` (physical device).
