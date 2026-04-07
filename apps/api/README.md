@@ -1,73 +1,53 @@
-# api.flirtu.al
+# Flirtual API
 
-## Contribution
-### Initial installation and setup
-* Install [Docker](https://docs.docker.com/get-docker/) and the [asdf version manager](https://asdf-vm.com/guide/getting-started.html).
+## Get started
+* Install build dependencies:
 
-  * ``asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git``
+  ```sh
+  # Debian/Ubuntu
+  sudo apt install build-essential cmake
 
-  * ``asdf plugin add erlang https://github.com/asdf-vm/asdf-erlang.git``
+  # Fedora
+  sudo dnf install gcc gcc-c++ make cmake
 
-  * Use ``asdf install`` to install Elixir and Erlang.
+  # Arch
+  sudo pacman -S base-devel cmake
+
+  # macOS
+  xcode-select --install
+  brew install cmake
+  ```
+
+* Install [Docker](https://docs.docker.com/get-docker/) or [Apple Container](https://github.com/apple/container) (macOS 26+), and the [asdf version manager](https://asdf-vm.com/guide/getting-started.html).
+
+  * `asdf plugin add elixir https://github.com/asdf-vm/asdf-elixir.git`
+
+  * `asdf plugin add erlang https://github.com/asdf-vm/asdf-erlang.git`
+
+  * Run `asdf install` to install Elixir and Erlang.
 
 * Configure the required environment variables.
 
-	* Copy `.env.example` to `.env.local`.
+  * Copy the example environment: `cp .env.example .env.local`
 
-  * Fill in all the required values.
+  * Fill in the values in .env.local.
 
 * Set up the project.
 
-	* Bring the environment variables into scope using: `source .env.local`.
+  * Source the environment: `source .env.local`.
 
-	* Start postgres in a detached state manually with: `docker compose up -d postgres`.
+  * Start postgres:
+
+    * Docker: `docker compose up -d postgres`
+    * Apple Container: `container run --detach --name postgres --publish 5432:5432 -e POSTGRES_PASSWORD=postgres -e PGDATA=/var/lib/postgresql/data/pgdata -v pgdata:/var/lib/postgresql/data postgres:17-alpine postgres -N 500`
 
   * Run `mix setup` to install dependencies, create the database, and run migrations.
 
   * Run `mix phx.gen.cert` to generate a self-signed TLS certificate.
 
-* Start the server with `./dev.sh`, this will start the server and automatically recompile on file changes.
+* Start the server with `./dev.sh`.
 
-* Now you can visit [`127.0.0.1:4001`](https://127.0.0.1:4001) from your browser.
-
-### Database snapshots
-
-When doing long-running operations, like dumping the database, it is recommended to fork the database on [fly.io, our database provider](https://fly.io), then run the operation on the forked database to avoid downtime.
-
-```sh
-fly postgres create --fork-from flirtual-db
-```
-Then, you can connect using the credentials provided by the command above.
-```sh
-fly proxy 5433:5432 -a <new-app-name>
-```
-
-Using the new connection, you can finally dump the database. When dumping the database, it is recommended to exclude the `likes_and_passes` and `oban` tables to avoid dumping unnecessary data, this often reduces the dump size by a significant amount.
-```sh
-pg_dump -Fc -h localhost -p 5433 -U postgres \
-  --exclude-table-data='*.likes_and_passes' \
-  --exclude-table-data='*.oban*' \
-  flirtual > dump.$(date +%s%3N).sql
-```
-The dump file will be saved in the current directory.
-
-#### Restoring a database snapshot to a local database
-
-```sh
-pg_restore -Fc -C --no-privileges --no-owner \
-  -h localhost -p 5432 -U postgres \
-  -d postgres dump-<timestamp>.sql
-
-psql -h localhost -p 5432 -U postgres \
-  -d postgres <<EOF
-select pg_terminate_backend(pid)
-from pg_stat_activity
-where pid <> pg_backend_pid()
-    and datname = 'flirtual';
-
-alter database "flirtual" rename to "flirtual_dev";
-EOF
-```
+* The API is now listening on port 4000 (http) and 4001 (https).
 
 ### mkcert
 
@@ -75,7 +55,6 @@ As an alternative to `mix phx.gen.cert`, you can use [mkcert](https://github.com
 
 ```sh
 mkcert -install
-mkdir priv/cert
 mkcert -cert-file priv/cert/selfsigned.pem \
        -key-file priv/cert/selfsigned_key.pem \
        $(hostname) localhost 127.0.0.1 ::1

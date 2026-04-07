@@ -10,7 +10,8 @@ build
 # Sentry Auth Token
 .sentryclirc
 
-certificates
+certificates/*
+!certificates/.gitkeep
 
 # eslint
 .eslintcache
