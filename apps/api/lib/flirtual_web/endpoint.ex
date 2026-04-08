@@ -30,6 +30,7 @@ defmodule FlirtualWeb.Endpoint do
     ])
     |> MapSet.to_list()
     |> Enum.map(&to_string/1)
+    |> Enum.map(&String.downcase/1)
   end
 
   plug(CORSPlug,
