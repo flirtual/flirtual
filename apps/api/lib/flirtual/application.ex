@@ -64,7 +64,25 @@ defmodule Flirtual.Application do
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: Flirtual.Supervisor]
-    Supervisor.start_link(children, opts)
+    result = Supervisor.start_link(children, opts)
+
+    create_elasticsearch_index()
+
+    result
+  end
+
+  defp create_elasticsearch_index do
+    if Flirtual.Elasticsearch.index_exists?(:users) do
+      :ok
+    else
+      case Flirtual.Elasticsearch.create_index(:users) do
+        :ok ->
+          Logger.info("Created Elasticsearch 'users' index.")
+
+        {:error, reason} ->
+          Logger.warning("Failed to create Elasticsearch 'users' index: #{inspect(reason)}")
+      end
+    end
   end
 
   # Tell Phoenix to update the endpoint configuration
