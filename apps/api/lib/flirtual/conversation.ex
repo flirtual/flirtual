@@ -5,10 +5,12 @@ defmodule Flirtual.Conversation do
 
   require Flirtual.Utilities
   import Flirtual.Utilities
+  import Ecto.Query
 
   alias Flirtual.Conversation
   alias Flirtual.Conversation.Message
   alias Flirtual.Conversation.Cursor
+  alias Flirtual.Matchmaking
   alias Flirtual.Talkjs
   alias Flirtual.User.Profile.LikesAndPasses
 
@@ -164,10 +166,33 @@ defmodule Flirtual.Conversation do
       %{"errorCode" => "CONVERSATION_NOT_FOUND"} ->
         {:error, :not_found}
 
+      {:error, :not_configured} ->
+        get_from_conversation_id(conversation_id)
+
       reason ->
         log(:error, [:get], reason: reason)
         {:error, :upstream}
     end
+  end
+
+  # Fallback when TalkJS is not configured
+  defp get_from_conversation_id(conversation_id) do
+    LikesAndPasses
+    |> where(type: :like)
+    |> Flirtual.Repo.all()
+    |> Enum.find_value(fn lap ->
+      if Talkjs.new_conversation_id(lap.profile_id, lap.target_id) == conversation_id do
+        {:ok,
+         %Conversation{
+           id: conversation_id,
+           kind: lap.kind,
+           participants: [lap.profile_id, lap.target_id],
+           last_message: nil,
+           is_unread: false,
+           created_at: lap.created_at
+         }}
+      end
+    end) || {:error, :not_found}
   end
 
   def list(user_id, token \\ nil) do
@@ -197,12 +222,27 @@ defmodule Flirtual.Conversation do
         {:error, :invalid_limit}
 
       {:error, :not_configured} ->
-        {:ok, {[], Cursor.map(cursor, [])}}
+        data = list_from_matches(user_id)
+        {:ok, {data, Cursor.map(cursor, data)}}
 
       reason ->
         log(:error, [:list], reason: reason)
         {:error, :upstream}
     end
+  end
+
+  defp list_from_matches(user_id) do
+    LikesAndPasses.list_matches(profile_id: user_id)
+    |> Enum.map(fn lap ->
+      %Conversation{
+        id: Talkjs.new_conversation_id(user_id, lap.target_id),
+        kind: Matchmaking.reduce_kind(lap.kind, lap.opposite.kind),
+        participants: [user_id, lap.target_id],
+        last_message: nil,
+        is_unread: false,
+        created_at: lap.created_at
+      }
+    end)
   end
 
   defimpl Jason.Encoder do

@@ -223,6 +223,9 @@ defmodule Flirtual.Talkjs do
     case fetch(:put, "conversations/" <> conversation_id, data) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         {:ok, Poison.decode!(body)}
+
+      {:error, :not_configured} ->
+        {:ok, nil}
     end
   end
 
@@ -241,6 +244,9 @@ defmodule Flirtual.Talkjs do
          ) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         {:ok, Poison.decode!(body)}
+
+      {:error, :not_configured} ->
+        {:ok, nil}
     end
   end
 
@@ -277,6 +283,9 @@ defmodule Flirtual.Talkjs do
 
       {:ok, %HTTPoison.Response{status_code: 404, body: body}} ->
         {:ok, Poison.decode!(body)}
+
+      {:error, :not_configured} ->
+        {:ok, nil}
     end
   end
 
@@ -284,6 +293,9 @@ defmodule Flirtual.Talkjs do
     case fetch(:post, "conversations/" <> conversation_id <> "/messages", messages) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         {:ok, Poison.decode!(body)}
+
+      {:error, :not_configured} ->
+        {:ok, nil}
     end
   end
 
@@ -293,6 +305,9 @@ defmodule Flirtual.Talkjs do
          ) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         Poison.decode!(body)["data"]
+
+      {:error, :not_configured} ->
+        []
     end
   end
 
@@ -311,6 +326,9 @@ defmodule Flirtual.Talkjs do
     case fetch(:get, "conversations/" <> conversation_id <> "/messages", nil, query: options) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         Poison.decode!(body)["data"]
+
+      {:error, :not_configured} ->
+        []
     end
   end
 end
