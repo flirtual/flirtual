@@ -80,3 +80,16 @@ mkcert -cert-file priv/cert/selfsigned.pem \
        -key-file priv/cert/selfsigned_key.pem \
        $(hostname) localhost 127.0.0.1 ::1
 ```
+
+### Seed data
+
+You can populate the database with fake users and likes/passes for testing by entering the following in the IEx shell:
+
+```elixir
+Flirtual.Faker.create_users(100)
+Flirtual.Faker.create_likes_passes(target_id: "YOUR_USER_ID", count: 25)
+```
+
+### Check emails
+
+You can view emails sent by the API at /dev/mailbox in your browser.
