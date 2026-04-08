@@ -35,95 +35,95 @@ export default [
 	_index("./app/root-redirect.tsx"),
 	...prefix(":locale", [
 		_layout("./app/[locale]/layout.tsx", [
-		layout("(public)", [
-			index("(public)/home"),
+			layout("(public)", [
+				index("(public)/home"),
 			// page("/home", "(public)/home"),
 			// route("/", "(public)/route"),
-		]),
-		layout("(minimal)", [
-			layout("(minimal)/(guest)", [
-				page("login", "(minimal)/(guest)/login"),
-				page("sign-up", "(minimal)/(guest)/sign-up"),
-				page("forgot", "(minimal)/(guest)/forgot"),
-				page("underage", "(minimal)/(guest)/underage"),
 			]),
-			layout("(minimal)/(session)", [
-				page("onboarding/1", "(minimal)/(session)/onboarding/1"),
-				page("onboarding/2", "(minimal)/(session)/onboarding/2"),
-			])
-		]),
-		layout("(app)", [
-			layout("(app)/(authenticated)", [
-				page("finish/1", "(app)/(authenticated)/finish/1"),
-				page("finish/2", "(app)/(authenticated)/finish/2"),
-				page("finish/3", "(app)/(authenticated)/finish/3"),
-				page("finish/4", "(app)/(authenticated)/finish/4"),
-				page("finish/5", "(app)/(authenticated)/finish/5"),
-				page("subscription", "(app)/(authenticated)/subscription"),
-				layout("(app)/(authenticated)/(onboarded)", [
-					page(":slug", "(app)/(authenticated)/(onboarded)/[slug]"),
-					// page("discover/:group", "(app)/(authenticated)/(onboarded)/discover/[group]"),
-					page("dates", "(app)/(authenticated)/(onboarded)/discover", { id: "dates" }),
-					page("homies", "(app)/(authenticated)/(onboarded)/discover", { id: "homies" }),
-					page("likes", "(app)/(authenticated)/(onboarded)/likes"),
-					layout("(app)/(authenticated)/(onboarded)/matches", [
-						page("matches", "(app)/(authenticated)/(onboarded)/matches"),
-						page("matches/:conversationId", "(app)/(authenticated)/(onboarded)/matches/[conversationId]")
-					])
+			layout("(minimal)", [
+				layout("(minimal)/(guest)", [
+					page("login", "(minimal)/(guest)/login"),
+					page("sign-up", "(minimal)/(guest)/sign-up"),
+					page("forgot", "(minimal)/(guest)/forgot"),
+					page("underage", "(minimal)/(guest)/underage"),
+				]),
+				layout("(minimal)/(session)", [
+					page("onboarding/1", "(minimal)/(session)/onboarding/1"),
+					page("onboarding/2", "(minimal)/(session)/onboarding/2"),
+				])
+			]),
+			layout("(app)", [
+				layout("(app)/(authenticated)", [
+					page("finish/1", "(app)/(authenticated)/finish/1"),
+					page("finish/2", "(app)/(authenticated)/finish/2"),
+					page("finish/3", "(app)/(authenticated)/finish/3"),
+					page("finish/4", "(app)/(authenticated)/finish/4"),
+					page("finish/5", "(app)/(authenticated)/finish/5"),
+					page("subscription", "(app)/(authenticated)/subscription"),
+					layout("(app)/(authenticated)/(onboarded)", [
+						page(":slug", "(app)/(authenticated)/(onboarded)/[slug]"),
+						// page("discover/:group", "(app)/(authenticated)/(onboarded)/discover/[group]"),
+						page("dates", "(app)/(authenticated)/(onboarded)/discover", { id: "dates" }),
+						page("homies", "(app)/(authenticated)/(onboarded)/discover", { id: "homies" }),
+						page("likes", "(app)/(authenticated)/(onboarded)/likes"),
+						layout("(app)/(authenticated)/(onboarded)/matches", [
+							page("matches", "(app)/(authenticated)/(onboarded)/matches"),
+							page("matches/:conversationId", "(app)/(authenticated)/(onboarded)/matches/[conversationId]")
+						])
 					// route("me", "(app)/(authenticated)/(onboarded)/me/route"),
+					]),
+					layout("(app)/(authenticated)/settings", [
+						page("settings", "(app)/(authenticated)/settings"),
+						page("settings/appearance", "(app)/(authenticated)/settings/(account)/appearance"),
+						page("settings/connections", "(app)/(authenticated)/settings/(account)/connections"),
+						page("settings/deactivate", "(app)/(authenticated)/settings/(account)/deactivate"),
+						page("settings/delete", "(app)/(authenticated)/settings/(account)/delete"),
+						page("settings/email", "(app)/(authenticated)/settings/(account)/email"),
+						page("settings/fun", "(app)/(authenticated)/settings/(account)/fun"),
+						page("settings/notifications", "(app)/(authenticated)/settings/(account)/notifications"),
+						page("settings/password", "(app)/(authenticated)/settings/(account)/password"),
+						page("settings/privacy", "(app)/(authenticated)/settings/(account)/privacy"),
+						page("settings/reactivate", "(app)/(authenticated)/settings/(account)/reactivate"),
+						page("settings/referral", "(app)/(authenticated)/settings/(account)/referral"),
+						page("settings/bio", "(app)/(authenticated)/settings/(profile)/bio"),
+						page("settings/info", "(app)/(authenticated)/settings/(profile)/info"),
+						page("settings/interests", "(app)/(authenticated)/settings/(profile)/interests"),
+						page("settings/matchmaking", "(app)/(authenticated)/settings/(profile)/matchmaking"),
+						page("settings/nsfw", "(app)/(authenticated)/settings/(profile)/nsfw"),
+						page("settings/personality", "(app)/(authenticated)/settings/(profile)/personality"),
+					]),
+					layout("(app)/(authenticated)/(admin)", [
+						page("stats", "(app)/(authenticated)/(admin)/stats"),
+					]),
+					layout("(app)/(authenticated)/(moderator)", [
+						page("flags", "(app)/(authenticated)/(moderator)/flags"),
+						page("reports", "(app)/(authenticated)/(moderator)/reports"),
+						page("search", "(app)/(authenticated)/(moderator)/search"),
+					]),
+					layout("(app)/(authenticated)/(debugger)", [
+						page("test/vrchat-browse", "(app)/(authenticated)/(debugger)/test/vrchat-browse"),
+					]),
 				]),
-				layout("(app)/(authenticated)/settings", [
-					page("settings", "(app)/(authenticated)/settings"),
-					page("settings/appearance", "(app)/(authenticated)/settings/(account)/appearance"),
-					page("settings/connections", "(app)/(authenticated)/settings/(account)/connections"),
-					page("settings/deactivate", "(app)/(authenticated)/settings/(account)/deactivate"),
-					page("settings/delete", "(app)/(authenticated)/settings/(account)/delete"),
-					page("settings/email", "(app)/(authenticated)/settings/(account)/email"),
-					page("settings/fun", "(app)/(authenticated)/settings/(account)/fun"),
-					page("settings/notifications", "(app)/(authenticated)/settings/(account)/notifications"),
-					page("settings/password", "(app)/(authenticated)/settings/(account)/password"),
-					page("settings/privacy", "(app)/(authenticated)/settings/(account)/privacy"),
-					page("settings/reactivate", "(app)/(authenticated)/settings/(account)/reactivate"),
-					page("settings/referral", "(app)/(authenticated)/settings/(account)/referral"),
-					page("settings/bio", "(app)/(authenticated)/settings/(profile)/bio"),
-					page("settings/info", "(app)/(authenticated)/settings/(profile)/info"),
-					page("settings/interests", "(app)/(authenticated)/settings/(profile)/interests"),
-					page("settings/matchmaking", "(app)/(authenticated)/settings/(profile)/matchmaking"),
-					page("settings/nsfw", "(app)/(authenticated)/settings/(profile)/nsfw"),
-					page("settings/personality", "(app)/(authenticated)/settings/(profile)/personality"),
+				layout("(app)/(public)", [
+					page("about", "(app)/(public)/about"),
+					page("branding", "(app)/(public)/branding"),
+					page("confirm-email", "(app)/(public)/confirm-email"),
+					page("debugger", "(app)/(public)/debugger"),
+					page("news", "(app)/(public)/news"),
+					page("download", "(app)/(public)/download"),
+					page("events", "(app)/(public)/events"),
+					page("guidelines", "(app)/(public)/guidelines"),
+					page("guides", "(app)/(public)/guides"),
+					page("guides/mental-health", "(app)/(public)/guides/mental-health"),
+					page("payments", "(app)/(public)/payments"),
+					page("press", "(app)/(public)/press"),
+					page("privacy", "(app)/(public)/privacy"),
+					page("privacy-20230605", "(app)/(public)/privacy-20230605"),
+					page("terms", "(app)/(public)/terms"),
+					page("terms-20231011", "(app)/(public)/terms-20231011"),
 				]),
-				layout("(app)/(authenticated)/(admin)", [
-					page("stats", "(app)/(authenticated)/(admin)/stats"),
-				]),
-				layout("(app)/(authenticated)/(moderator)", [
-					page("flags", "(app)/(authenticated)/(moderator)/flags"),
-					page("reports", "(app)/(authenticated)/(moderator)/reports"),
-					page("search", "(app)/(authenticated)/(moderator)/search"),
-				]),
-				layout("(app)/(authenticated)/(debugger)", [
-					page("test/vrchat-browse", "(app)/(authenticated)/(debugger)/test/vrchat-browse"),
-				]),
-			]),
-			layout("(app)/(public)", [
-				page("about", "(app)/(public)/about"),
-				page("branding", "(app)/(public)/branding"),
-				page("confirm-email", "(app)/(public)/confirm-email"),
-				page("debugger", "(app)/(public)/debugger"),
-				page("news", "(app)/(public)/news"),
-				page("download", "(app)/(public)/download"),
-				page("events", "(app)/(public)/events"),
-				page("guidelines", "(app)/(public)/guidelines"),
-				page("guides", "(app)/(public)/guides"),
-				page("guides/mental-health", "(app)/(public)/guides/mental-health"),
-				page("payments", "(app)/(public)/payments"),
-				page("press", "(app)/(public)/press"),
-				page("privacy", "(app)/(public)/privacy"),
-				page("privacy-20230605", "(app)/(public)/privacy-20230605"),
-				page("terms", "(app)/(public)/terms"),
-				page("terms-20231011", "(app)/(public)/terms-20231011"),
-			]),
-			route("*", "not-found")
-		])
+				route("*", "not-found")
+			])
 		])
 	]),
 
