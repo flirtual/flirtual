@@ -38,7 +38,7 @@ export default defineConfig((config) => {
 	// eslint-disable-next-line unicorn/prevent-abbreviations
 	const env = loadEnv(mode, process.cwd(), "");
 
-	const defaultHost = osHostname();
+	const defaultHost = osHostname().toLowerCase();
 	const origin = env.VITE_ORIGIN || `https://${defaultHost}:3000`;
 	const apiUrl = env.VITE_API_URL || `https://${defaultHost}:4001/v1/`;
 	const sentryOrganization = env.VITE_SENTRY_ORGANIZATION;
