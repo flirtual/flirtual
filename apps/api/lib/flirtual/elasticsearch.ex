@@ -36,6 +36,15 @@ defmodule Flirtual.Elasticsearch do
   #   end
   # end
 
+  def index_exists?(index) when is_atom(index) do
+    index_name = get_index_name(index)
+
+    case Elasticsearch.get(Flirtual.Elasticsearch, "/" <> index_name) do
+      {:ok, _} -> true
+      {:error, _} -> false
+    end
+  end
+
   def delete_index(index) when is_atom(index) do
     index_name = get_index_name(index)
     log(:warning, [index_name, "delete-index"], nil)
