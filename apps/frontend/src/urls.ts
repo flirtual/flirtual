@@ -104,10 +104,12 @@ export const bucketNames = [
 
 export type BucketName = typeof bucketNames[number];
 
+const apiOriginBase = new URL(apiUrl).origin;
+
 export const bucketOriginMap = {
 	static: "https://static.flirtual.com",
-	content: bucketContentOrigin,
-	uploads: bucketUploadsOrigin
+	content: bucketContentOrigin || `${apiOriginBase}/v1/images/files`,
+	uploads: bucketUploadsOrigin || `${apiOriginBase}/v1/images/files`
 } as const satisfies Record<BucketName, string>;
 
 export const bucketOrigins = Object.values(bucketOriginMap);

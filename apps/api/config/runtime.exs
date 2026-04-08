@@ -93,13 +93,15 @@ config :flirtual, Flirtual.FCM,
 
 config :joken, default_signer: System.fetch_env!("JOKEN_SECRET")
 
-config :ex_aws,
-  access_key_id: System.fetch_env!("R2_ACCESS_KEY_ID"),
-  secret_access_key: System.fetch_env!("R2_SECRET_ACCESS_KEY"),
-  s3: [
-    host: System.fetch_env!("R2_HOSTNAME"),
-    region: "auto"
-  ]
+if System.get_env("R2_HOSTNAME") do
+  config :ex_aws,
+    access_key_id: System.fetch_env!("R2_ACCESS_KEY_ID"),
+    secret_access_key: System.fetch_env!("R2_SECRET_ACCESS_KEY"),
+    s3: [
+      host: System.fetch_env!("R2_HOSTNAME"),
+      region: "auto"
+    ]
+end
 
 config :chargebeex,
   namespace: System.fetch_env!("CHARGEBEE_NAMESPACE"),
@@ -120,11 +122,25 @@ config :openai,
 
 origin = URI.parse(System.fetch_env!("ORIGIN"))
 
+content_origin = System.get_env("BUCKET_CONTENT_ORIGIN", "") |> then(&if(&1 != "", do: &1))
+uploads_origin = System.get_env("BUCKET_UPLOADS_ORIGIN", "") |> then(&if(&1 != "", do: &1))
+local_uploads? = System.get_env("R2_HOSTNAME", "") == ""
+
 config :flirtual,
   root_origin: URI.parse(System.fetch_env!("ROOT_ORIGIN")),
   frontend_origin: URI.parse(System.fetch_env!("FRONTEND_ORIGIN")),
-  content_origin: URI.parse(System.fetch_env!("BUCKET_CONTENT_ORIGIN")),
-  uploads_origin: URI.parse(System.fetch_env!("BUCKET_UPLOADS_ORIGIN")),
+  content_origin: content_origin && URI.parse(content_origin),
+  uploads_origin: uploads_origin && URI.parse(uploads_origin),
+  local_uploads?: local_uploads?,
+  local_uploads_dir:
+    if(local_uploads?,
+      do:
+        System.get_env(
+          "LOCAL_UPLOADS_DIR",
+          Path.join(:code.priv_dir(:flirtual) |> to_string(), "uploads")
+        ),
+      else: nil
+    ),
   origin: origin,
   session_signing_salt: System.fetch_env!("SESSION_SIGNING_SALT"),
   image_access_token: System.fetch_env!("IMAGE_ACCESS_TOKEN"),

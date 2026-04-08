@@ -371,8 +371,10 @@ defmodule Flirtual.Faker do
   defp get_random_images(count \\ 3) do
     1..count
     |> Enum.map(fn _ ->
-      case upload_image_to_r2() do
-        {:ok, id} -> id
+      with {:ok, image_data} <- get_random_image(),
+           {:ok, id} <- upload_image(image_data) do
+        id
+      else
         _ -> nil
       end
     end)
@@ -398,10 +400,15 @@ defmodule Flirtual.Faker do
     end
   end
 
-  defp upload_image_to_r2 do
-    with {:ok, image_data} <- get_random_image() do
-      id = Ecto.UUID.generate()
+  defp upload_image(image_data) do
+    id = Ecto.UUID.generate()
 
+    if Application.get_env(:flirtual, :local_uploads?) do
+      uploads_dir = Application.fetch_env!(:flirtual, :local_uploads_dir)
+      File.mkdir_p!(uploads_dir)
+      File.write!(Path.join(uploads_dir, id), image_data)
+      {:ok, id}
+    else
       bucket =
         case Application.get_env(:flirtual, :canary) do
           true -> "pfpup-canary"

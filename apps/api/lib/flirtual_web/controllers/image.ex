@@ -28,28 +28,75 @@ defmodule FlirtualWeb.ImageController do
     with {:ok, _} <- ExRated.check_rate("upload_image:#{user_id}", @twelve_hours, 100) do
       id = UUID.generate()
 
-      bucket =
-        case Application.get_env(:flirtual, :canary) do
-          true -> "pfpup-canary"
-          _ -> "pfpup"
-        end
+      if Application.get_env(:flirtual, :local_uploads?) do
+        origin = Application.fetch_env!(:flirtual, :origin)
 
-      {:ok, signed_url} =
-        ExAws.Config.new(:s3, []) |> ExAws.S3.presigned_url(:put, bucket, id, [])
+        conn
+        |> json(%{id: id, signed_url: "#{origin}/v1/images/#{id}/file"})
+      else
+        bucket =
+          case Application.get_env(:flirtual, :canary) do
+            true -> "pfpup-canary"
+            _ -> "pfpup"
+          end
 
-      conn
-      |> json(%{id: id, signed_url: signed_url})
+        {:ok, signed_url} =
+          ExAws.Config.new(:s3, []) |> ExAws.S3.presigned_url(:put, bucket, id, [])
+
+        conn
+        |> json(%{id: id, signed_url: signed_url})
+      end
     else
       {:error, _} -> {:error, {:unauthorized, :upload_rate_limit}}
+    end
+  end
+
+  def local_upload(conn, %{"image_id" => id}) do
+    with {:ok, _} <- UUID.cast(id) do
+      uploads_dir = Application.fetch_env!(:flirtual, :local_uploads_dir)
+      File.mkdir_p!(uploads_dir)
+
+      file_path = Path.join(uploads_dir, id)
+
+      {:ok, body, conn} = Plug.Conn.read_body(conn, length: 64_000_000)
+      File.write!(file_path, body)
+
+      conn
+      |> put_resp_header("etag", "\"#{id}\"")
+      |> send_resp(:ok, "")
+    else
+      :error -> {:error, {:bad_request, :invalid_id}}
+    end
+  end
+
+  def local_file(conn, %{"path" => path_parts}) do
+    uploads_dir = Application.fetch_env!(:flirtual, :local_uploads_dir)
+    file_path = Path.join([uploads_dir | path_parts])
+
+    # Prevent directory traversal
+    if String.starts_with?(Path.expand(file_path), Path.expand(uploads_dir)) and
+         File.exists?(file_path) do
+      conn
+      |> cache_control([:public, :immutable, {"max-age", [year: 1]}])
+      |> send_file(200, file_path)
+    else
+      {:error, {:not_found, :file_not_found}}
     end
   end
 
   def view(conn, %{"image_id" => image_id, "type" => variant}) do
     with %Image{} = image <- Image.get(image_id),
          :ok <- Policy.can(conn, :view, image) do
+      conn =
+        conn
+        |> cache_control([:public, :immutable, {"max-age", [year: 1]}])
+
+      conn =
+        if image.external_id,
+          do: put_resp_header(conn, "etag", image.external_id),
+          else: conn
+
       conn
-      |> cache_control([:public, :immutable, {"max-age", [year: 1]}])
-      |> put_resp_header("etag", image.external_id)
       |> put_status(:permanent_redirect)
       |> redirect(external: Image.url(image, variant))
     else

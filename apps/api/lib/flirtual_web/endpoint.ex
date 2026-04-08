@@ -38,7 +38,8 @@ defmodule FlirtualWeb.Endpoint do
       "cache-control"
     ],
     expose: [
-      "retry-after"
+      "retry-after",
+      "etag"
     ]
   )
 
