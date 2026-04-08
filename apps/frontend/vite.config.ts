@@ -5,7 +5,6 @@ import { reactRouter } from "@react-router/dev/vite";
 import { sentryReactRouter } from "@sentry/react-router";
 import basicSsl from "@vitejs/plugin-basic-ssl";
 import sonda from "sonda/vite";
-import invariant from "tiny-invariant";
 import info from "unplugin-info/vite";
 import remoteAssets from "unplugin-remote-assets/vite";
 import { defineConfig, loadEnv } from "vite";
@@ -36,6 +35,7 @@ function getManualChunk(moduleId: string) {
 export default defineConfig((config) => {
 	const { mode } = config;
 
+	// eslint-disable-next-line unicorn/prevent-abbreviations
 	const env = loadEnv(mode, process.cwd(), "");
 
 	const defaultHost = osHostname();
