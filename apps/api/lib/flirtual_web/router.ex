@@ -91,8 +91,11 @@ defmodule FlirtualWeb.Router do
           post("/", ImageController, :resolve_scan_queue)
         end
 
+        get("/files/*path", ImageController, :local_file)
+
         scope "/:image_id" do
           get("/view", ImageController, :view)
+          put("/file", ImageController, :local_upload)
         end
       end
 

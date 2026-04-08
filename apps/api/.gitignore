@@ -26,4 +26,8 @@ flirtual-*.tar
 
 # mix phx.gen.cert
 priv/cert
+
+# Local image uploads
+priv/uploads
+
 fly-staging.json

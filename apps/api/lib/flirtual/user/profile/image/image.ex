@@ -74,15 +74,32 @@ defmodule Flirtual.User.Profile.Image do
   end
 
   def url(:content, path) when is_binary(path) do
-    URI.new!(Application.get_env(:flirtual, :content_origin))
-    |> URI.merge(path |> URI.encode())
-    |> URI.to_string()
+    case Application.get_env(:flirtual, :content_origin) do
+      nil ->
+        local_file_url(path)
+
+      origin ->
+        URI.new!(origin)
+        |> URI.merge(path |> URI.encode())
+        |> URI.to_string()
+    end
   end
 
   def url(:uploads, path) when is_binary(path) do
-    URI.new!(Application.get_env(:flirtual, :uploads_origin))
-    |> URI.merge(path |> URI.encode())
-    |> URI.to_string()
+    case Application.get_env(:flirtual, :uploads_origin) do
+      nil ->
+        local_file_url(path)
+
+      origin ->
+        URI.new!(origin)
+        |> URI.merge(path |> URI.encode())
+        |> URI.to_string()
+    end
+  end
+
+  defp local_file_url(path) do
+    origin = Application.fetch_env!(:flirtual, :origin)
+    "#{origin}/v1/images/files/#{path |> URI.encode()}"
   end
 
   def url(_, variant) do
