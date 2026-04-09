@@ -129,7 +129,7 @@ defmodule Flirtual.Elasticsearch do
             "hidden_from_nonvisible" => %{
               "type" => "boolean"
             },
-            "tz_hour" => %{
+            "tz_norm" => %{
               "type" => "integer"
             },
             "geolocation" => %{

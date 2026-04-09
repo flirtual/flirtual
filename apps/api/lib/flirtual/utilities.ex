@@ -41,6 +41,31 @@ defmodule Flirtual.Utilities do
     dt.utc_offset + dt.std_offset
   end
 
+  def timezone_normalized(timezone) when is_atom(timezone) do
+    timezone_normalized(Atom.to_string(timezone))
+  end
+
+  def timezone_normalized(timezone) when is_binary(timezone) do
+    year = DateTime.utc_now().year
+    utc = "Etc/UTC"
+
+    # Approximate average offset, assuming DST is observed ~half the year.
+    {:ok, jan} =
+      DateTime.shift_zone(DateTime.new!(Date.new!(year, 1, 15), ~T[12:00:00], utc), timezone)
+
+    {:ok, jul} =
+      DateTime.shift_zone(DateTime.new!(Date.new!(year, 7, 15), ~T[12:00:00], utc), timezone)
+
+    jan_offset = jan.utc_offset + jan.std_offset
+    jul_offset = jul.utc_offset + jul.std_offset
+
+    standard_offset = min(jan_offset, jul_offset)
+    dst_shift = abs(jul_offset - jan_offset)
+
+    # Round to nearest half-hour. Sorry, Nepal.
+    round(standard_offset / 1800) + if(dst_shift > 0, do: 1, else: 0)
+  end
+
   def map_exclude_keys(map, keys) do
     Map.filter(map, &(elem(&1, 0) not in keys))
   end

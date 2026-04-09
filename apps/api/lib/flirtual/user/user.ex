@@ -1301,9 +1301,9 @@ defimpl Elasticsearch.Document, for: Flirtual.User do
           hidden_from_nonvisible:
             user.tns_discord_in_biography !== nil and :moderator not in user.tags and
               :admin not in user.tags,
-          tz_hour:
+          tz_norm:
             if(profile.timezone,
-              do: div(Flirtual.Utilities.timezone_offset(profile.timezone), 3600),
+              do: Flirtual.Utilities.timezone_normalized(profile.timezone),
               else: nil
             ),
           geolocation:

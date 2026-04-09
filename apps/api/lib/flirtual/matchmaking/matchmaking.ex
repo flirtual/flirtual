@@ -1168,28 +1168,29 @@ defmodule Flirtual.Matchmaking do
     end
   end
 
-  @tz_max_diff 6
+  # Max difference in half-hour steps (12 = 6 hours).
+  @tz_max_diff 12
 
   def query(:timezone, %User{} = user) do
     %{profile: %{timezone: timezone, custom_weights: custom_weights} = profile} = user
 
     if timezone do
-      target = div(timezone_offset(timezone), 3600)
+      target = timezone_normalized(timezone)
       scale = location_scale(profile)
       weight = Map.get(custom_weights, :location) || 1
 
-      # Term query per hour offset with decreasing boost. Wraparound handled
-      # by modular arithmetic so e.g. UTC+12 and UTC-12 are 0 hours apart.
+      # Term query per half-hour offset with decreasing boost. Wraparound handled by modular
+      # arithmetic so e.g. UTC+12 and UTC-12 are 0 hours apart.
       0..@tz_max_diff
       |> Enum.flat_map(fn i ->
-        [rem(target + i + 12, 24) - 12, rem(target - i + 12, 24) - 12]
+        [rem(target + i + 24, 48) - 24, rem(target - i + 24, 48) - 24]
         |> Enum.uniq()
-        |> Enum.map(fn hour ->
+        |> Enum.map(fn half_hour ->
           %{
             "constant_score" => %{
               "filter" => %{
                 "term" => %{
-                  "tz_hour" => %{"value" => hour}
+                  "tz_norm" => %{"value" => half_hour}
                 }
               },
               "boost" =>
