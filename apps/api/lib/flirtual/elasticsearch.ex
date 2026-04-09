@@ -128,6 +128,9 @@ defmodule Flirtual.Elasticsearch do
             },
             "hidden_from_nonvisible" => %{
               "type" => "boolean"
+            },
+            "tz_hour" => %{
+              "type" => "integer"
             }
           }
         }

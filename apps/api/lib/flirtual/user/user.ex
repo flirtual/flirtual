@@ -1300,7 +1300,12 @@ defimpl Elasticsearch.Document, for: Flirtual.User do
             |> Repo.all(),
           hidden_from_nonvisible:
             user.tns_discord_in_biography !== nil and :moderator not in user.tags and
-              :admin not in user.tags
+              :admin not in user.tags,
+          tz_hour:
+            if(profile.timezone,
+              do: div(Flirtual.Utilities.timezone_offset(profile.timezone), 3600),
+              else: nil
+            )
         },
         if(user.preferences.nsfw,
           do: %{
