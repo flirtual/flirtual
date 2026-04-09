@@ -131,6 +131,9 @@ defmodule Flirtual.Elasticsearch do
             },
             "tz_hour" => %{
               "type" => "integer"
+            },
+            "geolocation" => %{
+              "type" => "geo_point"
             }
           }
         }

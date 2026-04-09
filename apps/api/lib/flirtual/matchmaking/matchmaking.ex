@@ -752,6 +752,7 @@ defmodule Flirtual.Matchmaking do
         :custom_interests,
         :games,
         :location,
+        :geolocation,
         :monopoly,
         :relationships,
         :domsub,
@@ -899,25 +900,74 @@ defmodule Flirtual.Matchmaking do
     )
   end
 
-  def query(:location, %User{} = user) do
-    %{profile: %{country: country, custom_weights: custom_weights}} = user
+  # Scale base location-related weights so they add up to 30 even if you don't have all 3 location
+  # fields on your profile.
+  @location_base %{country: 9, geolocation: 16, timezone: 5}
+  @location_target 30
 
-    # Are $a and $b from the same country?
-    if(country,
-      do: %{
-        "constant_score" => %{
-          "filter" => %{
-            "term" => %{
-              "country" => %{
-                "value" => country
+  defp location_scale(%{country: country, latitude: lat, longitude: lon, timezone: timezone}) do
+    present =
+      if(country, do: @location_base.country, else: 0) +
+        if(lat && lon, do: @location_base.geolocation, else: 0) +
+        if(timezone, do: @location_base.timezone, else: 0)
+
+    if present > 0, do: @location_target / present, else: 1.0
+  end
+
+  def query(:location, %User{} = user) do
+    %{profile: %{country: country, custom_weights: custom_weights} = profile} = user
+    scale = location_scale(profile)
+    weight = Map.get(custom_weights, :location) || 1
+
+    if country do
+      List.flatten([
+        # Are $a and $b from the same country?
+        %{
+          "constant_score" => %{
+            "filter" => %{
+              "term" => %{
+                "country" => %{
+                  "value" => country
+                }
               }
+            },
+            "boost" => @location_base.country * scale * weight
+          }
+        },
+        # Additional country boost for targets without geolocation.
+        if(profile.latitude && profile.longitude,
+          do: %{
+            "constant_score" => %{
+              "filter" => %{
+                "bool" => %{
+                  "must" => [%{"term" => %{"country" => %{"value" => country}}}],
+                  "must_not" => [%{"exists" => %{"field" => "geolocation"}}]
+                }
+              },
+              "boost" => 12 * scale * weight
             }
           },
-          "boost" => 20 * (Map.get(custom_weights, :location) || 1)
-        }
-      },
-      else: []
-    )
+          else: []
+        ),
+        # Additional country boost for targets without timezone.
+        if(profile.timezone,
+          do: %{
+            "constant_score" => %{
+              "filter" => %{
+                "bool" => %{
+                  "must" => [%{"term" => %{"country" => %{"value" => country}}}],
+                  "must_not" => [%{"exists" => %{"field" => "tz_hour"}}]
+                }
+              },
+              "boost" => 3.3 * scale * weight
+            }
+          },
+          else: []
+        )
+      ])
+    else
+      []
+    end
   end
 
   def query(:monopoly, %User{} = user) do
@@ -1093,13 +1143,39 @@ defmodule Flirtual.Matchmaking do
     ]
   end
 
+  def query(:geolocation, %User{} = user) do
+    %{profile: %{latitude: lat, longitude: lon, custom_weights: custom_weights} = profile} = user
+
+    if lat && lon do
+      scale = location_scale(profile)
+      weight = Map.get(custom_weights, :location) || 1
+
+      %{
+        "function_score" => %{
+          "exp" => %{
+            "geolocation" => %{
+              "origin" => %{"lat" => lat, "lon" => lon},
+              "scale" => "4000km",
+              "offset" => "100km",
+              "decay" => 0.5
+            }
+          },
+          "boost" => @location_base.geolocation * scale * weight
+        }
+      }
+    else
+      []
+    end
+  end
+
   @tz_max_diff 6
 
   def query(:timezone, %User{} = user) do
-    %{profile: %{timezone: timezone, custom_weights: custom_weights}} = user
+    %{profile: %{timezone: timezone, custom_weights: custom_weights} = profile} = user
 
     if timezone do
       target = div(timezone_offset(timezone), 3600)
+      scale = location_scale(profile)
       weight = Map.get(custom_weights, :location) || 1
 
       # Term query per hour offset with decreasing boost. Wraparound handled
@@ -1116,7 +1192,8 @@ defmodule Flirtual.Matchmaking do
                   "tz_hour" => %{"value" => hour}
                 }
               },
-              "boost" => (@tz_max_diff + 1 - i) * weight
+              "boost" =>
+                (@tz_max_diff - i) / @tz_max_diff * @location_base.timezone * scale * weight
             }
           }
         end)

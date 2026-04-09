@@ -1305,6 +1305,11 @@ defimpl Elasticsearch.Document, for: Flirtual.User do
             if(profile.timezone,
               do: div(Flirtual.Utilities.timezone_offset(profile.timezone), 3600),
               else: nil
+            ),
+          geolocation:
+            if(profile.latitude && profile.longitude,
+              do: %{"lat" => profile.latitude, "lon" => profile.longitude},
+              else: nil
             )
         },
         if(user.preferences.nsfw,
