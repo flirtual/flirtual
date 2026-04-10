@@ -1,6 +1,6 @@
 import { SelectItemText } from "@radix-ui/react-select";
 import { useQuery } from "@tanstack/react-query";
-import { createContext, use, useMemo } from "react";
+import { createContext, use, useEffect, useMemo, useState } from "react";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -67,6 +67,12 @@ export function InputTimezoneSelect({ prefer, ...props }: InputTimezoneSelectPro
 	);
 	const preferredTimezone = prefer ?? browserTimezone;
 
+	const [currentMinute, setCurrentMinute] = useState(() => Math.floor(Date.now() / 60000));
+	useEffect(() => {
+		const interval = setInterval(() => setCurrentMinute(Math.floor(Date.now() / 60000)), 60000);
+		return () => clearInterval(interval);
+	}, []);
+
 	const offsetMap = useMemo(
 		() => new Map(timezones.map((tz) => [tz.id, tz.offset])),
 		[timezones]
@@ -89,7 +95,8 @@ export function InputTimezoneSelect({ prefer, ...props }: InputTimezoneSelectPro
 				if (b.id === preferredTimezone) return 1;
 				return 0;
 			});
-	}, [timezones, preferredTimezone]);
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [timezones, preferredTimezone, currentMinute]);
 
 	return (
 		<OffsetMapContext value={offsetMap}>
