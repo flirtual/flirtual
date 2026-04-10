@@ -789,7 +789,7 @@ defmodule Flirtual.Matchmaking do
             }
           }
         },
-        "boost" => 15 * (Map.get(custom_weights, :likes) || 1)
+        "boost" => 20 * (Map.get(custom_weights, :likes) || 1)
       }
     }
   end
@@ -900,10 +900,10 @@ defmodule Flirtual.Matchmaking do
     )
   end
 
-  # Scale base location-related weights so they add up to 30 even if you don't have all 3 location
+  # Scale base location-related weights so they add up to 40 even if you don't have all 3 location
   # fields on your profile.
-  @location_base %{country: 9, geolocation: 16, timezone: 5}
-  @location_target 30
+  @location_base %{country: 12, geolocation: 21, timezone: 7}
+  @location_target 40
 
   defp location_scale(%{country: country, latitude: lat, longitude: lon, timezone: timezone}) do
     present =
