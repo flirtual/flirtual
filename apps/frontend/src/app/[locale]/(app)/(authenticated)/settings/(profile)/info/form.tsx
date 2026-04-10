@@ -229,28 +229,24 @@ export const InfoForm: FC = () => {
 							</>
 						)}
 					</FormField>
-					{user.tags?.includes("debugger") && (
-						<>
-							<div className="flex flex-col gap-2">
-								<InputLabel>{t("geolocation")}</InputLabel>
+					<div className="flex flex-col gap-2">
+						<InputLabel>{t("geolocation")}</InputLabel>
+						<InputLabelHint className="-mt-2">
+							{t("geolocation_hint")}
+						</InputLabelHint>
+						<InputGeolocation />
+					</div>
+					<FormField name="timezone">
+						{(field) => (
+							<>
+								<InputLabel>{t("timezone")}</InputLabel>
 								<InputLabelHint className="-mt-2">
-									{t("geolocation_hint")}
+									{t("timezone_hint")}
 								</InputLabelHint>
-								<InputGeolocation />
-							</div>
-							<FormField name="timezone">
-								{(field) => (
-									<>
-										<InputLabel>{t("timezone")}</InputLabel>
-										<InputLabelHint className="-mt-2">
-											{t("timezone_hint")}
-										</InputLabelHint>
-										<InputTimezoneSelect {...field.props} />
-									</>
-								)}
-							</FormField>
-						</>
-					)}
+								<InputTimezoneSelect {...field.props} />
+							</>
+						)}
+					</FormField>
 					<FormField name="languages">
 						{(field) => (
 							<>

@@ -8,7 +8,7 @@ import { metaMerge, rootMeta } from "~/meta";
 import { attributeFetcher, attributeKey, queryClient } from "~/query";
 
 import type { Route } from "./+types/page";
-import { Onboarding2Form } from "./form";
+import { Onboarding3Form } from "./form";
 
 export const meta: Route.MetaFunction = (options) => {
 	invariant(isLocale(options.params.locale));
@@ -16,15 +16,13 @@ export const meta: Route.MetaFunction = (options) => {
 
 	return metaMerge([
 		...rootMeta(options),
-		{ title: t("page_title", { name: t("more_about_you") }) }
+		{ title: t("page_title", { name: t("want_to_meet") }) }
 	]);
 };
 
 export const handle = {
 	preload: () => Promise.all(([
-		"game",
-		"interest",
-		"platform",
+		"gender"
 	] as const).map((type) => queryClient.prefetchQuery({
 		queryKey: attributeKey(type),
 		queryFn: attributeFetcher
@@ -33,17 +31,12 @@ export const handle = {
 
 export const clientLoader = handle.preload;
 
-export default function Onboarding2Page() {
+export default function Onboarding3Page() {
 	const { t } = useTranslation();
 
 	return (
-		<ModelCard
-			branded
-			miniFooter
-			className="shrink-0 desktop:max-w-2xl"
-			title={t("more_about_you")}
-		>
-			<Onboarding2Form />
+		<ModelCard branded miniFooter className="desktop:max-w-2xl" title={t("want_to_meet")}>
+			<Onboarding3Form />
 		</ModelCard>
 	);
 }

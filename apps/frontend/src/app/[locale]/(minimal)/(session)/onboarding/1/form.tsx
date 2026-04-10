@@ -1,6 +1,5 @@
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
-import { fromEntries } from "remeda";
 
 import { isWretchError } from "~/api/common";
 import { User } from "~/api/user";
@@ -15,6 +14,8 @@ import {
 } from "~/components/inputs";
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
 import { InputCountrySelect } from "~/components/inputs/specialized";
+import { InputGeolocation } from "~/components/inputs/specialized/geolocation-input";
+import { InputTimezoneSelect } from "~/components/inputs/specialized/timezone-select";
 import { endOfYear, toLocalDateString } from "~/date";
 import {
 	useAttributes,
@@ -29,8 +30,6 @@ import { useOptimisticRoute } from "~/preload";
 import { invalidate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
-const AttributeKeys = [...(["gender", "game", "interest"] as const)];
-
 export const Onboarding1Form: FC = () => {
 	const { user } = useSession();
 	const { profile } = user;
@@ -41,9 +40,7 @@ export const Onboarding1Form: FC = () => {
 
 	const { country } = useConfig();
 
-	const games = useAttributes("game");
 	const genders = useAttributes("gender");
-	const interests = useAttributes("interest");
 
 	const tAttribute = useAttributeTranslation();
 
@@ -56,9 +53,8 @@ export const Onboarding1Form: FC = () => {
 					? new Date(user.bornAt.replaceAll("-", "/"))
 					: new Date(),
 				country: user.profile.country ?? country ?? null,
-				game: profile.attributes.game || [],
-				gender: profile.attributes.gender || [],
-				interest: profile.attributes.interest || []
+				timezone: (profile.timezone ?? Intl.DateTimeFormat().resolvedOptions().timeZone) as string | null,
+				gender: profile.attributes.gender || []
 			}}
 			className="flex flex-col gap-8"
 			requireChange={false}
@@ -70,16 +66,8 @@ export const Onboarding1Form: FC = () => {
 					}),
 					Profile.update(user.id, {
 						country: values.country ?? "none",
-						...fromEntries(
-							AttributeKeys.map((type) => {
-								return [
-									`${type}Id`,
-									type === "gender"
-										? values[type]?.filter((id) => id !== "other")
-										: values[type]
-								] as const;
-							})
-						)
+						timezone: values.timezone ?? "none",
+						genderId: values.gender?.filter((id) => id !== "other")
 					})
 				])
 					.then(async () => {
@@ -175,57 +163,26 @@ export const Onboarding1Form: FC = () => {
 					<FormField name="country">
 						{(field) => (
 							<>
-								<InputLabel hint={t("optional")}>{t("location")}</InputLabel>
+								<InputLabel hint={t("optional")}>{t("country")}</InputLabel>
 								<InputCountrySelect {...field.props} prefer={country ?? "us"} />
 							</>
 						)}
 					</FormField>
-					<FormField name="game">
+					<div className="flex flex-col gap-2">
+						<InputLabel hint={t("optional")}>{t("geolocation")}</InputLabel>
+						<InputLabelHint className="-mt-2">
+							{t("geolocation_hint")}
+						</InputLabelHint>
+						<InputGeolocation />
+					</div>
+					<FormField name="timezone">
 						{(field) => (
 							<>
-								<InputLabel hint={t("up_to_number", { number: 5 })}>{t("vr_apps_games")}</InputLabel>
+								<InputLabel hint={t("optional")}>{t("timezone")}</InputLabel>
 								<InputLabelHint className="-mt-2">
-									{t("game_hint")}
+									{t("timezone_hint")}
 								</InputLabelHint>
-								<InputAutocomplete
-									{...field.props}
-									options={games.map((game) => ({
-										key: game,
-										label: tAttribute[game]?.name ?? game
-									}))}
-									limit={5}
-									placeholder={t("select_games")}
-									value={field.props.value || []}
-								/>
-							</>
-						)}
-					</FormField>
-					<FormField name="interest">
-						{(field) => (
-							<>
-								<InputLabel hint={t("up_to_number", { number: 10 })}>{t("interests")}</InputLabel>
-								<InputLabelHint className="-mt-2">
-									{t("onboarding_interests_hint")}
-								</InputLabelHint>
-								<InputAutocomplete
-									{...field.props}
-									options={interests
-										.filter(
-											(interest) =>
-												interest.category === "iiCe39JvGQAAtsrTqnLddb"
-										)
-										.map((interest) => ({
-											key: interest.id,
-											label: tAttribute[interest.id]?.name ?? interest.id
-										}))
-										.sort((a, b) => {
-											if (a.label > b.label) return 1;
-											return -1;
-										})}
-									limit={10}
-									placeholder={t("select_interests")}
-									value={field.props.value || []}
-								/>
+								<InputTimezoneSelect {...field.props} />
 							</>
 						)}
 					</FormField>

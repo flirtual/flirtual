@@ -13,8 +13,7 @@ import { FormButton } from "~/components/forms/button";
 import {
 	InputAutocomplete,
 	InputLabel,
-	InputSelect,
-	InputSwitch
+	InputSelect
 } from "~/components/inputs";
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
 import { InputLanguageAutocomplete } from "~/components/inputs/specialized";
@@ -26,7 +25,6 @@ import { mutate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
 export const Finish2Form: FC = () => {
-	const platforms = useAttributes("platform");
 	const sexualities = useAttributes("sexuality");
 
 	const session = useOptionalSession();
@@ -44,9 +42,7 @@ export const Finish2Form: FC = () => {
 			fields={{
 				relationships: profile.relationships ?? [],
 				monopoly: profile.monopoly,
-				new: profile.new ?? false,
 				languages: user.profile.languages ?? [],
-				platformId: user.profile.attributes.platform || [],
 				sexualityId: user.profile.attributes.sexuality || []
 			}}
 			className="flex flex-col gap-8"
@@ -56,8 +52,7 @@ export const Finish2Form: FC = () => {
 					...values,
 					relationships: values.relationships ?? [],
 					monopoly: values.monopoly ?? "none",
-					languages: values.languages,
-					new: values.new
+					languages: values.languages
 				});
 
 				await mutate(sessionKey(), {
@@ -148,30 +143,6 @@ export const Finish2Form: FC = () => {
 							<>
 								<InputLabel>{t("language")}</InputLabel>
 								<InputLanguageAutocomplete limit={5} {...field.props} />
-							</>
-						)}
-					</FormField>
-					<FormField name="platformId">
-						{(field) => (
-							<>
-								<InputLabel>{t("vr_setup")}</InputLabel>
-								<InputAutocomplete
-									{...field.props}
-									options={platforms.map((platformId) => ({
-										key: platformId,
-										label: tAttribute[platformId]?.name || platformId
-									}))}
-									limit={8}
-									placeholder={t("select_the_platforms_you_use")}
-								/>
-							</>
-						)}
-					</FormField>
-					<FormField name="new">
-						{(field) => (
-							<>
-								<InputLabel>{t("nimble_hour_bumblebee_savor")}</InputLabel>
-								<InputSwitch {...field.props} />
 							</>
 						)}
 					</FormField>

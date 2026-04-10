@@ -171,7 +171,7 @@ export const urls = {
 		of: (conversationId: string) => `/matches/${conversationId}`
 	},
 	likes: "/likes",
-	onboarding: (onboardingIndex: 1 | 2) => `/onboarding/${onboardingIndex}`,
+	onboarding: (onboardingIndex: 1 | 2 | 3) => `/onboarding/${onboardingIndex}`,
 	finish: (finishIndex: FinishPage) => `/finish/${finishIndex}`,
 	subscription: {
 		default: "/subscription",

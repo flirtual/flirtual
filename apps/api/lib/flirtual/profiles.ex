@@ -181,7 +181,7 @@ defmodule Flirtual.Profiles do
       |> validate_attributes(:game_id, "game")
       |> validate_length(:game, min: 1, max: 5)
       |> validate_attributes(:platform_id, "platform")
-      |> validate_length(:platform, max: 8)
+      |> validate_length(:platform, min: 1, max: 8)
       |> validate_attributes(:interest_id, "interest")
       |> then(fn changeset ->
         if not changed?(changeset, :interest_id) and not changed?(changeset, :custom_interests) do

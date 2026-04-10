@@ -50,6 +50,7 @@ export default [
 				layout("(minimal)/(session)", [
 					page("onboarding/1", "(minimal)/(session)/onboarding/1"),
 					page("onboarding/2", "(minimal)/(session)/onboarding/2"),
+					page("onboarding/3", "(minimal)/(session)/onboarding/3"),
 				])
 			]),
 			layout("(app)", [
