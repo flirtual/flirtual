@@ -24,6 +24,7 @@ export const handle = {
 	preload: () => Promise.all(([
 		"gender",
 		"country",
+		"timezone"
 	] as const).map((type) => queryClient.prefetchQuery({
 		queryKey: attributeKey(type),
 		queryFn: attributeFetcher

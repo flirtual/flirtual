@@ -1,10 +1,11 @@
 import { SelectItemText } from "@radix-ui/react-select";
-import { useQuery } from "@tanstack/react-query";
-import { createContext, use, useEffect, useMemo, useState } from "react";
+import ms from "ms.macro";
+import { createContext, use, useCallback, useMemo } from "react";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 
-import { listTimezones } from "~/api/timezones";
+import { useAttributes } from "~/hooks/use-attribute";
+import { useIntervalValue } from "~/hooks/use-interval";
 
 import { InputSelect, SelectItem } from "../select";
 import type { InputSelectProps } from "../select";
@@ -55,11 +56,7 @@ export type InputTimezoneSelectProps = {
 export function InputTimezoneSelect({ prefer, ...props }: InputTimezoneSelectProps) {
 	const { t } = useTranslation();
 
-	const { data: timezones = [] } = useQuery({
-		queryKey: ["timezones"],
-		queryFn: listTimezones,
-		staleTime: Infinity
-	});
+	const timezones = useAttributes("timezone");
 
 	const browserTimezone = useMemo(
 		() => Intl.DateTimeFormat().resolvedOptions().timeZone,
@@ -67,18 +64,12 @@ export function InputTimezoneSelect({ prefer, ...props }: InputTimezoneSelectPro
 	);
 	const preferredTimezone = prefer ?? browserTimezone;
 
-	const [currentMinute, setCurrentMinute] = useState(() => Math.floor(Date.now() / 60000));
-	useEffect(() => {
-		const interval = setInterval(() => setCurrentMinute(Math.floor(Date.now() / 60000)), 60000);
-		return () => clearInterval(interval);
-	}, []);
-
 	const offsetMap = useMemo(
 		() => new Map(timezones.map((tz) => [tz.id, tz.offset])),
 		[timezones]
 	);
 
-	const options = useMemo(() => {
+	const options = useIntervalValue(useCallback(() => {
 		return timezones
 			.map((tz) => {
 				const city = getCityName(tz.id);
@@ -95,8 +86,7 @@ export function InputTimezoneSelect({ prefer, ...props }: InputTimezoneSelectPro
 				if (b.id === preferredTimezone) return 1;
 				return 0;
 			});
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [timezones, preferredTimezone, currentMinute]);
+	}, [preferredTimezone, timezones]), ms("5s"));
 
 	return (
 		<OffsetMapContext value={offsetMap}>

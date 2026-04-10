@@ -68,6 +68,24 @@ defmodule Flirtual.Attribute do
     Languages.list(:bcp_47) |> Enum.map(&%Attribute{id: &1, type: "language"})
   end
 
+  def list(type: "timezone") do
+    now = DateTime.utc_now()
+
+    timezones =
+      TzExtra.time_zone_ids()
+      |> Enum.reject(&String.starts_with?(&1, "Etc/"))
+      |> Enum.map(fn id ->
+        {:ok, dt} = DateTime.shift_zone(now, id)
+        offset = dt.utc_offset + dt.std_offset
+        city = id |> String.split("/") |> List.last()
+        {id, offset, city}
+      end)
+      |> Enum.sort_by(fn {_id, offset, city} -> {offset, city} end)
+      |> Enum.map(fn {id, offset, _city} ->
+        %Attribute{id: id, type: "timezone", metadata: %{offset: offset}}
+      end)
+  end
+
   def list(type: "relationship") do
     [
       %Attribute{

@@ -22,7 +22,8 @@ export const attributeTypes = [
 	"relationship",
 	"report-reason",
 	"sexuality",
-	"warn-reason"
+	"warn-reason",
+	"timezone"
 ] as const;
 
 export type AttributeType = (typeof attributeTypes)[number];
@@ -71,6 +72,9 @@ export interface AttributeMetadata {
 	"warn-reason"?: {
 		fallback?: boolean;
 		shadowban?: boolean;
+	};
+	timezone: {
+		offset: number;
 	};
 }
 

@@ -1,5 +1,4 @@
 import { Geolocation } from "@capacitor/geolocation";
-import { useState } from "react";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -9,7 +8,7 @@ import { Button } from "~/components/button";
 import { useDevice } from "~/hooks/use-device";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { invalidate, sessionKey } from "~/query";
+import { invalidate, sessionKey, useMutation } from "~/query";
 
 export const InputGeolocation: FC = () => {
 	const { t } = useTranslation();
@@ -17,40 +16,33 @@ export const InputGeolocation: FC = () => {
 	const { user } = useSession();
 	const { native } = useDevice();
 
-	const [loading, setLoading] = useState(false);
+	const { isPending, mutate } = useMutation({
+		mutationFn: async () => {
+			if (native)
+				await Geolocation.requestPermissions({ permissions: ["coarseLocation"] });
+
+			const position = await Geolocation.getCurrentPosition();
+			await Profile.updateGeolocation(user.id, {
+				longitude: position.coords.longitude,
+				latitude: position.coords.latitude
+			});
+		},
+		onSuccess: () => toasts.add(t("geolocation_updated")),
+		onError: (reason) => {
+			if (isWretchError(reason)) return toasts.addError(t(`errors.${reason.json.error}` as any));
+			toasts.addError(reason);
+		},
+		onSettled: () => invalidate({ queryKey: sessionKey() })
+	});
 
 	return (
 		<div className="flex gap-2">
 			<Button
-				disabled={loading}
+				pending={isPending}
 				size="sm"
-				onClick={async () => {
-					setLoading(true);
-					if (native)
-						await Geolocation.requestPermissions({ permissions: ["coarseLocation"] });
-					await Geolocation.getCurrentPosition()
-						.then((position) =>
-							Profile.updateGeolocation(user.id, {
-								longitude: position.coords.longitude,
-								latitude: position.coords.latitude
-							})
-						)
-						.then(() => toasts.add(t("geolocation_updated")))
-						.catch((reason) => {
-							if (isWretchError(reason)) {
-								toasts.addError(t(`errors.${reason.json.error}` as any));
-							}
-							else {
-								toasts.addError(reason);
-							}
-						})
-						.finally(() => {
-							setLoading(false);
-							void invalidate({ queryKey: sessionKey() });
-						});
-				}}
+				onClick={() => mutate()}
 			>
-				{loading
+				{isPending
 					? t("updating")
 					: user.profile.longitude && user.profile.latitude
 						? t("update_location")
