@@ -80,7 +80,7 @@ export function InputTimezoneSelect({ prefer, ...props }: InputTimezoneSelectPro
 
 				return {
 					id: tz.id,
-					name: `${city} (${time})`,
+					name: `${city} time (${time})`,
 					offset: tz.offset
 				};
 			})

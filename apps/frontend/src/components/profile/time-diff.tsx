@@ -28,11 +28,12 @@ const clockIcons: Array<React.FC<LucideProps> | null> = [
 export const TimeDiff: React.FC<TimeDiffProps> = ({ diff, displayName }) => {
 	const { t } = useTranslation();
 
-	const sign = diff < 0 ? "-" : "+";
 	const absDiff = Math.abs(diff);
 	const hours = Math.floor(absDiff / 3600);
 	const minutes = Math.floor((absDiff % 3600) / 60);
-	const formattedDiff = `${sign}${hours}:${minutes.toString().padStart(2, "0")}`;
+	const formattedDiff = minutes > 0
+		? t("time_diff_hm", { sign: diff < 0 ? "-" : "+", hours, minutes })
+		: t("time_diff_h", { sign: diff < 0 ? "-" : "+", hours });
 
 	const now = new Date();
 	const theirTime = new Date(now.getTime() + diff * 1000);

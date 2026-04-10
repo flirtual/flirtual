@@ -61,6 +61,12 @@ export const Location2025: FC<{ onSaved?: () => void }> = ({ onSaved }) => {
 									<InputLabel>{t("geolocation")}</InputLabel>
 									<InputLabelHint className="-mt-2">
 										{t("geolocation_hint")}
+										<details>
+											<summary className="text-pink opacity-75 transition-opacity hover:cursor-pointer hover:opacity-100">
+												{t("privacy")}
+											</summary>
+											{t("geolocation_privacy_details")}
+										</details>
 									</InputLabelHint>
 									<InputGeolocation />
 								</div>

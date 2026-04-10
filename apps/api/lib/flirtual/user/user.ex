@@ -329,8 +329,11 @@ defmodule Flirtual.User do
   end
 
   @miles_countries [:us, :gb, :lr, :mm]
-  @miles_buckets [50, 100, 250, 500, 1000, 2000, 3000, 4000, 5000]
-  @km_buckets [100, 250, 500, 1000, 2000, 3000, 4000, 5000]
+  @miles_buckets [50, 100, 250, 500, 1000]
+  @km_buckets [100, 250, 500, 1000, 1500, 2000]
+
+  @miles_max 1500
+  @km_max 2500
 
   defp round_to_nearest(value, [last]), do: if(value > last, do: :max, else: last)
 
@@ -341,20 +344,28 @@ defmodule Flirtual.User do
   defp format_distance(meters, country) when country in @miles_countries do
     mi = meters / 1609.34
 
-    case round_to_nearest(mi, @miles_buckets) do
-      :max -> "5000mi+"
-      50 -> "<50mi"
-      n -> "#{n}mi"
+    if mi > @miles_max do
+      nil
+    else
+      case round_to_nearest(mi, @miles_buckets) do
+        :max -> "~#{List.last(@miles_buckets)}mi"
+        50 -> "<50mi"
+        n -> "~#{n}mi"
+      end
     end
   end
 
   defp format_distance(meters, _) do
     km = meters / 1000
 
-    case round_to_nearest(km, @km_buckets) do
-      :max -> "5000km+"
-      100 -> "<100km"
-      n -> "#{n}km"
+    if km > @km_max do
+      nil
+    else
+      case round_to_nearest(km, @km_buckets) do
+        :max -> "~#{List.last(@km_buckets)}km"
+        100 -> "<100km"
+        n -> "~#{n}km"
+      end
     end
   end
 
