@@ -48,11 +48,13 @@ defmodule Flirtual.RevenueCat do
           "product_id" => product_id,
           "app_user_id" => customer_id,
           "store" => platform,
-          "id" => event_id
+          "id" => event_id,
+          "purchased_at_ms" => purchased_at_ms
         }
       })
       when type in ["INITIAL_PURCHASE", "RENEWAL", "UNCANCELLATION", "NON_RENEWING_PURCHASE"] do
     with %User{} = user <- User.get(revenuecat_id: customer_id),
+         :ok <- check_stale(user.subscription, purchased_at_ms),
          %Plan{} = plan <- Plan.get(revenuecat_id: product_id),
          {:ok, subscription} <-
            Subscription.apply(:revenuecat, user, plan, platform, event_id) do
@@ -67,10 +69,12 @@ defmodule Flirtual.RevenueCat do
           "new_product_id" => product_id,
           "app_user_id" => customer_id,
           "store" => platform,
-          "id" => event_id
+          "id" => event_id,
+          "purchased_at_ms" => purchased_at_ms
         }
       }) do
     with %User{} = user <- User.get(revenuecat_id: customer_id),
+         :ok <- check_stale(user.subscription, purchased_at_ms),
          %Plan{} = plan <- Plan.get(revenuecat_id: product_id),
          {:ok, subscription} <-
            Subscription.apply(:revenuecat, user, plan, platform, event_id) do
@@ -117,6 +121,19 @@ defmodule Flirtual.RevenueCat do
   def handle_event(_) do
     {:unhandled, :ignored}
   end
+
+  defp check_stale(%Subscription{cancelled_at: cancelled_at}, purchased_at_ms)
+       when not is_nil(cancelled_at) and is_integer(purchased_at_ms) do
+    event_time = DateTime.from_unix!(purchased_at_ms, :millisecond)
+
+    if DateTime.compare(cancelled_at, event_time) == :gt do
+      {:unhandled, :stale}
+    else
+      :ok
+    end
+  end
+
+  defp check_stale(_, _), do: :ok
 
   def delete_customer(%User{
         revenuecat_id: nil
