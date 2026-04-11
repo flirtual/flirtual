@@ -330,20 +330,29 @@ export const LoginForm: FC = () => {
 					</span>
 					<hr className="my-8 h-px w-full border-0 bg-white-40 vision:bg-transparent dark:bg-black-60" />
 				</div>
-				<LoginConnectionButton tabIndex={5} type="discord" />
-				{/* {platform === "apple" ? (
-						<>
-							<LoginConnectionButton type="apple" />
-							<LoginConnectionButton type="google" />
-						</>
-					) : (
-						<>
-							<LoginConnectionButton type="google" />
-							<LoginConnectionButton type="apple" />
-						</>
-					)}
-					<LoginConnectionButton type="meta" /> */}
-				{/* <LoginConnectionButton type="vrchat" /> */}
+				{device.apple
+					? (
+							<>
+								<LoginConnectionButton tabIndex={5} type="apple" />
+								{/* <LoginConnectionButton tabIndex={6} type="google" /> */}
+								<LoginConnectionButton tabIndex={7} type="discord" />
+							</>
+						)
+					: device.android
+						? (
+								<>
+									{/* <LoginConnectionButton tabIndex={5} type="google" /> */}
+									<LoginConnectionButton tabIndex={6} type="apple" />
+									<LoginConnectionButton tabIndex={7} type="discord" />
+								</>
+							)
+						: (
+								<>
+									<LoginConnectionButton tabIndex={5} type="discord" />
+									{/* <LoginConnectionButton tabIndex={6} type="google" /> */}
+									<LoginConnectionButton tabIndex={7} type="apple" />
+								</>
+							)}
 			</div>
 		</>
 	);

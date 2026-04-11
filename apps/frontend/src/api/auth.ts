@@ -55,6 +55,18 @@ export interface AuthenticatePasskeyOptions {
 	deviceId?: string;
 }
 
+export interface SocialLoginOptions {
+	provider: "apple" | "google" | "meta";
+	idToken: string;
+	authorizationCode?: string;
+	deviceId?: string;
+	notifications?: boolean;
+}
+
+export interface SocialLoginLinkResponse {
+	status: "already_linked" | "linked";
+}
+
 interface PublicKeyCredentialCreationOptionsBase64
 	extends Omit<
 		PublicKeyCredentialCreationOptions,
@@ -203,5 +215,15 @@ export const Authentication = {
 				if (isWretchError(reason)) return reason.json;
 			})
 			.json<Issue<"verification_invalid_code"> | VerificationResponse>();
+	},
+	socialLogin(options: SocialLoginOptions) {
+		return api
+			.url("connections/grant")
+			.json({ type: options.provider, ...options })
+			.post()
+			.unauthorized((reason) => {
+				if (isWretchError(reason)) return reason.json;
+			})
+			.json<Issue<"account_banned"> | Issue<"invalid_token"> | Issue<"token_expired"> | Session | SocialLoginLinkResponse>();
 	}
 };

@@ -38,6 +38,14 @@ export default {
 	plugins: {
 		Flirtual: {
 			apiUrl
+		},
+		SocialLogin: {
+			providers: {
+				google: true,
+				facebook: true,
+				apple: true,
+				twitter: false
+			}
 		}
 	}
 } satisfies CapacitorConfig;

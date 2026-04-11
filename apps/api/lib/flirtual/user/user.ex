@@ -73,6 +73,7 @@ defmodule Flirtual.User do
     field(:slug, :string)
     field(:password_hash, :string, redact: true)
     field(:talkjs_id, :string, virtual: true)
+    field(:has_password, :boolean, virtual: true)
     field(:talkjs_signature, :string, redact: true)
     field(:listmonk_id, :integer)
     field(:unsubscribe_token, Ecto.ShortUUID)
@@ -1202,6 +1203,9 @@ defmodule Flirtual.User do
     user |> change(email_confirmed_at: now)
   end
 
+  def has_password?(%User{password_hash: password_hash}), do: is_binary(password_hash)
+  def has_password?(_), do: false
+
   @doc """
   Verifies the password.
 
@@ -1232,6 +1236,14 @@ defmodule Flirtual.User do
       changeset
     else
       add_error(changeset, field, "invalid_password")
+    end
+  end
+
+  def validate_current_password_if_set(changeset, user, options \\ []) do
+    if has_password?(user) do
+      validate_current_password(changeset, user, options)
+    else
+      changeset
     end
   end
 end
@@ -1343,6 +1355,7 @@ defimpl Jason.Encoder, for: Flirtual.User do
       :slug,
       :age,
       :born_at,
+      :has_password,
       :moderator_message,
       :moderator_note,
       :talkjs_signature,

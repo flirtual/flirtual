@@ -64,6 +64,7 @@ export type User = {
 	slug: string;
 	talkjsId: string;
 	talkjsSignature?: string;
+	hasPassword?: boolean;
 	apnsTokens?: Array<string>;
 	fcmTokens?: Array<string>;
 	platforms?: Array<string>;
@@ -133,13 +134,13 @@ export type UpdateUserOptions = Partial<
 >;
 
 export interface UpdateUserEmailOptions {
-	currentPassword: string;
+	currentPassword?: string;
 	email: string;
 	emailConfirmation: string;
 }
 
 export interface UpdateUserPasswordOptions {
-	currentPassword: string;
+	currentPassword?: string;
 	password: string;
 	passwordConfirmation: string;
 }

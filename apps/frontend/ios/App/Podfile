@@ -25,6 +25,7 @@ def capacitor_pods
   pod 'CapacitorToast', :path => '../../node_modules/.pnpm/@capacitor+toast@7.0.2_@capacitor+core@7.4.3/node_modules/@capacitor/toast'
   pod 'CapawesomeTeamCapacitorDatetimePicker', :path => '../../node_modules/.pnpm/@capawesome-team+capacitor-datetime-picker@7.0.1_@capacitor+core@7.4.3/node_modules/@capawesome-team/capacitor-datetime-picker'
   pod 'CapawesomeCapacitorAppUpdate', :path => '../../node_modules/.pnpm/@capawesome+capacitor-app-update@7.0.1_@capacitor+core@7.4.3/node_modules/@capawesome/capacitor-app-update'
+  pod 'CapgoCapacitorSocialLogin', :path => '../../node_modules/.pnpm/@capgo+capacitor-social-login@7.20.0_@capacitor+core@7.4.3/node_modules/@capgo/capacitor-social-login'
   pod 'CapgoInappbrowser', :path => '../../node_modules/.pnpm/@capgo+inappbrowser@7.6.8_@capacitor+core@7.4.3/node_modules/@capgo/inappbrowser'
   pod 'RevenuecatPurchasesCapacitor', :path => '../../node_modules/.pnpm/@revenuecat+purchases-capacitor@10.2.1_@capacitor+core@7.4.3/node_modules/@revenuecat/purchases-capacitor'
   pod 'CapacitorNativeSettings', :path => '../../node_modules/.pnpm/capacitor-native-settings@7.0.2_@capacitor+core@7.4.3/node_modules/capacitor-native-settings'

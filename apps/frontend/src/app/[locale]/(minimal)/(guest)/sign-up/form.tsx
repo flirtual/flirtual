@@ -14,14 +14,18 @@ import {
 	InputLabelHint,
 	InputText
 } from "~/components/inputs";
+import { useDevice } from "~/hooks/use-device";
 import { useLocale } from "~/i18n";
 import { useOptimisticRoute } from "~/preload";
 import { mutate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
+import { LoginConnectionButton } from "../login/login-connection-button";
+
 export const SignUpForm: FC = () => {
 	const { t } = useTranslation();
 	const [locale] = useLocale();
+	const device = useDevice();
 
 	useOptimisticRoute(urls.onboarding(1));
 
@@ -162,6 +166,38 @@ export const SignUpForm: FC = () => {
 						<FormInputMessages
 							messages={errors.map((value) => ({ type: "error", value }))}
 						/>
+					</div>
+					<div className="flex flex-col gap-2">
+						<div className="inline-flex items-center justify-center">
+							<span className="absolute left-1/2 mb-1 -translate-x-1/2 bg-white-20 px-3 font-montserrat font-semibold text-black-50 vision:bg-transparent vision:text-white-50 dark:bg-black-70 dark:text-white-50">
+								{t("or")}
+							</span>
+							<hr className="my-8 h-px w-full border-0 bg-white-40 vision:bg-transparent dark:bg-black-60" />
+						</div>
+						{device.apple
+							? (
+									<>
+										<LoginConnectionButton tabIndex={11} type="apple" />
+										{/* <LoginConnectionButton tabIndex={12} type="google" /> */}
+										<LoginConnectionButton tabIndex={13} type="discord" />
+									</>
+								)
+							: device.android
+								? (
+										<>
+											{/* <LoginConnectionButton tabIndex={11} type="google" /> */}
+											<LoginConnectionButton tabIndex={12} type="apple" />
+											<LoginConnectionButton tabIndex={13} type="discord" />
+										</>
+									)
+
+								: (
+										<>
+											<LoginConnectionButton tabIndex={11} type="discord" />
+											{/* <LoginConnectionButton tabIndex={12} type="google" /> */}
+											<LoginConnectionButton tabIndex={13} type="apple" />
+										</>
+									)}
 					</div>
 				</>
 			)}

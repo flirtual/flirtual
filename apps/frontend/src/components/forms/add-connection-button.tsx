@@ -1,3 +1,4 @@
+import { SocialLogin } from "@capgo/capacitor-social-login";
 import { InAppBrowser, ToolBarType } from "@capgo/inappbrowser";
 import { X } from "lucide-react";
 import { useMemo } from "react";
@@ -5,18 +6,26 @@ import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router";
 import { twMerge } from "tailwind-merge";
 
+import { Authentication } from "~/api/auth";
+import { isWretchError } from "~/api/common";
 import {
 	Connection,
 	ConnectionMetadata
-
 } from "~/api/connections";
 import type { ConnectionType } from "~/api/connections";
-import { useDevice } from "~/hooks/use-device";
+import { device, useDevice } from "~/hooks/use-device";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { useNavigate } from "~/i18n";
 import { invalidate, sessionKey } from "~/query";
 import { toRelativeUrl } from "~/urls";
+
+type NativeSocialProvider = "apple" | "google";
+const nativeSocialProviders: Array<NativeSocialProvider> = ["apple", "google"];
+
+function isNativeSocialProvider(type: ConnectionType): type is NativeSocialProvider {
+	return nativeSocialProviders.includes(type as NativeSocialProvider);
+}
 
 export interface ConnectionButtonProps {
 	type: ConnectionType;
@@ -29,7 +38,7 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 	const session = useOptionalSession();
 	const navigate = useNavigate();
 	const toasts = useToast();
-	const { native } = useDevice();
+	const { native, id: deviceId } = useDevice();
 	const { t } = useTranslation();
 
 	const connection = useMemo(() => {
@@ -37,6 +46,136 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 			? session.user.connections?.find((connection) => connection.type === type)
 			: null;
 	}, [session, type]);
+
+	const handleNativeSocialLink = async () => {
+		if (!isNativeSocialProvider(type)) return;
+
+		try {
+			const result = await SocialLogin.login({
+				provider: type,
+				options: {
+					scopes: type === "apple" ? ["email"] : ["email", "profile"]
+				}
+			});
+
+			if (!result || !result.result) return;
+
+			const { result: loginResult } = result;
+
+			let idToken: string | undefined;
+			let authorizationCode: string | undefined;
+
+			if (type === "apple" && "idToken" in loginResult) {
+				idToken = loginResult.idToken ?? undefined;
+				authorizationCode = "authorizationCode" in loginResult ? (loginResult.authorizationCode ?? undefined) : undefined;
+			}
+			else if (type === "google" && "idToken" in loginResult) {
+				idToken = loginResult.idToken ?? undefined;
+			}
+
+			if (!idToken) {
+				toasts.add({ type: "error", value: t("errors.internal_server_error" as any) });
+				return;
+			}
+
+			const response = await Authentication.socialLogin({
+				provider: type,
+				idToken,
+				authorizationCode,
+				deviceId
+			});
+
+			if ("error" in response) {
+				toasts.add({ type: "error", value: t(`errors.${response.error}` as any) });
+				return;
+			}
+
+			if ("status" in response && response.status === "linked") {
+				toasts.add(t("linked_connection"));
+			}
+
+			await invalidate({ queryKey: sessionKey() });
+		}
+		catch (reason) {
+			console.error("Social link error:", reason);
+
+			if (reason instanceof Error) {
+				const message = reason.message.toLowerCase();
+				if (message.includes("cancel") || message.includes("abort")) {
+					return;
+				}
+			}
+
+			if (isWretchError(reason)) {
+				toasts.add({ type: "error", value: t(`errors.${reason.json?.error}` as any) });
+				return;
+			}
+
+			toasts.add({ type: "error", value: t("errors.internal_server_error" as any) });
+		}
+	};
+
+	const handleOAuthLink = async () => {
+		const url = new URL(`${location.pathname}`, window.location.origin);
+
+		if (!native) {
+			return navigate(
+				Connection.authorizeUrl({
+					type,
+					prompt: "consent",
+					next: url.href
+				})
+			);
+		}
+
+		const { authorizeUrl } = await Connection.authorize({
+			type,
+			prompt: "consent",
+			next: url.href
+		});
+
+		await InAppBrowser.addListener("urlChangeEvent", async (event) => {
+			const url = new URL(event.url);
+			const query: any = Object.fromEntries(url.searchParams.entries());
+
+			if ("error" in query) {
+				await InAppBrowser.removeAllListeners();
+				await InAppBrowser.close();
+			}
+			if ("code" in query) {
+				setTimeout(async () => {
+					const response = await Connection.grant({
+						...query,
+						redirect: "manual"
+					});
+
+					const next = response.headers.get("location");
+					if (next) navigate(toRelativeUrl(new URL(next)));
+
+					await invalidate({ queryKey: sessionKey() });
+
+					await InAppBrowser.removeAllListeners();
+					await InAppBrowser.close();
+				}, 1000);
+			}
+		});
+
+		await InAppBrowser.openWebView({
+			url: authorizeUrl,
+			toolbarType: ToolBarType.BLANK
+		});
+	};
+
+	const handleClick = async () => {
+		if (connection) return;
+
+		if (device.native && isNativeSocialProvider(type)) {
+			await handleNativeSocialLink();
+		}
+		else {
+			await handleOAuthLink();
+		}
+	};
 
 	if (!session) return null;
 
@@ -48,71 +187,20 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 			)}
 		>
 			<button
-				className="flex aspect-square h-full items-center justify-center p-2 text-white-20 before:absolute before:inset-0"
+				className="flex aspect-square h-full shrink-0 items-center justify-center p-2 text-white-20 before:absolute before:inset-0"
 				style={{ backgroundColor: color }}
 				type="button"
-				onClick={async () => {
-					if (connection) return;
-
-					const url = new URL(`${location.pathname}`, window.location.origin);
-
-					if (!native) {
-						return navigate(
-							Connection.authorizeUrl({
-								type,
-								prompt: "consent",
-								next: url.href
-							})
-						);
-					}
-
-					const { authorizeUrl } = await Connection.authorize({
-						type,
-						prompt: "consent",
-						next: url.href
-					});
-
-					await InAppBrowser.addListener("urlChangeEvent", async (event) => {
-						const url = new URL(event.url);
-						const query: any = Object.fromEntries(url.searchParams.entries());
-
-						if ("error" in query) {
-							await InAppBrowser.removeAllListeners();
-							await InAppBrowser.close();
-						}
-						if ("code" in query) {
-							setTimeout(async () => {
-								const response = await Connection.grant({
-									...query,
-									redirect: "manual"
-								});
-
-								const next = response.headers.get("location");
-								if (next) navigate(toRelativeUrl(new URL(next)));
-
-								await invalidate({ queryKey: sessionKey() });
-
-								await InAppBrowser.removeAllListeners();
-								await InAppBrowser.close();
-							}, 1000);
-						}
-					});
-
-					await InAppBrowser.openWebView({
-						url: authorizeUrl,
-						toolbarType: ToolBarType.BLANK
-					});
-				}}
+				onClick={handleClick}
 			>
 				<Icon className={twMerge("size-6", iconClassName)} />
 			</button>
 			<div className="pointer-events-none flex flex-col overflow-hidden whitespace-nowrap px-4 py-2 font-nunito leading-none vision:text-black-80">
 				<span className="text-sm leading-none opacity-75">{t(type)}</span>
-				<span>{connection?.displayName ?? t("connect_account")}</span>
+				<span className="overflow-x-clip text-ellipsis">{connection?.displayName ?? t("connect_account")}</span>
 			</div>
 			{connection && (
 				<button
-					className="z-10 ml-auto mr-3 cursor-pointer self-center opacity-50 hover:text-red-400 hover:opacity-100 vision:text-black-80"
+					className="z-10 ml-auto mr-3 shrink-0 cursor-pointer self-center opacity-50 hover:text-red-400 hover:opacity-100 vision:text-black-80"
 					type="button"
 					onClick={async () => {
 						await Connection.delete(type)

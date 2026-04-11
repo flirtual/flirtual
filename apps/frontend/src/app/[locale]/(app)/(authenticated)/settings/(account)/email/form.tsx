@@ -15,13 +15,14 @@ export const EmailForm: React.FC = () => {
 	const navigate = useNavigate();
 
 	const { user } = useSession();
+	const hasPassword = user.hasPassword === true;
 
 	return (
 		<Form
 			fields={{
 				email: user.email,
 				emailConfirmation: "",
-				currentPassword: ""
+				...(hasPassword ? { currentPassword: "" } : {})
 			}}
 			className="flex flex-col gap-8"
 			onSubmit={async (body) => {
@@ -49,18 +50,20 @@ export const EmailForm: React.FC = () => {
 							</>
 						)}
 					</FormField>
-					<FormField name="currentPassword">
-						{(field) => (
-							<>
-								<InputLabel>{t("confirm_current_password")}</InputLabel>
-								<InputText
-									{...field.props}
-									autoComplete="current-password"
-									type="password"
-								/>
-							</>
-						)}
-					</FormField>
+					{hasPassword && (
+						<FormField name="currentPassword">
+							{(field) => (
+								<>
+									<InputLabel>{t("confirm_current_password")}</InputLabel>
+									<InputText
+										{...field.props}
+										autoComplete="current-password"
+										type="password"
+									/>
+								</>
+							)}
+						</FormField>
+					)}
 					<FormButton>{t("update")}</FormButton>
 				</>
 			)}

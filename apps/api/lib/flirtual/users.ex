@@ -157,6 +157,8 @@ defmodule Flirtual.Users do
   defmodule UpdatePassword do
     use Flirtual.EmbeddedSchema
 
+    @optional [:current_password]
+
     embedded_schema do
       field(:password, :string, redact: true)
       field(:password_confirmation, :string, redact: true)
@@ -165,14 +167,21 @@ defmodule Flirtual.Users do
 
     def changeset(value, _, %{user: user}) do
       value
-      |> User.validate_current_password(user)
+      |> User.validate_current_password_if_set(user)
       |> User.validate_password()
       |> User.validate_password_confirmation()
-      |> validate_predicate(
-        &(not User.valid_password?(&2, &1)),
-        {:password, {:value, user.password_hash}},
-        message: "password_must_be_different"
-      )
+      |> then(fn changeset ->
+        if User.has_password?(user) do
+          validate_predicate(
+            changeset,
+            &(not User.valid_password?(&2, &1)),
+            {:password, {:value, user.password_hash}},
+            message: "password_must_be_different"
+          )
+        else
+          changeset
+        end
+      end)
     end
   end
 
@@ -251,6 +260,8 @@ defmodule Flirtual.Users do
   defmodule UpdateEmail do
     use Flirtual.EmbeddedSchema
 
+    @optional [:current_password]
+
     embedded_schema do
       field(:email, :string)
       field(:email_confirmation, :string)
@@ -259,7 +270,7 @@ defmodule Flirtual.Users do
 
     def changeset(value, _, %{user: user}) do
       value
-      |> User.validate_current_password(user)
+      |> User.validate_current_password_if_set(user)
       |> User.validate_email()
       |> validate_confirmation(:email)
       |> validate_predicate(:not_equal, {:email, {:value, user.email}},
@@ -460,9 +471,9 @@ defmodule Flirtual.Users do
 
     import Flirtual.Attribute, only: [validate_attribute: 3]
     import Flirtual.Turnstile, only: [validate_captcha: 1]
-    import Flirtual.User, only: [validate_current_password: 2]
+    import Flirtual.User, only: [validate_current_password_if_set: 2]
 
-    @optional [:comment]
+    @optional [:comment, :current_password]
 
     embedded_schema do
       field(:reason_id, :string)
@@ -478,7 +489,7 @@ defmodule Flirtual.Users do
       value
       |> validate_captcha()
       |> validate_attribute(:reason_id, "delete-reason")
-      |> validate_current_password(user)
+      |> validate_current_password_if_set(user)
       |> validate_length(:comment, max: 10_000)
     end
   end
@@ -537,6 +548,9 @@ defmodule Flirtual.Users do
     end)
   end
 
+  @doc """
+  Creates a new user with password (standard registration flow).
+  """
   def create(attrs, options \\ []) do
     Repo.transaction(fn ->
       with {:ok, attrs} <-
@@ -576,60 +590,91 @@ defmodule Flirtual.Users do
              |> User.validate_password()
              |> User.put_password()
              |> Repo.insert(),
-           {:ok, user} <-
-             change(user, %{
-               slug: String.downcase(user.id, :ascii) |> String.slice(0..19),
-               talkjs_signature: Talkjs.new_user_signature(user.id),
-               revenuecat_id: UUID.generate(),
-               unsubscribe_token: UUID.generate()
-             })
-             |> Repo.update(),
-           {:ok, preferences} <-
-             Ecto.build_assoc(
-               user,
-               :preferences,
-               %{
-                 # language: attrs[:language]
-               }
-             )
-             |> Repo.insert(),
-           {:ok, _} <-
-             Ecto.build_assoc(preferences, :email_notifications, %{
-               newsletter: attrs[:notifications]
-             })
-             |> Repo.insert(),
-           {:ok, _} <-
-             Ecto.build_assoc(preferences, :push_notifications, %{
-               newsletter: attrs[:notifications]
-             })
-             |> Repo.insert(),
-           {:ok, _} <-
-             Ecto.build_assoc(preferences, :privacy)
-             |> Repo.insert(),
-           {:ok, profile} <-
-             Ecto.build_assoc(user, :profile)
-             |> Repo.insert(),
-           {:ok, _} <-
-             Ecto.build_assoc(profile, :preferences)
-             |> Repo.insert(),
-           user <- Repo.preload(user, User.default_assoc()),
-           :ok <- Flag.check_honeypot(user.id, attrs[:url]),
-           :ok <- Flag.check_email_flags(user.id, attrs[:email]),
-           :ok <-
-             (case Application.get_env(:flirtual, :canary, false) do
-                true -> :ok
-                false -> Hash.check_hash(user.id, "email", attrs[:email])
-              end),
-           {:ok, _} <- Talkjs.update_user(user),
-           {:ok, _} <-
-             Listmonk.create_subscriber(user),
-           {:ok, _} <- deliver_email_confirmation(user) do
+           {:ok, user} <- setup_new_user(user, attrs),
+           :ok <- Flag.check_honeypot(user.id, attrs[:url]) do
         user
       else
         {:error, reason} -> Repo.rollback(reason)
         reason -> Repo.rollback(reason)
       end
     end)
+  end
+
+  @doc """
+  Creates a new user without password (social login flow).
+  Email is pre-verified since it comes from a trusted provider.
+  """
+  def create_from_connection(email, options \\ []) do
+    notifications = Keyword.get(options, :notifications, false)
+
+    Repo.transaction(fn ->
+      with {:ok, user} <-
+             %User{}
+             |> cast(%{email: email}, [:email])
+             |> User.validate_unique_email()
+             |> Flag.validate_allowed_email(:email)
+             |> Repo.insert(),
+           {:ok, user} <-
+             setup_new_user(user, %{notifications: notifications}, email_confirmed: true) do
+        user
+      else
+        {:error, reason} -> Repo.rollback(reason)
+        reason -> Repo.rollback(reason)
+      end
+    end)
+  end
+
+  # Shared user setup: generates identifiers, creates preferences/profile, runs checks
+  defp setup_new_user(user, attrs, options \\ []) do
+    email_confirmed = Keyword.get(options, :email_confirmed, false)
+    notifications = Map.get(attrs, :notifications, false)
+
+    with {:ok, user} <-
+           change(user, %{
+             slug: String.downcase(user.id, :ascii) |> String.slice(0..19),
+             talkjs_signature: Talkjs.new_user_signature(user.id),
+             revenuecat_id: UUID.generate(),
+             unsubscribe_token: UUID.generate(),
+             email_confirmed_at:
+               if(email_confirmed,
+                 do: DateTime.utc_now() |> DateTime.truncate(:second),
+                 else: nil
+               )
+           })
+           |> Repo.update(),
+         {:ok, preferences} <-
+           Ecto.build_assoc(user, :preferences, %{})
+           |> Repo.insert(),
+         {:ok, _} <-
+           Ecto.build_assoc(preferences, :email_notifications, %{newsletter: notifications})
+           |> Repo.insert(),
+         {:ok, _} <-
+           Ecto.build_assoc(preferences, :push_notifications, %{newsletter: notifications})
+           |> Repo.insert(),
+         {:ok, _} <-
+           Ecto.build_assoc(preferences, :privacy)
+           |> Repo.insert(),
+         {:ok, profile} <-
+           Ecto.build_assoc(user, :profile)
+           |> Repo.insert(),
+         {:ok, _} <-
+           Ecto.build_assoc(profile, :preferences)
+           |> Repo.insert(),
+         user <- Repo.preload(user, User.default_assoc()),
+         :ok <- Flag.check_email_flags(user.id, user.email),
+         :ok <- check_email_hash(user),
+         {:ok, _} <- Talkjs.update_user(user),
+         {:ok, _} <- Listmonk.create_subscriber(user),
+         {:ok, _} <- if(email_confirmed, do: {:ok, nil}, else: deliver_email_confirmation(user)) do
+      {:ok, user}
+    end
+  end
+
+  defp check_email_hash(user) do
+    case Application.get_env(:flirtual, :canary, false) do
+      true -> :ok
+      false -> Hash.check_hash(user.id, "email", user.email)
+    end
   end
 
   def count do

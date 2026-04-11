@@ -1,9 +1,11 @@
 import { App } from "@capacitor/app";
+import { SocialLogin } from "@capgo/capacitor-social-login";
 import { startTransition, StrictMode } from "react";
 import { flushSync } from "react-dom";
 import { hydrateRoot } from "react-dom/client";
 import { HydratedRouter } from "react-router/dom";
 
+import { apiUrl, appleSigninServiceId } from "./const";
 import { log } from "./log";
 import { preloadAll } from "./query";
 import { isRedirectError } from "./redirect";
@@ -16,6 +18,25 @@ App.addListener("appUrlOpen", async (event) => {
 });
 
 import("./monitoring").then(({ initializeMonitoring }) => initializeMonitoring());
+
+async function initSocialLogin() {
+	if (!appleSigninServiceId) return;
+
+	try {
+		await SocialLogin.initialize({
+			apple: {
+				clientId: appleSigninServiceId,
+				redirectUrl: `${apiUrl}/connections/grant?type=apple`
+			}
+		});
+		log("SocialLogin initialized");
+	}
+	catch (reason) {
+		console.warn("SocialLogin initialization failed:", reason);
+	}
+}
+
+void initSocialLogin();
 
 // await restoreQueries();
 //

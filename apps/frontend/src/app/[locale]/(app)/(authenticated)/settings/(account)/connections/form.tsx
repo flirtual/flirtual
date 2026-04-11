@@ -35,7 +35,7 @@ const ConnectionError: FC = withSuspense(() => {
 });
 
 export const ConnectionsForm: FC = () => {
-	const { vision } = useDevice();
+	const { vision, apple } = useDevice();
 	const { user } = useSession();
 	const toasts = useToast();
 	const [playlistSubmitted, setPlaylistSubmitted] = useState<string | null>(
@@ -100,19 +100,6 @@ export const ConnectionsForm: FC = () => {
 							</div>
 							<div className="grid gap-4 wide:grid-cols-2">
 								<AddConnectionButton type="discord" />
-								{/* <AddConnectionButton type="vrchat" />
-							{platform === "apple" ? (
-								<>
-									<AddConnectionButton type="apple" />
-									<AddConnectionButton type="google" />
-								</>
-							) : (
-								<>
-									<AddConnectionButton type="google" />
-									<AddConnectionButton type="apple" />
-								</>
-							)}
-							<AddConnectionButton type="meta" /> */}
 								<FormField name="vrchat">
 									{(field) => (
 										<InputText
@@ -136,6 +123,19 @@ export const ConnectionsForm: FC = () => {
 										)}
 									</FormField>
 								)}
+								{apple
+									? (
+											<>
+												<AddConnectionButton type="apple" />
+												{/* <AddConnectionButton type="google" /> */}
+											</>
+										)
+									: (
+											<>
+												{/* <AddConnectionButton type="google" /> */}
+												<AddConnectionButton type="apple" />
+											</>
+										)}
 							</div>
 						</div>
 						<div className="flex flex-col gap-4">

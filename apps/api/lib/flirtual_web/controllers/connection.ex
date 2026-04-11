@@ -7,7 +7,8 @@ defmodule FlirtualWeb.ConnectionController do
   import Ecto.Changeset
   import Flirtual.Utilities
 
-  alias Flirtual.{Connection, Discord, Flag, Hash, Repo, User}
+  alias Flirtual.{Connection, Discord, Flag, Hash, Jwt, Repo, User, Users}
+  alias Flirtual.User.Login
   alias FlirtualWeb.SessionController
 
   action_fallback(FlirtualWeb.FallbackController)
@@ -22,10 +23,10 @@ defmodule FlirtualWeb.ConnectionController do
     type = to_atom(type)
 
     with {:ok, provider} <- Connection.provider(type),
+         {:ok, state} <- generate_oauth_state(conn, next),
          {:ok, authorize_url} <-
-           provider.authorize_url(conn, %{prompt: prompt, redirect: false}) do
+           provider.authorize_url(conn, %{prompt: prompt, redirect: false, state: state}) do
       conn
-      |> put_session(:next, next)
       |> json(%{
         authorize_url: authorize_url |> URI.to_string()
       })
@@ -45,9 +46,9 @@ defmodule FlirtualWeb.ConnectionController do
     type = to_atom(type)
 
     with {:ok, provider} <- Connection.provider(type),
-         {:ok, authorize_url} <- provider.authorize_url(conn, %{prompt: prompt}) do
+         {:ok, state} <- generate_oauth_state(conn, next),
+         {:ok, authorize_url} <- provider.authorize_url(conn, %{prompt: prompt, state: state}) do
       conn
-      |> put_session(:next, next)
       |> redirect(external: authorize_url |> URI.to_string())
     else
       {:error, :provider_not_found} ->
@@ -58,6 +59,28 @@ defmodule FlirtualWeb.ConnectionController do
 
       reason ->
         reason
+    end
+  end
+
+  # Generate a signed state token containing user_id and next URL
+  # This preserves context across OAuth callbacks that don't send cookies (e.g., Apple's form_post)
+  defp generate_oauth_state(conn, next) do
+    user_id = if conn.assigns[:session], do: conn.assigns[:session].user_id, else: nil
+
+    Jwt.sign(Jwt.config("oauth-state"), %{
+      "user_id" => user_id,
+      "next" => next
+    })
+  end
+
+  # Decode and verify the state token from OAuth callback
+  defp verify_oauth_state(state) do
+    case Jwt.verify(Jwt.config("oauth-state"), state) do
+      {:ok, claims} ->
+        {:ok, %{user_id: claims["user_id"], next: claims["next"]}}
+
+      error ->
+        error
     end
   end
 
@@ -79,7 +102,7 @@ defmodule FlirtualWeb.ConnectionController do
       "location",
       next || Application.fetch_env!(:flirtual, :frontend_origin)
     )
-    |> resp(if(redirect_type == "manual", do: 200, else: 307), "")
+    |> resp(if(redirect_type == "manual", do: 200, else: 303), "")
     |> halt()
   end
 
@@ -98,108 +121,51 @@ defmodule FlirtualWeb.ConnectionController do
       |> URI.merge((get_session(conn, :next) || "/login") <> "?error=" <> Atom.to_string(message))
       |> URI.to_string()
     )
-    |> resp(if(redirect_type == "manual", do: 200, else: 307), "")
+    |> resp(if(redirect_type == "manual", do: 200, else: 303), "")
     |> halt()
   end
 
-  def grant(conn, %{"redirect" => "off"} = params) do
+  # OAuth redirect flow - preflight for CORS
+  def grant(conn, %{"redirect" => "off"} = _params) do
     conn |> resp(200, "") |> halt()
   end
 
+  # OAuth redirect flow - error from provider
   def grant(conn, %{"error" => error}) do
     grant_error(conn, "auto", error)
   end
 
+  # OAuth redirect flow - exchange code for tokens
   def grant(conn, %{"type" => type, "code" => code} = params) do
     type = to_atom(type)
-
     redirect_type = params["redirect"] || "auto"
 
     with {:ok, provider} <- Connection.provider(type),
+         {:ok, state_data} <- verify_oauth_state(params["state"]),
          {:ok, authorization} <-
            provider.exchange_code(code, redirect: redirect_type !== "manual"),
-         {:ok, profile} <- provider.get_profile(authorization),
-         connection <- Connection.get(uid: profile.uid, type: type) do
-      user = conn.assigns[:session] && conn.assigns[:session].user
+         {:ok, profile} <- provider.get_profile(authorization) do
+      # Try session first, fall back to user_id from state (for Apple's form_post)
+      user =
+        cond do
+          conn.assigns[:session] ->
+            conn.assigns[:session].user
 
-      case {user, connection} do
-        {%User{} = user, nil} ->
-          %Connection{}
-          |> Connection.changeset(profile)
-          |> change(%{user_id: user.id, type: type})
-          |> Repo.insert!()
+          state_data.user_id ->
+            Users.get(state_data.user_id)
 
-          # remove legacy connections
-          if type == :discord do
-            user.profile
-            |> change(%{
-              discord: nil
-            })
-            |> Repo.update()
-          end
-
-          Flag.check_flags(user.id, profile.display_name)
-          Flag.check_email_flags(user.id, profile.email)
-
-          Hash.check_hash(user.id, "email", profile.email)
-          Hash.check_hash(user.id, "#{Connection.provider_name!(type)} ID", profile.uid)
-
-          Hash.check_hash(
-            user.id,
-            "#{Connection.provider_name!(type)} username",
-            profile.display_name
-          )
-
-          grant_next(conn, redirect_type)
-
-        {%User{} = user, %Connection{user: %User{id: user_id}}} when user_id == user.id ->
-          grant_next(conn, redirect_type)
-
-        {%User{} = user, %Connection{user: %User{id: user_id}}} when user_id != user.id ->
-          Discord.deliver_webhook(:flagged_duplicate,
-            user: user,
-            duplicates:
-              "[#{user_id}](#{Application.fetch_env!(:flirtual, :frontend_origin) |> URI.merge("/#{user_id}")})",
-            type: "#{Connection.provider_name!(type)} (connection updated)",
-            text: "#{profile.display_name} (#{profile.uid})"
-          )
-
-          connection
-          |> change(%{user_id: user.id})
-          |> Repo.update!()
-
-          grant_next(conn, redirect_type)
-
-        {nil, %Connection{user: %User{banned_at: nil} = login_user}} ->
-          next = get_session(conn, :next)
-          {_, conn} = SessionController.create(conn, login_user, method: type)
-          grant_next(conn, redirect_type, next)
-
-        {nil, %Connection{user: %User{}} = connection} ->
-          grant_error(
-            conn,
-            redirect_type,
-            :account_banned,
-            type,
-            connection
-          )
-
-        {nil, nil} ->
-          grant_error(
-            conn,
-            redirect_type,
-            :connection_account_not_found,
-            type,
+          true ->
             nil
-          )
-      end
+        end
+
+      handle_grant(conn, user, profile, type,
+        response: :redirect,
+        redirect_type: redirect_type,
+        next: state_data.next
+      )
     else
       {:error, :unverified_email} ->
-        grant_error(
-          conn,
-          redirect_type,
-          :connection_verify_email
-        )
+        grant_error(conn, redirect_type, :connection_verify_email)
 
       {:error, :provider_not_found} ->
         grant_error(conn, redirect_type, :provider_not_found)
@@ -219,6 +185,262 @@ defmodule FlirtualWeb.ConnectionController do
       reason ->
         log(:error, [:grant], reason: reason)
         grant_error(conn, redirect_type, :internal_server_error, type)
+    end
+  end
+
+  # Native SDK flow - verify id_token directly
+  def grant(conn, %{"type" => type, "id_token" => _} = params) do
+    type = to_atom(type)
+
+    with {:ok, _provider} <- Connection.provider(type),
+         {:ok, profile} <- verify_token(type, params) do
+      user = conn.assigns[:session] && conn.assigns[:session].user
+
+      handle_grant(conn, user, profile, type,
+        response: :json,
+        device_id: params["device_id"],
+        notifications: params["notifications"] == true
+      )
+    else
+      {:error, :provider_not_found} ->
+        {:error, {:bad_request, :provider_not_found, %{type: type}}}
+
+      {:error, :not_supported} ->
+        {:error, {:bad_request, :native_login_not_supported, %{type: type}}}
+
+      {:error, :invalid_token} ->
+        Login.log_login_attempt(conn, nil, nil, method: type)
+        {:error, {:unauthorized, :invalid_token}}
+
+      {:error, :token_expired} ->
+        Login.log_login_attempt(conn, nil, nil, method: type)
+        {:error, {:unauthorized, :token_expired}}
+
+      {:error, :unverified_email} ->
+        {:error, {:bad_request, :connection_verify_email}}
+
+      {:error, :missing_token} ->
+        {:error, {:bad_request, :missing_token}}
+
+      {:error, reason} when is_atom(reason) ->
+        log(:error, [:grant], reason: reason)
+        {:error, {:unauthorized, reason}}
+
+      reason ->
+        log(:error, [:grant], reason: reason)
+        {:error, {:internal_server_error, :verification_failed}}
+    end
+  end
+
+  # Verify id_token from native SDK (Apple, Google, etc.)
+  defp verify_token(:apple, params) do
+    id_token = params["id_token"]
+
+    if is_nil(id_token) or id_token == "" do
+      {:error, :missing_token}
+    else
+      case Flirtual.Apple.verify_native_token(id_token, params["authorization_code"]) do
+        {:ok, claims} ->
+          {:ok,
+           %{
+             uid: claims["sub"],
+             email: claims["email"],
+             # Apple doesn't provide a display name, use email
+             display_name: claims["email"],
+             avatar: nil
+           }}
+
+        error ->
+          error
+      end
+    end
+  end
+
+  defp verify_token(type, _params) do
+    log(:warning, [:verify_token], "Native login not implemented for #{type}")
+    {:error, :not_supported}
+  end
+
+  # Core grant logic - handles all connection scenarios
+  defp handle_grant(conn, user, profile, type, options) do
+    connection = Connection.get(uid: profile.uid, type: type)
+
+    case {user, connection} do
+      # Logged-in user, no existing connection -> link it
+      {%User{} = user, nil} ->
+        link_connection(conn, user, profile, type, options)
+
+      # Logged-in user, connection already linked to them -> no-op
+      {%User{id: user_id}, %Connection{user: %User{id: conn_user_id}}}
+      when user_id == conn_user_id ->
+        respond_success(conn, options, :already_linked)
+
+      # Logged-in user, connection linked to different user -> transfer
+      {%User{} = user, %Connection{user: %User{id: other_user_id}} = connection}
+      when user.id != other_user_id ->
+        transfer_connection(conn, user, connection, profile, type, options)
+
+      # Not logged in, connection exists for active user -> log them in
+      {nil, %Connection{user: %User{banned_at: nil} = login_user}} ->
+        create_session(conn, login_user, type, options)
+
+      # Not logged in, connection exists for banned user -> reject
+      {nil, %Connection{user: %User{}} = connection} ->
+        respond_error(conn, :account_banned, type, connection, options)
+
+      # Not logged in, no connection -> register new user (if supported)
+      {nil, nil} ->
+        register_user(conn, profile, type, options)
+    end
+  end
+
+  # Link a connection to an existing user
+  defp link_connection(conn, user, profile, type, options) do
+    %Connection{}
+    |> Connection.changeset(profile)
+    |> change(%{user_id: user.id, type: type})
+    |> Repo.insert!()
+
+    # Remove legacy Discord connection from profile
+    if type == :discord do
+      user.profile
+      |> change(%{discord: nil})
+      |> Repo.update()
+    end
+
+    run_connection_checks(user.id, profile, type)
+    respond_success(conn, options, :linked, :created)
+  end
+
+  # Transfer a connection from one user to another
+  defp transfer_connection(conn, user, connection, profile, type, options) do
+    Discord.deliver_webhook(:flagged_duplicate,
+      user: user,
+      duplicates: "https://flirtu.al/#{connection.user.id}",
+      type: "#{Connection.provider_name!(type)} (connection updated)",
+      text: "#{profile.display_name || profile.uid} (#{profile.uid})"
+    )
+
+    connection
+    |> change(%{user_id: user.id})
+    |> Repo.update!()
+
+    respond_success(conn, options, :linked)
+  end
+
+  # Create a session for an existing user
+  defp create_session(conn, user, type, options) do
+    {session, conn} =
+      SessionController.create(conn, user,
+        method: type,
+        device_id: options[:device_id]
+      )
+
+    case options[:response] do
+      :redirect ->
+        grant_next(conn, options[:redirect_type], options[:next])
+
+      :json ->
+        conn |> put_status(:ok) |> json(Flirtual.Policy.transform(conn, session))
+    end
+  end
+
+  # Register a new user via connection
+  defp register_user(conn, profile, type, options) do
+    do_register_user(conn, profile, type, options)
+  end
+
+  defp do_register_user(conn, profile, type, options) do
+    email = profile.email
+
+    if is_nil(email) or email == "" do
+      case options[:response] do
+        :redirect -> grant_error(conn, options[:redirect_type], :email_required, type, nil)
+        :json -> {:error, {:bad_request, :email_required}}
+      end
+    else
+      case Users.create_from_connection(email, notifications: options[:notifications]) do
+        {:ok, user} ->
+          # Create the connection
+          %Connection{}
+          |> Connection.changeset(profile)
+          |> change(%{user_id: user.id, type: type})
+          |> Repo.insert!()
+
+          run_connection_checks(user.id, profile, type)
+
+          {session, conn} =
+            SessionController.create(conn, user,
+              method: type,
+              device_id: options[:device_id]
+            )
+
+          case options[:response] do
+            :redirect ->
+              grant_next(conn, options[:redirect_type], options[:next])
+
+            :json ->
+              conn |> put_status(:created) |> json(Flirtual.Policy.transform(conn, session))
+          end
+
+        {:error, %Ecto.Changeset{} = changeset} ->
+          case options[:response] do
+            :redirect ->
+              grant_error(conn, options[:redirect_type], :registration_failed, type, nil)
+
+            :json ->
+              {:error, changeset}
+          end
+
+        {:error, reason} ->
+          log(:error, [:register_user], reason: reason)
+
+          case options[:response] do
+            :redirect ->
+              grant_error(conn, options[:redirect_type], :registration_failed, type, nil)
+
+            :json ->
+              {:error, {:internal_server_error, :registration_failed}}
+          end
+      end
+    end
+  end
+
+  # Run moderation checks on connection data
+  defp run_connection_checks(user_id, profile, type) do
+    if profile.display_name, do: Flag.check_flags(user_id, profile.display_name)
+    if profile.email, do: Flag.check_email_flags(user_id, profile.email)
+    if profile.email, do: Hash.check_hash(user_id, "email", profile.email)
+    Hash.check_hash(user_id, "#{Connection.provider_name!(type)} ID", profile.uid)
+
+    if profile.display_name do
+      Hash.check_hash(
+        user_id,
+        "#{Connection.provider_name!(type)} username",
+        profile.display_name
+      )
+    end
+  end
+
+  # Response helpers
+  defp respond_success(conn, options, status, http_status \\ :ok) do
+    case options[:response] do
+      :redirect -> grant_next(conn, options[:redirect_type], options[:next])
+      :json -> conn |> put_status(http_status) |> json(%{status: to_string(status)})
+    end
+  end
+
+  defp respond_error(conn, message, type, connection, options) do
+    case options[:response] do
+      :redirect ->
+        grant_error(conn, options[:redirect_type], message, type, connection)
+
+      :json ->
+        if connection do
+          Login.log_login_attempt(conn, connection.user.id, nil, method: type)
+        end
+
+        {:error, {:unauthorized, message}}
     end
   end
 end

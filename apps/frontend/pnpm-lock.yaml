@@ -59,6 +59,9 @@ importers:
       '@capawesome/capacitor-app-update':
         specifier: ^7.0.1
         version: 7.0.1(@capacitor/core@7.4.3)
+      '@capgo/capacitor-social-login':
+        specifier: ^7.20.0
+        version: 7.20.0(@capacitor/core@7.4.3)
       '@capgo/inappbrowser':
         specifier: 7.6.8
         version: 7.6.8(@capacitor/core@7.4.3)
@@ -750,6 +753,11 @@ packages:
 
   '@capawesome/capacitor-app-update@7.0.1':
     resolution: {integrity: sha512-VEzAa8vdG8BvW8pjjinmUeiEfzDlZ2XBfAIBE0o0Gib63+FTZg8d0tAu0nUoV/s/1oIOM7Fk+PokN5GpQrY8sQ==}
+    peerDependencies:
+      '@capacitor/core': '>=7.0.0'
+
+  '@capgo/capacitor-social-login@7.20.0':
+    resolution: {integrity: sha512-rHlEALFUonLe4sDG+qybDowh2/XDiHJ4DK9pShe1aPTGSrmA5j7kz8VbHYGqgof5xdyeC7pAY3+8PASTW+qGKg==}
     peerDependencies:
       '@capacitor/core': '>=7.0.0'
 
@@ -7989,6 +7997,10 @@ snapshots:
       '@capacitor/core': 7.4.3
 
   '@capawesome/capacitor-app-update@7.0.1(@capacitor/core@7.4.3)':
+    dependencies:
+      '@capacitor/core': 7.4.3
+
+  '@capgo/capacitor-social-login@7.20.0(@capacitor/core@7.4.3)':
     dependencies:
       '@capacitor/core': 7.4.3
 

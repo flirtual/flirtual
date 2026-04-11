@@ -210,6 +210,7 @@ defmodule FlirtualWeb.Router do
           get("/available", ConnectionController, :list_available)
           get("/authorize", ConnectionController, :authorize)
           get("/grant", ConnectionController, :grant)
+          post("/grant", ConnectionController, :grant)
 
           scope "/" do
             pipe_through(:require_authenticated_user)

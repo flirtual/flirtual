@@ -299,6 +299,15 @@ defmodule Flirtual.User.Policy do
       ),
       do: ShortUUID.decode!(user_id)
 
+  def transform(
+        :has_password,
+        %Plug.Conn{assigns: %{session: %{user_id: user_id}}},
+        %User{id: user_id} = user
+      ),
+      do: User.has_password?(user)
+
+  def transform(:has_password, _, _), do: nil
+
   @admin_property_keys [
     :email,
     :born_at,

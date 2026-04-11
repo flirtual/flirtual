@@ -53,8 +53,11 @@ config :flirtual, Flirtual.Discord,
   webhook_admin: System.fetch_env!("DISCORD_WEBHOOK_ADMIN")
 
 config :flirtual, Flirtual.Apple,
-  client_id: System.fetch_env!("APPLE_CLIENT_ID"),
-  client_secret: System.fetch_env!("APPLE_CLIENT_SECRET")
+  key: System.fetch_env!("APPLE_KEY"),
+  key_id: System.fetch_env!("APPLE_KEY_ID"),
+  team_id: System.fetch_env!("APPLE_TEAM_ID"),
+  app_id: System.fetch_env!("APPLE_SIGNIN_APP_ID"),
+  service_id: System.fetch_env!("APPLE_SIGNIN_SERVICE_ID")
 
 config :flirtual, Flirtual.VRChat,
   username: System.fetch_env!("VRCHAT_USERNAME"),
@@ -80,9 +83,9 @@ config :flirtual, Flirtual.Listmonk,
 
 config :flirtual, Flirtual.APNS,
   adapter: Pigeon.APNS,
-  key: System.fetch_env!("APNS_KEY"),
-  key_identifier: System.fetch_env!("APNS_KEY_ID"),
-  team_id: System.fetch_env!("APNS_TEAM_ID"),
+  key: System.fetch_env!("APPLE_KEY"),
+  key_identifier: System.fetch_env!("APPLE_KEY_ID"),
+  team_id: System.fetch_env!("APPLE_TEAM_ID"),
   topic: System.fetch_env!("APNS_TOPIC"),
   mode: if(config_env() == :prod, do: :prod, else: :dev)
 

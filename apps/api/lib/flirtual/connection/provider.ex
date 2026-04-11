@@ -20,19 +20,21 @@ defmodule Flirtual.Connection.Provider do
       end
 
       def redirect_url(options \\ []) do
-        {:ok,
-         Application.get_env(:flirtual, :origin)
-         |> URI.merge(
-           "/v1/connections/grant?" <>
-             URI.encode_query(
-               %{
-                 type: @provider_name
-               }
-               |> Map.merge(
-                 if(Keyword.get(options, :redirect, true), do: %{}, else: %{redirect: "off"})
-               )
-             )
-         )}
+        {
+          :ok,
+          Application.get_env(:flirtual, :origin)
+          |> URI.merge(
+            "/v1/connections/grant?" <>
+              URI.encode_query(
+                %{
+                  type: @provider_name
+                }
+                |> Map.merge(
+                  if(Keyword.get(options, :redirect, true), do: %{}, else: %{redirect: "off"})
+                )
+              )
+          )
+        }
       end
 
       def redirect_url!(options \\ []) do
