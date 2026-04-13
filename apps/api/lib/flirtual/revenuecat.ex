@@ -53,13 +53,18 @@ defmodule Flirtual.RevenueCat do
         }
       })
       when type in ["INITIAL_PURCHASE", "RENEWAL", "UNCANCELLATION", "NON_RENEWING_PURCHASE"] do
-    with %User{} = user <- User.get(revenuecat_id: customer_id),
-         :ok <- check_stale(user.subscription, purchased_at_ms),
-         %Plan{} = plan <- Plan.get(revenuecat_id: product_id),
-         {:ok, subscription} <-
-           Subscription.apply(:revenuecat, user, plan, platform, event_id) do
-      log(:debug, [type, event_id], subscription)
-      :ok
+    case resolve_user(customer_id) do
+      %User{} = user ->
+        with :ok <- check_stale(user.subscription, purchased_at_ms),
+             %Plan{} = plan <- Plan.get(revenuecat_id: product_id),
+             {:ok, subscription} <-
+               Subscription.apply(:revenuecat, user, plan, platform, event_id) do
+          log(:debug, [type, event_id], subscription)
+          :ok
+        end
+
+      other ->
+        other
     end
   end
 
@@ -73,13 +78,18 @@ defmodule Flirtual.RevenueCat do
           "purchased_at_ms" => purchased_at_ms
         }
       }) do
-    with %User{} = user <- User.get(revenuecat_id: customer_id),
-         :ok <- check_stale(user.subscription, purchased_at_ms),
-         %Plan{} = plan <- Plan.get(revenuecat_id: product_id),
-         {:ok, subscription} <-
-           Subscription.apply(:revenuecat, user, plan, platform, event_id) do
-      log(:debug, ["PRODUCT_CHANGE", event_id], subscription)
-      :ok
+    case resolve_user(customer_id) do
+      %User{} = user ->
+        with :ok <- check_stale(user.subscription, purchased_at_ms),
+             %Plan{} = plan <- Plan.get(revenuecat_id: product_id),
+             {:ok, subscription} <-
+               Subscription.apply(:revenuecat, user, plan, platform, event_id) do
+          log(:debug, ["PRODUCT_CHANGE", event_id], subscription)
+          :ok
+        end
+
+      other ->
+        other
     end
   end
 
@@ -89,10 +99,14 @@ defmodule Flirtual.RevenueCat do
           "app_user_id" => customer_id
         }
       }) do
-    with %User{} = user <- User.get(revenuecat_id: customer_id),
-         {:ok, _} <-
-           Subscription.cancel(user.subscription) do
-      :ok
+    case resolve_user(customer_id) do
+      %User{} = user ->
+        with {:ok, _} <- Subscription.cancel(user.subscription) do
+          :ok
+        end
+
+      other ->
+        other
     end
   end
 
@@ -120,6 +134,48 @@ defmodule Flirtual.RevenueCat do
 
   def handle_event(_) do
     {:unhandled, :ignored}
+  end
+
+  def anonymous_id?(app_user_id) when is_binary(app_user_id),
+    do: String.starts_with?(app_user_id, "$RCAnonymousID:")
+
+  def anonymous_id?(_), do: false
+
+  # If we receive an anonymous webhook from an S2S notification, try to resolve the user from
+  # RevenueCat's API. It may take a few retries before RevenueCat aliases the user, so we send
+  # failures to Oban.
+  defp resolve_user(app_user_id) when is_binary(app_user_id) do
+    if anonymous_id?(app_user_id) do
+      case resolve_aliases(app_user_id) do
+        %User{} = user -> user
+        nil -> {:retry, :user_not_found}
+      end
+    else
+      case User.get(revenuecat_id: app_user_id) do
+        %User{} = user -> user
+        nil -> {:unhandled, :unknown_user}
+      end
+    end
+  end
+
+  defp resolve_user(_), do: {:unhandled, :unknown_user}
+
+  defp resolve_aliases(app_user_id) do
+    with {:ok, %HTTPoison.Response{status_code: 200, body: body}} <-
+           fetch(:get, "subscribers/#{URI.encode_www_form(app_user_id)}"),
+         {:ok, %{"subscriber" => %{"original_app_user_id" => original_id}}}
+         when is_binary(original_id) <- Poison.decode(body),
+         false <- anonymous_id?(original_id) do
+      safe_user_lookup(original_id)
+    else
+      _ -> nil
+    end
+  end
+
+  defp safe_user_lookup(id) do
+    User.get(revenuecat_id: id)
+  rescue
+    Ecto.Query.CastError -> nil
   end
 
   defp check_stale(%Subscription{cancelled_at: cancelled_at}, purchased_at_ms)

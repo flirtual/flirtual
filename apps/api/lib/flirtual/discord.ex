@@ -954,6 +954,34 @@ defmodule Flirtual.Discord do
     })
   end
 
+  def deliver_webhook(:revenuecat_unresolved,
+        app_user_id: app_user_id,
+        event_type: event_type,
+        event_id: event_id,
+        reason: reason
+      ) do
+    webhook(:admin, %{
+      content: "<@&458465845887369243>",
+      embeds: [
+        %{
+          title: "RevenueCat event failure",
+          fields: [
+            %{name: "Type", value: to_string(event_type), inline: true},
+            %{name: "ID", value: to_string(event_id), inline: true},
+            %{name: "Reason", value: to_string(reason), inline: true},
+            %{
+              name: "RevenueCat customer",
+              value:
+                "[#{app_user_id}](https://app.revenuecat.com/customers/cf0649d1/#{URI.encode(app_user_id)})"
+            }
+          ],
+          color: @destructive_color,
+          timestamp: DateTime.utc_now() |> DateTime.to_iso8601()
+        }
+      ]
+    })
+  end
+
   def deliver_webhook(:admin_deleted, user: %User{} = user, moderator: %User{} = moderator) do
     webhook(:admin, %{
       content: "<@&458465845887369243>",
