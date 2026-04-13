@@ -333,10 +333,10 @@ defmodule Flirtual.User do
   @miles_buckets [50, 100, 250, 500, 1000]
   @km_buckets [100, 250, 500, 1000, 1500, 2000]
 
-  @miles_max 1500
-  @km_max 2500
+  @miles_max 4000
+  @km_max 6500
 
-  defp round_to_nearest(value, [last]), do: if(value > last, do: :max, else: last)
+  defp round_to_nearest(value, [last]), do: if(value >= last, do: :max, else: last)
 
   defp round_to_nearest(value, [a, b | rest]) do
     if value <= (a + b) / 2, do: a, else: round_to_nearest(value, [b | rest])
@@ -349,7 +349,7 @@ defmodule Flirtual.User do
       nil
     else
       case round_to_nearest(mi, @miles_buckets) do
-        :max -> "~#{List.last(@miles_buckets)}mi"
+        :max -> "#{List.last(@miles_buckets)}mi+"
         50 -> "<50mi"
         n -> "~#{n}mi"
       end
@@ -363,7 +363,7 @@ defmodule Flirtual.User do
       nil
     else
       case round_to_nearest(km, @km_buckets) do
-        :max -> "~#{List.last(@km_buckets)}km"
+        :max -> "#{List.last(@km_buckets)}km+"
         100 -> "<100km"
         n -> "~#{n}km"
       end
