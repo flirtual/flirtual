@@ -998,6 +998,8 @@
 	"distance_within_mi": "Within {distance} miles",
 	"distance_around_km": "Around {distance} kilometres away",
 	"distance_around_mi": "Around {distance} miles away",
+	"distance_over_km": "Over {distance} kilometres away",
+	"distance_over_mi": "Over {distance} miles away",
 	"share_location": "Share location",
 	"update_location": "Update location",
 	"updating": "Updating…",

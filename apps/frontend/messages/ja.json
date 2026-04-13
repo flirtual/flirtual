@@ -995,6 +995,8 @@
 	"distance_within_mi": "{distance}マイル以内",
 	"distance_around_km": "約{distance}キロメートル先",
 	"distance_around_mi": "約{distance}マイル先",
+	"distance_over_km": "{distance}キロメートル以上先",
+	"distance_over_mi": "{distance}マイル以上先",
 	"share_location": "位置情報を共有",
 	"update_location": "位置情報を更新",
 	"updating": "更新中…",
