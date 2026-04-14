@@ -1014,5 +1014,8 @@
 	"snowfall": "Snowfall",
 	"snowfall_option_auto": "Auto",
 	"snowfall_option_always": "Always",
-	"snowfall_option_never": "Never"
+	"snowfall_option_never": "Never",
+	"chat_unavailable": "Chat unavailable",
+	"chat_unavailable_description": "They may have unmatched, disabled their account, or had their profile temporarily or permanently hidden by our moderation team. For privacy reasons, we can't share more details.",
+	"back_to_matches": "Back to matches"
 }
