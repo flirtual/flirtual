@@ -32,6 +32,31 @@ async function getPurchaseModule() {
 	return import("@revenuecat/purchases-capacitor");
 }
 
+let configurePromise: Promise<void> | null = null;
+
+async function ensureConfigured(
+	platform: "android" | "apple",
+	appUserID: string
+) {
+	if (!configurePromise) {
+		configurePromise = (async () => {
+			const { Purchases } = await getPurchaseModule();
+			await Purchases.configure({
+				apiKey: platform === "apple" ? rcAppleKey : rcGoogleKey,
+				appUserID
+			});
+		})();
+	}
+	return configurePromise;
+}
+
+async function ensureIdentified(appUserID: string) {
+	const { Purchases } = await getPurchaseModule();
+	const { appUserID: current } = await Purchases.getAppUserID();
+	if (current === appUserID) return;
+	await Purchases.logIn({ appUserID });
+}
+
 async function getPackage(revenuecatId: string) {
 	const { Purchases } = await getPurchaseModule();
 	return (await Purchases.getOfferings()).current?.availablePackages.find(
@@ -40,7 +65,7 @@ async function getPackage(revenuecatId: string) {
 }
 
 export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
-	const { apple, native } = useDevice();
+	const { apple, native, platform } = useDevice();
 
 	const toasts = useToast();
 	const navigate = useNavigate();
@@ -50,20 +75,29 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 	const { user } = useSession();
 	const plans = usePlans();
 
+	const revenuecatId = user?.revenuecatId;
+
 	useEffect(() => {
+		if (!revenuecatId || !native) return;
+		let cancelled = false;
+
+		if (platform === "web") return;
+
 		void (async () => {
-			if (!user?.revenuecatId || !native) return;
+			await ensureConfigured(platform, revenuecatId);
+			if (cancelled) return;
+			await ensureIdentified(revenuecatId);
+			if (cancelled) return;
 			const { Purchases } = await getPurchaseModule();
-
-			await Purchases.configure({
-				apiKey: apple ? rcAppleKey : rcGoogleKey,
-				appUserID: user?.revenuecatId
-			});
-
 			const offerings = await Purchases.getOfferings();
+			if (cancelled) return;
 			setPackages(offerings.current?.availablePackages ?? []);
 		})();
-	}, [apple, native, user?.revenuecatId]);
+
+		return () => {
+			cancelled = true;
+		};
+	}, [platform, native, revenuecatId]);
 
 	const purchase = useCallback(
 		async (planId?: string): Promise<string | null> => {
@@ -73,7 +107,17 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 					: Subscription.manageUrl();
 			}
 
+			if (!revenuecatId) throw new Error("Not logged in");
+			if (platform === "web") throw new Error("Unsupported platform");
+
+			await ensureConfigured(platform, revenuecatId);
+			await ensureIdentified(revenuecatId);
+
 			const { Purchases } = await getPurchaseModule();
+
+			const { appUserID } = await Purchases.getAppUserID();
+			if (appUserID !== revenuecatId) throw new Error("Identity mismatch");
+
 			const { customerInfo } = await Purchases.getCustomerInfo();
 
 			if (!planId && customerInfo.managementURL) {
@@ -111,7 +155,7 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 					return null;
 				});
 		},
-		[native, plans, apple, toasts, navigate]
+		[native, plans, apple, platform, toasts, navigate, revenuecatId]
 	);
 
 	return (
