@@ -18,7 +18,7 @@ import {
 import { useAttributeTranslation } from "~/hooks/use-attribute";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useNavigate } from "~/i18n";
-import { invalidate, sessionKey } from "~/query";
+import { invalidate, queueKey, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
 export const Finish1Form: FC = () => {
@@ -78,7 +78,11 @@ export const Finish1Form: FC = () => {
 					Profile.updatePrompts(user.id, values.prompts)
 				]);
 
-				await invalidate({ queryKey: sessionKey() });
+				await Promise.all([
+					invalidate({ queryKey: sessionKey() }),
+					invalidate({ queryKey: queueKey("love") }),
+					invalidate({ queryKey: queueKey("friend") })
+				]);
 				await navigate(urls.finish(2));
 			}}
 		>
