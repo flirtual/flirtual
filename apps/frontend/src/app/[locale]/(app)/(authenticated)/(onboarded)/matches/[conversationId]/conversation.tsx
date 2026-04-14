@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { withSuspense } from "with-suspense";
 
+import { ButtonLink } from "~/components/button";
 import { InlineLink } from "~/components/inline-link";
 import { ProfileDropdown } from "~/components/profile/dropdown";
 import { UserAvatar } from "~/components/user-avatar";
@@ -8,7 +9,6 @@ import { useConversation } from "~/hooks/use-conversations";
 import { useSession } from "~/hooks/use-session";
 import { ConversationChatbox } from "~/hooks/use-talkjs";
 import { useUser } from "~/hooks/use-user";
-import { throwRedirect } from "~/redirect";
 import { urls } from "~/urls";
 
 import { LeaveButton } from "./leave-button";
@@ -21,7 +21,25 @@ export const Conversation = withSuspense<{ id: string }>(({ id: conversationId }
 	const conversation = useConversation(conversationId);
 	const user = useUser(conversation?.userId);
 
-	if (!conversation || !user) throwRedirect(urls.conversations.list());
+	if (!conversation || !user) {
+		return (
+			<div className="mt-0 h-fit w-full shrink-0 bg-brand-gradient vision:bg-none desktop:max-w-[38rem] desktop:shrink desktop:rounded-2xl desktop:p-1 desktop:shadow-brand-1">
+				<div className="flex h-16 w-full items-center justify-center bg-brand-gradient px-3 vision:bg-none desktop:mt-0 desktop:rounded-t-xl android:desktop:mt-0">
+					<span className="text-center font-montserrat text-2xl font-semibold text-white-20 desktop:font-extrabold">
+						{t("chat_unavailable")}
+					</span>
+				</div>
+				<div className="flex flex-col gap-8 bg-white-20 p-8 vision:bg-transparent dark:bg-black-70 desktop:rounded-xl desktop:shadow-brand-inset">
+					<span className="font-nunito text-black-70 dark:text-white-20">
+						{t("chat_unavailable_description")}
+					</span>
+					<ButtonLink className="desktop:hidden" href={urls.conversations.list()} size="sm">
+						{t("back_to_matches")}
+					</ButtonLink>
+				</div>
+			</div>
+		);
+	}
 
 	return (
 		<div className="mt-0 h-fit w-full shrink-0 bg-brand-gradient vision:bg-none desktop:max-w-[38rem] desktop:shrink desktop:rounded-2xl desktop:p-1 desktop:shadow-brand-1">
