@@ -2,9 +2,8 @@ import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
-import type { Session } from "~/api/auth";
 import { ButtonLink } from "~/components/button";
-import { sessionKey, useQueryState } from "~/query";
+import { useOptionalSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 
 import { SignUpButton } from "./sign-up-button";
@@ -24,7 +23,7 @@ export const CallToActionGuest: FC<{ className?: string }> = ({ className }) => 
 
 export const CallToAction: FC<{ className?: string }> = ({ className }) => {
 	const { t } = useTranslation();
-	const { data: session } = useQueryState<Session | null>(sessionKey());
+	const session = useOptionalSession();
 
 	if (session) return (
 		<div className={twMerge("gap-2", className)}>
