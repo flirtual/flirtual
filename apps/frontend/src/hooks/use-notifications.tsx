@@ -73,6 +73,35 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 	}, [platform, session]);
 
 	useQuery({
+		queryKey: ["notifications-action-listener"] as const,
+		queryFn: async () => {
+			await PushNotifications.addListener(
+				"pushNotificationActionPerformed",
+				({ notification }) => {
+					const data = notification.data as
+						| { url?: string; conversationId?: string }
+						| undefined;
+
+					const url
+						= data?.url
+							?? (data?.conversationId
+								? `flirtual://matches/${data.conversationId}`
+								: null);
+
+					if (!url) return;
+					location.href = url.replace(/^flirtual:\/\//, "/");
+				}
+			);
+			return null;
+		},
+		placeholderData: null,
+		enabled: native,
+		meta: {
+			cacheTime: 0
+		}
+	});
+
+	useQuery({
 		queryKey: ["notifications-listeners", { userId: session?.user.id, status, pushRegistrationIds }] as const,
 		queryFn: async ({ queryKey: [, { status, pushRegistrationIds }] }) => {
 			if (status !== "granted") return null;
