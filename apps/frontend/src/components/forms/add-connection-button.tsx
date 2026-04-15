@@ -15,6 +15,7 @@ import {
 import type { ConnectionType } from "~/api/connections";
 import { device, useDevice } from "~/hooks/use-device";
 import { useOptionalSession } from "~/hooks/use-session";
+import { useTheme } from "~/hooks/use-theme";
 import { useToast } from "~/hooks/use-toast";
 import { useNavigate } from "~/i18n";
 import { invalidate, sessionKey } from "~/query";
@@ -33,7 +34,10 @@ export interface ConnectionButtonProps {
 
 export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 	const { type } = props;
-	const { Icon, iconClassName, color } = ConnectionMetadata[type];
+	const { Icon, color, logoColor, darkColor, darkLogoColor } = ConnectionMetadata[type];
+	const [theme] = useTheme();
+	const backgroundColor = theme === "dark" ? darkColor ?? color : color;
+	const iconColor = theme === "dark" ? darkLogoColor ?? logoColor : logoColor;
 	const location = useLocation();
 	const session = useOptionalSession();
 	const navigate = useNavigate();
@@ -188,11 +192,11 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 		>
 			<button
 				className="flex aspect-square h-full shrink-0 items-center justify-center p-2 text-white-20 before:absolute before:inset-0"
-				style={{ backgroundColor: color }}
+				style={{ backgroundColor, color: iconColor }}
 				type="button"
 				onClick={handleClick}
 			>
-				<Icon className={twMerge("size-6", iconClassName)} />
+				<Icon className="size-6" />
 			</button>
 			<div className="pointer-events-none flex flex-col overflow-hidden whitespace-nowrap px-4 py-2 font-nunito leading-none vision:text-black-80">
 				<span className="text-sm leading-none opacity-75">{t(type)}</span>

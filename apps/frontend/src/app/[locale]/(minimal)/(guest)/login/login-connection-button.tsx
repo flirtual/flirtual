@@ -15,6 +15,7 @@ import {
 import type { ConnectionType } from "~/api/connections";
 import { Button } from "~/components/button";
 import { device, useDevice } from "~/hooks/use-device";
+import { useTheme } from "~/hooks/use-theme";
 import { useToast } from "~/hooks/use-toast";
 import { useNavigate } from "~/i18n";
 import { invalidate, mutate, sessionKey } from "~/query";
@@ -56,7 +57,10 @@ export const LoginConnectionButton: FC<LoginConnectionButtonProps> = ({
 	const { id: deviceId } = useDevice();
 	const [isLoading, setIsLoading] = useState(false);
 
-	const { Icon, iconClassName, color } = ConnectionMetadata[type];
+	const { Icon, color, logoColor, darkColor, darkLogoColor } = ConnectionMetadata[type];
+	const [theme] = useTheme();
+	const backgroundColor = theme === "dark" ? darkColor ?? color : color;
+	const iconColor = theme === "dark" ? darkLogoColor ?? logoColor : logoColor;
 
 	const handleNativeSocialLogin = async () => {
 		if (!isNativeSocialProvider(type)) {
@@ -201,11 +205,11 @@ export const LoginConnectionButton: FC<LoginConnectionButtonProps> = ({
 			className={twMerge("gap-4 bg-none", className)}
 			disabled={isLoading}
 			size="sm"
-			style={{ backgroundColor: color }}
+			style={{ backgroundColor, color: iconColor }}
 			tabIndex={tabIndex}
 			onClick={handleClick}
 		>
-			<Icon className={twMerge("size-6", iconClassName)} />
+			<Icon className="size-6" />
 			<span className="font-montserrat text-lg font-semibold">
 				{t("log_in_with", { type: label[type] })}
 			</span>

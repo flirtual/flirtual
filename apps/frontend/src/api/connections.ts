@@ -22,7 +22,13 @@ export type ConnectionType = (typeof ConnectionType)[number];
 
 export const ConnectionMetadata: Record<
 	ConnectionType,
-	{ Icon: IconComponent; iconClassName?: string; color: string }
+	{
+		Icon: IconComponent;
+		color?: string;
+		logoColor?: string;
+		darkColor?: string;
+		darkLogoColor?: string;
+	}
 > = {
 	google: {
 		Icon: GoogleIcon,
@@ -30,7 +36,10 @@ export const ConnectionMetadata: Record<
 	},
 	apple: {
 		Icon: AppleIcon,
-		color: "#000000"
+		color: "#000000",
+		logoColor: "#ffffff",
+		darkColor: "#ffffff",
+		darkLogoColor: "#000000"
 	},
 	meta: {
 		Icon: MetaIcon,
@@ -42,7 +51,6 @@ export const ConnectionMetadata: Record<
 	},
 	vrchat: {
 		Icon: VRChatIcon,
-		iconClassName: "text-black-90",
 		color: "#095d6a"
 	}
 };
