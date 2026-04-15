@@ -6,6 +6,7 @@ import { hydrateRoot } from "react-dom/client";
 import { HydratedRouter } from "react-router/dom";
 
 import { apiUrl, appleSigninServiceId } from "./const";
+import { device } from "./hooks/use-device";
 import { log } from "./log";
 import { preloadAll } from "./query";
 import { isRedirectError } from "./redirect";
@@ -26,7 +27,10 @@ async function initSocialLogin() {
 		await SocialLogin.initialize({
 			apple: {
 				clientId: appleSigninServiceId,
-				redirectUrl: `${apiUrl}/connections/grant?type=apple`
+				useProperTokenExchange: true,
+				...(device.android && {
+					redirectUrl: `${apiUrl}/connections/grant?type=apple`
+				})
 			}
 		});
 		log("SocialLogin initialized");
