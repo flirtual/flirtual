@@ -20,6 +20,7 @@ export default async function handleRequest(
 
 	const locale = getLocale(pathname, pathname);
 	if (locale) await i18n.changeLanguage(locale);
+	await i18n.loadNamespaces(i18n.options.ns as Array<string> ?? ["data"]);
 
 	return new Promise((resolve, reject) => {
 		const { pipe, abort } = renderToPipeableStream(
