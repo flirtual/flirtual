@@ -79,14 +79,24 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 				"pushNotificationActionPerformed",
 				({ notification }) => {
 					const data = notification.data as
-						| { url?: string; conversationId?: string }
+						| {
+							url?: string;
+							talkjs?: { message?: { conversationId?: string } } | string;
+						}
 						| undefined;
 
-					const url
-						= data?.url
-							?? (data?.conversationId
-								? `flirtual://matches/${data.conversationId}`
-								: null);
+					let url = data?.url ?? null;
+
+					if (!url && data?.talkjs) {
+						try {
+							const talkjs = typeof data.talkjs === "string"
+								? (JSON.parse(data.talkjs) as { message?: { conversationId?: string } })
+								: data.talkjs;
+							if (talkjs.message?.conversationId)
+								url = `flirtual://matches/${talkjs.message.conversationId}`;
+						}
+						catch {}
+					}
 
 					if (!url) return;
 					location.href = url.replace(/^flirtual:\/\//, "/");
