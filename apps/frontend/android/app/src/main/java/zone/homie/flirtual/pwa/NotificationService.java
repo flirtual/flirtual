@@ -147,10 +147,10 @@ public class NotificationService extends FirebaseMessagingService {
     }
 
     if (url != null) {
-      Intent intent = new Intent(Intent.ACTION_VIEW);
+      Intent intent = new Intent(this, MainActivity.class);
+      intent.setAction(Intent.ACTION_VIEW);
       intent.setData(Uri.parse(url));
-      intent.setPackage(getPackageName());
-      intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+      intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
       PendingIntent pendingIntent = PendingIntent.getActivity(this, notificationId, intent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
       builder.setContentIntent(pendingIntent);
     }
@@ -218,10 +218,10 @@ public class NotificationService extends FirebaseMessagingService {
   }
 
   private void createDynamicShortcut(String shortcutId, String shortLabel, Person person, Bitmap icon, String url) {
-    Intent intent = new Intent(Intent.ACTION_VIEW);
+    Intent intent = new Intent(this, MainActivity.class);
+    intent.setAction(Intent.ACTION_VIEW);
     intent.setData(Uri.parse(url));
-    intent.setPackage(getPackageName());
-    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
     ShortcutInfoCompat.Builder shortcutBuilder = new ShortcutInfoCompat.Builder(this, shortcutId)
         .setLongLived(true)
