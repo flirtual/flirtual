@@ -7,6 +7,7 @@ import { twMerge } from "tailwind-merge";
 
 import type { User } from "~/api/user";
 import { notFoundImage, ProfileImage } from "~/api/user/profile/images";
+import { bucketContentOrigin } from "~/const";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
@@ -35,11 +36,6 @@ interface SingleImageProps {
 
 const reverseSearchEngines = [
 	{
-		name: "Google Images",
-		url: (url: string) =>
-			`https://www.google.com/searchbyimage?client=app&image_url=${encodeURIComponent(url)}`
-	},
-	{
 		name: "Google Lens",
 		url: (url: string) =>
 			`https://lens.google.com/uploadbyurl?url=${encodeURIComponent(url)}`
@@ -60,9 +56,21 @@ const reverseSearchEngines = [
 	}
 ];
 
+function transformedImage(url: string, options: string) {
+	return `${bucketContentOrigin}/cdn-cgi/image/${options}/${url}`;
+}
+
 function reverseSearch(url: string) {
+	const variants = [
+		url,
+		transformedImage(url, "flip=h"),
+		transformedImage(url, "gravity=face,fit=cover,width=768,height=768")
+	];
+
 	for (const engine of reverseSearchEngines) {
-		window.open(engine.url(url), "_blank");
+		for (const variant of variants) {
+			window.open(engine.url(variant), "_blank");
+		}
 	}
 }
 
