@@ -7,7 +7,7 @@ defmodule Flirtual.Profiles do
 
   alias Flirtual.{Attribute, Flag, ObanWorkers, Repo, User}
   alias Flirtual.User.Profile
-  alias Flirtual.User.Profile.{Image, Prompt}
+  alias Flirtual.User.Profile.{Block, Image, Prompt}
 
   def get_personality_by_user_id(user_id)
       when is_binary(user_id) do
@@ -622,14 +622,20 @@ defmodule Flirtual.Profiles do
     profile_ids =
       Image
       |> join(:inner, [image], user in User, on: user.id == image.profile_id)
-      |> where([image, _], image.world_id == ^world_id)
-      |> where([image, _], image.profile_id != ^user_id)
-      |> where([_, user], user.status == ^:visible)
+      |> join(:left, [image, _], block in Block,
+        on:
+          (block.profile_id == ^user_id and block.target_id == image.profile_id) or
+            (block.profile_id == image.profile_id and block.target_id == ^user_id)
+      )
+      |> where([image, _, _], image.world_id == ^world_id)
+      |> where([image, _, _], image.profile_id != ^user_id)
+      |> where([_, user, _], user.status == ^:visible)
+      |> where([_, _, block], is_nil(block.profile_id))
       |> maybe_require_external_id()
-      |> group_by([image, _], image.profile_id)
-      |> order_by([image, _], desc: max(image.created_at))
+      |> group_by([image, _, _], image.profile_id)
+      |> order_by([image, _, _], desc: max(image.created_at))
       |> limit(50)
-      |> select([image, _], image.profile_id)
+      |> select([image, _, _], image.profile_id)
       |> Repo.all()
 
     Image
