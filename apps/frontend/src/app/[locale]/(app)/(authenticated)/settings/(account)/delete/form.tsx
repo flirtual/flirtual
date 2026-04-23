@@ -40,16 +40,29 @@ export const DeleteForm: FC = () => {
 		>
 			{({ FormField, fields }) => (
 				<>
-					{subscription?.active
-						&& ["android", "ios"].includes(subscription.platform) && (
+					{subscription?.active && (
 						<div className="rounded-lg bg-brand-gradient px-6 py-4">
 							<span className="font-montserrat text-white-10">
-								⚠️
-								{" "}
-								{t("stock_wacky_guppy_pull")}
-								<br />
-								<br />
-								{t(subscription.platform === "ios" ? "alert_dark_leopard_tap" : "helpful_basic_snail_relish")}
+								{!subscription.plan.recurring
+									? (
+											<>
+												⚠️
+												{" "}
+												{t("delete_lifetime_warning")}
+											</>
+										)
+									: subscription.platform === "ios" || subscription.platform === "android"
+										? (
+												<>
+													⚠️
+													{" "}
+													{t("delete_subscription_warning")}
+													<br />
+													<br />
+													{t(subscription.platform === "ios" ? "delete_subscription_apple" : "delete_subscription_google")}
+												</>
+											)
+										: t("delete_subscription_cancel")}
 							</span>
 						</div>
 					)}

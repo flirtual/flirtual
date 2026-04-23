@@ -15,6 +15,7 @@ export type Plan = {
 	googleId?: string;
 	revenuecatId?: string;
 	purchasable: boolean;
+	recurring: boolean;
 }
 & Partial<DatedModel> & UuidModel;
 
