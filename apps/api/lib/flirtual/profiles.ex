@@ -619,12 +619,24 @@ defmodule Flirtual.Profiles do
   end
 
   def list_by_world(user_id, world_id) when is_binary(user_id) and is_binary(world_id) do
+    profile_ids =
+      Image
+      |> join(:inner, [image], user in User, on: user.id == image.profile_id)
+      |> where([image, _], image.world_id == ^world_id)
+      |> where([image, _], image.profile_id != ^user_id)
+      |> where([_, user], user.status == ^:visible)
+      |> maybe_require_external_id()
+      |> group_by([image, _], image.profile_id)
+      |> order_by([image, _], desc: max(image.created_at))
+      |> limit(50)
+      |> select([image, _], image.profile_id)
+      |> Repo.all()
+
     Image
+    |> where([image], image.profile_id in ^profile_ids)
     |> where([image], image.world_id == ^world_id)
-    |> where([image], image.profile_id != ^user_id)
     |> maybe_require_external_id()
     |> order_by([image], desc: image.created_at)
-    |> limit(50)
     |> Repo.all()
     |> Enum.group_by(& &1.profile_id)
     |> Enum.sort_by(fn {_, [first | _]} -> first.created_at end, {:desc, DateTime})
