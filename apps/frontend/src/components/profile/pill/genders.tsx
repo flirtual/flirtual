@@ -53,6 +53,11 @@ export const GenderPills: FC<GenderPillsProps> = ({
 		)
 	];
 
+	visibleGenders.sort((a, b) =>
+		genders.findIndex((gender) => gender.id === a.id)
+		- genders.findIndex((gender) => gender.id === b.id)
+	);
+
 	if (visibleGenders.length === 0) {
 		const fallback = genders.find(({ fallback }) => fallback);
 		if (fallback) visibleGenders.push(fallback);
