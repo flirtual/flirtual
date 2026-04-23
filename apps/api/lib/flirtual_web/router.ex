@@ -233,6 +233,14 @@ defmodule FlirtualWeb.Router do
           end
         end
 
+        scope "/worlds" do
+          pipe_through([:require_authenticated_user, :require_valid_user])
+
+          scope "/:world_id" do
+            get("/profiles", ProfileController, :list_by_world)
+          end
+        end
+
         scope "/subscriptions" do
           pipe_through(:require_authenticated_user)
 
