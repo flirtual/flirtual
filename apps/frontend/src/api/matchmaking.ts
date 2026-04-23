@@ -82,6 +82,9 @@ export const Matchmaking = {
 	undo(body: ReverseRespondProspectBody) {
 		return api.url("queue").json(body).delete().json<RespondProspect>();
 	},
+	skipProspect(userId: string) {
+		return api.url("queue/prospect").query({ userId }).delete().json<{ success: true }>();
+	},
 	unmatch(userId: string) {
 		return api.url("matches").query({ userId }).delete().res();
 	},

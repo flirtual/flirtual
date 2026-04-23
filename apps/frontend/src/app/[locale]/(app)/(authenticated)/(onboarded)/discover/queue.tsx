@@ -1,12 +1,15 @@
 import { AnimatePresence, m } from "motion/react";
 import type { FC } from "react";
 
+import { Matchmaking, prospectKinds } from "~/api/matchmaking";
 import type { ProspectKind } from "~/api/matchmaking";
 import { Profile } from "~/components/profile";
 import { useDevice } from "~/hooks/use-device";
-import { useQueue } from "~/hooks/use-queue";
+import { invalidateQueue, useQueue } from "~/hooks/use-queue";
 import { useSession } from "~/hooks/use-session";
 import { useDefaultTour } from "~/hooks/use-tour";
+import { useUser } from "~/hooks/use-user";
+import { invalidate, useMutation, userKey } from "~/query";
 
 import { ConfirmEmailError, FinishProfileError, OutOfProspects } from "./out-of-prospects";
 import { QueueActions } from "./queue-actions";
@@ -19,9 +22,23 @@ function DefaultTour() {
 	return null;
 }
 
+const SkipStaleProspect: FC<{ userId: string }> = ({ userId }) => {
+	const mutation = useMutation({
+		mutationKey: ["skip-prospect", userId],
+		mutationFn: () => Matchmaking.skipProspect(userId),
+		onError: () => invalidate({ queryKey: userKey(userId) }),
+		onSettled: () => prospectKinds.forEach((mode) => void invalidateQueue(mode))
+	});
+
+	if (mutation.isIdle) mutation.mutate();
+	return null;
+};
+
 export const Queue: FC<{ kind: ProspectKind }> = ({ kind }) => {
 	const { error, next: [current] } = useQueue(kind);
 	// const { error, next: [current, next], previous } = useQueue(kind);
+
+	const currentUser = useUser(current);
 
 	if (error === "finish_profile")
 		return <FinishProfileError />;
@@ -30,6 +47,8 @@ export const Queue: FC<{ kind: ProspectKind }> = ({ kind }) => {
 		return <ConfirmEmailError />;
 
 	if (!current) return <OutOfProspects mode={kind} />;
+
+	if (!currentUser) return <SkipStaleProspect key={current} userId={current} />;
 
 	return (
 		<>
