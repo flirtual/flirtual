@@ -4,6 +4,7 @@ import type { FC } from "react";
 import { Conversation } from "~/api/conversations";
 import { useToast } from "~/hooks/use-toast";
 import { useNavigate } from "~/i18n";
+import { conversationsKey, invalidate } from "~/query";
 import { urls } from "~/urls";
 
 export interface LeaveButtonProps {
@@ -23,6 +24,7 @@ export const LeaveButton: FC<LeaveButtonProps> = (props) => {
 				await Conversation.leave(conversationId)
 					.catch(toasts.addError);
 
+				await invalidate({ queryKey: conversationsKey() });
 				await navigate(urls.conversations.list());
 			}}
 		>

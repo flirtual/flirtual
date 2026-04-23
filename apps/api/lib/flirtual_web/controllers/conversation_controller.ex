@@ -32,6 +32,7 @@ defmodule FlirtualWeb.ConversationController do
 
     with {:ok, {data, metadata}} <-
            Conversation.list(user.id, cursor),
+         data <- Policy.filter(data, conn, :read),
          data <- Policy.transform(conn, data) do
       conn
       |> json_with_etag(%{
