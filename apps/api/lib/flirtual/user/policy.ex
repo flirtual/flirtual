@@ -77,10 +77,11 @@ defmodule Flirtual.User.Policy do
         },
         %User{} = user
       ) do
-    if user.status == :visible do
-      true
-    else
-      :moderator in session.user.tags
+    cond do
+      :moderator in session.user.tags -> true
+      user.status != :visible -> false
+      User.blocked?(user, session.user) -> false
+      true -> true
     end
   end
 

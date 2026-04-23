@@ -293,6 +293,7 @@ defmodule FlirtualWeb.Router do
 
           post("/", MatchmakingController, :response)
           delete("/", MatchmakingController, :undo_response)
+          delete("/prospect", MatchmakingController, :skip_prospect)
         end
 
         scope "/matches" do

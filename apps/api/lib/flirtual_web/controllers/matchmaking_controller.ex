@@ -10,6 +10,7 @@ defmodule FlirtualWeb.MatchmakingController do
   alias Flirtual.Matchmaking
   alias Flirtual.User.Profile.Image
   alias Flirtual.User.Profile.LikesAndPasses
+  alias Flirtual.User.Profile.Prospect
 
   action_fallback(FlirtualWeb.FallbackController)
 
@@ -126,6 +127,21 @@ defmodule FlirtualWeb.MatchmakingController do
         queue: queue,
         user_id: prospect.target_id
       })
+    end
+  end
+
+  def skip_prospect(conn, %{"user_id" => target_id}) do
+    user = conn.assigns[:session].user
+    target = Users.get(target_id)
+
+    if is_nil(target) or Policy.cannot?(conn, :read, target) do
+      Prospect
+      |> where(profile_id: ^user.id, target_id: ^target_id)
+      |> Repo.delete_all()
+
+      conn |> json(%{success: true})
+    else
+      {:error, {:conflict, :prospect_visible, %{user_id: target_id}}}
     end
   end
 

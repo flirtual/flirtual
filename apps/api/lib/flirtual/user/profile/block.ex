@@ -37,6 +37,7 @@ defmodule Flirtual.User.Profile.Block do
              |> Repo.insert(),
            {:ok, _} <- LikesAndPasses.delete_all(profile_id: user.id, target_id: target_id),
            :ok <- handle_prospects(user, target_id, prospect_kinds),
+           :ok <- handle_blockee_prospects(user.id, target_id),
            {:ok, _} <- ObanWorkers.update_user([user.id, target_id], [:elasticsearch, :talkjs]) do
         item
       else
@@ -44,6 +45,14 @@ defmodule Flirtual.User.Profile.Block do
         reason -> Repo.rollback(reason)
       end
     end)
+  end
+
+  defp handle_blockee_prospects(blocker_id, blockee_id) do
+    Prospect
+    |> where([p], p.profile_id == ^blockee_id and p.target_id == ^blocker_id)
+    |> Repo.delete_all()
+
+    :ok
   end
 
   defp handle_prospects(_, _, []), do: :ok
