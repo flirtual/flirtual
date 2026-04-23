@@ -62,7 +62,8 @@ defimpl Jason.Encoder, for: Flirtual.Plan do
       :chargebee_id,
       :revenuecat_id,
       :created_at,
-      :purchasable
+      :purchasable,
+      :recurring
     ]
 end
 
