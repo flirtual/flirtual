@@ -47,8 +47,9 @@ defmodule Flirtual.Conversation do
       kind: decode(:subject, data["subject"]),
       participants:
         data["participants"]
-        |> Map.keys()
-        |> Enum.map(&ShortUUID.encode!(&1)),
+        # Filter out read-only admin observers
+        |> Enum.filter(fn {_, info} -> info["access"] != "Read" end)
+        |> Enum.map(fn {id, _} -> ShortUUID.encode!(id) end),
       last_message: data["lastMessage"] |> Message.decode(),
       is_unread: data["isUnread"],
       created_at: DateTime.from_unix!(data["createdAt"], :millisecond)
@@ -222,7 +223,9 @@ defmodule Flirtual.Conversation do
     use Flirtual.Policy
 
     alias Flirtual.Policy
+    alias Flirtual.User
     alias Flirtual.User.Session
+    alias Flirtual.Users
 
     def authorize(
           action,
@@ -232,11 +235,17 @@ defmodule Flirtual.Conversation do
                 user_id: user_id
               }
             }
-          },
+          } = conn,
           %Conversation{participants: participants}
         )
         when action in [:read, :send_message] do
-      user_id in participants
+      with true <- user_id in participants,
+           [other_id] <- Enum.reject(participants, &(&1 === user_id)),
+           %User{} = target <- Users.get(other_id) do
+        Policy.can?(conn, :read, target)
+      else
+        _ -> false
+      end
     end
 
     def authorize(_, _, _), do: false
