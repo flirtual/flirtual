@@ -25,6 +25,11 @@ export const notFoundImage = {
 	updatedAt: new Date("2024-05-01T00:00:00.000Z").toISOString()
 };
 
+export interface WorldProfileItem {
+	userId: string;
+	images: Array<ProfileImage>;
+}
+
 export const ProfileImage = {
 	create(userId: string, files: Array<{ id: string } & Partial<ProfileImageMetadata>>) {
 		return api
@@ -45,5 +50,11 @@ export const ProfileImage = {
 	},
 	delete(imageId: string) {
 		return api.url(`images/${imageId}`).delete().json<ProfileImage>();
+	},
+	listByWorld(worldId: string) {
+		return api
+			.url(`worlds/${encodeURIComponent(worldId)}/profiles`)
+			.get()
+			.json<Array<WorldProfileItem>>();
 	}
 };

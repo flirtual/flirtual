@@ -610,4 +610,30 @@ defmodule Flirtual.Profiles do
       end)
     end)
   end
+
+  def has_image_in_world?(user_id, world_id)
+      when is_binary(user_id) and is_binary(world_id) do
+    Image
+    |> where(profile_id: ^user_id, world_id: ^world_id)
+    |> Repo.exists?()
+  end
+
+  def list_by_world(user_id, world_id) when is_binary(user_id) and is_binary(world_id) do
+    Image
+    |> where([image], image.world_id == ^world_id)
+    |> where([image], image.profile_id != ^user_id)
+    |> maybe_require_external_id()
+    |> order_by([image], desc: image.created_at)
+    |> limit(50)
+    |> Repo.all()
+    |> Enum.group_by(& &1.profile_id)
+    |> Enum.sort_by(fn {_, [first | _]} -> first.created_at end, {:desc, DateTime})
+  end
+
+  if Mix.env() == :dev do
+    defp maybe_require_external_id(query), do: query
+  else
+    defp maybe_require_external_id(query),
+      do: where(query, [image], not is_nil(image.external_id))
+  end
 end

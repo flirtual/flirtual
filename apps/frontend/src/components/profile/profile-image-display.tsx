@@ -1,4 +1,4 @@
-import { ChevronLeft, ChevronRight, Search, Trash2 } from "lucide-react";
+import { ChevronLeft, ChevronRight, ScanSearch, Search, Trash2 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import type React from "react";
 import { Trans, useTranslation } from "react-i18next";
@@ -7,6 +7,7 @@ import { twMerge } from "tailwind-merge";
 
 import type { User } from "~/api/user";
 import { notFoundImage, ProfileImage } from "~/api/user/profile/images";
+import { useDialog } from "~/hooks/use-dialog";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
@@ -19,6 +20,7 @@ import { VRChatIcon } from "../icons";
 import { InlineLink } from "../inline-link";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
 import { UserImage } from "../user-avatar";
+import { SearchWorldDialog } from "./dialogs/search-world";
 
 export interface ProfileImageDisplayProps {
 	user: User;
@@ -169,10 +171,13 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 	const firstImageId = images[0]?.id;
 	const [expandedImage, setExpandedImage] = useState(false);
 	const session = useOptionalSession();
+	const dialogs = useDialog();
 	const { t } = useTranslation();
 
 	const [imageId, setImageId] = useState(firstImageId);
 	useEffect(() => setImageId(firstImageId), [firstImageId]);
+
+	const canSearchWorld = session?.user?.id === user.id && !!session?.user?.subscription?.active;
 
 	useEffect(() => {
 		setExpandedImage(false);
@@ -295,13 +300,34 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 										image={currentImage}
 									/>
 									{currentImage.worldId && currentImage.worldName && (
-										<InlineLink
-											className="absolute bottom-2 right-2 z-20 flex items-center gap-1.5 rounded-full bg-black-70/80 px-2 pb-[3px] pt-1 text-xs text-white-20 opacity-80 shadow-brand-1 transition-opacity hover:opacity-100 desktop:bottom-4 desktop:right-4 desktop:gap-2 desktop:pb-1.5 desktop:pl-3 desktop:pr-3.5 desktop:pt-2 desktop:text-sm"
-											href={urls.vrchatWorld(currentImage.worldId)}
-										>
-											<VRChatIcon className="size-3.5 desktop:size-4" />
-											<span className="max-w-56 truncate desktop:max-w-80 desktop:pb-0">{currentImage.worldName}</span>
-										</InlineLink>
+										<div className="absolute bottom-2 right-2 z-20 flex items-center gap-2 rounded-full bg-black-70/80 px-2 pb-[3px] pt-1 text-xs text-white-20 opacity-80 shadow-brand-1 transition-opacity hover:opacity-100 desktop:bottom-4 desktop:right-4 desktop:gap-4 desktop:pb-1.5 desktop:pl-3 desktop:pr-3.5 desktop:pt-2 desktop:text-sm">
+											<InlineLink
+												className="flex items-center gap-1.5 desktop:gap-2"
+												highlight={false}
+												href={urls.vrchatWorld(currentImage.worldId)}
+											>
+												<VRChatIcon className="size-3.5 desktop:size-4" />
+												<span className="max-w-56 truncate desktop:max-w-80 desktop:pb-0">{currentImage.worldName}</span>
+											</InlineLink>
+											{canSearchWorld && (
+												<button
+													className="-mr-0.5 ml-1 inline-flex shrink-0 items-center self-center transition-opacity hover:opacity-80"
+													type="button"
+													onClick={() => {
+														const dialog = (
+															<SearchWorldDialog
+																worldId={currentImage.worldId!}
+																worldName={currentImage.worldName ?? null}
+																onClose={() => dialogs.remove(dialog)}
+															/>
+														);
+														dialogs.add(dialog);
+													}}
+												>
+													<ScanSearch className="-mt-px block size-4 desktop:-mt-0.5 desktop:size-5" />
+												</button>
+											)}
+										</div>
 									)}
 								</div>
 								{session?.user?.tags?.includes("moderator") && (

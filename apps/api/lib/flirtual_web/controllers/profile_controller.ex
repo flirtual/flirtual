@@ -6,7 +6,7 @@ defmodule FlirtualWeb.ProfileController do
   import FlirtualWeb.Utilities
 
   alias Flirtual.User.Profile
-  alias Flirtual.{Policy, Profiles, Users}
+  alias Flirtual.{Policy, Profiles, Subscription, Users}
 
   action_fallback(FlirtualWeb.FallbackController)
 
@@ -192,4 +192,24 @@ defmodule FlirtualWeb.ProfileController do
       end
     end
   end
+
+  def list_by_world(conn, %{"world_id" => world_id})
+      when is_binary(world_id) and world_id != "" do
+    user = conn.assigns[:session].user
+
+    with true <- Subscription.active?(user.subscription) || {:subscription_required},
+         true <- Profiles.has_image_in_world?(user.id, world_id) || {:no_image_in_world} do
+      items =
+        user.id
+        |> Profiles.list_by_world(world_id)
+        |> Enum.map(fn {user_id, images} -> %{user_id: user_id, images: images} end)
+
+      conn |> json_with_etag(items)
+    else
+      {:subscription_required} -> {:error, {:forbidden, :subscription_required}}
+      {:no_image_in_world} -> {:error, {:forbidden, :no_image_in_world}}
+    end
+  end
+
+  def list_by_world(_, _), do: {:error, {:bad_request, :invalid_world_id}}
 end
