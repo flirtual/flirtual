@@ -177,7 +177,9 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 	const [imageId, setImageId] = useState(firstImageId);
 	useEffect(() => setImageId(firstImageId), [firstImageId]);
 
-	const canSearchWorld = session?.user?.id === user.id && !!session?.user?.subscription?.active;
+	const canSearchWorld
+		= !!session?.user?.tags?.includes("moderator")
+			|| (session?.user?.id === user.id && !!session?.user?.subscription?.active);
 
 	useEffect(() => {
 		setExpandedImage(false);
