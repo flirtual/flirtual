@@ -448,7 +448,7 @@ defmodule Flirtual.Matchmaking do
         schedule_reset_notification(user, fields.reset_at)
         {:error, :out_of_passes, fields.reset_at}
       else
-        Repo.transaction(fn repo ->
+        Repo.transaction(fn _repo ->
           with %User{} <- target,
                {_, _} <-
                  Prospect
@@ -480,11 +480,10 @@ defmodule Flirtual.Matchmaking do
                      &1
                    end
                  )
-                 |> unsafe_validate_unique([:profile_id, :target_id, :kind], repo,
-                   error_key: :user_id,
-                   message: "already_responded"
-                 )
-                 |> Repo.insert(),
+                 |> Repo.insert(
+                   on_conflict: {:replace, [:type, :created_at]},
+                   conflict_target: [:profile_id, :target_id, :kind]
+                 ),
                {1, nil} <-
                  Profile
                  |> where(user_id: ^user.id)
