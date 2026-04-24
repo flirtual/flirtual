@@ -196,9 +196,12 @@ defmodule FlirtualWeb.ProfileController do
   def list_by_world(conn, %{"world_id" => world_id})
       when is_binary(world_id) and world_id != "" do
     user = conn.assigns[:session].user
+    moderator? = :moderator in user.tags
 
-    with true <- Subscription.active?(user.subscription) || {:subscription_required},
-         true <- Profiles.has_image_in_world?(user.id, world_id) || {:no_image_in_world} do
+    with true <-
+           moderator? or Subscription.active?(user.subscription) or {:subscription_required},
+         true <-
+           moderator? or Profiles.has_image_in_world?(user.id, world_id) or {:no_image_in_world} do
       items =
         user.id
         |> Profiles.list_by_world(world_id)
