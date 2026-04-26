@@ -1,15 +1,16 @@
+import { useIsFetching, useIsMutating } from "@tanstack/react-query";
 import { AnimatePresence, m } from "motion/react";
 import type { FC } from "react";
 
 import { Matchmaking, prospectKinds } from "~/api/matchmaking";
-import type { ProspectKind } from "~/api/matchmaking";
+import type { ProspectKind, Queue as QueueData } from "~/api/matchmaking";
 import { Profile } from "~/components/profile";
 import { useDevice } from "~/hooks/use-device";
-import { invalidateQueue, useQueue } from "~/hooks/use-queue";
+import { useQueue } from "~/hooks/use-queue";
 import { useSession } from "~/hooks/use-session";
 import { useDefaultTour } from "~/hooks/use-tour";
 import { useUser } from "~/hooks/use-user";
-import { invalidate, useMutation, userKey } from "~/query";
+import { invalidate, queryClient, queueKey, useMutation, userKey } from "~/query";
 
 import { ConfirmEmailError, FinishProfileError, OutOfProspects } from "./out-of-prospects";
 import { QueueActions } from "./queue-actions";
@@ -27,7 +28,17 @@ const SkipStaleProspect: FC<{ userId: string }> = ({ userId }) => {
 		mutationKey: ["skip-prospect", userId],
 		mutationFn: () => Matchmaking.skipProspect(userId),
 		onError: () => invalidate({ queryKey: userKey(userId) }),
-		onSettled: () => prospectKinds.forEach((mode) => void invalidateQueue(mode))
+		onSettled: () => {
+			prospectKinds.forEach((mode) => {
+				queryClient.setQueryData<QueueData>(queueKey(mode), (queue) => queue && {
+					previous: queue.previous === userId ? null : queue.previous,
+					next: queue.next.filter((id) => id !== userId)
+				});
+				// Refetch queue if empty.
+				const next = queryClient.getQueryData<QueueData>(queueKey(mode))?.next;
+				if (next && next.length === 0) void invalidate({ queryKey: queueKey(mode) });
+			});
+		}
 	});
 
 	if (mutation.isIdle) mutation.mutate();
@@ -40,13 +51,20 @@ export const Queue: FC<{ kind: ProspectKind }> = ({ kind }) => {
 
 	const currentUser = useUser(current);
 
+	const skipping = useIsMutating({ mutationKey: ["skip-prospect"] }) > 0;
+	const queueing = useIsMutating({ mutationKey: queueKey(kind) }) > 0;
+	const fetchingQueue = useIsFetching({ queryKey: queueKey(kind) }) > 0;
+
 	if (error === "finish_profile")
 		return <FinishProfileError />;
 
 	if (error === "confirm_email")
 		return <ConfirmEmailError />;
 
-	if (!current) return <OutOfProspects mode={kind} />;
+	if (!current) {
+		if (skipping || queueing || fetchingQueue) return null;
+		return <OutOfProspects mode={kind} />;
+	}
 
 	if (!currentUser) return <SkipStaleProspect key={current} userId={current} />;
 
