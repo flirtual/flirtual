@@ -601,7 +601,7 @@ defmodule Flirtual.Matchmaking do
                           Block
                           |> where(target_id: ^profile.user_id)
                           |> distinct(true)
-                          |> select([item], item.target_id)
+                          |> select([item], item.profile_id)
                           |> Repo.all()
                         ]
                         |> List.flatten()
