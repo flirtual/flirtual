@@ -76,8 +76,6 @@ defmodule FlirtualWeb.Router do
       end
 
       scope "/images" do
-        post("/", ImageController, :upload)
-
         scope "/variants" do
           pipe_through(:fetch_authorization_token)
 
@@ -225,6 +223,8 @@ defmodule FlirtualWeb.Router do
 
         scope "/images" do
           pipe_through(:require_authenticated_user)
+
+          post("/", ImageController, :upload)
 
           scope "/:image_id" do
             get("/", ImageController, :get)

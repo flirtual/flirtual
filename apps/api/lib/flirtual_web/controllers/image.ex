@@ -23,31 +23,36 @@ defmodule FlirtualWeb.ImageController do
   @twelve_hours 43_200_000
 
   def upload(conn, _) do
-    user_id = conn.assigns[:session] && conn.assigns[:session].user_id
+    user_id = conn.assigns[:session].user_id
+    bucket = "upload_image:#{user_id}"
 
-    with {:ok, _} <- ExRated.check_rate("upload_image:#{user_id}", @twelve_hours, 100) do
+    {_, remaining, _, _, _} = ExRated.inspect_bucket(bucket, @twelve_hours, 100)
+
+    if remaining <= 0 do
+      {:error, {:unauthorized, :upload_rate_limit}}
+    else
       id = UUID.generate()
 
-      if Application.get_env(:flirtual, :local_uploads?) do
-        origin = Application.fetch_env!(:flirtual, :origin)
+      with {:ok, signed_url} <- presigned_upload_url(id) do
+        ExRated.check_rate(bucket, @twelve_hours, 100)
 
-        conn
-        |> json(%{id: id, signed_url: "#{origin}/v1/images/#{id}/file"})
-      else
-        bucket =
-          case Application.get_env(:flirtual, :canary) do
-            true -> "pfpup-canary"
-            _ -> "pfpup"
-          end
-
-        {:ok, signed_url} =
-          ExAws.Config.new(:s3, []) |> ExAws.S3.presigned_url(:put, bucket, id, [])
-
-        conn
-        |> json(%{id: id, signed_url: signed_url})
+        conn |> json(%{id: id, signed_url: signed_url})
       end
+    end
+  end
+
+  defp presigned_upload_url(id) do
+    if Application.get_env(:flirtual, :local_uploads?) do
+      origin = Application.fetch_env!(:flirtual, :origin)
+      {:ok, "#{origin}/v1/images/#{id}/file"}
     else
-      {:error, _} -> {:error, {:unauthorized, :upload_rate_limit}}
+      bucket =
+        case Application.get_env(:flirtual, :canary) do
+          true -> "pfpup-canary"
+          _ -> "pfpup"
+        end
+
+      ExAws.Config.new(:s3, []) |> ExAws.S3.presigned_url(:put, bucket, id, [])
     end
   end
 
