@@ -61,7 +61,14 @@ export function useQueue(mode: ProspectKind = "love") {
 
 	const error = "error" in queue ? queue.error : null;
 
-	useEffect(() => void Promise.all(next.map((userId) => preloadProfile(userId))), [next]);
+	// Preload so undo doesn't suspend Queue.
+	useEffect(() => {
+		void Promise.all(
+			[previous, ...next]
+				.filter((userId): userId is string => !!userId)
+				.map((userId) => preloadProfile(userId))
+		);
+	}, [previous, next]);
 
 	const [current] = next;
 
@@ -157,7 +164,19 @@ export function useQueue(mode: ProspectKind = "love") {
 					dialogs.add(dialog);
 				}
 
-				return queue;
+				// Keep the optimistic head so a mismatched next[0] from the server doesn't trigger a second
+				// key change in AnimatePresence and orphan the previous Profile.
+				await queryClient.cancelQueries({ queryKey });
+				queryClient.setQueryData<Queue>(queryKey, (cache) => {
+					if (action === "undo" || !cache || !("next" in cache) || !cache.next[0])
+						return queue;
+
+					const head = cache.next[0];
+					return {
+						previous: queue.previous,
+						next: [head, ...queue.next.filter((id) => id !== head)],
+					};
+				});
 			}
 			catch (reason) {
 				if (!isWretchError(reason)) throw reason;
