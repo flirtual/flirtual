@@ -8,12 +8,12 @@ import { useUserCount } from "~/hooks/use-user";
 import { useLocale } from "~/i18n";
 import { urls } from "~/urls";
 
-import { ManageButton } from "./manage-button";
 import { PlanList } from "./plan-list";
 import {
 	MatchSubscriptionPlatform,
 	PlatformMismatchMessage
 } from "./platform-mismatch";
+import { SubscriptionButtons } from "./subscription-buttons";
 import { SuccessMessage } from "./success-message";
 
 export const SubscriptionForm: FC = () => {
@@ -46,7 +46,7 @@ export const SubscriptionForm: FC = () => {
 				</div>
 			)}
 			<MatchSubscriptionPlatform>
-				<ManageButton />
+				<SubscriptionButtons />
 			</MatchSubscriptionPlatform>
 			<div className="flex flex-col gap-8">
 				{subscription?.active
