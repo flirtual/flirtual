@@ -88,7 +88,7 @@ const data = [
 						// https://posthog.com/docs/advanced/content-security-policy
 						posthogHost && new URL(posthogHost).host,
 						// https://www.chargebee.com/docs/billing/2.0/hosted-capabilities/embedded-checkout
-						"https://js.chargebee.com/v2/chargebee.js"
+						"*.chargebee.com"
 					],
 					"style-src": [
 						"'self'",
