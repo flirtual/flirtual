@@ -448,97 +448,116 @@ defmodule Flirtual.Matchmaking do
         schedule_reset_notification(user, fields.reset_at)
         {:error, :out_of_passes, fields.reset_at}
       else
-        Repo.transaction(fn _repo ->
-          with %User{} <- target,
-               {_, _} <-
-                 Prospect
-                 |> where(profile_id: ^user.id, target_id: ^target.id, kind: ^mode)
-                 |> Repo.update_all(set: [completed: true]),
-               {_, _} <-
-                 Prospect
-                 |> where(
-                   [prospect],
-                   prospect.profile_id == ^user.id and prospect.target_id == ^target.id and
-                     prospect.kind != ^mode
-                 )
-                 |> Repo.delete_all(),
-               {:ok, item} <-
-                 %LikesAndPasses{}
-                 |> cast(
-                   %{
-                     profile_id: user.id,
-                     target_id: target.id,
-                     type: type,
-                     kind: kind
-                   },
-                   [:profile_id, :target_id, :type, :kind]
-                 )
-                 |> then(
-                   &if(get_field(&1, :profile_id) === get_field(&1, :target_id)) do
-                     add_error(&1, :user_id, "cannot_like_self")
-                   else
-                     &1
-                   end
-                 )
-                 |> Repo.insert(
-                   on_conflict: {:replace, [:type, :created_at]},
-                   conflict_target: [:profile_id, :target_id, :kind]
-                 ),
-               {1, nil} <-
-                 Profile
-                 |> where(user_id: ^user.id)
-                 |> Repo.update_all(inc: Keyword.put([], queue_keys[types], 1)),
-               {1, nil} <-
-                 User
-                 |> where(id: ^user.id)
-                 |> Repo.update_all(
-                   inc:
-                     Keyword.put(
-                       [],
-                       case type do
-                         :like -> :likes_count
-                         :pass -> :passes_count
-                       end,
-                       1
-                     )
-                 ),
-               opposite_item <-
-                 LikesAndPasses.get(
-                   user_id: item.target_id,
-                   target_id: item.profile_id,
-                   type: type
-                 ),
-               match_kind = reduce_kind(item.kind, opposite_item[:kind]),
-               {:ok, opposite_item} <-
-                 if(is_nil(opposite_item),
-                   do: {:ok, nil},
-                   else:
-                     with true <- item.type === :like and opposite_item.type === :like,
-                          {:ok, _} <-
-                            create_match_conversation(user, target, match_kind),
-                          {:ok, _} <-
-                            deliver_match_notification(target, user, match_kind) do
-                       {:ok, opposite_item}
+        result =
+          Repo.transaction(fn _repo ->
+            with %User{} <- target,
+                 {_, _} <-
+                   Prospect
+                   |> where(profile_id: ^user.id, target_id: ^target.id, kind: ^mode)
+                   |> Repo.update_all(set: [completed: true]),
+                 {_, _} <-
+                   Prospect
+                   |> where(
+                     [prospect],
+                     prospect.profile_id == ^user.id and prospect.target_id == ^target.id and
+                       prospect.kind != ^mode
+                   )
+                   |> Repo.delete_all(),
+                 {:ok, item} <-
+                   %LikesAndPasses{}
+                   |> cast(
+                     %{
+                       profile_id: user.id,
+                       target_id: target.id,
+                       type: type,
+                       kind: kind
+                     },
+                     [:profile_id, :target_id, :type, :kind]
+                   )
+                   |> then(
+                     &if(get_field(&1, :profile_id) === get_field(&1, :target_id)) do
+                       add_error(&1, :user_id, "cannot_like_self")
                      else
-                       false -> {:ok, opposite_item}
-                       value -> value
+                       &1
                      end
-                 ) do
-            %{
-              match:
-                if not is_nil(opposite_item) do
-                  item.type === :like and opposite_item.type === :like
-                else
-                  false
-                end,
-              match_kind: match_kind,
-              user_id: target.id
-            }
-          else
-            {:error, reason} -> Repo.rollback(reason)
-            reason -> Repo.rollback(reason)
-          end
-        end)
+                   )
+                   |> Repo.insert(
+                     on_conflict: {:replace, [:type, :created_at]},
+                     conflict_target: [:profile_id, :target_id, :kind]
+                   ),
+                 {1, nil} <-
+                   Profile
+                   |> where(user_id: ^user.id)
+                   |> Repo.update_all(inc: Keyword.put([], queue_keys[types], 1)),
+                 {1, nil} <-
+                   User
+                   |> where(id: ^user.id)
+                   |> Repo.update_all(
+                     inc:
+                       Keyword.put(
+                         [],
+                         case type do
+                           :like -> :likes_count
+                           :pass -> :passes_count
+                         end,
+                         1
+                       )
+                   ),
+                 opposite_item <-
+                   LikesAndPasses.get(
+                     user_id: item.target_id,
+                     target_id: item.profile_id,
+                     type: type
+                   ),
+                 match_kind = reduce_kind(item.kind, opposite_item[:kind]),
+                 {:ok, opposite_item} <-
+                   if(is_nil(opposite_item),
+                     do: {:ok, nil},
+                     else:
+                       with true <- item.type === :like and opposite_item.type === :like,
+                            true <- User.Policy.can_read?(user, target),
+                            {:ok, _} <-
+                              create_match_conversation(user, target, match_kind),
+                            {:ok, _} <-
+                              deliver_match_notification(target, user, match_kind) do
+                         {:ok, opposite_item}
+                       else
+                         false ->
+                           if item.type === :like and opposite_item.type === :like do
+                             # Stale non-readable prospect: rollback match
+                             Repo.rollback({:cannot_read, target.id})
+                           else
+                             {:ok, opposite_item}
+                           end
+                       end
+                   ) do
+              %{
+                match:
+                  if not is_nil(opposite_item) do
+                    item.type === :like and opposite_item.type === :like
+                  else
+                    false
+                  end,
+                match_kind: match_kind,
+                user_id: target.id
+              }
+            else
+              {:error, reason} -> Repo.rollback(reason)
+              reason -> Repo.rollback(reason)
+            end
+          end)
+
+        case result do
+          {:error, {:cannot_read, target_id}} ->
+            Prospect
+            |> where(profile_id: ^user.id, target_id: ^target_id)
+            |> Repo.delete_all()
+
+            {:ok, %{match: false, match_kind: nil, user_id: target_id}}
+
+          result ->
+            result
+        end
       end
     end
   end
