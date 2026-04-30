@@ -47,6 +47,7 @@ export const cloudflareBeaconId = import.meta.env.VITE_CLOUDFLARE_BEACON_ID as s
 
 export const freshworksWidgetId = import.meta.env.VITE_FRESHWORKS_WIDGET_ID as string;
 
+export const chargebeeNamespace = import.meta.env.VITE_CHARGEBEE_NAMESPACE as string;
 export const rcAppleKey = import.meta.env.VITE_RC_APPL_PUBLIC_KEY as string;
 export const rcGoogleKey = import.meta.env.VITE_RC_GOOG_PUBLIC_KEY as string;
 export const picoAppId = import.meta.env.VITE_PICO_APP_ID as string;

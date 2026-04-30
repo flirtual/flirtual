@@ -3,11 +3,6 @@ import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 
 import { Button } from "~/components/button";
-import {
-	Dialog,
-	DialogContent,
-	DialogTitle
-} from "~/components/dialog/dialog";
 import { useDevice } from "~/hooks/use-device";
 import { usePurchase } from "~/hooks/use-purchase";
 import { useOptionalSession } from "~/hooks/use-session";
@@ -21,7 +16,6 @@ export const SubscriptionButtons: FC = () => {
 	const [pendingAction, setPendingAction] = useState<"manage" | "resubscribe" | null>(null);
 	const { t } = useTranslation();
 
-	const [manageUrl, setManageUrl] = useState<string | null>(null);
 	if (!session) return null;
 
 	const { subscription } = session.user;
@@ -33,61 +27,37 @@ export const SubscriptionButtons: FC = () => {
 	if (!showResubscribe && !showManage) return null;
 
 	return (
-		<>
-			{manageUrl && (
-				<Dialog
-					open
-					onOpenChange={(open) => {
-						if (open) return;
-						setManageUrl(null);
+		<div className="flex flex-wrap gap-2">
+			{showResubscribe && (
+				<Button
+					disabled={pendingAction !== null}
+					kind="primary"
+					pending={pendingAction === "resubscribe"}
+					size="sm"
+					onClick={async () => {
+						setPendingAction("resubscribe");
+						await purchase(subscription.plan.id).catch(toasts.addError);
+						setPendingAction(null);
 					}}
 				>
-					<DialogTitle className="sr-only">{t("manage_subscription")}</DialogTitle>
-					<DialogContent className="w-fit overflow-hidden p-0">
-						{/* eslint-disable-next-line react-dom/no-missing-iframe-sandbox */}
-						<iframe
-							className="max-h-[90vh] max-w-full rounded-2.5xl bg-[#f4f5f9]"
-							height={561}
-							src={manageUrl}
-							width={479}
-						/>
-					</DialogContent>
-				</Dialog>
+					{t("resubscribe")}
+				</Button>
 			)}
-			<div className="flex flex-wrap gap-2">
-				{showResubscribe && (
-					<Button
-						disabled={pendingAction !== null}
-						kind="primary"
-						pending={pendingAction === "resubscribe"}
-						size="sm"
-						onClick={async () => {
-							setPendingAction("resubscribe");
-							const url = await purchase(subscription.plan.id).catch(toasts.addError);
-							setManageUrl(url || null);
-							setPendingAction(null);
-						}}
-					>
-						{t("resubscribe")}
-					</Button>
-				)}
-				{showManage && (
-					<Button
-						disabled={pendingAction !== null}
-						kind={showResubscribe ? "secondary" : "primary"}
-						pending={pendingAction === "manage"}
-						size="sm"
-						onClick={async () => {
-							setPendingAction("manage");
-							const url = await purchase().catch(toasts.addError);
-							setManageUrl(url || null);
-							setPendingAction(null);
-						}}
-					>
-						{t("manage")}
-					</Button>
-				)}
-			</div>
-		</>
+			{showManage && (
+				<Button
+					disabled={pendingAction !== null}
+					kind={showResubscribe ? "secondary" : "primary"}
+					pending={pendingAction === "manage"}
+					size="sm"
+					onClick={async () => {
+						setPendingAction("manage");
+						await purchase().catch(toasts.addError);
+						setPendingAction(null);
+					}}
+				>
+					{t("manage")}
+				</Button>
+			)}
+		</div>
 	);
 };

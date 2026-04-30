@@ -19,26 +19,18 @@ defmodule FlirtualWeb.SubscriptionController do
 
   def checkout(conn, %{"plan_id" => plan_id}) do
     with %Plan{purchasable: true} = plan <- Plan.get(plan_id),
-         {:ok, url} <- Chargebee.checkout(conn.assigns[:session].user, plan) do
-      conn |> redirect(external: url)
+         {:ok, %Chargebeex.HostedPage{} = hosted_page} <-
+           Chargebee.checkout(conn.assigns[:session].user, plan) do
+      conn |> json(serialize_hosted_page(hosted_page))
     else
       %Plan{} ->
-        conn
-        |> html(
-          "<div style='height: 100%; text-align: center; align-content: center; font-family: sans-serif'>There was an error completing your purchase, please try again. You have not been charged.</div>"
-        )
+        {:error, {:bad_request, :plan_not_available}}
 
       nil ->
-        conn
-        |> html(
-          "<div style='height: 100%; text-align: center; align-content: center; font-family: sans-serif'>There was an error completing your purchase, please try again. You have not been charged.</div>"
-        )
+        {:error, {:not_found, :plan_not_available}}
 
       {:error, :payments_banned} ->
-        conn
-        |> html(
-          "<div style='height: 100%; text-align: center; align-content: center; font-family: sans-serif'>Sorry, Premium is currently unavailable for purchase.</div>"
-        )
+        {:error, {:forbidden, :checkout_not_available}}
 
       value ->
         value
@@ -46,10 +38,39 @@ defmodule FlirtualWeb.SubscriptionController do
   end
 
   def manage(conn, _) do
-    with {:ok, url} <- Chargebee.manage(conn.assigns[:session].user) do
-      conn |> redirect(external: url)
+    with {:ok, %Chargebeex.PortalSession{} = portal_session} <-
+           Chargebee.manage(conn.assigns[:session].user) do
+      conn |> json(serialize_portal_session(portal_session))
     else
       value -> value
     end
+  end
+
+  defp serialize_hosted_page(%Chargebeex.HostedPage{} = hosted_page) do
+    %{
+      id: hosted_page.id,
+      type: hosted_page.type,
+      url: hosted_page.url,
+      state: hosted_page.state,
+      embed: hosted_page.embed,
+      created_at: hosted_page.created_at,
+      expires_at: hosted_page.expires_at,
+      object: "hosted_page"
+    }
+  end
+
+  defp serialize_portal_session(%Chargebeex.PortalSession{} = portal_session) do
+    %{
+      id: portal_session.id,
+      token: portal_session.token,
+      access_url: portal_session.access_url,
+      status: portal_session.status,
+      customer_id: portal_session.customer_id,
+      redirect_url: portal_session.redirect_url,
+      created_at: portal_session.created_at,
+      expires_at: portal_session.expires_at,
+      linked_customers: portal_session.linked_customers,
+      object: "portal_session"
+    }
   end
 end

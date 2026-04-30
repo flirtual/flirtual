@@ -454,7 +454,9 @@
 		"geolocation_failed": "位置情報の更新に失敗しました。",
 		"geolocation_rate_limit": "位置情報の更新は週に3回までです。",
 		"geolocation_permission_denied": "位置情報の許可が拒否されました。",
-		"geolocation_not_supported": "お使いの端末では位置情報サービスがサポートされていません。"
+		"geolocation_not_supported": "お使いの端末では位置情報サービスがサポートされていません。",
+		"plan_not_available": "購入の開始中にエラーが発生しました。ページを再読み込みしてもう一度お試しください。料金は請求されていません。",
+		"checkout_not_available": "申し訳ありませんが、現在ご購入いただけません。"
 	},
 	"support": "サポート",
 	"forgot_your_password": "パスワードを忘れましたか？",

@@ -1,12 +1,10 @@
 import { Loader2 } from "lucide-react";
-import { useState, useTransition } from "react";
+import { useTransition } from "react";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
 import { Button } from "~/components/button";
-import { Dialog, DialogContent, DialogTitle } from "~/components/dialog/dialog";
-import { Loading } from "~/components/loading";
 import { usePurchase } from "~/hooks/use-purchase";
 import { useToast } from "~/hooks/use-toast";
 
@@ -25,48 +23,20 @@ export const PlanButtonLink: FC<
 	const [pending, startTransition] = useTransition();
 	const { t } = useTranslation();
 
-	const [purchaseUrl, setPurchaseUrl] = useState<string | null>(null);
-
 	return (
-		<>
-			{purchaseUrl && (
-				<Dialog
-					open
-					onOpenChange={(open) => {
-						if (open) return;
-						setPurchaseUrl(null);
-					}}
-				>
-					<DialogTitle className="sr-only">{t("purchase")}</DialogTitle>
-					<DialogContent className="max-w-[min(489px,95svw)] overflow-hidden desktop:w-fit" closable={false}>
-						<div className="flex items-center justify-center rounded-2.5xl bg-white-10">
-							<Loading light className="absolute min-h-0 p-6 text-black-90" />
-							{/* eslint-disable-next-line react-dom/no-missing-iframe-sandbox */}
-							<iframe
-								className="z-10 max-h-[90vh] max-w-full rounded-2.5xl bg-transparent"
-								height={630}
-								src={purchaseUrl}
-								width={479}
-							/>
-						</div>
-					</DialogContent>
-				</Dialog>
-			)}
-			<Button
-				className={twMerge("relative my-auto flex", !highlight && "vision:bg-white-10")}
-				disabled={disabled || pending}
-				Icon={pending ? Loader2 : undefined}
-				iconClassName="animate-spin absolute left-2 h-5"
-				kind={highlight ? "primary" : "secondary"}
-				size="sm"
-				onClick={() =>
-					startTransition(async () => {
-						const url = await purchase(id).catch(toasts.addError);
-						setPurchaseUrl(url || null);
-					})}
-			>
-				{t(active ? "manage" : lifetime ? "purchase" : "subscribe")}
-			</Button>
-		</>
+		<Button
+			className={twMerge("relative my-auto flex", !highlight && "vision:bg-white-10")}
+			disabled={disabled || pending}
+			Icon={pending ? Loader2 : undefined}
+			iconClassName="animate-spin absolute left-2 h-5"
+			kind={highlight ? "primary" : "secondary"}
+			size="sm"
+			onClick={() =>
+				startTransition(async () => {
+					await purchase(id).catch(toasts.addError);
+				})}
+		>
+			{t(active ? "manage" : lifetime ? "purchase" : "subscribe")}
+		</Button>
 	);
 };

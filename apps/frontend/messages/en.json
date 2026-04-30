@@ -454,7 +454,9 @@
 		"geolocation_failed": "Failed to update location.",
 		"geolocation_rate_limit": "You can only update your location 3 times per week.",
 		"geolocation_permission_denied": "Location permission denied.",
-		"geolocation_not_supported": "Geolocation is not supported by your device."
+		"geolocation_not_supported": "Geolocation is not supported by your device.",
+		"plan_not_available": "There was an error initiating the purchase, please refresh the page and try again. You have not been charged.",
+		"checkout_not_available": "Sorry, purchases are currently unavailable."
 	},
 	"support": "Support",
 	"forgot_your_password": "Forgot your password?",

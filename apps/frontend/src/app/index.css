@@ -90,6 +90,18 @@ iframe {
   background-image: linear-gradient(to bottom, var(--light-theme-2) 50%, #fff 50%);
 }
 
+#cb-container {
+  background-color: rgb(17 17 17 / 0.8) !important;
+  backdrop-filter: blur(4px);
+}
+
+/* Hides white full-viewport loader Chargebee shows the 2nd time an iframe is opened. */
+#cb-loader[style*="width: 100%"],
+#cb-loader[style*="width: 100%"] #wrapper_v4Checkout {
+  background-color: transparent !important;
+  transition: none !important;
+}
+
 img,
 a {
   -webkit-touch-callout: none;
