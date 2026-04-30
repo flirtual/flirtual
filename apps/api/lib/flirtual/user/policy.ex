@@ -75,12 +75,15 @@ defmodule Flirtual.User.Policy do
             session: %Session{} = session
           }
         },
-        %User{} = user
-      ) do
+        %User{} = target
+      ),
+      do: can_read?(session.user, target)
+
+  def can_read?(%User{} = user, %User{} = target) do
     cond do
-      :moderator in session.user.tags -> true
-      user.status != :visible -> false
-      User.blocked?(user, session.user) -> false
+      :moderator in user.tags -> true
+      target.status != :visible -> false
+      User.blocked?(target, user) -> false
       true -> true
     end
   end
