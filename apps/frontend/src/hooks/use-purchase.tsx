@@ -9,7 +9,10 @@ import {
 	useState
 } from "react";
 import type { FC, PropsWithChildren } from "react";
+import { useTranslation } from "react-i18next";
 
+import { getChargebee } from "~/api/chargebee";
+import { isWretchError } from "~/api/common";
 import { Subscription } from "~/api/subscription";
 import { rcAppleKey, rcGoogleKey } from "~/const";
 import { useNavigate } from "~/i18n";
@@ -22,7 +25,7 @@ import { useSession } from "./use-session";
 import { useToast } from "./use-toast";
 
 interface PurchaseContext {
-	purchase: (planId?: string) => Promise<string | null>;
+	purchase: (planId?: string) => Promise<void>;
 	packages: Array<PurchasesPackage>;
 }
 
@@ -69,6 +72,7 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 
 	const toasts = useToast();
 	const navigate = useNavigate();
+	const { t } = useTranslation();
 
 	const [packages, setPackages] = useState<Array<PurchasesPackage>>([]);
 
@@ -100,11 +104,44 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 	}, [platform, native, revenuecatId]);
 
 	const purchase = useCallback(
-		async (planId?: string): Promise<string | null> => {
+		async (planId?: string): Promise<void> => {
 			if (!native) {
-				return planId
-					? Subscription.checkoutUrl(planId)
-					: Subscription.manageUrl();
+				const chargebee = await getChargebee();
+
+				if (planId) {
+					await new Promise<void>((resolve, reject) => {
+						chargebee.openCheckout({
+							hostedPage: () =>
+								Subscription.checkout(planId).catch((reason) => {
+									if (isWretchError(reason) && reason.json?.error)
+										throw new Error(t(`errors.${reason.json.error}` as any));
+									throw reason;
+								}),
+							success: () => {
+								void (async () => {
+									await invalidate({ queryKey: sessionKey() });
+									await navigate(urls.subscription.success);
+									resolve();
+								})();
+							},
+							error: reject,
+							close: () => resolve()
+						});
+					});
+					return;
+				}
+
+				chargebee.setPortalSession(() => Subscription.manage());
+				const portal = chargebee.createChargebeePortal();
+				await new Promise<void>((resolve) => {
+					portal.open({
+						close: () => {
+							void invalidate({ queryKey: sessionKey() });
+							resolve();
+						}
+					});
+				});
+				return;
 			}
 
 			if (!revenuecatId) throw new Error("Not logged in");
@@ -122,7 +159,7 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 
 			if (!planId && customerInfo.managementURL) {
 				window.open(customerInfo.managementURL, "_blank");
-				return null;
+				return;
 			}
 
 			const plan = plans?.find((plan) => plan.id === planId);
@@ -137,25 +174,23 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 				&& customerInfo.managementURL
 			) {
 				window.open(customerInfo.managementURL, "_blank");
-				return null;
+				return;
 			}
 
 			const aPackage = await getPackage(plan.revenuecatId);
 
 			if (!aPackage) throw new Error("Package not available");
 
-			return Purchases.purchasePackage({ aPackage })
+			await Purchases.purchasePackage({ aPackage })
 				.then(async () => {
 					await invalidate({ queryKey: sessionKey() });
 					await navigate(urls.subscription.success);
-					return null;
 				})
 				.catch((reason) => {
 					toasts.addError(reason);
-					return null;
 				});
 		},
-		[native, plans, apple, platform, toasts, navigate, revenuecatId]
+		[native, plans, apple, platform, toasts, navigate, revenuecatId, t]
 	);
 
 	return (

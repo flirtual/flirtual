@@ -44,68 +44,60 @@ defmodule Flirtual.Chargebee do
         {:error, :payments_banned}
 
       {true, _, _} ->
-        with {:ok,
-              %Chargebeex.HostedPage{
-                url: url
-              }} <-
-               Chargebeex.Action.generic_action_without_id(
-                 :post,
-                 "hosted_page",
-                 "checkout_existing_for_items",
-                 %{
-                   layout: "in_app",
-                   customer: %{
-                     id: chargebee_id,
-                     locale: to_valid_locale(user.preferences.language)
-                   },
-                   subscription: %{id: user.subscription.chargebee_id},
-                   subscription_items: [
-                     %{item_price_id: plan.chargebee_id}
-                   ],
-                   replace_item_list: true,
-                   redirect_url:
-                     Application.fetch_env!(:flirtual, :frontend_origin)
-                     |> URI.merge("/subscription?success=true")
-                     |> URI.to_string(),
-                   cancel_url:
-                     Application.fetch_env!(:flirtual, :frontend_origin)
-                     |> URI.merge("/subscription")
-                     |> URI.to_string()
-                 }
-               ) do
-          {:ok, url}
-        end
+        Chargebeex.Action.generic_action_without_id(
+          :post,
+          "hosted_page",
+          "checkout_existing_for_items",
+          %{
+            layout: "in_app",
+            embed: true,
+            iframe_messaging: true,
+            customer: %{
+              id: chargebee_id,
+              locale: to_valid_locale(user.preferences.language)
+            },
+            subscription: %{id: user.subscription.chargebee_id},
+            subscription_items: [
+              %{item_price_id: plan.chargebee_id}
+            ],
+            replace_item_list: true,
+            redirect_url:
+              Application.fetch_env!(:flirtual, :frontend_origin)
+              |> URI.merge("/subscription?success=true")
+              |> URI.to_string(),
+            cancel_url:
+              Application.fetch_env!(:flirtual, :frontend_origin)
+              |> URI.merge("/subscription")
+              |> URI.to_string()
+          }
+        )
 
       {false, _, _} ->
-        with {:ok,
-              %Chargebeex.HostedPage{
-                url: url
-              }} <-
-               Chargebeex.Action.generic_action_without_id(
-                 :post,
-                 "hosted_page",
-                 "checkout_new_for_items",
-                 %{
-                   layout: "in_app",
-                   customer: %{
-                     id: chargebee_id,
-                     locale: to_valid_locale(user.preferences.language)
-                   },
-                   subscription_items: [
-                     %{item_price_id: plan.chargebee_id}
-                   ],
-                   redirect_url:
-                     Application.fetch_env!(:flirtual, :frontend_origin)
-                     |> URI.merge("/subscription?success=true")
-                     |> URI.to_string(),
-                   cancel_url:
-                     Application.fetch_env!(:flirtual, :frontend_origin)
-                     |> URI.merge("/subscription")
-                     |> URI.to_string()
-                 }
-               ) do
-          {:ok, url}
-        end
+        Chargebeex.Action.generic_action_without_id(
+          :post,
+          "hosted_page",
+          "checkout_new_for_items",
+          %{
+            layout: "in_app",
+            embed: true,
+            iframe_messaging: true,
+            customer: %{
+              id: chargebee_id,
+              locale: to_valid_locale(user.preferences.language)
+            },
+            subscription_items: [
+              %{item_price_id: plan.chargebee_id}
+            ],
+            redirect_url:
+              Application.fetch_env!(:flirtual, :frontend_origin)
+              |> URI.merge("/subscription?success=true")
+              |> URI.to_string(),
+            cancel_url:
+              Application.fetch_env!(:flirtual, :frontend_origin)
+              |> URI.merge("/subscription")
+              |> URI.to_string()
+          }
+        )
     end
   end
 
@@ -118,36 +110,32 @@ defmodule Flirtual.Chargebee do
 
     case allowed do
       true ->
-        with {:ok,
-              %Chargebeex.HostedPage{
-                url: url
-              }} <-
-               Chargebeex.Action.generic_action_without_id(
-                 :post,
-                 "hosted_page",
-                 "checkout_one_time_for_items",
-                 %{
-                   layout: "in_app",
-                   customer: %{
-                     id: chargebee_id,
-                     locale: to_valid_locale(user.preferences.language)
-                   },
-                   item_prices: [
-                     %{item_price_id: plan.chargebee_id}
-                   ],
-                   currency_code: "usd",
-                   redirect_url:
-                     Application.fetch_env!(:flirtual, :frontend_origin)
-                     |> URI.merge("/subscription?success=true")
-                     |> URI.to_string(),
-                   cancel_url:
-                     Application.fetch_env!(:flirtual, :frontend_origin)
-                     |> URI.merge("/subscription")
-                     |> URI.to_string()
-                 }
-               ) do
-          {:ok, url}
-        end
+        Chargebeex.Action.generic_action_without_id(
+          :post,
+          "hosted_page",
+          "checkout_one_time_for_items",
+          %{
+            layout: "in_app",
+            embed: true,
+            iframe_messaging: true,
+            customer: %{
+              id: chargebee_id,
+              locale: to_valid_locale(user.preferences.language)
+            },
+            item_prices: [
+              %{item_price_id: plan.chargebee_id}
+            ],
+            currency_code: "usd",
+            redirect_url:
+              Application.fetch_env!(:flirtual, :frontend_origin)
+              |> URI.merge("/subscription?success=true")
+              |> URI.to_string(),
+            cancel_url:
+              Application.fetch_env!(:flirtual, :frontend_origin)
+              |> URI.merge("/subscription")
+              |> URI.to_string()
+          }
+        )
 
       false ->
         {:error, :payments_banned}
@@ -162,15 +150,9 @@ defmodule Flirtual.Chargebee do
   end
 
   def manage(%User{chargebee_id: chargebee_id} = user) do
-    with {:ok,
-          %Chargebeex.PortalSession{
-            access_url: url
-          }} <-
-           Chargebeex.PortalSession.create(%{
-             customer: %{id: chargebee_id, locale: to_valid_locale(user.preferences.language)}
-           }) do
-      {:ok, url}
-    end
+    Chargebeex.PortalSession.create(%{
+      customer: %{id: chargebee_id, locale: to_valid_locale(user.preferences.language)}
+    })
   end
 
   # User isn't an existing Chargebee Customer, create one.

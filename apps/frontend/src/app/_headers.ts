@@ -86,20 +86,26 @@ const data = [
 						// https://developers.cloudflare.com/web-analytics/
 						"static.cloudflareinsights.com",
 						// https://posthog.com/docs/advanced/content-security-policy
-						posthogHost && new URL(posthogHost).host
+						posthogHost && new URL(posthogHost).host,
+						// https://www.chargebee.com/docs/billing/2.0/hosted-capabilities/embedded-checkout
+						"https://js.chargebee.com/v2/chargebee.js"
 					],
 					"style-src": [
 						"'self'",
 						"'unsafe-inline'",
 						// https://developers.freshdesk.com/widget-api/
 						"*.freshworks.com",
-						"*.freshdesk.com"
+						"*.freshdesk.com",
+						// https://www.chargebee.com/docs/billing/2.0/hosted-capabilities/embedded-checkout
+						"*.chargebee.com"
 					],
 					"img-src": [
 						"'self'",
 						"blob:",
 						"data:",
-						...bucketOrigins.map((origin) => new URL(origin).host)
+						...bucketOrigins.map((origin) => new URL(origin).host),
+						// https://www.chargebee.com/docs/billing/2.0/hosted-capabilities/embedded-checkout
+						"*.chargebee.com"
 					],
 					"media-src": [
 						"'self'",
@@ -134,7 +140,9 @@ const data = [
 						// https://docs.sentry.io/concepts/key-terms/dsn-explainer/
 						sentryEnabled && new URL(sentryDsn).host,
 						// https://posthog.com/docs/advanced/content-security-policy
-						posthogHost && new URL(posthogHost).host
+						posthogHost && new URL(posthogHost).host,
+						// https://www.chargebee.com/docs/billing/2.0/hosted-capabilities/embedded-checkout
+						"*.chargebee.com"
 					],
 					"font-src": ["'self'"],
 					"object-src": ["'self'", "data:"],
@@ -150,7 +158,7 @@ const data = [
 						"https://recaptcha.google.com/recaptcha/",
 						// https://talkjs.com/docs/Features/Security_Settings/Content_Security_Policy/
 						"*.talkjs.com",
-						// https://www.chargebee.com/docs/2.0/embedded-checkout.html
+						// https://www.chargebee.com/docs/billing/2.0/hosted-capabilities/embedded-checkout
 						"chargebee.com",
 						"*.chargebee.com",
 						// https://docs.widgetbot.io/

@@ -1,15 +1,15 @@
 import { useTranslation } from "react-i18next";
 
 import type { Session } from "~/api/auth";
-import { Subscription } from "~/api/subscription";
 import { User } from "~/api/user";
-import { ButtonLink } from "~/components/button";
+import { Button } from "~/components/button";
 import {
 	Form,
 	FormAlternativeActionLink,
 	FormButton
 } from "~/components/forms";
 import { ModelCard } from "~/components/model-card";
+import { usePurchase } from "~/hooks/use-purchase";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { mutate, sessionKey } from "~/query";
@@ -18,6 +18,7 @@ import { urls } from "~/urls";
 
 export const ReactivationForm: React.FC = () => {
 	const { user } = useSession();
+	const { purchase } = usePurchase();
 
 	const { t } = useTranslation();
 
@@ -57,14 +58,13 @@ export const ReactivationForm: React.FC = () => {
 									{" "}
 									{t("trite_awful_marten_lend")}
 								</p>
-								<ButtonLink
-									href={Subscription.manageUrl()}
+								<Button
 									kind="secondary"
 									size="sm"
-									target="_self"
+									onClick={() => purchase().catch(toasts.addError)}
 								>
 									{t("manage_subscription")}
-								</ButtonLink>
+								</Button>
 							</div>
 						)}
 						<span>
