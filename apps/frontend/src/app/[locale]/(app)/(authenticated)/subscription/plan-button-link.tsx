@@ -33,7 +33,7 @@ export const PlanButtonLink: FC<
 			size="sm"
 			onClick={() =>
 				startTransition(async () => {
-					await purchase(id).catch(toasts.addError);
+					await purchase(active ? undefined : id).catch(toasts.addError);
 				})}
 		>
 			{t(active ? "manage" : lifetime ? "purchase" : "subscribe")}
