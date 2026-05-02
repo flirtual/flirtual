@@ -105,7 +105,8 @@ const data = [
 						"data:",
 						...bucketOrigins.map((origin) => new URL(origin).host),
 						// https://www.chargebee.com/docs/billing/2.0/hosted-capabilities/embedded-checkout
-						"*.chargebee.com"
+						"*.chargebee.com",
+						"cb-invoice-logos-prod.s3.us-east-1.amazonaws.com"
 					],
 					"media-src": [
 						"'self'",
