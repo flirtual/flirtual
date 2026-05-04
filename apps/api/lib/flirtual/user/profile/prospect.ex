@@ -47,7 +47,13 @@ defmodule Flirtual.User.Profile.Prospect do
       with {:ok, _} <- LikesAndPasses.delete_all(profile_id: profile_id, target_id: target_id),
            {_, _} <-
              Prospect
-             |> where([p], p.id != ^prospect.id and p.kind == ^kind)
+             |> where(
+               [p],
+               p.profile_id == ^profile_id and
+                 p.kind == ^kind and
+                 p.completed == true and
+                 p.id != ^prospect.id
+             )
              |> Repo.delete_all(),
            {:ok, prospect} <-
              prospect
