@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		2714E35A2A426DBB00458704 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2714E3592A426DBB00458704 /* StoreKit.framework */; };
+		273A40612FA9587B0058371B /* BridgeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273A40602FA9587B0058371B /* BridgeViewController.swift */; };
+		273A40622FA9587B0058371B /* BridgeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273A40602FA9587B0058371B /* BridgeViewController.swift */; };
 		27D784832E8E23AC006DD767 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504EC3071FED79650016851F /* AppDelegate.swift */; };
 		27D784852E8E23AC006DD767 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2714E3592A426DBB00458704 /* StoreKit.framework */; };
 		27D784892E8E23AC006DD767 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 504EC3101FED79650016851F /* LaunchScreen.storyboard */; };
@@ -34,6 +36,7 @@
 /* Begin PBXFileReference section */
 		2714E3582A426D6600458704 /* Flirtual.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Flirtual.entitlements; sourceTree = "<group>"; };
 		2714E3592A426DBB00458704 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		273A40602FA9587B0058371B /* BridgeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BridgeViewController.swift; sourceTree = "<group>"; };
 		27D784932E8E23AC006DD767 /* Flirtual Beta.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Flirtual Beta.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		27D784942E8E23AC006DD767 /* Beta-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Beta-Info.plist"; sourceTree = "<group>"; };
 		27D784992E8E50B1006DD767 /* Beta-AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = "Beta-AppIcon.icon"; sourceTree = "<group>"; };
@@ -117,6 +120,7 @@
 		504EC3061FED79650016851F /* App */ = {
 			isa = PBXGroup;
 			children = (
+				273A40602FA9587B0058371B /* BridgeViewController.swift */,
 				50379B222058CBB4000EE86E /* capacitor.config.json */,
 				504EC3071FED79650016851F /* AppDelegate.swift */,
 				504EC30B1FED79650016851F /* Main.storyboard */,
@@ -331,6 +335,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				27D784832E8E23AC006DD767 /* AppDelegate.swift in Sources */,
+				273A40612FA9587B0058371B /* BridgeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -339,6 +344,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				504EC3081FED79650016851F /* AppDelegate.swift in Sources */,
+				273A40622FA9587B0058371B /* BridgeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
