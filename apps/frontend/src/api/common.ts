@@ -1,3 +1,4 @@
+import ms from "ms.macro";
 import wretch from "wretch";
 import type { ConfiguredMiddleware } from "wretch";
 import AbortAddon from "wretch/addons/abort";
@@ -7,6 +8,8 @@ import { WretchError } from "wretch/resolver";
 import { client, development } from "~/const";
 import { urls } from "~/urls";
 import { newIdempotencyKey, toCamelObject, toSnakeObject } from "~/utilities";
+
+import { delay, timeout } from "./middleware";
 
 export interface UuidModel {
 	id: string;
@@ -62,16 +65,9 @@ export const api = wretch(urls.api)
 	})
 	.middlewares(
 		[
-			(client && development) && ((next) => {
-				return async (url, options) => {
-					options.headers ??= {};
-
-					// Artificially slow requests in development, ensuring we can see loading/pending states.
-					await new Promise((resolve) => setTimeout(resolve, 500 * Math.random() * (options.method === "GET" ? 1 : 2)));
-
-					return next(url, options);
-				};
-			}) as ConfiguredMiddleware
+			timeout(ms("5s")),
+			// Artificially slow requests in development, ensuring we can see loading/pending states.
+			development && delay((_, { method }) => 500 * Math.random() * (method === "GET" ? 1 : 2))
 		].filter(Boolean)
 	)
 	// .errorType("json")

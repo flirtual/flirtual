@@ -22,7 +22,7 @@ export function Loading({
 	longerThanUsual?: boolean;
 }>) {
 	const [longerThanUsual, setLongerThanUsual] = useState(_longerThanUsual);
-	useTimeout(() => setLongerThanUsual(true), ms("5s"));
+	useTimeout(() => setLongerThanUsual(true), ms("8s"));
 
 	return (
 		<div className={twMerge("flex min-h-screen w-full flex-col items-center justify-center opacity-75", className)}>
