@@ -43,11 +43,17 @@ async function ensureConfigured(
 ) {
 	if (!configurePromise) {
 		configurePromise = (async () => {
-			const { Purchases } = await getPurchaseModule();
-			await Purchases.configure({
-				apiKey: platform === "apple" ? rcAppleKey : rcGoogleKey,
-				appUserID
-			});
+			try {
+				const { Purchases } = await getPurchaseModule();
+				await Purchases.configure({
+					apiKey: platform === "apple" ? rcAppleKey : rcGoogleKey,
+					appUserID
+				});
+			}
+			catch (reason) {
+				configurePromise = null;
+				throw reason;
+			}
 		})();
 	}
 	return configurePromise;
