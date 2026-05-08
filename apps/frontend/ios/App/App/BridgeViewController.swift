@@ -22,6 +22,7 @@ private final class WebViewRetryProxy: NSObject, WKNavigationDelegate {
     private weak var inner: WKNavigationDelegate?
     private var retryCount = 0
     private var lastRequestedURL: URL?
+    private var pendingRetry: DispatchWorkItem?
 
     private let maxRetries = 8
 
@@ -50,8 +51,11 @@ private final class WebViewRetryProxy: NSObject, WKNavigationDelegate {
         decidePolicyFor navigationAction: WKNavigationAction,
         decisionHandler: @escaping (WKNavigationActionPolicy) -> Void
     ) {
-        if let url = navigationAction.request.url, url.scheme == "http" || url.scheme == "https" {
+        if navigationAction.targetFrame?.isMainFrame == true,
+           let url = navigationAction.request.url,
+           url.scheme == "http" || url.scheme == "https" {
             lastRequestedURL = url
+            cancelPendingRetry()
         }
         // Default-allow if unimplemented so decisionHandler isn't dropped.
         let selector = Selector("webView:decidePolicyForNavigationAction:decisionHandler:")
@@ -64,6 +68,7 @@ private final class WebViewRetryProxy: NSObject, WKNavigationDelegate {
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         retryCount = 0
+        cancelPendingRetry()
         inner?.webView?(webView, didFinish: navigation)
     }
 
@@ -81,6 +86,11 @@ private final class WebViewRetryProxy: NSObject, WKNavigationDelegate {
         scheduleRetryIfNeeded(webView: webView, error: error)
     }
 
+    private func cancelPendingRetry() {
+        pendingRetry?.cancel()
+        pendingRetry = nil
+    }
+
     private func scheduleRetryIfNeeded(webView: WKWebView, error: Error) {
         let nsError = error as NSError
         guard nsError.domain == NSURLErrorDomain,
@@ -92,8 +102,12 @@ private final class WebViewRetryProxy: NSObject, WKNavigationDelegate {
 
         retryCount += 1
         let delay = min(pow(2.0, Double(retryCount - 1)) * 0.25, 5.0)
-        DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [weak webView] in
+        cancelPendingRetry()
+        let work = DispatchWorkItem { [weak self, weak webView] in
+            self?.pendingRetry = nil
             webView?.load(URLRequest(url: url))
         }
+        pendingRetry = work
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: work)
     }
 }
