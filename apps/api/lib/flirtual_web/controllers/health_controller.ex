@@ -3,39 +3,38 @@ defmodule FlirtualWeb.HealthController do
 
   import Ecto.Query
 
-  alias Flirtual.{Elasticsearch, Repo, Users}
+  alias Flirtual.{Elasticsearch, Repo}
+  alias Flirtual.User
 
-  def health(conn, %{"check" => check}) do
-    result =
-      case check do
-        "api" ->
-          :ok
+  def check("api"), do: :ok
 
-        "database" ->
-          case Users.count() do
-            n when is_integer(n) and n >= 1 -> :ok
-            _ -> :error
-          end
+  def check("database") do
+    case Repo.one(from u in User, limit: 1, select: 1) do
+      1 -> :ok
+      _ -> :error
+    end
+  end
 
-        "matchmaking" ->
-          case Elasticsearch.search(:users, %{size: 1}) do
-            {:ok, %{"hits" => %{"hits" => [_]}}} -> :ok
-            _ -> :error
-          end
+  def check("matchmaking") do
+    case Elasticsearch.search(:users, %{size: 1}) do
+      {:ok, %{"hits" => %{"hits" => [_]}}} -> :ok
+      _ -> :error
+    end
+  end
 
-        "notifications" ->
-          cutoff = DateTime.utc_now() |> DateTime.add(-60, :second)
+  def check("notifications") do
+    cutoff = DateTime.utc_now() |> DateTime.add(-60, :second)
 
-          with {:ok, _} <- check_worker("Flirtual.ObanWorkers.Email", cutoff),
-               {:ok, _} <- check_worker("Flirtual.ObanWorkers.Push", cutoff) do
-            :ok
-          else
-            _ -> :error
-          end
+    with {:ok, _} <- check_worker("Flirtual.ObanWorkers.Email", cutoff),
+         {:ok, _} <- check_worker("Flirtual.ObanWorkers.Push", cutoff) do
+      :ok
+    else
+      _ -> :error
+    end
+  end
 
-        _ ->
-          :error
-      end
+  def health(conn, %{"check" => type}) do
+    result = check(type)
 
     case result do
       :ok ->
