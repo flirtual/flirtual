@@ -1,11 +1,10 @@
 import ms from "ms.macro";
 import wretch from "wretch";
-import type { ConfiguredMiddleware } from "wretch";
 import AbortAddon from "wretch/addons/abort";
 import QueryAddon from "wretch/addons/queryString";
 import { WretchError } from "wretch/resolver";
 
-import { client, development } from "~/const";
+import { development } from "~/const";
 import { urls } from "~/urls";
 import { newIdempotencyKey, toCamelObject, toSnakeObject } from "~/utilities";
 
