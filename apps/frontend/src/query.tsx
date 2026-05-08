@@ -128,6 +128,7 @@ export const queryClient = new QueryClient({
 				// Never retry failed queries in development.
 				? false
 				: (attempt, error) => {
+						if (error.name === "TimeoutError") return true;
 						if (isWretchError(error) && [400, 401, 403, 429].includes(error.status)) return false;
 						return true;
 					},
