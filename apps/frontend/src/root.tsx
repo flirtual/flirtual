@@ -22,6 +22,8 @@ import AppleIcon from "virtual:remote/e7a99a6d-7299-4754-af73-b2eae55f969c?no-in
 import MarkBackground from "virtual:remote/flirtual-mark-background.png?no-inline";
 
 import type { Route } from "./+types/root";
+import { api } from "./api/common";
+import { Config } from "./api/config";
 import { App } from "./app";
 import { HavingIssuesViewport } from "./components/error";
 import { Loading } from "./components/loading";
@@ -180,6 +182,11 @@ const BeforeRenderScript: FC = memo(() => {
 	);
 });
 
+const priorityRequests = [
+	Config.api._url,
+	api.url("session")._url
+];
+
 export function Layout({ children }: PropsWithChildren) {
 	const { locale: _locale } = useParams();
 	const locale = _locale && isLocale(_locale) ? _locale : defaultLocale;
@@ -189,6 +196,7 @@ export function Layout({ children }: PropsWithChildren) {
 
 	preconnect(apiOrigin);
 	bucketOrigins.map((origin) => preconnect(origin));
+	priorityRequests.map((url) => preload(url, { as: "fetch", crossOrigin: "use-credentials", type: "application/json" }));
 	preload(montserratNormal, { as: "font", type: "font/woff2", crossOrigin: "anonymous" });
 	preload(nunitoNormal, { as: "font", type: "font/woff2", crossOrigin: "anonymous" });
 
