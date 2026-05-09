@@ -17,6 +17,7 @@ defmodule Flirtual.ObanWorkers.Email do
             end),
          {:ok, tokens, _} <- :smtp_rfc5322_scan.string(String.to_charlist(address)),
          {:ok, _} <- :smtp_rfc5322_parse.parse(tokens),
+         :ok <- User.validate_idn(address),
          {:ok, email} <- Mailer.send(recipient, options) do
       {:ok, email}
     else
@@ -27,6 +28,9 @@ defmodule Flirtual.ObanWorkers.Email do
         {:cancel, reason}
 
       {:error, {_, :smtp_rfc5322_parse, reason}} ->
+        {:cancel, reason}
+
+      {:error, {:idna, reason}} ->
         {:cancel, reason}
 
       {:error, reason} ->
