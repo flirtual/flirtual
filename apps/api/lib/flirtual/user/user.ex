@@ -1121,6 +1121,27 @@ defmodule Flirtual.User do
     |> validate_required([:email])
     |> validate_format(:email, ~r/^[^\s]+@[^\s]+$/, message: "must have the @ sign and no spaces")
     |> validate_length(:email, max: 254)
+    |> validate_change(:email, fn :email, email ->
+      case validate_idn(email) do
+        :ok -> []
+        {:error, _} -> [email: "is invalid"]
+      end
+    end)
+  end
+
+  def validate_idn(address) when is_binary(address) do
+    case String.split(address, "@") do
+      [_, domain] ->
+        try do
+          _ = :idna.encode(String.to_charlist(domain))
+          :ok
+        catch
+          _kind, reason -> {:error, {:idna, reason}}
+        end
+
+      _ ->
+        {:error, {:idna, :invalid_address}}
+    end
   end
 
   def validate_unique_email(changeset) do
