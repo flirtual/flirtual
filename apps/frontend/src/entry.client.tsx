@@ -5,6 +5,7 @@ import { hydrateRoot } from "react-dom/client";
 import { HydratedRouter } from "react-router/dom";
 
 import { log } from "./log";
+import { initializeMonitoring } from "./monitoring";
 import { preloadAll } from "./query";
 import { isRedirectError } from "./redirect";
 
@@ -15,7 +16,7 @@ App.addListener("appUrlOpen", async (event) => {
 	location.href = href;
 });
 
-import("./monitoring").then(({ initializeMonitoring }) => initializeMonitoring());
+initializeMonitoring();
 
 // await restoreQueries();
 //
