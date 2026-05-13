@@ -34,7 +34,9 @@ defmodule FlirtualWeb.Endpoint do
       "content-type",
       "idempotency-key",
       "retry-count",
-      "cache-control"
+      "cache-control",
+      "sentry-trace",
+      "baggage"
     ],
     expose: [
       "retry-after",

@@ -66,12 +66,19 @@ config :bodyguard,
 
 config :sentry,
   enable_source_code_context: true,
-  root_source_code_paths: [File.cwd!()]
+  root_source_code_paths: [File.cwd!()],
+  logs: [
+    level: :info,
+    metadata: :all
+  ]
 
 config :logger, :console,
-  backends: [:console, Sentry.LoggerBackend],
   format: "level=$level $metadata\n$message\n\n",
-  metadata: [:request_id]
+  metadata: [:request_id, :trace_id, :span_id]
+
+config :logger,
+  handle_otp_reports: true,
+  handle_sasl_reports: true
 
 config :phoenix,
   # Use Jason for JSON parsing in Phoenix

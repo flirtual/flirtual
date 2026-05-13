@@ -7,10 +7,13 @@ import {
 	apiOrigin,
 	client,
 	cloudflareBeaconId,
+	development,
 	preview,
 	production,
 	sentryDsn,
 	sentryEnabled,
+	sentryLogs,
+	sentryTraces,
 	siteOrigin
 } from "~/const";
 import { device } from "~/hooks/use-device";
@@ -23,7 +26,8 @@ export function initializeMonitoring() {
 		enabled: sentryEnabled,
 		dsn: sentryDsn,
 		sampleRate: 1,
-		tracesSampleRate: 1,
+		tracesSampleRate: sentryTraces,
+		enableLogs: sentryLogs,
 		replaysOnErrorSampleRate: 1,
 		replaysSessionSampleRate: 0,
 		tracePropagationTargets: [
@@ -33,15 +37,18 @@ export function initializeMonitoring() {
 		ignoreErrors: [
 			"must be caught by a redirect boundary"
 		],
-		environment: preview || "production",
-		integrations: [Sentry.replayIntegration({
-			mask: ["[data-mask]"],
-			unmask: ["[data-unmask]"],
-			block: ["[data-block]"],
-			unblock: ["[data-unblock]"],
-			ignore: ["[data-ignore]"],
-			maskAttributes: ["title", "placeholder", "aria-label", "alt", "href"]
-		})]
+		environment: development ? "development" : (preview || "production"),
+		integrations: [
+			Sentry.reactRouterTracingIntegration(),
+			Sentry.replayIntegration({
+				mask: ["[data-mask]"],
+				unmask: ["[data-unmask]"],
+				block: ["[data-block]"],
+				unblock: ["[data-unblock]"],
+				ignore: ["[data-ignore]"],
+				maskAttributes: ["title", "placeholder", "aria-label", "alt", "href"]
+			})
+		]
 	});
 
 	log("Error monitoring initialized");
