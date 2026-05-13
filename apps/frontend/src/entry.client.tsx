@@ -8,6 +8,7 @@ import { HydratedRouter } from "react-router/dom";
 import { apiUrl, appleSigninServiceId } from "./const";
 import { device } from "./hooks/use-device";
 import { log } from "./log";
+import { initializeMonitoring } from "./monitoring";
 import { preloadAll } from "./query";
 import { isRedirectError } from "./redirect";
 
@@ -18,7 +19,7 @@ App.addListener("appUrlOpen", async (event) => {
 	location.href = href;
 });
 
-import("./monitoring").then(({ initializeMonitoring }) => initializeMonitoring());
+initializeMonitoring();
 
 async function initSocialLogin() {
 	if (!appleSigninServiceId) return;
