@@ -32,13 +32,16 @@ export const sentryDsn = import.meta.env.VITE_SENTRY_DSN as string;
 export const sentryOrganization = import.meta.env.VITE_SENTRY_ORGANIZATION as string;
 export const sentryProjectId = Number.parseInt(import.meta.env.VITE_SENTRY_PROJECT_ID as string || "0");
 export const sentryReportTo = import.meta.env.VITE_SENTRY_REPORT_TO as string;
+export const sentryTraces = Number.parseFloat(
+	import.meta.env.VITE_SENTRY_TRACES as string || (production ? "0.1" : "0")
+);
+export const sentryLogs = (import.meta.env.VITE_SENTRY_LOGS as string || (production ? "1" : "0")) === "1";
 
 // PostHog
 export const posthogKey = import.meta.env.VITE_POSTHOG_KEY as string;
 export const posthogHost = import.meta.env.VITE_POSTHOG_HOST as string;
 
-export const sentryEnabled = production
-	&& !!sentryDsn
+export const sentryEnabled = !!sentryDsn
 	&& !!sentryOrganization
 	&& !!sentryProjectId;
 

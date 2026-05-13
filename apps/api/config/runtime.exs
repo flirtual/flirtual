@@ -201,9 +201,44 @@ if config_env() == :prod do
     secret: System.fetch_env!("SES_SECRET")
 
   config :swoosh, :api_client, Swoosh.ApiClient.Finch
+end
+
+config :opentelemetry, traces_exporter: :none
+
+if dsn = System.get_env("SENTRY_DSN") do
+  environment_name =
+    cond do
+      config_env() == :prod and canary -> :canary
+      config_env() == :prod -> :production
+      config_env() == :dev -> :development
+      true -> config_env()
+    end
+
+  {traces_sample_rate, _} =
+    Float.parse(System.get_env("SENTRY_TRACES", if(config_env() == :prod, do: "0.1", else: "0")))
+
+  enable_logs? =
+    System.get_env("SENTRY_LOGS", if(config_env() == :prod, do: "1", else: "0")) == "1"
 
   config :sentry,
-    dsn: System.fetch_env!("SENTRY_DSN"),
-    environment_name: if(canary, do: :canary, else: :production),
-    release: System.get_env("GIT_COMMIT_SHA")
+    dsn: dsn,
+    environment_name: environment_name,
+    release: System.get_env("GIT_COMMIT_SHA"),
+    traces_sample_rate: traces_sample_rate,
+    enable_logs: enable_logs?,
+    integrations: [
+      oban: [
+        capture_errors: true,
+        cron: [enabled: true]
+      ]
+    ]
+
+  config :opentelemetry,
+    span_processor: {Sentry.OpenTelemetry.SpanProcessor, []},
+    sampler: {Sentry.OpenTelemetry.Sampler, []},
+    text_map_propagators: [
+      :trace_context,
+      :baggage,
+      Sentry.OpenTelemetry.Propagator
+    ]
 end

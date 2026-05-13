@@ -47,9 +47,6 @@ config :flirtual, FlirtualWeb.Endpoint,
   code_reloader: true,
   watchers: []
 
-config :sentry,
-  environment_name: :development
-
 config :phoenix,
   # Set a higher stacktrace during development. Avoid configuring such
   # in production as building large stacktraces may be expensive.
