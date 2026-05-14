@@ -201,7 +201,7 @@ export const FlagsView: React.FC = () => {
 			type: activeTab,
 			page: deferredPage
 		}),
-		queryFn: ({ queryKey: [, options] }) => Flag.list(options),
+		queryFn: ({ queryKey: [, filters], signal }) => Flag.list(filters, { signal }),
 		placeholderData: emptyPaginate as Paginate<FlagModel>,
 		staleTime: 0,
 		meta: {

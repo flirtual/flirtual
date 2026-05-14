@@ -1,3 +1,5 @@
+import type { WretchOptions } from "wretch";
+
 import { api } from "~/api/common";
 
 import type { Profile } from ".";
@@ -27,9 +29,10 @@ export const DefaultProfilePersonality = Object.freeze<ProfilePersonality>(
 );
 
 export const Personality = {
-	get(userId: string) {
+	get(userId: string, options: WretchOptions = {}) {
 		return api
 			.url(`users/${userId}/profile/personality`)
+			.options(options)
 			.get()
 			.json<ProfilePersonality>();
 	},

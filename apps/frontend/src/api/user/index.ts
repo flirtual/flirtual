@@ -193,16 +193,16 @@ export const User = {
 			.notFound(() => null)
 			.json<User | null>();
 	},
-	getCount() {
+	getCount(options: WretchOptions = {}) {
 		return this.api
 			.url("/count")
-			.options({ credentials: "omit" })
+			.options({ credentials: "omit", ...options })
 			.get()
 			.fetchError(() => ({ count: 0 }))
 			.json<{ count: number }>();
 	},
-	async getApproximateCount() {
-		const { count } = await this.getCount();
+	async getApproximateCount(options: WretchOptions = {}) {
+		const { count } = await this.getCount(options);
 		return Math.floor(count / 50000) * 50000;
 	},
 	preview(userId: string) {

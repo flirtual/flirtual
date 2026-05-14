@@ -10,7 +10,7 @@ export function preloadConversations() {
 
 	return queryClient.prefetchInfiniteQuery({
 		queryKey,
-		queryFn: ({ pageParam }) => Conversation.list(pageParam),
+		queryFn: ({ pageParam, signal }) => Conversation.list(pageParam, { signal }),
 		initialPageParam: undefined as unknown as string
 	});
 }
@@ -18,7 +18,7 @@ export function preloadConversations() {
 export function useConversations() {
 	const { promise, fetchNextPage } = useInfiniteQuery({
 		queryKey: conversationsKey(),
-		queryFn: ({ pageParam }) => Conversation.list(pageParam),
+		queryFn: ({ pageParam, signal }) => Conversation.list(pageParam, { signal }),
 		initialPageParam: undefined as unknown as string,
 		getNextPageParam: ({ metadata: { next } }) => next,
 		getPreviousPageParam: ({ metadata: { previous } }) => previous

@@ -140,7 +140,7 @@ const WorldItemSkeleton: FC<ComponentProps<"div">> = ({ className, ...props }) =
 const WorldCategory: FC<{ category: WorldCategory }> = ({ category }) => {
 	const { promise, fetchNextPage, } = useInfiniteQuery({
 		queryKey: ["vrchat", "worlds", category],
-		queryFn: ({ pageParam: page }) => VRChat.getWorldsByCategory(category, page),
+		queryFn: ({ pageParam: page, signal }) => VRChat.getWorldsByCategory(category, page, { signal }),
 		initialPageParam: 0,
 		getNextPageParam: (lastPage, allPages, lastPageParameter) => {
 			return lastPageParameter + 1;

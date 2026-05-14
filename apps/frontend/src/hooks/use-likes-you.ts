@@ -18,14 +18,14 @@ export function preloadLikesYouPreview() {
 
 	return queryClient.prefetchQuery({
 		queryKey,
-		queryFn: () => Matchmaking.likesYouPreview()
+		queryFn: ({ signal }) => Matchmaking.likesYouPreview({ signal })
 	});
 }
 
 export function useLikesYouPreview() {
 	return useQuery({
 		queryKey: likesYouPreviewKey(),
-		queryFn: () => Matchmaking.likesYouPreview()
+		queryFn: ({ signal }) => Matchmaking.likesYouPreview({ signal })
 	});
 }
 
@@ -36,7 +36,7 @@ export function preloadLikesYou(filters?: LikesYouFilters) {
 
 	return queryClient.prefetchInfiniteQuery({
 		queryKey,
-		queryFn: ({ pageParam }) => Matchmaking.likesYou(pageParam, filters),
+		queryFn: ({ pageParam, signal }) => Matchmaking.likesYou(pageParam, filters, { signal }),
 		initialPageParam: undefined as unknown as string
 	});
 }
@@ -47,7 +47,7 @@ export function useLikesYou(filters?: LikesYouFilters) {
 
 	const { data, fetchNextPage, hasNextPage } = useSuspenseInfiniteQuery({
 		queryKey: deferredQueryKey,
-		queryFn: ({ pageParam }) => Matchmaking.likesYou(pageParam, filters),
+		queryFn: ({ pageParam, signal }) => Matchmaking.likesYou(pageParam, filters, { signal }),
 		initialPageParam: undefined as unknown as string,
 		getNextPageParam: ({ metadata: { next } }) => next,
 		getPreviousPageParam: ({ metadata: { previous } }) => previous
