@@ -1,1 +1,15 @@
+ignoredBuiltDependencies:
+  - '@shgysk8zer0/polyfills'
+
 minimumReleaseAge: 4320
+
+onlyBuiltDependencies:
+  - '@parcel/watcher'
+  - '@sentry/cli'
+  - core-js
+  - esbuild
+  - exifreader
+  - oxc-resolver
+  - protobufjs
+  - sharp
+  - workerd
