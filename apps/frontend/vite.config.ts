@@ -45,6 +45,9 @@ export default defineConfig((config) => {
 	} = loadEnv(mode, process.cwd(), "");
 
 	invariant(origin, "VITE_ORIGIN is required");
+
+	const useSentry = sentryOrganization && sentryProjectId && sentryAuthToken;
+
 	const { hostname } = new URL(origin);
 
 	return {
@@ -164,7 +167,7 @@ export default defineConfig((config) => {
 			sonda({
 				open: false
 			}),
-			sentryReactRouter({
+			useSentry && sentryReactRouter({
 				org: sentryOrganization,
 				project: sentryProjectId,
 				authToken: sentryAuthToken,
@@ -178,6 +181,6 @@ export default defineConfig((config) => {
 					excludeDebugStatements: true
 				}
 			}, config)
-		],
+		].filter(Boolean),
 	};
 });
