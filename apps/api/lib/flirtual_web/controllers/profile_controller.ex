@@ -69,7 +69,12 @@ defmodule FlirtualWeb.ProfileController do
   end
 
   def update_custom_weights(conn, %{"user_id" => user_id} = params) do
-    user = Users.get(user_id)
+    user =
+      if(conn.assigns[:session].user.id === user_id,
+        do: conn.assigns[:session].user,
+        else: Users.get(user_id)
+      )
+
     profile = %Profile{user.profile | user: user}
 
     if is_nil(user) or Policy.cannot?(conn, :update, profile) do
