@@ -13,6 +13,7 @@ import babel from "vite-plugin-babel";
 import { ViteImageOptimizer as imageOptimize } from "vite-plugin-image-optimizer";
 import tsconfigPaths from "vite-tsconfig-paths";
 
+import { targets } from "./src/polyfill";
 import { hush } from "./vite-plugin-hush";
 
 const mkcertPaths = {
@@ -63,12 +64,7 @@ export default defineConfig((config) => {
 			assetsDir: "static",
 			minify: true,
 			sourcemap: true,
-			target: [
-				"chrome106",
-				"edge106",
-				"firefox104",
-				"safari15"
-			],
+			target: targets,
 			chunkSizeWarningLimit: 100,
 			// cssMinify: "lightningcss",
 			rollupOptions: {
@@ -169,15 +165,6 @@ export default defineConfig((config) => {
 					});
 				}
 			}),
-			// checker({
-			// 	overlay: false,
-			// 	typescript: true,
-			// 	eslint: {
-			// 		useFlatConfig: true,
-			// 		lintCommand: "eslint \"./src/**/*.{ts,tsx}\"",
-			// 		watchPath: "./src",
-			// 	}
-			// }),
 			sonda({
 				open: false
 			}),

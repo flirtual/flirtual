@@ -12,7 +12,6 @@ import {
 	sentryEnabled,
 	sentryReportTo
 } from "~/const";
-import { polyfillBaseUrl } from "~/polyfill";
 import { bucketOrigins } from "~/urls";
 
 const contentSecurityPolicyReportTo = sentryEnabled
@@ -72,7 +71,6 @@ const data = [
 					"script-src": [
 						"'self'",
 						"'unsafe-inline'",
-						polyfillBaseUrl.href.replace(polyfillBaseUrl.origin, polyfillBaseUrl.host),
 						// https://talkjs.com/docs/Features/Security_Settings/Content_Security_Policy/
 						"*.talkjs.com",
 						// https://developers.freshdesk.com/widget-api/
