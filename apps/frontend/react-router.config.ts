@@ -14,7 +14,11 @@ export default {
 	},
 	appDirectory: "src",
 	buildDirectory: "dist",
-	buildEnd: sentryOnBuildEnd,
+	buildEnd: (build) => {
+		// Sentry is optional, so we check if the config is present before calling the function.
+		// https://github.com/getsentry/sentry-javascript/blob/develop/packages/react-router/src/vite/buildEnd/handleOnBuildEnd.ts#L13
+		if ("sentryConfig" in build.viteConfig) sentryOnBuildEnd(build);
+	},
 	prerender: [
 		...[
 			"",

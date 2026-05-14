@@ -42,9 +42,12 @@ export default defineConfig((config) => {
 	const defaultHost = osHostname().toLowerCase();
 	const origin = env.VITE_ORIGIN || `https://${defaultHost}:3000`;
 	const apiUrl = env.VITE_API_URL || `https://${defaultHost}:4001/v1/`;
+
 	const sentryOrganization = env.VITE_SENTRY_ORGANIZATION;
 	const sentryProjectId = env.VITE_SENTRY_PROJECT_ID;
 	const sentryAuthToken = env.SENTRY_AUTH_TOKEN;
+
+	const useSentry = sentryOrganization && sentryProjectId && sentryAuthToken;
 
 	const { hostname } = new URL(origin);
 
@@ -168,7 +171,7 @@ export default defineConfig((config) => {
 			sonda({
 				open: false
 			}),
-			sentryReactRouter({
+			useSentry && sentryReactRouter({
 				org: sentryOrganization,
 				project: sentryProjectId,
 				authToken: sentryAuthToken,
@@ -182,6 +185,6 @@ export default defineConfig((config) => {
 					excludeDebugStatements: true
 				}
 			}, config)
-		],
+		].filter(Boolean),
 	};
 });
