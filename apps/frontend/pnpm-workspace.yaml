@@ -1,11 +1,11 @@
 ignoredBuiltDependencies:
-  - '@shgysk8zer0/polyfills'
+  - "@shgysk8zer0/polyfills"
 
 minimumReleaseAge: 4320
 
 onlyBuiltDependencies:
-  - '@parcel/watcher'
-  - '@sentry/cli'
+  - "@parcel/watcher"
+  - "@sentry/cli"
   - core-js
   - esbuild
   - exifreader
