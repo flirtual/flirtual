@@ -74,6 +74,27 @@ importers:
       '@fontsource-variable/nunito':
         specifier: ^5.2.6
         version: 5.2.7
+      '@formatjs/intl-datetimeformat':
+        specifier: ^7.4.2
+        version: 7.4.7
+      '@formatjs/intl-displaynames':
+        specifier: ^7.3.5
+        version: 7.3.9
+      '@formatjs/intl-listformat':
+        specifier: ^8.3.5
+        version: 8.3.9
+      '@formatjs/intl-locale':
+        specifier: ^5.3.5
+        version: 5.3.8
+      '@formatjs/intl-numberformat':
+        specifier: ^9.3.5
+        version: 9.3.10
+      '@formatjs/intl-pluralrules':
+        specifier: ^6.3.5
+        version: 6.3.9
+      '@formatjs/intl-relativetimeformat':
+        specifier: ^12.3.5
+        version: 12.3.9
       '@heroicons/react':
         specifier: ^2.2.0
         version: 2.2.0(react@19.1.2)
@@ -188,6 +209,9 @@ importers:
       capacitor-native-settings:
         specifier: ^7.0.2
         version: 7.0.2(@capacitor/core@7.4.3)
+      core-js:
+        specifier: ^3.49.0
+        version: 3.49.0
       csstype:
         specifier: ^3.1.3
         version: 3.1.3
@@ -1276,11 +1300,17 @@ packages:
   '@fontsource-variable/nunito@5.2.7':
     resolution: {integrity: sha512-2N8QhatkyKgSUbAGZO2FYLioxA32+RyI1EplVLawbpkGjUeui9Qg9VMrpkCaik1ydjFjfLV+kzQ0cGEsMrMenQ==}
 
+  '@formatjs/bigdecimal@0.2.5':
+    resolution: {integrity: sha512-2XTKNrZRaCUyXK2976wfutqxMBuPO/S/zbJnQdysLI2Zy5mWPVNVEkE6tsTcSVWSE7DgO88t8DtBy+uf3I8bxg==}
+
   '@formatjs/ecma402-abstract@2.3.4':
     resolution: {integrity: sha512-qrycXDeaORzIqNhBOx0btnhpD1c+/qFIHAN9znofuMJX6QBwtbrmlpWfD4oiUUD2vJUOIYFA/gYtg2KAMGG7sA==}
 
   '@formatjs/fast-memoize@2.2.7':
     resolution: {integrity: sha512-Yabmi9nSvyOMrlSeGGWDiH7rf3a7sIwplbvo/dlz9WCIjzIQAfy1RMf4S0X3yG724n5Ghu2GmEl5NJIV6O9sZQ==}
+
+  '@formatjs/fast-memoize@3.1.5':
+    resolution: {integrity: sha512-KLi3fan6WnCHmigd9pmEEN8Hid0v4wiFBW576M/d07KMWYecf1CvyMI3n34vCmHT4AoVqG2n702kiHbXjzZX2A==}
 
   '@formatjs/icu-messageformat-parser@2.11.2':
     resolution: {integrity: sha512-AfiMi5NOSo2TQImsYAg8UYddsNJ/vUEv/HaNqiFjnI3ZFfWihUtD5QtuX6kHl8+H+d3qvnE/3HZrfzgdWpsLNA==}
@@ -1288,8 +1318,38 @@ packages:
   '@formatjs/icu-skeleton-parser@1.8.14':
     resolution: {integrity: sha512-i4q4V4qslThK4Ig8SxyD76cp3+QJ3sAqr7f6q9VVfeGtxG9OhiAk3y9XF6Q41OymsKzsGQ6OQQoJNY4/lI8TcQ==}
 
+  '@formatjs/intl-datetimeformat@7.4.7':
+    resolution: {integrity: sha512-COvfxjQJbRK3HHX5eJ3p6yG1fkhQ+SkG7RxnmmugNjr5ZDGvEW6gDRP+F6HkJ5W00Wxx+DzSFME2dPrdVvatbA==}
+
+  '@formatjs/intl-displaynames@7.3.9':
+    resolution: {integrity: sha512-UELvrHS171ElQW9iMCGqMR/HmUYQPYkYSz1A/SSkQtJ62ZH7aUWC1QnXPxL0CInQmxa/MgC7oE402XBoTe5nTQ==}
+
+  '@formatjs/intl-getcanonicallocales@3.2.9':
+    resolution: {integrity: sha512-b1dLzhFSeccG5X1PY2KodVFRGd0p6tBPc7pRBJaW6A7+fMeZnwHOAJLkMsGNDyvM9XailkkstE4jzmNa1GVh5w==}
+
+  '@formatjs/intl-listformat@8.3.9':
+    resolution: {integrity: sha512-6+jiRGBhgRhdpP6ZPFFlD/myQV/KNLRAWoIARFKROxIM7oBPh9ejUO1DQnG8nLbs0kj5dJcoFbqn839Xx2+4Zw==}
+
+  '@formatjs/intl-locale@5.3.8':
+    resolution: {integrity: sha512-pJgqQlg4zFoyCiVMXlKPBWpY7fAxvsUiShNmB/l8BW2ZwmFMefMWCrDzgocSH9WR+Z3pkihfjh1XbalCZhXc1Q==}
+
   '@formatjs/intl-localematcher@0.6.1':
     resolution: {integrity: sha512-ePEgLgVCqi2BBFnTMWPfIghu6FkbZnnBVhO2sSxvLfrdFw7wCHAHiDoM2h4NRgjbaY7+B7HgOLZGkK187pZTZg==}
+
+  '@formatjs/intl-localematcher@0.8.9':
+    resolution: {integrity: sha512-GmB0F/gYh4Hdl4rLWjgDsgT+x4pB54fkJeRh8kAZ4XFzKeCK8dGs+SBJWXO42QZtOUni+IDWKNuCw6wiL4lTvw==}
+
+  '@formatjs/intl-numberformat@9.3.10':
+    resolution: {integrity: sha512-wYboXVXZyTvuMBgwE0AxcXYxV8LM0IkH+lfCoBlRVNjCwNzdHVbRcUxDRHE+HbFkQ6/zWFkyguvIP5y3PAt+jw==}
+
+  '@formatjs/intl-pluralrules@6.3.9':
+    resolution: {integrity: sha512-0405uU1npNs5/N04tfIQ3pme96Xb51tEkCBTBKy8HMjAsssbhnK70gf8v3ogj1WqHf7WFRoFZu8clQTsvwBQNg==}
+
+  '@formatjs/intl-relativetimeformat@12.3.9':
+    resolution: {integrity: sha512-kJyV+aGLQHZJiWdjhO5LSt44G4HrASpx+/o/y6mLqyWK056hhWvAKLf5/sSZq4Zfk4fbfPvnNrJJmusoOOqpbw==}
+
+  '@formatjs/intl-supportedvaluesof@2.3.7':
+    resolution: {integrity: sha512-ZTXEKijV5H08z19odngZPsXlmGndfukHuVnjd9qyER77XSk/yJwDMiSjoJYY5C5WxFs2UN4s/EMtu75e6Tp3ug==}
 
   '@heroicons/react@2.2.0':
     resolution: {integrity: sha512-LMcepvRaS9LYHJGsF0zzmgKCUim/X3N/DQKc4jepAXJ7l8QxJ1PmxJzqplF2Z3FE4PqBAIGyJAQ/w4B5dsqbtQ==}
@@ -3786,8 +3846,8 @@ packages:
   core-js-compat@3.45.1:
     resolution: {integrity: sha512-tqTt5T4PzsMIZ430XGviK4vzYSoeNJ6CXODi6c/voxOT6IZqBht5/EKaSNnYiEjjRYxjVz7DQIsOsY0XNi8PIA==}
 
-  core-js@3.47.0:
-    resolution: {integrity: sha512-c3Q2VVkGAUyupsjRnaNX6u8Dq2vAdzm9iuPj5FW0fRxzlxgq9Q39MDq10IvmQSpLgHQNyQzQmOo6bgGHmH3NNg==}
+  core-js@3.49.0:
+    resolution: {integrity: sha512-es1U2+YTtzpwkxVLwAFdSpaIMyQaq0PBgm3YD1W3Qpsn1NAmO3KSgZfu+oGSWVu6NvLHoHCV/aYcsE5wiB7ALg==}
 
   core-util-is@1.0.3:
     resolution: {integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==}
@@ -8263,6 +8323,8 @@ snapshots:
 
   '@fontsource-variable/nunito@5.2.7': {}
 
+  '@formatjs/bigdecimal@0.2.5': {}
+
   '@formatjs/ecma402-abstract@2.3.4':
     dependencies:
       '@formatjs/fast-memoize': 2.2.7
@@ -8273,6 +8335,8 @@ snapshots:
   '@formatjs/fast-memoize@2.2.7':
     dependencies:
       tslib: 2.8.1
+
+  '@formatjs/fast-memoize@3.1.5': {}
 
   '@formatjs/icu-messageformat-parser@2.11.2':
     dependencies:
@@ -8285,9 +8349,51 @@ snapshots:
       '@formatjs/ecma402-abstract': 2.3.4
       tslib: 2.8.1
 
+  '@formatjs/intl-datetimeformat@7.4.7':
+    dependencies:
+      '@formatjs/bigdecimal': 0.2.5
+      '@formatjs/intl-localematcher': 0.8.9
+
+  '@formatjs/intl-displaynames@7.3.9':
+    dependencies:
+      '@formatjs/intl-localematcher': 0.8.9
+
+  '@formatjs/intl-getcanonicallocales@3.2.9': {}
+
+  '@formatjs/intl-listformat@8.3.9':
+    dependencies:
+      '@formatjs/intl-localematcher': 0.8.9
+
+  '@formatjs/intl-locale@5.3.8':
+    dependencies:
+      '@formatjs/intl-getcanonicallocales': 3.2.9
+      '@formatjs/intl-supportedvaluesof': 2.3.7
+
   '@formatjs/intl-localematcher@0.6.1':
     dependencies:
       tslib: 2.8.1
+
+  '@formatjs/intl-localematcher@0.8.9':
+    dependencies:
+      '@formatjs/fast-memoize': 3.1.5
+
+  '@formatjs/intl-numberformat@9.3.10':
+    dependencies:
+      '@formatjs/bigdecimal': 0.2.5
+      '@formatjs/intl-localematcher': 0.8.9
+
+  '@formatjs/intl-pluralrules@6.3.9':
+    dependencies:
+      '@formatjs/bigdecimal': 0.2.5
+      '@formatjs/intl-localematcher': 0.8.9
+
+  '@formatjs/intl-relativetimeformat@12.3.9':
+    dependencies:
+      '@formatjs/intl-localematcher': 0.8.9
+
+  '@formatjs/intl-supportedvaluesof@2.3.7':
+    dependencies:
+      '@formatjs/fast-memoize': 3.1.5
 
   '@heroicons/react@2.2.0(react@19.1.2)':
     dependencies:
@@ -10867,7 +10973,7 @@ snapshots:
     dependencies:
       browserslist: 4.26.2
 
-  core-js@3.47.0: {}
+  core-js@3.49.0: {}
 
   core-util-is@1.0.3: {}
 
@@ -13306,7 +13412,7 @@ snapshots:
       '@opentelemetry/sdk-logs': 0.208.0(@opentelemetry/api@1.9.0)
       '@posthog/core': 1.20.1
       '@posthog/types': 1.342.1
-      core-js: 3.47.0
+      core-js: 3.49.0
       dompurify: 3.3.1
       fflate: 0.4.8
       preact: 10.28.3

@@ -20,6 +20,7 @@ import type {
 } from "react-router";
 
 import { server } from "~/const";
+import { polyfillForLanguage } from "~/polyfill";
 import { isInternalHref } from "~/urls";
 
 import { log as _log } from "../log";
@@ -78,7 +79,8 @@ async function load(locale: Locale) {
 				// case "ja": return (await import("@uppy/locales/lib/ja_JP.js")).default.strings;
 				default: return {};
 			}
-		})()
+		})(),
+		polyfillForLanguage(locale),
 	]);
 
 	return {
