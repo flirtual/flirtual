@@ -97,16 +97,18 @@ export const Matchmaking = {
 	resetPasses() {
 		return api.url("passes").delete().res();
 	},
-	likesYou(cursor?: string, filters?: LikesYouFilters) {
+	likesYou(cursor?: string, filters?: LikesYouFilters, options: WretchOptions = {}) {
 		return api
 			.url("likes")
 			.query({ ...filters, ...(cursor ? { cursor } : {}) })
+			.options(options)
 			.get()
 			.json<LikesYouList>();
 	},
-	likesYouPreview() {
+	likesYouPreview(options: WretchOptions = {}) {
 		return api
 			.url("likes/preview")
+			.options(options)
 			.get()
 			.json<LikesYouPreview>();
 	}

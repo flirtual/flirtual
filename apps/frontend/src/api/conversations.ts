@@ -32,9 +32,10 @@ export const Conversation = {
 			.notFound(() => null)
 			.json<Conversation | null>();
 	},
-	list(cursor?: string) {
+	list(cursor?: string, options: WretchOptions = {}) {
 		return this.api
 			.query(cursor ? { cursor } : {})
+			.options(options)
 			.get()
 			.json<ConversationList>();
 	},

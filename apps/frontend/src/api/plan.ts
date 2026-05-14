@@ -1,3 +1,5 @@
+import type { WretchOptions } from "wretch";
+
 import { commitIdShort } from "~/const";
 
 import { api } from "./common";
@@ -21,13 +23,14 @@ export type Plan = {
 
 export const Plan = {
 	api: api.url("plans"),
-	list() {
+	list(options: WretchOptions = {}) {
 		return this.api
 			.options({
 				credentials: "omit",
 				next: {
 					revalidate: false
-				}
+				},
+				...options
 			})
 			.query({ v: commitIdShort })
 			.get()

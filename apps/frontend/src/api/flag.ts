@@ -1,3 +1,5 @@
+import type { WretchOptions } from "wretch";
+
 import type { Expand } from "~/utilities";
 
 import { api } from "./common";
@@ -27,8 +29,8 @@ export interface CreateFlagOptions {
 
 export const Flag = {
 	api: api.url("flags"),
-	list(options: ListFlagOptions = {}) {
-		return this.api.query(options).get().json<Paginate<Flag>>();
+	list(filters: ListFlagOptions = {}, options: WretchOptions = {}) {
+		return this.api.query(filters).options(options).get().json<Paginate<Flag>>();
 	},
 	create(options: CreateFlagOptions) {
 		return this.api.json(options).post().json<Flag>();

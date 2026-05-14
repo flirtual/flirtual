@@ -53,7 +53,7 @@ export function relationshipFetcher({ queryKey: [, userId], signal }: QueryFunct
 }
 
 export const userCountKey = () => ["user-count"] as const;
-export const userCountFetcher = () => User.getApproximateCount();
+export const userCountFetcher = ({ signal }: QueryFunctionContext<ReturnType<typeof userCountKey>>) => User.getApproximateCount({ signal });
 
 export const queueKey = (kind: ProspectKind) => ["queue", kind] as const;
 export function queueFetcher({ queryKey: [, kind], signal }: QueryFunctionContext<ReturnType<typeof queueKey>>) {
@@ -76,10 +76,10 @@ export const conversationKey = (conversationId: string) => ["conversation", conv
 export const conversationFetcher = async ({ queryKey: [, conversationId], signal }: QueryFunctionContext<ReturnType<typeof conversationKey>>) => Conversation.get(conversationId, { signal });
 
 export const plansKey = () => ["plans"] as const;
-export const plansFetcher = () => Plan.list();
+export const plansFetcher = ({ signal }: QueryFunctionContext<ReturnType<typeof plansKey>>) => Plan.list({ signal });
 
 export const personalityKey = (userId: string) => ["personality", userId] as const;
-export const personalityFetcher = ({ queryKey: [, userId] }: QueryFunctionContext<ReturnType<typeof personalityKey>>) => Personality.get(userId);
+export const personalityFetcher = ({ queryKey: [, userId], signal }: QueryFunctionContext<ReturnType<typeof personalityKey>>) => Personality.get(userId, { signal });
 
 export const preferencesKey = (key: string) => ["preferences", key] as const;
 export function preferencesFetcher<T>({ queryKey: [, key] }: QueryFunctionContext<ReturnType<typeof preferencesKey>>) {

@@ -1,3 +1,5 @@
+import type { WretchOptions } from "wretch";
+
 import { api } from "./common";
 
 export interface World {
@@ -24,10 +26,11 @@ export type WorldCategory = (typeof worldCategories)[number];
 export const VRChat = {
 	api: api.url("vrchat"),
 
-	getWorldsByCategory(category: WorldCategory, page = 0) {
+	getWorldsByCategory(category: WorldCategory, page = 0, options: WretchOptions = {}) {
 		return this.api
 			.url(`/worlds/${category}`)
 			.query({ page })
+			.options(options)
 			.get()
 			.json<Array<World>>();
 	}
