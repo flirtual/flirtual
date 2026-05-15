@@ -48,7 +48,12 @@ export const LikesQueueActions: FC<{
 		"keydown",
 		useCallback(
 			(event) => {
-				if (document.querySelector("[data-radix-focus-guard]") || event.ctrlKey || event.metaKey || tooFast)
+				if (
+					document.querySelector("[role=\"dialog\"][data-state=\"open\"], [role=\"alertdialog\"][data-state=\"open\"], [role=\"menu\"][data-state=\"open\"], [role=\"listbox\"][data-state=\"open\"]")
+					|| event.ctrlKey
+					|| event.metaKey
+					|| tooFast
+				)
 					return;
 
 				if (event.key === "h" && previous) void undo();

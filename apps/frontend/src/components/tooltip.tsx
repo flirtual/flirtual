@@ -169,6 +169,7 @@ function TooltipContent({
 				}}
 				align={align}
 				ref={ref}
+				role="tooltip"
 				side={side}
 				sideOffset={sideOffset}
 				onCloseAutoFocus={(event) => event.preventDefault()}
