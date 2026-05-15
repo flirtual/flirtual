@@ -222,7 +222,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 		useCallback(
 			(event) => {
 				if (
-					(document.querySelector("[data-radix-focus-guard]")
+					(document.querySelector("[role=\"dialog\"][data-state=\"open\"], [role=\"alertdialog\"][data-state=\"open\"], [role=\"menu\"][data-state=\"open\"], [role=\"listbox\"][data-state=\"open\"]")
 						&& !expandedImage)
 					|| event.ctrlKey
 					|| event.metaKey
