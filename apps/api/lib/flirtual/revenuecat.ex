@@ -49,13 +49,17 @@ defmodule Flirtual.RevenueCat do
           "app_user_id" => customer_id,
           "store" => platform,
           "id" => event_id,
-          "purchased_at_ms" => purchased_at_ms
+          "purchased_at_ms" => purchased_at_ms,
+          "event_timestamp_ms" => event_timestamp_ms
         }
       })
       when type in ["INITIAL_PURCHASE", "RENEWAL", "UNCANCELLATION", "NON_RENEWING_PURCHASE"] do
+    timestamp_ms =
+      if type == "UNCANCELLATION", do: event_timestamp_ms, else: purchased_at_ms
+
     case resolve_user(customer_id) do
       %User{} = user ->
-        with :ok <- check_stale(user.subscription, purchased_at_ms),
+        with :ok <- check_stale(user.subscription, timestamp_ms),
              %Plan{} = plan <- Plan.get(revenuecat_id: product_id),
              {:ok, subscription} <-
                Subscription.apply(:revenuecat, user, plan, platform, event_id) do
