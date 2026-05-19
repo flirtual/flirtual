@@ -1,6 +1,10 @@
 defmodule FlirtualWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :flirtual
 
+  socket("/live", Phoenix.LiveView.Socket,
+    websocket: [connect_info: [session: {FlirtualWeb.Session, :options, []}]]
+  )
+
   use Sentry.PlugCapture
 
   if Code.ensure_loaded?(Tidewave) do
@@ -43,6 +47,11 @@ defmodule FlirtualWeb.Endpoint do
       "retry-after",
       "etag"
     ]
+  )
+
+  plug(Phoenix.LiveDashboard.RequestLogger,
+    param_key: "request_logger",
+    cookie_key: "request_logger"
   )
 
   plug(Plug.RequestId, http_header: "fly-request-id")

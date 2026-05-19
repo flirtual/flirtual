@@ -152,6 +152,7 @@ config :flirtual,
 
 config :flirtual, FlirtualWeb.Endpoint,
   secret_key_base: System.fetch_env!("SECRET_KEY_BASE"),
+  live_view: [signing_salt: System.fetch_env!("LIVE_VIEW_SIGNING_SALT")],
   url: [
     host: origin.host,
     port: origin.port
