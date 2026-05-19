@@ -20,7 +20,7 @@ defmodule Flirtual.MixProject do
   def application do
     [
       mod: {Flirtual.Application, []},
-      extra_applications: [:logger, :runtime_tools, :ecto_sql]
+      extra_applications: [:logger, :runtime_tools, :ecto_sql, :os_mon]
     ]
   end
 
@@ -35,6 +35,8 @@ defmodule Flirtual.MixProject do
       {:bcrypt_elixir, "~> 3.0"},
       {:phoenix, "~> 1.7.0"},
       {:phoenix_view, "~> 2.0"},
+      {:phoenix_live_dashboard, "~> 0.8"},
+      {:ecto_psql_extras, "~> 0.6"},
       {:bodyguard, "~> 2.4"},
       {:phoenix_ecto, "~> 4.4"},
       {:plug_redirect, "~> 1.0"},

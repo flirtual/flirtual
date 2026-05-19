@@ -6,6 +6,8 @@ defmodule FlirtualWeb.Router do
   import Phoenix.Router
   import Plug.Conn
 
+  import Phoenix.LiveDashboard.Router
+
   import FlirtualWeb.ErrorHelpers
   import FlirtualWeb.SessionController
 
@@ -48,6 +50,34 @@ defmodule FlirtualWeb.Router do
     else
       conn
     end
+  end
+
+  def require_debugger_user(conn, _opts) do
+    user = conn.assigns[:session] && conn.assigns[:session].user
+
+    if user && :debugger in user.tags do
+      conn
+    else
+      conn |> put_error(:not_found) |> halt()
+    end
+  end
+
+  pipeline :debugger_dashboard do
+    plug(:accepts, ["html"])
+    plug(:fetch_session)
+    plug(:protect_from_forgery)
+    plug(:put_secure_browser_headers)
+    plug(:fetch_current_session)
+    plug(:require_debugger_user)
+  end
+
+  scope "/" do
+    pipe_through(:debugger_dashboard)
+
+    live_dashboard("/dashboard",
+      metrics: FlirtualWeb.Telemetry,
+      on_mount: [{FlirtualWeb.LiveDashboardAuth, :require_debugger}]
+    )
   end
 
   scope "/", FlirtualWeb do
