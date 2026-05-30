@@ -41,6 +41,11 @@ flushSync(() => {
 				onCaughtError: (reason) => {
 					if (isRedirectError(reason)) return;
 					console.error(reason);
+				},
+				onRecoverableError: (reason) => {
+					if (isRedirectError(reason) || isRedirectError((reason as { cause?: unknown })?.cause)) return;
+					if (typeof reportError === "function") return reportError(reason);
+					console.error(reason);
 				}
 			}
 		);
