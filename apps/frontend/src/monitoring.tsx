@@ -34,9 +34,6 @@ export function initializeMonitoring() {
 			siteOrigin,
 			apiOrigin,
 		],
-		ignoreErrors: [
-			"must be caught by a redirect boundary"
-		],
 		environment: development ? "development" : (preview || "production"),
 		integrations: [
 			Sentry.reactRouterTracingIntegration(),
