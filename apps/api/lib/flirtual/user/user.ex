@@ -73,6 +73,7 @@ defmodule Flirtual.User do
     field(:slug, :string)
     field(:password_hash, :string, redact: true)
     field(:talkjs_id, :string, virtual: true)
+    field(:talkjs_token, :string, virtual: true)
     field(:talkjs_signature, :string, redact: true)
     field(:listmonk_id, :integer)
     field(:unsubscribe_token, Ecto.ShortUUID)
@@ -1353,6 +1354,7 @@ defimpl Jason.Encoder, for: Flirtual.User do
       :rating_prompts,
       :news,
       :talkjs_id,
+      :talkjs_token,
       :stripe_id,
       :chargebee_id,
       :revenuecat_id,

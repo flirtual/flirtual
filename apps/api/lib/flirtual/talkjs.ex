@@ -37,6 +37,41 @@ defmodule Flirtual.Talkjs do
     |> Base.encode16(case: :lower)
   end
 
+  @doc """
+  Mints a short-lived TalkJS user token (JWT, HS256) signed with the secret key.
+
+  Used for token-based authentication, replacing the non-expiring HMAC signature.
+  See https://talkjs.com/docs/Features/Security/Advanced_Authentication/.
+  """
+  def new_user_token(user_id, expires_in \\ 3600) when is_binary(user_id) do
+    case {config(:access_token), config(:app_id)} do
+      {access_token, app_id} when access_token in [nil, ""] or app_id in [nil, ""] ->
+        nil
+
+      {access_token, app_id} ->
+        signer = Joken.Signer.create("HS256", access_token)
+
+        expires_at =
+          DateTime.utc_now()
+          |> DateTime.add(expires_in, :second)
+          |> DateTime.to_unix()
+
+        case Joken.generate_and_sign(
+               %{},
+               %{
+                 "tokenType" => "user",
+                 "iss" => app_id,
+                 "sub" => ShortUUID.decode!(user_id),
+                 "exp" => expires_at
+               },
+               signer
+             ) do
+          {:ok, token, _claims} -> token
+          _ -> nil
+        end
+    end
+  end
+
   def fetch(method, pathname, body \\ nil, options \\ []) do
     raw_body = if(is_nil(body), do: "", else: Poison.encode!(body))
     url = new_url(pathname, Keyword.get(options, :query))

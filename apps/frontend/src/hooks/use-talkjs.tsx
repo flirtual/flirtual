@@ -1,4 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
+import ms from "ms.macro";
 import {
 	createContext,
 
@@ -35,7 +36,7 @@ import EmojiYonk from "virtual:remote/static/emoji/yonk.png";
 
 import { talkjsAppId } from "~/const";
 import { useLocale } from "~/i18n";
-import { conversationsKey, invalidate } from "~/query";
+import { conversationsKey, invalidate, queryClient, sessionFetcher, sessionKey } from "~/query";
 import { absoluteUrl } from "~/urls";
 import { emptyArray } from "~/utilities";
 
@@ -60,17 +61,27 @@ const TalkjsProvider_: React.FC<React.PropsWithChildren> = ({ children }) => {
 	useEffect(() => void Talk.ready.then(() => setReady(true)), []);
 
 	const talkjsUserId = authSession?.user.talkjsId;
-	const talkjsSignature = authSession?.user.talkjsSignature;
 
 	const session = useMemo(() => {
-		if (!talkjsUserId || !talkjsSignature || !ready) return null;
+		if (!talkjsUserId || !ready) return null;
 
 		return new Talk.Session({
 			appId: talkjsAppId,
-			signature: talkjsSignature,
-			me: new Talk.User(talkjsUserId)
+			me: new Talk.User(talkjsUserId),
+			tokenFetcher: async () => {
+				const session = await queryClient.fetchQuery({
+					queryKey: sessionKey(),
+					queryFn: sessionFetcher,
+					staleTime: ms("30m")
+				});
+
+				const token = session?.user.talkjsToken;
+				if (!token) throw new Error("Couldn't fetch Talk.js token");
+
+				return token;
+			}
 		});
-	}, [talkjsUserId, talkjsSignature, ready]);
+	}, [talkjsUserId, ready]);
 
 	useEffect(() => {
 		setUnreadConversations([]);
