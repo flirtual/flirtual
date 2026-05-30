@@ -34,6 +34,11 @@ export function initializeMonitoring() {
 			siteOrigin,
 			apiOrigin,
 		],
+		ignoreErrors: [
+			"Load failed",
+			"Failed to fetch",
+			"NetworkError when attempting to fetch resource.",
+		],
 		environment: development ? "development" : (preview || "production"),
 		integrations: [
 			Sentry.reactRouterTracingIntegration(),
