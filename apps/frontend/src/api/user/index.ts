@@ -64,6 +64,7 @@ export type User = {
 	slug: string;
 	talkjsId: string;
 	talkjsSignature?: string;
+	talkjsToken?: string;
 	hasPassword?: boolean;
 	apnsTokens?: Array<string>;
 	fcmTokens?: Array<string>;

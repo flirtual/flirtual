@@ -4,6 +4,7 @@ defmodule Flirtual.User.Policy do
   import Flirtual.Utilities
 
   alias Flirtual.Policy
+  alias Flirtual.Talkjs
   alias Flirtual.User
   alias Flirtual.User.Session
 
@@ -302,6 +303,21 @@ defmodule Flirtual.User.Policy do
         %User{id: user_id}
       ),
       do: ShortUUID.decode!(user_id)
+
+  def transform(
+        :talkjs_token,
+        %Plug.Conn{
+          assigns: %{
+            session: %{
+              user_id: user_id
+            }
+          }
+        },
+        %User{id: user_id}
+      ),
+      do: Talkjs.new_user_token(user_id)
+
+  def transform(:talkjs_token, _, _), do: nil
 
   def transform(
         :has_password,
