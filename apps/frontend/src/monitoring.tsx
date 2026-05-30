@@ -35,7 +35,10 @@ export function initializeMonitoring() {
 			apiOrigin,
 		],
 		ignoreErrors: [
-			"must be caught by a redirect boundary"
+			"must be caught by a redirect boundary",
+			"Load failed",
+			"Failed to fetch",
+			"NetworkError when attempting to fetch resource.",
 		],
 		environment: development ? "development" : (preview || "production"),
 		integrations: [
