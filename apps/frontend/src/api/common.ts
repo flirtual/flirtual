@@ -64,7 +64,7 @@ export const api = wretch(urls.api)
 	})
 	.middlewares(
 		[
-			timeout(ms("5s")),
+			timeout(ms("30s")),
 			// Artificially slow requests in development, ensuring we can see loading/pending states.
 			development && delay((_, { method }) => 500 * Math.random() * (method === "GET" ? 1 : 2))
 		].filter(Boolean)
