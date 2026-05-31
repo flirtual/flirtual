@@ -38,6 +38,12 @@ export function initializeMonitoring() {
 			"Load failed",
 			"Failed to fetch",
 			"NetworkError when attempting to fetch resource.",
+			// Stale-chunk dynamic-import failures — React Router auto-recovers
+			// by reloading the page (see loadRouteModule). Engine-specific
+			// messages: Safari, Chrome, Firefox.
+			"Importing a module script failed.",
+			"Failed to fetch dynamically imported module",
+			"error loading dynamically imported module",
 		],
 		environment: development ? "development" : (preview || "production"),
 		integrations: [
