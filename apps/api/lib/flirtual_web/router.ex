@@ -352,7 +352,6 @@ defmodule FlirtualWeb.Router do
             pipe_through([:require_authenticated_user, :require_valid_user])
 
             get("/", UsersController, :search)
-            post("/bulk", UsersController, :bulk)
           end
 
           scope "/:slug/name" do

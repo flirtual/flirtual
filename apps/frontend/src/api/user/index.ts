@@ -157,10 +157,6 @@ export const User = {
 	}) {
 		return this.api.json(options).post().json<User>();
 	},
-	getMany(userIds: Array<string>) {
-		return Promise.all(userIds.map((userId) => this.get(userId)));
-		// return this.api.url("/bulk").json(userIds).get().json<Array<User>>();
-	},
 	get(userId: string | null, options: WretchOptions = {}) {
 		if (!userId || !isUid(userId)) return Promise.resolve(null);
 
