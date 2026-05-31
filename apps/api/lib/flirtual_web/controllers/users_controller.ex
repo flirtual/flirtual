@@ -103,20 +103,6 @@ defmodule FlirtualWeb.UsersController do
     end
   end
 
-  # def bulk(conn, %{"_json" => user_ids}) do
-  #   conn
-  #   |> json_with_etag(
-  #     Users.by_ids(user_ids)
-  #     |> Enum.map(
-  #       &if(not is_nil(&1) and Policy.can?(conn, :read, &1),
-  #         do: Policy.transform(conn, &1),
-  #         else: nil
-  #       )
-  #     )
-  #     |> Enum.reject(&is_nil/1)
-  #   )
-  # end
-
   def inspect(conn, %{"user_id" => user_id, "type" => "elasticsearch"}) do
     user =
       if(conn.assigns[:session].user.id === user_id,

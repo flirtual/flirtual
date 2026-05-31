@@ -52,13 +52,6 @@ defmodule Flirtual.Users do
     |> Repo.one()
   end
 
-  def by_ids(user_ids) do
-    User
-    |> where([user], user.id in ^user_ids)
-    |> preload(^User.default_assoc())
-    |> Repo.all()
-  end
-
   def get_by_email(email)
       when is_binary(email) do
     User
