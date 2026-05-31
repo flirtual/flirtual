@@ -75,6 +75,8 @@ defmodule FlirtualWeb.ConversationController do
     end
   end
 
+  def send_message(_conn, _params), do: {:error, {:bad_request, :missing_text}}
+
   def mark_read(conn, _) do
     user = conn.assigns[:session].user
 
