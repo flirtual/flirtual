@@ -233,7 +233,7 @@ if dsn = System.get_env("SENTRY_DSN") do
 
   config :opentelemetry,
     span_processor: {Sentry.OpenTelemetry.SpanProcessor, []},
-    sampler: {Sentry.OpenTelemetry.Sampler, []},
+    sampler: {Flirtual.OpenTelemetry.Sampler, []},
     text_map_propagators: [
       :trace_context,
       :baggage,
