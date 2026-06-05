@@ -89,7 +89,7 @@ defmodule Flirtual.Talkjs do
         {:error, :not_configured}
 
       {access_token, _} ->
-        HTTPoison.request(method, url, raw_body, [
+        Telepoison.request(method, url, raw_body, [
           {"authorization", "Bearer " <> access_token},
           {"content-type", "application/json"}
         ])

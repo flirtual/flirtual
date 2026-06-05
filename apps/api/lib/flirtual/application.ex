@@ -21,6 +21,7 @@ defmodule Flirtual.Application do
     OpentelemetryPhoenix.setup(adapter: :bandit)
     OpentelemetryEcto.setup([:flirtual, :repo], db_statement: :enabled)
     OpentelemetryOban.setup()
+    OpentelemetryFinch.setup()
 
     children =
       [
@@ -51,6 +52,7 @@ defmodule Flirtual.Application do
         # Start the Endpoint (http/https)
         FlirtualWeb.Endpoint,
         {Finch, name: Swoosh.Finch},
+        {Finch, name: Flirtual.Finch},
         # Start VRChat session manager
         Flirtual.VRChatSession,
         # Start disposable email ETS

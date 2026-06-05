@@ -50,7 +50,7 @@ defmodule Flirtual.Discord do
     wait = Keyword.get(opts, :wait, false)
     query = "?with_components=true" <> if(wait, do: "&wait=true", else: "")
 
-    case HTTPoison.post(
+    case Telepoison.post(
            url("webhooks/" <> token <> query),
            Poison.encode!(body),
            [{"content-type", "application/json"}]
@@ -94,7 +94,7 @@ defmodule Flirtual.Discord do
 
   def exchange_code(code, options \\ []) when is_binary(code) do
     with {:ok, %HTTPoison.Response{body: body}} <-
-           HTTPoison.post(
+           Telepoison.post(
              url("oauth2/token"),
              URI.encode_query(%{
                client_id: config(:client_id),
@@ -129,7 +129,7 @@ defmodule Flirtual.Discord do
 
   def get_profile(authorization) do
     with {:ok, %HTTPoison.Response{body: body}} <-
-           HTTPoison.get(
+           Telepoison.get(
              url("users/@me"),
              [{"authorization", authorization}]
            ),

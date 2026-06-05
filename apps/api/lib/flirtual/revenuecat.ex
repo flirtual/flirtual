@@ -39,7 +39,7 @@ defmodule Flirtual.RevenueCat do
 
     log(:debug, [method, url], body)
 
-    HTTPoison.request(method, url, raw_body, headers)
+    Telepoison.request(method, url, raw_body, headers)
   end
 
   def handle_event(%{
