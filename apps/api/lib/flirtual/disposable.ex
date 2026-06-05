@@ -25,7 +25,7 @@ defmodule Flirtual.Disposable do
   end
 
   def update do
-    case HTTPoison.get(@url) do
+    case Telepoison.get(@url) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         domains = body |> String.split("\n", trim: true)
 

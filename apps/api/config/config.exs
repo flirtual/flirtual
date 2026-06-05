@@ -10,6 +10,8 @@ import Config
 config :flirtual,
   ecto_repos: [Flirtual.Repo]
 
+config :tesla, VRChat.Connection, adapter: {Tesla.Adapter.Finch, name: Flirtual.Finch}
+
 # Configures the endpoint
 config :flirtual, FlirtualWeb.Endpoint,
   adapter: Bandit.PhoenixAdapter,

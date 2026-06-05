@@ -44,7 +44,7 @@ defmodule Flirtual.Listmonk do
 
         log(:debug, [method, url], body)
 
-        HTTPoison.request(
+        Telepoison.request(
           method,
           url,
           raw_body,

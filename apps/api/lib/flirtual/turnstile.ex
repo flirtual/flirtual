@@ -10,7 +10,7 @@ defmodule Flirtual.Turnstile do
 
   def validate(token) do
     with {:ok, response} <-
-           HTTPoison.post(
+           Telepoison.post(
              "https://challenges.cloudflare.com/turnstile/v0/siteverify",
              URI.encode_query(%{
                secret: config(:access_token),

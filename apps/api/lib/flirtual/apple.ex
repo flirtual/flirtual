@@ -43,7 +43,7 @@ defmodule Flirtual.Apple do
 
     with {:ok, client_secret} <- generate_client_secret(client_id),
          {:ok, %HTTPoison.Response{body: body, status_code: 200}} <-
-           HTTPoison.post(
+           Telepoison.post(
              @apple_token_url,
              URI.encode_query(%{
                client_id: client_id,
@@ -209,7 +209,7 @@ defmodule Flirtual.Apple do
 
   defp fetch_and_cache_keys(cache_key) do
     with {:ok, %HTTPoison.Response{body: body, status_code: 200}} <-
-           HTTPoison.get(@apple_keys_url),
+           Telepoison.get(@apple_keys_url),
          {:ok, %{"keys" => keys}} <- Poison.decode(body) do
       expiry = System.system_time(:millisecond) + @keys_cache_ttl
       :persistent_term.put(cache_key, {keys, expiry})

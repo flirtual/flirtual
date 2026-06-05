@@ -384,10 +384,10 @@ defmodule Flirtual.Faker do
   defp get_random_image do
     api_url = Enum.random(@image_endpoints)
 
-    with {:ok, %HTTPoison.Response{status_code: 200, body: body}} <- HTTPoison.get(api_url),
+    with {:ok, %HTTPoison.Response{status_code: 200, body: body}} <- Telepoison.get(api_url),
          {:ok, %{"url" => image_url}} <- Jason.decode(body),
          {:ok, %HTTPoison.Response{status_code: 200, body: image_data}} <-
-           HTTPoison.get(image_url) do
+           Telepoison.get(image_url) do
       {:ok, image_data}
     else
       {:ok, %HTTPoison.Response{status_code: status}} ->
