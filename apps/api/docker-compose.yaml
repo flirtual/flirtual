@@ -1,6 +1,6 @@
 services:
   postgres:
-    image: postgres:alpine
+    image: postgres:17-alpine
     shm_size: 256m
     command: postgres -N 500
     restart: always
