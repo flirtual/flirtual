@@ -3,8 +3,8 @@ import {
 	AppUpdateAvailability,
 } from "@capawesome/capacitor-app-update";
 import ms from "ms.macro";
-import { useEffect } from "react";
-import { useTranslation } from "react-i18next";
+import { useEffect, useState } from "react";
+import { Trans, useTranslation } from "react-i18next";
 import { withSuspense, } from "with-suspense";
 
 import { client, commitId, siteOrigin } from "~/const";
@@ -13,15 +13,12 @@ import { useQuery } from "~/query";
 
 import { Button } from "./button";
 import {
-	AlertDialog,
-	AlertDialogAction,
-	AlertDialogCancel,
-	AlertDialogContent,
-	AlertDialogDescription,
-	AlertDialogHeader,
-	AlertDialogTitle
-} from "./dialog/alert";
-import { DialogFooter } from "./dialog/dialog";
+	DialogBody,
+	DialogDescription,
+	DialogHeader,
+	DialogTitle
+} from "./dialog/dialog";
+import { DrawerOrDialog } from "./drawer-or-dialog";
 
 function useVersionCheck() {
 	return useQuery({
@@ -39,9 +36,44 @@ function useVersionCheck() {
 	});
 }
 
-export const UpdateInformation: React.FC = withSuspense(() => {
+export const UpdateInformationDialog: React.FC<{ onUpdate: () => void }> = ({ onUpdate }) => {
 	const { t } = useTranslation();
+	const [open, setOpen] = useState(true);
 
+	return (
+		<DrawerOrDialog closable className="desktop:max-w-lg" open={open} onOpenChange={setOpen}>
+			<>
+				<DialogHeader>
+					<DialogTitle>{t("early_north_alpaca_sail")}</DialogTitle>
+					<DialogDescription className="sr-only" />
+				</DialogHeader>
+				<DialogBody className="min-h-48">
+					<p>
+						<Trans
+							components={{ strong: <strong className="font-semibold" /> }}
+							i18nKey="icy_sound_emu_kiss"
+						/>
+					</p>
+					<div className="flex gap-2">
+						<Button className="grow" size="sm" onClick={onUpdate}>
+							{t("update")}
+						</Button>
+						<Button
+							className="grow"
+							kind="tertiary"
+							size="sm"
+							onClick={() => setOpen(false)}
+						>
+							{t("aware_such_leopard_fond")}
+						</Button>
+					</div>
+				</DialogBody>
+			</>
+		</DrawerOrDialog>
+	);
+};
+
+export const UpdateInformation: React.FC = withSuspense(() => {
 	const serverVersion = useVersionCheck();
 	const webUpdateAvailable = !!serverVersion && serverVersion !== commitId;
 
@@ -81,35 +113,15 @@ export const UpdateInformation: React.FC = withSuspense(() => {
 		return null;
 
 	return (
-		<AlertDialog defaultOpen>
-			<AlertDialogContent>
-				<AlertDialogHeader>
-					<AlertDialogTitle>{t("early_north_alpaca_sail")}</AlertDialogTitle>
-				</AlertDialogHeader>
-				<AlertDialogDescription>
-					{t("icy_sound_emu_kiss")}
-				</AlertDialogDescription>
-				<DialogFooter>
-					<AlertDialogCancel asChild>
-						<Button kind="tertiary" size="sm">
-							{t("aware_such_leopard_fond")}
-						</Button>
-					</AlertDialogCancel>
-					<AlertDialogAction asChild>
-						<Button
-							size="sm"
-							onClick={() => {
-								if (nativeUpdateAvailable)
-									AppUpdate.openAppStore();
-								else
-									window.location.reload();
-							}}
-						>
-							{t("update")}
-						</Button>
-					</AlertDialogAction>
-				</DialogFooter>
-			</AlertDialogContent>
-		</AlertDialog>
+		<UpdateInformationDialog
+			onUpdate={() => {
+				if (nativeUpdateAvailable) {
+					AppUpdate.openAppStore();
+					return;
+				}
+
+				window.location.reload();
+			}}
+		/>
 	);
 });
