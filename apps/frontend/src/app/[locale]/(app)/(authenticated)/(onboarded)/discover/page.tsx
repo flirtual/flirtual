@@ -16,7 +16,7 @@ const discoverGroups = ["dates", "homies"] as const;
 export type DiscoverGroup = (typeof discoverGroups)[number];
 
 export const meta: Route.MetaFunction = (options) => {
-	const { params: { locale }, matches: [,,,,,{ id: group }] } = options;
+	const { params: { locale }, matches: [,,,,{ id: group }] } = options;
 	invariant(isLocale(locale));
 
 	const t = i18n.getFixedT(locale);
@@ -45,7 +45,7 @@ export const handle = {
 
 export const clientLoader = handle.preload;
 
-export default function DiscoverPage({ matches: [,,,,,{ id: group }] }: Route.ComponentProps) {
+export default function DiscoverPage({ matches: [,,,,{ id: group }] }: Route.ComponentProps) {
 	useRatingPrompt();
 
 	return (
