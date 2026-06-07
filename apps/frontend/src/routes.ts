@@ -32,9 +32,7 @@ function page(path: string, file?: string, options?: RouteOptions, children?: Ar
 }
 
 export default [
-	_index("./app/root-redirect.tsx"),
 	...prefix(":locale", [
-		_layout("./app/[locale]/layout.tsx", [
 		layout("(public)", [
 			index("(public)/home"),
 			// page("/home", "(public)/home"),
@@ -123,7 +121,6 @@ export default [
 				page("terms-20231011", "(app)/(public)/terms-20231011"),
 			]),
 			route("*", "not-found")
-		])
 		])
 	]),
 
