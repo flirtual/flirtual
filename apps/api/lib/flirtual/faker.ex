@@ -410,7 +410,7 @@ defmodule Flirtual.Faker do
       {:ok, id}
     else
       bucket =
-        case Application.get_env(:flirtual, :canary) do
+        case Application.get_env(:flirtual, :canary?) do
           true -> "pfpup-canary"
           _ -> "pfpup"
         end

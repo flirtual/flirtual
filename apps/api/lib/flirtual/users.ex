@@ -664,7 +664,7 @@ defmodule Flirtual.Users do
   end
 
   defp check_email_hash(user) do
-    case Application.get_env(:flirtual, :canary, false) do
+    case Application.get_env(:flirtual, :canary?, false) do
       true -> :ok
       false -> Hash.check_hash(user.id, "email", user.email)
     end
