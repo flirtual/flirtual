@@ -16,8 +16,19 @@ export function useShare() {
 
 	return {
 		canShare,
-		share: useCallback(async (options: ShareOptions): Promise<ShareResult> => {
-			return Share.share(options);
+		share: useCallback(async (options: ShareOptions): Promise<ShareResult | null> => {
+			try {
+				return await Share.share(options);
+			}
+			catch (reason) {
+				if (isShareCanceled(reason)) return null;
+				throw reason;
+			}
 		}, [])
 	};
+}
+
+function isShareCanceled(reason: unknown): boolean {
+	if (!(reason instanceof Error)) return false;
+	return reason.name === "AbortError" || reason.message === "Share canceled";
 }
