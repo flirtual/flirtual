@@ -100,10 +100,7 @@ export const PersonalActions: React.FC<{ user: User }> = ({ user }) => {
 											await share({
 												text: t("icy_stock_herring_burn"),
 												url: toAbsoluteUrl(urls.profile(profileLink)).toString()
-											}).catch((reason) => {
-												if (reason instanceof Error && reason.name === "AbortError") return;
-												toasts.addError(reason);
-											});
+											}).catch(toasts.addError);
 										}}
 									>
 										{t("share")}
