@@ -47,7 +47,7 @@ defmodule FlirtualWeb.ImageController do
       {:ok, "#{origin}/v1/images/#{id}/file"}
     else
       bucket =
-        case Application.get_env(:flirtual, :canary) do
+        case Application.get_env(:flirtual, :canary?) do
           true -> "pfpup-canary"
           _ -> "pfpup"
         end

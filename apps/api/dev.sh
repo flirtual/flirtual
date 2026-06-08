@@ -39,6 +39,6 @@ else
   docker compose up -d --remove-orphans
 fi
 
-. .env.local
+# . .env.local
 mix ecto.migrate
 iex -S mix phx.server
