@@ -45,6 +45,7 @@ function useKylesWebAuthnImplementation() {
 		async function webAuthnAuthenticate() {
 			if (
 				!challengeGenerated.current
+				&& navigator.credentials
 				&& window.PublicKeyCredential
 				&& PublicKeyCredential.isConditionalMediationAvailable
 			) {
