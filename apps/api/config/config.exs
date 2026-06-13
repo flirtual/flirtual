@@ -43,8 +43,7 @@ config :flirtual, Oban,
        {"@daily", Flirtual.ObanWorkers.Daily},
        {"0 18 * * SAT", Flirtual.ObanWorkers.Weekly}
      ]}
-  ],
-  queues: [default: 1]
+  ]
 
 config :flirtual, Flirtual.Elasticsearch,
   api: Elasticsearch.API.HTTP,

@@ -1,6 +1,6 @@
 defmodule Flirtual.ObanWorkers.LikeDigest do
   @six_days 60 * 60 * 24 * 6
-  use Oban.Worker, priority: 3, unique: [period: @six_days, keys: [:user_id]]
+  use Oban.Worker, priority: 1, unique: [period: @six_days, keys: [:user_id]]
 
   alias Flirtual.User
   alias Flirtual.User.Profile.LikesAndPasses
