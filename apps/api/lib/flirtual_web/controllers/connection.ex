@@ -225,10 +225,6 @@ defmodule FlirtualWeb.ConnectionController do
       {:error, reason} when is_atom(reason) ->
         log(:error, [:grant], reason: reason)
         {:error, {:unauthorized, reason}}
-
-      reason ->
-        log(:error, [:grant], reason: reason)
-        {:error, {:internal_server_error, :verification_failed}}
     end
   end
 
@@ -390,17 +386,6 @@ defmodule FlirtualWeb.ConnectionController do
 
             :json ->
               {:error, changeset}
-          end
-
-        {:error, reason} ->
-          log(:error, [:register_user], reason: reason)
-
-          case options[:response] do
-            :redirect ->
-              grant_error(conn, options[:redirect_type], :registration_failed, type, nil)
-
-            :json ->
-              {:error, {:internal_server_error, :registration_failed}}
           end
       end
     end
