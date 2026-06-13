@@ -62,12 +62,13 @@ defmodule Flirtual.ObanWorkers.Weekly do
 
     query
     |> Repo.all()
-    |> Enum.each(fn user_id ->
+    |> Enum.with_index()
+    |> Enum.each(fn {user_id, index} ->
       %{
         "user_id" => user_id,
         "cutoff" => cutoff
       }
-      |> Flirtual.ObanWorkers.LikeDigest.new()
+      |> Flirtual.ObanWorkers.LikeDigest.new(schedule_in: index)
       |> Oban.insert()
     end)
   end
