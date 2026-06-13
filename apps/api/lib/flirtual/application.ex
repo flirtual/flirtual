@@ -1,34 +1,19 @@
 defmodule Flirtual.Application do
+  # See https://hexdocs.pm/elixir/Application.html
+  # for more information on OTP Applications
   @moduledoc false
+  require Logger
 
   use Application
-  require Logger
 
   @impl true
   def start(_type, _args) do
-    configure_inet6()
-    if config(:telemetry?), do: setup_observability()
-
-    with {:ok, pid} <-
-           Supervisor.start_link(children(), strategy: :one_for_one, name: Flirtual.Supervisor) do
-      create_elasticsearch_index()
-      {:ok, pid}
+    if System.get_env("ECTO_IPV6") do
+      :httpc.set_option(:ipfamily, :inet6fb4)
     end
-  end
 
-  @impl true
-  def config_change(changed, _new, removed) do
-    FlirtualWeb.Endpoint.config_change(changed, removed)
-    :ok
-  end
+    topologies = Application.get_env(:libcluster, :topologies) || []
 
-  def config(key), do: Application.get_env(:flirtual, key)
-
-  defp configure_inet6 do
-    if System.get_env("ECTO_IPV6"), do: :httpc.set_option(:ipfamily, :inet6fb4)
-  end
-
-  defp setup_observability() do
     Oban.Telemetry.attach_default_logger()
     Flirtual.ObanReporter.attach()
 
@@ -37,51 +22,53 @@ defmodule Flirtual.Application do
     OpentelemetryEcto.setup([:flirtual, :repo], db_statement: :enabled)
     OpentelemetryOban.setup()
     OpentelemetryFinch.setup()
-  end
 
-  defp children do
-    topologies = Application.get_env(:libcluster, :topologies) || []
-
-    optional =
+    children =
       [
-        {
-          config(:telemetry?),
-          [FlirtualWeb.Telemetry]
-        },
-        {
-          has_config?(Flirtual.VRChat, [:username, :password]),
-          [Flirtual.VRChatSession]
-        },
-        {
-          has_config?(Flirtual.APNS, [:key]),
-          [Flirtual.APNS]
-        },
-        {
-          has_config?(Flirtual.FCM, [:project_id]),
-          [
-            {Goth, name: Flirtual.Goth},
-            Flirtual.FCM
-          ]
-        }
+        # Start the Cluster supervisor
+        {Cluster.Supervisor, [topologies, [name: Flirtual.ClusterSupervisor]]},
+        # Start the Ecto repository
+        Flirtual.Repo,
+        # Start Oban
+        {Oban, Application.fetch_env!(:flirtual, Oban)},
+        # Start Elasticsearch
+        Flirtual.Elasticsearch,
+        # Start the push notification dispatchers
+        if(Application.get_env(:flirtual, Flirtual.APNS)[:key] in [nil, ""],
+          do:
+            Logger.warning("Flirtual.APNS not configured, excluding from supervision tree.") &&
+              nil,
+          else: Flirtual.APNS
+        ),
+        if(Application.get_env(:flirtual, Flirtual.FCM)[:project_id] in [nil, ""],
+          do:
+            Logger.warning("Flirtual.FCM not configured, excluding from supervision tree.") && nil,
+          else: [{Goth, name: Flirtual.Goth}, Flirtual.FCM]
+        ),
+        # Start the Telemetry supervisor
+        FlirtualWeb.Telemetry,
+        # Start the PubSub system
+        {Phoenix.PubSub, name: Flirtual.PubSub},
+        # Start the Endpoint (http/https)
+        FlirtualWeb.Endpoint,
+        {Finch, name: Swoosh.Finch},
+        {Finch, name: Flirtual.Finch},
+        # Start VRChat session manager
+        Flirtual.VRChatSession,
+        # Start disposable email ETS
+        Flirtual.Disposable
       ]
-      |> Enum.flat_map(fn {start?, specs} -> if start?, do: specs, else: [] end)
+      |> List.flatten()
+      |> Enum.reject(&is_nil/1)
 
-    [
-      {Cluster.Supervisor, [topologies, [name: Flirtual.ClusterSupervisor]]},
-      Flirtual.Repo,
-      {Oban, Application.fetch_env!(:flirtual, Oban)},
-      Flirtual.Elasticsearch,
-      {Phoenix.PubSub, name: Flirtual.PubSub},
-      FlirtualWeb.Endpoint,
-      {Finch, name: Swoosh.Finch},
-      {Finch, name: Flirtual.Finch},
-      Flirtual.Disposable
-    ] ++ optional
-  end
+    # See https://hexdocs.pm/elixir/Supervisor.html
+    # for other strategies and supported options
+    opts = [strategy: :one_for_one, name: Flirtual.Supervisor]
+    result = Supervisor.start_link(children, opts)
 
-  defp has_config?(module, keys) do
-    config = Application.get_env(:flirtual, module, [])
-    Enum.all?(keys, &(config[&1] not in [nil, ""]))
+    create_elasticsearch_index()
+
+    result
   end
 
   defp create_elasticsearch_index do
@@ -96,5 +83,13 @@ defmodule Flirtual.Application do
           Logger.warning("Failed to create Elasticsearch 'users' index: #{inspect(reason)}")
       end
     end
+  end
+
+  # Tell Phoenix to update the endpoint configuration
+  # whenever the application is updated.
+  @impl true
+  def config_change(changed, _new, removed) do
+    FlirtualWeb.Endpoint.config_change(changed, removed)
+    :ok
   end
 end
