@@ -47,6 +47,7 @@ defmodule Flirtual.MixProject do
       {:ecto_sql, "~> 3.10"},
       {:postgrex, ">= 0.0.0"},
       {:oban, "~> 2.16"},
+      {:oban_web, "~> 2.12"},
       {:tz, "~> 0.28.1"},
       {:tz_extra, "~> 0.45.0"},
       {:distance, "~> 1.1"},

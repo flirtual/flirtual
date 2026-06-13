@@ -5,6 +5,7 @@ defmodule FlirtualWeb.Router do
   import Plug.Conn
 
   import Phoenix.LiveDashboard.Router
+  import Oban.Web.Router
 
   import FlirtualWeb.ErrorHelpers
   import FlirtualWeb.SessionController
@@ -74,6 +75,10 @@ defmodule FlirtualWeb.Router do
 
     live_dashboard("/dashboard",
       metrics: FlirtualWeb.Telemetry,
+      on_mount: [{FlirtualWeb.LiveDashboardAuth, :require_debugger}]
+    )
+
+    oban_dashboard("/oban",
       on_mount: [{FlirtualWeb.LiveDashboardAuth, :require_debugger}]
     )
   end
