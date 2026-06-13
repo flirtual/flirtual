@@ -134,11 +134,6 @@ defmodule FlirtualWeb.VRChatController do
                 messageError: true
               })
           end
-
-        {:error, reason} ->
-          conn
-          |> put_status(:internal_server_error)
-          |> json(%{error: "Failed to create instance", details: inspect(reason)})
       end
     else
       {:world_id, true} ->
@@ -190,11 +185,6 @@ defmodule FlirtualWeb.VRChatController do
           worldName: world.name,
           worldImageUrl: world.thumbnailImageUrl
         })
-
-      {:error, reason} ->
-        conn
-        |> put_status(:internal_server_error)
-        |> json(%{error: "Failed to create instance", details: inspect(reason)})
     end
   end
 end

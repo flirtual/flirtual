@@ -1,6 +1,5 @@
 defmodule FlirtualWeb.FallbackController do
   use Phoenix.Controller
-  use Flirtual.Logger, :fallback
 
   import FlirtualWeb.ErrorHelpers
 
@@ -31,13 +30,5 @@ defmodule FlirtualWeb.FallbackController do
   def call(%Plug.Conn{} = conn, {:error, {status, message, details}})
       when is_atom(status) or status in @error_status_codes do
     conn |> put_error(status, message, details) |> halt()
-  end
-
-  def call(%Plug.Conn{} = conn, params) do
-    log(:critical, ["unhandled request error"], params)
-
-    conn
-    |> put_error(:internal_server_error)
-    |> halt()
   end
 end

@@ -42,20 +42,15 @@ defmodule FlirtualWeb.ErrorHelpers do
 
   def put_error(%Plug.Conn{} = conn, status) do
     status_code = Status.code(status)
-    message = status_code |> Status.reason_phrase()
-
-    if status_code > 499, do: Sentry.capture_message(message)
 
     conn
     |> put_status(status_code)
-    |> json(Issue.new(message))
+    |> json(Issue.new(Status.reason_phrase(status_code)))
   end
 
-  def put_error(%Plug.Conn{} = conn, status, message \\ nil, details \\ %{}) do
+  def put_error(%Plug.Conn{} = conn, status, message, details \\ %{}) do
     status_code = Status.code(status)
     message = message || status_code |> Status.reason_phrase()
-
-    if status_code > 499, do: Sentry.capture_message(message)
 
     {conn, details} = maybe_put_headers(conn, details)
 
