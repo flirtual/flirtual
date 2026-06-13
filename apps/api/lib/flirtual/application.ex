@@ -46,37 +46,36 @@ defmodule Flirtual.Application do
       [
         {
           config(:telemetry?),
-          [FlirtualWeb.Telemetry]
+          [{0, FlirtualWeb.Telemetry}]
         },
         {
           has_config?(Flirtual.VRChat, [:username, :password]),
-          [Flirtual.VRChatSession]
+          [{2, Flirtual.VRChatSession}]
         },
         {
           has_config?(Flirtual.APNS, [:key]),
-          [Flirtual.APNS]
+          [{2, Flirtual.APNS}]
         },
         {
           has_config?(Flirtual.FCM, [:project_id]),
-          [
-            {Goth, name: Flirtual.Goth},
-            Flirtual.FCM
-          ]
+          [{2, {Goth, name: Flirtual.Goth}}, {2, Flirtual.FCM}]
         }
       ]
       |> Enum.flat_map(fn {start?, specs} -> if start?, do: specs, else: [] end)
 
-    [
-      {Cluster.Supervisor, [topologies, [name: Flirtual.ClusterSupervisor]]},
-      Flirtual.Repo,
-      {Oban, Application.fetch_env!(:flirtual, Oban)},
-      Flirtual.Elasticsearch,
-      {Phoenix.PubSub, name: Flirtual.PubSub},
-      FlirtualWeb.Endpoint,
-      {Finch, name: Swoosh.Finch},
-      {Finch, name: Flirtual.Finch},
-      Flirtual.Disposable
-    ] ++ optional
+    ([
+       {0, {Cluster.Supervisor, [topologies, [name: Flirtual.ClusterSupervisor]]}},
+       {1, Flirtual.Repo},
+       {2, {Finch, name: Swoosh.Finch}},
+       {2, {Finch, name: Flirtual.Finch}},
+       {2, Flirtual.Elasticsearch},
+       {2, {Phoenix.PubSub, name: Flirtual.PubSub}},
+       {2, Flirtual.Disposable},
+       {3, FlirtualWeb.Endpoint},
+       {9, {Oban, Application.fetch_env!(:flirtual, Oban)}}
+     ] ++ optional)
+    |> Enum.sort_by(&elem(&1, 0))
+    |> Enum.map(&elem(&1, 1))
   end
 
   defp has_config?(module, keys) do
