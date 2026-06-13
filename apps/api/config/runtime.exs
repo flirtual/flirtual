@@ -213,6 +213,12 @@ config :flirtual, Flirtual.ObanWorkers,
     ),
   email_rate_limit: Env.get!("EMAIL_RATE_LIMIT", default: "1") |> String.to_integer()
 
+config :flirtual, Oban,
+  queues: [
+    default: Env.get("OBAN_DEFAULT_CONCURRENCY", default: "6") |> String.to_integer(),
+    notifications: Env.get("OBAN_NOTIFICATIONS_CONCURRENCY", default: "3") |> String.to_integer()
+  ]
+
 if prod? do
   app_name =
     Env.get("FLY_APP_NAME") ||

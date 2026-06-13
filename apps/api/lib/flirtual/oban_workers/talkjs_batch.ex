@@ -1,5 +1,5 @@
 defmodule Flirtual.ObanWorkers.TalkjsBatch do
-  use Oban.Worker, priority: 3, unique: [period: :infinity, states: [:available, :scheduled]]
+  use Oban.Worker, priority: 1, unique: [period: :infinity, states: [:available, :scheduled]]
 
   alias Flirtual.Talkjs
 
