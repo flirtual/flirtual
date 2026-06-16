@@ -1,6 +1,6 @@
 import type { WretchOptions } from "wretch";
 
-import { commitIdShort } from "~/const";
+import { commitIdShort, development } from "~/const";
 
 import { api } from "./common";
 import type { DatedModel, UuidModel } from "./common";
@@ -26,7 +26,7 @@ export const Plan = {
 	list(options: WretchOptions = {}) {
 		return this.api
 			.options({
-				credentials: "omit",
+				credentials: development ? "include" : "omit",
 				next: {
 					revalidate: false
 				},

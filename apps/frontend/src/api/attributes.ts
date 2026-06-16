@@ -1,6 +1,6 @@
 import type { WretchOptions } from "wretch";
 
-import { commitIdShort } from "~/const";
+import { commitIdShort, development } from "~/const";
 import type { Expand } from "~/utilities";
 
 import { api } from "./common";
@@ -108,7 +108,7 @@ export type GroupedAttributeCollection = Record<
 export const Attribute = {
 	api: api
 		.url("attributes")
-		.options({ credentials: "omit" }),
+		.options({ credentials: development ? "include" : "omit" }),
 	list<T extends AttributeType>(type: T, options: WretchOptions = {}) {
 		return this.api
 			.url(`/${type}`)
