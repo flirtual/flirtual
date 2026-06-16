@@ -1,10 +1,12 @@
 import { useIsFetching, useIsMutating } from "@tanstack/react-query";
 import { AnimatePresence, m } from "motion/react";
 import type { FC } from "react";
+import { withSuspense } from "with-suspense";
 
 import { Matchmaking, prospectKinds } from "~/api/matchmaking";
 import type { ProspectKind, Queue as QueueData } from "~/api/matchmaking";
 import { Profile } from "~/components/profile";
+import { ProfileSkeleton } from "~/components/profile/skeleton";
 import { useDevice } from "~/hooks/use-device";
 import { useQueue } from "~/hooks/use-queue";
 import { useSession } from "~/hooks/use-session";
@@ -45,11 +47,19 @@ const SkipStaleProspect: FC<{ userId: string }> = ({ userId }) => {
 	return null;
 };
 
+// motion: Suspense breaks exit animations.
+// https://github.com/motiondivision/motion/issues/2690
+// https://github.com/motiondivision/motion/issues/2269
+const CurrentProfile = withSuspense<{ userId: string }>(({ userId }) => {
+	const user = useUser(userId);
+	if (!user) return <SkipStaleProspect userId={userId} />;
+
+	return <Profile userId={userId} />;
+}, { fallback: <ProfileSkeleton /> });
+
 export const Queue: FC<{ kind: ProspectKind }> = ({ kind }) => {
 	const { error, next: [current] } = useQueue(kind);
 	// const { error, next: [current, next], previous } = useQueue(kind);
-
-	const currentUser = useUser(current);
 
 	const skipping = useIsMutating({ mutationKey: ["skip-prospect"] }) > 0;
 	const queueing = useIsMutating({ mutationKey: queueKey(kind) }) > 0;
@@ -66,8 +76,6 @@ export const Queue: FC<{ kind: ProspectKind }> = ({ kind }) => {
 		return <OutOfProspects mode={kind} />;
 	}
 
-	if (!currentUser) return <SkipStaleProspect key={current} userId={current} />;
-
 	return (
 		<>
 			{kind === "love" && <DefaultTour />}
@@ -81,7 +89,7 @@ export const Queue: FC<{ kind: ProspectKind }> = ({ kind }) => {
 						exit={{ opacity: 0, position: "absolute" }}
 						initial={{ opacity: 0 }}
 					>
-						<Profile userId={current} />
+						<CurrentProfile userId={current} />
 					</m.div>
 				</AnimatePresence>
 			</div>
