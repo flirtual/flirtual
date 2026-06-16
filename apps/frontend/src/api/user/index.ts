@@ -1,6 +1,7 @@
 import { toSnakeCase } from "remeda";
 import type { WretchOptions } from "wretch";
 
+import { development } from "~/const";
 import type { Locale } from "~/i18n";
 import { isUid } from "~/utilities";
 
@@ -192,7 +193,7 @@ export const User = {
 	getCount(options: WretchOptions = {}) {
 		return this.api
 			.url("/count")
-			.options({ credentials: "omit", ...options })
+			.options({ credentials: development ? "include" : "omit", ...options })
 			.get()
 			.fetchError(() => ({ count: 0 }))
 			.json<{ count: number }>();
