@@ -17,7 +17,9 @@ config :flirtual, FlirtualWeb.Endpoint,
   adapter: Bandit.PhoenixAdapter,
   pubsub_server: Flirtual.PubSub,
   http: [
-    port: 4000
+    port: 4000,
+    http_1_options: [max_header_length: 20_000, max_header_count: 100],
+    http_2_options: [max_header_block_size: 100_000]
   ],
   render_errors: [
     view: FlirtualWeb.ErrorView,
