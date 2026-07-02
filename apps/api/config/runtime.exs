@@ -191,9 +191,10 @@ config :flirtual, FlirtualWeb.RevenueCatController,
   google_key: Env.get!("REVENUECAT_GOOGLE_KEY"),
   signing_secret: Env.get!("REVENUECAT_SIGNING_SECRET")
 
-config :openai,
-  organization_key: Env.get!("OPENAI_ORG_ID"),
-  api_key: Env.get!("OPENAI_ACCESS_TOKEN")
+config :flirtual, Flirtual.LLM,
+  model: Env.get("LLM_MODEL", default: "anthropic:claude-sonnet-latest")
+
+config :req_llm, anthropic_api_key: Env.get("ANTHROPIC_ACCESS_TOKEN")
 
 config :flirtual, Flirtual.ObanWorkers,
   enabled_workers:
