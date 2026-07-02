@@ -5,6 +5,8 @@ defmodule Flirtual.ObanWorkers.Elasticsearch do
 
   alias Flirtual.{Elasticsearch, Repo, User}
   alias Flirtual.User.Profile.Prospect
+  alias Flirtual.User.SearchDocument
+  alias Snap.Bulk.Action
 
   @impl Oban.Worker
   def perform(%Oban.Job{args: %{"user_id" => user_id}}) do
@@ -17,8 +19,6 @@ defmodule Flirtual.ObanWorkers.Elasticsearch do
   end
 
   def process_users(user_ids) do
-    documents = Elasticsearch.get(:users, user_ids)
-
     users =
       User
       |> where([user], user.id in ^user_ids)
@@ -34,25 +34,14 @@ defmodule Flirtual.ObanWorkers.Elasticsearch do
       end
     end)
 
-    Elasticsearch.bulk(
-      :users,
-      Enum.map(users, fn user ->
-        document_id = user.id
-        document = Elasticsearch.encode(user)
-        document_exists? = not is_nil(Enum.find(documents, &(&1["id"] === document_id)))
-
-        type =
-          if(user.status == :visible,
-            do: if(document_exists?, do: :update, else: :create),
-            else: :delete
-          )
-
-        {
-          type,
-          document_id,
-          if(type !== :delete, do: document, else: nil)
-        }
-      end)
-    )
+    users
+    |> Enum.map(fn user ->
+      if user.status == :visible do
+        %Action.Index{id: user.id, doc: SearchDocument.encode(user)}
+      else
+        %Action.Delete{id: user.id}
+      end
+    end)
+    |> Snap.Bulk.perform(Elasticsearch, "users", page_wait: 0)
   end
 end

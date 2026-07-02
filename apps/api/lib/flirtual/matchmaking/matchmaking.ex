@@ -217,10 +217,9 @@ defmodule Flirtual.Matchmaking do
   def get_new_prospects(user, kind) do
     query = generate_query(user, kind)
 
-    with {:ok, resp} <- Elasticsearch.search(:users, query) do
+    with {:ok, response} <- Snap.Search.search(Elasticsearch, "users", query) do
       elasticsearch_prospects =
-        resp["hits"]["hits"]
-        |> Enum.map(&%{user_id: &1["_id"], score: &1["_score"]})
+        Enum.map(response, &%{user_id: &1.id, score: &1.score})
 
       scores_by_user_id =
         Map.new(elasticsearch_prospects, &{&1.user_id, &1.score})

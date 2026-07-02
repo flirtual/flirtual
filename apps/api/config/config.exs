@@ -48,19 +48,6 @@ config :flirtual, Oban,
      ]}
   ]
 
-config :flirtual, Flirtual.Elasticsearch,
-  api: Elasticsearch.API.HTTP,
-  json_library: Jason,
-  indexes: %{
-    users_new: %{
-      settings: "priv/elasticsearch/users.json",
-      store: Flirtual.Elasticsearch.Store,
-      sources: [Flirtual.User],
-      bulk_page_size: 5000,
-      bulk_wait_interval: 15_000
-    }
-  }
-
 config :elixir, :time_zone_database, Tz.TimeZoneDatabase
 
 config :floki, :html_parser, Floki.HTMLParser.FastHtml

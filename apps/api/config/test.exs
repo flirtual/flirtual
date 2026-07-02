@@ -26,6 +26,9 @@ config :flirtual, FlirtualWeb.Endpoint,
 # In tests we don't run Oban jobs
 config :flirtual, Oban, testing: :inline
 
+# Snap's Finch pool needs a URL to start; tests don't hit Elasticsearch.
+config :flirtual, Flirtual.Elasticsearch, url: "http://localhost:9200"
+
 # In test we don't send emails.
 config :flirtual, Flirtual.Mailer, adapter: Swoosh.Adapters.Test
 
