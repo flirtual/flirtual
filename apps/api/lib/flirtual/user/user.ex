@@ -1163,7 +1163,7 @@ defmodule Flirtual.User do
     case Application.get_env(:flirtual, :prohibit_leaked_passwords, true) do
       true ->
         password
-        |> LeakedPasswords.leaked?()
+        |> Flirtual.LeakedPasswords.leaked?()
         |> process_leaked_check(changeset)
 
       false ->
