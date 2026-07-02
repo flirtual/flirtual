@@ -63,7 +63,6 @@ defmodule Flirtual.MixProject do
       {:recase, "~> 0.5"},
       {:swoosh, "~> 1.3"},
       {:openai, "~> 0.6.1"},
-      {:leaked_passwords, "~> 1.0"},
       {:phoenix_swoosh, "~> 1.0"},
       {:gen_smtp, "~> 1.2"},
       {:goth, "~> 1.4"},
