@@ -39,7 +39,15 @@ defmodule Flirtual.RevenueCat do
 
     log(:debug, [method, url], body)
 
-    Telepoison.request(method, url, raw_body, headers)
+    Req.request(
+      method: method,
+      url: url,
+      body: raw_body,
+      headers: headers,
+      decode_body: false,
+      retry: false,
+      finch: Flirtual.Finch
+    )
   end
 
   def handle_event(%{
@@ -165,7 +173,7 @@ defmodule Flirtual.RevenueCat do
   defp resolve_user(_), do: {:unhandled, :unknown_user}
 
   defp resolve_aliases(app_user_id) do
-    with {:ok, %HTTPoison.Response{status_code: 200, body: body}} <-
+    with {:ok, %Req.Response{status: 200, body: body}} <-
            fetch(:get, "subscribers/#{URI.encode_www_form(app_user_id)}"),
          {:ok, %{"subscriber" => %{"original_app_user_id" => original_id}}}
          when is_binary(original_id) <- Poison.decode(body),
@@ -204,11 +212,11 @@ defmodule Flirtual.RevenueCat do
   def delete_customer(%User{
         revenuecat_id: revenuecat_id
       }) do
-    with {:ok, %HTTPoison.Response{status_code: 200}} <-
+    with {:ok, %Req.Response{status: 200}} <-
            fetch(:delete, "subscribers/#{revenuecat_id}") do
       :ok
     else
-      {:ok, %HTTPoison.Response{status_code: 404}} -> :ok
+      {:ok, %Req.Response{status: 404}} -> :ok
     end
   end
 
@@ -218,7 +226,7 @@ defmodule Flirtual.RevenueCat do
         platform,
         receipt
       ) do
-    with {:ok, %HTTPoison.Response{status_code: 200}} <-
+    with {:ok, %Req.Response{status: 200}} <-
            fetch(
              :post,
              "receipts",

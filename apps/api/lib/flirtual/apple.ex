@@ -42,22 +42,27 @@ defmodule Flirtual.Apple do
     redirect_uri = redirect_url!(redirect: Keyword.get(options, :redirect, true))
 
     with {:ok, client_secret} <- generate_client_secret(client_id),
-         {:ok, %HTTPoison.Response{body: body, status_code: 200}} <-
-           Telepoison.post(
-             @apple_token_url,
-             URI.encode_query(%{
-               client_id: client_id,
-               client_secret: client_secret,
-               code: code,
-               grant_type: "authorization_code",
-               redirect_uri: redirect_uri
-             }),
-             [{"content-type", "application/x-www-form-urlencoded"}]
+         {:ok, %Req.Response{body: body, status: 200}} <-
+           Req.request(
+             method: :post,
+             url: @apple_token_url,
+             body:
+               URI.encode_query(%{
+                 client_id: client_id,
+                 client_secret: client_secret,
+                 code: code,
+                 grant_type: "authorization_code",
+                 redirect_uri: redirect_uri
+               }),
+             headers: [{"content-type", "application/x-www-form-urlencoded"}],
+             decode_body: false,
+             retry: false,
+             finch: Flirtual.Finch
            ),
          {:ok, %{"id_token" => id_token} = response} <- Poison.decode(body) do
       {:ok, %{id_token: id_token, access_token: response["access_token"]}}
     else
-      {:ok, %HTTPoison.Response{body: body}} ->
+      {:ok, %Req.Response{body: body}} ->
         log(:error, [:exchange_code], body)
 
         case Poison.decode(body) do
@@ -208,14 +213,20 @@ defmodule Flirtual.Apple do
   end
 
   defp fetch_and_cache_keys(cache_key) do
-    with {:ok, %HTTPoison.Response{body: body, status_code: 200}} <-
-           Telepoison.get(@apple_keys_url),
+    with {:ok, %Req.Response{body: body, status: 200}} <-
+           Req.request(
+             method: :get,
+             url: @apple_keys_url,
+             decode_body: false,
+             retry: false,
+             finch: Flirtual.Finch
+           ),
          {:ok, %{"keys" => keys}} <- Poison.decode(body) do
       expiry = System.system_time(:millisecond) + @keys_cache_ttl
       :persistent_term.put(cache_key, {keys, expiry})
       {:ok, keys}
     else
-      {:ok, %HTTPoison.Response{} = response} ->
+      {:ok, %Req.Response{} = response} ->
         log(:error, [:fetch_apple_public_keys], response)
         {:error, :upstream}
 

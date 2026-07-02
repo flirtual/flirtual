@@ -70,7 +70,6 @@ defmodule Flirtual.MixProject do
       {:pigeon, "~> 2.0.1"},
       {:wax_, "~> 0.6.0"},
       {:httpoison, "~> 2.0", override: true},
-      {:telepoison, "~> 2.0"},
       {:tls_certificate_check, "~> 1.20"},
       {:finch, "~> 0.21"},
       {:req, "~> 0.6"},

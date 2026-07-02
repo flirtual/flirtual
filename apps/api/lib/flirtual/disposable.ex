@@ -25,8 +25,14 @@ defmodule Flirtual.Disposable do
   end
 
   def update do
-    case Telepoison.get(@url) do
-      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+    case Req.request(
+           method: :get,
+           url: @url,
+           decode_body: false,
+           retry: false,
+           finch: Flirtual.Finch
+         ) do
+      {:ok, %Req.Response{status: 200, body: body}} ->
         domains = body |> String.split("\n", trim: true)
 
         :ets.delete_all_objects(:disposable)

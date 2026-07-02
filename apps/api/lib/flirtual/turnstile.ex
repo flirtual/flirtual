@@ -10,15 +10,20 @@ defmodule Flirtual.Turnstile do
 
   def validate(token) do
     with {:ok, response} <-
-           Telepoison.post(
-             "https://challenges.cloudflare.com/turnstile/v0/siteverify",
-             URI.encode_query(%{
-               secret: config(:access_token),
-               response: token
-             }),
-             [
+           Req.request(
+             method: :post,
+             url: "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+             body:
+               URI.encode_query(%{
+                 secret: config(:access_token),
+                 response: token
+               }),
+             headers: [
                {"content-type", "application/x-www-form-urlencoded"}
-             ]
+             ],
+             decode_body: false,
+             retry: false,
+             finch: Flirtual.Finch
            ),
          {:ok, body} <- Poison.decode(response.body) do
       body
