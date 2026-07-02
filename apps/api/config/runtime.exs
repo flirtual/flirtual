@@ -176,7 +176,8 @@ config :flirtual, Flirtual.Listmonk,
 
 config :chargebeex,
   namespace: Env.get!("CHARGEBEE_NAMESPACE"),
-  api_key: Env.get!("CHARGEBEE_ACCESS_TOKEN")
+  api_key: Env.get!("CHARGEBEE_ACCESS_TOKEN"),
+  http_client: Flirtual.Chargebee.ReqClient
 
 config :flirtual, FlirtualWeb.ChargebeeController,
   signing_secret: Env.get!("CHARGEBEE_SIGNING_SECRET")
