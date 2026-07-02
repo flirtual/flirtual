@@ -50,15 +50,19 @@ defmodule Flirtual.Discord do
     wait = Keyword.get(opts, :wait, false)
     query = "?with_components=true" <> if(wait, do: "&wait=true", else: "")
 
-    case Telepoison.post(
-           url("webhooks/" <> token <> query),
-           Poison.encode!(body),
-           [{"content-type", "application/json"}]
+    case Req.request(
+           method: :post,
+           url: url("webhooks/" <> token <> query),
+           body: Poison.encode!(body),
+           headers: [{"content-type", "application/json"}],
+           decode_body: false,
+           retry: false,
+           finch: Flirtual.Finch
          ) do
-      {:ok, %HTTPoison.Response{status_code: 204}} ->
+      {:ok, %Req.Response{status: 204}} ->
         :ok
 
-      {:ok, %HTTPoison.Response{status_code: 200, body: response_body}} when wait ->
+      {:ok, %Req.Response{status: 200, body: response_body}} when wait ->
         case Poison.decode(response_body) do
           {:ok, %{"id" => message_id, "channel_id" => channel_id}} ->
             {:ok, "https://discord.com/channels/455219574036496404/#{channel_id}/#{message_id}"}
@@ -67,7 +71,7 @@ defmodule Flirtual.Discord do
             :ok
         end
 
-      {:ok, %HTTPoison.Response{} = response} ->
+      {:ok, %Req.Response{} = response} ->
         log(:error, ["webhook", name], response)
         {:error, :upstream}
 
@@ -93,17 +97,22 @@ defmodule Flirtual.Discord do
   end
 
   def exchange_code(code, options \\ []) when is_binary(code) do
-    with {:ok, %HTTPoison.Response{body: body}} <-
-           Telepoison.post(
-             url("oauth2/token"),
-             URI.encode_query(%{
-               client_id: config(:client_id),
-               client_secret: config(:client_secret),
-               grant_type: "authorization_code",
-               redirect_uri: redirect_url!(redirect: Keyword.get(options, :redirect, true)),
-               code: code
-             }),
-             [{"content-type", "application/x-www-form-urlencoded"}]
+    with {:ok, %Req.Response{body: body}} <-
+           Req.request(
+             method: :post,
+             url: url("oauth2/token"),
+             body:
+               URI.encode_query(%{
+                 client_id: config(:client_id),
+                 client_secret: config(:client_secret),
+                 grant_type: "authorization_code",
+                 redirect_uri: redirect_url!(redirect: Keyword.get(options, :redirect, true)),
+                 code: code
+               }),
+             headers: [{"content-type", "application/x-www-form-urlencoded"}],
+             decode_body: false,
+             retry: false,
+             finch: Flirtual.Finch
            ),
          {:ok, body} <- Poison.decode(body),
          %{"access_token" => access_token, "token_type" => token_type} <- body do
@@ -128,10 +137,14 @@ defmodule Flirtual.Discord do
   def profile_url(%Connection{uid: id}), do: "https://discord.com/users/#{id}"
 
   def get_profile(authorization) do
-    with {:ok, %HTTPoison.Response{body: body}} <-
-           Telepoison.get(
-             url("users/@me"),
-             [{"authorization", authorization}]
+    with {:ok, %Req.Response{body: body}} <-
+           Req.request(
+             method: :get,
+             url: url("users/@me"),
+             headers: [{"authorization", authorization}],
+             decode_body: false,
+             retry: false,
+             finch: Flirtual.Finch
            ),
          {:ok, profile} <- Poison.decode(body),
          %{

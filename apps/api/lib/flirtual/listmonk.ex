@@ -44,14 +44,17 @@ defmodule Flirtual.Listmonk do
 
         log(:debug, [method, url], body)
 
-        Telepoison.request(
-          method,
-          url,
-          raw_body,
-          [
+        Req.request(
+          method: method,
+          url: url,
+          body: raw_body,
+          headers: [
             {"content-type", "application/json"}
           ],
-          hackney: [basic_auth: {username, password}]
+          auth: {:basic, username <> ":" <> password},
+          decode_body: false,
+          retry: false,
+          finch: Flirtual.Finch
         )
     end
   end
@@ -80,7 +83,7 @@ defmodule Flirtual.Listmonk do
     }
 
     case fetch(:post, "subscribers", body) do
-      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+      {:ok, %Req.Response{status: 200, body: body}} ->
         data = Poison.decode!(body)["data"]
 
         with {:ok, _} <-
@@ -89,12 +92,11 @@ defmodule Flirtual.Listmonk do
           {:ok, data}
         end
 
-      {:ok,
-       %HTTPoison.Response{status_code: 409, body: "{\"message\":\"E-mail already exists.\"}\n"}} ->
+      {:ok, %Req.Response{status: 409, body: "{\"message\":\"E-mail already exists.\"}\n"}} ->
         case fetch(:get, "subscribers", nil,
                query: [query: "lower(subscribers.email) = lower('#{user.email}')"]
              ) do
-          {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+          {:ok, %Req.Response{status: 200, body: body}} ->
             data = Poison.decode!(body)["data"]
 
             with {:ok, _} <-
@@ -124,7 +126,7 @@ defmodule Flirtual.Listmonk do
   # User is an existing Listmonk subscriber, update their details.
   def update_subscriber(%User{listmonk_id: listmonk_id} = user) when is_integer(listmonk_id) do
     case fetch(:get, "subscribers/#{user.listmonk_id}") do
-      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+      {:ok, %Req.Response{status: 200, body: body}} ->
         subscriber = Poison.decode!(body)["data"]
 
         status =
@@ -143,7 +145,7 @@ defmodule Flirtual.Listmonk do
         }
 
         case fetch(:put, "subscribers/#{user.listmonk_id}", body) do
-          {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+          {:ok, %Req.Response{status: 200, body: body}} ->
             {:ok, Poison.decode!(body)["data"]}
 
           _ ->
@@ -161,7 +163,7 @@ defmodule Flirtual.Listmonk do
 
   def delete_subscriber(%User{listmonk_id: listmonk_id} = user) when is_integer(listmonk_id) do
     case fetch(:delete, "subscribers/#{user.listmonk_id}") do
-      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+      {:ok, %Req.Response{status: 200, body: body}} ->
         {:ok, Poison.decode!(body)["data"]}
 
       _ ->
@@ -182,7 +184,7 @@ defmodule Flirtual.Listmonk do
     }
 
     case fetch(:put, "subscribers/lists", body) do
-      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+      {:ok, %Req.Response{status: 200, body: body}} ->
         {:ok, Poison.decode!(body)["data"]}
 
       _ ->

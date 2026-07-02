@@ -150,7 +150,7 @@ defmodule Flirtual.Conversation do
   end
 
   def get(conversation_id) when is_binary(conversation_id) do
-    with {:ok, %HTTPoison.Response{body: body}} <-
+    with {:ok, %Req.Response{body: body}} <-
            Talkjs.fetch(
              :get,
              "conversations/" <> conversation_id,
@@ -206,7 +206,7 @@ defmodule Flirtual.Conversation do
       }
       |> exclude_nil()
 
-    with {:ok, %HTTPoison.Response{body: body}} <-
+    with {:ok, %Req.Response{body: body}} <-
            Talkjs.fetch(
              :get,
              "users/" <> ShortUUID.decode!(user_id) <> "/conversations",
