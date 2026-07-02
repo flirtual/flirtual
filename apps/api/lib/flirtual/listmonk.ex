@@ -29,7 +29,7 @@ defmodule Flirtual.Listmonk do
         {:error, :not_configured}
 
       {basename, username, password} ->
-        raw_body = if(is_nil(body), do: "", else: Poison.encode!(body))
+        raw_body = if(is_nil(body), do: "", else: Jason.encode!(body))
         query = Keyword.get(options, :query)
 
         url =
@@ -84,7 +84,7 @@ defmodule Flirtual.Listmonk do
 
     case fetch(:post, "subscribers", body) do
       {:ok, %Req.Response{status: 200, body: body}} ->
-        data = Poison.decode!(body)["data"]
+        data = Jason.decode!(body)["data"]
 
         with {:ok, _} <-
                change(user, %{listmonk_id: data["id"]})
@@ -97,7 +97,7 @@ defmodule Flirtual.Listmonk do
                query: [query: "lower(subscribers.email) = lower('#{user.email}')"]
              ) do
           {:ok, %Req.Response{status: 200, body: body}} ->
-            data = Poison.decode!(body)["data"]
+            data = Jason.decode!(body)["data"]
 
             with {:ok, _} <-
                    change(user, %{listmonk_id: hd(data["results"])["id"]})
@@ -127,7 +127,7 @@ defmodule Flirtual.Listmonk do
   def update_subscriber(%User{listmonk_id: listmonk_id} = user) when is_integer(listmonk_id) do
     case fetch(:get, "subscribers/#{user.listmonk_id}") do
       {:ok, %Req.Response{status: 200, body: body}} ->
-        subscriber = Poison.decode!(body)["data"]
+        subscriber = Jason.decode!(body)["data"]
 
         status =
           cond do
@@ -146,7 +146,7 @@ defmodule Flirtual.Listmonk do
 
         case fetch(:put, "subscribers/#{user.listmonk_id}", body) do
           {:ok, %Req.Response{status: 200, body: body}} ->
-            {:ok, Poison.decode!(body)["data"]}
+            {:ok, Jason.decode!(body)["data"]}
 
           _ ->
             :error
@@ -164,7 +164,7 @@ defmodule Flirtual.Listmonk do
   def delete_subscriber(%User{listmonk_id: listmonk_id} = user) when is_integer(listmonk_id) do
     case fetch(:delete, "subscribers/#{user.listmonk_id}") do
       {:ok, %Req.Response{status: 200, body: body}} ->
-        {:ok, Poison.decode!(body)["data"]}
+        {:ok, Jason.decode!(body)["data"]}
 
       _ ->
         :error
@@ -185,7 +185,7 @@ defmodule Flirtual.Listmonk do
 
     case fetch(:put, "subscribers/lists", body) do
       {:ok, %Req.Response{status: 200, body: body}} ->
-        {:ok, Poison.decode!(body)["data"]}
+        {:ok, Jason.decode!(body)["data"]}
 
       _ ->
         :error

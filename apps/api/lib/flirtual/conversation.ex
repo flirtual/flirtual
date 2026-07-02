@@ -156,7 +156,7 @@ defmodule Flirtual.Conversation do
              "conversations/" <> conversation_id,
              nil
            ),
-         {:ok, data} <- Poison.decode(body),
+         {:ok, data} <- Jason.decode(body),
          %{"id" => _} <- data,
          %Conversation{} = conversation <- decode(data) do
       {:ok, conversation}
@@ -213,7 +213,7 @@ defmodule Flirtual.Conversation do
              nil,
              query: query
            ),
-         {:ok, body} <- Poison.decode(body),
+         {:ok, body} <- Jason.decode(body),
          %{"data" => data} when is_list(data) <- body do
       data = data |> decode() |> Enum.reject(&is_nil/1)
 

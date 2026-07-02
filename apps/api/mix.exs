@@ -85,7 +85,6 @@ defmodule Flirtual.MixProject do
       {:opentelemetry_oban, "~> 1.2"},
       {:opentelemetry_finch, "~> 0.2"},
       {:gettext, "~> 0.18"},
-      {:poison, "~> 6.0"},
       {:jason, "~> 1.4"},
       {:joken, "~> 2.5"},
       {:sentry, "~> 13.0"},

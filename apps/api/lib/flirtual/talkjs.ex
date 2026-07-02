@@ -26,7 +26,7 @@ defmodule Flirtual.Talkjs do
       user_id,
       target_user_id
     ])
-    |> Poison.encode!()
+    |> Jason.encode!()
     |> then(&:crypto.hash(:sha, &1))
     |> Base.encode16(case: :lower)
     |> String.slice(0, 20)
@@ -73,7 +73,7 @@ defmodule Flirtual.Talkjs do
   end
 
   def fetch(method, pathname, body \\ nil, options \\ []) do
-    raw_body = if(is_nil(body), do: "", else: Poison.encode!(body))
+    raw_body = if(is_nil(body), do: "", else: Jason.encode!(body))
     url = new_url(pathname, Keyword.get(options, :query))
 
     log(:debug, [method, url], body)
@@ -123,14 +123,14 @@ defmodule Flirtual.Talkjs do
   def batch(operations) do
     case fetch(:post, "batch", operations) do
       {:ok, %Req.Response{status: 200, body: body}} ->
-        {:ok, Poison.decode!(body)}
+        {:ok, Jason.decode!(body)}
     end
   end
 
   def get_user(user_id) do
     case fetch(:get, "users/" <> ShortUUID.decode!(user_id)) do
       {:ok, %Req.Response{status: 200, body: body}} ->
-        {:ok, Poison.decode!(body)}
+        {:ok, Jason.decode!(body)}
 
       {:ok, %Req.Response{status: 404}} ->
         {:error, :not_found}
@@ -252,7 +252,7 @@ defmodule Flirtual.Talkjs do
   def update_user(user_id, params) do
     case fetch(:put, "users/" <> ShortUUID.decode!(user_id), params) do
       {:ok, %Req.Response{status: 200, body: body}} ->
-        {:ok, Poison.decode!(body)}
+        {:ok, Jason.decode!(body)}
 
       {:error, :not_configured} ->
         {:ok, nil}
@@ -265,7 +265,7 @@ defmodule Flirtual.Talkjs do
   def update_conversation(conversation_id, data) do
     case fetch(:put, "conversations/" <> conversation_id, data) do
       {:ok, %Req.Response{status: 200, body: body}} ->
-        {:ok, Poison.decode!(body)}
+        {:ok, Jason.decode!(body)}
 
       {:error, :not_configured} ->
         {:ok, nil}
@@ -286,7 +286,7 @@ defmodule Flirtual.Talkjs do
            end
          ) do
       {:ok, %Req.Response{status: 200, body: body}} ->
-        {:ok, Poison.decode!(body)}
+        {:ok, Jason.decode!(body)}
 
       {:error, :not_configured} ->
         {:ok, nil}
@@ -309,10 +309,10 @@ defmodule Flirtual.Talkjs do
            "conversations/" <> conversation_id <> "/participants/" <> ShortUUID.decode!(user_id)
          ) do
       {:ok, %Req.Response{status: 200, body: body}} ->
-        {:ok, Poison.decode!(body)}
+        {:ok, Jason.decode!(body)}
 
       {:ok, %Req.Response{status: 404, body: body}} ->
-        {:ok, Poison.decode!(body)}
+        {:ok, Jason.decode!(body)}
 
       {:error, :not_configured} ->
         {:ok, nil}
@@ -322,10 +322,10 @@ defmodule Flirtual.Talkjs do
   def delete_conversation(conversation_id) do
     case fetch(:delete, "conversations/" <> conversation_id) do
       {:ok, %Req.Response{status: 200, body: body}} ->
-        {:ok, Poison.decode!(body)}
+        {:ok, Jason.decode!(body)}
 
       {:ok, %Req.Response{status: 404, body: body}} ->
-        {:ok, Poison.decode!(body)}
+        {:ok, Jason.decode!(body)}
 
       {:error, :not_configured} ->
         {:ok, nil}
@@ -335,7 +335,7 @@ defmodule Flirtual.Talkjs do
   def create_messages(conversation_id, messages) do
     case fetch(:post, "conversations/" <> conversation_id <> "/messages", messages) do
       {:ok, %Req.Response{status: 200, body: body}} ->
-        {:ok, Poison.decode!(body)}
+        {:ok, Jason.decode!(body)}
 
       {:error, :not_configured} ->
         {:ok, nil}
@@ -347,7 +347,7 @@ defmodule Flirtual.Talkjs do
            query: options
          ) do
       {:ok, %Req.Response{status: 200, body: body}} ->
-        Poison.decode!(body)["data"]
+        Jason.decode!(body)["data"]
 
       {:error, :not_configured} ->
         []
@@ -368,7 +368,7 @@ defmodule Flirtual.Talkjs do
   def list_messages(conversation_id, options \\ []) do
     case fetch(:get, "conversations/" <> conversation_id <> "/messages", nil, query: options) do
       {:ok, %Req.Response{status: 200, body: body}} ->
-        Poison.decode!(body)["data"]
+        Jason.decode!(body)["data"]
 
       {:error, :not_configured} ->
         []

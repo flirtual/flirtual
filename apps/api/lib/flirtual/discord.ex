@@ -53,7 +53,7 @@ defmodule Flirtual.Discord do
     case Req.request(
            method: :post,
            url: url("webhooks/" <> token <> query),
-           body: Poison.encode!(body),
+           body: Jason.encode!(body),
            headers: [{"content-type", "application/json"}],
            decode_body: false,
            retry: false,
@@ -63,7 +63,7 @@ defmodule Flirtual.Discord do
         :ok
 
       {:ok, %Req.Response{status: 200, body: response_body}} when wait ->
-        case Poison.decode(response_body) do
+        case Jason.decode(response_body) do
           {:ok, %{"id" => message_id, "channel_id" => channel_id}} ->
             {:ok, "https://discord.com/channels/455219574036496404/#{channel_id}/#{message_id}"}
 
@@ -114,7 +114,7 @@ defmodule Flirtual.Discord do
              retry: false,
              finch: Flirtual.Finch
            ),
-         {:ok, body} <- Poison.decode(body),
+         {:ok, body} <- Jason.decode(body),
          %{"access_token" => access_token, "token_type" => token_type} <- body do
       {:ok, "#{token_type} #{access_token}"}
     else
@@ -146,7 +146,7 @@ defmodule Flirtual.Discord do
              retry: false,
              finch: Flirtual.Finch
            ),
-         {:ok, profile} <- Poison.decode(body),
+         {:ok, profile} <- Jason.decode(body),
          %{
            "id" => id,
            "email" => email,
