@@ -16,8 +16,8 @@ defmodule FlirtualWeb.HealthController do
   end
 
   def check("matchmaking") do
-    case Elasticsearch.search(:users, %{size: 1}) do
-      {:ok, %{"hits" => %{"hits" => [_]}}} -> :ok
+    case Snap.Search.search(Elasticsearch, "users", %{size: 1}) do
+      {:ok, %Snap.SearchResponse{hits: %Snap.Hits{hits: [_ | _]}}} -> :ok
       _ -> :error
     end
   end

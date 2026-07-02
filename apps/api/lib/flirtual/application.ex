@@ -84,16 +84,21 @@ defmodule Flirtual.Application do
   end
 
   defp create_elasticsearch_index do
-    if Flirtual.Elasticsearch.index_exists?(:users) do
-      :ok
-    else
-      case Flirtual.Elasticsearch.create_index(:users) do
-        :ok ->
-          Logger.info("Created Elasticsearch 'users' index.")
+    mapping =
+      :flirtual
+      |> Application.app_dir("priv/elasticsearch/users.json")
+      |> File.read!()
+      |> Jason.decode!()
 
-        {:error, reason} ->
-          Logger.warning("Failed to create Elasticsearch 'users' index: #{inspect(reason)}")
-      end
+    case Snap.Indexes.create(Flirtual.Elasticsearch, "users", mapping) do
+      {:ok, _} ->
+        Logger.info("Created Elasticsearch 'users' index.")
+
+      {:error, %Snap.ResponseError{type: "resource_already_exists_exception"}} ->
+        :ok
+
+      {:error, reason} ->
+        Logger.warning("Failed to create Elasticsearch 'users' index: #{inspect(reason)}")
     end
   end
 end

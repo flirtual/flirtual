@@ -52,10 +52,12 @@ defmodule FlirtualWeb.MatchmakingController do
 
     query = Matchmaking.generate_query(user, kind_atom, explain: true)
 
+    index = Snap.Cluster.Namespace.add_namespace_to_index("users", Flirtual.Elasticsearch)
+
     results =
-      case Flirtual.Elasticsearch.search(:users, query) do
+      case Flirtual.Elasticsearch.post("/#{index}/_search", query) do
         {:ok, response} -> response
-        {:error, error} -> %{"error" => error}
+        {:error, error} -> %{"error" => Exception.message(error)}
       end
 
     conn

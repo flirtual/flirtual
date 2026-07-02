@@ -1270,17 +1270,15 @@ defmodule Flirtual.User do
   end
 end
 
-defimpl Elasticsearch.Document, for: Flirtual.User do
+defmodule Flirtual.User.SearchDocument do
   alias Flirtual.Attribute
   import Flirtual.Utilities
   import Ecto.Query
 
+  alias Flirtual.Elasticsearch
   alias Flirtual.User.Profile.LikesAndPasses
   alias Flirtual.User
   alias Flirtual.Repo
-
-  def id(%User{} = user), do: user.id
-  def routing(_), do: false
 
   def encode(%User{} = user) do
     profile = user.profile
@@ -1366,6 +1364,14 @@ defimpl Elasticsearch.Document, for: Flirtual.User do
       )
 
     document
+  end
+
+  def delete_if_exists(id) do
+    case Snap.Document.delete(Elasticsearch, "users", id) do
+      {:ok, _} -> :ok
+      {:error, %Snap.ResponseError{type: "not_found"}} -> :ok
+      error -> error
+    end
   end
 end
 

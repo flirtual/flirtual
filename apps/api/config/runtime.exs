@@ -248,10 +248,9 @@ if prod? do
 
   config :flirtual, Flirtual.Elasticsearch,
     url: Env.get!("ELASTICSEARCH_URL"),
-    index_prefix: Env.get("ELASTICSEARCH_INDEX_PREFIX"),
-    default_headers: [
-      {"authorization", "ApiKey " <> Env.get!("ELASTICSEARCH_ACCESS_TOKEN")}
-    ]
+    index_namespace: Env.get("ELASTICSEARCH_INDEX_PREFIX"),
+    auth: Flirtual.Elasticsearch.Auth,
+    access_token: Env.get!("ELASTICSEARCH_ACCESS_TOKEN")
 
   config :flirtual, Flirtual.Mailer,
     adapter: Swoosh.Adapters.AmazonSES,

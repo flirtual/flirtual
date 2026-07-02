@@ -113,7 +113,7 @@ defmodule FlirtualWeb.UsersController do
     if is_nil(user) or Policy.cannot?(conn, :inspect, user) do
       {:error, {:not_found, :user_not_found, %{user_id: user_id}}}
     else
-      conn |> json_with_etag(Elasticsearch.Document.encode(user))
+      conn |> json_with_etag(Flirtual.User.SearchDocument.encode(user))
     end
   end
 

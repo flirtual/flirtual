@@ -13,7 +13,6 @@ defmodule Flirtual.Users do
   alias Flirtual.{
     Chargebee,
     Discord,
-    Elasticsearch,
     Flag,
     Hash,
     Jwt,
@@ -26,7 +25,7 @@ defmodule Flirtual.Users do
     User
   }
 
-  alias Flirtual.User.{Login, Preferences}
+  alias Flirtual.User.{Login, Preferences, SearchDocument}
 
   def get(id)
       when is_binary(id) do
@@ -492,7 +491,7 @@ defmodule Flirtual.Users do
       with {:ok, attrs} <- Delete.apply(attrs, context: %{user: user}),
            :ok <- Hash.delete(user.id),
            {:ok, user} <- Repo.delete(user),
-           :ok <- Elasticsearch.delete(:users, user.id),
+           :ok <- SearchDocument.delete_if_exists(user.id),
            {:ok, _} <- Talkjs.delete_user(user),
            {:ok, _} <- Listmonk.delete_subscriber(user),
            {:ok, _} <- Chargebee.delete_customer(user),
@@ -515,7 +514,7 @@ defmodule Flirtual.Users do
     Repo.transaction(fn ->
       with :ok <- if(is_nil(user.banned_at), do: Hash.delete(user.id), else: :ok),
            {:ok, user} <- Repo.delete(user),
-           :ok <- Elasticsearch.delete(:users, user.id),
+           :ok <- SearchDocument.delete_if_exists(user.id),
            {:ok, _} <- Talkjs.delete_user(user),
            {:ok, _} <- Listmonk.delete_subscriber(user),
            {:ok, _} <- Chargebee.delete_customer(user),
@@ -532,7 +531,7 @@ defmodule Flirtual.Users do
     Repo.transaction(fn ->
       with :ok <- if(is_nil(user.banned_at), do: Hash.delete(user.id), else: :ok),
            {:ok, user} <- Repo.delete(user),
-           :ok <- Elasticsearch.delete(:users, user.id) do
+           :ok <- SearchDocument.delete_if_exists(user.id) do
         {:ok, user}
       else
         {:error, reason} -> Repo.rollback(reason)
