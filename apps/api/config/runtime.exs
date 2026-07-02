@@ -106,7 +106,10 @@ unless local_uploads? do
   config :ex_aws,
     access_key_id: Env.get!("R2_ACCESS_KEY_ID", always?: true),
     secret_access_key: Env.get!("R2_SECRET_ACCESS_KEY", always?: true),
-    s3: [host: Env.get!("R2_HOSTNAME"), region: "auto"]
+    s3: [host: Env.get!("R2_HOSTNAME"), region: "auto"],
+    http_client: ExAws.Request.Req
+
+  config :ex_aws, :req_opts, finch: Flirtual.Finch, receive_timeout: 30_000
 end
 
 discord_client_id = Env.get("DISCORD_CLIENT_ID")

@@ -73,6 +73,7 @@ defmodule Flirtual.MixProject do
       {:telepoison, "~> 2.0"},
       {:tls_certificate_check, "~> 1.20"},
       {:finch, "~> 0.21"},
+      {:req, "~> 0.6"},
       {:telemetry_metrics, "~> 1.0"},
       {:telemetry_poller, "~> 1.0"},
       {:opentelemetry, "~> 1.7"},
