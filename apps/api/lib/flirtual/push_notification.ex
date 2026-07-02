@@ -1,6 +1,8 @@
 defmodule Flirtual.PushNotification do
   use Flirtual.Logger, :pushnotification
 
+  require OpenTelemetry.Tracer, as: Tracer
+
   alias Flirtual.{APNS, FCM, User}
   alias Pigeon.APNS.Notification, as: APNSNotification
   alias Pigeon.FCM.Notification, as: FCMNotification
@@ -22,10 +24,23 @@ defmodule Flirtual.PushNotification do
   defp handle_response(%FCMNotification{response: error}, _, _),
     do: log(:error, [:fcm], error)
 
+  defp finish_span(span, response) do
+    OpenTelemetry.Span.set_attribute(span, :"messaging.response", to_string(response))
+
+    unless response == :success do
+      OpenTelemetry.Span.set_status(span, OpenTelemetry.status(:error, to_string(response)))
+    end
+
+    OpenTelemetry.Span.end_span(span)
+  end
+
   def send(user, title, message, url) do
     {:ok, user} = User.increment_push_count(user)
 
     Enum.each(user.apns_tokens, fn token ->
+      span =
+        Tracer.start_span("push apns", %{kind: :client, attributes: %{"messaging.system": "apns"}})
+
       APNS.push(
         %APNSNotification{
           device_token: token,
@@ -42,11 +57,17 @@ defmodule Flirtual.PushNotification do
           },
           topic: Application.fetch_env!(:flirtual, Flirtual.APNS)[:topic]
         },
-        on_response: fn notification -> handle_response(notification, user, token) end
+        on_response: fn notification ->
+          finish_span(span, notification.response)
+          handle_response(notification, user, token)
+        end
       )
     end)
 
     Enum.each(user.fcm_tokens, fn token ->
+      span =
+        Tracer.start_span("push fcm", %{kind: :client, attributes: %{"messaging.system": "fcm"}})
+
       FCM.push(
         FCMNotification.new(
           {:token, token},
@@ -58,7 +79,10 @@ defmodule Flirtual.PushNotification do
             "url" => url
           }
         ),
-        on_response: fn notification -> handle_response(notification, user, token) end
+        on_response: fn notification ->
+          finish_span(span, notification.response)
+          handle_response(notification, user, token)
+        end
       )
     end)
 
