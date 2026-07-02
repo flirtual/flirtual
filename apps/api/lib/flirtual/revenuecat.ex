@@ -14,7 +14,7 @@ defmodule Flirtual.RevenueCat do
   end
 
   def fetch(method, pathname, body \\ nil, options \\ [], key \\ :private, platform \\ nil) do
-    raw_body = if(is_nil(body), do: "", else: Poison.encode!(body))
+    raw_body = if(is_nil(body), do: "", else: Jason.encode!(body))
     url = new_url(pathname, Keyword.get(options, :query))
 
     headers = [
@@ -176,7 +176,7 @@ defmodule Flirtual.RevenueCat do
     with {:ok, %Req.Response{status: 200, body: body}} <-
            fetch(:get, "subscribers/#{URI.encode_www_form(app_user_id)}"),
          {:ok, %{"subscriber" => %{"original_app_user_id" => original_id}}}
-         when is_binary(original_id) <- Poison.decode(body),
+         when is_binary(original_id) <- Jason.decode(body),
          false <- anonymous_id?(original_id) do
       safe_user_lookup(original_id)
     else

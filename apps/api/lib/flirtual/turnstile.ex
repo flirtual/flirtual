@@ -25,7 +25,7 @@ defmodule Flirtual.Turnstile do
              retry: false,
              finch: Flirtual.Finch
            ),
-         {:ok, body} <- Poison.decode(response.body) do
+         {:ok, body} <- Jason.decode(response.body) do
       body
     else
       _ ->

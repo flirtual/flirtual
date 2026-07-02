@@ -59,13 +59,13 @@ defmodule Flirtual.Apple do
              retry: false,
              finch: Flirtual.Finch
            ),
-         {:ok, %{"id_token" => id_token} = response} <- Poison.decode(body) do
+         {:ok, %{"id_token" => id_token} = response} <- Jason.decode(body) do
       {:ok, %{id_token: id_token, access_token: response["access_token"]}}
     else
       {:ok, %Req.Response{body: body}} ->
         log(:error, [:exchange_code], body)
 
-        case Poison.decode(body) do
+        case Jason.decode(body) do
           {:ok, %{"error" => "invalid_grant"}} -> {:error, :invalid_grant}
           _ -> {:error, :upstream}
         end
@@ -188,7 +188,7 @@ defmodule Flirtual.Apple do
     case String.split(token, ".") do
       [header_b64 | _] ->
         with {:ok, header_json} <- Base.url_decode64(header_b64, padding: false),
-             {:ok, header} <- Poison.decode(header_json) do
+             {:ok, header} <- Jason.decode(header_json) do
           {:ok, header}
         else
           _ -> {:error, :invalid_token_format}
@@ -221,7 +221,7 @@ defmodule Flirtual.Apple do
              retry: false,
              finch: Flirtual.Finch
            ),
-         {:ok, %{"keys" => keys}} <- Poison.decode(body) do
+         {:ok, %{"keys" => keys}} <- Jason.decode(body) do
       expiry = System.system_time(:millisecond) + @keys_cache_ttl
       :persistent_term.put(cache_key, {keys, expiry})
       {:ok, keys}
