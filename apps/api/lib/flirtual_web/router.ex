@@ -226,7 +226,7 @@ defmodule FlirtualWeb.Router do
         scope "/translate" do
           pipe_through([:require_authenticated_user])
 
-          post("/", OpenAIController, :translate)
+          post("/", LLMController, :translate)
         end
 
         scope "/vrchat" do

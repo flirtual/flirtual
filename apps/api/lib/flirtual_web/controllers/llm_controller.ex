@@ -1,7 +1,7 @@
-defmodule FlirtualWeb.OpenAIController do
+defmodule FlirtualWeb.LLMController do
   use FlirtualWeb, :controller
 
-  alias Flirtual.OpenAI
+  alias Flirtual.LLM
 
   def translate(conn, %{"language" => language, "text" => text}) do
     user = conn.assigns[:session].user
@@ -9,7 +9,7 @@ defmodule FlirtualWeb.OpenAIController do
     if :moderator not in user.tags do
       {:error, {:forbidden, :missing_permission}}
     else
-      {:ok, text} = OpenAI.translate(language, text)
+      {:ok, text} = LLM.translate(language, text)
 
       conn
       |> put_status(:ok)
