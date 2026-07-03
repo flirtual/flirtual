@@ -1,6 +1,7 @@
 defmodule Flirtual.User.Profile.Image.Moderation do
   use Flirtual.Logger, :image_moderation
 
+  import Bitwise
   import Ecto.Query
   import Ecto.Changeset
 
@@ -91,7 +92,12 @@ defmodule Flirtual.User.Profile.Image.Moderation do
     |> Repo.all()
   end
 
-  def classify_image(%Image{} = image, classifications) do
+  # Max Hamming distance (out of 64) for duplicate image flags and
+  # image search.
+  @duplicate_threshold 12
+  @search_threshold 12
+
+  def classify_image(%Image{} = image, classifications, hashes \\ nil) do
     type = classify_flag?(classifications)
     safe = type == :safe
 
@@ -111,12 +117,144 @@ defmodule Flirtual.User.Profile.Image.Moderation do
       end
     end
 
-    image
-    |> change(%{scanned: true, failed: false})
-    |> Repo.update()
+    hashes = hashes || %{}
+    hash = Image.hash_to_integer(hashes["hash"])
+    flipped = Image.hash_to_integer(hashes["flipped"])
+
+    attrs = %{scanned: true, failed: false}
+    attrs = if is_integer(hash), do: Map.put(attrs, :hash, hash), else: attrs
+
+    result =
+      image
+      |> change(attrs)
+      |> Repo.update()
+
+    with {:ok, %Image{} = updated} <- result do
+      check_duplicate(updated, flipped)
+    end
+
+    result
   end
 
-  def update_scan_queue(%{"success" => success, "failed" => failed}) do
+  def check_duplicate(%Image{hash: hash, profile_id: profile_id} = image, flipped)
+      when is_integer(hash) and not is_nil(profile_id) do
+    query_hashes = [hash, flipped] |> Enum.filter(&is_integer/1) |> Enum.uniq()
+
+    matches =
+      query_hashes
+      |> find_similar_images(@duplicate_threshold)
+      |> Enum.reject(&(&1.profile_id == profile_id))
+
+    case matches do
+      [] ->
+        :ok
+
+      matches ->
+        distance = matches |> Enum.map(&variant_distance(query_hashes, &1)) |> Enum.min()
+
+        with %User{} = user <- User.get(profile_id) do
+          Discord.deliver_webhook(:duplicate_image,
+            user: user,
+            image: image,
+            duplicates: duplicate_profiles(matches),
+            distance: distance
+          )
+        end
+
+        :ok
+    end
+  end
+
+  def check_duplicate(_, _), do: :ok
+
+  # Closest distance between image hash and any query hash.
+  defp variant_distance(query_hashes, %Image{hash: hash}) do
+    query_hashes |> Enum.map(&hamming_distance(&1, hash)) |> Enum.min()
+  end
+
+  # Hamming distance between two 64-bit perceptual hashes (as signed ints).
+  defp hamming_distance(a, b) do
+    bits = a |> bxor(b) |> band(0xFFFFFFFFFFFFFFFF)
+
+    for <<(bit::1 <- <<bits::64>>)>>, reduce: 0 do
+      acc -> acc + bit
+    end
+  end
+
+  # Profiles with a matching image, grouped and ordered by closeness, excluding
+  # the source image.
+  def search_similar(query_hashes, exclude_id \\ nil) when is_list(query_hashes) do
+    query_hashes
+    |> find_similar_images(@search_threshold)
+    |> Enum.reject(&(&1.id == exclude_id or is_nil(&1.profile_id)))
+    |> Enum.group_by(& &1.profile_id)
+    |> Enum.map(fn {profile_id, images} ->
+      {profile_id, images, images |> Enum.map(&variant_distance(query_hashes, &1)) |> Enum.min()}
+    end)
+    |> Enum.sort_by(fn {_, _, distance} -> distance end)
+    |> Enum.map(fn {profile_id, images, _} -> {profile_id, images} end)
+  end
+
+  # Images within `threshold` Hamming distance of any query hash.
+  def find_similar_images(query_hashes, threshold) when is_list(query_hashes) do
+    condition =
+      Enum.reduce(query_hashes, dynamic(false), fn hash, acc ->
+        dynamic(
+          [image],
+          ^acc or fragment("bit_count((? # ?)::bit(64)) <= ?", image.hash, ^hash, ^threshold)
+        )
+      end)
+
+    Image
+    |> where([image], not is_nil(image.hash))
+    |> where(^condition)
+    |> Repo.all()
+  end
+
+  # Render list of profiles with matched images.
+  defp duplicate_profiles(matches) do
+    {named, anonymous} =
+      Enum.split_with(matches, fn
+        %Image{profile_id: id} when not is_nil(id) -> true
+        %Image{suspended_url: url} when not is_nil(url) -> true
+        _ -> false
+      end)
+
+    named =
+      named
+      |> Enum.map(fn
+        %Image{profile_id: id} when not is_nil(id) -> {:user, id}
+        %Image{suspended_url: url} -> {:banned, url}
+      end)
+      |> Enum.uniq()
+      |> Enum.map(fn
+        {:user, id} ->
+          case User.get(id) do
+            %User{} = user ->
+              Discord.md_display_name(user)
+
+            _ ->
+              url = Application.fetch_env!(:flirtual, :frontend_origin) |> URI.merge("/#{id}")
+              "[#{id}](#{url})"
+          end
+
+        {:banned, url} ->
+          "[Banned user](#{url})"
+      end)
+
+    anonymous =
+      case length(anonymous) do
+        0 -> []
+        1 -> ["Banned user (not found)"]
+        n -> ["#{n}x Banned user (not found)"]
+      end
+
+    Enum.join(named ++ anonymous, "\n")
+  end
+
+  def update_scan_queue(%{"success" => success, "failed" => failed} = data) do
+    hashes = Map.get(data, "hashes", %{})
+
     Repo.transaction(fn ->
       success
       |> Map.to_list()
@@ -124,7 +262,7 @@ defmodule Flirtual.User.Profile.Image.Moderation do
         Image.get(id)
         |> case do
           %Image{} = image ->
-            classify_image(image, classifications)
+            classify_image(image, classifications, Map.get(hashes, id))
 
           _ ->
             nil

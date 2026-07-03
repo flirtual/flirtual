@@ -1,5 +1,6 @@
 import { accessToken } from "../consts";
 import { Classification } from "../classifiers";
+import { ImageHashes } from "../hash";
 
 import { url } from ".";
 
@@ -17,6 +18,7 @@ export const list = (options: { size: number }) =>
 
 export interface UpdateScanQueue {
 	success: Record<string, Classification>;
+	hashes: Record<string, ImageHashes>;
 	failed: Array<string>;
 }
 

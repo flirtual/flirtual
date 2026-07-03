@@ -64,6 +64,14 @@ defmodule Flirtual.Hash do
     :ok
   end
 
+  def get_suspended_url(user_id) when is_binary(user_id) do
+    Hash
+    |> where([hash], hash.user_id == ^user_id and not is_nil(hash.suspended_url))
+    |> limit(1)
+    |> select([hash], hash.suspended_url)
+    |> Repo.one()
+  end
+
   def delete(user_id) when is_binary(user_id) do
     case Hash |> where(user_id: ^user_id) |> Repo.delete_all() do
       {_, nil} -> :ok

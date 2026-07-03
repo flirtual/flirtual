@@ -20,11 +20,13 @@ defmodule Flirtual.User.Profile.Image do
     field(:blur_id, :string)
     field(:scanned, :boolean, default: false)
     field(:failed, :boolean, default: false)
+    field(:hash, :integer)
     field(:order, :integer)
     field(:author_id, :string)
     field(:author_name, :string)
     field(:world_id, :string)
     field(:world_name, :string)
+    field(:suspended_url, :string)
 
     timestamps()
   end
@@ -38,6 +40,7 @@ defmodule Flirtual.User.Profile.Image do
       :blur_id,
       :scanned,
       :failed,
+      :hash,
       :order,
       :author_id,
       :author_name,
@@ -112,8 +115,91 @@ defmodule Flirtual.User.Profile.Image do
 
   def get(_), do: nil
 
+  @uint64_max 0x1_0000_0000_0000_0000
+  @int64_max 0x8000_0000_0000_0000
+
+  # Convert 64-character perceptual hash binary string into a signed 64-bit
+  # integer for storage, or nil if malformed.
+  def hash_to_integer(hash) when is_binary(hash) do
+    if hash =~ ~r/^[01]{64}$/ do
+      case String.to_integer(hash, 2) do
+        value when value >= @int64_max -> value - @uint64_max
+        value -> value
+      end
+    end
+  end
+
+  def hash_to_integer(_), do: nil
+
   def delete(%Image{} = image) do
+    delete_objects(image)
     Repo.delete(image)
+  end
+
+  # external_id variants
+  # (blur uses blur_id)
+  @content_variants ~w(full profile thumb icon)
+
+  def delete_objects(%Image{} = image) do
+    uploads_keys = if is_binary(image.original_file), do: [image.original_file], else: []
+
+    content_keys =
+      if(is_binary(image.external_id),
+        do: Enum.map(@content_variants, &"#{image.external_id}/#{&1}"),
+        else: []
+      ) ++ if(is_binary(image.blur_id), do: ["#{image.blur_id}/blur"], else: [])
+
+    if Application.get_env(:flirtual, :local_uploads?) do
+      dir = Application.fetch_env!(:flirtual, :local_uploads_dir)
+      Enum.each(uploads_keys ++ content_keys, &File.rm(Path.join(dir, &1)))
+    else
+      keys =
+        Enum.map(uploads_keys, &{uploads_bucket(), &1}) ++
+          Enum.map(content_keys, &{content_bucket(), &1})
+
+      Enum.each(keys, fn {bucket, key} ->
+        ExAws.S3.delete_object(bucket, key) |> ExAws.request()
+      end)
+    end
+
+    :ok
+  end
+
+  defp uploads_bucket,
+    do: if(Application.get_env(:flirtual, :canary?), do: "pfpup-canary", else: "pfpup")
+
+  defp content_bucket,
+    do: if(Application.get_env(:flirtual, :canary?), do: "pfp-canary", else: "pfp")
+
+  def delete_user_objects(user_id) when is_binary(user_id) do
+    Image
+    |> where(profile_id: ^user_id)
+    |> Repo.all()
+    |> Enum.each(&delete_objects/1)
+
+    :ok
+  end
+
+  # Detach image from profile before pruning and reduce to hash for duplicate
+  # flagging.
+  def retain_user_hashes(user_id, suspended_url) when is_binary(user_id) do
+    Image
+    |> where([image], image.profile_id == ^user_id and not is_nil(image.hash))
+    |> Repo.update_all(
+      set: [
+        profile_id: nil,
+        order: nil,
+        external_id: nil,
+        blur_id: nil,
+        author_id: nil,
+        author_name: nil,
+        world_id: nil,
+        world_name: nil,
+        suspended_url: suspended_url
+      ]
+    )
+
+    :ok
   end
 
   def update_variants(original_file, external_id, blur_id) do

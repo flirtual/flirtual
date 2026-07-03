@@ -6,6 +6,8 @@ import * as scanQueue from "./api/scan-queue";
 import { download } from "./api/images";
 import { classify } from "./classifiers";
 import { temporaryDirectory } from "./consts";
+import { imageHashes } from "./hash";
+import { startServer } from "./server";
 import { log } from "./log";
 
 const execute = async (size: number) => {
@@ -39,7 +41,7 @@ const execute = async (size: number) => {
 		);
 
 		const scannableImages = downloadedImages.filter(
-			([, downloaded]) => downloaded
+			(entry): entry is readonly [(typeof entry)[0], string] => Boolean(entry[1])
 		);
 
 		if (scannableImages.length === 0) {
@@ -57,6 +59,22 @@ const execute = async (size: number) => {
 			scannableImages.map(([image]) => image)
 		);
 
+		// Hashing failure is non-fatal.
+		const hashes = Object.fromEntries(
+			(
+				await Promise.all(
+					scannableImages.map(async ([image, file]) => {
+						const variants = await imageHashes(file);
+						if (!variants.hash) {
+							log.warn({ groupFile, imageId: image.id }, "Hashing failed.");
+							return null;
+						}
+						return [image.id, variants] as const;
+					})
+				)
+			).filter((entry): entry is NonNullable<typeof entry> => entry !== null)
+		);
+
 		const failed = downloadedImages
 			.filter(([, downloaded]) => !downloaded)
 			.map(([{ id }]) => id);
@@ -67,6 +85,7 @@ const execute = async (size: number) => {
 
 		await scanQueue.update({
 			failed,
+			hashes,
 			success: Object.fromEntries(map.entries())
 		});
 
@@ -87,6 +106,8 @@ const execute = async (size: number) => {
 		process.exit(0);
 	})
 );
+
+startServer();
 
 const size = 100;
 void execute(size);

@@ -3,12 +3,54 @@ defmodule FlirtualWeb.ImageController do
 
   import FlirtualWeb.Utilities
 
-  alias Flirtual.{Discord, ObanWorkers, Policy, User}
+  alias Flirtual.{Discord, ImageClassification, ObanWorkers, Policy, User}
   alias Flirtual.User.Profile.Image
   alias Flirtual.User.Profile.Image.Moderation
   alias Ecto.UUID
 
   action_fallback(FlirtualWeb.FallbackController)
+
+  @ten_megabytes 10_000_000
+
+  # Profiles with an image matching the uploaded image.
+  def search(conn, _params) do
+    if Policy.cannot?(conn, :search, conn.assigns[:session].user) do
+      {:error, {:forbidden, :missing_permission}}
+    else
+      with {:ok, body, conn} <- read_body(conn, length: @ten_megabytes),
+           true <- byte_size(body) > 0,
+           {:ok, {hash, flipped}} <- ImageClassification.hash(body) do
+        hashes =
+          [hash, flipped] |> Enum.map(&Image.hash_to_integer/1) |> Enum.filter(&is_integer/1)
+
+        conn |> json(render_matches(hashes))
+      else
+        false -> {:error, {:bad_request, :empty_body}}
+        {:more, _, _conn} -> {:error, {:bad_request, :image_too_large}}
+        {:error, _} -> {:error, {:unprocessable_entity, :hash_failed}}
+      end
+    end
+  end
+
+  # Profiles with an image matching an existing image's hash.
+  def similar(conn, %{"image_id" => image_id}) do
+    if Policy.cannot?(conn, :search, conn.assigns[:session].user) do
+      {:error, {:forbidden, :missing_permission}}
+    else
+      with %Image{hash: hash} = image when is_integer(hash) <- Image.get(image_id) do
+        conn |> json(render_matches([hash], image.id))
+      else
+        %Image{} -> conn |> json([])
+        nil -> {:error, {:not_found, :image_not_found, %{image_id: image_id}}}
+      end
+    end
+  end
+
+  defp render_matches(hashes, exclude_id \\ nil) do
+    hashes
+    |> Moderation.search_similar(exclude_id)
+    |> Enum.map(fn {user_id, images} -> %{user_id: user_id, images: images} end)
+  end
 
   def get(conn, %{"image_id" => image_id}) do
     with %Image{} = image <- Image.get(image_id),

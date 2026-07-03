@@ -357,7 +357,7 @@
 	"discord_verified": "Discord verificado",
 	"pipe_land_teeny_hypnotic": "Você {status, select, liked {curtiu} homied {amigou} other {passou}} {displayName}.",
 	"mint_colossal_kettle_sense": "{displayName} {status, select, liked {curtiu} other {amigou}} você.",
-	"search_image": "Buscar Imagem",
+	"search_image_external": "Buscar Imagem",
 	"edit": "Editar",
 	"home_watery_koala_stop": "Compartilhar link do seu perfil",
 	"odd_mad_dog_nurture": "Atualizar link do perfil",

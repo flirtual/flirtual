@@ -26,6 +26,7 @@ defmodule Flirtual.Users do
   }
 
   alias Flirtual.User.{Login, Preferences, SearchDocument}
+  alias Flirtual.User.Profile.Image
 
   def get(id)
       when is_binary(id) do
@@ -490,6 +491,7 @@ defmodule Flirtual.Users do
     Repo.transaction(fn ->
       with {:ok, attrs} <- Delete.apply(attrs, context: %{user: user}),
            :ok <- Hash.delete(user.id),
+           :ok <- Image.delete_user_objects(user.id),
            {:ok, user} <- Repo.delete(user),
            :ok <- SearchDocument.delete_if_exists(user.id),
            {:ok, _} <- Talkjs.delete_user(user),
@@ -513,6 +515,12 @@ defmodule Flirtual.Users do
   def admin_delete(%User{} = user) do
     Repo.transaction(fn ->
       with :ok <- if(is_nil(user.banned_at), do: Hash.delete(user.id), else: :ok),
+           :ok <- Image.delete_user_objects(user.id),
+           :ok <-
+             if(is_nil(user.banned_at),
+               do: :ok,
+               else: Image.retain_user_hashes(user.id, Hash.get_suspended_url(user.id))
+             ),
            {:ok, user} <- Repo.delete(user),
            :ok <- SearchDocument.delete_if_exists(user.id),
            {:ok, _} <- Talkjs.delete_user(user),

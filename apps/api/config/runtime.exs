@@ -67,13 +67,15 @@ origin = URI.parse(Env.get!("ORIGIN", default: "https://#{hostname}:4001"))
 frontend_origin = Env.get!("FRONTEND_ORIGIN", default: "https://#{hostname}:3000")
 content_origin = Env.get("BUCKET_CONTENT_ORIGIN")
 uploads_origin = Env.get("BUCKET_UPLOADS_ORIGIN")
+image_classification_origin = Env.get("IMAGE_CLASSIFICATION_ORIGIN")
 
 config :flirtual,
   origin: origin,
   frontend_origin: URI.parse(frontend_origin),
   cookie_origin: URI.parse(Env.get("ROOT_ORIGIN", default: frontend_origin)),
   content_origin: content_origin && URI.parse(content_origin),
-  uploads_origin: uploads_origin && URI.parse(uploads_origin)
+  uploads_origin: uploads_origin && URI.parse(uploads_origin),
+  image_classification_origin: image_classification_origin
 
 config :flirtual, FlirtualWeb.Endpoint,
   secret_key_base:

@@ -7,8 +7,8 @@ import {
 	useReactTable
 } from "@tanstack/react-table";
 import type { ColumnDef } from "@tanstack/react-table";
-import { Eye, EyeOff, Gavel, Gem, Loader2, Search, ShieldEllipsis } from "lucide-react";
-import { Suspense, useDeferredValue, useEffect, useState } from "react";
+import { Eye, EyeOff, Gavel, Gem, Images, Loader2, Search, ShieldEllipsis } from "lucide-react";
+import { Suspense, useDeferredValue, useEffect, useRef, useState } from "react";
 import type { FC } from "react";
 import { useSearchParams } from "react-router";
 import { capitalize } from "remeda";
@@ -28,6 +28,7 @@ import { DateTimeRelative } from "~/components/datetime-relative";
 import { InputSelect, InputSwitch, InputText } from "~/components/inputs";
 import { Link } from "~/components/link";
 import { ModelCard } from "~/components/model-card";
+import { SearchImageDialog } from "~/components/profile/dialogs/search-image";
 import { ProfileDropdown } from "~/components/profile/dropdown";
 import {
 	Table,
@@ -45,6 +46,7 @@ import {
 	TooltipTrigger
 } from "~/components/tooltip";
 import { UserThumbnail } from "~/components/user-avatar";
+import { useDialog } from "~/hooks/use-dialog";
 import { useSession } from "~/hooks/use-session";
 import { useUser } from "~/hooks/use-user";
 import { useQuery } from "~/query";
@@ -339,6 +341,18 @@ export const SearchView: React.FC = () => {
 
 	const deferredOptions = useDeferredValue(searchOptions);
 
+	const dialogs = useDialog();
+	const fileInputReference = useRef<HTMLInputElement>(null);
+
+	// Upload an image and show perceptually-matching profiles in a dialog.
+	const onImageChange = (file: File) => {
+		const dialog = (
+			<SearchImageDialog source={{ file }} onClose={() => dialogs.remove(dialog)} />
+		);
+		dialogs.add(dialog);
+		if (fileInputReference.current) fileInputReference.current.value = "";
+	};
+
 	const [page, setPage] = useState(1);
 	const deferredPage = useDeferredValue(page);
 
@@ -377,8 +391,8 @@ export const SearchView: React.FC = () => {
 				<div className="grid gap-4 wide:grid-cols-2">
 					<div className="flex flex-col gap-2">
 						<span>Filter</span>
-						<div className="grid grid-cols-3 gap-2">
-							<div className="col-span-3">
+						<div className="grid grid-cols-2 gap-2">
+							<div className="col-span-2">
 								<InputText
 									autoFocus
 									Icon={Search}
@@ -428,17 +442,35 @@ export const SearchView: React.FC = () => {
 										tags: [value as UserTags]
 									})}
 							/>
+							<input
+								accept="image/*"
+								className="hidden"
+								ref={fileInputReference}
+								type="file"
+								onChange={({ currentTarget }) => {
+									if (currentTarget.files?.[0]) void onImageChange(currentTarget.files[0]);
+								}}
+							/>
+							<Button
+								className="col-span-2"
+								Icon={Images}
+								size="sm"
+								onClick={() => fileInputReference.current?.click()}
+							>
+								Search by image
+							</Button>
 						</div>
 					</div>
 					<div className="flex flex-col gap-2">
 						<span>Sort</span>
-						<div className="flex items-center gap-2">
+						<div className="flex items-center gap-2 desktop:flex-col desktop:items-stretch">
 							<InputSelect
 								options={searchSortKeys.map((sort) => ({
 									name: sort.split("_").map((value) => capitalize(value)).join(" "),
 									id: sort,
 									disabled: sort === "similarity" && searchOptions.search === ""
 								}))}
+								className="grow"
 								value={searchOptions.sort}
 								onChange={(value) =>
 									setSearchOptions({
@@ -447,6 +479,7 @@ export const SearchView: React.FC = () => {
 									})}
 							/>
 							<InputSwitch
+								className="desktop:w-full"
 								no="Ascending"
 								value={searchOptions.order === "desc"}
 								yes="Descending"

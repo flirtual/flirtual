@@ -1,4 +1,4 @@
-import { ChevronLeft, ChevronRight, ScanSearch, Search, Trash2 } from "lucide-react";
+import { ChevronLeft, ChevronRight, Images, ScanSearch, Search, Trash2 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import type React from "react";
 import { Trans, useTranslation } from "react-i18next";
@@ -20,6 +20,7 @@ import { VRChatIcon } from "../icons";
 import { InlineLink } from "../inline-link";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
 import { UserImage } from "../user-avatar";
+import { SearchImageDialog } from "./dialogs/search-image";
 import { SearchWorldDialog } from "./dialogs/search-world";
 
 export interface ProfileImageDisplayProps {
@@ -89,6 +90,7 @@ const SingleImage: React.FC<SingleImageProps> = (props) => {
 const ImageToolbar: React.FC<{ image: ProfileImage; user: User }> = ({ image, user }) => {
 	const { t } = useTranslation();
 	const [locale] = useLocale();
+	const dialogs = useDialog();
 
 	const toasts = useToast();
 
@@ -133,12 +135,31 @@ const ImageToolbar: React.FC<{ image: ProfileImage; user: User }> = ({ image, us
 					<TooltipTrigger asChild>
 						<button
 							type="button"
+							onClick={() => {
+								const dialog = (
+									<SearchImageDialog
+										source={{ imageId: image.id }}
+										onClose={() => dialogs.remove(dialog)}
+									/>
+								);
+								dialogs.add(dialog);
+							}}
+						>
+							<Images className="size-5" strokeWidth={2} />
+						</button>
+					</TooltipTrigger>
+					<TooltipContent>{t("search_image_internal")}</TooltipContent>
+				</Tooltip>
+				<Tooltip>
+					<TooltipTrigger asChild>
+						<button
+							type="button"
 							onClick={() => reverseSearch(urls.image(image, "full"))}
 						>
 							<Search className="size-5" strokeWidth={2} />
 						</button>
 					</TooltipTrigger>
-					<TooltipContent>{t("search_image")}</TooltipContent>
+					<TooltipContent>{t("search_image_external")}</TooltipContent>
 				</Tooltip>
 				<Tooltip>
 					<TooltipTrigger asChild>

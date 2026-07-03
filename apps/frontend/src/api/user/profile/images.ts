@@ -56,5 +56,16 @@ export const ProfileImage = {
 			.url(`worlds/${encodeURIComponent(worldId)}/profiles`)
 			.get()
 			.json<Array<WorldProfileItem>>();
+	},
+	searchByImage(file: File) {
+		return api
+			.url("images/search")
+			.headers({ "content-type": file.type || "application/octet-stream" })
+			.body(file)
+			.post()
+			.json<Array<WorldProfileItem>>();
+	},
+	searchSimilar(imageId: string) {
+		return api.url(`images/${imageId}/similar`).get().json<Array<WorldProfileItem>>();
 	}
 };
