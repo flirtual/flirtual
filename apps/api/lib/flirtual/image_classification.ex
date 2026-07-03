@@ -16,7 +16,7 @@ defmodule Flirtual.ImageClassification do
              receive_timeout: 15_000,
              decode_body: false,
              retry: false,
-             finch: Flirtual.Finch
+             finch: Flirtual.FinchInternal
            ),
          {:ok, %{"hash" => hash} = hashes} when is_binary(hash) <- Jason.decode(body) do
       {:ok, {hash, hashes["flipped"]}}
