@@ -694,15 +694,12 @@ defmodule Flirtual.User do
            {:ok, _} <- ObanWorkers.update_user(user.id, [:elasticsearch, :listmonk, :talkjs]),
            {_, _} <- Session.delete(user_id: user.id),
            User.Email.deliver(user, :suspended, message) do
-        case Discord.deliver_webhook(:suspended,
-               user: user,
-               moderator: moderator,
-               reason: reason,
-               message: message
-             ) do
-          {:ok, url} -> Hash.add_suspended_url(user.id, url)
-          _ -> :ok
-        end
+        Discord.deliver_webhook(:suspended,
+          user: user,
+          moderator: moderator,
+          reason: reason,
+          message: message
+        )
 
         user
       else
