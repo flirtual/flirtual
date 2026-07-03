@@ -94,8 +94,8 @@ defmodule Flirtual.User.Profile.Image.Moderation do
 
   # Max Hamming distance (out of 64) for duplicate image flags and
   # image search.
-  @duplicate_threshold 12
-  @search_threshold 12
+  @duplicate_threshold 4
+  @search_threshold 6
 
   def classify_image(%Image{} = image, classifications, hashes \\ nil) do
     type = classify_flag?(classifications)
