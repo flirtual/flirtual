@@ -343,6 +343,7 @@ export const SearchView: React.FC = () => {
 
 	const dialogs = useDialog();
 	const fileInputReference = useRef<HTMLInputElement>(null);
+	const [dragging, setDragging] = useState(false);
 
 	// Upload an image and show perceptually-matching profiles in a dialog.
 	const onImageChange = (file: File) => {
@@ -383,9 +384,23 @@ export const SearchView: React.FC = () => {
 	return (
 		<ModelCard
 			data-block
-			className="desktop:max-w-7xl"
+			className={twMerge("desktop:max-w-7xl", dragging && "opacity-50")}
 			containerProps={{ className: "gap-8 min-h-screen" }}
 			title="Search"
+			onDragLeave={() => setDragging(false)}
+			onDragOver={(event) => {
+				event.preventDefault();
+				setDragging(true);
+			}}
+			onDrop={(event) => {
+				event.preventDefault();
+				setDragging(false);
+
+				const file = [...event.dataTransfer.files].find((file) =>
+					file.type.startsWith("image/")
+				);
+				if (file) onImageChange(file);
+			}}
 		>
 			<div className="flex flex-col gap-4">
 				<div className="grid gap-4 wide:grid-cols-2">
