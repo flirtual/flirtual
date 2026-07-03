@@ -60,7 +60,12 @@ defmodule Flirtual.Discord do
     end
   end
 
-  def send_webhook(name, body, opts \\ []) when is_atom(name) do
+  def send_webhook(name, body, opts \\ [])
+
+  def send_webhook(name, body, opts) when is_binary(name),
+    do: send_webhook(String.to_existing_atom(name), body, opts)
+
+  def send_webhook(name, body, opts) when is_atom(name) do
     case webhook_token(name) do
       token when token in [nil, ""] -> :ok
       token -> deliver_webhook(name, body, token, opts)
@@ -828,17 +833,21 @@ defmodule Flirtual.Discord do
   def deliver_webhook(:duplicate_image,
         user: %User{} = user,
         image: %Image{} = image,
+        matches: matches,
         duplicates: duplicates,
         distance: distance
-      ) do
+      )
+      when is_list(matches) do
     color = if distance == 0, do: @destructive_color, else: @warn_color
     image_url = Image.url(image)
+    user_url = User.url(user) |> URI.to_string()
 
     webhook(:moderation_duplicates, %{
       embeds: [
         %{
           author: webhook_author(user),
           title: "Potential duplicate image",
+          url: user_url,
           image: %{
             url: image_url
           },
@@ -851,6 +860,7 @@ defmodule Flirtual.Discord do
           color: color,
           timestamp: DateTime.utc_now() |> DateTime.to_iso8601()
         }
+        | Enum.map(matches, &%{url: user_url, image: %{url: Image.url(&1)}})
       ],
       components: [
         %{
