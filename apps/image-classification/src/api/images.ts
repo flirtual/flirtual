@@ -38,9 +38,6 @@ export const download = async (
 			return false;
 		}
 
-		// UploadCare does not support transforming SVG images.
-		// And we expect to receive jpeg images, but they simply return the original image.
-		// https://uploadcare.com/docs/cdn-operations/#limits
 		if (extension === "svg") {
 			log.warn({ groupFile, imageId }, `SVG images not supported.`);
 			return false;
