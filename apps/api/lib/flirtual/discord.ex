@@ -6,6 +6,7 @@ defmodule Flirtual.Discord do
 
   alias Flirtual.Attribute
   alias Flirtual.Connection
+  alias Flirtual.ObanWorkers
   alias Flirtual.Report
   alias Flirtual.Subscription
   alias Flirtual.User
@@ -41,8 +42,28 @@ defmodule Flirtual.Discord do
 
         :ok
 
-      token ->
-        deliver_webhook(name, body, token, opts)
+      _token ->
+        args =
+          %{name: name, body: body}
+          |> Map.merge(if(Keyword.get(opts, :wait, false), do: %{wait: true}, else: %{}))
+          |> Map.merge(
+            case Keyword.get(opts, :suspended_user_id) do
+              nil -> %{}
+              user_id -> %{suspended_user_id: user_id}
+            end
+          )
+
+        case args |> ObanWorkers.Discord.new() |> Oban.insert() do
+          {:ok, _job} -> :ok
+          {:error, reason} -> {:error, reason}
+        end
+    end
+  end
+
+  def send_webhook(name, body, opts \\ []) when is_atom(name) do
+    case webhook_token(name) do
+      token when token in [nil, ""] -> :ok
+      token -> deliver_webhook(name, body, token, opts)
     end
   end
 
@@ -258,7 +279,8 @@ defmodule Flirtual.Discord do
           }
         ]
       },
-      wait: true
+      wait: true,
+      suspended_user_id: user.id
     )
   end
 
