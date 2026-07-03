@@ -5,7 +5,7 @@ import { randomBytes } from "node:crypto";
 import * as scanQueue from "./api/scan-queue";
 import { download } from "./api/images";
 import { classify } from "./classifiers";
-import { temporaryDirectory } from "./consts";
+import { batchSize, temporaryDirectory } from "./consts";
 import { imageHashes } from "./hash";
 import { startServer } from "./server";
 import { log } from "./log";
@@ -109,5 +109,4 @@ const execute = async (size: number) => {
 
 startServer();
 
-const size = 100;
-void execute(size);
+void execute(batchSize);
