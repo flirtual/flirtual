@@ -1,3 +1,4 @@
+import { Loader2 } from "lucide-react";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { withSuspense } from "with-suspense";
@@ -10,6 +11,7 @@ import {
 	DialogHeader,
 	DialogTitle
 } from "~/components/dialog/dialog";
+import { useToast } from "~/hooks/use-toast";
 import { useQuery } from "~/query";
 
 import { ProfileImagesCard } from "./profile-images-card";
@@ -36,10 +38,15 @@ function search(source: SearchImageSource) {
 
 const SearchImageList: FC<{ source: SearchImageSource; onNavigate: () => void }> = withSuspense(({ source, onNavigate }) => {
 	const { t } = useTranslation();
+	const toasts = useToast();
 
 	const items = useQuery({
 		queryKey: searchImageKey(source),
-		queryFn: () => search(source).catch(() => [])
+		queryFn: () =>
+			search(source).catch((reason) => {
+				void toasts.addError(reason);
+				return [];
+			})
 	});
 
 	if (!items || items.length === 0) {
@@ -57,6 +64,12 @@ const SearchImageList: FC<{ source: SearchImageSource; onNavigate: () => void }>
 			))}
 		</div>
 	);
+}, {
+	fallback: (
+		<div className="flex justify-center py-8">
+			<Loader2 className="size-6 animate-spin" />
+		</div>
+	)
 });
 
 export const SearchImageDialog: FC<SearchImageDialogProps> = ({ source, onClose }) => {
