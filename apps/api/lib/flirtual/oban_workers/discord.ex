@@ -7,7 +7,7 @@ defmodule Flirtual.ObanWorkers.Discord do
   @impl Oban.Worker
   def perform(%Oban.Job{args: %{"name" => name, "body" => body} = args}) do
     case Discord.send_webhook(
-           String.to_existing_atom(name),
+           name,
            body,
            wait: Map.get(args, "wait", false)
          ) do

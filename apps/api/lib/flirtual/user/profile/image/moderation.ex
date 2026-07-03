@@ -150,12 +150,14 @@ defmodule Flirtual.User.Profile.Image.Moderation do
         :ok
 
       matches ->
-        distance = matches |> Enum.map(&variant_distance(query_hashes, &1)) |> Enum.min()
+        closest = Enum.sort_by(matches, &variant_distance(query_hashes, &1))
+        distance = variant_distance(query_hashes, List.first(closest))
 
         with %User{} = user <- User.get(profile_id) do
           Discord.deliver_webhook(:duplicate_image,
             user: user,
             image: image,
+            matches: Enum.take(closest, 3),
             duplicates: duplicate_profiles(matches),
             distance: distance
           )
