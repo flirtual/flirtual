@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next";
 import { withSuspense } from "with-suspense";
 
 import { ProfileImage as ProfileImageApi } from "~/api/user/profile/images";
-import { Badge } from "~/components/badge";
 import {
 	Dialog,
 	DialogBody,
@@ -15,26 +14,38 @@ import { useQuery } from "~/query";
 
 import { ProfileImagesCard } from "./profile-images-card";
 
-export interface SearchWorldDialogProps {
-	worldId: string;
-	worldName?: string | null;
+// Either an uploaded file or an existing profile image to match against.
+export type SearchImageSource = { file: File } | { imageId: string };
+
+export interface SearchImageDialogProps {
+	source: SearchImageSource;
 	onClose: () => void;
 }
 
-const searchWorldKey = (worldId: string) => ["search-world", worldId] as const;
+function searchImageKey(source: SearchImageSource) {
+	return "file" in source
+		? ["search-image", "upload", source.file.name, source.file.size, source.file.lastModified] as const
+		: ["search-image", source.imageId] as const;
+}
 
-const SearchWorldList: FC<{ worldId: string; onNavigate: () => void }> = withSuspense(({ worldId, onNavigate }) => {
+function search(source: SearchImageSource) {
+	return "file" in source
+		? ProfileImageApi.searchByImage(source.file)
+		: ProfileImageApi.searchSimilar(source.imageId);
+}
+
+const SearchImageList: FC<{ source: SearchImageSource; onNavigate: () => void }> = withSuspense(({ source, onNavigate }) => {
 	const { t } = useTranslation();
 
 	const items = useQuery({
-		queryKey: searchWorldKey(worldId),
-		queryFn: () => ProfileImageApi.listByWorld(worldId)
+		queryKey: searchImageKey(source),
+		queryFn: () => search(source).catch(() => [])
 	});
 
 	if (!items || items.length === 0) {
 		return (
 			<div className="flex flex-col gap-8 py-8">
-				<span className="text-center">{t("no_world_profiles_description")}</span>
+				<span className="text-center">{t("no_results")}</span>
 			</div>
 		);
 	}
@@ -48,11 +59,7 @@ const SearchWorldList: FC<{ worldId: string; onNavigate: () => void }> = withSus
 	);
 });
 
-export const SearchWorldDialog: FC<SearchWorldDialogProps> = ({
-	worldId,
-	worldName,
-	onClose
-}) => {
+export const SearchImageDialog: FC<SearchImageDialogProps> = ({ source, onClose }) => {
 	const { t } = useTranslation();
 
 	return (
@@ -65,18 +72,11 @@ export const SearchWorldDialog: FC<SearchWorldDialogProps> = ({
 			<DialogContent className="desktop:max-w-4xl">
 				<DialogHeader>
 					<DialogTitle className="flex items-center justify-center gap-4 desktop:justify-start">
-						<span>
-							{worldName
-								? t("photos_from_world_named", { world: worldName })
-								: t("photos_from_world")}
-						</span>
-						<Badge white className="text-theme-2">
-							{t("premium")}
-						</Badge>
+						{t("matching_images")}
 					</DialogTitle>
 				</DialogHeader>
 				<DialogBody className="max-h-[80vh] overflow-y-auto">
-					<SearchWorldList worldId={worldId} onNavigate={onClose} />
+					<SearchImageList source={source} onNavigate={onClose} />
 				</DialogBody>
 			</DialogContent>
 		</Dialog>

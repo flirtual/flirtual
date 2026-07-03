@@ -791,6 +791,62 @@ defmodule Flirtual.Discord do
     })
   end
 
+  defp reverse_image_search_buttons(image_url) do
+    encoded = URI.encode_www_form(image_url)
+
+    [
+      {"Google", "https://lens.google.com/uploadbyurl?url=#{encoded}"},
+      {"Yandex", "https://yandex.com/images/search?url=#{encoded}&rpt=imageview"},
+      {"Bing",
+       "https://www.bing.com/images/search?q=imgurl:#{encoded}&view=detailv2&iss=sbi&FORM=IRSBIQ"}
+    ]
+    |> Enum.map(fn {label, url} -> %{type: 2, label: label, style: 5, url: url} end)
+  end
+
+  def deliver_webhook(:duplicate_image,
+        user: %User{} = user,
+        image: %Image{} = image,
+        duplicates: duplicates,
+        distance: distance
+      ) do
+    color = if distance == 0, do: @destructive_color, else: @warn_color
+    image_url = Image.url(image)
+
+    webhook(:moderation_duplicates, %{
+      embeds: [
+        %{
+          author: webhook_author(user),
+          title: "Potential duplicate image",
+          image: %{
+            url: image_url
+          },
+          fields: [
+            %{
+              name: "Matching profiles",
+              value: duplicates
+            }
+          ],
+          color: color,
+          timestamp: DateTime.utc_now() |> DateTime.to_iso8601()
+        }
+      ],
+      components: [
+        %{
+          type: 1,
+          components: [
+            %{
+              type: 2,
+              label: "View profile",
+              style: 5,
+              url: User.url(user) |> URI.to_string()
+            }
+            | reverse_image_search_buttons(image_url)
+          ]
+        }
+      ]
+    })
+  end
+
   def deliver_webhook(:subscription_transferred,
         from_user: from_user,
         from_revenuecat_id: from_revenuecat_id,

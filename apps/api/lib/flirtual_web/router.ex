@@ -258,9 +258,11 @@ defmodule FlirtualWeb.Router do
           pipe_through(:require_authenticated_user)
 
           post("/", ImageController, :upload)
+          post("/search", ImageController, :search)
 
           scope "/:image_id" do
             get("/", ImageController, :get)
+            get("/similar", ImageController, :similar)
 
             delete("/", ImageController, :delete)
           end

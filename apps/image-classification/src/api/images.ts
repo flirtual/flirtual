@@ -8,7 +8,10 @@ import { temporaryDirectory } from "../consts";
 
 import { url } from ".";
 
-export const download = async (groupFile: string, imageId: string) => {
+export const download = async (
+	groupFile: string,
+	imageId: string
+): Promise<string | false> => {
 	try {
 		const response = await fetch(`https://content.flirtual.com/${imageId}/full`, {
 			headers: {
@@ -53,7 +56,7 @@ export const download = async (groupFile: string, imageId: string) => {
 		createWriteStream(output).write(buffer);
 
 		log.info({ groupFile, imageId }, `Downloaded.`);
-		return true;
+		return output;
 	} catch (reason) {
 		const error = reason instanceof Error ? reason.message : String(reason);
 		log.error({ groupFile, imageId, reason: error }, "Download failed.");
