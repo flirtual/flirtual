@@ -1,4 +1,4 @@
-import { createWriteStream } from "node:fs";
+import fs from "node:fs/promises";
 import path from "node:path";
 
 import mime from "mime-types";
@@ -49,8 +49,7 @@ export const download = async (
 			`${imageId}.${extension}`
 		);
 
-		const buffer = Buffer.from(await response.arrayBuffer());
-		createWriteStream(output).write(buffer);
+		await fs.writeFile(output, Buffer.from(await response.arrayBuffer()));
 
 		log.info({ groupFile, imageId }, `Downloaded.`);
 		return output;
