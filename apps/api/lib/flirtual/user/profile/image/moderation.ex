@@ -144,6 +144,7 @@ defmodule Flirtual.User.Profile.Image.Moderation do
       query_hashes
       |> find_similar_images(@duplicate_threshold)
       |> Enum.reject(&(&1.profile_id == profile_id))
+      |> Enum.reject(&(is_nil(&1.profile_id) and variant_distance(query_hashes, &1) > 0))
 
     case matches do
       [] ->
