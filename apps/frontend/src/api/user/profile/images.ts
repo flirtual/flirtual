@@ -51,6 +51,9 @@ export const ProfileImage = {
 	delete(imageId: string) {
 		return api.url(`images/${imageId}`).delete().json<ProfileImage>();
 	},
+	deleteIllegal(imageId: string) {
+		return api.url(`images/${imageId}/illegal`).delete().json<unknown>();
+	},
 	listByWorld(worldId: string) {
 		return api
 			.url(`worlds/${encodeURIComponent(worldId)}/profiles`)
