@@ -30,7 +30,8 @@ defmodule Flirtual.User.Profile.Image.Policy do
       do: true
 
   @moderator_actions [
-    :delete
+    :delete,
+    :delete_illegal
   ]
 
   def authorize(

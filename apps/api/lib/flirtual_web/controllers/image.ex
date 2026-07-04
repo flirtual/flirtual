@@ -167,7 +167,7 @@ defmodule FlirtualWeb.ImageController do
                Discord.deliver_webhook(:removed_image,
                  user: image_owner,
                  moderator: user,
-                 image: image
+                 image_url: Image.retain_object(image)
                ),
              else: :ok
            ),
@@ -178,6 +178,32 @@ defmodule FlirtualWeb.ImageController do
       conn |> json(%{deleted: true})
     else
       nil -> {:error, {:not_found, :image_not_found, %{image_id: image_id}}}
+      value -> value
+    end
+  end
+
+  def delete_illegal(conn, %{"image_id" => image_id}) do
+    user = conn.assigns[:session].user
+
+    with %Image{} = image <- Image.get(image_id),
+         %User{} = image_owner <- User.get(image.profile_id),
+         :ok <- Policy.can(conn, :delete_illegal, image),
+         retention when retention != :error <- Image.retain_illegal_object(image),
+         key = if(match?({:ok, _}, retention), do: elem(retention, 1)),
+         :ok <-
+           Discord.deliver_webhook(:illegal_image,
+             user: image_owner,
+             moderator: user,
+             key: key
+           ),
+         {:ok, _} <- Image.delete(image),
+         image_owner = User.get(image_owner.id),
+         {:ok, _} <- User.update_status(image_owner),
+         {:ok, _} <- ObanWorkers.update_user(image_owner.id, [:elasticsearch, :talkjs]) do
+      conn |> json(%{deleted: true})
+    else
+      nil -> {:error, {:not_found, :image_not_found, %{image_id: image_id}}}
+      :error -> {:error, {:internal_server_error, :image_retention_failed}}
       value -> value
     end
   end

@@ -265,6 +265,7 @@ defmodule FlirtualWeb.Router do
             get("/similar", ImageController, :similar)
 
             delete("/", ImageController, :delete)
+            delete("/illegal", ImageController, :delete_illegal)
           end
         end
 

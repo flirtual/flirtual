@@ -100,6 +100,18 @@ defmodule Flirtual.User.Profile.Image do
     end
   end
 
+  def url(:retained, path) when is_binary(path) do
+    case Application.get_env(:flirtual, :retained_origin) do
+      nil ->
+        local_file_url(path)
+
+      origin ->
+        URI.new!(origin)
+        |> URI.merge(path |> URI.encode())
+        |> URI.to_string()
+    end
+  end
+
   defp local_file_url(path) do
     origin = Application.fetch_env!(:flirtual, :origin)
     "#{origin}/v1/images/files/#{path |> URI.encode()}"
@@ -170,6 +182,47 @@ defmodule Flirtual.User.Profile.Image do
 
   defp content_bucket,
     do: if(Application.get_env(:flirtual, :canary?), do: "pfp-canary", else: "pfp")
+
+  defp retained_bucket,
+    do:
+      if(Application.get_env(:flirtual, :canary?), do: "pfpretained-canary", else: "pfpretained")
+
+  def retain_object(%Image{} = image) do
+    if Application.get_env(:flirtual, :local_uploads?) do
+      nil
+    else
+      case copy_object(image, retained_bucket()) do
+        {:ok, id} -> url(:retained, id)
+        :error -> nil
+      end
+    end
+  end
+
+  def retain_illegal_object(%Image{} = image) do
+    if Application.get_env(:flirtual, :local_uploads?),
+      do: :skip,
+      else: copy_object(image, "quarantine")
+  end
+
+  defp copy_object(%Image{} = image, bucket) do
+    id = Ecto.UUID.generate()
+
+    with {source_bucket, source_key} <- copy_source(image),
+         {:ok, _} <-
+           ExAws.S3.put_object_copy(bucket, id, source_bucket, source_key) |> ExAws.request() do
+      {:ok, id}
+    else
+      _ -> :error
+    end
+  end
+
+  defp copy_source(%Image{external_id: external_id}) when is_binary(external_id),
+    do: {content_bucket(), external_id <> "/full"}
+
+  defp copy_source(%Image{original_file: original_file}) when is_binary(original_file),
+    do: {uploads_bucket(), original_file}
+
+  defp copy_source(_), do: nil
 
   def delete_user_objects(user_id) when is_binary(user_id) do
     Image

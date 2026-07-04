@@ -1,4 +1,4 @@
-import { ChevronLeft, ChevronRight, Images, ScanSearch, Search, Trash2 } from "lucide-react";
+import { ChevronLeft, ChevronRight, Images, ScanSearch, Search, Siren, Trash2 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import type React from "react";
 import { Trans, useTranslation } from "react-i18next";
@@ -7,6 +7,18 @@ import { twMerge } from "tailwind-merge";
 
 import type { User } from "~/api/user";
 import { notFoundImage, ProfileImage } from "~/api/user/profile/images";
+import { Button } from "~/components/button";
+import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogHeader,
+	AlertDialogTitle,
+	AlertDialogTrigger
+} from "~/components/dialog/alert";
+import { DialogFooter } from "~/components/dialog/dialog";
 import { useDialog } from "~/hooks/use-dialog";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
 import { useOptionalSession } from "~/hooks/use-session";
@@ -130,54 +142,99 @@ const ImageToolbar: React.FC<{ image: ProfileImage; user: User }> = ({ image, us
 					</>
 				)}
 			</div>
-			<div className="flex gap-4 text-white-20">
-				<Tooltip>
-					<TooltipTrigger asChild>
-						<button
-							type="button"
-							onClick={() => {
-								const dialog = (
-									<SearchImageDialog
-										source={{ imageId: image.id }}
-										onClose={() => dialogs.remove(dialog)}
-									/>
-								);
-								dialogs.add(dialog);
-							}}
-						>
-							<Images className="size-5" strokeWidth={2} />
-						</button>
-					</TooltipTrigger>
-					<TooltipContent>{t("search_image_internal")}</TooltipContent>
-				</Tooltip>
-				<Tooltip>
-					<TooltipTrigger asChild>
-						<button
-							type="button"
-							onClick={() => reverseSearch(urls.image(image, "full"))}
-						>
-							<Search className="size-5" strokeWidth={2} />
-						</button>
-					</TooltipTrigger>
-					<TooltipContent>{t("search_image_external")}</TooltipContent>
-				</Tooltip>
-				<Tooltip>
-					<TooltipTrigger asChild>
-						<button
-							type="button"
-							onClick={async () => {
-								await ProfileImage.delete(image.id)
-									.then(() => toasts.add(t("image_deleted")))
-									.catch(toasts.addError);
+			<div className="flex gap-8 text-white-20">
+				<div className="flex gap-4">
+					<Tooltip>
+						<TooltipTrigger asChild>
+							<button
+								type="button"
+								onClick={() => {
+									const dialog = (
+										<SearchImageDialog
+											source={{ imageId: image.id }}
+											onClose={() => dialogs.remove(dialog)}
+										/>
+									);
+									dialogs.add(dialog);
+								}}
+							>
+								<Images className="size-5" strokeWidth={2} />
+							</button>
+						</TooltipTrigger>
+						<TooltipContent>{t("search_image_internal")}</TooltipContent>
+					</Tooltip>
+					<Tooltip>
+						<TooltipTrigger asChild>
+							<button
+								type="button"
+								onClick={() => reverseSearch(urls.image(image, "full"))}
+							>
+								<Search className="size-5" strokeWidth={2} />
+							</button>
+						</TooltipTrigger>
+						<TooltipContent>{t("search_image_external")}</TooltipContent>
+					</Tooltip>
+				</div>
+				<div className="flex gap-4">
+					<AlertDialog>
+						<Tooltip>
+							<TooltipTrigger asChild>
+								<AlertDialogTrigger asChild>
+									<button type="button">
+										<Siren className="size-5" />
+									</button>
+								</AlertDialogTrigger>
+							</TooltipTrigger>
+							<TooltipContent>Delete illegal image</TooltipContent>
+						</Tooltip>
+						<AlertDialogContent>
+							<AlertDialogHeader>
+								<AlertDialogTitle>Delete illegal image?</AlertDialogTitle>
+							</AlertDialogHeader>
+							<AlertDialogDescription>
+								The image will be quarantined to meet legal reporting requirements.
+							</AlertDialogDescription>
+							<DialogFooter>
+								<AlertDialogCancel asChild>
+									<Button kind="tertiary" size="sm">
+										{t("cancel")}
+									</Button>
+								</AlertDialogCancel>
+								<AlertDialogAction asChild>
+									<Button
+										size="sm"
+										onClick={async () => {
+											await ProfileImage.deleteIllegal(image.id)
+												.then(() => toasts.add(t("image_deleted")))
+												.catch(toasts.addError);
 
-								await invalidate({ queryKey: userKey(user.id) });
-							}}
-						>
-							<Trash2 className="size-5" />
-						</button>
-					</TooltipTrigger>
-					<TooltipContent>{t("delete_image")}</TooltipContent>
-				</Tooltip>
+											await invalidate({ queryKey: userKey(user.id) });
+										}}
+									>
+										{t("delete_image")}
+									</Button>
+								</AlertDialogAction>
+							</DialogFooter>
+						</AlertDialogContent>
+					</AlertDialog>
+					<Tooltip>
+						<TooltipTrigger asChild>
+							<button
+								type="button"
+								onClick={async () => {
+									await ProfileImage.delete(image.id)
+										.then(() => toasts.add(t("image_deleted")))
+										.catch(toasts.addError);
+
+									await invalidate({ queryKey: userKey(user.id) });
+								}}
+							>
+								<Trash2 className="size-5" />
+							</button>
+						</TooltipTrigger>
+						<TooltipContent>{t("delete_image")}</TooltipContent>
+					</Tooltip>
+				</div>
 			</div>
 		</div>
 	);
