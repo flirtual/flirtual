@@ -86,7 +86,7 @@ defmodule Flirtual.User.Profile.Image.Moderation do
       [image],
       not image.scanned and not is_nil(image.external_id) and not is_nil(image.profile_id)
     )
-    |> order_by(asc: :failed, asc: :created_at)
+    |> order_by(asc: :failed, asc: :updated_at)
     |> limit(^size)
     |> select([image], %{id: image.id, file: image.external_id})
     |> Repo.all()
@@ -278,7 +278,8 @@ defmodule Flirtual.User.Profile.Image.Moderation do
         |> case do
           %Image{} = image ->
             image
-            |> change(%{failed: true})
+            |> change(if abandon_scan?(image), do: %{scanned: true}, else: %{})
+            |> force_change(:failed, true)
             |> Repo.update()
 
           _ ->
@@ -286,5 +287,12 @@ defmodule Flirtual.User.Profile.Image.Moderation do
         end
       end)
     end)
+  end
+
+  defp abandon_scan?(%Image{created_at: created_at}) do
+    DateTime.compare(
+      created_at,
+      DateTime.add(DateTime.utc_now(), -30, :day)
+    ) == :lt
   end
 end
