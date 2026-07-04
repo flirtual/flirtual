@@ -96,7 +96,8 @@ jobs:
             .services[0].auto_stop_machines = true |
             .services[0].auto_start_machines = true |
             .services[0].min_machines_running = 1 |
-            .vm[0].size = "shared-cpu-2x"
+            .vm[0].size = "shared-cpu-2x" |
+            .vm[0].memory = "1gb"
           ' > fly-canary.json
 
           GIT_COMMIT_SHA=$(git rev-parse HEAD)
