@@ -17,14 +17,15 @@ RUN apt-get update -qq
 FROM base as fetch-deep-danbooru
 RUN apt-get install -y unzip curl git
 
-ARG DEEP_DANBOORU_VERSION=pretrained-v3-20211112-sgd-e28
+ARG DEEP_DANBOORU_REF=main
+ARG DEEP_DANBOORU_MODEL=pretrained-v3-20211112-sgd-e28
 
 # Clone repository.
-RUN git clone https://github.com/flirtual/deep-danbooru.git --depth=1 --branch=${DEEP_DANBOORU_VERSION}
+RUN git clone https://github.com/flirtual/deep-danbooru.git --depth=1 --branch=${DEEP_DANBOORU_REF}
 WORKDIR /app/deep-danbooru
 
 ## Download model, extract and remove zip.
-RUN curl -L https://github.com/flirtual/deep-danbooru/releases/download/${DEEP_DANBOORU_VERSION}/${DEEP_DANBOORU_VERSION}.zip -o ./model.zip
+RUN curl -L https://github.com/flirtual/deep-danbooru/releases/download/${DEEP_DANBOORU_MODEL}/${DEEP_DANBOORU_MODEL}.zip -o ./model.zip
 RUN unzip ./model.zip -d . && rm ./model.zip
 
 # Build Deep Danbooru.
