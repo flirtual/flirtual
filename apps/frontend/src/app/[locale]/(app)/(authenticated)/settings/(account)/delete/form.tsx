@@ -126,6 +126,7 @@ export const DeleteForm: FC = () => {
 											? t("odd_blue_clownfish_gleam")
 											: t("dirty_pink_puffin_flow")
 									}
+									maxLength={1000}
 									rows={4}
 								/>
 							</>

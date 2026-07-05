@@ -71,6 +71,39 @@ defmodule Flirtual.Utilities do
     |> min(maximum)
   end
 
+  def truncate(text, max_length, ellipsis \\ "…")
+
+  def truncate(nil, _, _), do: nil
+
+  def truncate(text, max_length, ellipsis) do
+    if String.length(text) <= max_length,
+      do: text,
+      else: String.slice(text, 0, max_length - String.length(ellipsis)) <> ellipsis
+  end
+
+  def truncate_join(items, max_length, separator, ellipsis \\ "…") do
+    joined = Enum.join(items, separator)
+
+    if String.length(joined) <= max_length do
+      joined
+    else
+      suffix = separator <> ellipsis
+
+      items
+      |> Enum.reduce_while("", fn item, acc ->
+        candidate = if acc == "", do: item, else: acc <> separator <> item
+
+        if String.length(candidate) + String.length(suffix) <= max_length,
+          do: {:cont, candidate},
+          else: {:halt, acc}
+      end)
+      |> case do
+        "" -> ellipsis
+        truncated -> truncated <> suffix
+      end
+    end
+  end
+
   defmacro is_uid(value) do
     quote do
       is_uuid(unquote(value)) or is_shortuuid(unquote(value))

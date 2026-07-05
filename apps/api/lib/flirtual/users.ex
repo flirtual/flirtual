@@ -472,7 +472,7 @@ defmodule Flirtual.Users do
       |> validate_captcha()
       |> validate_attribute(:reason_id, "delete-reason")
       |> validate_current_password(user)
-      |> validate_length(:comment, max: 10_000)
+      |> validate_length(:comment, max: 1_000)
     end
   end
 

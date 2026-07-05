@@ -252,7 +252,7 @@ defmodule Flirtual.User.Profile.Image.Moderation do
         n -> ["#{n}x Banned user (not found)"]
       end
 
-    Enum.join(named ++ anonymous, "\n")
+    named ++ anonymous
   end
 
   def update_scan_queue(%{"success" => success, "failed" => failed} = data) do

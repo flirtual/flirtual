@@ -135,11 +135,9 @@ defmodule Flirtual.Hash do
             n -> ["#{n}x Banned user (not found)"]
           end
 
-        duplicates = Enum.join(named ++ anonymous, "\n")
-
         Discord.deliver_webhook(:flagged_duplicate,
           user: Users.get(user_id),
-          duplicates: duplicates,
+          duplicates: named ++ anonymous,
           type: type,
           text: if(type == "IP address", do: IpAddress.anonymize(text), else: text)
         )
