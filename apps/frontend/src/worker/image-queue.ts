@@ -88,6 +88,14 @@ export const queue: ExportedHandler<Env, {
 				console.log(`↓ ${option.name}: ${variantUrl}`);
 
 				const result = await fetch(variantUrl);
+				const contentType = result.headers.get("content-type");
+
+				// Cloudflare Image Resizing can return 200 with an error body
+				if (!result.ok || !contentType?.startsWith("image/")) {
+					const error = (await result.text().catch(() => "")).slice(0, 200);
+					throw new Error(`Variant ${option.name} failed for ${key}: ${result.status} ${error}`);
+				}
+
 				const blob = await result.blob();
 
 				await env.DESTINATION_BUCKET.put(`${option.name === "blur" ? blurId : id}/${option.name}`, blob);
