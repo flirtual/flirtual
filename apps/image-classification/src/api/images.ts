@@ -2,6 +2,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 
 import mime from "mime-types";
+import sharp from "sharp";
 
 import { log } from "../log";
 import { temporaryDirectory } from "../consts";
@@ -43,13 +44,22 @@ export const download = async (
 			return false;
 		}
 
+		let buffer: Buffer = Buffer.from(await response.arrayBuffer());
+		let outputExtension = extension;
+
+		// Classifiers don't support animated GIFs, so convert the first frame to PNG.
+		if (extension === "gif") {
+			buffer = await sharp(buffer).png().toBuffer();
+			outputExtension = "png";
+		}
+
 		const output = path.resolve(
 			temporaryDirectory,
 			groupFile,
-			`${imageId}.${extension}`
+			`${imageId}.${outputExtension}`
 		);
 
-		await fs.writeFile(output, Buffer.from(await response.arrayBuffer()));
+		await fs.writeFile(output, buffer);
 
 		log.info({ groupFile, imageId }, `Downloaded.`);
 		return output;
