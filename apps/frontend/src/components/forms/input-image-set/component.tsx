@@ -71,6 +71,9 @@ export interface InputImageSetProps {
 type UppyfileMeta = { id: string } & Partial<ProfileImageMetadata>;
 type UppyfileData = Record<string, unknown>;
 
+// Cloudflare Image Resizing rejects images over 100MP.
+const maxImagePixels = 100_000_000;
+
 export const InputImageSet: FC<InputImageSetProps> = (props) => {
 	const { value, onChange, type = "profile", max } = props;
 
@@ -140,6 +143,22 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 				},
 				pluralize: (n) => n === 1 ? 0 : 1
 			}
+		});
+
+		uppyInstance.on("file-added", (file) => {
+			if (!file.type?.startsWith("image/")) return;
+
+			void createImageBitmap(file.data)
+				.then((bitmap) => {
+					const pixels = bitmap.width * bitmap.height;
+					bitmap.close();
+
+					if (pixels > maxImagePixels) {
+						uppyInstance.removeFile(file.id);
+						uppyInstance.info(t("each_ideal_seahorse_bump"), "error", 5000);
+					}
+				})
+				.catch(() => void 0);
 		});
 
 		if (type === "profile") {
