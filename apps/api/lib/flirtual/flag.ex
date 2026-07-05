@@ -146,10 +146,7 @@ defmodule Flirtual.Flag do
       |> Enum.map(& &1.flag)
 
     if flags != [] do
-      flags_with_context =
-        flags
-        |> Enum.map(fn flag -> extract_flag_context(text, flag) end)
-        |> Enum.join("\n")
+      flags_with_context = Enum.map(flags, fn flag -> extract_flag_context(text, flag) end)
 
       Discord.deliver_webhook(:flagged_keyword, user: user, flags: flags_with_context)
     end
@@ -337,14 +334,14 @@ defmodule Flirtual.Flag do
          not String.ends_with?(email, ".edu") do
       Discord.deliver_webhook(:flagged_keyword,
         user: user,
-        flags: email |> String.split("@") |> List.last()
+        flags: [email |> String.split("@") |> List.last()]
       )
     end
 
     if Regex.match?(~r/^(?!.*\+flirtual).*flirtual.*@/i, email) do
       Discord.deliver_webhook(:flagged_keyword,
         user: user,
-        flags: email |> String.split("@") |> List.first()
+        flags: [email |> String.split("@") |> List.first()]
       )
     end
 

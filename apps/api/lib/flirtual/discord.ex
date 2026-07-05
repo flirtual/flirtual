@@ -17,6 +17,9 @@ defmodule Flirtual.Discord do
   @warn_color 16_636_429
   @success_color 65_280
 
+  @embed_field_value_limit 1000
+  @embed_description_limit 4000
+
   def config(key) do
     Application.get_env(:flirtual, Flirtual.Discord)[key]
   end
@@ -236,7 +239,7 @@ defmodule Flirtual.Discord do
           %{
             author: webhook_author(user),
             title: "User banned",
-            description: message,
+            description: truncate(message, @embed_description_limit),
             fields:
               [
                 %{
@@ -401,7 +404,7 @@ defmodule Flirtual.Discord do
         %{
           author: webhook_author(user),
           title: "User warned" <> if(shadowbanned, do: " + shadowbanned", else: ""),
-          description: message,
+          description: truncate(message, @embed_description_limit),
           fields: [
             %{
               name: "Reason",
@@ -458,7 +461,7 @@ defmodule Flirtual.Discord do
         %{
           author: webhook_author(user),
           title: "Warning acknowledged",
-          description: "Warning: " <> message,
+          description: truncate("Warning: " <> message, @embed_description_limit),
           color: @success_color,
           timestamp: warn_acknowledged_at |> DateTime.to_iso8601()
         }
@@ -551,7 +554,7 @@ defmodule Flirtual.Discord do
               if(report.message !== "",
                 do: %{
                   name: "Message",
-                  value: report.message
+                  value: truncate(report.message, @embed_field_value_limit)
                 },
                 else: nil
               ),
@@ -563,7 +566,7 @@ defmodule Flirtual.Discord do
                     |> Enum.map(fn image ->
                       "[📎 View file](#{Image.url(:uploads, image)})"
                     end)
-                    |> Enum.join("\n")
+                    |> truncate_join(@embed_field_value_limit, "\n")
                 },
                 else: nil
               )
@@ -646,7 +649,7 @@ defmodule Flirtual.Discord do
           fields: [
             %{
               name: "Flags",
-              value: flags
+              value: truncate_join(flags, @embed_field_value_limit, "\n")
             }
           ],
           color: @warn_color,
@@ -813,7 +816,7 @@ defmodule Flirtual.Discord do
           fields: [
             %{
               name: "Duplicates",
-              value: duplicates
+              value: truncate_join(duplicates, @embed_field_value_limit, "\n")
             },
             %{
               name: "Flagged #{type}",
@@ -876,7 +879,7 @@ defmodule Flirtual.Discord do
           fields: [
             %{
               name: "Matching profiles",
-              value: duplicates
+              value: truncate_join(duplicates, @embed_field_value_limit, "\n")
             }
           ],
           color: color,
@@ -979,9 +982,14 @@ defmodule Flirtual.Discord do
                 classifications["deepDanbooru"]
                 |> Map.to_list()
                 |> Enum.sort(fn {_, v1}, {_, v2} -> v1 >= v2 end)
-                |> Enum.map_join(", ", fn {k, v} ->
+                |> Enum.map(fn {k, v} ->
                   "``#{k} #{:erlang.float_to_binary(Float.parse(to_string(v)) |> elem(0), decimals: 2)}``"
                 end)
+                |> truncate_join(@embed_field_value_limit, ", ")
+                |> case do
+                  "" -> "*none*"
+                  value -> value
+                end
             }
 
             # ,
