@@ -77,14 +77,32 @@ export const queue: ExportedHandler<Env, {
 
 			const type = head.httpMetadata.contentType;
 
-			if (!["image/gif", "image/jpeg", "image/png", "image/webp"].includes(type)) {
+			if (!["image/gif", "image/heic", "image/heif", "image/jpeg", "image/png", "image/webp"].includes(type)) {
 				console.log(`Message ${messageId}: skipping ${originalUrl} due to unsupported type ${type}`);
 				return message.ack();
 			}
 
 			console.log(`Message ${messageId}: ${originalUrl} → ${JSON.stringify({ id, blurId, type })}`);
+
+			// Crop side-by-side stereo images to the left half.
+			const lowerKey = key.toLowerCase();
+			let trim = "";
+
+			if (lowerKey.endsWith(".jps") || lowerKey.endsWith(".pns") || lowerKey.endsWith("_vr.jpg")) {
+				const metadataResult = await fetch(`${baseOrigin}/cdn-cgi/image/format=json/${originalUrl}`);
+				if (!metadataResult.ok) {
+					throw new Error(`Metadata failed for ${key}: ${metadataResult.status}`);
+				}
+
+				const metadata = await metadataResult.json<{ width?: number; original?: { width?: number } }>();
+				const width = metadata.width ?? metadata.original?.width;
+				if (!width) throw new Error(`Metadata missing width for ${key}`);
+
+				trim = `trim=0;${width - Math.floor(width / 2)};0;0,`;
+			}
+
 			await Promise.all(imageVariants.map(async (option) => {
-				const variantUrl = `${baseOrigin}/cdn-cgi/image/fit=${option.fit},width=${option.width},height=${option.height}${option.blur ? `,blur=${option.blur}` : ""},quality=90,metadata=none/${originalUrl}`;
+				const variantUrl = `${baseOrigin}/cdn-cgi/image/${trim}fit=${option.fit},width=${option.width},height=${option.height}${option.blur ? `,blur=${option.blur}` : ""},quality=90,metadata=none/${originalUrl}`;
 				console.log(`↓ ${option.name}: ${variantUrl}`);
 
 				const result = await fetch(variantUrl);

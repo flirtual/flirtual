@@ -74,6 +74,15 @@ type UppyfileData = Record<string, unknown>;
 // Cloudflare Image Resizing rejects images over 100MP.
 const maxImagePixels = 100_000_000;
 
+// Browsers don't report MIME types for formats they don't support.
+const extensionContentTypes: Record<string, string> = {
+	mpo: "image/jpeg",
+	jps: "image/jpeg",
+	pns: "image/png",
+	heic: "image/heic",
+	heif: "image/heif"
+};
+
 export const InputImageSet: FC<InputImageSetProps> = (props) => {
 	const { value, onChange, type = "profile", max } = props;
 
@@ -120,7 +129,7 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 				maxFileSize: 64_000_000,
 				allowedFileTypes:
 					type === "profile"
-						? ["image/jpeg", "image/png", "image/gif", "image/webp"]
+						? ["image/jpeg", "image/png", "image/gif", "image/webp", "image/heic", "image/heif", ".heic", ".heif", ".mpo", ".jps", ".pns"]
 						: undefined
 			},
 			locale: {
@@ -146,6 +155,13 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 		});
 
 		uppyInstance.on("file-added", (file) => {
+			// Change HEIC and MPO content types so Compressor skips them and doesn't
+			// strip stereo metadata. The pre-upload processor restores the correct
+			// type.
+			const extension = file.extension?.toLowerCase() ?? "";
+			if (["heic", "heif", "mpo"].includes(extension))
+				uppyInstance.setFileState(file.id, { type: "application/octet-stream" });
+
 			if (!file.type?.startsWith("image/")) return;
 
 			void createImageBitmap(file.data)
@@ -204,6 +220,16 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 		if (!(native && apple)) {
 			uppyInstance.use(GoldenRetriever, {});
 		}
+
+		// Correct content types.
+		uppyInstance.addPreProcessor(async (fileIds) => {
+			for (const fileId of fileIds) {
+				const file = uppyInstance.getFile(fileId);
+				const type = file && extensionContentTypes[file.extension?.toLowerCase() ?? ""];
+				if (type && file.type !== type)
+					uppyInstance.setFileState(fileId, { type, meta: { ...file.meta, type } });
+			}
+		});
 
 		uppyInstance.use(AwsS3, {
 			shouldUseMultipart: false,
