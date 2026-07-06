@@ -39,6 +39,7 @@ defmodule Flirtual.ObanWorkers.Weekly do
           is_nil(opposite) and
             is_nil(block) and
             user.status == :visible,
+        distinct: true,
         select: lap.target_id
       )
 
@@ -56,12 +57,11 @@ defmodule Flirtual.ObanWorkers.Weekly do
             (email_notif.likes == true or
                (push_notif.likes == true and
                   (user.apns_tokens != [] or user.fcm_tokens != []))),
-        select: user.id,
-        distinct: true
+        select: user.id
       )
 
     query
-    |> Repo.all()
+    |> Repo.all(timeout: :timer.minutes(2))
     |> Enum.with_index()
     |> Enum.each(fn {user_id, index} ->
       %{
