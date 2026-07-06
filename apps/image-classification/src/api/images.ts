@@ -47,8 +47,9 @@ export const download = async (
 		let buffer: Buffer = Buffer.from(await response.arrayBuffer());
 		let outputExtension = extension;
 
-		// Classifiers don't support animated GIFs, so convert the first frame to PNG.
-		if (extension === "gif") {
+		// Classifiers only support JPEG/PNG/BMP and non-animated GIF; convert to a
+		// single PNG frame.
+		if (!["jpeg", "png", "bmp"].includes(extension)) {
 			buffer = await sharp(buffer).png().toBuffer();
 			outputExtension = "png";
 		}
