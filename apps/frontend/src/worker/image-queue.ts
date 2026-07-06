@@ -98,7 +98,12 @@ export const queue: ExportedHandler<Env, {
 
 				const blob = await result.blob();
 
-				await env.DESTINATION_BUCKET.put(`${option.name === "blur" ? blurId : id}/${option.name}`, blob);
+				await env.DESTINATION_BUCKET.put(`${option.name === "blur" ? blurId : id}/${option.name}`, blob, {
+					httpMetadata: {
+						contentType,
+						cacheControl: "public, max-age=31536000, immutable"
+					}
+				});
 			}));
 
 			const apiResponse = await fetch(`${apiUrl}/images/variants`, {
