@@ -34,7 +34,12 @@ defmodule FlirtualWeb.HealthController do
   end
 
   def health(conn, %{"check" => type}) do
-    result = check(type)
+    result =
+      try do
+        check(type)
+      rescue
+        DBConnection.ConnectionError -> :error
+      end
 
     case result do
       :ok ->
