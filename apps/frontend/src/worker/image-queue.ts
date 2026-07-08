@@ -85,10 +85,9 @@ export const queue: ExportedHandler<Env, {
 			console.log(`Message ${messageId}: ${originalUrl} → ${JSON.stringify({ id, blurId, type })}`);
 
 			// Crop side-by-side stereo images to the left half.
-			const lowerKey = key.toLowerCase();
 			let trim = "";
 
-			if (lowerKey.endsWith(".jps") || lowerKey.endsWith(".pns") || lowerKey.endsWith("_vr.jpg")) {
+			if (head.customMetadata?.stereo === "sbs") {
 				const metadataResult = await fetch(`${baseOrigin}/cdn-cgi/image/format=json/${originalUrl}`);
 				if (!metadataResult.ok) {
 					throw new Error(`Metadata failed for ${key}: ${metadataResult.status}`);

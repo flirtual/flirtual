@@ -17,17 +17,22 @@ export default class StereoMetadata<M extends Meta, B extends Body> extends Base
 		this.type = "modifier";
 	}
 
-	private async detect(file: { name?: string; extension?: string; data: Blob }): Promise<boolean> {
+	// "sbs" = side-by-side in a single frame (flat variants must be cropped to one
+	// eye); "stereo" = stereo with separate frames/images in container.
+	private async detect(file: { name?: string; extension?: string; data: Blob }): Promise<"sbs" | "stereo" | null> {
 		const name = (file.name ?? "").toLowerCase();
 		const extension = (file.extension ?? name.split(".").pop() ?? "").toLowerCase();
 
-		// JPS/MPO/PNS, Google VR Photo, and SteamVR screenshot filenames.
-		if (["jps", "mpo", "pns"].includes(extension) || /[._]vr\.jpe?g$/.test(name)) return true;
+		// JPS/PNS, Google VR Photo, and SteamVR screenshots: side-by-side.
+		if (["jps", "pns"].includes(extension) || /[._]vr\.jpe?g$/.test(name)) return "sbs";
+
+		// MPO: two separate JPEG frames.
+		if (extension === "mpo") return "stereo";
 
 		// HEIC files with spatial metadata.
-		if (extension === "heic") return this.isStereoHeic(file.data);
+		if (extension === "heic") return (await this.isStereoHeic(file.data)) ? "stereo" : null;
 
-		return false;
+		return null;
 	}
 
 	// A stereo HEIC has a 'ster' entity group inside 'grpl' in its metadata.
@@ -46,12 +51,14 @@ export default class StereoMetadata<M extends Meta, B extends Body> extends Base
 		await Promise.all(fileIDs.map(async (fileID) => {
 			const file = this.uppy.getFile(fileID);
 
-			if (await this.detect(file)) {
+			const layout = await this.detect(file);
+
+			if (layout) {
 				this.uppy.setFileState(fileID, {
-					meta: { ...file.meta, stereo: true }
+					meta: { ...file.meta, stereo: true, sbs: layout === "sbs" }
 				});
 
-				this.uppy.log(`[Stereo] Detected stereo image for ${file.id}`);
+				this.uppy.log(`[Stereo] Detected ${layout} image for ${file.id}`);
 			}
 		}));
 	};
