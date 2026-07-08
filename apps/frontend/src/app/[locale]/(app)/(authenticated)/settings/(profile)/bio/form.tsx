@@ -63,6 +63,7 @@ export const BiographyForm: FC = () => {
 						user.id,
 						values.images.map((image) => ({
 							id: image.id,
+							stereo: image.stereo,
 							authorId: image.authorId,
 							authorName: image.authorName,
 							worldId: image.worldId,

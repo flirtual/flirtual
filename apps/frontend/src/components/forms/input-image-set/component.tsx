@@ -44,6 +44,7 @@ import {
 	SortableItemOverlay,
 	useCurrentSortableItem
 } from "../sortable";
+import StereoMetadata from "./stereo-metadata";
 import VRChatMetadata from "./vrchat-metadata";
 
 import "@uppy/core/dist/style.min.css";
@@ -57,6 +58,7 @@ export type ImageSetValue = {
 	id: string;
 	src: string;
 	fullSrc: string;
+	stereo?: boolean;
 }
 & Partial<ProfileImageMetadata>;
 
@@ -68,7 +70,7 @@ export interface InputImageSetProps {
 	max?: number;
 }
 
-type UppyfileMeta = { id: string } & Partial<ProfileImageMetadata>;
+type UppyfileMeta = { id: string; stereo?: boolean } & Partial<ProfileImageMetadata>;
 type UppyfileData = Record<string, unknown>;
 
 // Cloudflare Image Resizing rejects images over 100MP.
@@ -109,6 +111,7 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 					id: meta.id,
 					src: urls.media(meta.id, "uploads"),
 					fullSrc: urls.media(meta.id, "uploads"),
+					stereo: meta.stereo,
 					authorId: meta.authorId,
 					authorName: meta.authorName,
 					worldId: meta.worldId,
@@ -200,7 +203,8 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 						croppedCanvasOptions: {}
 					}
 				})
-				.use(VRChatMetadata, {});
+				.use(VRChatMetadata, {})
+				.use(StereoMetadata, {});
 		}
 
 		uppyInstance
