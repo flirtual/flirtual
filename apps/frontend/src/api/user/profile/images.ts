@@ -13,6 +13,7 @@ export interface ProfileImageMetadata {
 export type ProfileImage = {
 	originalFile?: string;
 	externalId?: string;
+	spatialId?: string;
 }
 & DatedModel
 & Partial<ProfileImageMetadata> & UuidModel;
@@ -30,7 +31,7 @@ export interface WorldProfileItem {
 }
 
 export const ProfileImage = {
-	create(userId: string, files: Array<{ id: string } & Partial<ProfileImageMetadata>>) {
+	create(userId: string, files: Array<{ id: string; stereo?: boolean } & Partial<ProfileImageMetadata>>) {
 		return api
 			.url(`users/${userId}/profile/images`)
 			.json(files)

@@ -20,6 +20,7 @@ defmodule Flirtual.User.Profile.Image do
     field(:blur_id, :string)
     field(:hash, :integer)
     field(:order, :integer)
+    field(:spatial_id, :string)
     field(:author_id, :string)
     field(:author_name, :string)
     field(:world_id, :string)
@@ -38,6 +39,7 @@ defmodule Flirtual.User.Profile.Image do
       :blur_id,
       :hash,
       :order,
+      :spatial_id,
       :author_id,
       :author_name,
       :world_id,
@@ -48,6 +50,7 @@ defmodule Flirtual.User.Profile.Image do
     |> foreign_key_constraint(:profile_id)
     |> validate_uid(:external_id)
     |> validate_uid(:blur_id)
+    |> validate_uid(:spatial_id)
   end
 
   def not_found() do
@@ -62,6 +65,10 @@ defmodule Flirtual.User.Profile.Image do
 
   def url(%Image{blur_id: blur_id}, "blur") when is_binary(blur_id) do
     url(:content, blur_id <> "/blur")
+  end
+
+  def url(%Image{spatial_id: spatial_id}, "spatial") when is_binary(spatial_id) do
+    url(:content, spatial_id <> "/spatial")
   end
 
   def url(%Image{external_id: external_id}, variant) when is_binary(external_id) do
@@ -156,7 +163,8 @@ defmodule Flirtual.User.Profile.Image do
         do: Enum.map(@content_variants, &"#{image.external_id}/#{&1}"),
         else: []
       ) ++
-        if(is_binary(image.blur_id), do: ["#{image.blur_id}/blur"], else: [])
+        if(is_binary(image.blur_id), do: ["#{image.blur_id}/blur"], else: []) ++
+        if(is_binary(image.spatial_id), do: ["#{image.spatial_id}/spatial"], else: [])
 
     if Application.get_env(:flirtual, :local_uploads?) do
       dir = Application.fetch_env!(:flirtual, :local_uploads_dir)
@@ -220,6 +228,34 @@ defmodule Flirtual.User.Profile.Image do
     do: {uploads_bucket(), original_file}
 
   defp copy_source(_), do: nil
+
+  def put_spatial(spatial_id, body)
+      when is_binary(spatial_id) and is_binary(body) do
+    key = "#{spatial_id}/spatial"
+
+    if Application.get_env(:flirtual, :local_uploads?) do
+      dir = Application.fetch_env!(:flirtual, :local_uploads_dir)
+      path = Path.join(dir, key)
+
+      with :ok <- File.mkdir_p(Path.dirname(path)),
+           :ok <- File.write(path, body) do
+        :ok
+      else
+        _ -> :error
+      end
+    else
+      case ExAws.S3.put_object(content_bucket(), key, body,
+             content_type: "image/heic",
+             cache_control: "public, max-age=31536000, immutable"
+           )
+           |> ExAws.request() do
+        {:ok, _} -> :ok
+        _ -> :error
+      end
+    end
+  end
+
+  def put_spatial(_, _), do: :error
 
   def delete_user_objects(user_id) when is_binary(user_id) do
     Image
@@ -297,6 +333,7 @@ defmodule Flirtual.User.Profile.Image do
         :id,
         :original_file,
         :external_id,
+        :spatial_id,
         :updated_at,
         :created_at,
         :author_id,

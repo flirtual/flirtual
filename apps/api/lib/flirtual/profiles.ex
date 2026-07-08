@@ -485,6 +485,7 @@ defmodule Flirtual.Profiles do
           case Repo.insert_or_update(changeset) do
             {:ok, image} ->
               Image.Moderation.enqueue_scan(image)
+              if file["stereo"] == true, do: Image.Moderation.enqueue_spatial(image)
               {:ok, image}
 
             error ->

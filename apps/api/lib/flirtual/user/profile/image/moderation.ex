@@ -8,6 +8,7 @@ defmodule Flirtual.User.Profile.Image.Moderation do
   alias Flirtual.User
   alias Flirtual.Discord
   alias Flirtual.ObanWorkers.ImageClassify
+  alias Flirtual.ObanWorkers.ImageSpatial
   alias Flirtual.Repo
   alias Flirtual.User.Profile.Image
 
@@ -127,6 +128,13 @@ defmodule Flirtual.User.Profile.Image.Moderation do
   end
 
   def classify_remote(_), do: {:error, :not_ready}
+
+  # Queue spatial HEIC generation for an image.
+  def enqueue_spatial(%Image{id: id, spatial_id: nil}) do
+    %{"image_id" => id} |> ImageSpatial.new() |> Oban.insert()
+  end
+
+  def enqueue_spatial(_), do: :ok
 
   # Max Hamming distance (out of 64) for duplicate image flags and
   # image search.

@@ -61,7 +61,8 @@ config :flirtual,
   feedback_access_token:
     Env.get!("FEEDBACK_ACCESS_TOKEN",
       default: "local_u3HxXMz7yp0KxkewdJkUQQSCjZJZLehA6TFdgpQaKj8Zxmo4OxIygcUWvhy"
-    )
+    ),
+  stereo2spatial_access_token: Env.get("STEREO2SPATIAL_ACCESS_TOKEN")
 
 origin = URI.parse(Env.get!("ORIGIN", default: "https://#{hostname}:4001"))
 frontend_origin = Env.get!("FRONTEND_ORIGIN", default: "https://#{hostname}:3000")
@@ -227,7 +228,8 @@ config :flirtual, Oban,
     default: Env.get("OBAN_DEFAULT_CONCURRENCY", default: "6") |> String.to_integer(),
     notifications: Env.get("OBAN_NOTIFICATIONS_CONCURRENCY", default: "3") |> String.to_integer(),
     image_classification:
-      Env.get("OBAN_IMAGE_CLASSIFICATION_CONCURRENCY", default: "1") |> String.to_integer()
+      Env.get("OBAN_IMAGE_CLASSIFICATION_CONCURRENCY", default: "1") |> String.to_integer(),
+    image_spatial: Env.get("OBAN_IMAGE_SPATIAL_CONCURRENCY", default: "1") |> String.to_integer()
   ]
 
 if prod? do
