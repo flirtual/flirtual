@@ -18,69 +18,75 @@ defmodule Flirtual.User.Profile.Image.Moderation do
 
   # https://github.com/flirtual/deep-danbooru
   # https://danbooru.donmai.us/wiki_pages/tag_groups
-  def classify_flag?(classifications) do
-    case classifications do
-      # Neutral usually applies for real-life images.
-      %{"nsfwjs" => %{"neutral" => _}, "deepDanbooru" => %{"blood" => _}} -> :violence
-      %{"nsfwjs" => %{"neutral" => _}, "deepDanbooru" => %{"drugs" => _}} -> :illegal
-      %{"nsfwjs" => %{"neutral" => _}, "deepDanbooru" => %{"weapon" => _}} -> :violence
-      # Specific or niche classifications.
-      %{"deepDanbooru" => %{"ahegao" => _}} -> :nsfw
-      %{"deepDanbooru" => %{"ass_focus" => _}} -> :nsfw
-      %{"deepDanbooru" => %{"baby" => _}} -> :underage
-      %{"deepDanbooru" => %{"bdsm" => _}} -> :nsfw
-      %{"deepDanbooru" => %{"bondage" => _}} -> :nsfw
-      %{"deepDanbooru" => %{"breast_focus" => _}} -> :nsfw
-      %{"deepDanbooru" => %{"breast_tattoo" => _}} -> :nsfw
-      %{"deepDanbooru" => %{"cameltoe" => _}} -> :nsfw
-      %{"deepDanbooru" => %{"chat_log" => _}} -> :spam
-      %{"deepDanbooru" => %{"child" => _}} -> :underage
-      %{"deepDanbooru" => %{"comic" => _}} -> :spam
-      %{"deepDanbooru" => %{"cum" => _}} -> :nsfw
-      %{"deepDanbooru" => %{"diaper" => _}} -> :underage
-      %{"deepDanbooru" => %{"fellatio_gesture" => _}} -> :nsfw
-      %{"deepDanbooru" => %{"foot_focus" => _}} -> :nsfw
-      %{"deepDanbooru" => %{"groping" => _}} -> :nsfw
-      %{"deepDanbooru" => %{"guro" => _}} -> :violence
-      %{"deepDanbooru" => %{"implied_fellatio" => _}} -> :nsfw
-      %{"deepDanbooru" => %{"implied_fingering" => _}} -> :nsfw
-      %{"deepDanbooru" => %{"implied_masturbation" => _}} -> :nsfw
-      %{"deepDanbooru" => %{"implied_sex" => _}} -> :nsfw
-      %{"deepDanbooru" => %{"licking_foot" => _}} -> :nsfw
-      %{"deepDanbooru" => %{"lingerie" => _}} -> :nsfw
-      %{"deepDanbooru" => %{"meme" => _}} -> :spam
-      %{"deepDanbooru" => %{"nude" => _}} -> :nsfw
-      %{"deepDanbooru" => %{"oral_invitation" => _}} -> :nsfw
-      %{"deepDanbooru" => %{"pasties" => _}} -> :nsfw
-      %{"deepDanbooru" => %{"peeing" => _}} -> :nsfw
-      %{"deepDanbooru" => %{"penetration_gesture" => _}} -> :nsfw
-      %{"deepDanbooru" => %{"phone_screen" => _}} -> :spam
-      %{"deepDanbooru" => %{"presenting" => _}} -> :nsfw
-      %{"deepDanbooru" => %{"pubic_tattoo" => _}} -> :nsfw
-      %{"deepDanbooru" => %{"severed_head" => _}} -> :violence
-      %{"deepDanbooru" => %{"severed_limb" => _}} -> :violence
-      %{"deepDanbooru" => %{"sex_toy" => _}} -> :nsfw
-      %{"deepDanbooru" => %{"sexually_suggestive" => _}} -> :nsfw
-      %{"deepDanbooru" => %{"stab" => _}} -> :violence
-      %{"deepDanbooru" => %{"straddling" => _}} -> :nsfw
-      %{"deepDanbooru" => %{"swastika" => _}} -> :hate
-      %{"deepDanbooru" => %{"teenage" => _}} -> :underage
-      %{"deepDanbooru" => %{"text-only_page" => _}} -> :spam
-      %{"deepDanbooru" => %{"text_focus" => _}} -> :spam
-      %{"deepDanbooru" => %{"top-down_bottom-up" => _}} -> :nsfw
-      %{"deepDanbooru" => %{"underwear" => _}} -> :nsfw
-      %{"deepDanbooru" => %{"vore" => _}} -> :nsfw
-      %{"deepDanbooru" => %{"wall_of_text" => _}} -> :spam
-      %{"deepDanbooru" => %{"watermark" => _}} -> :spam
-      # Generalistic ratings.
-      %{"nsfwjs" => %{"porn" => _}} -> :nsfw
-      %{"nsfwjs" => %{"hentai" => _}} -> :nsfw
-      %{"nsfwjs" => %{"sexy" => v}} when v > 0.8 -> :nsfw
-      %{"deepDanbooru" => %{"rating:explicit" => _}} -> :nsfw
-      %{"deepDanbooru" => %{"rating:questionable" => v}} when v > 0.8 -> :nsfw
-      _ -> :safe
-    end
+  @questionable_threshold 0.8
+
+  @flag_tags [
+    {"ahegao", :nsfw},
+    {"ass_focus", :nsfw},
+    {"baby", :underage},
+    {"bdsm", :nsfw},
+    {"bondage", :nsfw},
+    {"breast_focus", :nsfw},
+    {"breast_tattoo", :nsfw},
+    {"cameltoe", :nsfw},
+    {"chat_log", :spam},
+    {"child", :underage},
+    {"comic", :spam},
+    {"cum", :nsfw},
+    {"diaper", :underage},
+    {"fellatio_gesture", :nsfw},
+    {"foot_focus", :nsfw},
+    {"groping", :nsfw},
+    {"guro", :violence},
+    {"implied_fellatio", :nsfw},
+    {"implied_fingering", :nsfw},
+    {"implied_masturbation", :nsfw},
+    {"implied_sex", :nsfw},
+    {"licking_foot", :nsfw},
+    {"lingerie", :nsfw},
+    {"meme", :spam},
+    {"nude", :nsfw},
+    {"oral_invitation", :nsfw},
+    {"pasties", :nsfw},
+    {"peeing", :nsfw},
+    {"penetration_gesture", :nsfw},
+    {"phone_screen", :spam},
+    {"presenting", :nsfw},
+    {"pubic_tattoo", :nsfw},
+    {"severed_head", :violence},
+    {"severed_limb", :violence},
+    {"sex_toy", :nsfw},
+    {"sexually_suggestive", :nsfw},
+    {"stab", :violence},
+    {"straddling", :nsfw},
+    {"swastika", :hate},
+    {"teenage", :underage},
+    {"text-only_page", :spam},
+    {"text_focus", :spam},
+    {"top-down_bottom-up", :nsfw},
+    {"underwear", :nsfw},
+    {"vore", :nsfw},
+    {"wall_of_text", :spam},
+    {"watermark", :spam},
+    {"rating:explicit", :nsfw},
+    {"rating:questionable", :nsfw}
+  ]
+
+  @flag_tag_names Enum.map(@flag_tags, &elem(&1, 0))
+
+  def classify_flag?(%{"deepDanbooru" => tags}) do
+    Enum.find_value(@flag_tags, :safe, fn {tag, category} ->
+      case Map.fetch(tags, tag) do
+        {:ok, v} when tag != "rating:questionable" or v > @questionable_threshold -> category
+        _ -> false
+      end
+    end)
   end
+
+  def classify_flag?(_), do: :safe
+
+  def flagged_tags(%{"deepDanbooru" => tags}), do: Map.take(tags, @flag_tag_names)
+  def flagged_tags(_), do: %{}
 
   # Queue classification once an image has variants and is attached to a
   # profile.

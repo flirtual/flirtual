@@ -11,6 +11,7 @@ defmodule Flirtual.Discord do
   alias Flirtual.Subscription
   alias Flirtual.User
   alias Flirtual.User.Profile.Image
+  alias Flirtual.User.Profile.Image.Moderation
 
   @default_color 8_421_504
   @destructive_color 16_711_680
@@ -979,7 +980,7 @@ defmodule Flirtual.Discord do
             %{
               name: "Classifications",
               value:
-                classifications["deepDanbooru"]
+                Moderation.flagged_tags(classifications)
                 |> Map.to_list()
                 |> Enum.sort(fn {_, v1}, {_, v2} -> v1 >= v2 end)
                 |> Enum.map(fn {k, v} ->
@@ -991,17 +992,6 @@ defmodule Flirtual.Discord do
                   value -> value
                 end
             }
-
-            # ,
-            # %{
-            #   name: "Categories",
-            #   value:
-            #     classifications["nsfwjs"]
-            #     |> Map.to_list()
-            #     |> Enum.concat([{to_string(type), 1}])
-            #     |> Enum.filter(fn {_, v} -> v >= 0.5 end)
-            #     |> Enum.map_join(", ", fn {k, _} -> k end)
-            # }
           ],
           color: @default_color,
           timestamp: DateTime.utc_now() |> DateTime.to_iso8601()
