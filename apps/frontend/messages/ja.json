@@ -316,7 +316,7 @@
 	"zany_salty_cheetah_lead": "VRChat: <copy>{name}</copy>",
 	"pipe_land_teeny_hypnotic": "あなたは{name}を{status, select, liked {いいねしました} homied {ホミーしました} other {スキップしました}}。",
 	"mint_colossal_kettle_sense": "{name}があなたを{status, select, liked {いいねしました} other {ホミーしました}}。",
-	"strong_trite_squid_grasp": "{uploaded}{scanned, select, true {アップロードされ、スキャンされました} false {アップロードされ、<strong>スキャンされませんでした</strong>} other {}}。",
+	"uploaded_date": "{uploaded}にアップロードされました。",
 	"search_image_external": "画像検索（外部）",
 	"search_image_internal": "画像検索（内部）",
 	"matching_images": "一致する画像",

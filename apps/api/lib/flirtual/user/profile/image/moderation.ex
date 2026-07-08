@@ -7,6 +7,7 @@ defmodule Flirtual.User.Profile.Image.Moderation do
 
   alias Flirtual.User
   alias Flirtual.Discord
+  alias Flirtual.ObanWorkers.ImageClassify
   alias Flirtual.Repo
   alias Flirtual.User.Profile.Image
 
@@ -80,17 +81,52 @@ defmodule Flirtual.User.Profile.Image.Moderation do
     end
   end
 
-  def list_scan_queue(size) do
-    Image
-    |> where(
-      [image],
-      not image.scanned and not is_nil(image.external_id) and not is_nil(image.profile_id)
-    )
-    |> order_by(asc: :failed, asc: :updated_at)
-    |> limit(^size)
-    |> select([image], %{id: image.id, file: image.external_id})
-    |> Repo.all()
+  # Queue classification once an image has variants and is attached to a
+  # profile.
+  def enqueue_scan(%Image{
+        id: id,
+        external_id: external_id,
+        profile_id: profile_id
+      })
+      when is_binary(external_id) and not is_nil(profile_id) do
+    if Application.get_env(:flirtual, :image_classification_origin) do
+      %{"image_id" => id} |> ImageClassify.new() |> Oban.insert()
+    else
+      :ok
+    end
   end
+
+  def enqueue_scan(_), do: :ok
+
+  # Send an image to the image classification service and return its
+  # classifications + perceptual hashes.
+  def classify_remote(%Image{id: id, external_id: external_id}) when is_binary(external_id) do
+    with url when is_binary(url) <- Application.get_env(:flirtual, :image_classification_origin),
+         token when is_binary(token) <- Application.get_env(:flirtual, :image_access_token) do
+      case Req.request(
+             method: :post,
+             url: url <> "/classify",
+             json: %{id: id, file: external_id},
+             headers: [{"authorization", "Bearer " <> token}],
+             receive_timeout: 60_000,
+             retry: false,
+             finch: Flirtual.FinchInternal
+           ) do
+        {:ok, %Req.Response{status: 200, body: %{"classifications" => classifications} = body}} ->
+          {:ok, %{classifications: classifications, hashes: Map.take(body, ["hash", "flipped"])}}
+
+        {:ok, %Req.Response{status: status}} ->
+          {:error, {:classify_failed, status}}
+
+        {:error, reason} ->
+          {:error, reason}
+      end
+    else
+      _ -> {:error, :not_configured}
+    end
+  end
+
+  def classify_remote(_), do: {:error, :not_ready}
 
   # Max Hamming distance (out of 64) for duplicate image flags and
   # image search.
@@ -121,8 +157,7 @@ defmodule Flirtual.User.Profile.Image.Moderation do
     hash = Image.hash_to_integer(hashes["hash"])
     flipped = Image.hash_to_integer(hashes["flipped"])
 
-    attrs = %{scanned: true, failed: false}
-    attrs = if is_integer(hash), do: Map.put(attrs, :hash, hash), else: attrs
+    attrs = if is_integer(hash), do: %{hash: hash}, else: %{}
 
     result =
       image
@@ -253,46 +288,5 @@ defmodule Flirtual.User.Profile.Image.Moderation do
       end
 
     named ++ anonymous
-  end
-
-  def update_scan_queue(%{"success" => success, "failed" => failed} = data) do
-    hashes = Map.get(data, "hashes", %{})
-
-    Repo.transaction(fn ->
-      success
-      |> Map.to_list()
-      |> Enum.each(fn {id, classifications} ->
-        Image.get(id)
-        |> case do
-          %Image{} = image ->
-            classify_image(image, classifications, Map.get(hashes, id))
-
-          _ ->
-            nil
-        end
-      end)
-
-      failed
-      |> Enum.each(fn id ->
-        Image.get(id)
-        |> case do
-          %Image{} = image ->
-            image
-            |> change(if abandon_scan?(image), do: %{scanned: true}, else: %{})
-            |> force_change(:failed, true)
-            |> Repo.update()
-
-          _ ->
-            nil
-        end
-      end)
-    end)
-  end
-
-  defp abandon_scan?(%Image{created_at: created_at}) do
-    DateTime.compare(
-      created_at,
-      DateTime.add(DateTime.utc_now(), -30, :day)
-    ) == :lt
   end
 end

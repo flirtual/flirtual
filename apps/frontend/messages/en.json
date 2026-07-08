@@ -316,7 +316,7 @@
 	"zany_salty_cheetah_lead": "VRChat: <copy>{name}</copy>",
 	"pipe_land_teeny_hypnotic": "You {status, select, liked {liked} homied {homied} other {passed on}} {name}.",
 	"mint_colossal_kettle_sense": "{name} {status, select, liked {liked} other {homied}} you.",
-	"strong_trite_squid_grasp": "Uploaded {uploaded}{scanned, select, true {, and was scanned} false {, and was <strong>not scanned</strong>} other {}}.",
+	"uploaded_date": "Uploaded {uploaded}.",
 	"search_image_external": "Search image (external)",
 	"search_image_internal": "Search image (internal)",
 	"matching_images": "Matching images",

@@ -116,10 +116,9 @@ const ImageToolbar: React.FC<{ image: ProfileImage; user: User }> = ({ image, us
 			<div className="select-children">
 				<Trans
 					values={{
-						uploaded: formattedUploadTime,
-						scanned: (!!image.scanned).toString()
+						uploaded: formattedUploadTime
 					}}
-					i18nKey="strong_trite_squid_grasp"
+					i18nKey="uploaded_date"
 				/>
 				{image.authorId && image.worldId && (
 					<>

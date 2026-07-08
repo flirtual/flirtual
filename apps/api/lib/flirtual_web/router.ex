@@ -114,13 +114,6 @@ defmodule FlirtualWeb.Router do
           post("/", ImageController, :update_variants)
         end
 
-        scope "/scan-queue" do
-          pipe_through(:fetch_authorization_token)
-
-          get("/", ImageController, :scan_queue)
-          post("/", ImageController, :resolve_scan_queue)
-        end
-
         get("/files/*path", ImageController, :local_file)
 
         scope "/:image_id" do
