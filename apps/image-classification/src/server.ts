@@ -50,17 +50,17 @@ const handleHash = async (request: IncomingMessage, response: ServerResponse): P
 	sendJson(response, 200, hashes);
 };
 
-// POST /classify { id, file }: downloads an image and returns
+// POST /classify { url }: downloads an image and returns
 // { classifications, hash, flipped }. Used for image uploads.
 const handleClassify = async (
 	request: IncomingMessage,
 	response: ServerResponse
 ): Promise<void> => {
 	const raw = await readBody(request);
-	const { file } = JSON.parse(raw.toString() || "{}") as { id?: string; file?: string };
+	const { url } = JSON.parse(raw.toString() || "{}") as { url?: string };
 
-	if (!file) {
-		sendJson(response, 400, { error: "missing file" });
+	if (!url) {
+		sendJson(response, 400, { error: "missing url" });
 		return;
 	}
 
@@ -73,7 +73,7 @@ const handleClassify = async (
 	await fs.mkdir(groupDir, { recursive: true });
 
 	try {
-		const imagePath = await download(groupDir, file);
+		const imagePath = await download(groupDir, url);
 		if (!imagePath) {
 			sendJson(response, 422, { error: "download failed" });
 			return;

@@ -1,3 +1,4 @@
+import { randomBytes } from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";
 
@@ -5,16 +6,13 @@ import mime from "mime-types";
 import sharp from "sharp";
 
 import { log } from "../log";
-import { temporaryDirectory } from "../consts";
-
-import { url } from ".";
 
 export const download = async (
 	groupFile: string,
-	imageId: string
+	url: string
 ): Promise<string | false> => {
 	try {
-		const response = await fetch(`https://content.flirtual.com/${imageId}/full`, {
+		const response = await fetch(url, {
 			headers: {
 				accept: "image/webp"
 			}
@@ -26,7 +24,7 @@ export const download = async (
 				(body && typeof body === "object" && "error" in body && body?.error) ||
 				response.statusText;
 
-			log.error({ groupFile, imageId, error }, `Download failed.`);
+			log.error({ groupFile, url, error }, `Download failed.`);
 			return false;
 		}
 
@@ -35,12 +33,12 @@ export const download = async (
 		);
 
 		if (!extension) {
-			log.warn({ groupFile, imageId }, `Unknown content type.`);
+			log.warn({ groupFile, url }, `Unknown content type.`);
 			return false;
 		}
 
 		if (extension === "svg") {
-			log.warn({ groupFile, imageId }, `SVG images not supported.`);
+			log.warn({ groupFile, url }, `SVG images not supported.`);
 			return false;
 		}
 
@@ -55,18 +53,17 @@ export const download = async (
 		}
 
 		const output = path.resolve(
-			temporaryDirectory,
 			groupFile,
-			`${imageId}.${outputExtension}`
+			`${randomBytes(16).toString("hex")}.${outputExtension}`
 		);
 
 		await fs.writeFile(output, buffer);
 
-		log.info({ groupFile, imageId }, `Downloaded.`);
+		log.info({ groupFile, url }, `Downloaded.`);
 		return output;
 	} catch (reason) {
 		const error = reason instanceof Error ? reason.message : String(reason);
-		log.error({ groupFile, imageId, reason: error }, "Download failed.");
+		log.error({ groupFile, url, reason: error }, "Download failed.");
 		return false;
 	}
 };
