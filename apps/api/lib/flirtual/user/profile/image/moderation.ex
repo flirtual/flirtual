@@ -101,13 +101,14 @@ defmodule Flirtual.User.Profile.Image.Moderation do
 
   # Send an image to the image classification service and return its
   # classifications + perceptual hashes.
-  def classify_remote(%Image{id: id, external_id: external_id}) when is_binary(external_id) do
+  def classify_remote(%Image{external_id: external_id} = image)
+      when is_binary(external_id) do
     with url when is_binary(url) <- Application.get_env(:flirtual, :image_classification_origin),
          token when is_binary(token) <- Application.get_env(:flirtual, :image_access_token) do
       case Req.request(
              method: :post,
              url: url <> "/classify",
-             json: %{id: id, file: external_id},
+             json: %{url: Image.url(image, "full")},
              headers: [{"authorization", "Bearer " <> token}],
              receive_timeout: 60_000,
              retry: false,
