@@ -18,8 +18,6 @@ defmodule Flirtual.User.Profile.Image do
     field(:original_file, :string)
     field(:external_id, :string)
     field(:blur_id, :string)
-    field(:scanned, :boolean, default: false)
-    field(:failed, :boolean, default: false)
     field(:hash, :integer)
     field(:order, :integer)
     field(:author_id, :string)
@@ -38,8 +36,6 @@ defmodule Flirtual.User.Profile.Image do
       :original_file,
       :external_id,
       :blur_id,
-      :scanned,
-      :failed,
       :hash,
       :order,
       :author_id,
@@ -159,7 +155,8 @@ defmodule Flirtual.User.Profile.Image do
       if(is_binary(image.external_id),
         do: Enum.map(@content_variants, &"#{image.external_id}/#{&1}"),
         else: []
-      ) ++ if(is_binary(image.blur_id), do: ["#{image.blur_id}/blur"], else: [])
+      ) ++
+        if(is_binary(image.blur_id), do: ["#{image.blur_id}/blur"], else: [])
 
     if Application.get_env(:flirtual, :local_uploads?) do
       dir = Application.fetch_env!(:flirtual, :local_uploads_dir)
@@ -284,8 +281,12 @@ defmodule Flirtual.User.Profile.Image do
         end
 
       case Repo.insert_or_update(changeset) do
-        {:ok, image} -> image
-        {:error, reason} -> Repo.rollback(reason)
+        {:ok, image} ->
+          Image.Moderation.enqueue_scan(image)
+          image
+
+        {:error, reason} ->
+          Repo.rollback(reason)
       end
     end)
   end
@@ -296,7 +297,6 @@ defmodule Flirtual.User.Profile.Image do
         :id,
         :original_file,
         :external_id,
-        :scanned,
         :updated_at,
         :created_at,
         :author_id,

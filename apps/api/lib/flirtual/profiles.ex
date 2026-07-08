@@ -482,7 +482,14 @@ defmodule Flirtual.Profiles do
               })
             end
 
-          Repo.insert_or_update(changeset)
+          case Repo.insert_or_update(changeset) do
+            {:ok, image} ->
+              Image.Moderation.enqueue_scan(image)
+              {:ok, image}
+
+            error ->
+              error
+          end
         else
           {:ok, existing_complete_image}
         end

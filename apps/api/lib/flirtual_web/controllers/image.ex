@@ -229,28 +229,4 @@ defmodule FlirtualWeb.ImageController do
       {:error, {:unauthorized, :invalid_access_token}}
     end
   end
-
-  def scan_queue(conn, %{"size" => size}) do
-    {size, _} = Integer.parse(size)
-
-    if authenticated?(conn) do
-      images = Moderation.list_scan_queue(size)
-
-      conn
-      |> json(images)
-    else
-      {:error, {:unauthorized, :invalid_access_token}}
-    end
-  end
-
-  def resolve_scan_queue(conn, %{"success" => _, "failed" => _} = data) do
-    if authenticated?(conn) do
-      case Moderation.update_scan_queue(data) do
-        {:ok, _} -> conn |> json(%{updated: true})
-        _ -> {:error, {:unprocessable_entity, :update_failed}}
-      end
-    else
-      {:error, {:unauthorized, :invalid_access_token}}
-    end
-  end
 end

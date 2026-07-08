@@ -82,7 +82,6 @@ defmodule Flirtual.User.Profile.Image.Policy do
 
   @moderator_property_keys (if Mix.env() == :dev do
                               [
-                                :scanned,
                                 :created_at,
                                 :updated_at,
                                 :author_id,
@@ -91,7 +90,6 @@ defmodule Flirtual.User.Profile.Image.Policy do
                             else
                               [
                                 :original_file,
-                                :scanned,
                                 :created_at,
                                 :updated_at,
                                 :author_id,

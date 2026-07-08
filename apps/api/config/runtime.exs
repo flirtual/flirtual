@@ -225,7 +225,9 @@ config :flirtual, Flirtual.ObanWorkers,
 config :flirtual, Oban,
   queues: [
     default: Env.get("OBAN_DEFAULT_CONCURRENCY", default: "6") |> String.to_integer(),
-    notifications: Env.get("OBAN_NOTIFICATIONS_CONCURRENCY", default: "3") |> String.to_integer()
+    notifications: Env.get("OBAN_NOTIFICATIONS_CONCURRENCY", default: "3") |> String.to_integer(),
+    image_classification:
+      Env.get("OBAN_IMAGE_CLASSIFICATION_CONCURRENCY", default: "1") |> String.to_integer()
   ]
 
 if prod? do

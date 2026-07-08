@@ -340,7 +340,6 @@ defmodule Flirtual.Faker do
           original_file: img.original_file,
           external_id: img.external_id,
           blur_id: img.blur_id,
-          scanned: true,
           order: idx,
           created_at: now,
           updated_at: now

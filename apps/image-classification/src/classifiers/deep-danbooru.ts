@@ -1,75 +1,75 @@
 import { spawn } from "node:child_process";
-import fs from "node:fs/promises";
-import path from "node:path";
 
-import { temporaryDirectory } from "../consts";
 import { log } from "../log";
-
-import type { Classifier } from ".";
 
 export type Result = Record<string, number>;
 
-export const classify: Classifier<Result> = async (images, groupFile) => {
-	const map = new Map<string, Result>();
+const host = process.env.DD_HOST ?? "127.0.0.1";
+const modelPort = Number.parseInt(process.env.DD_PORT ?? "5001");
+const modelUrl = `http://${host}:${modelPort}`;
 
-	await new Promise((resolve, reject) => {
-		// Spawn the Python process.
-		const process = spawn(
-			"python3",
-			[
-				"deepdanbooru/__main__.py",
-				"evaluate",
-				path.resolve(temporaryDirectory, groupFile),
-				"--project-path",
-				"./",
-				"--allow-folder",
-				"--save-json"
-			],
-			{
-				cwd: "deep-danbooru"
-			}
-		);
+let modelReady = false;
 
-		process.stderr.on("data", (data) =>
-			log.error({ groupFile, classifierId: "deepDanbooru" }, data.toString())
-		);
+export const isReady = (): boolean => modelReady;
 
-		process.on("error", (reason) => {
-			log.error({ groupFile, classifierId: "deepDanbooru", reason }, "Failed.");
-			reject(reason);
-		});
-		process.on("close", resolve);
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+// Spawn the resident DeepDanbooru model server and wait until it has loaded the
+// TensorFlow model. Restart if it dies.
+export const startModel = async (): Promise<void> => {
+	const child = spawn("python3", ["deepdanbooru_server.py"], {
+		stdio: ["ignore", "inherit", "inherit"],
+		env: process.env
 	});
 
-	// Deep Danbooru outputs a JSON file for each image.
-	// We read the files and parse them into a map.
-	await Promise.all(
-		images.map(async (image) => {
-			const content = await fs
-				.readFile(
-					path.resolve(temporaryDirectory, groupFile, `${image.file}.json`),
-					"utf8"
-				)
-				.catch((reason) =>
-					log.error({ groupFile, classifierId: "deepDanbooru" }, reason)
-				);
-
-			if (!content) return;
-
-			const data = JSON.parse(content) as Record<string, string>;
-
-			map.set(
-				image.id,
-				Object.fromEntries(
-					Object.entries(data).map(([tag, probability]) => [
-						tag,
-						// Round the probability to 4 decimal places.
-						Number.parseFloat(Number.parseFloat(probability).toFixed(4))
-					])
-				)
+	child.on("exit", (code) => {
+		modelReady = false;
+		log.error({ code }, "DeepDanbooru model server exited; restarting in 5s.");
+		setTimeout(() => {
+			void startModel().catch((reason) =>
+				log.error({ reason: String(reason) }, "DeepDanbooru restart failed.")
 			);
-		})
-	);
+		}, 5000);
+	});
 
-	return map;
+	for (let attempt = 0; attempt < 600; attempt++) {
+		try {
+			const response = await fetch(`${modelUrl}/health`);
+			if (response.ok) {
+				modelReady = true;
+				log.info("DeepDanbooru model ready.");
+				return;
+			}
+		} catch {
+			// Not listening yet; keep polling.
+		}
+
+		await sleep(1000);
+	}
+
+	throw new Error("DeepDanbooru model server did not become ready in time.");
+};
+
+// Evaluate an image file, returning tag -> probability.
+export const evaluate = async (imagePath: string): Promise<Result> => {
+	const response = await fetch(`${modelUrl}/evaluate`, {
+		method: "POST",
+		headers: { "content-type": "application/json" },
+		body: JSON.stringify({ path: imagePath })
+	});
+
+	if (!response.ok) {
+		const body = await response.text().catch(() => "");
+		throw new Error(`DeepDanbooru evaluate failed (${response.status}): ${body}`);
+	}
+
+	const data = (await response.json()) as Record<string, number>;
+
+	// Round to 4 decimal places.
+	return Object.fromEntries(
+		Object.entries(data).map(([tag, probability]) => [
+			tag,
+			Number.parseFloat(probability.toFixed(4))
+		])
+	);
 };

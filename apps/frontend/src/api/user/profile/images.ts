@@ -13,7 +13,6 @@ export interface ProfileImageMetadata {
 export type ProfileImage = {
 	originalFile?: string;
 	externalId?: string;
-	scanned?: boolean;
 }
 & DatedModel
 & Partial<ProfileImageMetadata> & UuidModel;
