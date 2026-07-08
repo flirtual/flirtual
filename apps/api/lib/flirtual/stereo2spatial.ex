@@ -20,7 +20,7 @@ defmodule Flirtual.Stereo2Spatial do
       Req.request(
         method: :get,
         url: origin <> "/convert",
-        params: [url: source_url],
+        params: [url: source_url, strip: 1],
         headers: if(is_binary(token), do: [{"authorization", "Bearer " <> token}], else: []),
         receive_timeout: @receive_timeout,
         decode_body: false,
