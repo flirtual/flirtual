@@ -64,7 +64,7 @@ defmodule FlirtualWeb.ImageController do
 
   @twelve_hours 43_200_000
 
-  def upload(conn, _) do
+  def upload(conn, params) do
     user_id = conn.assigns[:session].user_id
     bucket = "upload_image:#{user_id}"
 
@@ -75,7 +75,7 @@ defmodule FlirtualWeb.ImageController do
     else
       id = UUID.generate()
 
-      with {:ok, signed_url} <- presigned_upload_url(id) do
+      with {:ok, signed_url} <- presigned_upload_url(id, params["sbs"] == true) do
         ExRated.check_rate(bucket, @twelve_hours, 100)
 
         conn |> json(%{id: id, signed_url: signed_url})
@@ -83,7 +83,7 @@ defmodule FlirtualWeb.ImageController do
     end
   end
 
-  defp presigned_upload_url(id) do
+  defp presigned_upload_url(id, sbs) do
     if Application.get_env(:flirtual, :local_uploads?) do
       origin = Application.fetch_env!(:flirtual, :origin)
       {:ok, "#{origin}/v1/images/#{id}/file"}
@@ -94,7 +94,9 @@ defmodule FlirtualWeb.ImageController do
           _ -> "pfpup"
         end
 
-      ExAws.Config.new(:s3, []) |> ExAws.S3.presigned_url(:put, bucket, id, [])
+      opts = if sbs, do: [headers: [{"x-amz-meta-stereo", "sbs"}]], else: []
+
+      ExAws.Config.new(:s3, []) |> ExAws.S3.presigned_url(:put, bucket, id, opts)
     end
   end
 

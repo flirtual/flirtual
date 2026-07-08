@@ -70,7 +70,7 @@ export interface InputImageSetProps {
 	max?: number;
 }
 
-type UppyfileMeta = { id: string; stereo?: boolean } & Partial<ProfileImageMetadata>;
+type UppyfileMeta = { id: string; stereo?: boolean; sbs?: boolean } & Partial<ProfileImageMetadata>;
 type UppyfileData = Record<string, unknown>;
 
 // Cloudflare Image Resizing rejects images over 100MP.
@@ -240,12 +240,14 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 			limit: 15,
 			async getUploadParameters(file) {
 				try {
-					const { id, signedUrl } = await Image.upload();
+					const sbs = file.meta.sbs === true;
+					const { id, signedUrl } = await Image.upload(sbs);
 					file.meta.id = id;
 
 					return {
 						url: signedUrl,
-						method: "PUT"
+						method: "PUT",
+						...(sbs ? { headers: { "x-amz-meta-stereo": "sbs" } } : {})
 					};
 				}
 				catch (reason) {
