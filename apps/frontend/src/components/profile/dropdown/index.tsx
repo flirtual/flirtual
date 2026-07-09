@@ -89,7 +89,7 @@ export const ProfileDropdown: FC<ProfileDropdownProps> = ({ userId }) => {
 						<DropdownMenuItem asChild>
 							<Link
 								className="gap-2"
-								href={`https://hello.flirtu.al/a/search/customers?term=${user.email}`}
+								href={`https://hello.flirtu.al/a/search/contacts?term=${user.email}`}
 								target="_blank"
 							>
 								<Headset className="size-5" />
