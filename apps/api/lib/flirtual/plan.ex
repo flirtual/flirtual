@@ -16,8 +16,6 @@ defmodule Flirtual.Plan do
     field(:recurring, :boolean, default: true)
     field(:purchasable, :boolean, default: true)
 
-    field(:product_id, :string)
-    field(:price_id, :string)
     field(:google_id, :string)
     field(:apple_id, :string)
     field(:chargebee_id, :string)
@@ -28,11 +26,6 @@ defmodule Flirtual.Plan do
 
   def get(plan_id) when is_uid(plan_id) do
     Plan |> where(id: ^plan_id) |> Repo.one()
-  end
-
-  def get(product_id: product_id, price_id: price_id)
-      when is_binary(product_id) and is_binary(price_id) do
-    Plan |> where(product_id: ^product_id, price_id: ^price_id) |> Repo.one()
   end
 
   def get(chargebee_id: chargebee_id) when is_binary(chargebee_id) do
@@ -55,8 +48,6 @@ defimpl Jason.Encoder, for: Flirtual.Plan do
     only: [
       :id,
       :name,
-      :product_id,
-      :price_id,
       :google_id,
       :apple_id,
       :chargebee_id,
