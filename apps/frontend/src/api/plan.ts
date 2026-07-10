@@ -11,8 +11,6 @@ export type SubscriptionFeature = (typeof SubscriptionFeatures)[number];
 export type Plan = {
 	name: string;
 	features: Array<SubscriptionFeature>;
-	productId?: string;
-	priceId?: string;
 	appleId?: string;
 	googleId?: string;
 	revenuecatId?: string;
