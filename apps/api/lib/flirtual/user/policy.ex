@@ -94,6 +94,7 @@ defmodule Flirtual.User.Policy do
     :payments_ban,
     :payments_unban,
     :update_tags,
+    :manage_subscription,
     :sudo,
     :delete
   ]

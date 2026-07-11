@@ -278,6 +278,12 @@ export const User = {
 	paymentsUnban(userId: string) {
 		return this.api.url(`/${userId}/payments-ban`).delete().json<User>();
 	},
+	grantPromotionalPremium(userId: string) {
+		return this.api.url(`/${userId}/promotional-premium`).post().json<User>();
+	},
+	revokePromotionalPremium(userId: string) {
+		return this.api.url(`/${userId}/promotional-premium`).delete().json<User>();
+	},
 	warn(
 		userId: string,
 		options: {

@@ -34,6 +34,9 @@ defmodule Flirtual.Subscription do
   def active?(%Subscription{cancelled_at: nil}), do: true
   def active?(_), do: false
 
+  def promotional?(%Subscription{plan_id: plan_id}), do: plan_id == Plan.promotional_id()
+  def promotional?(_), do: false
+
   def reset_matchmaking_timer(profile) do
     profile
     |> change(%{queue_love_reset_at: nil, queue_friend_reset_at: nil})
@@ -269,6 +272,66 @@ defmodule Flirtual.Subscription do
   end
 
   def get(_), do: nil
+
+  def grant_promotional(%User{subscription: %Subscription{} = subscription} = user) do
+    cond do
+      promotional?(subscription) and active?(subscription) -> {:ok, subscription}
+      active?(subscription) -> {:error, :existing_subscription}
+      true -> set_promotional(user, subscription)
+    end
+  end
+
+  def grant_promotional(%User{subscription: nil} = user),
+    do: set_promotional(user, %Subscription{})
+
+  defp set_promotional(user, subscription) do
+    case Plan.promotional() do
+      %Plan{} = plan ->
+        Repo.transaction(fn ->
+          with {:ok, subscription} <-
+                 subscription
+                 |> change(%{
+                   user_id: user.id,
+                   plan_id: plan.id,
+                   cancelled_at: nil,
+                   google_id: nil,
+                   apple_id: nil,
+                   chargebee_id: nil
+                 })
+                 |> Repo.insert_or_update(),
+               {:ok, _} <- reset_matchmaking_timer(user.profile) do
+            subscription
+          else
+            {:error, reason} -> Repo.rollback(reason)
+            reason -> Repo.rollback(reason)
+          end
+        end)
+
+      nil ->
+        {:error, :promotional_plan_missing}
+    end
+  end
+
+  def revoke_promotional(%User{subscription: %Subscription{} = subscription} = user) do
+    if promotional?(subscription) and active?(subscription) do
+      now = DateTime.utc_now() |> DateTime.truncate(:second)
+
+      Repo.transaction(fn ->
+        with {:ok, _} <- reset_premium_settings(user.profile),
+             {:ok, subscription} <-
+               subscription |> change(%{cancelled_at: now}) |> Repo.update() do
+          subscription
+        else
+          {:error, reason} -> Repo.rollback(reason)
+          reason -> Repo.rollback(reason)
+        end
+      end)
+    else
+      {:error, :not_promotional}
+    end
+  end
+
+  def revoke_promotional(%User{subscription: nil}), do: {:error, :not_promotional}
 end
 
 defimpl Jason.Encoder, for: Flirtual.Subscription do
