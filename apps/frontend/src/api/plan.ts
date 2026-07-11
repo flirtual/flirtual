@@ -8,6 +8,8 @@ import type { DatedModel, UuidModel } from "./common";
 export const SubscriptionFeatures = ["custom_weights"] as const;
 export type SubscriptionFeature = (typeof SubscriptionFeatures)[number];
 
+export const promotionalPlanId = "Duk5r7zeKUhqXv5L6P3m3Q";
+
 export type Plan = {
 	name: string;
 	features: Array<SubscriptionFeature>;

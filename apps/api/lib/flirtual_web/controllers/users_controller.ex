@@ -12,7 +12,7 @@ defmodule FlirtualWeb.UsersController do
   import Flirtual.Utilities
   import Flirtual.Attribute, only: [validate_attribute: 3]
 
-  alias Flirtual.{Discord, IpAddress, ObanWorkers, Policy, Repo, User, Users}
+  alias Flirtual.{Discord, IpAddress, ObanWorkers, Policy, Repo, Subscription, User, Users}
   alias Flirtual.User.Session
   alias Flirtual.User.Profile.Block
   alias FlirtualWeb.SessionController
@@ -441,6 +441,34 @@ defmodule FlirtualWeb.UsersController do
     else
       with {:ok, user} <- User.payments_unban(user) do
         conn |> json(Policy.transform(conn, user))
+      end
+    end
+  end
+
+  def grant_promotional(conn, %{"user_id" => user_id}) do
+    user = Users.get(user_id)
+
+    if is_nil(user) or Policy.cannot?(conn, :manage_subscription, user) do
+      {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
+    else
+      case Subscription.grant_promotional(user) do
+        {:ok, _} -> conn |> json(Policy.transform(conn, Users.get(user_id)))
+        {:error, :existing_subscription} -> {:error, {:conflict, :existing_subscription}}
+        {:error, reason} -> {:error, {:bad_request, reason}}
+      end
+    end
+  end
+
+  def revoke_promotional(conn, %{"user_id" => user_id}) do
+    user = Users.get(user_id)
+
+    if is_nil(user) or Policy.cannot?(conn, :manage_subscription, user) do
+      {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
+    else
+      case Subscription.revoke_promotional(user) do
+        {:ok, _} -> conn |> json(Policy.transform(conn, Users.get(user_id)))
+        {:error, :not_promotional} -> {:error, {:conflict, :not_promotional}}
+        {:error, reason} -> {:error, {:bad_request, reason}}
       end
     end
   end

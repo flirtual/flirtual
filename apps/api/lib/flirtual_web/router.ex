@@ -386,6 +386,9 @@ defmodule FlirtualWeb.Router do
             delete("/payments-ban", UsersController, :payments_unban)
 
             scope "/warn" do
+            post("/promotional-premium", UsersController, :grant_promotional)
+            delete("/promotional-premium", UsersController, :revoke_promotional)
+
               post("/", UsersController, :warn)
               delete("/", UsersController, :revoke_warn)
               put("/", UsersController, :acknowledge_warn)

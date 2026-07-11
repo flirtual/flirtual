@@ -24,6 +24,10 @@ defmodule Flirtual.Plan do
     timestamps(updated_at: false)
   end
 
+  def promotional_id, do: "Duk5r7zeKUhqXv5L6P3m3Q"
+
+  def promotional, do: get(promotional_id())
+
   def get(plan_id) when is_uid(plan_id) do
     Plan |> where(id: ^plan_id) |> Repo.one()
   end

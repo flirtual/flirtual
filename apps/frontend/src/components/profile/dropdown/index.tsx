@@ -26,6 +26,7 @@ import { useUser } from "~/hooks/use-user";
 import { urls } from "~/urls";
 
 import { ImpersonateAction } from "./actions/impersonate";
+import { PromotionalPremiumAction } from "./actions/promotional-premium";
 import { ProfileDropdownCopySubmenu } from "./submenus/copy";
 import { ProfileDropdownModerateSubmenu } from "./submenus/moderate";
 import { ProfileDropdownReportsSubmenu } from "./submenus/reports";
@@ -97,6 +98,7 @@ export const ProfileDropdown: FC<ProfileDropdownProps> = ({ userId }) => {
 							</Link>
 						</DropdownMenuItem>
 						<DropdownMenuSeparator />
+						<PromotionalPremiumAction user={user} />
 						<DropdownMenuItem asChild>
 							<Link
 								className="gap-2"
