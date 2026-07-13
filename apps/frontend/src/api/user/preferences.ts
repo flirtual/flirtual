@@ -38,7 +38,7 @@ export interface Preferences {
 export const Preferences = {
 	update(
 		userId: string,
-		options: Partial<Pick<Preferences, "language" | "nsfw" | "theme" | "dismissed">>
+		options: Partial<Pick<Preferences, "dismissed" | "language" | "nsfw" | "theme">>
 	) {
 		return api
 			.url(`users/${userId}/preferences`)
