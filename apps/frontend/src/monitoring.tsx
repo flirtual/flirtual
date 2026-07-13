@@ -13,6 +13,7 @@ import {
 	sentryDsn,
 	sentryEnabled,
 	sentryLogs,
+	sentryProfiles,
 	sentryTraces,
 	siteOrigin
 } from "~/const";
@@ -27,6 +28,8 @@ export function initializeMonitoring() {
 		dsn: sentryDsn,
 		sampleRate: 1,
 		tracesSampleRate: sentryTraces,
+		profileSessionSampleRate: sentryProfiles,
+		profileLifecycle: "trace",
 		enableLogs: sentryLogs,
 		replaysOnErrorSampleRate: 1,
 		replaysSessionSampleRate: 0,
@@ -48,6 +51,7 @@ export function initializeMonitoring() {
 		environment: development ? "development" : (preview || "production"),
 		integrations: [
 			Sentry.reactRouterTracingIntegration(),
+			Sentry.browserProfilingIntegration(),
 			Sentry.replayIntegration({
 				mask: ["[data-mask]"],
 				unmask: ["[data-unmask]"],
