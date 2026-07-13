@@ -38,15 +38,27 @@ config :flirtual, Flirtual.Repo, telemetry_prefix: [:flirtual, :repo]
 config :flirtual, Oban,
   repo: Flirtual.Repo,
   notifier: Oban.Notifiers.PG,
+  # Only affects promotion of scheduled/retryable jobs; immediately-enqueued
+  # jobs dispatch via insert triggers, so this interval doesn't delay them.
+  # https://hexdocs.pm/oban/scaling.html#triggers
+  stage_interval: :timer.seconds(5),
   plugins: [
-    {Oban.Plugins.Pruner, max_age: 60 * 60 * 24 * 7},
+    # Short retention is safe here: the completed-state unique jobs are all
+    # cron-cadence, so their dedup window never reaches back this far.
+    # https://hexdocs.pm/oban/scaling.html#pruning
+    {Oban.Plugins.Pruner, max_age: 60 * 60 * 24 * 2},
     {Oban.Plugins.Lifeline, rescue_after: :timer.minutes(30)},
+    {Oban.Plugins.Reindexer, schedule: "@weekly"},
     {Oban.Plugins.Cron,
      crontab: [
        {"@daily", Flirtual.ObanWorkers.Daily},
        {"0 18 * * SAT", Flirtual.ObanWorkers.Weekly}
      ]}
   ]
+
+# Oban Web's metrics reporter counts jobs every second by default. 5s is ample
+# for the dashboard and cuts per-second aggregate queries over oban_jobs.
+config :oban_met, :reporter, check_interval: :timer.seconds(5)
 
 config :elixir, :time_zone_database, Tz.TimeZoneDatabase
 

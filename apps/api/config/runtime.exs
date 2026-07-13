@@ -256,6 +256,14 @@ if prod? do
     queue_interval: String.to_integer(Env.get("QUEUE_INTERVAL", default: "1000")),
     socket_options: if(Env.get("ECTO_IPV6"), do: [:inet6], else: [])
 
+  # Give Oban its own connection pool (started in application.ex when
+  # :oban_pool_size is set) so its query volume doesn't contend with the pool
+  # serving web requests. https://hexdocs.pm/oban/scaling.html#pooling
+  config :flirtual, :oban_pool_size,
+    String.to_integer(Env.get("OBAN_POOL_SIZE", default: "10"))
+
+  config :flirtual, Oban, get_dynamic_repo: {Flirtual.Repo, :oban_repo, []}
+
   config :flirtual, Flirtual.Elasticsearch,
     url: Env.get!("ELASTICSEARCH_URL"),
     index_namespace: Env.get("ELASTICSEARCH_INDEX_PREFIX"),
