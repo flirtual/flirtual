@@ -2,6 +2,7 @@ import type { FC } from "react";
 import type React from "react";
 import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
+import FlittyImage from "virtual:remote/flitty.png";
 
 import type { User } from "~/api/user";
 import { urls } from "~/urls";
@@ -56,10 +57,15 @@ export const UserImage: React.FC<UserImageProps> = ({ src, ...props }) => {
 		<Image
 			{...props}
 			className={twMerge(
-				"aspect-square shrink-0 object-cover",
+				"aspect-square shrink-0 bg-contain bg-center bg-no-repeat object-cover text-transparent",
 				props.className
 			)}
 			src={src}
+			style={{ backgroundImage: `url(${FlittyImage})`, ...props.style }}
+			onLoad={(event) => {
+				event.currentTarget.style.backgroundImage = "none";
+				props.onLoad?.(event);
+			}}
 		/>
 	);
 };
