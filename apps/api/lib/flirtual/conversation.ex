@@ -281,7 +281,7 @@ defmodule Flirtual.Conversation do
         when action in [:read, :send_message] do
       with true <- user_id in participants,
            [other_id] <- Enum.reject(participants, &(&1 === user_id)),
-           %User{} = target <- Users.get(other_id) do
+           %User{} = target <- Users.get(other_id, []) do
         Policy.can?(conn, :read, target)
       else
         _ -> false
