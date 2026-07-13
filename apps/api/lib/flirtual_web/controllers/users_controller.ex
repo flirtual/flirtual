@@ -103,7 +103,7 @@ defmodule FlirtualWeb.UsersController do
     end
   end
 
-  def inspect(conn, %{"user_id" => user_id, "type" => "elasticsearch"}) do
+  def inspect(conn, %{"user_id" => user_id, "type" => "search"}) do
     user =
       if(conn.assigns[:session].user.id === user_id,
         do: conn.assigns[:session].user,
@@ -113,7 +113,7 @@ defmodule FlirtualWeb.UsersController do
     if is_nil(user) or Policy.cannot?(conn, :inspect, user) do
       {:error, {:not_found, :user_not_found, %{user_id: user_id}}}
     else
-      conn |> json_with_etag(Flirtual.User.SearchDocument.encode(user))
+      conn |> json_with_etag(Flirtual.Search.Document.encode(user))
     end
   end
 
@@ -261,7 +261,7 @@ defmodule FlirtualWeb.UsersController do
 
   def confirm_email(conn, params) do
     with {:ok, user} <- Users.confirm_update_email(params),
-         {:ok, _} <- ObanWorkers.update_user(user.id, [:elasticsearch, :listmonk, :talkjs]) do
+         {:ok, _} <- ObanWorkers.update_user(user.id, [:search_index, :listmonk, :talkjs]) do
       conn
       |> json(%{
         user_id: user.id,

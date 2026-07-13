@@ -4,7 +4,7 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
 
   import Ecto.Query
 
-  alias Flirtual.{ObanWorkers, Repo, Talkjs, User}
+  alias Flirtual.{ObanWorkers, Repo, User}
   alias Flirtual.User.Profile.{Attributes, Block, LikesAndPasses}
 
   schema "likes_and_passes" do
@@ -38,6 +38,37 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
       do: true
 
   def matched?(_, _), do: false
+
+  # Selectivity weight for a user's likes, from their like/pass ratio over
+  # their last 150 actions: 1x at 1:1, up to 1.5x at 1:9, down to 0.5x at 9:1.
+  @pickiness_window 150
+
+  def like_multiplier(user_id) do
+    recent =
+      from(lp in LikesAndPasses,
+        where: lp.profile_id == ^user_id,
+        order_by: [desc: lp.created_at],
+        limit: @pickiness_window,
+        select: lp.type
+      )
+
+    counts =
+      from(t in subquery(recent), group_by: t.type, select: {t.type, count()})
+      |> Repo.all()
+      |> Map.new()
+
+    like_multiplier(Map.get(counts, :like, 0), Map.get(counts, :pass, 0))
+  end
+
+  def like_multiplier(0, 0), do: 1.0
+
+  def like_multiplier(likes, passes) do
+    fraction = likes / (likes + passes)
+
+    (1.0 + (0.5 - fraction) * 1.25)
+    |> min(1.5)
+    |> max(0.5)
+  end
 
   def get(user: %User{id: user_id}, target: %User{id: target_id}, type: type),
     do: get(user_id: user_id, target_id: target_id, type: type)
@@ -239,7 +270,7 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
              |> where(profile_id: ^profile_id, type: :like)
              |> where([lap], lap.target_id in ^liked_users)
              |> Repo.delete_all(),
-           {:ok, _} <- ObanWorkers.update_user(profile_id, [:elasticsearch, :refresh_prospects]) do
+           {:ok, _} <- ObanWorkers.update_user(profile_id, [:compute_queue]) do
         count
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -253,7 +284,7 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
              LikesAndPasses
              |> where(profile_id: ^profile_id, type: :pass)
              |> Repo.delete_all(),
-           {:ok, _} <- ObanWorkers.update_user(profile_id, [:elasticsearch, :refresh_prospects]) do
+           {:ok, _} <- ObanWorkers.update_user(profile_id, [:compute_queue]) do
         count
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -269,7 +300,9 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
              |> where(profile_id: ^profile_id, target_id: ^target_id)
              |> Repo.delete_all(),
            {:ok, _} <-
-             Talkjs.delete_participants(user_id: profile_id, target_id: target_id) do
+             %{user_id: profile_id, target_id: target_id}
+             |> ObanWorkers.Unmatch.new()
+             |> Oban.insert() do
         count
       else
         {:error, reason} -> Repo.rollback(reason)

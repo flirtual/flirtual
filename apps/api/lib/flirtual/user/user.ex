@@ -703,7 +703,7 @@ defmodule Flirtual.User do
              |> Repo.update(),
            {:ok, _} <- Report.list(target_id: user.id) |> Report.clear_all(moderator, true),
            {:ok, user} <- User.update_status(user),
-           {:ok, _} <- ObanWorkers.update_user(user.id, [:elasticsearch, :listmonk, :talkjs]),
+           {:ok, _} <- ObanWorkers.update_user(user.id, [:search_index, :listmonk, :talkjs]),
            {_, _} <- Session.delete(user_id: user.id),
            User.Email.deliver(user, :suspended, message) do
         Discord.deliver_webhook(:suspended,
@@ -730,9 +730,9 @@ defmodule Flirtual.User do
            {:ok, user} <- User.update_status(user),
            {:ok, _} <-
              ObanWorkers.update_user(user.id, [
-               :elasticsearch,
+               :search_index,
                :listmonk,
-               :refresh_prospects,
+               :compute_queue,
                :talkjs
              ]),
            :ok <-
@@ -759,9 +759,9 @@ defmodule Flirtual.User do
            {:ok, user} <- User.update_status(user),
            {:ok, _} <-
              ObanWorkers.update_user(user.id, [
-               :elasticsearch,
+               :search_index,
                :listmonk,
-               :refresh_prospects,
+               :compute_queue,
                :talkjs
              ]),
            :ok <-
@@ -786,9 +786,9 @@ defmodule Flirtual.User do
            {:ok, user} <- User.update_status(user),
            {:ok, _} <-
              ObanWorkers.update_user(user.id, [
-               :elasticsearch,
+               :search_index,
                :listmonk,
-               :refresh_prospects,
+               :compute_queue,
                :talkjs
              ]),
            :ok <-
@@ -854,7 +854,7 @@ defmodule Flirtual.User do
            {:ok, user} <- User.update_status(user),
            {:ok, _} <-
              ObanWorkers.update_user(if(shadowban, do: user.id, else: []), [
-               :elasticsearch,
+               :search_index,
                :talkjs
              ]),
            :ok <-
@@ -1263,111 +1263,6 @@ defmodule Flirtual.User do
       validate_current_password(changeset, user, options)
     else
       changeset
-    end
-  end
-end
-
-defmodule Flirtual.User.SearchDocument do
-  alias Flirtual.Attribute
-  import Flirtual.Utilities
-  import Ecto.Query
-
-  alias Flirtual.Elasticsearch
-  alias Flirtual.User.Profile.LikesAndPasses
-  alias Flirtual.User
-  alias Flirtual.Repo
-
-  def encode(%User{} = user) do
-    profile = user.profile
-
-    attributes =
-      profile.attributes
-      |> Attribute.normalize_aliases()
-      |> then(
-        &if(user.preferences.nsfw,
-          do: &1,
-          else: exclude_by(&1, :type, "kink")
-        )
-      )
-      |> Enum.map(& &1.id)
-      |> Enum.sort()
-
-    attributes_lf =
-      profile.preferences.attributes
-      |> then(
-        &if(user.preferences.nsfw,
-          do:
-            &1 ++
-              (profile.attributes
-               |> filter_by(:type, "kink")
-               |> Attribute.normalize_pairs()),
-          else: exclude_by(&1, :type, "kink")
-        )
-      )
-      |> Enum.map(& &1.id)
-      |> Enum.sort()
-
-    document =
-      Map.merge(
-        %{
-          id: user.id,
-          dob: user.born_at,
-          active_at: user.active_at,
-          platforms: user.platforms,
-          agemin: profile.preferences.agemin || 18,
-          agemax: profile.preferences.agemax || 128,
-          openness: profile.openness,
-          conscientiousness: profile.conscientiousness,
-          agreeableness: profile.agreeableness,
-          custom_interests:
-            profile.custom_interests
-            |> Enum.map(
-              &(&1
-                |> String.downcase()
-                |> String.replace(~r/[^[:alnum:]]/u, ""))
-            ),
-          attributes: attributes,
-          attributes_lf: attributes_lf,
-          country: profile.country,
-          monopoly: profile.monopoly,
-          relationships: profile.relationships,
-          nsfw: user.preferences.nsfw,
-          languages: profile.languages,
-          liked:
-            LikesAndPasses
-            |> where(profile_id: ^profile.user_id, type: :like)
-            |> select([item], item.target_id)
-            |> Repo.all(),
-          hidden_from_nonvisible:
-            user.tns_discord_in_biography !== nil and :moderator not in user.tags and
-              :admin not in user.tags,
-          tz_norm:
-            if(profile.timezone,
-              do: Flirtual.Utilities.timezone_normalized(profile.timezone),
-              else: nil
-            ),
-          geolocation:
-            if(profile.latitude && profile.longitude,
-              do: %{"lat" => profile.latitude, "lon" => profile.longitude},
-              else: nil
-            )
-        },
-        if(user.preferences.nsfw,
-          do: %{
-            domsub: user.profile.domsub
-          },
-          else: %{}
-        )
-      )
-
-    document
-  end
-
-  def delete_if_exists(id) do
-    case Snap.Document.delete(Elasticsearch, "users", id) do
-      {:ok, _} -> :ok
-      {:error, %Snap.ResponseError{type: "not_found"}} -> :ok
-      error -> error
     end
   end
 end

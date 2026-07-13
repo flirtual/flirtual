@@ -72,8 +72,8 @@ export const QueueActions: FC<{
 }> = ({ kind: mode, explicitUserId }) => {
 	const { t } = useTranslation();
 	const {
-		previous,
 		next: [current],
+		canUndo,
 		like,
 		pass,
 		undo,
@@ -103,12 +103,11 @@ export const QueueActions: FC<{
 				)
 					return;
 
-				if (event.key === "h" && previous) void undo();
-				if (event.key === "j" && !blocked) void like();
-				if (event.key === "k" && !blocked) void like("friend");
-				if (event.key === "l") void pass();
+				if (event.key === "h" && canUndo) void undo();
+				if (event.key === "j" && !blocked) void like(explicitUserId);
+				if (event.key === "l") void pass(explicitUserId);
 			},
-			[like, pass, undo, previous, tooFast, blocked]
+			[like, pass, undo, canUndo, tooFast, blocked, explicitUserId]
 		)
 	);
 
@@ -117,79 +116,80 @@ export const QueueActions: FC<{
 			<div className="fixed bottom-[max(calc(var(--safe-area-inset-bottom,0rem)+5.5rem),6rem)] z-20 flex flex-col items-center justify-center gap-2 desktop:bottom-12">
 				<QueueDebugger kind={mode} />
 				<div className="flex items-center gap-2 text-white-10">
-					{!explicitUserId && (
-						<Tooltip touchable={false}>
-							<TooltipTrigger asChild>
-								<m.button
-									id="undo-button"
-									className="flex h-fit items-center rounded-full border border-black-50/25 bg-white-30 p-3 text-black-50 shadow-brand-1 transition-all disabled:!scale-100 disabled:text-black-10 dark:bg-black-50 dark:text-white-10 dark:disabled:text-black-10"
-									disabled={!previous || tooFast}
-									type="button"
-									whileHover={{ scale: 1.05 }}
-									whileTap={{ scale: 0.95 }}
-									onClick={() => undo()}
-								>
-									<Undo2 className="size-7" strokeWidth={3} />
-								</m.button>
-							</TooltipTrigger>
-							<TooltipContent className="flex gap-3 px-3 py-1.5 native:hidden">
-								<span className="pt-1">{t("undo")}</span>
-								<Key label="H" />
-							</TooltipContent>
-						</Tooltip>
-					)}
-					{mode === "love" && (
-						<Tooltip touchable={false}>
-							<TooltipTrigger asChild>
-								<m.button
-									id="like-button"
-									className={twMerge(
-										"flex items-center justify-center rounded-full border border-black-50/25 bg-brand-gradient p-4 shadow-brand-1 transition-all disabled:brightness-90 dark:disabled:brightness-[80%]",
-										blocked && "grayscale-[0.75]"
-									)}
-									disabled={tooFast || blocked}
-									type="button"
-									whileHover={{ scale: 1.05 }}
-									whileTap={{ scale: 0.95 }}
-									onClick={() => like("love", explicitUserId)}
-								>
-									<HeartIcon
-										className="w-[2.125rem] shrink-0"
-										gradient={false}
-									/>
-								</m.button>
-							</TooltipTrigger>
-							<TooltipContent className="flex gap-3 px-3 py-1.5 native:hidden">
-								<span className="pt-1">{t("like")}</span>
-								<Key label="J" />
-							</TooltipContent>
-						</Tooltip>
-					)}
 					<Tooltip touchable={false}>
 						<TooltipTrigger asChild>
 							<m.button
-								id="friend-button"
-								className={twMerge(
-									"flex items-center justify-center rounded-full border border-black-50/25 bg-gradient-to-tr from-theme-friend-1 to-theme-friend-2 p-4 shadow-brand-1 transition-all disabled:brightness-90 dark:disabled:brightness-[80%]",
-									blocked && "grayscale-[0.75]"
-								)}
-								disabled={tooFast || blocked}
+								id="undo-button"
+								className="flex h-fit items-center rounded-full border border-black-50/25 bg-white-30 p-3 text-black-50 shadow-brand-1 transition-all disabled:!scale-100 disabled:text-black-10 dark:bg-black-50 dark:text-white-10 dark:disabled:text-black-10"
+								disabled={!!explicitUserId || !canUndo || tooFast}
 								type="button"
 								whileHover={{ scale: 1.05 }}
 								whileTap={{ scale: 0.95 }}
-								onClick={() => like("friend", explicitUserId)}
+								onClick={() => undo()}
 							>
-								<PeaceIcon
-									className="w-[2.125rem] shrink-0"
-									gradient={false}
-								/>
+								<Undo2 className="size-7" strokeWidth={3} />
 							</m.button>
 						</TooltipTrigger>
 						<TooltipContent className="flex gap-3 px-3 py-1.5 native:hidden">
-							<span className="pt-1">{t("homie")}</span>
-							<Key label={mode === "love" ? "K" : "J"} />
+							<span className="pt-1">{t("undo")}</span>
+							<Key label="H" />
 						</TooltipContent>
 					</Tooltip>
+					{mode === "love"
+						? (
+								<Tooltip touchable={false}>
+									<TooltipTrigger asChild>
+										<m.button
+											id="like-button"
+											className={twMerge(
+												"flex items-center justify-center rounded-full border border-black-50/25 bg-brand-gradient p-4 shadow-brand-1 transition-all disabled:brightness-90 dark:disabled:brightness-[80%]",
+												blocked && "grayscale-[0.75]"
+											)}
+											disabled={tooFast || blocked}
+											type="button"
+											whileHover={{ scale: 1.05 }}
+											whileTap={{ scale: 0.95 }}
+											onClick={() => like(explicitUserId)}
+										>
+											<HeartIcon
+												className="w-[2.125rem] shrink-0"
+												gradient={false}
+											/>
+										</m.button>
+									</TooltipTrigger>
+									<TooltipContent className="flex gap-3 px-3 py-1.5 native:hidden">
+										<span className="pt-1">{t("like")}</span>
+										<Key label="J" />
+									</TooltipContent>
+								</Tooltip>
+							)
+						: (
+								<Tooltip touchable={false}>
+									<TooltipTrigger asChild>
+										<m.button
+											id="friend-button"
+											className={twMerge(
+												"flex items-center justify-center rounded-full border border-black-50/25 bg-gradient-to-tr from-theme-friend-1 to-theme-friend-2 p-4 shadow-brand-1 transition-all disabled:brightness-90 dark:disabled:brightness-[80%]",
+												blocked && "grayscale-[0.75]"
+											)}
+											disabled={tooFast || blocked}
+											type="button"
+											whileHover={{ scale: 1.05 }}
+											whileTap={{ scale: 0.95 }}
+											onClick={() => like(explicitUserId)}
+										>
+											<PeaceIcon
+												className="w-[2.125rem] shrink-0"
+												gradient={false}
+											/>
+										</m.button>
+									</TooltipTrigger>
+									<TooltipContent className="flex gap-3 px-3 py-1.5 native:hidden">
+										<span className="pt-1">{t("homie")}</span>
+										<Key label="J" />
+									</TooltipContent>
+								</Tooltip>
+							)}
 					<Tooltip touchable={false}>
 						<TooltipTrigger asChild>
 							<m.button
@@ -199,7 +199,7 @@ export const QueueActions: FC<{
 								type="button"
 								whileHover={{ scale: 1.05 }}
 								whileTap={{ scale: 0.95 }}
-								onClick={() => pass(undefined, explicitUserId)}
+								onClick={() => pass(explicitUserId)}
 							>
 								<X className="size-7" strokeWidth={3} />
 							</m.button>

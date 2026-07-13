@@ -143,13 +143,6 @@ export function useDefaultTour(enabled: boolean = true) {
 								modalOverlayOpeningRadius: 33
 							},
 							{
-								id: "friend",
-								title: t("royal_house_peacock_roar"),
-								text: t("light_flat_racoon_buzz"),
-								attachTo: { element: "#friend-button", on: "top" },
-								modalOverlayOpeningRadius: 33
-							},
-							{
 								id: "pass",
 								title: t("bad_ideal_stingray_amuse"),
 								text: t("away_lime_hound_launch"),

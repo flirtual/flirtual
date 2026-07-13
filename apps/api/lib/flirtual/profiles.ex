@@ -24,7 +24,7 @@ defmodule Flirtual.Profiles do
              |> Profile.update_personality_changeset(attrs)
              |> Repo.update(),
            {:ok, _} <-
-             ObanWorkers.update_user(profile.user_id, [:elasticsearch, :refresh_prospects]) do
+             ObanWorkers.update_user(profile.user_id, [:search_index, :compute_queue]) do
         profile
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -318,9 +318,9 @@ defmodule Flirtual.Profiles do
            {:ok, _} <- User.update_status(user),
            {:ok, _} <-
              ObanWorkers.update_user(profile.user_id, [
-               :elasticsearch,
+               :search_index,
                :listmonk,
-               :refresh_prospects,
+               :compute_queue,
                :talkjs
              ]) do
         profile
@@ -340,7 +340,9 @@ defmodule Flirtual.Profiles do
            user = User.get(preferences.profile_id),
            {:ok, _} <- User.update_status(user),
            {:ok, _} <-
-             ObanWorkers.update_user(preferences.profile_id, [:elasticsearch, :refresh_prospects]) do
+             ObanWorkers.update_user(preferences.profile_id, [:search_index]),
+           :ok <-
+             Flirtual.Matchmaking.refresh_queues(preferences.profile_id, filters_updated: true) do
         preferences
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -350,41 +352,83 @@ defmodule Flirtual.Profiles do
   end
 
   def update_custom_weights(%Profile.CustomWeights{} = custom_weights, attrs) do
-    custom_weights
-    |> Profile.CustomWeights.changeset(attrs)
-    |> Repo.insert_or_update()
+    with {:ok, custom_weights} <-
+           custom_weights
+           |> Profile.CustomWeights.changeset(attrs)
+           |> Repo.insert_or_update(),
+         {:ok, _} <-
+           ObanWorkers.update_user(custom_weights.profile_id, [:compute_queue]) do
+      {:ok, custom_weights}
+    end
   end
 
-  def update_custom_filters(%Profile{user_id: profile_id}, filters) do
-    Repo.transaction(fn ->
-      with {_, nil} <-
-             Profile.CustomFilter
-             |> where(profile_id: ^profile_id)
-             |> Repo.delete_all(),
-           filters <-
-             filters
-             |> Enum.map(fn filter ->
-               with {:ok, filter} <-
-                      %Profile.CustomFilter{}
-                      |> Profile.CustomFilter.changeset(
-                        filter
-                        |> Map.put("profile_id", profile_id)
-                      )
-                      |> Repo.insert() do
-                 filter
-               else
-                 {:error, reason} -> Repo.rollback(reason)
-                 reason -> Repo.rollback(reason)
-               end
-             end),
-           {:ok, _} <-
-             ObanWorkers.update_user(profile_id, [:elasticsearch]) do
-        filters
-      else
-        {:error, reason} -> Repo.rollback(reason)
-        reason -> Repo.rollback(reason)
-      end
-    end)
+  @advanced_filter_kinds ["include", "exclude"]
+  @advanced_filter_categories Enum.map(
+                                Flirtual.User.Profile.AdvancedFilter.categories(),
+                                &to_string/1
+                              )
+
+  def update_advanced_filters(%Profile{user_id: profile_id} = profile, filters)
+      when is_list(filters) do
+    user = profile.user
+
+    attributes =
+      filters
+      |> Enum.map(&(&1["attribute_id"] || &1[:attribute_id]))
+      |> Enum.reject(&is_nil/1)
+      |> Attribute.list()
+      |> Map.new(&{&1.id, &1})
+
+    context = %{user: user, attributes: attributes}
+
+    valid_kinds_categories? =
+      Enum.all?(filters, fn filter ->
+        is_map(filter) and
+          to_string(filter["kind"] || filter[:kind]) in @advanced_filter_kinds and
+          to_string(filter["category"] || filter[:category]) in @advanced_filter_categories
+      end)
+
+    changesets =
+      filters
+      |> Enum.map(
+        &Profile.AdvancedFilter.changeset(
+          %Profile.AdvancedFilter{profile_id: profile_id},
+          &1,
+          context
+        )
+      )
+      |> Enum.uniq_by(
+        &{get_field(&1, :kind), get_field(&1, :category), get_field(&1, :attribute_id),
+         get_field(&1, :value)}
+      )
+
+    cond do
+      not valid_kinds_categories? ->
+        {:error, {:bad_request, :invalid_filter}}
+
+      length(filters) > Profile.AdvancedFilter.max_per_kind() * 2 ->
+        {:error, {:bad_request, :too_many_filters}}
+
+      Enum.any?(changesets, &(not &1.valid?)) ->
+        {:error, Enum.find(changesets, &(not &1.valid?))}
+
+      true ->
+        Repo.transaction(fn ->
+          with {_, nil} <-
+                 Profile.AdvancedFilter
+                 |> where(profile_id: ^profile_id)
+                 |> Repo.delete_all(),
+               filters <- Enum.map(changesets, &Repo.insert!/1),
+               {:ok, _} <- ObanWorkers.update_user(profile_id, [:search_index]),
+               :ok <-
+                 Flirtual.Matchmaking.refresh_queues(profile_id, filters_updated: true) do
+            filters
+          else
+            {:error, reason} -> Repo.rollback(reason)
+            reason -> Repo.rollback(reason)
+          end
+        end)
+    end
   end
 
   defmodule UpdateColors do
@@ -535,7 +579,7 @@ defmodule Flirtual.Profiles do
            user = User.get(profile.user_id),
            {:ok, _} <- User.update_status(user),
            {:ok, _} <-
-             ObanWorkers.update_user(profile.user_id, [:elasticsearch, :talkjs]) do
+             ObanWorkers.update_user(profile.user_id, [:search_index, :talkjs]) do
         images
       else
         {:error, reason} -> Repo.rollback(reason)

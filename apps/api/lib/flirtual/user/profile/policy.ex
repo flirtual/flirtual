@@ -65,9 +65,7 @@ defmodule Flirtual.User.Profile.Policy do
                        :latitude,
                        :preferences,
                        :custom_weights,
-                       :custom_filters,
-                       :queue_love_reset_at,
-                       :queue_friend_reset_at,
+                       :advanced_filters,
                        :updated_at
                      ] ++ @personality_keys ++ @nsfw_keys ++ @connection_keys
 

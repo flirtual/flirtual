@@ -1,23 +1,39 @@
 defmodule Flirtual.Matchmaking do
   use Flirtual.Logger, :matchmaking
 
-  import Flirtual.Utilities
-  import Ecto.Changeset
   import Ecto.Query
 
   alias Flirtual.Conversation
-  alias Flirtual.Elasticsearch
+  alias Flirtual.Matchmaking.Query
+  alias Flirtual.ObanWorkers
+  alias Flirtual.Repo
+  alias Flirtual.Search
   alias Flirtual.Subscription
   alias Flirtual.Talkjs
-  alias Flirtual.User.Profile
+  alias Flirtual.User
   alias Flirtual.User.Profile.Block
   alias Flirtual.User.Profile.LikesAndPasses
   alias Flirtual.User.Profile.Prospect
-  alias Flirtual.{Attribute, Repo, User}
+  alias Flirtual.User.Profile.Queue
 
-  @simple_genders ["jAL62ePbibxaG4FPu7S8LG", "rhw3rcbheU7vc9vcSy6W6V", "tpkW7r8PZ2RUuYGUSYi82N"]
+  # Free users, per mode, per day.
+  @daily_likes_limit 15
+  @daily_browses_limit 30
 
-  def next_reset_at() do
+  # Users with an incomplete profile or unconfirmed email.
+  @trial_likes_limit 7
+  @trial_browses_limit 15
+
+  # Uncompleted prospects loaded per read and protected across recomputes.
+  @foresight 3
+
+  # Uncompleted prospects exposed through the API.
+  @visible_prospects 2
+
+  # Recompute is queued once this number of uncompleted prospects remain.
+  @refresh_threshold 5
+
+  def next_reset_at do
     now = DateTime.utc_now()
     today_9am = DateTime.new!(Date.utc_today(), Time.new!(9, 0, 0, 0))
 
@@ -28,299 +44,590 @@ defmodule Flirtual.Matchmaking do
     |> DateTime.truncate(:second)
   end
 
-  @queue_limit 15
-
-  def get_queue_fields(profile, kind) do
-    %{reset_at: reset_at, likes: likes, passes: passes} =
-      case kind do
-        :love ->
-          %{
-            reset_at: profile.queue_love_reset_at,
-            likes: profile.queue_love_likes,
-            passes: profile.queue_love_passes
-          }
-
-        :friend ->
-          %{
-            reset_at: profile.queue_friend_reset_at,
-            likes: profile.queue_friend_likes,
-            passes: profile.queue_friend_passes
-          }
-      end
-
-    likes_limit = @queue_limit
-    passes_limit = @queue_limit * 2 - likes
-
-    %{
-      reset_at: reset_at,
-      likes: likes,
-      likes_left: likes_limit - likes,
-      likes_limit: likes_limit,
-      passes: passes,
-      passes_left: passes_limit - passes,
-      passes_limit: passes_limit
-    }
-  end
-
-  def queue_fields(kind) do
-    case kind do
-      :love ->
-        %{
-          reset_at: :queue_love_reset_at,
-          likes: :queue_love_likes,
-          passes: :queue_love_passes
-        }
-
-      :friend ->
-        %{
-          reset_at: :queue_friend_reset_at,
-          likes: :queue_friend_likes,
-          passes: :queue_friend_passes
-        }
-    end
-  end
-
-  def reset_queue_fields(kind) do
-    %{}
-    |> Map.put(queue_fields(kind)[:reset_at], next_reset_at())
-    |> Map.put(queue_fields(kind)[:likes], 0)
-    |> Map.put(queue_fields(kind)[:passes], 0)
-  end
-
-  def should_reset?(reset_at) do
-    reset_at === nil or
-      DateTime.compare(reset_at, DateTime.utc_now()) == :lt
-  end
-
-  @trial_likes_limit 7
-  @trial_total_limit 15
+  def reduce_kind(a, b) when a === :friend or b === :friend, do: :friend
+  def reduce_kind(_, _), do: :love
 
   defp trial_user?(%User{} = user) do
     user.status in [:registered, :onboarded] || is_nil(user.email_confirmed_at)
   end
 
-  defp trial_likes_left?(%User{} = user) do
-    user.likes_count + user.passes_count >= @trial_total_limit ||
+  defp trial_exhausted?(%User{} = user) do
+    user.likes_count + user.passes_count >= @trial_browses_limit ||
       user.likes_count >= @trial_likes_limit
   end
 
-  @prospect_foresight 2
+  defp trial_error(%User{status: :finished_profile}), do: :confirm_email
+  defp trial_error(_), do: :finish_profile
 
-  def queue_information(%User{} = user, mode) do
-    {:ok, all_prospects} = get_user_prospects(user, mode)
-    incomplete_prospects = all_prospects |> Enum.filter(&(!&1.completed))
-
-    if(trial_user?(user) && trial_likes_left?(user)) do
-      {
-        :error,
-        {
-          :forbidden,
-          case user.status do
-            :finished_profile -> :confirm_email
-            _ -> :finish_profile
-          end
-        }
-      }
+  def queue_information(%User{} = user, kind) do
+    if trial_user?(user) and trial_exhausted?(user) do
+      {:error, {:forbidden, trial_error(user)}}
     else
-      retained_prospects = get_retained_prospects(all_prospects)
+      queue = Queue.get(user.id, kind)
+      uncompleted = Prospect.list_uncompleted(user.id, kind, @foresight)
+      remaining = Prospect.count_uncompleted(user.id, kind)
+      previous = Prospect.last_completed(user.id, kind)
 
-      {:ok, prospects} =
-        if(length(incomplete_prospects) <= @prospect_foresight,
-          do: refresh_prospects(user, mode, retained_prospects),
-          else: {:ok, all_prospects}
-        )
-
-      grouped_prospects = Enum.group_by(prospects, & &1.completed)
+      enqueued = maybe_enqueue_compute(user.id, kind, queue, remaining)
 
       {:ok,
        %{
-         # completed prospects.
-         previous:
-           (grouped_prospects[true] || [])
-           |> Enum.at(-1)
-           |> case do
-             nil -> nil
-             prospect -> Map.get(prospect, :user_id)
-           end,
-         # uncompleted prospects.
-         next:
-           (grouped_prospects[false] || [])
-           |> Enum.take(@prospect_foresight)
-           |> Enum.map(&Map.get(&1, :user_id))
+         previous: previous && previous.target_id,
+         next: uncompleted |> Enum.take(@visible_prospects) |> Enum.map(& &1.target_id),
+         fallback: fallback_head?(uncompleted),
+         notice: fallback_notice(queue, uncompleted),
+         limits: limits(user, queue),
+         can_undo: not queue.undone and not is_nil(previous),
+         pending: remaining == 0 and (enqueued == :enqueued or pending?(queue))
        }}
     end
   end
 
-  defp previous_prospect(user, kind) do
-    prospect =
-      Prospect
-      |> where(profile_id: ^user.id, kind: ^kind, completed: true)
-      |> order_by(asc: :score)
-      |> limit(1)
-      |> Repo.one()
+  defp fallback_head?([%Prospect{fallback: fallback} | _]), do: fallback
+  defp fallback_head?(_), do: false
 
-    {:ok, prospect}
-  end
+  defp pending?(%Queue{requested_at: nil}), do: false
+  defp pending?(%Queue{computed_at: nil}), do: true
 
-  def get_user_prospects(user) do
-    prospects =
-      Prospect
-      |> where(profile_id: ^user.id)
-      |> order_by(desc: :completed, desc: :score, desc: :target_id)
-      |> select([prospect], %{
-        user_id: prospect.target_id,
-        kind: prospect.kind,
-        score: prospect.score,
-        completed: prospect.completed
-      })
-      |> Repo.all()
+  defp pending?(%Queue{requested_at: requested_at, computed_at: computed_at}),
+    do: DateTime.compare(requested_at, computed_at) == :gt
 
-    {:ok, prospects}
-  end
-
-  def get_user_prospects(user, kind) do
-    prospects =
-      Prospect
-      |> where(profile_id: ^user.id, kind: ^kind)
-      |> order_by(desc: :completed, desc: :score, desc: :target_id)
-      |> select([prospect], %{
-        user_id: prospect.target_id,
-        kind: prospect.kind,
-        score: prospect.score,
-        completed: prospect.completed
-      })
-      |> Repo.all()
-
-    {:ok, prospects}
-  end
-
-  def refresh_prospects(%User{} = user) do
-    {:ok, all_prospects} =
-      get_user_prospects(user)
-
-    prospects_by_kind =
-      all_prospects
-      |> Enum.sort(&(&1.score >= &2.score))
-      |> Enum.group_by(& &1.kind)
-
-    [
-      :love,
-      :friend
-    ]
-    |> Enum.map(fn kind ->
-      retained_prospects = get_retained_prospects(prospects_by_kind[kind] || [])
-      Task.async(fn -> refresh_prospects(user, kind, retained_prospects) end)
-    end)
-    |> Task.await_many()
-  end
-
-  def get_new_prospects(user, kind) do
-    query = generate_query(user, kind)
-
-    with {:ok, response} <- Snap.Search.search(Elasticsearch, "users", query) do
-      elasticsearch_prospects =
-        Enum.map(response, &%{user_id: &1.id, score: &1.score})
-
-      scores_by_user_id =
-        Map.new(elasticsearch_prospects, &{&1.user_id, &1.score})
-
-      elasticsearch_user_ids = Map.keys(scores_by_user_id)
-
-      prospects =
-        User
-        |> where([u], u.id in ^elasticsearch_user_ids and u.status == :visible)
-        |> select([u], u.id)
-        |> Repo.all()
-        |> Enum.map(fn user_id ->
-          %{
-            user_id: user_id,
-            score: Map.get(scores_by_user_id, user_id)
-          }
-        end)
-        |> Enum.sort_by(& &1.score, :desc)
-
-      {:ok, prospects}
+  defp fallback_notice(%Queue{} = queue, uncompleted) do
+    with [%Prospect{fallback: true} = head | _] <- uncompleted,
+         true <- notice_armed?(queue),
+         true <- computed_since_filter_change?(head, queue) do
+      "fallback"
+    else
+      _ -> nil
     end
   end
 
-  def get_retained_prospects(prospects) do
-    prospects_by_completion = Enum.group_by(prospects, & &1.completed)
+  defp notice_armed?(%Queue{fallback_notified_at: nil}), do: true
 
-    retained_prospects =
-      [
-        # your top uncompleted prospects, as directly visible to you.
-        (prospects_by_completion[false] || [])
-        |> Enum.take(@prospect_foresight)
-        |> Enum.sort(&(&1.score <= &2.score)),
-        # your last like/pass or undo.
-        (prospects_by_completion[true] || []) |> Enum.at(-1)
-      ]
-      |> List.flatten()
-      |> Enum.reject(&is_nil/1)
-      |> Enum.uniq_by(& &1.user_id)
+  defp notice_armed?(%Queue{fallback_notified_at: notified_at, filters_updated_at: updated_at}),
+    do: not is_nil(updated_at) and DateTime.compare(notified_at, updated_at) == :lt
+
+  defp computed_since_filter_change?(_head, %Queue{filters_updated_at: nil}), do: true
+
+  defp computed_since_filter_change?(%Prospect{created_at: created_at}, %Queue{
+         filters_updated_at: updated_at
+       }),
+       do: DateTime.compare(created_at, updated_at) != :lt
+
+  def dismiss_fallback_notice(user_id, kind) do
+    {:ok, _} =
+      Queue.upsert(user_id, kind, %{
+        fallback_notified_at: DateTime.utc_now() |> DateTime.truncate(:second)
+      })
+
+    :ok
   end
 
-  defp refresh_prospects(user, kind, retained_prospects \\ []) do
-    Repo.transaction(fn ->
-      with {:ok, prospects} <- get_new_prospects(user, kind),
-           {:ok, _} <- Prospect.delete_all(profile_id: user.id, kind: kind) do
-        retained_prospect_ids = MapSet.new(retained_prospects, & &1.user_id)
-
-        filtered_prospects =
-          prospects
-          |> Enum.reject(&(&1.user_id in retained_prospect_ids))
-
-        highest_score =
-          filtered_prospects
-          |> List.first(%{score: 0.0})
-          |> Map.get(:score)
-
-        bumped_retained_prospects =
-          retained_prospects
-          |> Enum.with_index()
-          |> Enum.map(fn {prospect, index} ->
-            %{prospect | score: highest_score + index + 1}
-          end)
-
-        all_prospects = filtered_prospects ++ bumped_retained_prospects
-
-        prospect_attrs =
-          Enum.map(all_prospects, fn prospect ->
-            %{
-              profile_id: user.id,
-              target_id: prospect.user_id,
-              kind: kind,
-              score: prospect.score,
-              completed: Map.get(prospect, :completed, false)
-            }
-          end)
-
-        case Prospect.insert_all(prospect_attrs) do
-          {:ok, _} ->
-            result =
-              all_prospects
-              |> Enum.sort_by(& &1.score, :desc)
-              |> Enum.map(&format_prospect/1)
-
-            log(:debug, ["computing", user.id, kind], result)
-            result
-
-          {:error, reason} ->
-            Repo.rollback(reason)
-        end
-      else
-        {:error, reason} -> Repo.rollback(reason)
-        reason -> Repo.rollback(reason)
-      end
+  # Blocking a prospect counts towards the daily free pass limit.
+  def record_block_passes(%User{} = user, kinds) when is_list(kinds) do
+    Enum.each(kinds, fn kind ->
+      _ = ensure_fresh_queue(Queue.get(user.id, kind))
+      {:ok, _} = Queue.increment(user.id, kind, :passes_count)
     end)
+
+    if kinds != [] do
+      {_, nil} =
+        User
+        |> where(id: ^user.id)
+        |> Repo.update_all(inc: [passes_count: 1])
+    end
+
+    :ok
   end
 
-  defp format_prospect(prospect) do
-    %{
-      user_id: prospect.user_id,
-      score: prospect.score,
-      completed: Map.get(prospect, :completed, false)
-    }
+  def limits(%User{} = user, %Queue{} = queue) do
+    cond do
+      Subscription.active?(user.subscription) ->
+        nil
+
+      trial_user?(user) ->
+        %{
+          likes: %{used: user.likes_count, max: @trial_likes_limit},
+          browses: %{used: user.likes_count + user.passes_count, max: @trial_browses_limit},
+          reset_at: nil
+        }
+
+      true ->
+        {likes, passes} = effective_counts(queue)
+
+        %{
+          likes: %{used: likes, max: @daily_likes_limit},
+          browses: %{used: likes + passes, max: @daily_browses_limit},
+          reset_at: next_reset_at()
+        }
+    end
+  end
+
+  # Counters as of now, without persisting a lazy reset on read.
+  defp effective_counts(%Queue{} = queue) do
+    if reset_stale?(queue), do: {0, 0}, else: {queue.likes_count, queue.passes_count}
+  end
+
+  defp reset_stale?(%Queue{reset_at: nil}), do: true
+
+  defp reset_stale?(%Queue{reset_at: reset_at}),
+    do: DateTime.compare(reset_at, DateTime.utc_now()) == :lt
+
+  # Stale counters are zeroed lazily, whenever they're about to change.
+  defp ensure_fresh_queue(%Queue{} = queue) do
+    if reset_stale?(queue) do
+      reset_at = next_reset_at()
+
+      {:ok, _} =
+        Queue.upsert(queue.profile_id, queue.kind, %{
+          likes_count: 0,
+          passes_count: 0,
+          reset_at: reset_at
+        })
+
+      %{queue | likes_count: 0, passes_count: 0, reset_at: reset_at}
+    else
+      queue
+    end
+  end
+
+  defp maybe_enqueue_compute(user_id, kind, %Queue{} = queue, remaining) do
+    cond do
+      pending?(queue) ->
+        :pending
+
+      # Drained and nothing has changed; don't re-search on every read.
+      exhausted?(queue) ->
+        :ok
+
+      remaining <= @refresh_threshold ->
+        enqueue_compute(user_id, kind)
+        :enqueued
+
+      # While in fallback mode, search for non-fallback profiles after the daily reset time.
+      queue.fallback_active and computed_before_reset?(queue) ->
+        enqueue_compute(user_id, kind)
+        :enqueued
+
+      true ->
+        :ok
+    end
+  end
+
+  # A drained queue re-arms on a filter change or after the daily reset.
+  defp exhausted?(%Queue{exhausted_at: nil}), do: false
+
+  defp exhausted?(%Queue{exhausted_at: exhausted_at, filters_updated_at: filters_updated_at}) do
+    filters_unchanged =
+      is_nil(filters_updated_at) or DateTime.compare(filters_updated_at, exhausted_at) != :gt
+
+    same_reset_window = DateTime.compare(exhausted_at, last_reset_at()) != :lt
+
+    filters_unchanged and same_reset_window
+  end
+
+  defp last_reset_at, do: DateTime.add(next_reset_at(), -24 * 60 * 60)
+
+  defp computed_before_reset?(%Queue{computed_at: nil}), do: true
+
+  defp computed_before_reset?(%Queue{computed_at: computed_at}),
+    do: DateTime.compare(computed_at, last_reset_at()) == :lt
+
+  def enqueue_compute(user_id, kind) do
+    {:ok, _} = Queue.upsert(user_id, kind, %{requested_at: DateTime.utc_now()})
+
+    {:ok, _} =
+      %{user_id: user_id, kind: kind}
+      |> ObanWorkers.ComputeQueue.new()
+      |> Oban.insert()
+
+    :ok
+  end
+
+  # When matchmaking settings are updated, prune each queue to the current
+  # and previous profile, then recompute everything after them.
+  def refresh_queues(user_id, opts \\ []) do
+    if Keyword.get(opts, :filters_updated, false), do: Queue.touch_filters_updated(user_id)
+
+    Enum.each(Queue.kinds(), fn kind ->
+      protected_ids =
+        [
+          Prospect.list_uncompleted(user_id, kind, 1),
+          Prospect.last_completed(user_id, kind)
+        ]
+        |> List.flatten()
+        |> Enum.reject(&is_nil/1)
+        |> Enum.map(& &1.id)
+
+      Prospect
+      |> where([p], p.profile_id == ^user_id and p.kind == ^kind and p.id not in ^protected_ids)
+      |> Repo.delete_all()
+
+      enqueue_compute(user_id, kind)
+    end)
+
+    :ok
+  end
+
+  def compute_queue(%User{} = user, kind) do
+    # Pickiness is updated at the same time as a recompute.
+    Search.update_like_multiplier(user.id)
+
+    queue = Queue.get(user.id, kind)
+    filters_snapshot = queue.filters_updated_at
+
+    uncompleted = Prospect.list_uncompleted(user.id, kind, @foresight)
+    last = Prospect.last_completed(user.id, kind)
+
+    protected = Enum.uniq_by(uncompleted ++ List.wrap(last), & &1.target_id)
+    protected_ids = Enum.map(protected, & &1.target_id)
+
+    with {:ok, primary} <- search_prospects(user, kind, protected_ids, false),
+         {:ok, fallback} <-
+           maybe_search_fallback(user, kind, protected_ids, primary) do
+      write_queue(user, kind, protected, primary, fallback, filters_snapshot)
+    end
+  end
+
+  defp search_prospects(user, kind, exclude_ids, fallback?, size \\ nil) do
+    query =
+      Query.build(user, kind,
+        fallback: fallback?,
+        exclude_ids: exclude_ids,
+        size: size || Query.default_size()
+      )
+
+    with {:ok, hits} <- Search.search(query) do
+      {:ok, verify_visible(hits)}
+    end
+  end
+
+  # No fallback for Homie Mode; an incomplete primary result means the pool is simply exhausted.
+  defp maybe_search_fallback(_user, :friend, _exclude_ids, _primary), do: {:ok, []}
+
+  defp maybe_search_fallback(user, kind, exclude_ids, primary) do
+    missing = Query.default_size() - length(primary)
+
+    if missing > 0 do
+      search_prospects(
+        user,
+        kind,
+        exclude_ids ++ Enum.map(primary, & &1.user_id),
+        true,
+        missing
+      )
+    else
+      {:ok, []}
+    end
+  end
+
+  # The search index may lag Postgres; never serve prospects that aren't
+  # currently visible.
+  defp verify_visible(hits) do
+    ids = Enum.map(hits, & &1.user_id)
+
+    visible =
+      User
+      |> where([u], u.id in ^ids and u.status == :visible)
+      |> select([u], u.id)
+      |> Repo.all()
+      |> MapSet.new()
+
+    Enum.filter(hits, &MapSet.member?(visible, &1.user_id))
+  end
+
+  defp write_queue(user, kind, protected, primary, fallback, filters_snapshot) do
+    protected_row_ids = Enum.map(protected, & &1.id)
+
+    base_position =
+      protected
+      |> Enum.filter(&is_nil(&1.completed_at))
+      |> Enum.map(& &1.position)
+      |> Enum.max(&>=/2, fn -> -1 end)
+
+    rows =
+      (Enum.map(primary, &{&1, false}) ++ Enum.map(fallback, &{&1, true}))
+      |> Enum.with_index(base_position + 1)
+      |> Enum.map(fn {{hit, fallback?}, position} ->
+        %{
+          profile_id: user.id,
+          target_id: hit.user_id,
+          kind: kind,
+          position: position,
+          score: hit.score * 1.0,
+          fallback: fallback?
+        }
+      end)
+
+    result =
+      Repo.transaction(fn ->
+        current = Queue.get(user.id, kind)
+
+        if current.filters_updated_at != filters_snapshot do
+          Repo.rollback(:stale_filters)
+        end
+
+        Prospect
+        |> where(
+          [p],
+          p.profile_id == ^user.id and p.kind == ^kind and p.id not in ^protected_row_ids
+        )
+        |> Repo.delete_all()
+
+        {:ok, _} = Prospect.insert_all(rows)
+
+        fallback_active = fallback != [] or Enum.any?(protected, & &1.fallback)
+
+        {:ok, _} =
+          %{
+            computed_at: DateTime.utc_now(),
+            fallback_active: fallback_active,
+            # No new prospects: the pool is drained.
+            exhausted_at: if(rows == [], do: DateTime.utc_now() |> DateTime.truncate(:second))
+          }
+          |> then(&Queue.upsert(user.id, kind, &1))
+
+        length(rows)
+      end)
+
+    case result do
+      {:ok, count} ->
+        log(:debug, ["computed", user.id, kind], %{count: count, fallback: length(fallback)})
+        :ok
+
+      {:error, :stale_filters} ->
+        enqueue_compute(user.id, kind)
+        :ok
+
+      {:error, reason} ->
+        {:error, reason}
+    end
+  end
+
+  def respond(opts \\ []) do
+    user = Keyword.fetch!(opts, :user)
+    type = Keyword.fetch!(opts, :type)
+    mode = Keyword.get(opts, :mode, :love)
+
+    target = Keyword.get(opts, :target) || User.get(Keyword.get(opts, :target_id))
+
+    with {:ok, target} <- validate_target(user, target),
+         queue = ensure_fresh_queue(Queue.get(user.id, mode)),
+         :ok <- check_limits(user, queue, type),
+         {:ok, result} <- insert_response(user, target, type, mode) do
+      after_respond(user, target, result, mode)
+      {:ok, result}
+    end
+  end
+
+  defp validate_target(_user, nil), do: {:error, {:not_found, :user_not_found}}
+
+  defp validate_target(%User{id: id}, %User{id: id}),
+    do: {:error, {:bad_request, :cannot_like_self}}
+
+  defp validate_target(%User{} = user, %User{} = target) do
+    if Block.exists?(user_id: user.id, target_id: target.id) or
+         Block.exists?(user_id: target.id, target_id: user.id) do
+      {:error, {:forbidden, :blocked}}
+    else
+      {:ok, target}
+    end
+  end
+
+  defp check_limits(%User{} = user, %Queue{} = queue, type) do
+    cond do
+      Subscription.active?(user.subscription) ->
+        :ok
+
+      trial_user?(user) ->
+        if trial_exhausted?(user) or
+             (type == :like and user.likes_count >= @trial_likes_limit) do
+          {:error, {:forbidden, trial_error(user)}}
+        else
+          :ok
+        end
+
+      true ->
+        reset_at = next_reset_at()
+
+        cond do
+          queue.likes_count + queue.passes_count >= @daily_browses_limit ->
+            schedule_reset_notification(user, reset_at)
+            {:error, :out_of_browses, reset_at}
+
+          type == :like and queue.likes_count >= @daily_likes_limit ->
+            schedule_reset_notification(user, reset_at)
+            {:error, :out_of_likes, reset_at}
+
+          true ->
+            :ok
+        end
+    end
+  end
+
+  defp insert_response(%User{} = user, %User{} = target, type, kind) do
+    now = DateTime.utc_now()
+
+    Repo.transaction(fn ->
+      existing =
+        LikesAndPasses
+        |> where(profile_id: ^user.id, target_id: ^target.id, kind: ^kind)
+        |> Repo.one()
+
+      if existing, do: Repo.rollback(:already_responded)
+
+      {:ok, _} =
+        %LikesAndPasses{
+          profile_id: user.id,
+          target_id: target.id,
+          type: type,
+          kind: kind
+        }
+        |> Repo.insert()
+
+      complete_prospects(user, target, kind, now)
+
+      counter = if type == :like, do: :likes_count, else: :passes_count
+
+      {1, nil} =
+        User
+        |> where(id: ^user.id)
+        |> Repo.update_all(inc: [{counter, 1}])
+
+      {:ok, _} = Queue.increment(user.id, kind, counter, %{undone: false})
+
+      opposite =
+        LikesAndPasses.get(
+          user_id: target.id,
+          target_id: user.id,
+          type: :like
+        )
+
+      match =
+        type == :like and not is_nil(opposite) and User.Policy.can_read?(user, target)
+
+      %{
+        match: match,
+        match_kind: if(match, do: reduce_kind(kind, opposite.kind), else: nil),
+        user_id: target.id
+      }
+    end)
+    |> case do
+      {:ok, result} -> {:ok, result}
+      {:error, :already_responded} -> {:error, {:conflict, :already_responded}}
+      {:error, reason} -> {:error, reason}
+    end
+  end
+
+  # The acted-on prospect is completed (created on the spot if it wasn't queued,
+  # so undo works uniformly); the same target's prospect in the other mode is
+  # removed since an action excludes them everywhere.
+  defp complete_prospects(user, target, kind, now) do
+    case Prospect.get(profile_id: user.id, target_id: target.id, kind: kind) do
+      %Prospect{} = prospect ->
+        prospect
+        |> Ecto.Changeset.change(%{completed_at: now})
+        |> Repo.update!()
+
+      nil ->
+        %Prospect{
+          profile_id: user.id,
+          target_id: target.id,
+          kind: kind,
+          position: Prospect.head_position(user.id, kind) - 1,
+          completed_at: now
+        }
+        |> Repo.insert!()
+    end
+
+    Prospect
+    |> where(
+      [p],
+      p.profile_id == ^user.id and p.target_id == ^target.id and p.kind != ^kind
+    )
+    |> Repo.delete_all()
+  end
+
+  defp after_respond(%User{} = user, %User{} = target, result, kind) do
+    if result.match do
+      {:ok, _} =
+        %{user_id: user.id, target_id: target.id, kind: result.match_kind}
+        |> ObanWorkers.ProcessMatch.new()
+        |> Oban.insert()
+    end
+
+    remaining = Prospect.count_uncompleted(user.id, kind)
+    queue = Queue.get(user.id, kind)
+    maybe_enqueue_compute(user.id, kind, queue, remaining)
+
+    :ok
+  end
+
+  def undo(%User{} = user, kind) do
+    queue = Queue.get(user.id, kind)
+
+    if queue.undone do
+      {:error, {:conflict, :already_undone}}
+    else
+      case Prospect.last_completed(user.id, kind) do
+        nil ->
+          {:error, {:conflict, :nothing_to_undo}}
+
+        prospect ->
+          undo_prospect(user, prospect, kind)
+      end
+    end
+  end
+
+  defp undo_prospect(%User{} = user, %Prospect{} = prospect, kind) do
+    result =
+      Repo.transaction(fn ->
+        item =
+          LikesAndPasses
+          |> where(profile_id: ^user.id, target_id: ^prospect.target_id, kind: ^kind)
+          |> Repo.one()
+
+        was_match =
+          not is_nil(item) and item.type == :like and
+            not is_nil(
+              LikesAndPasses.get(
+                user_id: prospect.target_id,
+                target_id: user.id,
+                type: :like
+              )
+            )
+
+        if item, do: Repo.delete!(item)
+
+        prospect
+        |> Ecto.Changeset.change(%{
+          completed_at: nil,
+          position: Prospect.head_position(user.id, kind) - 1
+        })
+        |> Repo.update!()
+
+        # Undone actions don't count towards the daily limits.
+        counter =
+          case item do
+            %LikesAndPasses{type: :like} -> :likes_count
+            _ -> :passes_count
+          end
+
+        :ok = Queue.decrement(user.id, kind, counter, %{undone: true})
+
+        was_match
+      end)
+
+    with {:ok, was_match} <- result do
+      if was_match do
+        {:ok, _} =
+          %{user_id: user.id, target_id: prospect.target_id}
+          |> ObanWorkers.Unmatch.new()
+          |> Oban.insert()
+      end
+
+      {:ok, prospect}
+    end
   end
 
   def schedule_reset_notification(user, reset_at) do
@@ -401,838 +708,5 @@ defmodule Flirtual.Matchmaking do
     else
       _ -> {:error, nil}
     end
-  end
-
-  def reduce_kind(a, b) when a === :friend or b === :friend, do: :friend
-  def reduce_kind(_, _), do: :love
-
-  def respond(opts \\ []) do
-    user = Keyword.fetch!(opts, :user)
-
-    type = Keyword.fetch!(opts, :type)
-    types = if type == :like, do: :likes, else: :passes
-
-    kind = Keyword.get(opts, :kind, :love)
-    mode = Keyword.get(opts, :mode, kind)
-
-    target_id = Keyword.get(opts, :target_id)
-    target = Keyword.get(opts, :target) || User.get(target_id)
-
-    queue_keys = queue_fields(mode)
-    existing_fields = get_queue_fields(user.profile, mode)
-
-    profile =
-      if should_reset?(existing_fields.reset_at) do
-        fields = reset_queue_fields(mode)
-
-        {:ok, profile} =
-          user.profile
-          |> change(fields)
-          |> Repo.update()
-
-        log(:info, ["reset", user.id, mode], fields)
-        profile
-      else
-        user.profile
-      end
-
-    fields = get_queue_fields(profile, mode)
-
-    if type == :like and fields.likes >= fields.likes_limit and
-         not Subscription.active?(user.subscription) do
-      schedule_reset_notification(user, fields.reset_at)
-      {:error, :out_of_likes, fields.reset_at}
-    else
-      if fields.passes >= fields.passes_limit and not Subscription.active?(user.subscription) do
-        schedule_reset_notification(user, fields.reset_at)
-        {:error, :out_of_passes, fields.reset_at}
-      else
-        result =
-          Repo.transaction(fn _repo ->
-            with %User{} <- target,
-                 {_, _} <-
-                   Prospect
-                   |> where(profile_id: ^user.id, target_id: ^target.id, kind: ^mode)
-                   |> Repo.update_all(set: [completed: true]),
-                 {_, _} <-
-                   Prospect
-                   |> where(
-                     [prospect],
-                     prospect.profile_id == ^user.id and prospect.target_id == ^target.id and
-                       prospect.kind != ^mode
-                   )
-                   |> Repo.delete_all(),
-                 {:ok, item} <-
-                   %LikesAndPasses{}
-                   |> cast(
-                     %{
-                       profile_id: user.id,
-                       target_id: target.id,
-                       type: type,
-                       kind: kind
-                     },
-                     [:profile_id, :target_id, :type, :kind]
-                   )
-                   |> then(
-                     &if(get_field(&1, :profile_id) === get_field(&1, :target_id)) do
-                       add_error(&1, :user_id, "cannot_like_self")
-                     else
-                       &1
-                     end
-                   )
-                   |> Repo.insert(
-                     on_conflict: {:replace, [:type, :created_at]},
-                     conflict_target: [:profile_id, :target_id, :kind]
-                   ),
-                 {1, nil} <-
-                   Profile
-                   |> where(user_id: ^user.id)
-                   |> Repo.update_all(inc: Keyword.put([], queue_keys[types], 1)),
-                 {1, nil} <-
-                   User
-                   |> where(id: ^user.id)
-                   |> Repo.update_all(
-                     inc:
-                       Keyword.put(
-                         [],
-                         case type do
-                           :like -> :likes_count
-                           :pass -> :passes_count
-                         end,
-                         1
-                       )
-                   ),
-                 opposite_item <-
-                   LikesAndPasses.get(
-                     user_id: item.target_id,
-                     target_id: item.profile_id,
-                     type: type
-                   ),
-                 match_kind = reduce_kind(item.kind, opposite_item[:kind]),
-                 {:ok, opposite_item} <-
-                   if(is_nil(opposite_item),
-                     do: {:ok, nil},
-                     else:
-                       with true <- item.type === :like and opposite_item.type === :like,
-                            true <- User.Policy.can_read?(user, target),
-                            {:ok, _} <-
-                              create_match_conversation(user, target, match_kind),
-                            {:ok, _} <-
-                              deliver_match_notification(target, user, match_kind) do
-                         {:ok, opposite_item}
-                       else
-                         false ->
-                           if item.type === :like and opposite_item.type === :like do
-                             # Stale non-readable prospect: rollback match
-                             Repo.rollback({:cannot_read, target.id})
-                           else
-                             {:ok, opposite_item}
-                           end
-                       end
-                   ) do
-              %{
-                match:
-                  if not is_nil(opposite_item) do
-                    item.type === :like and opposite_item.type === :like
-                  else
-                    false
-                  end,
-                match_kind: match_kind,
-                user_id: target.id
-              }
-            else
-              {:error, reason} -> Repo.rollback(reason)
-              reason -> Repo.rollback(reason)
-            end
-          end)
-
-        case result do
-          {:error, {:cannot_read, target_id}} ->
-            Prospect
-            |> where(profile_id: ^user.id, target_id: ^target_id)
-            |> Repo.delete_all()
-
-            {:ok, %{match: false, match_kind: nil, user_id: target_id}}
-
-          result ->
-            result
-        end
-      end
-    end
-  end
-
-  def undo(user, kind) do
-    Repo.transaction(fn ->
-      with {:ok, prospect} <- previous_prospect(user, kind),
-           {:ok, _} <- Prospect.reverse(prospect) do
-        prospect
-      end
-    end)
-  end
-
-  def generate_query(%User{} = user, kind, opts \\ []) do
-    user =
-      user
-      |> then(
-        &Map.put(
-          &1,
-          :profile,
-          &1.profile
-          |> Repo.preload(attributes: from(Attribute))
-          |> Map.put(:custom_weights, &1.profile.custom_weights || %{})
-        )
-      )
-
-    profile = user.profile
-
-    %{
-      "explain" => Keyword.get(opts, :explain, false),
-      "_source" => false,
-      "size" => 31,
-      "query" => %{
-        "function_score" => %{
-          "query" => %{
-            "bool" => %{
-              "must_not" =>
-                [
-                  %{
-                    "ids" => %{
-                      "values" =>
-                        [
-                          # Exclude yourself.
-                          user.id,
-                          # Exclude users you've already liked or passed.
-                          LikesAndPasses
-                          |> where(profile_id: ^profile.user_id, type: :like)
-                          |> or_where(profile_id: ^profile.user_id, type: :pass, kind: :love)
-                          |> or_where(profile_id: ^profile.user_id, type: :pass, kind: ^kind)
-                          |> distinct(true)
-                          |> select([item], item.target_id)
-                          |> Repo.all(),
-                          # Exclude blocked users.
-                          Block
-                          |> where(profile_id: ^profile.user_id)
-                          |> distinct(true)
-                          |> select([item], item.target_id)
-                          |> Repo.all(),
-                          # Exclude users who blocked you.
-                          Block
-                          |> where(target_id: ^profile.user_id)
-                          |> distinct(true)
-                          |> select([item], item.profile_id)
-                          |> Repo.all()
-                        ]
-                        |> List.flatten()
-                        |> Enum.uniq()
-                    }
-                  }
-                ]
-                |> Enum.reject(&is_nil/1),
-              "filter" => filters(user, kind),
-              "should" => queries(user, kind),
-              "minimum_should_match" => 0
-            }
-          },
-          functions: [
-            %{
-              random_score: %{},
-              weight:
-                case kind do
-                  :love -> 1
-                  :friend -> 30
-                end
-            }
-          ],
-          boost_mode: "sum"
-        }
-      }
-    }
-  end
-
-  def filters(%User{} = user, :love) do
-    Enum.map([:age, :gender, :hidden], &filter(&1, user)) |> List.flatten()
-  end
-
-  def filters(%User{} = user, :friend) do
-    filter(:hidden, user)
-  end
-
-  def filter(:age, %User{} = user) do
-    %{profile: %{preferences: preferences}} = user
-    user_age = if user.born_at, do: get_years_since(user.born_at), else: nil
-
-    dob_lte = if preferences.agemin, do: get_years_ago(preferences.agemin), else: nil
-
-    dob_gte =
-      if preferences.agemax, do: Date.add(get_years_ago(preferences.agemax + 1), 1), else: nil
-
-    [
-      if(!!dob_lte or !!dob_gte,
-        do: %{
-          "range" => %{
-            "dob" =>
-              Map.merge(
-                if(dob_lte, do: %{"lte" => dob_lte}, else: %{}),
-                if(dob_gte, do: %{"gte" => dob_gte}, else: %{})
-              )
-          }
-        },
-        else: []
-      ),
-      if(user_age,
-        do: [
-          %{
-            "range" => %{
-              "agemin" => %{
-                "lte" => user_age
-              }
-            }
-          },
-          %{
-            "range" => %{
-              "agemax" => %{
-                "gte" => user_age
-              }
-            }
-          }
-        ],
-        else: []
-      )
-    ]
-  end
-
-  def filter(:gender, %User{} = user) do
-    %{profile: %{attributes: attributes, preferences: preferences}} = user
-
-    genders =
-      attributes
-      |> filter_by(:type, "gender")
-      |> Attribute.normalize_aliases()
-      |> Enum.map(& &1.id)
-      |> Enum.sort()
-
-    preferences_genders =
-      preferences.attributes
-      |> filter_by(:type, "gender")
-      |> Attribute.normalize_aliases()
-      |> Enum.map(& &1.id)
-      |> Enum.sort()
-
-    # $b must be looking for one or more of $a’s genders.
-    filter =
-      if genders != @simple_genders do
-        [
-          %{
-            "terms" => %{
-              "attributes_lf" => genders
-            }
-          }
-        ]
-      else
-        []
-      end
-
-    # $a must be looking for one or more of $b’s genders.
-    if preferences_genders != @simple_genders do
-      [
-        %{
-          "terms" => %{
-            "attributes" => preferences_genders
-          }
-        }
-        | filter
-      ]
-    else
-      filter
-    end
-  end
-
-  def filter(:hidden, %User{status: :visible}) do
-    []
-  end
-
-  def filter(:hidden, _) do
-    %{
-      "term" => %{
-        "hidden_from_nonvisible" => %{
-          "value" => false
-        }
-      }
-    }
-  end
-
-  def queries(%User{} = user, :love) do
-    Enum.map(
-      [
-        :likes,
-        :interests,
-        :custom_interests,
-        :games,
-        :location,
-        :geolocation,
-        :monopoly,
-        :relationships,
-        :domsub,
-        :languages,
-        :kinks,
-        :personality,
-        :timezone,
-        :active_at
-      ],
-      &query(&1, user)
-    )
-    |> List.flatten()
-  end
-
-  def queries(%User{} = user, :friend) do
-    Enum.map(
-      [
-        :active_at
-      ],
-      &query(&1, user)
-    )
-    |> List.flatten()
-  end
-
-  def query(:likes, %User{} = user) do
-    %{profile: %{custom_weights: custom_weights}} = user
-
-    %{
-      "constant_score" => %{
-        "filter" => %{
-          "term" => %{
-            "liked" => %{
-              "value" => user.id
-            }
-          }
-        },
-        "boost" => 20 * (Map.get(custom_weights, :likes) || 1)
-      }
-    }
-  end
-
-  def query(:interests, %User{} = user) do
-    %{profile: %{attributes: attributes, custom_weights: custom_weights}} = user
-
-    grouped_interests =
-      attributes
-      |> filter_by(:type, "interest")
-      |> Profile.group_interests_by_strength()
-
-    List.flatten([
-      # Which default-weighted interests do $a and $b have in common?
-      Enum.map(
-        grouped_interests[0] || [],
-        &%{
-          "constant_score" => %{
-            "filter" => %{
-              "term" => %{
-                "attributes" => %{
-                  "value" => &1.id
-                }
-              }
-            },
-            "boost" => 3 * (Map.get(custom_weights, :default_interests) || 1)
-          }
-        }
-      ),
-      # Which strong-weighted interests do $a and $b have in common?
-      Enum.map(
-        grouped_interests[1] || [],
-        &%{
-          "constant_score" => %{
-            "filter" => %{
-              "term" => %{
-                "attributes" => %{
-                  "value" => &1.id
-                }
-              }
-            },
-            "boost" => 5 * (Map.get(custom_weights, :default_interests) || 1)
-          }
-        }
-      ),
-      # Which stronger-weighted interests do $a and $b have in common?
-      Enum.map(
-        grouped_interests[2] || [],
-        &%{
-          "constant_score" => %{
-            "filter" => %{
-              "term" => %{
-                "attributes" => %{
-                  "value" => &1.id
-                }
-              }
-            },
-            "boost" => 20 * (Map.get(custom_weights, :default_interests) || 1)
-          }
-        }
-      )
-    ])
-  end
-
-  def query(:custom_interests, %User{} = user) do
-    %{profile: %{custom_interests: custom_interests, custom_weights: custom_weights}} = user
-
-    # Which custom interests do $a and $b have in common?
-    Enum.map(
-      custom_interests,
-      &%{
-        "constant_score" => %{
-          "filter" => %{
-            "term" => %{
-              "custom_interests" => %{
-                "value" =>
-                  &1
-                  |> String.downcase()
-                  |> String.replace(~r/[^[:alnum:]]/u, "")
-              }
-            }
-          },
-          "boost" => 25 * (Map.get(custom_weights, :custom_interests) || 1)
-        }
-      }
-    )
-  end
-
-  def query(:games, %User{} = user) do
-    %{profile: %{attributes: attributes, custom_weights: custom_weights}} = user
-    games = attributes |> filter_by(:type, "game")
-
-    # Which VR games do $a and $b both play?
-    Enum.map(
-      games,
-      &%{
-        "constant_score" => %{
-          "filter" => %{
-            "term" => %{
-              "attributes" => %{
-                "value" => &1.id
-              }
-            }
-          },
-          "boost" => 1 * (Map.get(custom_weights, :games) || 1)
-        }
-      }
-    )
-  end
-
-  # Scale base location-related weights so they add up to 40 even if you don't have all 3 location
-  # fields on your profile.
-  @location_base %{country: 12, geolocation: 21, timezone: 7}
-  @location_target 40
-
-  defp location_scale(%{country: country, latitude: lat, longitude: lon, timezone: timezone}) do
-    present =
-      if(country, do: @location_base.country, else: 0) +
-        if(lat && lon, do: @location_base.geolocation, else: 0) +
-        if(timezone, do: @location_base.timezone, else: 0)
-
-    if present > 0, do: @location_target / present, else: 1.0
-  end
-
-  def query(:location, %User{} = user) do
-    %{profile: %{country: country, custom_weights: custom_weights} = profile} = user
-    scale = location_scale(profile)
-    weight = Map.get(custom_weights, :location) || 1
-
-    if country do
-      List.flatten([
-        # Are $a and $b from the same country?
-        %{
-          "constant_score" => %{
-            "filter" => %{
-              "term" => %{
-                "country" => %{
-                  "value" => country
-                }
-              }
-            },
-            "boost" => @location_base.country * scale * weight
-          }
-        },
-        # Additional country boost for targets without geolocation.
-        if(profile.latitude && profile.longitude,
-          do: %{
-            "constant_score" => %{
-              "filter" => %{
-                "bool" => %{
-                  "must" => [%{"term" => %{"country" => %{"value" => country}}}],
-                  "must_not" => [%{"exists" => %{"field" => "geolocation"}}]
-                }
-              },
-              "boost" => 12 * scale * weight
-            }
-          },
-          else: []
-        ),
-        # Additional country boost for targets without timezone.
-        if(profile.timezone,
-          do: %{
-            "constant_score" => %{
-              "filter" => %{
-                "bool" => %{
-                  "must" => [%{"term" => %{"country" => %{"value" => country}}}],
-                  "must_not" => [%{"exists" => %{"field" => "tz_hour"}}]
-                }
-              },
-              "boost" => 3.3 * scale * weight
-            }
-          },
-          else: []
-        )
-      ])
-    else
-      []
-    end
-  end
-
-  def query(:monopoly, %User{} = user) do
-    %{profile: %{monopoly: monopoly, custom_weights: custom_weights}} = user
-
-    # Are $a and $b both monogamous, or both non-monogamous?
-    if(monopoly,
-      do: %{
-        "constant_score" => %{
-          "filter" => %{
-            "term" => %{
-              "monopoly" => %{
-                "value" => monopoly
-              }
-            }
-          },
-          "boost" => 5 * (Map.get(custom_weights, :monopoly) || 1)
-        }
-      },
-      else: []
-    )
-  end
-
-  def query(:relationships, %User{} = user) do
-    %{profile: %{relationships: relationships, custom_weights: custom_weights}} = user
-
-    # Are $a and $b both looking for the same types of relationships?
-    Enum.map(
-      relationships,
-      &%{
-        "constant_score" => %{
-          "filter" => %{
-            "term" => %{
-              "relationships" => %{
-                "value" => &1
-              }
-            }
-          },
-          "boost" => 2 * (Map.get(custom_weights, :relationships) || 1)
-        }
-      }
-    )
-  end
-
-  def query(:domsub, %User{} = user) do
-    %{profile: %{domsub: domsub, custom_weights: custom_weights}} = user
-
-    if(user.preferences.nsfw && domsub,
-      do: %{
-        "constant_score" => %{
-          "filter" => %{
-            "terms" => %{
-              "domsub" => User.Profile.get_domsub_match(domsub)
-            }
-          },
-          "boost" => 3 * (Map.get(custom_weights, :domsub) || 1)
-        }
-      },
-      else: []
-    )
-  end
-
-  def query(:languages, %User{} = user) do
-    %{profile: %{languages: languages, custom_weights: custom_weights}} = user
-
-    Enum.map(
-      languages,
-      &%{
-        "constant_score" => %{
-          "filter" => %{
-            "term" => %{
-              "languages" => %{
-                "value" => &1
-              }
-            }
-          },
-          "boost" => 1 * (Map.get(custom_weights, :languages) || 1)
-        }
-      }
-    )
-  end
-
-  def query(:kinks, %User{} = user) do
-    %{profile: %{preferences: preferences, custom_weights: custom_weights} = profile} = user
-
-    if(user.preferences.nsfw,
-      do:
-        List.flatten([
-          Enum.map(
-            filter_by(preferences.attributes, :type, "kink"),
-            &%{
-              "constant_score" => %{
-                "filter" => %{
-                  "term" => %{
-                    "attributes" => %{
-                      "value" => &1.id
-                    }
-                  }
-                },
-                "boost" => 2 * (Map.get(custom_weights, :kinks) || 1)
-              }
-            }
-          ),
-          Enum.map(
-            filter_by(profile.attributes, :type, "kink"),
-            &%{
-              "constant_score" => %{
-                "filter" => %{
-                  "term" => %{
-                    "attributes_lf" => %{
-                      "value" => &1.id
-                    }
-                  }
-                },
-                "boost" => 2 * (Map.get(custom_weights, :kinks) || 1)
-              }
-            }
-          )
-        ]),
-      else: []
-    )
-  end
-
-  def query(:personality, %User{} = user) do
-    %{profile: %{custom_weights: custom_weights} = profile} = user
-
-    [
-      if profile.openness do
-        %{
-          "function_score" => %{
-            "linear" => %{
-              "openness" => %{
-                "origin" => profile.openness,
-                "scale" => 3
-              }
-            },
-            "boost" => 4.5 * (Map.get(custom_weights, :personality) || 1)
-          }
-        }
-      else
-        []
-      end,
-      if profile.conscientiousness do
-        %{
-          "function_score" => %{
-            "linear" => %{
-              "conscientiousness" => %{
-                "origin" => profile.conscientiousness,
-                "scale" => 3
-              }
-            },
-            "boost" => 4.5 * (Map.get(custom_weights, :personality) || 1)
-          }
-        }
-      else
-        []
-      end,
-      if profile.agreeableness do
-        %{
-          "function_score" => %{
-            "linear" => %{
-              "agreeableness" => %{
-                "origin" => profile.agreeableness,
-                "scale" => 3
-              }
-            },
-            "boost" => 4.5 * (Map.get(custom_weights, :personality) || 1)
-          }
-        }
-      else
-        []
-      end
-    ]
-  end
-
-  def query(:geolocation, %User{} = user) do
-    %{profile: %{latitude: lat, longitude: lon, custom_weights: custom_weights} = profile} = user
-
-    if lat && lon do
-      scale = location_scale(profile)
-      weight = Map.get(custom_weights, :location) || 1
-
-      %{
-        "function_score" => %{
-          "exp" => %{
-            "geolocation" => %{
-              "origin" => %{"lat" => lat, "lon" => lon},
-              "scale" => "4000km",
-              "offset" => "100km",
-              "decay" => 0.5
-            }
-          },
-          "boost" => @location_base.geolocation * scale * weight
-        }
-      }
-    else
-      []
-    end
-  end
-
-  # Max difference in half-hour steps (12 = 6 hours).
-  @tz_max_diff 12
-
-  def query(:timezone, %User{} = user) do
-    %{profile: %{timezone: timezone, custom_weights: custom_weights} = profile} = user
-
-    if timezone do
-      target = timezone_normalized(timezone)
-      scale = location_scale(profile)
-      weight = Map.get(custom_weights, :location) || 1
-
-      # Term query per half-hour offset with decreasing boost. Wraparound handled by modular
-      # arithmetic so e.g. UTC+12 and UTC-12 are 0 hours apart.
-      0..@tz_max_diff
-      |> Enum.flat_map(fn i ->
-        [rem(target + i + 24, 48) - 24, rem(target - i + 24, 48) - 24]
-        |> Enum.uniq()
-        |> Enum.map(fn half_hour ->
-          %{
-            "constant_score" => %{
-              "filter" => %{
-                "term" => %{
-                  "tz_norm" => %{"value" => half_hour}
-                }
-              },
-              "boost" =>
-                (@tz_max_diff - i) / @tz_max_diff * @location_base.timezone * scale * weight
-            }
-          }
-        end)
-      end)
-    else
-      []
-    end
-  end
-
-  def query(:active_at, _) do
-    %{
-      "function_score" => %{
-        "exp" => %{
-          "active_at" => %{
-            "scale" => "7d",
-            "offset" => "1d",
-            "decay" => 0.5
-          }
-        },
-        "boost" => 12
-      }
-    }
   end
 end

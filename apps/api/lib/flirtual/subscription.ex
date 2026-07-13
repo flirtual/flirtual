@@ -38,9 +38,12 @@ defmodule Flirtual.Subscription do
   def promotional?(_), do: false
 
   def reset_matchmaking_timer(profile) do
-    profile
-    |> change(%{queue_love_reset_at: nil, queue_friend_reset_at: nil})
-    |> Repo.update()
+    {_, nil} =
+      Flirtual.User.Profile.Queue
+      |> where(profile_id: ^profile.user_id)
+      |> Repo.update_all(set: [likes_count: 0, passes_count: 0, reset_at: nil])
+
+    {:ok, profile}
   end
 
   def reset_premium_settings(profile) do

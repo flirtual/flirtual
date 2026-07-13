@@ -28,7 +28,7 @@ import {
 import { DialogFooter } from "~/components/dialog/dialog";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
-import { InputCheckbox, InputLabel, InputLabelHint, InputSelect } from "~/components/inputs";
+import { InputLabel, InputLabelHint, InputSelect } from "~/components/inputs";
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
 import { Slider } from "~/components/inputs/slider";
 import {
@@ -40,6 +40,16 @@ import type { AttributeTranslation } from "~/hooks/use-attribute";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { invalidate, sessionKey } from "~/query";
+
+import { AdvancedFilterSelect } from "./advanced-filter-select";
+import {
+	advancedFiltersToSelections,
+	maximumAdvancedFilters,
+	ownFilterKeys,
+	selectionsToAdvancedFilters,
+	useAdvancedFilterGroups,
+	withOwnTagsFirst
+} from "./advanced-filters";
 
 const absMinAge = 18;
 const absMaxAge = 60;
@@ -60,10 +70,23 @@ export const MatchmakingForm: FC = () => {
 	const { preferences, customWeights = DefaultProfileCustomWeights }
 		= user.profile;
 
+	const premium = !!user.subscription?.active;
+
+	const advancedFilterGroups = useAdvancedFilterGroups({
+		nsfw: !!user.preferences?.nsfw
+	});
+
+	// "I only want to see..." shows the user's own tags first; "I don't want
+	// to see..." keeps the plain order.
+	const includeFilterGroups = withOwnTagsFirst(advancedFilterGroups, ownFilterKeys(user));
+
+	const advancedFilterSelections = advancedFiltersToSelections(user.profile.advancedFilters);
+
 	return (
 		<Form
 			fields={{
-				visionFilter: user.profile.customFilters?.some(({ preferred, type, value }) => preferred && type === "platform" && value === "vision"),
+				advancedIncludes: advancedFilterSelections.include,
+				advancedExcludes: advancedFilterSelections.exclude,
 				gender: preferences?.attributes.gender || [],
 				age: [
 					preferences?.agemin ?? absMinAge,
@@ -118,13 +141,10 @@ export const MatchmakingForm: FC = () => {
 						languages: values.weightLanguages,
 						personality: values.weightPersonality
 					}),
-					Profile.updateCustomFilters(user.id, values.visionFilter
-						? [{
-								preferred: true,
-								type: "platform",
-								value: "vision"
-							}]
-						: [])
+					Profile.updateAdvancedFilters(
+						user.id,
+						selectionsToAdvancedFilters(values.advancedIncludes, values.advancedExcludes)
+					)
 				]);
 
 				await invalidate({ queryKey: sessionKey() });
@@ -133,18 +153,6 @@ export const MatchmakingForm: FC = () => {
 		>
 			{({ FormField, fields }) => (
 				<>
-					{user.platforms?.includes("vision") && (
-						<FormField name="visionFilter">
-							{(field) => (
-								<div className="flex items-center gap-4">
-									<InputCheckbox {...field.props} />
-									<InputLabel {...field.labelProps}>
-										{t("legal_actual_newt_soar")}
-									</InputLabel>
-								</div>
-							)}
-						</FormField>
-					)}
 					<FormField name="gender">
 						{(field) => (
 							<>
@@ -279,6 +287,52 @@ export const MatchmakingForm: FC = () => {
 							</DialogFooter>
 						</AlertDialogContent>
 					</AlertDialog>
+					<div className="flex flex-col gap-4">
+						<InputLabel className="flex items-center gap-2 text-2xl font-semibold">
+							<span>{t("advanced_filters")}</span>
+							<PremiumBadge />
+						</InputLabel>
+						<span>{t("advanced_filters_description")}</span>
+						<span>{t("advanced_filters_warning")}</span>
+						<FormField name="advancedIncludes">
+							{(field) => (
+								<>
+									<InputLabel {...field.labelProps}>
+										{t("advanced_filters_include")}
+									</InputLabel>
+									<InputLabelHint className="-mt-2">
+										{t("advanced_filters_include_hint")}
+									</InputLabelHint>
+									<AdvancedFilterSelect
+										{...field.props}
+										groups={includeFilterGroups}
+										limit={maximumAdvancedFilters}
+										placeholder={t("advanced_filters_placeholder")}
+										premium={premium}
+									/>
+								</>
+							)}
+						</FormField>
+						<FormField name="advancedExcludes">
+							{(field) => (
+								<>
+									<InputLabel {...field.labelProps}>
+										{t("advanced_filters_exclude")}
+									</InputLabel>
+									<InputLabelHint className="-mt-2">
+										{t("advanced_filters_exclude_hint")}
+									</InputLabelHint>
+									<AdvancedFilterSelect
+										{...field.props}
+										groups={advancedFilterGroups}
+										limit={maximumAdvancedFilters}
+										placeholder={t("advanced_filters_placeholder")}
+										premium={premium}
+									/>
+								</>
+							)}
+						</FormField>
+					</div>
 					<div className="flex flex-col gap-4">
 						<InputLabel className="flex items-center gap-2 text-2xl font-semibold">
 							<span>{t("matchmaking_priorities")}</span>

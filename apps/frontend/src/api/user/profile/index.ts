@@ -55,11 +55,9 @@ export type Profile = {
 	customInterests: Array<string>;
 	preferences?: ProfilePreferences;
 	customWeights?: ProfileCustomWeights;
-	customFilters?: ProfileCustomFilters;
+	advancedFilters?: ProfileAdvancedFilters;
 	images: Array<ProfileImage>;
 	prompts: Array<ProfilePrompt>;
-	queueResetLoveAt?: string;
-	queueResetFriendAt?: string;
 	color1?: string;
 	color2?: string;
 } & Partial<UpdatedAtModel>;
@@ -130,13 +128,49 @@ export const DefaultProfileCustomWeights = Object.freeze<ProfileCustomWeights>(
 	) as ProfileCustomWeights
 );
 
-export interface CustomFilter {
-	preferred: boolean;
-	type: "country" | "game" | "gender" | "interest" | "kink" | "language" | "platform" | "sexuality";
-	value: string;
+export const AdvancedFilterCategories = [
+	"gender",
+	"sexuality",
+	"relationships",
+	"monopoly",
+	"interest",
+	"game",
+	"platform",
+	"personality",
+	"domsub",
+	"country",
+	"language",
+	"kink"
+] as const;
+
+export type AdvancedFilterCategory = (typeof AdvancedFilterCategories)[number];
+
+export const advancedFilterAttributeCategories = [
+	"gender",
+	"sexuality",
+	"interest",
+	"game",
+	"platform",
+	"kink"
+] as const;
+
+export const advancedFilterValueCategories = [
+	"country",
+	"language",
+	"relationships",
+	"monopoly",
+	"personality",
+	"domsub"
+] as const;
+
+export interface AdvancedFilter {
+	kind: "exclude" | "include";
+	category: AdvancedFilterCategory;
+	attributeId?: string | null;
+	value?: string | null;
 }
 
-export type ProfileCustomFilters = Array<CustomFilter>;
+export type ProfileAdvancedFilters = Array<AdvancedFilter>;
 
 export interface ProfilePrompt {
 	promptId: string;
@@ -178,12 +212,12 @@ export const Profile = {
 			.post()
 			.json<Profile>();
 	},
-	updateCustomFilters(userId: string, options: Partial<ProfileCustomFilters>) {
+	updateAdvancedFilters(userId: string, options: ProfileAdvancedFilters) {
 		return api
-			.url(`users/${userId}/profile/custom-filters`)
+			.url(`users/${userId}/profile/advanced-filters`)
 			.json(options)
 			.post()
-			.json<Profile>();
+			.json<ProfileAdvancedFilters>();
 	},
 	updatePrompts(userId: string, options: UpdateProfilePromptOptions) {
 		return api

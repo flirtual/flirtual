@@ -6,7 +6,7 @@ defmodule FlirtualWeb.MatchmakingController do
 
   import Ecto.Query
 
-  alias Flirtual.{Policy, Repo, Subscription, User, Users}
+  alias Flirtual.{Policy, Repo, Search, Subscription, Users}
   alias Flirtual.Matchmaking
   alias Flirtual.User.Profile.Image
   alias Flirtual.User.Profile.LikesAndPasses
@@ -14,18 +14,23 @@ defmodule FlirtualWeb.MatchmakingController do
 
   action_fallback(FlirtualWeb.FallbackController)
 
-  def queue_information(conn, %{"kind" => kind}) do
+  def queue_information(conn, params) do
+    mode = to_atom(params["mode"] || params["kind"], :love)
+
     with {:ok, queue_information} <-
-           Matchmaking.queue_information(conn.assigns[:session].user, to_atom(kind, :love)) do
+           Matchmaking.queue_information(conn.assigns[:session].user, mode) do
       conn
       |> json_with_etag(queue_information)
     end
   end
 
-  def refresh_prospects(conn, _) do
-    with :ok <- Matchmaking.refresh_prospects(conn.assigns[:session].user) do
-      conn |> json(%{success: true})
-    end
+  def dismiss_notice(conn, params) do
+    user = conn.assigns[:session].user
+    mode = to_atom(params["mode"] || params["kind"], :love)
+
+    :ok = Matchmaking.dismiss_fallback_notice(user.id, mode)
+
+    conn |> json(%{success: true})
   end
 
   def reset_likes(conn, _) do
@@ -46,48 +51,54 @@ defmodule FlirtualWeb.MatchmakingController do
     end
   end
 
-  def inspect_query(conn, %{"kind" => kind}) do
+  def inspect_query(conn, params) do
     user = conn.assigns[:session].user
-    kind_atom = to_atom(kind, :love)
 
-    query = Matchmaking.generate_query(user, kind_atom, explain: true)
+    if :debugger not in user.tags and :admin not in user.tags do
+      {:error, {:forbidden, :missing_permission}}
+    else
+      kind = to_atom(params["mode"] || params["kind"], :love)
+      fallback = params["fallback"] == "true"
 
-    index = Snap.Cluster.Namespace.add_namespace_to_index("users", Flirtual.Elasticsearch)
+      query = Flirtual.Matchmaking.Query.build(user, kind, fallback: fallback)
 
-    results =
-      case Flirtual.Elasticsearch.post("/#{index}/_search", query) do
-        {:ok, response} -> response
-        {:error, error} -> %{"error" => Exception.message(error)}
-      end
+      results =
+        case Search.search(query) do
+          {:ok, hits} -> hits
+          {:error, reason} -> %{"error" => inspect(reason)}
+        end
 
-    conn
-    |> json_with_etag(%{
-      query: query,
-      results: results
-    })
+      conn
+      |> json(%{
+        query: %{
+          kind: query.kind,
+          fallback: query.fallback,
+          size: query.size,
+          exclude_ids: query.exclude_ids,
+          filters: Enum.map(query.filters, &inspect/1),
+          factors: Enum.map(query.factors, &inspect/1)
+        },
+        compiled: Search.compile(query),
+        results: results
+      })
+    end
   end
 
   def response(conn, params) do
     user = conn.assigns[:session].user
 
-    # %{"type" => type, "kind" => kind, "mode" => mode}
-    type = Map.get(params, "type", "like")
-    kind = Map.get(params, "kind", "love")
-    mode = Map.get(params, "mode", kind)
-
+    type = to_atom(Map.get(params, "type", "like"), :like)
+    mode = to_atom(Map.get(params, "mode", "love"), :love)
     target_id = Map.get(params, "user_id")
-    target = if(is_nil(target_id), do: nil, else: Users.get(target_id))
 
     with {:ok, value} <-
            Matchmaking.respond(
              user: user,
-             target: target,
-             type: to_atom(type, :like),
-             kind: to_atom(kind, :love),
-             mode: to_atom(mode, :love)
+             target_id: target_id,
+             type: type,
+             mode: mode
            ),
-         {:ok, queue} <-
-           Matchmaking.queue_information(user, to_atom(mode, :love)) do
+         {:ok, queue} <- Matchmaking.queue_information(user, mode) do
       conn |> json(value |> Map.put(:queue, queue))
     else
       {:error, :out_of_likes, reset_at} ->
@@ -100,30 +111,27 @@ defmodule FlirtualWeb.MatchmakingController do
             ]
           }}}
 
-      {:error, :out_of_passes, reset_at} ->
+      {:error, :out_of_browses, reset_at} ->
         {:error,
-         {:too_many_requests, :out_of_passes,
+         {:too_many_requests, :out_of_browses,
           %{
             reset_at: reset_at,
-            headers: %{
+            headers: [
               {"retry-after", DateTime.diff(reset_at, DateTime.utc_now())}
-            }
+            ]
           }}}
-
-      {:error, %Ecto.Changeset{errors: [user_id: {"already_responded", _}]}} ->
-        {:error, {:conflict, :already_responded}}
 
       reason ->
         reason
     end
   end
 
-  def undo_response(conn, %{"mode" => mode}) do
+  def undo_response(conn, params) do
     user = conn.assigns[:session].user
-    kind = to_atom(mode, :love)
+    mode = to_atom(params["mode"] || params["kind"], :love)
 
-    with {:ok, prospect} <- Matchmaking.undo(user, kind),
-         {:ok, queue} <- Matchmaking.queue_information(user, kind) do
+    with {:ok, prospect} <- Matchmaking.undo(user, mode),
+         {:ok, queue} <- Matchmaking.queue_information(user, mode) do
       conn
       |> json(%{
         queue: queue,
@@ -231,18 +239,4 @@ defmodule FlirtualWeb.MatchmakingController do
       thumbnails: thumbnails
     })
   end
-
-  # def list_matches(conn, _) do
-  #   with items <-
-  #          LikesAndPasses.list_matches(profile_id: conn.assigns[:session].user_id) do
-  #     conn
-  #     |> json_with_etag(%{
-  #       count: Enum.group_by(items, & &1.kind) |> Map.new(fn {k, v} -> {k, length(v)} end),
-  #       items:
-  #         items
-  #         |> Policy.filter(conn, :read)
-  #         |> then(&Policy.transform(conn, &1))
-  #     })
-  #   end
-  # end
 end

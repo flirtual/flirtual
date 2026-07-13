@@ -15,6 +15,7 @@ defmodule Flirtual.User.Preferences do
     field(:nsfw, :boolean, default: false)
     field(:theme, Ecto.Enum, values: [:light, :dark, :system], default: :light)
     field(:language, :string)
+    field(:dismissed, {:array, :string}, default: [])
 
     has_one(:email_notifications, EmailNotifications,
       references: :user_id,
@@ -42,7 +43,8 @@ defmodule Flirtual.User.Preferences do
     |> cast(attrs, [
       :nsfw,
       :theme,
-      :language
+      :language,
+      :dismissed
     ])
     |> validate_inclusion(
       :language,
@@ -58,6 +60,7 @@ defimpl Jason.Encoder, for: Flirtual.User.Preferences do
       :nsfw,
       :theme,
       :language,
+      :dismissed,
       :email_notifications,
       :push_notifications,
       :privacy

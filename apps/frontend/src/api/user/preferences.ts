@@ -29,6 +29,7 @@ export interface Preferences {
 	nsfw: boolean;
 	theme: PreferenceTheme;
 	language?: Locale;
+	dismissed: Array<string>;
 	emailNotifications: NotificationPreferences;
 	pushNotifications: NotificationPreferences;
 	privacy: PrivacyPreferences;
@@ -37,7 +38,7 @@ export interface Preferences {
 export const Preferences = {
 	update(
 		userId: string,
-		options: Partial<Pick<Preferences, "language" | "nsfw" | "theme">>
+		options: Partial<Pick<Preferences, "language" | "nsfw" | "theme" | "dismissed">>
 	) {
 		return api
 			.url(`users/${userId}/preferences`)

@@ -176,7 +176,7 @@ defmodule Flirtual.User.Session do
              session
              |> change(%{expire_at: new_expire_at()})
              |> Repo.update(),
-           {:ok, _} <- ObanWorkers.update_user(user.id, [:elasticsearch]) do
+           {:ok, _} <- ObanWorkers.update_user(user.id, [:search_index]) do
         {:ok, Map.put(session, :user, user)}
       end
     end

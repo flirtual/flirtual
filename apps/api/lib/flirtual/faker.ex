@@ -502,7 +502,7 @@ defmodule Flirtual.Faker do
     Enum.each(entries, fn entry ->
       Prospect
       |> where(profile_id: ^entry.profile_id, target_id: ^entry.target_id)
-      |> Repo.update_all(set: [completed: true])
+      |> Repo.update_all(set: [completed_at: DateTime.utc_now()])
     end)
 
     matches =

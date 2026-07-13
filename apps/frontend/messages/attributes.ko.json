@@ -2988,12 +2988,6 @@
 		}
 	},
 	"platform": {
-		"qhAm6Z9kGRP5opGfnrVYda": {
-			"name": "오큘러스 리프트"
-		},
-		"d52VH6CyRaVPQvAwoStEoY": {
-			"name": "SteamVR"
-		},
 		"N458aYKyg6hweVbyDEMDAR": {
 			"name": "VIVE Standalone"
 		},
@@ -3018,15 +3012,6 @@
 		"3Kagenz7boB64Ke6vEAKv6": {
 			"name": "PCVR"
 		},
-		"6BdtcWSEHNwX6ba9nzd2Yc": {
-			"name": "데스크톱"
-		},
-		"fyBa2tUpgEgqBPda4BpXAE": {
-			"name": "모바일 VR"
-		},
-		"WQVnXwQzfThHr7yczTjm3C": {
-			"name": "Windows 혼합 현실"
-		},
 		"n6sSShVCXahjazwqEraKCG": {
 			"name": "PlayStation VR"
 		},
@@ -3038,9 +3023,6 @@
 		},
 		"MLWTjDZEuacyr2qwbXEw4K": {
 			"name": "전신 추적"
-		},
-		"UpyGwuCHANjYmM2P269dFm": {
-			"name": "퀘스트 링크"
 		}
 	},
 	"prompt": {

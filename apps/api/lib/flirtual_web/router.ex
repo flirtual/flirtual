@@ -323,6 +323,7 @@ defmodule FlirtualWeb.Router do
           post("/", MatchmakingController, :response)
           delete("/", MatchmakingController, :undo_response)
           delete("/prospect", MatchmakingController, :skip_prospect)
+          delete("/notice", MatchmakingController, :dismiss_notice)
         end
 
         scope "/matches" do
@@ -439,7 +440,7 @@ defmodule FlirtualWeb.Router do
               post("/prompts", ProfileController, :update_prompts)
               post("/preferences", ProfileController, :update_preferences)
               post("/custom-weights", ProfileController, :update_custom_weights)
-              post("/custom-filters", ProfileController, :update_custom_filters)
+              post("/advanced-filters", ProfileController, :update_advanced_filters)
               post("/geolocation", ProfileController, :update_geolocation)
               delete("/geolocation", ProfileController, :delete_geolocation)
             end

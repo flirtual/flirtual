@@ -142,8 +142,7 @@ export function useLikesQueue(mode: ProspectKind = "love", options: UseLikesQueu
 
 				const { match, matchKind } = await Matchmaking.queueAction({
 					type: action,
-					kind,
-					mode,
+					mode: kind,
 					userId
 				});
 
@@ -154,7 +153,7 @@ export function useLikesQueue(mode: ProspectKind = "love", options: UseLikesQueu
 					const dialog = (
 						<ItsAMatch
 							conversationId={conversationId}
-							kind={matchKind}
+							kind={matchKind ?? "love"}
 							userId={userId}
 							onClose={() => dialogs.remove(dialog)}
 						/>

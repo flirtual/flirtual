@@ -11,7 +11,7 @@ defmodule Flirtual.Application do
 
     with {:ok, pid} <-
            Supervisor.start_link(children(), strategy: :one_for_one, name: Flirtual.Supervisor) do
-      create_elasticsearch_index()
+      Flirtual.Search.bootstrap()
       {:ok, pid}
     end
   end
@@ -35,6 +35,7 @@ defmodule Flirtual.Application do
     OpentelemetryBandit.setup()
     OpentelemetryPhoenix.setup(adapter: :bandit)
     OpentelemetryEcto.setup([:flirtual, :repo], db_statement: :enabled)
+    OpentelemetryEcto.setup([:flirtual, :search, :repo], db_statement: :enabled)
     OpentelemetryOban.setup()
     OpentelemetryFinch.setup()
   end
@@ -77,13 +78,13 @@ defmodule Flirtual.Application do
     ([
        {0, {Cluster.Supervisor, [topologies, [name: Flirtual.ClusterSupervisor]]}},
        {1, Flirtual.Repo},
+       {1, Flirtual.Search.Repo},
        {2, {Finch, name: Swoosh.Finch}},
        {2, {Finch, name: Flirtual.Finch}},
        {2,
         {Finch,
          name: Flirtual.FinchInternal,
          pools: %{default: [conn_opts: [transport_opts: [tcp_module: :inet6_tcp]]]}}},
-       {2, Flirtual.Elasticsearch},
        {2, {Phoenix.PubSub, name: Flirtual.PubSub}},
        {2, Flirtual.Disposable},
        {3, FlirtualWeb.Endpoint},
@@ -96,24 +97,5 @@ defmodule Flirtual.Application do
   defp has_config?(module, keys) do
     config = Application.get_env(:flirtual, module, [])
     Enum.all?(keys, &(config[&1] not in [nil, ""]))
-  end
-
-  defp create_elasticsearch_index do
-    mapping =
-      :flirtual
-      |> Application.app_dir("priv/elasticsearch/users.json")
-      |> File.read!()
-      |> Jason.decode!()
-
-    case Snap.Indexes.create(Flirtual.Elasticsearch, "users", mapping) do
-      {:ok, _} ->
-        Logger.info("Created Elasticsearch 'users' index.")
-
-      {:error, %Snap.ResponseError{type: "resource_already_exists_exception"}} ->
-        :ok
-
-      {:error, reason} ->
-        Logger.warning("Failed to create Elasticsearch 'users' index: #{inspect(reason)}")
-    end
   end
 end

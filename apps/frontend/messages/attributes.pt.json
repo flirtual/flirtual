@@ -1282,17 +1282,11 @@
 		}
 	},
 	"platform": {
-		"6BdtcWSEHNwX6ba9nzd2Yc": {
-			"name": "Desktop"
-		},
 		"n6sSShVCXahjazwqEraKCG": {
 			"name": "PlayStation VR"
 		},
 		"aNGgneQH5YX4HyWpNEUpmQ": {
 			"name": "Outro VR"
-		},
-		"UpyGwuCHANjYmM2P269dFm": {
-			"name": "Quest Link"
 		},
 		"RNaigbGdB7H4ZMw5c8ysbi": {
 			"name": "Meta Quest"
@@ -1312,20 +1306,8 @@
 		"c255sGSiJpMNnm6NTUcvx6": {
 			"name": "Apple Vision"
 		},
-		"d52VH6CyRaVPQvAwoStEoY": {
-			"name": "SteamVR"
-		},
 		"MLWTjDZEuacyr2qwbXEw4K": {
 			"name": "Full-body tracking"
-		},
-		"fyBa2tUpgEgqBPda4BpXAE": {
-			"name": "VR de Celular"
-		},
-		"WQVnXwQzfThHr7yczTjm3C": {
-			"name": "Windows Mixed Reality"
-		},
-		"qhAm6Z9kGRP5opGfnrVYda": {
-			"name": "Oculus Rift"
 		},
 		"x5T9enPhP8WpYwnoottGDL": {
 			"name": "Esteira de locomoção"

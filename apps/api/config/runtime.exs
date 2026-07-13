@@ -204,8 +204,8 @@ config :req_llm, anthropic_api_key: Env.get("ANTHROPIC_ACCESS_TOKEN")
 config :flirtual, Flirtual.ObanWorkers,
   enabled_workers:
     if(prod?,
-      do: [:chargebee, :elasticsearch, :listmonk, :refresh_prospects, :talkjs],
-      else: [:elasticsearch, :refresh_prospects]
+      do: [:chargebee, :compute_queue, :listmonk, :search_index, :search_state, :talkjs],
+      else: [:compute_queue, :search_index, :search_state]
     ),
   enabled_cron_tasks:
     if(prod?,
@@ -229,11 +229,23 @@ config :flirtual, Flirtual.ObanWorkers,
 config :flirtual, Oban,
   queues: [
     default: Env.get("OBAN_DEFAULT_CONCURRENCY", default: "6") |> String.to_integer(),
+    matchmaking: Env.get("OBAN_MATCHMAKING_CONCURRENCY", default: "4") |> String.to_integer(),
     notifications: Env.get("OBAN_NOTIFICATIONS_CONCURRENCY", default: "3") |> String.to_integer(),
     image_classification:
       Env.get("OBAN_IMAGE_CLASSIFICATION_CONCURRENCY", default: "1") |> String.to_integer(),
     image_spatial: Env.get("OBAN_IMAGE_SPATIAL_CONCURRENCY", default: "1") |> String.to_integer()
   ]
+
+# Manticore over MySQL protocol. username is required by the driver but ignored
+# by Manticore.
+config :flirtual, Flirtual.Search.Repo,
+  hostname: Env.get!("MANTICORE_HOST", default: "localhost"),
+  port: Env.get("MANTICORE_PORT", default: "9306") |> String.to_integer(),
+  username: "root",
+  database: nil,
+  pool_size: Env.get("MANTICORE_POOL_SIZE", default: "10") |> String.to_integer(),
+  queue_target: 5000,
+  socket_options: if(Env.get("MANTICORE_IPV6"), do: [:inet6], else: [])
 
 if prod? do
   app_name =
@@ -265,12 +277,6 @@ if prod? do
   config :flirtual, :oban_pool_size, String.to_integer(Env.get("OBAN_POOL_SIZE", default: "10"))
 
   config :flirtual, Oban, get_dynamic_repo: {Flirtual.Repo, :oban_repo, []}
-
-  config :flirtual, Flirtual.Elasticsearch,
-    url: Env.get!("ELASTICSEARCH_URL"),
-    index_namespace: Env.get("ELASTICSEARCH_INDEX_PREFIX"),
-    auth: Flirtual.Elasticsearch.Auth,
-    access_token: Env.get!("ELASTICSEARCH_ACCESS_TOKEN")
 
   config :flirtual, Flirtual.Mailer,
     adapter: Swoosh.Adapters.AmazonSES,

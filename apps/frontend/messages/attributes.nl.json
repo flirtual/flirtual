@@ -2892,18 +2892,6 @@
 		}
 	},
 	"platform": {
-		"UpyGwuCHANjYmM2P269dFm": {
-			"name": "Zoektocht Link"
-		},
-		"qhAm6Z9kGRP5opGfnrVYda": {
-			"name": "Oculus Rift"
-		},
-		"WQVnXwQzfThHr7yczTjm3C": {
-			"name": "Windows Gemengde Realiteit"
-		},
-		"fyBa2tUpgEgqBPda4BpXAE": {
-			"name": "Mobiele VR"
-		},
 		"m4S2N4Jn2f3WDbJm7bcbgQ": {
 			"name": "Gezicht volgen"
 		},
@@ -2916,14 +2904,8 @@
 		"aNGgneQH5YX4HyWpNEUpmQ": {
 			"name": "Andere VR"
 		},
-		"6BdtcWSEHNwX6ba9nzd2Yc": {
-			"name": "Desktop"
-		},
 		"x5T9enPhP8WpYwnoottGDL": {
 			"name": "Locomotie loopband"
-		},
-		"d52VH6CyRaVPQvAwoStEoY": {
-			"name": "SteamVR"
 		},
 		"MLWTjDZEuacyr2qwbXEw4K": {
 			"name": "Volgen van het lichaam"

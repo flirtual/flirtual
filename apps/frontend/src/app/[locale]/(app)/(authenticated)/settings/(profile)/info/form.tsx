@@ -267,10 +267,13 @@ export const InfoForm: FC = () => {
 								<InputLabel>{t("vr_setup")}</InputLabel>
 								<InputAutocomplete
 									{...field.props}
-									options={platforms.map((platform) => ({
-										key: platform,
-										label: tAttribute[platform]?.name ?? platform
-									}))}
+									options={platforms.map((platform) => {
+										const id = typeof platform === "string" ? platform : platform.id;
+										return {
+											key: id,
+											label: tAttribute[id]?.name ?? id
+										};
+									})}
 									limit={8}
 									placeholder={t("select_the_platforms_you_use")}
 									value={field.props.value || []}

@@ -25,7 +25,7 @@ defmodule Flirtual.Users do
     User
   }
 
-  alias Flirtual.User.{Login, Preferences, SearchDocument}
+  alias Flirtual.User.{Login, Preferences}
   alias Flirtual.User.Profile.Image
 
   def get(id)
@@ -114,9 +114,9 @@ defmodule Flirtual.Users do
                {:ok, user} <- User.update_status(user),
                {:ok, _} <-
                  ObanWorkers.update_user(user.id, [
-                   :elasticsearch,
+                   :search_index,
                    :listmonk,
-                   :refresh_prospects,
+                   :compute_queue,
                    :talkjs
                  ]) do
             if not is_nil(born_at) do
@@ -293,7 +293,7 @@ defmodule Flirtual.Users do
              |> Repo.update(),
            :ok <- Hash.check_hash(user.id, "email", attrs[:email]),
            {:ok, user} <- User.update_status(user),
-           {:ok, _} <- ObanWorkers.update_user(user.id, [:elasticsearch, :listmonk, :talkjs]),
+           {:ok, _} <- ObanWorkers.update_user(user.id, [:search_index, :listmonk, :talkjs]),
            {:ok, _} <- deliver_email_confirmation(user) do
         user
       else
@@ -334,7 +334,7 @@ defmodule Flirtual.Users do
              |> Repo.update(),
            {:ok, user} <- User.update_status(user),
            {:ok, _} <-
-             ObanWorkers.update_user(user.id, [:chargebee, :elasticsearch, :listmonk, :talkjs]),
+             ObanWorkers.update_user(user.id, [:chargebee, :search_index, :listmonk, :talkjs]),
            {:ok, _} <- User.Email.deliver(user, :email_changed),
            :ok <- Flag.check_new_email_domain(user.id, user.email) do
         user
@@ -428,7 +428,7 @@ defmodule Flirtual.Users do
              |> change(%{deactivated_at: now})
              |> Repo.update(),
            {:ok, user} <- User.update_status(user),
-           {:ok, _} <- ObanWorkers.update_user(user.id, [:elasticsearch, :listmonk, :talkjs]) do
+           {:ok, _} <- ObanWorkers.update_user(user.id, [:search_index, :listmonk, :talkjs]) do
         user
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -446,9 +446,9 @@ defmodule Flirtual.Users do
            {:ok, user} <- User.update_status(user),
            {:ok, _} <-
              ObanWorkers.update_user(user.id, [
-               :elasticsearch,
+               :search_index,
                :listmonk,
-               :refresh_prospects,
+               :compute_queue,
                :talkjs
              ]) do
         user
@@ -493,7 +493,7 @@ defmodule Flirtual.Users do
            :ok <- Hash.delete(user.id),
            :ok <- Image.delete_user_objects(user.id),
            {:ok, user} <- Repo.delete(user),
-           :ok <- SearchDocument.delete_if_exists(user.id),
+           :ok <- Flirtual.Search.delete_users([user.id]),
            {:ok, _} <- Talkjs.delete_user(user),
            {:ok, _} <- Listmonk.delete_subscriber(user),
            {:ok, _} <- Chargebee.delete_customer(user),
@@ -522,7 +522,7 @@ defmodule Flirtual.Users do
                else: Image.retain_user_hashes(user.id, Hash.get_suspended_url(user.id))
              ),
            {:ok, user} <- Repo.delete(user),
-           :ok <- SearchDocument.delete_if_exists(user.id),
+           :ok <- Flirtual.Search.delete_users([user.id]),
            {:ok, _} <- Talkjs.delete_user(user),
            {:ok, _} <- Listmonk.delete_subscriber(user),
            {:ok, _} <- Chargebee.delete_customer(user),
@@ -539,7 +539,7 @@ defmodule Flirtual.Users do
     Repo.transaction(fn ->
       with :ok <- if(is_nil(user.banned_at), do: Hash.delete(user.id), else: :ok),
            {:ok, user} <- Repo.delete(user),
-           :ok <- SearchDocument.delete_if_exists(user.id) do
+           :ok <- Flirtual.Search.delete_users([user.id]) do
         {:ok, user}
       else
         {:error, reason} -> Repo.rollback(reason)

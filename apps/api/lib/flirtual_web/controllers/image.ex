@@ -176,7 +176,7 @@ defmodule FlirtualWeb.ImageController do
          {:ok, _} <- Image.delete(image),
          image_owner = User.get(image_owner.id),
          {:ok, _} <- User.update_status(image_owner),
-         {:ok, _} <- ObanWorkers.update_user(image_owner.id, [:elasticsearch, :talkjs]) do
+         {:ok, _} <- ObanWorkers.update_user(image_owner.id, [:search_index, :talkjs]) do
       conn |> json(%{deleted: true})
     else
       nil -> {:error, {:not_found, :image_not_found, %{image_id: image_id}}}
@@ -201,7 +201,7 @@ defmodule FlirtualWeb.ImageController do
          {:ok, _} <- Image.delete(image),
          image_owner = User.get(image_owner.id),
          {:ok, _} <- User.update_status(image_owner),
-         {:ok, _} <- ObanWorkers.update_user(image_owner.id, [:elasticsearch, :talkjs]) do
+         {:ok, _} <- ObanWorkers.update_user(image_owner.id, [:search_index, :talkjs]) do
       conn |> json(%{deleted: true})
     else
       nil -> {:error, {:not_found, :image_not_found, %{image_id: image_id}}}

@@ -5,7 +5,7 @@ set -e
 if [ -d "$HOME/Library/Application Support/com.apple.container" ]; then
   container system start
 
-  for svc in postgres elasticsearch; do
+  for svc in postgres manticore; do
     state=$(container ls --all 2>/dev/null | awk -v s="$svc" '$1 == s { print $5 }')
     if [ "$state" = "running" ]; then
       continue
@@ -23,14 +23,13 @@ if [ -d "$HOME/Library/Application Support/com.apple.container" ]; then
           postgres:17-alpine \
           postgres -N 500
         ;;
-      elasticsearch)
-        container run --detach --name elasticsearch \
-          --publish 9200:9200 \
-          -e ES_JAVA_OPTS="-Xms512m -Xmx512m" \
-          -e xpack.security.enabled=false \
-          -e discovery.type=single-node \
-          -v esdata:/usr/share/elasticsearch/data \
-          elasticsearch:8.6.2
+      manticore)
+        container run --detach --name manticore \
+          --publish 9306:9306 \
+          --publish 9308:9308 \
+          --memory 2g \
+          -v manticoredata:/var/lib/manticore \
+          manticoresearch/manticore:latest
         ;;
     esac
   done

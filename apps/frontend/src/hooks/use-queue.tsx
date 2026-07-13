@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useSyncExternalStore } from "react";
 
 import { isWretchError } from "~/api/common";
 import type { Queue, QueueActionIssue, QueueIssue } from "~/api/matchmaking";
@@ -29,6 +29,26 @@ import { useUnreadConversations } from "./use-talkjs";
 
 export const invalidateQueue = (mode: ProspectKind = "love") => invalidate({ queryKey: queueKey(mode) });
 
+// Consecutive likes per mode. A module-level store rather than component
+// state, because useQueue() mounts in several components that share one count.
+const likeStreaks = new Map<ProspectKind, number>();
+const likeStreakListeners = new Set<() => void>();
+
+function setLikeStreak(mode: ProspectKind, value: number) {
+	likeStreaks.set(mode, value);
+	likeStreakListeners.forEach((listener) => listener());
+}
+
+function useLikeStreak(mode: ProspectKind) {
+	return useSyncExternalStore(
+		(onChange) => {
+			likeStreakListeners.add(onChange);
+			return () => likeStreakListeners.delete(onChange);
+		},
+		() => likeStreaks.get(mode) ?? 0
+	);
+}
+
 export function invalidateMatch(userId: string) {
 	queryClient.removeQueries({ queryKey: likesYouKey() });
 	return Promise.all([
@@ -46,18 +66,26 @@ export function useQueue(mode: ProspectKind = "love") {
 	const queryKey = useMemo(() => queueKey(mode), [mode]);
 	const dialogs = useDialog();
 
+	const likeStreak = useLikeStreak(mode);
+
 	const queue = useQuery<Queue | QueueIssue, typeof queryKey>({
 		queryKey,
 		queryFn: queueFetcher,
-		// refetchInterval: ms("1m"),
-		// staleTime: 0,
-		// meta: {
-		// 	cacheTime: 0
-		// }
+		// The queue recomputes in the background; poll briefly while it's empty
+		// and a recompute is pending.
+		refetchInterval: (query) => {
+			const data = query.state.data;
+			return data && "pending" in data && data.pending && data.next.length === 0
+				? 2000
+				: false;
+		}
 	});
 
 	const previous = "previous" in queue ? queue.previous : null;
 	const next = "next" in queue ? queue.next : emptyArray;
+	const canUndo = "canUndo" in queue ? queue.canUndo && !!previous : false;
+	const notice = "notice" in queue ? queue.notice : null;
+	const pending = "pending" in queue ? queue.pending : false;
 
 	const error = "error" in queue ? queue.error : null;
 
@@ -81,8 +109,10 @@ export function useQueue(mode: ProspectKind = "love") {
 		if (!current) return queue;
 
 		return {
+			...queue,
 			previous: current,
 			next,
+			canUndo: true,
 		};
 	}), [queryKey]);
 
@@ -94,8 +124,10 @@ export function useQueue(mode: ProspectKind = "love") {
 		const { previous, next } = queue;
 
 		return {
+			...queue,
 			previous: null,
-			next: [previous, ...next],
+			next: [previous, ...next].filter((id): id is string => !!id),
+			canUndo: false,
 		};
 	}), [queryKey]);
 
@@ -115,14 +147,13 @@ export function useQueue(mode: ProspectKind = "love") {
 	const { mutateAsync, isPending: mutating } = useMutation<Queue | QueueIssue | undefined, {
 		action: "like" | "pass" | "undo";
 		userId: string;
-		kind: ProspectKind;
 	}>({
 		mutationKey: queryKey,
 		onMutate: ({ action, userId }) => {
 			setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 0);
 
-			if (userId !== current)
-				return remove(userId);
+			if (action !== "undo" && userId !== current)
+				return removeAll(userId);
 
 			return ({
 				like: forward,
@@ -132,15 +163,14 @@ export function useQueue(mode: ProspectKind = "love") {
 		},
 		mutationFn: async ({
 			action,
-			userId,
-			kind
+			userId
 		}) => {
-			log(action, { userId, kind, mode });
+			log(action, { userId, mode });
 
 			try {
 				const { queue, match, matchKind, userId: finalUserId } = action === "undo"
 					? await Matchmaking.undo({ mode })
-					: await Matchmaking.queueAction({ type: action, kind, mode, userId });
+					: await Matchmaking.queueAction({ type: action, mode, userId });
 
 				void invalidateMatch(finalUserId);
 				const conversationId = await newConversationId(meId, finalUserId);
@@ -155,7 +185,7 @@ export function useQueue(mode: ProspectKind = "love") {
 					const dialog = (
 						<ItsAMatch
 							conversationId={conversationId}
-							kind={matchKind}
+							kind={matchKind ?? "love"}
 							userId={userId}
 							onClose={() => dialogs.remove(dialog)}
 						/>
@@ -173,10 +203,13 @@ export function useQueue(mode: ProspectKind = "love") {
 
 					const head = cache.next[0];
 					return {
-						previous: queue.previous,
+						...queue,
 						next: [head, ...queue.next.filter((id) => id !== head)],
 					};
 				});
+
+				if (action === "like") setLikeStreak(mode, (likeStreaks.get(mode) ?? 0) + 1);
+				else setLikeStreak(mode, 0);
 			}
 			catch (reason) {
 				if (!isWretchError(reason)) throw reason;
@@ -186,9 +219,14 @@ export function useQueue(mode: ProspectKind = "love") {
 				if (issue.error === "confirm_email" || issue.error === "finish_profile") return issue;
 
 				await invalidate({ queryKey });
-				if (issue.error === "already_responded") return;
+				if (
+					issue.error === "already_responded"
+					|| issue.error === "already_undone"
+					|| issue.error === "nothing_to_undo"
+					|| issue.error === "blocked"
+				) return;
 
-				if (issue.error !== "out_of_likes" && issue.error !== "out_of_passes") throw reason;
+				if (issue.error !== "out_of_likes" && issue.error !== "out_of_browses") throw reason;
 				const { details: { reset_at } } = issue;
 
 				const dialog = (
@@ -212,9 +250,13 @@ export function useQueue(mode: ProspectKind = "love") {
 		error,
 		previous,
 		next,
-		like: (kind: ProspectKind = mode, userId: string = current!) => mutateAsync({ action: "like", userId, kind }),
-		pass: (kind: ProspectKind = mode, userId: string = current!) => mutateAsync({ action: "pass", userId, kind }),
-		undo: (kind: ProspectKind = mode) => mutateAsync({ action: "undo", userId: current!, kind }),
+		canUndo,
+		notice,
+		pending,
+		likeStreak,
+		like: (userId: string = current!) => mutateAsync({ action: "like", userId }),
+		pass: (userId: string = current!) => mutateAsync({ action: "pass", userId }),
+		undo: () => mutateAsync({ action: "undo", userId: previous! }),
 		invalidate: () => invalidateQueue(mode),
 		mutating,
 		forward,
