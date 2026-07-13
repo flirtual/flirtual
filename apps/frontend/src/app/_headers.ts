@@ -39,6 +39,14 @@ const data = [
 				value: "strict-origin-when-cross-origin"
 			},
 			/**
+			 * @see https://http.dev/document-policy
+			 * @see https://docs.sentry.io/platforms/javascript/guides/react/profiling/browser-profiling/
+			 */
+			{
+				key: "document-policy",
+				value: "js-profiling"
+			},
+			/**
 			 * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Permissions-Policy
 			 */
 			{
