@@ -49,6 +49,17 @@ defmodule Flirtual.Application do
           [{0, FlirtualWeb.Telemetry}]
         },
         {
+          not is_nil(config(:oban_pool_size)),
+          [
+            {1,
+             Supervisor.child_spec(
+               {Flirtual.Repo,
+                name: Flirtual.Repo.oban_repo(), pool_size: config(:oban_pool_size)},
+               id: Flirtual.Repo.oban_repo()
+             )}
+          ]
+        },
+        {
           has_config?(Flirtual.VRChat, [:username, :password]),
           [{2, Flirtual.VRChatSession}]
         },
