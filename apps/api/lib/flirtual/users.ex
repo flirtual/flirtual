@@ -28,11 +28,11 @@ defmodule Flirtual.Users do
   alias Flirtual.User.{Login, Preferences}
   alias Flirtual.User.Profile.Image
 
-  def get(id)
+  def get(id, preload \\ User.default_assoc())
       when is_binary(id) do
     User
     |> where([user], user.id == ^id)
-    |> preload(^User.default_assoc())
+    |> preload(^preload)
     |> Repo.one()
   end
 
