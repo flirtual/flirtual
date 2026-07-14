@@ -3,7 +3,7 @@ defmodule Flirtual.Repo.Migrations.AddProfileImagesBlurHash do
 
   def change do
     alter table(:profile_images) do
-      add :blur_hash, :string
+      add_if_not_exists :blur_hash, :string
     end
   end
 end
