@@ -25,10 +25,6 @@
 			"path": "../apps/frontend/visionos"
 		},
 		{
-			"name": "📸 Image Variants",
-			"path": "../apps/image-variants"
-		},
-		{
 			"name": "🛡️ Image Classification",
 			"path": "../apps/image-classification"
 		},
