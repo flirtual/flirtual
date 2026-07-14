@@ -13,8 +13,8 @@ import {
 	DialogHeader,
 	DialogTitle
 } from "~/components/dialog/dialog";
+import { useDismissed } from "~/hooks/use-dismissed";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
-import { usePreferences } from "~/hooks/use-preferences";
 import { useOptionalSession } from "~/hooks/use-session";
 import { mutate, sessionKey } from "~/query";
 
@@ -27,7 +27,7 @@ export type NewsDialogProps
 export const NewsDialog: FC<NewsDialogProps> = (props) => {
 	const { t } = useTranslation();
 	const session = useOptionalSession();
-	const [tourCompleted] = usePreferences("tour-browsing-completed", false);
+	const [tourCompleted] = useDismissed("tour_browsing");
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const news = useMemo(() => {
 		if (props.news) return props.news.filter((id) => newsItems[id]);
