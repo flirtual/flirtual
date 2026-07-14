@@ -375,6 +375,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 									)}
 									<SingleImage
 										large
+										priority
 										className="touch-callout-default !relative mx-auto aspect-auto !size-auto max-h-[80vh] object-cover"
 										image={currentImage}
 									/>
