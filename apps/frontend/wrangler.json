@@ -29,7 +29,10 @@
 					"binding": "DESTINATION_BUCKET",
 					"bucket_name": "pfp"
 				}
-			]
+			],
+			"images": {
+				"binding": "IMAGES"
+			}
 		},
 		"canary": {
 			"routes": [
@@ -54,7 +57,10 @@
 					"binding": "DESTINATION_BUCKET",
 					"bucket_name": "pfp-canary"
 				}
-			]
+			],
+			"images": {
+				"binding": "IMAGES"
+			}
 		}
 	},
 	"assets": {
@@ -90,5 +96,8 @@
 			"binding": "DESTINATION_BUCKET",
 			"bucket_name": "pfp"
 		}
-	]
+	],
+	"images": {
+		"binding": "IMAGES"
+	}
 }
