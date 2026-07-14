@@ -3,12 +3,12 @@ defmodule Flirtual.Stereo2Spatial do
 
   alias Flirtual.User.Profile.Image
 
-  @origin "https://stereo2spatial.kfarwell.org"
   @receive_timeout 180_000
 
   def convert(%Image{original_file: original_file} = image, spatial_id)
       when is_binary(original_file) and is_binary(spatial_id) do
-    request(image, spatial_id, @origin, Image.url(:uploads, original_file))
+    origin = Application.fetch_env!(:flirtual, :stereo2spatial_origin)
+    request(image, spatial_id, origin, Image.url(:uploads, original_file))
   end
 
   def convert(_, _), do: {:error, :missing_original}
