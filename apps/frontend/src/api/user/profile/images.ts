@@ -14,6 +14,7 @@ export type ProfileImage = {
 	originalFile?: string;
 	externalId?: string;
 	spatialId?: string;
+	blurHash?: string;
 }
 & DatedModel
 & Partial<ProfileImageMetadata> & UuidModel;
