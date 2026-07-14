@@ -4,6 +4,7 @@
 	"scripts": {
 		"dev": "react-router dev",
 		"typegen": "wrangler types --include-runtime false && react-router typegen",
+		"typecheck:worker": "tsc -p tsconfig.worker.json",
 		"build": "rm -rf .sonda && pnpm typegen && react-router build",
 		"build:preview": "sh -c 'name=${1:-$(whoami)} && VITE_PREVIEW=\"$name\" pnpm -s build --mode=\"$name\"' --",
 		"production": "pnpm -s build --mode=production && wrangler deploy --env=production --old-asset-ttl=7776000 -c ./dist/client/wrangler.json",

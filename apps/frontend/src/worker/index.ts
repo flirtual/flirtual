@@ -1,6 +1,3 @@
-/// <reference types="@cloudflare/workers-types" />
-/// <reference types="../../worker-configuration.d.ts" />
-
 import { env } from "cloudflare:workers";
 import { createPath } from "react-router";
 
@@ -11,7 +8,7 @@ import {
 	isLocale,
 	replaceLanguage
 } from "../i18n/languages";
-import { queue } from "./image-queue";
+import { queue } from "./queue/user-uploads";
 
 export default {
 	async fetch(request): Promise<Response> {
