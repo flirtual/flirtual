@@ -18,6 +18,7 @@ defmodule Flirtual.User.Profile.Image do
     field(:original_file, :string)
     field(:external_id, :string)
     field(:blur_id, :string)
+    field(:blur_hash, :string)
     field(:hash, :integer)
     field(:order, :integer)
     field(:spatial_id, :string)
@@ -37,6 +38,7 @@ defmodule Flirtual.User.Profile.Image do
       :original_file,
       :external_id,
       :blur_id,
+      :blur_hash,
       :hash,
       :order,
       :spatial_id,
@@ -288,7 +290,7 @@ defmodule Flirtual.User.Profile.Image do
     :ok
   end
 
-  def update_variants(original_file, external_id, blur_id) do
+  def update_variants(original_file, external_id, blur_id, blur_hash) do
     Repo.transaction(fn ->
       now = DateTime.truncate(DateTime.utc_now(), :second)
 
@@ -303,6 +305,7 @@ defmodule Flirtual.User.Profile.Image do
           Image.changeset(existing_image, %{
             external_id: external_id,
             blur_id: blur_id,
+            blur_hash: blur_hash,
             updated_at: now
           })
         else
@@ -311,6 +314,7 @@ defmodule Flirtual.User.Profile.Image do
             original_file: original_file,
             external_id: external_id,
             blur_id: blur_id,
+            blur_hash: blur_hash,
             updated_at: now,
             created_at: now
           })
@@ -333,6 +337,7 @@ defmodule Flirtual.User.Profile.Image do
         :id,
         :original_file,
         :external_id,
+        :blur_hash,
         :spatial_id,
         :updated_at,
         :created_at,

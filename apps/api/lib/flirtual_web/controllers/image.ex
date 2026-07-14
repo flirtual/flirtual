@@ -218,13 +218,19 @@ defmodule FlirtualWeb.ImageController do
       )
   end
 
-  def update_variants(conn, %{
-        "original_file" => original_file,
-        "external_id" => external_id,
-        "blur_id" => blur_id
-      }) do
+  def update_variants(
+        conn,
+        %{
+          "original_file" => original_file,
+          "external_id" => external_id,
+          "blur_id" => blur_id
+        } = params
+      ) do
     if authenticated?(conn) do
-      with {:ok, image} <- Image.update_variants(original_file, external_id, blur_id) do
+      blur_hash = Map.get(params, "blur_hash")
+
+      with {:ok, image} <-
+             Image.update_variants(original_file, external_id, blur_id, blur_hash) do
         conn |> json(image)
       end
     else
