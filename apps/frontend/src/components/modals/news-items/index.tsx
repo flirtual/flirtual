@@ -7,6 +7,10 @@ export interface NewsItem {
 }
 
 export const newsItems: Record<string, NewsItem> = {
+	"2026_homie_mode": {
+		date: "2026-07-14",
+		Component: lazy(() => import("./2026-homie-mode").then(({ HomieMode2026 }) => ({ default: HomieMode2026 })))
+	},
 	"2025_location": {
 		date: "2025-12-09",
 		Component: lazy(() => import("./2025-location").then(({ Location2025 }) => ({ default: Location2025 })))

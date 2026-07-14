@@ -83,6 +83,10 @@
 	},
 	"news": {
 		"footer": "<p>💡 Have an idea for Flirtual? <ideas>Suggest and vote</ideas> on new features and improvements.</p><p>❓ Found a bug or need help? <contact>Let us know</contact>.</p><p>💻 Did you know Flirtual is open source? If you're a developer, you can <github>help build the future of Flirtual</github>.</p><p>💬 Join our <discord>Discord community</discord> and <vrchat>VRChat group</vrchat> for events and more!</p>",
+		"2026_homie_mode": {
+			"title": "Homie Mode updates",
+			"body": "<p>We heard you: Homie Mode is a bit confusing and a bit too random.</p><ul><li>🎯 Improved matchmaking: Homie Mode now takes your age range, interests, and other tags into consideration. Your gender filters, location, and relationship-focused tags still apply only in Date Mode.</li><li>✌️ The Homie button has left Date Mode. To make friends, switch to Homie Mode.</li><li>🔀 Switching modes keeps the profile you're viewing, so you can still Homie someone you found in Date Mode, or (new!) Like someone you found in Homie Mode.</li></ul>"
+		},
 		"2025_location": {
 			"title": "Location, location, location",
 			"body": "<p>You can now optionally add your location and timezone to see how close people are and what time it is for them.</p><form />",
