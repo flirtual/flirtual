@@ -4,7 +4,7 @@
 	"scripts": {
 		"dev": "react-router dev",
 		"typegen": "wrangler types --include-runtime false && react-router typegen",
-		"typecheck:worker": "tsc -p tsconfig.worker.json",
+		"typecheck:worker": "tsc -p src/worker/tsconfig.json",
 		"build": "rm -rf .sonda && pnpm typegen && react-router build",
 		"build:preview": "sh -c 'name=${1:-$(whoami)} && VITE_PREVIEW=\"$name\" pnpm -s build --mode=\"$name\"' --",
 		"production": "pnpm -s build --mode=production && wrangler deploy --env=production --old-asset-ttl=7776000 -c ./dist/client/wrangler.json",
@@ -83,6 +83,7 @@
 		"@vitejs/plugin-basic-ssl": "^2.1.0",
 		"@widgetbot/react-embed": "^1.9.0",
 		"accept-language": "^3.0.20",
+		"blurhash": "^2.0.5",
 		"capacitor-native-settings": "^7.0.2",
 		"core-js": "^3.49.0",
 		"csstype": "^3.1.3",

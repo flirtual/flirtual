@@ -4,6 +4,7 @@ export async function updateVariants(payload: {
 	originalFile: string;
 	externalId: string;
 	blurId: string;
+	blurhash: string | null;
 }): Promise<void> {
 	const response = await fetch(`${apiUrl}/images/variants`, {
 		method: "post",
@@ -14,7 +15,8 @@ export async function updateVariants(payload: {
 		body: JSON.stringify({
 			original_file: payload.originalFile,
 			external_id: payload.externalId,
-			blur_id: payload.blurId
+			blur_id: payload.blurId,
+			blur_hash: payload.blurhash
 		})
 	});
 

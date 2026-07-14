@@ -209,6 +209,9 @@ importers:
       accept-language:
         specifier: ^3.0.20
         version: 3.0.20
+      blurhash:
+        specifier: ^2.0.5
+        version: 2.0.5
       capacitor-native-settings:
         specifier: ^7.0.2
         version: 7.0.2(@capacitor/core@7.4.3)
@@ -3629,6 +3632,9 @@ packages:
 
   blueimp-canvas-to-blob@3.29.0:
     resolution: {integrity: sha512-0pcSSGxC0QxT+yVkivxIqW0Y4VlO2XSDPofBAqoJ1qJxgH9eiUDLv50Rixij2cDuEfx4M6DpD9UGZpRhT5Q8qg==}
+
+  blurhash@2.0.5:
+    resolution: {integrity: sha512-cRygWd7kGBQO3VEhPiTgq4Wc43ctsM+o46urrmPOiuAe+07fzlSB9OJVdpgDL0jPqXUVQ9ht7aq7kxOeJHRK+w==}
 
   body-parser@1.20.3:
     resolution: {integrity: sha512-7rAxByjUMqQ3/bHJy7D6OGXvx/MMc4IqBn/X0fcM1QUcAItpZrBEYhWGem+tzXH90c+G01ypMcYJBO9Y30203g==}
@@ -10924,6 +10930,8 @@ snapshots:
   blake3-wasm@2.1.5: {}
 
   blueimp-canvas-to-blob@3.29.0: {}
+
+  blurhash@2.0.5: {}
 
   body-parser@1.20.3:
     dependencies:
