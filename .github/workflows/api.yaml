@@ -32,7 +32,7 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v7
 
     - name: Set up Elixir
       uses: erlef/setup-beam@v1
@@ -42,7 +42,7 @@ jobs:
 
     - name: Cache deps
       id: cache-deps
-      uses: actions/cache@v3
+      uses: actions/cache@v6
       env:
         cache-name: cache-elixir-deps
       with:
@@ -53,7 +53,7 @@ jobs:
 
     - name: Cache compiled build
       id: cache-build
-      uses: actions/cache@v3
+      uses: actions/cache@v6
       env:
         cache-name: cache-compiled-build
       with:
@@ -87,7 +87,7 @@ jobs:
       url: https://canary-api.flirtual.com
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v7
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - run: |
           flyctl config show -a flirtual | jq '
@@ -120,7 +120,7 @@ jobs:
       url: https://api.flirtu.al
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v7
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - run: |
           GIT_COMMIT_SHA=$(git rev-parse HEAD)
