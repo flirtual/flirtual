@@ -52,6 +52,7 @@ end
 
 config :flirtual,
   canary?: canary?,
+  expose_error_details?: dev? or canary?,
   session_signing_salt: Env.get!("SESSION_SIGNING_SALT", default: "local_M0aOkiQYko"),
   # Shared dev tokens: must match apps/image-classification/.env.local and flirtualbot.
   image_access_token:
