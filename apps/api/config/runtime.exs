@@ -64,7 +64,7 @@ config :flirtual,
     ),
   stereo2spatial_access_token: Env.get("STEREO2SPATIAL_ACCESS_TOKEN"),
   stereo2spatial_origin:
-    Env.get!("STEREO2SPATIAL_ORIGIN", default: "https://stereo2spatial.kfarwell.org")
+    Env.get("STEREO2SPATIAL_ORIGIN", default: "https://stereo2spatial.kfarwell.org")
 
 origin = URI.parse(Env.get!("ORIGIN", default: "https://#{hostname}:4001"))
 frontend_origin = Env.get!("FRONTEND_ORIGIN", default: "https://#{hostname}:3000")
