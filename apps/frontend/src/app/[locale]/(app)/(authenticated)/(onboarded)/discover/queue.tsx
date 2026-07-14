@@ -210,7 +210,7 @@ export const Queue: FC<{ kind: ProspectKind }> = ({ kind }) => {
 
 	return (
 		<>
-			{kind === "love" && <DefaultTour />}
+			<DefaultTour />
 
 			<div className="relative flex w-full max-w-full flex-col items-center gap-4 desktop:w-auto">
 				{notice === "fallback" && <FallbackNotice mode={kind} />}

@@ -1,3 +1,5 @@
+import { useCallback } from "react";
+
 import type { Session } from "~/api/auth";
 import { Preferences } from "~/api/user/preferences";
 import { mutate, sessionKey } from "~/query";
@@ -9,7 +11,7 @@ export function useDismissed(key: string): [boolean, () => Promise<void>] {
 	const dismissed = user.preferences?.dismissed ?? [];
 	const isDismissed = dismissed.includes(key);
 
-	const dismiss = async () => {
+	const dismiss = useCallback(async () => {
 		if (isDismissed) return;
 
 		const preferences = await Preferences.update(user.id, {
@@ -20,7 +22,8 @@ export function useDismissed(key: string): [boolean, () => Promise<void>] {
 			sessionKey(),
 			(session) => session && { ...session, user: { ...session.user, preferences } }
 		);
-	};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isDismissed, user.id, key, dismissed.join(",")]);
 
 	return [isDismissed, dismiss];
 }

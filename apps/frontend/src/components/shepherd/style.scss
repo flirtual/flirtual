@@ -14,6 +14,10 @@
 	&.shepherd-target-click-disabled {
 		@apply pointer-events-none;
 	}
+
+	&#browse-mode-switch {
+		@apply dark:bg-white-20;
+	}
 }
 
 

@@ -6,10 +6,11 @@ import { emptyArray } from "~/utilities";
 
 const tourOptions = {
 	useModalOverlay: true,
+	exitOnEsc: false,
 	defaultStepOptions: {
 		canClickTarget: false,
 		cancelIcon: {
-			enabled: true
+			enabled: false
 		}
 	}
 } satisfies Tour.TourOptions;
