@@ -58,6 +58,7 @@ export type ImageSetValue = {
 	id: string;
 	src: string;
 	fullSrc: string;
+	blurHash?: string;
 	stereo?: boolean;
 }
 & Partial<ProfileImageMetadata>;
@@ -396,6 +397,7 @@ const ArrangeableImageDialog: React.FC<{
 			<DialogContent className="pointer-events-none w-fit max-w-[95svw] overflow-hidden p-0 desktop:max-w-[95svw]">
 				<UserImage
 					alt={t("profile_picture")}
+					blurHash={image.blurHash}
 					className="!relative mx-auto aspect-auto !size-auto max-h-[80vh] rounded-2.5xl object-cover"
 					src={image.fullSrc}
 				/>

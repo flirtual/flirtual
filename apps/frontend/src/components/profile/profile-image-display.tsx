@@ -90,6 +90,7 @@ const SingleImage: React.FC<SingleImageProps> = (props) => {
 	return (
 		<UserImage
 			alt=""
+			blurHash={image.blurHash}
 			className={twMerge(className, large && "bg-black-90 object-contain")}
 			height={large ? undefined : 512}
 			priority={priority}

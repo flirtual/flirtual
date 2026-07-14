@@ -43,6 +43,7 @@ export const BiographyForm: FC = () => {
 					id: image.id,
 					src: urls.image(image),
 					fullSrc: urls.image(image, "full"),
+					blurHash: image.blurHash,
 					authorId: image.authorId,
 					authorName: image.authorName,
 					worldId: image.worldId,
