@@ -33,6 +33,10 @@
 			"path": "../apps/image-classification"
 		},
 		{
+			"name": "🔎 Manticore",
+			"path": "../apps/manticore"
+		},
+		{
 			"name": "📊 Grafana",
 			"path": "../apps/grafana"
 		},
