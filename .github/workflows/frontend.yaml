@@ -21,18 +21,18 @@ jobs:
       run:
         working-directory: apps/frontend
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
       - run: echo "::add-matcher::.github/annotation-eslint.json"
 
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
         name: Install pnpm
         with:
-          version: 10
+          package_json_file: apps/frontend/package.json
           run_install: false
 
       - name: Install Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 24
           cache: pnpm
@@ -58,18 +58,18 @@ jobs:
       run:
         working-directory: apps/frontend
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
       - run: echo "::add-matcher::.github/annotation-typescript.json"
 
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
         name: Install pnpm
         with:
-          version: 10
+          package_json_file: apps/frontend/package.json
           run_install: false
 
       - name: Install Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 24
           cache: pnpm
@@ -137,16 +137,16 @@ jobs:
       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
         name: Install pnpm
         with:
-          version: 10
+          package_json_file: apps/frontend/package.json
           run_install: false
 
       - name: Install Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 24
           cache: pnpm
@@ -154,5 +154,12 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install
+
+      - name: Cache build caches
+        uses: actions/cache@v6
+        with:
+          path: apps/frontend/node_modules/.cache
+          key: build-cache-${{ matrix.environment }}-${{ github.run_id }}
+          restore-keys: build-cache-${{ matrix.environment }}-
 
       - run: pnpm run ${{ matrix.environment }}
