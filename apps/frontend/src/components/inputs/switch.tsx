@@ -4,19 +4,32 @@ import { twMerge } from "tailwind-merge";
 
 export type SwitchValue = boolean | null;
 
-export interface InputSwitchProps {
+interface InputSwitchBaseProps {
 	value: SwitchValue;
-	onChange: React.Dispatch<boolean>;
 	yes?: string;
 	no?: string;
 	className?: string;
 }
 
+export type InputSwitchProps = InputSwitchBaseProps & (
+	| { deselectable: true; onChange: React.Dispatch<SwitchValue> }
+	| { deselectable?: false; onChange: React.Dispatch<boolean> }
+);
+
 export const InputSwitch: React.FC<InputSwitchProps> = (props) => {
-	const { yes, no, value, onChange, className } = props;
+	const { yes, no, value, className } = props;
 	const { t } = useTranslation();
 
 	const ariaChecked = value === null ? "mixed" : value;
+
+	function select(next: boolean) {
+		if (props.deselectable) {
+			props.onChange(value === next ? null : next);
+			return;
+		}
+
+		props.onChange(next);
+	}
 
 	return (
 		<div
@@ -33,7 +46,7 @@ export const InputSwitch: React.FC<InputSwitchProps> = (props) => {
 				checked={value || false}
 				className="hidden"
 				type="checkbox"
-				onChange={({ target: { checked } }) => onChange(checked)}
+				onChange={({ target: { checked } }) => select(checked)}
 			/>
 			{value !== null && (
 				<m.div
@@ -62,13 +75,13 @@ export const InputSwitch: React.FC<InputSwitchProps> = (props) => {
 			)}
 			<span
 				className="relative flex h-full items-center justify-center px-4 group-aria-checked:text-white-10 vision:text-black-80"
-				onClick={() => onChange(true)}
+				onClick={() => select(true)}
 			>
 				{yes ?? t("yes")}
 			</span>
 			<span
 				className="relative flex h-full items-center justify-center px-4 text-white-10 group-aria-checked:text-black-80 group-data-[checked=mixed]:text-black-80 dark:group-aria-checked:text-white-10 dark:group-data-[checked=mixed]:text-white-10"
-				onClick={() => onChange(false)}
+				onClick={() => select(false)}
 			>
 				{no ?? t("no")}
 			</span>
