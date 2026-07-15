@@ -8,6 +8,7 @@ import { Html } from "~/components/html";
 import { usePreferences } from "~/hooks/use-preferences";
 import { useSession } from "~/hooks/use-session";
 import { useRelationship, useUser } from "~/hooks/use-user";
+import { collapseBlankLines } from "~/html";
 import { attributeFetcher, attributeKey, preload, relationshipFetcher, relationshipKey, userFetcher, userKey } from "~/query";
 import { urls } from "~/urls";
 import { escapeHtml } from "~/utilities";
@@ -266,10 +267,7 @@ export const Profile = withSuspense(({
 										me.status === "visible" && "select-children"
 									)}
 								>
-									{user.profile.biography.replaceAll(
-										/(<p>(<br\s?\/?>)+<\/p>){2}/g,
-										""
-									)}
+									{collapseBlankLines(user.profile.biography)}
 								</Html>
 							)
 						: myProfile

@@ -1,6 +1,8 @@
 import type React from "react";
+import { useTranslation } from "react-i18next";
+import { twMerge } from "tailwind-merge";
 
-import { editorColors } from "~/html";
+import { contentLength, editorColors } from "~/html";
 import { lazy } from "~/lazy";
 
 import "./style.scss";
@@ -23,40 +25,76 @@ const ReactQuill = lazy(
 export interface InputEditorProps {
 	value: string;
 	onChange: React.Dispatch<string>;
+	maxLength?: number;
+	showCountAbove?: number;
 }
 
 export const InputEditor: React.FC<InputEditorProps> = ({
 	value,
-	onChange
+	onChange,
+	maxLength,
+	showCountAbove
 }) => {
+	const { t } = useTranslation();
+
+	const length = maxLength === undefined ? 0 : contentLength(value);
+
+	const tooLong = maxLength !== undefined && length > maxLength;
+	const showCount
+		= maxLength !== undefined
+			&& (showCountAbove === undefined || length > showCountAbove);
+
 	return (
-		<ReactQuill
-			data-block
-			formats={[
-				"header",
-				"bold",
-				"italic",
-				"underline",
-				"strike",
-				"color",
-				"background",
-				"list",
-				"blockquote",
-				"align"
-			]}
-			modules={{
-				toolbar: [
-					[{ header: 3 }],
-					["bold", "italic", "underline"],
-					[{ color: editorColors }, { background: editorColors }],
-					[{ list: "ordered" }],
-					["blockquote"],
-					[{ align: [] }]
-				]
-			}}
-			className="prose max-w-none dark:prose-invert [&_*]:!select-auto"
-			value={value}
-			onChange={(value) => onChange(value)}
-		/>
+		<div className="flex flex-col gap-1">
+			<ReactQuill
+				data-block
+				formats={[
+					"header",
+					"bold",
+					"italic",
+					"underline",
+					"strike",
+					"color",
+					"background",
+					"list",
+					"blockquote",
+					"align"
+				]}
+				modules={{
+					toolbar: [
+						[{ header: 3 }],
+						["bold", "italic", "underline"],
+						[{ color: editorColors }, { background: editorColors }],
+						[{ list: "ordered" }],
+						["blockquote"],
+						[{ align: [] }]
+					]
+				}}
+				className="prose max-w-none dark:prose-invert [&_*]:!select-auto"
+				value={value}
+				onChange={(value) => onChange(value)}
+			/>
+			{showCount && (
+				<div className="flex items-center gap-2 font-nunito text-sm">
+					{tooLong && (
+						<span className="text-red-600 dark:text-red-400">
+							{t("errors.should_be_at_most_{count}_character(s)" as never, {
+								count: maxLength
+							})}
+						</span>
+					)}
+					<span
+						className={twMerge(
+							"ml-auto tabular-nums text-black-60 dark:text-white-50",
+							tooLong && "text-red-600 dark:text-red-400"
+						)}
+					>
+						{length}
+						{" / "}
+						{maxLength}
+					</span>
+				</div>
+			)}
+		</div>
 	);
 };

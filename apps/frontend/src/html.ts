@@ -84,6 +84,36 @@ export const editorColors = [
 	"#250e49"
 ];
 
+export const biographyMaxLength = 10_000;
+export const biographyCounterThreshold = 8000;
+
+// Collapse 3+ consecutive and strip any leading/trailing blank lines. Matches
+// collapse_blank_lines/1 in profiles.ex.
+export function collapseBlankLines(value: string): string {
+	return value
+		.replace(/^(?:<p>(?:<br\s?\/?>)+<\/p>)+/, "")
+		.replace(/(?:<p>(?:<br\s?\/?>)+<\/p>)+$/, "")
+		.replaceAll(
+			/((?:<p>(?:<br\s?\/?>)+<\/p>){2})(?:<p>(?:<br\s?\/?>)+<\/p>)+/g,
+			"$1"
+		);
+}
+
+// Length of rich-text content: visible text in Unicode codepoints plus rendered
+// newlines. Matches content_length/1 in profiles.ex.
+export function contentLength(value: string): number {
+	const { body } = new DOMParser().parseFromString(
+		collapseBlankLines(value),
+		"text/html"
+	);
+
+	const lines = body.querySelectorAll(
+		"p, h1, h2, h3, h4, h5, h6, blockquote, li, pre"
+	).length;
+
+	return [...(body.textContent ?? "")].length + lines;
+}
+
 const colorHexRegex = new RegExp(editorColors.join("|"), "i");
 const colorRgbRegex
 	= /^rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)$/;

@@ -64,7 +64,6 @@ defmodule Flirtual.Profiles do
     @optional [
                 :display_name,
                 :biography,
-                :biography_fragment,
                 :domsub,
                 :monopoly,
                 :country,
@@ -83,7 +82,6 @@ defmodule Flirtual.Profiles do
     embedded_schema do
       field(:display_name, :string)
       field(:biography, :string)
-      field(:biography_fragment, :map)
       field(:vrchat, :string, default: "")
       field(:vrchat_name, :string, default: "")
       field(:discord, :string, default: "")
@@ -138,32 +136,80 @@ defmodule Flirtual.Profiles do
 
           case Floki.parse_fragment(value) do
             {:error, _} -> add_error(changeset, field, "is invalid")
-            {:ok, fragment} -> put_change(changeset, :"#{field}_fragment", fragment)
+            {:ok, _fragment} -> changeset
           end
       end
     end
 
     def validate_html_length(changeset, field, options) when is_atom(field) do
-      case changeset do
-        %{valid?: false} ->
-          changeset
+      min = Keyword.get(options, :min, 0)
+      max = Keyword.get(options, :max)
 
-        _ ->
-          case changed?(changeset, field) do
-            false ->
-              changeset
+      with true <- changeset.valid?,
+           true <- changed?(changeset, field),
+           value when is_binary(value) <- get_change(changeset, field) do
+        length = content_length(value)
 
-            true ->
-              original = get_change(changeset, field)
-              fragment = get_change(changeset, :"#{field}_fragment")
+        cond do
+          length < min ->
+            add_error(changeset, field, "should be at least %{count} character(s)",
+              count: min,
+              validation: :length,
+              kind: :min,
+              type: :string
+            )
 
-              changeset
-              |> put_change(field, Floki.text(fragment))
-              |> validate_length(field, options)
-              |> put_change(field, original)
-          end
+          not is_nil(max) and length > max ->
+            add_error(changeset, field, "should be at most %{count} character(s)",
+              count: max,
+              validation: :length,
+              kind: :max,
+              type: :string
+            )
+
+          true ->
+            changeset
+        end
+      else
+        _ -> changeset
       end
     end
+
+    # Length of rich-text content: visible text in Unicode codepoints plus rendered
+    # newlines. Matches contentLength() in html.ts.
+    defp content_length(value) do
+      case value |> collapse_blank_lines() |> Floki.parse_fragment() do
+        {:ok, fragment} ->
+          text_length =
+            fragment
+            |> Floki.filter_out("br, hr")
+            |> Floki.text()
+            |> codepoint_length()
+
+          line_count =
+            fragment
+            |> Floki.find("p, h1, h2, h3, h4, h5, h6, blockquote, li, pre")
+            |> Kernel.length()
+
+          text_length + line_count
+
+        {:error, _} ->
+          0
+      end
+    end
+
+    # Collapse 3+ consecutive and strip any leading/trailing blank lines. Matches
+    # collapseBlankLines() in html.ts.
+    defp collapse_blank_lines(value) do
+      empty = ~S"(?:<p>(?:<br\s?/?>)+</p>)"
+
+      value
+      |> then(&Regex.replace(~r/^#{empty}+/, &1, ""))
+      |> then(&Regex.replace(~r/#{empty}+$/, &1, ""))
+      |> then(&Regex.replace(~r/(#{empty}{2})#{empty}+/, &1, "\\1"))
+    end
+
+    defp codepoint_length(text), do: text |> String.codepoints() |> length()
 
     def changeset(value, _, %{required: required}) do
       value

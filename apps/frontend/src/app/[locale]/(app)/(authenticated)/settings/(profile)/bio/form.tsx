@@ -17,7 +17,12 @@ import {
 import { useAttributeTranslation } from "~/hooks/use-attribute";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { html } from "~/html";
+import {
+	biographyCounterThreshold,
+	biographyMaxLength,
+	contentLength,
+	html
+} from "~/html";
 import { invalidate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
@@ -84,81 +89,92 @@ export const BiographyForm: FC = () => {
 				await invalidate({ queryKey: sessionKey() });
 			}}
 		>
-			{({ FormField }) => (
-				<>
-					<FormField name="displayName">
-						{(field) => (
-							<>
-								<InputLabel
-									inline
-									hint={t("factual_curly_fly_pop")}
-									{...field.labelProps}
-								>
-									{t("display_name")}
-								</InputLabel>
-								<InputText {...field.props} />
-							</>
-						)}
-					</FormField>
-					<FormField name="images">
-						{(field) => (
-							<>
-								<InputLabel
-									{...field.labelProps}
-									inline
-									hint={(
-										<InputLabelHint>
-											{t("known_antsy_gull_savor", { game: tAttribute[favoriteGameId]!.name })}
-											<details>
-												<summary className="text-pink opacity-75 transition-opacity hover:cursor-pointer hover:opacity-100">
-													{t("guidelines")}
-												</summary>
-												{t("formal_icy_hound_type")}
-											</details>
-										</InputLabelHint>
-									)}
-								>
-									{t("profile_pictures")}
-								</InputLabel>
-								<InputImageSet {...field.props} max={15} />
-							</>
-						)}
-					</FormField>
-					<FormField name="biography">
-						{(field) => (
-							<>
-								<InputLabel
-									inline
-									hint={(
-										<InputLabelHint>
-											{t("proof_east_termite_pave")}
-											<details>
-												<summary className="text-pink opacity-75 transition-opacity hover:cursor-pointer hover:opacity-100">
-													{t("guidelines")}
-												</summary>
-												{t("tame_weird_termite_zap")}
-											</details>
-										</InputLabelHint>
-									)}
-									{...field.labelProps}
-								>
-									{t("bio")}
-								</InputLabel>
-								<InputEditor {...field.props} />
-							</>
-						)}
-					</FormField>
-					<FormField name="prompts">
-						{(field) => (
-							<InputPrompts
-								labelId={field.labelProps.htmlFor}
-								{...field.props}
-							/>
-						)}
-					</FormField>
-					<FormButton>{t("update")}</FormButton>
-				</>
-			)}
+			{({ FormField, fields, buttonProps }) => {
+				const bioInvalid
+					= contentLength(fields.biography.props.value) > biographyMaxLength;
+
+				return (
+					<>
+						<FormField name="displayName">
+							{(field) => (
+								<>
+									<InputLabel
+										inline
+										hint={t("factual_curly_fly_pop")}
+										{...field.labelProps}
+									>
+										{t("display_name")}
+									</InputLabel>
+									<InputText {...field.props} />
+								</>
+							)}
+						</FormField>
+						<FormField name="images">
+							{(field) => (
+								<>
+									<InputLabel
+										{...field.labelProps}
+										inline
+										hint={(
+											<InputLabelHint>
+												{t("known_antsy_gull_savor", { game: tAttribute[favoriteGameId]!.name })}
+												<details>
+													<summary className="text-pink opacity-75 transition-opacity hover:cursor-pointer hover:opacity-100">
+														{t("guidelines")}
+													</summary>
+													{t("formal_icy_hound_type")}
+												</details>
+											</InputLabelHint>
+										)}
+									>
+										{t("profile_pictures")}
+									</InputLabel>
+									<InputImageSet {...field.props} max={15} />
+								</>
+							)}
+						</FormField>
+						<FormField name="biography">
+							{(field) => (
+								<>
+									<InputLabel
+										inline
+										hint={(
+											<InputLabelHint>
+												{t("proof_east_termite_pave")}
+												<details>
+													<summary className="text-pink opacity-75 transition-opacity hover:cursor-pointer hover:opacity-100">
+														{t("guidelines")}
+													</summary>
+													{t("tame_weird_termite_zap")}
+												</details>
+											</InputLabelHint>
+										)}
+										{...field.labelProps}
+									>
+										{t("bio")}
+									</InputLabel>
+									<InputEditor
+										{...field.props}
+										maxLength={biographyMaxLength}
+										showCountAbove={biographyCounterThreshold}
+									/>
+								</>
+							)}
+						</FormField>
+						<FormField name="prompts">
+							{(field) => (
+								<InputPrompts
+									labelId={field.labelProps.htmlFor}
+									{...field.props}
+								/>
+							)}
+						</FormField>
+						<FormButton disabled={buttonProps.disabled || bioInvalid}>
+							{t("update")}
+						</FormButton>
+					</>
+				);
+			}}
 		</Form>
 	);
 };
