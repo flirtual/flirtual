@@ -1,6 +1,7 @@
 import { DatetimePicker, ErrorCode } from "@capawesome-team/capacitor-datetime-picker";
 import { useCallback, useRef, useState } from "react";
 
+import { useBreakpoint } from "~/hooks/use-breakpoint";
 import { useDevice } from "~/hooks/use-device";
 import { useTheme } from "~/hooks/use-theme";
 import { useToast } from "~/hooks/use-toast";
@@ -43,11 +44,27 @@ export type InputDateSelectProps = {
 
 export const InputDateSelect: React.FC<InputDateSelectProps> = (props) => {
 	const { native } = useDevice();
+	const desktop = useBreakpoint("desktop");
 
 	const [inputValue, setInputValue] = useState(() => toDateString(props.value));
 	const [drawerVisible, setDrawerVisible] = useState(false);
 
 	const reference = useRef<HTMLDivElement>(null);
+	const calendarReference = useRef<HTMLDivElement>(null);
+
+	// Whether the calendar was opened by pressing the field: the calendar is
+	// focused instead of the field, so the keyboard doesn't pop up on mobile.
+	const openedByPointerReference = useRef(false);
+	const suppressClickReference = useRef(false);
+	const restoringFocusReference = useRef(false);
+
+	const openDrawer = () => {
+		// On mobile, scroll the field to the top so the calendar fits below.
+		if (!desktop && !drawerVisible)
+			reference.current?.scrollIntoView({ block: "start" });
+
+		setDrawerVisible(true);
+	};
 
 	const progressDate = useCallback(
 		(type: number, direction: -1 | 1) => {
@@ -81,7 +98,7 @@ export const InputDateSelect: React.FC<InputDateSelectProps> = (props) => {
 				props.onChange(now);
 			}}
 			onChange={(value) => {
-				setDrawerVisible(true);
+				openDrawer();
 
 				const date = fromDateString(value);
 				setInputValue(value);
@@ -89,8 +106,15 @@ export const InputDateSelect: React.FC<InputDateSelectProps> = (props) => {
 				if (Number.isNaN(date.getTime())) return;
 				props.onChange(date);
 			}}
-			onClick={() => setDrawerVisible(true)}
-			onFocus={() => setDrawerVisible(true)}
+			onClick={() => openDrawer()}
+			onFocus={() => {
+				if (restoringFocusReference.current) {
+					restoringFocusReference.current = false;
+					return;
+				}
+
+				openDrawer();
+			}}
 			onKeyDown={(event) => {
 				const { currentTarget } = event;
 
@@ -145,21 +169,77 @@ export const InputDateSelect: React.FC<InputDateSelectProps> = (props) => {
 
 	return (
 		<Popover open={drawerVisible} onOpenChange={setDrawerVisible}>
-			<PopoverAnchor ref={reference}>
+			<PopoverAnchor
+				className="scroll-mt-28"
+				ref={reference}
+				onClickCapture={(event) => {
+					if (!suppressClickReference.current) return;
+					suppressClickReference.current = false;
+
+					// The field would focus itself on click; the calendar has focus.
+					event.preventDefault();
+					event.stopPropagation();
+				}}
+				onPointerDownCapture={(event) => {
+					if (drawerVisible) {
+						suppressClickReference.current = false;
+						return;
+					}
+
+					event.preventDefault();
+					openedByPointerReference.current = true;
+					suppressClickReference.current = true;
+					openDrawer();
+				}}
+			>
 				{inputField}
 			</PopoverAnchor>
 			<PopoverContent
 				align="start"
+				avoidCollisions={false}
+				// The scaled-down calendar (mobile) is smaller than its layout box;
+				// presses on the dead area land outside the content, dismissing.
+				className="pointer-events-none"
+				onCloseAutoFocus={(event) => {
+					event.preventDefault();
+
+					// This fires after the calendar unmounts: focus on the body means it
+					// was dropped from within the calendar. Outside interactions have
+					// already moved focus elsewhere, leave those alone.
+					if (document.activeElement && document.activeElement !== document.body)
+						return;
+
+					const input = reference.current?.querySelector("input");
+					if (!input) return;
+
+					restoringFocusReference.current = true;
+
+					// Focusing a read-only input keeps the mobile keyboard hidden.
+					input.readOnly = true;
+					input.focus();
+
+					setTimeout(() => {
+						input.readOnly = false;
+					}, 0);
+				}}
 				onInteractOutside={(event) => {
 					if (reference.current?.contains(event.target as Node)) {
 						event.preventDefault();
 					}
 				}}
-				onOpenAutoFocus={(event) => event.preventDefault()}
+				onOpenAutoFocus={(event) => {
+					event.preventDefault();
+
+					if (!openedByPointerReference.current) return;
+					openedByPointerReference.current = false;
+
+					calendarReference.current?.focus();
+				}}
 			>
 				<InputCalendar
-					className="w-fit shadow-brand-1"
+					className="pointer-events-auto w-fit shadow-brand-1"
 					{...props}
+					ref={calendarReference}
 					value={props.value}
 					onChange={(value) => {
 						setInputValue(toDateString(value));
