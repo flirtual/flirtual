@@ -267,7 +267,8 @@ export const InfoForm: FC = () => {
 									{...field.props}
 									options={platforms.map((platform) => ({
 										key: platform,
-										label: tAttribute[platform]?.name ?? platform
+										label: tAttribute[platform]?.name ?? platform,
+										example: tAttribute[platform]?.example
 									}))}
 									limit={8}
 									placeholder={t("select_the_platforms_you_use")}

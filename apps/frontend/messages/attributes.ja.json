@@ -2333,7 +2333,8 @@
 			"name": "Meta Quest"
 		},
 		"3Kagenz7boB64Ke6vEAKv6": {
-			"name": "PCVR"
+			"name": "PCVR",
+			"example": "(Index、Vive、Rift など)"
 		},
 		"UpyGwuCHANjYmM2P269dFm": {
 			"name": "Quest Link"
@@ -2345,10 +2346,12 @@
 			"name": "SteamVR"
 		},
 		"N458aYKyg6hweVbyDEMDAR": {
-			"name": "VIVE Standalone"
+			"name": "VIVE Standalone",
+			"example": "(Focus Vision、XR Elite)"
 		},
 		"Qb3Ar9wqh7mAMwdevJCfYS": {
-			"name": "Android XR"
+			"name": "Android XR",
+			"example": "(Galaxy XR)"
 		},
 		"c255sGSiJpMNnm6NTUcvx6": {
 			"name": "Apple Vision"
