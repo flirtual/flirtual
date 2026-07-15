@@ -18,11 +18,11 @@ import type { Paginate } from "~/api/common";
 import { emptyPaginate } from "~/api/common";
 import {
 	searchSortKeys,
+	searchTags,
 	User,
-	UserStatuses,
-	userTags
+	UserStatuses
 } from "~/api/user";
-import type { SearchOptions, UserTags } from "~/api/user";
+import type { SearchOptions, SearchTag } from "~/api/user";
 import { Button } from "~/components/button";
 import { DateTimeRelative } from "~/components/datetime-relative";
 import { InputSelect, InputSwitch, InputText } from "~/components/inputs";
@@ -411,7 +411,7 @@ export const SearchView: React.FC = () => {
 								<InputText
 									autoFocus
 									Icon={Search}
-									placeholder="Search"
+									placeholder="Search (*: any text   ?: any char   ,: multiple terms)"
 									value={searchOptions.search}
 									onChange={(value) =>
 										setSearchOptions((searchOptions) => {
@@ -445,7 +445,7 @@ export const SearchView: React.FC = () => {
 							/>
 							<InputSelect
 								optional
-								options={userTags.map((tag) => ({
+								options={searchTags.map((tag) => ({
 									name: tag.split("_").map((value) => capitalize(value)).join(" "),
 									id: tag
 								}))}
@@ -454,7 +454,7 @@ export const SearchView: React.FC = () => {
 								onChange={(value) =>
 									setSearchOptions({
 										...searchOptions,
-										tags: [value as UserTags]
+										tags: [value as SearchTag]
 									})}
 							/>
 							<input
