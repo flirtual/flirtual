@@ -40,6 +40,7 @@ export interface AttributeTranslationMetadata {
 
 export type AttributeTranslation<T extends AttributeType> = {
 	name: string;
+	example?: string;
 } & (T extends keyof AttributeTranslationMetadata
 	? AttributeTranslationMetadata[T]
 	: Record<string, never>);

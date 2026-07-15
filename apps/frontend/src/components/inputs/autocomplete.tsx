@@ -12,6 +12,7 @@ import { InputOptionWindow } from "./option-window";
 export interface InputAutocompleteOption<K extends string = string> {
 	key: K;
 	label: string;
+	example?: string;
 	definition?: string;
 	definitionLink?: string;
 	hidden?: boolean;

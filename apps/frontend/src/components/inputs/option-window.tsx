@@ -14,6 +14,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
 export interface InputSelectOption<K> {
 	key: K;
 	label: string;
+	example?: string;
 	definition?: string;
 	definitionLink?: string;
 	active?: boolean;
@@ -96,7 +97,12 @@ export const DefaultOptionItem: FC<OptionItemProps<unknown>> = (props) => {
 					)}
 					type="button"
 				>
-					<span className="font-nunito text-lg">{option.label}</span>
+					<span className="font-nunito text-lg">
+						{option.label}
+						{option.example && (
+							<span className="opacity-70">{` ${option.example}`}</span>
+						)}
+					</span>
 				</button>
 			</TooltipTrigger>
 			{(option.definition || option.definitionLink) && (

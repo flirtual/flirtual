@@ -271,7 +271,8 @@ export const InfoForm: FC = () => {
 										const id = typeof platform === "string" ? platform : platform.id;
 										return {
 											key: id,
-											label: tAttribute[id]?.name ?? id
+											label: tAttribute[id]?.name ?? id,
+											example: tAttribute[id]?.example
 										};
 									})}
 									limit={8}
