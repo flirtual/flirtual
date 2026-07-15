@@ -121,6 +121,35 @@ export function skipErrorStack(error: Error, count: number) {
 	return error;
 }
 
+// Discard the click completing the current pointer interaction, so a press
+// whose default was cancelled (e.g. dismissing an overlay) can't also activate
+// whatever it landed on. Cleans itself up once the interaction ends, since a
+// cancelled press doesn't produce a click in every browser. onSuppress runs
+// only if the click actually arrives, i.e. the press was a tap, not a pan.
+export function suppressNextClick(onSuppress?: () => void) {
+	const suppress = (event: MouseEvent) => {
+		event.preventDefault();
+		event.stopPropagation();
+		onSuppress?.();
+	};
+
+	document.addEventListener("click", suppress, { capture: true, once: true });
+
+	const release = () => {
+		window.removeEventListener("pointerup", release, { capture: true });
+		window.removeEventListener("pointercancel", release, { capture: true });
+
+		// The click, if any, dispatches before timers run.
+		setTimeout(
+			() => document.removeEventListener("click", suppress, { capture: true }),
+			0
+		);
+	};
+
+	window.addEventListener("pointerup", release, { capture: true });
+	window.addEventListener("pointercancel", release, { capture: true });
+}
+
 export function escapeHtml(value: string): string {
 	return value
 		.replace(/&/g, "&amp;")

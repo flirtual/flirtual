@@ -81,6 +81,9 @@ function SelectContent({ ref: reference, ...props }: { ref?: React.Ref<React.Com
 		...elementProps
 	} = props;
 
+	// Tapping outside dismisses without restoring focus to the trigger.
+	const touchDismissReference = React.useRef(false);
+
 	return (
 		<SelectPrimitive.Portal>
 			<SelectPrimitive.Content
@@ -94,6 +97,16 @@ function SelectContent({ ref: reference, ...props }: { ref?: React.Ref<React.Com
 				ref={reference}
 				sideOffset={sideOffset}
 				{...elementProps}
+				onCloseAutoFocus={(event) => {
+					if (!touchDismissReference.current) return;
+
+					touchDismissReference.current = false;
+					event.preventDefault();
+				}}
+				onPointerDownOutside={(event) => {
+					if (event.detail.originalEvent.pointerType === "touch")
+						touchDismissReference.current = true;
+				}}
 			>
 				<SelectScrollUpButton />
 				<SelectPrimitive.Viewport

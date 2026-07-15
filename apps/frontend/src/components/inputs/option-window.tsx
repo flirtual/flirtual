@@ -8,7 +8,10 @@ import type { ComponentProps, EventHandler, FC, FocusEvent, KeyboardEvent, Mouse
 import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
+import { useScrollIndicator } from "~/hooks/use-scroll-indicator";
+
 import { InlineLink } from "../inline-link";
+import { ScrollIndicator } from "../scroll-indicator";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
 
 export interface InputSelectOption<K> {
@@ -35,6 +38,7 @@ export interface OptionItemProps<K> {
 		"data-active": boolean;
 		onClick: EventHandler<MouseEvent<HTMLButtonElement>>;
 		onFocus: EventHandler<FocusEvent<HTMLButtonElement>>;
+		onMouseDown: EventHandler<MouseEvent<HTMLButtonElement>>;
 	};
 }
 
@@ -129,11 +133,32 @@ export function InputOptionWindow(props: InputOptionWindowProps<unknown>) {
 		onOptionClick,
 		onOptionFocus,
 		OptionItem = DefaultOptionItem,
+		className,
 		onFocusCapture,
 		onKeyDown,
+		ref: forwardedReference,
 		...elementProps
 	} = props;
 	const optionsReference = useRef<HTMLDivElement>(null);
+
+	// macOS Safari focuses the nearest tabindex ancestor (the viewport) on
+	// mousedown instead of the clicked option. We distinguish from
+	// keyboard/programmatic focus then preventDefault, otherwise the mouseup
+	// lands on a different option and the click doesn't fire.
+	const pointerReference = useRef(false);
+
+	const { ref: indicatorReference, up, down, element }
+		= useScrollIndicator<HTMLDivElement>();
+
+	const setScrollElement = useCallback(
+		(node: HTMLDivElement | null) => {
+			indicatorReference(node);
+
+			if (typeof forwardedReference === "function") forwardedReference(node);
+			else if (forwardedReference) forwardedReference.current = node;
+		},
+		[indicatorReference, forwardedReference]
+	);
 
 	const focusOption = useCallback((target: -1 | 0 | 1) => {
 		const { current: root } = optionsReference;
@@ -156,8 +181,6 @@ export function InputOptionWindow(props: InputOptionWindowProps<unknown>) {
 		if (sibling instanceof HTMLElement) sibling.focus();
 	}, []);
 
-	// useEffect(() => focusOption(0), [focusOption]);
-
 	useEffect(() => {
 		const { current: root } = optionsReference;
 		if (!root) return;
@@ -166,63 +189,82 @@ export function InputOptionWindow(props: InputOptionWindowProps<unknown>) {
 		if (!activeElement || !(activeElement instanceof HTMLElement)) return;
 
 		activeElement.focus({});
-
-		// todo: this scrolls the entire page, not the container.
-		// activeElement.scrollIntoView({ block: "start" });
 	}, []);
 
 	return (
 		<div
 			{...elementProps}
 			className={twMerge(
-				"focusable-within flex max-h-72 w-fit min-w-full overflow-x-hidden overflow-y-scroll rounded-xl bg-white-20 shadow-brand-1 dark:bg-black-60",
-				elementProps.className
+				"focusable-within relative flex w-fit min-w-full overflow-hidden rounded-xl bg-white-20 shadow-brand-1 dark:bg-black-60",
+				className
 			)}
-			tabIndex={-1}
-			onFocusCapture={(event) => {
-				onFocusCapture?.(event);
+		>
+			<ScrollIndicator side="up" target={element} visible={up} />
+			<div
+				className="flex max-h-[var(--overlay-max-height,min(28rem,60svh))] w-full overflow-x-hidden overflow-y-scroll"
+				ref={setScrollElement}
+				tabIndex={-1}
+				onFocusCapture={(event) => {
+					onFocusCapture?.(event);
 
-				if (event.currentTarget !== event.target) return;
-				focusOption(0);
-			}}
-			onKeyDown={(event) => {
-				onKeyDown?.(event);
-				focusElementByKeydown(event);
-
-				switch (event.key) {
-					case "ArrowUp": {
-						event.preventDefault();
-						focusOption(-1);
+					if (event.currentTarget !== event.target) return;
+					if (pointerReference.current) {
+						pointerReference.current = false;
 						return;
 					}
-					case "ArrowDown": {
-						event.preventDefault();
-						focusOption(1);
-					}
-				}
-			}}
-		>
-			<div className="flex w-full flex-col" ref={optionsReference}>
-				{options.map((option) => {
-					if (!option.key) return null;
 
-					return (
-						<OptionItem
-							key={option.key as any}
-							elementProps={{
-								"data-active": option.active ?? false,
-								"data-key": option.key,
-								"data-name": option.label,
-								onClick: (event) =>
-									onOptionClick?.(Object.assign(event, { option })),
-								onFocus: (event) =>
-									onOptionFocus?.(Object.assign(event, { option }))
-							}}
-							option={option}
-						/>
-					);
-				})}
+					focusOption(0);
+				}}
+				onKeyDown={(event) => {
+					onKeyDown?.(event);
+					focusElementByKeydown(event);
+
+					switch (event.key) {
+						case "ArrowUp": {
+							event.preventDefault();
+							focusOption(-1);
+							return;
+						}
+						case "ArrowDown": {
+							event.preventDefault();
+							focusOption(1);
+						}
+					}
+				}}
+				onPointerCancel={() => {
+					pointerReference.current = false;
+				}}
+				onPointerDownCapture={() => {
+					pointerReference.current = true;
+				}}
+				onPointerUpCapture={() => {
+					pointerReference.current = false;
+				}}
+			>
+				<div className="flex w-full flex-col" ref={optionsReference}>
+					{options.map((option) => {
+						if (!option.key) return null;
+
+						return (
+							<OptionItem
+								key={option.key as any}
+								elementProps={{
+									"data-active": option.active ?? false,
+									"data-key": option.key,
+									"data-name": option.label,
+									onClick: (event) =>
+										onOptionClick?.(Object.assign(event, { option })),
+									onFocus: (event) =>
+										onOptionFocus?.(Object.assign(event, { option })),
+									onMouseDown: (event) => event.preventDefault() // macOS Safari fix
+								}}
+								option={option}
+							/>
+						);
+					})}
+				</div>
 			</div>
+			<ScrollIndicator side="down" target={element} visible={down} />
 		</div>
 	);
 }

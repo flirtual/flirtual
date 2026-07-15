@@ -5,7 +5,7 @@ import {
 	ChevronsLeft,
 	ChevronsRight
 } from "lucide-react";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 import type { IconComponent } from "~/components/icons";
@@ -65,6 +65,8 @@ interface LabelSelectProps {
 const LabelSelect: React.FC<LabelSelectProps> = ({ options, children, onOptionAction }) => {
 	const [visible, setVisible] = useState(false);
 
+	const wasVisibleReference = useRef(false);
+
 	return (
 		<div
 			className="focusable-within relative rounded-xl"
@@ -80,6 +82,18 @@ const LabelSelect: React.FC<LabelSelectProps> = ({ options, children, onOptionAc
 			<button
 				className="flex items-center gap-2 px-3 font-montserrat text-xl font-semibold focus:outline-none"
 				type="button"
+				onClick={(event) => {
+					// Keyboard clicks (detail 0) have no pointerdown; focus opened the
+					// window on an earlier interaction, so live state is accurate.
+					const wasVisible = event.detail === 0
+						? visible
+						: wasVisibleReference.current;
+
+					setVisible(!wasVisible);
+				}}
+				onPointerDown={() => {
+					wasVisibleReference.current = visible;
+				}}
 			>
 				<span className="w-12 whitespace-nowrap">{children}</span>
 				<ChevronDown className="size-4" strokeWidth={3} />
