@@ -67,7 +67,7 @@ export const PersonalityForm: FC = () => {
 									<InputLabel {...field.labelProps} inline>
 										{t(`personality_questions.${Number.parseInt(name.slice(-1))}` as any)}
 									</InputLabel>
-									<InputSwitch {...field.props} />
+									<InputSwitch {...field.props} deselectable />
 								</div>
 							)}
 						</FormField>
