@@ -1,14 +1,22 @@
+import { Slot } from "@radix-ui/react-slot";
 import { search as fuzzySearch } from "fast-fuzzy";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import { AnimatePresence, m } from "motion/react";
 import { useCallback, useMemo, useRef, useState } from "react";
-import type { FC, KeyboardEvent } from "react";
+import type { CSSProperties, FC, KeyboardEvent } from "react";
 import { useTranslation } from "react-i18next";
+import { RemoveScroll } from "react-remove-scroll";
 import { twMerge } from "tailwind-merge";
 
 import { Badge } from "~/components/badge";
 import { Link } from "~/components/link";
+import { Popover, PopoverAnchor, PopoverContent } from "~/components/popover";
+import { ScrollIndicator } from "~/components/scroll-indicator";
+import { useBreakpoint } from "~/hooks/use-breakpoint";
+import { useDisableOutsidePointerEvents } from "~/hooks/use-disable-outside-pointer-events";
+import { useSafeArea } from "~/hooks/use-safe-area";
+import { useScrollIndicator } from "~/hooks/use-scroll-indicator";
 import { urls } from "~/urls";
+import { suppressNextClick } from "~/utilities";
 
 export interface AdvancedFilterOption {
 	key: string;
@@ -38,10 +46,17 @@ export const AdvancedFilterSelect: FC<{
 	id?: string;
 }> = ({ value, onChange, groups, premium, limit = 25, placeholder: _placeholder, id }) => {
 	const { t } = useTranslation();
+	const safeArea = useSafeArea();
+	const desktop = useBreakpoint("desktop");
 	const [inputValue, setInputValue] = useState("");
 	const [overlayVisible, setOverlayVisible] = useState(false);
+	const anchorReference = useRef<HTMLDivElement>(null);
 	const inputReference = useRef<HTMLInputElement>(null);
 	const listReference = useRef<HTMLDivElement>(null);
+	const { ref: attachList, down: canScrollDown, element: listElement }
+		= useScrollIndicator(listReference);
+
+	useDisableOutsidePointerEvents(overlayVisible);
 
 	const filtering = inputValue.trim().length > 0;
 
@@ -98,6 +113,15 @@ export const AdvancedFilterSelect: FC<{
 
 	const onInputKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
 		const { key, currentTarget } = event;
+
+		if (!overlayVisible) {
+			if (key === "ArrowDown" || key === "ArrowUp" || key === "Enter") {
+				setOverlayVisible(true);
+				event.preventDefault();
+			}
+
+			return;
+		}
 
 		if (key === "Enter" && filtering) {
 			const first = suggestions.find(({ locked }) => !locked);
@@ -223,66 +247,126 @@ export const AdvancedFilterSelect: FC<{
 			id={id}
 			className="group relative"
 			onBlur={({ currentTarget, relatedTarget }) => {
-				if (currentTarget.contains(relatedTarget)) return;
+				if (
+					currentTarget.contains(relatedTarget)
+					|| listReference.current?.contains(relatedTarget)
+				)
+					return;
+
 				setOverlayVisible(false);
 				setInputValue("");
 			}}
-			onClick={() => inputReference.current?.focus()}
-			onFocus={() => setOverlayVisible(true)}
+			onClick={() => {
+				inputReference.current?.focus();
+				// An input may be closed but already focused (won't get a focus event), so
+				// we need to open it manually.
+				setOverlayVisible(true);
+			}}
+			onFocus={() => {
+				if (!desktop && !overlayVisible)
+					anchorReference.current?.scrollIntoView({ block: "start" });
+
+				setOverlayVisible(true);
+			}}
 		>
-			<div className="focusable-within flex rounded-xl bg-white-40 px-1.5 py-1 text-black-70 shadow-brand-1 vision:bg-white-40/70 dark:bg-black-60 dark:text-white-20">
-				<div className="flex flex-wrap items-center gap-1.5">
-					{selectedOptions.map((option) => (
-						<button
-							key={option.key}
-							className="focusable h-fit rounded-xl bg-brand-gradient px-3 py-1 text-left shadow-brand-1"
-							type="button"
-							onClick={() => onChange(value.filter((key) => key !== option.key))}
-						>
-							<span className="pointer-events-none font-nunito text-lg text-white-20">
-								{option.label}
-							</span>
-						</button>
-					))}
-					<input
-						style={{
-							width: `${(inputValue.length || placeholder?.length || 1) + 2}em`
-						}}
-						autoComplete="off"
-						className="grow border-none bg-transparent caret-theme-2 placeholder:text-black-50 focus:ring-transparent placeholder:dark:text-white-50"
-						placeholder={placeholder}
-						ref={inputReference}
-						type="text"
-						value={inputValue}
-						onChange={({ currentTarget }) => setInputValue(currentTarget.value)}
-						onKeyDown={onInputKeyDown}
-					/>
-				</div>
-			</div>
-			<AnimatePresence>
-				{overlayVisible && (
-					<m.div
-						animate={{ height: "max-content" }}
-						className="absolute z-10 mt-4 flex w-full"
-						exit={{ height: 0 }}
-						initial={{ height: 0 }}
-						transition={{ damping: 25 }}
-						// Motion resolves "max-content" to a pixel height measured at open,
-						// which goes stale as options load; clear it so the list's own
-						// viewport-based max-height governs while open.
-						onAnimationComplete={(definition) => {
-							if (
-								typeof definition === "object"
-								&& definition !== null
-								&& "height" in definition
-								&& definition.height === "max-content"
-							)
-								listReference.current?.parentElement?.style.removeProperty("height");
-						}}
-					>
+			<Popover open={overlayVisible}>
+				<PopoverAnchor
+					className={twMerge(
+						"focusable-within flex scroll-mt-24 rounded-xl bg-white-40 px-1.5 py-1 text-black-70 shadow-brand-1 vision:bg-white-40/70 dark:bg-black-60 dark:text-white-20",
+						// Stays interactive while the page has pointer events disabled. Suppress
+						// touch events that can bypass the scroll lock.
+						overlayVisible && "pointer-events-auto touch-none"
+					)}
+					ref={anchorReference}
+				>
+					<div className="flex flex-wrap items-center gap-1.5">
+						{selectedOptions.map((option) => (
+							<button
+								key={option.key}
+								className="focusable h-fit rounded-xl bg-brand-gradient px-3 py-1 text-left shadow-brand-1"
+								type="button"
+								onClick={() => onChange(value.filter((key) => key !== option.key))}
+							>
+								<span className="pointer-events-none font-nunito text-lg text-white-20">
+									{option.label}
+								</span>
+							</button>
+						))}
+						<input
+							className={twMerge(
+								"grow border-none bg-transparent caret-theme-2 placeholder:text-black-50 focus:ring-transparent placeholder:dark:text-white-50",
+								!overlayVisible && "caret-transparent"
+							)}
+							style={{
+								width: `${(inputValue.length || placeholder?.length || 1) + 2}em`
+							}}
+							autoComplete="off"
+							placeholder={placeholder}
+							ref={inputReference}
+							type="text"
+							value={inputValue}
+							// Block input when focused but closed (after Esc or outside
+							// click).
+							onBeforeInput={(event) => {
+								if (!overlayVisible) event.preventDefault();
+							}}
+							onChange={({ currentTarget }) => {
+								if (!overlayVisible) return;
+								setInputValue(currentTarget.value);
+							}}
+							onKeyDown={onInputKeyDown}
+						/>
+					</div>
+				</PopoverAnchor>
+				<PopoverContent
+					style={{
+						"--overlay-max-height":
+							"min(28rem, var(--radix-popover-content-available-height))"
+					} as CSSProperties}
+					align="start"
+					className="pointer-events-auto relative z-50 flex w-[var(--radix-popper-anchor-width)]"
+					collisionPadding={safeArea}
+					side="bottom"
+					onCloseAutoFocus={(event) => event.preventDefault()}
+					onEscapeKeyDown={(event) => {
+						event.preventDefault();
+						inputReference.current?.focus();
+
+						setOverlayVisible(false);
+						setInputValue("");
+					}}
+					onOpenAutoFocus={(event) => event.preventDefault()}
+					onPointerDownOutside={(event) => {
+						const { originalEvent } = event.detail;
+
+						// The input is at the anchor, outside the content, so interacting
+						// with it counts as "outside" too; leave it alone.
+						if (anchorReference.current?.contains(originalEvent.target as Node))
+							return;
+
+						// On touch this fires on the tap's click; the tap landed on nothing
+						// (outside pointer events are disabled), so close and drop focus to
+						// dismiss the keyboard.
+						if (originalEvent.type !== "pointerdown") {
+							inputReference.current?.blur();
+							setOverlayVisible(false);
+							setInputValue("");
+							return;
+						}
+
+						// Outside press keeps the input focused and closes the window,
+						// without activating whatever was pressed.
+						originalEvent.preventDefault();
+						suppressNextClick();
+
+						setOverlayVisible(false);
+						setInputValue("");
+					}}
+				>
+					<RemoveScroll allowPinchZoom as={Slot}>
 						<div
-							className="flex max-h-[min(28rem,60svh)] w-full flex-col overflow-y-auto overscroll-contain rounded-xl bg-white-30 shadow-brand-1 focus:outline-none vision:bg-white-30/80 dark:bg-black-60"
-							ref={listReference}
+							className="flex max-h-[var(--overlay-max-height,min(28rem,60svh))] w-full flex-col overflow-y-auto overscroll-contain rounded-xl bg-white-30 shadow-brand-1 focus:outline-none vision:bg-white-30/80 dark:bg-black-60"
+							ref={attachList}
 							tabIndex={-1}
 							onKeyDown={onListKeyDown}
 							onScroll={onListScroll}
@@ -339,9 +423,16 @@ export const AdvancedFilterSelect: FC<{
 										);
 									})}
 						</div>
-					</m.div>
-				)}
-			</AnimatePresence>
+					</RemoveScroll>
+					<ScrollIndicator
+						className="rounded-b-xl"
+						itemSelector="[data-option]"
+						side="down"
+						target={listElement}
+						visible={canScrollDown}
+					/>
+				</PopoverContent>
+			</Popover>
 		</div>
 	);
 };
