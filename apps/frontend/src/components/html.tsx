@@ -1,7 +1,9 @@
 import type React from "react";
 import { twMerge } from "tailwind-merge";
 
-import { html } from "~/html";
+import { html, markLowContrastColors } from "~/html";
+
+import "./html.scss";
 
 export type HtmlProps = {
 	children: string;
@@ -18,6 +20,6 @@ export const Html: React.FC<HtmlProps> = ({ children, ...props }) => (
 		// "html" is a sanitization function, we explicitly declare
 		// allowed tags, properties, and other various attributes.
 		// eslint-disable-next-line react-dom/no-dangerously-set-innerhtml
-		dangerouslySetInnerHTML={{ __html: html(children) }}
+		dangerouslySetInnerHTML={{ __html: markLowContrastColors(html(children)) }}
 	/>
 );
