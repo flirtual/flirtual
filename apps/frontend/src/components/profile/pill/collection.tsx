@@ -1,4 +1,4 @@
-import type { FC, PropsWithChildren } from "react";
+import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 
 import type { User } from "~/api/user";
@@ -9,6 +9,7 @@ import { urls } from "~/urls";
 import { PillAttributeList } from "./attribute-list";
 import { PillCollectionExpansion } from "./expansion";
 import { Pill } from "./pill";
+import { PillRows } from "./rows";
 
 function isDomsubMatch(value1: string | undefined, value2: string | undefined) {
 	const a = new Set([value1, value2]);
@@ -17,10 +18,6 @@ function isDomsubMatch(value1: string | undefined, value2: string | undefined) {
 		|| (a.has("dominant") && a.has("submissive"))
 	);
 }
-
-const PillGroup: FC<PropsWithChildren> = ({ children }) => {
-	return <div className="flex w-full flex-wrap gap-2">{children}</div>;
-};
 
 export const PillCollection: FC<{ user: User }> = (props) => {
 	const { user } = props;
@@ -65,7 +62,7 @@ export const PillCollection: FC<{ user: User }> = (props) => {
 				user={user}
 			/>
 			{personalityLabels.length > 0 && (
-				<PillGroup>
+				<PillRows editable={editable}>
 					{personalityLabels.map((personalityLabel) => (
 						<Pill
 							key={personalityLabel}
@@ -78,9 +75,9 @@ export const PillCollection: FC<{ user: User }> = (props) => {
 							{personalityLabel}
 						</Pill>
 					))}
-				</PillGroup>
+				</PillRows>
 			)}
-			<PillGroup>
+			<PillRows editable={editable}>
 				{user.profile.attributes.interest?.map((id) => {
 					const { name } = tAttributes[id] ?? { name: id };
 
@@ -117,7 +114,7 @@ export const PillCollection: FC<{ user: User }> = (props) => {
 						</Pill>
 					);
 				})}
-			</PillGroup>
+			</PillRows>
 			<PillAttributeList
 				attributes={user.profile.attributes.game}
 				href={editable ? urls.settings.info("game") : undefined}

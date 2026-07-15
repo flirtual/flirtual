@@ -9,6 +9,7 @@ import { useAttributeTranslation } from "~/hooks/use-attribute";
 import { useOptionalSession } from "~/hooks/use-session";
 
 import { Pill } from "./pill";
+import { PillRows } from "./rows";
 
 interface PillAttributeListProps {
 	attributes?: Array<MinimalAttribute<AttributeType>>;
@@ -36,7 +37,7 @@ export const PillAttributeList: FC<PillAttributeListProps> = ({
 			.filter(Boolean);
 
 	return (
-		<div className="flex w-full flex-wrap gap-2">
+		<PillRows editable={!!href}>
 			{attributes.map((attribute) => {
 				const id = typeof attribute === "object" ? attribute.id : attribute;
 				const { name, definition, definitionLink } = (tAttributes[id] ?? {}) as {
@@ -79,6 +80,6 @@ export const PillAttributeList: FC<PillAttributeListProps> = ({
 					</Tooltip>
 				);
 			})}
-		</div>
+		</PillRows>
 	);
 };
