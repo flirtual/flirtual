@@ -33,8 +33,14 @@ defmodule Flirtual.Talkjs do
   end
 
   def new_user_signature(user_id) do
-    :crypto.mac(:hmac, :sha256, config(:access_token), ShortUUID.decode!(user_id))
-    |> Base.encode16(case: :lower)
+    case config(:access_token) do
+      access_token when access_token in [nil, ""] ->
+        nil
+
+      access_token ->
+        :crypto.mac(:hmac, :sha256, access_token, ShortUUID.decode!(user_id))
+        |> Base.encode16(case: :lower)
+    end
   end
 
   @doc """
@@ -74,9 +80,6 @@ defmodule Flirtual.Talkjs do
 
   def fetch(method, pathname, body \\ nil, options \\ []) do
     raw_body = if(is_nil(body), do: "", else: Jason.encode!(body))
-    url = new_url(pathname, Keyword.get(options, :query))
-
-    log(:debug, [method, url], body)
 
     case {config(:access_token), config(:app_id)} do
       {access_token, app_id} when access_token in [nil, ""] or app_id in [nil, ""] ->
@@ -89,6 +92,9 @@ defmodule Flirtual.Talkjs do
         {:error, :not_configured}
 
       {access_token, _} ->
+        url = new_url(pathname, Keyword.get(options, :query))
+        log(:debug, [method, url], body)
+
         Req.request(
           method: method,
           url: url,
