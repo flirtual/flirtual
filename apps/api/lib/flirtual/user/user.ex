@@ -477,42 +477,184 @@ defmodule Flirtual.User do
 
   def get(_), do: nil
 
-  def or_where_ilike(query, {as, key}, value, similarity_order)
-      when is_atom(as) and is_atom(key) do
-    query
-    |> or_where([{^as, q}], ilike(field(q, ^key), ^"%#{value}%"))
-    |> maybe_ilike_similarity({as, key}, value, similarity_order)
+  # Translate our search syntax into an ILIKE pattern. SQL symbols (`%`, `_`,
+  # `\`) are escaped first so they only match literally, then `*` = any text and
+  # `?` = any single character.
+  defp to_ilike_pattern(term) do
+    escaped =
+      term
+      |> String.replace("\\", "\\\\")
+      |> String.replace("%", "\\%")
+      |> String.replace("_", "\\_")
+      |> String.replace("*", "%")
+      |> String.replace("?", "_")
+
+    "%" <> escaped <> "%"
   end
 
-  def or_where_ilike(query, key, value, similarity_order) when is_atom(key) do
+  # Match the raw characters literally, escaping SQL wildcards so `*`, `?` and
+  # `,` match themselves.
+  defp to_literal_pattern(value) do
+    escaped =
+      value
+      |> String.replace("\\", "\\\\")
+      |> String.replace("%", "\\%")
+      |> String.replace("_", "\\_")
+
+    "%" <> escaped <> "%"
+  end
+
+  defp field_condition({:profile, key}, _term, pattern) do
+    dynamic([profile: profile], ilike(field(profile, ^key), ^pattern))
+  end
+
+  defp field_condition({:connections, key}, _term, pattern) do
+    dynamic([connections: connections], ilike(field(connections, ^key), ^pattern))
+  end
+
+  defp field_condition(key, term, pattern) when is_atom(key) do
     case User.__schema__(:type, key) do
       Ecto.ShortUUID ->
-        case Ecto.ShortUUID.cast(value) do
-          {:ok, _} -> or_where(query, [user], field(user, ^key) == ^value)
-          _ -> query
+        case Ecto.ShortUUID.cast(term) do
+          {:ok, value} -> dynamic([user: user], field(user, ^key) == ^value)
+          _ -> nil
+        end
+
+      :integer ->
+        case Integer.parse(term) do
+          {value, ""} -> dynamic([user: user], field(user, ^key) == ^value)
+          _ -> nil
         end
 
       _ ->
-        or_where(query, [user], ilike(field(user, ^key), ^"%#{value}%"))
-        |> maybe_ilike_similarity(key, value, similarity_order)
+        dynamic([user: user], ilike(field(user, ^key), ^pattern))
     end
   end
 
-  defp maybe_ilike_similarity(query, _, _, nil), do: query
+  defp combine(nil, condition, _operator), do: condition
+  defp combine(condition, nil, _operator), do: condition
+  defp combine(left, right, :and), do: dynamic(^left and ^right)
+  defp combine(left, right, :or), do: dynamic(^left or ^right)
 
-  defp maybe_ilike_similarity(query, key, value, similarity_order),
-    do: ilike_similarity(query, key, value, similarity_order)
-
-  defp ilike_similarity(query, {as, key}, value, similarity_order) when is_atom(key) do
-    order_by(query, [{^as, q}], [
-      {^similarity_order, fragment("similarity(?, ?)", field(q, ^key), ^value)}
-    ])
+  defp fields_condition(fields, term, pattern) do
+    Enum.reduce(fields, nil, fn field, condition ->
+      combine(condition, field_condition(field, term, pattern), :or)
+    end)
   end
 
-  defp ilike_similarity(query, key, value, similarity_order) when is_atom(key) do
-    order_by(query, [user], [
-      {^similarity_order, fragment("similarity(?, ?)", field(user, ^key), ^value)}
-    ])
+  defp biography_condition(pattern) do
+    dynamic([profile: profile], ilike(profile.biography, ^pattern))
+  end
+
+  # Match every field against the whole value with our wildcard syntax (`*` → any
+  # run, `?` → any char, comma literal), plus a literal `*` verbatim. A comma also
+  # searches biographies for the comma-separated terms ANDed together.
+  defp search_condition(fields, value) do
+    all_fields = fields_condition(fields, value, to_ilike_pattern(value))
+
+    literal =
+      if String.contains?(value, "*") do
+        fields_condition(fields, value, to_literal_pattern(value))
+      end
+
+    biography =
+      if String.contains?(value, ",") do
+        value
+        |> String.split(",", trim: true)
+        |> Enum.reduce(nil, fn term, condition ->
+          combine(condition, biography_condition(to_ilike_pattern(term)), :and)
+        end)
+      end
+
+    all_fields
+    |> combine(literal, :or)
+    |> combine(biography, :or)
+  end
+
+  defp apply_similarity_order(query, fields, value, order) do
+    Enum.reduce(fields, query, fn
+      {:profile, key}, query ->
+        order_by(query, [profile: profile], [
+          {^order, fragment("similarity(?, ?)", field(profile, ^key), ^value)}
+        ])
+
+      {:connections, key}, query ->
+        order_by(query, [connections: connections], [
+          {^order, fragment("similarity(?, ?)", field(connections, ^key), ^value)}
+        ])
+
+      key, query when is_atom(key) ->
+        if User.__schema__(:type, key) === :string do
+          order_by(query, [user: user], [
+            {^order, fragment("similarity(?, ?)", field(user, ^key), ^value)}
+          ])
+        else
+          query
+        end
+    end)
+  end
+
+  # A two-letter search filters by country instead of searching: the profile's
+  # country or any login region containing the country code.
+  defp parse_country(value) do
+    if value =~ ~r/^[A-Za-z]{2}$/, do: String.downcase(value)
+  end
+
+  defp country_condition(code) do
+    region = String.upcase(code)
+
+    logins =
+      from(login in Login,
+        where: login.user_id == parent_as(:user).id,
+        where: login.ip_region == ^region or ilike(login.ip_region, ^"%, #{region}")
+      )
+
+    dynamic(
+      [profile: profile],
+      fragment("?::text = ?", profile.country, ^code) or exists(logins)
+    )
+  end
+
+  # A `YYYY-MM-DD` search filters by date of birth instead of searching.
+  defp parse_born_at(value) do
+    with true <- value =~ ~r/^\d{4}-\d{2}-\d{2}$/,
+         {:ok, date} <- Date.from_iso8601(value) do
+      date
+    else
+      _ -> nil
+    end
+  end
+
+  # The synthetic "premium" tag filters to users with an active subscription.
+  defp premium_condition do
+    subscriptions =
+      from(subscription in Subscription,
+        where: subscription.user_id == parent_as(:user).id and is_nil(subscription.cancelled_at)
+      )
+
+    dynamic(exists(subscriptions))
+  end
+
+  defp apply_search(query, _fields, "", _sort, _sort_order), do: query
+
+  defp apply_search(query, fields, value, sort, sort_order) do
+    cond do
+      date = parse_born_at(value) ->
+        where(query, [user: user], user.born_at == ^date)
+
+      code = parse_country(value) ->
+        where(query, ^country_condition(code))
+
+      condition = search_condition(fields, value) ->
+        query = where(query, ^condition)
+
+        if sort === "similarity",
+          do: apply_similarity_order(query, fields, value, sort_order),
+          else: query
+
+      true ->
+        query
+    end
   end
 
   defmodule Search do
@@ -563,6 +705,7 @@ defmodule Flirtual.User do
     {:connections, :uid},
     {:connections, :display_name},
     {:profile, :vrchat},
+    {:profile, :vrchat_name},
     {:profile, :discord},
     {:profile, :facetime},
     :email,
@@ -570,7 +713,10 @@ defmodule Flirtual.User do
     :stripe_id,
     :chargebee_id,
     :revenuecat_id,
-    {:profile, :biography}
+    :listmonk_id,
+    {:profile, :biography},
+    :moderator_message,
+    :moderator_note
   ]
 
   def search(attrs) do
@@ -592,31 +738,16 @@ defmodule Flirtual.User do
              |> String.trim(),
            sort_order = if(attrs.order === "asc", do: :asc_nulls_first, else: :desc_nulls_last),
            query <-
-             User
-             # |> preload(^default_assoc())
-             |> join(:left, [user], profile in assoc(user, :profile), as: :profile)
-             |> join(:left, [user], connections in assoc(user, :connections), as: :connections),
-           query <-
-             (case value do
-                "" ->
-                  query
-
-                value when is_binary(value) ->
-                  similarity_order = if(attrs.sort === "similarity", do: sort_order, else: nil)
-
-                  Enum.reduce(@default_search_fields, query, fn field, query ->
-                    or_where_ilike(
-                      query,
-                      field,
-                      value,
-                      similarity_order
-                    )
-                  end)
-              end),
+             from(user in User, as: :user)
+             |> join(:left, [user: user], profile in assoc(user, :profile), as: :profile)
+             |> join(:left, [user: user], connections in assoc(user, :connections),
+               as: :connections
+             ),
+           query <- apply_search(query, @default_search_fields, value, attrs.sort, sort_order),
            query <-
              (case attrs.status do
                 status when status in @statuses ->
-                  where(query, [user], user.status == ^attrs.status)
+                  where(query, [user: user], user.status == ^attrs.status)
 
                 _ ->
                   query
@@ -624,8 +755,12 @@ defmodule Flirtual.User do
            query <-
              (case attrs.tags do
                 tags when is_list(tags) ->
-                  Enum.reduce(attrs.tags, query, fn tag, query ->
-                    where(query, [user], ^tag in user.tags)
+                  Enum.reduce(tags, query, fn
+                    "premium", query ->
+                      where(query, ^premium_condition())
+
+                    tag, query ->
+                      where(query, [user: user], ^tag in user.tags)
                   end)
 
                 _ ->

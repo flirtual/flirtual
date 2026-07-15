@@ -46,6 +46,10 @@ export const userTagNames: Record<UserTags, string> = {
 
 export type UserTags = (typeof userTags)[number];
 
+export const searchTags = ["premium", ...userTags] as const;
+
+export type SearchTag = (typeof searchTags)[number];
+
 export type UserPasskey = {
 	aaguid: string;
 }
@@ -125,7 +129,7 @@ export type SearchSortKeys = (typeof searchSortKeys)[number];
 export interface SearchOptions {
 	search?: string;
 	status?: UserStatus;
-	tags?: Array<UserTags>;
+	tags?: Array<SearchTag>;
 	sort?: SearchSortKeys;
 	order?: "asc" | "desc";
 }
