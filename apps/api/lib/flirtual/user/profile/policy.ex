@@ -225,28 +225,18 @@ defmodule Flirtual.User.Profile.Policy do
           }
         } = profile
       ) do
-    profile.attributes
-    |> then(&if(me.preferences.nsfw, do: &1, else: exclude_by(&1, :type, "kink")))
-    |> then(
-      &if(me.id !== profile.user_id,
-        do:
-          Enum.filter(&1, fn attribute ->
-            case(attribute.type) do
-              "kink" ->
-                preferences.privacy.kinks === :everyone or
-                  (preferences.privacy.kinks === :matches and matched)
-
-              "sexuality" ->
-                preferences.privacy.sexuality === :everyone or
-                  (preferences.privacy.kinks === :matches and matched)
-
-              _ ->
-                true
-            end
-          end),
-        else: &1
+    if me.id === profile.user_id do
+      profile.attributes
+    else
+      profile.attributes
+      |> then(
+        &if(me.preferences.nsfw and preferences.nsfw,
+          do: &1,
+          else: exclude_by(&1, :type, "kink")
+        )
       )
-    )
+      |> Enum.filter(&visible_to_others?(&1, preferences.privacy, matched))
+    end
     |> Attribute.group()
   end
 
@@ -327,4 +317,12 @@ defmodule Flirtual.User.Profile.Policy do
   end
 
   def transform(key, _, _) when key in @own_property_keys, do: nil
+
+  defp visible_to_others?(%{type: "kink"}, privacy, matched),
+    do: privacy.kinks === :everyone or (privacy.kinks === :matches and matched)
+
+  defp visible_to_others?(%{type: "sexuality"}, privacy, matched),
+    do: privacy.sexuality === :everyone or (privacy.kinks === :matches and matched)
+
+  defp visible_to_others?(_attribute, _privacy, _matched), do: true
 end

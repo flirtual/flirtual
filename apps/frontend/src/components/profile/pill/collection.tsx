@@ -33,6 +33,7 @@ export const PillCollection: FC<{ user: User }> = (props) => {
 	if (!session) return null;
 
 	const editable = session.user.id === user.id;
+	const nsfw = session.user.preferences?.nsfw ?? false;
 
 	function getPersonalityLabels({
 		profile: { openness, conscientiousness, agreeableness }
@@ -122,7 +123,7 @@ export const PillCollection: FC<{ user: User }> = (props) => {
 				href={editable ? urls.settings.info("game") : undefined}
 				user={user}
 			/>
-			{user.profile.domsub && (
+			{nsfw && user.profile.domsub && (
 				<div className="flex w-full flex-wrap gap-2">
 					<Pill
 						active={

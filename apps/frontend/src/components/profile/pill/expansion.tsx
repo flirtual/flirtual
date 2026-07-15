@@ -42,9 +42,12 @@ export const PillCollectionExpansion: FC<PillCollectionExpansionProps> = (
 		type: "language"
 	});
 
+	const nsfw = session.user.preferences?.nsfw ?? false;
+	const kinkIds = nsfw ? user.profile.attributes.kink : undefined;
+
 	if (
 		!user.profile.monopoly
-		&& !user.profile.attributes.kink
+		&& !kinkIds
 		&& !user.profile.attributes.language
 		&& !user.profile.attributes.platform
 		&& !user.profile.playlist
@@ -71,7 +74,7 @@ export const PillCollectionExpansion: FC<PillCollectionExpansionProps> = (
 					)}
 					<PillAttributeList
 						activeIds={activeKinkIds}
-						attributes={user.profile.attributes.kink}
+						attributes={kinkIds}
 						href={editable ? urls.settings.nsfw : undefined}
 						user={user}
 					/>
