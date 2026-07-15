@@ -10,6 +10,7 @@ import { twMerge } from "tailwind-merge";
 
 import type { IconComponent } from "~/components/icons";
 import { useLocale } from "~/i18n";
+import { suppressNextClick } from "~/utilities";
 
 import {
 
@@ -66,10 +67,64 @@ const LabelSelect: React.FC<LabelSelectProps> = ({ options, children, onOptionAc
 	const [visible, setVisible] = useState(false);
 
 	const wasVisibleReference = useRef(false);
+	const buttonReference = useRef<HTMLButtonElement>(null);
+	const wrapperReference = useRef<HTMLDivElement>(null);
+
+	// Presses outside the option window (e.g. on a day) only close it; their
+	// click is ignored.
+	useEffect(() => {
+		if (!visible) return;
+
+		const onPointerDown = (event: PointerEvent) => {
+			if (
+				event.target instanceof Node
+				&& wrapperReference.current?.contains(event.target)
+			)
+				return;
+
+			// Don't dismiss on touch pan.
+			if (event.pointerType === "touch") {
+				suppressNextClick(() => setVisible(false));
+				return;
+			}
+
+			suppressNextClick();
+			setVisible(false);
+		};
+
+		document.addEventListener("pointerdown", onPointerDown, { capture: true });
+		return () =>
+			document.removeEventListener("pointerdown", onPointerDown, {
+				capture: true
+			});
+	}, [visible]);
+
+	// Escape closes only the option window, not the enclosing calendar: Radix
+	// listens for it on the document, so this must run first (window capture).
+	useEffect(() => {
+		if (!visible) return;
+
+		const onKeyDown = (event: KeyboardEvent) => {
+			if (event.key !== "Escape") return;
+
+			event.preventDefault();
+			event.stopPropagation();
+
+			// Refocus first: the trigger's focus event reopens the window, so the
+			// close must be the later state update to win.
+			buttonReference.current?.focus();
+			setVisible(false);
+		};
+
+		window.addEventListener("keydown", onKeyDown, { capture: true });
+		return () =>
+			window.removeEventListener("keydown", onKeyDown, { capture: true });
+	}, [visible]);
 
 	return (
 		<div
 			className="focusable-within relative rounded-xl"
+			ref={wrapperReference}
 			tabIndex={-1}
 			onBlur={({ currentTarget, relatedTarget }) => {
 				if (currentTarget.contains(relatedTarget)) return;
@@ -81,6 +136,7 @@ const LabelSelect: React.FC<LabelSelectProps> = ({ options, children, onOptionAc
 		>
 			<button
 				className="flex items-center gap-2 px-3 font-montserrat text-xl font-semibold focus:outline-none"
+				ref={buttonReference}
 				type="button"
 				onClick={(event) => {
 					// Keyboard clicks (detail 0) have no pointerdown; focus opened the
@@ -102,6 +158,7 @@ const LabelSelect: React.FC<LabelSelectProps> = ({ options, children, onOptionAc
 				<InputOptionWindow
 					className="absolute mt-4 flex"
 					options={options}
+					scrollIndicators={false}
 					onOptionClick={(event) => {
 						onOptionAction(
 							event as InputOptionEvent<
@@ -109,6 +166,16 @@ const LabelSelect: React.FC<LabelSelectProps> = ({ options, children, onOptionAc
 								string
 							>
 						);
+
+						// Keyboard activation (Enter, detail 0) selects and closes;
+						// refocus first so the trigger's focus event, which reopens the
+						// window, is the earlier state update.
+						if (event.detail === 0) {
+							buttonReference.current?.focus();
+							setVisible(false);
+							return;
+						}
+
 						setVisible(false);
 						setVisible(true);
 					}}

@@ -45,6 +45,7 @@ export interface OptionItemProps<K> {
 export type InputOptionWindowProps<K> = {
 	options: Array<InputSelectOption<K>>;
 	OptionItem?: FC<OptionItemProps<K>>;
+	scrollIndicators?: boolean;
 	onOptionClick?: EventHandler<
 		InputOptionEvent<MouseEvent<HTMLButtonElement>, K>
 	>;
@@ -133,6 +134,7 @@ export function InputOptionWindow(props: InputOptionWindowProps<unknown>) {
 		onOptionClick,
 		onOptionFocus,
 		OptionItem = DefaultOptionItem,
+		scrollIndicators = true,
 		className,
 		onFocusCapture,
 		onKeyDown,
@@ -199,7 +201,9 @@ export function InputOptionWindow(props: InputOptionWindowProps<unknown>) {
 				className
 			)}
 		>
-			<ScrollIndicator side="up" target={element} visible={up} />
+			{scrollIndicators && (
+				<ScrollIndicator side="up" target={element} visible={up} />
+			)}
 			<div
 				className="flex max-h-[var(--overlay-max-height,min(28rem,60svh))] w-full overflow-x-hidden overflow-y-scroll"
 				ref={setScrollElement}
@@ -264,7 +268,9 @@ export function InputOptionWindow(props: InputOptionWindowProps<unknown>) {
 					})}
 				</div>
 			</div>
-			<ScrollIndicator side="down" target={element} visible={down} />
+			{scrollIndicators && (
+				<ScrollIndicator side="down" target={element} visible={down} />
+			)}
 		</div>
 	);
 }

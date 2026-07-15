@@ -127,27 +127,28 @@ export function skipErrorStack(error: Error, count: number) {
 // cancelled press doesn't produce a click in every browser. onSuppress runs
 // only if the click actually arrives, i.e. the press was a tap, not a pan.
 export function suppressNextClick(onSuppress?: () => void) {
-	const suppress = (event: MouseEvent) => {
+	function release() {
+		document.removeEventListener("click", suppress, { capture: true });
+		document.removeEventListener("pointerdown", release, { capture: true });
+	}
+
+	function suppress(event: MouseEvent) {
+		release();
+
+		// A keyboard click: the pointer interaction ended without producing one.
+		if (event.detail === 0) return;
+
 		event.preventDefault();
 		event.stopPropagation();
 		onSuppress?.();
-	};
+	}
 
-	document.addEventListener("click", suppress, { capture: true, once: true });
+	document.addEventListener("click", suppress, { capture: true });
 
-	const release = () => {
-		window.removeEventListener("pointerup", release, { capture: true });
-		window.removeEventListener("pointercancel", release, { capture: true });
-
-		// The click, if any, dispatches before timers run.
-		setTimeout(
-			() => document.removeEventListener("click", suppress, { capture: true }),
-			0
-		);
-	};
-
-	window.addEventListener("pointerup", release, { capture: true });
-	window.addEventListener("pointercancel", release, { capture: true });
+	// On touch the click can arrive a task after pointerup, so timers can
+	// disarm too early; the next pointerdown (never the one currently
+	// dispatching) always precedes the next click.
+	document.addEventListener("pointerdown", release, { capture: true });
 }
 
 export function escapeHtml(value: string): string {
