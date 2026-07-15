@@ -1,0 +1,25 @@
+// Improves contrast for bio text depending on the viewer's theme.
+
+[data-theme="light"] {
+	// Add a black background to light text on the light theme.
+	.bio-color-light {
+		background-color: #000;
+	}
+
+	// Add a white color to dark backgrounds on the light theme.
+	.bio-background-dark {
+		color: #fff;
+	}
+}
+
+[data-theme="dark"] {
+	// Add a white background to dark text on the dark theme.
+	.bio-color-dark {
+		background-color: #fff;
+	}
+
+	// Add a black color to light backgrounds on the dark theme.
+	.bio-background-light {
+		color: #000;
+	}
+}

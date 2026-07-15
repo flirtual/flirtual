@@ -84,6 +84,26 @@ export const editorColors = [
 	"#250e49"
 ];
 
+// Palette colors with poor contrast against a light background.
+const lightPaletteColors = new Set([
+	"#ffffff",
+	"#f5c6d2",
+	"#ffe8b7",
+	"#ddf6bc",
+	"#beeff1",
+	"#d5c2f3"
+]);
+
+// Palette colors with poor contrast against a dark background.
+const darkPaletteColors = new Set([
+	"#444444",
+	"#72142c",
+	"#754f00",
+	"#2b4509",
+	"#0a3738",
+	"#250e49"
+]);
+
 export const biographyMaxLength = 10_000;
 export const biographyCounterThreshold = 8000;
 
@@ -185,4 +205,30 @@ export function html(value: string) {
 			}
 		}
 	);
+}
+
+// Add a class to bio elements whose color or background is low-contrast on one
+// theme; html.scss gives them an opposite background or color respectively.
+// Elements with both a color and background are ignored (maybe the author wanted
+// them to be illegible).
+export function markLowContrastColors(value: string): string {
+	const { body } = new DOMParser().parseFromString(value, "text/html");
+
+	for (const element of body.querySelectorAll<HTMLElement>("[style]")) {
+		const style = fromStyleProperties(element.getAttribute("style") ?? "");
+
+		const color = style.color?.toLowerCase();
+		const background = style["background-color"]?.toLowerCase();
+		if (color && background) continue;
+
+		const className
+			= (color && lightPaletteColors.has(color) && "bio-color-light")
+				|| (color && darkPaletteColors.has(color) && "bio-color-dark")
+				|| (background && lightPaletteColors.has(background) && "bio-background-light")
+				|| (background && darkPaletteColors.has(background) && "bio-background-dark");
+
+		if (className) element.classList.add(className);
+	}
+
+	return body.innerHTML;
 }
