@@ -181,6 +181,7 @@ export const Queue: FC<{ kind: ProspectKind }> = ({ kind }) => {
 
 	const skipping = useIsMutating({ mutationKey: ["skip-prospect"] }) > 0;
 	const queueing = useIsMutating({ mutationKey: queueKey(kind) }) > 0;
+	const queueingAnyMode = useIsMutating({ mutationKey: ["queue"] }) > 0;
 	const fetchingQueue = useIsFetching({ queryKey: queueKey(kind) }) > 0;
 
 	// A profile carried over from the other mode, shown here even if it isn't
@@ -204,8 +205,8 @@ export const Queue: FC<{ kind: ProspectKind }> = ({ kind }) => {
 
 	// Once a guest profile is acted on, fall back to this mode's own queue.
 	useEffect(() => {
-		if (guest && queueing) setGuest(null);
-	}, [guest, queueing]);
+		if (guest && queueingAnyMode) setGuest(null);
+	}, [guest, queueingAnyMode]);
 
 	const displayed = (guest !== current ? guest : null) ?? current;
 

@@ -20,6 +20,8 @@ import { useQueue } from "~/hooks/use-queue";
 import { useSession } from "~/hooks/use-session";
 import { relationshipKey, useQueryState } from "~/query";
 
+import { HomieInstead } from "./homie-instead";
+
 export function Key({ label }: { label: string }) {
 	return (
 		<kbd className="mb-0.5 inline-block size-7 rounded-md bg-white-20 pt-0.5 text-center font-nunito font-bold text-black-60 shadow-[0_1px_1px_2px_rgba(255,255,255,0.75)] dark:bg-black-60 dark:text-white-20">
@@ -86,6 +88,11 @@ export const QueueActions: FC<{
 	const { data: relationship } = useQueryState<Relationship>(relationshipKey(explicitUserId ?? current!));
 	const blocked = relationship?.blocked ?? false;
 
+	// They're not looking for our gender, so we disable Like and offer to Homie
+	// instead.
+	const genderMismatch = mode === "love" && relationship?.prefersMyGender === false;
+	const [homieInstead, setHomieInstead] = useState(false);
+
 	const [didAction, setDidAction] = useState(false);
 
 	if (mutating && !didAction) setDidAction(true);
@@ -107,14 +114,18 @@ export const QueueActions: FC<{
 					return;
 
 				if (event.key === "h" && canUndo) void undo();
-				if (event.key === "j" && !blocked) void like(explicitUserId);
+
+				if (event.key === "j" && !blocked) {
+					if (genderMismatch) setHomieInstead(true);
+					else void like(explicitUserId);
+				}
 
 				if (event.key === "k" && direct && mode === "love" && !blocked)
 					void homie(explicitUserId);
 
 				if (event.key === "l") void pass(explicitUserId);
 			},
-			[like, homie, pass, undo, canUndo, tooFast, blocked, direct, mode, explicitUserId]
+			[like, homie, pass, undo, canUndo, tooFast, blocked, genderMismatch, direct, mode, explicitUserId]
 		)
 	);
 
@@ -149,13 +160,13 @@ export const QueueActions: FC<{
 									id="like-button"
 									className={twMerge(
 										"flex items-center justify-center rounded-full border border-black-50/25 bg-brand-gradient p-4 shadow-brand-1 transition-all disabled:brightness-90 dark:disabled:brightness-[80%]",
-										blocked && "grayscale-[0.75]"
+										(blocked || genderMismatch) && "brightness-90 grayscale-[0.75] dark:brightness-[80%]"
 									)}
 									disabled={tooFast || blocked}
 									type="button"
-									whileHover={{ scale: 1.05 }}
-									whileTap={{ scale: 0.95 }}
-									onClick={() => like(explicitUserId)}
+									whileHover={genderMismatch ? undefined : { scale: 1.05 }}
+									whileTap={genderMismatch ? undefined : { scale: 0.95 }}
+									onClick={() => (genderMismatch ? setHomieInstead(true) : void like(explicitUserId))}
 								>
 									<HeartIcon
 										className="w-[2.125rem] shrink-0"
@@ -217,6 +228,13 @@ export const QueueActions: FC<{
 					</Tooltip>
 				</div>
 			</div>
+			{homieInstead && (
+				<HomieInstead
+					userId={(explicitUserId ?? current)!}
+					onClose={() => setHomieInstead(false)}
+					onPass={() => void pass(explicitUserId)}
+				/>
+			)}
 		</div>
 	);
 };

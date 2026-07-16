@@ -11,6 +11,7 @@ defmodule Flirtual.Matchmaking.Query do
   alias Flirtual.User.Profile.AdvancedFilter
   alias Flirtual.User.Profile.Block
   alias Flirtual.User.Profile.LikesAndPasses
+  alias Flirtual.User.Profile.Preferences
 
   @simple_genders ["jAL62ePbibxaG4FPu7S8LG", "rhw3rcbheU7vc9vcSy6W6V", "tpkW7r8PZ2RUuYGUSYi82N"]
 
@@ -144,6 +145,36 @@ defmodule Flirtual.Matchmaking.Query do
       end
 
     filter_gender_one_way(user) ++ reverse
+  end
+
+  # Whether the target's gender preferences include one of the user's genders.
+  def prefers_my_gender?(user_id, target_id) do
+    my_genders =
+      Attribute
+      |> join(:inner, [attribute], profile_attribute in Profile.Attributes,
+        on: profile_attribute.attribute_id == attribute.id
+      )
+      |> where(
+        [attribute, profile_attribute],
+        profile_attribute.profile_id == ^user_id and attribute.type == "gender"
+      )
+      |> Repo.all()
+      |> Attribute.normalize_aliases()
+      |> Enum.map(& &1.id)
+      |> Enum.uniq()
+      |> Enum.sort()
+
+    if my_genders == @simple_genders or my_genders == [] do
+      true
+    else
+      Attribute
+      |> join(:inner, [attribute], preference in Preferences.Attributes,
+        on: preference.attribute_id == attribute.id
+      )
+      |> where([attribute, preference], preference.preferences_id == ^target_id)
+      |> where([attribute], attribute.type == "gender" and attribute.id in ^my_genders)
+      |> Repo.exists?()
+    end
   end
 
   # Candidates must be within my age range; whether I'm within theirs is a

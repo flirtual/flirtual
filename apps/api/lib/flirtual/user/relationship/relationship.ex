@@ -17,6 +17,7 @@ defmodule Flirtual.User.Relationship do
     field(:type, :string)
     field(:kind, :string)
     field(:liked_me, :map)
+    field(:prefers_my_gender, :boolean)
     field(:time_diff, :integer)
     field(:distance, :string)
   end
@@ -41,6 +42,7 @@ defmodule Flirtual.User.Relationship do
           else: lap[:kind]
         ),
       liked_me: liked_me(opposite_lap),
+      prefers_my_gender: Matchmaking.Query.prefers_my_gender?(user_id, target_id),
       conversation_id:
         if(matched,
           do: Talkjs.new_conversation_id(user_id, target_id),
@@ -68,6 +70,7 @@ defmodule Flirtual.User.Relationship do
           else: lap[:kind]
         ),
       liked_me: liked_me(opposite_lap),
+      prefers_my_gender: Matchmaking.Query.prefers_my_gender?(user.id, target.id),
       conversation_id: if(matched, do: Talkjs.new_conversation_id(user, target), else: nil),
       time_diff: User.time_diff(user, target),
       distance: User.distance(user, target)
@@ -82,6 +85,7 @@ defmodule Flirtual.User.Relationship do
         :type,
         :kind,
         :liked_me,
+        :prefers_my_gender,
         :conversation_id,
         :time_diff,
         :distance

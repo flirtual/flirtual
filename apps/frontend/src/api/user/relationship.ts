@@ -3,6 +3,7 @@ import type { ProspectKind, ProspectRespondType } from "../matchmaking";
 export type Relationship = {
 	blocked: boolean;
 	likedMe?: ProspectKind;
+	prefersMyGender?: boolean;
 	type?: ProspectRespondType;
 	kind?: ProspectKind;
 	timeDiff?: number;
