@@ -157,10 +157,13 @@ export const Finish2Form: FC = () => {
 								<InputLabel>{t("vr_setup")}</InputLabel>
 								<InputAutocomplete
 									{...field.props}
-									options={platforms.map((platformId) => ({
-										key: platformId,
-										label: tAttribute[platformId]?.name || platformId
-									}))}
+									options={platforms.map((platform) => {
+										const id = typeof platform === "string" ? platform : platform.id;
+										return {
+											key: id,
+											label: tAttribute[id]?.name || id
+										};
+									})}
 									limit={8}
 									placeholder={t("select_the_platforms_you_use")}
 								/>

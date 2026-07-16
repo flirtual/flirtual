@@ -50,7 +50,9 @@ export interface AttributeMetadata {
 		synonyms?: Array<string>;
 	};
 	"interest-category": undefined;
-	platform: undefined;
+	platform: {
+		kind?: "accessory" | "headset";
+	};
 	country: undefined;
 	kink: {
 		kind: KinkAttributeKind;
