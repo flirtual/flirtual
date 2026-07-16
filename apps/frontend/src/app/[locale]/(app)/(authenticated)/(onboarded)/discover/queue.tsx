@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import { withSuspense } from "with-suspense";
 
 import { Matchmaking, prospectKinds } from "~/api/matchmaking";
-import type { ProspectKind, Queue as QueueData } from "~/api/matchmaking";
+import type { ProspectKind, Queue as QueueData, QueueResponse } from "~/api/matchmaking";
 import { ButtonLink } from "~/components/button";
 import { Profile } from "~/components/profile";
 import { ProfileSkeleton } from "~/components/profile/skeleton";
@@ -68,6 +68,18 @@ const CurrentProfile = withSuspense<{ userId: string }>(({ userId }) => {
 // carries the profile over so you can Homie someone you found in Date Mode and
 // vice versa.
 let displayedProfile: { userId: string; mode: ProspectKind } | null = null;
+
+// Whether the mode's daily (or trial) limits are spent, per the last queue
+// response seen for it.
+function limitsReached(mode: ProspectKind) {
+	const queue = queryClient.getQueryData<QueueResponse>(queueKey(mode));
+	if (!queue || !("limits" in queue) || !queue.limits) return false;
+
+	const { likes, browses, resetAt } = queue.limits;
+	if (resetAt && new Date(resetAt).getTime() <= Date.now()) return false;
+
+	return likes.used >= likes.max || browses.used >= browses.max;
+}
 
 const noticeClassName
 	= "relative z-20 flex w-full flex-col gap-3 rounded-xl bg-white-10 p-4 font-nunito shadow-brand-1 dark:bg-black-70 desktop:max-w-lg";
@@ -174,8 +186,13 @@ export const Queue: FC<{ kind: ProspectKind }> = ({ kind }) => {
 	// A profile carried over from the other mode, shown here even if it isn't
 	// part of this queue. Switching modes reuses this component (no remount), so
 	// we re-derive the guest whenever the kind prop changes rather than on mount.
+	// Nothing carries over from a mode whose limits are spent.
 	const guestFor = (mode: ProspectKind) =>
-		displayedProfile && displayedProfile.mode !== mode ? displayedProfile.userId : null;
+		displayedProfile
+		&& displayedProfile.mode !== mode
+		&& !limitsReached(displayedProfile.mode)
+			? displayedProfile.userId
+			: null;
 
 	const [guest, setGuest] = useState<string | null>(() => guestFor(kind));
 
