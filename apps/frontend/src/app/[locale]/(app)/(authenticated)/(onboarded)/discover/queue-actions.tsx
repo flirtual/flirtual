@@ -69,7 +69,8 @@ const QueueDebugger: FC<{ kind: ProspectKind }> = ({ kind }) => {
 export const QueueActions: FC<{
 	kind: ProspectKind;
 	explicitUserId?: string;
-}> = ({ kind: mode, explicitUserId }) => {
+	direct?: boolean;
+}> = ({ kind: mode, explicitUserId, direct = false }) => {
 	const { t } = useTranslation();
 	const {
 		next: [current],
@@ -79,6 +80,8 @@ export const QueueActions: FC<{
 		undo,
 		mutating
 	} = useQueue(mode);
+
+	const { like: homie } = useQueue(direct ? "friend" : mode);
 
 	const { data: relationship } = useQueryState<Relationship>(relationshipKey(explicitUserId ?? current!));
 	const blocked = relationship?.blocked ?? false;
@@ -105,9 +108,13 @@ export const QueueActions: FC<{
 
 				if (event.key === "h" && canUndo) void undo();
 				if (event.key === "j" && !blocked) void like(explicitUserId);
+
+				if (event.key === "k" && direct && mode === "love" && !blocked)
+					void homie(explicitUserId);
+
 				if (event.key === "l") void pass(explicitUserId);
 			},
-			[like, pass, undo, canUndo, tooFast, blocked, explicitUserId]
+			[like, homie, pass, undo, canUndo, tooFast, blocked, direct, mode, explicitUserId]
 		)
 	);
 
@@ -135,61 +142,60 @@ export const QueueActions: FC<{
 							<Key label="H" />
 						</TooltipContent>
 					</Tooltip>
-					{mode === "love"
-						? (
-								<Tooltip touchable={false}>
-									<TooltipTrigger asChild>
-										<m.button
-											id="like-button"
-											className={twMerge(
-												"flex items-center justify-center rounded-full border border-black-50/25 bg-brand-gradient p-4 shadow-brand-1 transition-all disabled:brightness-90 dark:disabled:brightness-[80%]",
-												blocked && "grayscale-[0.75]"
-											)}
-											disabled={tooFast || blocked}
-											type="button"
-											whileHover={{ scale: 1.05 }}
-											whileTap={{ scale: 0.95 }}
-											onClick={() => like(explicitUserId)}
-										>
-											<HeartIcon
-												className="w-[2.125rem] shrink-0"
-												gradient={false}
-											/>
-										</m.button>
-									</TooltipTrigger>
-									<TooltipContent className="flex gap-3 px-3 py-1.5 native:hidden">
-										<span className="pt-1">{t("like")}</span>
-										<Key label="J" />
-									</TooltipContent>
-								</Tooltip>
-							)
-						: (
-								<Tooltip touchable={false}>
-									<TooltipTrigger asChild>
-										<m.button
-											id="friend-button"
-											className={twMerge(
-												"flex items-center justify-center rounded-full border border-black-50/25 bg-gradient-to-tr from-theme-friend-1 to-theme-friend-2 p-4 shadow-brand-1 transition-all disabled:brightness-90 dark:disabled:brightness-[80%]",
-												blocked && "grayscale-[0.75]"
-											)}
-											disabled={tooFast || blocked}
-											type="button"
-											whileHover={{ scale: 1.05 }}
-											whileTap={{ scale: 0.95 }}
-											onClick={() => like(explicitUserId)}
-										>
-											<PeaceIcon
-												className="w-[2.125rem] shrink-0"
-												gradient={false}
-											/>
-										</m.button>
-									</TooltipTrigger>
-									<TooltipContent className="flex gap-3 px-3 py-1.5 native:hidden">
-										<span className="pt-1">{t("homie")}</span>
-										<Key label="J" />
-									</TooltipContent>
-								</Tooltip>
-							)}
+					{mode === "love" && (
+						<Tooltip touchable={false}>
+							<TooltipTrigger asChild>
+								<m.button
+									id="like-button"
+									className={twMerge(
+										"flex items-center justify-center rounded-full border border-black-50/25 bg-brand-gradient p-4 shadow-brand-1 transition-all disabled:brightness-90 dark:disabled:brightness-[80%]",
+										blocked && "grayscale-[0.75]"
+									)}
+									disabled={tooFast || blocked}
+									type="button"
+									whileHover={{ scale: 1.05 }}
+									whileTap={{ scale: 0.95 }}
+									onClick={() => like(explicitUserId)}
+								>
+									<HeartIcon
+										className="w-[2.125rem] shrink-0"
+										gradient={false}
+									/>
+								</m.button>
+							</TooltipTrigger>
+							<TooltipContent className="flex gap-3 px-3 py-1.5 native:hidden">
+								<span className="pt-1">{t("like")}</span>
+								<Key label="J" />
+							</TooltipContent>
+						</Tooltip>
+					)}
+					{(direct || mode === "friend") && (
+						<Tooltip touchable={false}>
+							<TooltipTrigger asChild>
+								<m.button
+									id="friend-button"
+									className={twMerge(
+										"flex items-center justify-center rounded-full border border-black-50/25 bg-gradient-to-tr from-theme-friend-1 to-theme-friend-2 p-4 shadow-brand-1 transition-all disabled:brightness-90 dark:disabled:brightness-[80%]",
+										blocked && "grayscale-[0.75]"
+									)}
+									disabled={tooFast || blocked}
+									type="button"
+									whileHover={{ scale: 1.05 }}
+									whileTap={{ scale: 0.95 }}
+									onClick={() => homie(explicitUserId)}
+								>
+									<PeaceIcon
+										className="w-[2.125rem] shrink-0"
+										gradient={false}
+									/>
+								</m.button>
+							</TooltipTrigger>
+							<TooltipContent className="flex gap-3 px-3 py-1.5 native:hidden">
+								<span className="pt-1">{t("homie")}</span>
+								<Key label={mode === "love" ? "K" : "J"} />
+							</TooltipContent>
+						</Tooltip>
+					)}
 					<Tooltip touchable={false}>
 						<TooltipTrigger asChild>
 							<m.button
