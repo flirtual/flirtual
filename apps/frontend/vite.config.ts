@@ -4,7 +4,9 @@ import { hostname as osHostname } from "node:os";
 import { reactRouter } from "@react-router/dev/vite";
 import { sentryReactRouter } from "@sentry/react-router";
 import basicSsl from "@vitejs/plugin-basic-ssl";
+import autoprefixer from "autoprefixer";
 import sonda from "sonda/vite";
+import tailwindcss from "tailwindcss";
 import info from "unplugin-info/vite";
 import remoteAssets from "unplugin-remote-assets/vite";
 import { defineConfig, loadEnv } from "vite";
@@ -13,7 +15,7 @@ import babel from "vite-plugin-babel";
 import { ViteImageOptimizer as imageOptimize } from "vite-plugin-image-optimizer";
 import tsconfigPaths from "vite-tsconfig-paths";
 
-import { targets } from "./src/polyfill";
+import { browserslist, targets } from "./src/polyfill";
 import { hush } from "./vite-plugin-hush";
 
 const mkcertPaths = {
@@ -58,6 +60,14 @@ export default defineConfig((config) => {
 		appType: "mpa",
 		ssr: {
 			noExternal: ["posthog-js", "@posthog/react"]
+		},
+		css: {
+			postcss: {
+				plugins: [
+					tailwindcss(),
+					autoprefixer({ overrideBrowserslist: browserslist })
+				]
+			}
 		},
 		build: {
 			assetsDir: "static",
