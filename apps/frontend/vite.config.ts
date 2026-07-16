@@ -55,10 +55,6 @@ export default defineConfig((config) => {
 	if (!env.VITE_API_URL) process.env.VITE_API_URL = apiUrl;
 
 	return {
-		esbuild: {
-			charset: "utf8",
-			legalComments: "external",
-		},
 		appType: "mpa",
 		ssr: {
 			noExternal: ["posthog-js", "@posthog/react"]
@@ -74,8 +70,7 @@ export default defineConfig((config) => {
 				// experimentalLogSideEffects: true,
 				treeshake: {
 					unknownGlobalSideEffects: false,
-					propertyReadSideEffects: false,
-					tryCatchDeoptimization: false
+					propertyReadSideEffects: false
 				},
 				output: {
 					// experimentalMinChunkSize: 8192,
@@ -116,7 +111,7 @@ export default defineConfig((config) => {
 			]),
 			tsconfigPaths(),
 			babel({
-				filter: /\.[jt]sx?$/,
+				include: /\.[jt]sx?$/,
 				babelConfig: {
 					babelrc: false,
 					configFile: false,

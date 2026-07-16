@@ -6,7 +6,7 @@ import { locales } from "./src/i18n/languages";
 export default {
 	future: {
 		// unstable_subResourceIntegrity: true,
-		unstable_splitRouteModules: false,
+		v8_splitRouteModules: false,
 	},
 	ssr: false,
 	routeDiscovery: {
