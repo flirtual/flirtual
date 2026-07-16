@@ -11,3 +11,6 @@
 # Junk
 node_modules
 .DS_Store
+
+# CI/CD
+.wrangler
