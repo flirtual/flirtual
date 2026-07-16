@@ -255,6 +255,10 @@ const fontSizeNamed = {
 type FontSize = keyof typeof fontSizeNamed;
 type NamedFontSize = typeof fontSizeNamed[FontSize];
 
+const fontSizes = Object.keys(fontSizeNamed)
+	.map(Number)
+	.sort((a, b) => a - b) as Array<FontSize>;
+
 const InputFontSize: FC = () => {
 	const [fontSize, setFontSize] = usePreferences<FontSize>("font_size", defaultFontSize);
 	const namedSize = fontSizeNamed[fontSize] as NamedFontSize;
@@ -277,15 +281,15 @@ const InputFontSize: FC = () => {
 				<NewBadge className="inline-block" />
 			</InputLabel>
 			<Slider
-				max={20}
-				min={12}
-				step={1.3333}
-				value={[fontSize]}
-				onValueChange={async ([value]) => {
-					await setFontSize((Math.round(value! * 100) / 100) as FontSize);
+				max={fontSizes.length - 1}
+				min={0}
+				step={1}
+				value={[fontSizes.indexOf(fontSize)]}
+				onValueChange={async ([index]) => {
+					await setFontSize(fontSizes[index!]!);
 				}}
-				onValueCommit={async ([value]) => {
-					await setFontSize((Math.round(value! * 100) / 100) as FontSize);
+				onValueCommit={async ([index]) => {
+					await setFontSize(fontSizes[index!]!);
 				}}
 			/>
 		</div>

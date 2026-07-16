@@ -71,6 +71,10 @@ export const InputEditor: React.FC<InputEditorProps> = ({
 					]
 				}}
 				className="prose max-w-none dark:prose-invert [&_*]:!select-auto"
+				// Restore the pre-3.7.0 serializer: since 3.7.0 onChange returns
+				// editor.getSemanticHTML() instead of editor.root.innerHTML.
+				// https://github.com/VaguelySerious/react-quill/commit/d905530c1b19339948164673206150adb5435827
+				useSemanticHTML={false}
 				value={value}
 				onChange={(value) => onChange(value)}
 			/>
