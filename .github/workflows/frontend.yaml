@@ -99,7 +99,9 @@ jobs:
           - environment: ${{ github.ref != 'refs/heads/production' && 'production' || null }}
     runs-on: ubuntu-latest
     continue-on-error: true
-    environment: ${{ matrix.environment }}
+    environment:
+      name: ${{ matrix.environment }}
+      url: ${{ steps.preview.outputs.url }}
     defaults:
       run:
         working-directory: apps/frontend
@@ -167,8 +169,12 @@ jobs:
         run: pnpm run production
 
       - name: Compute preview alias
+        id: preview
         if: matrix.environment == 'canary'
-        run: echo "PREVIEW_ALIAS=c${GITHUB_SHA::7}" >> "$GITHUB_ENV"
+        run: |
+          alias="c${GITHUB_SHA::7}"
+          echo "PREVIEW_ALIAS=$alias" >> "$GITHUB_ENV"
+          echo "url=https://$alias.flirtual.dev" >> "$GITHUB_OUTPUT"
 
       - name: Upload preview version
         if: matrix.environment == 'canary'
