@@ -69,7 +69,15 @@ export const api = wretch(urls.api)
 			development && delay((_, { method }) => 500 * Math.random() * (method === "GET" ? 1 : 2))
 		].filter(Boolean)
 	)
-	// .errorType("json")
+	.customError((error, response) =>
+		response
+			.clone()
+			.json()
+			.then(
+				(json) => Object.assign(error, { json }),
+				() => error
+			)
+	)
 	.defer((wretch, _url, options) => {
 		const headers = new Headers(options.headers || {});
 		if (headers.get("content-type") === "application/json" && options.transformRequest !== false)
@@ -81,7 +89,7 @@ export const api = wretch(urls.api)
 		return wretch
 			.query(
 				toSnakeObject(Object.fromEntries(url.searchParams.entries())),
-				true
+				{ replace: true }
 			)
 			.headers({
 				"idempotency-key": newIdempotencyKey()
@@ -126,6 +134,7 @@ export function isWretchError(
 ): error is WretchIssue {
 	return (
 		error instanceof WretchError
-		&& (errorType === undefined || error.json?.error === errorType)
+		&& (errorType === undefined
+			|| (error as WretchIssue).json?.error === errorType)
 	);
 }

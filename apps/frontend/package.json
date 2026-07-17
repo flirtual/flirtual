@@ -120,7 +120,7 @@
 		"use-sound": "^5.0.0",
 		"vaul": "^1.1.2",
 		"with-suspense": "^1.0.5",
-		"wretch": "^2.11.0"
+		"wretch": "^3.0.9"
 	},
 	"devDependencies": {
 		"@ariesclark/eslint-config": "3.2.1-canary.1",

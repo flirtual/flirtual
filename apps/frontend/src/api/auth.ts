@@ -134,6 +134,7 @@ export const Authentication = {
 			.post()
 			.unauthorized((reason) => {
 				if (isWretchError(reason)) return reason.json;
+				throw reason;
 			})
 			.json<Issue<"account_banned"> | Issue<"invalid_credentials"> | Issue<"leaked_login_password"> | Issue<"login_rate_limit"> | Issue<"verification_rate_limit"> | Session | VerificationResponse>();
 	},
@@ -144,6 +145,7 @@ export const Authentication = {
 			.post()
 			.unauthorized((reason) => {
 				if (isWretchError(reason)) return reason.json;
+				throw reason;
 			})
 			.json<Issue<"account_banned"> | Issue<"invalid_token"> | Session>();
 	},
@@ -203,6 +205,7 @@ export const Authentication = {
 			.post()
 			.unauthorized((reason) => {
 				if (isWretchError(reason)) return reason.json;
+				throw reason;
 			})
 			.json<Issue<"verification_invalid_code"> | Issue<"verification_rate_limit"> | Session>();
 	},
@@ -213,6 +216,7 @@ export const Authentication = {
 			.post()
 			.unauthorized((reason) => {
 				if (isWretchError(reason)) return reason.json;
+				throw reason;
 			})
 			.json<Issue<"verification_invalid_code"> | VerificationResponse>();
 	},
@@ -223,6 +227,7 @@ export const Authentication = {
 			.post()
 			.unauthorized((reason) => {
 				if (isWretchError(reason)) return reason.json;
+				throw reason;
 			})
 			.json<Issue<"account_banned"> | Issue<"invalid_token"> | Issue<"token_expired"> | Session | SocialLoginLinkResponse>();
 	}

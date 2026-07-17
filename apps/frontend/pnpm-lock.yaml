@@ -321,8 +321,8 @@ importers:
         specifier: ^1.0.5
         version: 1.0.5(react@19.2.7)
       wretch:
-        specifier: ^2.11.0
-        version: 2.11.0
+        specifier: ^3.0.9
+        version: 3.0.9
     devDependencies:
       '@ariesclark/eslint-config':
         specifier: 3.2.1-canary.1
@@ -7639,9 +7639,9 @@ packages:
   wrappy@1.0.2:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
 
-  wretch@2.11.0:
-    resolution: {integrity: sha512-zbFW4PnPSS5RFQabHRkCAcMQjmFGrEQLcJwYe4YGXL9KWXneu03Dtaz2JUeqEkOwNDMjdfHEHPL+AIZJwE+y1g==}
-    engines: {node: '>=14'}
+  wretch@3.0.9:
+    resolution: {integrity: sha512-RXJQp5aOBfHQaDCLRyFXQooWDBOHrQxVgCH/6OFaFPBKjeUiXMQ3NV1b8qqI7CR+v4meVBWYs242P8n+rWRjzA==}
+    engines: {node: '>=22'}
 
   ws@8.21.0:
     resolution: {integrity: sha512-Vsp28b7DRcimFQvrqu2Wek3z1iYxDCWqHYB8Qsnk/S4RfaCQzPGPyBNuVjJV3cd6UiKtUtp6sNM77gWvzcCH+g==}
@@ -15337,7 +15337,7 @@ snapshots:
 
   wrappy@1.0.2: {}
 
-  wretch@2.11.0: {}
+  wretch@3.0.9: {}
 
   ws@8.21.0: {}
 
