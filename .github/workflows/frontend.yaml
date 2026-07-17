@@ -166,23 +166,23 @@ jobs:
         if: matrix.environment == 'production'
         run: pnpm run production
 
-      - name: Compute short SHA
+      - name: Compute preview alias
         if: matrix.environment == 'canary'
-        run: echo "SHORT_SHA=${GITHUB_SHA::7}" >> "$GITHUB_ENV"
+        run: echo "PREVIEW_ALIAS=c${GITHUB_SHA::7}" >> "$GITHUB_ENV"
 
       - name: Upload preview version
         if: matrix.environment == 'canary'
         env:
-          VITE_ORIGIN: https://${{ env.SHORT_SHA }}.flirtual.dev
-        run: pnpm run preview "$SHORT_SHA"
+          VITE_ORIGIN: https://${{ env.PREVIEW_ALIAS }}.flirtual.dev
+        run: pnpm run preview "$PREVIEW_ALIAS"
 
       - name: Point flirtual.dev at this preview
         if: matrix.environment == 'canary' && github.ref == 'refs/heads/main'
-        run: pnpm exec wrangler kv key put latest "$SHORT_SHA" --binding=PREVIEW_STATE -c ../preview-router/wrangler.jsonc --remote
+        run: pnpm exec wrangler kv key put latest "$PREVIEW_ALIAS" --binding=PREVIEW_STATE -c ../preview-router/wrangler.jsonc --remote
 
       - name: Summarize preview URL
         if: matrix.environment == 'canary'
-        run: echo "Preview → https://$SHORT_SHA.flirtual.dev" >> "$GITHUB_STEP_SUMMARY"
+        run: echo "Preview → https://$PREVIEW_ALIAS.flirtual.dev" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Send bundle stats to RelativeCI
         if: (success() || failure()) && matrix.environment == 'canary'
