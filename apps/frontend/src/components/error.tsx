@@ -1,6 +1,6 @@
 import { Clipboard } from "@capacitor/clipboard";
 import * as Sentry from "@sentry/react-router";
-import { Check, Chrome, RotateCw, Send, Smartphone, WifiOff } from "lucide-react";
+import { AppWindow, Check, RotateCw, Send, Smartphone, WifiOff } from "lucide-react";
 import ms from "ms.macro";
 import { useMemo, useState } from "react";
 import type { ComponentProps, FC } from "react";
@@ -104,7 +104,7 @@ export function HavingIssues({ error }: { error?: unknown }) {
 						<li>
 							<Trans
 								components={{
-									"browser-icon": <Chrome className="mr-1 inline-block size-4 shrink-0" />,
+									"browser-icon": <AppWindow className="mr-1 inline-block size-4 shrink-0" />,
 									"device-icon": <Smartphone className="mr-0.5 inline-block size-4 shrink-0" />
 								}}
 								i18nKey={native ? "sweet_strong_poodle_endure" : "heroic_pink_gull_breathe"}

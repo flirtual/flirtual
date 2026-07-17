@@ -1,4 +1,4 @@
-import { Chrome, RotateCw, Smartphone, WifiOff } from "lucide-react";
+import { AppWindow, RotateCw, Smartphone, WifiOff } from "lucide-react";
 import { m } from "motion/react";
 import { Trans, useTranslation } from "react-i18next";
 
@@ -40,7 +40,7 @@ export function LongerThanUsual() {
 				<li>
 					<Trans
 						components={{
-							"browser-icon": <Chrome className="inline-block size-4 shrink-0" />,
+							"browser-icon": <AppWindow className="inline-block size-4 shrink-0" />,
 							"device-icon": <Smartphone className="inline-block size-4 shrink-0" />
 						}}
 						i18nKey="sweet_strong_poodle_endure"
