@@ -159,7 +159,7 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 								[
 									toCamelCase(key),
 									issues.map(({ error, details }) =>
-										t(`errors.${error}` as any, details)
+										t(`errors.${error}` as any, details as Record<string, string>)
 									)
 								] as const
 						)
