@@ -1,13 +1,7 @@
 on:
   push:
-    paths: ["apps/frontend/**", ".github/workflows/frontend.yaml"]
   pull_request:
-    paths: ["apps/frontend/**", ".github/workflows/frontend.yaml"]
   workflow_dispatch:
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
 
 permissions:
   contents: read

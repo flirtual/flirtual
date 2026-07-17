@@ -1,13 +1,7 @@
 on:
   push:
-    paths: ["apps/api/**", ".github/workflows/api.yaml"]
   pull_request:
-    paths: [ "apps/api/**", ".github/workflows/api.yaml" ]
   workflow_dispatch:
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
 
 permissions:
   contents: read
