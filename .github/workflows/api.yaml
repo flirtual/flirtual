@@ -145,7 +145,10 @@ jobs:
               --port 443:4000/tcp:http:tls \
               --autostart --autostop=stop \
               --vm-memory 1024 \
-              --env GIT_COMMIT_SHA="$GITHUB_SHA"; then
+              --env GIT_COMMIT_SHA="$GITHUB_SHA" \
+              --env ORIGIN="https://api-$PREVIEW_LABEL.flirtual.dev" \
+              --env FRONTEND_ORIGIN="https://$PREVIEW_LABEL.flirtual.dev" \
+              --env ROOT_ORIGIN=https://flirtual.dev; then
               break
             fi
 
