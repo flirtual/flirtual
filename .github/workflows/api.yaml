@@ -123,7 +123,30 @@ jobs:
             echo "ROOT_ORIGIN=https://flirtual.dev"
           } >> "$GITHUB_ENV"
 
+      - name: Look for new migrations
+        id: migrations
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BASE: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          # Previews share the canary database, so migrating is a no-op unless
+          # this push carries a migration. Anything we can't work out falls
+          # through to migrating, which is idempotent anyway.
+          changed=yes
+
+          case "$BASE" in
+            "" | 0000000000000000000000000000000000000000) ;;
+            *)
+              if files=$(gh api "repos/$GITHUB_REPOSITORY/compare/$BASE...$GITHUB_SHA" --jq '.files[].filename' 2>/dev/null); then
+                printf '%s\n' "$files" | grep -q '^apps/api/priv/repo/migrations/' || changed=no
+              fi
+              ;;
+          esac
+
+          echo "changed=$changed" >> "$GITHUB_OUTPUT"
+
       - name: Migrate
+        if: steps.migrations.outputs.changed == 'yes'
         run: |
           flyctl machine run "$FLY_IMAGE" -a "$FLY_APP" --rm --restart no \
             --env ORIGIN="$ORIGIN" \
