@@ -122,21 +122,43 @@ jobs:
         run: |
           name="preview-$PREVIEW_LABEL"
 
-          existing=$(flyctl machines list -a "$FLY_APP" --json | jq -r --arg n "$name" '.[] | select(.name == $n) | .id')
-          if [ -n "$existing" ]; then
-            flyctl machine destroy "$existing" -a "$FLY_APP" --force
-          fi
+          machine_id() {
+            flyctl machines list -a "$FLY_APP" --json | jq -r --arg n "$name" '.[] | select(.name == $n) | .id'
+          }
 
-          flyctl machine run "$FLY_IMAGE" -a "$FLY_APP" \
-            --name "$name" \
-            --region iad \
-            --port 443:4000/tcp:http:tls \
-            --autostart --autostop=stop \
-            --vm-memory 1024 \
-            --env GIT_COMMIT_SHA="$GITHUB_SHA"
+          discard() {
+            id=$(machine_id)
+            if [ -n "$id" ]; then
+              flyctl machine destroy "$id" -a "$FLY_APP" --force || true
+            fi
+          }
 
-          id=$(flyctl machines list -a "$FLY_APP" --json | jq -r --arg n "$name" '.[] | select(.name == $n) | .id')
-          echo "PREVIEW_MACHINE=$id" >> "$GITHUB_ENV"
+          # A Machine occasionally lands on a host that cannot unpack the image
+          # and crash-loops on a missing /app/bin/server. Fly still reports the
+          # host as healthy, so the only recourse is another host.
+          discard
+
+          for attempt in 1 2 3; do
+            if flyctl machine run "$FLY_IMAGE" -a "$FLY_APP" \
+              --name "$name" \
+              --region iad \
+              --port 443:4000/tcp:http:tls \
+              --autostart --autostop=stop \
+              --vm-memory 1024 \
+              --env GIT_COMMIT_SHA="$GITHUB_SHA"; then
+              break
+            fi
+
+            if [ "$attempt" = 3 ]; then
+              echo "::error::preview machine failed to boot after $attempt attempts"
+              exit 1
+            fi
+
+            echo "::warning::preview machine failed to boot, retrying on another host"
+            discard
+          done
+
+          echo "PREVIEW_MACHINE=$(machine_id)" >> "$GITHUB_ENV"
 
       - name: Point the router at this preview
         env:
