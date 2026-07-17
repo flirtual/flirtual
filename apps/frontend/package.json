@@ -100,7 +100,7 @@
 		"react-colorful": "^5.8.0",
 		"react-dom": "19.2.7",
 		"react-error-boundary": "^6.1.2",
-		"react-i18next": "^15.7.3",
+		"react-i18next": "^17.0.9",
 		"react-intersection-observer": "^10.1.0",
 		"react-portal": "^4.3.0",
 		"react-quill-new": "^3.8.3",
