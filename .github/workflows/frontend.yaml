@@ -190,15 +190,12 @@ jobs:
         if: matrix.environment == 'canary'
         env:
           VITE_ORIGIN: https://${{ env.PREVIEW_LABEL }}.flirtual.dev
+          VITE_API_URL: https://api-${{ env.PREVIEW_LABEL }}.flirtual.dev/v1/
         run: pnpm run preview "$PREVIEW_ALIAS"
 
       - name: Point flirtual.dev at this preview
         if: matrix.environment == 'canary' && github.ref == 'refs/heads/main'
         run: pnpm exec wrangler kv key put latest "$PREVIEW_LABEL" --binding=PREVIEW_STATE -c ../preview-router/wrangler.jsonc --remote
-
-      - name: Summarize preview URL
-        if: matrix.environment == 'canary'
-        run: echo "Preview → https://$PREVIEW_LABEL.flirtual.dev" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Post preview check
         if: matrix.environment == 'canary' && github.ref == 'refs/heads/main'
@@ -210,5 +207,5 @@ jobs:
             head_sha: $sha,
             status: "completed",
             conclusion: "success",
-            output: { title: "Preview deployed", summary: $url }
+            output: { title: "Preview deployed", summary: "→ \($url)" }
           }' | gh api repos/${{ github.repository }}/check-runs --input -
