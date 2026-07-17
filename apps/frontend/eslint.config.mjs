@@ -18,6 +18,7 @@ export default configure({
 		"android/",
 		"ios/",
 		"visionos/",
+		"**/*.md",
 	],
 	rules: {
 		// todo: disable eventually, flags bug-prone code.

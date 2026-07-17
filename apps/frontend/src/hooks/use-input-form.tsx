@@ -5,7 +5,8 @@ import { useTranslation } from "react-i18next";
 import { entries, fromEntries, toCamelCase } from "remeda";
 import { WretchError } from "wretch/resolver";
 
-import { isWretchError, type WretchIssue } from "~/api/common";
+import { isWretchError } from "~/api/common";
+import type { WretchIssue } from "~/api/common";
 import type { FormCaptchaReference } from "~/components/forms/captcha";
 import { FormField } from "~/components/forms/field";
 import type { FormFieldFC } from "~/components/forms/field";
