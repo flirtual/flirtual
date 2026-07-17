@@ -70,12 +70,7 @@ jobs:
 
   image:
     if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/production')
-    strategy:
-      matrix:
-        environment: [production, canary]
-        exclude:
-          - environment: ${{ github.ref == 'refs/heads/main' && 'production' || null }}
-          - environment: ${{ github.ref == 'refs/heads/production' && 'canary' || null }}
+    needs: [build]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -92,13 +87,13 @@ jobs:
         with:
           context: apps/api
           push: true
-          tags: registry.fly.io/flirtual:${{ matrix.environment }}-${{ github.sha }}
+          tags: registry.fly.io/flirtual:${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
   deploy-canary:
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    needs: [build, image]
+    needs: [image]
     environment: 
       name: canary
       url: https://canary-api.flirtual.com
@@ -121,7 +116,7 @@ jobs:
 
           flyctl deploy \
             -c fly-canary.json \
-            --image registry.fly.io/flirtual:canary-${{ github.sha }} \
+            --image registry.fly.io/flirtual:${{ github.sha }} \
             --update-only \
             --env CANARY=1 \
             --env GIT_COMMIT_SHA="$GIT_COMMIT_SHA"
@@ -131,7 +126,7 @@ jobs:
 
   deploy-production:
     if: github.ref == 'refs/heads/production' && github.event_name == 'push'
-    needs: [build, image]
+    needs: [image]
     environment:
       name: production
       url: https://api.flirtu.al
@@ -141,7 +136,7 @@ jobs:
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - run: |
           GIT_COMMIT_SHA=$(git rev-parse HEAD)
-          flyctl deploy --image registry.fly.io/flirtual:production-${{ github.sha }} --env GIT_COMMIT_SHA="$GIT_COMMIT_SHA"
+          flyctl deploy --image registry.fly.io/flirtual:${{ github.sha }} --env GIT_COMMIT_SHA="$GIT_COMMIT_SHA"
         working-directory: ./apps/api
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
