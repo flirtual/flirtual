@@ -165,7 +165,7 @@ jobs:
       - run: pnpm run ${{ matrix.environment }}
 
       - name: Send bundle stats to RelativeCI
-        if: matrix.environment == 'canary'
+        if: (success() || failure()) && matrix.environment == 'canary'
         uses: relative-ci/agent-action@v3
         with:
           webpackStatsFile: ./apps/frontend/dist/client/webpack-stats.json
