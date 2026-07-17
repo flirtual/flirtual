@@ -145,7 +145,12 @@ export const SettingsNavigation: FC = () => {
 						<NavigationLink href={urls.settings.notifications} Icon={Bell}>
 							{t("notifications")}
 						</NavigationLink>
-						<NavigationLink href={urls.settings.email} Icon={AtSign}>
+						<NavigationLink
+							href={user.emailConfirmedAt
+								? urls.settings.email
+								: urls.confirmEmail({ to: urls.settings.email })}
+							Icon={AtSign}
+						>
 							{t("email")}
 						</NavigationLink>
 						<NavigationLink href={urls.settings.password} Icon={KeyRound}>
