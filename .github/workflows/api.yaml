@@ -115,8 +115,21 @@ jobs:
           echo "PREVIEW_LABEL=$label" >> "$GITHUB_ENV"
           echo "url=https://api-$label.flirtual.dev" >> "$GITHUB_OUTPUT"
 
+          # runtime.exs requires these in prod, so every machine needs them,
+          # even one that only runs migrations.
+          {
+            echo "ORIGIN=https://api-$label.flirtual.dev"
+            echo "FRONTEND_ORIGIN=https://$label.flirtual.dev"
+            echo "ROOT_ORIGIN=https://flirtual.dev"
+          } >> "$GITHUB_ENV"
+
       - name: Migrate
-        run: flyctl machine run "$FLY_IMAGE" -a "$FLY_APP" --rm --restart no /app/bin/migrate
+        run: |
+          flyctl machine run "$FLY_IMAGE" -a "$FLY_APP" --rm --restart no \
+            --env ORIGIN="$ORIGIN" \
+            --env FRONTEND_ORIGIN="$FRONTEND_ORIGIN" \
+            --env ROOT_ORIGIN="$ROOT_ORIGIN" \
+            /app/bin/migrate
 
       - name: Run preview machine
         run: |
@@ -146,9 +159,9 @@ jobs:
               --autostart --autostop=stop \
               --vm-memory 1024 \
               --env GIT_COMMIT_SHA="$GITHUB_SHA" \
-              --env ORIGIN="https://api-$PREVIEW_LABEL.flirtual.dev" \
-              --env FRONTEND_ORIGIN="https://$PREVIEW_LABEL.flirtual.dev" \
-              --env ROOT_ORIGIN=https://flirtual.dev; then
+              --env ORIGIN="$ORIGIN" \
+              --env FRONTEND_ORIGIN="$FRONTEND_ORIGIN" \
+              --env ROOT_ORIGIN="$ROOT_ORIGIN"; then
               break
             fi
 
