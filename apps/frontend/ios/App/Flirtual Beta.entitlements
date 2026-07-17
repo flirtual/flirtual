@@ -10,8 +10,8 @@
 	</array>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>webcredentials:canary.flirtual.com</string>
-		<string>applinks:canary.flirtual.com</string>
+		<string>webcredentials:flirtual.dev</string>
+		<string>applinks:flirtual.dev</string>
 	</array>
 	<key>com.apple.security.app-sandbox</key>
 	<true/>

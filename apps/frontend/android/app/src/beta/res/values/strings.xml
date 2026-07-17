@@ -7,7 +7,7 @@
     <string name="default_notification_channel_id">flirtual-beta</string>
     <string name="asset_statements" translatable="false">
         [{
-            \"include\": \"https://canary.flirtual.com/.well-known/assetlinks.json\"
+            \"include\": \"https://flirtual.dev/.well-known/assetlinks.json\"
         }]
     </string>
 </resources>

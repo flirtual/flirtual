@@ -28,7 +28,7 @@ pnpm eslint --fix              # lint
 
 # Mobile (Capacitor): set origin + bundle id, then sync/open/run
 export VITE_ORIGIN=https://$(hostname):3000 VITE_APP_BUNDLE_ID=zone.homie.flirtual.beta  # local dev
-# beta:  VITE_ORIGIN=https://canary.flirtual.com VITE_APP_BUNDLE_ID=zone.homie.flirtual.beta
+# beta:  VITE_ORIGIN=https://flirtual.dev VITE_APP_BUNDLE_ID=zone.homie.flirtual.beta
 # prod:  VITE_ORIGIN=https://flirtu.al VITE_APP_BUNDLE=zone.homie.flirtual.pwa
 pnpm cap sync
 pnpm cap open ios | open android | run ios | run android
