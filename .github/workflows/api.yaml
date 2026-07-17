@@ -149,6 +149,7 @@ jobs:
         if: steps.migrations.outputs.changed == 'yes'
         run: |
           flyctl machine run "$FLY_IMAGE" -a "$FLY_APP" --rm --restart no \
+            --env CANARY=1 \
             --env ORIGIN="$ORIGIN" \
             --env FRONTEND_ORIGIN="$FRONTEND_ORIGIN" \
             --env ROOT_ORIGIN="$ROOT_ORIGIN" \
@@ -181,6 +182,7 @@ jobs:
               --port 443:4000/tcp:http:tls \
               --autostart --autostop=stop \
               --vm-memory 1024 \
+              --env CANARY=1 \
               --env GIT_COMMIT_SHA="$GITHUB_SHA" \
               --env ORIGIN="$ORIGIN" \
               --env FRONTEND_ORIGIN="$FRONTEND_ORIGIN" \
