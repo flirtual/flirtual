@@ -189,11 +189,3 @@ jobs:
       - name: Summarize preview URL
         if: matrix.environment == 'canary'
         run: echo "Preview → https://$PREVIEW_ALIAS.flirtual.dev" >> "$GITHUB_STEP_SUMMARY"
-
-      - name: Send bundle stats to RelativeCI
-        if: (success() || failure()) && matrix.environment == 'canary'
-        uses: relative-ci/agent-action@v3
-        with:
-          webpackStatsFile: ./apps/frontend/dist/client/webpack-stats.json
-          key: ${{ secrets.RELATIVE_CI_KEY }}
-          token: ${{ secrets.GITHUB_TOKEN }}
