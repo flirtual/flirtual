@@ -198,12 +198,10 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          url="https://$PREVIEW_ALIAS.flirtual.dev"
-          jq -n --arg sha "$GITHUB_SHA" --arg url "$url" '{
+          jq -n --arg sha "$GITHUB_SHA" --arg url "https://$PREVIEW_ALIAS.flirtual.dev" '{
             name: "preview",
             head_sha: $sha,
             status: "completed",
             conclusion: "success",
-            details_url: $url,
-            output: { title: "Preview → \($url)", summary: "[Open preview](\($url))" }
+            output: { title: "Preview deployed", summary: $url }
           }' | gh api repos/${{ github.repository }}/check-runs --input -
