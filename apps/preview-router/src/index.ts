@@ -10,12 +10,20 @@ function isPreviewLabel(label: string): boolean {
 function redirectToLatest(url: URL, prefix: string, latest: string): Response {
 	const target = new URL(url)
 	target.hostname = `${prefix}${latest}.${env.PREVIEW_ROOT_DOMAIN}`
-	return Response.redirect(target.href, 302)
+
+	return new Response(null, {
+		status: 302,
+		headers: {
+			"location": target.href,
+			"flirtual-label": latest
+		}
+	})
 }
 
 async function proxy(
 	request: Request,
 	url: URL,
+	label: string,
 	upstreamHost: string,
 	instance?: string
 ): Promise<Response> {
@@ -35,16 +43,19 @@ async function proxy(
 
 	const response = await fetch(upstreamRequest, { redirect: "manual" })
 
-	const location = response.headers.get("location")
-	if (location === null) return response
-
-	const target = URL.parse(location, upstreamUrl.href)
-	if (target === null || target.hostname !== upstreamHost) return response
-
-	target.hostname = requestHost
-
 	const headers = new Headers(response.headers)
-	headers.set("location", target.toString())
+	headers.set("flirtual-label", label)
+	headers.set("flirtual-upstream", upstreamHost)
+	if (instance !== undefined) headers.set("flirtual-machine", instance)
+
+	const location = response.headers.get("location")
+	if (location !== null) {
+		const target = URL.parse(location, upstreamUrl.href)
+		if (target !== null && target.hostname === upstreamHost) {
+			target.hostname = requestHost
+			headers.set("location", target.toString())
+		}
+	}
 
 	return new Response(response.body, {
 		status: response.status,
@@ -82,13 +93,14 @@ export default {
 			const machine = await env.PREVIEW_STATE.get(`machine-${target}`)
 			if (machine === null) return new Response(null, { status: 418 })
 
-			return proxy(request, url, env.PREVIEW_API_HOST, machine)
+			return proxy(request, url, target, env.PREVIEW_API_HOST, machine)
 		}
 
 		if (isPreviewLabel(label))
 			return proxy(
 				request,
 				url,
+				label,
 				`git-${label}-${env.PREVIEW_WORKER_NAME}.${env.PREVIEW_SUBDOMAIN}.workers.dev`
 			)
 
