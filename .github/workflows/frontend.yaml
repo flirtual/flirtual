@@ -99,6 +99,9 @@ jobs:
           - environment: ${{ github.ref != 'refs/heads/production' && 'production' || null }}
     runs-on: ubuntu-latest
     continue-on-error: true
+    permissions:
+      contents: read
+      checks: write
     environment:
       name: ${{ matrix.environment }}
       url: ${{ steps.preview.outputs.url }}
@@ -189,3 +192,18 @@ jobs:
       - name: Summarize preview URL
         if: matrix.environment == 'canary'
         run: echo "Preview → https://$PREVIEW_ALIAS.flirtual.dev" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Post preview check
+        if: matrix.environment == 'canary' && github.ref == 'refs/heads/main'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          url="https://$PREVIEW_ALIAS.flirtual.dev"
+          jq -n --arg sha "$GITHUB_SHA" --arg url "$url" '{
+            name: "preview",
+            head_sha: $sha,
+            status: "completed",
+            conclusion: "success",
+            details_url: $url,
+            output: { title: "Preview → \($url)", summary: "[Open preview](\($url))" }
+          }' | gh api repos/${{ github.repository }}/check-runs --input -
