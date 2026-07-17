@@ -27,6 +27,9 @@
 		// Find it with `wrangler whoami` or in the Cloudflare dashboard → Workers → subdomain.
 		"PREVIEW_SUBDOMAIN": "flirtual",
 		"PREVIEW_WORKER_NAME": "flirtual-canary",
-		"PREVIEW_ROOT_DOMAIN": "flirtual.dev"
+		"PREVIEW_ROOT_DOMAIN": "flirtual.dev",
+		// Fly app holding the per-commit API preview machines, reached by
+		// forcing a specific instance rather than load-balancing.
+		"PREVIEW_API_HOST": "flirtual-canary.fly.dev"
 	}
 }

@@ -63,7 +63,7 @@ jobs:
       run: mix check --except compiler
 
   image:
-    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/production')
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     needs: [build]
     runs-on: ubuntu-latest
     steps:
@@ -85,38 +85,75 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-  deploy-canary:
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+  preview:
+    if: github.ref != 'refs/heads/production' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
     needs: [image]
-    environment: 
+    environment:
       name: canary
-      url: https://canary-api.flirtual.com
+      url: ${{ steps.preview.outputs.url }}
     runs-on: ubuntu-latest
+    env:
+      FLY_APP: flirtual-canary
+      FLY_IMAGE: registry.fly.io/flirtual:${{ github.sha }}
+      FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
     steps:
       - uses: actions/checkout@v7
       - uses: superfly/flyctl-actions/setup-flyctl@master
-      - run: |
-          flyctl config show -a flirtual | jq '
-            .app = "flirtual-canary" |
-            .deploy.strategy = "immediate" |
-            .services[0].auto_stop_machines = true |
-            .services[0].auto_start_machines = true |
-            .services[0].min_machines_running = 1 |
-            .vm[0].size = "shared-cpu-2x" |
-            .vm[0].memory = "1gb"
-          ' > fly-canary.json
 
-          GIT_COMMIT_SHA=$(git rev-parse HEAD)
-
-          flyctl deploy \
-            -c fly-canary.json \
-            --image registry.fly.io/flirtual:${{ github.sha }} \
-            --update-only \
-            --env CANARY=1 \
-            --env GIT_COMMIT_SHA="$GIT_COMMIT_SHA"
-        working-directory: ./apps/api
+      - name: Compute preview label
+        id: preview
         env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          if [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then
+            label="$PR_NUMBER"
+          else
+            label="${GITHUB_SHA::7}"
+          fi
+          echo "PREVIEW_LABEL=$label" >> "$GITHUB_ENV"
+          echo "url=https://api-$label.flirtual.dev" >> "$GITHUB_OUTPUT"
+
+      - name: Migrate
+        run: flyctl machine run "$FLY_IMAGE" -a "$FLY_APP" --rm --restart no /app/bin/migrate
+
+      - name: Run preview machine
+        run: |
+          name="preview-$PREVIEW_LABEL"
+          id=$(flyctl machines list -a "$FLY_APP" --json | jq -r --arg n "$name" '.[] | select(.name == $n) | .id')
+
+          if [ -z "$id" ]; then
+            flyctl machine run "$FLY_IMAGE" -a "$FLY_APP" \
+              --name "$name" \
+              --region iad \
+              --port 443:4000/tcp:http:tls \
+              --autostart --autostop=stop \
+              --vm-memory 1024 \
+              --env GIT_COMMIT_SHA="$GITHUB_SHA"
+            id=$(flyctl machines list -a "$FLY_APP" --json | jq -r --arg n "$name" '.[] | select(.name == $n) | .id')
+          else
+            flyctl machine update "$id" -a "$FLY_APP" --image "$FLY_IMAGE" --yes
+          fi
+
+          echo "PREVIEW_MACHINE=$id" >> "$GITHUB_ENV"
+
+      - name: Point the router at this preview
+        env:
+          KV_NAMESPACE: 413cd83515854c738f758131b600fee2
+        run: |
+          kv_put() {
+            curl -sfX PUT \
+              "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/storage/kv/namespaces/$KV_NAMESPACE/values/$1" \
+              -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+              -F value="$2" -F metadata='{}' > /dev/null
+          }
+
+          kv_put "machine-$PREVIEW_LABEL" "$PREVIEW_MACHINE"
+
+          if [ "$GITHUB_REF" = "refs/heads/main" ]; then
+            kv_put latest-api "$PREVIEW_LABEL"
+          fi
 
   deploy-production:
     if: github.ref == 'refs/heads/production' && github.event_name == 'push'
