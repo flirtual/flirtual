@@ -4,10 +4,7 @@ import { sentryOnBuildEnd } from "@sentry/react-router";
 import { locales } from "./src/i18n/languages";
 
 export default {
-	future: {
-		// unstable_subResourceIntegrity: true,
-		v8_splitRouteModules: false,
-	},
+	splitRouteModules: false,
 	ssr: false,
 	routeDiscovery: {
 		mode: "initial"
