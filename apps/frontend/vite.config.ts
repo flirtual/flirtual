@@ -5,6 +5,7 @@ import { reactRouter } from "@react-router/dev/vite";
 import { sentryReactRouter } from "@sentry/react-router";
 import basicSsl from "@vitejs/plugin-basic-ssl";
 import autoprefixer from "autoprefixer";
+import webpackStatsPlugin from "rollup-plugin-webpack-stats";
 import sonda from "sonda/vite";
 import tailwindcss from "tailwindcss";
 import info from "unplugin-info/vite";
@@ -189,7 +190,8 @@ export default defineConfig((config) => {
 				bundleSizeOptimizations: {
 					excludeDebugStatements: true
 				}
-			}, config)
+			}, config),
+			webpackStatsPlugin()
 		].filter(Boolean),
 	};
 });
