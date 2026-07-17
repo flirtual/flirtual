@@ -1,0 +1,32 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "preview-router",
+	"main": "src/index.ts",
+	"compatibility_date": "2025-09-27",
+	"observability": {
+		"enabled": true
+	},
+	"routes": [
+		{
+			"pattern": "flirtual.dev",
+			"custom_domain": true
+		},
+		{
+			"pattern": "*.flirtual.dev/*",
+			"zone_name": "flirtual.dev"
+		}
+	],
+	"kv_namespaces": [
+		{
+			"binding": "PREVIEW_STATE",
+			"id": "413cd83515854c738f758131b600fee2"
+		}
+	],
+	"vars": {
+		// Account workers.dev subdomain (the "<x>" in https://…-<worker>.<x>.workers.dev).
+		// Find it with `wrangler whoami` or in the Cloudflare dashboard → Workers → subdomain.
+		"PREVIEW_SUBDOMAIN": "flirtual",
+		"PREVIEW_WORKER_NAME": "flirtual-canary",
+		"PREVIEW_ROOT_DOMAIN": "flirtual.dev"
+	}
+}
