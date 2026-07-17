@@ -1,6 +1,7 @@
 import { env } from "cloudflare:workers"
 
-const previewAliasPattern = /^c[0-9a-f]{7,40}$/
+const shaPattern = /^[0-9a-f]{7,40}$/
+const pullRequestPattern = /^[0-9]+$/
 
 const latestOrigins: Record<string, string> = {
 	api: "canary-api.flirtual.com"
@@ -11,8 +12,8 @@ function resolveUpstreamHost(label: string): string | null {
 		if (label === app || label.startsWith(`${app}-`)) return latestOrigins[app]
 	}
 
-	if (previewAliasPattern.test(label))
-		return `${label}-${env.PREVIEW_WORKER_NAME}.${env.PREVIEW_SUBDOMAIN}.workers.dev`
+	if (shaPattern.test(label) || pullRequestPattern.test(label))
+		return `git-${label}-${env.PREVIEW_WORKER_NAME}.${env.PREVIEW_SUBDOMAIN}.workers.dev`
 
 	return null
 }
