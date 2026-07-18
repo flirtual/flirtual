@@ -11,7 +11,7 @@ permissions:
   contents: read
 
 jobs:
-  upload:
+  ios:
     runs-on: macos-26
     environment: ${{ github.ref == 'refs/heads/production' && 'production' || 'canary' }}
     defaults:
@@ -68,6 +68,15 @@ jobs:
           security set-key-partition-list -S apple-tool:,apple: -s -k "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
           security list-keychains -d user -s "$KEYCHAIN_PATH" login.keychain-db
 
+      - name: Install provisioning profile
+        env:
+          PROFILE: ${{ github.ref == 'refs/heads/production' && secrets.APPLE_PROFILE_PRODUCTION || secrets.APPLE_PROFILE_BETA }}
+        run: |
+          mkdir -p "$HOME/Library/MobileDevice/Provisioning Profiles"
+          printf '%s' "$PROFILE" | base64 --decode > "$RUNNER_TEMP/profile.mobileprovision"
+          UUID=$(security cms -D -i "$RUNNER_TEMP/profile.mobileprovision" | plutil -extract UUID raw -o - -)
+          cp "$RUNNER_TEMP/profile.mobileprovision" "$HOME/Library/MobileDevice/Provisioning Profiles/$UUID.mobileprovision"
+
       - name: Archive
         working-directory: apps/frontend/ios/App
         env:
@@ -97,7 +106,16 @@ jobs:
             <key>destination</key>
             <string>upload</string>
             <key>signingStyle</key>
-            <string>automatic</string>
+            <string>manual</string>
+            <key>signingCertificate</key>
+            <string>Apple Distribution</string>
+            <key>provisioningProfiles</key>
+            <dict>
+              <key>zone.homie.flirtual.pwa</key>
+              <string>Flirtual App Store</string>
+              <key>zone.homie.flirtual.beta</key>
+              <string>Flirtual Beta App Store</string>
+            </dict>
             <key>teamID</key>
             <string>997W5KLYVR</string>
             <key>manageAppVersionAndBuildNumber</key>
@@ -108,7 +126,6 @@ jobs:
           xcodebuild -exportArchive \
             -archivePath "$RUNNER_TEMP/Flirtual.xcarchive" \
             -exportOptionsPlist "$RUNNER_TEMP/ExportOptions.plist" \
-            -allowProvisioningUpdates \
             -authenticationKeyPath "$RUNNER_TEMP/keys/AuthKey_$ASC_API_KEY_ID.p8" \
             -authenticationKeyID "$ASC_API_KEY_ID" \
             -authenticationKeyIssuerID "$ASC_API_ISSUER_ID"
