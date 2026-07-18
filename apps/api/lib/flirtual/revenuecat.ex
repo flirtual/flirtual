@@ -66,6 +66,7 @@ defmodule Flirtual.RevenueCat do
     "SUBSCRIPTION_PAUSED",
     "SUBSCRIPTION_EXTENDED",
     "REFUND",
+    "REFUND_REVERSED",
     "TEMPORARY_ENTITLEMENT_GRANT"
   ]
 
