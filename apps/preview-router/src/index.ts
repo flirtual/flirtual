@@ -15,7 +15,7 @@ function redirectToLatest(url: URL, prefix: string, latest: string): Response {
 		status: 302,
 		headers: {
 			"location": target.href,
-			"flirtual-label": latest
+			"x-flirtual-preview": latest
 		}
 	})
 }
@@ -43,10 +43,18 @@ async function proxy(
 
 	const response = await fetch(upstreamRequest, { redirect: "manual" })
 
+	// The upstream stamps the Machine that served it; if a forced request
+	// landed somewhere other than the instance we asked for, refuse it rather
+	// than return another preview's response.
+	if (instance !== undefined) {
+		const served = response.headers.get("x-flirtual-machine")
+		if (served !== null && served !== instance)
+			return new Response(null, { status: 502 })
+	}
+
 	const headers = new Headers(response.headers)
-	headers.set("flirtual-label", label)
-	headers.set("flirtual-upstream", upstreamHost)
-	if (instance !== undefined) headers.set("flirtual-machine", instance)
+	headers.set("x-flirtual-preview", label)
+	headers.set("x-flirtual-upstream", upstreamHost)
 
 	const location = response.headers.get("location")
 	if (location !== null) {
