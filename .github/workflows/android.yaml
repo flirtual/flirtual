@@ -77,4 +77,4 @@ jobs:
           packageName: ${{ env.VITE_APP_BUNDLE_ID }}
           releaseFiles: apps/frontend/android/app/build/outputs/bundle/${{ env.FLAVOR }}Release/app-${{ env.FLAVOR }}-release.aab
           track: internal
-          status: draft
+          status: completed
