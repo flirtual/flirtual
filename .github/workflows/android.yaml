@@ -1,0 +1,80 @@
+on:
+  push:
+    branches: [main, production]
+    paths:
+      - apps/frontend/android/**
+      - apps/frontend/capacitor.config.ts
+      - .github/workflows/android.yaml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    environment: ${{ github.ref == 'refs/heads/production' && 'production' || 'canary' }}
+    defaults:
+      run:
+        working-directory: apps/frontend
+    env:
+      VITE_ORIGIN: ${{ github.ref == 'refs/heads/production' && vars.VITE_ORIGIN || 'https://beta.flirtual.dev' }}
+      VITE_API_URL: ${{ github.ref == 'refs/heads/production' && vars.VITE_API_URL || 'https://beta-api.flirtual.dev/v1/' }}
+      VITE_APP_BUNDLE_ID: ${{ github.ref == 'refs/heads/production' && vars.VITE_APP_BUNDLE_ID || 'zone.homie.flirtual.beta' }}
+      FLAVOR: ${{ github.ref == 'refs/heads/production' && 'production' || 'beta' }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6
+        name: Install pnpm
+        with:
+          package_json_file: apps/frontend/package.json
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: apps/frontend/pnpm-lock.yaml
+
+      - name: Install Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v6
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Sync native project
+        run: pnpm cap sync android
+
+      - name: Decode keystore
+        env:
+          ANDROID_KEYSTORE: ${{ secrets.ANDROID_KEYSTORE }}
+        run: printf '%s' "$ANDROID_KEYSTORE" | base64 -d > "$RUNNER_TEMP/upload.keystore"
+
+      - name: Build app bundle
+        working-directory: apps/frontend/android
+        env:
+          ANDROID_KEYSTORE_PATH: ${{ runner.temp }}/upload.keystore
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          BUILD_NUMBER_OFFSET: ${{ vars.BUILD_NUMBER_OFFSET }}
+        run: |
+          export CI_VERSION_CODE=$(( GITHUB_RUN_NUMBER + ${BUILD_NUMBER_OFFSET:-100} ))
+          ./gradlew "bundle${FLAVOR^}Release"
+
+      - name: Upload to Google Play
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+          packageName: ${{ env.VITE_APP_BUNDLE_ID }}
+          releaseFiles: apps/frontend/android/app/build/outputs/bundle/${{ env.FLAVOR }}Release/app-${{ env.FLAVOR }}-release.aab
+          track: internal
+          status: draft

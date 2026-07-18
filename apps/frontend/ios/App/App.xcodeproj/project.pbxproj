@@ -377,7 +377,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "Beta-AppIcon";
 				CODE_SIGN_ENTITLEMENTS = "Flirtual Beta.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 26;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 997W5KLYVR;
 				INFOPLIST_FILE = "Beta-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Flirtual Beta";
@@ -403,7 +403,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "Beta-AppIcon";
 				CODE_SIGN_ENTITLEMENTS = "Flirtual Beta.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 26;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 997W5KLYVR;
 				INFOPLIST_FILE = "Beta-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Flirtual Beta";
@@ -535,7 +535,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Flirtual.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 997W5KLYVR;
 				INFOPLIST_FILE = App/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Flirtual;
@@ -561,7 +561,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Flirtual.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 997W5KLYVR;
 				INFOPLIST_FILE = App/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Flirtual;

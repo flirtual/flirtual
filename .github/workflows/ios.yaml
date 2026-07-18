@@ -1,0 +1,99 @@
+on:
+  push:
+    branches: [main, production]
+    paths:
+      - apps/frontend/ios/**
+      - apps/frontend/capacitor.config.ts
+      - .github/workflows/ios.yaml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  upload:
+    runs-on: macos-26
+    environment: ${{ github.ref == 'refs/heads/production' && 'production' || 'canary' }}
+    defaults:
+      run:
+        working-directory: apps/frontend
+    env:
+      VITE_ORIGIN: ${{ github.ref == 'refs/heads/production' && vars.VITE_ORIGIN || 'https://beta.flirtual.dev' }}
+      VITE_API_URL: ${{ github.ref == 'refs/heads/production' && vars.VITE_API_URL || 'https://beta-api.flirtual.dev/v1/' }}
+      VITE_APP_BUNDLE_ID: ${{ github.ref == 'refs/heads/production' && vars.VITE_APP_BUNDLE_ID || 'zone.homie.flirtual.beta' }}
+      SCHEME: ${{ github.ref == 'refs/heads/production' && 'Flirtual' || 'Flirtual Beta' }}
+      ASC_API_KEY_ID: ${{ secrets.ASC_API_KEY_ID }}
+      ASC_API_ISSUER_ID: ${{ secrets.ASC_API_ISSUER_ID }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6
+        name: Install pnpm
+        with:
+          package_json_file: apps/frontend/package.json
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: apps/frontend/pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Sync native project
+        run: pnpm cap sync ios
+
+      - name: Install App Store Connect API key
+        env:
+          ASC_API_KEY_P8: ${{ secrets.ASC_API_KEY_P8 }}
+        run: |
+          mkdir -p "$RUNNER_TEMP/keys"
+          printf '%s' "$ASC_API_KEY_P8" > "$RUNNER_TEMP/keys/AuthKey_$ASC_API_KEY_ID.p8"
+
+      - name: Archive
+        working-directory: apps/frontend/ios/App
+        env:
+          BUILD_NUMBER_OFFSET: ${{ vars.BUILD_NUMBER_OFFSET }}
+        run: |
+          xcodebuild archive \
+            -workspace App.xcworkspace \
+            -scheme "$SCHEME" \
+            -destination generic/platform=iOS \
+            -archivePath "$RUNNER_TEMP/Flirtual.xcarchive" \
+            -allowProvisioningUpdates \
+            -authenticationKeyPath "$RUNNER_TEMP/keys/AuthKey_$ASC_API_KEY_ID.p8" \
+            -authenticationKeyID "$ASC_API_KEY_ID" \
+            -authenticationKeyIssuerID "$ASC_API_ISSUER_ID" \
+            CURRENT_PROJECT_VERSION=$(( GITHUB_RUN_NUMBER + ${BUILD_NUMBER_OFFSET:-100} ))
+
+      - name: Upload to App Store Connect
+        working-directory: apps/frontend/ios/App
+        run: |
+          cat > "$RUNNER_TEMP/ExportOptions.plist" <<'EOF'
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+            <key>method</key>
+            <string>app-store-connect</string>
+            <key>destination</key>
+            <string>upload</string>
+            <key>signingStyle</key>
+            <string>automatic</string>
+            <key>teamID</key>
+            <string>997W5KLYVR</string>
+            <key>manageAppVersionAndBuildNumber</key>
+            <true/>
+          </dict>
+          </plist>
+          EOF
+          xcodebuild -exportArchive \
+            -archivePath "$RUNNER_TEMP/Flirtual.xcarchive" \
+            -exportOptionsPlist "$RUNNER_TEMP/ExportOptions.plist" \
+            -allowProvisioningUpdates \
+            -authenticationKeyPath "$RUNNER_TEMP/keys/AuthKey_$ASC_API_KEY_ID.p8" \
+            -authenticationKeyID "$ASC_API_KEY_ID" \
+            -authenticationKeyIssuerID "$ASC_API_ISSUER_ID"
