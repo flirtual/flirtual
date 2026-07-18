@@ -51,6 +51,15 @@ if Env.get("PHX_SERVER") && Env.get("RELEASE_NAME") do
 end
 
 config :flirtual,
+       :custom_headers,
+       [
+         {"x-flirtual-machine", Env.get("FLY_MACHINE_ID")},
+         {"x-flirtual-region", Env.get("FLY_REGION")},
+         {"x-flirtual-version", Env.get("GIT_COMMIT_SHA")}
+       ]
+       |> Enum.reject(fn {_name, value} -> value in [nil, ""] end)
+
+config :flirtual,
   canary?: canary?,
   expose_error_details?: dev? or canary?,
   session_signing_salt: Env.get!("SESSION_SIGNING_SALT", default: "local_M0aOkiQYko"),

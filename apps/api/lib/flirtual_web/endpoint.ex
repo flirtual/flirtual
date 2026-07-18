@@ -45,9 +45,14 @@ defmodule FlirtualWeb.Endpoint do
     ],
     expose: [
       "retry-after",
-      "etag"
+      "etag",
+      "x-flirtual-machine",
+      "x-flirtual-region",
+      "x-flirtual-version"
     ]
   )
+
+  plug(FlirtualWeb.CustomHeaders)
 
   plug(Phoenix.LiveDashboard.RequestLogger,
     param_key: "request_logger",
