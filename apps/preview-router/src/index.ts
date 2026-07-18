@@ -94,7 +94,14 @@ export default {
 			return redirectToLatest(url, "api-", latest)
 		}
 
-		if (label.startsWith("api-")) {
+		if (label === "beta-api") {
+		const machine = await env.PREVIEW_STATE.get("machine-beta")
+		if (machine === null) return new Response(null, { status: 418 })
+
+		return proxy(request, url, "beta", env.PREVIEW_API_HOST, machine)
+	}
+
+	if (label.startsWith("api-")) {
 			const target = label.slice("api-".length)
 			if (!isPreviewLabel(target)) return new Response(null, { status: 418 })
 

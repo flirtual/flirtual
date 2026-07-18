@@ -218,6 +218,48 @@ jobs:
             kv_put latest-api "$PREVIEW_LABEL"
           fi
 
+      - name: Update the beta machine
+        if: github.ref == 'refs/heads/main'
+        env:
+          KV_NAMESPACE: 413cd83515854c738f758131b600fee2
+        run: |
+          # Beta tracks main on a stable origin, unlike the per-commit
+          # previews; updating in place keeps the machine id (and the
+          # router's machine-beta pointer) stable across releases.
+          machine_id() {
+            flyctl machines list -a "$FLY_APP" --json | jq -r '.[] | select(.name == "beta") | .id'
+          }
+
+          id=$(machine_id)
+
+          if [ -z "$id" ]; then
+            flyctl machine run "$FLY_IMAGE" -a "$FLY_APP" \
+              --name beta \
+              --region iad \
+              --port 443:4000/tcp:http:tls \
+              --autostart --autostop=off \
+              --vm-memory 1024 \
+              --env CANARY=1 \
+              --env GIT_COMMIT_SHA="$GITHUB_SHA" \
+              --env ORIGIN=https://beta-api.flirtual.dev \
+              --env FRONTEND_ORIGIN=https://beta.flirtual.dev \
+              --env ROOT_ORIGIN=https://flirtual.dev
+            id=$(machine_id)
+          else
+            flyctl machine update "$id" -a "$FLY_APP" -y \
+              --image "$FLY_IMAGE" \
+              --env CANARY=1 \
+              --env GIT_COMMIT_SHA="$GITHUB_SHA" \
+              --env ORIGIN=https://beta-api.flirtual.dev \
+              --env FRONTEND_ORIGIN=https://beta.flirtual.dev \
+              --env ROOT_ORIGIN=https://flirtual.dev
+          fi
+
+          curl -sfX PUT \
+            "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/storage/kv/namespaces/$KV_NAMESPACE/values/machine-beta" \
+            -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+            -F value="$id" -F metadata='{}' > /dev/null
+
       - name: Reap superseded previews
         env:
           KV_NAMESPACE: 413cd83515854c738f758131b600fee2

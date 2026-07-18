@@ -192,6 +192,13 @@ jobs:
         if: matrix.environment == 'canary' && github.ref == 'refs/heads/main'
         run: pnpm exec wrangler kv key put latest "$PREVIEW_LABEL" --binding=PREVIEW_STATE -c ../preview-router/wrangler.jsonc --remote
 
+      - name: Deploy beta
+        if: matrix.environment == 'canary' && github.ref == 'refs/heads/main'
+        env:
+          VITE_ORIGIN: https://beta.flirtual.dev
+          VITE_API_URL: https://beta-api.flirtual.dev/v1/
+        run: pnpm run canary
+
       - name: Post preview check
         if: matrix.environment == 'canary' && github.ref == 'refs/heads/main'
         env:
