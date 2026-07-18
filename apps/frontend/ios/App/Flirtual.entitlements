@@ -12,6 +12,7 @@
 	<array>
 		<string>webcredentials:flirtu.al</string>
 		<string>applinks:flirtu.al</string>
+		<string>applinks:flirtual.app</string>
 	</array>
 	<key>com.apple.security.app-sandbox</key>
 	<true/>

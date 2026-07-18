@@ -1,0 +1,13 @@
+{
+	"name": "app-redirect",
+	"version": "0.0.0",
+	"private": true,
+	"scripts": {
+		"release": "wrangler deploy",
+		"dev": "wrangler dev",
+		"start": "wrangler dev"
+	},
+	"devDependencies": {
+		"wrangler": "^4.13.2"
+	}
+}
