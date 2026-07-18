@@ -2,32 +2,62 @@ import { useState } from "react";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 
+import type { Entitlement } from "~/api/subscription";
+import { premium } from "~/api/user";
 import { Button } from "~/components/button";
 import { useDevice } from "~/hooks/use-device";
 import { usePurchase } from "~/hooks/use-purchase";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
+import { urls } from "~/urls";
 
-export const SubscriptionButtons: FC = () => {
+import { EntitlementMismatch, managedElsewhere } from "./platform-mismatch";
+
+export const EntitlementButtons: FC<{ entitlement: Entitlement }> = ({
+	entitlement
+}) => {
 	const session = useOptionalSession();
 	const toasts = useToast();
 	const { purchase } = usePurchase();
-	const { native } = useDevice();
-	const [pendingAction, setPendingAction] = useState<"manage" | "resubscribe" | null>(null);
+	const { native, platform } = useDevice();
+	const [pendingAction, setPendingAction] = useState<
+		"manage" | "resubscribe" | null
+	>(null);
 	const { t } = useTranslation();
 
 	if (!session) return null;
 
-	const { subscription } = session.user;
-	if (!subscription) return null;
+	const showResubscribe
+		= !premium(session.user)
+			&& !entitlement.active
+			&& entitlement.kind === "subscription"
+			&& entitlement.plan.purchasable;
 
-	const showResubscribe = !!subscription.cancelledAt && subscription.plan.purchasable;
-	const showManage = !subscription.cancelledAt || (subscription.platform === "chargebee" && !native);
+	const mismatch = managedElsewhere(entitlement, platform, native);
 
-	if (!showResubscribe && !showManage) return null;
+	const storeUrl
+		= entitlement.store === "app_store" || entitlement.store === "play_store"
+			? urls.manageSubscription[entitlement.store]
+			: null;
+
+	const manage
+		= mismatch
+			? null
+			: entitlement.store === "chargebee"
+				? !native
+						? () => purchase()
+						: null
+				: entitlement.active && storeUrl
+					? native
+						? () => purchase()
+						: async () => void window.open(storeUrl, "_blank")
+					: null;
+
+	if (!showResubscribe && !manage && !mismatch) return null;
 
 	return (
 		<div className="flex flex-wrap gap-2">
+			{mismatch && <EntitlementMismatch entitlement={entitlement} />}
 			{showResubscribe && (
 				<Button
 					disabled={pendingAction !== null}
@@ -36,14 +66,14 @@ export const SubscriptionButtons: FC = () => {
 					size="sm"
 					onClick={async () => {
 						setPendingAction("resubscribe");
-						await purchase(subscription.plan.id).catch(toasts.addError);
+						await purchase(entitlement.plan.id).catch(toasts.addError);
 						setPendingAction(null);
 					}}
 				>
 					{t("resubscribe")}
 				</Button>
 			)}
-			{showManage && (
+			{manage && (
 				<Button
 					disabled={pendingAction !== null}
 					kind={showResubscribe ? "secondary" : "primary"}
@@ -51,7 +81,7 @@ export const SubscriptionButtons: FC = () => {
 					size="sm"
 					onClick={async () => {
 						setPendingAction("manage");
-						await purchase().catch(toasts.addError);
+						await manage().catch(toasts.addError);
 						setPendingAction(null);
 					}}
 				>

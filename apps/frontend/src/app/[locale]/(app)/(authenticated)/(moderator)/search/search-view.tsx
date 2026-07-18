@@ -92,8 +92,8 @@ const ColumnStatus: FC<{ userId: string; placeholder?: boolean }> = ({ userId, p
 			</MinimalTooltip>
 			<MinimalTooltip
 				content={
-					user?.subscription
-						? user?.subscription.active
+					user?.entitlements?.length
+						? user.entitlements.some((entitlement) => entitlement.active)
 							? "Active"
 							: "Canceled"
 						: "No subscription"
@@ -102,8 +102,8 @@ const ColumnStatus: FC<{ userId: string; placeholder?: boolean }> = ({ userId, p
 				<Gem
 					className={twMerge(
 						"size-5",
-						user?.subscription
-							? user?.subscription.active
+						user?.entitlements?.length
+							? user.entitlements.some((entitlement) => entitlement.active)
 								? "text-green-500"
 								: "text-yellow-500"
 							: "opacity-50"

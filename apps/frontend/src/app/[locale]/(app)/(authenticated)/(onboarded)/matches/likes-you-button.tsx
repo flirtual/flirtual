@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 import { withSuspense } from "with-suspense";
 
+import { premium } from "~/api/user";
 import { ButtonLink } from "~/components/button";
 import { HeartIcon } from "~/components/icons/gradient/heart";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
@@ -21,7 +22,7 @@ export const LikesYouButton: FC = withSuspense(() => {
 	return (
 		<ButtonLink
 			className="h-fit min-h-11 w-full py-1"
-			href={user.subscription?.active ? urls.likes : urls.subscription.default}
+			href={premium(user) ? urls.likes : urls.subscription.default}
 			size="sm"
 		>
 			<div className="flex gap-8">
@@ -80,7 +81,7 @@ export const LikesYouButton: FC = withSuspense(() => {
 		return (
 			<ButtonLink
 				className="w-full"
-				href={user.subscription?.active ? urls.likes : urls.subscription.default}
+				href={premium(user) ? urls.likes : urls.subscription.default}
 				size="sm"
 			>
 				{t("see_who_likes_you")}

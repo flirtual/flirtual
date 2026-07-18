@@ -2,17 +2,24 @@ import { api } from "./common";
 import type { DatedModel, UuidModel } from "./common";
 import type { Plan } from "./plan";
 
-type SubscriptionPlatform
-	= | "android"
-		| "chargebee"
-		| "ios"
-		| "unknown";
+export type EntitlementKind = "consumable" | "one_time" | "subscription";
 
-export type Subscription = {
+export type EntitlementStore
+	= | "app_store"
+		| "chargebee"
+		| "play_store"
+		| "promotional"
+		| "stripe";
+
+export type Entitlement = {
+	kind: EntitlementKind;
+	store: EntitlementStore;
 	active: boolean;
 	plan: Plan;
-	cancelledAt?: string;
-	platform: SubscriptionPlatform;
+	entitledUntil?: string;
+	renews?: boolean;
+	renewalPending?: boolean;
+	quantity?: number;
 }
 & DatedModel & UuidModel;
 

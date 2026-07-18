@@ -8,7 +8,7 @@ defmodule Flirtual.Discord do
   alias Flirtual.Connection
   alias Flirtual.ObanWorkers
   alias Flirtual.Report
-  alias Flirtual.Subscription
+  alias Flirtual.Entitlement
   alias Flirtual.User
   alias Flirtual.User.Profile.Image
   alias Flirtual.User.Profile.Image.Moderation
@@ -225,6 +225,25 @@ defmodule Flirtual.Discord do
       icon_url: User.avatar_url(user, "icon")
     }
 
+  defp entitlement_link(%User{} = user, chargebee_label, play_label, fallback) do
+    entitlement =
+      user.entitlements
+      |> Enum.filter(&Entitlement.active?/1)
+      |> Enum.find(&(&1.store not in [:promotional, :stripe]))
+
+    case entitlement do
+      %Entitlement{store: :chargebee, kind: :subscription, store_id: store_id}
+      when is_binary(store_id) ->
+        "[#{chargebee_label}](https://flirtual.chargebee.com/d/subscriptions/#{store_id})"
+
+      %Entitlement{store: :play_store} ->
+        "[#{play_label}](https://app.revenuecat.com/customers/cf0649d1/#{user.revenuecat_id})"
+
+      _ ->
+        fallback
+    end
+  end
+
   def deliver_webhook(:suspended,
         user: %User{} = user,
         moderator: %User{} = moderator,
@@ -235,7 +254,7 @@ defmodule Flirtual.Discord do
       :moderation_actions,
       %{
         content:
-          if(Subscription.active?(user.subscription), do: "<@&458465845887369243>", else: ""),
+          if(Entitlement.premium?(user.entitlements), do: "<@&458465845887369243>", else: ""),
         embeds: [
           %{
             author: webhook_author(user),
@@ -249,21 +268,16 @@ defmodule Flirtual.Discord do
                   inline: true
                 }
               ] ++
-                if(Subscription.active?(user.subscription),
+                if(Entitlement.premium?(user.entitlements),
                   do: [
                     %{
                       name: "Active subscription",
                       value:
-                        if(user.subscription.chargebee_id,
-                          do:
-                            "[Issue refund](https://flirtual.chargebee.com/d/subscriptions/#{user.subscription.chargebee_id})",
-                          else:
-                            if(user.subscription.google_id,
-                              do:
-                                "[Issue refund](https://app.revenuecat.com/customers/cf0649d1/#{user.revenuecat_id})",
-                              else:
-                                "[Send refund reminder](https://hello.flirtu.al/a/tickets/compose-email)"
-                            )
+                        entitlement_link(
+                          user,
+                          "Issue refund",
+                          "Issue refund",
+                          "[Send refund reminder](https://hello.flirtu.al/a/tickets/compose-email)"
                         )
                     }
                   ],
@@ -329,26 +343,22 @@ defmodule Flirtual.Discord do
       ) do
     webhook(:moderation_actions, %{
       content:
-        if(Subscription.active?(user.subscription), do: "<@&458465845887369243>", else: ""),
+        if(Entitlement.premium?(user.entitlements), do: "<@&458465845887369243>", else: ""),
       embeds: [
         %{
           author: webhook_author(user),
           title: "User indefinitely shadowbanned",
           fields:
-            if(Subscription.active?(user.subscription),
+            if(Entitlement.premium?(user.entitlements),
               do: [
                 %{
                   name: "Active subscription",
                   value:
-                    if(user.subscription.chargebee_id,
-                      do:
-                        "[Cancel subscription](https://flirtual.chargebee.com/d/subscriptions/#{user.subscription.chargebee_id})",
-                      else:
-                        if(user.subscription.google_id,
-                          do:
-                            "[Get transaction ID](https://app.revenuecat.com/customers/cf0649d1/#{user.revenuecat_id}), [Cancel subscription](https://play.google.com/console/u/0/developers/orders)",
-                          else: "Apple subscription - cannot cancel"
-                        )
+                    entitlement_link(
+                      user,
+                      "Cancel subscription",
+                      "View in RevenueCat",
+                      "Apple subscription - cannot cancel"
                     )
                 }
               ],
@@ -923,7 +933,6 @@ defmodule Flirtual.Discord do
     end
 
     webhook(:moderation_duplicates, %{
-      content: "<@&458465845887369243>",
       embeds: [
         %{
           title: "Subscription transferred",
@@ -1069,34 +1078,6 @@ defmodule Flirtual.Discord do
             ]
             |> List.flatten(),
           color: @default_color,
-          timestamp: DateTime.utc_now() |> DateTime.to_iso8601()
-        }
-      ]
-    })
-  end
-
-  def deliver_webhook(:revenuecat_unresolved,
-        app_user_id: app_user_id,
-        event_type: event_type,
-        event_id: event_id,
-        reason: reason
-      ) do
-    webhook(:admin, %{
-      content: "<@&458465845887369243>",
-      embeds: [
-        %{
-          title: "RevenueCat event failure",
-          fields: [
-            %{name: "Type", value: to_string(event_type), inline: true},
-            %{name: "ID", value: to_string(event_id), inline: true},
-            %{name: "Reason", value: to_string(reason), inline: true},
-            %{
-              name: "RevenueCat customer",
-              value:
-                "[#{app_user_id}](https://app.revenuecat.com/customers/cf0649d1/#{URI.encode(app_user_id)})"
-            }
-          ],
-          color: @destructive_color,
           timestamp: DateTime.utc_now() |> DateTime.to_iso8601()
         }
       ]

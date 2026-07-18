@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 
 import type { Session } from "~/api/auth";
-import { User } from "~/api/user";
+import { premium, User } from "~/api/user";
 import { Button } from "~/components/button";
 import {
 	Form,
@@ -51,7 +51,7 @@ export const ReactivationForm: React.FC = () => {
 			>
 				{() => (
 					<>
-						{user.subscription?.active && (
+						{premium(user) && (
 							<div className="mb-8 flex flex-col items-start gap-2">
 								<p>
 									⚠️

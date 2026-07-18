@@ -263,5 +263,10 @@ export const urls = {
 		google: "https://play.google.com/store/apps/details?id=zone.homie.flirtual.pwa",
 		microsoft: "https://apps.microsoft.com/store/detail/flirtual/9NWCSDGB6CS3",
 		sideQuest: "https://sidequestvr.com/app/9195"
+	},
+
+	manageSubscription: {
+		app_store: "https://apps.apple.com/account/subscriptions",
+		play_store: "https://play.google.com/store/account/subscriptions"
 	}
 };

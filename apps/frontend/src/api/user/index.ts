@@ -9,7 +9,7 @@ import type { Attribute } from "../attributes";
 import { api } from "../common";
 import type { DatedModel, Paginate, PaginateOptions, UuidModel } from "../common";
 import type { Connection } from "../connections";
-import type { Subscription } from "../subscription";
+import type { Entitlement } from "../subscription";
 import { Preferences } from "./preferences";
 import type { Profile } from "./profile";
 import type { Relationship } from "./relationship";
@@ -46,7 +46,12 @@ export const userTagNames: Record<UserTags, string> = {
 
 export type UserTags = (typeof userTags)[number];
 
-export const searchTags = ["premium", ...userTags] as const;
+export const searchTags = [
+	"premium_subscription",
+	"lifetime_premium",
+	"promotional_premium",
+	...userTags
+] as const;
 
 export type SearchTag = (typeof searchTags)[number];
 
@@ -95,7 +100,7 @@ export type User = {
 	deactivatedAt?: string;
 	preferences?: Preferences;
 	profile: Profile;
-	subscription?: Subscription;
+	entitlements?: Array<Entitlement>;
 	tags?: Array<UserTags>;
 	tnsDiscordInBiography?: string;
 	connections?: Array<Connection>;
@@ -352,3 +357,13 @@ export const User = {
 		return this.api.url(`/${userId}`).delete().json<User>();
 	}
 };
+
+export function activeEntitlements(user: User) {
+	return user.entitlements?.filter((entitlement) => entitlement.active) ?? [];
+}
+
+export function premium(user: User) {
+	return activeEntitlements(user).some(
+		(entitlement) => entitlement.plan.product === "premium"
+	);
+}

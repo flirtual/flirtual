@@ -3,7 +3,8 @@ defmodule Flirtual.ObanWorkers.Daily do
 
   import Ecto.Query
 
-  alias Flirtual.{Repo, User}
+  alias Flirtual.{Entitlement, Repo, User}
+  alias Flirtual.ObanWorkers.Reconcile
   alias Flirtual.User.{Email, Login, Push, Session}
   alias Flirtual.User.Profile.Attributes
 
@@ -21,8 +22,33 @@ defmodule Flirtual.ObanWorkers.Daily do
     if :prune_inactive in enabled, do: prune_inactive()
     if :prune_sessions in enabled, do: prune_sessions()
     if :update_attribute_order in enabled, do: update_attribute_order()
+    if :reconcile_entitlements in enabled, do: reconcile_entitlements()
 
     :ok
+  end
+
+  # Check entitlements webhooks and the scheduled lapse reconcile can miss:
+  # lifetime refunds, subs near their lapse, subs with a pending payment, and
+  # rows never reconciled.
+  defp reconcile_entitlements do
+    now = DateTime.utc_now()
+
+    Entitlement
+    |> where(
+      [entitlement],
+      entitlement.store not in [:promotional, :stripe] and entitlement.kind != :consumable
+    )
+    |> where(
+      [entitlement],
+      is_nil(entitlement.entitled_until) or
+        is_nil(entitlement.reconciled_at) or
+        entitlement.renewal_pending or
+        entitlement.entitled_until > ^DateTime.add(now, -2, :day)
+    )
+    |> distinct(true)
+    |> select([entitlement], entitlement.user_id)
+    |> Repo.all()
+    |> Enum.each(&Reconcile.enqueue/1)
   end
 
   defp prune_banned do

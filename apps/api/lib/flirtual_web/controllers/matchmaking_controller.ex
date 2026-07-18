@@ -6,7 +6,7 @@ defmodule FlirtualWeb.MatchmakingController do
 
   import Ecto.Query
 
-  alias Flirtual.{Policy, Repo, Search, Subscription, Users}
+  alias Flirtual.{Entitlement, Policy, Repo, Search, Users}
   alias Flirtual.Matchmaking
   alias Flirtual.User.Profile.Image
   alias Flirtual.User.Profile.LikesAndPasses
@@ -207,7 +207,7 @@ defmodule FlirtualWeb.MatchmakingController do
 
     count = LikesAndPasses.count_unrequited(profile_id: user.id)
 
-    variant = if Subscription.active?(user.subscription), do: "icon", else: "blur"
+    variant = if Entitlement.premium?(user.entitlements), do: "icon", else: "blur"
 
     profile_ids =
       LikesAndPasses.list_unrequited(

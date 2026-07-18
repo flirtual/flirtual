@@ -6,6 +6,7 @@ import { capitalize } from "remeda";
 import { twMerge } from "tailwind-merge";
 
 import { Matchmaking } from "~/api/matchmaking";
+import { activeEntitlements } from "~/api/user";
 import {
 	CustomWeightList,
 	DefaultProfileCustomWeights,
@@ -70,7 +71,7 @@ export const MatchmakingForm: FC = () => {
 	const { preferences, customWeights = DefaultProfileCustomWeights }
 		= user.profile;
 
-	const premium = !!user.subscription?.active;
+	const premium = activeEntitlements(user).length > 0;
 
 	const advancedFilterGroups = useAdvancedFilterGroups({
 		nsfw: !!user.preferences?.nsfw
@@ -401,7 +402,7 @@ export const MatchmakingForm: FC = () => {
 										<Slider
 											{...props}
 											disabled={
-												key === "location" ? false : !user.subscription?.active
+												key === "location" ? false : !premium
 											}
 											max={2}
 											min={0}

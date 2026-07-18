@@ -1,7 +1,7 @@
 defmodule Flirtual.User.Email do
   use Gettext, backend: Flirtual.Gettext
 
-  alias Flirtual.{Jwt, Subscription, User}
+  alias Flirtual.{Entitlement, Jwt, User}
 
   def deliver(%User{} = user, :suspended, message) do
     language = user.preferences.language || "en"
@@ -257,7 +257,7 @@ defmodule Flirtual.User.Email do
       likes = Keyword.fetch!(options, :likes)
       like_count = length(likes)
 
-      is_premium? = Subscription.active?(user.subscription)
+      is_premium? = Entitlement.premium?(user.entitlements)
 
       action_url =
         if(is_premium?,

@@ -95,7 +95,7 @@ defmodule Flirtual.User.Relationship do
   defmodule Policy do
     use Flirtual.Policy
 
-    alias Flirtual.Subscription
+    alias Flirtual.Entitlement
 
     def authorize(_, _, _), do: false
 
@@ -116,9 +116,7 @@ defmodule Flirtual.User.Relationship do
             assigns: %{
               session: %{
                 user: %User{
-                  subscription: %Subscription{
-                    cancelled_at: nil
-                  }
+                  entitlements: entitlements
                 }
               }
             }
@@ -126,7 +124,7 @@ defmodule Flirtual.User.Relationship do
           %Relationship{} = item
         )
         when key in @liked_property_keys,
-        do: item[key]
+        do: if(Entitlement.premium?(entitlements), do: item[key], else: nil)
 
     def transform(key, _, _) when key in @liked_property_keys, do: nil
   end

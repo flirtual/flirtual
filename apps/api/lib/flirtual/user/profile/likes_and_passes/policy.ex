@@ -3,7 +3,7 @@ defmodule Flirtual.User.Profile.LikesAndPasses.Policy do
 
   alias Flirtual.Policy
   alias Flirtual.User
-  alias Flirtual.Subscription
+  alias Flirtual.Entitlement
   alias Flirtual.User.Profile.LikesAndPasses
 
   @own_actions [
@@ -36,9 +36,7 @@ defmodule Flirtual.User.Profile.LikesAndPasses.Policy do
             session: %{
               user: %User{
                 id: user_id,
-                subscription: %Subscription{
-                  cancelled_at: nil
-                }
+                entitlements: entitlements
               }
             }
           }
@@ -48,7 +46,7 @@ defmodule Flirtual.User.Profile.LikesAndPasses.Policy do
           type: :like
         }
       ),
-      do: true
+      do: Entitlement.premium?(entitlements)
 
   def authorize(
         key,

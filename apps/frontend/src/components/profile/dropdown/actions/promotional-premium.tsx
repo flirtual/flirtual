@@ -2,7 +2,7 @@ import { Gift } from "lucide-react";
 import type { FC } from "react";
 
 import { promotionalPlanId } from "~/api/plan";
-import { User } from "~/api/user";
+import { activeEntitlements, User } from "~/api/user";
 import { DropdownMenuItem } from "~/components/dropdown";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
@@ -14,11 +14,15 @@ export const PromotionalPremiumAction: FC<{ user: User }> = ({ user }) => {
 
 	if (!session || !session.user.tags?.includes("admin")) return null;
 
-	const active = !!user.subscription?.active;
-	const isPromotional = user.subscription?.plan.id === promotionalPlanId;
+	const entitlements = activeEntitlements(user);
 
-	const hasPromotional = active && isPromotional;
-	const hasOtherActiveSubscription = active && !isPromotional;
+	const hasPromotional = entitlements.some(
+		(entitlement) => entitlement.plan.id === promotionalPlanId
+	);
+
+	const hasOtherActiveSubscription = entitlements.some(
+		(entitlement) => entitlement.plan.id !== promotionalPlanId
+	);
 
 	return (
 		<DropdownMenuItem asChild disabled={hasOtherActiveSubscription}>

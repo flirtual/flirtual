@@ -3201,47 +3201,20 @@
 		}
 	},
 	"plans": {
-		"w4WDwDWKtmLSqkn8oNqCN3": {
-			"name": "Legacy Premium (24,99 USD/3 månader)"
-		},
 		"Wt4aFY7jVzvSNFK9qcYAr5": {
 			"name": "Premium (var 6:e månad)"
 		},
 		"fBDvWjdgvG6zEZMj6ZfyNG": {
 			"name": "Premium (var 3:e månad)"
 		},
-		"6xZywHRc432o5H9PqFFoyG": {
-			"name": "Legacy Premium (9,99 USD/månad)"
-		},
-		"rFxKcnAZGQtwckWUQbrG9J": {
-			"name": "Fallback Premium"
-		},
-		"PQZuLuEmXRwuRhiQisgkPM": {
-			"name": "Legacy Premium (39,99 USD/6 månader)"
-		},
-		"PHpCmDBMX6wCkuXXr36foQ": {
-			"name": "Tidig Premium (US$24.99/3mo)"
-		},
 		"Di7Sypboma4ryhy6MUagyS": {
 			"name": "Livstid"
 		},
-		"43V699voRpLqskJEM42Vsa": {
-			"name": "Tidig supporter"
-		},
-		"CJv2NQ7AiEimvDoZJ3uQTe": {
-			"name": "Tidig livstid"
-		},
 		"2nAci9TWPaMaYFzVASVgme": {
-			"name": "Tidig Premium (US$9.99/mo)"
-		},
-		"5NcKBUELrTmZr6JQQFespf": {
-			"name": "Tidig Premium (39,99 USD/6 mån)"
+			"name": "Tidig Premium"
 		},
 		"LVjvu5YE7PjUJxVrkfsnMi": {
 			"name": "Premium (månadsvis)"
-		},
-		"QQd364odDmzV69gsaKTYwm": {
-			"name": "Legacy Livstid"
 		}
 	}
 }

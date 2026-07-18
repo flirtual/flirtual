@@ -227,7 +227,8 @@ config :flirtual, Flirtual.ObanWorkers,
         :prune_sessions,
         :prune_banned,
         :prune_inactive,
-        :update_attribute_order
+        :update_attribute_order,
+        :reconcile_entitlements
       ],
       else: [
         :like_digest,

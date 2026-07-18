@@ -3201,47 +3201,20 @@
 		}
 	},
 	"plans": {
-		"w4WDwDWKtmLSqkn8oNqCN3": {
-			"name": "Legacy Premium (US$24.99/3mo)"
-		},
 		"Wt4aFY7jVzvSNFK9qcYAr5": {
 			"name": "Premium (tous les 6 mois)"
 		},
 		"fBDvWjdgvG6zEZMj6ZfyNG": {
 			"name": "Premium (tous les 3 mois)"
 		},
-		"6xZywHRc432o5H9PqFFoyG": {
-			"name": "Legacy Premium (9,99 $US/mois)"
-		},
-		"rFxKcnAZGQtwckWUQbrG9J": {
-			"name": "Fallback Premium"
-		},
-		"PQZuLuEmXRwuRhiQisgkPM": {
-			"name": "Legacy Premium (US$39.99/6mo)"
-		},
-		"PHpCmDBMX6wCkuXXr36foQ": {
-			"name": "Early Premium (24,99 $US/3 mois)"
-		},
 		"Di7Sypboma4ryhy6MUagyS": {
 			"name": "Durée de vie"
 		},
-		"43V699voRpLqskJEM42Vsa": {
-			"name": "Premier supporteur"
-		},
-		"CJv2NQ7AiEimvDoZJ3uQTe": {
-			"name": "Début de vie"
-		},
 		"2nAci9TWPaMaYFzVASVgme": {
-			"name": "Early Premium (9,99 $US/mois)"
-		},
-		"5NcKBUELrTmZr6JQQFespf": {
-			"name": "Early Premium (39,99 $US/6 mois)"
+			"name": "Early Premium"
 		},
 		"LVjvu5YE7PjUJxVrkfsnMi": {
 			"name": "Premium (mensuel)"
-		},
-		"QQd364odDmzV69gsaKTYwm": {
-			"name": "L'héritage de la vie"
 		}
 	}
 }

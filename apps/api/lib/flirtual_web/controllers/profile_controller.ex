@@ -6,7 +6,7 @@ defmodule FlirtualWeb.ProfileController do
   import FlirtualWeb.Utilities
 
   alias Flirtual.User.Profile
-  alias Flirtual.{Policy, Profiles, Subscription, Users}
+  alias Flirtual.{Entitlement, Policy, Profiles, Users}
 
   action_fallback(FlirtualWeb.FallbackController)
 
@@ -204,7 +204,7 @@ defmodule FlirtualWeb.ProfileController do
     moderator? = :moderator in user.tags
 
     with true <-
-           moderator? or Subscription.active?(user.subscription) or {:subscription_required},
+           moderator? or Entitlement.premium?(user.entitlements) or {:subscription_required},
          true <-
            moderator? or Profiles.has_image_in_world?(user.id, world_id) or {:no_image_in_world} do
       items =

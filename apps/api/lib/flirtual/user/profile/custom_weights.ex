@@ -2,7 +2,7 @@ defmodule Flirtual.User.Profile.CustomWeights do
   use Flirtual.Schema, primary_key: false
 
   import Ecto.Changeset
-  alias Flirtual.Subscription
+  alias Flirtual.Entitlement
   alias Flirtual.User
   alias Flirtual.User.Profile
 
@@ -65,13 +65,13 @@ defmodule Flirtual.User.Profile.CustomWeights do
   end
 
   defp validate(changeset, name) do
-    %{user: %User{subscription: subscription}} = changeset.data.profile
+    %{user: %User{entitlements: entitlements}} = changeset.data.profile
 
     changeset
     |> validate_number(name, greater_than_or_equal_to: 0, less_than_or_equal_to: 2)
     |> validate_number_divisible(name, 0.25)
     |> validate_change(name, fn _, _ ->
-      if name !== :location and not Subscription.active?(subscription) do
+      if name !== :location and not Entitlement.premium?(entitlements) do
         [{name, "Subscription required"}]
       else
         []

@@ -4,7 +4,7 @@ defmodule Flirtual.User.Profile.AdvancedFilter do
   import Ecto.Changeset
   import Ecto.Query
 
-  alias Flirtual.{Attribute, Countries, Languages, Repo, Subscription}
+  alias Flirtual.{Attribute, Countries, Entitlement, Languages, Repo}
   alias Flirtual.User.Profile.AdvancedFilter
 
   @categories [
@@ -156,7 +156,7 @@ defmodule Flirtual.User.Profile.AdvancedFilter do
   end
 
   defp validate_premium(changeset, user, attributes) do
-    if Subscription.active?(user.subscription) do
+    if Entitlement.premium?(user.entitlements) do
       changeset
     else
       category = get_field(changeset, :category)

@@ -8,7 +8,7 @@ defmodule Flirtual.Matchmaking do
   alias Flirtual.ObanWorkers
   alias Flirtual.Repo
   alias Flirtual.Search
-  alias Flirtual.Subscription
+  alias Flirtual.Entitlement
   alias Flirtual.Talkjs
   alias Flirtual.User
   alias Flirtual.User.Profile.Block
@@ -142,7 +142,7 @@ defmodule Flirtual.Matchmaking do
 
   def limits(%User{} = user, %Queue{} = queue) do
     cond do
-      Subscription.active?(user.subscription) ->
+      Entitlement.premium?(user.entitlements) ->
         nil
 
       trial_user?(user) ->
@@ -436,7 +436,7 @@ defmodule Flirtual.Matchmaking do
 
   defp check_limits(%User{} = user, %Queue{} = queue, type) do
     cond do
-      Subscription.active?(user.subscription) ->
+      Entitlement.premium?(user.entitlements) ->
         :ok
 
       trial_user?(user) ->

@@ -5,6 +5,7 @@ import { Trans, useTranslation } from "react-i18next";
 import { useSwipeable } from "react-swipeable";
 import { twMerge } from "tailwind-merge";
 
+import { premium } from "~/api/user";
 import type { User } from "~/api/user";
 import { notFoundImage, ProfileImage } from "~/api/user/profile/images";
 import { Button } from "~/components/button";
@@ -257,7 +258,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 
 	const canSearchWorld
 		= !!session?.user?.tags?.includes("moderator")
-			|| (session?.user?.id === user.id && !!session?.user?.subscription?.active);
+			|| (!!session && session.user.id === user.id && premium(session.user));
 
 	useEffect(() => {
 		setExpandedImage(false);

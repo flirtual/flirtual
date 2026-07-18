@@ -3201,17 +3201,8 @@
 		}
 	},
 	"plans": {
-		"5NcKBUELrTmZr6JQQFespf": {
-			"name": "Early Premium (US$39.99/6mo)"
-		},
 		"LVjvu5YE7PjUJxVrkfsnMi": {
 			"name": "Premium (maandelijks)"
-		},
-		"QQd364odDmzV69gsaKTYwm": {
-			"name": "Erfenis Leven"
-		},
-		"w4WDwDWKtmLSqkn8oNqCN3": {
-			"name": "Legacy Premium (US$24.99/3mo)"
 		},
 		"Wt4aFY7jVzvSNFK9qcYAr5": {
 			"name": "Premium (elke 6 maanden)"
@@ -3219,29 +3210,11 @@
 		"fBDvWjdgvG6zEZMj6ZfyNG": {
 			"name": "Premium (elke 3 maanden)"
 		},
-		"6xZywHRc432o5H9PqFFoyG": {
-			"name": "Legacy Premium (US$9.99/mo)"
-		},
-		"rFxKcnAZGQtwckWUQbrG9J": {
-			"name": "Terugval Premium"
-		},
-		"PQZuLuEmXRwuRhiQisgkPM": {
-			"name": "Legacy Premium (US$39.99/6mo)"
-		},
-		"PHpCmDBMX6wCkuXXr36foQ": {
-			"name": "Early Premium (US$24.99/3mo)"
-		},
 		"Di7Sypboma4ryhy6MUagyS": {
 			"name": "Levenslang"
 		},
-		"43V699voRpLqskJEM42Vsa": {
-			"name": "Vroege Supporter"
-		},
-		"CJv2NQ7AiEimvDoZJ3uQTe": {
-			"name": "Vroege levensduur"
-		},
 		"2nAci9TWPaMaYFzVASVgme": {
-			"name": "Early Premium (US$9.99/mo)"
+			"name": "Early Premium"
 		}
 	}
 }

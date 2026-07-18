@@ -6,6 +6,7 @@ import { Trans, useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
 import type { Session } from "~/api/auth";
+import { premium } from "~/api/user";
 import { PreferenceThemes } from "~/api/user/preferences";
 import { Profile } from "~/api/user/profile";
 import type { ProfileColors } from "~/api/user/profile";
@@ -93,7 +94,7 @@ const ProfileColorSelect: FC = () => {
 					...session,
 					user: {
 						...session.user,
-						profile: user.subscription?.active
+						profile: premium(user)
 							? {
 									...session.user.profile,
 									color1: colors.color1,
@@ -108,7 +109,7 @@ const ProfileColorSelect: FC = () => {
 			});
 		},
 		mutationFn: async (colors: ProfileColors) => {
-			if (!user.subscription?.active) return;
+			if (!premium(user)) return;
 			await Profile.updateColors(user.id, colors);
 		}
 	});

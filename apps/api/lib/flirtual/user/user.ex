@@ -19,8 +19,8 @@ defmodule Flirtual.User do
     # Languages,
     ObanWorkers,
     Repo,
+    Entitlement,
     Report,
-    Subscription,
     Talkjs,
     User
   }
@@ -117,7 +117,7 @@ defmodule Flirtual.User do
     has_many(:passkeys, Flirtual.User.Passkey)
 
     has_one(:preferences, Flirtual.User.Preferences)
-    has_one(:subscription, Subscription)
+    has_many(:entitlements, Entitlement)
     has_one(:profile, Flirtual.User.Profile)
 
     timestamps()
@@ -125,7 +125,7 @@ defmodule Flirtual.User do
 
   def default_assoc do
     [
-      subscription: Flirtual.Subscription.default_assoc(),
+      entitlements: Flirtual.Entitlement.default_assoc(),
       connections: Flirtual.Connection.default_assoc(),
       passkeys: Flirtual.User.Passkey.default_assoc(),
       preferences: Flirtual.User.Preferences.default_assoc(),
@@ -637,14 +637,39 @@ defmodule Flirtual.User do
     end
   end
 
-  # The synthetic "premium" tag filters to users with an active subscription.
-  defp premium_condition do
-    subscriptions =
-      from(subscription in Subscription,
-        where: subscription.user_id == parent_as(:user).id and is_nil(subscription.cancelled_at)
+  defp premium_condition(:subscription),
+    do:
+      premium_condition(
+        dynamic(
+          [entitlement],
+          entitlement.kind == :subscription and entitlement.store != :promotional
+        )
       )
 
-    dynamic(exists(subscriptions))
+  defp premium_condition(:lifetime),
+    do:
+      premium_condition(
+        dynamic(
+          [entitlement],
+          entitlement.kind == :one_time and entitlement.store != :promotional
+        )
+      )
+
+  defp premium_condition(:promotional),
+    do: premium_condition(dynamic([entitlement], entitlement.store == :promotional))
+
+  defp premium_condition(condition) do
+    entitlements =
+      from(entitlement in Entitlement,
+        join: plan in assoc(entitlement, :plan),
+        where:
+          entitlement.user_id == parent_as(:user).id and plan.product == "premium" and
+            (is_nil(entitlement.entitled_until) or
+               entitlement.entitled_until > ^DateTime.utc_now()),
+        where: ^condition
+      )
+
+    dynamic(exists(entitlements))
   end
 
   defp apply_search(query, _fields, "", _sort, _sort_order), do: query
@@ -768,8 +793,14 @@ defmodule Flirtual.User do
              (case attrs.tags do
                 tags when is_list(tags) ->
                   Enum.reduce(tags, query, fn
-                    "premium", query ->
-                      where(query, ^premium_condition())
+                    "premium_subscription", query ->
+                      where(query, ^premium_condition(:subscription))
+
+                    "lifetime_premium", query ->
+                      where(query, ^premium_condition(:lifetime))
+
+                    "promotional_premium", query ->
+                      where(query, ^premium_condition(:promotional))
 
                     tag, query ->
                       where(query, [user: user], ^tag in user.tags)
@@ -1437,7 +1468,7 @@ defimpl Jason.Encoder, for: Flirtual.User do
       # :relationship,
       # :matched,
       # :blocked,
-      :subscription,
+      :entitlements,
       :tns_discord_in_biography,
       :preferences,
       :profile,

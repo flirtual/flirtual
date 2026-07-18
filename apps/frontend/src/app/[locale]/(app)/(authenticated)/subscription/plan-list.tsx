@@ -2,6 +2,7 @@ import { useState } from "react";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 
+import { activeEntitlements } from "~/api/user";
 import { useDevice } from "~/hooks/use-device";
 import { useOptionalSession } from "~/hooks/use-session";
 
@@ -16,15 +17,11 @@ export const PlanList: FC = () => {
 	if (!session || vision) return null;
 
 	const user = session.user;
-	const { subscription } = user;
 
 	if (
-		subscription
-		&& [
-			"CJv2NQ7AiEimvDoZJ3uQTe",
-			"Di7Sypboma4ryhy6MUagyS",
-			"QQd364odDmzV69gsaKTYwm"
-		].includes(subscription.plan.id)
+		activeEntitlements(user).some(
+			(entitlement) => entitlement.plan.id === "Di7Sypboma4ryhy6MUagyS"
+		)
 	) {
 		return null;
 	}

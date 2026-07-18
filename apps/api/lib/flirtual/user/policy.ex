@@ -181,7 +181,7 @@ defmodule Flirtual.User.Policy do
     :push_count,
     :rating_prompts,
     :news,
-    :subscription,
+    :entitlements,
     :revenuecat_id,
     :moderator_message,
     :active_at,
@@ -238,7 +238,7 @@ defmodule Flirtual.User.Policy do
     :email_confirmed_at,
     :created_at,
     :connections,
-    :subscription,
+    :entitlements,
     :tns_discord_in_biography
   ]
 

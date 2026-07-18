@@ -1,6 +1,8 @@
 import type { FC, PropsWithChildren } from "react";
 import { useTranslation } from "react-i18next";
 
+import type { Entitlement } from "~/api/subscription";
+import { activeEntitlements, premium } from "~/api/user";
 import { useDevice } from "~/hooks/use-device";
 import { useOptionalSession } from "~/hooks/use-session";
 
@@ -9,48 +11,74 @@ const osName = {
 	android: "android"
 } as const;
 
-export const PlatformMismatchMessage: FC = () => {
-	const { platform, native, vision } = useDevice();
+const storeName = {
+	app_store: "ios",
+	play_store: "android"
+} as const;
+
+function matchesPlatform(
+	entitlement: Entitlement,
+	platform: string,
+	native: boolean
+) {
+	return (
+		(entitlement.store === "chargebee" && (platform === "web" || !native))
+		|| (entitlement.store === "app_store" && platform === "apple" && native)
+		|| (entitlement.store === "play_store" && platform === "android" && native)
+	);
+}
+
+export function managedElsewhere(
+	entitlement: Entitlement,
+	platform: string,
+	native: boolean
+) {
+	return (
+		native
+		&& entitlement.active
+		&& entitlement.kind === "subscription"
+		&& entitlement.store !== "promotional"
+		&& entitlement.store !== "stripe"
+		&& !matchesPlatform(entitlement, platform, native)
+	);
+}
+
+export const EntitlementMismatch: FC<{ entitlement: Entitlement }> = ({
+	entitlement
+}) => {
+	const { platform, native } = useDevice();
+	const { t } = useTranslation();
+
+	if (platform === "web" || !managedElsewhere(entitlement, platform, native))
+		return null;
+
+	return (
+		<span className="text-black-30 vision:text-white-50 dark:text-white-50">
+			⚠️
+			{" "}
+			{entitlement.store === "chargebee"
+				? t("gross_each_cobra_talk", {
+						platform: t(osName[platform])
+					})
+				: t("caring_smug_felix_gleam", {
+						currentPlatform: t(osName[platform]),
+						otherPlatform: t(storeName[entitlement.store as keyof typeof storeName])
+					})}
+		</span>
+	);
+};
+
+export const VisionMessage: FC = () => {
+	const { vision } = useDevice();
 	const session = useOptionalSession();
 	const { t } = useTranslation();
 
-	if (!session) return null;
-	const { subscription } = session.user;
-
-	if (vision) return (
-		<div className="rounded-lg bg-brand-gradient px-6 py-4">
-			<span className="font-montserrat text-lg text-white-10">
-				{t(subscription?.active ? "dull_steep_tadpole_grin" : "light_wacky_tadpole_enrich")}
-			</span>
-		</div>
-	);
-
-	if (
-		!subscription
-		|| !subscription.active
-		|| subscription.platform === "unknown"
-		|| (subscription.platform === "chargebee" && (platform === "web" || !native))
-		|| (subscription.platform === "ios" && platform === "apple" && native)
-		|| (subscription.platform === "android" && platform === "android" && native)
-	)
-		return null;
+	if (!vision || !session) return null;
 
 	return (
 		<div className="rounded-lg bg-brand-gradient px-6 py-4">
 			<span className="font-montserrat text-lg text-white-10">
-				{(platform !== "web" && subscription.platform !== "chargebee")
-					? t("caring_smug_felix_gleam", {
-							currentPlatform: t(osName[platform]),
-							otherPlatform: t(subscription.platform)
-						})
-					: (platform !== "web" && subscription.platform === "chargebee")
-							? t("gross_each_cobra_talk", {
-									platform: t(osName[platform])
-								})
-							: t("elegant_chunky_frog_soar", {
-									// @ts-expect-error: "chargebee" is not assignable.
-									platform: t(subscription.platform)
-								})}
+				{t(premium(session.user) ? "dull_steep_tadpole_grin" : "light_wacky_tadpole_enrich")}
 			</span>
 		</div>
 	);
@@ -64,16 +92,14 @@ export const MatchSubscriptionPlatform: FC<PropsWithChildren> = ({
 
 	if (vision) return null;
 	if (!session) return children;
-	const { subscription } = session.user;
 
-	if (
-		!subscription
-		|| !subscription.active
-		|| (subscription.platform === "chargebee" && (platform === "web" || !native))
-		|| (subscription.platform === "ios" && platform === "apple" && native)
-		|| (subscription.platform === "android" && platform === "android" && native)
-	)
-		return children;
+	const entitlement = activeEntitlements(session.user).find(
+		(entitlement) => entitlement.kind !== "consumable"
+	);
 
-	return null;
+	if (!entitlement) return children;
+	if (entitlement.store === "promotional" || entitlement.store === "stripe")
+		return null;
+
+	return matchesPlatform(entitlement, platform, native) ? children : null;
 };

@@ -3201,44 +3201,17 @@
 		}
 	},
 	"plans": {
-		"QQd364odDmzV69gsaKTYwm": {
-			"name": "레거시 라이프타임"
-		},
-		"w4WDwDWKtmLSqkn8oNqCN3": {
-			"name": "레거시 프리미엄(US$24.99/3개월)"
-		},
 		"Wt4aFY7jVzvSNFK9qcYAr5": {
 			"name": "프리미엄(6개월마다)"
 		},
 		"fBDvWjdgvG6zEZMj6ZfyNG": {
 			"name": "프리미엄(3개월마다)"
 		},
-		"6xZywHRc432o5H9PqFFoyG": {
-			"name": "레거시 프리미엄(US$9.99/월)"
-		},
-		"rFxKcnAZGQtwckWUQbrG9J": {
-			"name": "폴백 프리미엄"
-		},
-		"PQZuLuEmXRwuRhiQisgkPM": {
-			"name": "레거시 프리미엄(US$39.99/6개월)"
-		},
-		"PHpCmDBMX6wCkuXXr36foQ": {
-			"name": "얼리 프리미엄(US$24.99/3개월)"
-		},
 		"Di7Sypboma4ryhy6MUagyS": {
 			"name": "평생"
 		},
-		"43V699voRpLqskJEM42Vsa": {
-			"name": "초기 서포터"
-		},
-		"CJv2NQ7AiEimvDoZJ3uQTe": {
-			"name": "초기 생애"
-		},
 		"2nAci9TWPaMaYFzVASVgme": {
-			"name": "얼리 프리미엄(US$9.99/월)"
-		},
-		"5NcKBUELrTmZr6JQQFespf": {
-			"name": "얼리 프리미엄(US$39.99/6개월)"
+			"name": "얼리 프리미엄"
 		},
 		"LVjvu5YE7PjUJxVrkfsnMi": {
 			"name": "프리미엄(월간)"

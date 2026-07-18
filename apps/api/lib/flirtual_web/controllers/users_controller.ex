@@ -12,7 +12,7 @@ defmodule FlirtualWeb.UsersController do
   import Flirtual.Utilities
   import Flirtual.Attribute, only: [validate_attribute: 3]
 
-  alias Flirtual.{Discord, IpAddress, ObanWorkers, Policy, Repo, Subscription, User, Users}
+  alias Flirtual.{Discord, Entitlement, IpAddress, ObanWorkers, Policy, Repo, User, Users}
   alias Flirtual.User.Session
   alias Flirtual.User.Profile.Block
   alias FlirtualWeb.SessionController
@@ -451,7 +451,7 @@ defmodule FlirtualWeb.UsersController do
     if is_nil(user) or Policy.cannot?(conn, :manage_subscription, user) do
       {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
     else
-      case Subscription.grant_promotional(user) do
+      case Entitlement.grant_promotional(user) do
         {:ok, _} -> conn |> json(Policy.transform(conn, Users.get(user_id)))
         {:error, :existing_subscription} -> {:error, {:conflict, :existing_subscription}}
         {:error, reason} -> {:error, {:bad_request, reason}}
@@ -465,7 +465,7 @@ defmodule FlirtualWeb.UsersController do
     if is_nil(user) or Policy.cannot?(conn, :manage_subscription, user) do
       {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
     else
-      case Subscription.revoke_promotional(user) do
+      case Entitlement.revoke_promotional(user) do
         {:ok, _} -> conn |> json(Policy.transform(conn, Users.get(user_id)))
         {:error, :not_promotional} -> {:error, {:conflict, :not_promotional}}
         {:error, reason} -> {:error, {:bad_request, reason}}
