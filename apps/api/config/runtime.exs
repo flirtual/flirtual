@@ -85,6 +85,7 @@ image_classification_origin = Env.get("IMAGE_CLASSIFICATION_ORIGIN")
 
 config :flirtual,
   origin: origin,
+  app_scheme: Env.get("APP_SCHEME", default: "flirtual"),
   frontend_origin: URI.parse(frontend_origin),
   cookie_origin: URI.parse(Env.get("ROOT_ORIGIN", default: frontend_origin)),
   content_origin: content_origin && URI.parse(content_origin),

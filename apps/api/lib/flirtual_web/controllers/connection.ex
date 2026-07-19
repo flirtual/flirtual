@@ -126,9 +126,49 @@ defmodule FlirtualWeb.ConnectionController do
     |> halt()
   end
 
+  defp app_grant_redirect(conn, params) do
+    query =
+      params
+      |> Map.reject(fn {_, value} -> is_nil(value) end)
+      |> URI.encode_query()
+
+    conn
+    |> redirect(
+      external: Application.fetch_env!(:flirtual, :app_scheme) <> "://apple-login?" <> query
+    )
+    |> halt()
+  end
+
   # OAuth redirect flow - preflight for CORS
   def grant(conn, %{"redirect" => "off"} = _params) do
     conn |> resp(200, "") |> halt()
+  end
+
+  # Native Android flow - Apple form_posts the authorization code here; exchange
+  # it and send the tokens back to the app via deep link, where the SocialLogin
+  # plugin resolves them and the app then calls the JSON grant with the id_token.
+  # Android must be specified in the type instead of a separate query parameter
+  # because the plugin embeds the redirect in the authorize URL without encoding
+  # and drops extra &params.
+  def grant(conn, %{"type" => "apple_android", "code" => code}) do
+    case Flirtual.Apple.exchange_code(code, platform: :android) do
+      {:ok, tokens} ->
+        app_grant_redirect(conn, %{
+          success: true,
+          id_token: tokens.id_token,
+          access_token: tokens.access_token,
+          refresh_token: tokens.refresh_token
+        })
+
+      {:error, reason} ->
+        log(:error, [:grant, :apple_android], reason: reason)
+        app_grant_redirect(conn, %{success: false})
+    end
+  end
+
+  # The user cancelled or Apple returned an error
+  def grant(conn, %{"type" => "apple_android"}) do
+    app_grant_redirect(conn, %{success: false})
   end
 
   # OAuth redirect flow - error from provider

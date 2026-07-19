@@ -39,7 +39,11 @@ defmodule Flirtual.Apple do
 
   def exchange_code(code, options) when is_binary(code) do
     client_id = config(:service_id)
-    redirect_uri = redirect_url!(redirect: Keyword.get(options, :redirect, true))
+
+    redirect_uri =
+      if Keyword.get(options, :platform) == :android,
+        do: android_redirect_url(),
+        else: redirect_url!(redirect: Keyword.get(options, :redirect, true))
 
     with {:ok, client_secret} <- generate_client_secret(client_id),
          {:ok, %Req.Response{body: body, status: 200}} <-
@@ -60,7 +64,12 @@ defmodule Flirtual.Apple do
              finch: Flirtual.Finch
            ),
          {:ok, %{"id_token" => id_token} = response} <- Jason.decode(body) do
-      {:ok, %{id_token: id_token, access_token: response["access_token"]}}
+      {:ok,
+       %{
+         id_token: id_token,
+         access_token: response["access_token"],
+         refresh_token: response["refresh_token"]
+       }}
     else
       {:ok, %Req.Response{body: body}} ->
         log(:error, [:exchange_code], body)
@@ -78,6 +87,12 @@ defmodule Flirtual.Apple do
         log(:error, [:exchange_code], reason)
         {:error, :upstream}
     end
+  end
+
+  def android_redirect_url do
+    Application.get_env(:flirtual, :origin)
+    |> URI.merge("/v1/connections/grant?type=apple_android")
+    |> URI.to_string()
   end
 
   def get_profile(%{id_token: id_token}), do: get_profile(id_token)

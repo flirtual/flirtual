@@ -30,7 +30,7 @@ async function initSocialLogin() {
 				clientId: appleSigninServiceId,
 				useProperTokenExchange: true,
 				...(device.android && {
-					redirectUrl: `${apiUrl}/connections/grant?type=apple`
+					redirectUrl: `${apiUrl}connections/grant?type=apple_android`
 				})
 			}
 		});
