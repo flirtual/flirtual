@@ -191,7 +191,10 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 			)}
 		>
 			<button
-				className="flex aspect-square h-full shrink-0 items-center justify-center p-2 text-white-20 before:absolute before:inset-0"
+				className={twMerge(
+					"flex aspect-square h-full shrink-0 items-center justify-center p-2 text-white-20 before:absolute before:inset-0",
+					connection && "cursor-default"
+				)}
 				style={{ backgroundColor, color: iconColor }}
 				type="button"
 				onClick={handleClick}
@@ -200,7 +203,15 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 			</button>
 			<div className="pointer-events-none flex flex-col overflow-hidden whitespace-nowrap px-4 py-2 font-nunito leading-none vision:text-black-80">
 				<span className="text-sm leading-none opacity-75">{t(type)}</span>
-				<span className="overflow-x-clip text-ellipsis">{connection?.displayName ?? t("connect_account")}</span>
+				<span
+					className={twMerge(
+						"overflow-x-clip text-ellipsis",
+						connection && "pointer-events-auto z-10"
+					)}
+					title={connection?.displayName}
+				>
+					{connection?.displayName ?? t("connect_account")}
+				</span>
 			</div>
 			{connection && (
 				<button
