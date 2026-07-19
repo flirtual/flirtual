@@ -74,7 +74,7 @@ defmodule FlirtualWeb.ConnectionController do
   end
 
   # Decode and verify the state token from OAuth callback
-  defp verify_oauth_state(state) do
+  defp verify_oauth_state(state) when is_binary(state) do
     case Jwt.verify(Jwt.config("oauth-state"), state) do
       {:ok, claims} ->
         {:ok, %{user_id: claims["user_id"], next: claims["next"]}}
@@ -83,6 +83,8 @@ defmodule FlirtualWeb.ConnectionController do
         error
     end
   end
+
+  defp verify_oauth_state(_state), do: {:error, :invalid_state}
 
   def delete(conn, %{"type" => type}) do
     type = to_atom(type)

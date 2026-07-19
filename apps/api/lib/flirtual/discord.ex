@@ -114,16 +114,21 @@ defmodule Flirtual.Discord do
   end
 
   def authorize_url(_, %{prompt: prompt} = options) do
-    URI.new(
-      "https://discord.com/api/oauth2/authorize?" <>
-        URI.encode_query(%{
-          client_id: config(:client_id),
-          redirect_uri: redirect_url!(redirect: Map.get(options, :redirect, true)),
-          response_type: "code",
-          scope: "identify email",
-          prompt: prompt
-        })
-    )
+    query = %{
+      client_id: config(:client_id),
+      redirect_uri: redirect_url!(redirect: Map.get(options, :redirect, true)),
+      response_type: "code",
+      scope: "identify email",
+      prompt: prompt
+    }
+
+    query =
+      case options do
+        %{state: state} -> Map.put(query, :state, state)
+        _ -> query
+      end
+
+    URI.new("https://discord.com/api/oauth2/authorize?" <> URI.encode_query(query))
   end
 
   def exchange_code(code, options \\ []) when is_binary(code) do
