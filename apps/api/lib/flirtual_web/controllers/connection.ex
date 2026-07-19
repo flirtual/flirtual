@@ -106,7 +106,7 @@ defmodule FlirtualWeb.ConnectionController do
     |> halt()
   end
 
-  defp grant_error(conn, redirect_type, message, type \\ nil, connection \\ nil) do
+  defp grant_error(conn, redirect_type, message, type \\ nil, connection \\ nil, next \\ nil) do
     if type do
       user_id = if connection && connection.user, do: connection.user.id, else: nil
       Flirtual.User.Login.log_login_attempt(conn, user_id, nil, method: type)
@@ -118,7 +118,8 @@ defmodule FlirtualWeb.ConnectionController do
     |> put_resp_header(
       "location",
       Application.fetch_env!(:flirtual, :frontend_origin)
-      |> URI.merge((get_session(conn, :next) || "/login") <> "?error=" <> to_string(message))
+      |> URI.merge(next || get_session(conn, :next) || "/login")
+      |> URI.append_query("error=" <> to_string(message))
       |> URI.to_string()
     )
     |> resp(if(redirect_type == "manual", do: 200, else: 303), "")
@@ -140,51 +141,60 @@ defmodule FlirtualWeb.ConnectionController do
     type = to_atom(type)
     redirect_type = params["redirect"] || "auto"
 
-    with {:ok, provider} <- Connection.provider(type),
-         {:ok, state_data} <- verify_oauth_state(params["state"]),
-         {:ok, authorization} <-
-           provider.exchange_code(code, redirect: redirect_type !== "manual"),
-         {:ok, profile} <- provider.get_profile(authorization) do
-      # Try session first, fall back to user_id from state (for Apple's form_post)
-      user =
-        cond do
-          conn.assigns[:session] ->
-            conn.assigns[:session].user
+    case verify_oauth_state(params["state"]) do
+      {:ok, state_data} ->
+        # Errors while linking return to the originating page; errors while
+        # logging in fall back to /login.
+        error_next = if state_data.user_id, do: state_data.next
 
-          state_data.user_id ->
-            Users.get(state_data.user_id)
+        with {:ok, provider} <- Connection.provider(type),
+             {:ok, authorization} <-
+               provider.exchange_code(code, redirect: redirect_type !== "manual"),
+             {:ok, profile} <- provider.get_profile(authorization) do
+          # Try session first, fall back to user_id from state (for Apple's form_post)
+          user =
+            cond do
+              conn.assigns[:session] ->
+                conn.assigns[:session].user
 
-          true ->
-            nil
+              state_data.user_id ->
+                Users.get(state_data.user_id)
+
+              true ->
+                nil
+            end
+
+          handle_grant(conn, user, profile, type,
+            response: :redirect,
+            redirect_type: redirect_type,
+            next: state_data.next
+          )
+        else
+          {:error, :unverified_email} ->
+            grant_error(conn, redirect_type, :connection_verify_email, nil, nil, error_next)
+
+          {:error, :provider_not_found} ->
+            grant_error(conn, redirect_type, :provider_not_found, nil, nil, error_next)
+
+          {:error, :not_supported} ->
+            grant_error(conn, redirect_type, :authorize_not_supported, nil, nil, error_next)
+
+          {:error, :invalid_grant} ->
+            grant_error(conn, redirect_type, :invalid_grant, type, nil, error_next)
+
+          {:error, :upstream} ->
+            grant_error(conn, redirect_type, :upstream_error, type, nil, error_next)
+
+          {:error, {status, message}} when is_atom(status) and is_binary(message) ->
+            grant_error(conn, redirect_type, message, type, nil, error_next)
+
+          reason ->
+            log(:error, [:grant], reason: reason)
+            grant_error(conn, redirect_type, :internal_server_error, type, nil, error_next)
         end
 
-      handle_grant(conn, user, profile, type,
-        response: :redirect,
-        redirect_type: redirect_type,
-        next: state_data.next
-      )
-    else
-      {:error, :unverified_email} ->
-        grant_error(conn, redirect_type, :connection_verify_email)
-
-      {:error, :provider_not_found} ->
-        grant_error(conn, redirect_type, :provider_not_found)
-
-      {:error, :not_supported} ->
-        grant_error(conn, redirect_type, :authorize_not_supported)
-
-      {:error, :invalid_grant} ->
-        grant_error(conn, redirect_type, :invalid_grant, type)
-
-      {:error, :upstream} ->
-        grant_error(conn, redirect_type, :upstream_error, type)
-
-      {:error, {status, message}} when is_atom(status) and is_binary(message) ->
-        grant_error(conn, redirect_type, message, type)
-
-      reason ->
-        log(:error, [:grant], reason: reason)
-        grant_error(conn, redirect_type, :internal_server_error, type)
+      _ ->
+        grant_error(conn, redirect_type, :state_mismatch, type)
     end
   end
 
@@ -308,20 +318,26 @@ defmodule FlirtualWeb.ConnectionController do
     respond_success(conn, options, :linked, :created)
   end
 
-  # Transfer a connection from one user to another
+  # Transfer a connection from one user to another. Refused for auth-only
+  # (non-visible) connections; unusual to transfer these and more likely to
+  # have recovery trouble.
   defp transfer_connection(conn, user, connection, profile, type, options) do
-    Discord.deliver_webhook(:flagged_duplicate,
-      user: user,
-      duplicates: [User.url(connection.user) |> URI.to_string()],
-      type: "#{Connection.provider_name!(type)} (connection updated)",
-      text: "#{profile.display_name || profile.uid} (#{profile.uid})"
-    )
+    if Connection.visible?(type) do
+      Discord.deliver_webhook(:flagged_duplicate,
+        user: user,
+        duplicates: [User.url(connection.user) |> URI.to_string()],
+        type: "#{Connection.provider_name!(type)} (connection updated)",
+        text: "#{profile.display_name || profile.uid} (#{profile.uid})"
+      )
 
-    connection
-    |> change(%{user_id: user.id})
-    |> Repo.update!()
+      connection
+      |> change(%{user_id: user.id})
+      |> Repo.update!()
 
-    respond_success(conn, options, :linked)
+      respond_success(conn, options, :linked)
+    else
+      respond_error(conn, :connection_in_use, type, connection, options, options[:next])
+    end
   end
 
   # Create a session for an existing user
@@ -415,10 +431,10 @@ defmodule FlirtualWeb.ConnectionController do
     end
   end
 
-  defp respond_error(conn, message, type, connection, options) do
+  defp respond_error(conn, message, type, connection, options, next \\ nil) do
     case options[:response] do
       :redirect ->
-        grant_error(conn, options[:redirect_type], message, type, connection)
+        grant_error(conn, options[:redirect_type], message, type, connection, next)
 
       :json ->
         if connection do

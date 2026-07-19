@@ -436,6 +436,7 @@
 		"password_must_be_different": "New password cannot be the same as the old password.",
 		"account_banned": "You have been suspended, please check your account email for details and appeal instructions.",
 		"connection_account_not_found": "No Flirtual account found for this Discord user. Ensure you are logged into the correct Discord account. If you haven't linked your Discord account, log in with your email and password first, then add your Discord account in the Connections settings.",
+		"connection_in_use": "This account is already connected to another Flirtual profile. Please delete your other Flirtual account first.",
 		"connection_verify_email": "Please verify your email with Discord and try again.",
 		"invalid_grant": "Couldn't connect account, please try again later. (invalid grant)",
 		"upstream_error": "Couldn't connect account, please try again later. (upstream error)",

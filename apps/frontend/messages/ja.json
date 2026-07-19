@@ -433,6 +433,7 @@
 		"password_must_be_different": "新しいパスワードは、以前のパスワードと同じにできません。",
 		"account_banned": "アカウントが停止されました。詳細と異議申し立て手順についてはアカウントのメールを確認してください。",
 		"connection_account_not_found": "このDiscordユーザーに関連付けられたFlirtualアカウントが見つかりません。このDiscordアカウントにログインしていることを確認してください。Discordアカウントをリンクしていない場合、まずメールとパスワードでログインし、その後接続設定でDiscordアカウントを追加してください。",
+		"connection_in_use": "このアカウントは既に別のFlirtualプロフィールに連携されています。先にもう一方のFlirtualアカウントを削除してください。",
 		"connection_verify_email": "Discordでメールを確認してもう一度お試しください。",
 		"invalid_grant": "アカウントを接続できませんでした。後でもう一度お試しください。（無効な認証）",
 		"upstream_error": "アカウントを接続できませんでした。後でもう一度お試しください。（上流エラー）",
