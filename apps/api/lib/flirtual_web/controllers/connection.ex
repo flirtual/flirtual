@@ -312,7 +312,7 @@ defmodule FlirtualWeb.ConnectionController do
   defp transfer_connection(conn, user, connection, profile, type, options) do
     Discord.deliver_webhook(:flagged_duplicate,
       user: user,
-      duplicates: "https://flirtu.al/#{connection.user.id}",
+      duplicates: [User.url(connection.user) |> URI.to_string()],
       type: "#{Connection.provider_name!(type)} (connection updated)",
       text: "#{profile.display_name || profile.uid} (#{profile.uid})"
     )
