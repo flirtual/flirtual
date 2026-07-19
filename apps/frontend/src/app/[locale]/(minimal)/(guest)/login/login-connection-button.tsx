@@ -28,6 +28,8 @@ export interface LoginConnectionButtonProps {
 	tabIndex?: number;
 	next?: string;
 	className?: string;
+	// Return false to block the action, i.e. when the service agreement is unchecked.
+	guard?: () => boolean;
 }
 
 const label = {
@@ -49,7 +51,8 @@ export const LoginConnectionButton: FC<LoginConnectionButtonProps> = ({
 	type,
 	tabIndex,
 	next = "/",
-	className
+	className,
+	guard
 }) => {
 	const { t } = useTranslation();
 	const navigate = useNavigate();
@@ -192,6 +195,8 @@ export const LoginConnectionButton: FC<LoginConnectionButtonProps> = ({
 	};
 
 	const handleClick = async () => {
+		if (guard && !guard()) return;
+
 		if (device.native && isNativeSocialProvider(type)) {
 			await handleNativeSocialLogin();
 		}
@@ -211,7 +216,7 @@ export const LoginConnectionButton: FC<LoginConnectionButtonProps> = ({
 		>
 			<Icon className="size-6" />
 			<span className="font-montserrat text-lg font-semibold">
-				{t("log_in_with", { type: label[type] })}
+				{t("continue_with", { type: label[type] })}
 			</span>
 		</Button>
 	);

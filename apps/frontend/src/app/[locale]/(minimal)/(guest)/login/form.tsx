@@ -285,7 +285,7 @@ export const LoginForm: FC = () => {
 										{...labelProps}
 										hint={(
 											<InputLabelHint>
-												<InlineLink href={urls.forgotPassword} tabIndex={6}>{t("forgot_your_password")}</InlineLink>
+												<InlineLink href={urls.forgotPassword} tabIndex={3}>{t("forgot_your_password")}</InlineLink>
 											</InputLabelHint>
 										)}
 									>
@@ -303,7 +303,7 @@ export const LoginForm: FC = () => {
 						<Captcha />
 						<div className="flex flex-col gap-4">
 							<div className="flex gap-2 desktop:flex-row-reverse">
-								<FormButton className="min-w-44" size="sm" tabIndex={3}>
+								<FormButton className="min-w-44" size="sm" tabIndex={4}>
 									{t("log_in")}
 								</FormButton>
 								<ButtonLink
@@ -311,7 +311,7 @@ export const LoginForm: FC = () => {
 									href={urls.register}
 									kind="tertiary"
 									size="sm"
-									tabIndex={4}
+									tabIndex={5}
 								>
 									<span>{t("or_sign_up")}</span>
 									<MoveRight className="size-5 desktop:rotate-180" />
@@ -334,24 +334,24 @@ export const LoginForm: FC = () => {
 				{device.apple
 					? (
 							<>
-								<LoginConnectionButton tabIndex={5} type="apple" />
-								{/* <LoginConnectionButton tabIndex={6} type="google" /> */}
-								<LoginConnectionButton tabIndex={7} type="discord" />
+								<LoginConnectionButton tabIndex={6} type="apple" />
+								{/* <LoginConnectionButton tabIndex={7} type="google" /> */}
+								<LoginConnectionButton tabIndex={8} type="discord" />
 							</>
 						)
 					: device.android
 						? (
 								<>
-									{/* <LoginConnectionButton tabIndex={5} type="google" /> */}
-									<LoginConnectionButton tabIndex={6} type="apple" />
-									<LoginConnectionButton tabIndex={7} type="discord" />
+									{/* <LoginConnectionButton tabIndex={6} type="google" /> */}
+									<LoginConnectionButton tabIndex={7} type="apple" />
+									<LoginConnectionButton tabIndex={8} type="discord" />
 								</>
 							)
 						: (
 								<>
-									<LoginConnectionButton tabIndex={5} type="discord" />
-									{/* <LoginConnectionButton tabIndex={6} type="google" /> */}
-									<LoginConnectionButton tabIndex={7} type="apple" />
+									<LoginConnectionButton tabIndex={6} type="discord" />
+									{/* <LoginConnectionButton tabIndex={7} type="google" /> */}
+									<LoginConnectionButton tabIndex={8} type="apple" />
 								</>
 							)}
 			</div>
