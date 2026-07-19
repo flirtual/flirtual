@@ -6,7 +6,7 @@ export async function updateVariants(payload: {
 	blurId: string;
 	blurhash: string | null;
 }): Promise<void> {
-	const response = await fetch(`${apiUrl}/images/variants`, {
+	const response = await fetch(`${apiUrl}images/variants`, {
 		method: "post",
 		headers: {
 			authorization: `Bearer ${imageAccessToken}`,
