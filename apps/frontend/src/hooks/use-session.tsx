@@ -1,5 +1,5 @@
 import { PushNotifications } from "@capacitor/push-notifications";
-import ms from "ms.macro";
+import ms from "ms" with { type: "macro" };
 import { useSearchParams } from "react-router";
 
 import type { Session } from "~/api/auth";

@@ -1,4 +1,4 @@
-import ms from "ms.macro";
+import ms from "ms" with { type: "macro" };
 import wretch from "wretch";
 import AbortAddon from "wretch/addons/abort";
 import QueryAddon from "wretch/addons/queryString";

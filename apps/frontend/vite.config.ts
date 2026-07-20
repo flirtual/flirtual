@@ -8,10 +8,10 @@ import autoprefixer from "autoprefixer";
 import sonda from "sonda/vite";
 import tailwindcss from "tailwindcss";
 import info from "unplugin-info/vite";
+import macros from "unplugin-macros/vite";
 import remoteAssets from "unplugin-remote-assets/vite";
 import { defineConfig, loadEnv } from "vite";
 import { imagetools } from "vite-imagetools";
-import babel from "vite-plugin-babel";
 import { ViteImageOptimizer as imageOptimize } from "vite-plugin-image-optimizer";
 
 import { browserslist, targets } from "./src/polyfill";
@@ -121,18 +121,7 @@ export default defineConfig((config) => {
 			hush([
 				"Can't resolve original location of error"
 			]),
-			babel({
-				include: /\.[jt]sx?$/,
-				babelConfig: {
-					babelrc: false,
-					configFile: false,
-					presets: ["@babel/preset-typescript"],
-					plugins: [
-						["babel-plugin-macros", {}],
-						["babel-plugin-dev-expression", {}]
-					]
-				}
-			}),
+			macros(),
 			info(),
 			remoteAssets({
 				aliases: [

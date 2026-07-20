@@ -1,7 +1,7 @@
 import { Clipboard } from "@capacitor/clipboard";
 import * as Sentry from "@sentry/react-router";
 import { AppWindow, Check, RotateCw, Send, Smartphone, WifiOff } from "lucide-react";
-import ms from "ms.macro";
+import ms from "ms" with { type: "macro" };
 import { useMemo, useState } from "react";
 import type { ComponentProps, FC } from "react";
 import { Trans, useTranslation } from "react-i18next";

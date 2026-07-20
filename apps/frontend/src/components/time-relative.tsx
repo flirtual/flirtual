@@ -1,4 +1,4 @@
-import ms from "ms.macro";
+import ms from "ms" with { type: "macro" };
 import { useCallback, useMemo, useState } from "react";
 import type { ComponentProps, FC } from "react";
 

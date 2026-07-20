@@ -2,7 +2,7 @@
 import type { QueryFunctionContext, QueryKey, QueryState, UseMutationOptions, UseQueryOptions } from "@tanstack/react-query";
 import { useMutation as _useMutation, useQuery as _useQuery, hashKey, QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import ms from "ms.macro";
+import ms from "ms" with { type: "macro" };
 import type { Dispatch, PropsWithChildren } from "react";
 import { use, useDebugValue, useEffect, useState } from "react";
 

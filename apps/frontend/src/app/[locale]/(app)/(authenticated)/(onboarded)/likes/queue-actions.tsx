@@ -1,6 +1,6 @@
 import { Undo2, X } from "lucide-react";
 import { m } from "motion/react";
-import ms from "ms.macro";
+import ms from "ms" with { type: "macro" };
 import { useCallback, useState } from "react";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";

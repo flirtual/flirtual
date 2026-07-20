@@ -1,5 +1,5 @@
 import { SelectItemText } from "@radix-ui/react-select";
-import ms from "ms.macro";
+import ms from "ms" with { type: "macro" };
 import { createContext, use, useCallback, useMemo } from "react";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";

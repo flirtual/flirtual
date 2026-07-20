@@ -1,4 +1,4 @@
-import ms from "ms.macro";
+import ms from "ms" with { type: "macro" };
 import { Trans, useTranslation } from "react-i18next";
 
 import { User } from "~/api/user";

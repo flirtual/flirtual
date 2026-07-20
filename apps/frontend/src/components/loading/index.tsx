@@ -1,5 +1,5 @@
 import { AnimatePresence } from "motion/react";
-import ms from "ms.macro";
+import ms from "ms" with { type: "macro" };
 import { useState } from "react";
 import type { PropsWithChildren } from "react";
 import { twMerge } from "tailwind-merge";
