@@ -173,7 +173,7 @@ export default defineConfig((config) => {
 					});
 				}
 			}),
-			sonda({
+			!!env.ANALYZE && sonda({
 				open: false
 			}),
 			useSentry && sentryReactRouter({
