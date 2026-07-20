@@ -161,7 +161,6 @@
 		"vite-plugin-babel": "^1.7.3",
 		"vite-plugin-checker": "^0.14.4",
 		"vite-plugin-image-optimizer": "^2.0.3",
-		"vite-tsconfig-paths": "^6.1.1",
 		"wrangler": "^4.110.0"
 	},
 	"exifreader": {

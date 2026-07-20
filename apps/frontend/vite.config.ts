@@ -13,7 +13,6 @@ import { defineConfig, loadEnv } from "vite";
 import { imagetools } from "vite-imagetools";
 import babel from "vite-plugin-babel";
 import { ViteImageOptimizer as imageOptimize } from "vite-plugin-image-optimizer";
-import tsconfigPaths from "vite-tsconfig-paths";
 
 import { browserslist, targets } from "./src/polyfill";
 import { hush } from "./vite-plugin-hush";
@@ -60,6 +59,9 @@ export default defineConfig((config) => {
 		appType: "mpa",
 		ssr: {
 			noExternal: ["posthog-js", "@posthog/react"]
+		},
+		resolve: {
+			tsconfigPaths: true
 		},
 		css: {
 			postcss: {
@@ -119,7 +121,6 @@ export default defineConfig((config) => {
 			hush([
 				"Can't resolve original location of error"
 			]),
-			tsconfigPaths(),
 			babel({
 				include: /\.[jt]sx?$/,
 				babelConfig: {
