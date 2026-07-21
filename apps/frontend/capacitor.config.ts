@@ -16,6 +16,12 @@ const androidFlavors: Record<string, string> = {
 };
 const androidFlavor = androidFlavors[appId];
 
+const iosSchemes: Record<string, string> = {
+	"zone.homie.flirtual.pwa": "Flirtual",
+	"zone.homie.flirtual.beta": "Flirtual Beta"
+};
+const iosScheme = iosSchemes[appId];
+
 const apiUrl = process.env.VITE_API_URL;
 invariant(apiUrl, "VITE_API_URL is not set");
 
@@ -32,7 +38,7 @@ export default {
 		flavor: androidFlavor
 	},
 	ios: {
-		scheme: "Flirtual"
+		scheme: iosScheme
 	},
 	appendUserAgent: "Flirtual-Native",
 	plugins: {
