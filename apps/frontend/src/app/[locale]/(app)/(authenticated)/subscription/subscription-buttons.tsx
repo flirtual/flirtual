@@ -3,6 +3,7 @@ import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 
 import type { Entitlement } from "~/api/subscription";
+import { managedElsewhere } from "~/api/subscription";
 import { premium } from "~/api/user";
 import { Button } from "~/components/button";
 import { useDevice } from "~/hooks/use-device";
@@ -11,7 +12,7 @@ import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { urls } from "~/urls";
 
-import { EntitlementMismatch, managedElsewhere } from "./platform-mismatch";
+import { EntitlementMismatch } from "./platform-mismatch";
 
 export const EntitlementButtons: FC<{ entitlement: Entitlement }> = ({
 	entitlement

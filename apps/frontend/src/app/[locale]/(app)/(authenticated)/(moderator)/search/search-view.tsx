@@ -1,4 +1,3 @@
-/* eslint-disable react-refresh/only-export-components */
 /* eslint-disable react-hooks/rules-of-hooks */
 import {
 
@@ -168,7 +167,7 @@ const ColumnStatus: FC<{ userId: string; placeholder?: boolean }> = ({ userId, p
 	);
 };
 
-export const columns: Array<ColumnDef<string>> = [
+const columns: Array<ColumnDef<string>> = [
 	{
 		id: "displayName",
 		enableHiding: false,

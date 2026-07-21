@@ -23,6 +23,33 @@ export type Entitlement = {
 }
 & DatedModel & UuidModel;
 
+export function matchesPlatform(
+	entitlement: Entitlement,
+	platform: string,
+	native: boolean
+) {
+	return (
+		(entitlement.store === "chargebee" && (platform === "web" || !native))
+		|| (entitlement.store === "app_store" && platform === "apple" && native)
+		|| (entitlement.store === "play_store" && platform === "android" && native)
+	);
+}
+
+export function managedElsewhere(
+	entitlement: Entitlement,
+	platform: string,
+	native: boolean
+) {
+	return (
+		native
+		&& entitlement.active
+		&& entitlement.kind === "subscription"
+		&& entitlement.store !== "promotional"
+		&& entitlement.store !== "stripe"
+		&& !matchesPlatform(entitlement, platform, native)
+	);
+}
+
 export interface ChargebeeHostedPage {
 	id: string;
 	type: string;

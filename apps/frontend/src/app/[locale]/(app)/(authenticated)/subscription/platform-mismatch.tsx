@@ -2,6 +2,7 @@ import type { FC, PropsWithChildren } from "react";
 import { useTranslation } from "react-i18next";
 
 import type { Entitlement } from "~/api/subscription";
+import { managedElsewhere, matchesPlatform } from "~/api/subscription";
 import { activeEntitlements, premium } from "~/api/user";
 import { useDevice } from "~/hooks/use-device";
 import { useOptionalSession } from "~/hooks/use-session";
@@ -15,33 +16,6 @@ const storeName = {
 	app_store: "ios",
 	play_store: "android"
 } as const;
-
-function matchesPlatform(
-	entitlement: Entitlement,
-	platform: string,
-	native: boolean
-) {
-	return (
-		(entitlement.store === "chargebee" && (platform === "web" || !native))
-		|| (entitlement.store === "app_store" && platform === "apple" && native)
-		|| (entitlement.store === "play_store" && platform === "android" && native)
-	);
-}
-
-export function managedElsewhere(
-	entitlement: Entitlement,
-	platform: string,
-	native: boolean
-) {
-	return (
-		native
-		&& entitlement.active
-		&& entitlement.kind === "subscription"
-		&& entitlement.store !== "promotional"
-		&& entitlement.store !== "stripe"
-		&& !matchesPlatform(entitlement, platform, native)
-	);
-}
 
 export const EntitlementMismatch: FC<{ entitlement: Entitlement }> = ({
 	entitlement
