@@ -436,7 +436,7 @@ export const AdvancedFilterSelect: FC<{
 							{selectedOptions.map((option) => (
 								<button
 									key={option.key}
-									className="focusable h-fit rounded-xl bg-brand-gradient px-3 py-1 text-left shadow-brand-1"
+									className="focusable h-fit translate-x-[-2px] translate-y-[-0.5px] rounded-xl bg-brand-gradient px-3 py-1 text-left shadow-brand-1"
 									type="button"
 									onClick={() => onChange(value.filter((key) => key !== option.key))}
 								>
@@ -447,11 +447,14 @@ export const AdvancedFilterSelect: FC<{
 							))}
 							<input
 								className={twMerge(
-									"grow border-none bg-transparent caret-theme-2 placeholder:text-black-50 focus:ring-transparent placeholder:dark:text-white-50",
+									"grow border-none bg-transparent py-1.5 caret-theme-2 placeholder:text-black-50 focus:ring-transparent placeholder:dark:text-white-50",
 									!overlayVisible && "caret-transparent"
 								)}
 								style={{
-									width: `${(inputValue.length || placeholder?.length || 1) + 2}em`
+									width:
+										overlayVisible || inputValue.length || placeholder?.length
+											? `${(inputValue.length || placeholder?.length || 1) + 2}em`
+											: 0
 								}}
 								autoComplete="off"
 								placeholder={placeholder}

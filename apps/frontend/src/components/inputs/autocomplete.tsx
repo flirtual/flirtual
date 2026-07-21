@@ -90,6 +90,7 @@ export function InputAutocomplete<K extends string>(
 	const optionWindowReference = useRef<HTMLDivElement>(null);
 
 	const fullscreen = dropdown && overlayVisible && !desktop;
+	const caretVisible = !dropdown || overlayVisible;
 
 	useDisableOutsidePointerEvents(dropdown && overlayVisible && desktop);
 
@@ -273,7 +274,7 @@ export function InputAutocomplete<K extends string>(
 								return (
 									<button
 										key={option.key}
-										className="focusable h-fit rounded-xl bg-brand-gradient px-3 py-1 text-left shadow-brand-1"
+										className="focusable h-fit translate-x-[-2px] translate-y-[-0.5px] rounded-xl bg-brand-gradient px-3 py-1 text-left shadow-brand-1"
 										type="button"
 										onClick={() => onChange(values.filter((v) => v !== option.key))}
 									>
@@ -305,11 +306,14 @@ export function InputAutocomplete<K extends string>(
 							})}
 							<input
 								className={twMerge(
-									"grow border-none bg-transparent caret-theme-2 placeholder:text-black-50 focus:ring-transparent placeholder:dark:text-white-50",
-									dropdown && !overlayVisible && "caret-transparent"
+									"grow border-none bg-transparent py-1.5 caret-theme-2 placeholder:text-black-50 focus:ring-transparent placeholder:dark:text-white-50",
+									!caretVisible && "caret-transparent"
 								)}
 								style={{
-									width: `${(inputValue.length || placeholder?.length || 1) + 2}em`
+									width:
+										caretVisible || inputValue.length || placeholder?.length
+											? `${(inputValue.length || placeholder?.length || 1) + 2}em`
+											: 0
 								}}
 								autoComplete="off"
 								placeholder={placeholder}
