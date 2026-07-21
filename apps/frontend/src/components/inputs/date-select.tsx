@@ -303,14 +303,16 @@ const InputDateSelectNative: React.FC<InputDateSelectNativeProps> = ({
 	});
 
 	return (
-		<div className={disabled ? "[&_input]:pointer-events-none" : undefined} onClick={() => disabled && onDisabledClick?.()}>
+		<div
+			className={disabled ? "[&_input]:pointer-events-none" : undefined}
+			onClick={() => disabled ? onDisabledClick?.() : mutate()}
+		>
 			<InputText
 				readOnly
 				className="w-full"
 				disabled={disabled}
 				type="date"
 				value={selectedDate.toLocaleDateString(undefined, { weekday: undefined })}
-				onClick={() => !disabled && mutate()}
 			/>
 		</div>
 	);
