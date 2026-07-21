@@ -335,14 +335,14 @@ export const LoginForm: FC = () => {
 					? (
 							<>
 								<LoginConnectionButton tabIndex={6} type="apple" />
-								{/* <LoginConnectionButton tabIndex={7} type="google" /> */}
+								<LoginConnectionButton tabIndex={7} type="google" />
 								<LoginConnectionButton tabIndex={8} type="discord" />
 							</>
 						)
 					: device.android
 						? (
 								<>
-									{/* <LoginConnectionButton tabIndex={6} type="google" /> */}
+									<LoginConnectionButton tabIndex={6} type="google" />
 									<LoginConnectionButton tabIndex={7} type="apple" />
 									<LoginConnectionButton tabIndex={8} type="discord" />
 								</>
@@ -350,7 +350,7 @@ export const LoginForm: FC = () => {
 						: (
 								<>
 									<LoginConnectionButton tabIndex={6} type="discord" />
-									{/* <LoginConnectionButton tabIndex={7} type="google" /> */}
+									<LoginConnectionButton tabIndex={7} type="google" />
 									<LoginConnectionButton tabIndex={8} type="apple" />
 								</>
 							)}

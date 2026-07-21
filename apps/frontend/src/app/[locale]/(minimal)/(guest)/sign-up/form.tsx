@@ -43,7 +43,7 @@ export const SignUpForm: FC = () => {
 				serviceAgreement: false,
 				notifications: false
 			}}
-			captchaTabIndex={11}
+			captchaTabIndex={12}
 			className="flex flex-col gap-8"
 			formErrorMessages={false}
 			renderCaptcha={false}
@@ -216,10 +216,14 @@ export const SignUpForm: FC = () => {
 									type="apple"
 								/>
 							)}
-							{/* <LoginConnectionButton guard={guardServiceAgreement} tabIndex={10} type="google" /> */}
 							<LoginConnectionButton
 								guard={guardServiceAgreement}
 								tabIndex={10}
+								type="google"
+							/>
+							<LoginConnectionButton
+								guard={guardServiceAgreement}
+								tabIndex={11}
 								type="discord"
 							/>
 						</div>

@@ -155,6 +155,11 @@ config :flirtual, Flirtual.Apple,
   app_id: Env.get!("APPLE_SIGNIN_APP_ID"),
   service_id: Env.get!("APPLE_SIGNIN_SERVICE_ID")
 
+config :flirtual, Flirtual.Google,
+  web_client_id: Env.get("GOOGLE_CLIENT_ID"),
+  web_client_secret: Env.get("GOOGLE_CLIENT_SECRET"),
+  ios_client_id: Env.get("GOOGLE_IOS_CLIENT_ID")
+
 config :flirtual, Flirtual.VRChat,
   username: Env.get!("VRCHAT_USERNAME"),
   password: Env.get!("VRCHAT_PASSWORD"),

@@ -50,7 +50,7 @@ function isNativeSocialProvider(type: ConnectionType): type is NativeSocialProvi
 export const LoginConnectionButton: FC<LoginConnectionButtonProps> = ({
 	type,
 	tabIndex,
-	next = "/",
+	next,
 	className,
 	guard
 }) => {
@@ -75,9 +75,7 @@ export const LoginConnectionButton: FC<LoginConnectionButtonProps> = ({
 		try {
 			const result = await SocialLogin.login({
 				provider: type,
-				options: {
-					scopes: type === "apple" ? ["email"] : ["email", "profile"]
-				}
+				options: type === "apple" ? { scopes: ["email"] } : {}
 			});
 
 			if (!result || !result.result) {
@@ -120,7 +118,7 @@ export const LoginConnectionButton: FC<LoginConnectionButtonProps> = ({
 
 			await invalidate({ refetchType: "none" });
 			await mutate(sessionKey(), response);
-			navigate(getNextUrl());
+			navigate(next ?? getNextUrl());
 		}
 		catch (reason) {
 			console.error("Social login error:", reason);
@@ -145,11 +143,13 @@ export const LoginConnectionButton: FC<LoginConnectionButtonProps> = ({
 	};
 
 	const handleOAuthLogin = async () => {
+		const nextUrl = toAbsoluteUrl(next ?? getNextUrl()).href;
+
 		if (!device.native) {
 			location.href = Connection.authorizeUrl({
 				type,
 				prompt: "consent",
-				next: toAbsoluteUrl(next).href
+				next: nextUrl
 			});
 
 			return;
@@ -158,7 +158,7 @@ export const LoginConnectionButton: FC<LoginConnectionButtonProps> = ({
 		const { authorizeUrl } = await Connection.authorize({
 			type,
 			prompt: "consent",
-			next: toAbsoluteUrl(next).href
+			next: nextUrl
 		});
 
 		await InAppBrowser.addListener("urlChangeEvent", async (event) => {

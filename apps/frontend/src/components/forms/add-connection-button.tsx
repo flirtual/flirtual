@@ -57,9 +57,7 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 		try {
 			const result = await SocialLogin.login({
 				provider: type,
-				options: {
-					scopes: type === "apple" ? ["email"] : ["email", "profile"]
-				}
+				options: type === "apple" ? { scopes: ["email"] } : {}
 			});
 
 			if (!result || !result.result) return;

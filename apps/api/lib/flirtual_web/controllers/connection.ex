@@ -67,20 +67,29 @@ defmodule FlirtualWeb.ConnectionController do
   defp generate_oauth_state(conn, next) do
     user_id = if conn.assigns[:session], do: conn.assigns[:session].user_id, else: nil
 
-    Jwt.sign(Jwt.config("oauth-state"), %{
+    %{
       "user_id" => user_id,
       "next" => next
-    })
+    }
+    |> Map.reject(fn {_, value} -> is_nil(value) end)
+    |> then(&Jwt.sign(Jwt.config("oauth-state"), &1))
   end
 
   # Decode and verify the state token from OAuth callback
   defp verify_oauth_state(state) when is_binary(state) do
     case Jwt.verify(Jwt.config("oauth-state"), state) do
       {:ok, claims} ->
-        {:ok, %{user_id: claims["user_id"], next: claims["next"]}}
+        {:ok, %{user_id: claim(claims, "user_id"), next: claim(claims, "next")}}
 
       error ->
         error
+    end
+  end
+
+  defp claim(claims, key) do
+    case claims[key] do
+      :null -> nil
+      value -> value
     end
   end
 
@@ -300,6 +309,19 @@ defmodule FlirtualWeb.ConnectionController do
 
         error ->
           error
+      end
+    end
+  end
+
+  defp verify_token(:google, params) do
+    id_token = params["id_token"]
+
+    if is_nil(id_token) or id_token == "" do
+      {:error, :missing_token}
+    else
+      case Flirtual.Google.verify_native_token(id_token) do
+        {:ok, claims} -> {:ok, Flirtual.Google.profile(claims)}
+        error -> error
       end
     end
   end

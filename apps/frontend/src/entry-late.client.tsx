@@ -5,7 +5,7 @@ import { flushSync } from "react-dom";
 import { hydrateRoot } from "react-dom/client";
 import { HydratedRouter } from "react-router/dom";
 
-import { apiUrl, appleSigninServiceId } from "./const";
+import { apiUrl, appleSigninServiceId, googleClientId, googleIosClientId } from "./const";
 import { device } from "./hooks/use-device";
 import { log } from "./log";
 import { initializeMonitoring } from "./monitoring";
@@ -22,17 +22,29 @@ App.addListener("appUrlOpen", async (event) => {
 initializeMonitoring();
 
 async function initSocialLogin() {
-	if (!appleSigninServiceId) return;
+	if (!appleSigninServiceId && !googleClientId) return;
 
 	try {
 		await SocialLogin.initialize({
-			apple: {
-				clientId: appleSigninServiceId,
-				useProperTokenExchange: true,
-				...(device.android && {
-					redirectUrl: `${apiUrl}connections/grant?type=apple_android`
-				})
-			}
+			...(appleSigninServiceId && {
+				apple: {
+					clientId: appleSigninServiceId,
+					useProperTokenExchange: true,
+					...(device.android && {
+						redirectUrl: `${apiUrl}connections/grant?type=apple_android`
+					})
+				}
+			}),
+			...(googleClientId && {
+				google: {
+					webClientId: googleClientId,
+					mode: "online" as const,
+					...(googleIosClientId && {
+						iOSClientId: googleIosClientId,
+						iOSServerClientId: googleClientId
+					})
+				}
+			})
 		});
 		log("SocialLogin initialized");
 	}

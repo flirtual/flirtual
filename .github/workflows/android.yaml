@@ -21,6 +21,8 @@ jobs:
       VITE_ORIGIN: ${{ github.ref == 'refs/heads/production' && vars.VITE_ORIGIN || 'https://beta.flirtual.dev' }}
       VITE_API_URL: ${{ github.ref == 'refs/heads/production' && vars.VITE_API_URL || 'https://beta-api.flirtual.dev/v1/' }}
       VITE_APP_BUNDLE_ID: ${{ github.ref == 'refs/heads/production' && vars.VITE_APP_BUNDLE_ID || 'zone.homie.flirtual.beta' }}
+      VITE_APPLE_SIGNIN_SERVICE_ID: ${{ vars.VITE_APPLE_SIGNIN_SERVICE_ID }}
+      VITE_GOOGLE_CLIENT_ID: ${{ vars.VITE_GOOGLE_CLIENT_ID }}
       FLAVOR: ${{ github.ref == 'refs/heads/production' && 'production' || 'beta' }}
     steps:
       - uses: actions/checkout@v7

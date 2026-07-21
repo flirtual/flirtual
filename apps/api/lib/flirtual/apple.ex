@@ -2,10 +2,11 @@ defmodule Flirtual.Apple do
   use Flirtual.Logger, :apple
   use Flirtual.Connection.Provider, :apple
 
+  alias Flirtual.Jwks
+
   @apple_auth_url "https://appleid.apple.com"
   @apple_keys_url "https://appleid.apple.com/auth/keys"
   @apple_token_url "https://appleid.apple.com/auth/token"
-  @keys_cache_ttl :timer.hours(1)
 
   def config(key) do
     Application.get_env(:flirtual, Flirtual.Apple)[key]
@@ -115,11 +116,7 @@ defmodule Flirtual.Apple do
   def verify_id_token(id_token, opts) do
     expected_client_id = Keyword.get(opts, :client_id)
 
-    with {:ok, header} <- peek_header(id_token),
-         {:ok, keys} <- fetch_apple_public_keys(),
-         {:ok, key} <- find_matching_key(keys, header["kid"]),
-         {:ok, jwk} <- build_jwk(key),
-         {:ok, claims} <- verify_and_decode(id_token, jwk),
+    with {:ok, claims} <- Jwks.verify_token(id_token, @apple_keys_url, ["RS256"]),
          :ok <- validate_claims(claims, expected_client_id) do
       {:ok, claims}
     end
@@ -196,89 +193,6 @@ defmodule Flirtual.Apple do
       e ->
         log(:error, [:parse_private_key], e)
         {:error, :invalid_private_key}
-    end
-  end
-
-  defp peek_header(token) do
-    case String.split(token, ".") do
-      [header_b64 | _] ->
-        with {:ok, header_json} <- Base.url_decode64(header_b64, padding: false),
-             {:ok, header} <- Jason.decode(header_json) do
-          {:ok, header}
-        else
-          _ -> {:error, :invalid_token_format}
-        end
-
-      _ ->
-        {:error, :invalid_token_format}
-    end
-  end
-
-  defp fetch_apple_public_keys do
-    cache_key = :apple_public_keys
-    now = System.system_time(:millisecond)
-
-    case :persistent_term.get(cache_key, nil) do
-      {keys, expiry} when expiry > now ->
-        {:ok, keys}
-
-      _ ->
-        fetch_and_cache_keys(cache_key)
-    end
-  end
-
-  defp fetch_and_cache_keys(cache_key) do
-    with {:ok, %Req.Response{body: body, status: 200}} <-
-           Req.request(
-             method: :get,
-             url: @apple_keys_url,
-             decode_body: false,
-             retry: false,
-             finch: Flirtual.Finch
-           ),
-         {:ok, %{"keys" => keys}} <- Jason.decode(body) do
-      expiry = System.system_time(:millisecond) + @keys_cache_ttl
-      :persistent_term.put(cache_key, {keys, expiry})
-      {:ok, keys}
-    else
-      {:ok, %Req.Response{} = response} ->
-        log(:error, [:fetch_apple_public_keys], response)
-        {:error, :upstream}
-
-      {:error, reason} ->
-        log(:error, [:fetch_apple_public_keys], reason)
-        {:error, :upstream}
-    end
-  end
-
-  defp find_matching_key(keys, kid) do
-    case Enum.find(keys, &(&1["kid"] == kid)) do
-      nil -> {:error, :key_not_found}
-      key -> {:ok, key}
-    end
-  end
-
-  defp build_jwk(key) do
-    try do
-      jwk = JOSE.JWK.from_map(key)
-      {:ok, jwk}
-    rescue
-      e ->
-        log(:error, [:build_jwk], e)
-        {:error, :invalid_key}
-    end
-  end
-
-  defp verify_and_decode(token, jwk) do
-    try do
-      case JOSE.JWT.verify_strict(jwk, ["RS256"], token) do
-        {true, %JOSE.JWT{fields: claims}, _} -> {:ok, claims}
-        {false, _, _} -> {:error, :invalid_signature}
-      end
-    rescue
-      e ->
-        log(:error, [:verify_and_decode], e)
-        {:error, :verification_failed}
     end
   end
 

@@ -59,6 +59,8 @@ export const rcGoogleKey = import.meta.env.VITE_RC_GOOG_PUBLIC_KEY as string;
 export const picoAppId = import.meta.env.VITE_PICO_APP_ID as string;
 
 export const appleSigninServiceId = import.meta.env.VITE_APPLE_SIGNIN_SERVICE_ID as string;
+export const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID as string;
+export const googleIosClientId = import.meta.env.VITE_GOOGLE_IOS_CLIENT_ID as string;
 
 export const bucketContentOrigin = (import.meta.env.VITE_BUCKET_CONTENT_ORIGIN as string) || "";
 export const bucketUploadsOrigin = (import.meta.env.VITE_BUCKET_UPLOADS_ORIGIN as string) || "";
