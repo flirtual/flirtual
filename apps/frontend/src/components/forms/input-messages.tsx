@@ -54,7 +54,7 @@ export const FormMessage: FC<FormMessageProps> = (props) => {
 		reference.current?.scrollIntoView({
 			behavior: "smooth",
 			block: "center",
-			inline: "center"
+			inline: "nearest"
 		});
 	}, [children, submitCount]);
 
