@@ -237,7 +237,7 @@ export const Queue: FC<{ kind: ProspectKind }> = ({ kind }) => {
 					<m.div
 						key={displayed}
 						animate={{ opacity: 1 }}
-						className="relative top-0 z-10"
+						className="relative top-0 z-10 max-w-full"
 						exit={{ opacity: 0, position: "absolute" }}
 						initial={{ opacity: 0 }}
 					>
