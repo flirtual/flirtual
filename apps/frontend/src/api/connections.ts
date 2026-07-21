@@ -68,6 +68,7 @@ export interface ConnectionAuthorizeOptions {
 	prompt: string;
 	next: string;
 	json?: boolean;
+	notifications?: boolean;
 }
 
 export interface ConnectionGrantOptions {

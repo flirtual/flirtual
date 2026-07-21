@@ -10,12 +10,14 @@ import type { ConnectionType } from "~/api/connections";
 // provider. Returns the post-grant location, or null if the user cancelled.
 export async function authorizeAndGrant(
 	type: ConnectionType,
-	next: string
+	next: string,
+	notifications?: boolean
 ): Promise<string | null> {
 	const { authorizeUrl, redirectUri } = await Connection.authorize({
 		type,
 		prompt: "consent",
-		next
+		next,
+		notifications
 	});
 
 	let redirectedUri: string;

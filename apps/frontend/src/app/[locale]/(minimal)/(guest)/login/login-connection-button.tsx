@@ -29,6 +29,7 @@ export interface LoginConnectionButtonProps {
 	tabIndex?: number;
 	next?: string;
 	className?: string;
+	notifications?: boolean;
 	// Return false to block the action, i.e. when the service agreement is unchecked.
 	guard?: () => boolean;
 }
@@ -53,6 +54,7 @@ export const LoginConnectionButton: FC<LoginConnectionButtonProps> = ({
 	tabIndex,
 	next,
 	className,
+	notifications = false,
 	guard
 }) => {
 	const { t } = useTranslation();
@@ -103,7 +105,8 @@ export const LoginConnectionButton: FC<LoginConnectionButtonProps> = ({
 				provider: type,
 				idToken,
 				authorizationCode,
-				deviceId
+				deviceId,
+				notifications
 			});
 
 			if ("error" in response) {
@@ -145,13 +148,14 @@ export const LoginConnectionButton: FC<LoginConnectionButtonProps> = ({
 			location.href = Connection.authorizeUrl({
 				type,
 				prompt: "consent",
-				next: nextUrl
+				next: nextUrl,
+				notifications
 			});
 
 			return;
 		}
 
-		const nextLocation = await authorizeAndGrant(type, nextUrl);
+		const nextLocation = await authorizeAndGrant(type, nextUrl, notifications);
 		if (!nextLocation) return;
 
 		await invalidate({ queryKey: sessionKey() });

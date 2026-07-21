@@ -212,17 +212,20 @@ export const SignUpForm: FC = () => {
 							{device.apple && (
 								<LoginConnectionButton
 									guard={guardServiceAgreement}
+									notifications={fields.notifications.props.value}
 									tabIndex={9}
 									type="apple"
 								/>
 							)}
 							<LoginConnectionButton
 								guard={guardServiceAgreement}
+								notifications={fields.notifications.props.value}
 								tabIndex={10}
 								type="google"
 							/>
 							<LoginConnectionButton
 								guard={guardServiceAgreement}
+								notifications={fields.notifications.props.value}
 								tabIndex={11}
 								type="discord"
 							/>

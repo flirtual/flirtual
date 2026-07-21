@@ -20,12 +20,15 @@ defmodule FlirtualWeb.ConnectionController do
 
   # JSON authorize is only used by the native app: the provider redirects to
   # the app-scheme deep link, resolved by openSecureWindow.
-  def authorize(conn, %{"type" => type, "prompt" => prompt, "next" => next, "json" => json})
+  def authorize(
+        conn,
+        %{"type" => type, "prompt" => prompt, "next" => next, "json" => json} = params
+      )
       when not is_nil(json) do
     type = to_atom(type)
 
     with {:ok, provider} <- Connection.provider(type),
-         {:ok, state} <- generate_oauth_state(conn, next),
+         {:ok, state} <- generate_oauth_state(conn, next, truthy?(params["notifications"])),
          {:ok, authorize_url} <-
            provider.authorize_url(conn, %{prompt: prompt, redirect: :app, state: state}) do
       conn
@@ -45,11 +48,11 @@ defmodule FlirtualWeb.ConnectionController do
     end
   end
 
-  def authorize(conn, %{"type" => type, "prompt" => prompt, "next" => next}) do
+  def authorize(conn, %{"type" => type, "prompt" => prompt, "next" => next} = params) do
     type = to_atom(type)
 
     with {:ok, provider} <- Connection.provider(type),
-         {:ok, state} <- generate_oauth_state(conn, next),
+         {:ok, state} <- generate_oauth_state(conn, next, truthy?(params["notifications"])),
          {:ok, authorize_url} <- provider.authorize_url(conn, %{prompt: prompt, state: state}) do
       conn
       |> redirect(external: authorize_url |> URI.to_string())
@@ -65,14 +68,19 @@ defmodule FlirtualWeb.ConnectionController do
     end
   end
 
-  # Generate a signed state token containing user_id and next URL
-  # This preserves context across OAuth callbacks that don't send cookies (e.g., Apple's form_post)
-  defp generate_oauth_state(conn, next) do
+  # Query parameters arrive as strings, JSON bodies as booleans.
+  defp truthy?(value), do: value in [true, "true", "1"]
+
+  # Generate a signed state token containing user_id, next URL, and newsletter
+  # opt-in. This preserves context across OAuth callbacks that don't send
+  # cookies (e.g., Apple's form_post).
+  defp generate_oauth_state(conn, next, notifications) do
     user_id = if conn.assigns[:session], do: conn.assigns[:session].user_id, else: nil
 
     %{
       "user_id" => user_id,
-      "next" => next
+      "next" => next,
+      "notifications" => if(notifications, do: true)
     }
     |> Map.reject(fn {_, value} -> is_nil(value) end)
     |> then(&Jwt.sign(Jwt.config("oauth-state"), &1))
@@ -82,7 +90,12 @@ defmodule FlirtualWeb.ConnectionController do
   defp verify_oauth_state(state) when is_binary(state) do
     case Jwt.verify(Jwt.config("oauth-state"), state) do
       {:ok, claims} ->
-        {:ok, %{user_id: claim(claims, "user_id"), next: claim(claims, "next")}}
+        {:ok,
+         %{
+           user_id: claim(claims, "user_id"),
+           next: claim(claims, "next"),
+           notifications: truthy?(claim(claims, "notifications"))
+         }}
 
       error ->
         error
@@ -223,7 +236,8 @@ defmodule FlirtualWeb.ConnectionController do
           handle_grant(conn, user, profile, type,
             response: :redirect,
             redirect_type: redirect_type,
-            next: state_data.next
+            next: state_data.next,
+            notifications: state_data.notifications
           )
         else
           {:error, :unverified_email} ->
@@ -265,7 +279,7 @@ defmodule FlirtualWeb.ConnectionController do
       handle_grant(conn, user, profile, type,
         response: :json,
         device_id: params["device_id"],
-        notifications: params["notifications"] == true
+        notifications: truthy?(params["notifications"])
       )
     else
       {:error, :provider_not_found} ->

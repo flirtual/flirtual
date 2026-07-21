@@ -607,7 +607,7 @@ defmodule Flirtual.Users do
   Email is pre-verified since it comes from a trusted provider.
   """
   def create_from_connection(email, options \\ []) do
-    notifications = Keyword.get(options, :notifications, false)
+    notifications = Keyword.get(options, :notifications) == true
 
     Repo.transaction(fn ->
       with {:ok, user} <-
@@ -629,7 +629,7 @@ defmodule Flirtual.Users do
   # Shared user setup: generates identifiers, creates preferences/profile, runs checks
   defp setup_new_user(user, attrs, options \\ []) do
     email_confirmed = Keyword.get(options, :email_confirmed, false)
-    notifications = Map.get(attrs, :notifications, false)
+    notifications = Map.get(attrs, :notifications) == true
 
     with {:ok, user} <-
            change(user, %{
