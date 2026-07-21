@@ -1,14 +1,50 @@
 import { SelectItemText } from "@radix-ui/react-select";
 import * as SelectPrimitive from "@radix-ui/react-select";
-import { ChevronDown, ChevronsUpDown, ChevronUp, X } from "lucide-react";
+import { ChevronDown, ChevronLeft, ChevronsUpDown, ChevronUp, X } from "lucide-react";
 import * as React from "react";
-import type { Dispatch, FC } from "react";
+import type { Dispatch, FC, ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
+import { useBreakpoint } from "~/hooks/use-breakpoint";
 import { emptyArray } from "~/utilities";
 
-const Select = SelectPrimitive.Root;
+const SelectContext = React.createContext<{
+	close: () => void;
+	fullscreen: boolean;
+} | null>(null);
+
+// Controlled so the close button within the mobile content can dismiss it. The
+// breakpoint is measured here because the content mounts only once the select is
+// already open.
+function Select({ open, defaultOpen, onOpenChange, ...props }: React.ComponentPropsWithoutRef<typeof SelectPrimitive.Root>) {
+	const [internalOpen, setInternalOpen] = React.useState(defaultOpen ?? false);
+	const desktop = useBreakpoint("desktop");
+
+	const onChange = React.useCallback(
+		(value: boolean) => {
+			setInternalOpen(value);
+			onOpenChange?.(value);
+		},
+		[onOpenChange]
+	);
+
+	const context = React.useMemo(
+		() => ({ close: () => onChange(false), fullscreen: !desktop }),
+		[desktop, onChange]
+	);
+
+	return (
+		<SelectContext value={context}>
+			<SelectPrimitive.Root
+				{...props}
+				open={open ?? internalOpen}
+				onOpenChange={onChange}
+			/>
+		</SelectContext>
+	);
+}
+
 const SelectGroup = SelectPrimitive.Group;
 const SelectValue = SelectPrimitive.Value;
 
@@ -71,15 +107,24 @@ SelectScrollDownButton.displayName
 
 function SelectContent({ ref: reference, ...props }: { ref?: React.Ref<React.ComponentRef<typeof SelectPrimitive.Content> | null> } & {
 	rows?: number;
+	label?: ReactNode;
 } & React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content>) {
 	const {
 		className,
 		children,
+		label,
 		position = "popper",
 		// rows = 8,
 		sideOffset = 8,
 		...elementProps
 	} = props;
+
+	const { t } = useTranslation();
+
+	// Takes over the viewport on mobile. The popper wrapper Radix positions is
+	// unpinned by the [data-fullscreen] rule in index.css.
+	const { close, fullscreen } = React.use(SelectContext)
+		?? { close: undefined, fullscreen: false };
 
 	// Tapping outside dismisses without restoring focus to the trigger.
 	const touchDismissReference = React.useRef(false);
@@ -88,11 +133,15 @@ function SelectContent({ ref: reference, ...props }: { ref?: React.Ref<React.Com
 		<SelectPrimitive.Portal>
 			<SelectPrimitive.Content
 				className={twMerge(
-					"focusable-within relative z-50 max-h-[min(var(--radix-select-content-available-height),28rem)] max-w-[calc(min(var(--radix-popper-anchor-width),var(--radix-popper-available-width)))] overflow-hidden rounded-xl bg-white-20 font-nunito shadow-brand-1 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:bg-black-60",
-					position === "popper"
+					"focusable-within relative z-50 overflow-hidden bg-white-20 font-nunito dark:bg-black-60",
+					fullscreen
+						? "flex size-full flex-col"
+						: "max-h-[min(var(--radix-select-content-available-height),28rem)] max-w-[calc(min(var(--radix-popper-anchor-width),var(--radix-popper-available-width)))] rounded-xl shadow-brand-1 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+					!fullscreen && position === "popper"
 					&& "data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
 					className
 				)}
+				data-fullscreen={fullscreen ? "" : undefined}
 				position={position}
 				ref={reference}
 				sideOffset={sideOffset}
@@ -108,16 +157,37 @@ function SelectContent({ ref: reference, ...props }: { ref?: React.Ref<React.Com
 						touchDismissReference.current = true;
 				}}
 			>
-				<SelectScrollUpButton />
-				<SelectPrimitive.Viewport
-					style={{
-						minHeight: "var(--radix-select-trigger-height)",
-						minWidth: "var(--radix-select-trigger-width)"
-					}}
-				>
-					{children}
-				</SelectPrimitive.Viewport>
-				<SelectScrollDownButton />
+				{fullscreen && (
+					<>
+						<div className="flex shrink-0 items-center gap-1 bg-white-40 px-1.5 py-1 pt-[calc(var(--safe-area-inset-top,0rem)+0.25rem)] text-black-70 shadow-brand-1 vision:bg-white-40/70 dark:bg-black-50 dark:text-white-20">
+							<button
+								aria-label={t("back")}
+								className="-ml-0.5 flex shrink-0 items-center self-stretch px-1"
+								type="button"
+								onClick={() => {
+									touchDismissReference.current = true;
+									close?.();
+								}}
+							>
+								<ChevronLeft className="size-6" />
+							</button>
+							<span className="truncate py-1 text-lg">{label}</span>
+						</div>
+						<div className="h-0.5 shrink-0 bg-brand-gradient" />
+					</>
+				)}
+				<div className="relative flex min-h-0 flex-1 flex-col">
+					<SelectScrollUpButton />
+					<SelectPrimitive.Viewport
+						style={{
+							minHeight: "var(--radix-select-trigger-height)",
+							minWidth: "var(--radix-select-trigger-width)"
+						}}
+					>
+						{children}
+					</SelectPrimitive.Viewport>
+					<SelectScrollDownButton />
+				</div>
 			</SelectPrimitive.Content>
 		</SelectPrimitive.Portal>
 	);
@@ -241,7 +311,7 @@ export function InputSelect<K>(props: InputSelectProps<K>) {
 					</button>
 				)}
 			</SelectTrigger>
-			<SelectContent>
+			<SelectContent label={activeOption?.name || placeholder}>
 				{options.map((option) => (
 					<Item
 						key={option.id}
