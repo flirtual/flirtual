@@ -127,12 +127,12 @@ export const ConnectionsForm: FC = () => {
 									? (
 											<>
 												<AddConnectionButton type="apple" />
-												{/* <AddConnectionButton type="google" /> */}
+												<AddConnectionButton type="google" />
 											</>
 										)
 									: (
 											<>
-												{/* <AddConnectionButton type="google" /> */}
+												<AddConnectionButton type="google" />
 												<AddConnectionButton type="apple" />
 											</>
 										)}
