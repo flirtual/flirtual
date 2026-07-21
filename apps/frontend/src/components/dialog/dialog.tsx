@@ -42,7 +42,7 @@ function DialogContent({ ref: reference, className, children, closable = true, b
 		>
 			{children}
 			{closable && (
-				<DialogPrimitive.Close className="absolute right-5 top-4 z-10 rounded-sm text-white-10 opacity-70 transition-opacity hover:opacity-100 disabled:pointer-events-none dark:text-white-20">
+				<DialogPrimitive.Close className="absolute right-5 top-4 z-10 rounded-sm text-white-10 opacity-70 outline-none transition-opacity hover:opacity-100 focus-visible:ring-2 focus-visible:ring-white-10 disabled:pointer-events-none dark:text-white-20">
 					<X className="size-5" />
 					<span className="sr-only">Close</span>
 				</DialogPrimitive.Close>

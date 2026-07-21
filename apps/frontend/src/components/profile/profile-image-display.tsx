@@ -353,25 +353,29 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 						<Dialog open={expandedImage} onOpenChange={setExpandedImage}>
 							<DialogContent
 								border={false}
-								className="max-w-full overflow-hidden rounded-none desktop:max-w-[95svw] desktop:rounded-xl"
+								className="max-w-full overflow-hidden rounded-none outline-none desktop:max-w-[95svw] desktop:rounded-xl"
+								onOpenAutoFocus={(event) => {
+									event.preventDefault();
+									(event.currentTarget as HTMLElement | null)?.focus();
+								}}
 							>
 								<DialogTitle className="sr-only">{t("view_image")}</DialogTitle>
 								<div className="relative max-h-[80vh] w-full bg-black-90">
 									{images.length > 1 && (
 										<div className="absolute z-10 flex size-full">
 											<button
-												className="flex h-full w-1/4 items-center justify-start px-8 opacity-70 transition-opacity hover:opacity-100"
+												className="group flex h-full w-1/4 items-center justify-start px-8 opacity-70 outline-none transition-opacity hover:opacity-100"
 												type="button"
 												onClick={() => set(-1)}
 											>
-												<ChevronLeft className="size-10 text-white-10 drop-shadow" />
+												<ChevronLeft className="size-10 rounded-md text-white-10 drop-shadow group-focus-visible:ring-2 group-focus-visible:ring-white-10" />
 											</button>
 											<button
-												className="ml-auto flex h-full w-1/4 items-center justify-end px-8 opacity-70 transition-opacity hover:opacity-100"
+												className="group ml-auto flex h-full w-1/4 items-center justify-end px-8 opacity-70 outline-none transition-opacity hover:opacity-100"
 												type="button"
 												onClick={() => set(1)}
 											>
-												<ChevronRight className="size-10 text-white-10 drop-shadow" />
+												<ChevronRight className="size-10 rounded-md text-white-10 drop-shadow group-focus-visible:ring-2 group-focus-visible:ring-white-10" />
 											</button>
 										</div>
 									)}
@@ -423,18 +427,18 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 					<>
 						<div className="pointer-events-none absolute flex size-full">
 							<button
-								className="pointer-events-auto flex h-full w-1/4 items-center justify-start px-6 opacity-70 transition-opacity hover:opacity-100"
+								className="group pointer-events-auto flex h-full w-1/4 items-center justify-start px-6 opacity-70 outline-none transition-opacity hover:opacity-100"
 								type="button"
 								onClick={() => set(-1)}
 							>
-								<ChevronLeft className="size-10 text-white-10 drop-shadow" />
+								<ChevronLeft className="size-10 rounded-md text-white-10 drop-shadow group-focus-visible:ring-2 group-focus-visible:ring-white-10" />
 							</button>
 							<button
-								className="pointer-events-auto ml-auto flex h-full w-1/4 items-center justify-end px-6 opacity-70 transition-opacity hover:opacity-100"
+								className="group pointer-events-auto ml-auto flex h-full w-1/4 items-center justify-end px-6 opacity-70 outline-none transition-opacity hover:opacity-100"
 								type="button"
 								onClick={() => set(1)}
 							>
-								<ChevronRight className="size-10 text-white-10 drop-shadow" />
+								<ChevronRight className="size-10 rounded-md text-white-10 drop-shadow group-focus-visible:ring-2 group-focus-visible:ring-white-10" />
 							</button>
 						</div>
 
