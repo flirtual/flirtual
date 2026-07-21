@@ -90,8 +90,8 @@ export const Connection = {
 			.url(this.authorizeUrl({ ...options, json: true }), true)
 			.get()
 			.json<{
-			state: string;
 			authorizeUrl: string;
+			redirectUri: string;
 		}>();
 	},
 	grant(options: ConnectionGrantOptions) {

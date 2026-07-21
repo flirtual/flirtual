@@ -1,4 +1,3 @@
-import { InAppBrowser, ToolBarType } from "@capgo/capacitor-inappbrowser";
 import { SocialLogin } from "@capgo/capacitor-social-login";
 import { X } from "lucide-react";
 import { useMemo } from "react";
@@ -18,6 +17,7 @@ import { useOptionalSession } from "~/hooks/use-session";
 import { useTheme } from "~/hooks/use-theme";
 import { useToast } from "~/hooks/use-toast";
 import { useNavigate } from "~/i18n";
+import { authorizeAndGrant } from "~/oauth";
 import { invalidate, sessionKey } from "~/query";
 import { toRelativeUrl } from "~/urls";
 
@@ -130,42 +130,11 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 			);
 		}
 
-		const { authorizeUrl } = await Connection.authorize({
-			type,
-			prompt: "consent",
-			next: url.href
-		});
+		const nextLocation = await authorizeAndGrant(type, url.href);
+		if (!nextLocation) return;
 
-		await InAppBrowser.addListener("urlChangeEvent", async (event) => {
-			const url = new URL(event.url);
-			const query: any = Object.fromEntries(url.searchParams.entries());
-
-			if ("error" in query) {
-				await InAppBrowser.removeAllListeners();
-				await InAppBrowser.close();
-			}
-			if ("code" in query) {
-				setTimeout(async () => {
-					const response = await Connection.grant({
-						...query,
-						redirect: "manual"
-					});
-
-					const next = response.headers.get("location");
-					if (next) navigate(toRelativeUrl(new URL(next)));
-
-					await invalidate({ queryKey: sessionKey() });
-
-					await InAppBrowser.removeAllListeners();
-					await InAppBrowser.close();
-				}, 1000);
-			}
-		});
-
-		await InAppBrowser.openWebView({
-			url: authorizeUrl,
-			toolbarType: ToolBarType.BLANK
-		});
+		navigate(toRelativeUrl(new URL(nextLocation)));
+		await invalidate({ queryKey: sessionKey() });
 	};
 
 	const handleClick = async () => {

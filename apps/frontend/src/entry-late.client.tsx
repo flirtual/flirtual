@@ -14,6 +14,10 @@ import { isRedirectError } from "./redirect";
 
 App.addListener("appUrlOpen", async (event) => {
 	const url = new URL(event.url);
+
+	// OAuth deep links resolve InAppBrowser.openSecureWindow, not navigation.
+	if (url.host === "oauth-callback") return;
+
 	const href = url.href.replace(url.origin, "");
 
 	location.href = href;

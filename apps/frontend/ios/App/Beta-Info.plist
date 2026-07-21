@@ -71,6 +71,12 @@
 				<string>com.googleusercontent.apps.429260353104-shvoh4mfrgjppm77cpebjfd7bhkeu14j</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>flirtual-beta</string>
+			</array>
+		</dict>
 	</array>
 </dict>
 </plist>

@@ -18,6 +18,8 @@ defmodule FlirtualWeb.ConnectionController do
     |> json(Connection.list_available(conn.assigns[:session].user))
   end
 
+  # JSON authorize is only used by the native app: the provider redirects to
+  # the app-scheme deep link, resolved by openSecureWindow.
   def authorize(conn, %{"type" => type, "prompt" => prompt, "next" => next, "json" => json})
       when not is_nil(json) do
     type = to_atom(type)
@@ -25,10 +27,11 @@ defmodule FlirtualWeb.ConnectionController do
     with {:ok, provider} <- Connection.provider(type),
          {:ok, state} <- generate_oauth_state(conn, next),
          {:ok, authorize_url} <-
-           provider.authorize_url(conn, %{prompt: prompt, redirect: false, state: state}) do
+           provider.authorize_url(conn, %{prompt: prompt, redirect: :app, state: state}) do
       conn
       |> json(%{
-        authorize_url: authorize_url |> URI.to_string()
+        authorize_url: authorize_url |> URI.to_string(),
+        redirect_uri: provider.redirect_url!(redirect: :app)
       })
     else
       {:error, :provider_not_found} ->
@@ -113,7 +116,7 @@ defmodule FlirtualWeb.ConnectionController do
       "location",
       next || Application.fetch_env!(:flirtual, :frontend_origin)
     )
-    |> resp(if(redirect_type == "manual", do: 200, else: 303), "")
+    |> resp(if(redirect_type == "app", do: 200, else: 303), "")
     |> halt()
   end
 
@@ -133,7 +136,7 @@ defmodule FlirtualWeb.ConnectionController do
       |> URI.append_query("error=" <> to_string(message))
       |> URI.to_string()
     )
-    |> resp(if(redirect_type == "manual", do: 200, else: 303), "")
+    |> resp(if(redirect_type == "app", do: 200, else: 303), "")
     |> halt()
   end
 
@@ -148,11 +151,6 @@ defmodule FlirtualWeb.ConnectionController do
       external: Application.fetch_env!(:flirtual, :app_scheme) <> "://apple-login?" <> query
     )
     |> halt()
-  end
-
-  # OAuth redirect flow - preflight for CORS
-  def grant(conn, %{"redirect" => "off"} = _params) do
-    conn |> resp(200, "") |> halt()
   end
 
   # Native Android flow - Apple form_posts the authorization code here; exchange
@@ -198,9 +196,16 @@ defmodule FlirtualWeb.ConnectionController do
         # logging in fall back to /login.
         error_next = if state_data.user_id, do: state_data.next
 
+        # `redirect=app` grants are fetch calls from the native app: the token
+        # exchange's redirect_uri must match the app-scheme deep link used at
+        # authorization, and the response is a 200 whose location header the
+        # app reads itself (a 303 would make fetch follow it).
         with {:ok, provider} <- Connection.provider(type),
              {:ok, authorization} <-
-               provider.exchange_code(code, redirect: redirect_type !== "manual"),
+               provider.exchange_code(code,
+                 redirect: if(redirect_type == "app", do: :app, else: true),
+                 state: params["state"]
+               ),
              {:ok, profile} <- provider.get_profile(authorization) do
           # Try session first, fall back to user_id from state (for Apple's form_post)
           user =

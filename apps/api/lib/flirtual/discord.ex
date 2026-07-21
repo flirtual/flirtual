@@ -128,22 +128,61 @@ defmodule Flirtual.Discord do
         _ -> query
       end
 
+    query =
+      case options do
+        %{redirect: :app, state: state} ->
+          query
+          |> Map.put(:code_challenge, pkce_challenge(pkce_verifier(state)))
+          |> Map.put(:code_challenge_method, "S256")
+
+        _ ->
+          query
+      end
+
     URI.new("https://discord.com/api/oauth2/authorize?" <> URI.encode_query(query))
   end
 
+  # Discord requires PKCE for custom-scheme redirect URIs. The verifier is
+  # derived from the state token, so the token exchange can recompute it instead
+  # of storing it or round-tripping it through the redirect.
+  defp pkce_verifier(state) do
+    :crypto.mac(
+      :hmac,
+      :sha256,
+      Application.fetch_env!(:flirtual, FlirtualWeb.Endpoint)[:secret_key_base],
+      state
+    )
+    |> Base.url_encode64(padding: false)
+  end
+
+  defp pkce_challenge(verifier) do
+    :crypto.hash(:sha256, verifier)
+    |> Base.url_encode64(padding: false)
+  end
+
   def exchange_code(code, options \\ []) when is_binary(code) do
+    params = %{
+      client_id: config(:client_id),
+      client_secret: config(:client_secret),
+      grant_type: "authorization_code",
+      redirect_uri: redirect_url!(redirect: Keyword.get(options, :redirect, true)),
+      code: code
+    }
+
+    params =
+      case {Keyword.get(options, :redirect, true), Keyword.get(options, :state)} do
+        {:app, state} when is_binary(state) ->
+          Map.put(params, :code_verifier, pkce_verifier(state))
+
+        _ ->
+          params
+      end
+
     with {:ok, %Req.Response{body: body}} <-
            Req.request(
              method: :post,
              url: url("oauth2/token"),
-             body:
-               URI.encode_query(%{
-                 client_id: config(:client_id),
-                 client_secret: config(:client_secret),
-                 grant_type: "authorization_code",
-                 redirect_uri: redirect_url!(redirect: Keyword.get(options, :redirect, true)),
-                 code: code
-               }),
+             body: URI.encode_query(params),
              headers: [{"content-type", "application/x-www-form-urlencoded"}],
              decode_body: false,
              retry: false,
