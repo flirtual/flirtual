@@ -123,8 +123,9 @@ export function useTour(
 			shepherd.off("complete", onComplete);
 			shepherd.off("cancel", onComplete);
 
-			for (const { id } of steps) shepherd.removeStep(id);
 			shepherd.cancel();
+			(shepherd as unknown as { currentStep: unknown }).currentStep = null;
+			for (const { id } of steps) shepherd.removeStep(id);
 		};
 	}, [shepherd, steps, dismiss, setScrollLocked, defaultStart, start, enabled]);
 
@@ -169,13 +170,16 @@ export function useDefaultTour(enabled: boolean = true) {
 	const navigateReference = useRef(navigate);
 	navigateReference.current = navigate;
 
-	// Navigate and wait for the step's target; if the tour was cancelled while
-	// we were waiting, never resolve, so the step can't render orphaned.
+	// Navigate and wait for the step's target; if the tour was cancelled or
+	// restarted while we were waiting, never resolve, so the step can't render
+	// orphaned.
 	const ensureOnPage = useCallback(
 		async (url: string, selector: string) => {
+			const step = shepherd.getCurrentStep();
 			await navigateReference.current(url);
 			await waitForElement(selector);
-			if (!shepherd.isActive()) await new Promise<never>(() => {});
+			if (!shepherd.isActive() || shepherd.getCurrentStep() !== step)
+				await new Promise<never>(() => {});
 		},
 		[shepherd]
 	);
