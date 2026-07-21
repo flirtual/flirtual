@@ -170,190 +170,178 @@ export const LoginForm: FC = () => {
 		);
 	}
 
+	const connectionTypes = device.apple
+		? (["apple", "google", "discord"] as const)
+		: device.android
+			? (["google", "apple", "discord"] as const)
+			: (["discord", "google", "apple"] as const);
+
 	return (
 		<>
 			<OAuthError />
-			<Form
-				withCaptcha
-				fields={{
-					login: "",
-					password: ""
-				}}
-				captchaTabIndex={7}
-				className="flex flex-col gap-8"
-				formErrorMessages={false}
-				renderCaptcha={false}
-				onSubmit={async (body) => {
-					const value = await Authentication.login({
-						...body,
-						deviceId: device.id
-					});
+			<div className="flex flex-col gap-8">
+				<Form
+					withCaptcha
+					fields={{
+						login: "",
+						password: ""
+					}}
+					captchaTabIndex={7}
+					className="flex flex-col gap-8"
+					formErrorMessages={false}
+					renderCaptcha={false}
+					onSubmit={async (body) => {
+						const value = await Authentication.login({
+							...body,
+							deviceId: device.id
+						});
 
-					if ("error" in value) {
-						if (value.error === "invalid_credentials")
-							throw [
-								<Trans
-									key=""
-									components={{
-										help: (
-											<InlineLink
-												className="underline"
-												highlight={false}
-												href="https://hello.flirtu.al/support/solutions/articles/73000539480-reset-your-password"
-											/>
-										),
-										reset: (
-											<InlineLink
-												className="underline"
-												highlight={false}
-												href={urls.forgotPassword}
-											/>
-										)
-									}}
-									i18nKey="errors.invalid_credentials_complex"
-								/>
-							];
-
-						if (value.error === "leaked_login_password")
-							throw [
-								<Trans
-									key=""
-									components={{
-										reset: (
-											<InlineLink
-												className="underline"
-												highlight={false}
-												href={urls.forgotPassword}
-											/>
-										)
-									}}
-									i18nKey="errors.leaked_login_password"
-								/>
-							];
-
-						if (value.error === "login_rate_limit" || value.error === "verification_rate_limit")
-							throw [
-								<Trans
-									key=""
-									components={{
-										reset: (
-											<InlineLink
-												className="underline"
-												highlight={false}
-												href={urls.forgotPassword}
-											/>
-										)
-									}}
-									i18nKey={`errors.${value.error}`}
-								/>
-							];
-
-						throw [t(`errors.${value.error}` as any)];
-					}
-
-					if ("loginId" in value) {
-						setVerification({ loginId: value.loginId, email: value.email });
-						return;
-					}
-
-					await invalidate({ refetchType: "none" });
-					await mutate(sessionKey(), value);
-				}}
-			>
-				{({ errors, FormField, Captcha }) => (
-					<>
-						<FormField name="login">
-							{({ props, labelProps }) => (
-								<>
-									<InputLabel {...labelProps}>{t("email_address")}</InputLabel>
-									<InputText
-										{...props}
-										autoCapitalize="none"
-										autoComplete="username webauthn"
-										autoCorrect="off"
-										spellCheck="false"
-										tabIndex={1}
-										type="text"
+						if ("error" in value) {
+							if (value.error === "invalid_credentials")
+								throw [
+									<Trans
+										key=""
+										components={{
+											help: (
+												<InlineLink
+													className="underline"
+													highlight={false}
+													href="https://hello.flirtu.al/support/solutions/articles/73000539480-reset-your-password"
+												/>
+											),
+											reset: (
+												<InlineLink
+													className="underline"
+													highlight={false}
+													href={urls.forgotPassword}
+												/>
+											)
+										}}
+										i18nKey="errors.invalid_credentials_complex"
 									/>
-								</>
-							)}
-						</FormField>
-						<FormField name="password">
-							{({ props, labelProps }) => (
-								<>
-									<InputLabel
-										{...labelProps}
-										hint={(
-											<InputLabelHint>
-												<InlineLink href={urls.forgotPassword} tabIndex={3}>{t("forgot_your_password")}</InlineLink>
-											</InputLabelHint>
-										)}
+								];
+
+							if (value.error === "leaked_login_password")
+								throw [
+									<Trans
+										key=""
+										components={{
+											reset: (
+												<InlineLink
+													className="underline"
+													highlight={false}
+													href={urls.forgotPassword}
+												/>
+											)
+										}}
+										i18nKey="errors.leaked_login_password"
+									/>
+								];
+
+							if (value.error === "login_rate_limit" || value.error === "verification_rate_limit")
+								throw [
+									<Trans
+										key=""
+										components={{
+											reset: (
+												<InlineLink
+													className="underline"
+													highlight={false}
+													href={urls.forgotPassword}
+												/>
+											)
+										}}
+										i18nKey={`errors.${value.error}`}
+									/>
+								];
+
+							throw [t(`errors.${value.error}` as any)];
+						}
+
+						if ("loginId" in value) {
+							setVerification({ loginId: value.loginId, email: value.email });
+							return;
+						}
+
+						await invalidate({ refetchType: "none" });
+						await mutate(sessionKey(), value);
+					}}
+				>
+					{({ errors, FormField, Captcha }) => (
+						<>
+							<FormField name="login">
+								{({ props, labelProps }) => (
+									<>
+										<InputLabel {...labelProps}>{t("email_address")}</InputLabel>
+										<InputText
+											{...props}
+											autoCapitalize="none"
+											autoComplete="username webauthn"
+											autoCorrect="off"
+											spellCheck="false"
+											tabIndex={1}
+											type="text"
+										/>
+									</>
+								)}
+							</FormField>
+							<FormField name="password">
+								{({ props, labelProps }) => (
+									<>
+										<InputLabel
+											{...labelProps}
+											hint={(
+												<InputLabelHint>
+													<InlineLink href={urls.forgotPassword} tabIndex={3}>{t("forgot_your_password")}</InlineLink>
+												</InputLabelHint>
+											)}
+										>
+											{t("password")}
+										</InputLabel>
+										<InputText
+											{...props}
+											autoComplete="current-password"
+											tabIndex={2}
+											type="password"
+										/>
+									</>
+								)}
+							</FormField>
+							<Captcha />
+							<div className="flex flex-col gap-4">
+								<div className="flex gap-2 desktop:flex-row-reverse">
+									<FormButton className="min-w-44" size="sm" tabIndex={4}>
+										{t("log_in")}
+									</FormButton>
+									<ButtonLink
+										className="flex w-fit flex-row gap-2 opacity-75 desktop:flex-row-reverse"
+										href={urls.register}
+										kind="tertiary"
+										size="sm"
+										tabIndex={5}
 									>
-										{t("password")}
-									</InputLabel>
-									<InputText
-										{...props}
-										autoComplete="current-password"
-										tabIndex={2}
-										type="password"
-									/>
-								</>
-							)}
-						</FormField>
-						<Captcha />
-						<div className="flex flex-col gap-4">
-							<div className="flex gap-2 desktop:flex-row-reverse">
-								<FormButton className="min-w-44" size="sm" tabIndex={4}>
-									{t("log_in")}
-								</FormButton>
-								<ButtonLink
-									className="flex w-fit flex-row gap-2 opacity-75 desktop:flex-row-reverse"
-									href={urls.register}
-									kind="tertiary"
-									size="sm"
-									tabIndex={5}
-								>
-									<span>{t("or_sign_up")}</span>
-									<MoveRight className="size-5 desktop:rotate-180" />
-								</ButtonLink>
+										<span>{t("or_sign_up")}</span>
+										<MoveRight className="size-5 desktop:rotate-180" />
+									</ButtonLink>
+								</div>
+								<FormInputMessages
+									messages={errors.map((value) => ({ type: "error", value }))}
+								/>
 							</div>
-							<FormInputMessages
-								messages={errors.map((value) => ({ type: "error", value }))}
-							/>
-						</div>
-					</>
-				)}
-			</Form>
-			<div className="flex flex-col gap-2">
-				<div className="inline-flex items-center justify-center">
-					<span className="absolute left-1/2 mb-1 -translate-x-1/2 bg-white-20 px-3 font-montserrat font-semibold text-black-50 vision:bg-transparent vision:text-white-50 dark:bg-black-70 dark:text-white-50">
-						{t("or")}
-					</span>
-					<hr className="my-8 h-px w-full border-0 bg-white-40 vision:bg-transparent dark:bg-black-60" />
+						</>
+					)}
+				</Form>
+				<div className="order-first flex flex-col gap-2 desktop:order-none">
+					<div className="order-last mb-2 mt-8 inline-flex items-center justify-center desktop:order-first desktop:mb-8 desktop:mt-2">
+						<span className="absolute left-1/2 mb-1 -translate-x-1/2 bg-white-20 px-3 font-montserrat font-semibold text-black-50 vision:bg-transparent vision:text-white-50 dark:bg-black-70 dark:text-white-50">
+							{t("or")}
+						</span>
+						<hr className="h-px w-full border-0 bg-white-40 vision:bg-transparent dark:bg-black-60" />
+					</div>
+					{connectionTypes.map((type, index) => (
+						<LoginConnectionButton key={type} tabIndex={6 + index} type={type} />
+					))}
 				</div>
-				{device.apple
-					? (
-							<>
-								<LoginConnectionButton tabIndex={6} type="apple" />
-								<LoginConnectionButton tabIndex={7} type="google" />
-								<LoginConnectionButton tabIndex={8} type="discord" />
-							</>
-						)
-					: device.android
-						? (
-								<>
-									<LoginConnectionButton tabIndex={6} type="google" />
-									<LoginConnectionButton tabIndex={7} type="apple" />
-									<LoginConnectionButton tabIndex={8} type="discord" />
-								</>
-							)
-						: (
-								<>
-									<LoginConnectionButton tabIndex={6} type="discord" />
-									<LoginConnectionButton tabIndex={7} type="google" />
-									<LoginConnectionButton tabIndex={8} type="apple" />
-								</>
-							)}
 			</div>
 		</>
 	);

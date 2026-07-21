@@ -33,6 +33,12 @@ export const SignUpForm: FC = () => {
 
 	useOptimisticRoute(urls.onboarding(1));
 
+	const connectionTypes = device.apple
+		? (["apple", "google", "discord"] as const)
+		: device.android
+			? (["google", "discord"] as const)
+			: (["discord", "google"] as const);
+
 	return (
 		<Form
 			withCaptcha
@@ -202,33 +208,22 @@ export const SignUpForm: FC = () => {
 								messages={errors.map((value) => ({ type: "error", value }))}
 							/>
 						</div>
-						<div className="flex flex-col gap-2">
-							<div className="inline-flex items-center justify-center">
+						<div className="order-first flex flex-col gap-2 desktop:order-none">
+							<div className="order-last mb-2 mt-8 inline-flex items-center justify-center desktop:order-first desktop:mb-8 desktop:mt-2">
 								<span className="absolute left-1/2 mb-1 -translate-x-1/2 bg-white-20 px-3 font-montserrat font-semibold text-black-50 vision:bg-transparent vision:text-white-50 dark:bg-black-70 dark:text-white-50">
 									{t("or")}
 								</span>
-								<hr className="my-8 h-px w-full border-0 bg-white-40 vision:bg-transparent dark:bg-black-60" />
+								<hr className="h-px w-full border-0 bg-white-40 vision:bg-transparent dark:bg-black-60" />
 							</div>
-							{device.apple && (
+							{connectionTypes.map((type, index) => (
 								<LoginConnectionButton
+									key={type}
 									guard={guardServiceAgreement}
 									notifications={fields.notifications.props.value}
-									tabIndex={9}
-									type="apple"
+									tabIndex={9 + index}
+									type={type}
 								/>
-							)}
-							<LoginConnectionButton
-								guard={guardServiceAgreement}
-								notifications={fields.notifications.props.value}
-								tabIndex={10}
-								type="google"
-							/>
-							<LoginConnectionButton
-								guard={guardServiceAgreement}
-								notifications={fields.notifications.props.value}
-								tabIndex={11}
-								type="discord"
-							/>
+							))}
 						</div>
 					</>
 				);
