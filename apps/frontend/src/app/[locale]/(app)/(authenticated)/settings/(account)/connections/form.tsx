@@ -104,6 +104,7 @@ export const ConnectionsForm: FC = () => {
 									{(field) => (
 										<InputText
 											Icon={VRChatIcon}
+											iconClassName="size-[1.625rem]"
 											iconColor="#095d6a"
 											placeholder="VRChat"
 											{...field.props}

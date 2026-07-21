@@ -85,6 +85,7 @@ export const Finish5Form: React.FC = () => {
 									{(field) => (
 										<InputText
 											Icon={VRChatIcon}
+											iconClassName="size-[1.625rem]"
 											iconColor="#095d6a"
 											placeholder={t("vrchat")}
 											{...field.props}
