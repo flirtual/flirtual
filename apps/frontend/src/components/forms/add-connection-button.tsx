@@ -1,6 +1,6 @@
 import { SocialLogin } from "@capgo/capacitor-social-login";
-import { X } from "lucide-react";
-import { useMemo } from "react";
+import { Loader2, X } from "lucide-react";
+import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router";
 import { twMerge } from "tailwind-merge";
@@ -44,6 +44,7 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 	const toasts = useToast();
 	const { native, id: deviceId } = useDevice();
 	const { t } = useTranslation();
+	const [isLoading, setIsLoading] = useState(false);
 
 	const connection = useMemo(() => {
 		return session
@@ -138,13 +139,20 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 	};
 
 	const handleClick = async () => {
-		if (connection) return;
+		if (connection || isLoading) return;
 
-		if (device.native && isNativeSocialProvider(type)) {
-			await handleNativeSocialLink();
+		setIsLoading(true);
+
+		try {
+			if (device.native && isNativeSocialProvider(type)) {
+				await handleNativeSocialLink();
+			}
+			else {
+				await handleOAuthLink();
+			}
 		}
-		else {
-			await handleOAuthLink();
+		finally {
+			setIsLoading(false);
 		}
 	};
 
@@ -166,7 +174,9 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 				type="button"
 				onClick={handleClick}
 			>
-				<Icon className="size-6" />
+				{isLoading
+					? <Loader2 className="size-6 animate-spin" />
+					: <Icon className="size-6" />}
 			</button>
 			<div className="pointer-events-none flex flex-col overflow-hidden whitespace-nowrap px-4 py-2 font-nunito leading-none vision:text-black-80">
 				<span className="text-sm leading-none opacity-75">{t(type)}</span>

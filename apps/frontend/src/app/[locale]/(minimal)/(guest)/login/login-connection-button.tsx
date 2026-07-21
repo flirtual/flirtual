@@ -1,4 +1,5 @@
 import { SocialLogin } from "@capgo/capacitor-social-login";
+import { Loader2 } from "lucide-react";
 import type { FC } from "react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -70,8 +71,6 @@ export const LoginConnectionButton: FC<LoginConnectionButtonProps> = ({
 			return handleOAuthLogin();
 		}
 
-		setIsLoading(true);
-
 		try {
 			const result = await SocialLogin.login({
 				provider: type,
@@ -137,9 +136,6 @@ export const LoginConnectionButton: FC<LoginConnectionButtonProps> = ({
 
 			toasts.add({ type: "error", value: t("errors.internal_server_error" as any) });
 		}
-		finally {
-			setIsLoading(false);
-		}
 	};
 
 	const handleOAuthLogin = async () => {
@@ -165,11 +161,18 @@ export const LoginConnectionButton: FC<LoginConnectionButtonProps> = ({
 	const handleClick = async () => {
 		if (guard && !guard()) return;
 
-		if (device.native && isNativeSocialProvider(type)) {
-			await handleNativeSocialLogin();
+		setIsLoading(true);
+
+		try {
+			if (device.native && isNativeSocialProvider(type)) {
+				await handleNativeSocialLogin();
+			}
+			else {
+				await handleOAuthLogin();
+			}
 		}
-		else {
-			await handleOAuthLogin();
+		finally {
+			setIsLoading(false);
 		}
 	};
 
@@ -182,7 +185,9 @@ export const LoginConnectionButton: FC<LoginConnectionButtonProps> = ({
 			tabIndex={tabIndex}
 			onClick={handleClick}
 		>
-			<Icon className="size-6" />
+			{isLoading
+				? <Loader2 className="size-6 animate-spin" />
+				: <Icon className="size-6" />}
 			<span className="font-montserrat text-lg font-semibold">
 				{t("continue_with", { type: label[type] })}
 			</span>
