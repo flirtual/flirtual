@@ -1,5 +1,5 @@
+import { InAppBrowser, ToolBarType } from "@capgo/capacitor-inappbrowser";
 import { SocialLogin } from "@capgo/capacitor-social-login";
-import { InAppBrowser, ToolBarType } from "@capgo/inappbrowser";
 import { X } from "lucide-react";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";

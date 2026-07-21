@@ -1,113 +1,118 @@
 PODS:
   - Alamofire (5.10.2)
-  - AppAuth (2.0.0):
-    - AppAuth/Core (= 2.0.0)
-    - AppAuth/ExternalUserAgent (= 2.0.0)
-  - AppAuth/Core (2.0.0)
-  - AppAuth/ExternalUserAgent (2.0.0):
+  - AppAuth (2.1.0):
+    - AppAuth/Core (= 2.1.0)
+    - AppAuth/ExternalUserAgent (= 2.1.0)
+  - AppAuth/Core (2.1.0)
+  - AppAuth/ExternalUserAgent (2.1.0):
     - AppAuth/Core
-  - AppCheckCore (11.2.0):
+  - AppCheckCore (11.3.1):
     - GoogleUtilities/Environment (~> 8.0)
     - GoogleUtilities/UserDefaults (~> 8.0)
     - PromisesObjC (~> 2.4)
-  - Capacitor (7.4.3):
+    - PromisesSwift (~> 2.4)
+    - RecaptchaInterop (~> 101.0)
+  - Capacitor (8.4.2):
     - CapacitorCordova
-  - CapacitorApp (7.1.0):
+  - CapacitorApp (8.1.1):
     - Capacitor
-  - CapacitorClipboard (7.0.2):
+  - CapacitorClipboard (8.0.1):
     - Capacitor
-  - CapacitorCommunityInAppReview (7.0.1):
+  - CapacitorCommunityInAppReview (8.0.0):
     - Capacitor
-  - CapacitorCommunitySafeArea (7.0.0-beta.3):
+  - CapacitorCommunitySafeArea (8.0.1):
     - Capacitor
-  - CapacitorCordova (7.4.3)
-  - CapacitorDevice (7.0.2):
+  - CapacitorCordova (8.4.2)
+  - CapacitorDevice (8.0.3):
     - Capacitor
-  - CapacitorDialog (7.0.2):
+  - CapacitorDialog (8.0.1):
     - Capacitor
-  - CapacitorGeolocation (7.1.6):
+  - CapacitorGeolocation (8.2.0):
     - Capacitor
-    - IONGeolocationLib (= 1.0.1)
-  - CapacitorKeyboard (7.0.3):
+    - IONGeolocationLib (= 2.1.0)
+  - CapacitorKeyboard (8.0.5):
     - Capacitor
-  - CapacitorNativeSettings (7.0.2):
+  - CapacitorNativeSettings (8.1.0):
     - Capacitor
-  - CapacitorPreferences (7.0.2):
+  - CapacitorPreferences (8.0.1):
     - Capacitor
-  - CapacitorPushNotifications (7.0.3):
+  - CapacitorPushNotifications (8.1.2):
     - Capacitor
-  - CapacitorShare (7.0.2):
+  - CapacitorShare (8.0.1):
     - Capacitor
-  - CapacitorToast (7.0.2):
+  - CapacitorToast (8.0.1):
     - Capacitor
-  - CapawesomeCapacitorAppUpdate (7.0.1):
+  - CapawesomeCapacitorAppUpdate (8.0.3):
     - Capacitor
-  - CapawesomeTeamCapacitorDatetimePicker (7.0.1):
+  - CapawesomeTeamCapacitorDatetimePicker (8.1.1):
     - Capacitor
-  - CapgoCapacitorSocialLogin (7.20.0):
+  - CapgoCapacitorInappbrowser (8.12.3):
+    - Capacitor
+  - CapgoCapacitorSocialLogin (8.3.37):
     - Alamofire (~> 5.10.2)
     - Capacitor
-    - FBSDKCoreKit (= 18.0.0)
-    - FBSDKLoginKit (= 18.0.0)
+    - FBSDKCoreKit (~> 18.0)
+    - FBSDKLoginKit (~> 18.0)
     - GoogleSignIn (~> 9.0.0)
-  - CapgoInappbrowser (7.6.8):
-    - Capacitor
-  - FBAEMKit (18.0.0):
-    - FBSDKCoreKit_Basics (= 18.0.0)
-  - FBSDKCoreKit (18.0.0):
-    - FBAEMKit (= 18.0.0)
-    - FBSDKCoreKit_Basics (= 18.0.0)
-  - FBSDKCoreKit_Basics (18.0.0)
-  - FBSDKLoginKit (18.0.0):
-    - FBSDKCoreKit (= 18.0.0)
+  - FBAEMKit (18.1.0):
+    - FBSDKCoreKit_Basics (= 18.1.0)
+  - FBSDKCoreKit (18.1.0):
+    - FBAEMKit (= 18.1.0)
+    - FBSDKCoreKit_Basics (= 18.1.0)
+  - FBSDKCoreKit_Basics (18.1.0)
+  - FBSDKLoginKit (18.1.0):
+    - FBSDKCoreKit (= 18.1.0)
   - GoogleSignIn (9.0.0):
     - AppAuth (~> 2.0)
     - AppCheckCore (~> 11.0)
     - GTMAppAuth (~> 5.0)
     - GTMSessionFetcher/Core (~> 3.3)
-  - GoogleUtilities/Environment (8.1.0):
+  - GoogleUtilities/Environment (8.1.2):
     - GoogleUtilities/Privacy
-  - GoogleUtilities/Logger (8.1.0):
+  - GoogleUtilities/Logger (8.1.2):
     - GoogleUtilities/Environment
     - GoogleUtilities/Privacy
-  - GoogleUtilities/Privacy (8.1.0)
-  - GoogleUtilities/UserDefaults (8.1.0):
+  - GoogleUtilities/Privacy (8.1.2)
+  - GoogleUtilities/UserDefaults (8.1.2):
     - GoogleUtilities/Logger
     - GoogleUtilities/Privacy
   - GTMAppAuth (5.0.0):
     - AppAuth/Core (~> 2.0)
     - GTMSessionFetcher/Core (< 4.0, >= 3.3)
   - GTMSessionFetcher/Core (3.5.0)
-  - IONGeolocationLib (1.0.1)
-  - PromisesObjC (2.4.0)
-  - PurchasesHybridCommon (13.25.0):
-    - RevenueCat (= 5.19.0)
-  - RevenueCat (5.19.0)
-  - RevenuecatPurchasesCapacitor (10.2.1):
+  - IONGeolocationLib (2.1.0)
+  - PromisesObjC (2.4.1)
+  - PromisesSwift (2.4.1):
+    - PromisesObjC (= 2.4.1)
+  - PurchasesHybridCommon (18.21.0):
+    - RevenueCat (= 5.80.3)
+  - RecaptchaInterop (101.0.0)
+  - RevenueCat (5.80.3)
+  - RevenuecatPurchasesCapacitor (13.2.3):
     - Capacitor
-    - PurchasesHybridCommon (= 13.25.0)
+    - PurchasesHybridCommon (= 18.21.0)
 
 DEPENDENCIES:
-  - "Capacitor (from `../../node_modules/.pnpm/@capacitor+ios@7.4.3_@capacitor+core@7.4.3/node_modules/@capacitor/ios`)"
-  - "CapacitorApp (from `../../node_modules/.pnpm/@capacitor+app@7.1.0_@capacitor+core@7.4.3/node_modules/@capacitor/app`)"
-  - "CapacitorClipboard (from `../../node_modules/.pnpm/@capacitor+clipboard@7.0.2_@capacitor+core@7.4.3/node_modules/@capacitor/clipboard`)"
-  - "CapacitorCommunityInAppReview (from `../../node_modules/.pnpm/@capacitor-community+in-app-review@7.0.1_@capacitor+core@7.4.3/node_modules/@capacitor-community/in-app-review`)"
-  - "CapacitorCommunitySafeArea (from `../../node_modules/.pnpm/@capacitor-community+safe-area@7.0.0-beta.3_@capacitor+core@7.4.3/node_modules/@capacitor-community/safe-area`)"
-  - "CapacitorCordova (from `../../node_modules/.pnpm/@capacitor+ios@7.4.3_@capacitor+core@7.4.3/node_modules/@capacitor/ios`)"
-  - "CapacitorDevice (from `../../node_modules/.pnpm/@capacitor+device@7.0.2_@capacitor+core@7.4.3/node_modules/@capacitor/device`)"
-  - "CapacitorDialog (from `../../node_modules/.pnpm/@capacitor+dialog@7.0.2_@capacitor+core@7.4.3/node_modules/@capacitor/dialog`)"
-  - "CapacitorGeolocation (from `../../node_modules/.pnpm/@capacitor+geolocation@7.1.6_@capacitor+core@7.4.3/node_modules/@capacitor/geolocation`)"
-  - "CapacitorKeyboard (from `../../node_modules/.pnpm/@capacitor+keyboard@7.0.3_@capacitor+core@7.4.3/node_modules/@capacitor/keyboard`)"
-  - "CapacitorNativeSettings (from `../../node_modules/.pnpm/capacitor-native-settings@7.0.2_@capacitor+core@7.4.3/node_modules/capacitor-native-settings`)"
-  - "CapacitorPreferences (from `../../node_modules/.pnpm/@capacitor+preferences@7.0.2_@capacitor+core@7.4.3/node_modules/@capacitor/preferences`)"
-  - "CapacitorPushNotifications (from `../../node_modules/.pnpm/@capacitor+push-notifications@7.0.3_@capacitor+core@7.4.3/node_modules/@capacitor/push-notifications`)"
-  - "CapacitorShare (from `../../node_modules/.pnpm/@capacitor+share@7.0.2_@capacitor+core@7.4.3/node_modules/@capacitor/share`)"
-  - "CapacitorToast (from `../../node_modules/.pnpm/@capacitor+toast@7.0.2_@capacitor+core@7.4.3/node_modules/@capacitor/toast`)"
-  - "CapawesomeCapacitorAppUpdate (from `../../node_modules/.pnpm/@capawesome+capacitor-app-update@7.0.1_@capacitor+core@7.4.3/node_modules/@capawesome/capacitor-app-update`)"
-  - "CapawesomeTeamCapacitorDatetimePicker (from `../../node_modules/.pnpm/@capawesome-team+capacitor-datetime-picker@7.0.1_@capacitor+core@7.4.3/node_modules/@capawesome-team/capacitor-datetime-picker`)"
-  - "CapgoCapacitorSocialLogin (from `../../node_modules/.pnpm/@capgo+capacitor-social-login@7.20.0_@capacitor+core@7.4.3/node_modules/@capgo/capacitor-social-login`)"
-  - "CapgoInappbrowser (from `../../node_modules/.pnpm/@capgo+inappbrowser@7.6.8_@capacitor+core@7.4.3/node_modules/@capgo/inappbrowser`)"
-  - "RevenuecatPurchasesCapacitor (from `../../node_modules/.pnpm/@revenuecat+purchases-capacitor@10.2.1_@capacitor+core@7.4.3/node_modules/@revenuecat/purchases-capacitor`)"
+  - "Capacitor (from `../../node_modules/.pnpm/@capacitor+ios@8.4.2_@capacitor+core@8.4.2/node_modules/@capacitor/ios`)"
+  - "CapacitorApp (from `../../node_modules/.pnpm/@capacitor+app@8.1.1_@capacitor+core@8.4.2/node_modules/@capacitor/app`)"
+  - "CapacitorClipboard (from `../../node_modules/.pnpm/@capacitor+clipboard@8.0.1_@capacitor+core@8.4.2/node_modules/@capacitor/clipboard`)"
+  - "CapacitorCommunityInAppReview (from `../../node_modules/.pnpm/@capacitor-community+in-app-review@8.0.0_@capacitor+core@8.4.2/node_modules/@capacitor-community/in-app-review`)"
+  - "CapacitorCommunitySafeArea (from `../../node_modules/.pnpm/@capacitor-community+safe-area@8.0.1_@capacitor+core@8.4.2/node_modules/@capacitor-community/safe-area`)"
+  - "CapacitorCordova (from `../../node_modules/.pnpm/@capacitor+ios@8.4.2_@capacitor+core@8.4.2/node_modules/@capacitor/ios`)"
+  - "CapacitorDevice (from `../../node_modules/.pnpm/@capacitor+device@8.0.3_@capacitor+core@8.4.2/node_modules/@capacitor/device`)"
+  - "CapacitorDialog (from `../../node_modules/.pnpm/@capacitor+dialog@8.0.1_@capacitor+core@8.4.2/node_modules/@capacitor/dialog`)"
+  - "CapacitorGeolocation (from `../../node_modules/.pnpm/@capacitor+geolocation@8.2.0_@capacitor+core@8.4.2/node_modules/@capacitor/geolocation`)"
+  - "CapacitorKeyboard (from `../../node_modules/.pnpm/@capacitor+keyboard@8.0.5_@capacitor+core@8.4.2/node_modules/@capacitor/keyboard`)"
+  - "CapacitorNativeSettings (from `../../node_modules/.pnpm/capacitor-native-settings@8.1.0_@capacitor+core@8.4.2/node_modules/capacitor-native-settings`)"
+  - "CapacitorPreferences (from `../../node_modules/.pnpm/@capacitor+preferences@8.0.1_@capacitor+core@8.4.2/node_modules/@capacitor/preferences`)"
+  - "CapacitorPushNotifications (from `../../node_modules/.pnpm/@capacitor+push-notifications@8.1.2_@capacitor+core@8.4.2/node_modules/@capacitor/push-notifications`)"
+  - "CapacitorShare (from `../../node_modules/.pnpm/@capacitor+share@8.0.1_@capacitor+core@8.4.2/node_modules/@capacitor/share`)"
+  - "CapacitorToast (from `../../node_modules/.pnpm/@capacitor+toast@8.0.1_@capacitor+core@8.4.2/node_modules/@capacitor/toast`)"
+  - "CapawesomeCapacitorAppUpdate (from `../../node_modules/.pnpm/@capawesome+capacitor-app-update@8.0.3_@capacitor+core@8.4.2/node_modules/@capawesome/capacitor-app-update`)"
+  - "CapawesomeTeamCapacitorDatetimePicker (from `../../node_modules/.pnpm/@capawesome-team+capacitor-datetime-picker@8.1.1_@capacitor+core@8.4.2/node_modules/@capawesome-team/capacitor-datetime-picker`)"
+  - "CapgoCapacitorInappbrowser (from `../../node_modules/.pnpm/@capgo+capacitor-inappbrowser@8.12.3_@capacitor+core@8.4.2/node_modules/@capgo/capacitor-inappbrowser`)"
+  - "CapgoCapacitorSocialLogin (from `../../node_modules/.pnpm/@capgo+capacitor-social-login@8.3.37_@capacitor+core@8.4.2/node_modules/@capgo/capacitor-social-login`)"
+  - "RevenuecatPurchasesCapacitor (from `../../node_modules/.pnpm/@revenuecat+purchases-capacitor@13.2.3_@capacitor+core@8.4.2/node_modules/@revenuecat/purchases-capacitor`)"
 
 SPEC REPOS:
   trunk:
@@ -124,88 +129,92 @@ SPEC REPOS:
     - GTMSessionFetcher
     - IONGeolocationLib
     - PromisesObjC
+    - PromisesSwift
     - PurchasesHybridCommon
+    - RecaptchaInterop
     - RevenueCat
 
 EXTERNAL SOURCES:
   Capacitor:
-    :path: "../../node_modules/.pnpm/@capacitor+ios@7.4.3_@capacitor+core@7.4.3/node_modules/@capacitor/ios"
+    :path: "../../node_modules/.pnpm/@capacitor+ios@8.4.2_@capacitor+core@8.4.2/node_modules/@capacitor/ios"
   CapacitorApp:
-    :path: "../../node_modules/.pnpm/@capacitor+app@7.1.0_@capacitor+core@7.4.3/node_modules/@capacitor/app"
+    :path: "../../node_modules/.pnpm/@capacitor+app@8.1.1_@capacitor+core@8.4.2/node_modules/@capacitor/app"
   CapacitorClipboard:
-    :path: "../../node_modules/.pnpm/@capacitor+clipboard@7.0.2_@capacitor+core@7.4.3/node_modules/@capacitor/clipboard"
+    :path: "../../node_modules/.pnpm/@capacitor+clipboard@8.0.1_@capacitor+core@8.4.2/node_modules/@capacitor/clipboard"
   CapacitorCommunityInAppReview:
-    :path: "../../node_modules/.pnpm/@capacitor-community+in-app-review@7.0.1_@capacitor+core@7.4.3/node_modules/@capacitor-community/in-app-review"
+    :path: "../../node_modules/.pnpm/@capacitor-community+in-app-review@8.0.0_@capacitor+core@8.4.2/node_modules/@capacitor-community/in-app-review"
   CapacitorCommunitySafeArea:
-    :path: "../../node_modules/.pnpm/@capacitor-community+safe-area@7.0.0-beta.3_@capacitor+core@7.4.3/node_modules/@capacitor-community/safe-area"
+    :path: "../../node_modules/.pnpm/@capacitor-community+safe-area@8.0.1_@capacitor+core@8.4.2/node_modules/@capacitor-community/safe-area"
   CapacitorCordova:
-    :path: "../../node_modules/.pnpm/@capacitor+ios@7.4.3_@capacitor+core@7.4.3/node_modules/@capacitor/ios"
+    :path: "../../node_modules/.pnpm/@capacitor+ios@8.4.2_@capacitor+core@8.4.2/node_modules/@capacitor/ios"
   CapacitorDevice:
-    :path: "../../node_modules/.pnpm/@capacitor+device@7.0.2_@capacitor+core@7.4.3/node_modules/@capacitor/device"
+    :path: "../../node_modules/.pnpm/@capacitor+device@8.0.3_@capacitor+core@8.4.2/node_modules/@capacitor/device"
   CapacitorDialog:
-    :path: "../../node_modules/.pnpm/@capacitor+dialog@7.0.2_@capacitor+core@7.4.3/node_modules/@capacitor/dialog"
+    :path: "../../node_modules/.pnpm/@capacitor+dialog@8.0.1_@capacitor+core@8.4.2/node_modules/@capacitor/dialog"
   CapacitorGeolocation:
-    :path: "../../node_modules/.pnpm/@capacitor+geolocation@7.1.6_@capacitor+core@7.4.3/node_modules/@capacitor/geolocation"
+    :path: "../../node_modules/.pnpm/@capacitor+geolocation@8.2.0_@capacitor+core@8.4.2/node_modules/@capacitor/geolocation"
   CapacitorKeyboard:
-    :path: "../../node_modules/.pnpm/@capacitor+keyboard@7.0.3_@capacitor+core@7.4.3/node_modules/@capacitor/keyboard"
+    :path: "../../node_modules/.pnpm/@capacitor+keyboard@8.0.5_@capacitor+core@8.4.2/node_modules/@capacitor/keyboard"
   CapacitorNativeSettings:
-    :path: "../../node_modules/.pnpm/capacitor-native-settings@7.0.2_@capacitor+core@7.4.3/node_modules/capacitor-native-settings"
+    :path: "../../node_modules/.pnpm/capacitor-native-settings@8.1.0_@capacitor+core@8.4.2/node_modules/capacitor-native-settings"
   CapacitorPreferences:
-    :path: "../../node_modules/.pnpm/@capacitor+preferences@7.0.2_@capacitor+core@7.4.3/node_modules/@capacitor/preferences"
+    :path: "../../node_modules/.pnpm/@capacitor+preferences@8.0.1_@capacitor+core@8.4.2/node_modules/@capacitor/preferences"
   CapacitorPushNotifications:
-    :path: "../../node_modules/.pnpm/@capacitor+push-notifications@7.0.3_@capacitor+core@7.4.3/node_modules/@capacitor/push-notifications"
+    :path: "../../node_modules/.pnpm/@capacitor+push-notifications@8.1.2_@capacitor+core@8.4.2/node_modules/@capacitor/push-notifications"
   CapacitorShare:
-    :path: "../../node_modules/.pnpm/@capacitor+share@7.0.2_@capacitor+core@7.4.3/node_modules/@capacitor/share"
+    :path: "../../node_modules/.pnpm/@capacitor+share@8.0.1_@capacitor+core@8.4.2/node_modules/@capacitor/share"
   CapacitorToast:
-    :path: "../../node_modules/.pnpm/@capacitor+toast@7.0.2_@capacitor+core@7.4.3/node_modules/@capacitor/toast"
+    :path: "../../node_modules/.pnpm/@capacitor+toast@8.0.1_@capacitor+core@8.4.2/node_modules/@capacitor/toast"
   CapawesomeCapacitorAppUpdate:
-    :path: "../../node_modules/.pnpm/@capawesome+capacitor-app-update@7.0.1_@capacitor+core@7.4.3/node_modules/@capawesome/capacitor-app-update"
+    :path: "../../node_modules/.pnpm/@capawesome+capacitor-app-update@8.0.3_@capacitor+core@8.4.2/node_modules/@capawesome/capacitor-app-update"
   CapawesomeTeamCapacitorDatetimePicker:
-    :path: "../../node_modules/.pnpm/@capawesome-team+capacitor-datetime-picker@7.0.1_@capacitor+core@7.4.3/node_modules/@capawesome-team/capacitor-datetime-picker"
+    :path: "../../node_modules/.pnpm/@capawesome-team+capacitor-datetime-picker@8.1.1_@capacitor+core@8.4.2/node_modules/@capawesome-team/capacitor-datetime-picker"
+  CapgoCapacitorInappbrowser:
+    :path: "../../node_modules/.pnpm/@capgo+capacitor-inappbrowser@8.12.3_@capacitor+core@8.4.2/node_modules/@capgo/capacitor-inappbrowser"
   CapgoCapacitorSocialLogin:
-    :path: "../../node_modules/.pnpm/@capgo+capacitor-social-login@7.20.0_@capacitor+core@7.4.3/node_modules/@capgo/capacitor-social-login"
-  CapgoInappbrowser:
-    :path: "../../node_modules/.pnpm/@capgo+inappbrowser@7.6.8_@capacitor+core@7.4.3/node_modules/@capgo/inappbrowser"
+    :path: "../../node_modules/.pnpm/@capgo+capacitor-social-login@8.3.37_@capacitor+core@8.4.2/node_modules/@capgo/capacitor-social-login"
   RevenuecatPurchasesCapacitor:
-    :path: "../../node_modules/.pnpm/@revenuecat+purchases-capacitor@10.2.1_@capacitor+core@7.4.3/node_modules/@revenuecat/purchases-capacitor"
+    :path: "../../node_modules/.pnpm/@revenuecat+purchases-capacitor@13.2.3_@capacitor+core@8.4.2/node_modules/@revenuecat/purchases-capacitor"
 
 SPEC CHECKSUMS:
   Alamofire: 7193b3b92c74a07f85569e1a6c4f4237291e7496
-  AppAuth: 1c1a8afa7e12f2ec3a294d9882dfa5ab7d3cb063
-  AppCheckCore: cc8fd0a3a230ddd401f326489c99990b013f0c4f
-  Capacitor: 28d6c01026a9a3f7156529498ec1f389a2a28dbc
-  CapacitorApp: 26587c2ce485d88ddb39adb21cac64f8e481afe3
-  CapacitorClipboard: 7e227702976d4435a5a40df54f65e154d0dfc1f3
-  CapacitorCommunityInAppReview: a8f26c4e48a8ccc9df0acf1c7bca39844c325572
-  CapacitorCommunitySafeArea: 0594cf23a9685bd52a0a8495f30f2e2716a37b14
-  CapacitorCordova: 435121e81a2df4d0034f0fb11fcefab5104cfdb5
-  CapacitorDevice: 81ae78d5d1942707caad79276badd458bf6ec603
-  CapacitorDialog: 5bf72a94b747fb339df6f64ef60812e5e4630ad2
-  CapacitorGeolocation: a65213fef581c7b8c5d486abbd5a6d00192a179e
-  CapacitorKeyboard: 62f36104f26d53d8b3a2a43f2a69fe714f1777d5
-  CapacitorNativeSettings: 3cd2e2ef431fe471674f381609cfb29154ddfcfa
-  CapacitorPreferences: 65107ed7437d96ee72583df5763985e3c0ff2bc2
-  CapacitorPushNotifications: bdd621fbd562be34a41f4a7b1750efa000447d5a
-  CapacitorShare: be166411fa995ead2d39b104aa0aae56d8615c66
-  CapacitorToast: 166611aea815418fc08894b77a915773e3d059d5
-  CapawesomeCapacitorAppUpdate: d1f04c1c870388248889908cf2ca960c7fdbf0ef
-  CapawesomeTeamCapacitorDatetimePicker: efbcc48bc69fbc550502235513691302871c9fad
-  CapgoCapacitorSocialLogin: a6084e910ce61d78173fa215460c00523a6c4536
-  CapgoInappbrowser: 07f56b0891cdcc211f8d4c6a788c915a6ddfca0c
-  FBAEMKit: e34530df538b8eb8aeb53c35867715ba6c63ef0c
-  FBSDKCoreKit: d3f479a69127acebb1c6aad91c1a33907bcf6c2f
-  FBSDKCoreKit_Basics: 017b6dc2a1862024815a8229e75661e627ac1e29
-  FBSDKLoginKit: 5875762d1fe09ddcb05d03365d4f5dc34413843d
+  AppAuth: ef4da5a3fc2e10b90c09a0a94a9baeaedc0341d5
+  AppCheckCore: e215d35177a9cf469927863e69c13e220df32a8b
+  Capacitor: 52f999235b8bd6a7d01694753f4f4d54d182e3a3
+  CapacitorApp: 305bd13c44f6f9d164e2ee66a4faa956ed8c0e06
+  CapacitorClipboard: c75fdaa6e622111119f35e7914ecfc67b05efecb
+  CapacitorCommunityInAppReview: 4492bdd34aad4d27ed87949376022cc93b294ea1
+  CapacitorCommunitySafeArea: 91738f4ae7f47d2d94e06e429e16fb73cd8fdc48
+  CapacitorCordova: 345eacdc4c8282415446aea4acd8c77d82480bd4
+  CapacitorDevice: 708e742b60a61572cd593e44c809592e8f31da14
+  CapacitorDialog: 854c5dac405081cae697c177ca43bcaa95ae67bf
+  CapacitorGeolocation: b36f6287bfc9f2eefa04dc900496f2c8ae666136
+  CapacitorKeyboard: b6b0744890cdb1d9a96e2cafcc9253fdcc55de3b
+  CapacitorNativeSettings: d512b84fdcc04948c32f267621079a0d7c0d452f
+  CapacitorPreferences: cca2021f386efb75947c850334447d9ff22b14f1
+  CapacitorPushNotifications: 32a7f840815f319fd9ba1c1c9b0b914be9d95237
+  CapacitorShare: 0c58305114538568059bfc07111f22dcb9cb2a82
+  CapacitorToast: 408036fbd702120d3adde3980b740f3c0fb60c9e
+  CapawesomeCapacitorAppUpdate: 3a7537c6a6696837b51d06f26b2e909fd7b9226f
+  CapawesomeTeamCapacitorDatetimePicker: 7248569efbab419c8791d5e6f4656548d2f99d28
+  CapgoCapacitorInappbrowser: ee6293211c1c7ba0098dc6bee29a506a40898831
+  CapgoCapacitorSocialLogin: 422e0fd92e8232e48d5491c462f41fa8ea71bae8
+  FBAEMKit: 64088ff0380f50e4a56e2ee07d984f7f1aef7595
+  FBSDKCoreKit: 8390ea3a8fac186f444275f31d7512e760b47cba
+  FBSDKCoreKit_Basics: 3a0005c78b355388bf2df5c6dbe6381b77ea4be3
+  FBSDKLoginKit: d8e2711a3a03b0026703735c8d28a2b5a0e1f4fd
   GoogleSignIn: c7f09cfbc85a1abf69187be091997c317cc33b77
-  GoogleUtilities: 00c88b9a86066ef77f0da2fab05f65d7768ed8e1
+  GoogleUtilities: 766ace00c6b10d8148408f329d10c4f051931850
   GTMAppAuth: 217a876b249c3c585a54fd6f73e6b58c4f5c4238
   GTMSessionFetcher: 5aea5ba6bd522a239e236100971f10cb71b96ab6
-  IONGeolocationLib: 20f9d0248a0b5264511fb57a37e25dd2badf797a
-  PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
-  PurchasesHybridCommon: f27e7fe57a9934319373b10c260db5d6c10bbb64
-  RevenueCat: 4be87c151dff652d2a5b7af46073db11f01ad93f
-  RevenuecatPurchasesCapacitor: 85b6f9412913f2688169e0baebf42b773be5d119
+  IONGeolocationLib: 6a7b6f76063fb1b01cfb14fae7d0f526e3c9b271
+  PromisesObjC: 752c3227f599e3467650e47ea36f433eeb10c273
+  PromisesSwift: 217dea0fd5d2ad65222a109c48698add13cc1c5b
+  PurchasesHybridCommon: 097af88db3cb39b415bef2f3140e6b3324899756
+  RecaptchaInterop: 11e0b637842dfb48308d242afc3f448062325aba
+  RevenueCat: 72d1e14966339bf38c41d9b2841ef64c8fd79646
+  RevenuecatPurchasesCapacitor: 691a18ebcfed0100a041e4cba91ba9ae8787b1a7
 
-PODFILE CHECKSUM: 122d8d74b76e6c3f79be730bcc6348c2d594d9d1
+PODFILE CHECKSUM: f012ab8b4f8cf61f3fa20c0a9cb4f01d99501e4a
 
 COCOAPODS: 1.16.2

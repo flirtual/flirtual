@@ -39,6 +39,9 @@ export default {
 		Flirtual: {
 			apiUrl
 		},
+		SystemBars: {
+			insetsHandling: "disable"
+		},
 		SocialLogin: {
 			providers: {
 				google: true,

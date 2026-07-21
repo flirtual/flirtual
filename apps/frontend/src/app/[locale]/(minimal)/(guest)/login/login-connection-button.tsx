@@ -1,5 +1,5 @@
+import { InAppBrowser, ToolBarType } from "@capgo/capacitor-inappbrowser";
 import { SocialLogin } from "@capgo/capacitor-social-login";
-import { InAppBrowser, ToolBarType } from "@capgo/inappbrowser";
 import type { FC } from "react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
