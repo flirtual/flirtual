@@ -439,6 +439,8 @@
 		"connection_in_use": "This account is already connected to another Flirtual profile. Please delete your other Flirtual account first.",
 		"connection_verify_email": "Please verify your email address with your account provider and try again.",
 		"email_required": "Your account provider is missing an email address and cannot be used.",
+		"email_in_use": "An account already exists with this email address.",
+		"registration_failed": "Couldn't create your account, please try again later.",
 		"invalid_grant": "Couldn't connect account, please try again later. (invalid grant)",
 		"upstream_error": "Couldn't connect account, please try again later. (upstream error)",
 		"state_mismatch": "Couldn't connect account, please try again later (state mismatch)",

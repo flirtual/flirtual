@@ -478,16 +478,42 @@ defmodule FlirtualWeb.ConnectionController do
               conn |> put_status(:created) |> json(Flirtual.Policy.transform(conn, session))
           end
 
-        {:error, %Ecto.Changeset{} = changeset} ->
+        {:error, reason} ->
+          {status, message} = registration_error(reason)
+
           case options[:response] do
             :redirect ->
-              grant_error(conn, options[:redirect_type], :registration_failed, type, nil)
+              grant_error(conn, options[:redirect_type], message, type, nil)
 
             :json ->
-              {:error, changeset}
+              {:error, {status, message}}
           end
       end
     end
+  end
+
+  defp registration_error(%Ecto.Changeset{} = changeset) do
+    case changeset.errors[:email] do
+      {"email_domain_blocked", _} ->
+        {:bad_request, :email_domain_blocked}
+
+      {_message, options} ->
+        if options[:validation] == :unsafe_unique or options[:constraint] == :unique do
+          {:conflict, :email_in_use}
+        else
+          log(:error, [:grant, :register], changeset: changeset)
+          {:bad_request, :registration_failed}
+        end
+
+      nil ->
+        log(:error, [:grant, :register], changeset: changeset)
+        {:bad_request, :registration_failed}
+    end
+  end
+
+  defp registration_error(reason) do
+    log(:error, [:grant, :register], reason: reason)
+    {:bad_request, :registration_failed}
   end
 
   # Run moderation checks on connection data
