@@ -11,17 +11,36 @@ import { log } from "./log";
 import { initializeMonitoring } from "./monitoring";
 import { preloadAll } from "./query";
 import { isRedirectError } from "./redirect";
+import { deepLinkToRelativeUrl } from "./urls";
 
-App.addListener("appUrlOpen", async (event) => {
-	const url = new URL(event.url);
+const launchDeepLinkKey = "launch-deep-link-consumed";
+
+let lastDeepLink: string | null = null;
+
+function openDeepLink(value: string) {
+	const href = deepLinkToRelativeUrl(value);
 
 	// OAuth deep links resolve InAppBrowser.openSecureWindow, not navigation.
-	if (url.host === "oauth-callback") return;
+	if (!href || href.startsWith("/oauth-callback") || href === lastDeepLink) return;
 
-	const href = url.href.replace(url.origin, "");
-
+	lastDeepLink = href;
 	location.href = href;
-});
+}
+
+App.addListener("appUrlOpen", ({ url }) => openDeepLink(url));
+
+// appUrlOpen misses cold starts: Android only fires it from onNewIntent, iOS can
+// drop it before the bridge exists. The launch url persists for the process
+// lifetime, so consume it once per webview.
+async function openLaunchDeepLink() {
+	if (sessionStorage.getItem(launchDeepLinkKey)) return;
+	sessionStorage.setItem(launchDeepLinkKey, "1");
+
+	const { url } = await App.getLaunchUrl() ?? {};
+	if (url) openDeepLink(url);
+}
+
+void openLaunchDeepLink();
 
 initializeMonitoring();
 

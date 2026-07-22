@@ -34,6 +34,22 @@ export function toRelativeUrl(url: { href: string; origin: string }) {
 	return url.href.slice(url.origin.length);
 }
 
+export function deepLinkToRelativeUrl(value: string) {
+	let url: URL;
+
+	try {
+		url = new URL(value);
+	}
+	catch {
+		return null;
+	}
+
+	if (url.protocol !== "http:" && url.protocol !== "https:")
+		return `/${url.host}${url.pathname}${url.search}${url.hash}`;
+
+	return toRelativeUrl(url);
+}
+
 export function urlEqual(a: URL, b: URL, strict: boolean = true) {
 	return (
 		a.origin === b.origin
