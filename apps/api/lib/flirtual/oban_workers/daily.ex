@@ -5,7 +5,7 @@ defmodule Flirtual.ObanWorkers.Daily do
 
   alias Flirtual.{Entitlement, Repo, User}
   alias Flirtual.ObanWorkers.Reconcile
-  alias Flirtual.User.{Email, Login, Push, Session}
+  alias Flirtual.User.{Email, Login, Push, Session, SessionTransfer}
   alias Flirtual.User.Profile.Attributes
 
   @reminders [
@@ -133,6 +133,8 @@ defmodule Flirtual.ObanWorkers.Daily do
       session.expire_at <= ^now or session.created_at <= ^absolute_expire_at
     )
     |> Repo.delete_all()
+
+    SessionTransfer.delete_expired()
 
     Login
     |> where(
