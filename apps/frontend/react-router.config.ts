@@ -48,6 +48,7 @@ export default {
 		"/.well-known/assetlinks.json",
 		"/.well-known/apple-app-site-association",
 		"/.well-known/apple-developer-merchantid-domain-association",
+		"/.well-known/webauthn",
 		"/_redirects",
 		"/_headers",
 		"/wrangler.json"

@@ -21,7 +21,7 @@ import {
 	DropdownMenuSubTrigger
 } from "~/components/dropdown";
 import { useOptionalSession } from "~/hooks/use-session";
-import { toAbsoluteUrl, urls } from "~/urls";
+import { toShortUrl, urls } from "~/urls";
 
 export const ProfileDropdownCopySubmenu: FC<
 	PropsWithChildren<{ user: User }>
@@ -106,7 +106,7 @@ export const ProfileDropdownCopySubmenu: FC<
 					className="gap-2"
 					onClick={() =>
 						Clipboard.write({
-							url: toAbsoluteUrl(urls.profile(user)).href
+							url: toShortUrl(urls.profile(user)).href
 						})}
 				>
 					<Link2 className="size-5" />

@@ -165,9 +165,11 @@ config :flirtual, Flirtual.VRChat,
   password: Env.get!("VRCHAT_PASSWORD"),
   totp_secret: Env.get!("VRCHAT_TOTP_SECRET")
 
+# We pin rp_id to flirtu.al to keep passkeys valid that were created before
+# moving to flirtual.com.
 config :wax_,
   origin: frontend_origin,
-  rp_id: :auto
+  rp_id: Env.get("WEBAUTHN_RP_ID", default: URI.parse(frontend_origin).host)
 
 config :joken,
   default_signer: Env.get!("JOKEN_SECRET", default: "local_Ru3m3hN7uAxO2snCb030SDyzDyR")

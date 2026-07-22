@@ -8,7 +8,7 @@ import type { User } from "./api/user";
 import type { Profile } from "./api/user/profile";
 import type { ProfileImage } from "./api/user/profile/images";
 import type { DiscoverGroup } from "./app/[locale]/(app)/(authenticated)/(onboarded)/discover/page";
-import { apiUrl, bucketContentOrigin, bucketUploadsOrigin, siteOrigin } from "./const";
+import { apiUrl, bucketContentOrigin, bucketUploadsOrigin, shortOrigin, siteOrigin } from "./const";
 import { defaultLocale } from "./i18n";
 import type { Locale } from "./i18n";
 import { escapeVRChat } from "./vrchat";
@@ -29,6 +29,10 @@ export function toAbsoluteUrl(to: Path | URL | string) {
 }
 
 export { toAbsoluteUrl as absoluteUrl };
+
+export function toShortUrl(to: Path | URL | string) {
+	return new URL((typeof to === "string" || to instanceof URL) ? to : createPath(to), shortOrigin);
+}
 
 export function toRelativeUrl(url: { href: string; origin: string }) {
 	return url.href.slice(url.origin.length);

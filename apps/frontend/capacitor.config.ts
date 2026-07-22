@@ -1,5 +1,22 @@
+import { readFileSync } from "node:fs";
+
 import type { CapacitorConfig } from "@capacitor/cli";
 import invariant from "tiny-invariant";
+
+function nativeVersion(path: string, pattern: RegExp) {
+	const versions = new Set(
+		[...readFileSync(path, "utf8").matchAll(pattern)].map(([, version]) => version)
+	);
+
+	invariant(versions.size === 1, `Expected one version in ${path}, found ${versions.size}`);
+	return [...versions][0] as string;
+}
+
+const androidVersion = nativeVersion("android/app/build.gradle", /versionName\s+'([^']+)'/g);
+const iosVersion = nativeVersion(
+	"ios/App/App.xcodeproj/project.pbxproj",
+	/MARKETING_VERSION = ([^;]+);/g
+);
 
 const origin = process.env.VITE_ORIGIN;
 invariant(origin, "VITE_ORIGIN is not set");
@@ -32,13 +49,16 @@ export default {
 		androidScheme: frontendScheme,
 		hostname: frontendUrl.hostname,
 		url: frontendUrl.origin,
-		cleartext: frontendScheme === "http"
+		cleartext: frontendScheme === "http",
+		allowNavigation: ["flirtual.com"] // migration prep
 	},
 	android: {
-		flavor: androidFlavor
+		flavor: androidFlavor,
+		appendUserAgent: `Flirtual-Native/${androidVersion}`
 	},
 	ios: {
-		scheme: iosScheme
+		scheme: iosScheme,
+		appendUserAgent: `Flirtual-Native/${iosVersion}`
 	},
 	appendUserAgent: "Flirtual-Native",
 	plugins: {

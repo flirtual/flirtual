@@ -12,6 +12,9 @@ export { default as builtAt } from "~build/time";
 export const siteOrigin = import.meta.env.VITE_ORIGIN as string;
 invariant(siteOrigin, "VITE_ORIGIN is required");
 
+export const shortOrigin = import.meta.env.VITE_SHORT_ORIGIN as string || siteOrigin;
+export const shortHost = new URL(shortOrigin).host;
+
 export const apiUrl = import.meta.env.VITE_API_URL as string;
 invariant(apiUrl, "VITE_API_URL is required");
 

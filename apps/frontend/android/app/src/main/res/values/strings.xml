@@ -8,6 +8,8 @@
     <string name="asset_statements" translatable="false">
         [{
             \"include\": \"https://flirtu.al/.well-known/assetlinks.json\"
+        }, {
+            \"include\": \"https://flirtual.com/.well-known/assetlinks.json\"
         }]
     </string>
 </resources>
