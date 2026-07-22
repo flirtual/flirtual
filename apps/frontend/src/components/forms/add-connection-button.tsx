@@ -56,10 +56,9 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 		if (!isNativeSocialProvider(type)) return;
 
 		try {
-			const result = await SocialLogin.login({
-				provider: type,
-				options: type === "apple" ? { scopes: ["email"] } : {}
-			});
+			const result = type === "apple"
+				? await SocialLogin.login({ provider: type, options: { scopes: ["email"] } })
+				: await SocialLogin.login({ provider: type, options: { forcePrompt: true } });
 
 			if (!result || !result.result) return;
 

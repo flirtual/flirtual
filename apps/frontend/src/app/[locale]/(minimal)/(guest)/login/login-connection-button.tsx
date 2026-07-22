@@ -74,10 +74,9 @@ export const LoginConnectionButton: FC<LoginConnectionButtonProps> = ({
 		}
 
 		try {
-			const result = await SocialLogin.login({
-				provider: type,
-				options: type === "apple" ? { scopes: ["email"] } : {}
-			});
+			const result = type === "apple"
+				? await SocialLogin.login({ provider: type, options: { scopes: ["email"] } })
+				: await SocialLogin.login({ provider: type, options: { forcePrompt: true } });
 
 			if (!result || !result.result) {
 				return;
