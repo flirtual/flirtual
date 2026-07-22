@@ -290,6 +290,18 @@ defmodule FlirtualWeb.Router do
           end
         end
 
+        scope "/attributes" do
+          pipe_through([:require_authenticated_user, :require_valid_user])
+
+          get("/", AttributeController, :index)
+          post("/", AttributeController, :create)
+
+          scope "/:attribute_id" do
+            patch("/", AttributeController, :update)
+            delete("/", AttributeController, :delete)
+          end
+        end
+
         scope "/flags" do
           pipe_through([:require_authenticated_user, :require_valid_user])
 

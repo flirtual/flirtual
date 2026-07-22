@@ -1,6 +1,6 @@
 import type { WretchOptions } from "wretch";
 
-import { commitIdShort, development } from "~/const";
+import { development } from "~/const";
 import type { Expand } from "~/utilities";
 
 import { api } from "./common";
@@ -27,6 +27,10 @@ export const attributeTypes = [
 ] as const;
 
 export type AttributeType = (typeof attributeTypes)[number];
+
+// Mirrors static_types in Flirtual.Attribute.
+export const editableAttributeTypes = attributeTypes
+	.filter((type) => !["country", "language", "relationship", "timezone"].includes(type));
 
 export interface AttributeMetadata {
 	gender: {
@@ -107,14 +111,34 @@ export type GroupedAttributeCollection = Record<
 
 // export type PartialAttributeCollection = Array<PartialAttribute>;
 
+// Attribute as stored, including extra fields for admins.
+export interface AttributeRow {
+	id: string;
+	type: AttributeType;
+	order: number | null;
+	metadata: Record<string, unknown> | null;
+	updatedAt: string;
+}
+
+export interface CreateAttributeOptions {
+	id?: string;
+	type: AttributeType;
+	order?: number | null;
+	metadata?: Record<string, unknown> | null;
+}
+
+export type UpdateAttributeOptions = Pick<CreateAttributeOptions, "metadata" | "order">;
+
 export const Attribute = {
 	api: api
 		.url("attributes")
 		.options({ credentials: development ? "include" : "omit" }),
-	list<T extends AttributeType>(type: T, options: WretchOptions = {}) {
+	// Reads drop credentials so they stay cacheable; the admin writes need the session.
+	adminApi: api.url("attributes"),
+	list<T extends AttributeType>(type: T, version?: string, options: WretchOptions = {}) {
 		return this.api
 			.url(`/${type}`)
-			.query({ v: commitIdShort })
+			.query(version ? { v: version } : {})
 			.options(options)
 			.get()
 			.json<AttributeCollection<T>>();
@@ -122,5 +146,28 @@ export const Attribute = {
 	async get<T extends AttributeType>(type: T, id: string) {
 		const values = await this.list(type);
 		return values.find((value) => value.id === id) ?? null;
+	},
+	listAll(type: AttributeType, options: WretchOptions = {}) {
+		return this.adminApi
+			.query({ type })
+			.options(options)
+			.get()
+			.json<Array<AttributeRow>>();
+	},
+	create(options: CreateAttributeOptions) {
+		return this.adminApi.json(options).post().json<AttributeRow>();
+	},
+	update(attributeId: string, options: UpdateAttributeOptions) {
+		return this.adminApi
+			.url(`/${attributeId}`)
+			.json(options)
+			.patch()
+			.json<AttributeRow>();
+	},
+	delete(attributeId: string) {
+		return this.adminApi
+			.url(`/${attributeId}`)
+			.delete()
+			.json<{ deleted: boolean }>();
 	}
 };

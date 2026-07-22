@@ -33,9 +33,9 @@ export function sessionFetcher({ signal }: QueryFunctionContext<ReturnType<typeo
 	return Authentication.getOptionalSession({ ...signal });
 }
 
-export const attributeKey = <T extends AttributeType>(type: T) => ["attribute", type] as const;
-export function attributeFetcher<T extends AttributeType>({ queryKey: [, type], signal }: QueryFunctionContext<ReturnType<typeof attributeKey<T>>>) {
-	return Attribute.list(type, { signal });
+export const attributeKey = <T extends AttributeType>(type: T, version?: string) => ["attribute", type, version ?? null] as const;
+export function attributeFetcher<T extends AttributeType>({ queryKey: [, type, version], signal }: QueryFunctionContext<ReturnType<typeof attributeKey<T>>>) {
+	return Attribute.list(type, version ?? undefined, { signal });
 }
 
 export const userKey = (userId?: string | null) => ["user", userId || null] as const;

@@ -233,6 +233,7 @@ export const urls = {
 	},
 
 	admin: {
+		attributes: "/attributes",
 		stats: "/stats",
 		statsData: (name: string) =>
 			`https://storage.cloud.google.com/flirtual-stats/${name}.csv`,

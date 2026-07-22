@@ -94,6 +94,7 @@ export default [
 						page("settings/personality", "(app)/(authenticated)/settings/(profile)/personality"),
 					]),
 					layout("(app)/(authenticated)/(admin)", [
+						page("attributes", "(app)/(authenticated)/(admin)/attributes"),
 						page("stats", "(app)/(authenticated)/(admin)/stats"),
 					]),
 					layout("(app)/(authenticated)/(moderator)", [

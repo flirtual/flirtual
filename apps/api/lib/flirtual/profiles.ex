@@ -37,7 +37,7 @@ defmodule Flirtual.Profiles do
     use Flirtual.EmbeddedSchema
 
     import Flirtual.Utilities
-    import Flirtual.Attribute
+    import Flirtual.Attribute, except: [create: 1]
 
     alias Flirtual.Countries
     alias Flirtual.Languages
