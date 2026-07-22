@@ -114,6 +114,10 @@ defmodule Flirtual.User.Session do
     Session |> where_token(token) |> delete_all()
   end
 
+  def delete(id: id) when is_binary(id) do
+    Session |> where(id: ^id) |> delete_all()
+  end
+
   def delete_others(user_id: user_id, token: token)
       when is_binary(user_id) and is_binary(token) do
     Session

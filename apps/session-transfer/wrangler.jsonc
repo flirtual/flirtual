@@ -1,0 +1,23 @@
+/**
+ * Session transfer for flirtu.al → flirtual.com migration.
+ *
+ * Routes are absent: deploying this worker must not change what flirtu.al
+ * serves before the migration. At that time, add:
+ *   "routes": [{ "pattern": "flirtu.al/*", "zone_name": "flirtu.al" }]
+ * and keep a more specific frontend-worker route for "flirtu.al/.well-known/*",
+ * which must continue serving assetlinks.json, apple-app-site-association, and
+ * webauthn from the old domain.
+ */
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "session-transfer",
+	"main": "src/index.ts",
+	"compatibility_date": "2025-04-27",
+	"observability": {
+		"enabled": true
+	},
+	"vars": {
+		"API_ORIGIN": "https://api.flirtual.com",
+		"DESTINATION_ORIGIN": "https://flirtual.com"
+	}
+}

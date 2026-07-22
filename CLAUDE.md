@@ -13,7 +13,7 @@ Flirtual is a dating app for VR users. The monorepo contains:
 
 Other services:
 - **image-classification/**: TensorFlow image moderation (NSFW/inappropriate).
-- **worker/**: cross-domain session transfer (flirtual.com ↔ flirtu.al) via encrypted JWTs.
+- **session-transfer/**: carries a logged-in session across the flirtu.al → flirtual.com migration via a single-use, API-minted token.
 - **trace/**: trace-forwarding proxy with loop detection.
 - **grafana/** + **tempo/**: tracing and metrics (Tempo OTLP backend, Grafana UI).
 

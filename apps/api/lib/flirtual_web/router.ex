@@ -165,6 +165,16 @@ defmodule FlirtualWeb.Router do
         scope "/session" do
           post("/", SessionController, :login)
 
+          scope "/transfer" do
+            get("/:token", SessionTransferController, :consume)
+
+            scope "/" do
+              pipe_through(:require_authenticated_user)
+
+              post("/", SessionTransferController, :create)
+            end
+          end
+
           scope "/" do
             pipe_through(:require_authenticated_user)
 

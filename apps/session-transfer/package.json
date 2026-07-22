@@ -1,5 +1,5 @@
 {
-	"name": "worker",
+	"name": "session-transfer",
 	"version": "0.0.0",
 	"private": true,
 	"scripts": {
@@ -15,8 +15,5 @@
 		"typescript": "^5.5.2",
 		"vitest": "~3.0.7",
 		"wrangler": "^4.13.2"
-	},
-	"dependencies": {
-		"jose": "^6.0.11"
 	}
 }
