@@ -1,9 +1,11 @@
-import WidgetBot from "@widgetbot/react-embed";
+import WidgetBotModule from "@widgetbot/react-embed";
 import { Suspense } from "react";
 
 import { useOptionalSession } from "~/hooks/use-session";
 import { lazy } from "~/lazy";
 import { urls } from "~/urls";
+
+const WidgetBot = (WidgetBotModule as unknown as { default: typeof WidgetBotModule }).default;
 
 const DiscordEmbed_: React.FC = () => {
 	const session = useOptionalSession();
