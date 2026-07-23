@@ -12,6 +12,7 @@ defmodule Flirtual.Users do
 
   alias Flirtual.{
     Chargebee,
+    Connection,
     Discord,
     Flag,
     Hash,
@@ -501,6 +502,7 @@ defmodule Flirtual.Users do
            {:ok, _} <- Chargebee.delete_customer(user),
            :ok <- RevenueCat.cancel_subscriptions(user),
            :ok <- RevenueCat.delete_customer(user),
+           :ok <- enqueue_revocations(user),
            :ok <-
              Discord.deliver_webhook(:exit_survey,
                user: user,
@@ -530,7 +532,8 @@ defmodule Flirtual.Users do
            {:ok, _} <- Listmonk.delete_subscriber(user),
            {:ok, _} <- Chargebee.delete_customer(user),
            :ok <- RevenueCat.cancel_subscriptions(user),
-           :ok <- RevenueCat.delete_customer(user) do
+           :ok <- RevenueCat.delete_customer(user),
+           :ok <- enqueue_revocations(user) do
         {:ok, user}
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -538,6 +541,13 @@ defmodule Flirtual.Users do
       end
     end)
   end
+
+  defp enqueue_revocations(%User{connections: connections}) when is_list(connections) do
+    Enum.each(connections, &Connection.enqueue_revocation/1)
+    :ok
+  end
+
+  defp enqueue_revocations(_), do: :ok
 
   def dev_delete(%User{} = user) do
     Repo.transaction(fn ->

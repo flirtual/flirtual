@@ -44,6 +44,9 @@ defmodule Flirtual.Connection do
     field(:display_name, :string)
     field(:avatar, :string)
 
+    field(:access_token, :string, redact: true)
+    field(:refresh_token, :string, redact: true)
+
     field(:avatar_url, :string, virtual: true)
     field(:url, :string, virtual: true)
 
@@ -76,7 +79,7 @@ defmodule Flirtual.Connection do
 
   def changeset(connection, attrs) do
     connection
-    |> cast(attrs, [:uid, :display_name, :avatar])
+    |> cast(attrs, [:uid, :display_name, :avatar, :access_token, :refresh_token])
     |> unsafe_validate_unique([:user_id, :type], Flirtual.Repo)
     |> unique_constraint([:user_id, :type])
   end
@@ -101,11 +104,47 @@ defmodule Flirtual.Connection do
   end
 
   def delete(user_id, type) when is_uid(user_id) and type in @provider_types do
-    case Connection |> where(user_id: ^user_id, type: ^type) |> Repo.delete_all() do
-      {_, nil} -> :ok
+    Repo.transaction(fn ->
+      case get(user_id, type) do
+        nil ->
+          :ok
+
+        connection ->
+          enqueue_revocation(connection)
+
+          case Repo.delete(connection) do
+            {:ok, _} -> :ok
+            {:error, reason} -> Repo.rollback(reason)
+          end
+      end
+    end)
+    |> case do
+      {:ok, :ok} -> :ok
       {:error, reason} -> {:error, reason}
-      reason -> reason
     end
+  end
+
+  # Tell supported providers to invalidate the grant, so the user doesn't see
+  # their deleted account on the provider's end and can create a new account
+  # with the right flow.
+  def revoke(%Connection{type: type} = connection) when type in @provider_types do
+    provider!(type).revoke(connection)
+  end
+
+  def enqueue_revocation(%Connection{access_token: access_token, refresh_token: refresh_token})
+      when not is_binary(access_token) and not is_binary(refresh_token),
+      do: :ok
+
+  def enqueue_revocation(%Connection{} = connection) do
+    %{
+      "type" => to_string(connection.type),
+      "access_token" => connection.access_token,
+      "refresh_token" => connection.refresh_token
+    }
+    |> Flirtual.ObanWorkers.RevokeConnection.new()
+    |> Oban.insert()
+
+    :ok
   end
 
   def list_available(%User{connections: []}), do: @provider_types

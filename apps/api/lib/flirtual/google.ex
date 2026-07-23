@@ -6,6 +6,7 @@ defmodule Flirtual.Google do
 
   @google_authorize_url "https://accounts.google.com/o/oauth2/v2/auth"
   @google_token_url "https://oauth2.googleapis.com/token"
+  @google_revoke_url "https://oauth2.googleapis.com/revoke"
   @google_keys_url "https://www.googleapis.com/oauth2/v3/certs"
   @google_issuers ["https://accounts.google.com", "accounts.google.com"]
 
@@ -29,6 +30,7 @@ defmodule Flirtual.Google do
         response_type: "code",
         scope: "openid email",
         prompt: "select_account",
+        access_type: "offline",
         state: state
       })
 
@@ -79,6 +81,35 @@ defmodule Flirtual.Google do
 
       reason ->
         log(:error, [:exchange_code], reason)
+        {:error, :upstream}
+    end
+  end
+
+  def tokens(%{access_token: access_token, refresh_token: refresh_token}),
+    do: %{access_token: access_token, refresh_token: refresh_token}
+
+  def revoke(%{refresh_token: refresh_token, access_token: access_token}) do
+    do_revoke(refresh_token || access_token)
+  end
+
+  defp do_revoke(token) when not is_binary(token), do: :ok
+
+  defp do_revoke(token) do
+    case Req.request(
+           method: :post,
+           url: @google_revoke_url,
+           body: URI.encode_query(%{token: token}),
+           headers: [{"content-type", "application/x-www-form-urlencoded"}],
+           decode_body: false,
+           retry: false,
+           finch: Flirtual.Finch
+         ) do
+      {:ok, %Req.Response{status: status}} when status in [200, 400] ->
+        # 400 is already invalid/expired.
+        :ok
+
+      other ->
+        log(:error, [:revoke], other)
         {:error, :upstream}
     end
   end

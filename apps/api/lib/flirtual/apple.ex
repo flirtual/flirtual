@@ -7,6 +7,7 @@ defmodule Flirtual.Apple do
   @apple_auth_url "https://appleid.apple.com"
   @apple_keys_url "https://appleid.apple.com/auth/keys"
   @apple_token_url "https://appleid.apple.com/auth/token"
+  @apple_revoke_url "https://appleid.apple.com/auth/revoke"
 
   def config(key) do
     Application.get_env(:flirtual, Flirtual.Apple)[key]
@@ -88,6 +89,98 @@ defmodule Flirtual.Apple do
         log(:error, [:exchange_code], reason)
         {:error, :upstream}
     end
+  end
+
+  def tokens(%{access_token: access_token, refresh_token: refresh_token}),
+    do: %{access_token: access_token, refresh_token: refresh_token}
+
+  # Native Sign in with Apple returns a one-time authorization_code alongside the
+  # id_token; exchanging it yields the long-lived refresh token we need for
+  # revocation. Native codes are issued to the app id.
+  def exchange_native_code(authorization_code) when is_binary(authorization_code) do
+    client_id = config(:app_id)
+
+    with {:ok, client_secret} <- generate_client_secret(client_id),
+         {:ok, %Req.Response{body: body, status: 200}} <-
+           Req.request(
+             method: :post,
+             url: @apple_token_url,
+             body:
+               URI.encode_query(%{
+                 client_id: client_id,
+                 client_secret: client_secret,
+                 code: authorization_code,
+                 grant_type: "authorization_code"
+               }),
+             headers: [{"content-type", "application/x-www-form-urlencoded"}],
+             decode_body: false,
+             retry: false,
+             finch: Flirtual.Finch
+           ),
+         {:ok, response} <- Jason.decode(body) do
+      {:ok, %{access_token: response["access_token"], refresh_token: response["refresh_token"]}}
+    else
+      reason ->
+        log(:error, [:exchange_native_code], reason)
+        {:error, :upstream}
+    end
+  end
+
+  def exchange_native_code(_), do: {:error, :missing_token}
+
+  # Apple returns 200 even for already-invalid tokens. The client id must match
+  # the one the token was issued to, so fall back from web (service id) to native
+  # (app id) on invalid_client.
+  def revoke(%{refresh_token: refresh_token, access_token: access_token}) do
+    {token, hint} =
+      if is_binary(refresh_token),
+        do: {refresh_token, "refresh_token"},
+        else: {access_token, "access_token"}
+
+    revoke_token(token, hint, [config(:service_id), config(:app_id)])
+  end
+
+  defp revoke_token(token, _hint, _client_ids) when not is_binary(token), do: :ok
+  defp revoke_token(_token, _hint, []), do: {:error, :upstream}
+
+  defp revoke_token(token, hint, [client_id | rest]) do
+    with {:ok, client_secret} <- generate_client_secret(client_id),
+         {:ok, %Req.Response{} = response} <-
+           Req.request(
+             method: :post,
+             url: @apple_revoke_url,
+             body:
+               URI.encode_query(%{
+                 client_id: client_id,
+                 client_secret: client_secret,
+                 token: token,
+                 token_type_hint: hint
+               }),
+             headers: [{"content-type", "application/x-www-form-urlencoded"}],
+             decode_body: false,
+             retry: false,
+             finch: Flirtual.Finch
+           ) do
+      cond do
+        response.status in 200..299 ->
+          :ok
+
+        response.status == 400 and invalid_client?(response.body) and rest != [] ->
+          revoke_token(token, hint, rest)
+
+        true ->
+          log(:error, [:revoke], response)
+          {:error, :upstream}
+      end
+    else
+      reason ->
+        log(:error, [:revoke], reason)
+        {:error, :upstream}
+    end
+  end
+
+  defp invalid_client?(body) do
+    match?({:ok, %{"error" => "invalid_client"}}, Jason.decode(body))
   end
 
   def android_redirect_url do

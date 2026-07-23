@@ -47,6 +47,10 @@ defmodule Flirtual.Connection.Provider do
       def exchange_code(_, _) do
         {:error, :not_supported}
       end
+
+      def tokens(_), do: %{access_token: nil, refresh_token: nil}
+
+      def revoke(_), do: :ok
     end
   end
 end

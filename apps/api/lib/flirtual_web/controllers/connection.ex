@@ -333,6 +333,8 @@ defmodule FlirtualWeb.ConnectionController do
                  org_scoped_id: params["org_scoped_id"]
                ),
              {:ok, profile} <- provider.get_profile(authorization) do
+          profile = Map.merge(profile, provider.tokens(authorization))
+
           # Try session first, fall back to user_id from state (for Apple's form_post)
           user =
             cond do
@@ -437,7 +439,8 @@ defmodule FlirtualWeb.ConnectionController do
              # Apple doesn't provide a display name, use email
              display_name: claims["email"],
              avatar: nil
-           }}
+           }
+           |> Map.merge(apple_native_tokens(params["authorization_code"]))}
 
         error ->
           error
@@ -463,6 +466,13 @@ defmodule FlirtualWeb.ConnectionController do
     {:error, :not_supported}
   end
 
+  defp apple_native_tokens(authorization_code) do
+    case Flirtual.Apple.exchange_native_code(authorization_code) do
+      {:ok, tokens} -> tokens
+      _ -> %{access_token: nil, refresh_token: nil}
+    end
+  end
+
   # Core grant logic - handles all connection scenarios
   defp handle_grant(conn, user, profile, type, options) do
     connection = Connection.get(uid: profile.uid, type: type)
@@ -483,7 +493,8 @@ defmodule FlirtualWeb.ConnectionController do
         transfer_connection(conn, user, connection, profile, type, options)
 
       # Not logged in, connection exists for active user -> log them in
-      {nil, %Connection{user: %User{banned_at: nil} = login_user}} ->
+      {nil, %Connection{user: %User{banned_at: nil} = login_user} = connection} ->
+        maybe_refresh_tokens(connection, profile)
         create_session(conn, login_user, type, options)
 
       # Not logged in, connection exists for banned user -> reject
@@ -512,6 +523,21 @@ defmodule FlirtualWeb.ConnectionController do
 
     run_connection_checks(user.id, profile, type)
     respond_success(conn, options, :linked, :created)
+  end
+
+  # Capture tokens on login in case we didn't get them on initial connection
+  # (Discord connections before we implemented revocation) or they have rotated.
+  defp maybe_refresh_tokens(%Connection{} = connection, profile) do
+    attrs =
+      %{access_token: profile[:access_token], refresh_token: profile[:refresh_token]}
+      |> Enum.reject(fn {_key, value} -> is_nil(value) end)
+      |> Map.new()
+
+    if attrs != %{} do
+      connection |> change(attrs) |> Repo.update()
+    end
+
+    :ok
   end
 
   # Transfer a connection from one user to another. Refused for auth-only

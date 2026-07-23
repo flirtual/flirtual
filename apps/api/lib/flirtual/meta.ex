@@ -40,6 +40,9 @@ defmodule Flirtual.Meta do
      )}
   end
 
+  # Not supported by Meta.
+  def revoke(%Connection{}), do: :ok
+
   def exchange_code(code, options \\ [])
 
   def exchange_code(code, options) when is_binary(code) do

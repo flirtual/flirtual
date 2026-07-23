@@ -190,7 +190,12 @@ defmodule Flirtual.Discord do
            ),
          {:ok, body} <- Jason.decode(body),
          %{"access_token" => access_token, "token_type" => token_type} <- body do
-      {:ok, "#{token_type} #{access_token}"}
+      {:ok,
+       %{
+         authorization: "#{token_type} #{access_token}",
+         access_token: access_token,
+         refresh_token: body["refresh_token"]
+       }}
     else
       %{"error" => "invalid_grant"} ->
         {:error, :invalid_grant}
@@ -210,7 +215,46 @@ defmodule Flirtual.Discord do
 
   def profile_url(%Connection{uid: id}), do: "https://discord.com/users/#{id}"
 
-  def get_profile(authorization) do
+  def tokens(%{access_token: access_token, refresh_token: refresh_token}),
+    do: %{access_token: access_token, refresh_token: refresh_token}
+
+  def revoke(%{refresh_token: refresh_token, access_token: access_token}) do
+    {token, hint} =
+      if is_binary(refresh_token),
+        do: {refresh_token, "refresh_token"},
+        else: {access_token, "access_token"}
+
+    do_revoke(token, hint)
+  end
+
+  defp do_revoke(token, _hint) when not is_binary(token), do: :ok
+
+  defp do_revoke(token, hint) do
+    case Req.request(
+           method: :post,
+           url: url("oauth2/token/revoke"),
+           body:
+             URI.encode_query(%{
+               client_id: config(:client_id),
+               client_secret: config(:client_secret),
+               token: token,
+               token_type_hint: hint
+             }),
+           headers: [{"content-type", "application/x-www-form-urlencoded"}],
+           decode_body: false,
+           retry: false,
+           finch: Flirtual.Finch
+         ) do
+      {:ok, %Req.Response{status: 200}} ->
+        :ok
+
+      other ->
+        log(:error, [:revoke], other)
+        {:error, :upstream}
+    end
+  end
+
+  def get_profile(%{authorization: authorization}) do
     with {:ok, %Req.Response{body: body}} <-
            Req.request(
              method: :get,
