@@ -3,7 +3,6 @@ import type React from "react";
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
-import FlittyImage from "virtual:remote/flitty.png";
 
 import type { User } from "~/api/user";
 import { blurHashToDataUrl } from "~/blurhash";
@@ -65,15 +64,14 @@ export const UserImage: React.FC<UserImageProps> = ({ src, blurHash, ...props })
 		() => (blurHash ? blurHashToDataUrl(blurHash) : undefined),
 		[blurHash]
 	);
-	const background = loaded ? undefined : placeholder ?? FlittyImage;
+	const background = loaded ? undefined : placeholder;
 
 	return (
 		<Image
 			{...props}
 			suppressHydrationWarning
 			className={twMerge(
-				"aspect-square shrink-0 bg-center bg-no-repeat object-cover text-transparent",
-				placeholder && !loaded ? "bg-cover" : "bg-contain",
+				"aspect-square shrink-0 bg-cover bg-center bg-no-repeat object-cover text-transparent",
 				props.className
 			)}
 			style={{
