@@ -7,7 +7,7 @@ import type { ShepherdOptionsWithType, Tour } from "react-shepherd";
 
 import { HeartIcon } from "~/components/icons/gradient/heart";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
-import { useNavigate } from "~/i18n";
+import { localePathnameRegex, useNavigate } from "~/i18n";
 import { urls } from "~/urls";
 
 import { useBreakpoint } from "./use-breakpoint";
@@ -155,8 +155,8 @@ export function useTour(
 }
 
 // Shepherd step text is an HTML string, not React.
-function modeIcon(Icon: FC<ComponentProps<"svg">>) {
-	return `<span class="inline-flex align-middle [&>svg]:h-[1.2em] [&>svg]:w-auto">${renderToStaticMarkup(createElement(Icon))}</span>`;
+function modeIcon(name: string, Icon: FC<ComponentProps<"svg">>) {
+	return `<span class="inline-flex align-middle [&>svg]:h-[1.2em] [&>svg]:w-auto">${renderToStaticMarkup(createElement(Icon), { identifierPrefix: `${name}-` })}</span>`;
 }
 
 export function useDefaultTour(enabled: boolean = true) {
@@ -175,6 +175,10 @@ export function useDefaultTour(enabled: boolean = true) {
 	// orphaned.
 	const ensureOnPage = useCallback(
 		async (url: string, selector: string) => {
+			const currentPath = location.pathname.replace(localePathnameRegex, "/");
+			if (currentPath === url.split("?")[0] && document.querySelector(selector))
+				return;
+
 			const step = shepherd.getCurrentStep();
 			await navigateReference.current(url);
 			await waitForElement(selector);
@@ -245,8 +249,8 @@ export function useDefaultTour(enabled: boolean = true) {
 									ensureOnPage(urls.discover("dates"), "#browse-mode-switch"),
 								text: () => `
 					${t("chunky_zany_leopard_peek", {
-						heart: modeIcon(HeartIcon),
-						homie: modeIcon(PeaceIcon),
+						heart: modeIcon("heart", HeartIcon),
+						homie: modeIcon("homie", PeaceIcon),
 						interpolation: { escapeValue: false }
 					})}
 					<br/><br/>
