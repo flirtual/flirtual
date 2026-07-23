@@ -138,11 +138,21 @@ defmodule FlirtualWeb.ConnectionController do
 
   def delete(conn, %{"type" => type}) do
     type = to_atom(type)
+    user = conn.assigns[:session].user
 
-    with :ok <- Connection.delete(conn.assigns[:session].user.id, type) do
+    with :ok <- ensure_email(user, type),
+         :ok <- Connection.delete(user.id, type) do
       conn |> json(%{deleted: true})
     end
   end
+
+  defp ensure_email(%User{} = user, :meta) do
+    if has_email?(user), do: :ok, else: {:error, {:bad_request, :connection_email_required}}
+  end
+
+  defp ensure_email(_user, _type), do: :ok
+
+  defp has_email?(%User{email: email}), do: is_binary(email) and email != ""
 
   defp grant_next(conn, redirect_type, next \\ nil) do
     next = if(next, do: next, else: get_session(conn, :next))
@@ -505,24 +515,29 @@ defmodule FlirtualWeb.ConnectionController do
   end
 
   # Transfer a connection from one user to another. Refused for auth-only
-  # (non-visible) connections; unusual to transfer these and more likely to
-  # have recovery trouble.
+  # (non-visible) connections, and for Meta when the source account has no
+  # email.
   defp transfer_connection(conn, user, connection, profile, type, options) do
-    if Connection.visible?(type) do
-      Discord.deliver_webhook(:flagged_duplicate,
-        user: user,
-        duplicates: [User.url(connection.user) |> URI.to_string()],
-        type: "#{Connection.provider_name!(type)} (connection updated)",
-        text: "#{profile.display_name || profile.uid} (#{profile.uid})"
-      )
+    cond do
+      not Connection.visible?(type) ->
+        respond_error(conn, :connection_in_use, type, connection, options, options[:next])
 
-      connection
-      |> change(%{user_id: user.id})
-      |> Repo.update!()
+      type == :meta and not has_email?(connection.user) ->
+        respond_error(conn, :connection_in_use, type, connection, options, options[:next])
 
-      respond_success(conn, options, :linked)
-    else
-      respond_error(conn, :connection_in_use, type, connection, options, options[:next])
+      true ->
+        Discord.deliver_webhook(:flagged_duplicate,
+          user: user,
+          duplicates: [User.url(connection.user) |> URI.to_string()],
+          type: "#{Connection.provider_name!(type)} (connection updated)",
+          text: "#{profile.display_name || profile.uid} (#{profile.uid})"
+        )
+
+        connection
+        |> change(%{user_id: user.id})
+        |> Repo.update!()
+
+        respond_success(conn, options, :linked)
     end
   end
 
