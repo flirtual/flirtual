@@ -33,7 +33,7 @@ export const SignUpForm: FC = () => {
 
 	useOptimisticRoute(urls.onboarding(1));
 
-	const connectionTypes = device.apple
+	const [primaryConnectionType, ...secondaryConnectionTypes] = device.apple
 		? (["apple", "google", "discord", "meta"] as const)
 		: device.android
 			? (["google", "discord", "meta"] as const)
@@ -215,15 +215,24 @@ export const SignUpForm: FC = () => {
 								</span>
 								<hr className="h-px w-full border-0 bg-white-40 vision:bg-transparent dark:bg-black-60" />
 							</div>
-							{connectionTypes.map((type, index) => (
-								<LoginConnectionButton
-									key={type}
-									guard={guardServiceAgreement}
-									notifications={fields.notifications.props.value}
-									tabIndex={9 + index}
-									type={type}
-								/>
-							))}
+							<LoginConnectionButton
+								guard={guardServiceAgreement}
+								notifications={fields.notifications.props.value}
+								tabIndex={9}
+								type={primaryConnectionType}
+							/>
+							<div className="flex gap-2">
+								{secondaryConnectionTypes.map((type, index) => (
+									<LoginConnectionButton
+										key={type}
+										iconOnly
+										guard={guardServiceAgreement}
+										notifications={fields.notifications.props.value}
+										tabIndex={10 + index}
+										type={type}
+									/>
+								))}
+							</div>
 						</div>
 					</>
 				);

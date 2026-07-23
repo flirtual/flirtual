@@ -30,6 +30,7 @@ export interface LoginConnectionButtonProps {
 	next?: string;
 	className?: string;
 	notifications?: boolean;
+	iconOnly?: boolean;
 	// Return false to block the action, i.e. when the service agreement is unchecked.
 	guard?: () => boolean;
 }
@@ -47,6 +48,7 @@ export const LoginConnectionButton: FC<LoginConnectionButtonProps> = ({
 	next,
 	className,
 	notifications = false,
+	iconOnly = false,
 	guard
 }) => {
 	const { t } = useTranslation();
@@ -171,9 +173,12 @@ export const LoginConnectionButton: FC<LoginConnectionButtonProps> = ({
 		}
 	};
 
+	const label = t("continue_with", { type: name });
+
 	return (
 		<Button
-			className={twMerge("gap-4 bg-none", className)}
+			aria-label={iconOnly ? label : undefined}
+			className={twMerge("gap-4 bg-none", iconOnly && "grow px-0", className)}
 			disabled={isLoading}
 			size="sm"
 			style={{ backgroundColor, color: iconColor }}
@@ -183,9 +188,11 @@ export const LoginConnectionButton: FC<LoginConnectionButtonProps> = ({
 			{isLoading
 				? <Loader2 className="size-6 animate-spin" />
 				: <Icon className="size-6" />}
-			<span className="font-montserrat text-lg font-semibold">
-				{t("continue_with", { type: name })}
-			</span>
+			{!iconOnly && (
+				<span className="font-montserrat text-lg font-semibold">
+					{label}
+				</span>
+			)}
 		</Button>
 	);
 };

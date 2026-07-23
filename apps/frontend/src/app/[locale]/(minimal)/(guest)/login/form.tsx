@@ -170,7 +170,7 @@ export const LoginForm: FC = () => {
 		);
 	}
 
-	const connectionTypes = device.apple
+	const [primaryConnectionType, ...secondaryConnectionTypes] = device.apple
 		? (["apple", "google", "discord", "meta"] as const)
 		: device.android
 			? (["google", "apple", "discord", "meta"] as const)
@@ -338,9 +338,17 @@ export const LoginForm: FC = () => {
 						</span>
 						<hr className="h-px w-full border-0 bg-white-40 vision:bg-transparent dark:bg-black-60" />
 					</div>
-					{connectionTypes.map((type, index) => (
-						<LoginConnectionButton key={type} tabIndex={6 + index} type={type} />
-					))}
+					<LoginConnectionButton tabIndex={6} type={primaryConnectionType} />
+					<div className="flex gap-2">
+						{secondaryConnectionTypes.map((type, index) => (
+							<LoginConnectionButton
+								key={type}
+								iconOnly
+								tabIndex={7 + index}
+								type={type}
+							/>
+						))}
+					</div>
 				</div>
 			</div>
 		</>
