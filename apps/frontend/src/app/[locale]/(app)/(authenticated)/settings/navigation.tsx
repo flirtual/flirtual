@@ -106,6 +106,7 @@ export const SettingsNavigation: FC = () => {
 					)}
 					<NavigationCategory name={t("profile")}>
 						<NavigationLink
+							newBadge
 							href={urls.settings.matchmaking()}
 							Icon={SlidersHorizontal}
 						>
@@ -114,7 +115,7 @@ export const SettingsNavigation: FC = () => {
 						<NavigationLink href={urls.settings.bio} Icon={PenSquare}>
 							{t("bio_pics")}
 						</NavigationLink>
-						<NavigationLink href={urls.settings.info()} Icon={Contact}>
+						<NavigationLink newBadge href={urls.settings.info()} Icon={Contact}>
 							{t("basic_info")}
 						</NavigationLink>
 						<NavigationLink href={urls.settings.interests} Icon={Tag}>
@@ -127,6 +128,7 @@ export const SettingsNavigation: FC = () => {
 							{t("nsfw")}
 						</NavigationLink>
 						<NavigationLink
+							newBadge
 							href={urls.settings.connections}
 							Icon={Users}
 						>
@@ -140,7 +142,7 @@ export const SettingsNavigation: FC = () => {
 						<NavigationLink href={urls.subscription.default} Icon={Sparkles}>
 							{t("premium")}
 						</NavigationLink>
-						<NavigationLink newBadge href={urls.settings.appearance} Icon={Paintbrush}>
+						<NavigationLink href={urls.settings.appearance} Icon={Paintbrush}>
 							{t("appearance")}
 						</NavigationLink>
 						<NavigationLink href={urls.settings.privacy} Icon={EyeOff}>
