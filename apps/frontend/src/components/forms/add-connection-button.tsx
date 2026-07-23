@@ -196,7 +196,14 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 					onClick={async () => {
 						await Connection.delete(type)
 							.then(() => toasts.add(t("removed_connection")))
-							.catch(toasts.addError);
+							.catch((reason) => {
+								if (isWretchError(reason)) {
+									toasts.add({ type: "error", value: t(`errors.${reason.json?.error}` as any) });
+									return;
+								}
+
+								toasts.addError(reason);
+							});
 
 						await invalidate({ queryKey: sessionKey() });
 					}}
