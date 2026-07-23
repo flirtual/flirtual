@@ -23,6 +23,7 @@ export const DeleteForm: FC = () => {
 	const deleteReasons = useAttributes("delete-reason");
 
 	const { user } = useSession();
+	const hasPassword = user.hasPassword === true;
 
 	const entitlements = activeEntitlements(user);
 	const lifetime = entitlements.find((entitlement) => entitlement.kind === "one_time");
@@ -43,7 +44,7 @@ export const DeleteForm: FC = () => {
 			fields={{
 				reasonId: "",
 				comment: "",
-				currentPassword: ""
+				...(hasPassword ? { currentPassword: "" } : {})
 			}}
 			className="flex flex-col gap-8"
 			onSubmit={async (body, { captcha }) => {
@@ -155,18 +156,20 @@ export const DeleteForm: FC = () => {
 							</>
 						)}
 					</FormField>
-					<FormField name="currentPassword">
-						{(field) => (
-							<>
-								<InputLabel>{t("confirm_current_password")}</InputLabel>
-								<InputText
-									{...field.props}
-									autoComplete="current-password"
-									type="password"
-								/>
-							</>
-						)}
-					</FormField>
+					{hasPassword && (
+						<FormField name="currentPassword">
+							{(field) => (
+								<>
+									<InputLabel>{t("confirm_current_password")}</InputLabel>
+									<InputText
+										{...field.props}
+										autoComplete="current-password"
+										type="password"
+									/>
+								</>
+							)}
+						</FormField>
+					)}
 					<div className="flex flex-col gap-4">
 						<span>
 							<Trans i18nKey="teary_cuddly_midge_sew" />

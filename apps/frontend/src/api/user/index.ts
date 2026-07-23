@@ -348,7 +348,7 @@ export const User = {
 	deleteSelf(options: {
 		reasonId: string;
 		comment: string;
-		currentPassword: string;
+		currentPassword?: string;
 		captcha: string;
 	}) {
 		return this.api.json(options).delete().json<User>();
