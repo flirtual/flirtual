@@ -21,6 +21,7 @@ import { useOptimisticRoute } from "~/preload";
 import { mutate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
+import { useLoginConnectionTypes } from "../login/last-connection";
 import { LoginConnectionButton } from "../login/login-connection-button";
 
 export const SignUpForm: FC = () => {
@@ -33,11 +34,13 @@ export const SignUpForm: FC = () => {
 
 	useOptimisticRoute(urls.onboarding(1));
 
-	const [primaryConnectionType, ...secondaryConnectionTypes] = device.apple
-		? (["apple", "google", "discord", "meta"] as const)
-		: device.android
-			? (["google", "discord", "meta"] as const)
-			: (["discord", "google", "meta"] as const);
+	const [primaryConnectionType, ...secondaryConnectionTypes] = useLoginConnectionTypes(
+		device.apple
+			? (["apple", "google", "discord", "meta"] as const)
+			: device.android
+				? (["google", "discord", "meta"] as const)
+				: (["discord", "google", "meta"] as const)
+	);
 
 	return (
 		<Form

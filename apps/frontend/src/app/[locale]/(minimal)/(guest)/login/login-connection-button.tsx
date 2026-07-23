@@ -23,6 +23,7 @@ import { invalidate, mutate, sessionKey } from "~/query";
 import { toAbsoluteUrl, toRelativeUrl } from "~/urls";
 
 import { next as getNextUrl } from "./form";
+import { useRememberLoginConnection } from "./last-connection";
 
 export interface LoginConnectionButtonProps {
 	type: ConnectionType;
@@ -55,6 +56,7 @@ export const LoginConnectionButton: FC<LoginConnectionButtonProps> = ({
 	const navigate = useNavigate();
 	const toasts = useToast();
 	const { id: deviceId } = useDevice();
+	const { attempted, succeeded } = useRememberLoginConnection();
 	const [isLoading, setIsLoading] = useState(false);
 
 	const { name, Icon, color, logoColor, darkColor, darkLogoColor } = ConnectionMetadata[type];
@@ -111,6 +113,7 @@ export const LoginConnectionButton: FC<LoginConnectionButtonProps> = ({
 				return;
 			}
 
+			await succeeded(type);
 			await invalidate({ refetchType: "none" });
 			await mutate(sessionKey(), response);
 			navigate(next ?? getNextUrl());
@@ -138,6 +141,8 @@ export const LoginConnectionButton: FC<LoginConnectionButtonProps> = ({
 		const nextUrl = toAbsoluteUrl(next ?? getNextUrl()).href;
 
 		if (!device.native) {
+			await attempted(type);
+
 			location.href = Connection.authorizeUrl({
 				type,
 				prompt: "consent",
@@ -151,8 +156,11 @@ export const LoginConnectionButton: FC<LoginConnectionButtonProps> = ({
 		const nextLocation = await authorizeAndGrant(type, nextUrl, notifications);
 		if (!nextLocation) return;
 
+		const nextLocationUrl = new URL(nextLocation);
+		if (!nextLocationUrl.searchParams.has("error")) await succeeded(type);
+
 		await invalidate({ queryKey: sessionKey() });
-		navigate(toRelativeUrl(new URL(nextLocation)));
+		navigate(toRelativeUrl(nextLocationUrl));
 	};
 
 	const handleClick = async () => {

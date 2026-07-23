@@ -20,6 +20,7 @@ import { useNavigate } from "~/i18n";
 import { invalidate, mutate, sessionKey } from "~/query";
 import { isInternalHref, urls } from "~/urls";
 
+import { useLoginConnectionTypes } from "./last-connection";
 import { LoginConnectionButton } from "./login-connection-button";
 import { MagicLogin } from "./magic-login";
 import { VerificationForm } from "./verification";
@@ -137,6 +138,14 @@ export const LoginForm: FC = () => {
 
 	const token = searchParameters.get("token");
 
+	const [primaryConnectionType, ...secondaryConnectionTypes] = useLoginConnectionTypes(
+		device.apple
+			? (["apple", "google", "discord", "meta"] as const)
+			: device.android
+				? (["google", "apple", "discord", "meta"] as const)
+				: (["discord", "google", "apple", "meta"] as const)
+	);
+
 	useKylesWebAuthnImplementation();
 
 	if (token && !tokenInvalid) {
@@ -169,12 +178,6 @@ export const LoginForm: FC = () => {
 			</>
 		);
 	}
-
-	const [primaryConnectionType, ...secondaryConnectionTypes] = device.apple
-		? (["apple", "google", "discord", "meta"] as const)
-		: device.android
-			? (["google", "apple", "discord", "meta"] as const)
-			: (["discord", "google", "apple", "meta"] as const);
 
 	return (
 		<>
