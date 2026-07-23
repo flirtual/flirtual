@@ -145,9 +145,7 @@ export function useAdvancedFilterGroups(
 				options: countries
 					.map((countryId) => ({
 						key: `country:${countryId.toLowerCase()}`,
-						label: tAttribute[countryId.toUpperCase()]?.name
-							?? getCountryName(locale, countryId)
-							?? countryId
+						label: getCountryName(locale, countryId) ?? countryId
 					}))
 					.sort(byLabel)
 			},
