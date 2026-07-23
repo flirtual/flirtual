@@ -31,7 +31,7 @@ defmodule Flirtual.Connection do
   @provider_types Map.keys(@providers)
 
   # Visible connections are shared with matches; the rest are auth-only.
-  @visible_types [:discord, :vrchat]
+  @visible_types [:discord, :vrchat, :meta]
 
   def visible?(type) when type in @provider_types, do: type in @visible_types
 

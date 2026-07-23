@@ -20,7 +20,7 @@ export const EmailForm: React.FC = () => {
 	return (
 		<Form
 			fields={{
-				email: user.email,
+				email: user.email ?? "",
 				emailConfirmation: "",
 				...(hasPassword ? { currentPassword: "" } : {})
 			}}

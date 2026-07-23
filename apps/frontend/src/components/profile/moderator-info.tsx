@@ -107,7 +107,7 @@ export const ProfileModeratorInfo: FC<{
 						<span>
 							<span className="font-bold">Email:</span>
 							{" "}
-							<CopyClick value={user.email}>
+							<CopyClick value={user.email ?? null}>
 								<span className="cursor-pointer hover:underline">
 									{user.email}
 								</span>

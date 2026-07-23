@@ -70,7 +70,7 @@ export const UserStatuses = [
 export type UserStatus = (typeof UserStatuses)[number];
 
 export type User = {
-	email: string;
+	email?: string;
 	slug: string;
 	talkjsId: string;
 	talkjsSignature?: string;
@@ -147,7 +147,7 @@ export type UpdateUserOptions = Partial<
 export interface UpdateUserEmailOptions {
 	currentPassword?: string;
 	email: string;
-	emailConfirmation: string;
+	emailConfirmation?: string;
 }
 
 export interface UpdateUserPasswordOptions {

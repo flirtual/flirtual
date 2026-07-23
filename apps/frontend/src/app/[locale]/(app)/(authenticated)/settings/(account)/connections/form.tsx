@@ -124,6 +124,7 @@ export const ConnectionsForm: FC = () => {
 										)}
 									</FormField>
 								)}
+								<AddConnectionButton type="meta" />
 								{apple
 									? (
 											<>

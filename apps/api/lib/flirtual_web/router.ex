@@ -245,6 +245,8 @@ defmodule FlirtualWeb.Router do
           get("/authorize", ConnectionController, :authorize)
           get("/grant", ConnectionController, :grant)
           post("/grant", ConnectionController, :grant)
+          get("/meta/callback", ConnectionController, :meta_callback)
+          get("/meta/callback/app", ConnectionController, :meta_callback_app)
 
           scope "/" do
             pipe_through(:require_authenticated_user)

@@ -74,10 +74,4 @@
 
     <!-- Merged in by RevenueCat's play-services-ads-identifier dependency. -->
     <uses-permission android:name="com.google.android.gms.permission.AD_ID" tools:node="remove" />
-
-    <!-- Merged in by facebook-core. -->
-    <uses-permission android:name="android.permission.ACCESS_ADSERVICES_AD_ID" tools:node="remove" />
-    <uses-permission android:name="android.permission.ACCESS_ADSERVICES_ATTRIBUTION" tools:node="remove" />
-    <uses-permission android:name="android.permission.ACCESS_ADSERVICES_CUSTOM_AUDIENCE" tools:node="remove" />
-    <uses-permission android:name="android.permission.ACCESS_ADSERVICES_TOPICS" tools:node="remove" />
 </manifest>

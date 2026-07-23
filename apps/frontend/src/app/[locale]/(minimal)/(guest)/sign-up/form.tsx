@@ -34,10 +34,10 @@ export const SignUpForm: FC = () => {
 	useOptimisticRoute(urls.onboarding(1));
 
 	const connectionTypes = device.apple
-		? (["apple", "google", "discord"] as const)
+		? (["apple", "google", "discord", "meta"] as const)
 		: device.android
-			? (["google", "discord"] as const)
-			: (["discord", "google"] as const);
+			? (["google", "discord", "meta"] as const)
+			: (["discord", "google", "meta"] as const);
 
 	return (
 		<Form

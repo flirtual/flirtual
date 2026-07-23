@@ -34,14 +34,6 @@ export interface LoginConnectionButtonProps {
 	guard?: () => boolean;
 }
 
-const label = {
-	google: "Google",
-	apple: "Apple",
-	meta: "Meta",
-	discord: "Discord",
-	vrchat: "VRChat"
-};
-
 type NativeSocialProvider = "apple" | "google";
 const nativeSocialProviders: Array<NativeSocialProvider> = ["apple", "google"];
 
@@ -63,7 +55,7 @@ export const LoginConnectionButton: FC<LoginConnectionButtonProps> = ({
 	const { id: deviceId } = useDevice();
 	const [isLoading, setIsLoading] = useState(false);
 
-	const { Icon, color, logoColor, darkColor, darkLogoColor } = ConnectionMetadata[type];
+	const { name, Icon, color, logoColor, darkColor, darkLogoColor } = ConnectionMetadata[type];
 	const [theme] = useTheme();
 	const backgroundColor = theme === "dark" ? darkColor ?? color : color;
 	const iconColor = theme === "dark" ? darkLogoColor ?? logoColor : logoColor;
@@ -192,7 +184,7 @@ export const LoginConnectionButton: FC<LoginConnectionButtonProps> = ({
 				? <Loader2 className="size-6 animate-spin" />
 				: <Icon className="size-6" />}
 			<span className="font-montserrat text-lg font-semibold">
-				{t("continue_with", { type: label[type] })}
+				{t("continue_with", { type: name })}
 			</span>
 		</Button>
 	);
@@ -206,7 +198,7 @@ export const ConnectionItem: FC<ConnectionItemProps> = ({
 }) => {
 	return (
 		<div className="flex grow basis-64 flex-col gap-2 bg-white-30 p-4">
-			<span className="text-sm font-semibold">{label[type]}</span>
+			<span className="text-sm font-semibold">{ConnectionMetadata[type].name}</span>
 			<div className="flex items-center gap-2">
 				<span className="text-lg leading-4">{displayName}</span>
 			</div>

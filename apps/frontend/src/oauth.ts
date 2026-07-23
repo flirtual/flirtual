@@ -13,7 +13,7 @@ export async function authorizeAndGrant(
 	next: string,
 	notifications?: boolean
 ): Promise<string | null> {
-	const { authorizeUrl, redirectUri } = await Connection.authorize({
+	const { authorizeUrl, redirectUri, state: authorizeState } = await Connection.authorize({
 		type,
 		prompt: "consent",
 		next,
@@ -39,7 +39,8 @@ export async function authorizeAndGrant(
 	const response = await Connection.grant({
 		type,
 		code: query.code,
-		state: query.state,
+		state: authorizeState ?? query.state,
+		orgScopedId: query.org_scoped_id,
 		redirect: "app"
 	});
 

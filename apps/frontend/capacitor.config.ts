@@ -71,7 +71,7 @@ export default {
 		SocialLogin: {
 			providers: {
 				google: true,
-				facebook: true,
+				facebook: false,
 				apple: true,
 				twitter: false
 			}

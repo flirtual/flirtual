@@ -23,6 +23,7 @@ export type ConnectionType = (typeof ConnectionType)[number];
 export const ConnectionMetadata: Record<
 	ConnectionType,
 	{
+		name: string;
 		Icon: IconComponent;
 		color?: string;
 		logoColor?: string;
@@ -31,10 +32,12 @@ export const ConnectionMetadata: Record<
 	}
 > = {
 	google: {
+		name: "Google",
 		Icon: GoogleIcon,
 		color: "#dd4b39"
 	},
 	apple: {
+		name: "Apple",
 		Icon: AppleIcon,
 		color: "#000000",
 		logoColor: "#ffffff",
@@ -42,14 +45,17 @@ export const ConnectionMetadata: Record<
 		darkLogoColor: "#000000"
 	},
 	meta: {
+		name: "Meta",
 		Icon: MetaIcon,
 		color: "#0082fb"
 	},
 	discord: {
+		name: "Discord",
 		Icon: DiscordIcon,
 		color: "#5865f2"
 	},
 	vrchat: {
+		name: "VRChat",
 		Icon: VRChatIcon,
 		color: "#095d6a"
 	}
@@ -76,6 +82,7 @@ export interface ConnectionGrantOptions {
 	code: string;
 	state: string;
 	redirect?: string;
+	orgScopedId?: string;
 }
 
 export const Connection = {
@@ -93,6 +100,7 @@ export const Connection = {
 			.json<{
 			authorizeUrl: string;
 			redirectUri: string;
+			state?: string;
 		}>();
 	},
 	grant(options: ConnectionGrantOptions) {

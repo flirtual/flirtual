@@ -160,6 +160,11 @@ config :flirtual, Flirtual.Google,
   web_client_secret: Env.get("GOOGLE_CLIENT_SECRET"),
   ios_client_id: Env.get("GOOGLE_IOS_CLIENT_ID")
 
+config :flirtual, Flirtual.Meta,
+  app_id: Env.get("META_APP_ID"),
+  app_secret: Env.get("META_APP_SECRET"),
+  organization_id: Env.get("META_ORGANIZATION_ID")
+
 config :flirtual, Flirtual.VRChat,
   username: Env.get!("VRCHAT_USERNAME"),
   password: Env.get!("VRCHAT_PASSWORD"),

@@ -7,7 +7,7 @@ defmodule FlirtualWeb.ConnectionController do
   import Ecto.Changeset
   import Flirtual.Utilities
 
-  alias Flirtual.{Connection, Discord, Flag, Hash, Jwt, Repo, User, Users}
+  alias Flirtual.{Connection, Discord, Flag, Hash, Jwt, Meta, Repo, User, Users}
   alias Flirtual.User.Login
   alias FlirtualWeb.SessionController
 
@@ -16,6 +16,31 @@ defmodule FlirtualWeb.ConnectionController do
   def list_available(conn, _) do
     conn
     |> json(Connection.list_available(conn.assigns[:session].user))
+  end
+
+  # Meta carries no state, so we return the signed state to the app, which passes
+  # it back to grant itself.
+  def authorize(conn, %{"type" => "meta", "next" => next, "json" => json} = params)
+      when not is_nil(json) do
+    with {:ok, state} <- generate_oauth_state(conn, next, truthy?(params["notifications"])),
+         {:ok, authorize_url} <- Meta.authorize_url(conn, %{redirect: :app}) do
+      conn
+      |> json(%{
+        authorize_url: URI.to_string(authorize_url),
+        redirect_uri: Meta.redirect_url!(redirect: :app),
+        state: state
+      })
+    end
+  end
+
+  # Web opens our endpoint (302 to oculus) and stashes state in the session.
+  def authorize(conn, %{"type" => "meta", "next" => next} = params) do
+    with {:ok, state} <- generate_oauth_state(conn, next, truthy?(params["notifications"])),
+         {:ok, authorize_url} <- Meta.authorize_url(conn, %{}) do
+      conn
+      |> put_session(:meta_state, state)
+      |> redirect(external: URI.to_string(authorize_url))
+    end
   end
 
   # JSON authorize is only used by the native app: the provider redirects to
@@ -166,6 +191,83 @@ defmodule FlirtualWeb.ConnectionController do
     |> halt()
   end
 
+  # Meta appends its response as a URL fragment, which never reaches the server,
+  # so the callback serves a page that copies it into a query param and reloads.
+  @meta_callback_page """
+  <!doctype html>
+  <meta name="robots" content="noindex">
+  <title>Signing in…</title>
+  <script>
+  location.replace(location.pathname + "?payload=" + encodeURIComponent(location.hash.slice(1)));
+  </script>
+  """
+
+  # Web: read the state stashed in the session at /authorize, then hand to grant.
+  def meta_callback(conn, %{"payload" => payload}) do
+    state = get_session(conn, :meta_state)
+    conn = delete_session(conn, :meta_state)
+
+    case decode_meta_payload(payload) do
+      {:ok, code, org_scoped_id} when is_binary(state) ->
+        query = URI.encode_query(%{code: code, org_scoped_id: org_scoped_id, state: state})
+
+        conn
+        |> redirect(to: "/v1/connections/grant?type=meta&" <> query)
+        |> halt()
+
+      _ ->
+        grant_error(conn, "auto", :state_mismatch, :meta)
+    end
+  end
+
+  def meta_callback(conn, _), do: send_meta_bootstrap(conn)
+
+  # App: no session, and the app already holds the state. Forward just the code
+  # and org-scoped id to the app scheme; openSecureWindow prefix-matches, so
+  # type=meta stays first.
+  def meta_callback_app(conn, %{"payload" => payload}) do
+    suffix =
+      case decode_meta_payload(payload) do
+        {:ok, code, org_scoped_id} ->
+          URI.encode_query(%{code: code, org_scoped_id: org_scoped_id})
+
+        _ ->
+          "error=state_mismatch"
+      end
+
+    conn
+    |> redirect(external: Meta.redirect_url!(redirect: :app) <> "&" <> suffix)
+    |> halt()
+  end
+
+  def meta_callback_app(conn, _), do: send_meta_bootstrap(conn)
+
+  defp send_meta_bootstrap(conn) do
+    conn
+    |> put_resp_content_type("text/html")
+    |> send_resp(200, @meta_callback_page)
+  end
+
+  defp decode_meta_payload(payload) when is_binary(payload) do
+    with {:ok, json} <- decode_base64(payload),
+         {:ok, %{"code" => code} = fields} when is_binary(code) <- Jason.decode(json),
+         org_scoped_id = fields["org-scoped_id"] || fields["org_scoped_id"],
+         true <- is_binary(org_scoped_id) do
+      {:ok, code, org_scoped_id}
+    else
+      _ -> :error
+    end
+  end
+
+  defp decode_meta_payload(_), do: :error
+
+  defp decode_base64(value) do
+    case Base.decode64(value, padding: false) do
+      {:ok, decoded} -> {:ok, decoded}
+      :error -> Base.url_decode64(value, padding: false)
+    end
+  end
+
   # Native Android flow - Apple form_posts the authorization code here; exchange
   # it and send the tokens back to the app via deep link, where the SocialLogin
   # plugin resolves them and the app then calls the JSON grant with the id_token.
@@ -217,7 +319,8 @@ defmodule FlirtualWeb.ConnectionController do
              {:ok, authorization} <-
                provider.exchange_code(code,
                  redirect: if(redirect_type == "app", do: :app, else: true),
-                 state: params["state"]
+                 state: params["state"],
+                 org_scoped_id: params["org_scoped_id"]
                ),
              {:ok, profile} <- provider.get_profile(authorization) do
           # Try session first, fall back to user_id from state (for Apple's form_post)
@@ -445,50 +548,48 @@ defmodule FlirtualWeb.ConnectionController do
     do_register_user(conn, profile, type, options)
   end
 
+  defp onboarding_url do
+    Application.fetch_env!(:flirtual, :frontend_origin)
+    |> URI.merge("/onboarding/1")
+    |> URI.to_string()
+  end
+
   defp do_register_user(conn, profile, type, options) do
-    email = profile.email
+    case Users.create_from_connection(profile.email, notifications: options[:notifications]) do
+      {:ok, user} ->
+        %Connection{}
+        |> Connection.changeset(profile)
+        |> change(%{user_id: user.id, type: type})
+        |> Repo.insert!()
 
-    if is_nil(email) or email == "" do
-      case options[:response] do
-        :redirect -> grant_error(conn, options[:redirect_type], :email_required, type, nil)
-        :json -> {:error, {:bad_request, :email_required}}
-      end
-    else
-      case Users.create_from_connection(email, notifications: options[:notifications]) do
-        {:ok, user} ->
-          # Create the connection
-          %Connection{}
-          |> Connection.changeset(profile)
-          |> change(%{user_id: user.id, type: type})
-          |> Repo.insert!()
+        run_connection_checks(user.id, profile, type)
 
-          run_connection_checks(user.id, profile, type)
+        {session, conn} =
+          SessionController.create(conn, user,
+            method: type,
+            device_id: options[:device_id]
+          )
 
-          {session, conn} =
-            SessionController.create(conn, user,
-              method: type,
-              device_id: options[:device_id]
-            )
+        case options[:response] do
+          # New users go directly to onboarding. Logins (create_session/4) keep
+          # their `next`.
+          :redirect ->
+            grant_next(conn, options[:redirect_type], onboarding_url())
 
-          case options[:response] do
-            :redirect ->
-              grant_next(conn, options[:redirect_type], options[:next])
+          :json ->
+            conn |> put_status(:created) |> json(Flirtual.Policy.transform(conn, session))
+        end
 
-            :json ->
-              conn |> put_status(:created) |> json(Flirtual.Policy.transform(conn, session))
-          end
+      {:error, reason} ->
+        {status, message} = registration_error(reason)
 
-        {:error, reason} ->
-          {status, message} = registration_error(reason)
+        case options[:response] do
+          :redirect ->
+            grant_error(conn, options[:redirect_type], message, type, nil)
 
-          case options[:response] do
-            :redirect ->
-              grant_error(conn, options[:redirect_type], message, type, nil)
-
-            :json ->
-              {:error, {status, message}}
-          end
-      end
+          :json ->
+            {:error, {status, message}}
+        end
     end
   end
 

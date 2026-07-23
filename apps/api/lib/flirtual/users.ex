@@ -253,7 +253,9 @@ defmodule Flirtual.Users do
   defmodule UpdateEmail do
     use Flirtual.EmbeddedSchema
 
-    @optional [:current_password]
+    # email_confirmation is enforced only when changing an existing email, not
+    # when adding an email to a Meta account.
+    @optional [:current_password, :email_confirmation]
 
     embedded_schema do
       field(:email, :string)
@@ -602,22 +604,22 @@ defmodule Flirtual.Users do
     end)
   end
 
-  @doc """
-  Creates a new user without password (social login flow).
-  Email is pre-verified since it comes from a trusted provider.
-  """
+  # Creates a passwordless user for the social login flow. If the provider
+  # email, it's pre-verified. Meta doesn't expose an email, so we create the
+  # account without one and prompt for it on the email confirmation step.
   def create_from_connection(email, options \\ []) do
     notifications = Keyword.get(options, :notifications) == true
+    has_email = is_binary(email) and email != ""
 
     Repo.transaction(fn ->
       with {:ok, user} <-
              %User{}
-             |> cast(%{email: email}, [:email])
-             |> User.validate_unique_email()
-             |> Flag.validate_allowed_email(:email)
+             |> cast(%{email: if(has_email, do: email)}, [:email])
+             |> then(&if has_email, do: User.validate_unique_email(&1), else: &1)
+             |> then(&if has_email, do: Flag.validate_allowed_email(&1, :email), else: &1)
              |> Repo.insert(),
            {:ok, user} <-
-             setup_new_user(user, %{notifications: notifications}, email_confirmed: true) do
+             setup_new_user(user, %{notifications: notifications}, email_confirmed: has_email) do
         user
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -663,11 +665,15 @@ defmodule Flirtual.Users do
            Ecto.build_assoc(profile, :preferences)
            |> Repo.insert(),
          user <- Repo.preload(user, User.default_assoc()),
-         :ok <- Flag.check_email_flags(user.id, user.email),
-         :ok <- check_email_hash(user),
+         :ok <- if(user.email, do: Flag.check_email_flags(user.id, user.email), else: :ok),
+         :ok <- if(user.email, do: check_email_hash(user), else: :ok),
          {:ok, _} <- Talkjs.update_user(user),
-         {:ok, _} <- Listmonk.create_subscriber(user),
-         {:ok, _} <- if(email_confirmed, do: {:ok, nil}, else: deliver_email_confirmation(user)) do
+         {:ok, _} <- if(user.email, do: Listmonk.create_subscriber(user), else: {:ok, nil}),
+         {:ok, _} <-
+           if(email_confirmed or is_nil(user.email),
+             do: {:ok, nil},
+             else: deliver_email_confirmation(user)
+           ) do
       {:ok, user}
     end
   end

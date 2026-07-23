@@ -68,19 +68,6 @@ export const Finish5Form: React.FC = () => {
 						<>
 							<div className="grid gap-4 wide:grid-cols-2">
 								<AddConnectionButton type="discord" />
-								{/* <AddConnectionButton type="vrchat" />
-							{platform === "apple" ? (
-								<>
-									<AddConnectionButton type="apple" />
-									<AddConnectionButton type="google" />
-								</>
-							) : (
-								<>
-									<AddConnectionButton type="google" />
-									<AddConnectionButton type="apple" />
-								</>
-							)}
-							<AddConnectionButton type="meta" /> */}
 								<FormField name="vrchat">
 									{(field) => (
 										<InputText
@@ -92,6 +79,7 @@ export const Finish5Form: React.FC = () => {
 										/>
 									)}
 								</FormField>
+								<AddConnectionButton type="meta" />
 								{vision && user.tags?.includes("debugger") && (
 									<FormField
 										name="facetime"

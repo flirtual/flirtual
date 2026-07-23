@@ -171,10 +171,10 @@ export const LoginForm: FC = () => {
 	}
 
 	const connectionTypes = device.apple
-		? (["apple", "google", "discord"] as const)
+		? (["apple", "google", "discord", "meta"] as const)
 		: device.android
-			? (["google", "apple", "discord"] as const)
-			: (["discord", "google", "apple"] as const);
+			? (["google", "apple", "discord", "meta"] as const)
+			: (["discord", "google", "apple", "meta"] as const);
 
 	return (
 		<>

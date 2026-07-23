@@ -14,7 +14,7 @@ import { urls } from "~/urls";
 import { escapeHtml } from "~/utilities";
 
 import { CopyClick } from "../copy-click";
-import { DiscordIcon, VRChatOutlineIcon } from "../icons";
+import { DiscordIcon, MetaIcon, VRChatOutlineIcon } from "../icons";
 import { InlineLink } from "../inline-link";
 import { ProfileActionBar } from "./action-bar";
 import { ActivityIndicator } from "./activity-indicator";
@@ -90,6 +90,10 @@ export const Profile = withSuspense(({
 
 	const discordConnection = user.connections?.find(
 		(connection) => connection.type === "discord"
+	);
+
+	const metaConnection = user.connections?.find(
+		(connection) => connection.type === "meta"
 	);
 
 	return (
@@ -182,7 +186,8 @@ export const Profile = withSuspense(({
 						|| myProfile)
 					&& (discordConnection
 						|| user.profile.discord
-						|| user.profile.vrchatName)
+						|| user.profile.vrchatName
+						|| metaConnection)
 					&& (
 						<div className="flex flex-col gap-2 vision:text-white-20">
 							{(discordConnection || user.profile.discord) && (
@@ -204,7 +209,7 @@ export const Profile = withSuspense(({
 												/>
 											)
 										}}
-										i18nKey="that_proud_butterfly_find"
+										i18nKey="discord_username"
 										values={{ name: escapeHtml(discordConnection?.displayName || user.profile.discord!) }}
 									/>
 									{discordConnection && (
@@ -234,12 +239,32 @@ export const Profile = withSuspense(({
 													/>
 												)
 											}}
-											i18nKey="zany_salty_cheetah_lead"
+											i18nKey="vrchat_username"
 											values={{ name: escapeHtml(name) }}
 										/>
 									</div>
 								);
 							})()}
+							{metaConnection?.displayName && (
+								<div className="flex items-center gap-2">
+									<MetaIcon className="size-6 shrink-0" />
+									<Trans
+										shouldUnescape
+										components={{
+											copy: (
+												<InlineLink
+													className="underline"
+													highlight={false}
+													href={metaConnection.url ?? null}
+												/>
+											)
+										}}
+										i18nKey="meta_username"
+										values={{ name: escapeHtml(metaConnection.displayName) }}
+									/>
+									<ProfileVerificationBadge tooltip={t("meta_verified")} />
+								</div>
+							)}
 						</div>
 					)}
 					{user.profile.new && !myProfile
