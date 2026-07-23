@@ -6,6 +6,8 @@ import NotFoundPage from "~/app/[locale]/not-found";
 import { preloadProfileAttributes, Profile } from "~/components/profile";
 import { useSession } from "~/hooks/use-session";
 import { useRelationship, useUser } from "~/hooks/use-user";
+import { throwRedirect } from "~/redirect";
+import { urls } from "~/urls";
 
 import { QueueActions } from "../discover/queue-actions";
 
@@ -38,9 +40,13 @@ const ProfileQueueActions: FC<{ userId: string }> = ({ userId }) => {
 
 export default function ProfilePage() {
 	const { slug } = useParams();
+	const { user: me } = useSession();
 
 	const user = useUser(slug!);
 	if (!user) return <NotFoundPage />;
+
+	if (user.id === me.id && me.status === "onboarded")
+		return throwRedirect(urls.finish(1));
 
 	return (
 		<>

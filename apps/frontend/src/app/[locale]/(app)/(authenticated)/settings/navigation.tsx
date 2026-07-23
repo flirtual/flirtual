@@ -52,8 +52,6 @@ export const SettingsNavigation: FC = () => {
 	const { t } = useTranslation();
 	const dialogs = useDialog();
 
-	// if (user.status === "onboarded") throwRedirect(urls.finish(1));
-
 	return (
 		<div className="sticky top-0 z-10 flex w-full shrink-0 grow-0 flex-col self-baseline desktop:relative desktop:w-80 desktop:rounded-2xl desktop:bg-brand-gradient desktop:text-white-20 desktop:shadow-brand-1">
 			<NavigationHeader listOnly={listOnly} />
