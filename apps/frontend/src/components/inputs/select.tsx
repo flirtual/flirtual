@@ -302,6 +302,7 @@ export function InputSelect<K>(props: InputSelectProps<K>) {
 						className="focusable pointer-events-auto absolute right-4 rounded-full brightness-90 hocus:brightness-100"
 						tabIndex={0}
 						type="button"
+						onPointerDown={(event) => event.stopPropagation()}
 						onClick={(event) => {
 							event.stopPropagation();
 							onChange("");
