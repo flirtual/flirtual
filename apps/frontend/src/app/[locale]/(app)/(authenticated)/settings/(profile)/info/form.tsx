@@ -229,6 +229,17 @@ export const InfoForm: FC = () => {
 							</>
 						)}
 					</FormField>
+					<FormField name="timezone">
+						{(field) => (
+							<>
+								<InputLabel>{t("timezone")}</InputLabel>
+								<InputLabelHint className="-mt-2">
+									{t("timezone_hint")}
+								</InputLabelHint>
+								<InputTimezoneSelect {...field.props} />
+							</>
+						)}
+					</FormField>
 					<div className="flex flex-col gap-2">
 						<InputLabel>{t("geolocation")}</InputLabel>
 						<InputLabelHint className="-mt-2">
@@ -242,17 +253,6 @@ export const InfoForm: FC = () => {
 						</InputLabelHint>
 						<InputGeolocation />
 					</div>
-					<FormField name="timezone">
-						{(field) => (
-							<>
-								<InputLabel>{t("timezone")}</InputLabel>
-								<InputLabelHint className="-mt-2">
-									{t("timezone_hint")}
-								</InputLabelHint>
-								<InputTimezoneSelect {...field.props} />
-							</>
-						)}
-					</FormField>
 					<FormField name="languages">
 						{(field) => (
 							<>

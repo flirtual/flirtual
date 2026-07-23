@@ -3,14 +3,15 @@ import type { FC } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
+import { isWretchError } from "~/api/common";
 import { DefaultProfileCustomWeights, Profile } from "~/api/user/profile";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
-import { InputLabel, InputLabelHint } from "~/components/inputs";
+import { InputLabel, InputLabelHint, InputSwitch } from "~/components/inputs";
 import { Slider } from "~/components/inputs/slider";
 import {
-	InputGeolocation,
-	InputTimezoneSelect
+	InputTimezoneSelect,
+	useApplyGeolocation
 } from "~/components/inputs/specialized";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
@@ -22,6 +23,8 @@ export const Location2025: FC<{ onSaved?: () => void }> = ({ onSaved }) => {
 	const { t } = useTranslation();
 	const toasts = useToast();
 	const { user } = useSession();
+
+	const applyGeolocation = useApplyGeolocation();
 
 	const { customWeights = DefaultProfileCustomWeights } = user.profile;
 
@@ -38,16 +41,21 @@ export const Location2025: FC<{ onSaved?: () => void }> = ({ onSaved }) => {
 					<Form
 						fields={{
 							timezone: user.profile.timezone ?? browserTimezone,
-							weightLocation: customWeights.location
+							weightLocation: customWeights.location,
+							geolocation: true
 						}}
 						className="mt-2 flex flex-col gap-6"
-						onSubmit={async ({ timezone, weightLocation }) => {
+						onSubmit={async ({ timezone, weightLocation, geolocation }) => {
 							await Promise.all([
 								Profile.update(user.id, {
 									timezone: timezone ?? "none"
 								}),
 								Profile.updateCustomWeights(user.id, {
 									location: weightLocation
+								}),
+								applyGeolocation(geolocation).catch((reason) => {
+									if (isWretchError(reason)) return toasts.addError(t(`errors.${reason.json.error}` as any));
+									toasts.addError(reason);
 								})
 							]);
 							await invalidate({ queryKey: sessionKey() });
@@ -57,19 +65,23 @@ export const Location2025: FC<{ onSaved?: () => void }> = ({ onSaved }) => {
 					>
 						{({ FormField }) => (
 							<>
-								<div className="flex flex-col gap-2">
-									<InputLabel>{t("geolocation")}</InputLabel>
-									<InputLabelHint className="-mt-2">
-										{t("geolocation_hint")}
-										<details>
-											<summary className="text-pink opacity-75 transition-opacity hover:cursor-pointer hover:opacity-100">
-												{t("privacy")}
-											</summary>
-											{t("geolocation_privacy_details")}
-										</details>
-									</InputLabelHint>
-									<InputGeolocation />
-								</div>
+								<FormField name="geolocation">
+									{(field) => (
+										<>
+											<InputLabel>{t("enable_distance_matchmaking")}</InputLabel>
+											<InputLabelHint className="-mt-2">
+												{t("geolocation_hint")}
+												<details>
+													<summary className="text-pink opacity-75 transition-opacity hover:cursor-pointer hover:opacity-100">
+														{t("privacy")}
+													</summary>
+													{t("geolocation_privacy_details")}
+												</details>
+											</InputLabelHint>
+											<InputSwitch {...field.props} />
+										</>
+									)}
+								</FormField>
 								<FormField name="timezone">
 									{(field) => (
 										<>

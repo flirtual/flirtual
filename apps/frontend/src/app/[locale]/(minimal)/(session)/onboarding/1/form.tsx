@@ -10,11 +10,12 @@ import {
 	InputAutocomplete,
 	InputDateSelect,
 	InputLabel,
-	InputLabelHint
+	InputLabelHint,
+	InputSwitch
 } from "~/components/inputs";
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
 import { InputCountrySelect } from "~/components/inputs/specialized";
-import { InputGeolocation } from "~/components/inputs/specialized/geolocation-input";
+import { useApplyGeolocation } from "~/components/inputs/specialized/geolocation-input";
 import { InputTimezoneSelect } from "~/components/inputs/specialized/timezone-select";
 import { endOfYear, toLocalDateString } from "~/date";
 import {
@@ -40,6 +41,8 @@ export const Onboarding1Form: FC = () => {
 
 	const { country } = useConfig();
 
+	const applyGeolocation = useApplyGeolocation();
+
 	const genders = useAttributes("gender");
 
 	const tAttribute = useAttributeTranslation();
@@ -54,11 +57,12 @@ export const Onboarding1Form: FC = () => {
 					: new Date(),
 				country: user.profile.country ?? country ?? null,
 				timezone: (profile.timezone ?? Intl.DateTimeFormat().resolvedOptions().timeZone) as string | null,
-				gender: profile.attributes.gender || []
+				gender: profile.attributes.gender || [],
+				geolocation: true
 			}}
 			className="flex flex-col gap-8"
 			requireChange={false}
-			onSubmit={async ({ bornAt, ...values }) => {
+			onSubmit={async ({ bornAt, geolocation, ...values }) => {
 				await Promise.all([
 					User.update(user.id, {
 						bornAt: toLocalDateString(bornAt),
@@ -68,6 +72,10 @@ export const Onboarding1Form: FC = () => {
 						country: values.country ?? "none",
 						timezone: values.timezone ?? "none",
 						genderId: values.gender?.filter((id) => id !== "other")
+					}),
+					applyGeolocation(geolocation).catch((reason) => {
+						if (isWretchError(reason)) return toasts.addError(t(`errors.${reason.json.error}` as any));
+						toasts.addError(reason);
 					})
 				])
 					.then(async () => {
@@ -168,19 +176,6 @@ export const Onboarding1Form: FC = () => {
 							</>
 						)}
 					</FormField>
-					<div className="flex flex-col gap-2">
-						<InputLabel hint={t("optional")}>{t("geolocation")}</InputLabel>
-						<InputLabelHint className="-mt-2">
-							{t("geolocation_hint")}
-							<details>
-								<summary className="text-pink opacity-75 transition-opacity hover:cursor-pointer hover:opacity-100">
-									{t("privacy")}
-								</summary>
-								{t("geolocation_privacy_details")}
-							</details>
-						</InputLabelHint>
-						<InputGeolocation />
-					</div>
 					<FormField name="timezone">
 						{(field) => (
 							<>
@@ -189,6 +184,23 @@ export const Onboarding1Form: FC = () => {
 									{t("timezone_hint")}
 								</InputLabelHint>
 								<InputTimezoneSelect {...field.props} />
+							</>
+						)}
+					</FormField>
+					<FormField name="geolocation">
+						{(field) => (
+							<>
+								<InputLabel hint={t("optional")}>{t("enable_distance_matchmaking")}</InputLabel>
+								<InputLabelHint className="-mt-2">
+									{t("geolocation_hint")}
+									<details>
+										<summary className="text-pink opacity-75 transition-opacity hover:cursor-pointer hover:opacity-100">
+											{t("privacy")}
+										</summary>
+										{t("geolocation_privacy_details")}
+									</details>
+								</InputLabelHint>
+								<InputSwitch {...field.props} />
 							</>
 						)}
 					</FormField>

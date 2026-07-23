@@ -1029,7 +1029,7 @@
 	"distance_around_mi": "Around {distance} miles away",
 	"distance_over_km": "Over {distance} kilometres away",
 	"distance_over_mi": "Over {distance} miles away",
-	"share_location": "Share location",
+	"enable_distance_matchmaking": "Enable distance matchmaking",
 	"update_location": "Update location",
 	"updating": "Updating…",
 	"remove": "Remove",
