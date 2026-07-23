@@ -141,6 +141,7 @@ defmodule FlirtualWeb.ConnectionController do
     user = conn.assigns[:session].user
 
     with :ok <- ensure_email(user, type),
+         :ok <- ensure_email_independent(user, type),
          :ok <- Connection.delete(user.id, type) do
       conn |> json(%{deleted: true})
     end
@@ -151,6 +152,36 @@ defmodule FlirtualWeb.ConnectionController do
   end
 
   defp ensure_email(_user, _type), do: :ok
+
+  # Removing an Apple connection with Hide My Email makes their email
+  # undeliverable, so prevent removal if the user doesn't have a different or
+  # non-relay email.
+  defp ensure_email_independent(%User{email: email, connections: connections}, :apple)
+       when is_binary(email) do
+    connection = Enum.find(connections, &(&1.type == :apple))
+
+    if connection && same_email?(email, connection.display_name) && apple_relay?(email) do
+      {:error, {:bad_request, :connection_email_change_required}}
+    else
+      :ok
+    end
+  end
+
+  defp ensure_email_independent(_user, _type), do: :ok
+
+  defp same_email?(email, display_name) when is_binary(email) and is_binary(display_name) do
+    String.downcase(email) == String.downcase(display_name)
+  end
+
+  defp same_email?(_email, _display_name), do: false
+
+  defp apple_relay?(email) do
+    email = String.downcase(email)
+
+    # Hide My Email may be on either domain.
+    String.ends_with?(email, "@privaterelay.appleid.com") or
+      String.ends_with?(email, "@private.icloud.com")
+  end
 
   defp has_email?(%User{email: email}), do: is_binary(email) and email != ""
 

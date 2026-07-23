@@ -438,6 +438,7 @@
 		"connection_in_use": "このアカウントは既に別のFlirtualプロフィールに連携されています。先にもう一方のFlirtualアカウントを削除してください。",
 		"connection_verify_email": "アカウントのプロバイダーでメールアドレスを確認してから、もう一度お試しください。",
 		"connection_email_required": "この連携を解除する前に、アカウントにメールアドレスを追加してください。",
+		"connection_email_change_required": "この連携を解除する前に、アカウントのメールアドレスを変更してください。",
 		"email_required": "アカウントのプロバイダーにメールアドレスが登録されていないため、ご利用いただけません。",
 		"email_in_use": "このメールアドレスのアカウントは既に存在します。",
 		"registration_failed": "アカウントを作成できませんでした。後でもう一度お試しください。",
