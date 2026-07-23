@@ -300,9 +300,16 @@ defmodule Flirtual.Mailer do
     """
   end
 
+  defp address(mailbox, type) do
+    domains = Application.fetch_env!(:flirtual, __MODULE__)[:domains]
+    "#{mailbox}@#{Map.get(domains, type) || Map.fetch!(domains, "transactional")}"
+  end
+
   # subject, body_text, body_html, action_url \\ nil
   def send(recipient, options) do
-    from = Keyword.get(options, :from) || "noreply@flirtu.al"
+    type = Keyword.fetch!(options, :type)
+    from = address("noreply", type)
+    reply_to_mailbox = Keyword.get(options, :reply_to)
     subject = Keyword.fetch!(options, :subject)
     action_url = Keyword.get(options, :action_url)
     unsubscribe_token = Keyword.get(options, :unsubscribe_token)
@@ -325,6 +332,13 @@ defmodule Flirtual.Mailer do
             action_url
           )
         )
+
+      email =
+        if reply_to_mailbox do
+          reply_to(email, address(reply_to_mailbox, type))
+        else
+          email
+        end
 
       email =
         if unsubscribe_token do

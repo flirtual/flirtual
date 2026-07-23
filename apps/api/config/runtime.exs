@@ -93,6 +93,13 @@ config :flirtual,
   retained_origin: retained_origin && URI.parse(retained_origin),
   image_classification_origin: image_classification_origin
 
+config :flirtual, Flirtual.Mailer,
+  domains: %{
+    "transactional" =>
+      Env.get("MAIL_DOMAIN_TRANSACTIONAL", default: URI.parse(frontend_origin).host),
+    "marketing" => Env.get("MAIL_DOMAIN_MARKETING", default: URI.parse(frontend_origin).host)
+  }
+
 config :flirtual, FlirtualWeb.Endpoint,
   secret_key_base:
     Env.get!(

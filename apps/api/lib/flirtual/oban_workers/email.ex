@@ -49,10 +49,10 @@ defmodule Flirtual.ObanWorkers.Email do
         args:
           %{
             "user_id" => user_id,
+            "type" => type,
             "subject" => subject,
             "body_text" => body_text,
-            "body_html" => body_html,
-            "type" => type
+            "body_html" => body_html
           } = args
       }) do
     user = User.get(user_id)
@@ -63,11 +63,12 @@ defmodule Flirtual.ObanWorkers.Email do
     else
       send_email(
         user,
-        from: Map.get(args, "from"),
+        reply_to: Map.get(args, "reply_to"),
+        type: type,
         language: Map.get(args, "language", user.preferences.language),
         subject: subject,
         action_url: Map.get(args, "action_url"),
-        unsubscribe_token: if(type === "marketing", do: user.unsubscribe_token),
+        unsubscribe_token: if(type == "marketing", do: user.unsubscribe_token),
         body_text: body_text,
         body_html: body_html
       )
@@ -79,6 +80,7 @@ defmodule Flirtual.ObanWorkers.Email do
         args:
           %{
             "to" => to,
+            "type" => type,
             "subject" => subject,
             "body_text" => body_text,
             "body_html" => body_html
@@ -86,7 +88,8 @@ defmodule Flirtual.ObanWorkers.Email do
       }) do
     send_email(
       to,
-      from: Map.get(args, "from"),
+      reply_to: Map.get(args, "reply_to"),
+      type: type,
       language: Map.get(args, "language"),
       subject: subject,
       body_text: body_text,

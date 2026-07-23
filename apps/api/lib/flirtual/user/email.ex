@@ -10,7 +10,7 @@ defmodule Flirtual.User.Email do
     Gettext.with_locale(language, fn ->
       %{
         "user_id" => user.id,
-        "from" => "moderation@flirtu.al",
+        "reply_to" => "moderation",
         "subject" => dgettext("notifications", "suspended.subject"),
         "language" => language,
         "type" => "transactional",
@@ -118,7 +118,7 @@ defmodule Flirtual.User.Email do
     Gettext.with_locale(language, fn ->
       %{
         "user_id" => user.id,
-        "from" => "security@flirtu.al",
+        "reply_to" => "security",
         "language" => language,
         "type" => "transactional",
         "subject" => dgettext("notifications", "verification_code.subject", code: code),
@@ -141,7 +141,7 @@ defmodule Flirtual.User.Email do
     Gettext.with_locale(language, fn ->
       %{
         "user_id" => user.id,
-        "from" => "security@flirtu.al",
+        "reply_to" => "security",
         "language" => language,
         "type" => "transactional",
         "action_url" => action_url,
@@ -164,7 +164,7 @@ defmodule Flirtual.User.Email do
     Gettext.with_locale(language, fn ->
       %{
         "to" => user.previous_email,
-        "from" => "security@flirtu.al",
+        "reply_to" => "security",
         "language" => language,
         "type" => "transactional",
         "subject" => dgettext("notifications", "email_changed.subject"),
