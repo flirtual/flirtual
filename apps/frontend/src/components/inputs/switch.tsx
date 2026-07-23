@@ -31,6 +31,30 @@ export const InputSwitch: React.FC<InputSwitchProps> = (props) => {
 		props.onChange(next);
 	}
 
+	function onKeyDown(event: React.KeyboardEvent) {
+		const { key } = event;
+
+		if (value === null) {
+			if (key !== "Enter" && key !== "ArrowLeft" && key !== "ArrowRight")
+				return;
+
+			event.preventDefault();
+			select(true);
+			return;
+		}
+
+		if (key === "ArrowLeft" || key === "ArrowRight") {
+			event.preventDefault();
+			select(!value);
+			return;
+		}
+
+		if (key === "Enter" && props.deselectable) {
+			event.preventDefault();
+			props.onChange(null);
+		}
+	}
+
 	return (
 		<div
 			className={twMerge(
@@ -41,6 +65,7 @@ export const InputSwitch: React.FC<InputSwitchProps> = (props) => {
 			data-checked={ariaChecked}
 			role="checkbox"
 			tabIndex={0}
+			onKeyDown={onKeyDown}
 		>
 			<input
 				checked={value || false}
