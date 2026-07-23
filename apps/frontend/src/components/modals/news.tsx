@@ -70,7 +70,13 @@ export const NewsDialog: FC<NewsDialogProps> = (props) => {
 	return (
 		<Suspense fallback={null}>
 			<Dialog open onOpenChange={(open) => !open && currentIndex >= news.length - 1 && handleClose()}>
-				<DialogContent className="desktop:max-w-xl" closable={currentIndex >= news.length - 1}>
+				<DialogContent
+					className="outline-none desktop:max-w-xl"
+					closable={currentIndex >= news.length - 1}
+					onEscapeKeyDown={(event) => event.preventDefault()}
+					onInteractOutside={(event) => event.preventDefault()}
+					onOpenAutoFocus={(event) => event.preventDefault()}
+				>
 					<DialogHeader>
 						<DialogTitle>{t(`news.${news[currentIndex]}.title` as any)}</DialogTitle>
 					</DialogHeader>
