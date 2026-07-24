@@ -7,6 +7,7 @@ import { useOptionalSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 
 import { SignUpButton } from "./sign-up-button";
+import { SqueakyFlitty } from "./squeaky-flitty";
 
 export const CallToActionGuest: FC<{ className?: string }> = ({ className }) => {
 	const { t } = useTranslation();
@@ -27,9 +28,11 @@ export const CallToAction: FC<{ className?: string }> = ({ className }) => {
 
 	if (session) return (
 		<div className={twMerge("gap-2", className)}>
-			<ButtonLink href={urls.discover("dates")}>
-				{t("start_matching")}
-			</ButtonLink>
+			<SqueakyFlitty>
+				<ButtonLink className="isolate" href={urls.discover("dates")}>
+					{t("start_matching")}
+				</ButtonLink>
+			</SqueakyFlitty>
 		</div>
 	);
 
