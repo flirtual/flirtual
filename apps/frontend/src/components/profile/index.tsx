@@ -1,4 +1,5 @@
-import type { ComponentProps, CSSProperties } from "react";
+import { Copy } from "lucide-react";
+import type { ComponentProps, CSSProperties, FC } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 import { withSuspense } from "with-suspense";
@@ -63,6 +64,22 @@ export type ProfileProps = {
 	hideModeratorInfo?: boolean;
 } & ComponentProps<"div">;
 
+const CopyUsername: FC<{ value: string }> = ({ value }) => {
+	const { t } = useTranslation();
+
+	return (
+		<CopyClick value={value}>
+			<button
+				className="focusable shrink-0 rounded opacity-60 hocus:opacity-100"
+				type="button"
+			>
+				<Copy className="size-4" />
+				<span className="sr-only">{t("copy")}</span>
+			</button>
+		</CopyClick>
+	);
+};
+
 export const Profile = withSuspense(({
 	userId,
 	direct = false,
@@ -95,6 +112,8 @@ export const Profile = withSuspense(({
 	const metaConnection = user.connections?.find(
 		(connection) => connection.type === "meta"
 	);
+
+	const discordName = discordConnection?.displayName || user.profile.discord;
 
 	return (
 		<div
@@ -184,34 +203,31 @@ export const Profile = withSuspense(({
 					{(((me.tags?.includes("admin") || me.tags?.includes("moderator")) && moderatorInfoVisible)
 						|| relationship?.matched
 						|| myProfile)
-					&& (discordConnection
-						|| user.profile.discord
+					&& (discordName
 						|| user.profile.vrchatName
 						|| metaConnection)
 					&& (
 						<div className="flex flex-col gap-2 vision:text-white-20">
-							{(discordConnection || user.profile.discord) && (
+							{discordName && (
 								<div className="flex items-center gap-2">
 									<DiscordIcon className="size-6 shrink-0" />
 									<Trans
 										shouldUnescape
 										components={{
-											copy: (
-												<CopyClick
-													value={
-														me.status === "visible"
-															? discordConnection?.displayName
-															|| user.profile.discord!
-															: null
-													}
-													asChild={false}
-													className="data-[copy-click]:hover:underline"
-												/>
-											)
+											copy: discordConnection
+												? (
+														<InlineLink
+															className="underline"
+															highlight={false}
+															href={me.status === "visible" ? discordConnection.url ?? null : null}
+														/>
+													)
+												: <span />
 										}}
 										i18nKey="discord_username"
-										values={{ name: escapeHtml(discordConnection?.displayName || user.profile.discord!) }}
+										values={{ name: escapeHtml(discordName) }}
 									/>
+									{me.status === "visible" && <CopyUsername value={discordName} />}
 									{discordConnection && (
 										<ProfileVerificationBadge
 											tooltip={t("discord_verified")}
@@ -242,6 +258,7 @@ export const Profile = withSuspense(({
 											i18nKey="vrchat_username"
 											values={{ name: escapeHtml(name) }}
 										/>
+										{me.status === "visible" && <CopyUsername value={name} />}
 									</div>
 								);
 							})()}
@@ -262,6 +279,7 @@ export const Profile = withSuspense(({
 										i18nKey="meta_username"
 										values={{ name: escapeHtml(metaConnection.displayName) }}
 									/>
+									{me.status === "visible" && <CopyUsername value={metaConnection.displayName} />}
 									<ProfileVerificationBadge tooltip={t("meta_verified")} />
 								</div>
 							)}
