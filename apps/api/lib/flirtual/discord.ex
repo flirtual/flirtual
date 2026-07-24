@@ -21,6 +21,8 @@ defmodule Flirtual.Discord do
   @embed_field_value_limit 1000
   @embed_description_limit 4000
 
+  @scope ~w(identify email)
+
   def config(key) do
     Application.get_env(:flirtual, Flirtual.Discord)[key]
   end
@@ -118,7 +120,7 @@ defmodule Flirtual.Discord do
       client_id: config(:client_id),
       redirect_uri: redirect_url!(redirect: Map.get(options, :redirect, true)),
       response_type: "code",
-      scope: "identify email",
+      scope: Enum.join(@scope, " "),
       prompt: prompt
     }
 
@@ -194,7 +196,8 @@ defmodule Flirtual.Discord do
        %{
          authorization: "#{token_type} #{access_token}",
          access_token: access_token,
-         refresh_token: body["refresh_token"]
+         refresh_token: body["refresh_token"],
+         scope: Flirtual.Connection.Provider.granted_scope(body["scope"], @scope)
        }}
     else
       %{"error" => "invalid_grant"} ->
@@ -215,8 +218,12 @@ defmodule Flirtual.Discord do
 
   def profile_url(%Connection{uid: id}), do: "https://discord.com/users/#{id}"
 
-  def tokens(%{access_token: access_token, refresh_token: refresh_token}),
-    do: %{access_token: access_token, refresh_token: refresh_token}
+  def tokens(%{access_token: access_token, refresh_token: refresh_token} = authorization),
+    do: %{
+      access_token: access_token,
+      refresh_token: refresh_token,
+      scope: authorization[:scope]
+    }
 
   def revoke(%{refresh_token: refresh_token, access_token: access_token}) do
     {token, hint} =

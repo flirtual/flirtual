@@ -9,6 +9,8 @@ defmodule Flirtual.Apple do
   @apple_token_url "https://appleid.apple.com/auth/token"
   @apple_revoke_url "https://appleid.apple.com/auth/revoke"
 
+  @scope ~w(email)
+
   def config(key) do
     Application.get_env(:flirtual, Flirtual.Apple)[key]
   end
@@ -29,7 +31,7 @@ defmodule Flirtual.Apple do
         client_id: client_id,
         redirect_uri: redirect_uri,
         response_type: "code",
-        scope: "email",
+        scope: Enum.join(@scope, " "),
         response_mode: "form_post",
         state: state
       })
@@ -70,7 +72,8 @@ defmodule Flirtual.Apple do
        %{
          id_token: id_token,
          access_token: response["access_token"],
-         refresh_token: response["refresh_token"]
+         refresh_token: response["refresh_token"],
+         scope: Flirtual.Connection.Provider.granted_scope(response["scope"], @scope)
        }}
     else
       {:ok, %Req.Response{body: body}} ->
@@ -91,8 +94,12 @@ defmodule Flirtual.Apple do
     end
   end
 
-  def tokens(%{access_token: access_token, refresh_token: refresh_token}),
-    do: %{access_token: access_token, refresh_token: refresh_token}
+  def tokens(%{access_token: access_token, refresh_token: refresh_token} = authorization),
+    do: %{
+      access_token: access_token,
+      refresh_token: refresh_token,
+      scope: authorization[:scope]
+    }
 
   # Native Sign in with Apple returns a one-time authorization_code alongside the
   # id_token; exchanging it yields the long-lived refresh token we need for

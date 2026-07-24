@@ -513,9 +513,11 @@ defmodule FlirtualWeb.ConnectionController do
       {%User{} = user, nil} ->
         link_connection(conn, user, profile, type, options)
 
-      # Logged-in user, connection already linked to them -> no-op
-      {%User{id: user_id}, %Connection{user: %User{id: conn_user_id}}}
+      # Logged-in user, connection already linked to them -> re-authorization to
+      # grant any new scopes.
+      {%User{id: user_id}, %Connection{user: %User{id: conn_user_id}} = connection}
       when user_id == conn_user_id ->
+        maybe_refresh_tokens(connection, profile)
         respond_success(conn, options, :already_linked)
 
       # Logged-in user, connection linked to different user -> transfer
@@ -556,11 +558,16 @@ defmodule FlirtualWeb.ConnectionController do
     respond_success(conn, options, :linked, :created)
   end
 
-  # Capture tokens on login in case we didn't get them on initial connection
-  # (Discord connections before we implemented revocation) or they have rotated.
+  # Capture tokens and granted scope in case we didn't get them on initial
+  # connection (Discord connections before we implemented revocation), they have
+  # rotated, or the user just approved a new scope.
   defp maybe_refresh_tokens(%Connection{} = connection, profile) do
     attrs =
-      %{access_token: profile[:access_token], refresh_token: profile[:refresh_token]}
+      %{
+        access_token: profile[:access_token],
+        refresh_token: profile[:refresh_token],
+        scope: profile[:scope]
+      }
       |> Enum.reject(fn {_key, value} -> is_nil(value) end)
       |> Map.new()
 

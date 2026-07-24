@@ -46,6 +46,7 @@ defmodule Flirtual.Connection do
 
     field(:access_token, :string, redact: true)
     field(:refresh_token, :string, redact: true)
+    field(:scope, {:array, :string})
 
     field(:avatar_url, :string, virtual: true)
     field(:url, :string, virtual: true)
@@ -79,7 +80,7 @@ defmodule Flirtual.Connection do
 
   def changeset(connection, attrs) do
     connection
-    |> cast(attrs, [:uid, :display_name, :avatar, :access_token, :refresh_token])
+    |> cast(attrs, [:uid, :display_name, :avatar, :access_token, :refresh_token, :scope])
     |> unsafe_validate_unique([:user_id, :type], Flirtual.Repo)
     |> unique_constraint([:user_id, :type])
   end

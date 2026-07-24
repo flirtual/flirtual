@@ -10,6 +10,8 @@ defmodule Flirtual.Google do
   @google_keys_url "https://www.googleapis.com/oauth2/v3/certs"
   @google_issuers ["https://accounts.google.com", "accounts.google.com"]
 
+  @scope ~w(openid email)
+
   def config(key) do
     Application.get_env(:flirtual, Flirtual.Google)[key]
   end
@@ -28,7 +30,7 @@ defmodule Flirtual.Google do
         client_id: config(:web_client_id),
         redirect_uri: redirect_uri,
         response_type: "code",
-        scope: "openid email",
+        scope: Enum.join(@scope, " "),
         prompt: "select_account",
         access_type: "offline",
         state: state
@@ -64,7 +66,8 @@ defmodule Flirtual.Google do
        %{
          id_token: id_token,
          access_token: response["access_token"],
-         refresh_token: response["refresh_token"]
+         refresh_token: response["refresh_token"],
+         scope: Flirtual.Connection.Provider.granted_scope(response["scope"], @scope)
        }}
     else
       {:ok, %Req.Response{body: body}} ->
@@ -85,8 +88,12 @@ defmodule Flirtual.Google do
     end
   end
 
-  def tokens(%{access_token: access_token, refresh_token: refresh_token}),
-    do: %{access_token: access_token, refresh_token: refresh_token}
+  def tokens(%{access_token: access_token, refresh_token: refresh_token} = authorization),
+    do: %{
+      access_token: access_token,
+      refresh_token: refresh_token,
+      scope: authorization[:scope]
+    }
 
   def revoke(%{refresh_token: refresh_token, access_token: access_token}) do
     do_revoke(refresh_token || access_token)

@@ -1,4 +1,11 @@
 defmodule Flirtual.Connection.Provider do
+  # Prefer the scopes reported by the provider as granted, falling back to the
+  # requested scopes (e.g. Apple does not report granted scopes).
+  def granted_scope(scope, _requested) when is_binary(scope),
+    do: String.split(scope, " ", trim: true)
+
+  def granted_scope(_scope, requested), do: requested
+
   defmacro __using__(name) when is_atom(name) do
     quote do
       @provider_name unquote(name)
