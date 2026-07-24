@@ -65,7 +65,7 @@ export const InputGeolocation: FC = () => {
 					? t("updating")
 					: user.profile.longitude && user.profile.latitude
 						? t("update_location")
-						: t("enable_distance_matchmaking")}
+						: t("enable")}
 			</Button>
 
 			{user.profile.longitude && user.profile.latitude && (

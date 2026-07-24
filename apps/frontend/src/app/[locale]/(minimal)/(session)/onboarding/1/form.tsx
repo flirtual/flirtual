@@ -190,7 +190,7 @@ export const Onboarding1Form: FC = () => {
 					<FormField name="geolocation">
 						{(field) => (
 							<>
-								<InputLabel hint={t("optional")}>{t("enable_distance_matchmaking")}</InputLabel>
+								<InputLabel>{t("enable_distance_matchmaking")}</InputLabel>
 								<InputLabelHint className="-mt-2">
 									{t("geolocation_hint")}
 									<details>

@@ -95,7 +95,7 @@
 			"title": "場所、場所、場所",
 			"body": "<p>位置情報とタイムゾーンを追加して、他のユーザーとの距離や現地時間を確認できるようになりました。</p><form />",
 			"location_priority": "場所の優先度",
-			"location_priority_help": "右にスライドすると近くのユーザーが多く表示され、左にスライドすると遠くにいる気の合いそうなユーザーが多く表示されます。"
+			"location_priority_help": "右にスライドすると近くのユーザーが多く表示され、左にスライドすると世界中のユーザーが多く表示されます。"
 		},
 		"2025_catch_up": {
 			"title": "新しいプロフィールタグ！",
@@ -1014,7 +1014,7 @@
 	"timezone_hint": "あなたの現在時刻がプロフィールに表示されます。都市名は表示されません。",
 	"select_timezone": "タイムゾーンを選択…",
 	"country": "国",
-	"geolocation": "位置情報",
+	"geolocation": "位置情報（距離ベースのマッチメイキング）",
 	"geolocation_hint": "近くの人を見つけやすくなります。おおよその距離のみが他のユーザーに表示されます。",
 	"geolocation_privacy_details": "保存されるのは不正確な位置情報のみで、直接表示されることはありません。距離は近くの人にのみ表示され、正確ではありません。位置情報を保護するための追加のセキュリティ対策が講じられています。",
 	"distance_within_km": "{distance}キロメートル以内",
@@ -1023,7 +1023,8 @@
 	"distance_around_mi": "約{distance}マイル先",
 	"distance_over_km": "{distance}キロメートル以上先",
 	"distance_over_mi": "{distance}マイル以上先",
-	"enable_distance_matchmaking": "距離マッチングを有効にする",
+	"enable_distance_matchmaking": "距離ベースのマッチメイキングを有効にする",
+	"enable": "有効にする",
 	"update_location": "位置情報を更新",
 	"updating": "更新中…",
 	"remove": "削除",

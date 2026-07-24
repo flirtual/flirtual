@@ -91,7 +91,7 @@
 			"title": "Location, location, location",
 			"body": "<p>You can now optionally add your location and timezone to see how close people are and what time it is for them.</p><form />",
 			"location_priority": "Location priority",
-			"location_priority_help": "Slide right to see more people nearby, or left to see more people we think you'll like farther away."
+			"location_priority_help": "Slide right to see more people nearby, or left to see more people from around the world."
 		},
 		"2025_catch_up": {
 			"title": "New-ish profile tags!",
@@ -1020,7 +1020,7 @@
 	"timezone_hint": "Your current time will be displayed on your profile. The city is not shown.",
 	"select_timezone": "Select your timezone…",
 	"country": "Country",
-	"geolocation": "Geolocation",
+	"geolocation": "Geolocation (distance-based matchmaking)",
 	"geolocation_hint": "This helps you find people closer to you. Only your approximate distance is visible to others.",
 	"geolocation_privacy_details": "We only store an imprecise location, which is never visible. Your distance is shown only to people nearby, and is not exact. Extra security measures are in place to protect your location.",
 	"distance_within_km": "Within {distance} kilometres",
@@ -1029,7 +1029,8 @@
 	"distance_around_mi": "Around {distance} miles away",
 	"distance_over_km": "Over {distance} kilometres away",
 	"distance_over_mi": "Over {distance} miles away",
-	"enable_distance_matchmaking": "Enable distance matchmaking",
+	"enable_distance_matchmaking": "Enable distance-based matchmaking",
+	"enable": "Enable",
 	"update_location": "Update location",
 	"updating": "Updating…",
 	"remove": "Remove",
