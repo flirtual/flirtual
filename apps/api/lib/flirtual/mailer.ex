@@ -310,6 +310,10 @@ defmodule Flirtual.Mailer do
     Map.get(sets, type) || Map.fetch!(sets, "transactional")
   end
 
+  defp reply_address(mailbox) do
+    "#{mailbox}@#{Application.fetch_env!(:flirtual, __MODULE__)[:reply_domain]}"
+  end
+
   # subject, body_text, body_html, action_url \\ nil
   def send(recipient, options) do
     type = Keyword.fetch!(options, :type)
@@ -341,7 +345,7 @@ defmodule Flirtual.Mailer do
 
       email =
         if reply_to_mailbox do
-          reply_to(email, address(reply_to_mailbox, type))
+          reply_to(email, reply_address(reply_to_mailbox))
         else
           email
         end

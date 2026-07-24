@@ -99,6 +99,7 @@ config :flirtual, Flirtual.Mailer,
       Env.get("MAIL_DOMAIN_TRANSACTIONAL", default: URI.parse(frontend_origin).host),
     "marketing" => Env.get("MAIL_DOMAIN_MARKETING", default: URI.parse(frontend_origin).host)
   },
+  reply_domain: Env.get("MAIL_REPLY_DOMAIN", default: URI.parse(frontend_origin).host),
   configuration_sets: %{
     "transactional" => Env.get("SES_CONFIGURATION_SET_TRANSACTIONAL", default: "account"),
     "marketing" => Env.get("SES_CONFIGURATION_SET_MARKETING", default: "notify")
