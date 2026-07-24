@@ -277,8 +277,7 @@ defmodule Flirtual.Discord do
        %{
          uid: id,
          email: email,
-         display_name:
-           if(discriminator == "0", do: username, else: "#{username}##{discriminator}"),
+         display_name: format_username(username, discriminator),
          avatar: avatar
        }}
     else
@@ -288,6 +287,66 @@ defmodule Flirtual.Discord do
       reason ->
         log(:critical, [:get_profile], reason)
         {:error, :upstream}
+    end
+  end
+
+  defp format_username(username, "0"), do: username
+  defp format_username(username, discriminator), do: "#{username}##{discriminator}"
+
+  def bot_token?, do: config(:access_token) not in [nil, ""]
+
+  def get_user(id) when is_binary(id) do
+    case config(:access_token) do
+      token when token in [nil, ""] ->
+        {:error, :missing_bot_token}
+
+      token ->
+        Req.request(
+          method: :get,
+          url: url("users/" <> id),
+          headers: [{"authorization", "Bot " <> token}],
+          decode_body: false,
+          retry: false,
+          finch: Flirtual.Finch
+        )
+        |> handle_get_user()
+    end
+  end
+
+  defp handle_get_user({:ok, %Req.Response{status: 200, body: body}}) do
+    case Jason.decode(body) do
+      {:ok, %{"id" => id, "username" => username} = user} ->
+        {:ok,
+         %{
+           uid: id,
+           display_name: format_username(username, user["discriminator"]),
+           avatar: user["avatar"]
+         }}
+
+      reason ->
+        log(:error, [:get_user], reason)
+        {:error, :upstream}
+    end
+  end
+
+  defp handle_get_user({:ok, %Req.Response{status: 404}}), do: {:error, :not_found}
+
+  defp handle_get_user({:ok, %Req.Response{status: 401}}), do: {:error, :unauthorized}
+
+  defp handle_get_user({:ok, %Req.Response{status: 429} = response}),
+    do: {:error, {:rate_limited, retry_after(response)}}
+
+  defp handle_get_user(reason) do
+    log(:error, [:get_user], reason)
+    {:error, :upstream}
+  end
+
+  defp retry_after(%Req.Response{} = response) do
+    with [value | _] <- Req.Response.get_header(response, "retry-after"),
+         {seconds, _} <- Float.parse(value) do
+      ceil(seconds)
+    else
+      _ -> 5
     end
   end
 

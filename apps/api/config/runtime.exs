@@ -253,7 +253,8 @@ config :flirtual, Flirtual.ObanWorkers,
         :prune_banned,
         :prune_inactive,
         :update_attribute_order,
-        :reconcile_entitlements
+        :reconcile_entitlements,
+        :refresh_connections
       ],
       else: [
         :like_digest,
@@ -269,6 +270,7 @@ config :flirtual, Oban,
     default: Env.get("OBAN_DEFAULT_CONCURRENCY", default: "6") |> String.to_integer(),
     matchmaking: Env.get("OBAN_MATCHMAKING_CONCURRENCY", default: "4") |> String.to_integer(),
     notifications: Env.get("OBAN_NOTIFICATIONS_CONCURRENCY", default: "3") |> String.to_integer(),
+    connections: Env.get("OBAN_CONNECTIONS_CONCURRENCY", default: "1") |> String.to_integer(),
     image_classification:
       Env.get("OBAN_IMAGE_CLASSIFICATION_CONCURRENCY", default: "1") |> String.to_integer(),
     image_spatial: Env.get("OBAN_IMAGE_SPATIAL_CONCURRENCY", default: "1") |> String.to_integer()

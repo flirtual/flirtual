@@ -30,7 +30,13 @@ export const ProfileDropdownCopySubmenu: FC<
 	const { t } = useTranslation();
 
 	const connections: Array<{ type: ConnectionType; value: string | null }> = [
-		{ type: "discord", value: user.profile.discord ?? null },
+		{
+			type: "discord",
+			value:
+				user.connections?.find(({ type }) => type === "discord")?.displayName
+				?? user.profile.discord
+				?? null
+		},
 		{ type: "vrchat", value: user.profile.vrchat ?? null }
 	];
 

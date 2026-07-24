@@ -3,8 +3,9 @@ defmodule Flirtual.ObanWorkers.Daily do
 
   import Ecto.Query
 
-  alias Flirtual.{Entitlement, Repo, User}
+  alias Flirtual.{Connection, Discord, Entitlement, Repo, User}
   alias Flirtual.ObanWorkers.Reconcile
+  alias Flirtual.ObanWorkers.RefreshConnection
   alias Flirtual.User.{Email, Login, Push, Session, SessionTransfer}
   alias Flirtual.User.Profile.Attributes
 
@@ -23,8 +24,21 @@ defmodule Flirtual.ObanWorkers.Daily do
     if :prune_sessions in enabled, do: prune_sessions()
     if :update_attribute_order in enabled, do: update_attribute_order()
     if :reconcile_entitlements in enabled, do: reconcile_entitlements()
+    if :refresh_connections in enabled, do: refresh_connections()
 
     :ok
+  end
+
+  # Update Discord usernames.
+  defp refresh_connections do
+    if Discord.bot_token?() do
+      Connection
+      |> where([connection], connection.type == :discord)
+      |> select([connection], connection.id)
+      |> Repo.all()
+      |> Enum.chunk_every(RefreshConnection.batch_size())
+      |> Enum.each(&RefreshConnection.enqueue/1)
+    end
   end
 
   # Check entitlements webhooks and the scheduled lapse reconcile can miss:
