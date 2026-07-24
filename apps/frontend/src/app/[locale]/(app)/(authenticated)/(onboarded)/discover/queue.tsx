@@ -100,7 +100,6 @@ const DontShowAgain: FC<{ onClick: () => void }> = ({ onClick }) => {
 
 const FallbackNotice: FC<{ mode: ProspectKind }> = ({ mode }) => {
 	const { t } = useTranslation();
-	const [hidden, hide] = useDismissed("fallback_notice");
 
 	const { mutate: dismiss } = useMutation({
 		mutationKey: ["dismiss-notice", mode],
@@ -109,8 +108,6 @@ const FallbackNotice: FC<{ mode: ProspectKind }> = ({ mode }) => {
 			await Matchmaking.dismissNotice(mode);
 		}
 	});
-
-	if (hidden) return null;
 
 	return (
 		<div className={noticeClassName}>
@@ -132,8 +129,7 @@ const FallbackNotice: FC<{ mode: ProspectKind }> = ({ mode }) => {
 					<X className="size-5" />
 				</button>
 			</div>
-			<div className="flex items-center justify-between gap-3">
-				<DontShowAgain onClick={() => hide()} />
+			<div className="flex justify-end">
 				<ButtonLink href={urls.settings.matchmaking()} size="sm">
 					{t("update_filters")}
 				</ButtonLink>
