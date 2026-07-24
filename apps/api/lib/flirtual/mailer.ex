@@ -305,6 +305,11 @@ defmodule Flirtual.Mailer do
     "#{mailbox}@#{Map.get(domains, type) || Map.fetch!(domains, "transactional")}"
   end
 
+  defp configuration_set(type) do
+    sets = Application.fetch_env!(:flirtual, __MODULE__)[:configuration_sets]
+    Map.get(sets, type) || Map.fetch!(sets, "transactional")
+  end
+
   # subject, body_text, body_html, action_url \\ nil
   def send(recipient, options) do
     type = Keyword.fetch!(options, :type)
@@ -320,6 +325,7 @@ defmodule Flirtual.Mailer do
         new()
         |> to(recipient)
         |> from({"Flirtual", from})
+        |> put_provider_option(:configuration_set_name, configuration_set(type))
         |> subject(subject)
         |> text_body(
           Keyword.fetch!(options, :body_text)
