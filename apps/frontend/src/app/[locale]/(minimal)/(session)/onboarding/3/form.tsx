@@ -104,7 +104,7 @@ export const Onboarding3Form: FC = () => {
 										{...labelProps}
 										hint={
 											min === absMinAge && max === absMaxAge
-												? t("any_age")
+												? t("number_range_plus", { from: min, to: max })
 												: max === absMaxAge
 													? t("number_plus", { number: min })
 													: min === max
