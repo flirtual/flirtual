@@ -108,6 +108,34 @@ export function useAdvancedFilterGroups(
 
 		const groups: Array<AdvancedFilterGroup | null> = [
 			{
+				key: "gender",
+				label: t("genders"),
+				premium: false,
+				options: attributeOptions("gender", genders)
+			},
+			{
+				key: "popular-interest",
+				label: t("popular_interests"),
+				premium: false,
+				options: attributeOptions(
+					"interest",
+					allInterests.filter(({ category }) => category === popularInterestCategory)
+				)
+			},
+			{
+				key: "language",
+				label: t("languages"),
+				premium: false,
+				options: languages
+					.map((languageId) => ({
+						key: `language:${languageId}`,
+						label: tAttribute[languageId]?.name
+							?? languageNames.of(languageId)
+							?? languageId
+					}))
+					.sort(byLabel)
+			},
+			{
 				key: "headset",
 				label: t("vr_platforms"),
 				premium: false,
@@ -126,19 +154,6 @@ export function useAdvancedFilterGroups(
 				)
 			},
 			{
-				key: "language",
-				label: t("languages"),
-				premium: false,
-				options: languages
-					.map((languageId) => ({
-						key: `language:${languageId}`,
-						label: tAttribute[languageId]?.name
-							?? languageNames.of(languageId)
-							?? languageId
-					}))
-					.sort(byLabel)
-			},
-			{
 				key: "country",
 				label: t("countries"),
 				premium: true,
@@ -148,12 +163,6 @@ export function useAdvancedFilterGroups(
 						label: getCountryName(locale, countryId) ?? countryId
 					}))
 					.sort(byLabel)
-			},
-			{
-				key: "gender",
-				label: t("genders"),
-				premium: false,
-				options: attributeOptions("gender", genders)
 			},
 			{
 				key: "sexuality",
@@ -180,15 +189,6 @@ export function useAdvancedFilterGroups(
 					{ key: "monopoly:monogamous", label: t("monogamous") },
 					{ key: "monopoly:nonmonogamous", label: t("nonmonogamous") }
 				]
-			},
-			{
-				key: "popular-interest",
-				label: t("popular_interests"),
-				premium: false,
-				options: attributeOptions(
-					"interest",
-					allInterests.filter(({ category }) => category === popularInterestCategory)
-				)
 			},
 			{
 				key: "interest",
