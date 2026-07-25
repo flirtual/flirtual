@@ -5,7 +5,6 @@ import { twMerge } from "tailwind-merge";
 
 import { isWretchError } from "~/api/common";
 import { DefaultProfileCustomWeights, Profile } from "~/api/user/profile";
-import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputLabel, InputLabelHint, InputSwitch } from "~/components/inputs";
 import { Slider } from "~/components/inputs/slider";
@@ -18,6 +17,7 @@ import { useToast } from "~/hooks/use-toast";
 import { invalidate, sessionKey } from "~/query";
 
 import { commonComponents } from "./common";
+import { NewsForm } from "./form";
 
 export const Location2025: FC<{ onSaved?: () => void }> = ({ onSaved }) => {
 	const { t } = useTranslation();
@@ -38,7 +38,7 @@ export const Location2025: FC<{ onSaved?: () => void }> = ({ onSaved }) => {
 			components={{
 				...commonComponents,
 				form: (
-					<Form
+					<NewsForm
 						fields={{
 							timezone: user.profile.timezone ?? browserTimezone,
 							weightLocation: customWeights.location,
@@ -128,7 +128,7 @@ export const Location2025: FC<{ onSaved?: () => void }> = ({ onSaved }) => {
 								<FormButton>{t("save")}</FormButton>
 							</>
 						)}
-					</Form>
+					</NewsForm>
 				)
 			}}
 			i18nKey="news.2025_location.body"

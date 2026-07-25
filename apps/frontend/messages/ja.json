@@ -861,6 +861,8 @@
 	"dark_as_my_soul": "魂の闇",
 	"premium_required": "（プレミアムが必要です）",
 	"save": "保存",
+	"unsaved_settings": "未保存の設定",
+	"save_settings_confirmation": "続ける前に選択内容を保存しますか？",
 	"saved": "保存済み",
 	"legal_such_sloth_type": "ライトモードではプロフィールの色はこのようになります。",
 	"patchy_warm_mule_play": "ダークモードではプロフィールの色はこのようになります。",
