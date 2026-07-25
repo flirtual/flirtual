@@ -36,6 +36,7 @@ export interface AttributeMetadata {
 	gender: {
 		simple?: boolean;
 		fallback?: boolean;
+		pronoun?: boolean;
 		// plural?: string;
 		conflicts?: Array<string>;
 		aliasOf?: string;

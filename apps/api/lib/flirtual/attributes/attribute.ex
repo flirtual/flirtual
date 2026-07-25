@@ -302,6 +302,11 @@ defmodule Flirtual.Attribute do
     )
   end
 
+  def pronoun?(%Attribute{metadata: %{"pronoun" => true}}), do: true
+  def pronoun?(%Attribute{}), do: false
+
+  def reject_pronouns(list) when is_list(list), do: Enum.reject(list, &pronoun?/1)
+
   def normalize_aliases(list) when is_list(list) do
     attribute_aliases =
       list

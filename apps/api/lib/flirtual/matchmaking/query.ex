@@ -109,6 +109,7 @@ defmodule Flirtual.Matchmaking.Query do
   defp my_genders(%User{profile: profile}) do
     profile.attributes
     |> filter_by(:type, "gender")
+    |> Attribute.reject_pronouns()
     |> Attribute.normalize_aliases()
     |> Enum.map(& &1.id)
     |> Enum.sort()
@@ -117,6 +118,7 @@ defmodule Flirtual.Matchmaking.Query do
   defp my_preferred_genders(%User{profile: profile}) do
     profile.preferences.attributes
     |> filter_by(:type, "gender")
+    |> Attribute.reject_pronouns()
     |> Attribute.normalize_aliases()
     |> Enum.map(& &1.id)
     |> Enum.sort()
@@ -159,6 +161,7 @@ defmodule Flirtual.Matchmaking.Query do
         profile_attribute.profile_id == ^user_id and attribute.type == "gender"
       )
       |> Repo.all()
+      |> Attribute.reject_pronouns()
       |> Attribute.normalize_aliases()
       |> Enum.map(& &1.id)
       |> Enum.uniq()

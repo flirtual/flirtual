@@ -124,6 +124,12 @@ export const Onboarding1Form: FC = () => {
 								? [...field.props.value, "other"]
 								: field.props.value;
 
+							// "other" checkbox isn't a gender, temporarily filter so it
+							// doesn't count towards the limit.
+							const otherGenders = (field.props.value ?? []).filter(
+								(id) => id !== "other"
+							);
+
 							return (
 								<>
 									<InputLabel {...field.labelProps}>{t("my_gender")}</InputLabel>
@@ -161,7 +167,8 @@ export const Onboarding1Form: FC = () => {
 											})}
 											limit={4}
 											placeholder={t("select_genders")}
-											value={field.props.value || []}
+											value={otherGenders}
+											onChange={(value) => field.props.onChange([...value, "other"])}
 										/>
 									)}
 								</>

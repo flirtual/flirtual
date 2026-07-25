@@ -421,6 +421,7 @@
 		"should_have_at_least_{count}_item(s)": "{count, plural, =0 {必須です} =1 {必須です} other {少なくとも#項目を選択してください}}。",
 		"should_be_at_most_{count}_character(s)": "{count, plural, =0 {空白である必要があります} =1 {1文字を超えてはいけません} other {#文字を超えてはいけません}}。",
 		"should_have_at_most_{count}_item(s)": "{count, plural, =0 {空白である必要があります} =1 {1つ以上の項目を持つことはできません} other {#項目を超えてはいけません}}。",
+		"must_include_a_non_pronoun_gender": "代名詞に加えて、性別も選択してください。",
 		"must_be_less_than_{number}": "{number}未満でなければなりません。",
 		"must_be_greater_than_{number}": "{number}より大きくなければなりません。",
 		"must_be_less_than_or_equal_to_{number}": "{number}以下でなければなりません。",

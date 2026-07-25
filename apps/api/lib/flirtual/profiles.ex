@@ -220,6 +220,7 @@ defmodule Flirtual.Profiles do
       |> validate_length(:languages, max: 5)
       |> validate_attributes(:gender_id, "gender")
       |> validate_length(:gender, min: 1, max: 4)
+      |> validate_gender()
       |> validate_attributes(:sexuality_id, "sexuality")
       |> validate_length(:sexuality, max: 3)
       |> validate_attributes(:kink_id, "kink")
@@ -245,6 +246,15 @@ defmodule Flirtual.Profiles do
       |> validate_length(:interest, min: 1, max: 10)
       |> validate_playlist()
       |> validate_vrchat()
+    end
+
+    # Must have at least one non-pronoun gender for matchmaking.
+    defp validate_gender(changeset) do
+      validate_change(changeset, :gender, fn :gender, genders ->
+        if genders === [] or Enum.any?(genders, &(not pronoun?(&1))),
+          do: [],
+          else: [gender: "must include a non-pronoun gender"]
+      end)
     end
 
     defp validate_playlist(changeset) do

@@ -234,7 +234,11 @@ defmodule Flirtual.User do
     %{profile: profile} = user
 
     not is_nil(user.born_at) and
-      not Enum.empty?(filter_by(profile.attributes, :type, "gender")) and
+      not Enum.empty?(
+        profile.attributes
+        |> filter_by(:type, "gender")
+        |> Attribute.reject_pronouns()
+      ) and
       not Enum.empty?(filter_by(profile.attributes, :type, "game")) and
       not Enum.empty?(
         filter_by(profile.attributes, :type, "interest") ++ profile.custom_interests
