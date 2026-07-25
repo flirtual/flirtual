@@ -71,17 +71,6 @@ export const OutOfLikesPasses: FC<OutOfLikesPassesProps> = ({ mode, resetAt, res
 							<ButtonLink href={urls.subscription.default} size="sm">
 								{t("get_premium")}
 							</ButtonLink>
-							<ButtonLink
-								href={
-									mode === "love"
-										? urls.discover("homies")
-										: urls.discover("dates")
-								}
-								kind="tertiary"
-								size="sm"
-							>
-								{t(mode === "love" ? "homie_mode" : "leave_homie_mode")}
-							</ButtonLink>
 						</div>
 					</div>
 				</DialogBody>
