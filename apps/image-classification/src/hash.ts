@@ -1,4 +1,4 @@
-import sharp from "sharp";
+import sharp, { type Sharp } from "sharp";
 
 // DCT-based perceptual hash (pHash): DCT a 32x32 grayscale sample, keep the
 // top-left 8x8 low-frequency block, and threshold each against the block's
@@ -55,7 +55,7 @@ const dct2d = (input: Float64Array): Float64Array => {
 
 // 64-bit perceptual hash ("0"/"1" string) of a prepared pipeline. Similar
 // images have a small Hamming distance.
-const hashPipeline = async (pipeline: sharp.Sharp): Promise<string> => {
+const hashPipeline = async (pipeline: Sharp): Promise<string> => {
 	// `fill` ignores aspect ratio, so the hash is stable regardless of dimensions.
 	const pixels = await pipeline
 		.flatten({ background: "#000000" })
