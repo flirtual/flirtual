@@ -14,7 +14,6 @@
 		"does_not_match_confirmation": "Não corresponde.",
 		"password_does_not_match": "Nova senha não corresponde, porfavor confira sua senha e tente denovo.",
 		"leaked_password": "Essa senha foi exposta em um vazamento de dados de outro site ou applicativo. Para sua segurança, porfavor escolha uma nova senha que não tenha usado em nenhum outro lugar.",
-		"leaked_login_password": "Sua senha foi exposta em um vazamento de dados em outro site ou applicativo. Para sua segurança, porfavor <reset>resete sua senha</reset> para uma que não usou em outro lugar.",
 		"login_rate_limit": "Muitas tentativas de login, porfavor tente novamente em 15 minutos ou <reset>resete sua senha</reset>.",
 		"is_still_associated_with_this_entry": "Ainda associado com essa entrada.",
 		"are_still_associated_with_this_entry": "Ainda associado com essa entrada.",
