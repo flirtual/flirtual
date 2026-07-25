@@ -13,6 +13,7 @@ defmodule Flirtual.User do
 
   alias Flirtual.{
     Attribute,
+    Connection,
     Discord,
     Flag,
     Hash,
@@ -525,7 +526,13 @@ defmodule Flirtual.User do
   end
 
   defp field_condition({:connections, key}, _term, pattern) do
-    dynamic([connections: connections], ilike(field(connections, ^key), ^pattern))
+    connections =
+      from(connection in Connection,
+        where: ilike(field(connection, ^key), ^pattern),
+        select: connection.user_id
+      )
+
+    dynamic([user: user], user.id in subquery(connections))
   end
 
   defp field_condition(key, term, pattern) when is_atom(key) do
@@ -595,9 +602,13 @@ defmodule Flirtual.User do
         ])
 
       {:connections, key}, query ->
-        order_by(query, [connections: connections], [
-          {^order, fragment("similarity(?, ?)", field(connections, ^key), ^value)}
-        ])
+        similarity =
+          from(connection in Connection,
+            where: connection.user_id == parent_as(:user).id,
+            select: max(fragment("similarity(?, ?)", field(connection, ^key), ^value))
+          )
+
+        order_by(query, [], [{^order, subquery(similarity)}])
 
       key, query when is_atom(key) ->
         if User.__schema__(:type, key) === :string do
@@ -780,10 +791,7 @@ defmodule Flirtual.User do
            sort_order = if(attrs.order === "asc", do: :asc_nulls_first, else: :desc_nulls_last),
            query <-
              from(user in User, as: :user)
-             |> join(:left, [user: user], profile in assoc(user, :profile), as: :profile)
-             |> join(:left, [user: user], connections in assoc(user, :connections),
-               as: :connections
-             ),
+             |> join(:left, [user: user], profile in assoc(user, :profile), as: :profile),
            query <- apply_search(query, @default_search_fields, value, attrs.sort, sort_order),
            query <-
              (case attrs.status do
