@@ -15,6 +15,7 @@ import { FormInputMessages } from "~/components/forms/input-messages";
 import { InlineLink } from "~/components/inline-link";
 import { InputLabel, InputLabelHint, InputText } from "~/components/inputs";
 import { useDevice } from "~/hooks/use-device";
+import { rememberLeakedPassword } from "~/hooks/use-leaked-password";
 import { useToast } from "~/hooks/use-toast";
 import { useNavigate } from "~/i18n";
 import { invalidate, mutate, sessionKey } from "~/query";
@@ -134,7 +135,7 @@ export const LoginForm: FC = () => {
 	const device = useDevice();
 	const [searchParameters, setSearchParameters] = useSearchParams();
 	const [tokenInvalid, setTokenInvalid] = useState(false);
-	const [verification, setVerification] = useState<{ loginId: string; email: string } | null>(null);
+	const [verification, setVerification] = useState<{ loginId: string; email: string; leakedPassword?: boolean } | null>(null);
 
 	const token = searchParameters.get("token");
 
@@ -172,6 +173,7 @@ export const LoginForm: FC = () => {
 				<OAuthError />
 				<VerificationForm
 					email={verification.email}
+					leakedPassword={verification.leakedPassword}
 					loginId={verification.loginId}
 					onBack={() => setVerification(null)}
 				/>
@@ -224,23 +226,6 @@ export const LoginForm: FC = () => {
 									/>
 								];
 
-							if (value.error === "leaked_login_password")
-								throw [
-									<Trans
-										key=""
-										components={{
-											reset: (
-												<InlineLink
-													className="underline"
-													highlight={false}
-													href={urls.forgotPassword}
-												/>
-											)
-										}}
-										i18nKey="errors.leaked_login_password"
-									/>
-								];
-
 							if (value.error === "login_rate_limit" || value.error === "verification_rate_limit")
 								throw [
 									<Trans
@@ -262,9 +247,15 @@ export const LoginForm: FC = () => {
 						}
 
 						if ("loginId" in value) {
-							setVerification({ loginId: value.loginId, email: value.email });
+							setVerification({
+								loginId: value.loginId,
+								email: value.email,
+								leakedPassword: value.leakedPassword
+							});
 							return;
 						}
+
+						await rememberLeakedPassword(value.user.id, value.leakedPassword);
 
 						await invalidate({ refetchType: "none" });
 						await mutate(sessionKey(), value);

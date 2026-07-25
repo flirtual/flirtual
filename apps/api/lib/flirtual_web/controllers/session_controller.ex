@@ -42,14 +42,19 @@ defmodule FlirtualWeb.SessionController do
                Users.get_by_login_and_password(
                  attrs[:login],
                  attrs[:password]
-               ),
-             false <- Flirtual.LeakedPasswords.leaked?(attrs[:password]) do
+               ) do
+          leaked_password = Flirtual.LeakedPasswords.leaked?(attrs[:password])
+
           if Login.suspicious?(user.id, conn) do
             with login_id when is_binary(login_id) <-
                    Verification.send_verification(conn, user, attrs[:device_id]) do
               conn
               |> put_status(:accepted)
-              |> json(%{login_id: login_id, email: user.email})
+              |> json(%{
+                login_id: login_id,
+                email: user.email,
+                leaked_password: leaked_password
+              })
             else
               {:error, :verification_rate_limit} ->
                 {:error, {:unauthorized, :verification_rate_limit}}
@@ -59,7 +64,7 @@ defmodule FlirtualWeb.SessionController do
 
             conn
             |> put_status(:created)
-            |> json(Policy.transform(conn, session))
+            |> json(Policy.transform(conn, %{session | leaked_password: leaked_password}))
           end
         else
           %User{banned_at: banned_at} = user when not is_nil(banned_at) ->
@@ -69,17 +74,6 @@ defmodule FlirtualWeb.SessionController do
             )
 
             {:error, {:unauthorized, :account_banned}}
-
-          leak_count when is_integer(leak_count) ->
-            login = String.trim(params["login"] || "")
-            user = Users.get_by_username(login) || Users.get_by_email(login)
-
-            Login.log_login_attempt(conn, user && user.id, nil,
-              method: :password,
-              device_id: params["device_id"]
-            )
-
-            {:error, {:unauthorized, :leaked_login_password}}
 
           _ ->
             login = String.trim(params["login"] || "")

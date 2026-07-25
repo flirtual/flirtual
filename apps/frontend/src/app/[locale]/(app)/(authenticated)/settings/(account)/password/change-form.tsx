@@ -5,6 +5,7 @@ import { User } from "~/api/user";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputLabel, InputText } from "~/components/inputs";
+import { useLeakedPassword } from "~/hooks/use-leaked-password";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { useLocale } from "~/i18n";
@@ -14,6 +15,7 @@ export const PasswordChangeForm: React.FC = () => {
 	const session = useSession();
 	const toasts = useToast();
 	const { t } = useTranslation();
+	const [, forgetLeakedPassword] = useLeakedPassword(session.user.id);
 
 	const [locale] = useLocale();
 	const listFormatter = new Intl.ListFormat(locale, { style: "long", type: "disjunction" });
@@ -39,6 +41,7 @@ export const PasswordChangeForm: React.FC = () => {
 				const user = await User.updatePassword(session.user.id, body);
 				reset(initialValues);
 
+				await forgetLeakedPassword();
 				toasts.add(hasPassword ? t("password_changed") : t("password_set"));
 
 				await mutate(sessionKey(), { ...session, user });

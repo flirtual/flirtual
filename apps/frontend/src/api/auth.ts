@@ -10,6 +10,7 @@ import type { User } from "./user";
 
 export type Session = {
 	sudoerId?: string;
+	leakedPassword?: boolean;
 	user: User;
 } & DatedModel;
 
@@ -22,6 +23,7 @@ export interface LoginOptions {
 export interface VerificationResponse {
 	loginId: string;
 	email: string;
+	leakedPassword?: boolean;
 }
 
 export interface VerifyOptions {
@@ -136,7 +138,7 @@ export const Authentication = {
 				if (isWretchError(reason)) return reason.json;
 				throw reason;
 			})
-			.json<Issue<"account_banned"> | Issue<"invalid_credentials"> | Issue<"leaked_login_password"> | Issue<"login_rate_limit"> | Issue<"verification_rate_limit"> | Session | VerificationResponse>();
+			.json<Issue<"account_banned"> | Issue<"invalid_credentials"> | Issue<"login_rate_limit"> | Issue<"verification_rate_limit"> | Session | VerificationResponse>();
 	},
 	magicLogin(token: string) {
 		return this.api

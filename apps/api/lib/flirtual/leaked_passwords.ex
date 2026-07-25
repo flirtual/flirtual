@@ -11,7 +11,7 @@ defmodule Flirtual.LeakedPasswords do
            finch: Flirtual.Finch
          ) do
       {:ok, %Req.Response{status: 200, body: body}} ->
-        find_count(body, suffix)
+        listed?(body, suffix)
 
       _ ->
         false
@@ -20,14 +20,11 @@ defmodule Flirtual.LeakedPasswords do
 
   def leaked?(_), do: false
 
-  defp find_count(body, suffix) do
+  defp listed?(body, suffix) do
     body
     |> String.split(["\r\n", "\n"], trim: true)
-    |> Enum.find_value(false, fn line ->
-      case String.split(line, ":", parts: 2) do
-        [^suffix, count] -> String.to_integer(String.trim(count))
-        _ -> nil
-      end
+    |> Enum.any?(fn line ->
+      match?([^suffix, _], String.split(line, ":", parts: 2))
     end)
   end
 end

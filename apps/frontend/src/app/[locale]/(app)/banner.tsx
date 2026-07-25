@@ -1,11 +1,12 @@
 import { Slot } from "@radix-ui/react-slot";
-import { MoveRight } from "lucide-react";
+import { MoveRight, X } from "lucide-react";
 import type { FC, PropsWithChildren, ReactNode, RefAttributes } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
 import { InlineLink } from "~/components/inline-link";
 import type { InlineLinkProps } from "~/components/inline-link";
+import { useLeakedPassword } from "~/hooks/use-leaked-password";
 import { useOptionalSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 
@@ -27,11 +28,14 @@ export const BannerLink: FC<PropsWithChildren<InlineLinkProps>> = ({
 export type BannerProps = PropsWithChildren<{
 	className?: string;
 	icon?: ReactNode;
+	onDismiss?: () => void;
 }> & RefAttributes<HTMLDivElement>;
 
 const defaultBannerIcon = <MoveRight />;
 
-export function Banner({ children, className, ref, icon = defaultBannerIcon }: BannerProps) {
+export function Banner({ children, className, ref, icon = defaultBannerIcon, onDismiss }: BannerProps) {
+	const { t } = useTranslation();
+
 	return (
 		<div
 			className={twMerge(
@@ -44,11 +48,37 @@ export function Banner({ children, className, ref, icon = defaultBannerIcon }: B
 				<div className="relative flex items-center gap-4 font-montserrat leading-none desktop:text-lg">
 					{icon && <Slot className="mt-[0.15rem] w-6 shrink-0 animate-bounce-x">{icon}</Slot>}
 					<span>{children}</span>
+					{onDismiss && (
+						<button
+							aria-label={t("close")}
+							className="focusable relative shrink-0 rounded-full p-1"
+							type="button"
+							onClick={onDismiss}
+						>
+							<X className="size-5" />
+						</button>
+					)}
 				</div>
 			</div>
 		</div>
 	);
 }
+
+const LeakedPasswordBanner: FC<{ userId: string }> = ({ userId }) => {
+	const [leaked, dismiss] = useLeakedPassword(userId);
+	if (!leaked) return null;
+
+	return (
+		<Banner onDismiss={() => void dismiss()}>
+			<Trans
+				components={{
+					bannerLink: <BannerLink href={urls.settings.password} />
+				}}
+				i18nKey="leaked_password_banner"
+			/>
+		</Banner>
+	);
+};
 
 export const AppBanner: FC = () => {
 	const session = useOptionalSession();
@@ -92,5 +122,5 @@ export const AppBanner: FC = () => {
 		);
 	}
 
-	return null;
+	return <LeakedPasswordBanner userId={session.user.id} />;
 };

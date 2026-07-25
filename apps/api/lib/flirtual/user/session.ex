@@ -14,6 +14,7 @@ defmodule Flirtual.User.Session do
     belongs_to(:sudoer, User)
 
     field(:token, :string, virtual: true, redact: true)
+    field(:leaked_password, :boolean, virtual: true)
     field(:hashed_token, :string, redact: true)
     field(:expire_at, :utc_datetime)
 
@@ -208,6 +209,7 @@ defimpl Jason.Encoder, for: Flirtual.User.Session do
     only: [
       :user,
       :sudoer_id,
+      :leaked_password,
       :updated_at,
       :created_at
     ]
