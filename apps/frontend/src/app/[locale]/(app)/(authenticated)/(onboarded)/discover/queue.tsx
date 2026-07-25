@@ -82,7 +82,7 @@ function limitsReached(mode: ProspectKind) {
 }
 
 const noticeClassName
-	= "relative z-20 flex w-full flex-col gap-3 rounded-xl bg-white-10 p-4 font-nunito shadow-brand-1 dark:bg-black-70 desktop:max-w-lg";
+	= "relative z-20 flex w-full flex-col gap-3 bg-white-10 p-4 font-nunito shadow-brand-1 dark:bg-black-70 desktop:max-w-lg desktop:rounded-xl";
 
 const DontShowAgain: FC<{ onClick: () => void }> = ({ onClick }) => {
 	const { t } = useTranslation();
@@ -112,15 +112,7 @@ const FallbackNotice: FC<{ mode: ProspectKind }> = ({ mode }) => {
 	return (
 		<div className={noticeClassName}>
 			<div className="flex items-start justify-between gap-4">
-				<div className="flex flex-col">
-					<span>{t("queue_fallback_notice")}</span>
-					<details>
-						<summary className="text-pink opacity-75 transition-opacity hover:cursor-pointer hover:opacity-100">
-							{t("more_info")}
-						</summary>
-						{t("queue_fallback_notice_details")}
-					</details>
-				</div>
+				<span>{t("queue_fallback_notice")}</span>
 				<button
 					className="shrink-0 opacity-75 hocus:opacity-100"
 					type="button"
@@ -129,8 +121,14 @@ const FallbackNotice: FC<{ mode: ProspectKind }> = ({ mode }) => {
 					<X className="size-5" />
 				</button>
 			</div>
-			<div className="flex justify-end">
-				<ButtonLink href={urls.settings.matchmaking()} size="sm">
+			<div className="flex flex-wrap items-center justify-between gap-3">
+				<details className="min-w-0 grow open:basis-full">
+					<summary className="text-pink opacity-75 transition-opacity hover:cursor-pointer hover:opacity-100">
+						{t("more_info")}
+					</summary>
+					{t("queue_fallback_notice_details")}
+				</details>
+				<ButtonLink className="ml-auto" href={urls.settings.matchmaking()} size="sm">
 					{t("update_filters")}
 				</ButtonLink>
 			</div>
@@ -226,7 +224,7 @@ export const Queue: FC<{ kind: ProspectKind }> = ({ kind }) => {
 		<>
 			<DefaultTour />
 
-			<div className="relative flex w-full max-w-full flex-col items-center gap-4 desktop:w-auto">
+			<div className="relative flex w-full max-w-full flex-col items-center gap-0 desktop:w-auto desktop:gap-4">
 				{notice === "fallback" && <FallbackNotice mode={kind} />}
 				<StreakNotice streak={likeStreak} />
 				<AnimatePresence initial={false}>
