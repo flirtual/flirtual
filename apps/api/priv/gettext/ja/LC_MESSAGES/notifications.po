@@ -8,16 +8,15 @@
 ### to merge POT files into PO files.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2025-02-18 01:09+0000\n"
-"Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
-"memory@weblate.org>\n"
+"PO-Revision-Date: 2026-07-25 20:07+0000\n"
+"Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/flirtual/"
 "notifications/ja/>\n"
 "Language: ja\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.10.1-dev\n"
+"X-Generator: Weblate 2026.8.dev0\n"
 
 #: lib/flirtual/mailer.ex:42
 #: lib/flirtual/mailer.ex:289
@@ -43,12 +42,12 @@ msgid "x"
 msgstr "X（旧Twitter）"
 
 #: lib/flirtual/user/email.ex:15
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "suspended.subject"
 msgstr "アカウントが無効になりました"
 
 #: lib/flirtual/user/email.ex:45
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "confirm_email.body_html"
 msgstr ""
 "<p>あと少しです。以下のボタンをタップしてメールアドレスを確認してください。確"
@@ -57,7 +56,7 @@ msgstr ""
 "<p><a href=\"%{action_url}\" class=\"btn\">続行</a></p>"
 
 #: lib/flirtual/user/email.ex:43
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "confirm_email.body_text"
 msgstr ""
 "あと少しです。以下のリンクを開き、メールアドレスを確認してください。\n"
@@ -72,7 +71,7 @@ msgid "confirm_email.subject"
 msgstr "アカウントを確認してください"
 
 #: lib/flirtual/user/email.ex:90
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "reset_password.body_html"
 msgstr ""
 "<p>あと少しです。以下のボタンをタップしてパスワードをリセットしてください。完"
@@ -84,7 +83,7 @@ msgstr ""
 "ん。</p>"
 
 #: lib/flirtual/user/email.ex:88
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "reset_password.body_text"
 msgstr ""
 "あと少しです。以下のリンクを開き、パスワードをリセットしてください。\n"
