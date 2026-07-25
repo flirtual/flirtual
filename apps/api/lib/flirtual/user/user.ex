@@ -545,8 +545,11 @@ defmodule Flirtual.User do
 
       :integer ->
         case Integer.parse(term) do
-          {value, ""} -> dynamic([user: user], field(user, ^key) == ^value)
-          _ -> nil
+          {value, ""} when value in -2_147_483_648..2_147_483_647 ->
+            dynamic([user: user], field(user, ^key) == ^value)
+
+          _ ->
+            nil
         end
 
       _ ->
