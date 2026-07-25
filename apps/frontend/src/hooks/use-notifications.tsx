@@ -1,3 +1,5 @@
+import { App } from "@capacitor/app";
+import { registerPlugin } from "@capacitor/core";
 import {
 
 	PushNotifications
@@ -7,18 +9,70 @@ import {
 	createContext,
 
 	use,
+	useEffect,
 	useMemo
 } from "react";
 import type { PropsWithChildren } from "react";
 
 import { User } from "~/api/user";
-import { useQuery } from "~/query";
+import { queryClient, useQuery } from "~/query";
 
-import { useDevice } from "./use-device";
+import { device, useDevice } from "./use-device";
 import { useOptionalSession } from "./use-session";
 
 export interface NotificationContext {
 	status: PermissionStatus["receive"];
+}
+
+const NotificationSettings = registerPlugin<{
+	areEnabled: () => Promise<{ enabled: boolean }>;
+}>("NotificationSettings");
+
+const permissionsKey = ["notifications-permissions"] as const;
+
+// eslint-disable-next-line react-refresh/only-export-components
+export function setNotificationPermission(status: PermissionStatus["receive"]) {
+	queryClient.setQueryData<PermissionStatus["receive"]>(permissionsKey, status);
+}
+
+async function getNotificationPermission(): Promise<PermissionStatus["receive"]> {
+	const { receive } = await PushNotifications.checkPermissions();
+	if (receive !== "granted" || !device.native || !device.android) return receive;
+
+	const { enabled } = await NotificationSettings.areEnabled();
+	return enabled ? "granted" : "denied";
+}
+
+// eslint-disable-next-line react-refresh/only-export-components
+export async function requestNotificationPermission() {
+	const status = await getNotificationPermission();
+
+	if (status !== "prompt" && status !== "prompt-with-rationale") {
+		setNotificationPermission(status);
+		return;
+	}
+
+	await PushNotifications.requestPermissions();
+	setNotificationPermission(await getNotificationPermission());
+}
+
+let promptedThisSession = false;
+
+// eslint-disable-next-line react-refresh/only-export-components
+export function useNotificationPrompt() {
+	const { native } = useDevice();
+	const session = useOptionalSession();
+
+	const wantsNotifications = Object
+		.values(session?.user.preferences?.pushNotifications ?? {})
+		.some(Boolean);
+
+	useEffect(() => {
+		if (!native || !wantsNotifications || promptedThisSession) return;
+		promptedThisSession = true;
+
+		void requestNotificationPermission();
+	}, [native, wantsNotifications]);
 }
 
 const NotificationContext = createContext({} as NotificationContext);
@@ -47,23 +101,29 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 	});
 
 	const status = useQuery({
-		queryKey: ["notifications-permissions"],
-		queryFn: async () => {
-			const { receive } = await PushNotifications.checkPermissions();
-
-			if (receive === "prompt" || receive === "prompt-with-rationale") {
-				const { receive } = await PushNotifications.requestPermissions();
-				return receive;
-			}
-
-			return receive;
-		},
+		queryKey: permissionsKey,
+		queryFn: getNotificationPermission,
 		enabled: native,
 		placeholderData: "denied" as const,
 		meta: {
 			cacheTime: 0
 		}
 	});
+
+	useNotificationPrompt();
+
+	// The user may have changed the permission in system settings while we were
+	// in the background, so re-check whenever we come back.
+	useEffect(() => {
+		if (!native) return;
+
+		const listener = App.addListener("appStateChange", async ({ isActive }) => {
+			if (!isActive) return;
+			setNotificationPermission(await getNotificationPermission());
+		});
+
+		return () => void listener.then((listener) => listener.remove());
+	}, [native]);
 
 	const pushRegistrationIds = useMemo(() => {
 		if (!session) return [];
