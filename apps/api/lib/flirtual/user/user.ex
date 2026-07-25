@@ -872,7 +872,8 @@ defmodule Flirtual.User do
         %User{} = user,
         %Attribute{type: "ban-reason"} = reason,
         message,
-        %User{} = moderator
+        %User{} = moderator,
+        options \\ []
       ) do
     now = DateTime.utc_now() |> DateTime.truncate(:second)
     message = message || reason.metadata["details"]
@@ -891,7 +892,8 @@ defmodule Flirtual.User do
           user: user,
           moderator: moderator,
           reason: reason,
-          message: message
+          message: message,
+          automatic: Keyword.get(options, :automatic)
         )
 
         user

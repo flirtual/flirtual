@@ -42,6 +42,8 @@ PODS:
     - Capacitor
   - CapacitorToast (8.0.1):
     - Capacitor
+  - CapawesomeCapacitorAgeSignals (0.4.1):
+    - Capacitor
   - CapawesomeCapacitorAppUpdate (8.0.3):
     - Capacitor
   - CapawesomeTeamCapacitorDatetimePicker (8.1.1):
@@ -98,6 +100,7 @@ DEPENDENCIES:
   - "CapacitorPushNotifications (from `../../node_modules/.pnpm/@capacitor+push-notifications@8.1.2_@capacitor+core@8.4.2/node_modules/@capacitor/push-notifications`)"
   - "CapacitorShare (from `../../node_modules/.pnpm/@capacitor+share@8.0.1_@capacitor+core@8.4.2/node_modules/@capacitor/share`)"
   - "CapacitorToast (from `../../node_modules/.pnpm/@capacitor+toast@8.0.1_@capacitor+core@8.4.2/node_modules/@capacitor/toast`)"
+  - "CapawesomeCapacitorAgeSignals (from `../../node_modules/.pnpm/@capawesome+capacitor-age-signals@0.4.1_@capacitor+core@8.4.2/node_modules/@capawesome/capacitor-age-signals`)"
   - "CapawesomeCapacitorAppUpdate (from `../../node_modules/.pnpm/@capawesome+capacitor-app-update@8.0.3_@capacitor+core@8.4.2/node_modules/@capawesome/capacitor-app-update`)"
   - "CapawesomeTeamCapacitorDatetimePicker (from `../../node_modules/.pnpm/@capawesome-team+capacitor-datetime-picker@8.1.1_@capacitor+core@8.4.2/node_modules/@capawesome-team/capacitor-datetime-picker`)"
   - "CapgoCapacitorInappbrowser (from `../../node_modules/.pnpm/@capgo+capacitor-inappbrowser@8.12.3_@capacitor+core@8.4.2/node_modules/@capgo/capacitor-inappbrowser`)"
@@ -151,6 +154,8 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/.pnpm/@capacitor+share@8.0.1_@capacitor+core@8.4.2/node_modules/@capacitor/share"
   CapacitorToast:
     :path: "../../node_modules/.pnpm/@capacitor+toast@8.0.1_@capacitor+core@8.4.2/node_modules/@capacitor/toast"
+  CapawesomeCapacitorAgeSignals:
+    :path: "../../node_modules/.pnpm/@capawesome+capacitor-age-signals@0.4.1_@capacitor+core@8.4.2/node_modules/@capawesome/capacitor-age-signals"
   CapawesomeCapacitorAppUpdate:
     :path: "../../node_modules/.pnpm/@capawesome+capacitor-app-update@8.0.3_@capacitor+core@8.4.2/node_modules/@capawesome/capacitor-app-update"
   CapawesomeTeamCapacitorDatetimePicker:
@@ -181,6 +186,7 @@ SPEC CHECKSUMS:
   CapacitorPushNotifications: 32a7f840815f319fd9ba1c1c9b0b914be9d95237
   CapacitorShare: 0c58305114538568059bfc07111f22dcb9cb2a82
   CapacitorToast: 408036fbd702120d3adde3980b740f3c0fb60c9e
+  CapawesomeCapacitorAgeSignals: 40458b043d58e51a6df8b04040bd27e637a8fee5
   CapawesomeCapacitorAppUpdate: 3a7537c6a6696837b51d06f26b2e909fd7b9226f
   CapawesomeTeamCapacitorDatetimePicker: 7248569efbab419c8791d5e6f4656548d2f99d28
   CapgoCapacitorInappbrowser: ee6293211c1c7ba0098dc6bee29a506a40898831
@@ -197,6 +203,6 @@ SPEC CHECKSUMS:
   RevenueCat: 72d1e14966339bf38c41d9b2841ef64c8fd79646
   RevenuecatPurchasesCapacitor: 691a18ebcfed0100a041e4cba91ba9ae8787b1a7
 
-PODFILE CHECKSUM: 201c52050f1b89f21534cef3b1eac0d78ef7bb90
+PODFILE CHECKSUM: d20cdd6024ce70851c617ba132a1c5837fdc0974
 
 COCOAPODS: 1.16.2

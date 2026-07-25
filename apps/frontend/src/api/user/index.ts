@@ -1,6 +1,7 @@
 import { toSnakeCase } from "remeda";
 import type { WretchOptions } from "wretch";
 
+import type { AgeRangeReport } from "~/age-range";
 import { development } from "~/const";
 import type { Locale } from "~/i18n";
 import { isUid } from "~/utilities";
@@ -334,6 +335,9 @@ export const User = {
 	},
 	resetPushCount(userId: string) {
 		return this.api.url(`/${userId}/push-count`).delete().json<User>();
+	},
+	reportAgeRange(userId: string, report: AgeRangeReport) {
+		return this.api.url(`/${userId}/age-range`).json(report).post().res();
 	},
 	updateRatingPrompts(userId: string, options: { ratingPrompts: number }) {
 		return this.api

@@ -26,8 +26,12 @@ defmodule Flirtual.Users do
     User
   }
 
+  alias Flirtual.Attribute
   alias Flirtual.User.{Login, Preferences}
   alias Flirtual.User.Profile.Image
+
+  @underage_ban_reason_id "muXMqNjneKnwqxT8nqcy4d"
+  @underage_ban_message "Underaged. You must be at least 18 years of age to use Flirtual. If you believe you have been banned in error, you can reply to this email to appeal and we'll send you a secure link to verify your I.D. in order to unban your account."
 
   def get(id, preload \\ User.default_assoc())
       when is_binary(id) do
@@ -91,22 +95,8 @@ defmodule Flirtual.Users do
       born_at = Ecto.Changeset.get_change(changeset, :born_at)
 
       if not is_nil(born_at) and User.underage?(born_at) === true do
-        case Flirtual.Attribute.get("muXMqNjneKnwqxT8nqcy4d", "ban-reason") do
-          %Flirtual.Attribute{} = reason ->
-            Repo.update(changeset)
-
-            User.suspend(
-              user,
-              reason,
-              "Underaged. You must be at least 18 years of age to use Flirtual. If you believe you have been banned in error, you can reply to this email to appeal and we'll send you a secure link to verify your I.D. in order to unban your account.",
-              user
-            )
-
-            {:error, {:forbidden, :banned_underage}}
-
-          _ ->
-            {:error, {:internal_error, :attribute_not_found}}
-        end
+        Repo.update(changeset)
+        autoban_underage(user, :date_of_birth)
       else
         previous_born_at = user.born_at
 
@@ -145,6 +135,20 @@ defmodule Flirtual.Users do
     else
       %Ecto.Changeset{} = changeset -> {:error, changeset}
       {:error, reason} -> {:error, reason}
+    end
+  end
+
+  def autoban_underage(%User{banned_at: banned_at}, _) when not is_nil(banned_at),
+    do: {:error, {:forbidden, :banned_underage}}
+
+  def autoban_underage(%User{} = user, automatic) do
+    case Attribute.get(@underage_ban_reason_id, "ban-reason") do
+      %Attribute{} = reason ->
+        User.suspend(user, reason, @underage_ban_message, user, automatic: automatic)
+        {:error, {:forbidden, :banned_underage}}
+
+      _ ->
+        {:error, {:internal_error, :attribute_not_found}}
     end
   end
 

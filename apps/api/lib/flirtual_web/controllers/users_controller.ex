@@ -661,6 +661,52 @@ defmodule FlirtualWeb.UsersController do
     end
   end
 
+  defmodule AgeRange do
+    use Flirtual.EmbeddedSchema
+
+    @optional [:platform, :declaration, :age_lower, :age_upper]
+
+    embedded_schema do
+      field(:platform, :string)
+      field(:declaration, :string)
+      field(:age_lower, :integer)
+      field(:age_upper, :integer)
+    end
+
+    def changeset(value, _, _) do
+      value
+      |> validate_inclusion(:platform, ["android", "apple"])
+      |> validate_inclusion(:declaration, ["SELF_DECLARED", "GUARDIAN_DECLARED", "CONFIRMED"])
+      |> validate_number(:age_lower, greater_than_or_equal_to: 0, less_than_or_equal_to: 120)
+      |> validate_number(:age_upper, greater_than_or_equal_to: 0, less_than_or_equal_to: 120)
+    end
+  end
+
+  def age_range(
+        %{assigns: %{session: %{user: %User{id: user_id} = user}}} = conn,
+        %{"user_id" => user_id} = params
+      ) do
+    with {:ok, attrs} <- AgeRange.apply(params) do
+      if is_integer(attrs.age_upper) and attrs.age_upper < 18 do
+        Users.autoban_underage(
+          user,
+          {:age_range,
+           %{
+             platform: attrs.platform,
+             declaration: attrs.declaration,
+             age_lower: attrs.age_lower,
+             age_upper: attrs.age_upper
+           }}
+        )
+      else
+        conn |> send_resp(:no_content, "")
+      end
+    end
+  end
+
+  def age_range(_, %{"user_id" => user_id}),
+    do: {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
+
   def remove_news(conn, %{"user_id" => user_id, "news" => news}) when is_list(news) do
     user =
       if(conn.assigns[:session].user.id === user_id,

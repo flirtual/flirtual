@@ -2,6 +2,7 @@ import { lazy, Suspense } from "react";
 import { Outlet } from "react-router";
 
 import { AnalyticsProvider } from "./analytics";
+import { AgeGate } from "./components/age-gate";
 import { InsetPreview } from "./components/inset-preview";
 import { Loading } from "./components/loading";
 import { development } from "./const";
@@ -27,7 +28,9 @@ export function App() {
 					<ToastProvider>
 						<DialogProvider>
 							<Suspense fallback={<Loading />}>
-								<Outlet />
+								<AgeGate>
+									<Outlet />
+								</AgeGate>
 							</Suspense>
 						</DialogProvider>
 					</ToastProvider>

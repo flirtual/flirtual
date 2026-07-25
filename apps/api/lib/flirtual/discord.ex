@@ -398,11 +398,52 @@ defmodule Flirtual.Discord do
     end
   end
 
+  defp autoban_fields(nil), do: []
+
+  defp autoban_fields(:date_of_birth),
+    do: [%{name: "Auto-ban", value: "Date of birth", inline: true}]
+
+  defp autoban_fields(
+         {:age_range,
+          %{
+            platform: platform,
+            declaration: declaration,
+            age_lower: age_lower,
+            age_upper: age_upper
+          }}
+       ),
+       do:
+         [
+           %{name: "Auto-ban", value: age_range_source(platform), inline: true},
+           %{name: "Age range", value: format_age_range(age_lower, age_upper), inline: true}
+         ] ++ age_declaration_fields(declaration)
+
+  defp age_declaration_fields("SELF_DECLARED"),
+    do: [%{name: "Age source", value: "Self-declared", inline: true}]
+
+  defp age_declaration_fields("GUARDIAN_DECLARED"),
+    do: [%{name: "Age source", value: "Guardian-declared", inline: true}]
+
+  defp age_declaration_fields("CONFIRMED"),
+    do: [%{name: "Age source", value: "Verified", inline: true}]
+
+  defp age_declaration_fields(_), do: []
+
+  defp age_range_source("apple"), do: "Apple Declared Age Range"
+  defp age_range_source("android"), do: "Google Play Age Signals"
+  defp age_range_source(_), do: "Platform age range"
+
+  defp format_age_range(nil, nil), do: "Unknown"
+  defp format_age_range(lower, nil), do: "#{lower}+"
+  defp format_age_range(nil, upper), do: "0–#{upper}"
+  defp format_age_range(lower, upper), do: "#{lower}–#{upper}"
+
   def deliver_webhook(:suspended,
         user: %User{} = user,
         moderator: %User{} = moderator,
         reason: %Attribute{type: "ban-reason"} = reason,
-        message: message
+        message: message,
+        automatic: automatic
       ) do
     webhook(
       :moderation_actions,
@@ -422,6 +463,7 @@ defmodule Flirtual.Discord do
                   inline: true
                 }
               ] ++
+                autoban_fields(automatic) ++
                 if(Entitlement.premium?(user.entitlements),
                   do: [
                     %{

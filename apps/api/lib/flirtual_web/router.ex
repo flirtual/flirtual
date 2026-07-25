@@ -435,6 +435,7 @@ defmodule FlirtualWeb.Router do
 
             post("/password", UsersController, :update_password)
 
+            post("/age-range", UsersController, :age_range)
             post("/push-token", UsersController, :add_push_token)
             delete("/push-count", UsersController, :reset_push_count)
             post("/rating-prompts", UsersController, :update_rating_prompts)

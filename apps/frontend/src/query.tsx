@@ -6,6 +6,7 @@ import ms from "ms" with { type: "macro" };
 import type { Dispatch, PropsWithChildren } from "react";
 import { use, useDebugValue, useEffect, useState } from "react";
 
+import { getAgeRange } from "./age-range";
 import type { AttributeType } from "./api/attributes";
 import { Attribute } from "./api/attributes";
 import { Authentication } from "./api/auth";
@@ -32,6 +33,9 @@ export const sessionKey = () => ["session"] as const;
 export function sessionFetcher({ signal }: QueryFunctionContext<ReturnType<typeof sessionKey>>) {
 	return Authentication.getOptionalSession({ ...signal });
 }
+
+export const ageRangeKey = () => ["age-range"] as const;
+export const ageRangeFetcher = () => getAgeRange();
 
 export const attributeKey = <T extends AttributeType>(type: T, version?: string) => ["attribute", type, version ?? null] as const;
 export function attributeFetcher<T extends AttributeType>({ queryKey: [, type, version], signal }: QueryFunctionContext<ReturnType<typeof attributeKey<T>>>) {
@@ -95,6 +99,8 @@ export async function preloadAll() {
 		preload({ queryKey: sessionKey(), queryFn: sessionFetcher, staleTime: 0 }),
 
 		preload({ queryKey: plansKey(), queryFn: plansFetcher }),
+
+		preload({ queryKey: ageRangeKey(), queryFn: ageRangeFetcher, staleTime: Number.POSITIVE_INFINITY }),
 
 		// ...([
 		// 	"country",

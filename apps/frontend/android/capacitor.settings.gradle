@@ -41,6 +41,9 @@ project(':capacitor-toast').projectDir = new File('../node_modules/.pnpm/@capaci
 include ':capawesome-team-capacitor-datetime-picker'
 project(':capawesome-team-capacitor-datetime-picker').projectDir = new File('../node_modules/.pnpm/@capawesome-team+capacitor-datetime-picker@8.1.1_@capacitor+core@8.4.2/node_modules/@capawesome-team/capacitor-datetime-picker/android')
 
+include ':capawesome-capacitor-age-signals'
+project(':capawesome-capacitor-age-signals').projectDir = new File('../node_modules/.pnpm/@capawesome+capacitor-age-signals@0.4.1_@capacitor+core@8.4.2/node_modules/@capawesome/capacitor-age-signals/android')
+
 include ':capawesome-capacitor-app-update'
 project(':capawesome-capacitor-app-update').projectDir = new File('../node_modules/.pnpm/@capawesome+capacitor-app-update@8.0.3_@capacitor+core@8.4.2/node_modules/@capawesome/capacitor-app-update/android')
 

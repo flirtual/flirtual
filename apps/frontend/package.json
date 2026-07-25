@@ -32,6 +32,7 @@
 		"@capacitor/share": "^8.0.1",
 		"@capacitor/toast": "^8.0.1",
 		"@capawesome-team/capacitor-datetime-picker": "^8.1.1",
+		"@capawesome/capacitor-age-signals": "^0.4.1",
 		"@capawesome/capacitor-app-update": "^8.0.3",
 		"@capgo/capacitor-inappbrowser": "8.12.3",
 		"@capgo/capacitor-social-login": "^8.3.37",
