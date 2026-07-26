@@ -47,8 +47,10 @@ FROM base as build
 WORKDIR /app
 
 ## Install node modules
-COPY --link package.json .
-RUN npm install --legacy-peer-deps --production=false
+ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
+RUN corepack enable pnpm
+COPY --link package.json pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile --prod=false --node-linker=hoisted
 
 ## Copy source files and build.
 COPY --link . .
