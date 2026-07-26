@@ -75,7 +75,6 @@ defmodule Flirtual.MixProject do
       {:telemetry_poller, "~> 1.0"},
       {:opentelemetry, "~> 1.7"},
       {:opentelemetry_api, "~> 1.5"},
-      {:opentelemetry_exporter, "~> 1.9"},
       {:opentelemetry_semantic_conventions, "~> 1.27"},
       {:opentelemetry_phoenix, "~> 2.0.1"},
       {:opentelemetry_bandit, "~> 0.3"},
