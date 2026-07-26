@@ -40,7 +40,7 @@ async function createTransferToken(env: Env, session: string) {
 }
 
 export default {
-	async fetch(request, env) {
+	async fetch(request, env, ctx) {
 		const url = new URL(request.url);
 		const path = `${url.pathname}${url.search}`;
 
