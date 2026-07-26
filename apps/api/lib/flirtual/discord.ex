@@ -409,25 +409,27 @@ defmodule Flirtual.Discord do
             platform: platform,
             declaration: declaration,
             age_lower: age_lower,
-            age_upper: age_upper
+            age_upper: age_upper,
+            region: region
           }}
        ),
-       do:
-         [
-           %{name: "Auto-ban", value: age_range_source(platform), inline: true},
-           %{name: "Age range", value: format_age_range(age_lower, age_upper), inline: true}
-         ] ++ age_declaration_fields(declaration)
+       do: [
+         %{
+           name: "Auto-ban",
+           value: age_range_source(platform) <> if(region, do: " (#{region})", else: ""),
+           inline: true
+         },
+         %{
+           name: "Age range",
+           value: format_age_range(age_lower, age_upper) <> age_declaration(declaration),
+           inline: true
+         }
+       ]
 
-  defp age_declaration_fields("SELF_DECLARED"),
-    do: [%{name: "Age source", value: "Self-declared", inline: true}]
-
-  defp age_declaration_fields("GUARDIAN_DECLARED"),
-    do: [%{name: "Age source", value: "Guardian-declared", inline: true}]
-
-  defp age_declaration_fields("CONFIRMED"),
-    do: [%{name: "Age source", value: "Verified", inline: true}]
-
-  defp age_declaration_fields(_), do: []
+  defp age_declaration("SELF_DECLARED"), do: " (self-declared)"
+  defp age_declaration("GUARDIAN_DECLARED"), do: " (guardian-declared)"
+  defp age_declaration("CONFIRMED"), do: " (verified)"
+  defp age_declaration(_), do: ""
 
   defp age_range_source("apple"), do: "Apple Declared Age Range"
   defp age_range_source("android"), do: "Google Play Age Signals"

@@ -695,7 +695,8 @@ defmodule FlirtualWeb.UsersController do
              platform: attrs.platform,
              declaration: attrs.declaration,
              age_lower: attrs.age_lower,
-             age_upper: attrs.age_upper
+             age_upper: attrs.age_upper,
+             region: get_conn_region(conn)
            }}
         )
       else
