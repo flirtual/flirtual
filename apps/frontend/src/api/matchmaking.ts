@@ -20,6 +20,9 @@ export interface LikesYouFilters {
 
 export type ProspectRespondType = "like" | "pass";
 
+export const ResponseSource = ["love", "friend", "direct", "likes"] as const;
+export type ResponseSource = (typeof ResponseSource)[number];
+
 export interface LikeAndPassItem {
 	profileId: string;
 	targetId: string;
@@ -31,6 +34,7 @@ export interface RespondProspectBody {
 	type: ProspectRespondType;
 	mode: ProspectKind;
 	userId: string;
+	source: ResponseSource;
 }
 
 export interface RespondProspect {
@@ -80,11 +84,11 @@ export const Matchmaking = {
 	queueAction(body: RespondProspectBody) {
 		return api.url("queue").json(body).post().json<RespondProspect>();
 	},
-	like(mode: ProspectKind, userId: string) {
-		return this.queueAction({ type: "like", mode, userId });
+	like(mode: ProspectKind, userId: string, source: ResponseSource) {
+		return this.queueAction({ type: "like", mode, userId, source });
 	},
-	pass(mode: ProspectKind, userId: string) {
-		return this.queueAction({ type: "pass", mode, userId });
+	pass(mode: ProspectKind, userId: string, source: ResponseSource) {
+		return this.queueAction({ type: "pass", mode, userId, source });
 	},
 	undo(body: ReverseRespondProspectBody) {
 		return api.url("queue").json(body).delete().json<RespondProspect>();

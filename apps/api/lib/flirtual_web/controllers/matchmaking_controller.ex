@@ -91,12 +91,22 @@ defmodule FlirtualWeb.MatchmakingController do
     mode = to_atom(Map.get(params, "mode", "love"), :love)
     target_id = Map.get(params, "user_id")
 
+    source =
+      case params["source"] do
+        "love" -> :love
+        "friend" -> :friend
+        "direct" -> :direct
+        "likes" -> :likes
+        _ -> :unknown
+      end
+
     with {:ok, value} <-
            Matchmaking.respond(
              user: user,
              target_id: target_id,
              type: type,
-             mode: mode
+             mode: mode,
+             source: source
            ),
          {:ok, queue} <- Matchmaking.queue_information(user, mode) do
       conn |> json(value |> Map.put(:queue, queue))

@@ -408,13 +408,14 @@ defmodule Flirtual.Matchmaking do
     user = Keyword.fetch!(opts, :user)
     type = Keyword.fetch!(opts, :type)
     mode = Keyword.get(opts, :mode, :love)
+    source = Keyword.get(opts, :source, :unknown)
 
     target = Keyword.get(opts, :target) || User.get(Keyword.get(opts, :target_id))
 
     with {:ok, target} <- validate_target(user, target),
          queue = ensure_fresh_queue(Queue.get(user.id, mode)),
          :ok <- check_limits(user, queue, type),
-         {:ok, result} <- insert_response(user, target, type, mode) do
+         {:ok, result} <- insert_response(user, target, type, mode, source) do
       after_respond(user, target, result, mode)
       {:ok, result}
     end
@@ -465,7 +466,7 @@ defmodule Flirtual.Matchmaking do
     end
   end
 
-  defp insert_response(%User{} = user, %User{} = target, type, kind) do
+  defp insert_response(%User{} = user, %User{} = target, type, kind, source) do
     now = DateTime.utc_now()
 
     Repo.transaction(fn ->
@@ -474,27 +475,41 @@ defmodule Flirtual.Matchmaking do
         |> where(profile_id: ^user.id, target_id: ^target.id, kind: ^kind)
         |> Repo.one()
 
-      if existing, do: Repo.rollback(:already_responded)
+      new_response =
+        case {existing, source} do
+          {nil, _} ->
+            {:ok, _} =
+              %LikesAndPasses{
+                profile_id: user.id,
+                target_id: target.id,
+                type: type,
+                kind: kind,
+                source: source
+              }
+              |> Repo.insert()
 
-      {:ok, _} =
-        %LikesAndPasses{
-          profile_id: user.id,
-          target_id: target.id,
-          type: type,
-          kind: kind
-        }
-        |> Repo.insert()
+            true
 
-      complete_prospects(user, target, kind, now)
+          {%LikesAndPasses{type: :pass, source: was} = pass, :likes} when was != :likes ->
+            {:ok, _} =
+              pass
+              |> Ecto.Changeset.change(%{
+                type: type,
+                source: :likes,
+                created_at: DateTime.truncate(now, :second)
+              })
+              |> Repo.update()
 
-      counter = if type == :like, do: :likes_count, else: :passes_count
+            type == :like
 
-      {1, nil} =
-        User
-        |> where(id: ^user.id)
-        |> Repo.update_all(inc: [{counter, 1}])
+          _ ->
+            Repo.rollback(:already_responded)
+        end
 
-      {:ok, _} = Queue.increment(user.id, kind, counter, %{undone: false})
+      if new_response do
+        complete_prospects(user, target, kind, now)
+        count_response(user, type, kind)
+      end
 
       opposite =
         LikesAndPasses.get(
@@ -517,6 +532,17 @@ defmodule Flirtual.Matchmaking do
       {:error, :already_responded} -> {:error, {:conflict, :already_responded}}
       {:error, reason} -> {:error, reason}
     end
+  end
+
+  defp count_response(%User{} = user, type, kind) do
+    counter = if type == :like, do: :likes_count, else: :passes_count
+
+    {1, nil} =
+      User
+      |> where(id: ^user.id)
+      |> Repo.update_all(inc: [{counter, 1}])
+
+    {:ok, _} = Queue.increment(user.id, kind, counter, %{undone: false})
   end
 
   # The acted-on prospect is completed (created on the spot if it wasn't queued,

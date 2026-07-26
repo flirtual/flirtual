@@ -14,8 +14,14 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
     field(:type, Ecto.Enum, values: [:like, :pass])
     field(:kind, Ecto.Enum, values: [:love, :friend], primary_key: true)
 
+    field(:source, Ecto.Enum,
+      values: [:love, :friend, :direct, :likes, :unknown],
+      default: :unknown
+    )
+
     field(:opposite, :map, virtual: true)
     field(:match, :boolean, virtual: true)
+    field(:passed, :boolean, virtual: true)
 
     timestamps(updated_at: false)
   end
@@ -132,11 +138,16 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
     query =
       LikesAndPasses
       |> where(target_id: ^profile_id, type: :like)
-      |> with_opposite(nil: true)
+      |> unanswered(profile_id)
+      |> select_merge([_, response], %{passed: not is_nil(response.target_id)})
       |> exclude_blocked()
       |> join(:left, [lap, _, _], user in User, on: lap.profile_id == user.id)
       |> where([_, _, _, user], user.status == :visible)
-      |> order_by([lap], desc: lap.created_at, desc: lap.profile_id)
+      |> order_by([lap, response],
+        asc: not is_nil(response.target_id),
+        desc: lap.created_at,
+        desc: lap.profile_id
+      )
 
     query =
       if filters[:kind] do
@@ -163,7 +174,11 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
         |> join(:inner, [lap, _, _, _], pa in Attributes,
           on: lap.profile_id == pa.profile_id and pa.attribute_id in ^gender_ids
         )
-        |> distinct([lap], desc: lap.created_at, desc: lap.profile_id)
+        |> distinct([lap, response],
+          asc: not is_nil(response.target_id),
+          desc: lap.created_at,
+          desc: lap.profile_id
+        )
       else
         query
       end
@@ -172,12 +187,19 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
       if cursor.before && cursor.before_id do
         before_datetime = DateTime.from_unix!(cursor.before, :millisecond)
 
-        where(
-          query,
-          [lap],
-          lap.created_at < ^before_datetime or
-            (lap.created_at == ^before_datetime and lap.profile_id < ^cursor.before_id)
-        )
+        older =
+          dynamic(
+            [lap],
+            lap.created_at < ^before_datetime or
+              (lap.created_at == ^before_datetime and lap.profile_id < ^cursor.before_id)
+          )
+
+        after_cursor =
+          if cursor.passed,
+            do: dynamic([_, response], not is_nil(response.target_id) and ^older),
+            else: dynamic([_, response], not is_nil(response.target_id) or ^older)
+
+        where(query, ^after_cursor)
       else
         query
       end
@@ -195,7 +217,7 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
   end
 
   def list_unrequited(profile_id: profile_id, since: since) do
-    subquery =
+    latest =
       from(lap in LikesAndPasses,
         where:
           lap.target_id == ^profile_id and
@@ -209,36 +231,22 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
         }
       )
 
-    query =
-      from(lap in subquery(subquery),
-        left_join: opposite in LikesAndPasses,
-        on:
-          lap.profile_id == opposite.target_id and
-            lap.target_id == opposite.profile_id,
-        left_join: block in Block,
-        on:
-          lap.profile_id == block.profile_id and
-            lap.target_id == block.target_id,
-        left_join: user in User,
-        on: lap.profile_id == user.id,
-        where:
-          is_nil(opposite) and
-            is_nil(block) and
-            user.status == :visible,
-        select: lap.profile_id,
-        order_by: [desc: lap.latest_created_at]
-      )
-
-    Repo.all(query)
+    from(lap in subquery(latest))
+    |> unanswered(profile_id)
+    |> join(:left, [lap, _], block in Block,
+      on: lap.profile_id == block.profile_id and lap.target_id == block.target_id
+    )
+    |> join(:left, [lap, _, _], user in User, on: lap.profile_id == user.id)
+    |> where([_, _, block, user], is_nil(block) and user.status == :visible)
+    |> order_by([lap], desc: lap.latest_created_at)
+    |> select([lap], lap.profile_id)
+    |> Repo.all()
   end
 
   def count_unrequited(profile_id: profile_id) do
     LikesAndPasses
     |> where(target_id: ^profile_id, type: :like)
-    |> join(:left, [lap], opposite in LikesAndPasses,
-      on: lap.profile_id == opposite.target_id and lap.target_id == opposite.profile_id
-    )
-    |> where([_, opposite], is_nil(opposite))
+    |> unanswered(profile_id)
     |> join(:left, [lap, _], block in Block,
       on:
         (lap.profile_id == block.profile_id and lap.target_id == block.target_id) or
@@ -311,6 +319,29 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
     end)
   end
 
+  defp responses(profile_id) do
+    from(response in LikesAndPasses,
+      where: response.profile_id == ^profile_id,
+      group_by: response.target_id,
+      select: %{
+        target_id: response.target_id,
+        answered:
+          type(
+            fragment("bool_or(?)", response.type == :like or response.source == :likes),
+            :boolean
+          )
+      }
+    )
+  end
+
+  def unanswered(query, profile_id) do
+    query
+    |> join(:left, [lap], response in subquery(responses(profile_id)),
+      on: lap.profile_id == response.target_id
+    )
+    |> where([_, response], is_nil(response.target_id) or not response.answered)
+  end
+
   def exclude_blocked(query) do
     query
     |> join(:left, [lap, _], block in Block,
@@ -346,7 +377,7 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
     alias Flirtual.User.Profile.LikesAndPasses.Cursor
 
     @derive [{Jason.Encoder, only: [:page, :limit]}]
-    defstruct before: nil, before_id: nil, page: 0, limit: 20
+    defstruct before: nil, before_id: nil, passed: false, page: 0, limit: 20
 
     def map(self, data) do
       %{
@@ -366,6 +397,7 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
         {
           cursor.before,
           cursor.before_id,
+          cursor.passed,
           cursor.page,
           cursor.limit
         },
@@ -378,14 +410,16 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
 
     def decode(token) when is_binary(token) do
       with {:ok, binary} <- Base.url_decode64(token),
-           {before, before_id, page, limit}
+           {before, before_id, passed, page, limit}
            when (is_nil(before) or is_integer(before)) and
                   (is_nil(before_id) or is_binary(before_id)) and
+                  is_boolean(passed) and
                   is_integer(page) and is_integer(limit) <-
              :erlang.binary_to_term(binary, [:safe]) do
         %Cursor{
           before: before,
           before_id: before_id,
+          passed: passed,
           page: page,
           limit: limit
         }
@@ -405,6 +439,7 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
         %Cursor{
           before: DateTime.to_unix(last_item.created_at, :millisecond),
           before_id: last_item.profile_id,
+          passed: last_item.passed == true,
           page: self.page + 1
         }
       else

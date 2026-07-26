@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useSyncExternalStore } from "react";
 
 import { isWretchError } from "~/api/common";
-import type { Queue, QueueActionIssue, QueueIssue } from "~/api/matchmaking";
+import type { Queue, QueueActionIssue, QueueIssue, ResponseSource } from "~/api/matchmaking";
 import { Matchmaking, ProspectKind, prospectKinds } from "~/api/matchmaking";
 import { ItsAMatch } from "~/app/[locale]/(app)/(authenticated)/(onboarded)/discover/its-a-match";
 import { OutOfLikesPasses } from "~/app/[locale]/(app)/(authenticated)/(onboarded)/discover/out-of-likes-passes";
@@ -59,7 +59,7 @@ export function invalidateMatch(userId: string) {
 	]);
 }
 
-export function useQueue(mode: ProspectKind = "love") {
+export function useQueue(mode: ProspectKind = "love", source: ResponseSource = mode) {
 	if (!ProspectKind.includes(mode)) mode = "love";
 	const { user: { id: meId } } = useSession();
 	const { setUnreadConversations } = useUnreadConversations();
@@ -165,12 +165,12 @@ export function useQueue(mode: ProspectKind = "love") {
 			action,
 			userId
 		}) => {
-			log(action, { userId, mode });
+			log(action, { userId, mode, source });
 
 			try {
 				const { queue, match, matchKind, userId: finalUserId } = action === "undo"
 					? await Matchmaking.undo({ mode })
-					: await Matchmaking.queueAction({ type: action, mode, userId });
+					: await Matchmaking.queueAction({ type: action, mode, userId, source });
 
 				void invalidateMatch(finalUserId);
 				const conversationId = await newConversationId(meId, finalUserId);

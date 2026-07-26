@@ -74,6 +74,8 @@ export const QueueActions: FC<{
 	direct?: boolean;
 }> = ({ kind: mode, explicitUserId, direct = false }) => {
 	const { t } = useTranslation();
+	const source = direct ? "direct" : mode;
+
 	const {
 		next: [current],
 		canUndo,
@@ -81,9 +83,9 @@ export const QueueActions: FC<{
 		pass,
 		undo,
 		mutating
-	} = useQueue(mode);
+	} = useQueue(mode, source);
 
-	const { like: homie } = useQueue(direct ? "friend" : mode);
+	const { like: homie } = useQueue(direct ? "friend" : mode, source);
 
 	const { data: relationship } = useQueryState<Relationship>(relationshipKey(explicitUserId ?? current!));
 	const blocked = relationship?.blocked ?? false;
@@ -230,6 +232,7 @@ export const QueueActions: FC<{
 			</div>
 			{homieInstead && (
 				<HomieInstead
+					source={source}
 					userId={(explicitUserId ?? current)!}
 					onClose={() => setHomieInstead(false)}
 					onPass={() => void pass(explicitUserId)}

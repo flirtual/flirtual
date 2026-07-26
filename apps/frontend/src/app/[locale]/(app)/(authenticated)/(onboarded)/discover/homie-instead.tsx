@@ -1,6 +1,7 @@
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 
+import type { ResponseSource } from "~/api/matchmaking";
 import { Button } from "~/components/button";
 import { DialogBody, DialogDescription, DialogHeader, DialogTitle } from "~/components/dialog/dialog";
 import { DrawerOrDialog } from "~/components/drawer-or-dialog";
@@ -8,13 +9,14 @@ import { useQueue } from "~/hooks/use-queue";
 
 export interface HomieInsteadProps {
 	userId: string;
+	source: ResponseSource;
 	onPass: () => void;
 	onClose: () => void;
 }
 
-export const HomieInstead: FC<HomieInsteadProps> = ({ userId, onPass, onClose }) => {
+export const HomieInstead: FC<HomieInsteadProps> = ({ userId, source, onPass, onClose }) => {
 	const { t } = useTranslation();
-	const { like: homie } = useQueue("friend");
+	const { like: homie } = useQueue("friend", source);
 
 	return (
 		<DrawerOrDialog
