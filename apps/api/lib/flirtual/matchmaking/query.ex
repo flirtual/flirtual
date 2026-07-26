@@ -262,7 +262,7 @@ defmodule Flirtual.Matchmaking.Query do
   defp boost_token(%AdvancedFilter{category: :personality, value: value}),
     do: Search.Tokens.personality(value)
 
-  @age_closeness_weight 15
+  @age_closeness_weight 30
   @reverse_age_weight 10
   @fallback_advanced_weight 10
 
@@ -317,7 +317,7 @@ defmodule Flirtual.Matchmaking.Query do
 
   defp weight(cw, key), do: Map.get(cw, key) || 1
 
-  defp liked_me(_user, cw), do: {:liked_me, 20 * weight(cw, :likes)}
+  defp liked_me(_user, cw), do: {:liked_me, 40 * weight(cw, :likes)}
 
   defp interests(%User{profile: profile}, cw) do
     strength_boosts = %{0 => 3, 1 => 5, 2 => 20}
@@ -475,7 +475,7 @@ defmodule Flirtual.Matchmaking.Query do
   defp reverse_age(%User{born_at: born_at}),
     do: {:reverse_age, get_years_since(born_at), @reverse_age_weight}
 
-  defp active, do: {:active, 12}
+  defp active, do: {:active, 40}
 
   defp fallback_factors(user, :love, advanced_filters) do
     [

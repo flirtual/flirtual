@@ -259,7 +259,7 @@ defmodule Flirtual.Search do
 
   defp compile_factor({:active, weight}, _query) do
     elapsed = "(#{now()}-active_at)/86400.0-1"
-    "#{fl(weight)}*exp(-#{@ln2}*IF(#{elapsed}>0,#{elapsed},0)/7.0)"
+    "#{fl(weight)}*exp(-#{@ln2}*IF(#{elapsed}>0,#{elapsed},0)/14.0)"
   end
 
   defp compile_factor({:geo, {lat, lon}, weight}, _query) do
@@ -270,12 +270,12 @@ defmodule Flirtual.Search do
 
   defp compile_factor({:age_closeness, origin, offset_days, weight}, _query) do
     delta = "ABS(dob-#{unix(origin)})/86400.0-#{offset_days}"
-    "#{fl(weight)}*exp(-#{@ln2}*IF(#{delta}>0,#{delta},0)/1825.0)"
+    "#{fl(weight)}*exp(-#{@ln2}*IF(#{delta}>0,#{delta},0)/1095.0)"
   end
 
   defp compile_factor({:reverse_age, age, weight}, _query) do
     outside = "IF(agemin-#{age}>#{age}-agemax,agemin-#{age},#{age}-agemax)"
-    "#{fl(weight)}*exp(-#{@ln2}*IF(#{outside}>0,#{outside},0)/5.0)"
+    "#{fl(weight)}*exp(-#{@ln2}*IF(#{outside}>0,#{outside},0)/3.0)"
   end
 
   defp compile_factor({:random, weight}, _query), do: "#{fl(weight)}*RAND()"

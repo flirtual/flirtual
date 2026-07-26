@@ -75,7 +75,7 @@ Per-category include/exclude tag lists: gender, sexuality, interest, game, platf
 
 ### Scoring factors (Date, base weight × Premium custom weight)
 
-Likes-you 20, interests 3/5/20 by strength, custom interests 25, games 1, location composite 40 (country/geo/timezone rescaled, plus same-country compensation when geo/timezone missing), monopoly 5, relationships 2, domsub 3 (NSFW), languages 1, kinks 2 (NSFW), personality 4.5×3 traits, reverse-age 10 (candidate's range includes me: full inside, halving per 5 years outside), activity decay 12, random 1. Homie: likes-you, interests, custom interests, games, languages, personality, age closeness 15 (full inside my range, halving per 5 years outside) + reverse-age 10, activity, random 15.
+Likes-you 40, interests 3/5/20 by strength, custom interests 25, games 1, location composite 40 (country/geo/timezone rescaled, plus same-country compensation when geo/timezone missing), monopoly 5, relationships 2, domsub 3 (NSFW), languages 1, kinks 2 (NSFW), personality 4.5×3 traits, reverse-age 10 (candidate's range includes me: full inside, halving per 3 years outside), activity decay 40 (halving per 14 days idle), random 1. Homie: likes-you, interests, custom interests, games, languages, personality, age closeness 30 (full inside my range, halving per 3 years outside) + reverse-age 10, activity, random 15.
 
 ### Daily limits (non-subscribers, per mode, counters on `queues`)
 
