@@ -124,6 +124,13 @@ export const SubscriptionForm: FC = () => {
 									</InlineLink>
 								</li>
 								<li>
+									🏷️
+									{" "}
+									<InlineLink href={urls.settings.matchmaking()}>
+										{t("advanced_filters")}
+									</InlineLink>
+								</li>
+								<li>
 									💃
 									{" "}
 									<InlineLink href={urls.settings.appearance}>
@@ -158,6 +165,20 @@ export const SubscriptionForm: FC = () => {
 									</span>
 									<span>
 										{t("stock_zany_puma_gulp")}
+										{" "}
+										<InlineLink href={urls.settings.matchmaking()}>
+											{t("check_this_out_for_free")}
+										</InlineLink>
+									</span>
+								</li>
+								<li className="flex flex-col">
+									<span className="text-lg font-semibold">
+										🏷️
+										{" "}
+										{t("advanced_filters")}
+									</span>
+									<span>
+										{t("premium_advanced_filters_description")}
 										{" "}
 										<InlineLink href={urls.settings.matchmaking()}>
 											{t("check_this_out_for_free")}
