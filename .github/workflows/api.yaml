@@ -63,7 +63,9 @@ jobs:
       run: mix check --except compiler
 
   image:
-    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    if: >-
+      github.actor != 'dependabot[bot]'
+      && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
     needs: [build]
     runs-on: ubuntu-latest
     steps:
