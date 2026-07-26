@@ -1,6 +1,6 @@
 {
 	"type": "module",
-	"packageManager": "pnpm@10.16.1",
+	"packageManager": "pnpm@10.34.5",
 	"scripts": {
 		"dev": "react-router dev",
 		"typegen": "wrangler types --include-runtime false && react-router typegen",
@@ -160,7 +160,7 @@
 		"vite-imagetools": "^10.0.1",
 		"vite-plugin-checker": "^0.14.4",
 		"vite-plugin-image-optimizer": "^2.0.3",
-		"wrangler": "^4.110.0"
+		"wrangler": "^4.114.0"
 	},
 	"exifreader": {
 		"include": {

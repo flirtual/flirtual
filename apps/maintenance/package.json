@@ -12,5 +12,6 @@
 		"eslint": "^9.39.1",
 		"eslint-plugin-format": "^1.1.0",
 		"wrangler": "^4.114.0"
-	}
+	},
+	"packageManager": "pnpm@10.34.5"
 }
