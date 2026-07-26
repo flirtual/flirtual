@@ -1,0 +1,35 @@
+name: Mix dependency submission
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "apps/api/mix.exs"
+      - "apps/api/mix.lock"
+      - ".github/workflows/mix-dependency-submission.yaml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  submit:
+    name: Submit mix dependencies
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+
+    - name: Set up Elixir
+      uses: erlef/setup-beam@v1
+      with:
+        version-type: strict
+        version-file: apps/api/.tool-versions
+
+    - name: Submit dependencies
+      uses: erlef/mix-dependency-submission@v1
+      with:
+        project-path: apps/api
+        install-deps: true
