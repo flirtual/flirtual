@@ -406,6 +406,8 @@
 		"should_have_{count}_item(s)": "{count, plural, =0 {空白である必要があります} =1 {1つの項目を選択してください} other {#項目を選択してください}}。",
 		"should_be_at_least_{count}_character(s)": "{count, plural, =0 {必須です} =1 {必須です} other {少なくとも#文字である必要があります}}。",
 		"should_be_at_least_{count}_byte(s)": "{count, plural, =0 {必須です} =1 {必須です} other {少なくとも#文字である必要があります}}。",
+		"should_be_at_most_{count}_byte(s)": "{count, plural, other {#文字を超えることはできません}}。",
+		"must_have_the_@_sign_and_no_spaces": "有効なメールアドレスを入力してください。",
 		"should_have_at_least_{count}_item(s)": "{count, plural, =0 {必須です} =1 {必須です} other {少なくとも#項目を選択してください}}。",
 		"should_be_at_most_{count}_character(s)": "{count, plural, =0 {空白である必要があります} =1 {1文字を超えてはいけません} other {#文字を超えてはいけません}}。",
 		"should_have_at_most_{count}_item(s)": "{count, plural, =0 {空白である必要があります} =1 {1つ以上の項目を持つことはできません} other {#項目を超えてはいけません}}。",
