@@ -456,6 +456,7 @@
 		"cannot_unblock_user": "ユーザーのブロックを解除できませんでした（アカウントが無効化されています）。",
 		"profile_not_blocked": "ユーザーのブロックを解除できませんでした（すでに解除されています）。",
 		"passkey_login_failed": "パスキーログインに失敗しました。もう一度お試しになるか、別の方法をご利用ください。",
+		"passkey_registration_failed": "パスキーを登録できませんでした。もう一度お試しください。",
 		"turnstile_required": "あなたはロボットですか？",
 		"turnstile_invalid": "認証に失敗しました。もう一度お試しください。",
 		"turnstile_expired": "認証が期限切れです。もう一度お試しください。",

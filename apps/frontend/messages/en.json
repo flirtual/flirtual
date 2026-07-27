@@ -459,6 +459,7 @@
 		"cannot_unblock_user": "Error unblocking user (account disabled).",
 		"profile_not_blocked": "Error unblocking user (already unblocked).",
 		"passkey_login_failed": "Passkey login failed, please try again or use a different method.",
+		"passkey_registration_failed": "Error registering your passkey, please try again.",
 		"turnstile_required": "Are you a robot?",
 		"turnstile_invalid": "Verification failed, please try again.",
 		"turnstile_expired": "Verification expired, please try again.",

@@ -1,5 +1,6 @@
 defmodule FlirtualWeb.PasskeyController do
   use FlirtualWeb, :controller
+  require Logger
 
   alias Ecto.UUID
   alias Flirtual.Policy
@@ -97,7 +98,8 @@ defmodule FlirtualWeb.PasskeyController do
     challenge = get_session(conn, :challenge)
     conn = delete_session(conn, :challenge)
 
-    with {:ok, {authenticator_data, _}} <-
+    with %Wax.Challenge{} <- challenge,
+         {:ok, {authenticator_data, _}} <-
            Wax.register(attestation_object, client_data_json, challenge),
          {:ok, _} <-
            Passkey.create(
@@ -110,10 +112,12 @@ defmodule FlirtualWeb.PasskeyController do
       |> put_status(:created)
       |> json(%{})
     else
-      {:error, reason} ->
+      reason ->
+        Logger.warning("passkey registration failed: #{inspect(reason)}")
+
         conn
         |> put_status(:bad_request)
-        |> json(%{error: reason})
+        |> json(%{error: "passkey_registration_failed"})
     end
   end
 
