@@ -199,7 +199,7 @@ defmodule FlirtualWeb.ConnectionController do
     |> halt()
   end
 
-  defp grant_error(conn, redirect_type, message, type \\ nil, connection \\ nil, next \\ nil) do
+  defp grant_error(conn, redirect_type, message, type, connection, next) do
     if type do
       user_id = if connection && connection.user, do: connection.user.id, else: nil
       Flirtual.User.Login.log_login_attempt(conn, user_id, nil, method: type)
@@ -211,12 +211,16 @@ defmodule FlirtualWeb.ConnectionController do
     |> put_resp_header(
       "location",
       Application.fetch_env!(:flirtual, :frontend_origin)
-      |> URI.merge(next || get_session(conn, :next) || "/login")
+      |> URI.merge(next || get_session(conn, :next) || error_fallback(conn))
       |> URI.append_query("error=" <> to_string(message))
       |> URI.to_string()
     )
     |> resp(if(redirect_type == "app", do: 200, else: 303), "")
     |> halt()
+  end
+
+  defp error_fallback(conn) do
+    if conn.assigns[:session], do: "/settings/connections", else: "/login"
   end
 
   defp app_grant_redirect(conn, params) do
@@ -257,7 +261,7 @@ defmodule FlirtualWeb.ConnectionController do
         |> halt()
 
       _ ->
-        grant_error(conn, "auto", :state_mismatch, :meta)
+        grant_error(conn, "auto", :state_mismatch, :meta, nil, nil)
     end
   end
 
@@ -337,8 +341,14 @@ defmodule FlirtualWeb.ConnectionController do
   end
 
   # OAuth redirect flow - error from provider
-  def grant(conn, %{"error" => error}) do
-    grant_error(conn, "auto", error)
+  def grant(conn, %{"error" => error} = params) do
+    error_next =
+      case verify_oauth_state(params["state"]) do
+        {:ok, %{user_id: user_id, next: next}} when not is_nil(user_id) -> next
+        _ -> nil
+      end
+
+    grant_error(conn, "auto", error, nil, nil, error_next)
   end
 
   # OAuth redirect flow - exchange code for tokens
@@ -410,7 +420,7 @@ defmodule FlirtualWeb.ConnectionController do
         end
 
       _ ->
-        grant_error(conn, redirect_type, :state_mismatch, type)
+        grant_error(conn, redirect_type, :state_mismatch, type, nil, nil)
     end
   end
 
@@ -664,7 +674,7 @@ defmodule FlirtualWeb.ConnectionController do
 
         case options[:response] do
           :redirect ->
-            grant_error(conn, options[:redirect_type], message, type, nil)
+            grant_error(conn, options[:redirect_type], message, type, nil, nil)
 
           :json ->
             {:error, {status, message}}
