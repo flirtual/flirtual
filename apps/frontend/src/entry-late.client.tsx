@@ -20,8 +20,13 @@ let lastDeepLink: string | null = null;
 function openDeepLink(value: string) {
 	const href = deepLinkToRelativeUrl(value);
 
-	// OAuth deep links resolve InAppBrowser.openSecureWindow, not navigation.
-	if (!href || href.startsWith("/oauth-callback") || href === lastDeepLink) return;
+	// Native OAuth deep links are consumed by the plugin, not webview navigation.
+	if (
+		!href
+		|| href.startsWith("/oauth-callback")
+		|| href.startsWith("/apple-login")
+		|| href === lastDeepLink
+	) return;
 
 	lastDeepLink = href;
 	location.href = href;
