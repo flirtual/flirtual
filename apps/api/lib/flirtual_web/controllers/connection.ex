@@ -170,6 +170,12 @@ defmodule FlirtualWeb.ConnectionController do
   defp oauth_next(%{signup: true}), do: "/sign-up"
   defp oauth_next(_), do: nil
 
+  # Live session must match the user the state was minted for (CSRF).
+  defp verify_session_user(conn, %{user_id: user_id}) do
+    session_user_id = conn.assigns[:session] && conn.assigns[:session].user_id
+    if session_user_id in [nil, user_id], do: :ok, else: {:error, :session_mismatch}
+  end
+
   def delete(conn, %{"type" => type}) do
     type = to_atom(type)
     user = conn.assigns[:session].user
@@ -425,7 +431,8 @@ defmodule FlirtualWeb.ConnectionController do
         # exchange's redirect_uri must match the app-scheme deep link used at
         # authorization, and the response is a 200 whose location header the
         # app reads itself (a 303 would make fetch follow it).
-        with {:ok, provider} <- Connection.provider(type),
+        with :ok <- verify_session_user(conn, state_data),
+             {:ok, provider} <- Connection.provider(type),
              {:ok, authorization} <-
                provider.exchange_code(code,
                  redirect: if(redirect_type == "app", do: :app, else: true),
@@ -474,6 +481,9 @@ defmodule FlirtualWeb.ConnectionController do
 
           {:error, {status, message}} when is_atom(status) and is_binary(message) ->
             grant_error(conn, redirect_type, message, type, nil, error_next)
+
+          {:error, :session_mismatch} ->
+            grant_error(conn, redirect_type, :state_mismatch, type, nil, error_next)
 
           reason ->
             log(:error, [:grant], reason: reason)
