@@ -334,7 +334,8 @@ defmodule FlirtualWeb.ConnectionController do
 
   # App: no session, and the app already holds the state. Forward just the code
   # and org-scoped id to the app scheme; openSecureWindow prefix-matches, so
-  # type=meta stays first.
+  # type=meta stays first. With no state to check here, a missing code can only
+  # mean the user cancelled.
   def meta_callback_app(conn, %{"payload" => payload}) do
     suffix =
       case decode_meta_payload(payload) do
@@ -342,7 +343,7 @@ defmodule FlirtualWeb.ConnectionController do
           URI.encode_query(%{code: code, org_scoped_id: org_scoped_id})
 
         _ ->
-          "error=state_mismatch"
+          "error=user_cancelled_authorize"
       end
 
     conn
