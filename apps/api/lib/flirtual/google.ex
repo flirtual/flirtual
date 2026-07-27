@@ -124,7 +124,7 @@ defmodule Flirtual.Google do
   def get_profile(%{id_token: id_token}), do: get_profile(id_token)
 
   def get_profile(id_token) when is_binary(id_token) do
-    with {:ok, claims} <- verify_id_token(id_token) do
+    with {:ok, claims} <- verify_id_token(id_token, client_id: config(:web_client_id)) do
       {:ok, profile(claims)}
     end
   end
@@ -172,7 +172,7 @@ defmodule Flirtual.Google do
       claims["exp"] < now ->
         {:error, :token_expired}
 
-      expected_client_id != nil and claims["aud"] != expected_client_id ->
+      claims["aud"] != expected_client_id ->
         {:error, :invalid_audience}
 
       claims["email"] != nil and claims["email_verified"] == false ->
