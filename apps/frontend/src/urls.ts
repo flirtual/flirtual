@@ -51,6 +51,8 @@ export function deepLinkToRelativeUrl(value: string) {
 	if (url.protocol !== "http:" && url.protocol !== "https:")
 		return `/${url.host}${url.pathname}${url.search}${url.hash}`;
 
+	if (!allowedOrigins.includes(url.origin)) return null;
+
 	return toRelativeUrl(url);
 }
 

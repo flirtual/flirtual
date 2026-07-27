@@ -24,7 +24,7 @@ function openDeepLink(value: string) {
 	if (!href || href.startsWith("/oauth-callback") || href === lastDeepLink) return;
 
 	lastDeepLink = href;
-	location.href = href;
+	location.assign(href);
 }
 
 App.addListener("appUrlOpen", ({ url }) => openDeepLink(url));
