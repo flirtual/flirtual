@@ -27,7 +27,7 @@ function openDeepLink(value: string) {
 	) return;
 
 	lastDeepLink = href;
-	location.href = href;
+	location.assign(href);
 }
 
 App.addListener("appUrlOpen", ({ url }) => openDeepLink(url));
