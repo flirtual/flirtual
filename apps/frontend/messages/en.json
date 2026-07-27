@@ -886,7 +886,7 @@
 	"confirm_password": "Confirm password",
 	"confirm_new_password": "Confirm new password",
 	"passkeys": "Passkeys",
-	"broad_upper_ox_drum": "Passkeys let you log in conveniently and securely with your fingerprint, face, device PIN or security key instead of your password. Only add passkeys on trusted devices.",
+	"broad_upper_ox_drum": "Passkeys let you log in conveniently and securely with your device PIN, face or fingerprint instead of your password. Only add passkeys on trusted devices.",
 	"large_simple_penguin_learn": "Passkeys are not yet supported on Android.",
 	"add_passkey": "Add passkey",
 	"unsupported_device": "(unsupported device)",

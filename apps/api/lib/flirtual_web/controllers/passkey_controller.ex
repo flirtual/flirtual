@@ -64,7 +64,7 @@ defmodule FlirtualWeb.PasskeyController do
               authenticatorAttachment: "platform"
             },
             else: %{
-              requireResidentKey: false,
+              requireResidentKey: true,
               userVerification: "preferred"
             }
           )
