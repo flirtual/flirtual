@@ -14,5 +14,5 @@ export async function computeBlurhash(source: ReadableStream<Uint8Array>): Promi
 		throw new Error(`Unexpected RGBA length ${pixels.length}`);
 	}
 
-	return encodeBlurhash(pixels, blurhashSize, blurhashSize, 4, 3);
+	return encodeBlurhash(pixels, blurhashSize, blurhashSize, 4, 4);
 }
