@@ -219,6 +219,7 @@ export const SignUpForm: FC = () => {
 								<hr className="h-px w-full border-0 bg-white-40 vision:bg-transparent dark:bg-black-60" />
 							</div>
 							<LoginConnectionButton
+								signup
 								guard={guardServiceAgreement}
 								notifications={fields.notifications.props.value}
 								tabIndex={9}
@@ -229,6 +230,7 @@ export const SignUpForm: FC = () => {
 									<LoginConnectionButton
 										key={type}
 										iconOnly
+										signup
 										guard={guardServiceAgreement}
 										notifications={fields.notifications.props.value}
 										tabIndex={10 + index}

@@ -75,6 +75,7 @@ export interface ConnectionAuthorizeOptions {
 	next: string;
 	json?: boolean;
 	notifications?: boolean;
+	signup?: boolean;
 }
 
 export interface ConnectionGrantOptions {

@@ -32,6 +32,7 @@ export interface LoginConnectionButtonProps {
 	className?: string;
 	notifications?: boolean;
 	iconOnly?: boolean;
+	signup?: boolean;
 	// Return false to block the action, i.e. when the service agreement is unchecked.
 	guard?: () => boolean;
 }
@@ -50,6 +51,7 @@ export const LoginConnectionButton: FC<LoginConnectionButtonProps> = ({
 	className,
 	notifications = false,
 	iconOnly = false,
+	signup = false,
 	guard
 }) => {
 	const { t } = useTranslation();
@@ -101,7 +103,8 @@ export const LoginConnectionButton: FC<LoginConnectionButtonProps> = ({
 				idToken,
 				authorizationCode,
 				deviceId,
-				notifications
+				notifications,
+				signup
 			});
 
 			if ("error" in response) {
@@ -147,13 +150,14 @@ export const LoginConnectionButton: FC<LoginConnectionButtonProps> = ({
 				type,
 				prompt: "consent",
 				next: nextUrl,
-				notifications
+				notifications,
+				signup
 			});
 
 			return;
 		}
 
-		const nextLocation = await authorizeAndGrant(type, nextUrl, notifications);
+		const nextLocation = await authorizeAndGrant(type, nextUrl, notifications, signup);
 		if (!nextLocation) return;
 
 		const nextLocationUrl = new URL(nextLocation);

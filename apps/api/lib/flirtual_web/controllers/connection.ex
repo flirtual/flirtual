@@ -22,7 +22,7 @@ defmodule FlirtualWeb.ConnectionController do
   # it back to grant itself.
   def authorize(conn, %{"type" => "meta", "next" => next, "json" => json} = params)
       when not is_nil(json) do
-    with {:ok, state} <- generate_oauth_state(conn, next, truthy?(params["notifications"])),
+    with {:ok, state} <- generate_oauth_state(conn, next, truthy?(params["notifications"]), truthy?(params["signup"])),
          {:ok, authorize_url} <- Meta.authorize_url(conn, %{redirect: :app}) do
       conn
       |> json(%{
@@ -35,7 +35,7 @@ defmodule FlirtualWeb.ConnectionController do
 
   # Web opens our endpoint (302 to oculus) and stashes state in the session.
   def authorize(conn, %{"type" => "meta", "next" => next} = params) do
-    with {:ok, state} <- generate_oauth_state(conn, next, truthy?(params["notifications"])),
+    with {:ok, state} <- generate_oauth_state(conn, next, truthy?(params["notifications"]), truthy?(params["signup"])),
          {:ok, authorize_url} <- Meta.authorize_url(conn, %{}) do
       conn
       |> put_session(:meta_state, state)
@@ -53,7 +53,7 @@ defmodule FlirtualWeb.ConnectionController do
     type = to_atom(type)
 
     with {:ok, provider} <- Connection.provider(type),
-         {:ok, state} <- generate_oauth_state(conn, next, truthy?(params["notifications"])),
+         {:ok, state} <- generate_oauth_state(conn, next, truthy?(params["notifications"]), truthy?(params["signup"])),
          {:ok, authorize_url} <-
            provider.authorize_url(conn, %{prompt: prompt, redirect: :app, state: state}) do
       conn
@@ -77,7 +77,7 @@ defmodule FlirtualWeb.ConnectionController do
     type = to_atom(type)
 
     with {:ok, provider} <- Connection.provider(type),
-         {:ok, state} <- generate_oauth_state(conn, next, truthy?(params["notifications"])),
+         {:ok, state} <- generate_oauth_state(conn, next, truthy?(params["notifications"]), truthy?(params["signup"])),
          {:ok, authorize_url} <- provider.authorize_url(conn, %{prompt: prompt, state: state}) do
       conn
       |> redirect(external: authorize_url |> URI.to_string())
@@ -99,13 +99,14 @@ defmodule FlirtualWeb.ConnectionController do
   # Generate a signed state token containing user_id, next URL, and newsletter
   # opt-in. This preserves context across OAuth callbacks that don't send
   # cookies (e.g., Apple's form_post).
-  defp generate_oauth_state(conn, next, notifications) do
+  defp generate_oauth_state(conn, next, notifications, signup) do
     user_id = if conn.assigns[:session], do: conn.assigns[:session].user_id, else: nil
 
     %{
       "user_id" => user_id,
       "next" => next,
-      "notifications" => if(notifications, do: true)
+      "notifications" => if(notifications, do: true),
+      "signup" => if(signup, do: true)
     }
     |> Map.reject(fn {_, value} -> is_nil(value) end)
     |> then(&Jwt.sign(Jwt.config("oauth-state"), &1))
@@ -119,7 +120,8 @@ defmodule FlirtualWeb.ConnectionController do
          %{
            user_id: claim(claims, "user_id"),
            next: claim(claims, "next"),
-           notifications: truthy?(claim(claims, "notifications"))
+           notifications: truthy?(claim(claims, "notifications")),
+           signup: truthy?(claim(claims, "signup"))
          }}
 
       error ->
@@ -345,6 +347,7 @@ defmodule FlirtualWeb.ConnectionController do
     error_next =
       case verify_oauth_state(params["state"]) do
         {:ok, %{user_id: user_id, next: next}} when not is_nil(user_id) -> next
+        {:ok, %{signup: true}} -> "/sign-up"
         _ -> nil
       end
 
@@ -358,9 +361,13 @@ defmodule FlirtualWeb.ConnectionController do
 
     case verify_oauth_state(params["state"]) do
       {:ok, state_data} ->
-        # Errors while linking return to the originating page; errors while
-        # logging in fall back to /login.
-        error_next = if state_data.user_id, do: state_data.next
+        # Errors return to where the flow began: connection page, /sign-up, or /login.
+        error_next =
+          cond do
+            state_data.user_id -> state_data.next
+            state_data.signup -> "/sign-up"
+            true -> nil
+          end
 
         # `redirect=app` grants are fetch calls from the native app: the token
         # exchange's redirect_uri must match the app-scheme deep link used at
@@ -393,7 +400,9 @@ defmodule FlirtualWeb.ConnectionController do
             response: :redirect,
             redirect_type: redirect_type,
             next: state_data.next,
-            notifications: state_data.notifications
+            notifications: state_data.notifications,
+            register: state_data.signup,
+            error_next: error_next
           )
         else
           {:error, :unverified_email} ->
@@ -435,7 +444,8 @@ defmodule FlirtualWeb.ConnectionController do
       handle_grant(conn, user, profile, type,
         response: :json,
         device_id: params["device_id"],
-        notifications: truthy?(params["notifications"])
+        notifications: truthy?(params["notifications"]),
+        register: truthy?(params["signup"])
       )
     else
       {:error, :provider_not_found} ->
@@ -544,9 +554,13 @@ defmodule FlirtualWeb.ConnectionController do
       {nil, %Connection{user: %User{}} = connection} ->
         respond_error(conn, :account_banned, type, connection, options)
 
-      # Not logged in, no connection -> register new user (if supported)
+      # Not logged in, no connection: register only from the sign-up flow, else reject.
       {nil, nil} ->
-        register_user(conn, profile, type, options)
+        if options[:register] do
+          register_user(conn, profile, type, options)
+        else
+          respond_error(conn, :connection_no_account, type, nil, options, options[:error_next])
+        end
     end
   end
 
@@ -674,7 +688,7 @@ defmodule FlirtualWeb.ConnectionController do
 
         case options[:response] do
           :redirect ->
-            grant_error(conn, options[:redirect_type], message, type, nil, nil)
+            grant_error(conn, options[:redirect_type], message, type, nil, options[:error_next])
 
           :json ->
             {:error, {status, message}}

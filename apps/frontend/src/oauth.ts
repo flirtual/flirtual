@@ -11,13 +11,15 @@ import type { ConnectionType } from "~/api/connections";
 export async function authorizeAndGrant(
 	type: ConnectionType,
 	next: string,
-	notifications?: boolean
+	notifications?: boolean,
+	signup?: boolean
 ): Promise<string | null> {
 	const { authorizeUrl, redirectUri, state: authorizeState } = await Connection.authorize({
 		type,
 		prompt: "consent",
 		next,
-		notifications
+		notifications,
+		signup
 	});
 
 	let redirectedUri: string;

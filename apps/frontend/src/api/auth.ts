@@ -63,6 +63,7 @@ export interface SocialLoginOptions {
 	authorizationCode?: string;
 	deviceId?: string;
 	notifications?: boolean;
+	signup?: boolean;
 }
 
 export interface SocialLoginLinkResponse {

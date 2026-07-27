@@ -431,6 +431,7 @@
 		"connection_verify_email": "Please verify your email address with your account provider and try again.",
 		"connection_email_required": "Please add an email to your account before removing this connection.",
 		"connection_email_change_required": "Please change your account email before removing this connection.",
+		"connection_no_account": "No Flirtual account found for this login. Try a different login method, or sign up if you don't have an account yet.",
 		"email_required": "Your account provider is missing an email address and cannot be used.",
 		"email_in_use": "An account already exists with this email address.",
 		"registration_failed": "Couldn't create your account, please try again later.",
