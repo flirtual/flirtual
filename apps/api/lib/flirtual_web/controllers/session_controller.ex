@@ -57,8 +57,8 @@ defmodule FlirtualWeb.SessionController do
                 leaked_password: leaked_password
               })
             else
-              {:error, :verification_rate_limit} ->
-                {:error, {:unauthorized, :verification_rate_limit}}
+              {:error, code} ->
+                {:error, {:unauthorized, code}}
             end
           else
             {session, conn} = create(conn, user, method: :password, device_id: attrs[:device_id])
@@ -105,11 +105,8 @@ defmodule FlirtualWeb.SessionController do
       |> put_status(:ok)
       |> json(%{login_id: login_id})
     else
-      {:error, :verification_rate_limit} ->
-        {:error, {:unauthorized, :verification_rate_limit}}
-
-      {:error, _} ->
-        {:error, {:unauthorized, :verification_invalid_code}}
+      {:error, code} ->
+        {:error, {:unauthorized, code}}
     end
   end
 

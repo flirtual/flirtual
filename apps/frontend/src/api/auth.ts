@@ -140,7 +140,7 @@ export const Authentication = {
 				if (isWretchError(reason)) return reason.json;
 				throw reason;
 			})
-			.json<Issue<"account_banned"> | Issue<"invalid_credentials"> | Issue<"login_rate_limit"> | Issue<"verification_rate_limit"> | Session | VerificationResponse>();
+			.json<Issue<"account_banned"> | Issue<"invalid_credentials"> | Issue<"login_rate_limit"> | Issue<"verification_email_failed"> | Issue<"verification_rate_limit"> | Session | VerificationResponse>();
 	},
 	magicLogin(token: string) {
 		return this.api
@@ -222,7 +222,7 @@ export const Authentication = {
 				if (isWretchError(reason)) return reason.json;
 				throw reason;
 			})
-			.json<Issue<"verification_invalid_code"> | VerificationResponse>();
+			.json<Issue<"verification_email_failed"> | Issue<"verification_invalid_code"> | VerificationResponse>();
 	},
 	socialLogin(options: SocialLoginOptions) {
 		return api
