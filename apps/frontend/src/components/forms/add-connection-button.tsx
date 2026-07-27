@@ -150,6 +150,12 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 				await handleOAuthLink();
 			}
 		}
+		catch (reason) {
+			const error = isWretchError(reason)
+				? reason.json?.error
+				: reason instanceof Error ? reason.message : undefined;
+			toasts.add({ type: "error", value: t(`errors.${error}` as any, { defaultValue: t("errors.connection_error_generic") }) });
+		}
 		finally {
 			setIsLoading(false);
 		}
