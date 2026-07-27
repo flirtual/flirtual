@@ -111,7 +111,7 @@ defmodule FlirtualWeb.SessionController do
 
   def verify(conn, %{"login_id" => login_id, "code" => code}) do
     with %Login{user_id: user_id} <- Login.get(login_id),
-         %User{} = user <- Users.get(user_id),
+         %User{banned_at: nil} = user <- Users.get(user_id),
          :ok <- Verification.verify(login_id, code) do
       session = Session.create(user)
 
@@ -130,6 +130,10 @@ defmodule FlirtualWeb.SessionController do
     else
       nil ->
         {:error, {:unauthorized, :verification_invalid_code}}
+
+      %User{banned_at: banned_at} = user when not is_nil(banned_at) ->
+        Login.log_login_attempt(conn, user.id, nil, method: :password)
+        {:error, {:unauthorized, :account_banned}}
 
       {:error, :verification_rate_limit} ->
         with %Login{user_id: user_id} <- Login.get(login_id) do
