@@ -26,9 +26,8 @@ export const UserForms: React.FC = () => {
 				fields={{ email: "" }}
 				requireChange={["email"]}
 				onSubmit={async (body) => {
-					await User.updateEmail(user.id, body)
-						.then(() => toasts.add(t("salty_novel_octopus_surge")))
-						.catch(toasts.addError);
+					await User.updateEmail(user.id, body);
+					toasts.add(t("salty_novel_octopus_surge"));
 
 					await invalidate({ queryKey: sessionKey() });
 				}}
@@ -65,9 +64,8 @@ export const UserForms: React.FC = () => {
 				fields={{}}
 				requireChange={false}
 				onSubmit={async () => {
-					await User.resendConfirmEmail()
-						.then(() => toasts.add(t("salty_novel_octopus_surge")))
-						.catch(toasts.addError);
+					await User.resendConfirmEmail();
+					toasts.add(t("salty_novel_octopus_surge"));
 
 					await invalidate({ queryKey: sessionKey() });
 				}}
@@ -97,9 +95,8 @@ export const UserForms: React.FC = () => {
 				className="mt-8"
 				requireChange={["email", "emailConfirmation", "currentPassword"]}
 				onSubmit={async (body) => {
-					await User.updateEmail(user.id, body)
-						.then(() => toasts.add(t("email_changed")))
-						.catch(toasts.addError);
+					await User.updateEmail(user.id, body);
+					toasts.add(t("email_changed"));
 
 					await invalidate({ queryKey: sessionKey() });
 				}}
