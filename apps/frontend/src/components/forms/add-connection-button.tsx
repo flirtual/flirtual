@@ -128,8 +128,12 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 		const nextLocation = await authorizeAndGrant(type, url.href);
 		if (!nextLocation) return;
 
-		navigate(toRelativeUrl(new URL(nextLocation)));
+		const nextLocationUrl = new URL(nextLocation);
+		navigate(toRelativeUrl(nextLocationUrl));
 		await invalidate({ queryKey: sessionKey() });
+
+		if (!nextLocationUrl.searchParams.has("error"))
+			toasts.add(t("linked_connection"));
 	};
 
 	const handleClick = async () => {
