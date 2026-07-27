@@ -401,6 +401,7 @@
 		"verification_invalid_code": "Invalid or expired verification code. Please request a new code.",
 		"verification_rate_limit": "Too many verification attempts. Please try again later or <reset>reset your password</reset>.",
 		"reset_password_rate_limit": "Too many password reset requests. Please try again later.",
+		"reset_password_link_invalid": "Your password reset link is invalid or has expired. <forgot>Request a new one</forgot>.",
 		"registration_rate_limit": "Too many registration attempts. Please try again later.",
 		"upload_rate_limit": "You're uploading too many images! Please try again later.",
 		"is_still_associated_with_this_entry": "Still associated with this entry.",

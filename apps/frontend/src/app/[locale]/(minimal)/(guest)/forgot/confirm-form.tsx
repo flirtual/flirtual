@@ -1,11 +1,13 @@
 import { decodeJwt } from "jose";
+import { AlertCircle } from "lucide-react";
 import { useState } from "react";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 
 import { Authentication } from "~/api/auth";
 import { ButtonLink } from "~/components/button";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
+import { InlineLink } from "~/components/inline-link";
 import { InputLabel, InputText } from "~/components/inputs";
 import { throwRedirect } from "~/redirect";
 import { urls } from "~/urls";
@@ -15,8 +17,13 @@ export const ConfirmPasswordResetForm: React.FC<{ token: string }> = ({ token })
 
 	const [success, setSuccess] = useState(false);
 
-	const payload = decodeJwt(token);
-	const email = payload?.sub;
+	let email: string | undefined;
+	try {
+		email = decodeJwt(token).sub;
+	}
+	catch {
+		email = undefined;
+	}
 
 	if (!email) return throwRedirect(urls.forgotPassword);
 
@@ -34,7 +41,7 @@ export const ConfirmPasswordResetForm: React.FC<{ token: string }> = ({ token })
 				setSuccess(true);
 			}}
 		>
-			{({ FormField }) =>
+			{({ FormField, fields }) =>
 				success
 					? (
 							<>
@@ -50,6 +57,17 @@ export const ConfirmPasswordResetForm: React.FC<{ token: string }> = ({ token })
 						)
 					: (
 							<>
+								{fields.token.errors.length > 0 && (
+									<div className="flex gap-2 font-nunito text-lg text-red-600 dark:text-red-400">
+										<AlertCircle className="mt-0.5 size-6 shrink-0" />
+										<span>
+											<Trans
+												components={{ forgot: <InlineLink className="underline" highlight={false} href={urls.forgotPassword} /> }}
+												i18nKey="errors.reset_password_link_invalid"
+											/>
+										</span>
+									</div>
+								)}
 								<FormField name="email">
 									{(field) => (
 										<>
