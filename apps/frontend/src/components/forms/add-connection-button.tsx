@@ -158,6 +158,10 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 
 	if (!session) return null;
 
+	// Don't allow Apple connections to be created from Android, or they won't get
+	// revocation tokens.
+	if (!connection && type === "apple" && device.native && device.android) return null;
+
 	return (
 		<div
 			className={twMerge(
