@@ -226,14 +226,14 @@ defmodule FlirtualWeb.ConnectionController do
   defp has_email?(%User{email: email}), do: is_binary(email) and email != ""
 
   defp grant_next(conn, redirect_type, next \\ nil) do
-    next = if(next, do: next, else: get_session(conn, :next))
+    next = safe_next(next) || safe_next(get_session(conn, :next))
 
     conn
     |> delete_session(:next)
     |> put_resp_header("access-control-expose-headers", "location")
     |> put_resp_header(
       "location",
-      next || Application.fetch_env!(:flirtual, :frontend_origin)
+      next || URI.to_string(Application.fetch_env!(:flirtual, :frontend_origin))
     )
     |> resp(if(redirect_type == "app", do: 200, else: 303), "")
     |> halt()
@@ -269,8 +269,16 @@ defmodule FlirtualWeb.ConnectionController do
 
   defp grant_origin(conn, next) do
     Application.fetch_env!(:flirtual, :frontend_origin)
-    |> URI.merge(next || get_session(conn, :next) || error_fallback(conn))
+    |> URI.merge(safe_next(next) || safe_next(get_session(conn, :next)) || error_fallback(conn))
   end
+
+  # Reject redirects to external hosts.
+  defp safe_next(next) when is_binary(next) do
+    frontend = Application.fetch_env!(:flirtual, :frontend_origin)
+    if URI.parse(next).host in [nil, frontend.host], do: next, else: nil
+  end
+
+  defp safe_next(_), do: nil
 
   defp error_fallback(conn) do
     if conn.assigns[:session], do: "/settings/connections", else: "/login"
