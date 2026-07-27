@@ -17,6 +17,7 @@ export type Session = {
 export interface LoginOptions {
 	login: string;
 	password: string;
+	captcha: string;
 	deviceId?: string;
 }
 

@@ -178,9 +178,10 @@ export const LoginForm: FC = () => {
 					className="flex flex-col gap-8"
 					formErrorMessages={false}
 					renderCaptcha={false}
-					onSubmit={async (body) => {
+					onSubmit={async (body, { captcha }) => {
 						const value = await Authentication.login({
 							...body,
+							captcha,
 							deviceId: device.id
 						});
 

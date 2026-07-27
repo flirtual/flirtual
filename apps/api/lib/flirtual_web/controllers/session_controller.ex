@@ -8,7 +8,7 @@ defmodule FlirtualWeb.SessionController do
   import FlirtualWeb.Utilities
   import Flirtual.Utilities.Changeset
 
-  alias Flirtual.{IpAddress, Jwt, Policy, User, Users}
+  alias Flirtual.{IpAddress, Jwt, Policy, Turnstile, User, Users}
   alias Flirtual.User.{Login, Session, Verification}
 
   action_fallback(FlirtualWeb.FallbackController)
@@ -26,7 +26,8 @@ defmodule FlirtualWeb.SessionController do
 
     case ExRated.check_rate("login:#{IpAddress.normalize(ip)}", @fifteen_minutes, 5) do
       {:ok, _} ->
-        with {:ok, attrs} <-
+        with true <- Turnstile.valid?(params["captcha"]),
+             {:ok, attrs} <-
                cast_arbitrary(
                  %{
                    login: :string,
@@ -67,6 +68,9 @@ defmodule FlirtualWeb.SessionController do
             |> json(Policy.transform(conn, %{session | leaked_password: leaked_password}))
           end
         else
+          false ->
+            {:error, {:unauthorized, :turnstile_invalid}}
+
           %User{banned_at: banned_at} = user when not is_nil(banned_at) ->
             Login.log_login_attempt(conn, user.id, nil,
               method: :password,
