@@ -205,11 +205,16 @@ defmodule FlirtualWeb.Router do
           end
 
           scope "/passkey" do
-            get("/registration-challenge", PasskeyController, :get_registration_challenge)
             get("/authentication-challenge", PasskeyController, :get_authentication_challenge)
-            post("/", PasskeyController, :create)
-            delete("/", PasskeyController, :delete)
             post("/authenticate", PasskeyController, :authenticate)
+
+            scope "/" do
+              pipe_through(:require_authenticated_user)
+
+              get("/registration-challenge", PasskeyController, :get_registration_challenge)
+              post("/", PasskeyController, :create)
+              delete("/", PasskeyController, :delete)
+            end
           end
 
           scope "/sudo" do
@@ -241,7 +246,6 @@ defmodule FlirtualWeb.Router do
         end
 
         scope "/connections" do
-          get("/available", ConnectionController, :list_available)
           get("/authorize", ConnectionController, :authorize)
           get("/grant", ConnectionController, :grant)
           post("/grant", ConnectionController, :grant)
@@ -251,6 +255,7 @@ defmodule FlirtualWeb.Router do
           scope "/" do
             pipe_through(:require_authenticated_user)
 
+            get("/available", ConnectionController, :list_available)
             delete("/", ConnectionController, :delete)
           end
         end
@@ -370,7 +375,12 @@ defmodule FlirtualWeb.Router do
 
         scope "/users" do
           post("/", UsersController, :create)
-          delete("/", UsersController, :delete)
+
+          scope "/" do
+            pipe_through(:require_authenticated_user)
+
+            delete("/", UsersController, :delete)
+          end
 
           scope "/" do
             pipe_through([:require_authenticated_user, :require_valid_user])
