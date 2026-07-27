@@ -1,10 +1,10 @@
 import { MoveLeft } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { useSearchParams } from "react-router";
 
 import type { Session } from "~/api/auth";
 import { Profile } from "~/api/user/profile";
 import { ButtonLink } from "~/components/button";
+import { ConnectionError } from "~/components/connection-error";
 import { Form, FormButton } from "~/components/forms";
 import { AddConnectionButton } from "~/components/forms/add-connection-button";
 import { FaceTimeIcon, VRChatIcon } from "~/components/icons";
@@ -16,9 +16,6 @@ import { mutate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
 export const Finish5Form: React.FC = () => {
-	const [query] = useSearchParams();
-	const error = query.get("error") || undefined;
-
 	const { vision } = useDevice();
 	const navigate = useNavigate();
 	const { user } = useSession();
@@ -26,11 +23,7 @@ export const Finish5Form: React.FC = () => {
 
 	return (
 		<>
-			{error && (
-				<div className="mb-8 rounded-lg bg-brand-gradient px-6 py-4">
-					<span className="font-montserrat text-lg text-white-10">{error}</span>
-				</div>
-			)}
+			<ConnectionError />
 			<div className="flex flex-col gap-4">
 				<div>
 					<span className="flex text-xl">{t("drab_game_myna_yell")}</span>

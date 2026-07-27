@@ -5,11 +5,11 @@ import { useEffect, useRef, useState } from "react";
 import type { FC } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router";
-import { withSuspense } from "with-suspense";
 
 import { Authentication } from "~/api/auth";
 import { isWretchError } from "~/api/common";
 import { ButtonLink } from "~/components/button";
+import { ConnectionError } from "~/components/connection-error";
 import { Form, FormButton } from "~/components/forms";
 import { FormInputMessages } from "~/components/forms/input-messages";
 import { InlineLink } from "~/components/inline-link";
@@ -113,23 +113,6 @@ function useKylesWebAuthnImplementation() {
 	}, [toasts, t, navigate, deviceId]);
 }
 
-const OAuthError: FC = withSuspense(() => {
-	const [query] = useSearchParams();
-	const error = query.get("error");
-
-	const { t } = useTranslation();
-
-	if (!error || error === "access_denied") return null;
-
-	return (
-		<div className="mb-8 rounded-lg bg-brand-gradient px-6 py-4">
-			<span className="font-montserrat text-lg text-white-10">
-				{t(`errors.${error}` as any)}
-			</span>
-		</div>
-	);
-});
-
 export const LoginForm: FC = () => {
 	const { t } = useTranslation();
 	const device = useDevice();
@@ -152,7 +135,7 @@ export const LoginForm: FC = () => {
 	if (token && !tokenInvalid) {
 		return (
 			<>
-				<OAuthError />
+				<ConnectionError />
 				<MagicLogin
 					token={token}
 					onInvalid={() => {
@@ -170,7 +153,7 @@ export const LoginForm: FC = () => {
 	if (verification) {
 		return (
 			<>
-				<OAuthError />
+				<ConnectionError />
 				<VerificationForm
 					email={verification.email}
 					leakedPassword={verification.leakedPassword}
@@ -183,7 +166,7 @@ export const LoginForm: FC = () => {
 
 	return (
 		<>
-			<OAuthError />
+			<ConnectionError />
 			<div className="flex flex-col gap-8">
 				<Form
 					withCaptcha

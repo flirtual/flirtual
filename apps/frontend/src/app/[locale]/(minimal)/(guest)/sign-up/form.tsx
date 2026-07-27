@@ -6,6 +6,7 @@ import { Trans, useTranslation } from "react-i18next";
 import type { Session } from "~/api/auth";
 import { User } from "~/api/user";
 import { ButtonLink } from "~/components/button";
+import { ConnectionError } from "~/components/connection-error";
 import { Form, FormButton } from "~/components/forms";
 import { FormInputMessages } from "~/components/forms/input-messages";
 import { InlineLink } from "~/components/inline-link";
@@ -86,6 +87,7 @@ export const SignUpForm: FC = () => {
 
 				return (
 					<>
+						<ConnectionError />
 						<FormField name="email">
 							{({ props, labelProps }) => (
 								<>

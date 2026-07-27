@@ -13,6 +13,9 @@ defmodule FlirtualWeb.ConnectionController do
 
   action_fallback(FlirtualWeb.FallbackController)
 
+  # We don't return user-cancellation errors.
+  @oauth_cancel_errors ~w(access_denied user_cancelled_authorize)
+
   def list_available(conn, _) do
     conn
     |> json(Connection.list_available(conn.assigns[:session].user))
@@ -22,7 +25,13 @@ defmodule FlirtualWeb.ConnectionController do
   # it back to grant itself.
   def authorize(conn, %{"type" => "meta", "next" => next, "json" => json} = params)
       when not is_nil(json) do
-    with {:ok, state} <- generate_oauth_state(conn, next, truthy?(params["notifications"]), truthy?(params["signup"])),
+    with {:ok, state} <-
+           generate_oauth_state(
+             conn,
+             next,
+             truthy?(params["notifications"]),
+             truthy?(params["signup"])
+           ),
          {:ok, authorize_url} <- Meta.authorize_url(conn, %{redirect: :app}) do
       conn
       |> json(%{
@@ -35,7 +44,13 @@ defmodule FlirtualWeb.ConnectionController do
 
   # Web opens our endpoint (302 to oculus) and stashes state in the session.
   def authorize(conn, %{"type" => "meta", "next" => next} = params) do
-    with {:ok, state} <- generate_oauth_state(conn, next, truthy?(params["notifications"]), truthy?(params["signup"])),
+    with {:ok, state} <-
+           generate_oauth_state(
+             conn,
+             next,
+             truthy?(params["notifications"]),
+             truthy?(params["signup"])
+           ),
          {:ok, authorize_url} <- Meta.authorize_url(conn, %{}) do
       conn
       |> put_session(:meta_state, state)
@@ -53,7 +68,13 @@ defmodule FlirtualWeb.ConnectionController do
     type = to_atom(type)
 
     with {:ok, provider} <- Connection.provider(type),
-         {:ok, state} <- generate_oauth_state(conn, next, truthy?(params["notifications"]), truthy?(params["signup"])),
+         {:ok, state} <-
+           generate_oauth_state(
+             conn,
+             next,
+             truthy?(params["notifications"]),
+             truthy?(params["signup"])
+           ),
          {:ok, authorize_url} <-
            provider.authorize_url(conn, %{prompt: prompt, redirect: :app, state: state}) do
       conn
@@ -77,7 +98,13 @@ defmodule FlirtualWeb.ConnectionController do
     type = to_atom(type)
 
     with {:ok, provider} <- Connection.provider(type),
-         {:ok, state} <- generate_oauth_state(conn, next, truthy?(params["notifications"]), truthy?(params["signup"])),
+         {:ok, state} <-
+           generate_oauth_state(
+             conn,
+             next,
+             truthy?(params["notifications"]),
+             truthy?(params["signup"])
+           ),
          {:ok, authorize_url} <- provider.authorize_url(conn, %{prompt: prompt, state: state}) do
       conn
       |> redirect(external: authorize_url |> URI.to_string())
@@ -137,6 +164,11 @@ defmodule FlirtualWeb.ConnectionController do
   end
 
   defp verify_oauth_state(_state), do: {:error, :invalid_state}
+
+  # Where an OAuth error/cancel returns: connection page, /sign-up, or /login.
+  defp oauth_next(%{user_id: user_id, next: next}) when not is_nil(user_id), do: next
+  defp oauth_next(%{signup: true}), do: "/sign-up"
+  defp oauth_next(_), do: nil
 
   def delete(conn, %{"type" => type}) do
     type = to_atom(type)
@@ -212,13 +244,26 @@ defmodule FlirtualWeb.ConnectionController do
     |> put_resp_header("access-control-expose-headers", "location")
     |> put_resp_header(
       "location",
-      Application.fetch_env!(:flirtual, :frontend_origin)
-      |> URI.merge(next || get_session(conn, :next) || error_fallback(conn))
+      grant_origin(conn, next)
       |> URI.append_query("error=" <> to_string(message))
       |> URI.to_string()
     )
     |> resp(if(redirect_type == "app", do: 200, else: 303), "")
     |> halt()
+  end
+
+  defp grant_cancel(conn, redirect_type, next) do
+    conn
+    |> delete_session(:next)
+    |> put_resp_header("access-control-expose-headers", "location")
+    |> put_resp_header("location", grant_origin(conn, next) |> URI.to_string())
+    |> resp(if(redirect_type == "app", do: 200, else: 303), "")
+    |> halt()
+  end
+
+  defp grant_origin(conn, next) do
+    Application.fetch_env!(:flirtual, :frontend_origin)
+    |> URI.merge(next || get_session(conn, :next) || error_fallback(conn))
   end
 
   defp error_fallback(conn) do
@@ -263,7 +308,11 @@ defmodule FlirtualWeb.ConnectionController do
         |> halt()
 
       _ ->
-        grant_error(conn, "auto", :state_mismatch, :meta, nil, nil)
+        # Valid state, no code = user cancelled; missing state = genuine failure.
+        case verify_oauth_state(state) do
+          {:ok, state_data} -> grant_cancel(conn, "auto", oauth_next(state_data))
+          _ -> grant_error(conn, "auto", :state_mismatch, :meta, nil, nil)
+        end
     end
   end
 
@@ -342,16 +391,19 @@ defmodule FlirtualWeb.ConnectionController do
     app_grant_redirect(conn, %{success: false})
   end
 
-  # OAuth redirect flow - error from provider
+  # OAuth redirect flow - provider returned an error or the user cancelled
   def grant(conn, %{"error" => error} = params) do
     error_next =
       case verify_oauth_state(params["state"]) do
-        {:ok, %{user_id: user_id, next: next}} when not is_nil(user_id) -> next
-        {:ok, %{signup: true}} -> "/sign-up"
+        {:ok, state_data} -> oauth_next(state_data)
         _ -> nil
       end
 
-    grant_error(conn, "auto", error, nil, nil, error_next)
+    if error in @oauth_cancel_errors do
+      grant_cancel(conn, "auto", error_next)
+    else
+      grant_error(conn, "auto", error, nil, nil, error_next)
+    end
   end
 
   # OAuth redirect flow - exchange code for tokens
