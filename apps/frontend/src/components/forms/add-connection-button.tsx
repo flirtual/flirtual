@@ -1,4 +1,3 @@
-import { SocialLogin } from "@capgo/capacitor-social-login";
 import { Loader2, X } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -19,6 +18,7 @@ import { useToast } from "~/hooks/use-toast";
 import { useNavigate } from "~/i18n";
 import { authorizeAndGrant } from "~/oauth";
 import { invalidate, sessionKey } from "~/query";
+import { nativeSocialLogin } from "~/social-login";
 import { toRelativeUrl } from "~/urls";
 
 type NativeSocialProvider = "apple" | "google";
@@ -57,8 +57,8 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 
 		try {
 			const result = type === "apple"
-				? await SocialLogin.login({ provider: type, options: { scopes: ["email"] } })
-				: await SocialLogin.login({ provider: type, options: { forcePrompt: true } });
+				? await nativeSocialLogin({ provider: type, options: { scopes: ["email"] } })
+				: await nativeSocialLogin({ provider: type, options: { forcePrompt: true } });
 
 			if (!result || !result.result) return;
 
@@ -101,12 +101,7 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 		catch (reason) {
 			console.error("Social link error:", reason);
 
-			if (reason instanceof Error) {
-				const message = reason.message.toLowerCase();
-				if (message.includes("cancel") || message.includes("abort")) {
-					return;
-				}
-			}
+			if ((reason as { code?: unknown })?.code === "USER_CANCELLED") return;
 
 			if (isWretchError(reason)) {
 				toasts.add({ type: "error", value: t(`errors.${reason.json?.error}` as any) });

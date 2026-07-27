@@ -1,4 +1,3 @@
-import { SocialLogin } from "@capgo/capacitor-social-login";
 import { Loader2 } from "lucide-react";
 import type { FC } from "react";
 import { useState } from "react";
@@ -20,6 +19,7 @@ import { useToast } from "~/hooks/use-toast";
 import { useNavigate } from "~/i18n";
 import { authorizeAndGrant } from "~/oauth";
 import { invalidate, mutate, sessionKey } from "~/query";
+import { nativeSocialLogin } from "~/social-login";
 import { toAbsoluteUrl, toRelativeUrl } from "~/urls";
 
 import { next as getNextUrl } from "./form";
@@ -73,8 +73,8 @@ export const LoginConnectionButton: FC<LoginConnectionButtonProps> = ({
 
 		try {
 			const result = type === "apple"
-				? await SocialLogin.login({ provider: type, options: { scopes: ["email"] } })
-				: await SocialLogin.login({ provider: type, options: { forcePrompt: true } });
+				? await nativeSocialLogin({ provider: type, options: { scopes: ["email"] } })
+				: await nativeSocialLogin({ provider: type, options: { forcePrompt: true } });
 
 			if (!result || !result.result) {
 				return;
@@ -124,12 +124,7 @@ export const LoginConnectionButton: FC<LoginConnectionButtonProps> = ({
 		catch (reason) {
 			console.error("Social login error:", reason);
 
-			if (reason instanceof Error) {
-				const message = reason.message.toLowerCase();
-				if (message.includes("cancel") || message.includes("abort")) {
-					return;
-				}
-			}
+			if ((reason as { code?: unknown })?.code === "USER_CANCELLED") return;
 
 			if (isWretchError(reason)) {
 				toasts.add({ type: "error", value: t(`errors.${reason.json?.error}` as any) });

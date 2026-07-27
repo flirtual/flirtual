@@ -1,16 +1,14 @@
 import { App } from "@capacitor/app";
-import { SocialLogin } from "@capgo/capacitor-social-login";
 import { startTransition, StrictMode } from "react";
 import { flushSync } from "react-dom";
 import { hydrateRoot } from "react-dom/client";
 import { HydratedRouter } from "react-router/dom";
 
-import { apiUrl, appleSigninServiceId, googleClientId, googleIosClientId } from "./const";
-import { device } from "./hooks/use-device";
 import { log } from "./log";
 import { initializeMonitoring } from "./monitoring";
 import { preloadAll } from "./query";
 import { isRedirectError } from "./redirect";
+import { initializeSocialLogin } from "./social-login";
 import { deepLinkToRelativeUrl } from "./urls";
 
 const launchDeepLinkKey = "launch-deep-link-consumed";
@@ -49,39 +47,7 @@ void openLaunchDeepLink();
 
 initializeMonitoring();
 
-async function initSocialLogin() {
-	if (!appleSigninServiceId && !googleClientId) return;
-
-	try {
-		await SocialLogin.initialize({
-			...(appleSigninServiceId && {
-				apple: {
-					clientId: appleSigninServiceId,
-					useProperTokenExchange: true,
-					...(device.android && {
-						redirectUrl: `${apiUrl}connections/grant?type=apple_android`
-					})
-				}
-			}),
-			...(googleClientId && {
-				google: {
-					webClientId: googleClientId,
-					mode: "online" as const,
-					...(googleIosClientId && {
-						iOSClientId: googleIosClientId,
-						iOSServerClientId: googleClientId
-					})
-				}
-			})
-		});
-		log("SocialLogin initialized");
-	}
-	catch (reason) {
-		console.warn("SocialLogin initialization failed:", reason);
-	}
-}
-
-void initSocialLogin();
+void initializeSocialLogin();
 
 // await restoreQueries();
 //
