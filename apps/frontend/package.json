@@ -1,6 +1,7 @@
 {
+	"name": "frontend",
 	"type": "module",
-	"packageManager": "pnpm@10.34.5",
+	"private": true,
 	"scripts": {
 		"dev": "react-router dev",
 		"typegen": "wrangler types --include-runtime false && react-router typegen",

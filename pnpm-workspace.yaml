@@ -1,3 +1,9 @@
+packages:
+  - apps/*
+  - "!apps/image-classification"
+
+verifyDepsBeforeRun: install
+
 ignoredBuiltDependencies:
   - "@shgysk8zer0/polyfills"
 

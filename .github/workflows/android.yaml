@@ -30,7 +30,6 @@ jobs:
       - uses: pnpm/action-setup@v6
         name: Install pnpm
         with:
-          package_json_file: apps/frontend/package.json
           run_install: false
 
       - name: Install Node.js
@@ -38,7 +37,6 @@ jobs:
         with:
           node-version: 24
           cache: pnpm
-          cache-dependency-path: apps/frontend/pnpm-lock.yaml
 
       - name: Install Java
         uses: actions/setup-java@v5
