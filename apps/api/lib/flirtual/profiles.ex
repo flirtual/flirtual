@@ -548,58 +548,66 @@ defmodule Flirtual.Profiles do
             else: nil
           )
 
-        if is_nil(existing_complete_image) do
-          existing_incomplete_image =
-            Image
-            |> where(original_file: ^file["id"])
-            |> order_by([image], desc: image.created_at)
-            |> Repo.one()
-
-          changeset =
-            if existing_incomplete_image do
-              Image.changeset(existing_incomplete_image, %{
-                profile_id: profile.user_id,
-                order: image_count + file_idx,
-                updated_at: now,
-                author_id: file["author_id"],
-                author_name: file["author_name"],
-                world_id: file["world_id"],
-                world_name: file["world_name"]
-              })
-            else
-              %Image{}
-              |> Image.changeset(%{
-                id: Ecto.ShortUUID.generate(),
-                profile_id: profile.user_id,
-                original_file: file["id"],
-                order: image_count + file_idx,
-                updated_at: now,
-                created_at: now,
-                author_id: file["author_id"],
-                author_name: file["author_name"],
-                world_id: file["world_id"],
-                world_name: file["world_name"]
-              })
-            end
-
-          case Repo.insert_or_update(changeset) do
-            {:ok, image} ->
-              Image.Moderation.enqueue_scan(image)
-              if file["stereo"] == true, do: Image.Moderation.enqueue_spatial(image)
-              {:ok, image}
-
-            error ->
-              error
-          end
-        else
-          {:ok, existing_complete_image}
-        end
+        if is_nil(existing_complete_image),
+          do: attach_file(profile, file, image_count + file_idx, now),
+          else: {:ok, existing_complete_image}
       end)
       |> Enum.map(fn
         {:ok, image} -> image
         {:error, reason} -> Repo.rollback(reason)
       end)
     end)
+  end
+
+  defp attach_file(%Profile{} = profile, file, order, now, retry? \\ true) do
+    existing_images =
+      Image
+      |> where(original_file: ^file["id"])
+      |> order_by([image], desc: image.created_at)
+      |> Repo.all()
+
+    # Retained hash rows must stay frozen, never attach to a profile.
+    if Enum.any?(existing_images, &(not is_nil(&1.suspended_url))),
+      do: Repo.rollback({:unprocessable_entity, :image_retained})
+
+    attrs = %{
+      profile_id: profile.user_id,
+      order: order,
+      updated_at: now,
+      author_id: file["author_id"],
+      author_name: file["author_name"],
+      world_id: file["world_id"],
+      world_name: file["world_name"]
+    }
+
+    changeset =
+      case existing_images do
+        [] ->
+          Image.changeset(
+            %Image{},
+            Map.merge(attrs, %{
+              id: Ecto.ShortUUID.generate(),
+              original_file: file["id"],
+              created_at: now
+            })
+          )
+
+        [image | _] ->
+          Image.changeset(image, attrs)
+      end
+
+    case Repo.insert_or_update(changeset, mode: :savepoint) do
+      {:ok, image} ->
+        Image.Moderation.enqueue_scan(image)
+        if file["stereo"] == true, do: Image.Moderation.enqueue_spatial(image)
+        {:ok, image}
+
+      {:error, changeset} = error ->
+        # Lost the insert race against variant processing; adopt its row.
+        if retry? and Image.original_file_conflict?(changeset),
+          do: attach_file(profile, file, order, now, false),
+          else: error
+    end
   end
 
   def update_images(%Profile{} = profile, image_ids) do
