@@ -2,11 +2,20 @@ packages:
   - apps/*
   - "!apps/image-classification"
 
+catalog:
+  "@ariesclark/eslint-config": 3.2.1-canary.1
+  "@cloudflare/vitest-pool-workers": ^0.18.8
+  eslint: ^9.39.1
+  typescript: ^5.9.2
+  vitest: ~4.1.10
+  wrangler: ^4.114.0
+
 overrides:
   # 3.18.3 fails to resolve Tailwind v3: "Error while loading rule
   # 'tailwindcss/enforces-negative-arbitrary-values': Could not resolve tailwindcss".
   eslint-plugin-tailwindcss: 3.18.2
 
+cleanupUnusedCatalogs: true
 verifyDepsBeforeRun: install
 
 ignoredBuiltDependencies:
