@@ -221,6 +221,7 @@ defmodule Flirtual.Profiles do
       |> validate_attributes(:gender_id, "gender")
       |> validate_length(:gender, min: 1, max: 4)
       |> validate_gender()
+      |> validate_gender_conflicts()
       |> validate_attributes(:sexuality_id, "sexuality")
       |> validate_length(:sexuality, max: 3)
       |> validate_attributes(:kink_id, "kink")
@@ -254,6 +255,23 @@ defmodule Flirtual.Profiles do
         if genders === [] or Enum.any?(genders, &(not pronoun?(&1))),
           do: [],
           else: [gender: "must include a non-pronoun gender"]
+      end)
+    end
+
+    defp validate_gender_conflicts(changeset) do
+      validate_change(changeset, :gender, fn :gender, genders ->
+        ids = MapSet.new(genders, & &1.id)
+
+        conflicting? =
+          Enum.any?(genders, fn gender ->
+            gender.metadata["conflicts"]
+            |> List.wrap()
+            |> Enum.any?(&MapSet.member?(ids, &1))
+          end)
+
+        if conflicting?,
+          do: [gender: "invalid gender selection"],
+          else: []
       end)
     end
 

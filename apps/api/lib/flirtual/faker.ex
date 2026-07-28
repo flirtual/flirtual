@@ -187,30 +187,7 @@ defmodule Flirtual.Faker do
                    else: [:en | random_n_of(0..2, Languages.list(:bcp_47) -- [:en])]
                  ),
                custom_interests: random_n_of(0..3, @custom_interests),
-               gender_id:
-                 case Enum.random(1..4) do
-                   1 ->
-                     ["rhw3rcbheU7vc9vcSy6W6V"]
-
-                   2 ->
-                     ["tpkW7r8PZ2RUuYGUSYi82N"]
-
-                   3 ->
-                     random_n_of(1..4, genders |> Enum.map(& &1.id))
-
-                   4 ->
-                     [
-                       Enum.random(["rhw3rcbheU7vc9vcSy6W6V", "tpkW7r8PZ2RUuYGUSYi82N"])
-                       | random_n_of(
-                           1..3,
-                           genders
-                           |> Enum.reject(
-                             &(&1.id in ["rhw3rcbheU7vc9vcSy6W6V", "tpkW7r8PZ2RUuYGUSYi82N"])
-                           )
-                           |> Enum.map(& &1.id)
-                         )
-                     ]
-                 end,
+               gender_id: random_gender_ids(genders),
                sexuality_id: random_n_of(0..3, sexualities |> Enum.map(& &1.id)),
                kink_id: random_n_of(0..8, kinks |> Enum.map(& &1.id)),
                game_id: random_n_of(1..5, games |> Enum.map(& &1.id)),
@@ -323,6 +300,38 @@ defmodule Flirtual.Faker do
 
   defp random_n_of(range, list) do
     Enum.shuffle(list) |> Enum.take(Enum.random(range))
+  end
+
+  defp random_gender_ids(genders) do
+    picked =
+      case Enum.random(1..4) do
+        1 ->
+          ["rhw3rcbheU7vc9vcSy6W6V"]
+
+        2 ->
+          ["tpkW7r8PZ2RUuYGUSYi82N"]
+
+        3 ->
+          random_n_of(1..4, genders |> Enum.map(& &1.id))
+
+        4 ->
+          [
+            Enum.random(["rhw3rcbheU7vc9vcSy6W6V", "tpkW7r8PZ2RUuYGUSYi82N"])
+            | random_n_of(
+                1..3,
+                genders
+                |> Enum.reject(&(&1.id in ["rhw3rcbheU7vc9vcSy6W6V", "tpkW7r8PZ2RUuYGUSYi82N"]))
+                |> Enum.map(& &1.id)
+              )
+          ]
+      end
+
+    genders_by_id = Map.new(genders, &{&1.id, &1})
+
+    Enum.reduce(picked, [], fn id, kept ->
+      conflicts = List.wrap(genders_by_id[id].metadata["conflicts"])
+      if Enum.any?(conflicts, &(&1 in kept)), do: kept, else: [id | kept]
+    end)
   end
 
   defp create_profile_images(profile, :new, file_ids, _now) do

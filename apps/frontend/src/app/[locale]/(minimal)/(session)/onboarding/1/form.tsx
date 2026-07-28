@@ -160,7 +160,11 @@ export const Onboarding1Form: FC = () => {
 												return {
 													definition,
 													definitionLink: gender.definitionLink,
-													hidden: simpleGenderIds.has(gender.id),
+													hidden:
+														simpleGenderIds.has(gender.id)
+														|| (!otherGenders.includes(gender.id)
+															&& (gender.conflicts ?? []).some((conflict) =>
+																otherGenders.includes(conflict))),
 													key: gender.id,
 													label: name ?? gender.id
 												};
