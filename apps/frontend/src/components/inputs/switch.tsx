@@ -85,9 +85,9 @@ export const InputSwitch: React.FC<InputSwitchProps> = (props) => {
 						opacity: 0.8,
 					}}
 					style={{
-						justifySelf: value
-							? "start"
-							: "end"
+						insetInlineStart: value
+							? 0
+							: "50%"
 					}}
 					transition={{
 						type: "spring",
@@ -95,7 +95,7 @@ export const InputSwitch: React.FC<InputSwitchProps> = (props) => {
 						ease: "easeInOut",
 						bounce: 0.25
 					}}
-					className="absolute inset-0 w-1/2 rounded-xl bg-brand-gradient"
+					className="absolute inset-y-0 w-1/2 rounded-xl bg-brand-gradient"
 				/>
 			)}
 			<span
