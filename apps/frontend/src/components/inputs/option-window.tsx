@@ -118,6 +118,7 @@ export const DefaultOptionItem: FC<OptionItemProps<unknown>> = (props) => {
 						<InlineLink
 							className="pointer-events-auto"
 							href={option.definitionLink}
+							onMouseDown={(event) => event.preventDefault()}
 						>
 							{t("learn_more")}
 						</InlineLink>
