@@ -28,8 +28,8 @@ defmodule Flirtual.ObanWorkers.ComputeQueue do
           :ok
 
         user ->
-          :ok = Matchmaking.compute_queue(user, :love)
-          :ok = Matchmaking.compute_queue(user, :friend)
+          Matchmaking.compute_queue(user, :love)
+          Matchmaking.compute_queue(user, :friend)
       end
     end)
   end

@@ -78,19 +78,13 @@ defmodule Flirtual.Matchmaking do
          notice: fallback_notice(queue, uncompleted),
          limits: limits(user, queue),
          can_undo: not queue.undone and not is_nil(previous),
-         pending: remaining == 0 and (enqueued == :enqueued or pending?(queue))
+         pending: remaining == 0 and enqueued == :enqueued
        }}
     end
   end
 
   defp fallback_head?([%Prospect{fallback: fallback} | _]), do: fallback
   defp fallback_head?(_), do: false
-
-  defp pending?(%Queue{requested_at: nil}), do: false
-  defp pending?(%Queue{computed_at: nil}), do: true
-
-  defp pending?(%Queue{requested_at: requested_at, computed_at: computed_at}),
-    do: DateTime.compare(requested_at, computed_at) == :gt
 
   defp fallback_notice(%Queue{} = queue, uncompleted) do
     with [%Prospect{fallback: true} = head | _] <- uncompleted,
@@ -193,9 +187,6 @@ defmodule Flirtual.Matchmaking do
 
   defp maybe_enqueue_compute(user_id, kind, %Queue{} = queue, remaining) do
     cond do
-      pending?(queue) ->
-        :pending
-
       # Drained and nothing has changed; don't re-search on every read.
       exhausted?(queue) ->
         :ok
@@ -233,9 +224,10 @@ defmodule Flirtual.Matchmaking do
   defp computed_before_reset?(%Queue{computed_at: computed_at}),
     do: DateTime.compare(computed_at, last_reset_at()) == :lt
 
+  # Oban's uniqueness dedupes against a recompute that's already pending, so
+  # this is safe to call on every read: a queue whose job went missing recovers
+  # on the next one instead of waiting forever on a job that no longer exists.
   def enqueue_compute(user_id, kind) do
-    {:ok, _} = Queue.upsert(user_id, kind, %{requested_at: DateTime.utc_now()})
-
     {:ok, _} =
       %{user_id: user_id, kind: kind}
       |> ObanWorkers.ComputeQueue.new()
@@ -395,9 +387,11 @@ defmodule Flirtual.Matchmaking do
         log(:debug, ["computed", user.id, kind], %{count: count, fallback: length(fallback)})
         :ok
 
+      # Filters changed while we were searching. Retry this job rather than
+      # enqueueing a new one, which Oban's uniqueness would drop against the
+      # job doing the enqueueing.
       {:error, :stale_filters} ->
-        enqueue_compute(user.id, kind)
-        :ok
+        {:snooze, 1}
 
       {:error, reason} ->
         {:error, reason}

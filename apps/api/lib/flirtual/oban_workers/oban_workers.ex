@@ -1,13 +1,14 @@
 defmodule Flirtual.ObanWorkers do
   alias Flirtual.ObanWorkers.{
     Chargebee,
-    ComputeQueue,
     Listmonk,
     SearchIndex,
     Talkjs
   }
 
+  alias Flirtual.Matchmaking
   alias Flirtual.User
+  alias Flirtual.User.Profile.Queue
 
   def update_user(
         user_ids,
@@ -66,8 +67,9 @@ defmodule Flirtual.ObanWorkers do
     user_ids
     |> List.wrap()
     |> Enum.flat_map(fn user_id ->
-      Enum.map([:love, :friend], fn kind ->
-        Oban.insert(ComputeQueue.new(%{"user_id" => user_id, "kind" => kind}))
+      Enum.map(Queue.kinds(), fn kind ->
+        :ok = Matchmaking.enqueue_compute(user_id, kind)
+        {:ok, user_id}
       end)
     end)
   end

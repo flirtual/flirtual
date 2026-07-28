@@ -12,7 +12,6 @@ defmodule Flirtual.User.Profile.Queue do
     belongs_to(:profile, Flirtual.User.Profile, references: :user_id, primary_key: true)
 
     field(:kind, Ecto.Enum, values: @kinds, primary_key: true)
-    field(:requested_at, :utc_datetime_usec)
     field(:computed_at, :utc_datetime_usec)
     field(:fallback_active, :boolean, default: false)
     field(:fallback_notified_at, :utc_datetime)
