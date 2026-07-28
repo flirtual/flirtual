@@ -82,7 +82,7 @@ function limitsReached(mode: ProspectKind) {
 }
 
 const noticeClassName
-	= "relative z-20 flex w-full flex-col gap-3 bg-white-10 p-4 font-nunito shadow-brand-1 dark:bg-black-70 desktop:max-w-lg desktop:rounded-xl";
+	= "relative z-20 flex w-full flex-col gap-3 bg-white-10 p-4 font-nunito shadow-brand-1 first:pt-[max(calc(var(--safe-area-inset-top,0rem)+0.5rem),1rem)] dark:bg-black-70 desktop:max-w-lg desktop:rounded-xl desktop:first:pt-4";
 
 const DontShowAgain: FC<{ onClick: () => void }> = ({ onClick }) => {
 	const { t } = useTranslation();
