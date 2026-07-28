@@ -2,6 +2,11 @@ packages:
   - apps/*
   - "!apps/image-classification"
 
+overrides:
+  # 3.18.3 fails to resolve Tailwind v3: "Error while loading rule
+  # 'tailwindcss/enforces-negative-arbitrary-values': Could not resolve tailwindcss".
+  eslint-plugin-tailwindcss: 3.18.2
+
 verifyDepsBeforeRun: install
 
 ignoredBuiltDependencies:
