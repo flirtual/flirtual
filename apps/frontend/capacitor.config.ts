@@ -68,6 +68,10 @@ export default {
 		SystemBars: {
 			insetsHandling: "disable"
 		},
+		SafeArea: {
+			initialViewportFitCover: true,
+			detectViewportFitCoverChanges: false
+		},
 		SocialLogin: {
 			providers: {
 				google: true,

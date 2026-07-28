@@ -50,7 +50,7 @@ PODS:
     - Capacitor
   - CapgoCapacitorInappbrowser (8.12.3):
     - Capacitor
-  - CapgoCapacitorSocialLogin (8.3.37):
+  - CapgoCapacitorSocialLogin (8.3.38):
     - Alamofire (~> 5.10.2)
     - Capacitor
     - GoogleSignIn (~> 9.0.0)
@@ -85,27 +85,27 @@ PODS:
     - PurchasesHybridCommon (= 18.21.0)
 
 DEPENDENCIES:
-  - "Capacitor (from `../../node_modules/.pnpm/@capacitor+ios@8.4.2_@capacitor+core@8.4.2/node_modules/@capacitor/ios`)"
-  - "CapacitorApp (from `../../node_modules/.pnpm/@capacitor+app@8.1.1_@capacitor+core@8.4.2/node_modules/@capacitor/app`)"
-  - "CapacitorClipboard (from `../../node_modules/.pnpm/@capacitor+clipboard@8.0.1_@capacitor+core@8.4.2/node_modules/@capacitor/clipboard`)"
-  - "CapacitorCommunityInAppReview (from `../../node_modules/.pnpm/@capacitor-community+in-app-review@8.0.0_@capacitor+core@8.4.2/node_modules/@capacitor-community/in-app-review`)"
-  - "CapacitorCommunitySafeArea (from `../../node_modules/.pnpm/@capacitor-community+safe-area@8.0.1_@capacitor+core@8.4.2/node_modules/@capacitor-community/safe-area`)"
-  - "CapacitorCordova (from `../../node_modules/.pnpm/@capacitor+ios@8.4.2_@capacitor+core@8.4.2/node_modules/@capacitor/ios`)"
-  - "CapacitorDevice (from `../../node_modules/.pnpm/@capacitor+device@8.0.3_@capacitor+core@8.4.2/node_modules/@capacitor/device`)"
-  - "CapacitorDialog (from `../../node_modules/.pnpm/@capacitor+dialog@8.0.1_@capacitor+core@8.4.2/node_modules/@capacitor/dialog`)"
-  - "CapacitorGeolocation (from `../../node_modules/.pnpm/@capacitor+geolocation@8.2.0_@capacitor+core@8.4.2/node_modules/@capacitor/geolocation`)"
-  - "CapacitorKeyboard (from `../../node_modules/.pnpm/@capacitor+keyboard@8.0.5_@capacitor+core@8.4.2/node_modules/@capacitor/keyboard`)"
-  - "CapacitorNativeSettings (from `../../node_modules/.pnpm/capacitor-native-settings@8.1.0_@capacitor+core@8.4.2/node_modules/capacitor-native-settings`)"
-  - "CapacitorPreferences (from `../../node_modules/.pnpm/@capacitor+preferences@8.0.1_@capacitor+core@8.4.2/node_modules/@capacitor/preferences`)"
-  - "CapacitorPushNotifications (from `../../node_modules/.pnpm/@capacitor+push-notifications@8.1.2_@capacitor+core@8.4.2/node_modules/@capacitor/push-notifications`)"
-  - "CapacitorShare (from `../../node_modules/.pnpm/@capacitor+share@8.0.1_@capacitor+core@8.4.2/node_modules/@capacitor/share`)"
-  - "CapacitorToast (from `../../node_modules/.pnpm/@capacitor+toast@8.0.1_@capacitor+core@8.4.2/node_modules/@capacitor/toast`)"
-  - "CapawesomeCapacitorAgeSignals (from `../../node_modules/.pnpm/@capawesome+capacitor-age-signals@0.4.1_@capacitor+core@8.4.2/node_modules/@capawesome/capacitor-age-signals`)"
-  - "CapawesomeCapacitorAppUpdate (from `../../node_modules/.pnpm/@capawesome+capacitor-app-update@8.0.3_@capacitor+core@8.4.2/node_modules/@capawesome/capacitor-app-update`)"
-  - "CapawesomeTeamCapacitorDatetimePicker (from `../../node_modules/.pnpm/@capawesome-team+capacitor-datetime-picker@8.1.1_@capacitor+core@8.4.2/node_modules/@capawesome-team/capacitor-datetime-picker`)"
-  - "CapgoCapacitorInappbrowser (from `../../node_modules/.pnpm/@capgo+capacitor-inappbrowser@8.12.3_@capacitor+core@8.4.2/node_modules/@capgo/capacitor-inappbrowser`)"
-  - "CapgoCapacitorSocialLogin (from `../../node_modules/.pnpm/@capgo+capacitor-social-login@8.3.37_@capacitor+core@8.4.2/node_modules/@capgo/capacitor-social-login`)"
-  - "RevenuecatPurchasesCapacitor (from `../../node_modules/.pnpm/@revenuecat+purchases-capacitor@13.2.3_@capacitor+core@8.4.2/node_modules/@revenuecat/purchases-capacitor`)"
+  - "Capacitor (from `../../../../node_modules/.pnpm/@capacitor+ios@8.4.2_@capacitor+core@8.4.2/node_modules/@capacitor/ios`)"
+  - "CapacitorApp (from `../../../../node_modules/.pnpm/@capacitor+app@8.1.1_@capacitor+core@8.4.2/node_modules/@capacitor/app`)"
+  - "CapacitorClipboard (from `../../../../node_modules/.pnpm/@capacitor+clipboard@8.0.1_@capacitor+core@8.4.2/node_modules/@capacitor/clipboard`)"
+  - "CapacitorCommunityInAppReview (from `../../../../node_modules/.pnpm/@capacitor-community+in-app-review@8.0.0_@capacitor+core@8.4.2/node_modules/@capacitor-community/in-app-review`)"
+  - "CapacitorCommunitySafeArea (from `../../../../node_modules/.pnpm/@capacitor-community+safe-area@8.0.1_@capacitor+core@8.4.2/node_modules/@capacitor-community/safe-area`)"
+  - "CapacitorCordova (from `../../../../node_modules/.pnpm/@capacitor+ios@8.4.2_@capacitor+core@8.4.2/node_modules/@capacitor/ios`)"
+  - "CapacitorDevice (from `../../../../node_modules/.pnpm/@capacitor+device@8.0.3_@capacitor+core@8.4.2/node_modules/@capacitor/device`)"
+  - "CapacitorDialog (from `../../../../node_modules/.pnpm/@capacitor+dialog@8.0.1_@capacitor+core@8.4.2/node_modules/@capacitor/dialog`)"
+  - "CapacitorGeolocation (from `../../../../node_modules/.pnpm/@capacitor+geolocation@8.2.0_@capacitor+core@8.4.2/node_modules/@capacitor/geolocation`)"
+  - "CapacitorKeyboard (from `../../../../node_modules/.pnpm/@capacitor+keyboard@8.0.5_@capacitor+core@8.4.2/node_modules/@capacitor/keyboard`)"
+  - "CapacitorNativeSettings (from `../../../../node_modules/.pnpm/capacitor-native-settings@8.1.0_@capacitor+core@8.4.2/node_modules/capacitor-native-settings`)"
+  - "CapacitorPreferences (from `../../../../node_modules/.pnpm/@capacitor+preferences@8.0.1_@capacitor+core@8.4.2/node_modules/@capacitor/preferences`)"
+  - "CapacitorPushNotifications (from `../../../../node_modules/.pnpm/@capacitor+push-notifications@8.1.2_@capacitor+core@8.4.2/node_modules/@capacitor/push-notifications`)"
+  - "CapacitorShare (from `../../../../node_modules/.pnpm/@capacitor+share@8.0.1_@capacitor+core@8.4.2/node_modules/@capacitor/share`)"
+  - "CapacitorToast (from `../../../../node_modules/.pnpm/@capacitor+toast@8.0.1_@capacitor+core@8.4.2/node_modules/@capacitor/toast`)"
+  - "CapawesomeCapacitorAgeSignals (from `../../../../node_modules/.pnpm/@capawesome+capacitor-age-signals@0.4.1_@capacitor+core@8.4.2/node_modules/@capawesome/capacitor-age-signals`)"
+  - "CapawesomeCapacitorAppUpdate (from `../../../../node_modules/.pnpm/@capawesome+capacitor-app-update@8.0.3_@capacitor+core@8.4.2/node_modules/@capawesome/capacitor-app-update`)"
+  - "CapawesomeTeamCapacitorDatetimePicker (from `../../../../node_modules/.pnpm/@capawesome-team+capacitor-datetime-picker@8.1.1_@capacitor+core@8.4.2/node_modules/@capawesome-team/capacitor-datetime-picker`)"
+  - "CapgoCapacitorInappbrowser (from `../../../../node_modules/.pnpm/@capgo+capacitor-inappbrowser@8.12.3_@capacitor+core@8.4.2/node_modules/@capgo/capacitor-inappbrowser`)"
+  - "CapgoCapacitorSocialLogin (from `../../../../node_modules/.pnpm/@capgo+capacitor-social-login@8.3.38_@capacitor+core@8.4.2/node_modules/@capgo/capacitor-social-login`)"
+  - "RevenuecatPurchasesCapacitor (from `../../../../node_modules/.pnpm/@revenuecat+purchases-capacitor@13.2.3_@capacitor+core@8.4.2/node_modules/@revenuecat/purchases-capacitor`)"
 
 SPEC REPOS:
   trunk:
@@ -125,47 +125,47 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   Capacitor:
-    :path: "../../node_modules/.pnpm/@capacitor+ios@8.4.2_@capacitor+core@8.4.2/node_modules/@capacitor/ios"
+    :path: "../../../../node_modules/.pnpm/@capacitor+ios@8.4.2_@capacitor+core@8.4.2/node_modules/@capacitor/ios"
   CapacitorApp:
-    :path: "../../node_modules/.pnpm/@capacitor+app@8.1.1_@capacitor+core@8.4.2/node_modules/@capacitor/app"
+    :path: "../../../../node_modules/.pnpm/@capacitor+app@8.1.1_@capacitor+core@8.4.2/node_modules/@capacitor/app"
   CapacitorClipboard:
-    :path: "../../node_modules/.pnpm/@capacitor+clipboard@8.0.1_@capacitor+core@8.4.2/node_modules/@capacitor/clipboard"
+    :path: "../../../../node_modules/.pnpm/@capacitor+clipboard@8.0.1_@capacitor+core@8.4.2/node_modules/@capacitor/clipboard"
   CapacitorCommunityInAppReview:
-    :path: "../../node_modules/.pnpm/@capacitor-community+in-app-review@8.0.0_@capacitor+core@8.4.2/node_modules/@capacitor-community/in-app-review"
+    :path: "../../../../node_modules/.pnpm/@capacitor-community+in-app-review@8.0.0_@capacitor+core@8.4.2/node_modules/@capacitor-community/in-app-review"
   CapacitorCommunitySafeArea:
-    :path: "../../node_modules/.pnpm/@capacitor-community+safe-area@8.0.1_@capacitor+core@8.4.2/node_modules/@capacitor-community/safe-area"
+    :path: "../../../../node_modules/.pnpm/@capacitor-community+safe-area@8.0.1_@capacitor+core@8.4.2/node_modules/@capacitor-community/safe-area"
   CapacitorCordova:
-    :path: "../../node_modules/.pnpm/@capacitor+ios@8.4.2_@capacitor+core@8.4.2/node_modules/@capacitor/ios"
+    :path: "../../../../node_modules/.pnpm/@capacitor+ios@8.4.2_@capacitor+core@8.4.2/node_modules/@capacitor/ios"
   CapacitorDevice:
-    :path: "../../node_modules/.pnpm/@capacitor+device@8.0.3_@capacitor+core@8.4.2/node_modules/@capacitor/device"
+    :path: "../../../../node_modules/.pnpm/@capacitor+device@8.0.3_@capacitor+core@8.4.2/node_modules/@capacitor/device"
   CapacitorDialog:
-    :path: "../../node_modules/.pnpm/@capacitor+dialog@8.0.1_@capacitor+core@8.4.2/node_modules/@capacitor/dialog"
+    :path: "../../../../node_modules/.pnpm/@capacitor+dialog@8.0.1_@capacitor+core@8.4.2/node_modules/@capacitor/dialog"
   CapacitorGeolocation:
-    :path: "../../node_modules/.pnpm/@capacitor+geolocation@8.2.0_@capacitor+core@8.4.2/node_modules/@capacitor/geolocation"
+    :path: "../../../../node_modules/.pnpm/@capacitor+geolocation@8.2.0_@capacitor+core@8.4.2/node_modules/@capacitor/geolocation"
   CapacitorKeyboard:
-    :path: "../../node_modules/.pnpm/@capacitor+keyboard@8.0.5_@capacitor+core@8.4.2/node_modules/@capacitor/keyboard"
+    :path: "../../../../node_modules/.pnpm/@capacitor+keyboard@8.0.5_@capacitor+core@8.4.2/node_modules/@capacitor/keyboard"
   CapacitorNativeSettings:
-    :path: "../../node_modules/.pnpm/capacitor-native-settings@8.1.0_@capacitor+core@8.4.2/node_modules/capacitor-native-settings"
+    :path: "../../../../node_modules/.pnpm/capacitor-native-settings@8.1.0_@capacitor+core@8.4.2/node_modules/capacitor-native-settings"
   CapacitorPreferences:
-    :path: "../../node_modules/.pnpm/@capacitor+preferences@8.0.1_@capacitor+core@8.4.2/node_modules/@capacitor/preferences"
+    :path: "../../../../node_modules/.pnpm/@capacitor+preferences@8.0.1_@capacitor+core@8.4.2/node_modules/@capacitor/preferences"
   CapacitorPushNotifications:
-    :path: "../../node_modules/.pnpm/@capacitor+push-notifications@8.1.2_@capacitor+core@8.4.2/node_modules/@capacitor/push-notifications"
+    :path: "../../../../node_modules/.pnpm/@capacitor+push-notifications@8.1.2_@capacitor+core@8.4.2/node_modules/@capacitor/push-notifications"
   CapacitorShare:
-    :path: "../../node_modules/.pnpm/@capacitor+share@8.0.1_@capacitor+core@8.4.2/node_modules/@capacitor/share"
+    :path: "../../../../node_modules/.pnpm/@capacitor+share@8.0.1_@capacitor+core@8.4.2/node_modules/@capacitor/share"
   CapacitorToast:
-    :path: "../../node_modules/.pnpm/@capacitor+toast@8.0.1_@capacitor+core@8.4.2/node_modules/@capacitor/toast"
+    :path: "../../../../node_modules/.pnpm/@capacitor+toast@8.0.1_@capacitor+core@8.4.2/node_modules/@capacitor/toast"
   CapawesomeCapacitorAgeSignals:
-    :path: "../../node_modules/.pnpm/@capawesome+capacitor-age-signals@0.4.1_@capacitor+core@8.4.2/node_modules/@capawesome/capacitor-age-signals"
+    :path: "../../../../node_modules/.pnpm/@capawesome+capacitor-age-signals@0.4.1_@capacitor+core@8.4.2/node_modules/@capawesome/capacitor-age-signals"
   CapawesomeCapacitorAppUpdate:
-    :path: "../../node_modules/.pnpm/@capawesome+capacitor-app-update@8.0.3_@capacitor+core@8.4.2/node_modules/@capawesome/capacitor-app-update"
+    :path: "../../../../node_modules/.pnpm/@capawesome+capacitor-app-update@8.0.3_@capacitor+core@8.4.2/node_modules/@capawesome/capacitor-app-update"
   CapawesomeTeamCapacitorDatetimePicker:
-    :path: "../../node_modules/.pnpm/@capawesome-team+capacitor-datetime-picker@8.1.1_@capacitor+core@8.4.2/node_modules/@capawesome-team/capacitor-datetime-picker"
+    :path: "../../../../node_modules/.pnpm/@capawesome-team+capacitor-datetime-picker@8.1.1_@capacitor+core@8.4.2/node_modules/@capawesome-team/capacitor-datetime-picker"
   CapgoCapacitorInappbrowser:
-    :path: "../../node_modules/.pnpm/@capgo+capacitor-inappbrowser@8.12.3_@capacitor+core@8.4.2/node_modules/@capgo/capacitor-inappbrowser"
+    :path: "../../../../node_modules/.pnpm/@capgo+capacitor-inappbrowser@8.12.3_@capacitor+core@8.4.2/node_modules/@capgo/capacitor-inappbrowser"
   CapgoCapacitorSocialLogin:
-    :path: "../../node_modules/.pnpm/@capgo+capacitor-social-login@8.3.37_@capacitor+core@8.4.2/node_modules/@capgo/capacitor-social-login"
+    :path: "../../../../node_modules/.pnpm/@capgo+capacitor-social-login@8.3.38_@capacitor+core@8.4.2/node_modules/@capgo/capacitor-social-login"
   RevenuecatPurchasesCapacitor:
-    :path: "../../node_modules/.pnpm/@revenuecat+purchases-capacitor@13.2.3_@capacitor+core@8.4.2/node_modules/@revenuecat/purchases-capacitor"
+    :path: "../../../../node_modules/.pnpm/@revenuecat+purchases-capacitor@13.2.3_@capacitor+core@8.4.2/node_modules/@revenuecat/purchases-capacitor"
 
 SPEC CHECKSUMS:
   Alamofire: 7193b3b92c74a07f85569e1a6c4f4237291e7496
@@ -190,7 +190,7 @@ SPEC CHECKSUMS:
   CapawesomeCapacitorAppUpdate: 3a7537c6a6696837b51d06f26b2e909fd7b9226f
   CapawesomeTeamCapacitorDatetimePicker: 7248569efbab419c8791d5e6f4656548d2f99d28
   CapgoCapacitorInappbrowser: ee6293211c1c7ba0098dc6bee29a506a40898831
-  CapgoCapacitorSocialLogin: 25cf2f85a6111f2bf027607f6c4dee1d354f16c4
+  CapgoCapacitorSocialLogin: 5de0c9295188cbd9116d13e4581494f3bbaa3414
   GoogleSignIn: c7f09cfbc85a1abf69187be091997c317cc33b77
   GoogleUtilities: 766ace00c6b10d8148408f329d10c4f051931850
   GTMAppAuth: 217a876b249c3c585a54fd6f73e6b58c4f5c4238
@@ -203,6 +203,6 @@ SPEC CHECKSUMS:
   RevenueCat: 72d1e14966339bf38c41d9b2841ef64c8fd79646
   RevenuecatPurchasesCapacitor: 691a18ebcfed0100a041e4cba91ba9ae8787b1a7
 
-PODFILE CHECKSUM: d20cdd6024ce70851c617ba132a1c5837fdc0974
+PODFILE CHECKSUM: e75ec5ca8597784474c5bb1f0b5cfdf7b546433b
 
 COCOAPODS: 1.16.2
