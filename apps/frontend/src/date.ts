@@ -10,6 +10,7 @@ const digitZeros = [
 	0x1040, // Myanmar
 	0x17E0, // Khmer
 	0x1C50, // Ol Chiki
+	0x11136, // Chakma
 	0x1E950 // Adlam
 ];
 
