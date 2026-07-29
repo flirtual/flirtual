@@ -1,6 +1,8 @@
+import { captureException } from "@sentry/react-router";
 import AwsS3 from "@uppy/aws-s3";
 import Compressor from "@uppy/compressor";
 import Uppy from "@uppy/core";
+import type { UppyFile } from "@uppy/core";
 import DropTarget from "@uppy/drop-target";
 import GoldenRetriever from "@uppy/golden-retriever";
 import ImageEditor from "@uppy/image-editor";
@@ -9,6 +11,7 @@ import { ImagePlus } from "lucide-react";
 import {
 	useCallback,
 	useEffect,
+	useRef,
 	useState
 } from "react";
 import type { Dispatch, FC } from "react";
@@ -74,8 +77,20 @@ export interface InputImageSetProps {
 type UppyfileMeta = { id: string; stereo?: boolean; sbs?: boolean } & Partial<ProfileImageMetadata>;
 type UppyfileData = Record<string, unknown>;
 
+// Restored before a retry, since Uppy re-runs Compressor on every attempt and
+// repeated compression compounds the quality loss.
+type UppyfileSnapshot = Pick<
+	UppyFile<UppyfileMeta, UppyfileData>,
+	"data" | "extension" | "name" | "size" | "type"
+>;
+
+type UploadError = { expected?: boolean; source?: { status?: number } } & Error;
+
 // Cloudflare Image Resizing rejects images over 100MP.
 const maxImagePixels = 100_000_000;
+
+// Images are resized clientside to fit within 2048x2048.
+const maxImageDimension = 2048;
 
 // Browsers don't report MIME types for formats they don't support.
 const extensionContentTypes: Record<string, string> = {
@@ -85,6 +100,23 @@ const extensionContentTypes: Record<string, string> = {
 	heic: "image/heic",
 	heif: "image/heif"
 };
+
+const uploadRetryDelays = [2000, 6000, 15_000];
+
+// Presigned URLs are valid for an hour. Reuse them so retries don't burn our
+// rate limit. A 15 minute buffer allows for the upload and clock skew.
+const signedUrlLifetime = 45 * 60 * 1000;
+
+function retryableUploadError(error: UploadError): boolean {
+	const status = error.source?.status;
+	if (status === undefined) return false;
+
+	return status === 0 // dropped connection
+		|| status === 403 // expired presigned URL
+		|| status === 408 // request body sent too slowly
+		|| status === 429 // rate limited
+		|| status >= 500; // server-side failure
+}
 
 export const InputImageSet: FC<InputImageSetProps> = (props) => {
 	const { value, onChange, type = "profile", max } = props;
@@ -102,26 +134,37 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 
 	const fullPreviewImage = value.find(({ id }) => id === fullPreviewId);
 
-	const handleUppyComplete = useCallback(
-		async (filesMeta: Array<UppyfileMeta>) => {
-			if (!session) return;
+	// Uploads finish one at a time and outlive the render that started them, so
+	// appends compose against the latest value rather than a captured one.
+	const valueReference = useRef(value);
+	const onChangeReference = useRef(onChange);
 
-			onChange([
-				...value,
-				...filesMeta.map((meta) => ({
-					id: meta.id,
-					src: urls.media(meta.id, "uploads"),
-					fullSrc: urls.media(meta.id, "uploads"),
-					stereo: meta.stereo,
-					authorId: meta.authorId,
-					authorName: meta.authorName,
-					worldId: meta.worldId,
-					worldName: meta.worldName
-				}))
-			]);
-		},
-		[onChange, session, value]
-	);
+	useEffect(() => {
+		valueReference.current = value;
+	}, [value]);
+
+	useEffect(() => {
+		onChangeReference.current = onChange;
+	});
+
+	const handleUploadSuccess = useCallback((meta: UppyfileMeta) => {
+		const next = [
+			...valueReference.current,
+			{
+				id: meta.id,
+				src: urls.media(meta.id, "uploads"),
+				fullSrc: urls.media(meta.id, "uploads"),
+				stereo: meta.stereo,
+				authorId: meta.authorId,
+				authorName: meta.authorName,
+				worldId: meta.worldId,
+				worldName: meta.worldName
+			}
+		];
+
+		valueReference.current = next;
+		onChangeReference.current(next);
+	}, []);
 
 	useEffect(() => {
 		if (!session) return;
@@ -158,6 +201,16 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 			}
 		});
 
+		const addedFiles = new Map<string, UppyfileSnapshot>();
+		const signedUrls = new Map<
+			string,
+			{ id: string; mintedAt: number; sbs: boolean; signedUrl: string }
+		>();
+		const uploadAttempts = new Map<string, number>();
+		const uploadErrors = new Map<string, string>();
+		const pendingRetries = new Map<string, ReturnType<typeof setTimeout>>();
+		const settledFiles = new Set<string>();
+
 		uppyInstance.on("file-added", (file) => {
 			// Change HEIC and MPO content types so Compressor skips them and doesn't
 			// strip stereo metadata. The pre-upload processor restores the correct
@@ -165,6 +218,9 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 			const extension = file.extension?.toLowerCase() ?? "";
 			if (["heic", "heif", "mpo"].includes(extension))
 				uppyInstance.setFileState(file.id, { type: "application/octet-stream" });
+
+			const { data, extension: added, name, size, type } = uppyInstance.getFile(file.id);
+			addedFiles.set(file.id, { data, extension: added, name, size, type });
 
 			if (!file.type?.startsWith("image/")) return;
 
@@ -219,6 +275,8 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 				onDragLeave: () => setDragging(false)
 			})
 			.use(Compressor, {
+				maxHeight: maxImageDimension,
+				maxWidth: maxImageDimension,
 				quality: 0.6
 			});
 
@@ -236,43 +294,131 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 			}
 		});
 
+		const finishUpload = () => {
+			// A retry is still queued; it will finish the batch when it settles.
+			if (pendingRetries.size > 0) return;
+
+			const [message] = [...uploadErrors.values()];
+			if (message) toast.add({ type: "error", value: message });
+
+			uppyInstance.removeFiles([...settledFiles]);
+
+			for (const fileId of settledFiles) {
+				addedFiles.delete(fileId);
+				signedUrls.delete(fileId);
+				uploadAttempts.delete(fileId);
+				uploadErrors.delete(fileId);
+			}
+
+			settledFiles.clear();
+			setUppyVisible(false);
+		};
+
 		uppyInstance.use(AwsS3, {
 			shouldUseMultipart: false,
 			limit: 15,
 			async getUploadParameters(file) {
-				try {
-					const sbs = file.meta.sbs === true;
-					const { id, signedUrl } = await Image.upload(sbs);
+				const sbs = file.meta.sbs === true;
+				const reusable = signedUrls.get(file.id);
+
+				const parameters = (id: string, signedUrl: string) => {
 					file.meta.id = id;
 
 					return {
 						url: signedUrl,
-						method: "PUT",
+						method: "PUT" as const,
 						...(sbs ? { headers: { "x-amz-meta-stereo": "sbs" } } : {})
 					};
+				};
+
+				if (
+					reusable
+					&& reusable.sbs === sbs
+					&& Date.now() - reusable.mintedAt < signedUrlLifetime
+				)
+					return parameters(reusable.id, reusable.signedUrl);
+
+				try {
+					const { id, signedUrl } = await Image.upload(sbs);
+					signedUrls.set(file.id, { id, mintedAt: Date.now(), sbs, signedUrl });
+
+					return parameters(id, signedUrl);
 				}
 				catch (reason) {
 					if (isWretchError(reason) && reason.json?.error) {
 						const key = `errors.${reason.json.error}` as any;
 						const translated = t(key);
-						if (translated !== key) throw new Error(translated);
+
+						if (translated !== key) {
+							const refusal: UploadError = new Error(translated);
+							refusal.expected = true;
+
+							throw refusal;
+						}
 					}
-					throw new Error(t("each_ideal_seahorse_bump"));
+
+					const error: UploadError = new Error(t("each_ideal_seahorse_bump"));
+					// No response means the network dropped the request, rather than the
+					// API refusing it.
+					error.source = { status: isWretchError(reason) ? reason.status : 0 };
+
+					throw error;
 				}
 			},
 		})
-			.on("complete", ({ successful = [], failed = [] }) => {
-				if (failed.length > 0) toast.add({
-					type: "error",
-					value: failed[0]?.error || t("each_ideal_seahorse_bump")
-				});
+			.on("upload-success", (file) => {
+				if (!file) return;
 
-				void handleUppyComplete(successful.map((file) => file.meta));
-				setUppyVisible(false);
-			});
+				settledFiles.add(file.id);
+				uploadErrors.delete(file.id);
+
+				handleUploadSuccess(file.meta);
+			})
+			.on("upload-error", (file, error: UploadError) => {
+				if (!file) return;
+
+				const attempt = (uploadAttempts.get(file.id) ?? 0) + 1;
+				uploadAttempts.set(file.id, attempt);
+
+				if (error.message === "Request has expired") signedUrls.delete(file.id);
+
+				const delay = uploadRetryDelays[attempt - 1];
+
+				if (delay === undefined || !retryableUploadError(error)) {
+					settledFiles.add(file.id);
+					uploadErrors.set(file.id, error.message || t("each_ideal_seahorse_bump"));
+
+					if (!error.expected)
+						captureException(error, { tags: { uploadAttempts: attempt } });
+					return;
+				}
+
+				const added = addedFiles.get(file.id);
+				if (added) uppyInstance.setFileState(file.id, added);
+
+				// Cleared by the effect cleanup, which drains pendingRetries.
+				// eslint-disable-next-line react-web-api/no-leaked-timeout
+				const retry = setTimeout(() => {
+					pendingRetries.delete(file.id);
+					if (!uppyInstance.getFile(file.id)) return finishUpload();
+
+					void uppyInstance
+						.retryUpload(file.id)
+						.catch(() => void 0)
+						.finally(finishUpload);
+				}, delay);
+
+				pendingRetries.set(file.id, retry);
+			})
+			.on("complete", finishUpload);
 
 		setUppy(uppyInstance);
-	}, [session, handleUppyComplete, type, native, apple, t, uppyLocale, toast]);
+
+		return () => {
+			for (const timeout of pendingRetries.values()) clearTimeout(timeout);
+			uppyInstance.destroy();
+		};
+	}, [session, handleUploadSuccess, type, native, apple, t, uppyLocale, toast]);
 
 	const sortableItems = value.map(({ id }, index) => id || index);
 
