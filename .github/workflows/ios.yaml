@@ -75,8 +75,10 @@ jobs:
         run: |
           mkdir -p "$HOME/Library/MobileDevice/Provisioning Profiles"
           printf '%s' "$PROFILE" | base64 --decode > "$RUNNER_TEMP/profile.mobileprovision"
-          UUID=$(security cms -D -i "$RUNNER_TEMP/profile.mobileprovision" | plutil -extract UUID raw -o - -)
+          PLIST=$(security cms -D -i "$RUNNER_TEMP/profile.mobileprovision")
+          UUID=$(printf '%s' "$PLIST" | plutil -extract UUID raw -o - -)
           cp "$RUNNER_TEMP/profile.mobileprovision" "$HOME/Library/MobileDevice/Provisioning Profiles/$UUID.mobileprovision"
+          echo "Installed profile: $(printf '%s' "$PLIST" | plutil -extract Name raw -o - -) ($UUID)"
 
       - name: Archive
         working-directory: apps/frontend/ios/App
@@ -88,10 +90,6 @@ jobs:
             -scheme "$SCHEME" \
             -destination generic/platform=iOS \
             -archivePath "$RUNNER_TEMP/Flirtual.xcarchive" \
-            -allowProvisioningUpdates \
-            -authenticationKeyPath "$RUNNER_TEMP/keys/AuthKey_$ASC_API_KEY_ID.p8" \
-            -authenticationKeyID "$ASC_API_KEY_ID" \
-            -authenticationKeyIssuerID "$ASC_API_ISSUER_ID" \
             CURRENT_PROJECT_VERSION=$(( GITHUB_RUN_NUMBER + ${BUILD_NUMBER_OFFSET:-100} ))
 
       - name: Upload to App Store Connect
