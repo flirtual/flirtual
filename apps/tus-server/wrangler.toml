@@ -1,50 +1,41 @@
-name = "cdn3-dev"
+name = "flirtual-tus"
 main = "src/index.ts"
-compatibility_date = "2023-05-10"
+compatibility_date = "2025-09-01"
 compatibility_flags = ["nodejs_compat"]
-logpush = true
+workers_dev = false
 
-# Specifies the r2 buckets. r2 bucket names are scoped to your account (not global). The buckets should be publicly inaccessible.
 r2_buckets = [
-    { binding = "ATTACHMENT_BUCKET", bucket_name = "attachments-staging", preview_bucket_name = "attachments-staging" },
-    { binding = "BACKUP_BUCKET", bucket_name = "backups-staging", preview_bucket_name = "backups-staging" }
+    { binding = "ATTACHMENT_BUCKET", bucket_name = "pfpup-canary" }
 ]
-
 durable_objects.bindings = [
-    { name = "ATTACHMENT_UPLOAD_HANDLER", class_name = "AttachmentUploadHandler" },
-    { name = "BACKUP_UPLOAD_HANDLER", class_name = "BackupUploadHandler" }
+    { name = "ATTACHMENT_UPLOAD_HANDLER", class_name = "AttachmentUploadHandler" }
 ]
 
 [[migrations]]
 tag = "v1"
-new_classes = ["UploadHandler"]
-
-[[migrations]]
-tag = "v2"
-renamed_classes = [{ from = "UploadHandler", to = "AttachmentUploadHandler" }]
-new_classes = ["BackupUploadHandler"]
+new_sqlite_classes = ["AttachmentUploadHandler"]
 
 [env.production]
-name = "cdn3"
-durable_objects.bindings = [
-    { name = "ATTACHMENT_UPLOAD_HANDLER", class_name = "AttachmentUploadHandler" },
-    { name = "BACKUP_UPLOAD_HANDLER", class_name = "BackupUploadHandler" }
+name = "flirtual-tus"
+routes = [
+    { pattern = "flirtu.al/upload/*", zone_name = "flirtu.al" }
 ]
 r2_buckets = [
-    { binding = "ATTACHMENT_BUCKET", bucket_name = "attachments", preview_bucket_name = "attachments" },
-    { binding = "BACKUP_BUCKET", bucket_name = "backups", preview_bucket_name = "backups" }
+    { binding = "ATTACHMENT_BUCKET", bucket_name = "pfpup" }
+]
+durable_objects.bindings = [
+    { name = "ATTACHMENT_UPLOAD_HANDLER", class_name = "AttachmentUploadHandler" }
 ]
 
-[env.staging]
-name = "cdn3-staging"
-durable_objects.bindings = [
-    { name = "ATTACHMENT_UPLOAD_HANDLER", class_name = "AttachmentUploadHandler" },
-    { name = "BACKUP_UPLOAD_HANDLER", class_name = "BackupUploadHandler" }
+[env.canary]
+name = "flirtual-tus-canary"
+routes = [
+    { pattern = "beta.flirtual.dev/upload/*", zone_name = "flirtual.dev" },
+    { pattern = "*.flirtual.dev/upload/*", zone_name = "flirtual.dev" }
 ]
 r2_buckets = [
-    { binding = "ATTACHMENT_BUCKET", bucket_name = "attachments-staging", preview_bucket_name = "attachments-staging" },
-    { binding = "BACKUP_BUCKET", bucket_name = "backups-staging", preview_bucket_name = "backups-staging" }
+    { binding = "ATTACHMENT_BUCKET", bucket_name = "pfpup-canary" }
 ]
-
-# To set an auth secret,
-# wrangler secrets put SHARED_AUTH_SECRET 
+durable_objects.bindings = [
+    { name = "ATTACHMENT_UPLOAD_HANDLER", class_name = "AttachmentUploadHandler" }
+]

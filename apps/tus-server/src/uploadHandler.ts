@@ -47,7 +47,10 @@ interface StoredR2Part {
 interface StoredUploadInfo {
     uploadLength?: number,
     checksum?: Uint8Array,
-    multipartUploadId?: string
+    multipartUploadId?: string,
+    // Flirtual: carried from upload metadata so the finished object describes itself.
+    contentType?: string,
+    stereoLayout?: string
 }
 
 
@@ -182,6 +185,12 @@ export class UploadHandler {
         }
         if (checksum != null) {
             uploadInfo.checksum = checksum;
+        }
+        if (uploadMetadata.filetype != null) {
+            uploadInfo.contentType = uploadMetadata.filetype;
+        }
+        if (uploadMetadata.stereoLayout != null) {
+            uploadInfo.stereoLayout = uploadMetadata.stereoLayout;
         }
         await this.state.storage.put(UPLOAD_OFFSET_KEY, 0);
         await this.state.storage.put(UPLOAD_INFO_KEY, uploadInfo);
@@ -354,7 +363,7 @@ export class UploadHandler {
                     } else if (!this.multipart) {
                         // all the bytes fit into a single in memory buffer, so we can just upload
                         // it directly without using multipart
-                        await this.r2Put(r2Key, part.bytes, checksum);
+                        await this.r2Put(r2Key, part.bytes, checksum, uploadInfo);
                         uploadOffset += part.bytes.byteLength;
                         await this.cleanup();
                     } else {
@@ -479,7 +488,10 @@ export class UploadHandler {
         if (uploadInfo.checksum != null) {
             customMetadata[X_SIGNAL_CHECKSUM_SHA256] = toBase64(uploadInfo.checksum);
         }
-        const upload = await this.retryBucket.createMultipartUpload(r2Key, {customMetadata});
+        const upload = await this.retryBucket.createMultipartUpload(r2Key, {
+            customMetadata: {...customMetadata, ...this.objectMetadata(uploadInfo).customMetadata},
+            httpMetadata: this.objectMetadata(uploadInfo).httpMetadata
+        });
         uploadInfo.multipartUploadId = upload.r2MultipartUpload.uploadId;
         await this.state.storage.put(UPLOAD_INFO_KEY, uploadInfo);
         return upload;
@@ -489,9 +501,17 @@ export class UploadHandler {
         return this.retryBucket.resumeMultipartUpload(r2Key, multipartUploadId);
     }
 
-    async r2Put(r2Key: string, bytes: Uint8Array, checksum?: Uint8Array) {
+    // Flirtual: object metadata for a finished upload, mapped from upload metadata.
+    objectMetadata(uploadInfo: StoredUploadInfo): Pick<R2PutOptions, 'httpMetadata' | 'customMetadata'> {
+        return {
+            ...(uploadInfo.contentType == null ? {} : {httpMetadata: {contentType: uploadInfo.contentType}}),
+            ...(uploadInfo.stereoLayout == null ? {} : {customMetadata: {stereo: uploadInfo.stereoLayout}})
+        };
+    }
+
+    async r2Put(r2Key: string, bytes: Uint8Array, checksum?: Uint8Array, uploadInfo?: StoredUploadInfo) {
         try {
-            await this.retryBucket.put(r2Key, bytes, checksum);
+            await this.retryBucket.put(r2Key, bytes, checksum, uploadInfo && this.objectMetadata(uploadInfo));
         } catch (e) {
             if (isR2ChecksumError(e)) {
                 console.error(`checksum failure: ${e}`);
@@ -608,11 +628,6 @@ export class AttachmentUploadHandler extends UploadHandler {
     }
 }
 
-export class BackupUploadHandler extends UploadHandler {
-    constructor(state: DurableObjectState, env: Env) {
-        super(state, env, env.BACKUP_BUCKET);
-    }
-}
 
 class UnrecoverableError extends Error {
     r2Key: string;

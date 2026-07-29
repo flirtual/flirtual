@@ -8,7 +8,7 @@ import {afterAll, beforeAll, describe, expect, it, test} from 'vitest';
 import * as tus from 'tus-js-client';
 import {UploadOptions} from 'tus-js-client';
 import {unstable_dev, Unstable_DevWorker} from 'wrangler';
-import {attachmentsPath, backupHeaderFor, backupsPath, headerFor, secret} from '../src/testutil';
+import {attachmentsPath, headerFor, secret} from '../src/testutil';
 
 let worker: Unstable_DevWorker;
 
@@ -49,14 +49,4 @@ describe('tus-js-client', () => {
             const resp = await worker.fetch(`http://localhost/${attachmentsPath}/${name}`);
             expect(await resp.text()).toBe('test');
         });
-
-    it('accepts uploads with slashes', async () => {
-        const blob = Buffer.from('test', 'utf-8');
-        const name = 'subdir/b/c';
-        await tusClientUpload(name, backupsPath, await backupHeaderFor(name, 'write'), blob);
-        const resp = await worker.fetch(`http://localhost/${backupsPath}/${name}`, {
-            headers: {'Authorization': await backupHeaderFor('subdir', 'read')}
-        });
-        expect(await resp.text()).toBe('test');
-    });
 });

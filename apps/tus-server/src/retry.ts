@@ -98,11 +98,13 @@ export class RetryBucket {
     async put(
         key: string,
         value: (ArrayBuffer | ArrayBufferView) | string | Blob,
-        checksum?: string | ArrayBuffer | Uint8Array
+        checksum?: string | ArrayBuffer | Uint8Array,
+        // Flirtual: object metadata, so a completed upload carries its content type.
+        options?: Pick<R2PutOptions, 'httpMetadata' | 'customMetadata'>
     ): ReturnType<R2Bucket['put']> {
 
         return retry(
-            () => this.bucket.put(key, value, {sha256: checksum}), {
+            () => this.bucket.put(key, value, {...options, sha256: checksum}), {
                 params: this.params,
                 shouldRetry: error => !isR2ChecksumError(error)
             }

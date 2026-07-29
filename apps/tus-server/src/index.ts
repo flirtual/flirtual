@@ -13,7 +13,7 @@ import {toBase64} from './util';
 import {parseUploadMetadata} from './parse';
 import {DEFAULT_RETRY_PARAMS, retry, isR2RangedReadHeaderError, RetryBucket,} from './retry';
 
-export {UploadHandler, BackupUploadHandler, AttachmentUploadHandler} from './uploadHandler';
+export {UploadHandler, AttachmentUploadHandler} from './uploadHandler';
 
 const DO_CALL_TIMEOUT = 1000 * 60 * 30; // 20 minutes
 const MAX_TOKEN_AGE = 3600 * 24 * 7; // 7 days
@@ -24,15 +24,10 @@ export interface Env {
 
     ATTACHMENT_BUCKET: R2Bucket;
 
-    BACKUP_BUCKET: R2Bucket;
-
     ATTACHMENT_UPLOAD_HANDLER: DurableObjectNamespace;
-
-    BACKUP_UPLOAD_HANDLER: DurableObjectNamespace;
 }
 
 const ATTACHMENT_PREFIX = 'attachments';
-const BACKUP_PREFIX = 'backups';
 
 
 const router = Router();
@@ -70,47 +65,6 @@ router
     .head(`/upload/${ATTACHMENT_PREFIX}/:id+`,
         withNamespace(ATTACHMENT_PREFIX),
         withAuthenticatedClaims,
-        withAuthorizedKeyFromPath,
-        withAuthorizedUploadLength,
-        uploadHandler)
-
-    // --- backup handler methods ---
-    // GET/HEADs go straight to R2 and must include a subdir that is authenticated with a read permission
-    // TUS operations go to a durable object and require authentication with a write permission
-
-    // read the object :subdir/:id directly from R2, the request needs read permissions for :subdir
-    .get(`/${BACKUP_PREFIX}/:subdir/:id+`,
-        withNamespace(BACKUP_PREFIX),
-        withAuthenticatedClaims,
-        checkReadAuthorization,
-        withSubdirAuthorizedKey,
-        getHandler)
-    // head the object :subdir/:id directly from R2, the request needs read permissions for :subdir
-    .head(`/${BACKUP_PREFIX}/:subdir/:id+`,
-        withNamespace(BACKUP_PREFIX),
-        withAuthenticatedClaims,
-        checkReadAuthorization,
-        withSubdirAuthorizedKey,
-        headHandler)
-    // TUS protocol operations, dispatched to an UploadHandler durable object
-    .post(`/upload/${BACKUP_PREFIX}`,
-        withNamespace(BACKUP_PREFIX),
-        withAuthenticatedClaims,
-        checkWriteAuthorization,
-        withAuthorizedKeyFromMetadata,
-        withAuthorizedUploadLength,
-        uploadHandler)
-    .patch(`/upload/${BACKUP_PREFIX}/:id+`,
-        withNamespace(BACKUP_PREFIX),
-        withAuthenticatedClaims,
-        checkWriteAuthorization,
-        withAuthorizedKeyFromPath,
-        withAuthorizedUploadLength,
-        uploadHandler)
-    .head(`/upload/${BACKUP_PREFIX}/:id+`,
-        withNamespace(BACKUP_PREFIX),
-        withAuthenticatedClaims,
-        checkWriteAuthorization,
         withAuthorizedKeyFromPath,
         withAuthorizedUploadLength,
         uploadHandler)
@@ -317,7 +271,7 @@ function isRetryableDurableObjectError(err: unknown): boolean {
 interface Namespace {
     doNamespace: DurableObjectNamespace,
     bucket: R2Bucket
-    name: 'attachments' | 'backups'
+    name: 'attachments'
     useCache: boolean
 }
 
@@ -330,13 +284,6 @@ function selectNamespace(env: Env, prefix: string): Namespace | undefined {
                 bucket: env.ATTACHMENT_BUCKET,
                 name: ATTACHMENT_PREFIX,
                 useCache: true
-            };
-        case BACKUP_PREFIX:
-            return {
-                doNamespace: env.BACKUP_UPLOAD_HANDLER,
-                bucket: env.BACKUP_BUCKET,
-                name: BACKUP_PREFIX,
-                useCache: false
             };
         default:
             return undefined;
@@ -441,32 +388,11 @@ async function authenticateToken(namespace: Namespace, secretString: string, jwt
 // withAuthenticatedClaims ensures that the request has a valid credential signed by the appropriate authority.
 // After that we must also ensure that the credential is authorized to perform the requested action.
 // - If the endpoint requires permission, the permission field must be extracted and checked
-// - The namespace must match the path prefix, e.g. attachments or backups
 // - For uploads, the entity must match the target of the upload operation (which may be specified via path or metadata)
 // - For non-public reads, the entity must match the top-level parent directory of the read-target
 
-// Verify that the permission specifier in the already authenticated claims is set to 'read'
-function checkReadAuthorization(request: IRequest, _env: Env, _ctx: ExecutionContext): Response | undefined {
-    if (authenticatedClaims(request).scope !== 'read') {
-        return error(401);
-    }
-}
 
-// Verify that the permission specifier in the already authenticated claims is set to 'write'
-function checkWriteAuthorization(request: IRequest, _env: Env, _ctx: ExecutionContext): Response | undefined {
-    if (authenticatedClaims(request).scope !== 'write') {
-        return error(401);
-    }
-}
 
-// Set request.key to :subdir/:id from the request path, if the authenticated subject matches :subdir
-function withSubdirAuthorizedKey(request: IRequest, _env: Env, _ctx: ExecutionContext): Response | undefined {
-    const claims = authenticatedClaims(request);
-    if (claims.subject !== request.params.subdir) {
-        return error(401);
-    }
-    request.key = `${request.params.subdir}/${request.params.id}`;
-}
 
 // Set request.key to the name extracted from :id in the request path, if the authenticated subject matches the name
 function withAuthorizedKeyFromPath(request: IRequest, _env: Env, _ctx: ExecutionContext): Response | undefined {
@@ -480,7 +406,10 @@ function withAuthorizedKeyFromPath(request: IRequest, _env: Env, _ctx: Execution
 // Set request.key to the name extracted from the uploadMetadata, if the authenticated subject matches the name
 function withAuthorizedKeyFromMetadata(request: IRequest, _env: Env, _ctx: ExecutionContext): Response | undefined {
     const claims = authenticatedClaims(request);
-    const key = parseUploadMetadata(request.headers).filename;
+    // Flirtual: prefer `id` so the user-visible filename is unaffected, but keep
+    // accepting `filename` as upstream does.
+    const metadata = parseUploadMetadata(request.headers);
+    const key = metadata.id ?? metadata.filename;
     if (claims.subject !== key) {
         return error(401);
     }

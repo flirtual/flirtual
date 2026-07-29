@@ -7,6 +7,12 @@ import {X_SIGNAL_CHECKSUM_SHA256} from './uploadHandler';
 
 export interface UploadMetadata {
     filename?: string,
+    // Flirtual: the R2 key, kept separate from filename so the name the user sees
+    // is preserved.
+    id?: string,
+    // Flirtual: written through to the object so the image pipeline can read them.
+    filetype?: string,
+    stereoLayout?: string,
 }
 
 // Parse "Upload-Metadata" header as described in the TUS creation extension
@@ -36,6 +42,15 @@ export function parseUploadMetadata(headers: Headers): UploadMetadata {
 
         if (key === 'filename') {
             ret.filename = new TextDecoder().decode(valueBytes);
+        }
+        if (key === 'id') {
+            ret.id = new TextDecoder().decode(valueBytes);
+        }
+        if (key === 'filetype') {
+            ret.filetype = new TextDecoder().decode(valueBytes);
+        }
+        if (key === 'stereoLayout') {
+            ret.stereoLayout = new TextDecoder().decode(valueBytes);
         }
     }
     return ret;

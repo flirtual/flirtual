@@ -6,7 +6,7 @@
 // superfluous `await response.body.cancel()` calls in some tests may be removed when this issue is fixed.
 
 import {beforeEach, describe, expect, it, test} from 'vitest';
-import {attachmentsPath, backupHeaderFor, backupsPath, headerFor, secret} from './testutil';
+import {attachmentsPath, headerFor, secret} from './testutil';
 import {exports} from 'cloudflare:workers';
 import {X_SIGNAL_CHECKSUM_SHA256, X_SIGNAL_MAX_UPLOAD_LENGTH} from './uploadHandler';
 import {toBase64} from './util';
@@ -47,52 +47,8 @@ describe('worker basic auth', () => {
         expect(res.status).toBe(201);
     });
 
-    it('rejects backups POST with bad permission', async () => {
-        const res = await worker.fetch(`http://localhost/upload/${attachmentsPath}/`, {
-            method: 'POST',
-            headers: {
-                'Upload-Metadata': `filename ${btoa('abc')}`,
-                'Authorization': await backupHeaderFor('abc', 'read'),
-                'Upload-Length': '1'
-            }
-        });
-        expect(res.status).toBe(401);
-    });
-
     it('accepts unauthd GET to attachments', async () => {
         const res = await worker.fetch(`http://localhost/${attachmentsPath}/abc`);
-        expect(res.status).toBe(404);
-    });
-
-    it('rejects unauthd GET to backups', async () => {
-        const res = await worker.fetch(`http://localhost/${backupsPath}/abc/def`);
-        expect(res.status).toBe(401);
-    });
-
-    it('rejects GET to backups with no second component', async () => {
-        const res = await worker.fetch(`http://localhost/${backupsPath}/abc/`);
-        expect(res.status).toBe(401);
-    });
-
-    it.each(['write', '', 'abc'])('rejects GET to backups with %s permission', async (permission) => {
-        const res = await worker.fetch(`http://localhost/${backupsPath}/abc/def`, {
-            headers: {'Authorization': await backupHeaderFor('abc', permission)}
-        });
-        expect(res.status).toBe(401);
-    });
-
-    it.each(['ab', '/abc', 'abc/', '', 'abc/def'])('rejects GET with incorrect subdir %s', async (subdir) => {
-        const res = await worker.fetch(`http://localhost/${backupsPath}/abc/def`, {
-            headers: {'Authorization': await backupHeaderFor(subdir, 'read')}
-        });
-        expect(res.status).toBe(401);
-    });
-
-
-    it('accepts subdir authd GET to backups', async () => {
-        const res = await worker.fetch(`http://localhost/${backupsPath}/abc/def`, {
-            headers: {'Authorization': await backupHeaderFor('abc', 'read')}
-        });
         expect(res.status).toBe(404);
     });
 });
@@ -302,7 +258,6 @@ describe('Tus', () => {
 
     beforeEach(async () => {
         await caches.default.delete(new Request(`http://localhost/${attachmentsPath}/${name}`));
-        await caches.default.delete(new Request(`http://localhost/${backupsPath}/${name}`));
     });
 
     interface CreateOptions {
@@ -395,36 +350,6 @@ describe('Tus', () => {
         expect(response.status).toBe(200);
         const expectedBody = method == 'GET' ? 'foo' : '';
         expect(await response.text()).toEqual(expectedBody);
-    });
-
-    test.each(['GET', 'HEAD'])('ignores cache on %s when disabled', async (method: string) => {
-        const prefix = 'some_prefix';
-        const name = `${prefix}/some_object`;
-
-        await worker.fetch(`http://localhost/upload/${backupsPath}/`, {
-            method: 'POST',
-            headers: {
-                'Authorization': await backupHeaderFor(name, 'write'),
-                'Tus-Resumable': '1.0.0',
-                'Upload-Metadata': `filename ${btoa(name)}`,
-                'Upload-Length': '3',
-                'Content-Type': 'application/offset+octet-stream'
-            },
-            body: body(3, {pattern: 'foo'}),
-        });
-        const expectedEtag = await s3Etag(body(3, {pattern: 'foo'}));
-        const expectedBody = method == 'GET' ? 'foo' : '';
-
-        const request = new Request(`http://localhost/${backupsPath}/${name}`);
-        await caches.default.put(request, new Response('bar', {headers: {'cache-control': 'public, max-age=60'}}));
-        const response = await worker.fetch(`http://localhost/${backupsPath}/${name}`, {
-            method: method,
-            headers: {'Authorization': await backupHeaderFor(prefix, 'read')}
-        });
-
-        expect(response.status).toBe(200);
-        expect(response.headers.get('etag')).toEqual(expectedEtag);
-        expect(await response.text()).toBe(expectedBody);
     });
 
     it('can defer length', async () => {
@@ -737,19 +662,18 @@ describe('Tus', () => {
 
 describe('completed object read operations', () => {
     test.each(['HEAD', 'GET'])('404s unknown %s object', async (method: string) => {
-        const head = await worker.fetch(`http://localhost/${backupsPath}/subdir/does_not_exist`, {
-            method,
-            headers: {'Authorization': await backupHeaderFor('subdir', 'read')}
+        const head = await worker.fetch(`http://localhost/${attachmentsPath}/does_not_exist`, {
+            method
         });
         expect(head.status).toBe(404);
     });
 
     test.each(['HEAD', 'GET'])('populates headers for %s object', async (method: string) => {
         const digest = toBase64(await sha256(body(4, {pattern: 'test'})));
-        await worker.fetch(`http://localhost/upload/${backupsPath}/`, {
+        await worker.fetch(`http://localhost/upload/${attachmentsPath}/`, {
             method: 'POST',
             headers: {
-                'Authorization': await backupHeaderFor('subdir/a/b', 'write'),
+                'Authorization': await headerFor('subdir/a/b'),
                 'Tus-Resumable': '1.0.0',
                 'Upload-Metadata': `filename ${btoa('subdir/a/b')}`,
                 'Upload-Length': '4',
@@ -758,9 +682,8 @@ describe('completed object read operations', () => {
             },
             body: body(4, {pattern: 'test'})
         });
-        const resp = await worker.fetch(`http://localhost/${backupsPath}/subdir/a/b`, {
-            method: method,
-            headers: {'Authorization': await backupHeaderFor('subdir', 'read')}
+        const resp = await worker.fetch(`http://localhost/${attachmentsPath}/subdir/a/b`, {
+            method: method
         });
         expect(resp.status).toBe(200);
         expect(resp.headers.get('etag')).toBe(await s3Etag(body(4, {pattern: 'test'})));
@@ -772,51 +695,6 @@ describe('completed object read operations', () => {
         expect(diffSeconds < 60).toBe(true);
 
         await resp.body?.cancel();
-    });
-});
-
-
-describe('path routing', () => {
-    async function upload(bucket: string, name: string, auth: string, body: Buffer): Promise<Response> {
-        return await worker.fetch(`http://localhost/upload/${bucket}/`, {
-            method: 'POST',
-            headers: {
-                'Authorization': auth,
-                'Tus-Resumable': '1.0.0',
-                'Upload-Metadata': `filename ${btoa(name)}`,
-                'Upload-Length': body.length.toString(),
-                'Content-Type': 'application/offset+octet-stream'
-            },
-            body: body
-        });
-    }
-
-    it('selects correct bucket', async () => {
-        const attachmentName = 'subdir/attachmentName';
-        const backupName = 'subdir/backupName';
-        const attachmentBlob = Buffer.from('attachment123', 'utf-8');
-        const backupBlob = Buffer.from('backup123', 'utf-8');
-
-        // write the attachment to the attachments bucket, the backup to the backup bucket
-        await upload(attachmentsPath, attachmentName, await headerFor(attachmentName), attachmentBlob);
-        await upload(backupsPath, backupName, await backupHeaderFor(backupName, 'write'), backupBlob);
-
-        // the attachments bucket should have the attachment but not the backup
-        let resp = await worker.fetch(`http://localhost/${attachmentsPath}/${attachmentName}`);
-        expect(await resp.text()).toBe('attachment123');
-        resp = await worker.fetch(`http://localhost/${attachmentsPath}/${backupName}`);
-        expect(resp.status).toBe(404);
-
-        // the backup bucket should have the backup but not the attachment
-        resp = await worker.fetch(`http://localhost/${backupsPath}/${attachmentName}`, {
-            headers: {'Authorization': await backupHeaderFor('subdir', 'read')}
-        });
-        expect(resp.status).toBe(404);
-        resp = await worker.fetch(`http://localhost/${backupsPath}/${backupName}`, {
-            headers: {'Authorization': await backupHeaderFor('subdir', 'read')}
-        });
-        expect(await resp.text()).toBe('backup123');
-
     });
 });
 
