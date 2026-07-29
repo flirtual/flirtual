@@ -4,7 +4,7 @@ import { useMutation as _useMutation, useQuery as _useQuery, hashKey, QueryClien
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import ms from "ms" with { type: "macro" };
 import type { Dispatch, PropsWithChildren } from "react";
-import { use, useDebugValue, useEffect, useState } from "react";
+import { use, useCallback, useDebugValue, useSyncExternalStore } from "react";
 
 import { getAgeRange } from "./age-range";
 import type { AttributeType } from "./api/attributes";
@@ -296,16 +296,19 @@ export function useQuery<
 	return use(promise);
 }
 
+const emptyQueryState = {};
+
 export function useQueryState<T>(queryKey: QueryKey): Partial<QueryState<T>> {
 	const queryHash = hashKey(queryKey);
-	const [state, setState] = useState(() => queryClient.getQueryState<T>(queryKey));
 
-	useEffect(() => queryCache.subscribe(({ query, }) => {
-		if (query.queryHash !== queryHash) return;
-		setState(query.state);
-	}));
-
-	return state || {};
+	// Read through the cache on every render, so a changed key doesn't keep
+	// serving the previous query's state until the new one happens to emit.
+	return useSyncExternalStore(
+		useCallback((onChange) => queryCache.subscribe(({ query }) => {
+			if (query.queryHash === queryHash) onChange();
+		}), [queryHash]),
+		() => queryCache.get<T>(queryHash)?.state
+	) || emptyQueryState;
 }
 
 export function useMutation<T = unknown, Variables = void, Context = unknown>({
