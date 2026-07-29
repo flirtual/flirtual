@@ -7,6 +7,7 @@ import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.webkit.CookieManager;
 import android.webkit.WebView;
 import android.graphics.Color;
 import androidx.activity.EdgeToEdge;
@@ -40,6 +41,15 @@ public class MainActivity extends BridgeActivity {
         super.onStart();
         WebView webview = getBridge().getWebView();
         webview.setOverScrollMode(WebView.OVER_SCROLL_NEVER);
+    }
+
+    // Chromium batches cookie writes to SQLite, so a session cookie set shortly
+    // before the process dies is lost and the stale one on disk is restored,
+    // logging the user out
+    @Override
+    public void onPause() {
+        super.onPause();
+        CookieManager.getInstance().flush();
     }
 
     // Apple sign-in on Android: the API redirects Apple's OAuth callback to
