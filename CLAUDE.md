@@ -11,11 +11,16 @@ Flirtual is a dating app for VR users. The monorepo contains:
 - **Frontend** (apps/frontend/): TypeScript/React Router SPA on Cloudflare Workers. See [apps/frontend/CLAUDE.md](apps/frontend/CLAUDE.md) for stack, commands, styling, patterns, translations.
 - **API** (apps/api/): Elixir/Phoenix; data, auth, business logic. See [apps/api/CLAUDE.md](apps/api/CLAUDE.md) for stack, commands, patterns, matchmaking, moderation, schema, prod/DB ops.
 
-Other services:
+Other services, all under `apps/`:
 - **image-classification/**: TensorFlow image moderation (NSFW/inappropriate).
+- **manticore/**: the matchmaking search index (Fly app `flirtual-manticore`, MySQL protocol on 9306); see the API's CLAUDE.md for how `Flirtual.Search` uses it.
 - **session-transfer/**: carries a logged-in session across the flirtu.al → flirtual.com migration via a single-use, API-minted token.
 - **trace/**: trace-forwarding proxy with loop detection.
 - **grafana/** + **tempo/**: tracing and metrics (Tempo OTLP backend, Grafana UI).
+- **app-redirect/**: Worker that sends a link into the native app, or to the right store listing when it isn't installed.
+- **maintenance/**: Worker serving a 503 maintenance page; a `flirtual-maintenance` cookie matching `TOKEN` passes through. Also holds the static legal pages and `.well-known/` files.
+- **posthog-proxy/**: Worker proxying PostHog ingest and caching its static assets.
+- **preview-router/**: Worker routing preview hostnames (PR number or commit SHA) to the matching preview deployment.
 
 ## Data flow
 
@@ -51,7 +56,7 @@ Cross-app pipeline (frontend Worker + API + image-classification):
 
 1. **Upload** (`InputFile`/Uppy): direct to R2 (`uploads.flirtual.com`, S3 API); returns object key, which the frontend sends to the API.
 2. **API** (`Flirtual.User.Profile.Image`): creates a `profile_images` row (`scanned: false`); an R2 notification queues processing.
-3. **Processing** (`apps/frontend/src/worker/image-queue.ts`): generates variants (Cloudflare Images/sharp) back into R2, then queues classification.
+3. **Processing** (`apps/frontend/src/worker/queue/user-uploads/`): generates variants (Cloudflare Images/sharp) back into R2, then queues classification.
 4. **Classification** (`apps/image-classification/`): returns moderation results; API sets `scanned: true`; flagged images ping moderators via Discord webhook.
 
 R2 layout: originals at `uploads.flirtual.com/[key]`, variants at `[key]/[variant].jpg` (`thumb`, `icon`, `avatar`).

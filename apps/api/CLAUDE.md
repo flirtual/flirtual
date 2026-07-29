@@ -122,7 +122,7 @@ Key tables:
 
 Fly app `flirtual` at `https://api.flirtu.al` (not `.com`); routes under `/v1` (`lib/flirtual_web/router.ex`).
 
-Health: `GET /v1/health?check=<type>` where `<type>` is `api`, `database`, `matchmaking`, or `notifications` (default `api`); returns `200 {"status":"ok"}` or `503 {"status":"error"}`. A down dependency is 503, not 500: `database`/`notifications` hit `Repo` and rescue `DBConnection.ConnectionError`; `matchmaking` hits Elasticsearch via Snap (error tuple, not raise). No way to force 503 in prod without a real outage; reproduce locally by stopping the dependency (e.g. `?check=database` with Postgres down).
+Health: `GET /v1/health?check=<type>` where `<type>` is `api`, `database`, `matchmaking`, or `notifications` (default `api`); returns `200 {"status":"ok"}` or `503 {"status":"error"}`. A down dependency is 503, not 500: `database`/`notifications` hit `Repo` and rescue `DBConnection.ConnectionError`; `matchmaking` calls `Search.healthy?/0` against Manticore (boolean, not raise). No way to force 503 in prod without a real outage; reproduce locally by stopping the dependency (e.g. `?check=database` with Postgres down).
 
 ### Database (`flirtual-db`)
 

@@ -5,7 +5,7 @@ flow, environment setup, and image pipeline.
 
 ## Stack
 
-- **Framework**: React Router 7 (SSR off, SPA mode)
+- **Framework**: React Router 8 (SSR off, SPA mode)
 - **Deployment**: Cloudflare Workers
 - **State**: TanStack Query (server state), React hooks (client state)
 - **API client**: wretch, auto snake_case (api) ↔ camelCase (frontend)
