@@ -75,22 +75,13 @@ defmodule Flirtual.Faker do
   ]
 
   def create_user(options \\ []) do
-    file_ids = Keyword.get(options, :file_ids)
-    existing_images = Keyword.get(options, :existing_images)
+    {image_source, image_pool} =
+      Keyword.get(options, :images) || {:new, download_images(Enum.random(1..3))}
 
-    {image_source, images_to_use} =
-      cond do
-        existing_images && length(existing_images) > 0 ->
-          image_count = Enum.random(1..min(8, length(existing_images)))
-          {:copy, Enum.take_random(existing_images, image_count)}
-
-        file_ids && length(file_ids) > 0 ->
-          image_count = Enum.random(1..min(8, length(file_ids)))
-          {:new, Enum.take_random(file_ids, image_count)}
-
-        true ->
-          {:new, get_random_images(Enum.random(1..3))}
-      end
+    images_to_use =
+      if image_pool == [],
+        do: [],
+        else: Enum.take_random(image_pool, Enum.random(1..min(8, length(image_pool))))
 
     now =
       DateTime.utc_now()
@@ -253,35 +244,26 @@ defmodule Flirtual.Faker do
   def create_users(n, opts \\ []) do
     reuse_images = Keyword.get(opts, :reuse_images, false)
 
-    existing_images =
+    images =
       if reuse_images do
-        Image
-        |> Repo.all()
-        |> Enum.shuffle()
-        |> Enum.map(
-          &%{
-            original_file: &1.original_file,
-            external_id: &1.external_id,
-            blur_id: &1.blur_id
-          }
-        )
+        {:copy,
+         Image
+         |> where([image], not is_nil(image.external_id) and is_nil(image.suspended_url))
+         |> Repo.all()
+         |> Enum.shuffle()
+         |> Enum.map(
+           &%{
+             original_file: &1.original_file,
+             external_id: &1.external_id,
+             blur_id: &1.blur_id
+           }
+         )}
       else
-        nil
-      end
-
-    file_ids =
-      if reuse_images do
-        nil
-      else
-        total_images = max(n * 3, 10)
-        get_random_images(total_images)
+        {:new, download_images(max(div(n, 4), 10))}
       end
 
     Enum.map(1..n, fn _ ->
-      create_user(
-        file_ids: file_ids,
-        existing_images: existing_images
-      )
+      create_user(images: images)
     end)
   end
 
@@ -334,13 +316,30 @@ defmodule Flirtual.Faker do
     end)
   end
 
-  defp create_profile_images(profile, :new, file_ids, _now) do
+  defp create_profile_images(profile, :new, image_data, _now) do
+    file_ids =
+      image_data
+      |> Enum.flat_map(fn data ->
+        case upload_image(data) do
+          {:ok, id} -> [id]
+          {:error, _} -> []
+        end
+      end)
+
     Profiles.create_images(profile, file_ids |> Enum.map(&%{"id" => &1}))
   end
 
-  defp create_profile_images(profile, :copy, existing_images, now) do
+  defp create_profile_images(profile, :copy, source_images, now) do
     images =
-      existing_images
+      source_images
+      |> Enum.flat_map(fn img ->
+        # original_file is unique per row, so copy the object.
+        # external_id/blur_id can stay shared.
+        case copy_image(img.original_file) do
+          {:ok, original_file} -> [%{img | original_file: original_file}]
+          {:error, _} -> []
+        end
+      end)
       |> Enum.with_index()
       |> Enum.map(fn {img, idx} ->
         %{
@@ -376,17 +375,14 @@ defmodule Flirtual.Faker do
     end
   end
 
-  defp get_random_images(count \\ 3) do
+  defp download_images(count) do
     1..count
-    |> Enum.map(fn _ ->
-      with {:ok, image_data} <- get_random_image(),
-           {:ok, id} <- upload_image(image_data) do
-        id
-      else
-        _ -> nil
+    |> Enum.flat_map(fn _ ->
+      case get_random_image() do
+        {:ok, image_data} -> [image_data]
+        {:error, _} -> []
       end
     end)
-    |> Enum.filter(&(&1 != nil))
   end
 
   defp get_random_image do
@@ -430,13 +426,7 @@ defmodule Flirtual.Faker do
       File.write!(Path.join(uploads_dir, id), image_data)
       {:ok, id}
     else
-      bucket =
-        case Application.get_env(:flirtual, :canary?) do
-          true -> "pfpup-canary"
-          _ -> "pfpup"
-        end
-
-      case ExAws.S3.put_object(bucket, id, image_data, content_type: "image/jpeg")
+      case ExAws.S3.put_object(uploads_bucket(), id, image_data, content_type: "image/jpeg")
            |> ExAws.request() do
         {:ok, _} ->
           {:ok, id}
@@ -445,6 +435,42 @@ defmodule Flirtual.Faker do
           log(:error, ["upload-image"], inspect(reason))
           {:error, reason}
       end
+    end
+  end
+
+  defp copy_image(original_file) do
+    id = Ecto.UUID.generate()
+
+    if Application.get_env(:flirtual, :local_uploads?) do
+      uploads_dir = Application.fetch_env!(:flirtual, :local_uploads_dir)
+
+      case File.read(Path.join(uploads_dir, original_file)) do
+        {:ok, image_data} ->
+          File.write!(Path.join(uploads_dir, id), image_data)
+          {:ok, id}
+
+        {:error, reason} ->
+          log(:error, ["copy-image"], inspect(reason))
+          {:error, reason}
+      end
+    else
+      bucket = uploads_bucket()
+
+      case ExAws.S3.put_object_copy(bucket, id, bucket, original_file) |> ExAws.request() do
+        {:ok, _} ->
+          {:ok, id}
+
+        {:error, reason} ->
+          log(:error, ["copy-image"], inspect(reason))
+          {:error, reason}
+      end
+    end
+  end
+
+  defp uploads_bucket do
+    case Application.get_env(:flirtual, :canary?) do
+      true -> "pfpup-canary"
+      _ -> "pfpup"
     end
   end
 
