@@ -319,6 +319,17 @@ defmodule FlirtualWeb.Router do
           end
         end
 
+        scope "/stats" do
+          pipe_through([:require_authenticated_user, :require_valid_user])
+
+          get("/", StatsController, :index)
+
+          scope "/:stat_name" do
+            get("/", StatsController, :get)
+            get("/download", StatsController, :download)
+          end
+        end
+
         scope "/flags" do
           pipe_through([:require_authenticated_user, :require_valid_user])
 

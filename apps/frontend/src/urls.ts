@@ -240,11 +240,7 @@ export const urls = {
 
 	admin: {
 		attributes: "/attributes",
-		stats: "/stats",
-		statsData: (name: string) =>
-			`https://storage.cloud.google.com/flirtual-stats/${name}.csv`,
-		statsChart: (name: string) =>
-			`https://storage.cloud.google.com/flirtual-stats/${name}.svg`
+		stats: "/stats"
 	},
 
 	debugger: "/debugger",
