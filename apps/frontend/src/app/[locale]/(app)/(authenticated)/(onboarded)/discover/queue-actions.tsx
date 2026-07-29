@@ -91,8 +91,9 @@ export const QueueActions: FC<{
 	const blocked = relationship?.blocked ?? false;
 
 	// They're not looking for our gender, so we disable Like and offer to Homie
-	// instead.
-	const genderMismatch = mode === "love" && relationship?.prefersMyGender === false;
+	// instead. Only for profiles carried over from Homie Mode or direct profile
+	// links.
+	const genderMismatch = mode === "love" && !!explicitUserId && relationship?.prefersMyGender === false;
 	const [homieInstead, setHomieInstead] = useState(false);
 
 	const [didAction, setDidAction] = useState(false);
