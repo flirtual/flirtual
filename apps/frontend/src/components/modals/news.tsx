@@ -119,6 +119,12 @@ export const NewsDialog: FC<NewsDialogProps> = (props) => {
 
 	const currentId = news[currentIndex]!;
 	const dismissable = currentIndex >= news.length - 1;
+	const closeOnEscapeOrOutside = dismissable && Boolean(props.news);
+
+	const preventClose = (event: Event) => {
+		if (closeOnEscapeOrOutside) return;
+		event.preventDefault();
+	};
 
 	const handleClose = async () => {
 		if (closing.current) return;
@@ -157,8 +163,8 @@ export const NewsDialog: FC<NewsDialogProps> = (props) => {
 				<DialogContent
 					className="outline-none desktop:max-w-xl"
 					closable={dismissable}
-					onEscapeKeyDown={(event) => event.preventDefault()}
-					onInteractOutside={(event) => event.preventDefault()}
+					onEscapeKeyDown={preventClose}
+					onInteractOutside={preventClose}
 					onOpenAutoFocus={(event) => event.preventDefault()}
 				>
 					<DialogHeader>
