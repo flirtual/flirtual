@@ -15,6 +15,9 @@ defmodule Flirtual.ObanWorkers.Daily do
     {723, :reminder_723}
   ]
 
+  # Review accounts are exempt from pruning.
+  @never_prune_tags ["review"]
+
   @impl Oban.Worker
   def perform(%Oban.Job{}) do
     enabled = Application.get_env(:flirtual, Flirtual.ObanWorkers)[:enabled_cron_tasks]
@@ -95,6 +98,7 @@ defmodule Flirtual.ObanWorkers.Daily do
           where: is_nil(user.banned_at),
           where: not is_nil(user.email_confirmed_at),
           where: not fragment("? && ?::citext[]", user.tags, ^tags_gte),
+          where: not fragment("? && ?::citext[]", user.tags, ^@never_prune_tags),
           select: user.id
         )
         |> Repo.all()
@@ -130,6 +134,7 @@ defmodule Flirtual.ObanWorkers.Daily do
     from(user in User,
       where: is_nil(user.banned_at),
       where: user.active_at <= ^deletion_cutoff,
+      where: not fragment("? && ?::citext[]", user.tags, ^@never_prune_tags),
       select: user.id
     )
     |> Repo.all()

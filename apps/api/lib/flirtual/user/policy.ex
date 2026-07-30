@@ -46,6 +46,20 @@ defmodule Flirtual.User.Policy do
       when action in @own_actions,
       do: true
 
+  # Review accounts cannot be suspended.
+  def authorize(
+        :suspend,
+        %Plug.Conn{
+          assigns: %{
+            session: %{
+              user: %User{} = user
+            }
+          }
+        },
+        %User{} = target
+      ),
+      do: :moderator in user.tags and :review not in target.tags
+
   @moderator_actions [
     :suspend,
     :indef_shadowban,
