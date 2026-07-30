@@ -109,10 +109,10 @@ export const PlanCard: FC<PlanCardProps> = (props) => {
 						clipPath: "polygon(100% 0, 0 0, 100% 100%)",
 						margin: "-1px -1px 0 0"
 					}}
-					className="absolute right-0 top-0 flex aspect-square items-center justify-center rounded-tr-xl bg-brand-gradient p-3 text-white-20"
+					className="absolute right-0 top-0 flex aspect-square w-max items-center justify-center rounded-tr-xl bg-brand-gradient p-3 text-white-20"
 				>
 					<div className="origin-center -translate-y-3 translate-x-3 rotate-45">
-						<span className="font-semibold">
+						<span className="whitespace-nowrap font-semibold">
 							{t("save_percent", { number: discount })}
 						</span>
 					</div>
