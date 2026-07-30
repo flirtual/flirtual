@@ -78,6 +78,8 @@ const maxImagePixels = 100_000_000;
 // Images are resized clientside to fit within 2048x2048.
 const maxImageDimension = 2048;
 
+const allowedFileTypes = ["image/jpeg", "image/png", "image/gif", "image/webp", "image/heic", "image/heif", ".heic", ".heif", ".mpo", ".jps", ".pns"];
+
 // Browsers don't report MIME types for formats they don't support.
 const extensionContentTypes: Record<string, string> = {
 	mpo: "image/jpeg",
@@ -111,6 +113,7 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 	const valueReference = useRef(value);
 	const onChangeReference = useRef(onChange);
 	const toastReference = useRef(toast);
+	const fileInputReference = useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
 		valueReference.current = value;
@@ -148,10 +151,7 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 			restrictions: {
 				maxNumberOfFiles: 15,
 				maxFileSize: 64_000_000,
-				allowedFileTypes:
-					type === "profile"
-						? ["image/jpeg", "image/png", "image/gif", "image/webp", "image/heic", "image/heif", ".heic", ".heif", ".mpo", ".jps", ".pns"]
-						: undefined
+				allowedFileTypes: type === "profile" ? allowedFileTypes : undefined
 			},
 			locale: {
 				strings: {
@@ -497,10 +497,31 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 											dragging && "animate-pulse"
 										)}
 										tabIndex={0}
-										onClick={() => setUppyVisible(true)}
+										onClick={() => fileInputReference.current?.click()}
 									>
 										<ImagePlus className="size-10 text-white-20" />
 									</Button>
+									<input
+										multiple
+										accept={allowedFileTypes.join(",")}
+										className="hidden"
+										ref={fileInputReference}
+										type="file"
+										onChange={(event) => {
+											const { files } = event.currentTarget;
+											if (!uppy || !files?.length) return;
+
+											uppy.addFiles([...files].map((file) => ({
+												source: "file-input",
+												name: file.name,
+												type: file.type,
+												data: file
+											})));
+
+											event.currentTarget.value = "";
+											setUppyVisible(true);
+										}}
+									/>
 								</>
 							)
 						: (
