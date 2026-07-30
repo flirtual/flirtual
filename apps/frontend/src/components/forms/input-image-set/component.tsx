@@ -497,7 +497,10 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 											dragging && "animate-pulse"
 										)}
 										tabIndex={0}
-										onClick={() => fileInputReference.current?.click()}
+										onClick={() => {
+											if (uppy?.getFiles().length) return setUppyVisible(true);
+											fileInputReference.current?.click();
+										}}
 									>
 										<ImagePlus className="size-10 text-white-20" />
 									</Button>
