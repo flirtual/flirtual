@@ -113,7 +113,7 @@ defmodule Flirtual.User.Profile do
       join_through: Flirtual.User.Profile.Attributes,
       join_keys: [profile_id: :user_id, attribute_id: :id],
       on_replace: :delete,
-      preload_order: [asc: :type, asc: :order]
+      preload_order: [asc: :type, asc: :order, asc: :id]
     )
 
     has_many(:advanced_filters, AdvancedFilter, references: :user_id, foreign_key: :profile_id)
@@ -147,7 +147,8 @@ defmodule Flirtual.User.Profile do
     [
       :custom_weights,
       :advanced_filters,
-      attributes: from(attribute in Attribute, order_by: [attribute.type, attribute.id]),
+      attributes:
+        from(attribute in Attribute, order_by: [attribute.type, attribute.order, attribute.id]),
       preferences: Preferences.default_assoc(),
       images: from(image in Image, order_by: image.order),
       prompts: Prompt.default_assoc()

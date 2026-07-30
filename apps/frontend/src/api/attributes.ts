@@ -105,6 +105,12 @@ export type AttributeCollection<T extends AttributeType> = Array<
 	MinimalAttribute<T>
 >;
 
+export function attributeId(
+	attribute: MinimalAttribute<AttributeType>
+): string {
+	return typeof attribute === "string" ? attribute : attribute.id;
+}
+
 export type GroupedAttributeCollection = Record<
 	AttributeType,
 	Array<string> | undefined

@@ -2,6 +2,7 @@ import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 
 import type { AttributeType, MinimalAttribute } from "~/api/attributes";
+import { attributeId } from "~/api/attributes";
 import type { User } from "~/api/user";
 import { InlineLink } from "~/components/inline-link";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
@@ -36,10 +37,19 @@ export const PillAttributeList: FC<PillAttributeListProps> = ({
 			.flat()
 			.filter(Boolean);
 
+	const highlighted = (attribute: MinimalAttribute<AttributeType>) =>
+		!!session
+		&& session.user.id !== user.id
+		&& activeIds.includes(attributeId(attribute));
+
+	const sortedAttributes = [...attributes].sort(
+		(a, b) => Number(highlighted(b)) - Number(highlighted(a))
+	);
+
 	return (
 		<PillRows editable={!!href}>
-			{attributes.map((attribute) => {
-				const id = typeof attribute === "object" ? attribute.id : attribute;
+			{sortedAttributes.map((attribute) => {
+				const id = attributeId(attribute);
 				const { name, definition, definitionLink } = (tAttributes[id] ?? {}) as {
 					name?: string;
 					definition?: string;
@@ -51,11 +61,7 @@ export const PillAttributeList: FC<PillAttributeListProps> = ({
 						<TooltipTrigger asChild>
 							<div>
 								<Pill
-									active={
-										session
-											? session.user.id !== user.id && activeIds.includes(id)
-											: false
-									}
+									active={highlighted(attribute)}
 									className="vision:bg-white-30/70"
 									href={href}
 								>

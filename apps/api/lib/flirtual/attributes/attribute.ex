@@ -200,11 +200,7 @@ defmodule Flirtual.Attribute do
       else: Map.put(metadata, :id, id)
   end
 
-  def group(attributes) do
-    Enum.reduce(attributes, %{}, fn %{id: id, type: type}, acc ->
-      Map.update(acc, type, [id], fn existing -> [id | existing] end)
-    end)
-  end
+  def group(attributes), do: Enum.group_by(attributes, & &1.type, & &1.id)
 
   def validate_attribute(changeset, id_key, attribute_type, options \\ []) do
     key =

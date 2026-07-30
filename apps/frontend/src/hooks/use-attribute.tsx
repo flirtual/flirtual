@@ -3,6 +3,7 @@ import { useDebugValue, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 import type { AttributeCollection, AttributeType } from "~/api/attributes";
+import { attributeId } from "~/api/attributes";
 import { attributeFetcher, attributeKey, useQuery } from "~/query";
 
 import { useConfig } from "./use-config";
@@ -20,6 +21,21 @@ export function useAttributes<T extends AttributeType>(type: T): AttributeCollec
 			cacheTime: ms("30d")
 		}
 	});
+}
+
+export function useAttributeOrder(
+	type: AttributeType
+): (a: string, b: string) => number {
+	const attributes = useAttributes(type);
+
+	return useMemo(() => {
+		const order = new Map(
+			attributes.map((attribute, index) => [attributeId(attribute), index])
+		);
+
+		return (a, b) =>
+			(order.get(a) ?? attributes.length) - (order.get(b) ?? attributes.length);
+	}, [attributes]);
 }
 
 export interface AttributeTranslationMetadata {
