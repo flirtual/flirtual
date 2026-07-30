@@ -38,6 +38,7 @@ defmodule Flirtual.User do
     :legacy_vrlfp,
     :translating,
     :official,
+    :review,
     :dob_locked,
     :reminder_670,
     :reminder_700,
