@@ -323,6 +323,9 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 		}));
 
 		const finishUpload = () => {
+			// Uppy reports completion even when a retry found nothing to retry.
+			if (settledFiles.size === 0) return;
+
 			const [message] = [...uploadErrors.values()];
 			if (message) toastReference.current.add({ type: "error", value: message });
 
@@ -377,8 +380,20 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 				}));
 			}
 			catch (reason) {
+				const { message } = reason as Error;
+
 				// Uppy only reports "upload failed" here, keeping why behind an alert().
-				uppyInstance.info((reason as Error).message, "error", 5000);
+				uppyInstance.info(message, "error", 5000);
+
+				// A failed hook marks nothing as errored: retry would then collect no
+				// files and report itself complete, and every attempt after the first
+				// skips the branch that records the failure, leaving no retry button.
+				uppyInstance.setState({ error: message });
+
+				for (const fileId of fileIds) {
+					if (uppyInstance.getFile(fileId))
+						uppyInstance.setFileState(fileId, { error: message });
+				}
 
 				throw reason;
 			}
