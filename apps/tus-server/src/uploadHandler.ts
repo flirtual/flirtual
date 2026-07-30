@@ -144,7 +144,8 @@ export class UploadHandler {
         const uploadMetadata = parseUploadMetadata(request.headers);
         const checksum = parseChecksum(request.headers);
 
-        const r2Key = uploadMetadata.filename;
+        // Flirtual: `id` is the object key, matching withAuthorizedKeyFromMetadata.
+        const r2Key = uploadMetadata.id ?? uploadMetadata.filename;
         if (r2Key == null) {
             return error(400, 'bad filename metadata');
         }

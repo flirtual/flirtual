@@ -338,6 +338,43 @@ describe('Tus', () => {
         expect(upload.headers.get('Upload-Offset')).toBe('4');
     });
 
+    // Flirtual: the key comes from `id`, not `filename`, so the router and the
+    // upload handler must agree on it — otherwise the create Location points at
+    // the filename and every PATCH 401s.
+    it('keys the object on id metadata, not filename', async () => {
+        const id = 'e35bd2f6-8c4d-4b0a-9d3e-1f2a3b4c5d6e';
+        const create = await worker.fetch(`http://localhost/upload/${attachmentsPath}/`, {
+            method: 'POST',
+            headers: {
+                'Authorization': await headerFor(id),
+                'Tus-Resumable': '1.0.0',
+                'Upload-Metadata': `id ${btoa(id)},filename ${btoa('photo.jpg')}`,
+                'Upload-Length': '4'
+            }
+        });
+        expect(create.status).toBe(201);
+
+        const location = create.headers.get('Location')!;
+        expect(new URL(location).pathname.endsWith(`/${id}`)).toBe(true);
+
+        const upload = await worker.fetch(location, {
+            method: 'PATCH',
+            headers: {
+                'Authorization': await headerFor(id),
+                'Tus-Resumable': '1.0.0',
+                'Upload-Offset': '0',
+                'Content-Type': 'application/offset+octet-stream'
+            },
+            body: 'test'
+        });
+        expect(upload.status).toBe(204);
+        expect(upload.headers.get('Upload-Offset')).toBe('4');
+
+        // The finished object lands under the id.
+        const stored = await worker.fetch(`http://localhost/${attachmentsPath}/${id}`);
+        expect(await stored.text()).toBe('test');
+    });
+
     test.each(['GET', 'HEAD'])('returns from cache on %s when enabled', async (method: string) => {
         await caches.default.put(
             new Request(`http://localhost/${attachmentsPath}/${name}`),
