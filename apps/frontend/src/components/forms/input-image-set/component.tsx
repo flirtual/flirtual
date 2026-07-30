@@ -10,6 +10,7 @@ import { ImagePlus } from "lucide-react";
 import {
 	useCallback,
 	useEffect,
+	useMemo,
 	useRef,
 	useState
 } from "react";
@@ -100,7 +101,7 @@ const uploadChunkSize = 512 * 1024;
 export const InputImageSet: FC<InputImageSetProps> = (props) => {
 	const { value, onChange, type = "profile", max } = props;
 
-	const session = useOptionalSession();
+	const authenticated = !!useOptionalSession();
 	const [theme] = useTheme();
 	const { native, apple } = useDevice();
 	const [uppy, setUppy] = useState<Uppy<UppyfileMeta, UppyfileData> | null>(null);
@@ -109,13 +110,14 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 	const [fullPreviewId, setFullPreviewId] = useState<string | null>(null);
 	const toast = useToast();
 	const { t } = useTranslation();
-	const uppyLocale = t("uppy", { returnObjects: true });
+	const uppyLocale = useMemo(() => t("uppy", { returnObjects: true }), [t]);
 
 	const fullPreviewImage = value.find(({ id }) => id === fullPreviewId);
 
 	// Uploads outlive the render that started them, so append to the latest value.
 	const valueReference = useRef(value);
 	const onChangeReference = useRef(onChange);
+	const toastReference = useRef(toast);
 
 	useEffect(() => {
 		valueReference.current = value;
@@ -123,6 +125,7 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 
 	useEffect(() => {
 		onChangeReference.current = onChange;
+		toastReference.current = toast;
 	});
 
 	const handleUploadSuccess = useCallback((meta: UppyfileMeta) => {
@@ -145,7 +148,7 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 	}, []);
 
 	useEffect(() => {
-		if (!session) return;
+		if (!authenticated) return;
 
 		const uppyInstance = new Uppy<UppyfileMeta, UppyfileData>({
 			autoProceed: type === "report",
@@ -298,7 +301,7 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 
 		const finishUpload = () => {
 			const [message] = [...uploadErrors.values()];
-			if (message) toast.add({ type: "error", value: message });
+			if (message) toastReference.current.add({ type: "error", value: message });
 
 			uppyInstance.removeFiles([...settledFiles]);
 
@@ -380,104 +383,107 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 		setUppy(uppyInstance);
 
 		return () => uppyInstance.destroy();
-	}, [session, handleUploadSuccess, type, native, apple, t, uppyLocale, toast]);
+	}, [authenticated, handleUploadSuccess, type, native, apple, t, uppyLocale]);
 
 	const sortableItems = value.map(({ id }, index) => id || index);
 
 	return (
-		<SortableGrid
-			disabled={!!fullPreviewId}
-			values={sortableItems}
-			onChange={(newSortableItems) => {
-				const keyedValue = groupBy(value, ({ id }) => id);
-				onChange(
-					newSortableItems.map((id) => keyedValue[id]?.[0]).filter(Boolean)
-				);
-			}}
-		>
-			<div className="grid grid-cols-3 gap-2">
-				{value.map((image, imageIndex) =>
-					type === "profile"
-					|| !image.id?.includes(".")
-					|| /\.(?:jpg|jpeg|png|gif|webm)$/i.test(image.id)
+		<>
+			{/* Outside SortableGrid, whose key changes with values and would remount it. */}
+			{type === "profile" && uppy && (
+				<Dialog
+					open={uppyVisible}
+					onOpenChange={(visible) => setUppyVisible(visible)}
+				>
+					<DialogContent>
+						<DialogHeader>
+							<DialogTitle>{t("upload_pictures")}</DialogTitle>
+						</DialogHeader>
+						<DialogBody>
+							<Dashboard
+								showProgressDetails
+								proudlyDisplayPoweredByUppy={false}
+								theme={theme}
+								uppy={uppy}
+							/>
+						</DialogBody>
+					</DialogContent>
+				</Dialog>
+			)}
+			<SortableGrid
+				disabled={!!fullPreviewId}
+				values={sortableItems}
+				onChange={(newSortableItems) => {
+					const keyedValue = groupBy(value, ({ id }) => id);
+					onChange(
+						newSortableItems.map((id) => keyedValue[id]?.[0]).filter(Boolean)
+					);
+				}}
+			>
+				<div className="grid grid-cols-3 gap-2">
+					{value.map((image, imageIndex) =>
+						type === "profile"
+						|| !image.id?.includes(".")
+						|| /\.(?:jpg|jpeg|png|gif|webm)$/i.test(image.id)
+							? (
+									<SortableItem id={image.id} key={image.id}>
+										<ArrangeableImage
+											id={image.id}
+											className={max && (imageIndex + 1 > max) ? "opacity-25" : ""}
+											src={image.src}
+											onDelete={() => {
+												onChange?.(value.filter((_, index) => imageIndex !== index));
+											}}
+											onFullscreen={() => setFullPreviewId(image.id)}
+										/>
+									</SortableItem>
+								)
+							: (
+									<div key={image.id} className="m-auto">
+										{image.id.split("-").pop()}
+									</div>
+								)
+					)}
+					{fullPreviewImage && (
+						<ArrangeableImageDialog
+							image={fullPreviewImage}
+							onOpenChange={(visible) => {
+								if (!visible) setFullPreviewId(null);
+							}}
+						/>
+					)}
+					{type === "profile"
 						? (
-								<SortableItem id={image.id} key={image.id}>
-									<ArrangeableImage
-										id={image.id}
-										className={max && (imageIndex + 1 > max) ? "opacity-25" : ""}
-										src={image.src}
-										onDelete={() => {
-											onChange?.(value.filter((_, index) => imageIndex !== index));
-										}}
-										onFullscreen={() => setFullPreviewId(image.id)}
-									/>
-								</SortableItem>
+								<>
+									<Button
+										className={twMerge(
+											"focusable flex aspect-square size-full cursor-pointer items-center justify-center rounded-xl bg-brand-gradient",
+											dragging && "animate-pulse"
+										)}
+										tabIndex={0}
+										onClick={() => setUppyVisible(true)}
+									>
+										<ImagePlus className="size-10 text-white-20" />
+									</Button>
+								</>
 							)
 						: (
-								<div key={image.id} className="m-auto">
-									{image.id.split("-").pop()}
-								</div>
-							)
-				)}
-				{fullPreviewImage && (
-					<ArrangeableImageDialog
-						image={fullPreviewImage}
-						onOpenChange={(visible) => {
-							if (!visible) setFullPreviewId(null);
-						}}
-					/>
-				)}
-				{type === "profile"
-					? (
-							<>
-								{uppy && (
-									<Dialog
-										open={uppyVisible}
-										onOpenChange={(visible) => setUppyVisible(visible)}
-									>
-										<DialogContent>
-											<DialogHeader>
-												<DialogTitle>{t("upload_pictures")}</DialogTitle>
-											</DialogHeader>
-											<DialogBody>
-												<Dashboard
-													showProgressDetails
-													proudlyDisplayPoweredByUppy={false}
-													theme={theme}
-													uppy={uppy}
-												/>
-											</DialogBody>
-										</DialogContent>
-									</Dialog>
-								)}
-								<Button
-									className={twMerge(
-										"focusable flex aspect-square size-full cursor-pointer items-center justify-center rounded-xl bg-brand-gradient",
-										dragging && "animate-pulse"
-									)}
-									tabIndex={0}
-									onClick={() => setUppyVisible(true)}
-								>
-									<ImagePlus className="size-10 text-white-20" />
-								</Button>
-							</>
-						)
-					: (
-							uppy && (
-								<DragDrop
+								uppy && (
+									<DragDrop
 									// @ts-expect-error: no
-									className={twMerge(
-										"focusable flex aspect-square size-full cursor-pointer items-center justify-center rounded-xl bg-brand-gradient shadow-brand-1",
-										dragging && "animate-pulse"
-									)}
-									uppy={uppy}
-								/>
-							)
-						)}
-			</div>
-			<InputImageSetDragOverlay values={value} />
-			{type === "report" && uppy && <StatusBar uppy={uppy} />}
-		</SortableGrid>
+										className={twMerge(
+											"focusable flex aspect-square size-full cursor-pointer items-center justify-center rounded-xl bg-brand-gradient shadow-brand-1",
+											dragging && "animate-pulse"
+										)}
+										uppy={uppy}
+									/>
+								)
+							)}
+				</div>
+				<InputImageSetDragOverlay values={value} />
+				{type === "report" && uppy && <StatusBar uppy={uppy} />}
+			</SortableGrid>
+		</>
 	);
 };
 
