@@ -44,7 +44,7 @@ defmodule FlirtualWeb.SessionController do
                  attrs[:password]
                ),
              false <- Flirtual.LeakedPasswords.leaked?(attrs[:password]) do
-          if Login.suspicious?(user.id, conn) do
+          if Login.needs_verification?(user, conn) do
             with login_id when is_binary(login_id) <-
                    Verification.send_verification(conn, user, attrs[:device_id]) do
               conn

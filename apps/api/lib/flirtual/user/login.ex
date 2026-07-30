@@ -125,6 +125,11 @@ defmodule Flirtual.User.Login do
     |> Repo.update_all(set: [status: "untrusted"])
   end
 
+  # Review accounts bypass login verification.
+  def needs_verification?(%User{} = user, conn) do
+    :review not in user.tags and suspicious?(user.id, conn)
+  end
+
   def suspicious?(user_id, conn) do
     ip_address = get_conn_ip(conn)
     ip_region = get_conn_region(conn)
