@@ -1,11 +1,17 @@
 on:
   push:
-    branches: [main, production]
+    branches: [main]
     paths:
       - apps/frontend/ios/**
       - apps/frontend/capacitor.config.ts
       - .github/workflows/ios.yaml
   workflow_dispatch:
+    inputs:
+      channel:
+        description: App to build and upload
+        type: choice
+        options: [beta, production]
+        default: beta
 
 permissions:
   contents: read
@@ -13,18 +19,15 @@ permissions:
 jobs:
   ios:
     runs-on: macos-26
-    environment: ${{ github.ref == 'refs/heads/production' && 'production' || 'canary' }}
+    environment: mobile
     defaults:
       run:
         working-directory: apps/frontend
     env:
-      VITE_ORIGIN: ${{ github.ref == 'refs/heads/production' && vars.VITE_ORIGIN || 'https://beta.flirtual.dev' }}
-      VITE_API_URL: ${{ github.ref == 'refs/heads/production' && vars.VITE_API_URL || 'https://beta-api.flirtual.dev/v1/' }}
-      VITE_APP_BUNDLE_ID: ${{ github.ref == 'refs/heads/production' && vars.VITE_APP_BUNDLE_ID || 'zone.homie.flirtual.beta' }}
-      VITE_APPLE_SIGNIN_SERVICE_ID: ${{ vars.VITE_APPLE_SIGNIN_SERVICE_ID }}
-      VITE_GOOGLE_CLIENT_ID: ${{ vars.VITE_GOOGLE_CLIENT_ID }}
-      VITE_GOOGLE_IOS_CLIENT_ID: ${{ vars.VITE_GOOGLE_IOS_CLIENT_ID }}
-      SCHEME: ${{ github.ref == 'refs/heads/production' && 'Flirtual' || 'Flirtual Beta' }}
+      VITE_ORIGIN: ${{ inputs.channel == 'production' && 'https://flirtu.al' || 'https://beta.flirtual.dev' }}
+      VITE_API_URL: ${{ inputs.channel == 'production' && 'https://api.flirtu.al/v1/' || 'https://beta-api.flirtual.dev/v1/' }}
+      VITE_APP_BUNDLE_ID: ${{ inputs.channel == 'production' && 'zone.homie.flirtual.pwa' || 'zone.homie.flirtual.beta' }}
+      SCHEME: ${{ inputs.channel == 'production' && 'Flirtual' || 'Flirtual Beta' }}
       ASC_API_KEY_ID: ${{ secrets.ASC_API_KEY_ID }}
       ASC_API_ISSUER_ID: ${{ secrets.ASC_API_ISSUER_ID }}
     steps:
@@ -71,7 +74,7 @@ jobs:
 
       - name: Install provisioning profile
         env:
-          PROFILE: ${{ github.ref == 'refs/heads/production' && secrets.APPLE_PROFILE_PRODUCTION || secrets.APPLE_PROFILE_BETA }}
+          PROFILE: ${{ inputs.channel == 'production' && secrets.APPLE_PROFILE_PRODUCTION || secrets.APPLE_PROFILE_BETA }}
         run: |
           mkdir -p "$HOME/Library/MobileDevice/Provisioning Profiles"
           printf '%s' "$PROFILE" | base64 --decode > "$RUNNER_TEMP/profile.mobileprovision"
