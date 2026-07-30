@@ -1,6 +1,7 @@
 import { captureException } from "@sentry/react-router";
 import Compressor from "@uppy/compressor";
 import Uppy from "@uppy/core";
+import type { UppyFile } from "@uppy/core";
 import DropTarget from "@uppy/drop-target";
 import GoldenRetriever from "@uppy/golden-retriever";
 import ImageEditor from "@uppy/image-editor";
@@ -237,10 +238,32 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 				.catch(() => void 0);
 		});
 
+		const reportProgress = (process: (fileIds: Array<string>) => Promise<void>) =>
+			async (fileIds: Array<string>) => {
+				const each = (emit: (file: UppyFile<UppyfileMeta, UppyfileData>) => void) => {
+					for (const fileId of fileIds) {
+						const file = uppyInstance.getFile(fileId);
+						if (file) emit(file);
+					}
+				};
+
+				each((file) => uppyInstance.emit("preprocess-progress", file, {
+					mode: "indeterminate",
+					message: uppyLocale.loading as string
+				}));
+
+				try {
+					await process(fileIds);
+				}
+				finally {
+					each((file) => uppyInstance.emit("preprocess-complete", file));
+				}
+			};
+
 		// First, so a late copy can't overwrite Compressor's output.
-		uppyInstance.addPreProcessor(async (fileIds) => {
+		uppyInstance.addPreProcessor(reportProgress(async (fileIds) => {
 			await Promise.all(fileIds.map((fileId) => detachedFiles.get(fileId)));
-		});
+		}));
 
 		if (type === "profile") {
 			uppyInstance
@@ -290,14 +313,14 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 		}
 
 		// Correct content types.
-		uppyInstance.addPreProcessor(async (fileIds) => {
+		uppyInstance.addPreProcessor(reportProgress(async (fileIds) => {
 			for (const fileId of fileIds) {
 				const file = uppyInstance.getFile(fileId);
 				const type = file && extensionContentTypes[file.extension?.toLowerCase() ?? ""];
 				if (type && file.type !== type)
 					uppyInstance.setFileState(fileId, { type, meta: { ...file.meta, type } });
 			}
-		});
+		}));
 
 		const finishUpload = () => {
 			const [message] = [...uploadErrors.values()];
@@ -316,7 +339,7 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 		};
 
 		// Last, so the corrected content type is what tus sends as metadata.
-		uppyInstance.addPreProcessor(async (fileIds) => {
+		uppyInstance.addPreProcessor(reportProgress(async (fileIds) => {
 			await Promise.all(fileIds.map(async (fileId) => {
 				const file = uppyInstance.getFile(fileId);
 				if (!file || uploadTokens.has(fileId)) return;
@@ -351,7 +374,7 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 					throw new Error(t("each_ideal_seahorse_bump"));
 				}
 			}));
-		});
+		}));
 
 		uppyInstance.use(Tus, {
 			limit: 15,
