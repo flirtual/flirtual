@@ -64,7 +64,7 @@ export function statName(
 }
 
 export const Stats = {
-	api: api.url("/stats"),
+	api: api.url("stats"),
 
 	index(options: WretchOptions = {}) {
 		return this.api.options(options).get().json<StatIndex>();
