@@ -36,15 +36,58 @@
 }
 
 .uppy-DashboardContent-panel,
-.uppy-Dashboard-AddFilesPanel,
 .cropper-modal {
   background-color: rgb(235 235 235) !important;
 }
 
 :is([data-theme="dark"] .uppy-DashboardContent-panel),
-:is([data-theme="dark"] .uppy-Dashboard-AddFilesPanel),
 :is([data-theme="dark"] .cropper-modal) {
   background-color: rgb(30 30 30) !important;
+}
+
+.uppy-Dashboard-AddFilesPanel {
+  background-color: rgb(245 245 245) !important;
+}
+
+:is([data-theme="dark"] .uppy-Dashboard-AddFilesPanel) {
+  background-color: rgb(30 30 30) !important;
+}
+
+.uppy-Dashboard-serviceMsg {
+  background-color: rgb(235 235 235) !important;
+  border-radius: 12px !important;
+  margin: 0 15px 10px !important;
+  padding: 12px 15px 12px 48px !important;
+  top: 0 !important;
+}
+
+:is([data-theme="dark"] .uppy-Dashboard-serviceMsg) {
+  background-color: rgb(30 30 30) !important;
+}
+
+.uppy-Dashboard-serviceMsg-icon {
+  left: 16px !important;
+  top: 14px !important;
+}
+
+.uppy-Dashboard-serviceMsg-icon path:first-of-type {
+  fill: var(--brand-theme-2) !important;
+}
+
+.uppy-Dashboard-serviceMsg-icon circle,
+.uppy-Dashboard-serviceMsg-icon path:not(:first-of-type) {
+  fill: rgb(245 245 245) !important;
+}
+
+.uppy-Dashboard-serviceMsg-title {
+  font-family: 'Montserrat Variable', sans-serif !important;
+  font-weight: 600 !important;
+  padding-left: 0 !important;
+}
+
+.uppy-Dashboard-serviceMsg-text {
+  opacity: 0.75;
+  padding: 0 !important;
 }
 
 .uppy-StatusBar-actionBtn {
@@ -57,7 +100,22 @@
 }
 
 .uppy-StatusBar-actionBtn--retry {
-  padding-top: 2px !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  color: var(--brand-theme-2) !important;
+  height: auto !important;
+  padding: 0 0 0 18px !important;
+}
+
+.uppy-StatusBar-actionBtn--retry:focus,
+.uppy-StatusBar-actionBtn--retry:hover {
+  text-decoration: underline !important;
+}
+
+.uppy-StatusBar-actionBtn--retry svg {
+  fill: currentcolor !important;
+  top: 1px !important;
 }
 
 .uppy-StatusBar.is-preprocessing .uppy-StatusBar-actionBtn--upload,
@@ -76,6 +134,14 @@
 .uppy-Dashboard-browse:focus,
 .uppy-Dashboard-browse:hover {
   border-bottom-color: var(--brand-theme-2) !important;
+}
+
+.uppy-Dashboard-Item-action--remove {
+  color: var(--brand-theme-2) !important;
+}
+
+.uppy-Dashboard-Item-action--remove svg {
+  display: block !important;
 }
 
 .uppy-Dashboard-Item-previewInnerWrap {
@@ -144,7 +210,8 @@
 }
 
 @supports (corner-shape: superellipse(1)) {
-  .uppy-StatusBar-actionBtn {
+  .uppy-Dashboard-serviceMsg,
+  .uppy-StatusBar-actionBtn:not(.uppy-StatusBar-actionBtn--retry) {
     border-radius: calc(0.75rem * 1.5) !important;
     corner-shape: superellipse(1.5);
   }
