@@ -3,7 +3,6 @@
 import { playlistPlatforms } from "~/components/profile/playlist";
 import {
 	apiOrigin,
-	bucketUploadsSignedOrigin,
 	commitId,
 	development,
 	posthogHost,
@@ -129,7 +128,6 @@ const data = [
 						"blob:",
 						new URL(apiOrigin).host,
 						...bucketOrigins.map((origin) => new URL(origin).host),
-						bucketUploadsSignedOrigin && new URL(bucketUploadsSignedOrigin).host,
 						// https://talkjs.com/docs/Features/Security_Settings/Content_Security_Policy/
 						"*.talkjs.com",
 						"wss://*.talkjs.com",
