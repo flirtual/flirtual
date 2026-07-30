@@ -29,10 +29,7 @@ import { useTheme } from "~/hooks/use-theme";
 import { useToast } from "~/hooks/use-toast";
 import { urls } from "~/urls";
 
-import {
-	ArrangeableImage,
-	ArrangeableImagePreview
-} from "../../arrangeable-image";
+import { ArrangeableImage } from "../../arrangeable-image";
 import { Button } from "../../button";
 import {
 	Dialog,
@@ -42,12 +39,7 @@ import {
 	DialogTitle
 } from "../../dialog/dialog";
 import { UserImage } from "../../user-avatar";
-import {
-	SortableGrid,
-	SortableItem,
-	SortableItemOverlay,
-	useCurrentSortableItem
-} from "../sortable";
+import { SortableGrid, SortableItem } from "../sortable";
 import StereoMetadata from "./stereo-metadata";
 import VRChatMetadata from "./vrchat-metadata";
 
@@ -435,7 +427,6 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 
 	return (
 		<>
-			{/* Outside SortableGrid, whose key changes with values and would remount it. */}
 			{type === "profile" && uppy && (
 				<Dialog
 					open={uppyVisible}
@@ -474,7 +465,6 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 							? (
 									<SortableItem id={image.id} key={image.id}>
 										<ArrangeableImage
-											id={image.id}
 											className={max && (imageIndex + 1 > max) ? "opacity-25" : ""}
 											src={image.src}
 											onDelete={() => {
@@ -526,23 +516,9 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 								)
 							)}
 				</div>
-				<InputImageSetDragOverlay values={value} />
 				{type === "report" && uppy && <StatusBar uppy={uppy} />}
 			</SortableGrid>
 		</>
-	);
-};
-
-const InputImageSetDragOverlay: FC<{ values: Array<ImageSetValue> }> = ({
-	values
-}) => {
-	const currentId = useCurrentSortableItem();
-	const current = values.find(({ id }) => id === currentId);
-
-	return (
-		<SortableItemOverlay>
-			{current && <ArrangeableImagePreview {...current} />}
-		</SortableItemOverlay>
 	);
 };
 
