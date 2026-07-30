@@ -60,6 +60,11 @@
   padding-top: 2px !important;
 }
 
+.uppy-StatusBar.is-preprocessing .uppy-StatusBar-actionBtn--upload,
+.uppy-StatusBar.is-postprocessing .uppy-StatusBar-actionBtn--upload {
+  display: none !important;
+}
+
 .uppy-Dashboard-browse,
 .uppy-DashboardContent-back,
 .uppy-DashboardContent-save,

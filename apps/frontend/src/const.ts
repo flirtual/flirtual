@@ -67,7 +67,6 @@ export const googleIosClientId = import.meta.env.VITE_GOOGLE_IOS_CLIENT_ID as st
 
 export const bucketContentOrigin = (import.meta.env.VITE_BUCKET_CONTENT_ORIGIN as string) || "";
 export const bucketUploadsOrigin = (import.meta.env.VITE_BUCKET_UPLOADS_ORIGIN as string) || "";
-export const bucketUploadsSignedOrigin = (import.meta.env.VITE_BUCKET_UPLOADS_SIGNED_ORIGIN as string) || "";
 
 export const region = import.meta.env.VERCEL_REGION as string;
 

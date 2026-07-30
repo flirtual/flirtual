@@ -116,9 +116,19 @@ defmodule FlirtualWeb.Router do
 
         get("/files/*path", ImageController, :local_file)
 
+        scope "/uploads" do
+          options("/", ImageController, :tus_options)
+          post("/", ImageController, :tus_create)
+
+          scope "/:image_id" do
+            options("/", ImageController, :tus_options)
+            get("/", ImageController, :tus_head)
+            patch("/", ImageController, :tus_patch)
+          end
+        end
+
         scope "/:image_id" do
           get("/view", ImageController, :view)
-          put("/file", ImageController, :local_upload)
         end
       end
 

@@ -9,6 +9,9 @@ export const queue: ExportedHandler<Env, {
 	await Promise.all(messages.map(async (message) => {
 		const { body, attempts } = message;
 
+		// Resumable uploads stage partial data as its own object, ignore.
+		if (body.object.key.startsWith("temporary/")) return message.ack();
+
 		try {
 			await processImage(body.object.key);
 			message.ack();

@@ -1,11 +1,10 @@
 import { api } from "~/api/common";
 
 export const Image = {
-	upload(sbs?: boolean) {
+	upload() {
 		return api
 			.url("images")
-			.json({ sbs: sbs === true })
 			.post()
-			.json<{ id: string; signedUrl: string }>();
+			.json<{ id: string; uploadUrl: string; uploadToken: string }>();
 	}
 };

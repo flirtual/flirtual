@@ -1,0 +1,41 @@
+name = "flirtual-tus"
+main = "src/index.ts"
+compatibility_date = "2025-09-01"
+compatibility_flags = ["nodejs_compat"]
+workers_dev = false
+
+r2_buckets = [
+    { binding = "ATTACHMENT_BUCKET", bucket_name = "pfpup-canary" }
+]
+durable_objects.bindings = [
+    { name = "ATTACHMENT_UPLOAD_HANDLER", class_name = "AttachmentUploadHandler" }
+]
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["AttachmentUploadHandler"]
+
+[env.production]
+name = "flirtual-tus"
+routes = [
+    { pattern = "flirtu.al/upload/*", zone_name = "flirtu.al" }
+]
+r2_buckets = [
+    { binding = "ATTACHMENT_BUCKET", bucket_name = "pfpup" }
+]
+durable_objects.bindings = [
+    { name = "ATTACHMENT_UPLOAD_HANDLER", class_name = "AttachmentUploadHandler" }
+]
+
+[env.canary]
+name = "flirtual-tus-canary"
+routes = [
+    { pattern = "beta.flirtual.dev/upload/*", zone_name = "flirtual.dev" },
+    { pattern = "*.flirtual.dev/upload/*", zone_name = "flirtual.dev" }
+]
+r2_buckets = [
+    { binding = "ATTACHMENT_BUCKET", bucket_name = "pfpup-canary" }
+]
+durable_objects.bindings = [
+    { name = "ATTACHMENT_UPLOAD_HANDLER", class_name = "AttachmentUploadHandler" }
+]

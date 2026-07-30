@@ -105,13 +105,15 @@ config :flirtual, Flirtual.Mailer,
     "marketing" => Env.get("SES_CONFIGURATION_SET_MARKETING", default: "notify")
   }
 
+secret_key_base =
+  Env.get!(
+    "SECRET_KEY_BASE",
+    default:
+      "local_1TGGlvHyCZNDDLHq2HEwlFhrNZ519f0XT8MHIqAE4UcbdMEuHz0zr5zo0thFfbsTrFmkZ5G955hEau2jAA"
+  )
+
 config :flirtual, FlirtualWeb.Endpoint,
-  secret_key_base:
-    Env.get!(
-      "SECRET_KEY_BASE",
-      default:
-        "local_1TGGlvHyCZNDDLHq2HEwlFhrNZ519f0XT8MHIqAE4UcbdMEuHz0zr5zo0thFfbsTrFmkZ5G955hEau2jAA"
-    ),
+  secret_key_base: secret_key_base,
   live_view: [signing_salt: Env.get!("LIVE_VIEW_SIGNING_SALT", default: "local_gwbAO9QRWu")],
   url: [host: origin.host, port: origin.port]
 
@@ -130,7 +132,9 @@ local_uploads_dir =
 
 config :flirtual,
   local_uploads?: local_uploads?,
-  local_uploads_dir: local_uploads_dir
+  local_uploads_dir: local_uploads_dir,
+  upload_origin: URI.parse(Env.get("UPLOAD_ORIGIN", default: frontend_origin)),
+  upload_secret: Env.get("UPLOAD_SECRET") || Base.encode64(secret_key_base)
 
 unless local_uploads? do
   config :ex_aws,

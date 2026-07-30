@@ -1,5 +1,4 @@
 import { captureException } from "@sentry/react-router";
-import AwsS3 from "@uppy/aws-s3";
 import Compressor from "@uppy/compressor";
 import Uppy from "@uppy/core";
 import type { UppyFile } from "@uppy/core";
@@ -7,10 +6,12 @@ import DropTarget from "@uppy/drop-target";
 import GoldenRetriever from "@uppy/golden-retriever";
 import ImageEditor from "@uppy/image-editor";
 import { Dashboard, DragDrop, StatusBar } from "@uppy/react";
+import Tus from "@uppy/tus";
 import { ImagePlus } from "lucide-react";
 import {
 	useCallback,
 	useEffect,
+	useMemo,
 	useRef,
 	useState
 } from "react";
@@ -28,10 +29,7 @@ import { useTheme } from "~/hooks/use-theme";
 import { useToast } from "~/hooks/use-toast";
 import { urls } from "~/urls";
 
-import {
-	ArrangeableImage,
-	ArrangeableImagePreview
-} from "../../arrangeable-image";
+import { ArrangeableImage } from "../../arrangeable-image";
 import { Button } from "../../button";
 import {
 	Dialog,
@@ -41,12 +39,7 @@ import {
 	DialogTitle
 } from "../../dialog/dialog";
 import { UserImage } from "../../user-avatar";
-import {
-	SortableGrid,
-	SortableItem,
-	SortableItemOverlay,
-	useCurrentSortableItem
-} from "../sortable";
+import { SortableGrid, SortableItem } from "../sortable";
 import StereoMetadata from "./stereo-metadata";
 import VRChatMetadata from "./vrchat-metadata";
 
@@ -74,17 +67,10 @@ export interface InputImageSetProps {
 	max?: number;
 }
 
-type UppyfileMeta = { id: string; stereo?: boolean; sbs?: boolean } & Partial<ProfileImageMetadata>;
+type UppyfileMeta = { id: string; stereo?: boolean; sbs?: boolean; stereoLayout?: string } & Partial<ProfileImageMetadata>;
 type UppyfileData = Record<string, unknown>;
 
-// Restored before a retry, since Uppy re-runs Compressor on every attempt and
-// repeated compression compounds the quality loss.
-type UppyfileSnapshot = Pick<
-	UppyFile<UppyfileMeta, UppyfileData>,
-	"data" | "extension" | "name" | "size" | "type"
->;
-
-type UploadError = { expected?: boolean; source?: { status?: number } } & Error;
+type UploadError = { expected?: boolean } & Error;
 
 // Cloudflare Image Resizing rejects images over 100MP.
 const maxImagePixels = 100_000_000;
@@ -101,27 +87,14 @@ const extensionContentTypes: Record<string, string> = {
 	heif: "image/heif"
 };
 
-const uploadRetryDelays = [2000, 6000, 15_000];
-
-// Presigned URLs are valid for an hour. Reuse them so retries don't burn our
-// rate limit. A 15 minute buffer allows for the upload and clock skew.
-const signedUrlLifetime = 45 * 60 * 1000;
-
-function retryableUploadError(error: UploadError): boolean {
-	const status = error.source?.status;
-	if (status === undefined) return false;
-
-	return status === 0 // dropped connection
-		|| status === 403 // expired presigned URL
-		|| status === 408 // request body sent too slowly
-		|| status === 429 // rate limited
-		|| status >= 500; // server-side failure
-}
+// Smaller resumes better but costs requests, and the server restages its partial
+// buffer on each one, so halving this quadruples that traffic.
+const uploadChunkSize = 512 * 1024;
 
 export const InputImageSet: FC<InputImageSetProps> = (props) => {
 	const { value, onChange, type = "profile", max } = props;
 
-	const session = useOptionalSession();
+	const authenticated = !!useOptionalSession();
 	const [theme] = useTheme();
 	const { native, apple } = useDevice();
 	const [uppy, setUppy] = useState<Uppy<UppyfileMeta, UppyfileData> | null>(null);
@@ -130,14 +103,14 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 	const [fullPreviewId, setFullPreviewId] = useState<string | null>(null);
 	const toast = useToast();
 	const { t } = useTranslation();
-	const uppyLocale = t("uppy", { returnObjects: true });
+	const uppyLocale = useMemo(() => t("uppy", { returnObjects: true }), [t]);
 
 	const fullPreviewImage = value.find(({ id }) => id === fullPreviewId);
 
-	// Uploads finish one at a time and outlive the render that started them, so
-	// appends compose against the latest value rather than a captured one.
+	// Uploads outlive the render that started them, so append to the latest value.
 	const valueReference = useRef(value);
 	const onChangeReference = useRef(onChange);
+	const toastReference = useRef(toast);
 
 	useEffect(() => {
 		valueReference.current = value;
@@ -145,6 +118,7 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 
 	useEffect(() => {
 		onChangeReference.current = onChange;
+		toastReference.current = toast;
 	});
 
 	const handleUploadSuccess = useCallback((meta: UppyfileMeta) => {
@@ -167,7 +141,7 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 	}, []);
 
 	useEffect(() => {
-		if (!session) return;
+		if (!authenticated) return;
 
 		const uppyInstance = new Uppy<UppyfileMeta, UppyfileData>({
 			autoProceed: type === "report",
@@ -201,15 +175,35 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 			}
 		});
 
-		const addedFiles = new Map<string, UppyfileSnapshot>();
-		const signedUrls = new Map<
-			string,
-			{ id: string; mintedAt: number; sbs: boolean; signedUrl: string }
-		>();
-		const uploadAttempts = new Map<string, number>();
+		const uploadTokens = new Map<string, string>();
 		const uploadErrors = new Map<string, string>();
-		const pendingRetries = new Map<string, ReturnType<typeof setTimeout>>();
+		const detachedFiles = new Map<string, Promise<void>>();
 		const settledFiles = new Set<string>();
+
+		// Android's photo picker reports a different mtime each read, so Chromium fails
+		// the send with ERR_UPLOAD_FILE_CHANGED. An in-memory copy has no mtime.
+		const detachFromDisk = async (fileId: string) => {
+			const file = uppyInstance.getFile(fileId);
+			if (!file || file.data instanceof Blob === false) return;
+
+			try {
+				const source = file.data;
+				const buffer = await source.arrayBuffer();
+
+				// Stays a File so Compressor can still read a name off it, which it uses
+				// to rebuild the extension.
+				const data = source instanceof File
+					? new File([buffer], source.name, { type: source.type, lastModified: source.lastModified })
+					: new Blob([buffer], { type: source.type });
+
+				if (uppyInstance.getFile(fileId))
+					uppyInstance.setFileState(fileId, { data, size: data.size });
+			}
+			catch (reason) {
+				// Reading can fail the same way; report it rather than skipping silently.
+				captureException(reason, { tags: { stage: "detachFromDisk" } });
+			}
+		};
 
 		uppyInstance.on("file-added", (file) => {
 			// Change HEIC and MPO content types so Compressor skips them and doesn't
@@ -219,8 +213,7 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 			if (["heic", "heif", "mpo"].includes(extension))
 				uppyInstance.setFileState(file.id, { type: "application/octet-stream" });
 
-			const { data, extension: added, name, size, type } = uppyInstance.getFile(file.id);
-			addedFiles.set(file.id, { data, extension: added, name, size, type });
+			detachedFiles.set(file.id, detachFromDisk(file.id));
 
 			if (!file.type?.startsWith("image/")) return;
 
@@ -236,6 +229,33 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 				})
 				.catch(() => void 0);
 		});
+
+		const reportProgress = (process: (fileIds: Array<string>) => Promise<void>) =>
+			async (fileIds: Array<string>) => {
+				const each = (emit: (file: UppyFile<UppyfileMeta, UppyfileData>) => void) => {
+					for (const fileId of fileIds) {
+						const file = uppyInstance.getFile(fileId);
+						if (file) emit(file);
+					}
+				};
+
+				each((file) => uppyInstance.emit("preprocess-progress", file, {
+					mode: "indeterminate",
+					message: uppyLocale.loading as string
+				}));
+
+				try {
+					await process(fileIds);
+				}
+				finally {
+					each((file) => uppyInstance.emit("preprocess-complete", file));
+				}
+			};
+
+		// First, so a late copy can't overwrite Compressor's output.
+		uppyInstance.addPreProcessor(reportProgress(async (fileIds) => {
+			await Promise.all(fileIds.map((fileId) => detachedFiles.get(fileId)));
+		}));
 
 		if (type === "profile") {
 			uppyInstance
@@ -285,28 +305,27 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 		}
 
 		// Correct content types.
-		uppyInstance.addPreProcessor(async (fileIds) => {
+		uppyInstance.addPreProcessor(reportProgress(async (fileIds) => {
 			for (const fileId of fileIds) {
 				const file = uppyInstance.getFile(fileId);
 				const type = file && extensionContentTypes[file.extension?.toLowerCase() ?? ""];
 				if (type && file.type !== type)
 					uppyInstance.setFileState(fileId, { type, meta: { ...file.meta, type } });
 			}
-		});
+		}));
 
 		const finishUpload = () => {
-			// A retry is still queued; it will finish the batch when it settles.
-			if (pendingRetries.size > 0) return;
+			// Uppy reports completion even when a retry found nothing to retry.
+			if (settledFiles.size === 0) return;
 
 			const [message] = [...uploadErrors.values()];
-			if (message) toast.add({ type: "error", value: message });
+			if (message) toastReference.current.add({ type: "error", value: message });
 
 			uppyInstance.removeFiles([...settledFiles]);
 
 			for (const fileId of settledFiles) {
-				addedFiles.delete(fileId);
-				signedUrls.delete(fileId);
-				uploadAttempts.delete(fileId);
+				detachedFiles.delete(fileId);
+				uploadTokens.delete(fileId);
 				uploadErrors.delete(fileId);
 			}
 
@@ -314,57 +333,71 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 			setUppyVisible(false);
 		};
 
-		uppyInstance.use(AwsS3, {
-			shouldUseMultipart: false,
-			limit: 15,
-			async getUploadParameters(file) {
-				const sbs = file.meta.sbs === true;
-				const reusable = signedUrls.get(file.id);
+		// Last, so the corrected content type is what tus sends as metadata.
+		uppyInstance.addPreProcessor(reportProgress(async (fileIds) => {
+			try {
+				await Promise.all(fileIds.map(async (fileId) => {
+					const file = uppyInstance.getFile(fileId);
+					if (!file || uploadTokens.has(fileId)) return;
 
-				const parameters = (id: string, signedUrl: string) => {
-					file.meta.id = id;
+					try {
+						const { id, uploadUrl, uploadToken } = await Image.upload();
 
-					return {
-						url: signedUrl,
-						method: "PUT" as const,
-						...(sbs ? { headers: { "x-amz-meta-stereo": "sbs" } } : {})
-					};
-				};
-
-				if (
-					reusable
-					&& reusable.sbs === sbs
-					&& Date.now() - reusable.mintedAt < signedUrlLifetime
-				)
-					return parameters(reusable.id, reusable.signedUrl);
-
-				try {
-					const { id, signedUrl } = await Image.upload(sbs);
-					signedUrls.set(file.id, { id, mintedAt: Date.now(), sbs, signedUrl });
-
-					return parameters(id, signedUrl);
-				}
-				catch (reason) {
-					if (isWretchError(reason) && reason.json?.error) {
-						const key = `errors.${reason.json.error}` as any;
-						const translated = t(key);
-
-						if (translated !== key) {
-							const refusal: UploadError = new Error(translated);
-							refusal.expected = true;
-
-							throw refusal;
-						}
+						uploadTokens.set(fileId, uploadToken);
+						uppyInstance.setFileState(fileId, {
+							// `id` becomes the object key, `stereoLayout` its metadata.
+							meta: {
+								...file.meta,
+								id,
+								...(file.meta.sbs === true ? { stereoLayout: "sbs" } : {})
+							},
+							tus: { endpoint: uploadUrl }
+						});
 					}
+					catch (reason) {
+						if (isWretchError(reason) && reason.json?.error) {
+							const key = `errors.${reason.json.error}` as any;
+							const translated = t(key);
 
-					const error: UploadError = new Error(t("each_ideal_seahorse_bump"));
-					// No response means the network dropped the request, rather than the
-					// API refusing it.
-					error.source = { status: isWretchError(reason) ? reason.status : 0 };
+							if (translated !== key) {
+								const refusal: UploadError = new Error(translated);
+								refusal.expected = true;
 
-					throw error;
+								throw refusal;
+							}
+						}
+
+						throw new Error(t("each_ideal_seahorse_bump"));
+					}
+				}));
+			}
+			catch (reason) {
+				const { message } = reason as Error;
+
+				// Uppy only reports "upload failed" here, keeping why behind an alert().
+				uppyInstance.info(message, "error", 5000);
+
+				// A failed hook marks nothing as errored: retry would then collect no
+				// files and report itself complete, and every attempt after the first
+				// skips the branch that records the failure, leaving no retry button.
+				uppyInstance.setState({ error: message });
+
+				for (const fileId of fileIds) {
+					if (uppyInstance.getFile(fileId))
+						uppyInstance.setFileState(fileId, { error: message });
 				}
-			},
+
+				throw reason;
+			}
+		}));
+
+		uppyInstance.use(Tus, {
+			limit: 15,
+			chunkSize: uploadChunkSize,
+			// Only what the server reads; the rest of our meta stays off the wire.
+			allowedMetaFields: ["id", "stereoLayout", "name", "type"],
+			removeFingerprintOnSuccess: true,
+			headers: (file) => ({ authorization: `Bearer ${uploadTokens.get(file.id) ?? ""}` })
 		})
 			.on("upload-success", (file) => {
 				if (!file) return;
@@ -377,158 +410,115 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 			.on("upload-error", (file, error: UploadError) => {
 				if (!file) return;
 
-				const attempt = (uploadAttempts.get(file.id) ?? 0) + 1;
-				uploadAttempts.set(file.id, attempt);
+				// tus already retried from the server's offset, so this is terminal.
+				settledFiles.add(file.id);
+				uploadErrors.set(file.id, error.message || t("each_ideal_seahorse_bump"));
 
-				if (error.message === "Request has expired") signedUrls.delete(file.id);
-
-				const delay = uploadRetryDelays[attempt - 1];
-
-				if (delay === undefined || !retryableUploadError(error)) {
-					settledFiles.add(file.id);
-					uploadErrors.set(file.id, error.message || t("each_ideal_seahorse_bump"));
-
-					if (!error.expected)
-						captureException(error, { tags: { uploadAttempts: attempt } });
-					return;
-				}
-
-				const added = addedFiles.get(file.id);
-				if (added) uppyInstance.setFileState(file.id, added);
-
-				// Cleared by the effect cleanup, which drains pendingRetries.
-				// eslint-disable-next-line react-web-api/no-leaked-timeout
-				const retry = setTimeout(() => {
-					pendingRetries.delete(file.id);
-					if (!uppyInstance.getFile(file.id)) return finishUpload();
-
-					void uppyInstance
-						.retryUpload(file.id)
-						.catch(() => void 0)
-						.finally(finishUpload);
-				}, delay);
-
-				pendingRetries.set(file.id, retry);
+				if (!error.expected) captureException(error);
 			})
 			.on("complete", finishUpload);
 
 		setUppy(uppyInstance);
 
-		return () => {
-			for (const timeout of pendingRetries.values()) clearTimeout(timeout);
-			uppyInstance.destroy();
-		};
-	}, [session, handleUploadSuccess, type, native, apple, t, uppyLocale, toast]);
+		return () => uppyInstance.destroy();
+	}, [authenticated, handleUploadSuccess, type, native, apple, t, uppyLocale]);
 
 	const sortableItems = value.map(({ id }, index) => id || index);
 
 	return (
-		<SortableGrid
-			disabled={!!fullPreviewId}
-			values={sortableItems}
-			onChange={(newSortableItems) => {
-				const keyedValue = groupBy(value, ({ id }) => id);
-				onChange(
-					newSortableItems.map((id) => keyedValue[id]?.[0]).filter(Boolean)
-				);
-			}}
-		>
-			<div className="grid grid-cols-3 gap-2">
-				{value.map((image, imageIndex) =>
-					type === "profile"
-					|| !image.id?.includes(".")
-					|| /\.(?:jpg|jpeg|png|gif|webm)$/i.test(image.id)
+		<>
+			{type === "profile" && uppy && (
+				<Dialog
+					open={uppyVisible}
+					onOpenChange={(visible) => setUppyVisible(visible)}
+				>
+					<DialogContent>
+						<DialogHeader>
+							<DialogTitle>{t("upload_pictures")}</DialogTitle>
+						</DialogHeader>
+						<DialogBody>
+							<Dashboard
+								showProgressDetails
+								proudlyDisplayPoweredByUppy={false}
+								theme={theme}
+								uppy={uppy}
+							/>
+						</DialogBody>
+					</DialogContent>
+				</Dialog>
+			)}
+			<SortableGrid
+				disabled={!!fullPreviewId}
+				values={sortableItems}
+				onChange={(newSortableItems) => {
+					const keyedValue = groupBy(value, ({ id }) => id);
+					onChange(
+						newSortableItems.map((id) => keyedValue[id]?.[0]).filter(Boolean)
+					);
+				}}
+			>
+				<div className="grid grid-cols-3 gap-2">
+					{value.map((image, imageIndex) =>
+						type === "profile"
+						|| !image.id?.includes(".")
+						|| /\.(?:jpg|jpeg|png|gif|webm)$/i.test(image.id)
+							? (
+									<SortableItem id={image.id} key={image.id}>
+										<ArrangeableImage
+											className={max && (imageIndex + 1 > max) ? "opacity-25" : ""}
+											src={image.src}
+											onDelete={() => {
+												onChange?.(value.filter((_, index) => imageIndex !== index));
+											}}
+											onFullscreen={() => setFullPreviewId(image.id)}
+										/>
+									</SortableItem>
+								)
+							: (
+									<div key={image.id} className="m-auto">
+										{image.id.split("-").pop()}
+									</div>
+								)
+					)}
+					{fullPreviewImage && (
+						<ArrangeableImageDialog
+							image={fullPreviewImage}
+							onOpenChange={(visible) => {
+								if (!visible) setFullPreviewId(null);
+							}}
+						/>
+					)}
+					{type === "profile"
 						? (
-								<SortableItem id={image.id} key={image.id}>
-									<ArrangeableImage
-										id={image.id}
-										className={max && (imageIndex + 1 > max) ? "opacity-25" : ""}
-										src={image.src}
-										onDelete={() => {
-											onChange?.(value.filter((_, index) => imageIndex !== index));
-										}}
-										onFullscreen={() => setFullPreviewId(image.id)}
-									/>
-								</SortableItem>
+								<>
+									<Button
+										className={twMerge(
+											"focusable flex aspect-square size-full cursor-pointer items-center justify-center rounded-xl bg-brand-gradient",
+											dragging && "animate-pulse"
+										)}
+										tabIndex={0}
+										onClick={() => setUppyVisible(true)}
+									>
+										<ImagePlus className="size-10 text-white-20" />
+									</Button>
+								</>
 							)
 						: (
-								<div key={image.id} className="m-auto">
-									{image.id.split("-").pop()}
-								</div>
-							)
-				)}
-				{fullPreviewImage && (
-					<ArrangeableImageDialog
-						image={fullPreviewImage}
-						onOpenChange={(visible) => {
-							if (!visible) setFullPreviewId(null);
-						}}
-					/>
-				)}
-				{type === "profile"
-					? (
-							<>
-								{uppy && (
-									<Dialog
-										open={uppyVisible}
-										onOpenChange={(visible) => setUppyVisible(visible)}
-									>
-										<DialogContent>
-											<DialogHeader>
-												<DialogTitle>{t("upload_pictures")}</DialogTitle>
-											</DialogHeader>
-											<DialogBody>
-												<Dashboard
-													showProgressDetails
-													proudlyDisplayPoweredByUppy={false}
-													theme={theme}
-													uppy={uppy}
-												/>
-											</DialogBody>
-										</DialogContent>
-									</Dialog>
-								)}
-								<Button
-									className={twMerge(
-										"focusable flex aspect-square size-full cursor-pointer items-center justify-center rounded-xl bg-brand-gradient",
-										dragging && "animate-pulse"
-									)}
-									tabIndex={0}
-									onClick={() => setUppyVisible(true)}
-								>
-									<ImagePlus className="size-10 text-white-20" />
-								</Button>
-							</>
-						)
-					: (
-							uppy && (
-								<DragDrop
+								uppy && (
+									<DragDrop
 									// @ts-expect-error: no
-									className={twMerge(
-										"focusable flex aspect-square size-full cursor-pointer items-center justify-center rounded-xl bg-brand-gradient shadow-brand-1",
-										dragging && "animate-pulse"
-									)}
-									uppy={uppy}
-								/>
-							)
-						)}
-			</div>
-			<InputImageSetDragOverlay values={value} />
-			{type === "report" && uppy && <StatusBar uppy={uppy} />}
-		</SortableGrid>
-	);
-};
-
-const InputImageSetDragOverlay: FC<{ values: Array<ImageSetValue> }> = ({
-	values
-}) => {
-	const currentId = useCurrentSortableItem();
-	const current = values.find(({ id }) => id === currentId);
-
-	return (
-		<SortableItemOverlay>
-			{current && <ArrangeableImagePreview {...current} />}
-		</SortableItemOverlay>
+										className={twMerge(
+											"focusable flex aspect-square size-full cursor-pointer items-center justify-center rounded-xl bg-brand-gradient shadow-brand-1",
+											dragging && "animate-pulse"
+										)}
+										uppy={uppy}
+									/>
+								)
+							)}
+				</div>
+				{type === "report" && uppy && <StatusBar uppy={uppy} />}
+			</SortableGrid>
+		</>
 	);
 };
 
