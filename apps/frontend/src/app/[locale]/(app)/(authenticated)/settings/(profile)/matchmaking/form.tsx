@@ -9,6 +9,7 @@ import { Matchmaking } from "~/api/matchmaking";
 import { activeEntitlements } from "~/api/user";
 import {
 	CustomWeightList,
+	CustomWeightSteps,
 	DefaultProfileCustomWeights,
 	Profile,
 	ProfileMonopolyList,
@@ -404,9 +405,7 @@ export const MatchmakingForm: FC = () => {
 											disabled={
 												key === "location" ? false : !premium
 											}
-											max={2}
-											min={0}
-											step={0.25}
+											steps={CustomWeightSteps}
 											value={[value]}
 											onValueChange={(values) => onChange(values[0]!)}
 										/>

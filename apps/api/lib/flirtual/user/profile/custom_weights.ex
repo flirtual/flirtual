@@ -68,21 +68,10 @@ defmodule Flirtual.User.Profile.CustomWeights do
     %{user: %User{entitlements: entitlements}} = changeset.data.profile
 
     changeset
-    |> validate_number(name, greater_than_or_equal_to: 0, less_than_or_equal_to: 2)
-    |> validate_number_divisible(name, 0.25)
+    |> validate_number(name, greater_than_or_equal_to: 0, less_than_or_equal_to: 5)
     |> validate_change(name, fn _, _ ->
       if name !== :location and not Entitlement.premium?(entitlements) do
         [{name, "Subscription required"}]
-      else
-        []
-      end
-    end)
-  end
-
-  defp validate_number_divisible(changeset, name, denominator) do
-    validate_change(changeset, name, fn _, value ->
-      if Float.ratio(value / denominator) |> elem(1) !== 1 do
-        [{name, "Must be divisible by " <> to_string(denominator)}]
       else
         []
       end

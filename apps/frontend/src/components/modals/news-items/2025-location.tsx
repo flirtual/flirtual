@@ -4,7 +4,11 @@ import { Trans, useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
 import { isWretchError } from "~/api/common";
-import { DefaultProfileCustomWeights, Profile } from "~/api/user/profile";
+import {
+	CustomWeightSteps,
+	DefaultProfileCustomWeights,
+	Profile
+} from "~/api/user/profile";
 import { FormButton } from "~/components/forms/button";
 import { InputLabel, InputLabelHint, InputSwitch } from "~/components/inputs";
 import { Slider } from "~/components/inputs/slider";
@@ -116,9 +120,7 @@ export const Location2025: FC<{ onSaved?: () => void }> = ({ onSaved }) => {
 											</InputLabelHint>
 											<Slider
 												{...props}
-												max={2}
-												min={0}
-												step={0.25}
+												steps={CustomWeightSteps}
 												value={[value]}
 												onValueChange={(values) => onChange(values[0]!)}
 											/>

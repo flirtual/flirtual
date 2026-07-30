@@ -114,6 +114,17 @@ export function newIdempotencyKey() {
 export const emptyObject = Object.freeze({}) as Record<string, never>;
 export const emptyArray = Object.freeze([]) as Array<never>;
 
+// Where a value sits on an evenly-spaced scale of ascending step values: the
+// step's own position, or proportionally between the two it falls between.
+export function stepPosition(steps: ReadonlyArray<number>, value: number) {
+	const index = steps.findIndex((step) => step >= value);
+	if (index === -1) return steps.length - 1;
+	if (index === 0) return 0;
+
+	const previous = steps[index - 1]!;
+	return index - 1 + (value - previous) / (steps[index]! - previous);
+}
+
 export function skipErrorStack(error: Error, count: number) {
 	const stack = error.stack?.split("\n").slice(count);
 	error.stack = stack?.join("\n");

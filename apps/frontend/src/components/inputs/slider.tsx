@@ -2,7 +2,36 @@ import * as SliderPrimitive from "@radix-ui/react-slider";
 import * as React from "react";
 import { twMerge } from "tailwind-merge";
 
-export function Slider({ className, ...props }: React.ComponentProps<typeof SliderPrimitive.Root>) {
+import { stepPosition } from "~/utilities";
+
+export function Slider({
+	className,
+	steps,
+	value,
+	defaultValue,
+	onValueChange,
+	onValueCommit,
+	...props
+}: {
+	// Evenly-spaced positions with arbitrary values. A value between two steps
+	// sits between them until the next interaction, which snaps it to a step.
+	steps?: ReadonlyArray<number>;
+} & React.ComponentProps<typeof SliderPrimitive.Root>) {
+	const toValue = (positions: Array<number>) =>
+		positions.map((position) => steps![Math.round(position)]!);
+
+	const stepped = steps
+		? {
+				min: 0,
+				max: steps.length - 1,
+				step: 1,
+				value: value?.map((value) => stepPosition(steps, value)),
+				defaultValue: defaultValue?.map((value) => stepPosition(steps, value)),
+				onValueChange: onValueChange && ((positions: Array<number>) => onValueChange(toValue(positions))),
+				onValueCommit: onValueCommit && ((positions: Array<number>) => onValueCommit(toValue(positions)))
+			}
+		: { value, defaultValue, onValueChange, onValueCommit };
+
 	return (
 		<SliderPrimitive.Root
 			className={twMerge(
@@ -10,11 +39,12 @@ export function Slider({ className, ...props }: React.ComponentProps<typeof Slid
 				className
 			)}
 			{...props}
+			{...stepped}
 		>
 			<SliderPrimitive.Track className="relative h-2 w-full grow overflow-hidden rounded-full bg-white-40 shadow-brand-1 dark:bg-black-50">
 				<SliderPrimitive.Range className="absolute h-full bg-brand-gradient data-[disabled]:bg-black-20 data-[disabled]:bg-none" />
 			</SliderPrimitive.Track>
-			{(props.value || props.defaultValue)?.map((_, index) => (
+			{(value || defaultValue)?.map((_, index) => (
 				<SliderPrimitive.Thumb
 					// eslint-disable-next-line react/no-array-index-key
 					key={index}
