@@ -340,40 +340,48 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 
 		// Last, so the corrected content type is what tus sends as metadata.
 		uppyInstance.addPreProcessor(reportProgress(async (fileIds) => {
-			await Promise.all(fileIds.map(async (fileId) => {
-				const file = uppyInstance.getFile(fileId);
-				if (!file || uploadTokens.has(fileId)) return;
+			try {
+				await Promise.all(fileIds.map(async (fileId) => {
+					const file = uppyInstance.getFile(fileId);
+					if (!file || uploadTokens.has(fileId)) return;
 
-				try {
-					const { id, uploadUrl, uploadToken } = await Image.upload();
+					try {
+						const { id, uploadUrl, uploadToken } = await Image.upload();
 
-					uploadTokens.set(fileId, uploadToken);
-					uppyInstance.setFileState(fileId, {
-						// `id` becomes the object key, `stereoLayout` its metadata.
-						meta: {
-							...file.meta,
-							id,
-							...(file.meta.sbs === true ? { stereoLayout: "sbs" } : {})
-						},
-						tus: { endpoint: uploadUrl }
-					});
-				}
-				catch (reason) {
-					if (isWretchError(reason) && reason.json?.error) {
-						const key = `errors.${reason.json.error}` as any;
-						const translated = t(key);
-
-						if (translated !== key) {
-							const refusal: UploadError = new Error(translated);
-							refusal.expected = true;
-
-							throw refusal;
-						}
+						uploadTokens.set(fileId, uploadToken);
+						uppyInstance.setFileState(fileId, {
+							// `id` becomes the object key, `stereoLayout` its metadata.
+							meta: {
+								...file.meta,
+								id,
+								...(file.meta.sbs === true ? { stereoLayout: "sbs" } : {})
+							},
+							tus: { endpoint: uploadUrl }
+						});
 					}
+					catch (reason) {
+						if (isWretchError(reason) && reason.json?.error) {
+							const key = `errors.${reason.json.error}` as any;
+							const translated = t(key);
 
-					throw new Error(t("each_ideal_seahorse_bump"));
-				}
-			}));
+							if (translated !== key) {
+								const refusal: UploadError = new Error(translated);
+								refusal.expected = true;
+
+								throw refusal;
+							}
+						}
+
+						throw new Error(t("each_ideal_seahorse_bump"));
+					}
+				}));
+			}
+			catch (reason) {
+				// Uppy only reports "upload failed" here, keeping why behind an alert().
+				uppyInstance.info((reason as Error).message, "error", 5000);
+
+				throw reason;
+			}
 		}));
 
 		uppyInstance.use(Tus, {
