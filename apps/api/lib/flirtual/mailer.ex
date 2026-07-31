@@ -10,15 +10,13 @@ defmodule Flirtual.Mailer do
 
   defp get_urls() do
     origin = get_origin()
-    locale = Gettext.get_locale()
 
     %{
       home: URI.to_string(origin),
+      discord: "https://discord.gg/flirtual",
       x: "https://x.com/getflirtual",
-      discord:
-        origin
-        |> URI.merge("/discord")
-        |> URI.to_string(),
+      bluesky: "https://bsky.app/profile/flirtual.com",
+      instagram: "https://instagram.com/getflirtual",
       unsubscribe:
         origin
         |> URI.merge("/settings/notifications")
@@ -38,8 +36,10 @@ defmodule Flirtual.Mailer do
     ---
     #{urls.home}
 
-    #{dgettext("notifications", "x")}: #{urls.x}
     #{dgettext("notifications", "discord")}: #{urls.discord}
+    #{dgettext("notifications", "x")}: #{urls.x}
+    #{dgettext("notifications", "bluesky")}: #{urls.bluesky}
+    #{dgettext("notifications", "instagram")}: #{urls.instagram}
     #{dgettext("notifications", "unsubscribe")}: #{urls.unsubscribe}
 
     © #{Date.utc_today().year} #{@company}
@@ -285,8 +285,10 @@ defmodule Flirtual.Mailer do
       do: "<p class=\"action-link\">#{dgettext("notifications", "if_the_link_does_not_work")}<br /><a href=\"#{action_url}\">#{action_url}</a></p>",
       else: ""}
           <p>
+            <a href="#{urls.discord}">#{dgettext("notifications", "discord")}</a>
             <a href="#{urls.x}">#{dgettext("notifications", "x")}</a>
-            <a href="#{urls.discord}">#{dgettext("notifications", "discord")}</a><br />
+            <a href="#{urls.bluesky}">#{dgettext("notifications", "bluesky")}</a>
+            <a href="#{urls.instagram}">#{dgettext("notifications", "instagram")}</a><br />
             <a href="#{urls.unsubscribe}">#{dgettext("notifications", "unsubscribe")}</a>
           </p>
           <p>

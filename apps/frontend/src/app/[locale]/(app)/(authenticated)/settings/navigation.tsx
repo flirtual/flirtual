@@ -180,8 +180,12 @@ export const SettingsNavigation: FC = () => {
 							<NavigationLink href={urls.socials.vrchat}>
 								{t("vrchat_group")}
 							</NavigationLink>
-							<NavigationLink href={urls.socials.twitter}>
-								{t("twitter")}
+							<NavigationLink href={urls.socials.x}>{t("x")}</NavigationLink>
+							<NavigationLink href={urls.socials.bluesky}>
+								{t("bluesky")}
+							</NavigationLink>
+							<NavigationLink href={urls.socials.instagram}>
+								{t("instagram")}
 							</NavigationLink>
 						</NavigationCategory>
 					</div>

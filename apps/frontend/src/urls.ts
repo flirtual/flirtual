@@ -272,9 +272,11 @@ export const urls = {
 	},
 
 	socials: {
+		bluesky: "https://bsky.app/profile/flirtual.com",
 		discord: "https://discord.gg/flirtual",
+		instagram: "https://instagram.com/getflirtual",
 		vrchat: "https://vrc.group/FLIRT.4525",
-		twitter: "https://twitter.com/getflirtual"
+		x: "https://x.com/getflirtual"
 	},
 
 	apps: {
