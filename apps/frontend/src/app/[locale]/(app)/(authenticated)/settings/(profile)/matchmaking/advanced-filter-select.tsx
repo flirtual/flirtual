@@ -1,3 +1,4 @@
+import { DismissableLayer } from "@radix-ui/react-dismissable-layer";
 import { Slot } from "@radix-ui/react-slot";
 import { search as fuzzySearch } from "fast-fuzzy";
 import { ChevronDown, ChevronLeft, ChevronUp } from "lucide-react";
@@ -12,7 +13,6 @@ import { Link } from "~/components/link";
 import { Popover, PopoverAnchor, PopoverContent } from "~/components/popover";
 import { ScrollIndicator } from "~/components/scroll-indicator";
 import { useBreakpoint } from "~/hooks/use-breakpoint";
-import { useDisableOutsidePointerEvents } from "~/hooks/use-disable-outside-pointer-events";
 import { useSafeArea } from "~/hooks/use-safe-area";
 import { useScrollIndicator } from "~/hooks/use-scroll-indicator";
 import { urls } from "~/urls";
@@ -59,8 +59,6 @@ export const AdvancedFilterSelect: FC<{
 		= useScrollIndicator(listReference);
 
 	const fullscreen = overlayVisible && !desktop;
-
-	useDisableOutsidePointerEvents(overlayVisible && desktop);
 
 	// Focusing an input on mobile may scroll the page; we capture and restore the
 	// scroll position so opening the fullscreen overlay doesn't shift it.
@@ -519,7 +517,9 @@ export const AdvancedFilterSelect: FC<{
 							close();
 						}}
 					>
-						{optionList}
+						<DismissableLayer disableOutsidePointerEvents className="relative flex w-full">
+							{optionList}
+						</DismissableLayer>
 					</PopoverContent>
 				</Popover>
 				{fullscreen && (

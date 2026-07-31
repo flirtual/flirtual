@@ -1,3 +1,4 @@
+import { DismissableLayer } from "@radix-ui/react-dismissable-layer";
 import { Slot } from "@radix-ui/react-slot";
 import { fuzzy, search as fuzzySearch } from "fast-fuzzy";
 import { ChevronLeft } from "lucide-react";
@@ -8,7 +9,6 @@ import { RemoveScroll } from "react-remove-scroll";
 import { twMerge } from "tailwind-merge";
 
 import { useBreakpoint } from "~/hooks/use-breakpoint";
-import { useDisableOutsidePointerEvents } from "~/hooks/use-disable-outside-pointer-events";
 import { useSafeArea } from "~/hooks/use-safe-area";
 import { emptyArray, suppressNextClick } from "~/utilities";
 
@@ -92,8 +92,6 @@ export function InputAutocomplete<K extends string>(
 
 	const fullscreen = dropdown && overlayVisible && !desktop;
 	const caretVisible = !dropdown || overlayVisible;
-
-	useDisableOutsidePointerEvents(dropdown && overlayVisible && desktop);
 
 	// Focusing an input on mobile may scroll the page; we capture and restore the
 	// scroll position so opening the fullscreen overlay doesn't shift it.
@@ -424,7 +422,9 @@ export function InputAutocomplete<K extends string>(
 							close();
 						}}
 					>
-						{optionWindow}
+						<DismissableLayer disableOutsidePointerEvents className="flex w-full">
+							{optionWindow}
+						</DismissableLayer>
 					</PopoverContent>
 				</Popover>
 				{fullscreen && optionWindow}
