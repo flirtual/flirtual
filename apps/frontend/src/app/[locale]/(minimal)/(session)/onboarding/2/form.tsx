@@ -6,6 +6,7 @@ import { Profile } from "~/api/user/profile";
 import { ButtonLink } from "~/components/button";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
+import { FormGameAutocomplete } from "~/components/forms/game-autocomplete";
 import {
 	InputAutocomplete,
 	InputLabel,
@@ -31,7 +32,6 @@ export const Onboarding2Form: FC = () => {
 	const { t } = useTranslation();
 	const navigate = useNavigate();
 
-	const games = useAttributes("game");
 	const interests = useAttributes("interest");
 	const platforms = useAttributes("platform");
 
@@ -92,22 +92,13 @@ export const Onboarding2Form: FC = () => {
 						)}
 					</FormField>
 					<FormField name="game">
-						{(field) => (
+						{() => (
 							<>
 								<InputLabel hint={t("up_to_number", { number: 5 })}>{t("vr_apps_games")}</InputLabel>
 								<InputLabelHint className="-mt-2">
 									{t("game_hint")}
 								</InputLabelHint>
-								<InputAutocomplete
-									{...field.props}
-									options={games.map((game) => ({
-										key: game,
-										label: tAttribute[game]?.name ?? game
-									}))}
-									limit={5}
-									placeholder={t("select_games")}
-									value={field.props.value || []}
-								/>
+								<FormGameAutocomplete />
 							</>
 						)}
 					</FormField>

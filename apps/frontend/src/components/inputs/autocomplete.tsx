@@ -1,7 +1,7 @@
 import { Slot } from "@radix-ui/react-slot";
 import { fuzzy, search as fuzzySearch } from "fast-fuzzy";
 import { ChevronLeft } from "lucide-react";
-import type { CSSProperties } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { RemoveScroll } from "react-remove-scroll";
@@ -24,6 +24,7 @@ export interface InputAutocompleteOption<K extends string = string> {
 	definition?: string;
 	definitionLink?: string;
 	hidden?: boolean;
+	suffix?: ReactNode;
 }
 
 export interface InputAutocompleteProps<K extends string = string> {

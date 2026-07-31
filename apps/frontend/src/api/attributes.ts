@@ -7,6 +7,19 @@ import { api } from "./common";
 
 export type KinkAttributeKind = "dominant" | "submissive" | null;
 
+export const gameStores = [
+	"pcvr",
+	"frame",
+	"horizon",
+	"pico",
+	"vive",
+	"androidxr",
+	"vision",
+	"psvr"
+] as const;
+
+export type GameStore = (typeof gameStores)[number];
+
 export const attributeTypes = [
 	"ban-reason",
 	"country",
@@ -49,7 +62,17 @@ export interface AttributeMetadata {
 	};
 	relationship: undefined;
 	language: undefined;
-	game: undefined;
+	game?: {
+		pcvr?: string;
+		frame?: string;
+		horizon?: string;
+		pico?: string;
+		vive?: string;
+		androidxr?: string;
+		vision?: string;
+		psvr?: string;
+		crossplay?: Array<GameStore>;
+	};
 	interest: {
 		category: string;
 		strength?: number;

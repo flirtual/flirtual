@@ -6,6 +6,7 @@ import {
 	useAttributeOrder,
 	useAttributeTranslation
 } from "~/hooks/use-attribute";
+import { useGameStoreLinks, useSessionGameStores } from "~/hooks/use-game-stores";
 import { useOptionalSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 
@@ -34,6 +35,7 @@ export const PillCollection: FC<{ user: User }> = (props) => {
 	const { t } = useTranslation();
 	const tAttributes = useAttributeTranslation();
 	const relationshipOrder = useAttributeOrder("relationship");
+	const gameStoreLinks = useGameStoreLinks(useSessionGameStores());
 
 	if (!session) return null;
 
@@ -125,6 +127,7 @@ export const PillCollection: FC<{ user: User }> = (props) => {
 			</PillRows>
 			<PillAttributeList
 				attributes={user.profile.attributes.game}
+				getLinks={gameStoreLinks}
 				href={editable ? urls.settings.info("game") : undefined}
 				user={user}
 			/>

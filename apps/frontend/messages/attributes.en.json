@@ -2324,7 +2324,7 @@
 		},
 		"3Kagenz7boB64Ke6vEAKv6": {
 			"name": "PCVR",
-			"example": "(Index, Vive, Rift, etc.)"
+			"example": "(Quest Link, Index, Vive, etc.)"
 		},
 		"FEX8jjr4P9aeBurRUTLhU7": {
 			"name": "Pico"
@@ -2357,6 +2357,9 @@
 		},
 		"x5T9enPhP8WpYwnoottGDL": {
 			"name": "Locomotion treadmill"
+		},
+		"Ry723pMCrWV4ptp8ywcorG": {
+			"name": "Steam Frame"
 		}
 	},
 	"prompt": {

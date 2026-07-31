@@ -1,3 +1,4 @@
+export * from "./android";
 export * from "./apple";
 export * from "./discord";
 export * from "./discord-outline";
@@ -6,6 +7,11 @@ export * from "./google";
 export * from "./google-play";
 export * from "./meta";
 export * from "./microsoft";
+export * from "./pico";
+export * from "./playstation";
+export * from "./steam";
+export * from "./steam-frame";
 export * from "./twitter";
+export * from "./vive";
 export * from "./vrchat";
 export * from "./vrchat-outline";

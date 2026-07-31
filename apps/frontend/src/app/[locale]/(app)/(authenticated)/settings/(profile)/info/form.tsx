@@ -7,6 +7,7 @@ import { User } from "~/api/user";
 import { Profile } from "~/api/user/profile";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
+import { FormGameAutocomplete } from "~/components/forms/game-autocomplete";
 import {
 	InputAutocomplete,
 	InputDateSelect,
@@ -40,7 +41,6 @@ export const InfoForm: FC = () => {
 	const session = useOptionalSession();
 	const toasts = useToast();
 
-	const games = useAttributes("game");
 	const platforms = useAttributes("platform");
 	const sexualities = useAttributes("sexuality");
 	const genders = useAttributes("gender");
@@ -294,22 +294,13 @@ export const InfoForm: FC = () => {
 						)}
 					</FormField>
 					<FormField name="game">
-						{(field) => (
+						{() => (
 							<>
 								<InputLabel hint={t("up_to_number", { number: 5 })}>{t("vr_apps_games")}</InputLabel>
 								<InputLabelHint className="-mt-2">
 									{t("game_hint")}
 								</InputLabelHint>
-								<InputAutocomplete
-									{...field.props}
-									options={games.map((game) => ({
-										key: game,
-										label: tAttribute[game]?.name ?? game
-									}))}
-									limit={5}
-									placeholder={t("select_games")}
-									value={field.props.value || []}
-								/>
+								<FormGameAutocomplete />
 							</>
 						)}
 					</FormField>
