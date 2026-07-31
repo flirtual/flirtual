@@ -37,7 +37,7 @@ defmodule Flirtual.User.Profile.AdvancedFilter do
     :personality,
     :domsub
   ]
-  @max_per_kind 25
+  @max_per_kind 30
 
   @relationship_values ~w(serious vr hookups friends)
   @monopoly_values ~w(monogamous nonmonogamous)

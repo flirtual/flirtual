@@ -14,7 +14,7 @@ import { useLocale } from "~/i18n";
 
 import type { AdvancedFilterGroup, AdvancedFilterOption } from "./advanced-filter-select";
 
-export const maximumAdvancedFilters = 25;
+export const maximumAdvancedFilters = 30;
 
 // "Popular" interest-category listed separately.
 const popularInterestCategory = "iiCe39JvGQAAtsrTqnLddb";

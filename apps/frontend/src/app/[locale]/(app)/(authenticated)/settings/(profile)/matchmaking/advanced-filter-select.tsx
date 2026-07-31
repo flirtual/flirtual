@@ -44,7 +44,7 @@ export const AdvancedFilterSelect: FC<{
 	limit?: number;
 	placeholder?: string;
 	id?: string;
-}> = ({ value, onChange, groups, premium, limit = 25, placeholder: _placeholder, id }) => {
+}> = ({ value, onChange, groups, premium, limit = 30, placeholder: _placeholder, id }) => {
 	const { t } = useTranslation();
 	const safeArea = useSafeArea();
 	const desktop = useBreakpoint("desktop");
