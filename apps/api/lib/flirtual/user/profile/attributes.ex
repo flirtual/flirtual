@@ -5,6 +5,7 @@ defmodule Flirtual.User.Profile.Attributes do
   import Ecto.Changeset
 
   alias Flirtual.Attribute
+  alias Flirtual.Attribute.Cache
   alias Flirtual.Repo
   alias Flirtual.User
   alias Flirtual.User.Profile
@@ -113,20 +114,25 @@ defmodule Flirtual.User.Profile.Attributes do
   end
 
   def update_order(type, options) do
-    Repo.transaction(fn repo ->
-      list(type, options)
-      |> Enum.with_index()
-      |> Enum.map(fn {attribute, order} ->
-        with {:ok, attribute} <-
-               change(attribute, %{order: order})
-               |> repo.update() do
-          attribute
-        else
-          {:error, reason} -> Repo.rollback(reason)
-          reason -> Repo.rollback(reason)
-        end
-      end)
-      |> length()
-    end)
+    with {:ok, count} <-
+           Repo.transaction(fn repo ->
+             list(type, options)
+             |> Enum.with_index()
+             |> Enum.map(fn {attribute, order} ->
+               with {:ok, attribute} <-
+                      change(attribute, %{order: order})
+                      |> repo.update() do
+                 attribute
+               else
+                 {:error, reason} -> Repo.rollback(reason)
+                 reason -> Repo.rollback(reason)
+               end
+             end)
+             |> length()
+           end) do
+      Cache.refresh()
+
+      {:ok, count}
+    end
   end
 end
