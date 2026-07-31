@@ -7,6 +7,7 @@ export * from "./google";
 export * from "./google-play";
 export * from "./meta";
 export * from "./microsoft";
+export * from "./oculus";
 export * from "./pico";
 export * from "./playstation";
 export * from "./steam";

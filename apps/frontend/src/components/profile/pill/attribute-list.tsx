@@ -8,7 +8,6 @@ import type { User } from "~/api/user";
 import type { GameStoreLink } from "~/components/game-stores";
 import { GameStoreLinks } from "~/components/game-stores";
 import { InlineLink } from "~/components/inline-link";
-import { Link } from "~/components/link";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 import { useAttributeTranslation } from "~/hooks/use-attribute";
 import { useOptionalSession } from "~/hooks/use-session";
@@ -86,16 +85,7 @@ export const PillAttributeList: FC<PillAttributeListProps> = ({
 									href={href}
 								>
 									{label}
-									{links.length > 0 && (
-										<>
-											<Link
-												aria-label={label}
-												className="absolute inset-0 rounded-xl"
-												href={links[0]!.href}
-											/>
-											<GameStoreLinks className="relative" links={links} />
-										</>
-									)}
+									<GameStoreLinks overlay stretched links={links} />
 								</Pill>
 							</div>
 						</TooltipTrigger>

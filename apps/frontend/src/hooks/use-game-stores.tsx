@@ -12,8 +12,8 @@ import { useOptionalSession } from "./use-session";
 
 const storePlatforms: Record<GameStore, string> = {
 	pcvr: "3Kagenz7boB64Ke6vEAKv6",
-	frame: "Ry723pMCrWV4ptp8ywcorG",
 	horizon: "RNaigbGdB7H4ZMw5c8ysbi",
+	frame: "Ry723pMCrWV4ptp8ywcorG",
 	pico: "FEX8jjr4P9aeBurRUTLhU7",
 	vive: "N458aYKyg6hweVbyDEMDAR",
 	androidxr: "Qb3Ar9wqh7mAMwdevJCfYS",

@@ -9,8 +9,8 @@ export type KinkAttributeKind = "dominant" | "submissive" | null;
 
 export const gameStores = [
 	"pcvr",
-	"frame",
 	"horizon",
+	"frame",
 	"pico",
 	"vive",
 	"androidxr",
@@ -64,8 +64,8 @@ export interface AttributeMetadata {
 	language: undefined;
 	game?: {
 		pcvr?: string;
-		frame?: string;
 		horizon?: string;
+		frame?: string;
 		pico?: string;
 		vive?: string;
 		androidxr?: string;
