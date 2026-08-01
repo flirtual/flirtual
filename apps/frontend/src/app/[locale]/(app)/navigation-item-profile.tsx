@@ -80,16 +80,21 @@ export const NavigationItemProfile: FC = () => {
 
 	return (
 		<div className="relative aspect-square shrink-0">
-			<button
+			<Link
 				id="profile-dropdown-button"
 				className={twMerge(
-					"group rounded-full p-1 transition-all",
+					"group block rounded-full p-1 transition-all",
 					active
 						? "bg-white-20 shadow-brand-1"
 						: "bg-transparent hocus:bg-white-20 hocus:text-black-70 hocus:shadow-brand-1"
 				)}
-				type="button"
-				onClick={() => setVisible(true)}
+				href={urls.profile(user)}
+				onClick={(event) => {
+					if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+
+					event.preventDefault();
+					setVisible(true);
+				}}
 			>
 				<UserAvatar
 					priority
@@ -99,7 +104,7 @@ export const NavigationItemProfile: FC = () => {
 					variant="icon"
 					width={40}
 				/>
-			</button>
+			</Link>
 			<AnimatePresence>
 				{visible && (
 					<m.div
