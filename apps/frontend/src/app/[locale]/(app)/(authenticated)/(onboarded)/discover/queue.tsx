@@ -64,11 +64,6 @@ const CurrentProfile = withSuspense<{ userId: string }>(({ userId }) => {
 	return <Profile userId={userId} />;
 }, { fallback: <ProfileSkeleton /> });
 
-// The profile currently on screen. Switching modes remounts the queue, which
-// carries the profile over so you can Homie someone you found in Date Mode and
-// vice versa.
-let displayedProfile: { userId: string; mode: ProspectKind } | null = null;
-
 // Whether the mode's daily (or trial) limits are spent, per the last queue
 // response seen for it.
 function limitsReached(mode: ProspectKind) {
@@ -178,23 +173,26 @@ export const Queue: FC<{ kind: ProspectKind }> = ({ kind }) => {
 	const queueingAnyMode = useIsMutating({ mutationKey: ["queue"] }) > 0;
 	const fetchingQueue = useIsFetching({ queryKey: queueKey(kind) }) > 0;
 
-	// A profile carried over from the other mode, shown here even if it isn't
-	// part of this queue. Switching modes reuses this component (no remount), so
-	// we re-derive the guest whenever the kind prop changes rather than on mount.
-	// Nothing carries over from a mode whose limits are spent.
-	const guestFor = (mode: ProspectKind) =>
-		displayedProfile
-		&& displayedProfile.mode !== mode
-		&& !limitsReached(displayedProfile.mode)
-			? displayedProfile.userId
-			: null;
+	// The profile currently on screen, carried over when switching modes so you
+	// can Homie someone you found in Date Mode and vice versa.
+	const displayedProfile = useRef<{ userId: string; mode: ProspectKind } | null>(null);
 
-	const [guest, setGuest] = useState<string | null>(() => guestFor(kind));
+	// A profile carried over from the other mode, shown here even if it isn't
+	// part of this queue. Switching modes reuses this component, so we derive
+	// the guest whenever the kind changes. Nothing carries over from a mode whose
+	// limits are spent.
+	const [guest, setGuest] = useState<string | null>(null);
 
 	const renderedKind = useRef(kind);
 	if (renderedKind.current !== kind) {
 		renderedKind.current = kind;
-		setGuest(guestFor(kind));
+
+		const previous = displayedProfile.current;
+		setGuest(
+			previous && previous.mode !== kind && !limitsReached(previous.mode)
+				? previous.userId
+				: null
+		);
 	}
 
 	// Once a guest profile is acted on, fall back to this mode's own queue.
@@ -205,7 +203,7 @@ export const Queue: FC<{ kind: ProspectKind }> = ({ kind }) => {
 	const displayed = (guest !== current ? guest : null) ?? current;
 
 	useEffect(() => {
-		if (displayed) displayedProfile = { userId: displayed, mode: kind };
+		if (displayed) displayedProfile.current = { userId: displayed, mode: kind };
 	}, [displayed, kind]);
 
 	if (error === "finish_profile")
