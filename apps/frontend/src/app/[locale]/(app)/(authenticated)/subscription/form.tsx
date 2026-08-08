@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 
 import type { Entitlement } from "~/api/subscription";
 import { InlineLink } from "~/components/inline-link";
+import { useDevice } from "~/hooks/use-device";
 import { useSession } from "~/hooks/use-session";
 import { useUserCount } from "~/hooks/use-user";
 import { useLocale } from "~/i18n";
@@ -52,6 +53,7 @@ export const SubscriptionForm: FC = () => {
 
 	const { user } = useSession();
 	const userCount = useUserCount();
+	const { native } = useDevice();
 
 	const entitlements = (user.entitlements ?? []).filter(
 		(entitlement) => entitlement.kind !== "consumable"
@@ -75,6 +77,13 @@ export const SubscriptionForm: FC = () => {
 		<>
 			<SuccessMessage />
 			<VisionMessage />
+			{!native && (
+				<div className="rounded-lg bg-brand-gradient px-6 py-4">
+					<span className="font-montserrat text-lg text-white-10">
+						{t("web_payment_issue")}
+					</span>
+				</div>
+			)}
 			{shown.length > 0 && (
 				<div data-mask className="flex flex-col gap-4">
 					<h1 className="text-2xl font-semibold">
