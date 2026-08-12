@@ -175,7 +175,8 @@ export default function AboutPage() {
 									2021,
 									2022,
 									2023,
-									2024
+									2024,
+									2025
 								] as const).map((year, index) =>
 									<TimelineItem key={year} index={index} year={year} />
 								)}
