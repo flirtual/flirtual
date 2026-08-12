@@ -130,7 +130,7 @@ const OAuthError: FC = withSuspense(() => {
 
 export const LoginForm: FC = () => {
 	const { t } = useTranslation();
-	const device = useDevice();
+	const { id: deviceId, native, apple } = useDevice();
 	const [searchParameters, setSearchParameters] = useSearchParams();
 	const [tokenInvalid, setTokenInvalid] = useState(false);
 	const [verification, setVerification] = useState<{ loginId: string; email: string } | null>(null);
@@ -186,7 +186,7 @@ export const LoginForm: FC = () => {
 				onSubmit={async (body) => {
 					const value = await Authentication.login({
 						...body,
-						deviceId: device.id
+						deviceId
 					});
 
 					if ("error" in value) {
@@ -324,28 +324,30 @@ export const LoginForm: FC = () => {
 					</>
 				)}
 			</Form>
-			<div className="flex flex-col gap-2">
-				<div className="inline-flex items-center justify-center">
-					<span className="absolute left-1/2 mb-1 -translate-x-1/2 bg-white-20 px-3 font-montserrat font-semibold text-black-50 vision:bg-transparent vision:text-white-50 dark:bg-black-70 dark:text-white-50">
-						{t("or")}
-					</span>
-					<hr className="my-8 h-px w-full border-0 bg-white-40 vision:bg-transparent dark:bg-black-60" />
+			{!(native && apple) && (
+				<div className="flex flex-col gap-2">
+					<div className="inline-flex items-center justify-center">
+						<span className="absolute left-1/2 mb-1 -translate-x-1/2 bg-white-20 px-3 font-montserrat font-semibold text-black-50 vision:bg-transparent vision:text-white-50 dark:bg-black-70 dark:text-white-50">
+							{t("or")}
+						</span>
+						<hr className="my-8 h-px w-full border-0 bg-white-40 vision:bg-transparent dark:bg-black-60" />
+					</div>
+					<LoginConnectionButton tabIndex={5} type="discord" />
+					{/* {platform === "apple" ? (
+							<>
+								<LoginConnectionButton type="apple" />
+								<LoginConnectionButton type="google" />
+							</>
+						) : (
+							<>
+								<LoginConnectionButton type="google" />
+								<LoginConnectionButton type="apple" />
+							</>
+						)}
+						<LoginConnectionButton type="meta" /> */}
+					{/* <LoginConnectionButton type="vrchat" /> */}
 				</div>
-				<LoginConnectionButton tabIndex={5} type="discord" />
-				{/* {platform === "apple" ? (
-						<>
-							<LoginConnectionButton type="apple" />
-							<LoginConnectionButton type="google" />
-						</>
-					) : (
-						<>
-							<LoginConnectionButton type="google" />
-							<LoginConnectionButton type="apple" />
-						</>
-					)}
-					<LoginConnectionButton type="meta" /> */}
-				{/* <LoginConnectionButton type="vrchat" /> */}
-			</div>
+			)}
 		</>
 	);
 };
