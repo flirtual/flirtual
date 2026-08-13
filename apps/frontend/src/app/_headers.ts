@@ -61,7 +61,14 @@ const data = [
 					camera: [],
 					microphone: [],
 					geolocation: ["self"],
-					"browsing-topics": []
+					"browsing-topics": [],
+					...(development
+						? {}
+						: {
+								"local-network": [],
+								"loopback-network": [],
+								"local-network-access": []
+							})
 				})
 					.map(([key, value]) => `${key}=(${value.join(" ")})`)
 					.join(", ")
