@@ -48,14 +48,17 @@ export function deepLinkToRelativeUrl(value: string) {
 		return null;
 	}
 
-	if (url.protocol !== "http:" && url.protocol !== "https:") {
-		const relative = `/${url.host}${url.pathname}${url.search}${url.hash}`;
-		return isInternalHref(relative) ? relative : null;
+	let relative: string;
+
+	if (url.protocol === "http:" || url.protocol === "https:") {
+		if (!allowedOrigins.includes(url.origin)) return null;
+		relative = toRelativeUrl(url);
+	}
+	else {
+		relative = `/${url.host}${url.pathname}${url.search}${url.hash}`;
 	}
 
-	if (!allowedOrigins.includes(url.origin)) return null;
-
-	return toRelativeUrl(url);
+	return isInternalHref(relative) ? relative : null;
 }
 
 export function urlEqual(a: URL, b: URL, strict: boolean = true) {
