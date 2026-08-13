@@ -1,85 +1,39 @@
 import { PostHogProvider } from "@posthog/react";
-import { useQuery } from "@tanstack/react-query";
 import { posthog } from "posthog-js";
-import { Suspense, use } from "react";
 import type { PropsWithChildren } from "react";
 
-import { commitId, posthogHost, posthogKey, server } from "~/const";
+import { posthogHost, posthogKey } from "~/const";
 
 import type { Session } from "./api/auth";
-import { logOnce } from "./hooks/use-log";
 import { log } from "./log";
-import { queryClient, sessionFetcher, sessionKey } from "./query";
-import { absoluteUrl, urls } from "./urls";
+import { queryClient, sessionKey } from "./query";
 
-let ready = false;
+posthog.init(posthogKey, {
+	debug: log.enabled,
+	defaults: "2026-01-30",
 
-function initializeAnalytics() {
-	return;
-	if (ready) return;
+	api_host: posthogHost,
 
-	posthog.init(posthogKey, {
-		debug: log.enabled,
+	cookieless_mode: "always",
+	person_profiles: "never",
 
-		api_host: posthogHost,
+	disable_compression: true,
 
-		defaults: "2025-11-30",
-		cookieless_mode: "always",
+	before_send: (event) => {
+		if (!event) return event;
 
-		// https://github.com/PostHog/posthog-js/issues/2828
-		// disable_external_dependency_loading: true,
-		external_scripts_inject_target: "head",
+		const session = queryClient.getQueryData<Session | null>(sessionKey());
+		const optIn = session?.user.preferences?.privacy.analytics ?? false;
 
-		opt_out_capturing_by_default: true,
-		opt_out_capturing_persistence_type: "localStorage",
+		if (!optIn) return null;
+		return event;
+	},
+});
 
-		before_send: (event) => {
-			if (!event) return event;
-
-			const session = queryClient.getQueryData<Session | null>(sessionKey());
-			const optIn = session?.user.preferences?.privacy.analytics ?? true;
-
-			if (!optIn)
-				return null;
-
-			event.properties.$version = commitId;
-
-			return event;
-		},
-	});
-	posthog.opt_out_capturing();
-
-	logOnce(`Anonymous analytics enabled, you can opt out at ${absoluteUrl(urls.settings.privacy)}.`);
-	ready = true;
-}
-
-function AnalyticsProvider({ children }: PropsWithChildren) {
-	if (server) return children;
-
-	// eslint-disable-next-line react-hooks/rules-of-hooks
-	const { promise } = useQuery({
-		queryKey: sessionKey(),
-		queryFn: sessionFetcher
-	});
-
-	const session = use(promise);
-
-	const optIn = session?.user.preferences?.privacy.analytics ?? true;
-	if (optIn) initializeAnalytics();
-
+export function AnalyticsProvider({ children }: PropsWithChildren) {
 	return (
 		<PostHogProvider client={posthog}>
 			{children}
 		</PostHogProvider>
 	);
 }
-
-function AnalyticsProviderWithFallback({ children }: PropsWithChildren) {
-	return (
-		<Suspense fallback={children}>
-			<AnalyticsProvider>{children}</AnalyticsProvider>
-		</Suspense>
-	);
-}
-
-export { AnalyticsProviderWithFallback as AnalyticsProvider };
