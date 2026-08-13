@@ -1,0 +1,83 @@
+on:
+  push:
+    branches: [main, production]
+    paths: &paths
+      - apps/frontend/ios/**
+      - apps/frontend/visionos/**
+      - apps/frontend/capacitor.config.ts
+      - apps/frontend/package.json
+      - pnpm-lock.yaml
+      - pnpm-workspace.yaml
+      - .github/workflows/codeql-swift.yaml
+  pull_request:
+    paths: *paths
+  schedule:
+    - cron: 13 19 * * 6
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  analyze:
+    name: Analyze (swift)
+    runs-on: macos-26
+    permissions:
+      actions: read
+      contents: read
+      packages: read
+      security-events: write
+    env:
+      VITE_ORIGIN: https://flirtu.al
+      VITE_API_URL: https://api.flirtu.al/v1/
+      VITE_APP_BUNDLE_ID: zone.homie.flirtual.pwa
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6
+        name: Install pnpm
+        with:
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install dependencies
+        working-directory: apps/frontend
+        run: pnpm install
+
+      - name: Sync native project
+        working-directory: apps/frontend
+        run: pnpm cap sync ios
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v4
+        with:
+          languages: swift
+          build-mode: manual
+
+      - name: Build iOS app
+        working-directory: apps/frontend/ios/App
+        run: |
+          xcodebuild build \
+            -workspace App.xcworkspace \
+            -scheme Flirtual \
+            -destination generic/platform=iOS \
+            CODE_SIGNING_ALLOWED=NO
+
+      - name: Build visionOS app
+        working-directory: apps/frontend/visionos
+        run: |
+          xcodebuild build \
+            -project FlirtualVision.xcodeproj \
+            -scheme FlirtualVision \
+            -destination generic/platform=visionOS \
+            CODE_SIGNING_ALLOWED=NO
+
+      - name: Perform CodeQL analysis
+        uses: github/codeql-action/analyze@v4
+        with:
+          category: /language:swift
