@@ -75,7 +75,8 @@ jobs:
             -project FlirtualVision.xcodeproj \
             -scheme FlirtualVision \
             -destination generic/platform=visionOS \
-            CODE_SIGNING_ALLOWED=NO
+            CODE_SIGNING_ALLOWED=NO \
+            ASSETCATALOG_COMPILER_APPICON_NAME=
 
       - name: Perform CodeQL analysis
         uses: github/codeql-action/analyze@v4
