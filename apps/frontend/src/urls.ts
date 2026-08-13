@@ -48,8 +48,10 @@ export function deepLinkToRelativeUrl(value: string) {
 		return null;
 	}
 
-	if (url.protocol !== "http:" && url.protocol !== "https:")
-		return `/${url.host}${url.pathname}${url.search}${url.hash}`;
+	if (url.protocol !== "http:" && url.protocol !== "https:") {
+		const relative = `/${url.host}${url.pathname}${url.search}${url.hash}`;
+		return isInternalHref(relative) ? relative : null;
+	}
 
 	if (!allowedOrigins.includes(url.origin)) return null;
 
