@@ -102,7 +102,7 @@
 		"jose": "^6.2.3",
 		"lucide-react": "^1.24.0",
 		"motion": "12.42.2",
-		"posthog-js": "^1.399.5",
+		"posthog-js": "^1.413.3",
 		"react": "19.2.7",
 		"react-colorful": "^5.8.0",
 		"react-dom": "19.2.7",
