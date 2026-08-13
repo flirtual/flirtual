@@ -4,6 +4,8 @@ on:
     branches: [ "production" ]
     paths: [ "apps/image-classification/**", ".github/workflows/deploy-classification.yaml" ]
   workflow_dispatch:
+permissions:
+  contents: read
 jobs:
   deploy:
     name: Deploy Image Classification
