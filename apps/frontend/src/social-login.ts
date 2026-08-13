@@ -8,6 +8,7 @@ import { log } from "./log";
 const cancelGraceMs = 1500;
 
 export async function initializeSocialLogin(): Promise<void> {
+	if (!device.native) return;
 	if (!appleSigninServiceId && !googleClientId) return;
 
 	try {
