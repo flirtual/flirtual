@@ -148,7 +148,7 @@ defmodule FlirtualWeb.PasskeyController do
              signature,
              client_data_json,
              challenge,
-             [{credential_id, :erlang.binary_to_term(cose_key)}]
+             [{credential_id, :erlang.binary_to_term(cose_key, [:safe])}]
            ),
          login_user <- User.get(user_id),
          %User{banned_at: nil} <- login_user do
