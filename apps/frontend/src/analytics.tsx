@@ -2,7 +2,7 @@ import { PostHogProvider } from "@posthog/react";
 import { posthog } from "posthog-js";
 import type { PropsWithChildren } from "react";
 
-import { posthogHost, posthogKey } from "~/const";
+import { posthogHost, posthogKey, posthogUiHost } from "~/const";
 
 import type { Session } from "./api/auth";
 import { log } from "./log";
@@ -13,6 +13,7 @@ posthog.init(posthogKey, {
 	defaults: "2026-01-30",
 
 	api_host: posthogHost,
+	ui_host: posthogUiHost,
 
 	cookieless_mode: "always",
 	person_profiles: "never",

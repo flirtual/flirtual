@@ -46,6 +46,7 @@ export const sentryProfiles = Number.parseFloat(
 // PostHog
 export const posthogKey = import.meta.env.VITE_POSTHOG_KEY as string;
 export const posthogHost = import.meta.env.VITE_POSTHOG_HOST as string;
+export const posthogUiHost = import.meta.env.VITE_POSTHOG_UI_HOST as string || "https://us.posthog.com";
 
 export const sentryEnabled = !!sentryDsn
 	&& !!sentryOrganization
