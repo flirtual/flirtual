@@ -99,6 +99,7 @@ const data = [
 						"static.cloudflareinsights.com",
 						// https://posthog.com/docs/advanced/content-security-policy
 						posthogHost && new URL(posthogHost).host,
+						"*.posthog.com",
 						// https://www.chargebee.com/docs/billing/2.0/hosted-capabilities/embedded-checkout
 						"*.chargebee.com"
 					],
@@ -153,6 +154,7 @@ const data = [
 						sentryEnabled && new URL(sentryDsn).host,
 						// https://posthog.com/docs/advanced/content-security-policy
 						posthogHost && new URL(posthogHost).host,
+						"*.posthog.com",
 						// https://www.chargebee.com/docs/billing/2.0/hosted-capabilities/embedded-checkout
 						"*.chargebee.com"
 					],
@@ -179,7 +181,8 @@ const data = [
 						...playlistPlatforms.map(({ embed }) => new URL(embed("example", "light", "en")).host),
 					],
 					// https://docs.sentry.io/platforms/javascript/session-replay/#content-security-policy-csp
-					"worker-src": ["'self'", "blob:"],
+					// https://posthog.com/docs/advanced/content-security-policy
+					"worker-src": ["'self'", "blob:", "data:"],
 					"child-src": ["'self'", "blob:"],
 					"upgrade-insecure-requests": [],
 					...(contentSecurityPolicyReportTo
