@@ -1,3 +1,4 @@
+import ms from "ms.macro";
 import { toSnakeCase } from "remeda";
 import type { WretchOptions } from "wretch";
 
@@ -9,6 +10,7 @@ import type { Attribute } from "../attributes";
 import { api } from "../common";
 import type { DatedModel, Paginate, PaginateOptions, UuidModel } from "../common";
 import type { Connection } from "../connections";
+import { timeout } from "../middleware";
 import type { Subscription } from "../subscription";
 import { Preferences } from "./preferences";
 import type { Profile } from "./profile";
@@ -347,7 +349,11 @@ export const User = {
 		currentPassword: string;
 		captcha: string;
 	}) {
-		return this.api.json(options).delete().json<User>();
+		return this.api
+			.middlewares([timeout(ms("3m"))], true)
+			.json(options)
+			.delete()
+			.json<User>();
 	},
 	delete(userId: string) {
 		return this.api.url(`/${userId}`).delete().json<User>();
