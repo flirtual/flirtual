@@ -190,6 +190,16 @@ defmodule Flirtual.Chargebee do
 
       {:error, 400, _, %{"error_code" => "The resource is already scheduled for deletion"}} ->
         {:ok, nil}
+
+      reason ->
+        log(:error, [:delete_customer, chargebee_id], reason)
+
+        Sentry.capture_message("Chargebee customer deletion failed",
+          level: :error,
+          extra: %{chargebee_customer: chargebee_id, reason: inspect(reason)}
+        )
+
+        {:error, reason}
     end
   end
 

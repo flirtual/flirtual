@@ -31,4 +31,13 @@ defmodule FlirtualWeb.FallbackController do
       when is_atom(status) or status in @error_status_codes do
     conn |> put_error(status, message, details) |> halt()
   end
+
+  def call(%Plug.Conn{} = conn, {:error, reason}) do
+    Sentry.capture_message("Unhandled fallback error",
+      level: :error,
+      extra: %{reason: inspect(reason)}
+    )
+
+    conn |> put_error(:internal_server_error) |> halt()
+  end
 end

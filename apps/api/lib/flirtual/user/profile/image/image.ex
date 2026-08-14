@@ -1,5 +1,6 @@
 defmodule Flirtual.User.Profile.Image do
   use Flirtual.Schema
+  use Flirtual.Logger, :image
   use Flirtual.Policy.Target, policy: Flirtual.User.Profile.Image.Policy
 
   require Flirtual.Utilities
@@ -168,19 +169,29 @@ defmodule Flirtual.User.Profile.Image do
 
     if Application.get_env(:flirtual, :local_uploads?) do
       dir = Application.fetch_env!(:flirtual, :local_uploads_dir)
-      Enum.each(uploads_keys ++ content_keys, &File.rm(Path.join(dir, &1)))
+
+      (uploads_keys ++ content_keys)
+      |> Enum.map(&File.rm(Path.join(dir, &1)))
+      |> first_error()
     else
       keys =
         Enum.map(uploads_keys, &{uploads_bucket(), &1}) ++
           Enum.map(content_keys, &{content_bucket(), &1})
 
-      Enum.each(keys, fn {bucket, key} ->
+      keys
+      |> Enum.map(fn {bucket, key} ->
         ExAws.S3.delete_object(bucket, key) |> ExAws.request()
       end)
+      |> first_error()
     end
-
-    :ok
   end
+
+  defp first_error(results), do: Enum.find(results, :ok, &(not deleted?(&1)))
+
+  defp deleted?(:ok), do: true
+  defp deleted?({:ok, _}), do: true
+  defp deleted?({:error, :enoent}), do: true
+  defp deleted?(_), do: false
 
   defp uploads_bucket,
     do: if(Application.get_env(:flirtual, :canary?), do: "pfpup-canary", else: "pfpup")
@@ -258,12 +269,12 @@ defmodule Flirtual.User.Profile.Image do
   def put_spatial(_, _), do: :error
 
   def delete_user_objects(user_id) when is_binary(user_id) do
-    Image
-    |> where(profile_id: ^user_id)
-    |> Repo.all()
-    |> Enum.each(&delete_objects/1)
+    images = Image |> where(profile_id: ^user_id) |> Repo.all()
 
-    :ok
+    with {:error, reason} <- images |> Enum.map(&delete_objects/1) |> first_error() do
+      log(:error, [:delete_user_objects, user_id], reason)
+      {:error, reason}
+    end
   end
 
   # Detach image from profile before pruning and reduce to hash for duplicate

@@ -388,6 +388,7 @@
 	"unsudo": "スード解除",
 	"errors": {
 		"internal_server_error": "申し訳ありませんが、何か問題が発生しました！後でもう一度お試しください。",
+		"account_deletion_failed": "申し訳ありませんが、アカウントの削除中にエラーが発生しました。後でもう一度お試しいただくか、問題が続く場合はお問い合わせください。",
 		"cant_be_blank": "空白にすることはできません。",
 		"has_already_been_taken": "すでに取られています。",
 		"is_invalid": "無効な入力です。",
