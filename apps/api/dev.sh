@@ -29,7 +29,7 @@ if [ -d "$HOME/Library/Application Support/com.apple.container" ]; then
           --publish 9308:9308 \
           --memory 2g \
           -v manticoredata:/var/lib/manticore \
-          manticoresearch/manticore:latest
+          manticoresearch/manticore:28.4.4
         ;;
     esac
   done
