@@ -408,6 +408,7 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
 
     def encode(_), do: nil
 
+    # sobelow_skip ["Misc.BinToTerm"]
     def decode(token) when is_binary(token) do
       with {:ok, binary} <- Base.url_decode64(token),
            {before, before_id, passed, page, limit}

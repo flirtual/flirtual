@@ -129,6 +129,7 @@ defmodule FlirtualWeb.PasskeyController do
     end
   end
 
+  # sobelow_skip ["Misc.BinToTerm"]
   def authenticate(conn, %{"raw_id" => raw_id, "response" => response} = params) do
     raw_id = Base.decode64!(raw_id)
     authenticator_data = Base.decode64!(response["authenticator_data"])

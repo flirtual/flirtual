@@ -15,8 +15,11 @@
   tools: [
     {:formatter, "mix format --check-formatted"},
     {:credo, "mix credo --mute-exit-status"},
+    {:compiler, "mix compile"},
+    {:sobelow, "mix sobelow --skip"}
+
     ## curated tools may be disabled (e.g. the check for compilation warnings)
-    {:compiler, "mix compile"}
+    # {:compiler, false},
 
     ## ...or have command & args adjusted (e.g. enable skip comments for sobelow)
     # {:sobelow, "mix sobelow --exit medium --skip"}

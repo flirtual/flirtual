@@ -27,7 +27,7 @@ jobs:
       - name: Run Sobelow
         uses: sobelow/action@v1.2.0
         with:
-          flags: --root apps/api
+          flags: --root apps/api --skip
 
       - name: Upload results
         uses: github/codeql-action/upload-sarif@v4

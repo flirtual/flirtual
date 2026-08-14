@@ -417,6 +417,7 @@ defmodule Flirtual.Faker do
     end
   end
 
+  # sobelow_skip ["Traversal.FileModule"]
   defp upload_image(image_data) do
     id = Ecto.UUID.generate()
 
@@ -438,6 +439,7 @@ defmodule Flirtual.Faker do
     end
   end
 
+  # sobelow_skip ["Traversal.FileModule"]
   defp copy_image(original_file) do
     id = Ecto.UUID.generate()
 

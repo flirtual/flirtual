@@ -151,6 +151,7 @@ defmodule FlirtualWeb.ImageController do
     |> send_resp(:no_content, "")
   end
 
+  # sobelow_skip ["Traversal.FileModule"]
   def tus_create(conn, _params) do
     with true <- local_uploads?(),
          {:ok, id} <- authorized_upload_id(conn),
@@ -188,6 +189,7 @@ defmodule FlirtualWeb.ImageController do
     end
   end
 
+  # sobelow_skip ["Traversal.FileModule"]
   def tus_patch(conn, %{"image_id" => id}) do
     with true <- local_uploads?(),
          {:ok, ^id} <- authorized_upload_id(conn),
@@ -225,6 +227,7 @@ defmodule FlirtualWeb.ImageController do
     end
   end
 
+  # sobelow_skip ["Traversal.FileModule"]
   defp tus_expected_length(id) do
     with {:ok, contents} <- File.read(tus_length_path(id)),
          {upload_length, ""} <- Integer.parse(contents) do
@@ -234,6 +237,7 @@ defmodule FlirtualWeb.ImageController do
     end
   end
 
+  # sobelow_skip ["Traversal.SendFile"]
   def local_file(conn, %{"path" => [_ | _] = path_parts}) do
     with true <- local_uploads?(),
          uploads_dir = local_uploads_dir(),

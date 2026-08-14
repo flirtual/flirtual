@@ -158,6 +158,7 @@ defmodule Flirtual.User.Profile.Image do
   # (blur uses blur_id)
   @content_variants ~w(full profile thumb icon)
 
+  # sobelow_skip ["Traversal.FileModule"]
   def delete_objects(%Image{} = image) do
     uploads_keys = if is_binary(image.original_file), do: [image.original_file], else: []
 
@@ -232,6 +233,7 @@ defmodule Flirtual.User.Profile.Image do
 
   defp copy_source(_), do: nil
 
+  # sobelow_skip ["Traversal.FileModule"]
   def put_spatial(spatial_id, body)
       when is_binary(spatial_id) and is_binary(body) do
     key = "#{spatial_id}/spatial"

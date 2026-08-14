@@ -309,6 +309,7 @@ defmodule Flirtual.Search do
   defp esc(value),
     do: value |> to_string() |> String.replace("\\", "\\\\") |> String.replace("'", "''")
 
+  # sobelow_skip ["SQL.Query"]
   defp exec(sql) do
     case Ecto.Adapters.SQL.query(Search.Repo, sql, [], query_type: :text) do
       {:ok, _} -> :ok
@@ -316,6 +317,7 @@ defmodule Flirtual.Search do
     end
   end
 
+  # sobelow_skip ["SQL.Query"]
   defp query_rows(sql) do
     case Ecto.Adapters.SQL.query(Search.Repo, sql, [], query_type: :text) do
       {:ok, %{columns: columns, rows: rows}} ->

@@ -93,6 +93,7 @@ defmodule Flirtual.MixProject do
       {:ex_check, "~> 0.16.0", only: [:dev], runtime: false},
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:mix_audit, "~> 2.1", only: [:dev, :test], runtime: false},
+      {:sobelow, "~> 0.15", only: [:dev, :test], runtime: false},
       {:tidewave, "~> 0.5", only: :dev},
       {:kadabra, "~> 0.6.3"},
       {:vrchat, "~> 1.20.0"}
