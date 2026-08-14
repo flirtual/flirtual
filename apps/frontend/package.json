@@ -2,6 +2,7 @@
 	"name": "frontend",
 	"type": "module",
 	"private": true,
+	"license": "AGPL-3.0-or-later",
 	"scripts": {
 		"dev": "react-router dev",
 		"typegen": "wrangler types --include-runtime false && react-router typegen",

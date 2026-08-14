@@ -3,6 +3,7 @@
 	"version": "0.15.0",
 	"type": "module",
 	"private": true,
+	"license": "AGPL-3.0-only",
 	"scripts": {
 		"typegen": "wrangler types",
 		"type-check": "pnpm typegen && tsc",

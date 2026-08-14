@@ -1,10 +1,8 @@
 {
 	"name": "image-classification",
 	"version": "1.0.0",
-	"description": "",
-	"author": "",
-	"license": "ISC",
-	"keywords": [],
+	"private": true,
+	"license": "AGPL-3.0-or-later",
 	"main": "dist/index.js",
 	"files": [
 		"deepdanbooru_server.py",
