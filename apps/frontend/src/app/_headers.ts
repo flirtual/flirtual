@@ -110,7 +110,9 @@ const data = [
 						"*.freshworks.com",
 						"*.freshdesk.com",
 						// https://www.chargebee.com/docs/billing/2.0/hosted-capabilities/embedded-checkout
-						"*.chargebee.com"
+						"*.chargebee.com",
+						// https://posthog.com/docs/advanced/content-security-policy
+						"*.posthog.com"
 					],
 					"img-src": [
 						"'self'",
