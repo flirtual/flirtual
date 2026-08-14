@@ -182,8 +182,14 @@ defmodule Flirtual.Chargebee do
 
   def delete_customer(%User{chargebee_id: chargebee_id}) when is_binary(chargebee_id) do
     case Chargebeex.Customer.delete(chargebee_id) do
-      {:ok, customer} -> {:ok, customer}
-      {:error, 404, _, _} -> {:ok, nil}
+      {:ok, customer} ->
+        {:ok, customer}
+
+      {:error, 404, _, _} ->
+        {:ok, nil}
+
+      {:error, 400, _, %{"error_code" => "The resource is already scheduled for deletion"}} ->
+        {:ok, nil}
     end
   end
 
