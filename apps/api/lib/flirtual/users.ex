@@ -494,56 +494,64 @@ defmodule Flirtual.Users do
     end
   end
 
+  @delete_timeout :timer.minutes(2)
+
   def delete(%User{} = user, attrs) do
-    Repo.transaction(fn ->
-      with {:ok, attrs} <- Delete.apply(attrs, context: %{user: user}),
-           :ok <- Hash.delete(user.id),
-           :ok <- Image.delete_user_objects(user.id),
-           {:ok, user} <- Repo.delete(user),
-           :ok <- Flirtual.Search.delete_users([user.id]),
-           {:ok, _} <- Talkjs.delete_user(user),
-           {:ok, _} <- Listmonk.delete_subscriber(user),
-           {:ok, _} <- Chargebee.delete_customer(user),
-           :ok <- RevenueCat.cancel_subscriptions(user),
-           :ok <- RevenueCat.delete_customer(user),
-           :ok <- enqueue_revocations(user),
-           :ok <-
-             Discord.deliver_webhook(:exit_survey,
-               user: user,
-               reason: attrs.reason,
-               comment: attrs.comment
-             ) do
-        {:ok, user}
-      else
-        {:error, reason} -> Repo.rollback(reason)
-        reason -> Repo.rollback(reason)
-      end
-    end)
+    Repo.transaction(
+      fn ->
+        with {:ok, attrs} <- Delete.apply(attrs, context: %{user: user}),
+             :ok <- Hash.delete(user.id),
+             :ok <- Image.delete_user_objects(user.id),
+             {:ok, user} <- Repo.delete(user, timeout: @delete_timeout),
+             :ok <- Flirtual.Search.delete_users([user.id]),
+             {:ok, _} <- Talkjs.delete_user(user),
+             {:ok, _} <- Listmonk.delete_subscriber(user),
+             {:ok, _} <- Chargebee.delete_customer(user),
+             :ok <- RevenueCat.cancel_subscriptions(user),
+             :ok <- RevenueCat.delete_customer(user),
+             :ok <- enqueue_revocations(user),
+             :ok <-
+               Discord.deliver_webhook(:exit_survey,
+                 user: user,
+                 reason: attrs.reason,
+                 comment: attrs.comment
+               ) do
+          {:ok, user}
+        else
+          {:error, reason} -> Repo.rollback(reason)
+          reason -> Repo.rollback(reason)
+        end
+      end,
+      timeout: @delete_timeout
+    )
   end
 
   def admin_delete(%User{} = user) do
-    Repo.transaction(fn ->
-      with :ok <- if(is_nil(user.banned_at), do: Hash.delete(user.id), else: :ok),
-           :ok <- Image.delete_user_objects(user.id),
-           :ok <-
-             if(is_nil(user.banned_at),
-               do: :ok,
-               else: Image.retain_user_hashes(user.id, Hash.get_suspended_url(user.id))
-             ),
-           {:ok, user} <- Repo.delete(user),
-           :ok <- Flirtual.Search.delete_users([user.id]),
-           {:ok, _} <- Talkjs.delete_user(user),
-           {:ok, _} <- Listmonk.delete_subscriber(user),
-           {:ok, _} <- Chargebee.delete_customer(user),
-           :ok <- RevenueCat.cancel_subscriptions(user),
-           :ok <- RevenueCat.delete_customer(user),
-           :ok <- enqueue_revocations(user) do
-        {:ok, user}
-      else
-        {:error, reason} -> Repo.rollback(reason)
-        reason -> Repo.rollback(reason)
-      end
-    end)
+    Repo.transaction(
+      fn ->
+        with :ok <- if(is_nil(user.banned_at), do: Hash.delete(user.id), else: :ok),
+             :ok <- Image.delete_user_objects(user.id),
+             :ok <-
+               if(is_nil(user.banned_at),
+                 do: :ok,
+                 else: Image.retain_user_hashes(user.id, Hash.get_suspended_url(user.id))
+               ),
+             {:ok, user} <- Repo.delete(user, timeout: @delete_timeout),
+             :ok <- Flirtual.Search.delete_users([user.id]),
+             {:ok, _} <- Talkjs.delete_user(user),
+             {:ok, _} <- Listmonk.delete_subscriber(user),
+             {:ok, _} <- Chargebee.delete_customer(user),
+             :ok <- RevenueCat.cancel_subscriptions(user),
+             :ok <- RevenueCat.delete_customer(user),
+             :ok <- enqueue_revocations(user) do
+          {:ok, user}
+        else
+          {:error, reason} -> Repo.rollback(reason)
+          reason -> Repo.rollback(reason)
+        end
+      end,
+      timeout: @delete_timeout
+    )
   end
 
   defp enqueue_revocations(%User{connections: connections}) when is_list(connections) do
