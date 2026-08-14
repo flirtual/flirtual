@@ -231,6 +231,10 @@ defmodule Flirtual.Talkjs do
            }),
          {:ok, _} <- delete_user_conversations(user.id) do
       {:ok, talkjs_user}
+    else
+      reason ->
+        log(:error, [:delete_user, user.id], reason)
+        reason
     end
   end
 

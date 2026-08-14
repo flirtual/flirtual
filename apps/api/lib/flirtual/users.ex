@@ -515,8 +515,8 @@ defmodule Flirtual.Users do
                ) do
           {:ok, user}
         else
-          {:error, reason} -> Repo.rollback(reason)
-          reason -> Repo.rollback(reason)
+          {:error, %Ecto.Changeset{} = changeset} -> Repo.rollback(changeset)
+          _ -> Repo.rollback({:service_unavailable, :account_deletion_failed})
         end
       end,
       timeout: @delete_timeout
@@ -526,13 +526,9 @@ defmodule Flirtual.Users do
   def admin_delete(%User{} = user) do
     Repo.transaction(
       fn ->
-        with :ok <- if(is_nil(user.banned_at), do: Hash.delete(user.id), else: :ok),
+        with :ok <- delete_hashes(user),
              :ok <- Image.delete_user_objects(user.id),
-             :ok <-
-               if(is_nil(user.banned_at),
-                 do: :ok,
-                 else: Image.retain_user_hashes(user.id, Hash.get_suspended_url(user.id))
-               ),
+             :ok <- retain_image_hashes(user),
              {:ok, user} <- Repo.delete(user, timeout: @delete_timeout),
              :ok <- Flirtual.Search.delete_users([user.id]),
              {:ok, _} <- Talkjs.delete_user(user),
@@ -543,13 +539,21 @@ defmodule Flirtual.Users do
              :ok <- enqueue_revocations(user) do
           {:ok, user}
         else
-          {:error, reason} -> Repo.rollback(reason)
-          reason -> Repo.rollback(reason)
+          {:error, %Ecto.Changeset{} = changeset} -> Repo.rollback(changeset)
+          _ -> Repo.rollback({:service_unavailable, :account_deletion_failed})
         end
       end,
       timeout: @delete_timeout
     )
   end
+
+  defp delete_hashes(%User{banned_at: nil} = user), do: Hash.delete(user.id)
+  defp delete_hashes(%User{}), do: :ok
+
+  defp retain_image_hashes(%User{banned_at: nil}), do: :ok
+
+  defp retain_image_hashes(%User{} = user),
+    do: Image.retain_user_hashes(user.id, Hash.get_suspended_url(user.id))
 
   defp enqueue_revocations(%User{connections: connections}) when is_list(connections) do
     Enum.each(connections, &Connection.enqueue_revocation/1)

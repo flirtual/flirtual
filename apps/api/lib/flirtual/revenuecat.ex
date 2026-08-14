@@ -482,11 +482,19 @@ defmodule Flirtual.RevenueCat do
   def delete_customer(%User{
         revenuecat_id: revenuecat_id
       }) do
-    with {:ok, %Req.Response{status: 200}} <-
-           fetch(:delete, "subscribers/#{revenuecat_id}") do
-      :ok
-    else
-      {:ok, %Req.Response{status: 404}} -> :ok
+    case fetch(:delete, "subscribers/#{revenuecat_id}") do
+      {:ok, %Req.Response{status: status}} when status in [200, 404] ->
+        :ok
+
+      reason ->
+        log(:error, [:delete_customer, revenuecat_id], reason)
+
+        Sentry.capture_message("RevenueCat customer deletion failed",
+          level: :error,
+          extra: %{revenuecat_customer: revenuecat_id, reason: inspect(reason)}
+        )
+
+        {:error, reason}
     end
   end
 

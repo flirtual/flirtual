@@ -396,6 +396,7 @@
 	"unsudo": "Unsudo",
 	"errors": {
 		"internal_server_error": "Sorry, something went wrong! Please try again later.",
+		"account_deletion_failed": "Sorry, there was an error deleting your account. Please try again later or contact us if this issue persists.",
 		"cant_be_blank": "Cannot be empty.",
 		"has_already_been_taken": "Already taken.",
 		"is_invalid": "Invalid input.",

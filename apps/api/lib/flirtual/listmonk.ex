@@ -193,19 +193,19 @@ defmodule Flirtual.Listmonk do
   end
 
   def delete_subscriber(%User{listmonk_id: listmonk_id} = user) when is_integer(listmonk_id) do
-    case delete_subscriber_by_id(listmonk_id) do
-      {:ok, subscriber} ->
-        {:ok, subscriber}
+    with :error <- delete_subscriber_by_id(listmonk_id) do
+      delete_subscriber_by_email(user)
+    end
+  end
 
-      # Listmonk returns 400 when a subscriber isn't found. If the id is stale,
-      # the address may still resolve to a different one. Delete it if so,
-      # otherwise the subscriber has already been deleted.
-      :error ->
-        case get_subscriber_by_email(user.email) do
-          {:ok, nil} -> {:ok, nil}
-          {:ok, %{"id" => listmonk_id}} -> delete_subscriber_by_id(listmonk_id)
-          :error -> :error
-        end
+  # Listmonk returns 400 when a subscriber isn't found. If the id is stale, the
+  # address may still resolve to a different one. Delete it if so, otherwise the
+  # subscriber has already been deleted.
+  defp delete_subscriber_by_email(%User{email: email}) do
+    case get_subscriber_by_email(email) do
+      {:ok, nil} -> {:ok, nil}
+      {:ok, %{"id" => listmonk_id}} -> delete_subscriber_by_id(listmonk_id)
+      :error -> :error
     end
   end
 
