@@ -61,11 +61,25 @@ defmodule FlirtualWeb.Router do
     end
   end
 
+  def put_dashboard_csp(conn, _opts) do
+    nonce = 16 |> :crypto.strong_rand_bytes() |> Base.encode64()
+
+    conn
+    |> assign(:csp_nonce, nonce)
+    |> put_secure_browser_headers(%{
+      "content-security-policy" =>
+        "default-src 'self'; img-src 'self' data:; " <>
+          "script-src 'nonce-#{nonce}'; style-src 'nonce-#{nonce}'; " <>
+          "style-src-attr 'unsafe-inline'; " <>
+          "base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
+    })
+  end
+
   pipeline :debugger_dashboard do
     plug(:accepts, ["html"])
     plug(:fetch_session)
     plug(:protect_from_forgery)
-    plug(:put_secure_browser_headers)
+    plug(:put_dashboard_csp)
     plug(:fetch_current_session)
     plug(:require_debugger_user)
   end
@@ -75,10 +89,12 @@ defmodule FlirtualWeb.Router do
 
     live_dashboard("/dashboard",
       metrics: FlirtualWeb.Telemetry,
+      csp_nonce_assign_key: :csp_nonce,
       on_mount: [{FlirtualWeb.LiveDashboardAuth, :require_debugger}]
     )
 
     oban_dashboard("/oban",
+      csp_nonce_assign_key: :csp_nonce,
       on_mount: [{FlirtualWeb.LiveDashboardAuth, :require_debugger}]
     )
   end
