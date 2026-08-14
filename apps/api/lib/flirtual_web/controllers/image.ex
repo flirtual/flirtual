@@ -234,18 +234,17 @@ defmodule FlirtualWeb.ImageController do
     end
   end
 
-  def local_file(conn, %{"path" => path_parts}) do
-    uploads_dir = Application.fetch_env!(:flirtual, :local_uploads_dir)
-    file_path = Path.join([uploads_dir | path_parts])
-
-    # Prevent directory traversal
-    if String.starts_with?(Path.expand(file_path), Path.expand(uploads_dir)) and
-         File.exists?(file_path) do
+  def local_file(conn, %{"path" => [_ | _] = path_parts}) do
+    with true <- local_uploads?(),
+         uploads_dir = local_uploads_dir(),
+         {:ok, relative} <- Path.safe_relative(Path.join(path_parts), uploads_dir),
+         file_path = Path.join(uploads_dir, relative),
+         true <- File.exists?(file_path) do
       conn
       |> cache_control([:public, :immutable, {"max-age", [year: 1]}])
       |> send_file(200, file_path)
     else
-      {:error, {:not_found, :file_not_found}}
+      _ -> {:error, {:not_found, :file_not_found}}
     end
   end
 
