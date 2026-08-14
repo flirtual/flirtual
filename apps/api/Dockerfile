@@ -12,8 +12,11 @@
 #   - https://pkgs.org/ - resource for finding needed packages
 #   - Ex: hexpm/elixir:1.13.4-erlang-25.0-debian-bookworm-20210902-slim
 #
+# renovate: datasource=github-releases depName=elixir-lang/elixir extractVersion=^v(?<version>.*)$
 ARG ELIXIR_VERSION=1.18.3
+# renovate: datasource=github-releases depName=erlang/otp extractVersion=^OTP-(?<version>.*)$
 ARG OTP_VERSION=27.3.3
+# renovate: datasource=docker depName=debian
 ARG DEBIAN_VERSION=bookworm-20250407-slim
 
 ARG BUILDER_IMAGE="hexpm/elixir:${ELIXIR_VERSION}-erlang-${OTP_VERSION}-debian-${DEBIAN_VERSION}"

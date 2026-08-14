@@ -2,6 +2,11 @@
 
 set -e
 
+# renovate: datasource=docker depName=postgres
+POSTGRES_IMAGE=postgres:17.7-alpine
+# renovate: datasource=docker depName=manticoresearch/manticore
+MANTICORE_IMAGE=manticoresearch/manticore:28.4.4
+
 if [ -d "$HOME/Library/Application Support/com.apple.container" ]; then
   container system start
 
@@ -20,7 +25,7 @@ if [ -d "$HOME/Library/Application Support/com.apple.container" ]; then
           -e POSTGRES_PASSWORD=postgres \
           -e PGDATA=/var/lib/postgresql/data/pgdata \
           -v pgdata:/var/lib/postgresql/data \
-          postgres:17.7-alpine \
+          "$POSTGRES_IMAGE" \
           postgres -N 500
         ;;
       manticore)
@@ -29,7 +34,7 @@ if [ -d "$HOME/Library/Application Support/com.apple.container" ]; then
           --publish 9308:9308 \
           --memory 2g \
           -v manticoredata:/var/lib/manticore \
-          manticoresearch/manticore:28.4.4
+          "$MANTICORE_IMAGE"
         ;;
     esac
   done

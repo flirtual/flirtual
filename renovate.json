@@ -1,0 +1,91 @@
+{
+	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
+	"extends": [
+		"config:recommended"
+	],
+	"minimumReleaseAge": "3 days",
+	"dependencyDashboardApproval": true,
+	"lockFileMaintenance": {
+		"enabled": true,
+		"schedule": [
+			"before 6am on monday"
+		]
+	},
+	"customManagers": [
+		{
+			"customType": "regex",
+			"managerFilePatterns": [
+				"/(^|/)Dockerfile$/"
+			],
+			"matchStrings": [
+				"# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)(?: extractVersion=(?<extractVersion>\\S+))?\\s+ARG \\w+=(?<currentValue>\\S+)"
+			]
+		},
+		{
+			"customType": "regex",
+			"managerFilePatterns": [
+				"/(^|/)dev\\.sh$/"
+			],
+			"matchStrings": [
+				"# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\s+\\w+=\\S+:(?<currentValue>\\S+)"
+			]
+		},
+		{
+			"customType": "regex",
+			"managerFilePatterns": [
+				"/(^|/)fly\\.toml$/"
+			],
+			"matchStrings": [
+				"image ?= ?\"(?<depName>[^:\"]+):(?<currentValue>[^\"]+)\""
+			],
+			"datasourceTemplate": "docker"
+		}
+	],
+	"packageRules": [
+		{
+			"matchPackageNames": [
+				"wrangler",
+				"miniflare",
+				"@cloudflare/**"
+			],
+			"groupName": "cloudflare"
+		},
+		{
+			"matchPackageNames": [
+				"@capacitor/**",
+				"@capgo/**"
+			],
+			"groupName": "capacitor"
+		},
+		{
+			"matchPackageNames": [
+				"eslint",
+				"@eslint/**",
+				"eslint-**",
+				"@ariesclark/eslint-config"
+			],
+			"groupName": "eslint"
+		},
+		{
+			"matchPackageNames": [
+				"manticoresearch/manticore"
+			],
+			"groupName": "manticore"
+		},
+		{
+			"matchPackageNames": [
+				"postgres"
+			],
+			"groupName": "postgres"
+		},
+		{
+			"matchPackageNames": [
+				"elixir",
+				"elixir-lang/elixir",
+				"erlang",
+				"erlang/otp"
+			],
+			"groupName": "elixir toolchain"
+		}
+	]
+}
