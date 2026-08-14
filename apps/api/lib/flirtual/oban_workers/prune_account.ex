@@ -5,7 +5,9 @@ defmodule Flirtual.ObanWorkers.PruneAccount do
 
   @impl Oban.Worker
   def perform(%Oban.Job{args: %{"user_id" => user_id}}) do
-    User.get(user_id)
-    |> Users.admin_delete()
+    case User.get(user_id) do
+      %User{} = user -> Users.admin_delete(user)
+      nil -> :ok
+    end
   end
 end
