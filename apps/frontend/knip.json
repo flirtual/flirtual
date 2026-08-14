@@ -2,7 +2,6 @@
 	"$schema": "https://unpkg.com/knip@6/schema.json",
 	"ignoreDependencies": [
 		"@capacitor/keyboard",
-		"@capacitor/assets",
 		"@eslint-react/eslint-plugin",
 		"babel-plugin-dev-expression",
 		"babel-plugin-macros",
