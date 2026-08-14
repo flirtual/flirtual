@@ -3,7 +3,6 @@ on:
     branches: [main, production]
     paths: &paths
       - apps/frontend/ios/**
-      - apps/frontend/visionos/**
       - apps/frontend/capacitor.config.ts
       - apps/frontend/package.json
       - pnpm-lock.yaml
@@ -67,16 +66,6 @@ jobs:
             -scheme Flirtual \
             -destination generic/platform=iOS \
             CODE_SIGNING_ALLOWED=NO
-
-      - name: Build visionOS app
-        working-directory: apps/frontend/visionos
-        run: |
-          xcodebuild build \
-            -project FlirtualVision.xcodeproj \
-            -scheme FlirtualVision \
-            -destination generic/platform=visionOS \
-            CODE_SIGNING_ALLOWED=NO \
-            ASSETCATALOG_COMPILER_APPICON_NAME=
 
       - name: Perform CodeQL analysis
         uses: github/codeql-action/analyze@v4
