@@ -15,19 +15,19 @@
 		{
 			"customType": "regex",
 			"managerFilePatterns": [
-				"/(^|/)Dockerfile$/"
+				"/(^|/)dev\\.sh$/"
 			],
 			"matchStrings": [
-				"# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)(?: extractVersion=(?<extractVersion>\\S+))?\\s+ARG \\w+=(?<currentValue>\\S+)"
+				"# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\s+\\w+=(?:\\S+:)?(?<currentValue>[^\\s:]+)"
 			]
 		},
 		{
 			"customType": "regex",
 			"managerFilePatterns": [
-				"/(^|/)dev\\.sh$/"
+				"/(^|/)docker-compose\\.ya?ml$/"
 			],
 			"matchStrings": [
-				"# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\s+\\w+=\\S+:(?<currentValue>\\S+)"
+				"# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\s+image: \\S+?:(?<currentValue>[\\d.]+)"
 			]
 		},
 		{
@@ -76,14 +76,18 @@
 			"matchPackageNames": [
 				"postgres"
 			],
+			"enabled": false
+		},
+		{
+			"matchPackageNames": [
+				"flyio/postgres-flex"
+			],
 			"groupName": "postgres"
 		},
 		{
 			"matchPackageNames": [
 				"elixir",
-				"elixir-lang/elixir",
-				"erlang",
-				"erlang/otp"
+				"erlang"
 			],
 			"groupName": "elixir toolchain"
 		}

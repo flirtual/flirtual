@@ -128,6 +128,8 @@ Health: `GET /v1/health?check=<type>` where `<type>` is `api`, `database`, `matc
 
 Fly `postgres-flex` (17.7) HA cluster in `iad`, org `flirtual`: primary + streaming standby, both `performance-4x`, **16 GB RAM** (resized 2026-06-01 from 8 GB). The app connects via `flirtual-db.flycast:5432` → each node's HAProxy → the current primary on `:5433`. The app does **not** use the standby.
 
+The dev `postgres` pins in `docker-compose.yaml` and `dev.sh` are tracked against `flyio/postgres-flex`, not Docker Hub, so Renovate proposes them only when Fly ships a new cluster image. Moving the cluster itself is the manual upgrade below.
+
 **Restarting the primary** (resize, PG upgrade, restart-only GUCs) causes an outage. Never restart the *active* primary; move the primary role to the standby first via a graceful repmgr switchover.
 
 - **Do NOT `fly pg failover`**: broken on this unmanaged cluster; errors `no active leader found` and bounces HAProxy on both nodes, a 1-2 min outage (`... dropped from queue`) without completing.

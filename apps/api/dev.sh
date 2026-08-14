@@ -2,8 +2,11 @@
 
 set -e
 
-# renovate: datasource=docker depName=postgres
-POSTGRES_IMAGE=postgres:17.7-alpine
+# Tracked against the flyio/postgres-flex image running on flirtual-db instead
+# of Docker Hub's alpine image.
+# renovate: datasource=docker depName=flyio/postgres-flex
+POSTGRES_VERSION=17.7
+POSTGRES_IMAGE=postgres:${POSTGRES_VERSION}-alpine
 # renovate: datasource=docker depName=manticoresearch/manticore
 MANTICORE_IMAGE=manticoresearch/manticore:28.4.4
 
