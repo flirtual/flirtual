@@ -347,7 +347,6 @@ export const User = {
 		reasonId: string;
 		comment: string;
 		currentPassword: string;
-		captcha: string;
 	}) {
 		return this.api
 			.middlewares([timeout(ms("3m"))], true)

@@ -452,7 +452,6 @@ defmodule Flirtual.Users do
     use Flirtual.EmbeddedSchema
 
     import Flirtual.Attribute, only: [validate_attribute: 3]
-    import Flirtual.Turnstile, only: [validate_captcha: 1]
     import Flirtual.User, only: [validate_current_password: 2]
 
     @optional [:comment]
@@ -464,12 +463,10 @@ defmodule Flirtual.Users do
       field(:comment, :string, default: "")
 
       field(:current_password, :string, redact: true)
-      field(:captcha, :string, redact: true)
     end
 
     def changeset(value, _, %{user: user}) do
       value
-      |> validate_captcha()
       |> validate_attribute(:reason_id, "delete-reason")
       |> validate_current_password(user)
       |> validate_length(:comment, max: 1_000)

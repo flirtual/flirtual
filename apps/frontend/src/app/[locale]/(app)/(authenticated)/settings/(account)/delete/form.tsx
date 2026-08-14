@@ -26,15 +26,14 @@ export const DeleteForm: FC = () => {
 
 	return (
 		<Form
-			withCaptcha
 			fields={{
 				reasonId: "",
 				comment: "",
 				currentPassword: ""
 			}}
 			className="flex flex-col gap-8"
-			onSubmit={async (body, { captcha }) => {
-				await User.deleteSelf({ ...body, captcha });
+			onSubmit={async (body) => {
+				await User.deleteSelf(body);
 				await invalidate({ queryKey: sessionKey() });
 			}}
 		>
