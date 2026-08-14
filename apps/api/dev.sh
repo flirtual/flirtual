@@ -20,7 +20,7 @@ if [ -d "$HOME/Library/Application Support/com.apple.container" ]; then
           -e POSTGRES_PASSWORD=postgres \
           -e PGDATA=/var/lib/postgresql/data/pgdata \
           -v pgdata:/var/lib/postgresql/data \
-          postgres:17-alpine \
+          postgres:17.7-alpine \
           postgres -N 500
         ;;
       manticore)

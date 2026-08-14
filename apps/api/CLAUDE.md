@@ -126,7 +126,7 @@ Health: `GET /v1/health?check=<type>` where `<type>` is `api`, `database`, `matc
 
 ### Database (`flirtual-db`)
 
-Fly `postgres-flex` (17.2) HA cluster in `iad`, org `flirtual`: primary + streaming standby, both `performance-4x`, **16 GB RAM** (resized 2026-06-01 from 8 GB). The app connects via `flirtual-db.flycast:5432` → each node's HAProxy → the current primary on `:5433`. The app does **not** use the standby.
+Fly `postgres-flex` (17.7) HA cluster in `iad`, org `flirtual`: primary + streaming standby, both `performance-4x`, **16 GB RAM** (resized 2026-06-01 from 8 GB). The app connects via `flirtual-db.flycast:5432` → each node's HAProxy → the current primary on `:5433`. The app does **not** use the standby.
 
 **Restarting the primary** (resize, PG upgrade, restart-only GUCs) causes an outage. Never restart the *active* primary; move the primary role to the standby first via a graceful repmgr switchover.
 
