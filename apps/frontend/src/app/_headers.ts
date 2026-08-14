@@ -119,7 +119,9 @@ const data = [
 						...bucketOrigins.map((origin) => new URL(origin).host),
 						// https://www.chargebee.com/docs/billing/2.0/hosted-capabilities/embedded-checkout
 						"*.chargebee.com",
-						"cb-invoice-logos-prod.s3.us-east-1.amazonaws.com"
+						"cb-invoice-logos-prod.s3.us-east-1.amazonaws.com",
+						// https://posthog.com/docs/advanced/content-security-policy
+						"*.posthog.com",
 					],
 					"media-src": [
 						"'self'",
@@ -129,7 +131,9 @@ const data = [
 						// https://talkjs.com/docs/Features/Security_Settings/Content_Security_Policy/
 						"*.talkjs.com",
 						// https://vrcdn.live/
-						"stream.vrcdn.live"
+						"stream.vrcdn.live",
+						// https://posthog.com/docs/advanced/content-security-policy
+						"*.posthog.com",
 					],
 					"connect-src": [
 						"'self'",
@@ -158,11 +162,19 @@ const data = [
 						// https://www.chargebee.com/docs/billing/2.0/hosted-capabilities/embedded-checkout
 						"*.chargebee.com"
 					],
-					"font-src": ["'self'"],
+					"font-src": [
+						"'self'",
+						// https://posthog.com/docs/advanced/content-security-policy
+						"*.posthog.com",
+					],
 					"object-src": ["'self'", "data:"],
 					"base-uri": ["'self'"],
 					"form-action": ["'self'"],
-					"frame-ancestors": ["'none'"],
+					"frame-ancestors": [
+						"'self'",
+						// https://posthog.com/docs/advanced/content-security-policy
+						"*.posthog.com",
+					],
 					"frame-src": [
 						new URL(apiOrigin).host,
 						// https://developers.cloudflare.com/turnstile/reference/content-security-policy/
@@ -182,7 +194,13 @@ const data = [
 					],
 					// https://docs.sentry.io/platforms/javascript/session-replay/#content-security-policy-csp
 					// https://posthog.com/docs/advanced/content-security-policy
-					"worker-src": ["'self'", "blob:", "data:"],
+					"worker-src": [
+						"'self'",
+						"blob:",
+						"data:",
+						// https://posthog.com/docs/advanced/content-security-policy
+						"*.posthog.com",
+					],
 					"child-src": ["'self'", "blob:"],
 					"upgrade-insecure-requests": [],
 					...(contentSecurityPolicyReportTo
