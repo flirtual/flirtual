@@ -53,7 +53,7 @@ RUN mix release
 # the compiled release and other runtime necessities
 FROM debian:stable-slim
 
-RUN apt-get update -y && apt-get install -y libstdc++6 openssl libncurses5 locales ca-certificates \
+RUN apt-get update -y && apt-get install -y libstdc++6 openssl libncurses6 locales ca-certificates \
     && apt-get clean && rm -f /var/lib/apt/lists/*_*
 
 # Set the locale
