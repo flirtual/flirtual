@@ -1,6 +1,5 @@
 packages:
   - apps/*
-  - "!apps/image-classification"
 
 catalog:
   "@ariesclark/eslint-config": 3.2.1-canary.1

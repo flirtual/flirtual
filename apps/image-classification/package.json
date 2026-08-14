@@ -1,14 +1,17 @@
 {
 	"name": "image-classification",
 	"version": "1.0.0",
-	"packageManager": "pnpm@10.34.5",
 	"description": "",
 	"author": "",
 	"license": "ISC",
 	"keywords": [],
-	"main": "index.js",
+	"main": "dist/index.js",
+	"files": [
+		"deepdanbooru_server.py",
+		"dist"
+	],
 	"scripts": {
-		"dev": "docker build . -t image-classification && docker run -it --env-file .env.local --rm image-classification"
+		"dev": "docker build -f Dockerfile -t image-classification ../.. && docker run -it --env-file .env.local --rm image-classification"
 	},
 	"dependencies": {
 		"mime-types": "^2.1.35",
@@ -17,12 +20,12 @@
 		"tslib": "^2.8.1"
 	},
 	"devDependencies": {
-		"@ariesclark/eslint-config": "3.2.1-canary.1",
+		"@ariesclark/eslint-config": "catalog:",
 		"@total-typescript/ts-reset": "^0.4.2",
 		"@types/mime-types": "^2.1.4",
 		"@types/node": "^22.19.2",
-		"eslint": "^9.39.1",
+		"eslint": "catalog:",
 		"pino-pretty": "^10.3.1",
-		"typescript": "^5.9.3"
+		"typescript": "catalog:"
 	}
 }

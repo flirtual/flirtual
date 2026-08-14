@@ -47,8 +47,8 @@ One workspace at the repo root: `pnpm-workspace.yaml` (`apps/*`) and a single `p
 - Versions shared by more than one app (`typescript`, `eslint`, `wrangler`, `vitest`, …) live in
   the root `catalog:` and are referenced as `"typescript": "catalog:"`. Bump them there, not in the
   apps.
-- `apps/image-classification` is deliberately excluded: its Fly Docker build has the app directory
-  as its build context, so it keeps its own `pnpm-workspace.yaml` and lockfile.
+- `apps/image-classification`'s Fly image builds with the repo root as context so the shared
+  lockfile is in scope; its ignore rules live in `Dockerfile.dockerignore`.
 
 ## Image uploads
 
