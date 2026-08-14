@@ -71,3 +71,21 @@ jobs:
         uses: github/codeql-action/analyze@v4
         with:
           category: /language:swift
+          output: sarif
+          upload: false
+
+      - name: Drop results from vendored code
+        run: |
+          for file in sarif/*.sarif; do
+            jq '.runs[].results |= map(select(
+              (.locations[0].physicalLocation.artifactLocation.uri // "")
+                | test("(^|/)(node_modules|Pods)/") | not
+            ))' "$file" > "$file.filtered"
+            mv "$file.filtered" "$file"
+          done
+
+      - name: Upload results
+        uses: github/codeql-action/upload-sarif@v4
+        with:
+          sarif_file: sarif
+          category: /language:swift
