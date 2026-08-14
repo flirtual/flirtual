@@ -87,7 +87,9 @@
 		{
 			"matchPackageNames": [
 				"elixir",
-				"erlang"
+				"elixir-lang/elixir",
+				"erlang",
+				"erlang/otp"
 			],
 			"groupName": "elixir toolchain"
 		}
