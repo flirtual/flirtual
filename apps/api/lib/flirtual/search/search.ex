@@ -306,7 +306,8 @@ defmodule Flirtual.Search do
   defp fl(value) when is_integer(value), do: "#{value}.0"
   defp fl(value), do: to_string(value)
 
-  defp esc(value), do: value |> to_string() |> String.replace("'", "''")
+  defp esc(value),
+    do: value |> to_string() |> String.replace("\\", "\\\\") |> String.replace("'", "''")
 
   defp exec(sql) do
     case Ecto.Adapters.SQL.query(Search.Repo, sql, [], query_type: :text) do
