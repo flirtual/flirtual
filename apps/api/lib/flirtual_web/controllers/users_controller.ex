@@ -487,6 +487,7 @@ defmodule FlirtualWeb.UsersController do
     def changeset(value, _, _) do
       value
       |> validate_attribute(:reason_id, "warn-reason")
+      |> update_change(:message, &String.trim/1)
       |> validate_length(:message, min: 8, max: 10_000)
     end
   end

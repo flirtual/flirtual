@@ -1084,6 +1084,8 @@ defmodule Flirtual.User do
     end)
   end
 
+  def acknowledge_warn(%User{moderator_message: nil} = user), do: {:ok, user}
+
   def acknowledge_warn(%User{} = user) do
     now = DateTime.utc_now() |> DateTime.truncate(:second)
     message = user.moderator_message
