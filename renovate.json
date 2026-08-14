@@ -18,7 +18,7 @@
 				"/(^|/)renovate-entrypoint\\.sh$/"
 			],
 			"matchStrings": [
-				"# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)(?: extractVersion=(?<extractVersion>\\S+))?\\s+install-tool \\w+ (?<currentValue>\\S+)"
+				"# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)(?: extractVersion=(?<extractVersion>\\S+))?(?: versioning=(?<versioning>\\S+))?\\s+install-tool \\w+ (?<currentValue>\\S+)"
 			]
 		},
 		{
@@ -104,7 +104,8 @@
 				"elixir",
 				"elixir-lang/elixir",
 				"erlang",
-				"erlang/otp"
+				"erlang/otp",
+				"containerbase/erlang-prebuild"
 			],
 			"groupName": "elixir toolchain"
 		}
