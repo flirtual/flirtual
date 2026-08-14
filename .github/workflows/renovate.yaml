@@ -17,9 +17,9 @@ jobs:
     runs-on: ubuntu-latest
     if: >-
       (github.event_name != 'issues' && github.event_name != 'pull_request')
-      || (github.actor != 'janitor-flitty[bot]'
-      && (github.event.issue.user.login == 'janitor-flitty[bot]'
-      || github.event.pull_request.user.login == 'janitor-flitty[bot]'))
+      || (github.event.sender.id != 317127550
+      && (github.event.issue.user.id == 317127550
+      || github.event.pull_request.user.id == 317127550))
     steps:
       - uses: actions/checkout@v7
 
