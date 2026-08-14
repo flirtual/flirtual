@@ -1,12 +1,14 @@
 import * as deepDanbooru from "./deep-danbooru";
 
-export type Classification = {
+export interface Classification {
 	deepDanbooru: deepDanbooru.Result;
-};
+}
 
 export const startModel = deepDanbooru.startModel;
 export const isReady = deepDanbooru.isReady;
 
-export const classify = async (imagePath: string): Promise<Classification> => ({
-	deepDanbooru: await deepDanbooru.evaluate(imagePath)
-});
+export async function classify(imagePath: string): Promise<Classification> {
+	return {
+		deepDanbooru: await deepDanbooru.evaluate(imagePath)
+	};
+}

@@ -6,6 +6,5 @@ deep-danbooru
 node_modules
 .git
 .env.*
-.eslintrc.js
-.eslintignore
+eslint.config.mjs
 .gitignore

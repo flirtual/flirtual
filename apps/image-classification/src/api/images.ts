@@ -1,3 +1,4 @@
+import { Buffer } from "node:buffer";
 import { randomBytes } from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -7,10 +8,7 @@ import sharp from "sharp";
 
 import { log } from "../log";
 
-export const download = async (
-	groupFile: string,
-	url: string
-): Promise<string | false> => {
+export async function download(groupFile: string,	url: string): Promise<false | string> {
 	try {
 		const response = await fetch(url, {
 			headers: {
@@ -20,9 +18,9 @@ export const download = async (
 
 		if (!response.ok) {
 			const body = await response.json().catch(() => null);
-			const error =
-				(body && typeof body === "object" && "error" in body && body?.error) ||
-				response.statusText;
+			const error
+				= (body && typeof body === "object" && "error" in body && body?.error)
+					|| response.statusText;
 
 			log.error({ groupFile, url, error }, `Download failed.`);
 			return false;
@@ -47,7 +45,7 @@ export const download = async (
 
 		// Classifiers only support JPEG/PNG/BMP and non-animated GIF; convert to a
 		// single PNG frame.
-		if (!["jpeg", "png", "bmp"].includes(extension)) {
+		if (!["bmp", "jpeg", "png"].includes(extension)) {
 			buffer = await sharp(buffer).png().toBuffer();
 			outputExtension = "png";
 		}
@@ -61,9 +59,10 @@ export const download = async (
 
 		log.info({ groupFile, url }, `Downloaded.`);
 		return output;
-	} catch (reason) {
+	}
+	catch (reason) {
 		const error = reason instanceof Error ? reason.message : String(reason);
 		log.error({ groupFile, url, reason: error }, "Download failed.");
 		return false;
 	}
-};
+}

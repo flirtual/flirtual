@@ -1,4 +1,7 @@
-import sharp, { type Sharp } from "sharp";
+import { Buffer } from "node:buffer";
+
+import sharp from "sharp";
+import type { Sharp } from "sharp";
 
 // DCT-based perceptual hash (pHash): DCT a 32x32 grayscale sample, keep the
 // top-left 8x8 low-frequency block, and threshold each against the block's
@@ -8,7 +11,7 @@ const hashSize = 8;
 
 // 1D DCT-II coefficients, reused across both axes of the separable 2D transform.
 const dctMatrix = (() => {
-	const matrix = new Array<Float64Array>(sampleSize);
+	const matrix = Array.from<Float64Array>({ length: sampleSize });
 
 	for (let u = 0; u < sampleSize; u++) {
 		const row = new Float64Array(sampleSize);
@@ -23,7 +26,7 @@ const dctMatrix = (() => {
 	return matrix;
 })();
 
-const dct2d = (input: Float64Array): Float64Array => {
+function dct2d(input: Float64Array): Float64Array {
 	const rows = new Float64Array(sampleSize * sampleSize);
 
 	// DCT along each row.
@@ -51,11 +54,11 @@ const dct2d = (input: Float64Array): Float64Array => {
 	}
 
 	return output;
-};
+}
 
 // 64-bit perceptual hash ("0"/"1" string) of a prepared pipeline. Similar
 // images have a small Hamming distance.
-const hashPipeline = async (pipeline: Sharp): Promise<string> => {
+async function hashPipeline(pipeline: Sharp): Promise<string> {
 	// `fill` ignores aspect ratio, so the hash is stable regardless of dimensions.
 	const pixels = await pipeline
 		.flatten({ background: "#000000" })
@@ -79,29 +82,27 @@ const hashPipeline = async (pipeline: Sharp): Promise<string> => {
 	const median = (sorted[(sorted.length - 1) >> 1]! + sorted[sorted.length >> 1]!) / 2;
 
 	return block.map((value) => (value > median ? "1" : "0")).join("");
-};
+}
 
 // Mask size — sharp composites after resizing, so the mask must match the
 // base's post-resize size.
 const circleSampleSize = 256;
 
 let circleMaskCache: Promise<Buffer> | null = null;
-const circleMask = () =>
-	(circleMaskCache ??= sharp(
+function circleMask() {
+	return circleMaskCache ??= sharp(
 		Buffer.from(
 			`<svg width="${circleSampleSize}" height="${circleSampleSize}"><circle cx="${circleSampleSize / 2}" cy="${circleSampleSize / 2}" r="${circleSampleSize / 2}" fill="#fff"/></svg>`
 		)
 	)
 		.png()
-		.toBuffer());
+		.toBuffer();
+}
 
 // Perceptual hash of the image center-cropped to a circle (optionally mirrored
 // first). Circle crop helps recall from messy screenshots at the cost of some
 // precision.
-const circleHash = async (
-	input: Buffer | string,
-	flip: boolean
-): Promise<string> => {
+async function circleHash(input: Buffer | string,	flip: boolean): Promise<string> {
 	const base = () => {
 		const image = sharp(input, { failOn: "none" });
 		return flip ? image.flop() : image;
@@ -126,7 +127,7 @@ const circleHash = async (
 		.toBuffer();
 
 	return hashPipeline(sharp(masked, { failOn: "none" }));
-};
+}
 
 export interface ImageHashes {
 	// Perceptual hash, and the hash of the mirrored image (query-only, to match
@@ -136,9 +137,7 @@ export interface ImageHashes {
 }
 
 // Failed hashes are null.
-export const imageHashes = async (
-	input: Buffer | string
-): Promise<ImageHashes> => {
+export async function imageHashes(input: Buffer | string): Promise<ImageHashes> {
 	const safe = (hash: Promise<string>): Promise<string | null> =>
 		hash.catch(() => null);
 
@@ -148,4 +147,4 @@ export const imageHashes = async (
 	]);
 
 	return { hash, flipped };
-};
+}

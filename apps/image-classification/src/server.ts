@@ -1,7 +1,8 @@
-import { createServer } from "node:http";
-import type { IncomingMessage, ServerResponse } from "node:http";
+import { Buffer } from "node:buffer";
 import { randomBytes, timingSafeEqual } from "node:crypto";
 import fs from "node:fs/promises";
+import { createServer } from "node:http";
+import type { IncomingMessage, ServerResponse } from "node:http";
 import path from "node:path";
 
 import { download } from "./api/images";
@@ -10,31 +11,32 @@ import { accessToken, port, temporaryDirectory } from "./consts";
 import { imageHashes } from "./hash";
 import { log } from "./log";
 
-const authorized = (header: string | undefined): boolean => {
+function authorized(header: string | undefined): boolean {
 	if (!accessToken) return false;
 
 	const a = Buffer.from(header ?? "");
 	const b = Buffer.from(`Bearer ${accessToken}`);
 	return a.length === b.length && timingSafeEqual(a, b);
-};
+}
 
-const readBody = (request: IncomingMessage): Promise<Buffer> =>
-	new Promise((resolve, reject) => {
+function readBody(request: IncomingMessage): Promise<Buffer> {
+	return new Promise((resolve, reject) => {
 		const chunks: Array<Buffer> = [];
 		request.on("data", (chunk: Buffer) => chunks.push(chunk));
 		request.on("end", () => resolve(Buffer.concat(chunks)));
 		request.on("error", reject);
 	});
+}
 
-const sendJson = (response: ServerResponse, status: number, payload: unknown): void => {
+function sendJson(response: ServerResponse, status: number, payload: unknown): void {
 	response
 		.writeHead(status, { "content-type": "application/json" })
 		.end(JSON.stringify(payload));
-};
+}
 
 // POST /hash: returns { hash, flipped } for an image body. Used for moderation
 // image search.
-const handleHash = async (request: IncomingMessage, response: ServerResponse): Promise<void> => {
+async function handleHash(request: IncomingMessage, response: ServerResponse): Promise<void> {
 	const body = await readBody(request);
 	if (body.length === 0) {
 		response.writeHead(400).end();
@@ -48,14 +50,11 @@ const handleHash = async (request: IncomingMessage, response: ServerResponse): P
 	}
 
 	sendJson(response, 200, hashes);
-};
+}
 
 // POST /classify { url }: downloads an image and returns
 // { classifications, hash, flipped }. Used for image uploads.
-const handleClassify = async (
-	request: IncomingMessage,
-	response: ServerResponse
-): Promise<void> => {
+async function handleClassify(request: IncomingMessage,	response: ServerResponse): Promise<void> {
 	const raw = await readBody(request);
 	const { url } = JSON.parse(raw.toString() || "{}") as { url?: string };
 
@@ -69,11 +68,11 @@ const handleClassify = async (
 		return;
 	}
 
-	const groupDir = path.resolve(temporaryDirectory, randomBytes(16).toString("hex"));
-	await fs.mkdir(groupDir, { recursive: true });
+	const groupDirectory = path.resolve(temporaryDirectory, randomBytes(16).toString("hex"));
+	await fs.mkdir(groupDirectory, { recursive: true });
 
 	try {
-		const imagePath = await download(groupDir, url);
+		const imagePath = await download(groupDirectory, url);
 		if (!imagePath) {
 			sendJson(response, 422, { error: "download failed" });
 			return;
@@ -89,12 +88,13 @@ const handleClassify = async (
 			hash: hashes.hash,
 			flipped: hashes.flipped
 		});
-	} finally {
-		await fs.rm(groupDir, { recursive: true, force: true });
 	}
-};
+	finally {
+		await fs.rm(groupDirectory, { recursive: true, force: true });
+	}
+}
 
-export const startServer = () => {
+export function startServer() {
 	const server = createServer((request, response) => {
 		void (async () => {
 			if (request.method !== "POST") {
@@ -119,7 +119,8 @@ export const startServer = () => {
 				}
 
 				response.writeHead(404).end();
-			} catch (reason) {
+			}
+			catch (reason) {
 				const error = reason instanceof Error ? reason.message : String(reason);
 				log.error({ url: request.url, reason: error }, "Request failed.");
 				if (!response.headersSent) response.writeHead(500).end();
@@ -129,4 +130,4 @@ export const startServer = () => {
 
 	server.listen(port, "::", () => log.info({ port }, "Image Classification server listening."));
 	return server;
-};
+}

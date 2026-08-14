@@ -1,6 +1,8 @@
+import process from "node:process";
+
 import { startModel } from "./classifiers";
-import { startServer } from "./server";
 import { log } from "./log";
+import { startServer } from "./server";
 
 ["SIGTERM", "SIGINT"].map((signal) =>
 	// Gracefully exit on signals.

@@ -1,4 +1,5 @@
 import { spawn } from "node:child_process";
+import process from "node:process";
 
 import { log } from "../log";
 
@@ -16,7 +17,7 @@ const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 // Spawn the resident DeepDanbooru model server and wait until it has loaded the
 // TensorFlow model. Restart if it dies.
-export const startModel = async (): Promise<void> => {
+export async function startModel(): Promise<void> {
 	const child = spawn("python3", ["deepdanbooru_server.py"], {
 		stdio: ["ignore", "inherit", "inherit"],
 		env: process.env
@@ -40,7 +41,8 @@ export const startModel = async (): Promise<void> => {
 				log.info("DeepDanbooru model ready.");
 				return;
 			}
-		} catch {
+		}
+		catch {
 			// Not listening yet; keep polling.
 		}
 
@@ -48,10 +50,10 @@ export const startModel = async (): Promise<void> => {
 	}
 
 	throw new Error("DeepDanbooru model server did not become ready in time.");
-};
+}
 
 // Evaluate an image file, returning tag -> probability.
-export const evaluate = async (imagePath: string): Promise<Result> => {
+export async function evaluate(imagePath: string): Promise<Result> {
 	const response = await fetch(`${modelUrl}/evaluate`, {
 		method: "POST",
 		headers: { "content-type": "application/json" },
@@ -72,4 +74,4 @@ export const evaluate = async (imagePath: string): Promise<Result> => {
 			Number.parseFloat(probability.toFixed(4))
 		])
 	);
-};
+}
