@@ -56,10 +56,22 @@ defmodule Flirtual.Jwks do
     else
       {:ok, %Req.Response{} = response} ->
         log(:error, [:fetch_keys, keys_url], response)
+
+        Sentry.capture_message("JWKS fetch failed",
+          level: :error,
+          extra: %{keys_url: keys_url, status: response.status}
+        )
+
         {:error, :upstream}
 
       {:error, reason} ->
         log(:error, [:fetch_keys, keys_url], reason)
+
+        Sentry.capture_message("JWKS fetch failed",
+          level: :error,
+          extra: %{keys_url: keys_url, reason: inspect(reason)}
+        )
+
         {:error, :upstream}
     end
   end
@@ -78,6 +90,7 @@ defmodule Flirtual.Jwks do
     rescue
       e ->
         log(:error, [:build_jwk], e)
+        Sentry.capture_exception(e, stacktrace: __STACKTRACE__)
         {:error, :invalid_key}
     end
   end

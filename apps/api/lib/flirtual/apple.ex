@@ -271,6 +271,9 @@ defmodule Flirtual.Apple do
 
   defp parse_private_key(nil) do
     log(:error, [:parse_private_key], "APPLE_KEY not configured")
+
+    Sentry.capture_message("Apple private key not configured", level: :error)
+
     {:error, :invalid_private_key}
   end
 
@@ -287,11 +290,18 @@ defmodule Flirtual.Apple do
 
         {:error, reason} ->
           log(:error, [:parse_private_key], reason)
+
+          Sentry.capture_message("Apple private key unusable",
+            level: :error,
+            extra: %{reason: inspect(reason)}
+          )
+
           {:error, :invalid_private_key}
       end
     rescue
       e ->
         log(:error, [:parse_private_key], e)
+        Sentry.capture_exception(e, stacktrace: __STACKTRACE__)
         {:error, :invalid_private_key}
     end
   end
