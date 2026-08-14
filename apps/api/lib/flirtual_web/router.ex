@@ -66,19 +66,20 @@ defmodule FlirtualWeb.Router do
 
     conn
     |> assign(:csp_nonce, nonce)
-    |> put_secure_browser_headers(%{
-      "content-security-policy" =>
-        "default-src 'self'; img-src 'self' data:; " <>
-          "script-src 'nonce-#{nonce}'; style-src 'nonce-#{nonce}'; " <>
-          "style-src-attr 'unsafe-inline'; " <>
-          "base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
-    })
+    |> put_resp_header(
+      "content-security-policy",
+      "default-src 'self'; img-src 'self' data:; " <>
+        "script-src 'nonce-#{nonce}'; style-src 'nonce-#{nonce}'; " <>
+        "style-src-attr 'unsafe-inline'; " <>
+        "base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
+    )
   end
 
   pipeline :debugger_dashboard do
     plug(:accepts, ["html"])
     plug(:fetch_session)
     plug(:protect_from_forgery)
+    plug(:put_secure_browser_headers, %{"content-security-policy" => "default-src 'none'"})
     plug(:put_dashboard_csp)
     plug(:fetch_current_session)
     plug(:require_debugger_user)
@@ -527,7 +528,12 @@ defmodule FlirtualWeb.Router do
       plug(:accepts, ["html"])
       plug(:fetch_session)
       plug(:protect_from_forgery)
-      plug(:put_secure_browser_headers)
+
+      plug(:put_secure_browser_headers, %{
+        "content-security-policy" =>
+          "default-src 'self'; img-src * data:; " <>
+            "script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'"
+      })
     end
 
     scope "/dev" do
