@@ -68,6 +68,21 @@ defmodule Flirtual.Listmonk do
     end
   end
 
+  def get_subscriber_by_email(email) when is_binary(email) do
+    case fetch(:get, "subscribers", nil,
+           query: [query: "lower(subscribers.email) = lower('#{escape_sql_literal(email)}')"]
+         ) do
+      {:ok, %Req.Response{status: 200, body: body}} ->
+        {:ok, Jason.decode!(body)["data"]["results"] |> List.first()}
+
+      reason ->
+        log(:error, [:get_subscriber_by_email], reason)
+        :error
+    end
+  end
+
+  defp escape_sql_literal(value), do: String.replace(value, "'", "''")
+
   def create_subscriber(%User{} = user) do
     body = %{
       "email" => user.email,
@@ -93,16 +108,12 @@ defmodule Flirtual.Listmonk do
         end
 
       {:ok, %Req.Response{status: 409, body: "{\"message\":\"E-mail already exists.\"}\n"}} ->
-        case fetch(:get, "subscribers", nil,
-               query: [query: "lower(subscribers.email) = lower('#{user.email}')"]
-             ) do
-          {:ok, %Req.Response{status: 200, body: body}} ->
-            data = Jason.decode!(body)["data"]
-
+        case get_subscriber_by_email(user.email) do
+          {:ok, %{"id" => listmonk_id} = subscriber} ->
             with {:ok, _} <-
-                   change(user, %{listmonk_id: hd(data["results"])["id"]})
+                   change(user, %{listmonk_id: listmonk_id})
                    |> Repo.update() do
-              {:ok, hd(data["results"])}
+              {:ok, subscriber}
             end
 
           _ ->
@@ -125,34 +136,54 @@ defmodule Flirtual.Listmonk do
 
   # User is an existing Listmonk subscriber, update their details.
   def update_subscriber(%User{listmonk_id: listmonk_id} = user) when is_integer(listmonk_id) do
-    case fetch(:get, "subscribers/#{user.listmonk_id}") do
+    case fetch(:get, "subscribers/#{listmonk_id}") do
       {:ok, %Req.Response{status: 200, body: body}} ->
-        subscriber = Jason.decode!(body)["data"]
+        put_subscriber(user, listmonk_id, Jason.decode!(body)["data"])
 
-        status =
-          cond do
-            subscriber["status"] == "blocklisted" -> "blocklisted"
-            is_nil(user.email_confirmed_at) -> "disabled"
-            true -> "enabled"
-          end
+      # Repair stale id: adopt the id the address resolves to, or create a new
+      # subscriber if it doesn't resolve.
+      reason ->
+        log(:warning, [:update_subscriber, listmonk_id], reason)
 
-        body = %{
-          "email" => user.email,
-          "name" => user.profile[:display_name] || "_",
-          "status" => status,
-          "preconfirm_subscriptions" => true,
-          "lists" => get_subscriber_lists(user)
-        }
+        case get_subscriber_by_email(user.email) do
+          {:ok, %{"id" => listmonk_id} = subscriber} ->
+            with {:ok, user} <-
+                   change(user, %{listmonk_id: listmonk_id})
+                   |> Repo.update() do
+              put_subscriber(user, listmonk_id, subscriber)
+            end
 
-        case fetch(:put, "subscribers/#{user.listmonk_id}", body) do
-          {:ok, %Req.Response{status: 200, body: body}} ->
-            {:ok, Jason.decode!(body)["data"]}
+          {:ok, nil} ->
+            create_subscriber(user)
 
-          _ ->
+          :error ->
             :error
         end
+    end
+  end
 
-      {:error, _} ->
+  defp put_subscriber(%User{} = user, listmonk_id, subscriber) do
+    status =
+      cond do
+        subscriber["status"] == "blocklisted" -> "blocklisted"
+        is_nil(user.email_confirmed_at) -> "disabled"
+        true -> "enabled"
+      end
+
+    body = %{
+      "email" => user.email,
+      "name" => user.profile[:display_name] || "_",
+      "status" => status,
+      "preconfirm_subscriptions" => true,
+      "lists" => get_subscriber_lists(user)
+    }
+
+    case fetch(:put, "subscribers/#{listmonk_id}", body) do
+      {:ok, %Req.Response{status: 200, body: body}} ->
+        {:ok, Jason.decode!(body)["data"]}
+
+      reason ->
+        log(:error, [:update_subscriber, listmonk_id], reason)
         :error
     end
   end
@@ -162,11 +193,29 @@ defmodule Flirtual.Listmonk do
   end
 
   def delete_subscriber(%User{listmonk_id: listmonk_id} = user) when is_integer(listmonk_id) do
-    case fetch(:delete, "subscribers/#{user.listmonk_id}") do
+    case delete_subscriber_by_id(listmonk_id) do
+      {:ok, subscriber} ->
+        {:ok, subscriber}
+
+      # Listmonk returns 400 when a subscriber isn't found. If the id is stale,
+      # the address may still resolve to a different one. Delete it if so,
+      # otherwise the subscriber has already been deleted.
+      :error ->
+        case get_subscriber_by_email(user.email) do
+          {:ok, nil} -> {:ok, nil}
+          {:ok, %{"id" => listmonk_id}} -> delete_subscriber_by_id(listmonk_id)
+          :error -> :error
+        end
+    end
+  end
+
+  defp delete_subscriber_by_id(listmonk_id) when is_integer(listmonk_id) do
+    case fetch(:delete, "subscribers/#{listmonk_id}") do
       {:ok, %Req.Response{status: 200, body: body}} ->
         {:ok, Jason.decode!(body)["data"]}
 
-      _ ->
+      reason ->
+        log(:warning, [:delete_subscriber, listmonk_id], reason)
         :error
     end
   end
