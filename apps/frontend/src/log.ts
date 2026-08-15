@@ -1,12 +1,6 @@
-import debug from "debug";
+import { createDebug } from "obug";
 
-import * as environment from "./const";
+import { production } from "./const";
 
-const prefix = "flirtual";
-if (environment.development) debug.enable(`${prefix}*`);
-if (environment.client) debug.selectColor = () => "pink";
-
-export const log = debug(prefix);
-export const logRendering = log.extend("rendering");
-
-if (environment.client) log.extend("environment")({ ...environment });
+export const log = createDebug("flirtual", { useColors: true });
+if (!production) log.enabled = true;
