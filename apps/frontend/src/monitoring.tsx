@@ -17,7 +17,6 @@ import {
 	sentryTraces,
 	siteOrigin
 } from "~/const";
-import { device } from "~/hooks/use-device";
 
 export function setupMonitoring() {
 	init({
