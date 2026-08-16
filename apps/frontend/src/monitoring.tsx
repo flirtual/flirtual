@@ -1,9 +1,10 @@
-import { getGlobalScope, spanStreamingIntegration } from "@sentry/core";
 import {
 	browserProfilingIntegration,
+	getGlobalScope,
 	init,
 	reactRouterTracingIntegration,
 	replayIntegration,
+	spanStreamingIntegration
 } from "@sentry/react-router";
 
 import {

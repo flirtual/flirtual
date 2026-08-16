@@ -152,7 +152,7 @@ const data = [
 						"cloudflareinsights.com",
 						"static.cloudflareinsights.com",
 						// https://docs.sentry.io/concepts/key-terms/dsn-explainer/
-						sentryEnabled && new URL(sentryDsn).host,
+						sentryDsn && new URL(sentryDsn).host,
 						// https://posthog.com/docs/advanced/content-security-policy
 						posthogHost && new URL(posthogHost).host,
 						"*.posthog.com",
