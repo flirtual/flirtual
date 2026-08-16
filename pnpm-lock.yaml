@@ -327,8 +327,8 @@ importers:
         specifier: ^8.3.0
         version: 8.3.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       react-shepherd:
-        specifier: ^4.3.0
-        version: 4.3.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+        specifier: ^7.0.0
+        version: 7.0.5(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(typescript@5.9.3)
       react-snowfall:
         specifier: ^2.4.0
         version: 2.4.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
@@ -4242,6 +4242,10 @@ packages:
   deep-is@0.1.4:
     resolution: {integrity: sha512-oIPzksmTg4/MriiaYGO+okXDT7ztn/w3Eptv/+gSIdMdKsJo0u4CfYNFJPy+4SKMuCqGw2wxnA+URMg3t8a/bQ==}
 
+  deepmerge-ts@7.1.6:
+    resolution: {integrity: sha512-gQhL1ksGBLQbHeAo47YU6cs2ahd3Pv+8PFYoWogNZbQnNwQyOh9Ad5kbeHFiWwbKdeWQJ5Z7Y7mwb9ew2hXBLw==}
+    engines: {node: '>=16.0.0'}
+
   deepmerge@4.3.1:
     resolution: {integrity: sha512-3sUqbMEc77XqpdNO7FRyRog+eW3ph+GYCbj+rK+uYyRMuwsVy0rMiVtPn+QJlKFvWP/1PYpapqYn0Me2knFn+A==}
     engines: {node: '>=0.10.0'}
@@ -6145,12 +6149,12 @@ packages:
       react-dom:
         optional: true
 
-  react-shepherd@4.3.0:
-    resolution: {integrity: sha512-zJnFfn9llfyULPPJO/hjD9U1gCH/ylmMcgORt+IcxZ2Yx1DTvUJfsclK/UzIt6Stt63KcqlUCMB4nAMqTecFcQ==}
-    engines: {node: '>=16', npm: '>=7'}
+  react-shepherd@7.0.5:
+    resolution: {integrity: sha512-pTKfFENpqlPj431Vq83Bz/ZpEMmFWvJPzfNaMPO5J5h4NOEMXPIccFhGxrEd3B/r7r8tEZJHzilDN6ypISMjKA==}
     peerDependencies:
-      react: ^17.0.2 || 18.x
-      react-dom: ^17.0.2 || 18.x
+      react: ^18.0.0 || ^19.0.0
+      react-dom: ^18.0.0 || ^19.0.0
+      typescript: ^5.0.0 || ^6.0.0 || ^7.0.0
 
   react-snowfall@2.4.0:
     resolution: {integrity: sha512-KAPMiGnxt11PEgC2pTVrTQsvk5jt1kLUtG+ZamiKLphTZ7GiYT1Aa5kX6jp4jKWq1kqJHchnGT9CDm4g86A5Gg==}
@@ -6230,9 +6234,6 @@ packages:
 
   requires-port@1.0.0:
     resolution: {integrity: sha512-KigOCHcocU3XODJxsu8i/j8T9tzT4adHiecwORRQ0ZZFcp7ahwXuRU1m+yuO90C5ZUyGeGfocHDI14M3L3yDAQ==}
-
-  resize-observer-polyfill@1.5.1:
-    resolution: {integrity: sha512-LwZrotdHOo12nQuZlHEmtuXdqGoOD0OhaxopaNFxWzInpEgaLWoVuAMbTzixuosCx2nEG58ngzW3vxdWoxIgdg==}
 
   resolve-from@4.0.0:
     resolution: {integrity: sha512-pb/MYmXstAkysRFx8piNI1tGFNQIFA3vkE3Gq4EuA1dF6gHp/+vgZqsCGJapvy8N3Q+4o7FwvquPJcnZ7RYy4g==}
@@ -6379,9 +6380,9 @@ packages:
     resolution: {integrity: sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==}
     engines: {node: '>=8'}
 
-  shepherd.js@11.2.0:
-    resolution: {integrity: sha512-2hbz3N7GuuTjI7y3sfnoqKnH0cNhExx67IJtCTGQI2KhBEyvegsDYW5qjj5BlvvVtQjmL/O/J1GQEciwfoZWpw==}
-    engines: {node: 16.* || >= 18}
+  shepherd.js@15.2.3:
+    resolution: {integrity: sha512-FyLH/c25YlTS5d+cL9oLajzfW0TzNl43sysQG6EK4bf60n9les7TsIUekHTTKyMEtcARIVHW2d1N9sqeDkIsbQ==}
+    engines: {node: '>= 20'}
 
   side-channel-list@1.0.1:
     resolution: {integrity: sha512-mjn/0bi/oUURjc5Xl7IaWi/OJJJumuoJFQJfDDyO46+hBWsfaVM65TBHq2eoZBhzl9EchxOijpkbRC8SVBQU0w==}
@@ -11108,6 +11109,8 @@ snapshots:
 
   deep-is@0.1.4: {}
 
+  deepmerge-ts@7.1.6: {}
+
   deepmerge@4.3.1: {}
 
   define-lazy-prop@2.0.0: {}
@@ -13730,12 +13733,12 @@ snapshots:
     optionalDependencies:
       react-dom: 19.2.7(react@19.2.7)
 
-  react-shepherd@4.3.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7):
+  react-shepherd@7.0.5(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(typescript@5.9.3):
     dependencies:
       react: 19.2.7
       react-dom: 19.2.7(react@19.2.7)
-      resize-observer-polyfill: 1.5.1
-      shepherd.js: 11.2.0
+      shepherd.js: 15.2.3
+      typescript: 5.9.3
 
   react-snowfall@2.4.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7):
     dependencies:
@@ -13810,8 +13813,6 @@ snapshots:
       - supports-color
 
   requires-port@1.0.0: {}
-
-  resize-observer-polyfill@1.5.1: {}
 
   resolve-from@4.0.0: {}
 
@@ -14088,10 +14089,10 @@ snapshots:
 
   shebang-regex@3.0.0: {}
 
-  shepherd.js@11.2.0:
+  shepherd.js@15.2.3:
     dependencies:
       '@floating-ui/dom': 1.8.0
-      deepmerge: 4.3.1
+      deepmerge-ts: 7.1.6
 
   side-channel-list@1.0.1:
     dependencies:
