@@ -2,11 +2,11 @@ import type { ComponentProps, FC } from "react";
 import { createElement, use, useCallback, useEffect, useMemo, useRef } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { useTranslation } from "react-i18next";
-import { ShepherdTourContext } from "react-shepherd";
-import type { ShepherdOptionsWithType, Tour } from "react-shepherd";
+import type { StepOptions, Tour } from "shepherd.js";
 
 import { HeartIcon } from "~/components/icons/gradient/heart";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
+import { ShepherdContext } from "~/components/shepherd/context";
 import { localePathnameRegex, useNavigate } from "~/i18n";
 import { urls } from "~/urls";
 
@@ -17,7 +17,7 @@ import { useScrollLock } from "./use-scroll-lock";
 import "~/components/shepherd/style.scss";
 
 export function useShepherd() {
-	return use(ShepherdTourContext)!;
+	return use(ShepherdContext)!;
 }
 
 // Resolves once the element exists and its layout has settled (same position
@@ -46,7 +46,7 @@ function waitForElement(selector: string, timeout: number = 4000) {
 export function useTour(
 	enabled: boolean = true,
 	name: string,
-	getSteps: (shepherd: Tour) => Array<ShepherdOptionsWithType>,
+	getSteps: (shepherd: Tour) => Array<StepOptions>,
 	{
 		defaultStart = false
 	}: {
@@ -88,8 +88,7 @@ export function useTour(
 
 			// The first-run tour is unskippable; re-shows (F1) can be exited.
 			const skippable = !onlyIfUncompleted;
-			(shepherd as unknown as { options: Tour.TourOptions }).options.exitOnEsc
-				= skippable;
+			shepherd.options.exitOnEsc = skippable;
 			for (const step of shepherd.steps)
 				step.updateStepOptions({ cancelIcon: { enabled: skippable } });
 
@@ -124,7 +123,7 @@ export function useTour(
 			shepherd.off("cancel", onComplete);
 
 			shepherd.cancel();
-			(shepherd as unknown as { currentStep: unknown }).currentStep = null;
+			shepherd.currentStep = null;
 			for (const { id } of steps) shepherd.removeStep(id);
 		};
 	}, [shepherd, steps, dismiss, setScrollLocked, defaultStart, start, enabled]);

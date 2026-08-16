@@ -22,7 +22,7 @@
 
 
 .shepherd-element {
-	@apply z-[997] p-4 outline-none bg-transparent w-full max-w-sm opacity-0 invisible transition-opacity duration-300 ease-in-out;
+	@apply m-0 z-[997] p-4 outline-none bg-transparent w-full max-w-sm opacity-0 invisible transition-opacity duration-300 ease-in-out;
 
 	&.shepherd-enabled {
 		@apply visible opacity-100;
