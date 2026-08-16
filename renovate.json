@@ -52,6 +52,26 @@
 	],
 	"packageRules": [
 		{
+			"matchManagers": ["mix"],
+			"semanticCommitScope": "mix"
+		},
+		{
+			"matchManagers": ["npm"],
+			"semanticCommitScope": "npm"
+		},
+		{
+			"matchManagers": ["dockerfile", "docker-compose"],
+			"semanticCommitScope": "docker"
+		},
+		{
+			"matchManagers": ["gradle", "gradle-wrapper"],
+			"semanticCommitScope": "gradle"
+		},
+		{
+			"matchManagers": ["github-actions"],
+			"semanticCommitScope": "actions"
+		},
+		{
 			"matchPackageNames": [
 				"wrangler",
 				"miniflare",
