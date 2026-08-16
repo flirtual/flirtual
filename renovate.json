@@ -61,7 +61,7 @@
 		},
 		{
 			"matchPackageNames": [
-				"@capacitor/**",
+				"/capacitor/",
 				"@capgo/**"
 			],
 			"groupName": "capacitor"
