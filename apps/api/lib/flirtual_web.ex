@@ -23,7 +23,6 @@ defmodule FlirtualWeb do
 
       import Plug.Conn
       import FlirtualWeb.ErrorHelpers
-      alias FlirtualWeb.Router.Helpers, as: Routes
     end
   end
 
