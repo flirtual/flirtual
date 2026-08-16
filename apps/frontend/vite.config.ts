@@ -28,7 +28,7 @@ function getManualChunk(moduleId: string) {
 	const [,, language] = /(?:\/@uppy\/locales\/lib\/|\/messages\/(attributes\.)?)([a-z-_]+)\.(?:json|js)$/i.exec(moduleId) || [];
 	if (language) return `languages/${{ en_US: "en", ja_JP: "ja" }[language] || language}`;
 
-	if (/node_modules\/@?(?:react|react-dom|react-router|react-portal|react-error-boundary)\//i.test(moduleId)) return "react";
+	if (/node_modules\/@?(?:react|react-dom|react-router|react-error-boundary)\//i.test(moduleId)) return "react";
 	if (/node_modules\/@?(?:capacitor|capawesome|capgo|revenuecat)/i.test(moduleId)) return "native";
 
 	return null;
