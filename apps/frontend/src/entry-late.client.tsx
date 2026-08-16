@@ -1,15 +1,17 @@
 import { App } from "@capacitor/app";
-import { startTransition, StrictMode } from "react";
-import { flushSync } from "react-dom";
+import { StrictMode } from "react";
 import { hydrateRoot } from "react-dom/client";
 import { HydratedRouter } from "react-router/dom";
 
-import { log } from "./log";
-import { initializeMonitoring } from "./monitoring";
+import { setupAnalytics } from "./analytics";
+import { setupMonitoring } from "./monitoring";
 import { preloadAll } from "./query";
 import { isRedirectError } from "./redirect";
 import { initializeSocialLogin } from "./social-login";
 import { deepLinkToRelativeUrl } from "./urls";
+
+void setupMonitoring();
+void setupAnalytics();
 
 const launchDeepLinkKey = "launch-deep-link-consumed";
 
@@ -44,43 +46,26 @@ async function openLaunchDeepLink() {
 }
 
 void openLaunchDeepLink();
-
-initializeMonitoring();
-
 void initializeSocialLogin();
+void preloadAll();
 
-// await restoreQueries();
-//
-// window.addEventListener("beforeunload", saveQueries);
-// document.addEventListener("visibilitychange", () => {
-// 	if (document.visibilityState === "visible") return;
-// 	saveQueries();
-// });
-//
-preloadAll();
-//
+const { searchParams } = new URL(location.href);
 
-// eslint-disable-next-line react-dom/no-flush-sync
-flushSync(() => {
-	startTransition(() => {
-		hydrateRoot(
-			document,
-			<StrictMode>
-				<HydratedRouter />
-			</StrictMode>,
-			{
-				onCaughtError: (reason) => {
-					if (isRedirectError(reason)) return;
-					console.error(reason);
-				},
-				onRecoverableError: (reason) => {
-					if (isRedirectError(reason) || isRedirectError((reason as { cause?: unknown })?.cause)) return;
-					if (typeof reportError === "function") return reportError(reason);
-					console.error(reason);
-				}
+if (!searchParams.has("__no_hydrate"))
+	hydrateRoot(
+		document,
+		<StrictMode>
+			<HydratedRouter />
+		</StrictMode>,
+		{
+			onCaughtError: (reason) => {
+				if (isRedirectError(reason)) return;
+				console.error(reason);
+			},
+			onRecoverableError: (reason) => {
+				if (isRedirectError(reason) || isRedirectError((reason as { cause?: unknown })?.cause)) return;
+				if (typeof reportError === "function") return reportError(reason);
+				console.error(reason);
 			}
-		);
-	});
-});
-
-log("Client-side hydration complete");
+		}
+	);

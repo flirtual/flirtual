@@ -11,13 +11,11 @@ import { DialogProvider } from "./hooks/use-dialog";
 import { ToastProvider } from "./hooks/use-toast";
 import { QueryProvider } from "./query";
 
-const Monitoring = lazy(() => import("./monitoring").then(({ Monitoring }) => ({ default: Monitoring })));
 const UpdateInformation = lazy(() => import("./components/update-information").then(({ UpdateInformation }) => ({ default: UpdateInformation })));
 
 export function App() {
 	return (
 		<>
-			<Monitoring />
 			{development && <InsetPreview />}
 			<QueryProvider>
 				<AnalyticsProvider>

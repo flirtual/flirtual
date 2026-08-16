@@ -19,9 +19,9 @@ import { Matchmaking } from "./api/matchmaking";
 import { Plan } from "./api/plan";
 import { User } from "./api/user";
 import { Personality } from "./api/user/profile/personality";
-import { commitId, development, server } from "./const";
+import { development, server } from "./const";
 import { log as _log } from "./log";
-import { getPreferences, setPreferences } from "./preferences";
+import { getPreferences } from "./preferences";
 import { isUid } from "./utilities";
 
 export const configKey = () => ["config"] as const;
@@ -161,92 +161,12 @@ declare module "@tanstack/react-query" {
 	}
 }
 
-interface QueryPreference {
-	v: string;
-	q: Array<{
-		k: QueryKey;
-		h: string;
-		a?: number;
-		s: QueryState;
-	}>;
-}
-
 export type MinimalQueryOptions<T> = Pick<UseQueryOptions<T, Error, T, QueryKey>, "placeholderData">;
-
-const cacheVersion = commitId;
-const defaultCacheTime = ms("1d");
-
-export async function saveQueries() {
-	return; // Disable for now.
-
-	log("saveQueries()");
-	const queries = queryCache.getAll();
-
-	const eligibleQueries = queries.filter(({
-		queryKey,
-		queryHash,
-		state,
-		meta: { cacheTime = defaultCacheTime } = {}
-	}) => {
-		if (!queryKey || !queryHash || !state.dataUpdatedAt || cacheTime === 0) return false;
-		if (state.status !== "success") return false;
-
-		return true;
-	}).map(({
-		queryKey,
-		queryHash,
-		state,
-		meta: { cacheTime } = {}
-	}) => ({
-		k: queryKey,
-		h: queryHash,
-		a: cacheTime,
-		s: state
-	}));
-
-	await setPreferences<QueryPreference>("queries", {
-		v: cacheVersion,
-		q: eligibleQueries
-	});
-}
 
 export async function evictQueries() {
 	log("evictQueries()");
 
 	await queryClient.resetQueries();
-	return; // Disable for now.
-
-	queryCache.clear();
-	await setPreferences("queries", null);
-}
-
-export async function restoreQueries() {
-	return; // Disable for now.
-
-	log("restoreQueries()");
-
-	const { v: version, q: potentialQueries } = await getPreferences<QueryPreference>("queries") || { v: cacheVersion, q: [] };
-
-	if (version !== cacheVersion) {
-		log("Cache version mismatch.");
-		await evictQueries();
-
-		return;
-	}
-
-	const queries = potentialQueries.map(({
-		k: queryKey,
-		h: queryHash,
-		a: cacheTime = defaultCacheTime,
-		s: state
-	}) => {
-		if (Date.now() - state.dataUpdatedAt > Math.min(cacheTime, defaultCacheTime)) return null;
-		if (state.status !== "success") return null;
-
-		return queryCache.build(queryClient, { queryKey, queryHash }, state);
-	}).filter(Boolean);
-
-	log("restoreQueries() => %O", new Map(queries.map(({ queryKey, state: { data } }) => [queryKey, data])));
 }
 
 let usedQuery = false;

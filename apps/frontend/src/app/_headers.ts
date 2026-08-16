@@ -8,14 +8,9 @@ import {
 	posthogHost,
 	preview,
 	sentryDsn,
-	sentryEnabled,
 	sentryReportTo
 } from "~/const";
 import { bucketOrigins } from "~/urls";
-
-const contentSecurityPolicyReportTo = sentryEnabled
-	? sentryReportTo
-	: undefined;
 
 const data = [
 	{
@@ -205,9 +200,9 @@ const data = [
 					],
 					"child-src": ["'self'", "blob:"],
 					"upgrade-insecure-requests": [],
-					...(contentSecurityPolicyReportTo
+					...(sentryReportTo
 						? {
-								"report-uri": [contentSecurityPolicyReportTo],
+								"report-uri": [sentryReportTo],
 								"report-to": ["csp"]
 							}
 						: {})
