@@ -16,7 +16,8 @@
     {:formatter, "mix format --check-formatted"},
     {:credo, "mix credo --mute-exit-status"},
     {:compiler, "mix compile"},
-    {:sobelow, "mix sobelow --skip"}
+    {:sobelow, "mix sobelow --skip"},
+    {:hex_audit, "mix hex.audit"}
 
     ## curated tools may be disabled (e.g. the check for compilation warnings)
     # {:compiler, false},
