@@ -13,6 +13,17 @@ overrides:
   # 3.18.3 fails to resolve Tailwind v3: "Error while loading rule
   # 'tailwindcss/enforces-negative-arbitrary-values': Could not resolve tailwindcss".
   eslint-plugin-tailwindcss: 3.18.2
+  # Override tsup's pinned esbuild ^0.27.0 to fix GHSA-g7r4-m6w7-qqqr.
+  "tsup>esbuild": ">=0.28.1"
+
+auditConfig:
+  ignoreGhsas:
+    # Quill XSS via HTML export, unpatched upstream. Not applicable with
+    # useSemanticHTML={false} and bio sanitization.
+    - GHSA-v3m3-f69x-jf25
+    # uuid bounds check in v3/v5/v6 with `buf`. Only reachable via xcode, which
+    # calls v4 with no buf and pins uuid ^7.
+    - GHSA-w5hq-g745-h8pq
 
 cleanupUnusedCatalogs: true
 verifyDepsBeforeRun: install
