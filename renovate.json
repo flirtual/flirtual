@@ -4,6 +4,7 @@
 		"config:recommended"
 	],
 	"minimumReleaseAge": "3 days",
+	"semanticCommitScope": "{{#if parentDir}}{{parentDir}}{{else}}repo{{/if}}",
 	"dependencyDashboardApproval": true,
 	"lockFileMaintenance": {
 		"enabled": true,
@@ -52,20 +53,8 @@
 	],
 	"packageRules": [
 		{
-			"matchManagers": ["mix"],
-			"semanticCommitScope": "mix"
-		},
-		{
-			"matchManagers": ["npm"],
-			"semanticCommitScope": "npm"
-		},
-		{
-			"matchManagers": ["dockerfile", "docker-compose"],
-			"semanticCommitScope": "docker"
-		},
-		{
 			"matchManagers": ["gradle", "gradle-wrapper"],
-			"semanticCommitScope": "gradle"
+			"semanticCommitScope": "android"
 		},
 		{
 			"matchManagers": ["github-actions"],
