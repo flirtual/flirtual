@@ -4,6 +4,7 @@ on:
     paths:
       - apps/frontend/ios/**
       - apps/frontend/capacitor.config.ts
+      - apps/frontend/package.json
       - .github/workflows/ios.yaml
   workflow_dispatch:
     inputs:
@@ -17,7 +18,30 @@ permissions:
   contents: read
 
 jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      native: ${{ steps.check.outputs.native }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 2
+
+      - id: check
+        run: |
+          if git diff --name-only HEAD~1 HEAD \
+             | grep -qE '^apps/frontend/(ios/|capacitor\.config\.ts)|^\.github/workflows/ios\.yaml'; then
+            echo native=true >> "$GITHUB_OUTPUT"
+          elif git diff -U0 HEAD~1 HEAD -- apps/frontend/package.json \
+             | grep -qE '^[+-].*"(@capacitor|@capgo|@capawesome|@revenuecat|capacitor-)'; then
+            echo native=true >> "$GITHUB_OUTPUT"
+          else
+            echo native=false >> "$GITHUB_OUTPUT"
+          fi
+
   ios:
+    needs: changes
+    if: needs.changes.outputs.native == 'true' || github.event_name == 'workflow_dispatch'
     runs-on: macos-26
     environment: mobile
     defaults:
