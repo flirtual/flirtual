@@ -79,7 +79,11 @@ defmodule FlirtualWeb.Router do
     plug(:accepts, ["html"])
     plug(:fetch_session)
     plug(:protect_from_forgery)
-    plug(:put_secure_browser_headers, %{"content-security-policy" => "default-src 'none'"})
+
+    plug(:put_secure_browser_headers, %{
+      "content-security-policy" => "default-src 'none'; frame-ancestors 'none'"
+    })
+
     plug(:put_dashboard_csp)
     plug(:fetch_current_session)
     plug(:require_debugger_user)
@@ -531,7 +535,7 @@ defmodule FlirtualWeb.Router do
 
       plug(:put_secure_browser_headers, %{
         "content-security-policy" =>
-          "default-src 'self'; img-src * data:; " <>
+          "default-src 'self'; frame-ancestors 'none'; img-src * data:; " <>
             "script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'"
       })
     end
