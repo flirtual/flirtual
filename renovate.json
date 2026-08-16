@@ -54,6 +54,10 @@
 	],
 	"packageRules": [
 		{
+			"matchUpdateTypes": ["pin", "lockFileMaintenance", "rollback", "bump", "replacement"],
+			"minimumReleaseAge": null
+		},
+		{
 			"matchManagers": ["gradle", "gradle-wrapper"],
 			"semanticCommitScope": "android"
 		},
