@@ -6,6 +6,7 @@ defmodule Flirtual.MixProject do
       app: :flirtual,
       version: "0.1.0",
       elixir: "~> 1.18.3",
+      hex: [cooldown: "3d"],
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: Mix.compilers(),
       start_permanent: Mix.env() == :prod,
