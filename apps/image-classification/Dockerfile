@@ -60,8 +60,9 @@ COPY --link apps/image-classification ./apps/image-classification
 RUN pnpm --filter image-classification exec tsc
 
 ## Emit a self-contained tree without devDependencies.
-# --legacy is required because pnpm 10 otherwise refuses to deploy from a
+# --legacy is required because pnpm otherwise refuses to deploy from a
 # workspace that doesn't set inject-workspace-packages.
+# https://pnpm.io/11.x/cli/deploy
 RUN pnpm --filter image-classification deploy --prod --legacy /app
 
 # Final image.

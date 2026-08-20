@@ -31,18 +31,18 @@ auditConfig:
 cleanupUnusedCatalogs: true
 verifyDepsBeforeRun: install
 
-ignoredBuiltDependencies:
-  - "@shgysk8zer0/polyfills"
-
 minimumReleaseAge: 4320
 
-onlyBuiltDependencies:
-  - "@parcel/watcher"
-  - "@sentry/cli"
-  - core-js
-  - esbuild
-  - exifreader
-  - oxc-resolver
-  - protobufjs
-  - sharp
-  - workerd
+strictPeerDependencies: false
+
+allowBuilds:
+  "@parcel/watcher": true
+  "@sentry/cli": true
+  "@shgysk8zer0/polyfills": false
+  core-js: true
+  esbuild: true
+  exifreader: true
+  oxc-resolver: true
+  protobufjs: true
+  sharp: true
+  workerd: true

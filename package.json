@@ -2,5 +2,5 @@
 	"name": "flirtual",
 	"private": true,
 	"license": "AGPL-3.0-or-later",
-	"packageManager": "pnpm@10.34.5"
+	"packageManager": "pnpm@11.22.0"
 }
