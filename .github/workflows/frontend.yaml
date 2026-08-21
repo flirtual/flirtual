@@ -65,7 +65,9 @@ jobs:
         exclude:
           - environment: ${{ github.ref != 'refs/heads/production' && 'production' || null }}
     runs-on: ubuntu-latest
-    environment: ${{ matrix.environment }}
+    environment:
+      name: ${{ matrix.environment }}
+      deployment: false
     permissions:
       checks: write
     defaults:
