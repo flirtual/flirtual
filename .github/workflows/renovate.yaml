@@ -26,7 +26,7 @@ jobs:
       - uses: actions/create-github-app-token@v3.2.0
         id: app-token
         with:
-          app-id: ${{ secrets.RENOVATE_APP_ID }}
+          client-id: ${{ vars.RENOVATE_APP_CLIENT_ID }}
           private-key: ${{ secrets.RENOVATE_APP_PRIVATE_KEY }}
 
       - uses: renovatebot/github-action@v46.2.2
