@@ -3159,5 +3159,35 @@
 		"LVjvu5YE7PjUJxVrkfsnMi": {
 			"name": "Premium (mensuel)"
 		}
+	},
+	"warn-reason": {
+		"V7VcQEiYkiwHr5CHSVx5aS": {
+			"name": "Description et photos spam",
+			"details": "Veuillez actualiser votre description et téléverser des photos de votre avatar VR pour éviter d'être marqué comme spam."
+		},
+		"aUurnuPnvjTwU2W3K5Se7X": {
+			"name": "Photo NSFW retirée",
+			"details": "Le ou les image(s) NSFW ont été retirées de votre profil. Veuillez téléverser uniquement des images SFW."
+		},
+		"MjxDKasduf9iHTctStGzYA": {
+			"name": "Description NSFW",
+			"details": "Veuillez garder le contenu NSFW de votre description à un minimum, et retirer des descriptions graphiques ou des phantasmes. Vous pouvez utiliser les tags de fantasmes de Flirtual ou les intérêts personnalisés dans les options."
+		},
+		"CnaCPAcsLptyUgVVugubdf": {
+			"name": "Publicité",
+			"details": "Veuillez réduire les publicités/contenu promotionnels de votre profil. L'intérêt principal de votre profil devrait d'être de chercher des rencontres ou des amis."
+		},
+		"f8v44XrBausmXe6XybTVHd": {
+			"name": "Incitation",
+			"details": "Veuillez retirer toute sollicitation de votre profil. Demander pour de l'argent, des références ou des liens pour des services commerciaux ne sont pas acceptés sur Flirtual."
+		},
+		"RdHQQqrswesTTwyh4QZqbH": {
+			"name": "Contenu haineux",
+			"details": "Veuillez retirer tout contenu haineux de votre profil, car cela viole notre charte d'utilisation communautaire."
+		},
+		"KNJu36SMz87wA5DrJZyc4L": {
+			"name": "Soyez bons et respectueux",
+			"details": "À cause de précédents reports, veuillez être bon et respectueux envers les autres membres."
+		}
 	}
 }
