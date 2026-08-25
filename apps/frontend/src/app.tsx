@@ -5,7 +5,7 @@ import { AnalyticsProvider } from "./analytics";
 import { AgeGate } from "./components/age-gate";
 import { InsetPreview } from "./components/inset-preview";
 import { Loading } from "./components/loading";
-import { development } from "./const";
+import { development, server } from "./const";
 import { ConfigSubscriber } from "./hooks/use-config";
 import { DialogProvider } from "./hooks/use-dialog";
 import { ToastProvider } from "./hooks/use-toast";
@@ -19,9 +19,11 @@ export function App() {
 			{development && <InsetPreview />}
 			<QueryProvider>
 				<AnalyticsProvider>
-					<Suspense fallback={null}>
-						<ConfigSubscriber />
-					</Suspense>
+					{!server && (
+						<Suspense fallback={null}>
+							<ConfigSubscriber />
+						</Suspense>
+					)}
 					<UpdateInformation />
 					<ToastProvider>
 						<DialogProvider>
