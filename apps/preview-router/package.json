@@ -1,0 +1,16 @@
+{
+	"name": "preview-router",
+	"version": "0.0.0",
+	"private": true,
+	"license": "AGPL-3.0-or-later",
+	"scripts": {
+		"deploy": "wrangler deploy",
+		"dev": "wrangler dev",
+		"start": "wrangler dev",
+		"cf-typegen": "wrangler types"
+	},
+	"devDependencies": {
+		"typescript": "catalog:",
+		"wrangler": "catalog:"
+	}
+}

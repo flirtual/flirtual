@@ -6,7 +6,7 @@ defmodule FlirtualWeb.ProfileController do
   import FlirtualWeb.Utilities
 
   alias Flirtual.User.Profile
-  alias Flirtual.{Policy, Profiles, Subscription, Users}
+  alias Flirtual.{Entitlement, Policy, Profiles, Users}
 
   action_fallback(FlirtualWeb.FallbackController)
 
@@ -90,15 +90,15 @@ defmodule FlirtualWeb.ProfileController do
     end
   end
 
-  def update_custom_filters(conn, %{"user_id" => user_id, "_json" => filters}) do
+  def update_advanced_filters(conn, %{"user_id" => user_id, "_json" => filters}) do
     user = Users.get(user_id)
     profile = %Profile{user.profile | user: user}
 
     if is_nil(user) or Policy.cannot?(conn, :update, profile) do
       {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
     else
-      with {:ok, preferences} <- Profiles.update_custom_filters(profile, filters) do
-        conn |> json(preferences)
+      with {:ok, filters} <- Profiles.update_advanced_filters(profile, filters) do
+        conn |> json(filters)
       end
     end
   end
@@ -204,7 +204,7 @@ defmodule FlirtualWeb.ProfileController do
     moderator? = :moderator in user.tags
 
     with true <-
-           moderator? or Subscription.active?(user.subscription) or {:subscription_required},
+           moderator? or Entitlement.premium?(user.entitlements) or {:subscription_required},
          true <-
            moderator? or Profiles.has_image_in_world?(user.id, world_id) or {:no_image_in_world} do
       items =

@@ -14,8 +14,6 @@ config :flirtual, Flirtual.Repo,
   queue_target: 15_000,
   queue_interval: 5000
 
-config :flirtual, Flirtual.Elasticsearch, url: "http://localhost:9200"
-
 # Configures the mailer
 #
 # By default it uses the "Local" adapter which stores the emails

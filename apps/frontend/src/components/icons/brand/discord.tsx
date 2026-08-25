@@ -6,7 +6,7 @@ export function DiscordIcon(props: IconComponentProps) {
 			{...props}
 			fill="currentColor"
 			role="img"
-			viewBox="0 0 24 24"
+			viewBox="0 2.85 24 18.29"
 			xmlns="http://www.w3.org/2000/svg"
 		>
 			<title>Discord</title>

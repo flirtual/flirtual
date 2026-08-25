@@ -4,7 +4,7 @@ import {
 	useEffect,
 	useRef
 } from "react";
-import type { ComponentProps, EventHandler, FC, FocusEvent, KeyboardEvent, MouseEvent, SyntheticEvent } from "react";
+import type { ComponentProps, EventHandler, FC, FocusEvent, KeyboardEvent, MouseEvent, ReactNode, SyntheticEvent } from "react";
 import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
@@ -21,6 +21,7 @@ export interface InputSelectOption<K> {
 	definition?: string;
 	definitionLink?: string;
 	active?: boolean;
+	suffix?: ReactNode;
 }
 
 export type InputOptionEvent<
@@ -57,12 +58,8 @@ export type InputOptionWindowProps<K> = {
 	"onChange"
 >;
 
-function getFirstActiveElement(root: HTMLElement): HTMLElement {
-	return (
-		([...root.children] as Array<HTMLElement>).find(
-			(element) => element.dataset.active === "true"
-		) || (root.firstChild as HTMLElement)
-	);
+function getOptionElements(root: HTMLElement): Array<HTMLElement> {
+	return [...root.querySelectorAll<HTMLElement>("*[data-key]")];
 }
 
 function focusElementByKeydown({
@@ -90,41 +87,47 @@ export const DefaultOptionItem: FC<OptionItemProps<unknown>> = (props) => {
 	const { t } = useTranslation();
 
 	return (
-		<Tooltip touchable={false}>
-			<TooltipTrigger asChild>
-				<button
-					{...elementProps}
-					className={twMerge(
-						"px-4 py-2 text-left hocus:outline-none",
-						option.active
-							? "bg-brand-gradient text-white-20"
-							: "text-black-70 focus:outline-none hocus:bg-white-40 dark:text-white-20 dark:hocus:bg-black-80/50 dark:hocus:text-white-20"
-					)}
-					type="button"
-				>
-					<span className="font-nunito text-lg">
-						{option.label}
-						{option.example && (
-							<span className="opacity-70">{` ${option.example}`}</span>
-						)}
-					</span>
-				</button>
-			</TooltipTrigger>
-			{(option.definition || option.definitionLink) && (
-				<TooltipContent align="start">
-					{option.definition}
-					{" "}
-					{option.definitionLink && (
-						<InlineLink
-							className="pointer-events-auto"
-							href={option.definitionLink}
-						>
-							{t("learn_more")}
-						</InlineLink>
-					)}
-				</TooltipContent>
+		<div
+			className={twMerge(
+				"flex items-center",
+				option.active
+					? "bg-brand-gradient text-white-20"
+					: "text-black-70 hocus-within:bg-white-40 dark:text-white-20 dark:hocus-within:bg-black-80/50 dark:hocus-within:text-white-20"
 			)}
-		</Tooltip>
+		>
+			<Tooltip touchable={false}>
+				<TooltipTrigger asChild>
+					<button
+						{...elementProps}
+						className="grow px-4 py-2 text-left focus:outline-none hocus:outline-none"
+						type="button"
+					>
+						<span className="font-nunito text-lg">
+							{option.label}
+							{option.example && (
+								<span className="opacity-70">{` ${option.example}`}</span>
+							)}
+						</span>
+					</button>
+				</TooltipTrigger>
+				{(option.definition || option.definitionLink) && (
+					<TooltipContent align="start">
+						{option.definition}
+						{" "}
+						{option.definitionLink && (
+							<InlineLink
+								className="pointer-events-auto"
+								href={option.definitionLink}
+								onMouseDown={(event) => event.preventDefault()}
+							>
+								{t("learn_more")}
+							</InlineLink>
+						)}
+					</TooltipContent>
+				)}
+			</Tooltip>
+			{option.suffix && <div className="shrink-0 pr-4">{option.suffix}</div>}
+		</div>
 	);
 };
 
@@ -166,21 +169,24 @@ export function InputOptionWindow(props: InputOptionWindowProps<unknown>) {
 		const { current: root } = optionsReference;
 		if (!root) return;
 
-		const firstActiveElement = getFirstActiveElement(root);
-		if (
-			!root.contains(document.activeElement)
-			|| !document.activeElement
-			|| target === 0
-		) {
-			if (root.firstChild instanceof HTMLElement) firstActiveElement.focus();
+		const elements = getOptionElements(root);
+		if (elements.length === 0) return;
+
+		const current = document.activeElement instanceof HTMLElement
+			? elements.indexOf(document.activeElement)
+			: -1;
+
+		if (current === -1 || target === 0) {
+			(
+				elements.find((element) => element.dataset.active === "true")
+				?? elements[0]
+			)?.focus();
 			return;
 		}
 
-		const sibling
-			= document.activeElement[
-				target === -1 ? "previousSibling" : "nextSibling"
-			] ?? root[target === -1 ? "lastChild" : "firstChild"];
-		if (sibling instanceof HTMLElement) sibling.focus();
+		elements[
+			(current + target + elements.length) % elements.length
+		]?.focus();
 	}, []);
 
 	useEffect(() => {

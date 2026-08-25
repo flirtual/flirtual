@@ -15,6 +15,8 @@ export const targets = [
 	"safari15"
 ];
 
+export const browserslist = targets.map((target) => target.replace(/(\d+)/, " >= $1"));
+
 const {
 	PluralRules,
 	DateTimeFormat,

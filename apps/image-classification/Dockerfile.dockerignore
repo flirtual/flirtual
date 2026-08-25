@@ -1,0 +1,10 @@
+**/node_modules
+**/dist
+**/.git
+**/.env.*
+**/tmp
+
+apps/*
+!apps/image-classification
+
+apps/image-classification/deep-danbooru

@@ -88,11 +88,11 @@ const safeKeys = [
 // export const device = _device;
 export const device = server && development
 	? new Proxy(_device, {
-		get: (device, property) => {
-			if (safeKeys.includes(String(property))) return Reflect.get(device, property);
-			throw new Error(`"device.${String(property)}" cannot be accessed on the server, as it relies on the client environment.`);
-		}
-	})
+			get: (device, property) => {
+				if (safeKeys.includes(String(property))) return Reflect.get(device, property);
+				throw new Error(`"device.${String(property)}" cannot be accessed on the server, as it relies on the client environment.`);
+			}
+		})
 	: _device;
 
 export type Device = typeof device;

@@ -39,9 +39,6 @@
 		"mHF6zQZ3tbVe9iYjGuzAPK": {
 			"name": "PAYDAY 2"
 		},
-		"b3YVqwSVNMcsh2xUPSd9hU": {
-			"name": "PokerStars VR"
-		},
 		"HF4tppeRywmq9oWsR2GyMg": {
 			"name": "POPULATION: ONE"
 		},
@@ -56,9 +53,6 @@
 		},
 		"ffrwQHFv2kN4uRRJCLYqVb": {
 			"name": "Contractors"
-		},
-		"6DjtoKvDStyCEJBWdjDnva": {
-			"name": "A Township Tale"
 		},
 		"ibNMSB3mTjSqA4yVh424BG": {
 			"name": "Drunkn Bar Fight"
@@ -231,9 +225,6 @@
 		"z6PXMo8JatbqCcYzjCaW9F": {
 			"name": "Museum of Other Realities"
 		},
-		"E4Vf4HRy33aPjYkyXXdoee": {
-			"name": "F1 23"
-		},
 		"2B7KNoGh5iAEJsp5ADvZVG": {
 			"name": "Golf It!"
 		},
@@ -269,9 +260,6 @@
 		},
 		"pJAc8ipKGh5AjxkccveUUQ": {
 			"name": "Gun World VR"
-		},
-		"gBjREdNLqSz5yRCJyo93ua": {
-			"name": "Spatial"
 		},
 		"XPtLgbB63VUsPFqx5ELnLD": {
 			"name": "STAND OUT: VR Battle Royale"
@@ -1038,17 +1026,11 @@
 		"KmFuVctFYXysnMPp6hMzn8": {
 			"name": "Dread Meridian"
 		},
-		"45ZCnRNM263sv7y9XkbkTZ": {
-			"name": "Legendary Tales"
-		},
 		"wuJBKBouDtyXUdsRrKDGeP": {
 			"name": "NightClub Simulator VR"
 		},
 		"QkQzYZB3uqgFFLkyK2TaiL": {
 			"name": "PoligonVR"
-		},
-		"55XreduJ6GCvDgn4ysY4Ao": {
-			"name": "RUMBLE"
 		},
 		"itAqFvzYvyQMDg8FpNwHmG": {
 			"name": "Tower Tag"
@@ -2827,29 +2809,14 @@
 		"3Kagenz7boB64Ke6vEAKv6": {
 			"name": "PCVR"
 		},
-		"UpyGwuCHANjYmM2P269dFm": {
-			"name": "Länk till Quest"
-		},
-		"qhAm6Z9kGRP5opGfnrVYda": {
-			"name": "Oculus Rift"
-		},
-		"WQVnXwQzfThHr7yczTjm3C": {
-			"name": "Windows Mixed Reality"
-		},
 		"n6sSShVCXahjazwqEraKCG": {
 			"name": "PlayStation VR"
-		},
-		"fyBa2tUpgEgqBPda4BpXAE": {
-			"name": "Mobil VR"
 		},
 		"MLWTjDZEuacyr2qwbXEw4K": {
 			"name": "Spårning av hela kroppen"
 		},
 		"m4S2N4Jn2f3WDbJm7bcbgQ": {
 			"name": "Ansiktsuppföljning"
-		},
-		"d52VH6CyRaVPQvAwoStEoY": {
-			"name": "SteamVR"
 		},
 		"N458aYKyg6hweVbyDEMDAR": {
 			"name": "VIVE Standalone"
@@ -2866,8 +2833,8 @@
 		"aNGgneQH5YX4HyWpNEUpmQ": {
 			"name": "Andra VR"
 		},
-		"6BdtcWSEHNwX6ba9nzd2Yc": {
-			"name": "Skrivbord"
+		"Ry723pMCrWV4ptp8ywcorG": {
+			"name": "Steam Frame"
 		}
 	},
 	"prompt": {
@@ -3177,47 +3144,20 @@
 		}
 	},
 	"plans": {
-		"w4WDwDWKtmLSqkn8oNqCN3": {
-			"name": "Legacy Premium (24,99 USD/3 månader)"
-		},
 		"Wt4aFY7jVzvSNFK9qcYAr5": {
 			"name": "Premium (var 6:e månad)"
 		},
 		"fBDvWjdgvG6zEZMj6ZfyNG": {
 			"name": "Premium (var 3:e månad)"
 		},
-		"6xZywHRc432o5H9PqFFoyG": {
-			"name": "Legacy Premium (9,99 USD/månad)"
-		},
-		"rFxKcnAZGQtwckWUQbrG9J": {
-			"name": "Fallback Premium"
-		},
-		"PQZuLuEmXRwuRhiQisgkPM": {
-			"name": "Legacy Premium (39,99 USD/6 månader)"
-		},
-		"PHpCmDBMX6wCkuXXr36foQ": {
-			"name": "Tidig Premium (US$24.99/3mo)"
-		},
 		"Di7Sypboma4ryhy6MUagyS": {
 			"name": "Livstid"
 		},
-		"43V699voRpLqskJEM42Vsa": {
-			"name": "Tidig supporter"
-		},
-		"CJv2NQ7AiEimvDoZJ3uQTe": {
-			"name": "Tidig livstid"
-		},
 		"2nAci9TWPaMaYFzVASVgme": {
-			"name": "Tidig Premium (US$9.99/mo)"
-		},
-		"5NcKBUELrTmZr6JQQFespf": {
-			"name": "Tidig Premium (39,99 USD/6 mån)"
+			"name": "Tidig Premium"
 		},
 		"LVjvu5YE7PjUJxVrkfsnMi": {
 			"name": "Premium (månadsvis)"
-		},
-		"QQd364odDmzV69gsaKTYwm": {
-			"name": "Legacy Livstid"
 		}
 	}
 }

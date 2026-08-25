@@ -4,10 +4,16 @@
 <dict>
 	<key>aps-environment</key>
 	<string>development</string>
+	<key>com.apple.developer.applesignin</key>
+	<array>
+		<string>Default</string>
+	</array>
+	<key>com.apple.developer.declared-age-range</key>
+	<true/>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>webcredentials:canary.flirtual.com</string>
-		<string>applinks:canary.flirtual.com</string>
+		<string>webcredentials:beta.flirtual.dev</string>
+		<string>applinks:beta.flirtual.dev</string>
 	</array>
 	<key>com.apple.security.app-sandbox</key>
 	<true/>

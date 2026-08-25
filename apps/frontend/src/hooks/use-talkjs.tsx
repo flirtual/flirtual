@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import ms from "ms.macro";
+import ms from "ms" with { type: "macro" };
 import {
 	createContext,
 

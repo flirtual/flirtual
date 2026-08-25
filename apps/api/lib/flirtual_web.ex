@@ -19,11 +19,10 @@ defmodule FlirtualWeb do
 
   def controller do
     quote do
-      use Phoenix.Controller, namespace: FlirtualWeb
+      use Phoenix.Controller, formats: [:json]
 
       import Plug.Conn
       import FlirtualWeb.ErrorHelpers
-      alias FlirtualWeb.Router.Helpers, as: Routes
     end
   end
 

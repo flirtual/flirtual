@@ -1,0 +1,157 @@
+on:
+  push:
+    branches: [main]
+    paths:
+      - apps/frontend/ios/**
+      - apps/frontend/capacitor.config.ts
+      - apps/frontend/package.json
+      - .github/workflows/ios.yaml
+  workflow_dispatch:
+    inputs:
+      channel:
+        description: App to build and upload
+        type: choice
+        options: [beta, production]
+        default: beta
+
+permissions:
+  contents: read
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      native: ${{ steps.check.outputs.native }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 2
+
+      - id: check
+        run: |
+          if git diff --name-only HEAD~1 HEAD \
+             | grep -qE '^apps/frontend/(ios/|capacitor\.config\.ts)|^\.github/workflows/ios\.yaml'; then
+            echo native=true >> "$GITHUB_OUTPUT"
+          elif git diff -U0 HEAD~1 HEAD -- apps/frontend/package.json \
+             | grep -qE '^[+-].*"(@capacitor|@capgo|@capawesome|@revenuecat|capacitor-)'; then
+            echo native=true >> "$GITHUB_OUTPUT"
+          else
+            echo native=false >> "$GITHUB_OUTPUT"
+          fi
+
+  ios:
+    needs: changes
+    if: needs.changes.outputs.native == 'true' || github.event_name == 'workflow_dispatch'
+    runs-on: macos-26
+    environment: mobile
+    defaults:
+      run:
+        working-directory: apps/frontend
+    env:
+      VITE_ORIGIN: ${{ inputs.channel == 'production' && 'https://flirtu.al' || 'https://beta.flirtual.dev' }}
+      VITE_API_URL: ${{ inputs.channel == 'production' && 'https://api.flirtu.al/v1/' || 'https://beta-api.flirtual.dev/v1/' }}
+      VITE_APP_BUNDLE_ID: ${{ inputs.channel == 'production' && 'zone.homie.flirtual.pwa' || 'zone.homie.flirtual.beta' }}
+      SCHEME: ${{ inputs.channel == 'production' && 'Flirtual' || 'Flirtual Beta' }}
+      ASC_API_KEY_ID: ${{ secrets.ASC_API_KEY_ID }}
+      ASC_API_ISSUER_ID: ${{ secrets.ASC_API_ISSUER_ID }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6
+        name: Install pnpm
+        with:
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Sync native project
+        run: pnpm cap sync ios
+
+      - name: Install App Store Connect API key
+        env:
+          ASC_API_KEY_P8: ${{ secrets.ASC_API_KEY_P8 }}
+        run: |
+          mkdir -p "$RUNNER_TEMP/keys"
+          printf '%s' "$ASC_API_KEY_P8" > "$RUNNER_TEMP/keys/AuthKey_$ASC_API_KEY_ID.p8"
+
+      - name: Import distribution certificate
+        env:
+          CERTIFICATE_P12: ${{ secrets.APPLE_CERTIFICATE_P12 }}
+          CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+        run: |
+          KEYCHAIN_PATH="$RUNNER_TEMP/build.keychain-db"
+          KEYCHAIN_PASSWORD="$(uuidgen)"
+          security create-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
+          security set-keychain-settings -lut 21600 "$KEYCHAIN_PATH"
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
+          printf '%s' "$CERTIFICATE_P12" | base64 --decode > "$RUNNER_TEMP/certificate.p12"
+          security import "$RUNNER_TEMP/certificate.p12" -P "$CERTIFICATE_PASSWORD" -A -t cert -f pkcs12 -k "$KEYCHAIN_PATH"
+          security set-key-partition-list -S apple-tool:,apple: -s -k "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
+          security list-keychains -d user -s "$KEYCHAIN_PATH" login.keychain-db
+
+      - name: Install provisioning profile
+        env:
+          PROFILE: ${{ inputs.channel == 'production' && secrets.APPLE_PROFILE_PRODUCTION || secrets.APPLE_PROFILE_BETA }}
+        run: |
+          mkdir -p "$HOME/Library/MobileDevice/Provisioning Profiles"
+          printf '%s' "$PROFILE" | base64 --decode > "$RUNNER_TEMP/profile.mobileprovision"
+          PLIST=$(security cms -D -i "$RUNNER_TEMP/profile.mobileprovision")
+          UUID=$(printf '%s' "$PLIST" | plutil -extract UUID raw -o - -)
+          cp "$RUNNER_TEMP/profile.mobileprovision" "$HOME/Library/MobileDevice/Provisioning Profiles/$UUID.mobileprovision"
+          echo "Installed profile: $(printf '%s' "$PLIST" | plutil -extract Name raw -o - -) ($UUID)"
+
+      - name: Archive
+        working-directory: apps/frontend/ios/App
+        env:
+          BUILD_NUMBER_OFFSET: ${{ vars.BUILD_NUMBER_OFFSET }}
+        run: |
+          xcodebuild archive \
+            -workspace App.xcworkspace \
+            -scheme "$SCHEME" \
+            -destination generic/platform=iOS \
+            -archivePath "$RUNNER_TEMP/Flirtual.xcarchive" \
+            CURRENT_PROJECT_VERSION=$(( GITHUB_RUN_NUMBER + ${BUILD_NUMBER_OFFSET:-100} ))
+
+      - name: Upload to App Store Connect
+        working-directory: apps/frontend/ios/App
+        run: |
+          cat > "$RUNNER_TEMP/ExportOptions.plist" <<'EOF'
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+            <key>method</key>
+            <string>app-store-connect</string>
+            <key>destination</key>
+            <string>upload</string>
+            <key>signingStyle</key>
+            <string>manual</string>
+            <key>signingCertificate</key>
+            <string>Apple Distribution</string>
+            <key>provisioningProfiles</key>
+            <dict>
+              <key>zone.homie.flirtual.pwa</key>
+              <string>Flirtual App Store</string>
+              <key>zone.homie.flirtual.beta</key>
+              <string>Flirtual Beta App Store</string>
+            </dict>
+            <key>teamID</key>
+            <string>997W5KLYVR</string>
+            <key>manageAppVersionAndBuildNumber</key>
+            <true/>
+          </dict>
+          </plist>
+          EOF
+          xcodebuild -exportArchive \
+            -archivePath "$RUNNER_TEMP/Flirtual.xcarchive" \
+            -exportOptionsPlist "$RUNNER_TEMP/ExportOptions.plist" \
+            -authenticationKeyPath "$RUNNER_TEMP/keys/AuthKey_$ASC_API_KEY_ID.p8" \
+            -authenticationKeyID "$ASC_API_KEY_ID" \
+            -authenticationKeyIssuerID "$ASC_API_ISSUER_ID"

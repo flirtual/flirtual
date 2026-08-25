@@ -32,6 +32,10 @@ defmodule Flirtual.Jwt do
     end
   end
 
+  def verify(config, token) do
+    Joken.verify_and_validate(config, token)
+  end
+
   def validate_jwt(changeset, field, token_config, validate_claims) do
     with true <- changeset.valid?,
          {:ok, claims} <- Joken.verify_and_validate(token_config, get_field(changeset, field)),

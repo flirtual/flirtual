@@ -3,8 +3,10 @@ defmodule Flirtual.ObanWorkers.Daily do
 
   import Ecto.Query
 
-  alias Flirtual.{Repo, User}
-  alias Flirtual.User.{Email, Login, Push, Session}
+  alias Flirtual.{Connection, Discord, Entitlement, Repo, User}
+  alias Flirtual.ObanWorkers.Reconcile
+  alias Flirtual.ObanWorkers.RefreshConnection
+  alias Flirtual.User.{Email, Login, Push, Session, SessionTransfer}
   alias Flirtual.User.Profile.Attributes
 
   @reminders [
@@ -12,6 +14,9 @@ defmodule Flirtual.ObanWorkers.Daily do
     {700, :reminder_700},
     {723, :reminder_723}
   ]
+
+  # Review accounts are exempt from pruning.
+  @never_prune_tags ["review"]
 
   @impl Oban.Worker
   def perform(%Oban.Job{}) do
@@ -21,8 +26,46 @@ defmodule Flirtual.ObanWorkers.Daily do
     if :prune_inactive in enabled, do: prune_inactive()
     if :prune_sessions in enabled, do: prune_sessions()
     if :update_attribute_order in enabled, do: update_attribute_order()
+    if :reconcile_entitlements in enabled, do: reconcile_entitlements()
+    if :refresh_connections in enabled, do: refresh_connections()
 
     :ok
+  end
+
+  # Update Discord usernames.
+  defp refresh_connections do
+    if Discord.bot_token?() do
+      Connection
+      |> where([connection], connection.type == :discord)
+      |> select([connection], connection.id)
+      |> Repo.all()
+      |> Enum.chunk_every(RefreshConnection.batch_size())
+      |> Enum.each(&RefreshConnection.enqueue/1)
+    end
+  end
+
+  # Check entitlements webhooks and the scheduled lapse reconcile can miss:
+  # lifetime refunds, subs near their lapse, subs with a pending payment, and
+  # rows never reconciled.
+  defp reconcile_entitlements do
+    now = DateTime.utc_now()
+
+    Entitlement
+    |> where(
+      [entitlement],
+      entitlement.store not in [:promotional, :stripe] and entitlement.kind != :consumable
+    )
+    |> where(
+      [entitlement],
+      is_nil(entitlement.entitled_until) or
+        is_nil(entitlement.reconciled_at) or
+        entitlement.renewal_pending or
+        entitlement.entitled_until > ^DateTime.add(now, -2, :day)
+    )
+    |> distinct(true)
+    |> select([entitlement], entitlement.user_id)
+    |> Repo.all()
+    |> Enum.each(&Reconcile.enqueue/1)
   end
 
   defp prune_banned do
@@ -55,6 +98,7 @@ defmodule Flirtual.ObanWorkers.Daily do
           where: is_nil(user.banned_at),
           where: not is_nil(user.email_confirmed_at),
           where: not fragment("? && ?::citext[]", user.tags, ^tags_gte),
+          where: not fragment("? && ?::citext[]", user.tags, ^@never_prune_tags),
           select: user.id
         )
         |> Repo.all()
@@ -90,6 +134,7 @@ defmodule Flirtual.ObanWorkers.Daily do
     from(user in User,
       where: is_nil(user.banned_at),
       where: user.active_at <= ^deletion_cutoff,
+      where: not fragment("? && ?::citext[]", user.tags, ^@never_prune_tags),
       select: user.id
     )
     |> Repo.all()
@@ -107,6 +152,8 @@ defmodule Flirtual.ObanWorkers.Daily do
       session.expire_at <= ^now or session.created_at <= ^absolute_expire_at
     )
     |> Repo.delete_all()
+
+    SessionTransfer.delete_expired()
 
     Login
     |> where(

@@ -77,7 +77,7 @@ export const InlineThemeSelect: React.FC<{ className?: string }> = ({ className 
 				{" "}
 				<ChevronDown className="inline-block size-em" />
 			</RadixSelectTrigger>
-			<SelectContent>
+			<SelectContent label={t(theme)}>
 				{PreferenceThemes.map((value) => (
 					<SelectItem
 						key={value}

@@ -10,15 +10,13 @@ defmodule Flirtual.Mailer do
 
   defp get_urls() do
     origin = get_origin()
-    locale = Gettext.get_locale()
 
     %{
       home: URI.to_string(origin),
+      discord: "https://discord.gg/flirtual",
       x: "https://x.com/getflirtual",
-      discord:
-        origin
-        |> URI.merge("/discord")
-        |> URI.to_string(),
+      bluesky: "https://bsky.app/profile/flirtual.com",
+      instagram: "https://instagram.com/getflirtual",
       unsubscribe:
         origin
         |> URI.merge("/settings/notifications")
@@ -38,8 +36,10 @@ defmodule Flirtual.Mailer do
     ---
     #{urls.home}
 
-    #{dgettext("notifications", "x")}: #{urls.x}
     #{dgettext("notifications", "discord")}: #{urls.discord}
+    #{dgettext("notifications", "x")}: #{urls.x}
+    #{dgettext("notifications", "bluesky")}: #{urls.bluesky}
+    #{dgettext("notifications", "instagram")}: #{urls.instagram}
     #{dgettext("notifications", "unsubscribe")}: #{urls.unsubscribe}
 
     © #{Date.utc_today().year} #{@company}
@@ -285,8 +285,10 @@ defmodule Flirtual.Mailer do
       do: "<p class=\"action-link\">#{dgettext("notifications", "if_the_link_does_not_work")}<br /><a href=\"#{action_url}\">#{action_url}</a></p>",
       else: ""}
           <p>
+            <a href="#{urls.discord}">#{dgettext("notifications", "discord")}</a>
             <a href="#{urls.x}">#{dgettext("notifications", "x")}</a>
-            <a href="#{urls.discord}">#{dgettext("notifications", "discord")}</a><br />
+            <a href="#{urls.bluesky}">#{dgettext("notifications", "bluesky")}</a>
+            <a href="#{urls.instagram}">#{dgettext("notifications", "instagram")}</a><br />
             <a href="#{urls.unsubscribe}">#{dgettext("notifications", "unsubscribe")}</a>
           </p>
           <p>
@@ -300,9 +302,25 @@ defmodule Flirtual.Mailer do
     """
   end
 
+  defp address(mailbox, type) do
+    domains = Application.fetch_env!(:flirtual, __MODULE__)[:domains]
+    "#{mailbox}@#{Map.get(domains, type) || Map.fetch!(domains, "transactional")}"
+  end
+
+  defp configuration_set(type) do
+    sets = Application.fetch_env!(:flirtual, __MODULE__)[:configuration_sets]
+    Map.get(sets, type) || Map.fetch!(sets, "transactional")
+  end
+
+  defp reply_address(mailbox) do
+    "#{mailbox}@#{Application.fetch_env!(:flirtual, __MODULE__)[:reply_domain]}"
+  end
+
   # subject, body_text, body_html, action_url \\ nil
   def send(recipient, options) do
-    from = Keyword.get(options, :from) || "noreply@flirtu.al"
+    type = Keyword.fetch!(options, :type)
+    from = address("noreply", type)
+    reply_to_mailbox = Keyword.get(options, :reply_to)
     subject = Keyword.fetch!(options, :subject)
     action_url = Keyword.get(options, :action_url)
     unsubscribe_token = Keyword.get(options, :unsubscribe_token)
@@ -313,6 +331,7 @@ defmodule Flirtual.Mailer do
         new()
         |> to(recipient)
         |> from({"Flirtual", from})
+        |> put_provider_option(:configuration_set_name, configuration_set(type))
         |> subject(subject)
         |> text_body(
           Keyword.fetch!(options, :body_text)
@@ -325,6 +344,13 @@ defmodule Flirtual.Mailer do
             action_url
           )
         )
+
+      email =
+        if reply_to_mailbox do
+          reply_to(email, reply_address(reply_to_mailbox))
+        else
+          email
+        end
 
       email =
         if unsubscribe_token do

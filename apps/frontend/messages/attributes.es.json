@@ -39,9 +39,6 @@
 		"mHF6zQZ3tbVe9iYjGuzAPK": {
 			"name": "PAYDAY 2"
 		},
-		"b3YVqwSVNMcsh2xUPSd9hU": {
-			"name": "PokerStars VR"
-		},
 		"HF4tppeRywmq9oWsR2GyMg": {
 			"name": "POPULATION: ONE"
 		},
@@ -56,9 +53,6 @@
 		},
 		"ffrwQHFv2kN4uRRJCLYqVb": {
 			"name": "Contractors"
-		},
-		"6DjtoKvDStyCEJBWdjDnva": {
-			"name": "A Township Tale"
 		},
 		"ibNMSB3mTjSqA4yVh424BG": {
 			"name": "Drunkn Bar Fight"
@@ -231,9 +225,6 @@
 		"z6PXMo8JatbqCcYzjCaW9F": {
 			"name": "Museum of Other Realities"
 		},
-		"E4Vf4HRy33aPjYkyXXdoee": {
-			"name": "F1 23"
-		},
 		"2B7KNoGh5iAEJsp5ADvZVG": {
 			"name": "Golf It!"
 		},
@@ -269,9 +260,6 @@
 		},
 		"pJAc8ipKGh5AjxkccveUUQ": {
 			"name": "Gun World VR"
-		},
-		"gBjREdNLqSz5yRCJyo93ua": {
-			"name": "Spatial"
 		},
 		"XPtLgbB63VUsPFqx5ELnLD": {
 			"name": "STAND OUT: VR Battle Royale"
@@ -1038,17 +1026,11 @@
 		"KmFuVctFYXysnMPp6hMzn8": {
 			"name": "Dread Meridian"
 		},
-		"45ZCnRNM263sv7y9XkbkTZ": {
-			"name": "Legendary Tales"
-		},
 		"wuJBKBouDtyXUdsRrKDGeP": {
 			"name": "NightClub Simulator VR"
 		},
 		"QkQzYZB3uqgFFLkyK2TaiL": {
 			"name": "PoligonVR"
-		},
-		"55XreduJ6GCvDgn4ysY4Ao": {
-			"name": "RUMBLE"
 		},
 		"itAqFvzYvyQMDg8FpNwHmG": {
 			"name": "Tower Tag"
@@ -2830,26 +2812,11 @@
 		"c255sGSiJpMNnm6NTUcvx6": {
 			"name": "Visión Apple"
 		},
-		"WQVnXwQzfThHr7yczTjm3C": {
-			"name": "Windows Realidad Mixta"
-		},
-		"fyBa2tUpgEgqBPda4BpXAE": {
-			"name": "RV móvil"
-		},
 		"RNaigbGdB7H4ZMw5c8ysbi": {
 			"name": "Meta Quest"
 		},
 		"3Kagenz7boB64Ke6vEAKv6": {
 			"name": "PCVR"
-		},
-		"UpyGwuCHANjYmM2P269dFm": {
-			"name": "Enlace Quest"
-		},
-		"qhAm6Z9kGRP5opGfnrVYda": {
-			"name": "Oculus Rift"
-		},
-		"d52VH6CyRaVPQvAwoStEoY": {
-			"name": "SteamVR"
 		},
 		"FEX8jjr4P9aeBurRUTLhU7": {
 			"name": "Pico"
@@ -2860,14 +2827,14 @@
 		"aNGgneQH5YX4HyWpNEUpmQ": {
 			"name": "Otras RV"
 		},
-		"6BdtcWSEHNwX6ba9nzd2Yc": {
-			"name": "Escritorio"
-		},
 		"pzkBdEYqgAZiSEBZAcJMPZ": {
 			"name": "Traje háptico"
 		},
 		"x5T9enPhP8WpYwnoottGDL": {
 			"name": "Cinta de correr locomotion"
+		},
+		"Ry723pMCrWV4ptp8ywcorG": {
+			"name": "Steam Frame"
 		}
 	},
 	"ban-reason": {
@@ -3177,47 +3144,20 @@
 		}
 	},
 	"plans": {
-		"w4WDwDWKtmLSqkn8oNqCN3": {
-			"name": "Legacy Premium (US$24.99/3mo)"
-		},
 		"Wt4aFY7jVzvSNFK9qcYAr5": {
 			"name": "Premium (cada 6 meses)"
 		},
 		"fBDvWjdgvG6zEZMj6ZfyNG": {
 			"name": "Premium (cada 3 meses)"
 		},
-		"6xZywHRc432o5H9PqFFoyG": {
-			"name": "Legacy Premium (US$9.99/mes)"
-		},
-		"rFxKcnAZGQtwckWUQbrG9J": {
-			"name": "Fallback Premium"
-		},
-		"PQZuLuEmXRwuRhiQisgkPM": {
-			"name": "Legacy Premium (US$39.99/6mo)"
-		},
-		"PHpCmDBMX6wCkuXXr36foQ": {
-			"name": "Early Premium (US$24.99/3mo)"
-		},
 		"Di7Sypboma4ryhy6MUagyS": {
 			"name": "De por vida"
 		},
-		"43V699voRpLqskJEM42Vsa": {
-			"name": "Patrocinador inicial"
-		},
-		"CJv2NQ7AiEimvDoZJ3uQTe": {
-			"name": "Vida temprana"
-		},
 		"2nAci9TWPaMaYFzVASVgme": {
-			"name": "Early Premium (US$9.99/mes)"
-		},
-		"5NcKBUELrTmZr6JQQFespf": {
-			"name": "Early Premium (US$39.99/6mo)"
+			"name": "Early Premium"
 		},
 		"LVjvu5YE7PjUJxVrkfsnMi": {
 			"name": "Premium (mensual)"
-		},
-		"QQd364odDmzV69gsaKTYwm": {
-			"name": "Legacy Lifetime"
 		}
 	}
 }

@@ -3,20 +3,14 @@
 import { playlistPlatforms } from "~/components/profile/playlist";
 import {
 	apiOrigin,
-	bucketUploadsSignedOrigin,
 	commitId,
 	development,
 	posthogHost,
 	preview,
 	sentryDsn,
-	sentryEnabled,
 	sentryReportTo
 } from "~/const";
 import { bucketOrigins } from "~/urls";
-
-const contentSecurityPolicyReportTo = sentryEnabled
-	? sentryReportTo
-	: undefined;
 
 const data = [
 	{
@@ -62,7 +56,14 @@ const data = [
 					camera: [],
 					microphone: [],
 					geolocation: ["self"],
-					"browsing-topics": []
+					"browsing-topics": [],
+					...(development
+						? {}
+						: {
+								"local-network": [],
+								"loopback-network": [],
+								"local-network-access": []
+							})
 				})
 					.map(([key, value]) => `${key}=(${value.join(" ")})`)
 					.join(", ")
@@ -93,6 +94,7 @@ const data = [
 						"static.cloudflareinsights.com",
 						// https://posthog.com/docs/advanced/content-security-policy
 						posthogHost && new URL(posthogHost).host,
+						"*.posthog.com",
 						// https://www.chargebee.com/docs/billing/2.0/hosted-capabilities/embedded-checkout
 						"*.chargebee.com"
 					],
@@ -103,7 +105,9 @@ const data = [
 						"*.freshworks.com",
 						"*.freshdesk.com",
 						// https://www.chargebee.com/docs/billing/2.0/hosted-capabilities/embedded-checkout
-						"*.chargebee.com"
+						"*.chargebee.com",
+						// https://posthog.com/docs/advanced/content-security-policy
+						"*.posthog.com"
 					],
 					"img-src": [
 						"'self'",
@@ -112,7 +116,9 @@ const data = [
 						...bucketOrigins.map((origin) => new URL(origin).host),
 						// https://www.chargebee.com/docs/billing/2.0/hosted-capabilities/embedded-checkout
 						"*.chargebee.com",
-						"cb-invoice-logos-prod.s3.us-east-1.amazonaws.com"
+						"cb-invoice-logos-prod.s3.us-east-1.amazonaws.com",
+						// https://posthog.com/docs/advanced/content-security-policy
+						"*.posthog.com",
 					],
 					"media-src": [
 						"'self'",
@@ -122,14 +128,15 @@ const data = [
 						// https://talkjs.com/docs/Features/Security_Settings/Content_Security_Policy/
 						"*.talkjs.com",
 						// https://vrcdn.live/
-						"stream.vrcdn.live"
+						"stream.vrcdn.live",
+						// https://posthog.com/docs/advanced/content-security-policy
+						"*.posthog.com",
 					],
 					"connect-src": [
 						"'self'",
 						"blob:",
 						new URL(apiOrigin).host,
 						...bucketOrigins.map((origin) => new URL(origin).host),
-						bucketUploadsSignedOrigin && new URL(bucketUploadsSignedOrigin).host,
 						// https://talkjs.com/docs/Features/Security_Settings/Content_Security_Policy/
 						"*.talkjs.com",
 						"wss://*.talkjs.com",
@@ -145,17 +152,26 @@ const data = [
 						"cloudflareinsights.com",
 						"static.cloudflareinsights.com",
 						// https://docs.sentry.io/concepts/key-terms/dsn-explainer/
-						sentryEnabled && new URL(sentryDsn).host,
+						sentryDsn && new URL(sentryDsn).host,
 						// https://posthog.com/docs/advanced/content-security-policy
 						posthogHost && new URL(posthogHost).host,
+						"*.posthog.com",
 						// https://www.chargebee.com/docs/billing/2.0/hosted-capabilities/embedded-checkout
 						"*.chargebee.com"
 					],
-					"font-src": ["'self'"],
+					"font-src": [
+						"'self'",
+						// https://posthog.com/docs/advanced/content-security-policy
+						"*.posthog.com",
+					],
 					"object-src": ["'self'", "data:"],
 					"base-uri": ["'self'"],
 					"form-action": ["'self'"],
-					"frame-ancestors": ["'none'"],
+					"frame-ancestors": [
+						"'self'",
+						// https://posthog.com/docs/advanced/content-security-policy
+						"*.posthog.com",
+					],
 					"frame-src": [
 						new URL(apiOrigin).host,
 						// https://developers.cloudflare.com/turnstile/reference/content-security-policy/
@@ -174,12 +190,19 @@ const data = [
 						...playlistPlatforms.map(({ embed }) => new URL(embed("example", "light", "en")).host),
 					],
 					// https://docs.sentry.io/platforms/javascript/session-replay/#content-security-policy-csp
-					"worker-src": ["'self'", "blob:"],
+					// https://posthog.com/docs/advanced/content-security-policy
+					"worker-src": [
+						"'self'",
+						"blob:",
+						"data:",
+						// https://posthog.com/docs/advanced/content-security-policy
+						"*.posthog.com",
+					],
 					"child-src": ["'self'", "blob:"],
 					"upgrade-insecure-requests": [],
-					...(contentSecurityPolicyReportTo
+					...(sentryReportTo
 						? {
-								"report-uri": [contentSecurityPolicyReportTo],
+								"report-uri": [sentryReportTo],
 								"report-to": ["csp"]
 							}
 						: {})

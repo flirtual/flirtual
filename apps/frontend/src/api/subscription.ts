@@ -2,19 +2,53 @@ import { api } from "./common";
 import type { DatedModel, UuidModel } from "./common";
 import type { Plan } from "./plan";
 
-type SubscriptionPlatform
-	= | "android"
-		| "chargebee"
-		| "ios"
-		| "unknown";
+export type EntitlementKind = "consumable" | "one_time" | "subscription";
 
-export type Subscription = {
+export type EntitlementStore
+	= | "app_store"
+		| "chargebee"
+		| "play_store"
+		| "promotional"
+		| "stripe";
+
+export type Entitlement = {
+	kind: EntitlementKind;
+	store: EntitlementStore;
 	active: boolean;
 	plan: Plan;
-	cancelledAt?: string;
-	platform: SubscriptionPlatform;
+	entitledUntil?: string;
+	renews?: boolean;
+	renewalPending?: boolean;
+	quantity?: number;
 }
 & DatedModel & UuidModel;
+
+export function matchesPlatform(
+	entitlement: Entitlement,
+	platform: string,
+	native: boolean
+) {
+	return (
+		(entitlement.store === "chargebee" && (platform === "web" || !native))
+		|| (entitlement.store === "app_store" && platform === "apple" && native)
+		|| (entitlement.store === "play_store" && platform === "android" && native)
+	);
+}
+
+export function managedElsewhere(
+	entitlement: Entitlement,
+	platform: string,
+	native: boolean
+) {
+	return (
+		native
+		&& entitlement.active
+		&& entitlement.kind === "subscription"
+		&& entitlement.store !== "promotional"
+		&& entitlement.store !== "stripe"
+		&& !matchesPlatform(entitlement, platform, native)
+	);
+}
 
 export interface ChargebeeHostedPage {
 	id: string;

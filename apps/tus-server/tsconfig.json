@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "target": "es2024",
+    "lib": [
+      "es2024"
+    ],
+    "jsx": "react",
+    "module": "es2022",
+    "moduleResolution": "bundler",
+    "types": [
+      "@cloudflare/vitest-pool-workers"
+    ],
+    "paths": {
+      "cloudflare:test": [
+        "./node_modules/@cloudflare/vitest-pool-workers/types/cloudflare-test.d.ts"
+      ]
+    },
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "checkJs": false,
+    "noEmit": true,
+    "isolatedModules": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "skipLibCheck": true
+  }
+}

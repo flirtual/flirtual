@@ -5,12 +5,12 @@ node_modules
 dist
 build
 .sonda
-.wrangler
 .react-router
 # Sentry Auth Token
 .sentryclirc
 
-certificates
+certificates/*
+!certificates/.gitkeep
 
 # eslint
 .eslintcache

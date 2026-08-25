@@ -20,6 +20,9 @@ export interface LikesYouFilters {
 
 export type ProspectRespondType = "like" | "pass";
 
+export const ResponseSource = ["love", "friend", "direct", "likes"] as const;
+export type ResponseSource = (typeof ResponseSource)[number];
+
 export interface LikeAndPassItem {
 	profileId: string;
 	targetId: string;
@@ -29,61 +32,72 @@ export interface LikeAndPassItem {
 
 export interface RespondProspectBody {
 	type: ProspectRespondType;
-	kind: ProspectKind;
-	mode?: ProspectKind;
-	userId?: string;
+	mode: ProspectKind;
+	userId: string;
+	source: ResponseSource;
 }
 
 export interface RespondProspect {
 	match: boolean;
-	matchKind: ProspectKind;
+	matchKind: ProspectKind | null;
 	userId: string;
 	queue: Queue;
 }
 
 export type QueueActionIssue
-	= | Issue<"already_responded">
-		| Issue<"out_of_likes" | "out_of_passes", { reset_at: string }>
+	= | Issue<"already_responded" | "already_undone" | "blocked" | "nothing_to_undo">
+		| Issue<"out_of_browses" | "out_of_likes", { reset_at: string }>
 		| QueueIssue;
 
 export interface ReverseRespondProspectBody {
 	mode: ProspectKind;
 }
 
+export interface QueueLimits {
+	likes: { used: number; max: number };
+	browses: { used: number; max: number };
+	resetAt: string | null;
+}
+
 export interface Queue {
 	previous: string | null;
 	next: Array<string>;
+	fallback: boolean;
+	notice: "fallback" | null;
+	limits: QueueLimits | null;
+	canUndo: boolean;
+	pending: boolean;
 };
 
 export type QueueIssue = Issue<"confirm_email" | "finish_profile">;
 export type QueueResponse = Queue | QueueIssue;
 
 export const Matchmaking = {
-	queue(kind: ProspectKind, options: WretchOptions = {}) {
+	queue(mode: ProspectKind, options: WretchOptions = {}) {
 		return api
 			.url("queue")
-			.query({ kind })
+			.query({ mode })
 			.options(options)
 			.get()
-			// .forbidden((reason) => {
-			// 	if (isWretchError(reason)) return reason.json;
-			// })
 			.json<Queue>();
 	},
 	queueAction(body: RespondProspectBody) {
 		return api.url("queue").json(body).post().json<RespondProspect>();
 	},
-	like(kind: ProspectKind = "love") {
-		return this.queueAction({ type: "like", kind });
+	like(mode: ProspectKind, userId: string, source: ResponseSource) {
+		return this.queueAction({ type: "like", mode, userId, source });
 	},
-	pass(kind: ProspectKind = "love") {
-		return this.queueAction({ type: "pass", kind });
+	pass(mode: ProspectKind, userId: string, source: ResponseSource) {
+		return this.queueAction({ type: "pass", mode, userId, source });
 	},
 	undo(body: ReverseRespondProspectBody) {
 		return api.url("queue").json(body).delete().json<RespondProspect>();
 	},
 	skipProspect(userId: string) {
 		return api.url("queue/prospect").query({ userId }).delete().json<{ success: true }>();
+	},
+	dismissNotice(mode: ProspectKind) {
+		return api.url("queue/notice").query({ mode }).delete().json<{ success: true }>();
 	},
 	unmatch(userId: string) {
 		return api.url("matches").query({ userId }).delete().res();

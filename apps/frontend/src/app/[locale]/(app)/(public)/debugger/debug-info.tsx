@@ -10,7 +10,7 @@ import { commitId, production } from "~/const";
 import { useDevice } from "~/hooks/use-device";
 import { logout, useOptionalSession } from "~/hooks/use-session";
 import { useLocale } from "~/i18n";
-import { evictQueries, invalidate, restoreQueries, saveQueries } from "~/query";
+import { evictQueries, invalidate } from "~/query";
 
 export const DebugInfo: React.FC = () => {
 	const { t } = useTranslation();
@@ -71,20 +71,6 @@ export const DebugInfo: React.FC = () => {
 					Logout
 				</Button>
 				<span className="col-span-3 font-semibold">Cache</span>
-				<Button
-					className="bg-red-500"
-					size="xs"
-					onClick={() => saveQueries()}
-				>
-					Write
-				</Button>
-				<Button
-					className="bg-red-500"
-					size="xs"
-					onClick={() => restoreQueries()}
-				>
-					Restore
-				</Button>
 				<Button
 					className="bg-red-500"
 					size="xs"

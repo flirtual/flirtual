@@ -61,35 +61,40 @@ defmodule Flirtual.User.Verification do
   end
 
   def send_verification(conn, user, device_id) do
-    with {:ok, _} <-
-           ExRated.check_rate("send_verification:#{user.id}", @twelve_hours, 10),
-         {:ok, login} <-
-           Login.log_login_attempt(conn, user.id, nil,
-             method: :password,
-             device_id: device_id,
-             needs_verification: true
-           ),
-         {:ok, verification} <- create(login.id),
-         {:ok, _} <- User.Email.deliver(user, :verification_code, verification.code) do
-      login.id
-    else
-      {:error, _} -> {:error, :verification_rate_limit}
-      error -> error
+    case ExRated.check_rate("send_verification:#{user.id}", @twelve_hours, 10) do
+      {:error, _} ->
+        {:error, :verification_rate_limit}
+
+      {:ok, _} ->
+        with {:ok, login} <-
+               Login.log_login_attempt(conn, user.id, nil,
+                 method: :password,
+                 device_id: device_id,
+                 needs_verification: true
+               ),
+             {:ok, verification} <- create(login.id),
+             {:ok, _} <- User.Email.deliver(user, :verification_code, verification.code) do
+          login.id
+        else
+          _ -> {:error, :verification_email_failed}
+        end
     end
   end
 
   def resend_verification(login_id) do
     with %Login{user_id: user_id} <- Login.get(login_id),
          {:ok, _} <-
-           ExRated.check_rate("send_verification:#{user_id}", @twelve_hours, 10),
-         %User{} = user <- Users.get(user_id),
-         {:ok, verification} <- create(login_id),
-         {:ok, _} <- User.Email.deliver(user, :verification_code, verification.code) do
-      {:ok, login_id}
+           ExRated.check_rate("send_verification:#{user_id}", @twelve_hours, 10) do
+      with %User{} = user <- Users.get(user_id),
+           {:ok, verification} <- create(login_id),
+           {:ok, _} <- User.Email.deliver(user, :verification_code, verification.code) do
+        {:ok, login_id}
+      else
+        _ -> {:error, :verification_email_failed}
+      end
     else
       nil -> {:error, :verification_invalid_code}
       {:error, _} -> {:error, :verification_rate_limit}
-      error -> error
     end
   end
 

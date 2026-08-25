@@ -12,6 +12,7 @@ export const promotionalPlanId = "Duk5r7zeKUhqXv5L6P3m3Q";
 
 export type Plan = {
 	name: string;
+	product: string;
 	features: Array<SubscriptionFeature>;
 	appleId?: string;
 	googleId?: string;

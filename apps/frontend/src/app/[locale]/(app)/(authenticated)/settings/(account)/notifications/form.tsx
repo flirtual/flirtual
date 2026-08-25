@@ -1,23 +1,33 @@
-import { PushNotifications } from "@capacitor/push-notifications";
-import { IOSSettings, NativeSettings } from "capacitor-native-settings";
+import { AndroidSettings, IOSSettings, NativeSettings } from "capacitor-native-settings";
 import { Mail, Smartphone } from "lucide-react";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import { fromEntries, keys } from "remeda";
 
 import { Preferences } from "~/api/user/preferences";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
+import { InlineButton } from "~/components/inline-button";
+import { InputLabelHint } from "~/components/inputs";
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 import { useDevice } from "~/hooks/use-device";
+import { requestNotificationPermission, useNotifications } from "~/hooks/use-notifications";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { invalidate, sessionKey } from "~/query";
 
+function openNotificationSettings() {
+	return NativeSettings.open({
+		optionAndroid: AndroidSettings.AppNotification,
+		optionIOS: IOSSettings.App
+	});
+}
+
 export const NotificationsForm: React.FC = () => {
 	const { user } = useSession();
 	const toasts = useToast();
-	const { native, apple } = useDevice();
+	const { native } = useDevice();
+	const { status } = useNotifications();
 	const { t } = useTranslation();
 
 	if (!user || !user.preferences) return null;
@@ -40,24 +50,14 @@ export const NotificationsForm: React.FC = () => {
 					push: fromEntries(keys(preferences.pushNotifications).map((key) => [key, values.push.includes(key)]))
 				});
 
-				if (values.push.length > 0 && native) {
-					const { receive } = await PushNotifications.requestPermissions();
-
-					if (receive === "granted")
-						await PushNotifications.register();
-					else if (apple) {
-						await toasts.add(t("main_fit_lark_imagine"));
-						await new Promise((resolve) => setTimeout(resolve, 2000));
-
-						await NativeSettings.openIOS({ option: IOSSettings.App });
-					}
-				}
+				if (values.push.length > 0 && native)
+					await requestNotificationPermission();
 
 				await invalidate({ queryKey: sessionKey() });
 				await toasts.add(t("merry_smart_snake_boil"));
 			}}
 		>
-			{({ FormField }) => (
+			{({ FormField, fields }) => (
 				<>
 					<div className="grid grid-cols-[1fr_auto_auto] gap-4">
 						<div />
@@ -120,6 +120,24 @@ export const NotificationsForm: React.FC = () => {
 							)}
 						</FormField>
 					</div>
+					{native
+						&& status === "denied"
+						&& fields.push.props.value.length > 0 && (
+						<InputLabelHint>
+							<Trans
+								components={{
+									settings: (
+										<InlineButton
+											className="underline"
+											highlight={false}
+											onClick={openNotificationSettings}
+										/>
+									)
+								}}
+								i18nKey="push_notifications_blocked"
+							/>
+						</InputLabelHint>
+					)}
 					<FormButton>{t("update")}</FormButton>
 				</>
 			)}

@@ -1,6 +1,6 @@
 # syntax = docker/dockerfile:1
 
-ARG NODE_VERSION=18.20.5
+ARG NODE_VERSION=22.23.1
 
 FROM node:${NODE_VERSION}-slim as base
 
@@ -44,21 +44,26 @@ RUN pip install --break-system-packages "tensorflow==2.15.1" "tensorflow-io==0.3
 # We want to do this as late as possible so we can
 # utilize the cache for the previous stages.
 FROM base as build
-WORKDIR /app
+WORKDIR /repo
 
-## Install node modules
-COPY --link package.json .
-RUN npm install --legacy-peer-deps --production=false
+## Install node modules.
+ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
+RUN corepack enable pnpm
+
+COPY --link package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY --link apps/image-classification/package.json ./apps/image-classification/
+
+RUN pnpm install --frozen-lockfile --prod=false --filter image-classification
 
 ## Copy source files and build.
-COPY --link . .
-RUN ./node_modules/.bin/tsc
+COPY --link apps/image-classification ./apps/image-classification
+RUN pnpm --filter image-classification exec tsc
 
-## Clean up source files.
-RUN rm src -rf && rm tsconfig.json -rf
-
-## Copy only the necessary files.
-RUN cp -r dist/* . && rm dist -rf
+## Emit a self-contained tree without devDependencies.
+# --legacy is required because pnpm otherwise refuses to deploy from a
+# workspace that doesn't set inject-workspace-packages.
+# https://pnpm.io/11.x/cli/deploy
+RUN pnpm --filter image-classification deploy --prod --legacy /app
 
 # Final image.
 # Build upon the "build-deep-danbooru" stage because
@@ -70,4 +75,4 @@ COPY --from=build /app /app
 
 WORKDIR /app
 
-CMD [ "node", "index.js" ]
+CMD [ "node", "dist/index.js" ]

@@ -1,4 +1,4 @@
-import ms from "ms.macro";
+import ms from "ms" with { type: "macro" };
 import { useCallback, useState } from "react";
 import type { FC } from "react";
 import Image1049fc02 from "virtual:remote/1049fc02-6e6b-4178-b762-b46e56f9fa66";

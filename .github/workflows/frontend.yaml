@@ -1,13 +1,7 @@
 on:
   push:
-    paths: ["apps/frontend/**", ".github/workflows/frontend.yaml"]
   pull_request:
-    paths: ["apps/frontend/**", ".github/workflows/frontend.yaml"]
   workflow_dispatch:
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
 
 permissions:
   contents: read
@@ -21,28 +15,48 @@ jobs:
       run:
         working-directory: apps/frontend
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
       - run: echo "::add-matcher::.github/annotation-eslint.json"
 
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
         name: Install pnpm
         with:
-          version: 10
           run_install: false
 
       - name: Install Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 24
           cache: pnpm
-          cache-dependency-path: apps/frontend/pnpm-lock.yaml
 
       - name: Install dependencies
         run: pnpm install
 
       - name: ESLint
         run: ./node_modules/.bin/eslint -f stylish
+
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6
+        name: Install pnpm
+        with:
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Audit dependencies
+        run: pnpm audit --audit-level low --ignore-registry-errors
 
   typescript:
     strategy:
@@ -51,29 +65,29 @@ jobs:
         exclude:
           - environment: ${{ github.ref != 'refs/heads/production' && 'production' || null }}
     runs-on: ubuntu-latest
-    environment: ${{ matrix.environment }}
+    environment:
+      name: ${{ matrix.environment }}
+      deployment: false
     permissions:
       checks: write
     defaults:
       run:
         working-directory: apps/frontend
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
       - run: echo "::add-matcher::.github/annotation-typescript.json"
 
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
         name: Install pnpm
         with:
-          version: 10
           run_install: false
 
       - name: Install Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 24
           cache: pnpm
-          cache-dependency-path: apps/frontend/pnpm-lock.yaml
 
       - name: Install dependencies
         run: pnpm install
@@ -92,6 +106,8 @@ jobs:
           exit ${PIPESTATUS[0]}
 
   release:
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    needs: [typescript]
     strategy:
       matrix:
         environment: [production, canary]
@@ -99,7 +115,12 @@ jobs:
           - environment: ${{ github.ref != 'refs/heads/production' && 'production' || null }}
     runs-on: ubuntu-latest
     continue-on-error: true
-    environment: ${{ matrix.environment }}
+    permissions:
+      contents: read
+      checks: write
+    environment:
+      name: ${{ matrix.environment }}
+      url: ${{ steps.preview.outputs.url }}
     defaults:
       run:
         working-directory: apps/frontend
@@ -123,36 +144,93 @@ jobs:
       VITE_UPPY_BUCKET_ORIGIN: ${{ vars.VITE_UPPY_BUCKET_ORIGIN }}
       VITE_API_URL: ${{ vars.VITE_API_URL }}
       VITE_ORIGIN: ${{ vars.VITE_ORIGIN }}
+      VITE_SHORT_ORIGIN: ${{ vars.VITE_SHORT_ORIGIN }}
       VITE_APP_BUNDLE_ID: ${{ vars.VITE_APP_BUNDLE_ID }}
       VITE_PICO_APP_ID: ${{ vars.VITE_PICO_APP_ID }}
+      VITE_APPLE_SIGNIN_SERVICE_ID: ${{ vars.VITE_APPLE_SIGNIN_SERVICE_ID }}
+      VITE_GOOGLE_CLIENT_ID: ${{ vars.VITE_GOOGLE_CLIENT_ID }}
+      VITE_GOOGLE_IOS_CLIENT_ID: ${{ vars.VITE_GOOGLE_IOS_CLIENT_ID }}
       VITE_PLATFORM_OVERRIDE: ${{ vars.VITE_PLATFORM_OVERRIDE }}
       VITE_BUCKET_CONTENT_ORIGIN: ${{ vars.VITE_BUCKET_CONTENT_ORIGIN }}
       VITE_BUCKET_UPLOADS_ORIGIN: ${{ vars.VITE_BUCKET_UPLOADS_ORIGIN }}
-      VITE_BUCKET_UPLOADS_SIGNED_ORIGIN: ${{ vars.VITE_BUCKET_UPLOADS_SIGNED_ORIGIN }}
       VITE_ASSETLINKS_JSON: ${{ vars.VITE_ASSETLINKS_JSON }}
       VITE_APPLE_APP_SITE_ASSOCIATION_JSON: ${{ vars.VITE_APPLE_APP_SITE_ASSOCIATION_JSON }}
       VITE_APPLE_DEVELOPER_MERCHANTID_DOMAIN_ASSOCIATION: ${{ vars.VITE_APPLE_DEVELOPER_MERCHANTID_DOMAIN_ASSOCIATION }}
+      VITE_WEBAUTHN_JSON: ${{ vars.VITE_WEBAUTHN_JSON }}
 
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
         name: Install pnpm
         with:
-          version: 10
           run_install: false
 
       - name: Install Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 24
           cache: pnpm
-          cache-dependency-path: apps/frontend/pnpm-lock.yaml
 
       - name: Install dependencies
         run: pnpm install
 
-      - run: pnpm run ${{ matrix.environment }}
+      - name: Cache build caches
+        uses: actions/cache@v6
+        with:
+          path: apps/frontend/node_modules/.cache
+          key: build-cache-${{ matrix.environment }}-${{ github.run_id }}
+          restore-keys: build-cache-${{ matrix.environment }}-
+
+      - name: Deploy production
+        if: matrix.environment == 'production'
+        run: pnpm run production
+
+      - name: Compute preview alias
+        id: preview
+        if: matrix.environment == 'canary'
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          if [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then
+            label="$PR_NUMBER"
+          else
+            label="${GITHUB_SHA::7}"
+          fi
+          echo "PREVIEW_LABEL=$label" >> "$GITHUB_ENV"
+          echo "PREVIEW_ALIAS=git-$label" >> "$GITHUB_ENV"
+          echo "url=https://$label.flirtual.dev" >> "$GITHUB_OUTPUT"
+
+      - name: Upload preview version
+        if: matrix.environment == 'canary'
+        env:
+          VITE_ORIGIN: https://${{ env.PREVIEW_LABEL }}.flirtual.dev
+          VITE_API_URL: https://api-${{ env.PREVIEW_LABEL }}.flirtual.dev/v1/
+        run: pnpm run preview "$PREVIEW_ALIAS"
+
+      - name: Point flirtual.dev at this preview
+        if: matrix.environment == 'canary' && github.ref == 'refs/heads/main'
+        run: pnpm exec wrangler kv key put latest "$PREVIEW_LABEL" --binding=PREVIEW_STATE -c ../preview-router/wrangler.jsonc --remote
+
+      - name: Deploy beta
+        if: matrix.environment == 'canary' && github.ref == 'refs/heads/main'
+        env:
+          VITE_ORIGIN: https://beta.flirtual.dev
+          VITE_API_URL: https://beta-api.flirtual.dev/v1/
+        run: pnpm run canary
+
+      - name: Post preview check
+        if: matrix.environment == 'canary' && github.ref == 'refs/heads/main'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          jq -n --arg sha "$GITHUB_SHA" --arg url "https://$PREVIEW_LABEL.flirtual.dev" '{
+            name: "preview",
+            head_sha: $sha,
+            status: "completed",
+            conclusion: "success",
+            output: { title: "Preview deployed", summary: "→ \($url)" }
+          }' | gh api repos/${{ github.repository }}/check-runs --input -

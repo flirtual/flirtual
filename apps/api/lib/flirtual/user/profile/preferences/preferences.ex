@@ -22,14 +22,14 @@ defmodule Flirtual.User.Profile.Preferences do
       join_through: Preferences.Attributes,
       join_keys: [preferences_id: :profile_id, attribute_id: :id],
       on_replace: :delete,
-      preload_order: [asc: :type, asc: :order]
+      preload_order: [asc: :type, asc: :order, asc: :id]
   end
 
   def default_assoc do
     [
       attributes:
         from(attribute in Attribute,
-          order_by: [attribute.type, attribute.id]
+          order_by: [attribute.type, attribute.order, attribute.id]
         )
     ]
   end

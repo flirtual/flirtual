@@ -2,9 +2,10 @@ import {
 	AppUpdate,
 	AppUpdateAvailability,
 } from "@capawesome/capacitor-app-update";
-import ms from "ms.macro";
+import ms from "ms" with { type: "macro" };
 import { useEffect, useState } from "react";
-import { Trans, useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
+import { useMatches } from "react-router";
 import { withSuspense, } from "with-suspense";
 
 import { client, commitId, siteOrigin } from "~/const";
@@ -36,27 +37,55 @@ function useVersionCheck() {
 	});
 }
 
-export const UpdateInformationDialog: React.FC<{ onUpdate: () => void }> = ({ onUpdate }) => {
+const browsingRouteIds = new Set([
+	// Landing page.
+	"app/[locale]/(public)/home/page",
+	// Unauthenticated pages, e.g. about, terms.
+	"app/[locale]/(app)/(public)/layout",
+	// Profiles, discover, likes, matches.
+	"app/[locale]/(app)/(authenticated)/(onboarded)/layout"
+]);
+
+// Pages under the above layouts which can still have unsaved work.
+const unsavedWorkRouteIds = new Set([
+	"app/[locale]/(app)/(public)/confirm-email/page",
+	"app/[locale]/(app)/(authenticated)/(onboarded)/matches/[conversationId]/page"
+]);
+
+function useBrowsingOnly() {
+	const matches = useMatches();
+
+	return (
+		matches.some(({ id }) => browsingRouteIds.has(id))
+		&& !matches.some(({ id }) => unsavedWorkRouteIds.has(id))
+	);
+}
+
+export const UpdateInformationDialog: React.FC<{ native: boolean; onUpdate: () => void }> = ({ native, onUpdate }) => {
 	const { t } = useTranslation();
 	const [open, setOpen] = useState(true);
+	const browsingOnly = useBrowsingOnly();
 
 	return (
 		<DrawerOrDialog closable className="desktop:max-w-lg" open={open} onOpenChange={setOpen}>
 			<>
 				<DialogHeader>
-					<DialogTitle>{t("early_north_alpaca_sail")}</DialogTitle>
+					<DialogTitle>{t("update_available")}</DialogTitle>
 					<DialogDescription className="sr-only" />
 				</DialogHeader>
 				<DialogBody className="min-h-48">
 					<p>
-						<Trans
-							components={{ strong: <strong className="font-semibold" /> }}
-							i18nKey="icy_sound_emu_kiss"
-						/>
+						{native
+							? browsingOnly
+								? t("update_available_description_native")
+								: t("update_available_description_native_unsaved", { platform: device.platform })
+							: browsingOnly
+								? t("update_available_description_web")
+								: t("update_available_description_web_unsaved")}
 					</p>
 					<div className="flex gap-2">
 						<Button className="grow" size="sm" onClick={onUpdate}>
-							{t("update")}
+							{native ? t("update") : t("refresh")}
 						</Button>
 						<Button
 							className="grow"
@@ -64,7 +93,7 @@ export const UpdateInformationDialog: React.FC<{ onUpdate: () => void }> = ({ on
 							size="sm"
 							onClick={() => setOpen(false)}
 						>
-							{t("aware_such_leopard_fond")}
+							{t("not_now")}
 						</Button>
 					</div>
 				</DialogBody>
@@ -114,6 +143,7 @@ export const UpdateInformation: React.FC = withSuspense(() => {
 
 	return (
 		<UpdateInformationDialog
+			native={!!nativeUpdateAvailable}
 			onUpdate={() => {
 				if (nativeUpdateAvailable) {
 					AppUpdate.openAppStore();

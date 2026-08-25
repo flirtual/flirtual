@@ -3,25 +3,32 @@ import type { FC } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
-import { DefaultProfileCustomWeights, Profile } from "~/api/user/profile";
-import { Form } from "~/components/forms";
+import { isWretchError } from "~/api/common";
+import {
+	CustomWeightSteps,
+	DefaultProfileCustomWeights,
+	Profile
+} from "~/api/user/profile";
 import { FormButton } from "~/components/forms/button";
-import { InputLabel, InputLabelHint } from "~/components/inputs";
+import { InputLabel, InputLabelHint, InputSwitch } from "~/components/inputs";
 import { Slider } from "~/components/inputs/slider";
 import {
-	InputGeolocation,
-	InputTimezoneSelect
+	InputTimezoneSelect,
+	useApplyGeolocation
 } from "~/components/inputs/specialized";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { invalidate, sessionKey } from "~/query";
 
 import { commonComponents } from "./common";
+import { NewsForm } from "./form";
 
 export const Location2025: FC<{ onSaved?: () => void }> = ({ onSaved }) => {
 	const { t } = useTranslation();
 	const toasts = useToast();
 	const { user } = useSession();
+
+	const applyGeolocation = useApplyGeolocation();
 
 	const { customWeights = DefaultProfileCustomWeights } = user.profile;
 
@@ -35,19 +42,24 @@ export const Location2025: FC<{ onSaved?: () => void }> = ({ onSaved }) => {
 			components={{
 				...commonComponents,
 				form: (
-					<Form
+					<NewsForm
 						fields={{
 							timezone: user.profile.timezone ?? browserTimezone,
-							weightLocation: customWeights.location
+							weightLocation: customWeights.location,
+							geolocation: true
 						}}
 						className="mt-2 flex flex-col gap-6"
-						onSubmit={async ({ timezone, weightLocation }) => {
+						onSubmit={async ({ timezone, weightLocation, geolocation }) => {
 							await Promise.all([
 								Profile.update(user.id, {
 									timezone: timezone ?? "none"
 								}),
 								Profile.updateCustomWeights(user.id, {
 									location: weightLocation
+								}),
+								applyGeolocation(geolocation).catch((reason) => {
+									if (isWretchError(reason)) return toasts.addError(t(`errors.${reason.json.error}` as any));
+									toasts.addError(reason);
 								})
 							]);
 							await invalidate({ queryKey: sessionKey() });
@@ -57,13 +69,23 @@ export const Location2025: FC<{ onSaved?: () => void }> = ({ onSaved }) => {
 					>
 						{({ FormField }) => (
 							<>
-								<div className="flex flex-col gap-2">
-									<InputLabel>{t("geolocation")}</InputLabel>
-									<InputLabelHint className="-mt-2">
-										{t("geolocation_hint")}
-									</InputLabelHint>
-									<InputGeolocation />
-								</div>
+								<FormField name="geolocation">
+									{(field) => (
+										<>
+											<InputLabel>{t("enable_distance_matchmaking")}</InputLabel>
+											<InputLabelHint className="-mt-2">
+												{t("geolocation_hint")}
+												<details>
+													<summary className="text-pink opacity-75 transition-opacity hover:cursor-pointer hover:opacity-100">
+														{t("privacy")}
+													</summary>
+													{t("geolocation_privacy_details")}
+												</details>
+											</InputLabelHint>
+											<InputSwitch {...field.props} />
+										</>
+									)}
+								</FormField>
 								<FormField name="timezone">
 									{(field) => (
 										<>
@@ -98,9 +120,7 @@ export const Location2025: FC<{ onSaved?: () => void }> = ({ onSaved }) => {
 											</InputLabelHint>
 											<Slider
 												{...props}
-												max={2}
-												min={0}
-												step={0.25}
+												steps={CustomWeightSteps}
 												value={[value]}
 												onValueChange={(values) => onChange(values[0]!)}
 											/>
@@ -110,7 +130,7 @@ export const Location2025: FC<{ onSaved?: () => void }> = ({ onSaved }) => {
 								<FormButton>{t("save")}</FormButton>
 							</>
 						)}
-					</Form>
+					</NewsForm>
 				)
 			}}
 			i18nKey="news.2025_location.body"

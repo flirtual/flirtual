@@ -39,9 +39,6 @@
 		"mHF6zQZ3tbVe9iYjGuzAPK": {
 			"name": "PAYDAY 2"
 		},
-		"b3YVqwSVNMcsh2xUPSd9hU": {
-			"name": "PokerStars VR"
-		},
 		"HF4tppeRywmq9oWsR2GyMg": {
 			"name": "POPULATION: ONE"
 		},
@@ -56,9 +53,6 @@
 		},
 		"ffrwQHFv2kN4uRRJCLYqVb": {
 			"name": "Contractors"
-		},
-		"6DjtoKvDStyCEJBWdjDnva": {
-			"name": "A Township Tale"
 		},
 		"ibNMSB3mTjSqA4yVh424BG": {
 			"name": "Drunkn Bar Fight"
@@ -231,9 +225,6 @@
 		"z6PXMo8JatbqCcYzjCaW9F": {
 			"name": "Museum of Other Realities"
 		},
-		"E4Vf4HRy33aPjYkyXXdoee": {
-			"name": "F1 23"
-		},
 		"2B7KNoGh5iAEJsp5ADvZVG": {
 			"name": "Golf It!"
 		},
@@ -269,9 +260,6 @@
 		},
 		"pJAc8ipKGh5AjxkccveUUQ": {
 			"name": "Gun World VR"
-		},
-		"gBjREdNLqSz5yRCJyo93ua": {
-			"name": "Spatial"
 		},
 		"XPtLgbB63VUsPFqx5ELnLD": {
 			"name": "STAND OUT: VR Battle Royale"
@@ -1038,17 +1026,11 @@
 		"KmFuVctFYXysnMPp6hMzn8": {
 			"name": "Dread Meridian"
 		},
-		"45ZCnRNM263sv7y9XkbkTZ": {
-			"name": "Legendary Tales"
-		},
 		"wuJBKBouDtyXUdsRrKDGeP": {
 			"name": "NightClub Simulator VR"
 		},
 		"QkQzYZB3uqgFFLkyK2TaiL": {
 			"name": "PoligonVR"
-		},
-		"55XreduJ6GCvDgn4ysY4Ao": {
-			"name": "RUMBLE"
 		},
 		"itAqFvzYvyQMDg8FpNwHmG": {
 			"name": "Tower Tag"
@@ -2850,18 +2832,6 @@
 		}
 	},
 	"platform": {
-		"UpyGwuCHANjYmM2P269dFm": {
-			"name": "Zoektocht Link"
-		},
-		"qhAm6Z9kGRP5opGfnrVYda": {
-			"name": "Oculus Rift"
-		},
-		"WQVnXwQzfThHr7yczTjm3C": {
-			"name": "Windows Gemengde Realiteit"
-		},
-		"fyBa2tUpgEgqBPda4BpXAE": {
-			"name": "Mobiele VR"
-		},
 		"m4S2N4Jn2f3WDbJm7bcbgQ": {
 			"name": "Gezicht volgen"
 		},
@@ -2874,14 +2844,8 @@
 		"aNGgneQH5YX4HyWpNEUpmQ": {
 			"name": "Andere VR"
 		},
-		"6BdtcWSEHNwX6ba9nzd2Yc": {
-			"name": "Desktop"
-		},
 		"x5T9enPhP8WpYwnoottGDL": {
 			"name": "Locomotie loopband"
-		},
-		"d52VH6CyRaVPQvAwoStEoY": {
-			"name": "SteamVR"
 		},
 		"MLWTjDZEuacyr2qwbXEw4K": {
 			"name": "Volgen van het lichaam"
@@ -2903,6 +2867,9 @@
 		},
 		"FEX8jjr4P9aeBurRUTLhU7": {
 			"name": "Pico"
+		},
+		"Ry723pMCrWV4ptp8ywcorG": {
+			"name": "Steam Frame"
 		}
 	},
 	"prompt": {
@@ -3177,17 +3144,8 @@
 		}
 	},
 	"plans": {
-		"5NcKBUELrTmZr6JQQFespf": {
-			"name": "Early Premium (US$39.99/6mo)"
-		},
 		"LVjvu5YE7PjUJxVrkfsnMi": {
 			"name": "Premium (maandelijks)"
-		},
-		"QQd364odDmzV69gsaKTYwm": {
-			"name": "Erfenis Leven"
-		},
-		"w4WDwDWKtmLSqkn8oNqCN3": {
-			"name": "Legacy Premium (US$24.99/3mo)"
 		},
 		"Wt4aFY7jVzvSNFK9qcYAr5": {
 			"name": "Premium (elke 6 maanden)"
@@ -3195,29 +3153,11 @@
 		"fBDvWjdgvG6zEZMj6ZfyNG": {
 			"name": "Premium (elke 3 maanden)"
 		},
-		"6xZywHRc432o5H9PqFFoyG": {
-			"name": "Legacy Premium (US$9.99/mo)"
-		},
-		"rFxKcnAZGQtwckWUQbrG9J": {
-			"name": "Terugval Premium"
-		},
-		"PQZuLuEmXRwuRhiQisgkPM": {
-			"name": "Legacy Premium (US$39.99/6mo)"
-		},
-		"PHpCmDBMX6wCkuXXr36foQ": {
-			"name": "Early Premium (US$24.99/3mo)"
-		},
 		"Di7Sypboma4ryhy6MUagyS": {
 			"name": "Levenslang"
 		},
-		"43V699voRpLqskJEM42Vsa": {
-			"name": "Vroege Supporter"
-		},
-		"CJv2NQ7AiEimvDoZJ3uQTe": {
-			"name": "Vroege levensduur"
-		},
 		"2nAci9TWPaMaYFzVASVgme": {
-			"name": "Early Premium (US$9.99/mo)"
+			"name": "Early Premium"
 		}
 	}
 }

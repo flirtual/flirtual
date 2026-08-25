@@ -12,6 +12,9 @@ export { default as builtAt } from "~build/time";
 export const siteOrigin = import.meta.env.VITE_ORIGIN as string;
 invariant(siteOrigin, "VITE_ORIGIN is required");
 
+export const shortOrigin = import.meta.env.VITE_SHORT_ORIGIN as string || siteOrigin;
+export const shortHost = new URL(shortOrigin).host;
+
 export const apiUrl = import.meta.env.VITE_API_URL as string;
 invariant(apiUrl, "VITE_API_URL is required");
 
@@ -31,7 +34,7 @@ export const talkjsAppId = import.meta.env.VITE_TALKJS_APP_ID as string;
 export const sentryDsn = import.meta.env.VITE_SENTRY_DSN as string;
 export const sentryOrganization = import.meta.env.VITE_SENTRY_ORGANIZATION as string;
 export const sentryProjectId = Number.parseInt(import.meta.env.VITE_SENTRY_PROJECT_ID as string || "0");
-export const sentryReportTo = import.meta.env.VITE_SENTRY_REPORT_TO as string;
+export const sentryReportTo = import.meta.env.VITE_SENTRY_REPORT_TO as string | undefined;
 export const sentryTraces = Number.parseFloat(
 	import.meta.env.VITE_SENTRY_TRACES as string || (production ? "0.1" : "0")
 );
@@ -43,14 +46,9 @@ export const sentryProfiles = Number.parseFloat(
 // PostHog
 export const posthogKey = import.meta.env.VITE_POSTHOG_KEY as string;
 export const posthogHost = import.meta.env.VITE_POSTHOG_HOST as string;
-
-export const sentryEnabled = !!sentryDsn
-	&& !!sentryOrganization
-	&& !!sentryProjectId;
+export const posthogUiHost = import.meta.env.VITE_POSTHOG_UI_HOST as string || "https://us.posthog.com";
 
 // Miscellaneous
-export const cloudflareBeaconId = import.meta.env.VITE_CLOUDFLARE_BEACON_ID as string;
-
 export const freshworksWidgetId = import.meta.env.VITE_FRESHWORKS_WIDGET_ID as string;
 
 export const chargebeeNamespace = import.meta.env.VITE_CHARGEBEE_NAMESPACE as string;
@@ -58,9 +56,12 @@ export const rcAppleKey = import.meta.env.VITE_RC_APPL_PUBLIC_KEY as string;
 export const rcGoogleKey = import.meta.env.VITE_RC_GOOG_PUBLIC_KEY as string;
 export const picoAppId = import.meta.env.VITE_PICO_APP_ID as string;
 
+export const appleSigninServiceId = import.meta.env.VITE_APPLE_SIGNIN_SERVICE_ID as string;
+export const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID as string;
+export const googleIosClientId = import.meta.env.VITE_GOOGLE_IOS_CLIENT_ID as string;
+
 export const bucketContentOrigin = (import.meta.env.VITE_BUCKET_CONTENT_ORIGIN as string) || "";
 export const bucketUploadsOrigin = (import.meta.env.VITE_BUCKET_UPLOADS_ORIGIN as string) || "";
-export const bucketUploadsSignedOrigin = (import.meta.env.VITE_BUCKET_UPLOADS_SIGNED_ORIGIN as string) || "";
 
 export const region = import.meta.env.VERCEL_REGION as string;
 

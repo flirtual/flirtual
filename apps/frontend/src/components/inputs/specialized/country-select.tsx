@@ -8,22 +8,18 @@ import {
 	getCountryImage,
 	getCountryName
 } from "~/components/profile/pill/country";
-import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
+import { useAttributes } from "~/hooks/use-attribute";
 import { useLocale } from "~/i18n";
 
 import { InputSelect, SelectItem } from "../select";
 import type { InputSelectProps } from "../select";
 
 const CountrySelectItem: FC<{ value: string }> = ({ value: countryId }) => {
-	const tAttribute = useAttributeTranslation();
 	const [locale] = useLocale();
 
 	const [reference, viewed] = useInView({ triggerOnce: true });
 
-	const countryName
-		= tAttribute[countryId.toUpperCase()]?.name
-			?? getCountryName(locale, countryId)
-			?? countryId;
+	const countryName = getCountryName(locale, countryId) ?? countryId;
 
 	if (!countryId) return null;
 
@@ -56,7 +52,6 @@ export function InputCountrySelect({ prefer = "us", ...props }: InputCountrySele
 	const [locale] = useLocale();
 
 	const { t } = useTranslation();
-	const tAttribute = useAttributeTranslation();
 
 	const countries = useAttributes("country");
 
@@ -66,10 +61,7 @@ export function InputCountrySelect({ prefer = "us", ...props }: InputCountrySele
 				.map((countryId) => {
 					return {
 						id: countryId,
-						name:
-							tAttribute[countryId.toUpperCase()]?.name
-							?? getCountryName(locale, countryId)
-							?? countryId
+						name: getCountryName(locale, countryId) ?? countryId
 					};
 				})
 				.sort((a, b) => {
@@ -78,7 +70,7 @@ export function InputCountrySelect({ prefer = "us", ...props }: InputCountrySele
 
 					return a.name.localeCompare(b.name, locale);
 				}),
-		[countries, locale, prefer, tAttribute]
+		[countries, locale, prefer]
 	);
 
 	return (

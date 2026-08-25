@@ -24,7 +24,7 @@ defmodule Flirtual.Profiles do
              |> Profile.update_personality_changeset(attrs)
              |> Repo.update(),
            {:ok, _} <-
-             ObanWorkers.update_user(profile.user_id, [:elasticsearch, :refresh_prospects]) do
+             ObanWorkers.update_user(profile.user_id, [:search_index, :compute_queue]) do
         profile
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -37,7 +37,7 @@ defmodule Flirtual.Profiles do
     use Flirtual.EmbeddedSchema
 
     import Flirtual.Utilities
-    import Flirtual.Attribute
+    import Flirtual.Attribute, except: [create: 1]
 
     alias Flirtual.Countries
     alias Flirtual.Languages
@@ -220,6 +220,8 @@ defmodule Flirtual.Profiles do
       |> validate_length(:languages, max: 5)
       |> validate_attributes(:gender_id, "gender")
       |> validate_length(:gender, min: 1, max: 4)
+      |> validate_gender()
+      |> validate_gender_conflicts()
       |> validate_attributes(:sexuality_id, "sexuality")
       |> validate_length(:sexuality, max: 3)
       |> validate_attributes(:kink_id, "kink")
@@ -227,7 +229,7 @@ defmodule Flirtual.Profiles do
       |> validate_attributes(:game_id, "game")
       |> validate_length(:game, min: 1, max: 5)
       |> validate_attributes(:platform_id, "platform")
-      |> validate_length(:platform, max: 8)
+      |> validate_length(:platform, min: 1, max: 8)
       |> validate_attributes(:interest_id, "interest")
       |> then(fn changeset ->
         if not changed?(changeset, :interest_id) and not changed?(changeset, :custom_interests) do
@@ -245,6 +247,32 @@ defmodule Flirtual.Profiles do
       |> validate_length(:interest, min: 1, max: 10)
       |> validate_playlist()
       |> validate_vrchat()
+    end
+
+    # Must have at least one non-pronoun gender for matchmaking.
+    defp validate_gender(changeset) do
+      validate_change(changeset, :gender, fn :gender, genders ->
+        if genders === [] or Enum.any?(genders, &(not pronoun?(&1))),
+          do: [],
+          else: [gender: "must include a non-pronoun gender"]
+      end)
+    end
+
+    defp validate_gender_conflicts(changeset) do
+      validate_change(changeset, :gender, fn :gender, genders ->
+        ids = MapSet.new(genders, & &1.id)
+
+        conflicting? =
+          Enum.any?(genders, fn gender ->
+            gender.metadata["conflicts"]
+            |> List.wrap()
+            |> Enum.any?(&MapSet.member?(ids, &1))
+          end)
+
+        if conflicting?,
+          do: [gender: "invalid gender selection"],
+          else: []
+      end)
     end
 
     defp validate_playlist(changeset) do
@@ -364,9 +392,9 @@ defmodule Flirtual.Profiles do
            {:ok, _} <- User.update_status(user),
            {:ok, _} <-
              ObanWorkers.update_user(profile.user_id, [
-               :elasticsearch,
+               :search_index,
                :listmonk,
-               :refresh_prospects,
+               :compute_queue,
                :talkjs
              ]) do
         profile
@@ -386,7 +414,9 @@ defmodule Flirtual.Profiles do
            user = User.get(preferences.profile_id),
            {:ok, _} <- User.update_status(user),
            {:ok, _} <-
-             ObanWorkers.update_user(preferences.profile_id, [:elasticsearch, :refresh_prospects]) do
+             ObanWorkers.update_user(preferences.profile_id, [:search_index]),
+           :ok <-
+             Flirtual.Matchmaking.refresh_queues(preferences.profile_id, filters_updated: true) do
         preferences
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -396,41 +426,83 @@ defmodule Flirtual.Profiles do
   end
 
   def update_custom_weights(%Profile.CustomWeights{} = custom_weights, attrs) do
-    custom_weights
-    |> Profile.CustomWeights.changeset(attrs)
-    |> Repo.insert_or_update()
+    with {:ok, custom_weights} <-
+           custom_weights
+           |> Profile.CustomWeights.changeset(attrs)
+           |> Repo.insert_or_update(),
+         {:ok, _} <-
+           ObanWorkers.update_user(custom_weights.profile_id, [:compute_queue]) do
+      {:ok, custom_weights}
+    end
   end
 
-  def update_custom_filters(%Profile{user_id: profile_id}, filters) do
-    Repo.transaction(fn ->
-      with {_, nil} <-
-             Profile.CustomFilter
-             |> where(profile_id: ^profile_id)
-             |> Repo.delete_all(),
-           filters <-
-             filters
-             |> Enum.map(fn filter ->
-               with {:ok, filter} <-
-                      %Profile.CustomFilter{}
-                      |> Profile.CustomFilter.changeset(
-                        filter
-                        |> Map.put("profile_id", profile_id)
-                      )
-                      |> Repo.insert() do
-                 filter
-               else
-                 {:error, reason} -> Repo.rollback(reason)
-                 reason -> Repo.rollback(reason)
-               end
-             end),
-           {:ok, _} <-
-             ObanWorkers.update_user(profile_id, [:elasticsearch]) do
-        filters
-      else
-        {:error, reason} -> Repo.rollback(reason)
-        reason -> Repo.rollback(reason)
-      end
-    end)
+  @advanced_filter_kinds ["include", "exclude"]
+  @advanced_filter_categories Enum.map(
+                                Flirtual.User.Profile.AdvancedFilter.categories(),
+                                &to_string/1
+                              )
+
+  def update_advanced_filters(%Profile{user_id: profile_id} = profile, filters)
+      when is_list(filters) do
+    user = profile.user
+
+    attributes =
+      filters
+      |> Enum.map(&(&1["attribute_id"] || &1[:attribute_id]))
+      |> Enum.reject(&is_nil/1)
+      |> Attribute.list()
+      |> Map.new(&{&1.id, &1})
+
+    context = %{user: user, attributes: attributes}
+
+    valid_kinds_categories? =
+      Enum.all?(filters, fn filter ->
+        is_map(filter) and
+          to_string(filter["kind"] || filter[:kind]) in @advanced_filter_kinds and
+          to_string(filter["category"] || filter[:category]) in @advanced_filter_categories
+      end)
+
+    changesets =
+      filters
+      |> Enum.map(
+        &Profile.AdvancedFilter.changeset(
+          %Profile.AdvancedFilter{profile_id: profile_id},
+          &1,
+          context
+        )
+      )
+      |> Enum.uniq_by(
+        &{get_field(&1, :kind), get_field(&1, :category), get_field(&1, :attribute_id),
+         get_field(&1, :value)}
+      )
+
+    cond do
+      not valid_kinds_categories? ->
+        {:error, {:bad_request, :invalid_filter}}
+
+      length(filters) > Profile.AdvancedFilter.max_per_kind() * 2 ->
+        {:error, {:bad_request, :too_many_filters}}
+
+      Enum.any?(changesets, &(not &1.valid?)) ->
+        {:error, Enum.find(changesets, &(not &1.valid?))}
+
+      true ->
+        Repo.transaction(fn ->
+          with {_, nil} <-
+                 Profile.AdvancedFilter
+                 |> where(profile_id: ^profile_id)
+                 |> Repo.delete_all(),
+               filters <- Enum.map(changesets, &Repo.insert!/1),
+               {:ok, _} <- ObanWorkers.update_user(profile_id, [:search_index]),
+               :ok <-
+                 Flirtual.Matchmaking.refresh_queues(profile_id, filters_updated: true) do
+            filters
+          else
+            {:error, reason} -> Repo.rollback(reason)
+            reason -> Repo.rollback(reason)
+          end
+        end)
+    end
   end
 
   defmodule UpdateColors do
@@ -494,58 +566,66 @@ defmodule Flirtual.Profiles do
             else: nil
           )
 
-        if is_nil(existing_complete_image) do
-          existing_incomplete_image =
-            Image
-            |> where(original_file: ^file["id"])
-            |> order_by([image], desc: image.created_at)
-            |> Repo.one()
-
-          changeset =
-            if existing_incomplete_image do
-              Image.changeset(existing_incomplete_image, %{
-                profile_id: profile.user_id,
-                order: image_count + file_idx,
-                updated_at: now,
-                author_id: file["author_id"],
-                author_name: file["author_name"],
-                world_id: file["world_id"],
-                world_name: file["world_name"]
-              })
-            else
-              %Image{}
-              |> Image.changeset(%{
-                id: Ecto.ShortUUID.generate(),
-                profile_id: profile.user_id,
-                original_file: file["id"],
-                order: image_count + file_idx,
-                updated_at: now,
-                created_at: now,
-                author_id: file["author_id"],
-                author_name: file["author_name"],
-                world_id: file["world_id"],
-                world_name: file["world_name"]
-              })
-            end
-
-          case Repo.insert_or_update(changeset) do
-            {:ok, image} ->
-              Image.Moderation.enqueue_scan(image)
-              if file["stereo"] == true, do: Image.Moderation.enqueue_spatial(image)
-              {:ok, image}
-
-            error ->
-              error
-          end
-        else
-          {:ok, existing_complete_image}
-        end
+        if is_nil(existing_complete_image),
+          do: attach_file(profile, file, image_count + file_idx, now),
+          else: {:ok, existing_complete_image}
       end)
       |> Enum.map(fn
         {:ok, image} -> image
         {:error, reason} -> Repo.rollback(reason)
       end)
     end)
+  end
+
+  defp attach_file(%Profile{} = profile, file, order, now, retry? \\ true) do
+    existing_images =
+      Image
+      |> where(original_file: ^file["id"])
+      |> order_by([image], desc: image.created_at)
+      |> Repo.all()
+
+    # Retained hash rows must stay frozen, never attach to a profile.
+    if Enum.any?(existing_images, &(not is_nil(&1.suspended_url))),
+      do: Repo.rollback({:unprocessable_entity, :image_retained})
+
+    attrs = %{
+      profile_id: profile.user_id,
+      order: order,
+      updated_at: now,
+      author_id: file["author_id"],
+      author_name: file["author_name"],
+      world_id: file["world_id"],
+      world_name: file["world_name"]
+    }
+
+    changeset =
+      case existing_images do
+        [] ->
+          Image.changeset(
+            %Image{},
+            Map.merge(attrs, %{
+              id: Ecto.ShortUUID.generate(),
+              original_file: file["id"],
+              created_at: now
+            })
+          )
+
+        [image | _] ->
+          Image.changeset(image, attrs)
+      end
+
+    case Repo.insert_or_update(changeset, mode: :savepoint) do
+      {:ok, image} ->
+        Image.Moderation.enqueue_scan(image)
+        if file["stereo"] == true, do: Image.Moderation.enqueue_spatial(image)
+        {:ok, image}
+
+      {:error, changeset} = error ->
+        # Lost the insert race against variant processing; adopt its row.
+        if retry? and Image.original_file_conflict?(changeset),
+          do: attach_file(profile, file, order, now, false),
+          else: error
+    end
   end
 
   def update_images(%Profile{} = profile, image_ids) do
@@ -581,7 +661,7 @@ defmodule Flirtual.Profiles do
            user = User.get(profile.user_id),
            {:ok, _} <- User.update_status(user),
            {:ok, _} <-
-             ObanWorkers.update_user(profile.user_id, [:elasticsearch, :talkjs]) do
+             ObanWorkers.update_user(profile.user_id, [:search_index, :talkjs]) do
         images
       else
         {:error, reason} -> Repo.rollback(reason)

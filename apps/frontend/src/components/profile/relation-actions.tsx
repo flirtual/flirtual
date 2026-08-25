@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 
 import { Matchmaking } from "~/api/matchmaking";
+import { premium } from "~/api/user";
 import { invalidateMatch, invalidateQueue } from "~/hooks/use-queue";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
@@ -88,7 +89,7 @@ export const RelationActions: React.FC<{ userId: string; direct: boolean }> = ({
 			</div>
 		);
 
-	if (relationship.likedMe && current?.subscription?.active) {
+	if (relationship.likedMe && current && premium(current)) {
 		const Icon = relationship.likedMe === "love" ? HeartIcon : PeaceIcon;
 
 		return (

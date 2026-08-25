@@ -1,5 +1,5 @@
 import { InAppReview } from "@capacitor-community/in-app-review";
-import ms from "ms.macro";
+import ms from "ms" with { type: "macro" };
 import { useEffect } from "react";
 
 import { User } from "~/api/user";

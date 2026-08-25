@@ -46,6 +46,20 @@ defmodule Flirtual.User.Policy do
       when action in @own_actions,
       do: true
 
+  # Review accounts cannot be suspended.
+  def authorize(
+        :suspend,
+        %Plug.Conn{
+          assigns: %{
+            session: %{
+              user: %User{} = user
+            }
+          }
+        },
+        %User{} = target
+      ),
+      do: :moderator in user.tags and :review not in target.tags
+
   @moderator_actions [
     :suspend,
     :indef_shadowban,
@@ -181,7 +195,7 @@ defmodule Flirtual.User.Policy do
     :push_count,
     :rating_prompts,
     :news,
-    :subscription,
+    :entitlements,
     :revenuecat_id,
     :moderator_message,
     :active_at,
@@ -238,7 +252,7 @@ defmodule Flirtual.User.Policy do
     :email_confirmed_at,
     :created_at,
     :connections,
-    :subscription,
+    :entitlements,
     :tns_discord_in_biography
   ]
 
@@ -319,6 +333,15 @@ defmodule Flirtual.User.Policy do
       do: Talkjs.new_user_token(user_id)
 
   def transform(:talkjs_token, _, _), do: nil
+
+  def transform(
+        :has_password,
+        %Plug.Conn{assigns: %{session: %{user_id: user_id}}},
+        %User{id: user_id} = user
+      ),
+      do: User.has_password?(user)
+
+  def transform(:has_password, _, _), do: nil
 
   @admin_property_keys [
     :email,

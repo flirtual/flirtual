@@ -18,6 +18,7 @@ export const FooterSupportLink: React.FC = () => {
 export const FooterIconSupportLink: React.FC = () => {
 	return (
 		<FooterListIconLink
+			className="-mx-0.5 size-6 desktop:size-8"
 			Icon={EnvelopeIcon}
 			onClick={useFreshworks().openFreshworks}
 		/>

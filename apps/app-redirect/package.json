@@ -1,0 +1,14 @@
+{
+	"name": "app-redirect",
+	"version": "0.0.0",
+	"private": true,
+	"license": "AGPL-3.0-or-later",
+	"scripts": {
+		"release": "wrangler deploy",
+		"dev": "wrangler dev",
+		"start": "wrangler dev"
+	},
+	"devDependencies": {
+		"wrangler": "catalog:"
+	}
+}

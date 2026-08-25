@@ -8,7 +8,7 @@ defmodule Flirtual.Discord do
   alias Flirtual.Connection
   alias Flirtual.ObanWorkers
   alias Flirtual.Report
-  alias Flirtual.Subscription
+  alias Flirtual.Entitlement
   alias Flirtual.User
   alias Flirtual.User.Profile.Image
   alias Flirtual.User.Profile.Image.Moderation
@@ -20,6 +20,8 @@ defmodule Flirtual.Discord do
 
   @embed_field_value_limit 1000
   @embed_description_limit 4000
+
+  @scope ~w(identify email)
 
   def config(key) do
     Application.get_env(:flirtual, Flirtual.Discord)[key]
@@ -114,31 +116,75 @@ defmodule Flirtual.Discord do
   end
 
   def authorize_url(_, %{prompt: prompt} = options) do
-    URI.new(
-      "https://discord.com/api/oauth2/authorize?" <>
-        URI.encode_query(%{
-          client_id: config(:client_id),
-          redirect_uri: redirect_url!(redirect: Map.get(options, :redirect, true)),
-          response_type: "code",
-          scope: "identify email",
-          prompt: prompt
-        })
+    query = %{
+      client_id: config(:client_id),
+      redirect_uri: redirect_url!(redirect: Map.get(options, :redirect, true)),
+      response_type: "code",
+      scope: Enum.join(@scope, " "),
+      prompt: prompt
+    }
+
+    query =
+      case options do
+        %{state: state} -> Map.put(query, :state, state)
+        _ -> query
+      end
+
+    query =
+      case options do
+        %{redirect: :app, state: state} ->
+          query
+          |> Map.put(:code_challenge, pkce_challenge(pkce_verifier(state)))
+          |> Map.put(:code_challenge_method, "S256")
+
+        _ ->
+          query
+      end
+
+    URI.new("https://discord.com/api/oauth2/authorize?" <> URI.encode_query(query))
+  end
+
+  # Discord requires PKCE for custom-scheme redirect URIs. The verifier is
+  # derived from the state token, so the token exchange can recompute it instead
+  # of storing it or round-tripping it through the redirect.
+  defp pkce_verifier(state) do
+    :crypto.mac(
+      :hmac,
+      :sha256,
+      Application.fetch_env!(:flirtual, FlirtualWeb.Endpoint)[:secret_key_base],
+      state
     )
+    |> Base.url_encode64(padding: false)
+  end
+
+  defp pkce_challenge(verifier) do
+    :crypto.hash(:sha256, verifier)
+    |> Base.url_encode64(padding: false)
   end
 
   def exchange_code(code, options \\ []) when is_binary(code) do
+    params = %{
+      client_id: config(:client_id),
+      client_secret: config(:client_secret),
+      grant_type: "authorization_code",
+      redirect_uri: redirect_url!(redirect: Keyword.get(options, :redirect, true)),
+      code: code
+    }
+
+    params =
+      case {Keyword.get(options, :redirect, true), Keyword.get(options, :state)} do
+        {:app, state} when is_binary(state) ->
+          Map.put(params, :code_verifier, pkce_verifier(state))
+
+        _ ->
+          params
+      end
+
     with {:ok, %Req.Response{body: body}} <-
            Req.request(
              method: :post,
              url: url("oauth2/token"),
-             body:
-               URI.encode_query(%{
-                 client_id: config(:client_id),
-                 client_secret: config(:client_secret),
-                 grant_type: "authorization_code",
-                 redirect_uri: redirect_url!(redirect: Keyword.get(options, :redirect, true)),
-                 code: code
-               }),
+             body: URI.encode_query(params),
              headers: [{"content-type", "application/x-www-form-urlencoded"}],
              decode_body: false,
              retry: false,
@@ -146,7 +192,13 @@ defmodule Flirtual.Discord do
            ),
          {:ok, body} <- Jason.decode(body),
          %{"access_token" => access_token, "token_type" => token_type} <- body do
-      {:ok, "#{token_type} #{access_token}"}
+      {:ok,
+       %{
+         authorization: "#{token_type} #{access_token}",
+         access_token: access_token,
+         refresh_token: body["refresh_token"],
+         scope: Flirtual.Connection.Provider.granted_scope(body["scope"], @scope)
+       }}
     else
       %{"error" => "invalid_grant"} ->
         {:error, :invalid_grant}
@@ -166,7 +218,50 @@ defmodule Flirtual.Discord do
 
   def profile_url(%Connection{uid: id}), do: "https://discord.com/users/#{id}"
 
-  def get_profile(authorization) do
+  def tokens(%{access_token: access_token, refresh_token: refresh_token} = authorization),
+    do: %{
+      access_token: access_token,
+      refresh_token: refresh_token,
+      scope: authorization[:scope]
+    }
+
+  def revoke(%{refresh_token: refresh_token, access_token: access_token}) do
+    {token, hint} =
+      if is_binary(refresh_token),
+        do: {refresh_token, "refresh_token"},
+        else: {access_token, "access_token"}
+
+    do_revoke(token, hint)
+  end
+
+  defp do_revoke(token, _hint) when not is_binary(token), do: :ok
+
+  defp do_revoke(token, hint) do
+    case Req.request(
+           method: :post,
+           url: url("oauth2/token/revoke"),
+           body:
+             URI.encode_query(%{
+               client_id: config(:client_id),
+               client_secret: config(:client_secret),
+               token: token,
+               token_type_hint: hint
+             }),
+           headers: [{"content-type", "application/x-www-form-urlencoded"}],
+           decode_body: false,
+           retry: false,
+           finch: Flirtual.Finch
+         ) do
+      {:ok, %Req.Response{status: 200}} ->
+        :ok
+
+      other ->
+        log(:error, [:revoke], other)
+        {:error, :upstream}
+    end
+  end
+
+  def get_profile(%{authorization: authorization}) do
     with {:ok, %Req.Response{body: body}} <-
            Req.request(
              method: :get,
@@ -189,8 +284,7 @@ defmodule Flirtual.Discord do
        %{
          uid: id,
          email: email,
-         display_name:
-           if(discriminator == "0", do: username, else: "#{username}##{discriminator}"),
+         display_name: format_username(username, discriminator),
          avatar: avatar
        }}
     else
@@ -200,6 +294,66 @@ defmodule Flirtual.Discord do
       reason ->
         log(:critical, [:get_profile], reason)
         {:error, :upstream}
+    end
+  end
+
+  defp format_username(username, "0"), do: username
+  defp format_username(username, discriminator), do: "#{username}##{discriminator}"
+
+  def bot_token?, do: config(:access_token) not in [nil, ""]
+
+  def get_user(id) when is_binary(id) do
+    case config(:access_token) do
+      token when token in [nil, ""] ->
+        {:error, :missing_bot_token}
+
+      token ->
+        Req.request(
+          method: :get,
+          url: url("users/" <> id),
+          headers: [{"authorization", "Bot " <> token}],
+          decode_body: false,
+          retry: false,
+          finch: Flirtual.Finch
+        )
+        |> handle_get_user()
+    end
+  end
+
+  defp handle_get_user({:ok, %Req.Response{status: 200, body: body}}) do
+    case Jason.decode(body) do
+      {:ok, %{"id" => id, "username" => username} = user} ->
+        {:ok,
+         %{
+           uid: id,
+           display_name: format_username(username, user["discriminator"]),
+           avatar: user["avatar"]
+         }}
+
+      reason ->
+        log(:error, [:get_user], reason)
+        {:error, :upstream}
+    end
+  end
+
+  defp handle_get_user({:ok, %Req.Response{status: 404}}), do: {:error, :not_found}
+
+  defp handle_get_user({:ok, %Req.Response{status: 401}}), do: {:error, :unauthorized}
+
+  defp handle_get_user({:ok, %Req.Response{status: 429} = response}),
+    do: {:error, {:rate_limited, retry_after(response)}}
+
+  defp handle_get_user(reason) do
+    log(:error, [:get_user], reason)
+    {:error, :upstream}
+  end
+
+  defp retry_after(%Req.Response{} = response) do
+    with [value | _] <- Req.Response.get_header(response, "retry-after"),
+         {seconds, _} <- Float.parse(value) do
+      ceil(seconds)
+    else
+      _ -> 5
     end
   end
 
@@ -225,17 +379,79 @@ defmodule Flirtual.Discord do
       icon_url: User.avatar_url(user, "icon")
     }
 
+  defp entitlement_link(%User{} = user, chargebee_label, play_label, fallback) do
+    entitlement =
+      user.entitlements
+      |> Enum.filter(&Entitlement.active?/1)
+      |> Enum.find(&(&1.store not in [:promotional, :stripe]))
+
+    case entitlement do
+      %Entitlement{store: :chargebee, kind: :subscription, store_id: store_id}
+      when is_binary(store_id) ->
+        "[#{chargebee_label}](https://flirtual.chargebee.com/d/subscriptions/#{store_id})"
+
+      %Entitlement{store: :play_store} ->
+        "[#{play_label}](https://app.revenuecat.com/customers/cf0649d1/#{user.revenuecat_id})"
+
+      _ ->
+        fallback
+    end
+  end
+
+  defp autoban_fields(nil), do: []
+
+  defp autoban_fields(:date_of_birth),
+    do: [%{name: "Auto-ban", value: "Date of birth", inline: true}]
+
+  defp autoban_fields(
+         {:age_range,
+          %{
+            platform: platform,
+            declaration: declaration,
+            age_lower: age_lower,
+            age_upper: age_upper,
+            region: region
+          }}
+       ),
+       do: [
+         %{
+           name: "Auto-ban",
+           value: age_range_source(platform) <> if(region, do: " (#{region})", else: ""),
+           inline: true
+         },
+         %{
+           name: "Age range",
+           value: format_age_range(age_lower, age_upper) <> age_declaration(declaration),
+           inline: true
+         }
+       ]
+
+  defp age_declaration("SELF_DECLARED"), do: " (self-declared)"
+  defp age_declaration("GUARDIAN_DECLARED"), do: " (guardian-declared)"
+  defp age_declaration("CONFIRMED"), do: " (verified)"
+  defp age_declaration(_), do: ""
+
+  defp age_range_source("apple"), do: "Apple Declared Age Range"
+  defp age_range_source("android"), do: "Google Play Age Signals"
+  defp age_range_source(_), do: "Platform age range"
+
+  defp format_age_range(nil, nil), do: "Unknown"
+  defp format_age_range(lower, nil), do: "#{lower}+"
+  defp format_age_range(nil, upper), do: "0–#{upper}"
+  defp format_age_range(lower, upper), do: "#{lower}–#{upper}"
+
   def deliver_webhook(:suspended,
         user: %User{} = user,
         moderator: %User{} = moderator,
         reason: %Attribute{type: "ban-reason"} = reason,
-        message: message
+        message: message,
+        automatic: automatic
       ) do
     webhook(
       :moderation_actions,
       %{
         content:
-          if(Subscription.active?(user.subscription), do: "<@&458465845887369243>", else: ""),
+          if(Entitlement.premium?(user.entitlements), do: "<@&458465845887369243>", else: ""),
         embeds: [
           %{
             author: webhook_author(user),
@@ -249,21 +465,17 @@ defmodule Flirtual.Discord do
                   inline: true
                 }
               ] ++
-                if(Subscription.active?(user.subscription),
+                autoban_fields(automatic) ++
+                if(Entitlement.premium?(user.entitlements),
                   do: [
                     %{
                       name: "Active subscription",
                       value:
-                        if(user.subscription.chargebee_id,
-                          do:
-                            "[Issue refund](https://flirtual.chargebee.com/d/subscriptions/#{user.subscription.chargebee_id})",
-                          else:
-                            if(user.subscription.google_id,
-                              do:
-                                "[Issue refund](https://app.revenuecat.com/customers/cf0649d1/#{user.revenuecat_id})",
-                              else:
-                                "[Send refund reminder](https://hello.flirtu.al/a/tickets/compose-email)"
-                            )
+                        entitlement_link(
+                          user,
+                          "Issue refund",
+                          "Issue refund",
+                          "[Send refund reminder](https://hello.flirtu.al/a/tickets/compose-email)"
                         )
                     }
                   ],
@@ -329,26 +541,22 @@ defmodule Flirtual.Discord do
       ) do
     webhook(:moderation_actions, %{
       content:
-        if(Subscription.active?(user.subscription), do: "<@&458465845887369243>", else: ""),
+        if(Entitlement.premium?(user.entitlements), do: "<@&458465845887369243>", else: ""),
       embeds: [
         %{
           author: webhook_author(user),
           title: "User indefinitely shadowbanned",
           fields:
-            if(Subscription.active?(user.subscription),
+            if(Entitlement.premium?(user.entitlements),
               do: [
                 %{
                   name: "Active subscription",
                   value:
-                    if(user.subscription.chargebee_id,
-                      do:
-                        "[Cancel subscription](https://flirtual.chargebee.com/d/subscriptions/#{user.subscription.chargebee_id})",
-                      else:
-                        if(user.subscription.google_id,
-                          do:
-                            "[Get transaction ID](https://app.revenuecat.com/customers/cf0649d1/#{user.revenuecat_id}), [Cancel subscription](https://play.google.com/console/u/0/developers/orders)",
-                          else: "Apple subscription - cannot cancel"
-                        )
+                    entitlement_link(
+                      user,
+                      "Cancel subscription",
+                      "View in RevenueCat",
+                      "Apple subscription - cannot cancel"
                     )
                 }
               ],
@@ -923,7 +1131,6 @@ defmodule Flirtual.Discord do
     end
 
     webhook(:moderation_duplicates, %{
-      content: "<@&458465845887369243>",
       embeds: [
         %{
           title: "Subscription transferred",
@@ -1069,34 +1276,6 @@ defmodule Flirtual.Discord do
             ]
             |> List.flatten(),
           color: @default_color,
-          timestamp: DateTime.utc_now() |> DateTime.to_iso8601()
-        }
-      ]
-    })
-  end
-
-  def deliver_webhook(:revenuecat_unresolved,
-        app_user_id: app_user_id,
-        event_type: event_type,
-        event_id: event_id,
-        reason: reason
-      ) do
-    webhook(:admin, %{
-      content: "<@&458465845887369243>",
-      embeds: [
-        %{
-          title: "RevenueCat event failure",
-          fields: [
-            %{name: "Type", value: to_string(event_type), inline: true},
-            %{name: "ID", value: to_string(event_id), inline: true},
-            %{name: "Reason", value: to_string(reason), inline: true},
-            %{
-              name: "RevenueCat customer",
-              value:
-                "[#{app_user_id}](https://app.revenuecat.com/customers/cf0649d1/#{URI.encode(app_user_id)})"
-            }
-          ],
-          color: @destructive_color,
           timestamp: DateTime.utc_now() |> DateTime.to_iso8601()
         }
       ]

@@ -1,22 +1,52 @@
-import { use, useCallback, useEffect, useMemo } from "react";
+import type { ComponentProps, FC } from "react";
+import { createElement, use, useCallback, useEffect, useMemo, useRef } from "react";
+import { renderToStaticMarkup } from "react-dom/server";
 import { useTranslation } from "react-i18next";
-import { ShepherdTourContext } from "react-shepherd";
-import type { ShepherdOptionsWithType, Tour } from "react-shepherd";
+import type { StepOptions, Tour } from "shepherd.js";
+
+import { HeartIcon } from "~/components/icons/gradient/heart";
+import { PeaceIcon } from "~/components/icons/gradient/peace";
+import { ShepherdContext } from "~/components/shepherd/context";
+import { localePathnameRegex, useNavigate } from "~/i18n";
+import { urls } from "~/urls";
 
 import { useBreakpoint } from "./use-breakpoint";
-import { usePreferences } from "./use-preferences";
+import { useDismissed } from "./use-dismissed";
 import { useScrollLock } from "./use-scroll-lock";
 
 import "~/components/shepherd/style.scss";
 
 export function useShepherd() {
-	return use(ShepherdTourContext)!;
+	return use(ShepherdContext)!;
+}
+
+// Resolves once the element exists and its layout has settled (same position
+// across two consecutive frames), so steps don't attach mid-transition.
+function waitForElement(selector: string, timeout: number = 4000) {
+	return new Promise<void>((resolve) => {
+		const startedAt = Date.now();
+		let previous: string | null = null;
+
+		function poll() {
+			if (Date.now() - startedAt > timeout) return resolve();
+
+			const element = document.querySelector(selector);
+			const position = element && JSON.stringify(element.getBoundingClientRect());
+
+			if (element && position === previous) return resolve();
+
+			previous = position;
+			setTimeout(poll, 100);
+		}
+
+		poll();
+	});
 }
 
 export function useTour(
 	enabled: boolean = true,
 	name: string,
-	getSteps: (shepherd: Tour) => Array<ShepherdOptionsWithType>,
+	getSteps: (shepherd: Tour) => Array<StepOptions>,
 	{
 		defaultStart = false
 	}: {
@@ -27,10 +57,7 @@ export function useTour(
 	const [, setScrollLocked] = useScrollLock();
 	const { t } = useTranslation();
 
-	const [completed, setCompleted] = usePreferences(
-		`tour-${name}-completed`,
-		false
-	);
+	const [completed, dismiss] = useDismissed(`tour_${name}`);
 
 	const steps = useMemo(
 		() =>
@@ -54,30 +81,35 @@ export function useTour(
 
 	const start = useCallback(
 		(onlyIfUncompleted: boolean = true) => {
-			shepherd.addSteps(steps);
-			const started = false;
-			if (started || completed === null || (onlyIfUncompleted && completed))
-				return;
+			if (!shepherd.steps.some(({ id }) => id === steps[0]?.id))
+				shepherd.addSteps(steps);
+
+			if (onlyIfUncompleted && completed) return;
+
+			// The first-run tour is unskippable; re-shows (F1) can be exited.
+			const skippable = !onlyIfUncompleted;
+			shepherd.options.exitOnEsc = skippable;
+			for (const step of shepherd.steps)
+				step.updateStepOptions({ cancelIcon: { enabled: skippable } });
 
 			setScrollLocked(true);
-
 			shepherd.start();
 		},
 		[completed, steps, shepherd, setScrollLocked]
 	);
 
 	const stop = useCallback(
-		(completed: boolean = true) => {
-			if (completed) setCompleted(true);
+		(complete: boolean = true) => {
+			if (complete) void dismiss();
 			shepherd.cancel();
 			shepherd.hide();
 		},
-		[shepherd, setCompleted]
+		[shepherd, dismiss]
 	);
 
 	useEffect(() => {
 		function onComplete() {
-			if (enabled) setCompleted(true);
+			if (enabled) void dismiss();
 			setScrollLocked(false);
 		}
 
@@ -90,31 +122,76 @@ export function useTour(
 			shepherd.off("complete", onComplete);
 			shepherd.off("cancel", onComplete);
 
-			for (const { id } of steps) shepherd.removeStep(id);
 			shepherd.cancel();
+			shepherd.currentStep = null;
+			for (const { id } of steps) shepherd.removeStep(id);
 		};
-	}, [shepherd, steps, setCompleted, setScrollLocked, defaultStart, start, enabled]);
+	}, [shepherd, steps, dismiss, setScrollLocked, defaultStart, start, enabled]);
+
+	// Re-show the tour on demand, even after it was dismissed.
+	useEffect(() => {
+		if (!enabled) return;
+
+		function onKeyDown(event: KeyboardEvent) {
+			if (event.key !== "F1") return;
+
+			event.preventDefault();
+			start(false);
+		}
+
+		window.addEventListener("keydown", onKeyDown);
+		return () => window.removeEventListener("keydown", onKeyDown);
+	}, [enabled, start]);
 
 	return useMemo(
 		() => ({
 			completed,
 			start,
-			stop,
-			setCompleted
+			stop
 		}),
-		[completed, start, stop, setCompleted]
+		[completed, start, stop]
 	);
+}
+
+// Shepherd step text is an HTML string, not React.
+function modeIcon(name: string, Icon: FC<ComponentProps<"svg">>) {
+	return `<span class="inline-flex align-middle [&>svg]:h-[1.2em] [&>svg]:w-auto">${renderToStaticMarkup(createElement(Icon), { identifierPrefix: `${name}-` })}</span>`;
 }
 
 export function useDefaultTour(enabled: boolean = true) {
 	const mobile = !useBreakpoint("desktop");
 	const { t } = useTranslation();
+	const shepherd = useShepherd();
+
+	// useNavigate's identity changes with location; the tour navigates between
+	// modes itself, which must not rebuild (and cancel) the running tour.
+	const navigate = useNavigate();
+	const navigateReference = useRef(navigate);
+	navigateReference.current = navigate;
+
+	// Navigate and wait for the step's target; if the tour was cancelled or
+	// restarted while we were waiting, never resolve, so the step can't render
+	// orphaned.
+	const ensureOnPage = useCallback(
+		async (url: string, selector: string) => {
+			const currentPath = location.pathname.replace(localePathnameRegex, "/");
+			if (currentPath === url.split("?")[0] && document.querySelector(selector))
+				return;
+
+			const step = shepherd.getCurrentStep();
+			await navigateReference.current(url);
+			await waitForElement(selector);
+			if (!shepherd.isActive() || shepherd.getCurrentStep() !== step)
+				await new Promise<never>(() => {});
+		},
+		[shepherd]
+	);
 
 	useTour(
 		enabled,
 		"browsing",
 		useCallback(
-			({ next, back, cancel }) =>
+			({ next, back }) =>
 				enabled
 					? [
 							{
@@ -124,10 +201,6 @@ export function useDefaultTour(enabled: boolean = true) {
 					${t("tidy_known_whale_imagine")}
 					`,
 								buttons: [
-									{
-										text: t("exit"),
-										action: cancel
-									},
 									{
 										classes: "primary shadow-brand-1",
 										text: t("continue"),
@@ -140,14 +213,8 @@ export function useDefaultTour(enabled: boolean = true) {
 								title: t("royal_house_peacock_roar"),
 								text: t("helpful_petty_peacock_hunt"),
 								attachTo: { element: "#like-button", on: "top" },
-								modalOverlayOpeningRadius: 33
-							},
-							{
-								id: "friend",
-								title: t("royal_house_peacock_roar"),
-								text: t("light_flat_racoon_buzz"),
-								attachTo: { element: "#friend-button", on: "top" },
-								modalOverlayOpeningRadius: 33
+								modalOverlayOpeningRadius: 33,
+								beforeShowPromise: () => ensureOnPage(urls.discover("dates"), "#like-button")
 							},
 							{
 								id: "pass",
@@ -177,8 +244,14 @@ export function useDefaultTour(enabled: boolean = true) {
 							{
 								id: "browse-mode",
 								title: t("minor_gaudy_seal_ask"),
-								text: `
-					${t("chunky_zany_leopard_peek")}
+								beforeShowPromise: () =>
+									ensureOnPage(urls.discover("dates"), "#browse-mode-switch"),
+								text: () => `
+					${t("chunky_zany_leopard_peek", {
+						heart: modeIcon("heart", HeartIcon),
+						homie: modeIcon("homie", PeaceIcon),
+						interpolation: { escapeValue: false }
+					})}
 					<br/><br/>
 					${t("honest_loud_felix_favor")}`,
 								attachTo: {
@@ -186,6 +259,14 @@ export function useDefaultTour(enabled: boolean = true) {
 									on: "top"
 								},
 								modalOverlayOpeningRadius: mobile ? 28 : 33
+							},
+							{
+								id: "friend",
+								title: t("royal_house_peacock_roar"),
+								text: t("light_flat_racoon_buzz"),
+								attachTo: { element: "#friend-button", on: "top" },
+								modalOverlayOpeningRadius: 33,
+								beforeShowPromise: () => ensureOnPage(urls.discover("homies"), "#friend-button")
 							},
 							{
 								id: "profile-dropdown",
@@ -196,7 +277,8 @@ export function useDefaultTour(enabled: boolean = true) {
 									on: "top"
 								},
 								modalOverlayOpeningRadius: 20,
-								modalOverlayOpeningPadding: 4
+								modalOverlayOpeningPadding: 4,
+								beforeShowPromise: () => ensureOnPage(urls.discover("dates"), "#profile-dropdown-button")
 							},
 							{
 								id: "conclusion",
@@ -225,7 +307,7 @@ export function useDefaultTour(enabled: boolean = true) {
 							}
 						]
 					: [],
-			[enabled, mobile, t]
+			[enabled, mobile, t, ensureOnPage]
 		),
 		{
 			defaultStart: true

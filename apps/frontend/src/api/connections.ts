@@ -22,27 +22,41 @@ export type ConnectionType = (typeof ConnectionType)[number];
 
 export const ConnectionMetadata: Record<
 	ConnectionType,
-	{ Icon: IconComponent; iconClassName?: string; color: string }
+	{
+		name: string;
+		Icon: IconComponent;
+		color?: string;
+		logoColor?: string;
+		darkColor?: string;
+		darkLogoColor?: string;
+	}
 > = {
 	google: {
+		name: "Google",
 		Icon: GoogleIcon,
 		color: "#dd4b39"
 	},
 	apple: {
+		name: "Apple",
 		Icon: AppleIcon,
-		color: "#000000"
+		color: "#000000",
+		logoColor: "#ffffff",
+		darkColor: "#ffffff",
+		darkLogoColor: "#000000"
 	},
 	meta: {
+		name: "Meta",
 		Icon: MetaIcon,
 		color: "#0082fb"
 	},
 	discord: {
+		name: "Discord",
 		Icon: DiscordIcon,
 		color: "#5865f2"
 	},
 	vrchat: {
+		name: "VRChat",
 		Icon: VRChatIcon,
-		iconClassName: "text-black-90",
 		color: "#095d6a"
 	}
 };
@@ -60,6 +74,8 @@ export interface ConnectionAuthorizeOptions {
 	prompt: string;
 	next: string;
 	json?: boolean;
+	notifications?: boolean;
+	signup?: boolean;
 }
 
 export interface ConnectionGrantOptions {
@@ -67,6 +83,7 @@ export interface ConnectionGrantOptions {
 	code: string;
 	state: string;
 	redirect?: string;
+	orgScopedId?: string;
 }
 
 export const Connection = {
@@ -82,8 +99,9 @@ export const Connection = {
 			.url(this.authorizeUrl({ ...options, json: true }), true)
 			.get()
 			.json<{
-			state: string;
 			authorizeUrl: string;
+			redirectUri: string;
+			state?: string;
 		}>();
 	},
 	grant(options: ConnectionGrantOptions) {

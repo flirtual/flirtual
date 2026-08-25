@@ -13,6 +13,7 @@ defmodule Flirtual.Plan do
   schema "plans" do
     field(:name, :string)
 
+    field(:product, :string)
     field(:recurring, :boolean, default: true)
     field(:purchasable, :boolean, default: true)
 
@@ -52,6 +53,7 @@ defimpl Jason.Encoder, for: Flirtual.Plan do
     only: [
       :id,
       :name,
+      :product,
       :google_id,
       :apple_id,
       :chargebee_id,

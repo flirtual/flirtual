@@ -10,6 +10,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
 
 export type InputTextProps = {
 	Icon?: IconComponent;
+	iconClassName?: string;
 	iconColor?: string;
 	onChange?: React.Dispatch<string>;
 	startContent?: React.ReactNode;
@@ -44,7 +45,7 @@ export const InputText: React.FC<InputTextProps> = (props) => {
 					)}
 					style={{ background: props.iconColor }}
 				>
-					<Icon className="size-6" />
+					<Icon className={twMerge("size-6", props.iconClassName)} />
 				</div>
 			)}
 			{props.startContent}
@@ -54,6 +55,7 @@ export const InputText: React.FC<InputTextProps> = (props) => {
 					"Icon",
 					"startContent",
 					"endContent",
+					"iconClassName",
 					"iconColor"
 				])}
 				className={twMerge(

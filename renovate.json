@@ -1,0 +1,127 @@
+{
+	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
+	"extends": [
+		"config:recommended"
+	],
+	"minimumReleaseAge": "3 days",
+	"semanticCommits": "enabled",
+	"semanticCommitScope": "{{#if parentDir}}{{parentDir}}{{else}}repo{{/if}}",
+	"dependencyDashboardApproval": true,
+	"lockFileMaintenance": {
+		"enabled": true,
+		"schedule": [
+			"before 6am on monday"
+		]
+	},
+	"customManagers": [
+		{
+			"customType": "regex",
+			"managerFilePatterns": [
+				"/(^|/)renovate-entrypoint\\.sh$/"
+			],
+			"matchStrings": [
+				"# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)(?: extractVersion=(?<extractVersion>\\S+))?(?: versioning=(?<versioning>\\S+))?\\s+install-tool \\w+ (?<currentValue>\\S+)"
+			]
+		},
+		{
+			"customType": "regex",
+			"managerFilePatterns": [
+				"/(^|/)dev\\.sh$/"
+			],
+			"matchStrings": [
+				"# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\s+\\w+=(?:\\S+:)?(?<currentValue>[^\\s:]+)"
+			]
+		},
+		{
+			"customType": "regex",
+			"managerFilePatterns": [
+				"/(^|/)docker-compose\\.ya?ml$/"
+			],
+			"matchStrings": [
+				"# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\s+image: \\S+?:(?<currentValue>[\\d.]+)"
+			]
+		},
+		{
+			"customType": "regex",
+			"managerFilePatterns": [
+				"/(^|/)fly\\.toml$/"
+			],
+			"matchStrings": [
+				"image ?= ?\"(?<depName>[^:\"]+):(?<currentValue>[^\"]+)\""
+			],
+			"datasourceTemplate": "docker"
+		}
+	],
+	"packageRules": [
+		{
+			"matchUpdateTypes": ["pin", "lockFileMaintenance", "rollback", "bump", "replacement"],
+			"minimumReleaseAge": null
+		},
+		{
+			"matchManagers": ["gradle", "gradle-wrapper"],
+			"semanticCommitScope": "android"
+		},
+		{
+			"matchManagers": ["github-actions"],
+			"semanticCommitScope": "actions"
+		},
+		{
+			"matchPackageNames": [
+				"wrangler",
+				"miniflare",
+				"@cloudflare/**"
+			],
+			"groupName": "cloudflare"
+		},
+		{
+			"matchPackageNames": [
+				"/capacitor/",
+				"@capgo/**"
+			],
+			"groupName": "capacitor"
+		},
+		{
+			"matchPackageNames": [
+				"eslint",
+				"@eslint/**",
+				"eslint-**",
+				"@ariesclark/eslint-config"
+			],
+			"groupName": "eslint"
+		},
+		{
+			"matchPackageNames": [
+				"manticoresearch/manticore"
+			],
+			"groupName": "manticore"
+		},
+		{
+			"matchPackageNames": [
+				"pnpm"
+			],
+			"groupName": "pnpm"
+		},
+		{
+			"matchPackageNames": [
+				"postgres"
+			],
+			"enabled": false
+		},
+		{
+			"matchPackageNames": [
+				"flyio/postgres-flex"
+			],
+			"groupName": "postgres"
+		},
+		{
+			"matchPackageNames": [
+				"elixir",
+				"elixir-lang/elixir",
+				"erlang",
+				"erlang/otp",
+				"containerbase/erlang-prebuild"
+			],
+			"groupName": "elixir toolchain"
+		}
+	]
+}

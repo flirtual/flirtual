@@ -28,7 +28,8 @@ export const handle = {
 			"sexuality",
 			"gender",
 			"country",
-			"language"
+			"language",
+			"timezone"
 		] as const).map((type) => queryClient.prefetchQuery({
 			queryKey: attributeKey(type),
 			queryFn: attributeFetcher

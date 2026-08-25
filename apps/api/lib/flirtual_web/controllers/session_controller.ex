@@ -8,7 +8,7 @@ defmodule FlirtualWeb.SessionController do
   import FlirtualWeb.Utilities
   import Flirtual.Utilities.Changeset
 
-  alias Flirtual.{IpAddress, Jwt, Policy, User, Users}
+  alias Flirtual.{IpAddress, Jwt, Policy, Turnstile, User, Users}
   alias Flirtual.User.{Login, Session, Verification}
 
   action_fallback(FlirtualWeb.FallbackController)
@@ -26,7 +26,8 @@ defmodule FlirtualWeb.SessionController do
 
     case ExRated.check_rate("login:#{IpAddress.normalize(ip)}", @fifteen_minutes, 5) do
       {:ok, _} ->
-        with {:ok, attrs} <-
+        with true <- Turnstile.valid?(params["captcha"]),
+             {:ok, attrs} <-
                cast_arbitrary(
                  %{
                    login: :string,
@@ -42,26 +43,34 @@ defmodule FlirtualWeb.SessionController do
                Users.get_by_login_and_password(
                  attrs[:login],
                  attrs[:password]
-               ),
-             false <- Flirtual.LeakedPasswords.leaked?(attrs[:password]) do
+               ) do
+          leaked_password = Flirtual.LeakedPasswords.leaked?(attrs[:password])
+
           if Login.needs_verification?(user, conn) do
             with login_id when is_binary(login_id) <-
                    Verification.send_verification(conn, user, attrs[:device_id]) do
               conn
               |> put_status(:accepted)
-              |> json(%{login_id: login_id, email: user.email})
+              |> json(%{
+                login_id: login_id,
+                email: user.email,
+                leaked_password: leaked_password
+              })
             else
-              {:error, :verification_rate_limit} ->
-                {:error, {:unauthorized, :verification_rate_limit}}
+              {:error, code} ->
+                {:error, {:unauthorized, code}}
             end
           else
             {session, conn} = create(conn, user, method: :password, device_id: attrs[:device_id])
 
             conn
             |> put_status(:created)
-            |> json(Policy.transform(conn, session))
+            |> json(Policy.transform(conn, %{session | leaked_password: leaked_password}))
           end
         else
+          false ->
+            {:error, {:unauthorized, :turnstile_invalid}}
+
           %User{banned_at: banned_at} = user when not is_nil(banned_at) ->
             Login.log_login_attempt(conn, user.id, nil,
               method: :password,
@@ -69,17 +78,6 @@ defmodule FlirtualWeb.SessionController do
             )
 
             {:error, {:unauthorized, :account_banned}}
-
-          leak_count when is_integer(leak_count) ->
-            login = String.trim(params["login"] || "")
-            user = Users.get_by_username(login) || Users.get_by_email(login)
-
-            Login.log_login_attempt(conn, user && user.id, nil,
-              method: :password,
-              device_id: params["device_id"]
-            )
-
-            {:error, {:unauthorized, :leaked_login_password}}
 
           _ ->
             login = String.trim(params["login"] || "")
@@ -107,17 +105,14 @@ defmodule FlirtualWeb.SessionController do
       |> put_status(:ok)
       |> json(%{login_id: login_id})
     else
-      {:error, :verification_rate_limit} ->
-        {:error, {:unauthorized, :verification_rate_limit}}
-
-      {:error, _} ->
-        {:error, {:unauthorized, :verification_invalid_code}}
+      {:error, code} ->
+        {:error, {:unauthorized, code}}
     end
   end
 
   def verify(conn, %{"login_id" => login_id, "code" => code}) do
     with %Login{user_id: user_id} <- Login.get(login_id),
-         %User{} = user <- Users.get(user_id),
+         %User{banned_at: nil} = user <- Users.get(user_id),
          :ok <- Verification.verify(login_id, code) do
       session = Session.create(user)
 
@@ -136,6 +131,10 @@ defmodule FlirtualWeb.SessionController do
     else
       nil ->
         {:error, {:unauthorized, :verification_invalid_code}}
+
+      %User{banned_at: banned_at} = user when not is_nil(banned_at) ->
+        Login.log_login_attempt(conn, user.id, nil, method: :password)
+        {:error, {:unauthorized, :account_banned}}
 
       {:error, :verification_rate_limit} ->
         with %Login{user_id: user_id} <- Login.get(login_id) do

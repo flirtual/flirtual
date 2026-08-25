@@ -2,6 +2,7 @@ import type { Dispatch, FC, SetStateAction } from "react";
 import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
+import { activeEntitlements } from "~/api/user";
 import { usePlans } from "~/hooks/use-plans";
 import { usePurchase } from "~/hooks/use-purchase";
 import { useOptionalSession } from "~/hooks/use-session";
@@ -66,9 +67,9 @@ export const PlanCard: FC<PlanCardProps> = (props) => {
 		= originalDiscount
 			?? Math.round(((originalPrice - price) / originalPrice) * 100);
 
-	const activePlan
-		= (user.subscription?.active && user.subscription.plan.id === id)
-			?? false;
+	const activePlan = activeEntitlements(user).some(
+		(entitlement) => entitlement.plan.id === id
+	);
 
 	const containerClassName = "grow shadow-brand-1";
 
@@ -108,10 +109,10 @@ export const PlanCard: FC<PlanCardProps> = (props) => {
 						clipPath: "polygon(100% 0, 0 0, 100% 100%)",
 						margin: "-1px -1px 0 0"
 					}}
-					className="absolute right-0 top-0 flex aspect-square items-center justify-center rounded-tr-xl bg-brand-gradient p-3 text-white-20"
+					className="absolute right-0 top-0 flex aspect-square w-max items-center justify-center rounded-tr-xl bg-brand-gradient p-3 text-white-20"
 				>
 					<div className="origin-center -translate-y-3 translate-x-3 rotate-45">
-						<span className="font-semibold">
+						<span className="whitespace-nowrap font-semibold">
 							{t("save_percent", { number: discount })}
 						</span>
 					</div>

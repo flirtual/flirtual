@@ -1,7 +1,7 @@
 defmodule Flirtual.User.Push do
   use Gettext, backend: Flirtual.Gettext
 
-  alias Flirtual.Subscription
+  alias Flirtual.Entitlement
   alias Flirtual.User
 
   def deliver(%User{} = user, :daily_profiles_ready, reset_at) do
@@ -62,7 +62,7 @@ defmodule Flirtual.User.Push do
 
     Gettext.with_locale(language, fn ->
       like_count = Keyword.fetch!(options, :like_count)
-      is_premium? = Subscription.active?(user.subscription)
+      is_premium? = Entitlement.premium?(user.entitlements)
 
       %{
         "user_id" => user.id,

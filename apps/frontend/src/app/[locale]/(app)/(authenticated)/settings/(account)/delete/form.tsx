@@ -2,7 +2,7 @@ import { InAppReview } from "@capacitor-community/in-app-review";
 import type { FC } from "react";
 import { Trans, useTranslation } from "react-i18next";
 
-import { User } from "~/api/user";
+import { activeEntitlements, User } from "~/api/user";
 import { Form } from "~/components/forms";
 import { FormAlternativeActionLink } from "~/components/forms/alt-action-link";
 import { FormButton } from "~/components/forms/button";
@@ -22,14 +22,28 @@ export const DeleteForm: FC = () => {
 	const tAttribute = useAttributeTranslation();
 	const deleteReasons = useAttributes("delete-reason");
 
-	const { user: { subscription } } = useSession();
+	const { user } = useSession();
+	const hasPassword = user.hasPassword === true;
+
+	const entitlements = activeEntitlements(user);
+	const lifetime = entitlements.find((entitlement) => entitlement.kind === "one_time");
+
+	const appleSubscription = entitlements.find(
+		(entitlement) =>
+			entitlement.kind === "subscription" && entitlement.store === "app_store"
+	);
+
+	const otherSubscription = entitlements.find(
+		(entitlement) =>
+			entitlement.kind === "subscription" && entitlement.store !== "app_store"
+	);
 
 	return (
 		<Form
 			fields={{
 				reasonId: "",
 				comment: "",
-				currentPassword: ""
+				...(hasPassword ? { currentPassword: "" } : {})
 			}}
 			className="flex flex-col gap-8"
 			onSubmit={async (body) => {
@@ -39,29 +53,39 @@ export const DeleteForm: FC = () => {
 		>
 			{({ FormField, fields }) => (
 				<>
-					{subscription?.active && (
+					{entitlements.length > 0 && (
 						<div className="rounded-lg bg-brand-gradient px-6 py-4">
-							<span className="font-montserrat text-white-10">
-								{!subscription.plan.recurring
-									? (
-											<>
-												⚠️
-												{" "}
-												{t("delete_lifetime_warning")}
-											</>
-										)
-									: subscription.platform === "ios" || subscription.platform === "android"
-										? (
-												<>
-													⚠️
-													{" "}
-													{t("delete_subscription_warning")}
-													<br />
-													<br />
-													{t(subscription.platform === "ios" ? "delete_subscription_apple" : "delete_subscription_google")}
-												</>
-											)
-										: t("delete_subscription_cancel")}
+							<span className="flex flex-col gap-4 font-montserrat text-white-10">
+								{lifetime && (
+									<span>
+										⚠️
+										{" "}
+										{t("delete_lifetime_warning")}
+									</span>
+								)}
+								{appleSubscription && (
+									<span>
+										⚠️
+										{" "}
+										{t("delete_subscription_warning")}
+										<br />
+										<br />
+										<Trans
+											components={{
+												link: (
+													<InlineLink
+														className="underline"
+														href={urls.manageSubscription.app_store}
+													/>
+												)
+											}}
+											i18nKey="delete_subscription_apple"
+										/>
+									</span>
+								)}
+								{otherSubscription && (
+									<span>{t("delete_subscription_cancel")}</span>
+								)}
 							</span>
 						</div>
 					)}
@@ -131,18 +155,20 @@ export const DeleteForm: FC = () => {
 							</>
 						)}
 					</FormField>
-					<FormField name="currentPassword">
-						{(field) => (
-							<>
-								<InputLabel>{t("confirm_current_password")}</InputLabel>
-								<InputText
-									{...field.props}
-									autoComplete="current-password"
-									type="password"
-								/>
-							</>
-						)}
-					</FormField>
+					{hasPassword && (
+						<FormField name="currentPassword">
+							{(field) => (
+								<>
+									<InputLabel>{t("confirm_current_password")}</InputLabel>
+									<InputText
+										{...field.props}
+										autoComplete="current-password"
+										type="password"
+									/>
+								</>
+							)}
+						</FormField>
+					)}
 					<div className="flex flex-col gap-4">
 						<span>
 							<Trans i18nKey="teary_cuddly_midge_sew" />

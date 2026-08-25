@@ -1,6 +1,6 @@
 import { MoveLeft, MoveRight, RefreshCw, Undo2, X } from "lucide-react";
 import { m } from "motion/react";
-import ms from "ms.macro";
+import ms from "ms" with { type: "macro" };
 import { useCallback, useState } from "react";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
@@ -19,6 +19,8 @@ import { useTimeout } from "~/hooks/use-interval";
 import { useQueue } from "~/hooks/use-queue";
 import { useSession } from "~/hooks/use-session";
 import { relationshipKey, useQueryState } from "~/query";
+
+import { HomieInstead } from "./homie-instead";
 
 export function Key({ label }: { label: string }) {
 	return (
@@ -69,19 +71,30 @@ const QueueDebugger: FC<{ kind: ProspectKind }> = ({ kind }) => {
 export const QueueActions: FC<{
 	kind: ProspectKind;
 	explicitUserId?: string;
-}> = ({ kind: mode, explicitUserId }) => {
+	direct?: boolean;
+}> = ({ kind: mode, explicitUserId, direct = false }) => {
 	const { t } = useTranslation();
+	const source = direct ? "direct" : mode;
+
 	const {
-		previous,
 		next: [current],
+		canUndo,
 		like,
 		pass,
 		undo,
 		mutating
-	} = useQueue(mode);
+	} = useQueue(mode, source);
+
+	const { like: homie } = useQueue(direct ? "friend" : mode, source);
 
 	const { data: relationship } = useQueryState<Relationship>(relationshipKey(explicitUserId ?? current!));
 	const blocked = relationship?.blocked ?? false;
+
+	// They're not looking for our gender, so we disable Like and offer to Homie
+	// instead. Only for profiles carried over from Homie Mode or direct profile
+	// links.
+	const genderMismatch = mode === "love" && !!explicitUserId && relationship?.prefersMyGender === false;
+	const [homieInstead, setHomieInstead] = useState(false);
 
 	const [didAction, setDidAction] = useState(false);
 
@@ -103,12 +116,19 @@ export const QueueActions: FC<{
 				)
 					return;
 
-				if (event.key === "h" && previous) void undo();
-				if (event.key === "j" && !blocked) void like();
-				if (event.key === "k" && !blocked) void like("friend");
-				if (event.key === "l") void pass();
+				if (event.key === "h" && canUndo) void undo();
+
+				if (event.key === "j" && !blocked) {
+					if (genderMismatch) setHomieInstead(true);
+					else void like(explicitUserId);
+				}
+
+				if (event.key === "k" && direct && mode === "love" && !blocked)
+					void homie(explicitUserId);
+
+				if (event.key === "l") void pass(explicitUserId);
 			},
-			[like, pass, undo, previous, tooFast, blocked]
+			[like, homie, pass, undo, canUndo, tooFast, blocked, genderMismatch, direct, mode, explicitUserId]
 		)
 	);
 
@@ -117,27 +137,25 @@ export const QueueActions: FC<{
 			<div className="fixed bottom-[max(calc(var(--safe-area-inset-bottom,0rem)+5.5rem),6rem)] z-20 flex flex-col items-center justify-center gap-2 desktop:bottom-12">
 				<QueueDebugger kind={mode} />
 				<div className="flex items-center gap-2 text-white-10">
-					{!explicitUserId && (
-						<Tooltip touchable={false}>
-							<TooltipTrigger asChild>
-								<m.button
-									id="undo-button"
-									className="flex h-fit items-center rounded-full border border-black-50/25 bg-white-30 p-3 text-black-50 shadow-brand-1 transition-all disabled:!scale-100 disabled:text-black-10 dark:bg-black-50 dark:text-white-10 dark:disabled:text-black-10"
-									disabled={!previous || tooFast}
-									type="button"
-									whileHover={{ scale: 1.05 }}
-									whileTap={{ scale: 0.95 }}
-									onClick={() => undo()}
-								>
-									<Undo2 className="size-7" strokeWidth={3} />
-								</m.button>
-							</TooltipTrigger>
-							<TooltipContent className="flex gap-3 px-3 py-1.5 native:hidden">
-								<span className="pt-1">{t("undo")}</span>
-								<Key label="H" />
-							</TooltipContent>
-						</Tooltip>
-					)}
+					<Tooltip touchable={false}>
+						<TooltipTrigger asChild>
+							<m.button
+								id="undo-button"
+								className="flex h-fit items-center rounded-full border border-black-50/25 bg-white-30 p-3 text-black-50 shadow-brand-1 transition-all disabled:!scale-100 disabled:text-black-10 dark:bg-black-50 dark:text-white-10 dark:disabled:text-black-10"
+								disabled={!!explicitUserId || !canUndo || tooFast}
+								type="button"
+								whileHover={{ scale: 1.05 }}
+								whileTap={{ scale: 0.95 }}
+								onClick={() => undo()}
+							>
+								<Undo2 className="size-7" strokeWidth={3} />
+							</m.button>
+						</TooltipTrigger>
+						<TooltipContent className="flex gap-3 px-3 py-1.5 native:hidden">
+							<span className="pt-1">{t("undo")}</span>
+							<Key label="H" />
+						</TooltipContent>
+					</Tooltip>
 					{mode === "love" && (
 						<Tooltip touchable={false}>
 							<TooltipTrigger asChild>
@@ -145,13 +163,13 @@ export const QueueActions: FC<{
 									id="like-button"
 									className={twMerge(
 										"flex items-center justify-center rounded-full border border-black-50/25 bg-brand-gradient p-4 shadow-brand-1 transition-all disabled:brightness-90 dark:disabled:brightness-[80%]",
-										blocked && "grayscale-[0.75]"
+										(blocked || genderMismatch) && "brightness-90 grayscale-[0.75] dark:brightness-[80%]"
 									)}
 									disabled={tooFast || blocked}
 									type="button"
-									whileHover={{ scale: 1.05 }}
-									whileTap={{ scale: 0.95 }}
-									onClick={() => like("love", explicitUserId)}
+									whileHover={genderMismatch ? undefined : { scale: 1.05 }}
+									whileTap={genderMismatch ? undefined : { scale: 0.95 }}
+									onClick={() => (genderMismatch ? setHomieInstead(true) : void like(explicitUserId))}
 								>
 									<HeartIcon
 										className="w-[2.125rem] shrink-0"
@@ -165,31 +183,33 @@ export const QueueActions: FC<{
 							</TooltipContent>
 						</Tooltip>
 					)}
-					<Tooltip touchable={false}>
-						<TooltipTrigger asChild>
-							<m.button
-								id="friend-button"
-								className={twMerge(
-									"flex items-center justify-center rounded-full border border-black-50/25 bg-gradient-to-tr from-theme-friend-1 to-theme-friend-2 p-4 shadow-brand-1 transition-all disabled:brightness-90 dark:disabled:brightness-[80%]",
-									blocked && "grayscale-[0.75]"
-								)}
-								disabled={tooFast || blocked}
-								type="button"
-								whileHover={{ scale: 1.05 }}
-								whileTap={{ scale: 0.95 }}
-								onClick={() => like("friend", explicitUserId)}
-							>
-								<PeaceIcon
-									className="w-[2.125rem] shrink-0"
-									gradient={false}
-								/>
-							</m.button>
-						</TooltipTrigger>
-						<TooltipContent className="flex gap-3 px-3 py-1.5 native:hidden">
-							<span className="pt-1">{t("homie")}</span>
-							<Key label={mode === "love" ? "K" : "J"} />
-						</TooltipContent>
-					</Tooltip>
+					{(direct || mode === "friend") && (
+						<Tooltip touchable={false}>
+							<TooltipTrigger asChild>
+								<m.button
+									id="friend-button"
+									className={twMerge(
+										"flex items-center justify-center rounded-full border border-black-50/25 bg-gradient-to-tr from-theme-friend-1 to-theme-friend-2 p-4 shadow-brand-1 transition-all disabled:brightness-90 dark:disabled:brightness-[80%]",
+										blocked && "grayscale-[0.75]"
+									)}
+									disabled={tooFast || blocked}
+									type="button"
+									whileHover={{ scale: 1.05 }}
+									whileTap={{ scale: 0.95 }}
+									onClick={() => homie(explicitUserId)}
+								>
+									<PeaceIcon
+										className="w-[2.125rem] shrink-0"
+										gradient={false}
+									/>
+								</m.button>
+							</TooltipTrigger>
+							<TooltipContent className="flex gap-3 px-3 py-1.5 native:hidden">
+								<span className="pt-1">{t("homie")}</span>
+								<Key label={mode === "love" ? "K" : "J"} />
+							</TooltipContent>
+						</Tooltip>
+					)}
 					<Tooltip touchable={false}>
 						<TooltipTrigger asChild>
 							<m.button
@@ -199,7 +219,7 @@ export const QueueActions: FC<{
 								type="button"
 								whileHover={{ scale: 1.05 }}
 								whileTap={{ scale: 0.95 }}
-								onClick={() => pass(undefined, explicitUserId)}
+								onClick={() => pass(explicitUserId)}
 							>
 								<X className="size-7" strokeWidth={3} />
 							</m.button>
@@ -211,6 +231,14 @@ export const QueueActions: FC<{
 					</Tooltip>
 				</div>
 			</div>
+			{homieInstead && (
+				<HomieInstead
+					source={source}
+					userId={(explicitUserId ?? current)!}
+					onClose={() => setHomieInstead(false)}
+					onPass={() => void pass(explicitUserId)}
+				/>
+			)}
 		</div>
 	);
 };

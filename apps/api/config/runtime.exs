@@ -51,7 +51,17 @@ if Env.get("PHX_SERVER") && Env.get("RELEASE_NAME") do
 end
 
 config :flirtual,
+       :custom_headers,
+       [
+         {"x-flirtual-machine", Env.get("FLY_MACHINE_ID")},
+         {"x-flirtual-region", Env.get("FLY_REGION")},
+         {"x-flirtual-version", Env.get("GIT_COMMIT_SHA")}
+       ]
+       |> Enum.reject(fn {_name, value} -> value in [nil, ""] end)
+
+config :flirtual,
   canary?: canary?,
+  expose_error_details?: dev? or canary?,
   session_signing_salt: Env.get!("SESSION_SIGNING_SALT", default: "local_M0aOkiQYko"),
   # Shared dev tokens: must match apps/image-classification/.env.local and flirtualbot.
   image_access_token:
@@ -75,6 +85,7 @@ image_classification_origin = Env.get("IMAGE_CLASSIFICATION_ORIGIN")
 
 config :flirtual,
   origin: origin,
+  app_scheme: Env.get("APP_SCHEME", default: "flirtual"),
   frontend_origin: URI.parse(frontend_origin),
   cookie_origin: URI.parse(Env.get("ROOT_ORIGIN", default: frontend_origin)),
   content_origin: content_origin && URI.parse(content_origin),
@@ -82,13 +93,27 @@ config :flirtual,
   retained_origin: retained_origin && URI.parse(retained_origin),
   image_classification_origin: image_classification_origin
 
+config :flirtual, Flirtual.Mailer,
+  domains: %{
+    "transactional" =>
+      Env.get("MAIL_DOMAIN_TRANSACTIONAL", default: URI.parse(frontend_origin).host),
+    "marketing" => Env.get("MAIL_DOMAIN_MARKETING", default: URI.parse(frontend_origin).host)
+  },
+  reply_domain: Env.get("MAIL_REPLY_DOMAIN", default: URI.parse(frontend_origin).host),
+  configuration_sets: %{
+    "transactional" => Env.get("SES_CONFIGURATION_SET_TRANSACTIONAL", default: "account"),
+    "marketing" => Env.get("SES_CONFIGURATION_SET_MARKETING", default: "notify")
+  }
+
+secret_key_base =
+  Env.get!(
+    "SECRET_KEY_BASE",
+    default:
+      "local_1TGGlvHyCZNDDLHq2HEwlFhrNZ519f0XT8MHIqAE4UcbdMEuHz0zr5zo0thFfbsTrFmkZ5G955hEau2jAA"
+  )
+
 config :flirtual, FlirtualWeb.Endpoint,
-  secret_key_base:
-    Env.get!(
-      "SECRET_KEY_BASE",
-      default:
-        "local_1TGGlvHyCZNDDLHq2HEwlFhrNZ519f0XT8MHIqAE4UcbdMEuHz0zr5zo0thFfbsTrFmkZ5G955hEau2jAA"
-    ),
+  secret_key_base: secret_key_base,
   live_view: [signing_salt: Env.get!("LIVE_VIEW_SIGNING_SALT", default: "local_gwbAO9QRWu")],
   url: [host: origin.host, port: origin.port]
 
@@ -107,7 +132,9 @@ local_uploads_dir =
 
 config :flirtual,
   local_uploads?: local_uploads?,
-  local_uploads_dir: local_uploads_dir
+  local_uploads_dir: local_uploads_dir,
+  upload_origin: URI.parse(Env.get("UPLOAD_ORIGIN", default: frontend_origin)),
+  upload_secret: Env.get("UPLOAD_SECRET") || Base.encode64(secret_key_base)
 
 unless local_uploads? do
   config :ex_aws,
@@ -138,28 +165,43 @@ config :flirtual, Flirtual.Discord,
   webhook_admin: Env.get("DISCORD_WEBHOOK_ADMIN")
 
 config :flirtual, Flirtual.Apple,
-  client_id: System.fetch_env!("APPLE_CLIENT_ID"),
-  client_secret: System.fetch_env!("APPLE_CLIENT_SECRET")
+  key: Env.get!("APPLE_KEY"),
+  key_id: Env.get!("APPLE_KEY_ID"),
+  team_id: Env.get!("APPLE_TEAM_ID"),
+  app_id: Env.get!("APPLE_SIGNIN_APP_ID"),
+  service_id: Env.get!("APPLE_SIGNIN_SERVICE_ID")
+
+config :flirtual, Flirtual.Google,
+  web_client_id: Env.get("GOOGLE_CLIENT_ID"),
+  web_client_secret: Env.get("GOOGLE_CLIENT_SECRET"),
+  ios_client_id: Env.get("GOOGLE_IOS_CLIENT_ID")
+
+config :flirtual, Flirtual.Meta,
+  app_id: Env.get("META_APP_ID"),
+  app_secret: Env.get("META_APP_SECRET"),
+  organization_id: Env.get("META_ORGANIZATION_ID")
 
 config :flirtual, Flirtual.VRChat,
   username: Env.get!("VRCHAT_USERNAME"),
   password: Env.get!("VRCHAT_PASSWORD"),
   totp_secret: Env.get!("VRCHAT_TOTP_SECRET")
 
+# We pin rp_id to flirtu.al to keep passkeys valid that were created before
+# moving to flirtual.com.
 config :wax_,
   origin: frontend_origin,
-  rp_id: :auto
+  rp_id: Env.get("WEBAUTHN_RP_ID", default: URI.parse(frontend_origin).host)
 
 config :joken,
   default_signer: Env.get!("JOKEN_SECRET", default: "local_Ru3m3hN7uAxO2snCb030SDyzDyR")
 
 config :flirtual, Flirtual.APNS,
   adapter: Pigeon.APNS,
-  key: System.fetch_env!("APNS_KEY"),
-  key_identifier: System.fetch_env!("APNS_KEY_ID"),
-  team_id: System.fetch_env!("APNS_TEAM_ID"),
-  topic: System.fetch_env!("APNS_TOPIC"),
-  mode: if(config_env() == :prod, do: :prod, else: :dev)
+  key: Env.get!("APPLE_KEY"),
+  key_identifier: Env.get!("APPLE_KEY_ID"),
+  team_id: Env.get!("APPLE_TEAM_ID"),
+  topic: Env.get!("APNS_TOPIC"),
+  mode: if(prod?, do: :prod, else: :dev)
 
 config :flirtual, Flirtual.FCM,
   adapter: Pigeon.FCM,
@@ -203,8 +245,8 @@ config :req_llm, anthropic_api_key: Env.get("ANTHROPIC_ACCESS_TOKEN")
 config :flirtual, Flirtual.ObanWorkers,
   enabled_workers:
     if(prod?,
-      do: [:chargebee, :elasticsearch, :listmonk, :refresh_prospects, :talkjs],
-      else: [:elasticsearch, :refresh_prospects]
+      do: [:chargebee, :compute_queue, :listmonk, :search_index, :search_state, :talkjs],
+      else: [:compute_queue, :search_index, :search_state]
     ),
   enabled_cron_tasks:
     if(prod?,
@@ -214,7 +256,9 @@ config :flirtual, Flirtual.ObanWorkers,
         :prune_sessions,
         :prune_banned,
         :prune_inactive,
-        :update_attribute_order
+        :update_attribute_order,
+        :reconcile_entitlements,
+        :refresh_connections
       ],
       else: [
         :like_digest,
@@ -228,11 +272,24 @@ config :flirtual, Flirtual.ObanWorkers,
 config :flirtual, Oban,
   queues: [
     default: Env.get("OBAN_DEFAULT_CONCURRENCY", default: "6") |> String.to_integer(),
+    matchmaking: Env.get("OBAN_MATCHMAKING_CONCURRENCY", default: "4") |> String.to_integer(),
     notifications: Env.get("OBAN_NOTIFICATIONS_CONCURRENCY", default: "3") |> String.to_integer(),
+    connections: Env.get("OBAN_CONNECTIONS_CONCURRENCY", default: "1") |> String.to_integer(),
     image_classification:
       Env.get("OBAN_IMAGE_CLASSIFICATION_CONCURRENCY", default: "1") |> String.to_integer(),
     image_spatial: Env.get("OBAN_IMAGE_SPATIAL_CONCURRENCY", default: "1") |> String.to_integer()
   ]
+
+# Manticore over MySQL protocol. username is required by the driver but ignored
+# by Manticore.
+config :flirtual, Flirtual.Search.Repo,
+  hostname: Env.get!("MANTICORE_HOST", default: "localhost"),
+  port: Env.get("MANTICORE_PORT", default: "9306") |> String.to_integer(),
+  username: "root",
+  database: nil,
+  pool_size: Env.get("MANTICORE_POOL_SIZE", default: "10") |> String.to_integer(),
+  queue_target: 5000,
+  socket_options: if(Env.get("MANTICORE_IPV6"), do: [:inet6], else: [])
 
 if prod? do
   app_name =
@@ -264,12 +321,6 @@ if prod? do
   config :flirtual, :oban_pool_size, String.to_integer(Env.get("OBAN_POOL_SIZE", default: "10"))
 
   config :flirtual, Oban, get_dynamic_repo: {Flirtual.Repo, :oban_repo, []}
-
-  config :flirtual, Flirtual.Elasticsearch,
-    url: Env.get!("ELASTICSEARCH_URL"),
-    index_namespace: Env.get("ELASTICSEARCH_INDEX_PREFIX"),
-    auth: Flirtual.Elasticsearch.Auth,
-    access_token: Env.get!("ELASTICSEARCH_ACCESS_TOKEN")
 
   config :flirtual, Flirtual.Mailer,
     adapter: Swoosh.Adapters.AmazonSES,

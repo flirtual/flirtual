@@ -10,18 +10,21 @@ import type { User } from "./user";
 
 export type Session = {
 	sudoerId?: string;
+	leakedPassword?: boolean;
 	user: User;
 } & DatedModel;
 
 export interface LoginOptions {
 	login: string;
 	password: string;
+	captcha: string;
 	deviceId?: string;
 }
 
 export interface VerificationResponse {
 	loginId: string;
 	email: string;
+	leakedPassword?: boolean;
 }
 
 export interface VerifyOptions {
@@ -53,6 +56,19 @@ export interface AuthenticatePasskeyOptions {
 		signature: string;
 	};
 	deviceId?: string;
+}
+
+export interface SocialLoginOptions {
+	provider: "apple" | "google" | "meta";
+	idToken: string;
+	authorizationCode?: string;
+	deviceId?: string;
+	notifications?: boolean;
+	signup?: boolean;
+}
+
+export interface SocialLoginLinkResponse {
+	status: "already_linked" | "linked";
 }
 
 interface PublicKeyCredentialCreationOptionsBase64
@@ -122,8 +138,9 @@ export const Authentication = {
 			.post()
 			.unauthorized((reason) => {
 				if (isWretchError(reason)) return reason.json;
+				throw reason;
 			})
-			.json<Issue<"account_banned"> | Issue<"invalid_credentials"> | Issue<"leaked_login_password"> | Issue<"login_rate_limit"> | Issue<"verification_rate_limit"> | Session | VerificationResponse>();
+			.json<Issue<"account_banned"> | Issue<"invalid_credentials"> | Issue<"login_rate_limit"> | Issue<"verification_email_failed"> | Issue<"verification_rate_limit"> | Session | VerificationResponse>();
 	},
 	magicLogin(token: string) {
 		return this.api
@@ -132,6 +149,7 @@ export const Authentication = {
 			.post()
 			.unauthorized((reason) => {
 				if (isWretchError(reason)) return reason.json;
+				throw reason;
 			})
 			.json<Issue<"account_banned"> | Issue<"invalid_token"> | Session>();
 	},
@@ -191,6 +209,7 @@ export const Authentication = {
 			.post()
 			.unauthorized((reason) => {
 				if (isWretchError(reason)) return reason.json;
+				throw reason;
 			})
 			.json<Issue<"verification_invalid_code"> | Issue<"verification_rate_limit"> | Session>();
 	},
@@ -201,7 +220,19 @@ export const Authentication = {
 			.post()
 			.unauthorized((reason) => {
 				if (isWretchError(reason)) return reason.json;
+				throw reason;
 			})
-			.json<Issue<"verification_invalid_code"> | VerificationResponse>();
+			.json<Issue<"verification_email_failed"> | Issue<"verification_invalid_code"> | VerificationResponse>();
+	},
+	socialLogin(options: SocialLoginOptions) {
+		return api
+			.url("connections/grant")
+			.json({ type: options.provider, ...options })
+			.post()
+			.unauthorized((reason) => {
+				if (isWretchError(reason)) return reason.json;
+				throw reason;
+			})
+			.json<Issue<"account_banned"> | Issue<"invalid_token"> | Issue<"token_expired"> | Session | SocialLoginLinkResponse>();
 	}
 };

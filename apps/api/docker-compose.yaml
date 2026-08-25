@@ -1,6 +1,7 @@
 services:
   postgres:
-    image: postgres:17-alpine
+    # renovate: datasource=docker depName=flyio/postgres-flex
+    image: postgres:17.7-alpine
     shm_size: 256m
     command: postgres -N 500
     restart: always
@@ -10,18 +11,15 @@ services:
       - postgres_data:/var/lib/postgresql/data
     ports:
       - 5432:5432
-  elasticsearch:
-    image: elasticsearch:8.6.2
+  manticore:
+    image: manticoresearch/manticore:28.4.4
     restart: always
-    environment:
-      ES_JAVA_OPTS: -Xms512m -Xmx512m
-      mem_limit: 1024m
-      xpack.security.enabled: false
-      discovery.type: single-node
+    mem_limit: 2g
     volumes:
-      - elasticsearch_data:/usr/share/elasticsearch/data
+      - manticore_data:/var/lib/manticore
     ports:
-      - 9200:9200
+      - 9306:9306
+      - 9308:9308
 volumes:
   postgres_data:
-  elasticsearch_data:
+  manticore_data:

@@ -2,10 +2,18 @@
 
 set -e
 
+# Tracked against the flyio/postgres-flex image running on flirtual-db instead
+# of Docker Hub's alpine image.
+# renovate: datasource=docker depName=flyio/postgres-flex
+POSTGRES_VERSION=17.7
+POSTGRES_IMAGE=postgres:${POSTGRES_VERSION}-alpine
+# renovate: datasource=docker depName=manticoresearch/manticore
+MANTICORE_IMAGE=manticoresearch/manticore:28.4.4
+
 if [ -d "$HOME/Library/Application Support/com.apple.container" ]; then
   container system start
 
-  for svc in postgres elasticsearch; do
+  for svc in postgres manticore; do
     state=$(container ls --all 2>/dev/null | awk -v s="$svc" '$1 == s { print $5 }')
     if [ "$state" = "running" ]; then
       continue
@@ -20,17 +28,16 @@ if [ -d "$HOME/Library/Application Support/com.apple.container" ]; then
           -e POSTGRES_PASSWORD=postgres \
           -e PGDATA=/var/lib/postgresql/data/pgdata \
           -v pgdata:/var/lib/postgresql/data \
-          postgres:17-alpine \
+          "$POSTGRES_IMAGE" \
           postgres -N 500
         ;;
-      elasticsearch)
-        container run --detach --name elasticsearch \
-          --publish 9200:9200 \
-          -e ES_JAVA_OPTS="-Xms512m -Xmx512m" \
-          -e xpack.security.enabled=false \
-          -e discovery.type=single-node \
-          -v esdata:/usr/share/elasticsearch/data \
-          elasticsearch:8.6.2
+      manticore)
+        container run --detach --name manticore \
+          --publish 9306:9306 \
+          --publish 9308:9308 \
+          --memory 2g \
+          -v manticoredata:/var/lib/manticore \
+          "$MANTICORE_IMAGE"
         ;;
     esac
   done

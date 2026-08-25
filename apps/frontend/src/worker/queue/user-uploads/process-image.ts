@@ -2,35 +2,62 @@
 import { env } from "cloudflare:workers";
 
 import { updateVariants } from "./api";
+import { computeBlurhash } from "./blurhash";
 import { bucketUploadsOrigin } from "./environment";
-import { imageVariants, outputOptions, stereoTrim, storeVariant, supportedTypes } from "./variants";
+import { cropStereo } from "./stereo";
+import { imageVariants, supportedTypes } from "./variants";
+
+function fork(stream: ReadableStream<Uint8Array>, count: number): Array<ReadableStream<Uint8Array>> {
+	if (count <= 1) return [stream];
+
+	const [head, tail] = stream.tee();
+	return [head, ...fork(tail, count - 1)];
+}
 
 export async function processImage(key: string): Promise<void> {
 	const originalUrl = new URL(key, bucketUploadsOrigin).href;
 
-	const head = await env.SOURCE_BUCKET.head(key);
-	if (!head?.httpMetadata?.contentType) return;
+	const object = await env.SOURCE_BUCKET.get(key);
 
-	const type = head.httpMetadata.contentType;
-	if (!supportedTypes.includes(type)) {
-		console.log(`Skipping ${originalUrl} due to unsupported type ${type}`);
+	if (!object?.httpMetadata?.contentType) return;
+	const { body, httpMetadata: { contentType }, customMetadata } = object;
+
+	if (!supportedTypes.includes(contentType)) {
+		console.log(`Skipping ${originalUrl} due to unsupported type ${contentType}`);
 		return;
 	}
 
 	const externalId = crypto.randomUUID();
 	const blurId = crypto.randomUUID();
 
-	console.log(`${originalUrl} → ${JSON.stringify({ externalId, blurId, type })}`);
+	console.log(`${originalUrl} → ${JSON.stringify({ externalId, blurId, contentType })}`);
 
-	const output = outputOptions(type);
-	const trim = head.customMetadata?.stereo === "sbs" ? await stereoTrim(key) : undefined;
+	const source = customMetadata?.stereo === "sbs"
+		? await cropStereo(body)
+		: body;
 
-	await Promise.all(imageVariants.map((variant) => {
-		console.log(`↓ ${variant.name}`);
+	const streams = fork(source, imageVariants.length + 1);
 
-		const destinationKey = `${variant.name === "blur" ? blurId : externalId}/${variant.name}`;
-		return storeVariant(key, destinationKey, variant, { trim, output });
-	}));
+	const [blurhash] = await Promise.all([
+		computeBlurhash(streams[0]),
+		Promise.all(imageVariants.map(async ({ name, ...transform }, index) => {
+			console.log(`↓ ${name}`);
 
-	await updateVariants({ originalFile: key, externalId, blurId });
+			const destinationKey = `${name === "blur" ? blurId : externalId}/${name}`;
+
+			const result = await env.IMAGES
+				.input(streams[index + 1])
+				.transform(transform)
+				.output({ format: "image/webp", quality: 90 });
+
+			await env.DESTINATION_BUCKET.put(destinationKey, result.image(), {
+				httpMetadata: {
+					contentType: result.contentType(),
+					cacheControl: "public, max-age=31536000, immutable"
+				}
+			});
+		}))
+	]);
+
+	await updateVariants({ originalFile: key, externalId, blurId, blurhash });
 }

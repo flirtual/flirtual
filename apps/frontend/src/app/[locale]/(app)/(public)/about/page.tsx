@@ -94,27 +94,27 @@ export default function AboutPage() {
 									{
 										name: "Buramie",
 										role: teamRole.moderator,
-										avatar: "5a01f443-7270-4fdb-b903-73d909a6f0f6"
-									},
-									{
-										name: "Cherry",
-										role: teamRole.moderator,
-										avatar: "ba650224-1ce1-4d5c-8e3e-9cd0638e520c"
+										avatar: "01e112a9-b064-4360-96b8-e8c236035449"
 									},
 									{
 										name: "Damned_United",
 										role: teamRole.moderator,
-										avatar: "1f8775ea-1f44-4e33-8cd7-388588723e5d"
+										avatar: "fc4b6ed4-d23d-4e74-99b6-2237233d9978"
 									},
 									{
-										name: "Rem",
+										name: "Ferry",
 										role: teamRole.moderator,
-										avatar: "911150fc-4123-4ad3-ae9b-554a7709ad2b"
+										avatar: "5b8a2b17-6eff-49a7-8a24-5b8efa1d33dc"
 									},
 									{
 										name: "Reploidsham",
 										role: teamRole.moderator,
 										avatar: "f93f2191-1dd4-4550-a348-b7634e3aff78"
+									},
+									{
+										name: "Samantha",
+										role: teamRole.moderator,
+										avatar: "d97a8bcf-6f13-413f-b590-7f0684c45cc3"
 									},
 									{
 										name: "Simon3373",
@@ -124,7 +124,7 @@ export default function AboutPage() {
 									{
 										name: "Starh",
 										role: teamRole.moderator,
-										avatar: "57c46b77-862d-42a6-84b2-f97879bd6f23"
+										avatar: "71c63eff-078c-4f0b-8ff4-1e63ad1aeb29"
 									},
 									{
 										name: "The_Blarg",
@@ -134,7 +134,17 @@ export default function AboutPage() {
 									{
 										name: "Zyp",
 										role: teamRole.moderator,
-										avatar: "78830b45-2d17-4caa-80eb-6ce728b991bf"
+										avatar: "2176bb72-0c35-40be-96f7-8cbd71423c11"
+									},
+									{
+										name: "Michiyo",
+										role: teamRole.event_host,
+										avatar: "d03b1ea9-e2d2-4178-9bc2-2eeb3d6a9b06"
+									},
+									{
+										name: "NickyKitty",
+										role: teamRole.event_host,
+										avatar: "ed70f0ee-c669-4692-ac8d-27eab41cb5b5"
 									},
 									{
 										name: "Syrmor",
@@ -165,7 +175,8 @@ export default function AboutPage() {
 									2021,
 									2022,
 									2023,
-									2024
+									2024,
+									2025
 								] as const).map((year, index) =>
 									<TimelineItem key={year} index={index} year={year} />
 								)}

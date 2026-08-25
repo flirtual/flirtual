@@ -33,6 +33,14 @@ html {
   display: contents;
 }
 
+[data-radix-popper-content-wrapper]:has(> [data-fullscreen]) {
+  position: fixed !important;
+  inset: 0 !important;
+  min-width: 0 !important;
+  transform: none !important;
+  z-index: 1000 !important;
+}
+
 @layer components {
   .pettable {
     cursor: grab;
@@ -66,11 +74,23 @@ body {
 
   --theme-1: var(--arc-theme-1, var(--brand-theme-1));
   --theme-2: var(--arc-theme-2, var(--brand-theme-2));
+
+  --chart-1: #c9436f;
+  --chart-2: #b87400;
+  --chart-3: #2a6fd6;
+  --chart-4: #1b8f5a;
+  --chart-5: #7a4fbf;
 }
 
 body[data-theme="dark"] {
   --brand-theme-1: var(--dark-theme-1);
   --brand-theme-2: var(--dark-theme-2);
+
+  --chart-1: #e05a82;
+  --chart-2: #b8820a;
+  --chart-3: #4a86d8;
+  --chart-4: #2e9a68;
+  --chart-5: #8e6bc8;
 }
 
 body[data-theme-style="friend"] {

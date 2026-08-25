@@ -1,19 +1,20 @@
 import { existsSync, readFileSync } from "node:fs";
+import { hostname as osHostname } from "node:os";
 
 import { reactRouter } from "@react-router/dev/vite";
 import { sentryReactRouter } from "@sentry/react-router";
 import basicSsl from "@vitejs/plugin-basic-ssl";
+import autoprefixer from "autoprefixer";
 import sonda from "sonda/vite";
-import invariant from "tiny-invariant";
+import tailwindcss from "tailwindcss";
 import info from "unplugin-info/vite";
+import macros from "unplugin-macros/vite";
 import remoteAssets from "unplugin-remote-assets/vite";
 import { defineConfig, loadEnv } from "vite";
 import { imagetools } from "vite-imagetools";
-import babel from "vite-plugin-babel";
 import { ViteImageOptimizer as imageOptimize } from "vite-plugin-image-optimizer";
-import tsconfigPaths from "vite-tsconfig-paths";
 
-import { targets } from "./src/polyfill";
+import { browserslist, targets } from "./src/polyfill";
 import { hush } from "./vite-plugin-hush";
 
 const mkcertPaths = {
@@ -27,7 +28,7 @@ function getManualChunk(moduleId: string) {
 	const [,, language] = /(?:\/@uppy\/locales\/lib\/|\/messages\/(attributes\.)?)([a-z-_]+)\.(?:json|js)$/i.exec(moduleId) || [];
 	if (language) return `languages/${{ en_US: "en", ja_JP: "ja" }[language] || language}`;
 
-	if (/node_modules\/@?(?:react|react-dom|react-router|react-portal|react-error-boundary)\//i.test(moduleId)) return "react";
+	if (/node_modules\/@?(?:react|react-dom|react-router|react-error-boundary)\//i.test(moduleId)) return "react";
 	if (/node_modules\/@?(?:capacitor|capawesome|capgo|revenuecat)/i.test(moduleId)) return "native";
 
 	return null;
@@ -36,28 +37,39 @@ function getManualChunk(moduleId: string) {
 export default defineConfig((config) => {
 	const { mode } = config;
 
-	const {
-		VITE_ORIGIN: origin,
-		VITE_API_URL: apiUrl,
-		VITE_SENTRY_ORGANIZATION: sentryOrganization,
-		VITE_SENTRY_PROJECT_ID: sentryProjectId,
-		SENTRY_AUTH_TOKEN: sentryAuthToken
-	} = loadEnv(mode, process.cwd(), "");
+	// eslint-disable-next-line unicorn/prevent-abbreviations
+	const env = loadEnv(mode, process.cwd(), "");
 
-	invariant(origin, "VITE_ORIGIN is required");
+	const defaultHost = osHostname().toLowerCase();
+	const origin = env.VITE_ORIGIN || `https://${defaultHost}:3000`;
+	const apiUrl = env.VITE_API_URL || `https://${defaultHost}:4001/v1/`;
+
+	const sentryOrganization = env.VITE_SENTRY_ORGANIZATION;
+	const sentryProjectId = env.VITE_SENTRY_PROJECT_ID;
+	const sentryAuthToken = env.SENTRY_AUTH_TOKEN;
 
 	const useSentry = sentryOrganization && sentryProjectId && sentryAuthToken;
 
 	const { hostname } = new URL(origin);
 
+	if (!env.VITE_ORIGIN) process.env.VITE_ORIGIN = origin;
+	if (!env.VITE_API_URL) process.env.VITE_API_URL = apiUrl;
+
 	return {
-		esbuild: {
-			charset: "utf8",
-			legalComments: "external",
-		},
 		appType: "mpa",
 		ssr: {
 			noExternal: ["posthog-js", "@posthog/react"]
+		},
+		resolve: {
+			tsconfigPaths: true
+		},
+		css: {
+			postcss: {
+				plugins: [
+					tailwindcss(),
+					autoprefixer({ overrideBrowserslist: browserslist })
+				]
+			}
 		},
 		build: {
 			assetsDir: "static",
@@ -70,8 +82,7 @@ export default defineConfig((config) => {
 				// experimentalLogSideEffects: true,
 				treeshake: {
 					unknownGlobalSideEffects: false,
-					propertyReadSideEffects: false,
-					tryCatchDeoptimization: false
+					propertyReadSideEffects: false
 				},
 				output: {
 					// experimentalMinChunkSize: 8192,
@@ -110,19 +121,7 @@ export default defineConfig((config) => {
 			hush([
 				"Can't resolve original location of error"
 			]),
-			tsconfigPaths(),
-			babel({
-				filter: /\.[jt]sx?$/,
-				babelConfig: {
-					babelrc: false,
-					configFile: false,
-					presets: ["@babel/preset-typescript"],
-					plugins: [
-						["babel-plugin-macros", {}],
-						["babel-plugin-dev-expression", {}]
-					]
-				}
-			}),
+			macros(),
 			info(),
 			remoteAssets({
 				aliases: [
@@ -164,7 +163,7 @@ export default defineConfig((config) => {
 					});
 				}
 			}),
-			sonda({
+			!!env.ANALYZE && sonda({
 				open: false
 			}),
 			useSentry && sentryReactRouter({

@@ -1,5 +1,6 @@
 defmodule FlirtualWeb.PasskeyController do
   use FlirtualWeb, :controller
+  require Logger
 
   alias Ecto.UUID
   alias Flirtual.Policy
@@ -63,7 +64,7 @@ defmodule FlirtualWeb.PasskeyController do
               authenticatorAttachment: "platform"
             },
             else: %{
-              requireResidentKey: false,
+              requireResidentKey: true,
               userVerification: "preferred"
             }
           )
@@ -97,7 +98,8 @@ defmodule FlirtualWeb.PasskeyController do
     challenge = get_session(conn, :challenge)
     conn = delete_session(conn, :challenge)
 
-    with {:ok, {authenticator_data, _}} <-
+    with %Wax.Challenge{} <- challenge,
+         {:ok, {authenticator_data, _}} <-
            Wax.register(attestation_object, client_data_json, challenge),
          {:ok, _} <-
            Passkey.create(
@@ -110,10 +112,12 @@ defmodule FlirtualWeb.PasskeyController do
       |> put_status(:created)
       |> json(%{})
     else
-      {:error, reason} ->
+      reason ->
+        Logger.warning("passkey registration failed: #{inspect(reason)}")
+
         conn
         |> put_status(:bad_request)
-        |> json(%{error: reason})
+        |> json(%{error: "passkey_registration_failed"})
     end
   end
 
@@ -125,6 +129,7 @@ defmodule FlirtualWeb.PasskeyController do
     end
   end
 
+  # sobelow_skip ["Misc.BinToTerm"]
   def authenticate(conn, %{"raw_id" => raw_id, "response" => response} = params) do
     raw_id = Base.decode64!(raw_id)
     authenticator_data = Base.decode64!(response["authenticator_data"])
@@ -144,7 +149,7 @@ defmodule FlirtualWeb.PasskeyController do
              signature,
              client_data_json,
              challenge,
-             [{credential_id, :erlang.binary_to_term(cose_key)}]
+             [{credential_id, :erlang.binary_to_term(cose_key, [:safe])}]
            ),
          login_user <- User.get(user_id),
          %User{banned_at: nil} <- login_user do

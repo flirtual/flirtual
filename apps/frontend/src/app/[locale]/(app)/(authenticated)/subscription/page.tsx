@@ -1,4 +1,4 @@
-import ms from "ms.macro";
+import ms from "ms" with { type: "macro" };
 import { useTranslation } from "react-i18next";
 import invariant from "tiny-invariant";
 

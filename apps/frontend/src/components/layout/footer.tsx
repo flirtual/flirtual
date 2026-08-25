@@ -3,9 +3,10 @@ import { twMerge } from "tailwind-merge";
 
 import { InlineThemeSelect } from "~/app/[locale]/(app)/(authenticated)/settings/(account)/appearance/theme-preview";
 import {
+	BlueskyIcon,
 	DiscordIcon,
-
-	TwitterIcon
+	InstagramIcon,
+	XIcon
 } from "~/components/icons";
 import type { IconComponent } from "~/components/icons";
 import { commitIdShort } from "~/const";
@@ -27,19 +28,27 @@ type LinkOrButtonProps<T> = T
 		| Pick<React.ComponentProps<"button">, "onClick">
 	);
 
-type FooterListIconLinkProps = LinkOrButtonProps<{ Icon: IconComponent }>;
+type FooterListIconLinkProps = LinkOrButtonProps<{
+	Icon: IconComponent;
+	className?: string;
+}>;
 
 export const FooterListIconLink: React.FC<FooterListIconLinkProps> = ({
 	Icon,
+	className,
 	...props
-}) =>
-	"href" in props
+}) => {
+	const icon = (
+		<Icon className={twMerge("h-[1.125rem] w-auto desktop:h-6", className)} />
+	);
+
+	return "href" in props
 		? (
 				<a
 					className="touch-callout-default cursor-pointer hover:brightness-90"
 					{...props}
 				>
-					<Icon className="size-6 desktop:size-8" />
+					{icon}
 				</a>
 			)
 		: (
@@ -48,9 +57,10 @@ export const FooterListIconLink: React.FC<FooterListIconLinkProps> = ({
 					type="button"
 					{...props}
 				>
-					<Icon className="size-6 desktop:size-8" />
+					{icon}
 				</button>
 			);
+};
 
 type FooterListLinkProps = LinkOrButtonProps<{
 	label: string;
@@ -112,15 +122,20 @@ export const Footer: React.FC<FooterProps> = ({
 						<Link href={urls.landing}>
 							<FlirtualLogo className="w-36" theme={logoTheme} />
 						</Link>
-						<div className="flex gap-4">
+						<div className="flex items-center gap-4">
 							<FooterIconSupportLink />
 							<FooterListIconLink
 								href={urls.socials.discord}
 								Icon={DiscordIcon}
 							/>
+							<FooterListIconLink href={urls.socials.x} Icon={XIcon} />
 							<FooterListIconLink
-								href={urls.socials.twitter}
-								Icon={TwitterIcon}
+								href={urls.socials.bluesky}
+								Icon={BlueskyIcon}
+							/>
+							<FooterListIconLink
+								href={urls.socials.instagram}
+								Icon={InstagramIcon}
 							/>
 						</div>
 					</div>

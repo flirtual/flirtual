@@ -18,6 +18,7 @@ export default configure({
 		"android/",
 		"ios/",
 		"visionos/",
+		"**/*.md",
 	],
 	rules: {
 		// todo: disable eventually, flags bug-prone code.
@@ -26,6 +27,16 @@ export default configure({
 		"node/prefer-global/buffer": "off",
 		"node/prefer-global/process": "off",
 		// "antfu/no-top-level-await": "off",
+		"no-restricted-syntax": [
+			"error",
+			// Preserved from the base config, which this rule would otherwise replace.
+			"TSEnumDeclaration[const=true]",
+			"TSExportAssignment",
+			{
+				selector: "ImportDeclaration[source.value='ms']:not(:has(ImportAttribute[key.name='type'][value.value='macro']))",
+				message: "Import \"ms\" with { type: \"macro\" } so values are inlined at build time."
+			}
+		],
 		"no-restricted-imports": [
 			"error",
 			{

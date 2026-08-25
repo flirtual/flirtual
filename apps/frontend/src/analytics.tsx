@@ -1,85 +1,111 @@
 import { PostHogProvider } from "@posthog/react";
-import { useQuery } from "@tanstack/react-query";
-import { posthog } from "posthog-js";
-import { Suspense, use } from "react";
+import {
+	AnalyticsExtensions,
+	ExperimentsExtensions,
+	FeatureFlagsExtensions
+} from "posthog-js/dist/extension-bundles";
+import { posthog } from "posthog-js/dist/module.slim.no-external";
 import type { PropsWithChildren } from "react";
+import { toKebabCase } from "remeda";
 
-import { commitId, posthogHost, posthogKey, server } from "~/const";
+import {
+	posthogHost,
+	posthogKey,
+	posthogUiHost
+} from "~/const";
 
 import type { Session } from "./api/auth";
-import { logOnce } from "./hooks/use-log";
-import { log } from "./log";
-import { queryClient, sessionFetcher, sessionKey } from "./query";
-import { absoluteUrl, urls } from "./urls";
+import { log as _log } from "./log";
+import {
+	queryClient,
+	sessionFetcher,
+	sessionKey
+} from "./query";
 
-let ready = false;
+// eslint-disable-next-line react-refresh/only-export-components
+export { posthog };
 
-function initializeAnalytics() {
-	return;
-	if (ready) return;
+const log = _log.extend("analytics");
+
+const loggedOutAnalytics = true;
+
+function patchPosthogLogger() {
+	if (!log.enabled) return;
+
+	const posthogPrefix = "[PostHog.js]";
+	const namespaces = new Map<string, typeof log>();
+
+	for (const level of ["log", "info", "debug"] as const) {
+		// eslint-disable-next-line no-console
+		const original = console[level].bind(console);
+
+		// eslint-disable-next-line no-console
+		console[level] = (...arguments_: Array<unknown>) => {
+			const [prefix, message, ...rest] = arguments_;
+			if (typeof prefix !== "string" || !prefix.startsWith(posthogPrefix))
+				return original(...arguments_);
+
+			const namespace = toKebabCase(
+				prefix.slice(posthogPrefix.length).trim().replace(/^\[(.*)\]$/, "$1")
+			);
+			let logger = namespaces.get(namespace);
+			if (!logger) {
+				logger = namespace ? log.extend(namespace) : log;
+				namespaces.set(namespace, logger);
+			}
+
+			logger(message, ...rest);
+		};
+	}
+}
+
+// eslint-disable-next-line react-refresh/only-export-components
+export async function setupAnalytics() {
+	patchPosthogLogger();
+
+	// Wait for session (and analytical preferences) to be available.
+	await queryClient.prefetchQuery({ queryKey: sessionKey(), queryFn: sessionFetcher });
+	await queryClient.ensureQueryData({ queryKey: sessionKey() });
 
 	posthog.init(posthogKey, {
+		disable_external_dependency_loading: true,
+		__extensionClasses: {
+			...AnalyticsExtensions,
+			...FeatureFlagsExtensions,
+			...ExperimentsExtensions
+		},
+
 		debug: log.enabled,
 
+		defaults: "2026-01-30",
+
 		api_host: posthogHost,
+		ui_host: posthogUiHost,
 
-		defaults: "2025-11-30",
 		cookieless_mode: "always",
+		person_profiles: "never",
+		disable_persistence: true,
+		persistence: "memory",
 
-		// https://github.com/PostHog/posthog-js/issues/2828
-		// disable_external_dependency_loading: true,
-		external_scripts_inject_target: "head",
-
-		opt_out_capturing_by_default: true,
-		opt_out_capturing_persistence_type: "localStorage",
+		internal_or_test_user_hostname: null,
 
 		before_send: (event) => {
 			if (!event) return event;
 
 			const session = queryClient.getQueryData<Session | null>(sessionKey());
-			const optIn = session?.user.preferences?.privacy.analytics ?? true;
+			const optIn = session?.user.preferences?.privacy.analytics ?? loggedOutAnalytics;
 
-			if (!optIn)
-				return null;
-
-			event.properties.$version = commitId;
-
+			if (!optIn) return null;
 			return event;
 		},
 	});
-	posthog.opt_out_capturing();
-
-	logOnce(`Anonymous analytics enabled, you can opt out at ${absoluteUrl(urls.settings.privacy)}.`);
-	ready = true;
 }
 
-function AnalyticsProvider({ children }: PropsWithChildren) {
-	if (server) return children;
-
-	// eslint-disable-next-line react-hooks/rules-of-hooks
-	const { promise } = useQuery({
-		queryKey: sessionKey(),
-		queryFn: sessionFetcher
-	});
-
-	const session = use(promise);
-
-	const optIn = session?.user.preferences?.privacy.analytics ?? true;
-	if (optIn) initializeAnalytics();
-
+export function AnalyticsProvider({ children }: PropsWithChildren) {
 	return (
+		// @ts-expect-error - @posthog/react does not support slim bundles, apparently.
 		<PostHogProvider client={posthog}>
 			{children}
 		</PostHogProvider>
 	);
 }
-
-function AnalyticsProviderWithFallback({ children }: PropsWithChildren) {
-	return (
-		<Suspense fallback={children}>
-			<AnalyticsProvider>{children}</AnalyticsProvider>
-		</Suspense>
-	);
-}
-
-export { AnalyticsProviderWithFallback as AnalyticsProvider };

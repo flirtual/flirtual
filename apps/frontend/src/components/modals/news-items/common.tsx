@@ -63,6 +63,7 @@ export const commonComponents = {
 	browse: <InlineLink href={urls.discover("dates")} />,
 	homies: <InlineLink href={urls.discover("homies")} />,
 	matches: <InlineLink href={urls.conversations.list()} />,
+	likes: <InlineLink href={urls.likes} />,
 	events: <InlineLink href={urls.resources.events} />,
 	about: <InlineLink href={urls.resources.about} />,
 	me: <InlineLink href={urls.user.me} />,

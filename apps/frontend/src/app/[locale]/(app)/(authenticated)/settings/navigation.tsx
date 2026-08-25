@@ -16,6 +16,7 @@ import {
 	SlidersHorizontal,
 	Sparkles,
 	Tag,
+	Tags,
 	Users,
 	VenetianMask,
 	X
@@ -51,8 +52,6 @@ export const SettingsNavigation: FC = () => {
 	const { t } = useTranslation();
 	const dialogs = useDialog();
 
-	// if (user.status === "onboarded") throwRedirect(urls.finish(1));
-
 	return (
 		<div className="sticky top-0 z-10 flex w-full shrink-0 grow-0 flex-col self-baseline desktop:relative desktop:w-80 desktop:rounded-2xl desktop:bg-brand-gradient desktop:text-white-20 desktop:shadow-brand-1">
 			<NavigationHeader listOnly={listOnly} />
@@ -79,9 +78,14 @@ export const SettingsNavigation: FC = () => {
 								</>
 							)}
 							{user.tags?.includes("admin") && (
-								<NavigationLink href={urls.admin.stats} Icon={LineChart}>
-									{t("stats")}
-								</NavigationLink>
+								<>
+									<NavigationLink href={urls.admin.attributes} Icon={Tags}>
+										{t("attributes_admin")}
+									</NavigationLink>
+									<NavigationLink href={urls.admin.stats} Icon={LineChart}>
+										{t("stats")}
+									</NavigationLink>
+								</>
 							)}
 							{sudoerId && (
 								<NavigationLink
@@ -102,6 +106,7 @@ export const SettingsNavigation: FC = () => {
 					)}
 					<NavigationCategory name={t("profile")}>
 						<NavigationLink
+							newBadge
 							href={urls.settings.matchmaking()}
 							Icon={SlidersHorizontal}
 						>
@@ -110,7 +115,7 @@ export const SettingsNavigation: FC = () => {
 						<NavigationLink href={urls.settings.bio} Icon={PenSquare}>
 							{t("bio_pics")}
 						</NavigationLink>
-						<NavigationLink href={urls.settings.info()} Icon={Contact}>
+						<NavigationLink newBadge href={urls.settings.info()} Icon={Contact}>
 							{t("basic_info")}
 						</NavigationLink>
 						<NavigationLink href={urls.settings.interests} Icon={Tag}>
@@ -123,6 +128,7 @@ export const SettingsNavigation: FC = () => {
 							{t("nsfw")}
 						</NavigationLink>
 						<NavigationLink
+							newBadge
 							href={urls.settings.connections}
 							Icon={Users}
 						>
@@ -136,7 +142,7 @@ export const SettingsNavigation: FC = () => {
 						<NavigationLink href={urls.subscription.default} Icon={Sparkles}>
 							{t("premium")}
 						</NavigationLink>
-						<NavigationLink newBadge href={urls.settings.appearance} Icon={Paintbrush}>
+						<NavigationLink href={urls.settings.appearance} Icon={Paintbrush}>
 							{t("appearance")}
 						</NavigationLink>
 						<NavigationLink href={urls.settings.privacy} Icon={EyeOff}>
@@ -174,8 +180,12 @@ export const SettingsNavigation: FC = () => {
 							<NavigationLink href={urls.socials.vrchat}>
 								{t("vrchat_group")}
 							</NavigationLink>
-							<NavigationLink href={urls.socials.twitter}>
-								{t("twitter")}
+							<NavigationLink href={urls.socials.x}>{t("x")}</NavigationLink>
+							<NavigationLink href={urls.socials.bluesky}>
+								{t("bluesky")}
+							</NavigationLink>
+							<NavigationLink href={urls.socials.instagram}>
+								{t("instagram")}
 							</NavigationLink>
 						</NavigationCategory>
 					</div>

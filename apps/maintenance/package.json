@@ -2,15 +2,16 @@
 	"name": "maintenance",
 	"version": "0.0.0",
 	"private": true,
+	"license": "AGPL-3.0-or-later",
 	"scripts": {
 		"deploy": "wrangler deploy",
 		"dev": "wrangler dev",
 		"start": "wrangler dev"
 	},
 	"devDependencies": {
-		"@ariesclark/eslint-config": "^3.1.1",
-		"eslint": "^9.39.1",
+		"@ariesclark/eslint-config": "catalog:",
+		"eslint": "catalog:",
 		"eslint-plugin-format": "^1.1.0",
-		"wrangler": "^4.53.0"
+		"wrangler": "catalog:"
 	}
 }

@@ -1,44 +1,52 @@
-/* eslint-disable react-refresh/only-export-components */
-import * as Sentry from "@sentry/react-router";
-import { Suspense } from "react";
-import { ErrorBoundary } from "react-error-boundary";
+import {
+	browserProfilingIntegration,
+	getGlobalScope,
+	init,
+	reactRouterTracingIntegration,
+	replayIntegration,
+	spanStreamingIntegration
+} from "@sentry/react-router";
 
 import {
 	apiOrigin,
-	client,
-	cloudflareBeaconId,
 	development,
 	preview,
-	production,
 	sentryDsn,
-	sentryEnabled,
 	sentryLogs,
 	sentryProfiles,
 	sentryTraces,
 	siteOrigin
 } from "~/const";
 import { device } from "~/hooks/use-device";
-import { useOptionalSession } from "~/hooks/use-session";
 
-import { log } from "./log";
-
-export function initializeMonitoring() {
-	Sentry.init({
-		enabled: sentryEnabled,
+export function setupMonitoring() {
+	init({
 		dsn: sentryDsn,
+		environment: development
+			? "development"
+			: preview
+				? "preview"
+				: "production",
+
 		sampleRate: 1,
+
 		tracesSampleRate: sentryTraces,
 		profileSessionSampleRate: sentryProfiles,
-		profileLifecycle: "trace",
-		enableLogs: sentryLogs,
-		replaysOnErrorSampleRate: 1,
+
 		replaysSessionSampleRate: 0,
+		replaysOnErrorSampleRate: 1,
+
+		enableLogs: sentryLogs,
+
+		profileLifecycle: "trace",
+		traceLifecycle: "stream",
+
 		tracePropagationTargets: [
 			siteOrigin,
 			apiOrigin,
 		],
+
 		ignoreErrors: [
-			"must be caught by a redirect boundary",
 			"Load failed",
 			"Failed to fetch",
 			"NetworkError when attempting to fetch resource.",
@@ -49,53 +57,31 @@ export function initializeMonitoring() {
 			"Failed to fetch dynamically imported module",
 			"error loading dynamically imported module",
 		],
-		environment: development ? "development" : (preview || "production"),
 		integrations: [
-			Sentry.reactRouterTracingIntegration(),
-			Sentry.browserProfilingIntegration(),
-			Sentry.replayIntegration({
+			spanStreamingIntegration(),
+			reactRouterTracingIntegration(),
+			browserProfilingIntegration(),
+			replayIntegration({
 				mask: ["[data-mask]"],
 				unmask: ["[data-unmask]"],
 				block: ["[data-block]"],
 				unblock: ["[data-unblock]"],
 				ignore: ["[data-ignore]"],
-				maskAttributes: ["title", "placeholder", "aria-label", "alt", "href"]
+				maskAttributes: [
+					"title",
+					"placeholder",
+					"aria-label",
+					"alt",
+					"href"
+				]
 			})
 		]
 	});
 
-	log("Error monitoring initialized");
-}
+	const { native, vision } = device;
 
-function Identity() {
-	const session = useOptionalSession();
-	const userId = session?.user.id || null;
-
-	if (client) {
-		Sentry.setTag("native", device.native ? "yes" : "no");
-		Sentry.setTag("vision", device.vision ? "yes" : "no");
-		Sentry.setUser(userId ? { id: userId } : null);
-	}
-
-	return null;
-}
-
-export function Monitoring() {
-	return (
-		<>
-			<Suspense>
-				<ErrorBoundary fallback={null}>
-					<Identity />
-				</ErrorBoundary>
-			</Suspense>
-			{production && cloudflareBeaconId && (
-				<script
-					async
-					defer
-					data-cf-beacon={JSON.stringify({ token: cloudflareBeaconId })}
-					src="https://static.cloudflareinsights.com/beacon.min.js"
-				/>
-			)}
-		</>
-	);
+	getGlobalScope().setAttributes({
+		native,
+		vision
+	});
 }

@@ -7,6 +7,7 @@ import { User } from "~/api/user";
 import { Profile } from "~/api/user/profile";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
+import { FormGameAutocomplete } from "~/components/forms/game-autocomplete";
 import {
 	InputAutocomplete,
 	InputDateSelect,
@@ -40,7 +41,6 @@ export const InfoForm: FC = () => {
 	const session = useOptionalSession();
 	const toasts = useToast();
 
-	const games = useAttributes("game");
 	const platforms = useAttributes("platform");
 	const sexualities = useAttributes("sexuality");
 	const genders = useAttributes("gender");
@@ -148,6 +148,12 @@ export const InfoForm: FC = () => {
 								? [...field.props.value, "other"]
 								: field.props.value;
 
+							// "other" checkbox isn't a gender, temporarily filter so it
+							// doesn't count towards the limit.
+							const otherGenders = (field.props.value ?? []).filter(
+								(id) => id !== "other"
+							);
+
 							return (
 								<>
 									<InputLabel {...field.labelProps}>{t("gender")}</InputLabel>
@@ -180,12 +186,17 @@ export const InfoForm: FC = () => {
 													label: name ?? gender.id,
 													definition,
 													definitionLink: gender.definitionLink,
-													hidden: simpleGenderIds.has(gender.id)
+													hidden:
+														simpleGenderIds.has(gender.id)
+														|| (!otherGenders.includes(gender.id)
+															&& (gender.conflicts ?? []).some((conflict) =>
+																otherGenders.includes(conflict)))
 												};
 											})}
 											limit={4}
 											placeholder={t("select_genders")}
-											value={field.props.value || []}
+											value={otherGenders}
+											onChange={(value) => field.props.onChange([...value, "other"])}
 										/>
 									)}
 								</>
@@ -229,28 +240,30 @@ export const InfoForm: FC = () => {
 							</>
 						)}
 					</FormField>
-					{user.tags?.includes("debugger") && (
-						<>
-							<div className="flex flex-col gap-2">
-								<InputLabel>{t("geolocation")}</InputLabel>
+					<FormField name="timezone">
+						{(field) => (
+							<>
+								<InputLabel>{t("timezone")}</InputLabel>
 								<InputLabelHint className="-mt-2">
-									{t("geolocation_hint")}
+									{t("timezone_hint")}
 								</InputLabelHint>
-								<InputGeolocation />
-							</div>
-							<FormField name="timezone">
-								{(field) => (
-									<>
-										<InputLabel>{t("timezone")}</InputLabel>
-										<InputLabelHint className="-mt-2">
-											{t("timezone_hint")}
-										</InputLabelHint>
-										<InputTimezoneSelect {...field.props} />
-									</>
-								)}
-							</FormField>
-						</>
-					)}
+								<InputTimezoneSelect {...field.props} />
+							</>
+						)}
+					</FormField>
+					<div className="flex flex-col gap-2">
+						<InputLabel>{t("geolocation")}</InputLabel>
+						<InputLabelHint className="-mt-2">
+							{t("geolocation_hint")}
+							<details>
+								<summary className="text-pink opacity-75 transition-opacity hover:cursor-pointer hover:opacity-100">
+									{t("privacy")}
+								</summary>
+								{t("geolocation_privacy_details")}
+							</details>
+						</InputLabelHint>
+						<InputGeolocation />
+					</div>
 					<FormField name="languages">
 						{(field) => (
 							<>
@@ -281,22 +294,13 @@ export const InfoForm: FC = () => {
 						)}
 					</FormField>
 					<FormField name="game">
-						{(field) => (
+						{() => (
 							<>
 								<InputLabel hint={t("up_to_number", { number: 5 })}>{t("vr_apps_games")}</InputLabel>
 								<InputLabelHint className="-mt-2">
 									{t("game_hint")}
 								</InputLabelHint>
-								<InputAutocomplete
-									{...field.props}
-									options={games.map((game) => ({
-										key: game,
-										label: tAttribute[game]?.name ?? game
-									}))}
-									limit={5}
-									placeholder={t("select_games")}
-									value={field.props.value || []}
-								/>
+								<FormGameAutocomplete />
 							</>
 						)}
 					</FormField>

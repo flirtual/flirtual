@@ -35,10 +35,15 @@
 			}
 		},
 		"canary": {
+			"preview_urls": true,
 			"routes": [
 				{
-					"pattern": "canary.flirtual.com",
+					"pattern": "beta.flirtual.dev",
 					"custom_domain": true
+				},
+				{
+					"pattern": "beta.flirtual.dev/*",
+					"zone_name": "flirtual.dev"
 				}
 			],
 			"queues": {

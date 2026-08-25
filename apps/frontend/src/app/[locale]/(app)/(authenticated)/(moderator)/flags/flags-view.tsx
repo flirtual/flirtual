@@ -1,4 +1,3 @@
-/* eslint-disable react-refresh/only-export-components */
 import {
 	flexRender,
 	getCoreRowModel,
@@ -70,7 +69,7 @@ const ColumnActions: FC<{ flag: FlagModel }> = ({ flag }) => {
 	);
 };
 
-export const columns: Array<ColumnDef<FlagModel>> = [
+const columns: Array<ColumnDef<FlagModel>> = [
 	{
 		id: "flag",
 		header: "Flag",

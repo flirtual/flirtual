@@ -35,8 +35,8 @@ export default [
 	...prefix(":locale", [
 		layout("(public)", [
 			index("(public)/home"),
-			// page("/home", "(public)/home"),
-			// route("/", "(public)/route"),
+		// page("/home", "(public)/home"),
+		// route("/", "(public)/route"),
 		]),
 		layout("(minimal)", [
 			layout("(minimal)/(guest)", [
@@ -48,6 +48,7 @@ export default [
 			layout("(minimal)/(session)", [
 				page("onboarding/1", "(minimal)/(session)/onboarding/1"),
 				page("onboarding/2", "(minimal)/(session)/onboarding/2"),
+				page("onboarding/3", "(minimal)/(session)/onboarding/3"),
 			])
 		]),
 		layout("(app)", [
@@ -68,7 +69,7 @@ export default [
 						page("matches", "(app)/(authenticated)/(onboarded)/matches"),
 						page("matches/:conversationId", "(app)/(authenticated)/(onboarded)/matches/[conversationId]")
 					])
-					// route("me", "(app)/(authenticated)/(onboarded)/me/route"),
+				// route("me", "(app)/(authenticated)/(onboarded)/me/route"),
 				]),
 				layout("(app)/(authenticated)/settings", [
 					page("settings", "(app)/(authenticated)/settings"),
@@ -91,6 +92,7 @@ export default [
 					page("settings/personality", "(app)/(authenticated)/settings/(profile)/personality"),
 				]),
 				layout("(app)/(authenticated)/(admin)", [
+					page("attributes", "(app)/(authenticated)/(admin)/attributes"),
 					page("stats", "(app)/(authenticated)/(admin)/stats"),
 				]),
 				layout("(app)/(authenticated)/(moderator)", [
@@ -132,6 +134,7 @@ export default [
 	file(".well-known/security.txt"),
 	file(".well-known/assetlinks.json"),
 	file(".well-known/apple-app-site-association"),
+	file(".well-known/webauthn"),
 	file(".well-known/apple-developer-merchantid-domain-association"),
 	file("_redirects"),
 	file("_headers"),

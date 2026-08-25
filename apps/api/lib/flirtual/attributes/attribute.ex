@@ -9,12 +9,32 @@ defmodule Flirtual.Attribute do
   import Ecto.Query
 
   alias Flirtual.{Attribute, Repo}
+  alias Flirtual.Attribute.Cache
 
   alias Flirtual.Countries
   alias Flirtual.Languages
 
   @derive {Inspect, only: [:id, :type, :metadata]}
   @internal_metadata_keys ["curated"]
+
+  # Static attributes are generated or hardcoded outside the database, so can't
+  # be edited.
+  @static_types ~w(country language relationship timezone)
+
+  @types ~w(
+    ban-reason
+    delete-reason
+    game
+    gender
+    interest
+    interest-category
+    kink
+    platform
+    prompt
+    report-reason
+    sexuality
+    warn-reason
+  ) ++ @static_types
 
   schema "attributes" do
     field(:type, :string)
@@ -23,6 +43,10 @@ defmodule Flirtual.Attribute do
 
     timestamps()
   end
+
+  def types, do: @types
+
+  def editable_type?(type), do: type in @types and type not in @static_types
 
   def get(attribute_id) when is_uid(attribute_id) do
     Attribute
@@ -68,6 +92,24 @@ defmodule Flirtual.Attribute do
     Languages.list(:bcp_47) |> Enum.map(&%Attribute{id: &1, type: "language"})
   end
 
+  def list(type: "timezone") do
+    now = DateTime.utc_now()
+
+    timezones =
+      TzExtra.time_zone_ids()
+      |> Enum.reject(&String.starts_with?(&1, "Etc/"))
+      |> Enum.map(fn id ->
+        {:ok, dt} = DateTime.shift_zone(now, id)
+        offset = dt.utc_offset + dt.std_offset
+        city = id |> String.split("/") |> List.last()
+        {id, offset, city}
+      end)
+      |> Enum.sort_by(fn {_id, offset, city} -> {offset, city} end)
+      |> Enum.map(fn {id, offset, _city} ->
+        %Attribute{id: id, type: "timezone", metadata: %{offset: offset}}
+      end)
+  end
+
   def list(type: "relationship") do
     [
       %Attribute{
@@ -96,18 +138,57 @@ defmodule Flirtual.Attribute do
   def list(type: attribute_type) when is_binary(attribute_type) do
     Attribute
     |> where(type: ^attribute_type)
-    |> order_by([:order])
+    |> order_by([:order, :id])
     |> Repo.all()
   end
 
   def list(attribute_ids) when is_list(attribute_ids) do
     Attribute
     |> where([attribute], attribute.id in ^attribute_ids)
-    |> order_by([:order])
+    |> order_by([:order, :id])
     |> Repo.all()
   end
 
   def list(_), do: []
+
+  # The id is castable so it can be chosen ahead of time: display names live in
+  # the frontend translation bundle, keyed by id, and have to ship before the
+  # attribute is created.
+  def create_changeset(attrs) do
+    %Attribute{}
+    |> cast(attrs, [:id, :type, :order, :metadata])
+    |> validate_required([:type])
+    |> validate_inclusion(:type, @types -- @static_types)
+    |> unique_constraint(:id, name: "attributes_pkey")
+  end
+
+  # Type is immutable: translations are grouped by type, so moving an attribute
+  # between them would orphan its name.
+  def update_changeset(%Attribute{} = attribute, attrs) do
+    attribute
+    |> cast(attrs, [:order, :metadata])
+  end
+
+  def create(attrs) do
+    with {:ok, attribute} <- attrs |> create_changeset() |> Repo.insert() do
+      Cache.refresh()
+      {:ok, attribute}
+    end
+  end
+
+  def update(%Attribute{} = attribute, attrs) do
+    with {:ok, attribute} <- attribute |> update_changeset(attrs) |> Repo.update() do
+      Cache.refresh()
+      {:ok, attribute}
+    end
+  end
+
+  def delete(%Attribute{} = attribute) do
+    with {:ok, attribute} <- Repo.delete(attribute) do
+      Cache.refresh()
+      {:ok, attribute}
+    end
+  end
 
   def compress(attributes) when is_list(attributes), do: Enum.map(attributes, &compress/1)
 
@@ -119,11 +200,7 @@ defmodule Flirtual.Attribute do
       else: Map.put(metadata, :id, id)
   end
 
-  def group(attributes) do
-    Enum.reduce(attributes, %{}, fn %{id: id, type: type}, acc ->
-      Map.update(acc, type, [id], fn existing -> [id | existing] end)
-    end)
-  end
+  def group(attributes), do: Enum.group_by(attributes, & &1.type, & &1.id)
 
   def validate_attribute(changeset, id_key, attribute_type, options \\ []) do
     key =
@@ -220,6 +297,11 @@ defmodule Flirtual.Attribute do
         ))
     )
   end
+
+  def pronoun?(%Attribute{metadata: %{"pronoun" => true}}), do: true
+  def pronoun?(%Attribute{}), do: false
+
+  def reject_pronouns(list) when is_list(list), do: Enum.reject(list, &pronoun?/1)
 
   def normalize_aliases(list) when is_list(list) do
     attribute_aliases =
@@ -320,6 +402,7 @@ defimpl Jason.Encoder, for: Flirtual.Attribute do
       :id,
       :type,
       :order,
-      :metadata
+      :metadata,
+      :updated_at
     ]
 end

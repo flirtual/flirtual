@@ -1,20 +1,41 @@
-import ms from "ms.macro";
-import { useDebugValue } from "react";
+import ms from "ms" with { type: "macro" };
+import { useDebugValue, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 import type { AttributeCollection, AttributeType } from "~/api/attributes";
+import { attributeId } from "~/api/attributes";
 import { attributeFetcher, attributeKey, useQuery } from "~/query";
+
+import { useConfig } from "./use-config";
 
 export function useAttributes<T extends AttributeType>(type: T): AttributeCollection<T> {
 	useDebugValue(type);
 
+	// Refetches whenever the digest changes.
+	const { attributes } = useConfig();
+
 	return useQuery({
-		queryKey: attributeKey(type),
+		queryKey: attributeKey(type, attributes[type]),
 		queryFn: attributeFetcher<T>,
 		meta: {
 			cacheTime: ms("30d")
 		}
 	});
+}
+
+export function useAttributeOrder(
+	type: AttributeType
+): (a: string, b: string) => number {
+	const attributes = useAttributes(type);
+
+	return useMemo(() => {
+		const order = new Map(
+			attributes.map((attribute, index) => [attributeId(attribute), index])
+		);
+
+		return (a, b) =>
+			(order.get(a) ?? attributes.length) - (order.get(b) ?? attributes.length);
+	}, [attributes]);
 }
 
 export interface AttributeTranslationMetadata {
@@ -50,5 +71,13 @@ export function useAttributeTranslation<
 // eslint-disable-next-line unused-imports/no-unused-vars
 >(type?: T): Record<string, AttributeTranslation<T>> {
 	const { t } = useTranslation();
-	return t("attributes", { returnObjects: true }) as Record<string, AttributeTranslation<T>>;
+	const translations = t("attributes", { returnObjects: true }) as Record<string, AttributeTranslation<T>>;
+
+	// An attribute may exist before its translation, so an unknown id falls back
+	// to itself instead of throwing.
+	return useMemo(() => new Proxy(translations, {
+		get: (target, key) => (typeof key === "string" && !(key in target))
+			? { name: key }
+			: Reflect.get(target, key)
+	}), [translations]);
 }

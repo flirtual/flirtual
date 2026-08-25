@@ -12,6 +12,7 @@ defmodule Flirtual.Users do
 
   alias Flirtual.{
     Chargebee,
+    Connection,
     Discord,
     Flag,
     Hash,
@@ -25,8 +26,12 @@ defmodule Flirtual.Users do
     User
   }
 
-  alias Flirtual.User.{Login, Preferences, SearchDocument}
+  alias Flirtual.Attribute
+  alias Flirtual.User.{Login, Preferences}
   alias Flirtual.User.Profile.Image
+
+  @underage_ban_reason_id "muXMqNjneKnwqxT8nqcy4d"
+  @underage_ban_message "Underaged. You must be at least 18 years of age to use Flirtual. If you believe you have been banned in error, you can reply to this email to appeal and we'll send you a secure link to verify your I.D. in order to unban your account."
 
   def get(id, preload \\ User.default_assoc())
       when is_binary(id) do
@@ -90,22 +95,8 @@ defmodule Flirtual.Users do
       born_at = Ecto.Changeset.get_change(changeset, :born_at)
 
       if not is_nil(born_at) and User.underage?(born_at) === true do
-        case Flirtual.Attribute.get("muXMqNjneKnwqxT8nqcy4d", "ban-reason") do
-          %Flirtual.Attribute{} = reason ->
-            Repo.update(changeset)
-
-            User.suspend(
-              user,
-              reason,
-              "Underaged. You must be at least 18 years of age to use Flirtual. If you believe you have been banned in error, you can reply to this email to appeal and we'll send you a secure link to verify your I.D. in order to unban your account.",
-              user
-            )
-
-            {:error, {:forbidden, :banned_underage}}
-
-          _ ->
-            {:error, {:internal_error, :attribute_not_found}}
-        end
+        Repo.update(changeset)
+        autoban_underage(user, :date_of_birth)
       else
         previous_born_at = user.born_at
 
@@ -114,9 +105,9 @@ defmodule Flirtual.Users do
                {:ok, user} <- User.update_status(user),
                {:ok, _} <-
                  ObanWorkers.update_user(user.id, [
-                   :elasticsearch,
+                   :search_index,
                    :listmonk,
-                   :refresh_prospects,
+                   :compute_queue,
                    :talkjs
                  ]) do
             if not is_nil(born_at) do
@@ -147,8 +138,24 @@ defmodule Flirtual.Users do
     end
   end
 
+  def autoban_underage(%User{banned_at: banned_at}, _) when not is_nil(banned_at),
+    do: {:error, {:forbidden, :banned_underage}}
+
+  def autoban_underage(%User{} = user, automatic) do
+    case Attribute.get(@underage_ban_reason_id, "ban-reason") do
+      %Attribute{} = reason ->
+        User.suspend(user, reason, @underage_ban_message, user, automatic: automatic)
+        {:error, {:forbidden, :banned_underage}}
+
+      _ ->
+        {:error, {:internal_error, :attribute_not_found}}
+    end
+  end
+
   defmodule UpdatePassword do
     use Flirtual.EmbeddedSchema
+
+    @optional [:current_password]
 
     embedded_schema do
       field(:password, :string, redact: true)
@@ -158,14 +165,21 @@ defmodule Flirtual.Users do
 
     def changeset(value, _, %{user: user}) do
       value
-      |> User.validate_current_password(user)
+      |> User.validate_current_password_if_set(user)
       |> User.validate_password()
       |> User.validate_password_confirmation()
-      |> validate_predicate(
-        &(not User.valid_password?(&2, &1)),
-        {:password, {:value, user.password_hash}},
-        message: "password_must_be_different"
-      )
+      |> then(fn changeset ->
+        if User.has_password?(user) do
+          validate_predicate(
+            changeset,
+            &(not User.valid_password?(&2, &1)),
+            {:password, {:value, user.password_hash}},
+            message: "password_must_be_different"
+          )
+        else
+          changeset
+        end
+      end)
     end
   end
 
@@ -244,6 +258,10 @@ defmodule Flirtual.Users do
   defmodule UpdateEmail do
     use Flirtual.EmbeddedSchema
 
+    # email_confirmation is enforced only when changing an existing email, not
+    # when adding an email to a Meta account.
+    @optional [:current_password, :email_confirmation]
+
     embedded_schema do
       field(:email, :string)
       field(:email_confirmation, :string)
@@ -252,7 +270,7 @@ defmodule Flirtual.Users do
 
     def changeset(value, _, %{user: user}) do
       value
-      |> User.validate_current_password(user)
+      |> User.validate_current_password_if_set(user)
       |> User.validate_email()
       |> validate_confirmation(:email)
       |> validate_predicate(:not_equal, {:email, {:value, user.email}},
@@ -282,7 +300,7 @@ defmodule Flirtual.Users do
              |> Repo.update(),
            :ok <- Hash.check_hash(user.id, "email", attrs[:email]),
            {:ok, user} <- User.update_status(user),
-           {:ok, _} <- ObanWorkers.update_user(user.id, [:elasticsearch, :listmonk, :talkjs]),
+           {:ok, _} <- ObanWorkers.update_user(user.id, [:search_index, :listmonk, :talkjs]),
            {:ok, _} <- deliver_email_confirmation(user) do
         user
       else
@@ -323,7 +341,7 @@ defmodule Flirtual.Users do
              |> Repo.update(),
            {:ok, user} <- User.update_status(user),
            {:ok, _} <-
-             ObanWorkers.update_user(user.id, [:chargebee, :elasticsearch, :listmonk, :talkjs]),
+             ObanWorkers.update_user(user.id, [:chargebee, :search_index, :listmonk, :talkjs]),
            {:ok, _} <- User.Email.deliver(user, :email_changed),
            :ok <- Flag.check_new_email_domain(user.id, user.email) do
         user
@@ -417,7 +435,7 @@ defmodule Flirtual.Users do
              |> change(%{deactivated_at: now})
              |> Repo.update(),
            {:ok, user} <- User.update_status(user),
-           {:ok, _} <- ObanWorkers.update_user(user.id, [:elasticsearch, :listmonk, :talkjs]) do
+           {:ok, _} <- ObanWorkers.update_user(user.id, [:search_index, :listmonk, :talkjs]) do
         user
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -435,9 +453,9 @@ defmodule Flirtual.Users do
            {:ok, user} <- User.update_status(user),
            {:ok, _} <-
              ObanWorkers.update_user(user.id, [
-               :elasticsearch,
+               :search_index,
                :listmonk,
-               :refresh_prospects,
+               :compute_queue,
                :talkjs
              ]) do
         user
@@ -452,9 +470,9 @@ defmodule Flirtual.Users do
     use Flirtual.EmbeddedSchema
 
     import Flirtual.Attribute, only: [validate_attribute: 3]
-    import Flirtual.User, only: [validate_current_password: 2]
+    import Flirtual.User, only: [validate_current_password_if_set: 2]
 
-    @optional [:comment]
+    @optional [:comment, :current_password]
 
     embedded_schema do
       field(:reason_id, :string)
@@ -468,7 +486,7 @@ defmodule Flirtual.Users do
     def changeset(value, _, %{user: user}) do
       value
       |> validate_attribute(:reason_id, "delete-reason")
-      |> validate_current_password(user)
+      |> validate_current_password_if_set(user)
       |> validate_length(:comment, max: 1_000)
     end
   end
@@ -482,11 +500,13 @@ defmodule Flirtual.Users do
              :ok <- Hash.delete(user.id),
              :ok <- Image.delete_user_objects(user.id),
              {:ok, user} <- Repo.delete(user, timeout: @delete_timeout),
-             :ok <- SearchDocument.delete_if_exists(user.id),
+             :ok <- Flirtual.Search.delete_users([user.id]),
              {:ok, _} <- Talkjs.delete_user(user),
              {:ok, _} <- Listmonk.delete_subscriber(user),
              {:ok, _} <- Chargebee.delete_customer(user),
+             :ok <- RevenueCat.cancel_subscriptions(user),
              :ok <- RevenueCat.delete_customer(user),
+             :ok <- enqueue_revocations(user),
              :ok <-
                Discord.deliver_webhook(:exit_survey,
                  user: user,
@@ -510,11 +530,13 @@ defmodule Flirtual.Users do
              :ok <- Image.delete_user_objects(user.id),
              :ok <- retain_image_hashes(user),
              {:ok, user} <- Repo.delete(user, timeout: @delete_timeout),
-             :ok <- SearchDocument.delete_if_exists(user.id),
+             :ok <- Flirtual.Search.delete_users([user.id]),
              {:ok, _} <- Talkjs.delete_user(user),
              {:ok, _} <- Listmonk.delete_subscriber(user),
              {:ok, _} <- Chargebee.delete_customer(user),
-             :ok <- RevenueCat.delete_customer(user) do
+             :ok <- RevenueCat.cancel_subscriptions(user),
+             :ok <- RevenueCat.delete_customer(user),
+             :ok <- enqueue_revocations(user) do
           {:ok, user}
         else
           {:error, %Ecto.Changeset{} = changeset} -> Repo.rollback(changeset)
@@ -533,11 +555,18 @@ defmodule Flirtual.Users do
   defp retain_image_hashes(%User{} = user),
     do: Image.retain_user_hashes(user.id, Hash.get_suspended_url(user.id))
 
+  defp enqueue_revocations(%User{connections: connections}) when is_list(connections) do
+    Enum.each(connections, &Connection.enqueue_revocation/1)
+    :ok
+  end
+
+  defp enqueue_revocations(_), do: :ok
+
   def dev_delete(%User{} = user) do
     Repo.transaction(fn ->
       with :ok <- if(is_nil(user.banned_at), do: Hash.delete(user.id), else: :ok),
            {:ok, user} <- Repo.delete(user),
-           :ok <- SearchDocument.delete_if_exists(user.id) do
+           :ok <- Flirtual.Search.delete_users([user.id]) do
         {:ok, user}
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -546,6 +575,9 @@ defmodule Flirtual.Users do
     end)
   end
 
+  @doc """
+  Creates a new user with password (standard registration flow).
+  """
   def create(attrs, options \\ []) do
     Repo.transaction(fn ->
       with {:ok, attrs} <-
@@ -585,60 +617,95 @@ defmodule Flirtual.Users do
              |> User.validate_password()
              |> User.put_password()
              |> Repo.insert(),
-           {:ok, user} <-
-             change(user, %{
-               slug: String.downcase(user.id, :ascii) |> String.slice(0..19),
-               talkjs_signature: Talkjs.new_user_signature(user.id),
-               revenuecat_id: UUID.generate(),
-               unsubscribe_token: UUID.generate()
-             })
-             |> Repo.update(),
-           {:ok, preferences} <-
-             Ecto.build_assoc(
-               user,
-               :preferences,
-               %{
-                 # language: attrs[:language]
-               }
-             )
-             |> Repo.insert(),
-           {:ok, _} <-
-             Ecto.build_assoc(preferences, :email_notifications, %{
-               newsletter: attrs[:notifications]
-             })
-             |> Repo.insert(),
-           {:ok, _} <-
-             Ecto.build_assoc(preferences, :push_notifications, %{
-               newsletter: attrs[:notifications]
-             })
-             |> Repo.insert(),
-           {:ok, _} <-
-             Ecto.build_assoc(preferences, :privacy)
-             |> Repo.insert(),
-           {:ok, profile} <-
-             Ecto.build_assoc(user, :profile)
-             |> Repo.insert(),
-           {:ok, _} <-
-             Ecto.build_assoc(profile, :preferences)
-             |> Repo.insert(),
-           user <- Repo.preload(user, User.default_assoc()),
-           :ok <- Flag.check_honeypot(user.id, attrs[:url]),
-           :ok <- Flag.check_email_flags(user.id, attrs[:email]),
-           :ok <-
-             (case Application.get_env(:flirtual, :canary, false) do
-                true -> :ok
-                false -> Hash.check_hash(user.id, "email", attrs[:email])
-              end),
-           {:ok, _} <- Talkjs.update_user(user),
-           {:ok, _} <-
-             Listmonk.create_subscriber(user),
-           {:ok, _} <- deliver_email_confirmation(user) do
+           {:ok, user} <- setup_new_user(user, attrs),
+           :ok <- Flag.check_honeypot(user.id, attrs[:url]) do
         user
       else
         {:error, reason} -> Repo.rollback(reason)
         reason -> Repo.rollback(reason)
       end
     end)
+  end
+
+  # Creates a passwordless user for the social login flow. If the provider
+  # email, it's pre-verified. Meta doesn't expose an email, so we create the
+  # account without one and prompt for it on the email confirmation step.
+  def create_from_connection(email, options \\ []) do
+    notifications = Keyword.get(options, :notifications) == true
+    has_email = is_binary(email) and email != ""
+
+    Repo.transaction(fn ->
+      with {:ok, user} <-
+             %User{}
+             |> cast(%{email: if(has_email, do: email)}, [:email])
+             |> then(&if has_email, do: User.validate_unique_email(&1), else: &1)
+             |> then(&if has_email, do: Flag.validate_allowed_email(&1, :email), else: &1)
+             |> Repo.insert(),
+           {:ok, user} <-
+             setup_new_user(user, %{notifications: notifications}, email_confirmed: has_email) do
+        user
+      else
+        {:error, reason} -> Repo.rollback(reason)
+        reason -> Repo.rollback(reason)
+      end
+    end)
+  end
+
+  # Shared user setup: generates identifiers, creates preferences/profile, runs checks
+  defp setup_new_user(user, attrs, options \\ []) do
+    email_confirmed = Keyword.get(options, :email_confirmed, false)
+    notifications = Map.get(attrs, :notifications) == true
+
+    with {:ok, user} <-
+           change(user, %{
+             slug: String.downcase(user.id, :ascii) |> String.slice(0..19),
+             talkjs_signature: Talkjs.new_user_signature(user.id),
+             revenuecat_id: UUID.generate(),
+             unsubscribe_token: UUID.generate(),
+             email_confirmed_at:
+               if(email_confirmed,
+                 do: DateTime.utc_now() |> DateTime.truncate(:second),
+                 else: nil
+               )
+           })
+           |> Repo.update(),
+         {:ok, preferences} <-
+           Ecto.build_assoc(user, :preferences, %{})
+           |> Repo.insert(),
+         {:ok, _} <-
+           Ecto.build_assoc(preferences, :email_notifications, %{newsletter: notifications})
+           |> Repo.insert(),
+         {:ok, _} <-
+           Ecto.build_assoc(preferences, :push_notifications, %{newsletter: notifications})
+           |> Repo.insert(),
+         {:ok, _} <-
+           Ecto.build_assoc(preferences, :privacy)
+           |> Repo.insert(),
+         {:ok, profile} <-
+           Ecto.build_assoc(user, :profile)
+           |> Repo.insert(),
+         {:ok, _} <-
+           Ecto.build_assoc(profile, :preferences)
+           |> Repo.insert(),
+         user <- Repo.preload(user, User.default_assoc()),
+         :ok <- if(user.email, do: Flag.check_email_flags(user.id, user.email), else: :ok),
+         :ok <- if(user.email, do: check_email_hash(user), else: :ok),
+         {:ok, _} <- Talkjs.update_user(user),
+         {:ok, _} <- if(user.email, do: Listmonk.create_subscriber(user), else: {:ok, nil}),
+         {:ok, _} <-
+           if(email_confirmed or is_nil(user.email),
+             do: {:ok, nil},
+             else: deliver_email_confirmation(user)
+           ) do
+      {:ok, user}
+    end
+  end
+
+  defp check_email_hash(user) do
+    case Application.get_env(:flirtual, :canary?, false) do
+      true -> :ok
+      false -> Hash.check_hash(user.id, "email", user.email)
+    end
   end
 
   def count do

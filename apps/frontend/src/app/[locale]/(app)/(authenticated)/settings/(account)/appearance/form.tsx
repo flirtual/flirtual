@@ -6,6 +6,7 @@ import { Trans, useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
 import type { Session } from "~/api/auth";
+import { premium } from "~/api/user";
 import { PreferenceThemes } from "~/api/user/preferences";
 import { Profile } from "~/api/user/profile";
 import type { ProfileColors } from "~/api/user/profile";
@@ -93,7 +94,7 @@ const ProfileColorSelect: FC = () => {
 					...session,
 					user: {
 						...session.user,
-						profile: user.subscription?.active
+						profile: premium(user)
 							? {
 									...session.user.profile,
 									color1: colors.color1,
@@ -108,7 +109,7 @@ const ProfileColorSelect: FC = () => {
 			});
 		},
 		mutationFn: async (colors: ProfileColors) => {
-			if (!user.subscription?.active) return;
+			if (!premium(user)) return;
 			await Profile.updateColors(user.id, colors);
 		}
 	});
@@ -255,6 +256,10 @@ const fontSizeNamed = {
 type FontSize = keyof typeof fontSizeNamed;
 type NamedFontSize = typeof fontSizeNamed[FontSize];
 
+const fontSizes = Object.keys(fontSizeNamed)
+	.map(Number)
+	.sort((a, b) => a - b) as Array<FontSize>;
+
 const InputFontSize: FC = () => {
 	const [fontSize, setFontSize] = usePreferences<FontSize>("font_size", defaultFontSize);
 	const namedSize = fontSizeNamed[fontSize] as NamedFontSize;
@@ -277,15 +282,15 @@ const InputFontSize: FC = () => {
 				<NewBadge className="inline-block" />
 			</InputLabel>
 			<Slider
-				max={20}
-				min={12}
-				step={1.3333}
-				value={[fontSize]}
-				onValueChange={async ([value]) => {
-					await setFontSize((Math.round(value! * 100) / 100) as FontSize);
+				max={fontSizes.length - 1}
+				min={0}
+				step={1}
+				value={[fontSizes.indexOf(fontSize)]}
+				onValueChange={async ([index]) => {
+					await setFontSize(fontSizes[index!]!);
 				}}
-				onValueCommit={async ([value]) => {
-					await setFontSize((Math.round(value! * 100) / 100) as FontSize);
+				onValueCommit={async ([index]) => {
+					await setFontSize(fontSizes[index!]!);
 				}}
 			/>
 		</div>

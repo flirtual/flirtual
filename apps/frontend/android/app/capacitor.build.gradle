@@ -22,8 +22,10 @@ dependencies {
     implementation project(':capacitor-share')
     implementation project(':capacitor-toast')
     implementation project(':capawesome-team-capacitor-datetime-picker')
+    implementation project(':capawesome-capacitor-age-signals')
     implementation project(':capawesome-capacitor-app-update')
-    implementation project(':capgo-inappbrowser')
+    implementation project(':capgo-capacitor-inappbrowser')
+    implementation project(':capgo-capacitor-social-login')
     implementation project(':revenuecat-purchases-capacitor')
     implementation project(':capacitor-native-settings')
 

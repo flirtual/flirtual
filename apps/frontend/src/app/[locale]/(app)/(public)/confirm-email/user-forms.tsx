@@ -1,4 +1,4 @@
-import ms from "ms.macro";
+import ms from "ms" with { type: "macro" };
 import { Trans, useTranslation } from "react-i18next";
 
 import { User } from "~/api/user";
@@ -18,6 +18,45 @@ export const UserForms: React.FC = () => {
 
 	useInterval(() => invalidate({ queryKey: sessionKey() }), ms("1s"));
 
+	// Meta sign-in provides no email; collect one before it can be confirmed.
+	if (!user.email) {
+		return (
+			<Form
+				className="flex flex-col gap-4"
+				fields={{ email: "" }}
+				requireChange={["email"]}
+				onSubmit={async (body) => {
+					await User.updateEmail(user.id, body);
+					toasts.add(t("salty_novel_octopus_surge"));
+
+					await invalidate({ queryKey: sessionKey() });
+				}}
+			>
+				{({ FormField }) => (
+					<div className="flex flex-col gap-4">
+						<div className="flex flex-col gap-2">
+							<h1 className="font-montserrat text-xl font-semibold">
+								{t("one_more_step")}
+							</h1>
+							<span className="text-lg">{t("add_confirm_email")}</span>
+						</div>
+						<FormField name="email">
+							{(field) => (
+								<>
+									<InputLabel {...field.labelProps}>
+										{t("email_address")}
+									</InputLabel>
+									<InputText {...field.props} autoComplete="email" type="email" />
+								</>
+							)}
+						</FormField>
+						<FormButton>{t("continue")}</FormButton>
+					</div>
+				)}
+			</Form>
+		);
+	}
+
 	return (
 		<>
 			<Form
@@ -25,9 +64,8 @@ export const UserForms: React.FC = () => {
 				fields={{}}
 				requireChange={false}
 				onSubmit={async () => {
-					await User.resendConfirmEmail()
-						.then(() => toasts.add(t("salty_novel_octopus_surge")))
-						.catch(toasts.addError);
+					await User.resendConfirmEmail();
+					toasts.add(t("salty_novel_octopus_surge"));
 
 					await invalidate({ queryKey: sessionKey() });
 				}}
@@ -57,9 +95,8 @@ export const UserForms: React.FC = () => {
 				className="mt-8"
 				requireChange={["email", "emailConfirmation", "currentPassword"]}
 				onSubmit={async (body) => {
-					await User.updateEmail(user.id, body)
-						.then(() => toasts.add(t("email_changed")))
-						.catch(toasts.addError);
+					await User.updateEmail(user.id, body);
+					toasts.add(t("email_changed"));
 
 					await invalidate({ queryKey: sessionKey() });
 				}}

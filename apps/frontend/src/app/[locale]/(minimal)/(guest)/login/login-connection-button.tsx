@@ -1,8 +1,11 @@
-import { InAppBrowser, ToolBarType } from "@capgo/inappbrowser";
+import { Loader2 } from "lucide-react";
 import type { FC } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
+import { Authentication } from "~/api/auth";
+import { isWretchError } from "~/api/common";
 import {
 	Connection,
 	ConnectionMetadata
@@ -10,96 +13,199 @@ import {
 } from "~/api/connections";
 import type { ConnectionType } from "~/api/connections";
 import { Button } from "~/components/button";
-import { device } from "~/hooks/use-device";
+import { device, useDevice } from "~/hooks/use-device";
+import { useTheme } from "~/hooks/use-theme";
+import { useToast } from "~/hooks/use-toast";
 import { useNavigate } from "~/i18n";
-import { invalidate, sessionKey } from "~/query";
+import { authorizeAndGrant } from "~/oauth";
+import { invalidate, mutate, sessionKey } from "~/query";
+import { nativeSocialLogin } from "~/social-login";
 import { toAbsoluteUrl, toRelativeUrl } from "~/urls";
+
+import { next as getNextUrl } from "./form";
+import { useRememberLoginConnection } from "./last-connection";
 
 export interface LoginConnectionButtonProps {
 	type: ConnectionType;
 	tabIndex?: number;
 	next?: string;
+	className?: string;
+	notifications?: boolean;
+	iconOnly?: boolean;
+	signup?: boolean;
+	// Return false to block the action, i.e. when the service agreement is unchecked.
+	guard?: () => boolean;
 }
 
-const label = {
-	google: "Google",
-	apple: "Apple",
-	meta: "Meta",
-	discord: "Discord",
-	vrchat: "VRChat"
-};
+type NativeSocialProvider = "apple" | "google";
+const nativeSocialProviders: Array<NativeSocialProvider> = ["apple", "google"];
+
+function isNativeSocialProvider(type: ConnectionType): type is NativeSocialProvider {
+	return nativeSocialProviders.includes(type as NativeSocialProvider);
+}
 
 export const LoginConnectionButton: FC<LoginConnectionButtonProps> = ({
 	type,
 	tabIndex,
-	next = "/"
+	next,
+	className,
+	notifications = false,
+	iconOnly = false,
+	signup = false,
+	guard
 }) => {
 	const { t } = useTranslation();
-
 	const navigate = useNavigate();
+	const toasts = useToast();
+	const { id: deviceId } = useDevice();
+	const { attempted, succeeded } = useRememberLoginConnection();
+	const [isLoading, setIsLoading] = useState(false);
 
-	const { Icon, iconClassName, color } = ConnectionMetadata[type];
+	const { name, Icon, color, logoColor, darkColor, darkLogoColor } = ConnectionMetadata[type];
+	const [theme] = useTheme();
+	const backgroundColor = theme === "dark" ? darkColor ?? color : color;
+	const iconColor = theme === "dark" ? darkLogoColor ?? logoColor : logoColor;
+
+	const handleNativeSocialLogin = async () => {
+		if (!isNativeSocialProvider(type)) {
+			return handleOAuthLogin();
+		}
+
+		try {
+			const result = type === "apple"
+				? await nativeSocialLogin({ provider: type, options: { scopes: ["email"] } })
+				: await nativeSocialLogin({ provider: type, options: { forcePrompt: true } });
+
+			if (!result || !result.result) {
+				return;
+			}
+
+			const { result: loginResult } = result;
+
+			let idToken: string | undefined;
+			let authorizationCode: string | undefined;
+
+			if (type === "apple" && "idToken" in loginResult) {
+				idToken = loginResult.idToken ?? undefined;
+				authorizationCode = "authorizationCode" in loginResult ? (loginResult.authorizationCode ?? undefined) : undefined;
+			}
+			else if (type === "google" && "idToken" in loginResult) {
+				idToken = loginResult.idToken ?? undefined;
+			}
+
+			if (!idToken) {
+				toasts.add({ type: "error", value: t("errors.internal_server_error" as any) });
+				return;
+			}
+
+			const response = await Authentication.socialLogin({
+				provider: type,
+				idToken,
+				authorizationCode,
+				deviceId,
+				notifications,
+				signup
+			});
+
+			if ("error" in response) {
+				toasts.add({ type: "error", value: t(`errors.${response.error}` as any) });
+				return;
+			}
+
+			if ("status" in response) {
+				return;
+			}
+
+			await succeeded(type);
+			await invalidate({ refetchType: "none" });
+			await mutate(sessionKey(), response);
+			navigate(next ?? getNextUrl());
+		}
+		catch (reason) {
+			console.error("Social login error:", reason);
+
+			if ((reason as { code?: unknown })?.code === "USER_CANCELLED") return;
+
+			if (isWretchError(reason)) {
+				toasts.add({ type: "error", value: t(`errors.${reason.json?.error}` as any) });
+				return;
+			}
+
+			toasts.add({ type: "error", value: t("errors.internal_server_error" as any) });
+		}
+	};
+
+	const handleOAuthLogin = async () => {
+		const nextUrl = toAbsoluteUrl(next ?? getNextUrl()).href;
+
+		if (!device.native) {
+			await attempted(type);
+
+			location.href = Connection.authorizeUrl({
+				type,
+				prompt: "consent",
+				next: nextUrl,
+				notifications,
+				signup
+			});
+
+			return;
+		}
+
+		const nextLocation = await authorizeAndGrant(type, nextUrl, notifications, signup);
+		if (!nextLocation) return;
+
+		const nextLocationUrl = new URL(nextLocation);
+		if (!nextLocationUrl.searchParams.has("error")) await succeeded(type);
+
+		await invalidate({ queryKey: sessionKey() });
+		navigate(toRelativeUrl(nextLocationUrl));
+	};
+
+	const handleClick = async () => {
+		if (guard && !guard()) return;
+
+		setIsLoading(true);
+
+		try {
+			if (device.native && isNativeSocialProvider(type)) {
+				await handleNativeSocialLogin();
+			}
+			else {
+				await handleOAuthLogin();
+			}
+		}
+		catch (reason) {
+			const error = isWretchError(reason)
+				? reason.json?.error
+				: reason instanceof Error ? reason.message : undefined;
+			toasts.add({ type: "error", value: t(`errors.${error}` as any, { defaultValue: t("errors.connection_error_generic") }) });
+		}
+		finally {
+			setIsLoading(false);
+		}
+	};
+
+	const label = t("continue_with", { type: name });
 
 	return (
 		<Button
-			className="gap-4 bg-none"
+			aria-label={iconOnly ? label : undefined}
+			className={twMerge("gap-4 bg-none", iconOnly && "grow px-0", className)}
+			disabled={isLoading}
 			size="sm"
-			style={{ backgroundColor: color }}
+			style={{ backgroundColor, color: iconColor }}
 			tabIndex={tabIndex}
-			onClick={async () => {
-				if (!device.native) {
-					location.href = Connection.authorizeUrl({
-						type,
-						prompt: "consent",
-						next: toAbsoluteUrl(next).href
-					});
-
-					return;
-				}
-
-				const { authorizeUrl } = await Connection.authorize({
-					type,
-					prompt: "consent",
-					next: toAbsoluteUrl(next).href
-				});
-
-				await InAppBrowser.addListener("urlChangeEvent", async (event) => {
-					const url = new URL(event.url);
-
-					const query: any = Object.fromEntries(url.searchParams.entries());
-
-					if ("error" in query) {
-						await InAppBrowser.removeAllListeners();
-						await InAppBrowser.close();
-					}
-					if ("code" in query) {
-						setTimeout(async () => {
-							const response = await Connection.grant({
-								...query,
-								redirect: "manual"
-							});
-
-							await invalidate({ queryKey: sessionKey() });
-
-							const next = response.headers.get("location");
-							if (next) navigate(toRelativeUrl(new URL(next)));
-
-							await InAppBrowser.removeAllListeners();
-							await InAppBrowser.close();
-						}, 1000);
-					}
-				});
-
-				await InAppBrowser.openWebView({
-					url: authorizeUrl,
-					toolbarType: ToolBarType.BLANK
-				});
-			}}
+			onClick={handleClick}
 		>
-			<Icon className={twMerge("size-6", iconClassName)} />
-			<span className="font-montserrat text-lg font-semibold">
-				{t("log_in_with", { type: label[type] })}
-			</span>
+			{isLoading
+				? <Loader2 className="size-6 animate-spin" />
+				: <Icon className="size-6" />}
+			{!iconOnly && (
+				<span className="font-montserrat text-lg font-semibold">
+					{label}
+				</span>
+			)}
 		</Button>
 	);
 };
@@ -112,7 +218,7 @@ export const ConnectionItem: FC<ConnectionItemProps> = ({
 }) => {
 	return (
 		<div className="flex grow basis-64 flex-col gap-2 bg-white-30 p-4">
-			<span className="text-sm font-semibold">{label[type]}</span>
+			<span className="text-sm font-semibold">{ConnectionMetadata[type].name}</span>
 			<div className="flex items-center gap-2">
 				<span className="text-lg leading-4">{displayName}</span>
 			</div>

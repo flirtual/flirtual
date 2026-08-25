@@ -2,11 +2,6 @@
 
 const logOnceSymbol = Symbol.for("logOnce");
 
-declare global {
-	// eslint-disable-next-line vars-on-top
-	var [logOnceSymbol]: Set<string>;
-}
-
 function getHistory() {
 	if (!(globalThis as any)[logOnceSymbol]) {
 		(globalThis as any)[logOnceSymbol] = new Set<string>();

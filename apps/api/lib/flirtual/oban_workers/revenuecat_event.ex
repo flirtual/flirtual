@@ -1,7 +1,6 @@
 defmodule Flirtual.ObanWorkers.RevenueCatEvent do
   use Oban.Worker, max_attempts: 6
 
-  alias Flirtual.Discord
   alias Flirtual.RevenueCat
 
   @backoff_schedule [30, 90, 300, 600, 1800]
@@ -16,8 +15,7 @@ defmodule Flirtual.ObanWorkers.RevenueCatEvent do
         :ok
 
       {:retry, reason} ->
-        if attempt >= max_attempts, do: alert_unresolved(payload, reason)
-        {:error, reason}
+        exhausted(payload, reason, attempt >= max_attempts)
 
       {:error, reason} ->
         {:error, reason}
@@ -27,16 +25,42 @@ defmodule Flirtual.ObanWorkers.RevenueCatEvent do
     end
   end
 
-  defp alert_unresolved(%{"event" => event}, reason) do
-    Discord.deliver_webhook(:revenuecat_unresolved,
-      app_user_id: event["app_user_id"] || "unknown",
-      event_type: event["type"] || "unknown",
-      event_id: event["id"] || "unknown",
-      reason: reason
-    )
+  defp exhausted(_payload, reason, false), do: {:error, reason}
+
+  defp exhausted(%{"event" => %{"app_user_id" => app_user_id}} = payload, reason, true) do
+    cond do
+      not RevenueCat.anonymous_id?(app_user_id) ->
+        {:error, reason}
+
+      RevenueCat.unclaimed?(app_user_id) ->
+        report_unclaimed(payload)
+
+      # The purchase was moved to the real customer, which we handled on its own
+      # webhook, or it expired.
+      true ->
+        :ok
+    end
   end
 
-  defp alert_unresolved(_, _), do: :ok
+  defp exhausted(_payload, reason, true), do: {:error, reason}
+
+  defp report_unclaimed(%{"event" => event}) do
+    Sentry.capture_message("Unclaimed RevenueCat purchase",
+      level: :warning,
+      tags: %{
+        revenuecat_store: to_string(event["store"] || "unknown"),
+        revenuecat_event_type: to_string(event["type"] || "unknown")
+      },
+      extra: %{
+        revenuecat_customer: event["app_user_id"],
+        store_order: event["original_transaction_id"] || event["transaction_id"],
+        event_id: event["id"],
+        expires_at: event["expiration_at_ms"]
+      }
+    )
+
+    :ok
+  end
 
   @impl Oban.Worker
   def backoff(%Oban.Job{attempt: attempt}) do

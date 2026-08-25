@@ -1,7 +1,6 @@
 import {
 	closestCenter,
 	DndContext,
-	DragOverlay,
 	KeyboardSensor,
 	MouseSensor,
 	TouchSensor,
@@ -17,25 +16,8 @@ import {
 	useSortable
 } from "@dnd-kit/sortable";
 import { Slot } from "@radix-ui/react-slot";
-import {
-	createContext,
-
-	use,
-	useEffect,
-	useMemo,
-	useState
-} from "react";
+import { useEffect, useState } from "react";
 import type { Dispatch, FC, PropsWithChildren } from "react";
-import { Portal } from "react-portal";
-
-const CurrentSortableContext = createContext(
-	{} as { currentItem: UniqueIdentifier | null }
-);
-
-// eslint-disable-next-line react-refresh/only-export-components
-export function useCurrentSortableItem() {
-	return use(CurrentSortableContext).currentItem;
-}
 
 export const SortableGrid: FC<
 	PropsWithChildren<{
@@ -55,42 +37,37 @@ export const SortableGrid: FC<
 	);
 
 	return (
-		<CurrentSortableContext
-			value={useMemo(() => ({ currentItem }), [currentItem])}
-		>
-			<DndContext
-				accessibility={{}}
-				autoScroll={false}
-				collisionDetection={closestCenter}
-				sensors={sensors}
-				onDragCancel={() => setCurrentItem(null)}
-				onDragEnd={({ over }) => {
-					setCurrentItem(null);
+		<DndContext
+			accessibility={{}}
+			autoScroll={false}
+			collisionDetection={closestCenter}
+			sensors={sensors}
+			onDragCancel={() => setCurrentItem(null)}
+			onDragEnd={({ over }) => {
+				setCurrentItem(null);
 
-					if (over) {
-						const overIndex = values.indexOf(over.id);
+				if (over) {
+					const overIndex = values.indexOf(over.id);
 
-						if (currentItem && currentItem !== over.id) {
-							const currentIndex = values.indexOf(currentItem);
-							onChange(arrayMove(values, currentIndex, overIndex));
-						}
+					if (currentItem && currentItem !== over.id) {
+						const currentIndex = values.indexOf(currentItem);
+						onChange(arrayMove(values, currentIndex, overIndex));
 					}
-				}}
-				onDragStart={({ active }) => {
-					if (!active) return;
-					setCurrentItem(active.id as string);
-				}}
+				}
+			}}
+			onDragStart={({ active }) => {
+				if (!active) return;
+				setCurrentItem(active.id as string);
+			}}
+		>
+			<SortableContext
+				disabled={disabled}
+				items={values}
+				strategy={rectSortingStrategy}
 			>
-				<SortableContext
-					key={JSON.stringify(values)}
-					disabled={disabled}
-					items={values}
-					strategy={rectSortingStrategy}
-				>
-					{children}
-				</SortableContext>
-			</DndContext>
-		</CurrentSortableContext>
+				{children}
+			</SortableContext>
+		</DndContext>
 	);
 };
 
@@ -113,11 +90,12 @@ export const SortableItem: FC<PropsWithChildren<{ id: UniqueIdentifier }>> = ({
 			style={
 				{
 					transition,
-					transform: `translate3d(${
-						transform ? `${Math.round(transform.x)}px` : 0
-					}, ${transform ? `${Math.round(transform.y)}px` : undefined}, 0)
-    scaleX(${transform?.scaleX ?? 1}) scaleY(${transform?.scaleY ?? 1})`,
-					transformOrigin: "0 0"
+					transform: transform
+						? `translate3d(${Math.round(transform.x)}px, ${Math.round(transform.y)}px, 0) scaleX(${transform.scaleX}) scaleY(${transform.scaleY})`
+						: undefined,
+					transformOrigin: "0 0",
+					zIndex: isDragging ? 100 : undefined,
+					cursor: isDragging ? "grabbing" : "grab"
 				} as React.CSSProperties
 			}
 			data-dragging={isDragging ? "" : undefined}
@@ -127,15 +105,5 @@ export const SortableItem: FC<PropsWithChildren<{ id: UniqueIdentifier }>> = ({
 		>
 			{children}
 		</Slot>
-	);
-};
-
-export const SortableItemOverlay: FC<PropsWithChildren> = ({ children }) => {
-	const currentId = useCurrentSortableItem();
-
-	return (
-		<Portal>
-			<DragOverlay>{currentId && children}</DragOverlay>
-		</Portal>
 	);
 };

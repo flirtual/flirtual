@@ -61,11 +61,30 @@ defmodule FlirtualWeb.Router do
     end
   end
 
+  def put_dashboard_csp(conn, _opts) do
+    nonce = 16 |> :crypto.strong_rand_bytes() |> Base.encode64()
+
+    conn
+    |> assign(:csp_nonce, nonce)
+    |> put_resp_header(
+      "content-security-policy",
+      "default-src 'self'; img-src 'self' data:; " <>
+        "script-src 'nonce-#{nonce}'; style-src 'nonce-#{nonce}'; " <>
+        "style-src-attr 'unsafe-inline'; " <>
+        "base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
+    )
+  end
+
   pipeline :debugger_dashboard do
     plug(:accepts, ["html"])
     plug(:fetch_session)
     plug(:protect_from_forgery)
-    plug(:put_secure_browser_headers)
+
+    plug(:put_secure_browser_headers, %{
+      "content-security-policy" => "default-src 'none'; frame-ancestors 'none'"
+    })
+
+    plug(:put_dashboard_csp)
     plug(:fetch_current_session)
     plug(:require_debugger_user)
   end
@@ -75,10 +94,12 @@ defmodule FlirtualWeb.Router do
 
     live_dashboard("/dashboard",
       metrics: FlirtualWeb.Telemetry,
+      csp_nonce_assign_key: :csp_nonce,
       on_mount: [{FlirtualWeb.LiveDashboardAuth, :require_debugger}]
     )
 
     oban_dashboard("/oban",
+      csp_nonce_assign_key: :csp_nonce,
       on_mount: [{FlirtualWeb.LiveDashboardAuth, :require_debugger}]
     )
   end
@@ -88,7 +109,6 @@ defmodule FlirtualWeb.Router do
 
     scope "/v1" do
       get("/config", ConfigController, :get)
-      get("/timezones", ConfigController, :timezones)
 
       scope "/attributes" do
         scope "/:attribute_type" do
@@ -117,9 +137,19 @@ defmodule FlirtualWeb.Router do
 
         get("/files/*path", ImageController, :local_file)
 
+        scope "/uploads" do
+          options("/", ImageController, :tus_options)
+          post("/", ImageController, :tus_create)
+
+          scope "/:image_id" do
+            options("/", ImageController, :tus_options)
+            get("/", ImageController, :tus_head)
+            patch("/", ImageController, :tus_patch)
+          end
+        end
+
         scope "/:image_id" do
           get("/view", ImageController, :view)
-          put("/file", ImageController, :local_upload)
         end
       end
 
@@ -165,6 +195,16 @@ defmodule FlirtualWeb.Router do
       scope "/v1/" do
         scope "/session" do
           post("/", SessionController, :login)
+
+          scope "/transfer" do
+            get("/:token", SessionTransferController, :consume)
+
+            scope "/" do
+              pipe_through(:require_authenticated_user)
+
+              post("/", SessionTransferController, :create)
+            end
+          end
 
           scope "/" do
             pipe_through(:require_authenticated_user)
@@ -239,6 +279,9 @@ defmodule FlirtualWeb.Router do
         scope "/connections" do
           get("/authorize", ConnectionController, :authorize)
           get("/grant", ConnectionController, :grant)
+          post("/grant", ConnectionController, :grant)
+          get("/meta/callback", ConnectionController, :meta_callback)
+          get("/meta/callback/app", ConnectionController, :meta_callback_app)
 
           scope "/" do
             pipe_through(:require_authenticated_user)
@@ -295,6 +338,29 @@ defmodule FlirtualWeb.Router do
           end
         end
 
+        scope "/attributes" do
+          pipe_through([:require_authenticated_user, :require_valid_user])
+
+          get("/", AttributeController, :index)
+          post("/", AttributeController, :create)
+
+          scope "/:attribute_id" do
+            patch("/", AttributeController, :update)
+            delete("/", AttributeController, :delete)
+          end
+        end
+
+        scope "/stats" do
+          pipe_through([:require_authenticated_user, :require_valid_user])
+
+          get("/", StatsController, :index)
+
+          scope "/:stat_name" do
+            get("/", StatsController, :get)
+            get("/download", StatsController, :download)
+          end
+        end
+
         scope "/flags" do
           pipe_through([:require_authenticated_user, :require_valid_user])
 
@@ -328,6 +394,7 @@ defmodule FlirtualWeb.Router do
           post("/", MatchmakingController, :response)
           delete("/", MatchmakingController, :undo_response)
           delete("/prospect", MatchmakingController, :skip_prospect)
+          delete("/notice", MatchmakingController, :dismiss_notice)
         end
 
         scope "/matches" do
@@ -420,6 +487,7 @@ defmodule FlirtualWeb.Router do
 
             post("/password", UsersController, :update_password)
 
+            post("/age-range", UsersController, :age_range)
             post("/push-token", UsersController, :add_push_token)
             delete("/push-count", UsersController, :reset_push_count)
             post("/rating-prompts", UsersController, :update_rating_prompts)
@@ -449,7 +517,7 @@ defmodule FlirtualWeb.Router do
               post("/prompts", ProfileController, :update_prompts)
               post("/preferences", ProfileController, :update_preferences)
               post("/custom-weights", ProfileController, :update_custom_weights)
-              post("/custom-filters", ProfileController, :update_custom_filters)
+              post("/advanced-filters", ProfileController, :update_advanced_filters)
               post("/geolocation", ProfileController, :update_geolocation)
               delete("/geolocation", ProfileController, :delete_geolocation)
             end
@@ -464,7 +532,12 @@ defmodule FlirtualWeb.Router do
       plug(:accepts, ["html"])
       plug(:fetch_session)
       plug(:protect_from_forgery)
-      plug(:put_secure_browser_headers)
+
+      plug(:put_secure_browser_headers, %{
+        "content-security-policy" =>
+          "default-src 'self'; frame-ancestors 'none'; img-src * data:; " <>
+            "script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'"
+      })
     end
 
     scope "/dev" do

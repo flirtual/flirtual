@@ -17,7 +17,7 @@ defmodule Flirtual.User.Preferences.PushNotifications do
     field(:messages, :boolean, default: true)
     field(:likes, :boolean, default: true)
     field(:reminders, :boolean, default: true)
-    field(:newsletter, :boolean, default: true)
+    field(:newsletter, :boolean, default: false)
   end
 
   def update_changeset(%Preferences.PushNotifications{} = push_notifications, attrs) do

@@ -1,0 +1,23 @@
+app = "flirtual-manticore"
+primary_region = "iad"
+
+[build]
+  image = "manticoresearch/manticore:28.4.4"
+
+[mounts]
+  source = "manticoredata"
+  destination = "/var/lib/manticore"
+
+[[services]]
+  protocol = "tcp"
+  internal_port = 9306
+  auto_stop_machines = "off"
+  auto_start_machines = true
+
+  [[services.ports]]
+    port = 9306
+
+[[vm]]
+  cpu_kind = "shared"
+  cpus = 1
+  memory = "1gb"

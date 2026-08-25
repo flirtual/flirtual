@@ -1,7 +1,8 @@
-import ms from "ms.macro";
+import ms from "ms" with { type: "macro" };
 import { toSnakeCase } from "remeda";
 import type { WretchOptions } from "wretch";
 
+import type { AgeRangeReport } from "~/age-range";
 import { development } from "~/const";
 import type { Locale } from "~/i18n";
 import { isUid } from "~/utilities";
@@ -11,7 +12,7 @@ import { api } from "../common";
 import type { DatedModel, Paginate, PaginateOptions, UuidModel } from "../common";
 import type { Connection } from "../connections";
 import { timeout } from "../middleware";
-import type { Subscription } from "../subscription";
+import type { Entitlement } from "../subscription";
 import { Preferences } from "./preferences";
 import type { Profile } from "./profile";
 import type { Relationship } from "./relationship";
@@ -50,7 +51,12 @@ export const userTagNames: Record<UserTags, string> = {
 
 export type UserTags = (typeof userTags)[number];
 
-export const searchTags = ["premium", ...userTags] as const;
+export const searchTags = [
+	"premium_subscription",
+	"lifetime_premium",
+	"promotional_premium",
+	...userTags
+] as const;
 
 export type SearchTag = (typeof searchTags)[number];
 
@@ -69,11 +75,12 @@ export const UserStatuses = [
 export type UserStatus = (typeof UserStatuses)[number];
 
 export type User = {
-	email: string;
+	email?: string;
 	slug: string;
 	talkjsId: string;
 	talkjsSignature?: string;
 	talkjsToken?: string;
+	hasPassword?: boolean;
 	apnsTokens?: Array<string>;
 	fcmTokens?: Array<string>;
 	platforms?: Array<string>;
@@ -98,7 +105,7 @@ export type User = {
 	deactivatedAt?: string;
 	preferences?: Preferences;
 	profile: Profile;
-	subscription?: Subscription;
+	entitlements?: Array<Entitlement>;
 	tags?: Array<UserTags>;
 	tnsDiscordInBiography?: string;
 	connections?: Array<Connection>;
@@ -143,13 +150,13 @@ export type UpdateUserOptions = Partial<
 >;
 
 export interface UpdateUserEmailOptions {
-	currentPassword: string;
+	currentPassword?: string;
 	email: string;
-	emailConfirmation: string;
+	emailConfirmation?: string;
 }
 
 export interface UpdateUserPasswordOptions {
-	currentPassword: string;
+	currentPassword?: string;
 	password: string;
 	passwordConfirmation: string;
 }
@@ -333,6 +340,9 @@ export const User = {
 	resetPushCount(userId: string) {
 		return this.api.url(`/${userId}/push-count`).delete().json<User>();
 	},
+	reportAgeRange(userId: string, report: AgeRangeReport) {
+		return this.api.url(`/${userId}/age-range`).json(report).post().res();
+	},
 	updateRatingPrompts(userId: string, options: { ratingPrompts: number }) {
 		return this.api
 			.url(`/${userId}/rating-prompts`)
@@ -346,7 +356,7 @@ export const User = {
 	deleteSelf(options: {
 		reasonId: string;
 		comment: string;
-		currentPassword: string;
+		currentPassword?: string;
 	}) {
 		return this.api
 			.middlewares([timeout(ms("3m"))], true)
@@ -358,3 +368,13 @@ export const User = {
 		return this.api.url(`/${userId}`).delete().json<User>();
 	}
 };
+
+export function activeEntitlements(user: User) {
+	return user.entitlements?.filter((entitlement) => entitlement.active) ?? [];
+}
+
+export function premium(user: User) {
+	return activeEntitlements(user).some(
+		(entitlement) => entitlement.plan.product === "premium"
+	);
+}

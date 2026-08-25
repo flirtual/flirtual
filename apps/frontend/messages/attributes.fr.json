@@ -39,9 +39,6 @@
 		"mHF6zQZ3tbVe9iYjGuzAPK": {
 			"name": "PAYDAY 2"
 		},
-		"b3YVqwSVNMcsh2xUPSd9hU": {
-			"name": "PokerStars VR"
-		},
 		"HF4tppeRywmq9oWsR2GyMg": {
 			"name": "POPULATION: ONE"
 		},
@@ -56,9 +53,6 @@
 		},
 		"ffrwQHFv2kN4uRRJCLYqVb": {
 			"name": "Contractors"
-		},
-		"6DjtoKvDStyCEJBWdjDnva": {
-			"name": "A Township Tale"
 		},
 		"ibNMSB3mTjSqA4yVh424BG": {
 			"name": "Drunkn Bar Fight"
@@ -231,9 +225,6 @@
 		"z6PXMo8JatbqCcYzjCaW9F": {
 			"name": "Museum of Other Realities"
 		},
-		"E4Vf4HRy33aPjYkyXXdoee": {
-			"name": "F1 23"
-		},
 		"2B7KNoGh5iAEJsp5ADvZVG": {
 			"name": "Golf It!"
 		},
@@ -269,9 +260,6 @@
 		},
 		"pJAc8ipKGh5AjxkccveUUQ": {
 			"name": "Gun World VR"
-		},
-		"gBjREdNLqSz5yRCJyo93ua": {
-			"name": "Spatial"
 		},
 		"XPtLgbB63VUsPFqx5ELnLD": {
 			"name": "STAND OUT: VR Battle Royale"
@@ -1038,17 +1026,11 @@
 		"KmFuVctFYXysnMPp6hMzn8": {
 			"name": "Dread Meridian"
 		},
-		"45ZCnRNM263sv7y9XkbkTZ": {
-			"name": "Legendary Tales"
-		},
 		"wuJBKBouDtyXUdsRrKDGeP": {
 			"name": "NightClub Simulator VR"
 		},
 		"QkQzYZB3uqgFFLkyK2TaiL": {
 			"name": "PoligonVR"
-		},
-		"55XreduJ6GCvDgn4ysY4Ao": {
-			"name": "RUMBLE"
 		},
 		"itAqFvzYvyQMDg8FpNwHmG": {
 			"name": "Tower Tag"
@@ -3007,26 +2989,14 @@
 		}
 	},
 	"platform": {
-		"d52VH6CyRaVPQvAwoStEoY": {
-			"name": "SteamVR"
-		},
 		"FEX8jjr4P9aeBurRUTLhU7": {
 			"name": "Pico"
-		},
-		"WQVnXwQzfThHr7yczTjm3C": {
-			"name": "Réalité mixte Windows"
 		},
 		"RNaigbGdB7H4ZMw5c8ysbi": {
 			"name": "Meta Quest"
 		},
 		"3Kagenz7boB64Ke6vEAKv6": {
 			"name": "PCVR"
-		},
-		"UpyGwuCHANjYmM2P269dFm": {
-			"name": "Lien Quest"
-		},
-		"qhAm6Z9kGRP5opGfnrVYda": {
-			"name": "Oculus Rift"
 		},
 		"N458aYKyg6hweVbyDEMDAR": {
 			"name": "VIVE Standalone"
@@ -3046,20 +3016,17 @@
 		"aNGgneQH5YX4HyWpNEUpmQ": {
 			"name": "Autres VR"
 		},
-		"6BdtcWSEHNwX6ba9nzd2Yc": {
-			"name": "Bureau"
-		},
 		"MLWTjDZEuacyr2qwbXEw4K": {
 			"name": "Suivi du corps entier"
 		},
 		"n6sSShVCXahjazwqEraKCG": {
 			"name": "PlayStation VR"
 		},
-		"fyBa2tUpgEgqBPda4BpXAE": {
-			"name": "Mobile VR"
-		},
 		"m4S2N4Jn2f3WDbJm7bcbgQ": {
 			"name": "Suivi du visage"
+		},
+		"Ry723pMCrWV4ptp8ywcorG": {
+			"name": "Steam Frame"
 		}
 	},
 	"prompt": {
@@ -3177,47 +3144,20 @@
 		}
 	},
 	"plans": {
-		"w4WDwDWKtmLSqkn8oNqCN3": {
-			"name": "Legacy Premium (US$24.99/3mo)"
-		},
 		"Wt4aFY7jVzvSNFK9qcYAr5": {
 			"name": "Premium (tous les 6 mois)"
 		},
 		"fBDvWjdgvG6zEZMj6ZfyNG": {
 			"name": "Premium (tous les 3 mois)"
 		},
-		"6xZywHRc432o5H9PqFFoyG": {
-			"name": "Legacy Premium (9,99 $US/mois)"
-		},
-		"rFxKcnAZGQtwckWUQbrG9J": {
-			"name": "Fallback Premium"
-		},
-		"PQZuLuEmXRwuRhiQisgkPM": {
-			"name": "Legacy Premium (US$39.99/6mo)"
-		},
-		"PHpCmDBMX6wCkuXXr36foQ": {
-			"name": "Early Premium (24,99 $US/3 mois)"
-		},
 		"Di7Sypboma4ryhy6MUagyS": {
 			"name": "Durée de vie"
 		},
-		"43V699voRpLqskJEM42Vsa": {
-			"name": "Premier supporteur"
-		},
-		"CJv2NQ7AiEimvDoZJ3uQTe": {
-			"name": "Début de vie"
-		},
 		"2nAci9TWPaMaYFzVASVgme": {
-			"name": "Early Premium (9,99 $US/mois)"
-		},
-		"5NcKBUELrTmZr6JQQFespf": {
-			"name": "Early Premium (39,99 $US/6 mois)"
+			"name": "Early Premium"
 		},
 		"LVjvu5YE7PjUJxVrkfsnMi": {
 			"name": "Premium (mensuel)"
-		},
-		"QQd364odDmzV69gsaKTYwm": {
-			"name": "L'héritage de la vie"
 		}
 	}
 }

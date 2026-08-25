@@ -41,13 +41,27 @@ defmodule FlirtualWeb.Endpoint do
       "retry-count",
       "cache-control",
       "sentry-trace",
-      "baggage"
+      "baggage",
+      "authorization",
+      "tus-resumable",
+      "upload-length",
+      "upload-metadata",
+      "upload-offset"
     ],
     expose: [
       "retry-after",
-      "etag"
+      "etag",
+      "x-flirtual-machine",
+      "x-flirtual-region",
+      "x-flirtual-version",
+      "location",
+      "tus-resumable",
+      "upload-offset",
+      "upload-length"
     ]
   )
+
+  plug(FlirtualWeb.CustomHeaders)
 
   plug(Phoenix.LiveDashboard.RequestLogger,
     param_key: "request_logger",

@@ -4,6 +4,7 @@ import type { FC } from "react";
 import { capitalize } from "remeda";
 import { twMerge } from "tailwind-merge";
 
+import { activeEntitlements, premium } from "~/api/user";
 import { useAttributeTranslation } from "~/hooks/use-attribute";
 import { useDialog } from "~/hooks/use-dialog";
 import { usePreferences } from "~/hooks/use-preferences";
@@ -106,7 +107,7 @@ export const ProfileModeratorInfo: FC<{
 						<span>
 							<span className="font-bold">Email:</span>
 							{" "}
-							<CopyClick value={user.email}>
+							<CopyClick value={user.email ?? null}>
 								<span className="cursor-pointer hover:underline">
 									{user.email}
 								</span>
@@ -244,10 +245,12 @@ export const ProfileModeratorInfo: FC<{
 						<span>
 							<span className="font-bold">Premium:</span>
 							{" "}
-							{user.subscription?.active
+							{premium(user)
 								? (
 										<span className="text-green-600">
-											{user.subscription.plan.name}
+											{activeEntitlements(user)
+												.map((entitlement) => entitlement.plan.name)
+												.join(", ")}
 										</span>
 									)
 								: (

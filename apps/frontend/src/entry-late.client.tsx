@@ -1,55 +1,71 @@
 import { App } from "@capacitor/app";
-import { startTransition, StrictMode } from "react";
-import { flushSync } from "react-dom";
+import { StrictMode } from "react";
 import { hydrateRoot } from "react-dom/client";
 import { HydratedRouter } from "react-router/dom";
 
-import { log } from "./log";
-import { initializeMonitoring } from "./monitoring";
+import { setupAnalytics } from "./analytics";
+import { setupMonitoring } from "./monitoring";
 import { preloadAll } from "./query";
 import { isRedirectError } from "./redirect";
+import { initializeSocialLogin } from "./social-login";
+import { deepLinkToRelativeUrl } from "./urls";
 
-App.addListener("appUrlOpen", async (event) => {
-	const url = new URL(event.url);
-	const href = url.href.replace(url.origin, "");
+void setupMonitoring();
+void setupAnalytics();
 
-	location.href = href;
-});
+const launchDeepLinkKey = "launch-deep-link-consumed";
 
-initializeMonitoring();
+let lastDeepLink: string | null = null;
 
-// await restoreQueries();
-//
-// window.addEventListener("beforeunload", saveQueries);
-// document.addEventListener("visibilitychange", () => {
-// 	if (document.visibilityState === "visible") return;
-// 	saveQueries();
-// });
-//
-preloadAll();
-//
+function openDeepLink(value: string) {
+	const href = deepLinkToRelativeUrl(value);
 
-// eslint-disable-next-line react-dom/no-flush-sync
-flushSync(() => {
-	startTransition(() => {
-		hydrateRoot(
-			document,
-			<StrictMode>
-				<HydratedRouter />
-			</StrictMode>,
-			{
-				onCaughtError: (reason) => {
-					if (isRedirectError(reason)) return;
-					console.error(reason);
-				},
-				onRecoverableError: (reason) => {
-					if (isRedirectError(reason) || isRedirectError((reason as { cause?: unknown })?.cause)) return;
-					if (typeof reportError === "function") return reportError(reason);
-					console.error(reason);
-				}
+	// Native OAuth deep links are consumed by the plugin, not webview navigation.
+	if (
+		!href
+		|| href.startsWith("/oauth-callback")
+		|| href.startsWith("/apple-login")
+		|| href === lastDeepLink
+	) return;
+
+	lastDeepLink = href;
+	location.assign(href);
+}
+
+App.addListener("appUrlOpen", ({ url }) => openDeepLink(url));
+
+// appUrlOpen misses cold starts: Android only fires it from onNewIntent, iOS can
+// drop it before the bridge exists. The launch url persists for the process
+// lifetime, so consume it once per webview.
+async function openLaunchDeepLink() {
+	if (sessionStorage.getItem(launchDeepLinkKey)) return;
+	sessionStorage.setItem(launchDeepLinkKey, "1");
+
+	const { url } = await App.getLaunchUrl() ?? {};
+	if (url) openDeepLink(url);
+}
+
+void openLaunchDeepLink();
+void initializeSocialLogin();
+void preloadAll();
+
+const { searchParams } = new URL(location.href);
+
+if (!searchParams.has("__no_hydrate"))
+	hydrateRoot(
+		document,
+		<StrictMode>
+			<HydratedRouter />
+		</StrictMode>,
+		{
+			onCaughtError: (reason) => {
+				if (isRedirectError(reason)) return;
+				console.error(reason);
+			},
+			onRecoverableError: (reason) => {
+				if (isRedirectError(reason) || isRedirectError((reason as { cause?: unknown })?.cause)) return;
+				if (typeof reportError === "function") return reportError(reason);
+				console.error(reason);
 			}
-		);
-	});
-});
-
-log("Client-side hydration complete");
+		}
+	);

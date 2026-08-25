@@ -2,7 +2,11 @@ import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 
 import type { User } from "~/api/user";
-import { useAttributeTranslation } from "~/hooks/use-attribute";
+import {
+	useAttributeOrder,
+	useAttributeTranslation
+} from "~/hooks/use-attribute";
+import { useGameStoreLinks, useSessionGameStores } from "~/hooks/use-game-stores";
 import { useOptionalSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 
@@ -19,6 +23,10 @@ function isDomsubMatch(value1: string | undefined, value2: string | undefined) {
 	);
 }
 
+function normalizeCustomInterest(value: string) {
+	return value.toLowerCase().replaceAll(/[^\p{L}\p{N}]/gu, "");
+}
+
 export const PillCollection: FC<{ user: User }> = (props) => {
 	const { user } = props;
 
@@ -26,6 +34,8 @@ export const PillCollection: FC<{ user: User }> = (props) => {
 
 	const { t } = useTranslation();
 	const tAttributes = useAttributeTranslation();
+	const relationshipOrder = useAttributeOrder("relationship");
+	const gameStoreLinks = useGameStoreLinks(useSessionGameStores());
 
 	if (!session) return null;
 
@@ -47,11 +57,38 @@ export const PillCollection: FC<{ user: User }> = (props) => {
 	const sessionPersonalityLabels = getPersonalityLabels(session.user);
 	const personalityLabels = getPersonalityLabels(user);
 
+	const sessionCustomInterests = session.user.profile.customInterests.map(
+		(customInterest) => normalizeCustomInterest(customInterest)
+	);
+
+	const interests = [
+		...(user.profile.attributes.interest ?? [])
+			.map((id) => ({
+				key: id,
+				name: tAttributes[id]?.name ?? id,
+				active:
+					session.user.id !== user.id
+					&& !!session.user.profile.attributes.interest?.includes(id)
+			}))
+			.sort((a, b) => a.name.localeCompare(b.name)),
+		...user.profile.customInterests.map((customInterest) => ({
+			key: customInterest,
+			name: customInterest,
+			active:
+				session.user.id !== user.id
+				&& sessionCustomInterests.includes(
+					normalizeCustomInterest(customInterest)
+				)
+		}))
+	].sort((a, b) => Number(b.active) - Number(a.active));
+
 	return (
 		<div className="flex flex-wrap gap-4">
 			<PillAttributeList
+				attributes={[...(user.profile.relationships ?? [])].sort(
+					relationshipOrder
+				)}
 				activeIds={session.user.profile.relationships}
-				attributes={user.profile.relationships}
 				href={editable ? urls.settings.matchmaking() : undefined}
 				user={user}
 			/>
@@ -78,45 +115,19 @@ export const PillCollection: FC<{ user: User }> = (props) => {
 				</PillRows>
 			)}
 			<PillRows editable={editable}>
-				{user.profile.attributes.interest?.map((id) => {
-					const { name } = tAttributes[id] ?? { name: id };
-
-					return (
-						<Pill
-							key={id}
-							active={session.user.id !== user.id && session.user.profile.attributes.interest?.includes(id)}
-							href={editable ? urls.settings.interests : undefined}
-						>
-							{name}
-						</Pill>
-					);
-				})}
-				{user.profile.customInterests.map((customInterest) => {
-					const regex = /[^\p{L}\p{N}]/gu;
-					const customInterestId = customInterest
-						.toLowerCase()
-						.replaceAll(regex, "");
-
-					return (
-						<Pill
-							key={customInterest}
-							active={
-								session.user.id !== user.id
-								&& session.user.profile.customInterests
-									.map((interest) =>
-										interest.toLowerCase().replaceAll(regex, "")
-									)
-									.includes(customInterestId)
-							}
-							href={editable ? urls.settings.interests : undefined}
-						>
-							{customInterest}
-						</Pill>
-					);
-				})}
+				{interests.map(({ key, name, active }) => (
+					<Pill
+						key={key}
+						active={active}
+						href={editable ? urls.settings.interests : undefined}
+					>
+						{name}
+					</Pill>
+				))}
 			</PillRows>
 			<PillAttributeList
 				attributes={user.profile.attributes.game}
+				getLinks={gameStoreLinks}
 				href={editable ? urls.settings.info("game") : undefined}
 				user={user}
 			/>

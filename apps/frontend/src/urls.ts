@@ -8,7 +8,7 @@ import type { User } from "./api/user";
 import type { Profile } from "./api/user/profile";
 import type { ProfileImage } from "./api/user/profile/images";
 import type { DiscoverGroup } from "./app/[locale]/(app)/(authenticated)/(onboarded)/discover/page";
-import { apiUrl, bucketContentOrigin, bucketUploadsOrigin, siteOrigin } from "./const";
+import { apiUrl, bucketContentOrigin, bucketUploadsOrigin, shortOrigin, siteOrigin } from "./const";
 import { defaultLocale } from "./i18n";
 import type { Locale } from "./i18n";
 import { escapeVRChat } from "./vrchat";
@@ -30,8 +30,35 @@ export function toAbsoluteUrl(to: Path | URL | string) {
 
 export { toAbsoluteUrl as absoluteUrl };
 
+export function toShortUrl(to: Path | URL | string) {
+	return new URL((typeof to === "string" || to instanceof URL) ? to : createPath(to), shortOrigin);
+}
+
 export function toRelativeUrl(url: { href: string; origin: string }) {
 	return url.href.slice(url.origin.length);
+}
+
+export function deepLinkToRelativeUrl(value: string) {
+	let url: URL;
+
+	try {
+		url = new URL(value);
+	}
+	catch {
+		return null;
+	}
+
+	let relative: string;
+
+	if (url.protocol === "http:" || url.protocol === "https:") {
+		if (!allowedOrigins.includes(url.origin)) return null;
+		relative = toRelativeUrl(url);
+	}
+	else {
+		relative = `/${url.host}${url.pathname}${url.search}${url.hash}`;
+	}
+
+	return isInternalHref(relative) ? relative : null;
 }
 
 export function urlEqual(a: URL, b: URL, strict: boolean = true) {
@@ -171,7 +198,7 @@ export const urls = {
 		of: (conversationId: string) => `/matches/${conversationId}`
 	},
 	likes: "/likes",
-	onboarding: (onboardingIndex: 1 | 2) => `/onboarding/${onboardingIndex}`,
+	onboarding: (onboardingIndex: 1 | 2 | 3) => `/onboarding/${onboardingIndex}`,
 	finish: (finishIndex: FinishPage) => `/finish/${finishIndex}`,
 	subscription: {
 		default: "/subscription",
@@ -217,11 +244,8 @@ export const urls = {
 	},
 
 	admin: {
-		stats: "/stats",
-		statsData: (name: string) =>
-			`https://storage.cloud.google.com/flirtual-stats/${name}.csv`,
-		statsChart: (name: string) =>
-			`https://storage.cloud.google.com/flirtual-stats/${name}.svg`
+		attributes: "/attributes",
+		stats: "/stats"
 	},
 
 	debugger: "/debugger",
@@ -253,9 +277,11 @@ export const urls = {
 	},
 
 	socials: {
+		bluesky: "https://bsky.app/profile/flirtual.com",
 		discord: "https://discord.gg/flirtual",
+		instagram: "https://instagram.com/getflirtual",
 		vrchat: "https://vrc.group/FLIRT.4525",
-		twitter: "https://twitter.com/getflirtual"
+		x: "https://x.com/getflirtual"
 	},
 
 	apps: {
@@ -263,5 +289,10 @@ export const urls = {
 		google: "https://play.google.com/store/apps/details?id=zone.homie.flirtual.pwa",
 		microsoft: "https://apps.microsoft.com/store/detail/flirtual/9NWCSDGB6CS3",
 		sideQuest: "https://sidequestvr.com/app/9195"
+	},
+
+	manageSubscription: {
+		app_store: "https://apps.apple.com/account/subscriptions",
+		play_store: "https://play.google.com/store/account/subscriptions"
 	}
 };

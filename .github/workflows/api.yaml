@@ -1,30 +1,13 @@
 on:
   push:
-    paths: ["apps/api/**", ".github/workflows/api.yaml"]
   pull_request:
-    paths: [ "apps/api/**", ".github/workflows/api.yaml" ]
   workflow_dispatch:
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
 
 permissions:
   contents: read
 
 jobs:
   build:
-    services:
-      db:
-        image: postgres:12
-        ports: ["5432:5432"]
-        env:
-          POSTGRES_PASSWORD: postgres
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -32,7 +15,7 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v7
 
     - name: Set up Elixir
       uses: erlef/setup-beam@v1
@@ -42,7 +25,7 @@ jobs:
 
     - name: Cache deps
       id: cache-deps
-      uses: actions/cache@v3
+      uses: actions/cache@v6
       env:
         cache-name: cache-elixir-deps
       with:
@@ -53,7 +36,7 @@ jobs:
 
     - name: Cache compiled build
       id: cache-build
-      uses: actions/cache@v3
+      uses: actions/cache@v6
       env:
         cache-name: cache-compiled-build
       with:
@@ -79,52 +62,246 @@ jobs:
     - name: Mix check
       run: mix check --except compiler
 
-  deploy-canary:
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+  image:
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     needs: [build]
-    environment: 
-      name: canary
-      url: https://canary-api.flirtual.com
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v7
+
+      - uses: docker/setup-buildx-action@v3
+
+      - uses: docker/login-action@v3
+        with:
+          registry: registry.fly.io
+          username: x
+          password: ${{ secrets.FLY_API_TOKEN }}
+
+      - uses: docker/build-push-action@v6
+        with:
+          context: apps/api
+          push: true
+          tags: registry.fly.io/flirtual:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  preview:
+    if: github.ref != 'refs/heads/production' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
+    needs: [image]
+    environment:
+      name: canary
+      url: ${{ steps.preview.outputs.url }}
+    runs-on: ubuntu-latest
+    env:
+      FLY_APP: flirtual-canary
+      FLY_IMAGE: registry.fly.io/flirtual:${{ github.sha }}
+      FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+    steps:
+      - uses: actions/checkout@v7
       - uses: superfly/flyctl-actions/setup-flyctl@master
-      - run: |
-          flyctl config show -a flirtual | jq '
-            .app = "flirtual-canary" |
-            .deploy.strategy = "immediate" |
-            .services[0].auto_stop_machines = true |
-            .services[0].auto_start_machines = true |
-            .services[0].min_machines_running = 1 |
-            .vm[0].size = "shared-cpu-2x" |
-            .vm[0].memory = "1gb"
-          ' > fly-canary.json
 
-          GIT_COMMIT_SHA=$(git rev-parse HEAD)
-
-          flyctl deploy \
-            -c fly-canary.json \
-            --remote-only \
-            --update-only \
-            --env CANARY=1 \
-            --env GIT_COMMIT_SHA="$GIT_COMMIT_SHA"
-        working-directory: ./apps/api
+      - name: Compute preview label
+        id: preview
         env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          if [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then
+            label="$PR_NUMBER"
+          else
+            label="${GITHUB_SHA::7}"
+          fi
+          echo "PREVIEW_LABEL=$label" >> "$GITHUB_ENV"
+          echo "url=https://api-$label.flirtual.dev" >> "$GITHUB_OUTPUT"
+
+          # runtime.exs requires these in prod, so every machine needs them,
+          # even one that only runs migrations.
+          {
+            echo "ORIGIN=https://api-$label.flirtual.dev"
+            echo "FRONTEND_ORIGIN=https://$label.flirtual.dev"
+            echo "ROOT_ORIGIN=https://flirtual.dev"
+          } >> "$GITHUB_ENV"
+
+      - name: Look for new migrations
+        id: migrations
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BASE: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          # Previews share the canary database, so migrating is a no-op unless
+          # this push carries a migration. Anything we can't work out falls
+          # through to migrating, which is idempotent anyway.
+          changed=yes
+
+          case "$BASE" in
+            "" | 0000000000000000000000000000000000000000) ;;
+            *)
+              if files=$(gh api "repos/$GITHUB_REPOSITORY/compare/$BASE...$GITHUB_SHA" --jq '.files[].filename' 2>/dev/null); then
+                printf '%s\n' "$files" | grep -q '^apps/api/priv/repo/migrations/' || changed=no
+              fi
+              ;;
+          esac
+
+          echo "changed=$changed" >> "$GITHUB_OUTPUT"
+
+      - name: Migrate
+        if: steps.migrations.outputs.changed == 'yes'
+        run: |
+          flyctl machine run "$FLY_IMAGE" -a "$FLY_APP" --rm --restart no \
+            --env CANARY=1 \
+            --env ORIGIN="$ORIGIN" \
+            --env FRONTEND_ORIGIN="$FRONTEND_ORIGIN" \
+            --env ROOT_ORIGIN="$ROOT_ORIGIN" \
+            /app/bin/migrate
+
+      - name: Run preview machine
+        run: |
+          name="preview-$PREVIEW_LABEL"
+
+          machine_id() {
+            flyctl machines list -a "$FLY_APP" --json | jq -r --arg n "$name" '.[] | select(.name == $n) | .id'
+          }
+
+          discard() {
+            id=$(machine_id)
+            if [ -n "$id" ]; then
+              flyctl machine destroy "$id" -a "$FLY_APP" --force || true
+            fi
+          }
+
+          # A Machine occasionally lands on a host that cannot unpack the image
+          # and crash-loops on a missing /app/bin/server. Fly still reports the
+          # host as healthy, so the only recourse is another host.
+          discard
+
+          for attempt in 1 2 3; do
+            if flyctl machine run "$FLY_IMAGE" -a "$FLY_APP" \
+              --name "$name" \
+              --region iad \
+              --port 443:4000/tcp:http:tls \
+              --autostart --autostop=stop \
+              --vm-memory 1024 \
+              --env CANARY=1 \
+              --env GIT_COMMIT_SHA="$GITHUB_SHA" \
+              --env ORIGIN="$ORIGIN" \
+              --env FRONTEND_ORIGIN="$FRONTEND_ORIGIN" \
+              --env ROOT_ORIGIN="$ROOT_ORIGIN"; then
+              break
+            fi
+
+            if [ "$attempt" = 3 ]; then
+              echo "::error::preview machine failed to boot after $attempt attempts"
+              exit 1
+            fi
+
+            echo "::warning::preview machine failed to boot, retrying on another host"
+            discard
+          done
+
+          echo "PREVIEW_MACHINE=$(machine_id)" >> "$GITHUB_ENV"
+
+      - name: Point the router at this preview
+        env:
+          KV_NAMESPACE: 413cd83515854c738f758131b600fee2
+        run: |
+          kv_put() {
+            curl -sfX PUT \
+              "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/storage/kv/namespaces/$KV_NAMESPACE/values/$1" \
+              -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+              -F value="$2" -F metadata='{}' > /dev/null
+          }
+
+          kv_put "machine-$PREVIEW_LABEL" "$PREVIEW_MACHINE"
+
+          if [ "$GITHUB_REF" = "refs/heads/main" ]; then
+            kv_put latest-api "$PREVIEW_LABEL"
+          fi
+
+      - name: Update the beta machine
+        if: github.ref == 'refs/heads/main'
+        env:
+          KV_NAMESPACE: 413cd83515854c738f758131b600fee2
+        run: |
+          # Beta tracks main on a stable origin, unlike the per-commit
+          # previews; updating in place keeps the machine id (and the
+          # router's machine-beta pointer) stable across releases.
+          machine_id() {
+            flyctl machines list -a "$FLY_APP" --json | jq -r '.[] | select(.name == "beta") | .id'
+          }
+
+          id=$(machine_id)
+
+          if [ -z "$id" ]; then
+            flyctl machine run "$FLY_IMAGE" -a "$FLY_APP" \
+              --name beta \
+              --region iad \
+              --port 443:4000/tcp:http:tls \
+              --autostart --autostop=off \
+              --vm-memory 1024 \
+              --env CANARY=1 \
+              --env GIT_COMMIT_SHA="$GITHUB_SHA" \
+              --env ORIGIN=https://beta-api.flirtual.dev \
+              --env FRONTEND_ORIGIN=https://beta.flirtual.dev \
+              --env ROOT_ORIGIN=https://flirtual.dev
+            id=$(machine_id)
+          else
+            flyctl machine update "$id" -a "$FLY_APP" -y \
+              --image "$FLY_IMAGE" \
+              --env CANARY=1 \
+              --env GIT_COMMIT_SHA="$GITHUB_SHA" \
+              --env ORIGIN=https://beta-api.flirtual.dev \
+              --env FRONTEND_ORIGIN=https://beta.flirtual.dev \
+              --env ROOT_ORIGIN=https://flirtual.dev
+          fi
+
+          curl -sfX PUT \
+            "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/storage/kv/namespaces/$KV_NAMESPACE/values/machine-beta" \
+            -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+            -F value="$id" -F metadata='{}' > /dev/null
+
+      - name: Reap superseded previews
+        env:
+          KV_NAMESPACE: 413cd83515854c738f758131b600fee2
+          KEEP: "20"
+        run: |
+          stale=$(flyctl machines list -a "$FLY_APP" --json | jq -r --argjson keep "$KEEP" '
+            [.[] | select(.name | startswith("preview-"))]
+            | sort_by(.updated_at)
+            | reverse
+            | .[$keep:][]
+            | "\(.id) \(.name)"
+          ')
+
+          if [ -z "$stale" ]; then
+            exit 0
+          fi
+
+          printf '%s\n' "$stale" | while read -r id name; do
+            label="${name#preview-}"
+            if [ "$label" = "$PREVIEW_LABEL" ]; then
+              continue
+            fi
+
+            flyctl machine destroy "$id" -a "$FLY_APP" --force || true
+            curl -sfX DELETE \
+              "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/storage/kv/namespaces/$KV_NAMESPACE/values/machine-$label" \
+              -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" > /dev/null || true
+          done
 
   deploy-production:
     if: github.ref == 'refs/heads/production' && github.event_name == 'push'
-    needs: [build]
-    environment: 
-      name: Production
+    needs: [image]
+    environment:
+      name: production
       url: https://api.flirtu.al
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v7
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - run: |
           GIT_COMMIT_SHA=$(git rev-parse HEAD)
-          flyctl deploy --remote-only --env GIT_COMMIT_SHA="$GIT_COMMIT_SHA"
+          flyctl deploy --image registry.fly.io/flirtual:${{ github.sha }} --env GIT_COMMIT_SHA="$GIT_COMMIT_SHA"
         working-directory: ./apps/api
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}

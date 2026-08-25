@@ -1,7 +1,7 @@
 defmodule Flirtual.User.Email do
   use Gettext, backend: Flirtual.Gettext
 
-  alias Flirtual.{Jwt, Subscription, User}
+  alias Flirtual.{Entitlement, Jwt, User}
 
   def deliver(%User{} = user, :suspended, message) do
     language = user.preferences.language || "en"
@@ -10,7 +10,7 @@ defmodule Flirtual.User.Email do
     Gettext.with_locale(language, fn ->
       %{
         "user_id" => user.id,
-        "from" => "moderation@flirtu.al",
+        "reply_to" => "moderation",
         "subject" => dgettext("notifications", "suspended.subject"),
         "language" => language,
         "type" => "transactional",
@@ -118,7 +118,7 @@ defmodule Flirtual.User.Email do
     Gettext.with_locale(language, fn ->
       %{
         "user_id" => user.id,
-        "from" => "security@flirtu.al",
+        "reply_to" => "security",
         "language" => language,
         "type" => "transactional",
         "subject" => dgettext("notifications", "verification_code.subject", code: code),
@@ -141,7 +141,7 @@ defmodule Flirtual.User.Email do
     Gettext.with_locale(language, fn ->
       %{
         "user_id" => user.id,
-        "from" => "security@flirtu.al",
+        "reply_to" => "security",
         "language" => language,
         "type" => "transactional",
         "action_url" => action_url,
@@ -164,7 +164,7 @@ defmodule Flirtual.User.Email do
     Gettext.with_locale(language, fn ->
       %{
         "to" => user.previous_email,
-        "from" => "security@flirtu.al",
+        "reply_to" => "security",
         "language" => language,
         "type" => "transactional",
         "subject" => dgettext("notifications", "email_changed.subject"),
@@ -257,7 +257,7 @@ defmodule Flirtual.User.Email do
       likes = Keyword.fetch!(options, :likes)
       like_count = length(likes)
 
-      is_premium? = Subscription.active?(user.subscription)
+      is_premium? = Entitlement.premium?(user.entitlements)
 
       action_url =
         if(is_premium?,

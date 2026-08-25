@@ -4,7 +4,7 @@ defmodule Flirtual.User.Profile.Policy do
   import Flirtual.Utilities
 
   alias Flirtual.Attribute
-  alias Flirtual.Subscription
+  alias Flirtual.Entitlement
   alias Flirtual.User
   alias Flirtual.User.Profile
 
@@ -38,9 +38,7 @@ defmodule Flirtual.User.Profile.Policy do
             session: %{
               user: %User{
                 id: user_id,
-                subscription: %Subscription{
-                  cancelled_at: nil
-                }
+                entitlements: entitlements
               }
             }
           }
@@ -49,7 +47,7 @@ defmodule Flirtual.User.Profile.Policy do
           user_id: user_id
         }
       ),
-      do: true
+      do: Entitlement.premium?(entitlements)
 
   # Any other action, or credentials are disallowed.
   def authorize(_, _, _), do: false
@@ -65,9 +63,7 @@ defmodule Flirtual.User.Profile.Policy do
                        :latitude,
                        :preferences,
                        :custom_weights,
-                       :custom_filters,
-                       :queue_love_reset_at,
-                       :queue_friend_reset_at,
+                       :advanced_filters,
                        :updated_at
                      ] ++ @personality_keys ++ @nsfw_keys ++ @connection_keys
 

@@ -2,73 +2,62 @@ defmodule Flirtual.User.Profile.Prospect do
   use Flirtual.Schema
 
   import Ecto.Query
-  import Ecto.Changeset
 
   alias Flirtual.Repo
-  alias Flirtual.User.Profile.{LikesAndPasses, Prospect}
+  alias Flirtual.User.Profile.Prospect
 
-  @derive {Jason.Encoder, only: [:kind, :target, :created_at]}
+  @derive {Jason.Encoder, only: [:kind, :target_id, :position, :fallback, :created_at]}
 
   schema "prospects" do
     belongs_to(:profile, Flirtual.User.Profile, references: :user_id)
     belongs_to(:target, Flirtual.User.Profile, references: :user_id)
 
     field(:kind, Ecto.Enum, values: [:love, :friend])
+    field(:position, :integer)
     field(:score, :float, default: 0.0)
-    field(:completed, :boolean, default: false)
+    field(:fallback, :boolean, default: false)
+    field(:completed_at, :utc_datetime_usec)
 
     timestamps(updated_at: false)
   end
 
-  def get(profile_id: profile_id, target_id: target_id) do
+  def get(profile_id: profile_id, target_id: target_id, kind: kind) do
     Prospect
-    |> where(profile_id: ^profile_id, target_id: ^target_id)
-    |> limit(1)
+    |> where(profile_id: ^profile_id, target_id: ^target_id, kind: ^kind)
     |> Repo.one()
   end
 
-  def list(profile_id: profile_id, kind: kind) do
+  def list_uncompleted(profile_id, kind, limit) do
     Prospect
-    |> where(profile_id: ^profile_id, kind: ^kind, completed: false)
-    |> order_by(desc: :score, desc: :target_id)
-    |> Repo.all()
-  end
-
-  def list(profile_id: profile_id, kind: kind, limit: limit) do
-    Prospect
-    |> where(profile_id: ^profile_id, kind: ^kind, completed: false)
-    |> order_by(desc: :score, desc: :target_id)
+    |> where([p], p.profile_id == ^profile_id and p.kind == ^kind and is_nil(p.completed_at))
+    |> order_by(asc: :position, asc: :target_id)
     |> limit(^limit)
     |> Repo.all()
   end
 
-  def reverse(%Prospect{profile_id: profile_id, target_id: target_id, kind: kind} = prospect) do
-    Repo.transaction(fn ->
-      with {:ok, _} <- LikesAndPasses.delete_all(profile_id: profile_id, target_id: target_id),
-           {_, _} <-
-             Prospect
-             |> where(
-               [p],
-               p.profile_id == ^profile_id and
-                 p.kind == ^kind and
-                 p.completed == true and
-                 p.id != ^prospect.id
-             )
-             |> Repo.delete_all(),
-           {:ok, prospect} <-
-             prospect
-             |> change(%{completed: false})
-             |> Repo.update() do
-        prospect
-      else
-        {:error, reason} -> Repo.rollback(reason)
-        reason -> Repo.rollback(reason)
-      end
-    end)
+  def count_uncompleted(profile_id, kind) do
+    Prospect
+    |> where([p], p.profile_id == ^profile_id and p.kind == ^kind and is_nil(p.completed_at))
+    |> Repo.aggregate(:count)
+  end
+
+  def last_completed(profile_id, kind) do
+    Prospect
+    |> where([p], p.profile_id == ^profile_id and p.kind == ^kind and not is_nil(p.completed_at))
+    |> order_by(desc: :completed_at)
+    |> limit(1)
+    |> Repo.one()
+  end
+
+  def head_position(profile_id, kind) do
+    Prospect
+    |> where(profile_id: ^profile_id, kind: ^kind)
+    |> select([p], min(p.position))
+    |> Repo.one() || 0
   end
 
   def insert_all(prospects) when is_list(prospects) do
-    now = DateTime.utc_now() |> DateTime.truncate(:second)
+    now = DateTime.utc_now()
 
     with {count, nil} <-
            Repo.insert_all(
@@ -80,53 +69,20 @@ defmodule Flirtual.User.Profile.Prospect do
                  created_at: {:placeholder, :now}
                })
              ),
-             on_conflict: :replace_all,
+             on_conflict: {:replace, [:position, :score, :fallback]},
              conflict_target: [:profile_id, :target_id, :kind],
-             placeholders: %{now: now}
+             placeholders: %{now: DateTime.truncate(now, :second)}
            ) do
       {:ok, count}
     end
   end
 
-  def delete_all(profile_id: profile_id, target_id: target_id) do
-    Repo.transaction(fn ->
-      with {count, nil} <-
-             Prospect
-             |> where(profile_id: ^profile_id, target_id: ^target_id)
-             |> Repo.delete_all() do
-        count
-      else
-        {:error, reason} -> Repo.rollback(reason)
-        reason -> Repo.rollback(reason)
-      end
-    end)
-  end
-
-  def delete_all(profile_id: profile_id, kind: kind) do
-    Repo.transaction(fn ->
-      with {count, nil} <-
-             Prospect
-             |> where(profile_id: ^profile_id, kind: ^kind)
-             |> Repo.delete_all() do
-        count
-      else
-        {:error, reason} -> Repo.rollback(reason)
-        reason -> Repo.rollback(reason)
-      end
-    end)
-  end
-
   def delete_all(target_id: target_id) do
-    Repo.transaction(fn ->
-      with {count, nil} <-
-             Prospect
-             |> where(target_id: ^target_id)
-             |> Repo.delete_all() do
-        count
-      else
-        {:error, reason} -> Repo.rollback(reason)
-        reason -> Repo.rollback(reason)
-      end
-    end)
+    with {count, nil} <-
+           Prospect
+           |> where(target_id: ^target_id)
+           |> Repo.delete_all() do
+      {:ok, count}
+    end
   end
 end

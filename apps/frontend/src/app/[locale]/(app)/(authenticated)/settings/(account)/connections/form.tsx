@@ -1,11 +1,10 @@
 import type { FC } from "react";
 import { useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
-import { useSearchParams } from "react-router";
-import { withSuspense } from "with-suspense";
 
 import type { Session } from "~/api/auth";
 import { Profile } from "~/api/user/profile";
+import { ConnectionError } from "~/components/connection-error";
 import { Form, FormButton } from "~/components/forms";
 import { AddConnectionButton } from "~/components/forms/add-connection-button";
 import { FaceTimeIcon, VRChatIcon } from "~/components/icons";
@@ -17,25 +16,8 @@ import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { mutate, sessionKey } from "~/query";
 
-const ConnectionError: FC = withSuspense(() => {
-	const [query] = useSearchParams();
-	const error = query.get("error");
-
-	const { t } = useTranslation();
-
-	if (!error || error === "access_denied") return null;
-
-	return (
-		<div className="mb-8 rounded-lg bg-brand-gradient px-6 py-4">
-			<span className="font-montserrat text-lg text-white-10">
-				{t(`errors.${error}` as any)}
-			</span>
-		</div>
-	);
-});
-
 export const ConnectionsForm: FC = () => {
-	const { vision } = useDevice();
+	const { vision, apple } = useDevice();
 	const { user } = useSession();
 	const toasts = useToast();
 	const [playlistSubmitted, setPlaylistSubmitted] = useState<string | null>(
@@ -100,23 +82,11 @@ export const ConnectionsForm: FC = () => {
 							</div>
 							<div className="grid gap-4 wide:grid-cols-2">
 								<AddConnectionButton type="discord" />
-								{/* <AddConnectionButton type="vrchat" />
-							{platform === "apple" ? (
-								<>
-									<AddConnectionButton type="apple" />
-									<AddConnectionButton type="google" />
-								</>
-							) : (
-								<>
-									<AddConnectionButton type="google" />
-									<AddConnectionButton type="apple" />
-								</>
-							)}
-							<AddConnectionButton type="meta" /> */}
 								<FormField name="vrchat">
 									{(field) => (
 										<InputText
 											Icon={VRChatIcon}
+											iconClassName="size-[1.625rem]"
 											iconColor="#095d6a"
 											placeholder="VRChat"
 											{...field.props}
@@ -136,6 +106,20 @@ export const ConnectionsForm: FC = () => {
 										)}
 									</FormField>
 								)}
+								<AddConnectionButton type="meta" />
+								{apple
+									? (
+											<>
+												<AddConnectionButton type="apple" />
+												<AddConnectionButton type="google" />
+											</>
+										)
+									: (
+											<>
+												<AddConnectionButton type="google" />
+												<AddConnectionButton type="apple" />
+											</>
+										)}
 							</div>
 						</div>
 						<div className="flex flex-col gap-4">

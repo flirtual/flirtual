@@ -1,4 +1,4 @@
-import { useCallback, useDebugValue, useEffect, useRef } from "react";
+import { useCallback, useDebugValue, useEffect, useRef, useState } from "react";
 
 export function useInterval(callback: () => void, every: number) {
 	const reference = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -24,6 +24,13 @@ export function useInterval(callback: () => void, every: number) {
 	useDebugValue(reference.current);
 
 	return { ref: reference, clear, reset };
+}
+
+export function useIntervalValue<T>(callback: () => T, every: number): T {
+	const [value, setValue] = useState<T>(callback);
+	useInterval(useCallback(() => setValue(callback()), [callback]), every);
+
+	return value;
 }
 
 export function useTimeout(callback: () => void, every: number, condition = true) {

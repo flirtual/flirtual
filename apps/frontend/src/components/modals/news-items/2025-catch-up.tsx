@@ -2,7 +2,6 @@ import type { FC } from "react";
 import { Trans, useTranslation } from "react-i18next";
 
 import { Profile, ProfileRelationshipList } from "~/api/user/profile";
-import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputLabel } from "~/components/inputs";
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
@@ -11,6 +10,7 @@ import { useToast } from "~/hooks/use-toast";
 import { invalidate, sessionKey } from "~/query";
 
 import { commonComponents } from "./common";
+import { NewsForm } from "./form";
 
 export const CatchUp2025: FC<{ onSaved?: () => void }> = () => {
 	const { t } = useTranslation();
@@ -22,7 +22,7 @@ export const CatchUp2025: FC<{ onSaved?: () => void }> = () => {
 			components={{
 				...commonComponents,
 				form: (
-					<Form
+					<NewsForm
 						fields={{
 							relationships: user.profile.relationships ?? []
 						}}
@@ -60,7 +60,7 @@ export const CatchUp2025: FC<{ onSaved?: () => void }> = () => {
 								<FormButton>{t("save")}</FormButton>
 							</>
 						)}
-					</Form>
+					</NewsForm>
 				)
 			}}
 			i18nKey="news.2025_catch_up.body"

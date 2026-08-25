@@ -22,10 +22,9 @@ export const meta: Route.MetaFunction = (options) => {
 
 export const handle = {
 	preload: () => Promise.all(([
-		"game",
 		"gender",
-		"interest",
 		"country",
+		"timezone"
 	] as const).map((type) => queryClient.prefetchQuery({
 		queryKey: attributeKey(type),
 		queryFn: attributeFetcher

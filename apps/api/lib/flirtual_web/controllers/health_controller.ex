@@ -3,7 +3,7 @@ defmodule FlirtualWeb.HealthController do
 
   import Ecto.Query
 
-  alias Flirtual.{Elasticsearch, Repo}
+  alias Flirtual.{Repo, Search}
   alias Flirtual.User
 
   def check("api"), do: :ok
@@ -16,10 +16,7 @@ defmodule FlirtualWeb.HealthController do
   end
 
   def check("matchmaking") do
-    case Snap.Search.search(Elasticsearch, "users", %{size: 1}) do
-      {:ok, %Snap.SearchResponse{hits: %Snap.Hits{hits: [_ | _]}}} -> :ok
-      _ -> :error
-    end
+    if Search.healthy?(), do: :ok, else: :error
   end
 
   def check("notifications") do

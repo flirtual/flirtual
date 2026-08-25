@@ -1,0 +1,108 @@
+on:
+  push:
+    branches: [main]
+    paths:
+      - apps/frontend/android/**
+      - apps/frontend/capacitor.config.ts
+      - apps/frontend/package.json
+      - .github/workflows/android.yaml
+  workflow_dispatch:
+    inputs:
+      channel:
+        description: App to build and upload
+        type: choice
+        options: [beta, production]
+        default: beta
+
+permissions:
+  contents: read
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      native: ${{ steps.check.outputs.native }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 2
+
+      - id: check
+        run: |
+          if git diff --name-only HEAD~1 HEAD \
+             | grep -qE '^apps/frontend/(android/|capacitor\.config\.ts)|^\.github/workflows/android\.yaml'; then
+            echo native=true >> "$GITHUB_OUTPUT"
+          elif git diff -U0 HEAD~1 HEAD -- apps/frontend/package.json \
+             | grep -qE '^[+-].*"(@capacitor|@capgo|@capawesome|@revenuecat|capacitor-)'; then
+            echo native=true >> "$GITHUB_OUTPUT"
+          else
+            echo native=false >> "$GITHUB_OUTPUT"
+          fi
+
+  android:
+    needs: changes
+    if: needs.changes.outputs.native == 'true' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    environment: mobile
+    defaults:
+      run:
+        working-directory: apps/frontend
+    env:
+      VITE_ORIGIN: ${{ inputs.channel == 'production' && 'https://flirtu.al' || 'https://beta.flirtual.dev' }}
+      VITE_API_URL: ${{ inputs.channel == 'production' && 'https://api.flirtu.al/v1/' || 'https://beta-api.flirtual.dev/v1/' }}
+      VITE_APP_BUNDLE_ID: ${{ inputs.channel == 'production' && 'zone.homie.flirtual.pwa' || 'zone.homie.flirtual.beta' }}
+      FLAVOR: ${{ inputs.channel == 'production' && 'production' || 'beta' }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6
+        name: Install pnpm
+        with:
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v6
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Sync native project
+        run: pnpm cap sync android
+
+      - name: Decode keystore
+        env:
+          ANDROID_KEYSTORE: ${{ secrets.ANDROID_KEYSTORE }}
+        run: printf '%s' "$ANDROID_KEYSTORE" | base64 -d > "$RUNNER_TEMP/upload.keystore"
+
+      - name: Build app bundle
+        working-directory: apps/frontend/android
+        env:
+          ANDROID_KEYSTORE_PATH: ${{ runner.temp }}/upload.keystore
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          BUILD_NUMBER_OFFSET: ${{ vars.BUILD_NUMBER_OFFSET }}
+        run: |
+          export CI_VERSION_CODE=$(( GITHUB_RUN_NUMBER + ${BUILD_NUMBER_OFFSET:-100} ))
+          ./gradlew "bundle${FLAVOR^}Release"
+
+      - name: Upload to Google Play
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+          packageName: ${{ env.VITE_APP_BUNDLE_ID }}
+          releaseFiles: apps/frontend/android/app/build/outputs/bundle/${{ env.FLAVOR }}Release/app-${{ env.FLAVOR }}-release.aab
+          track: internal
+          status: completed

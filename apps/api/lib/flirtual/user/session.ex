@@ -14,6 +14,7 @@ defmodule Flirtual.User.Session do
     belongs_to(:sudoer, User)
 
     field(:token, :string, virtual: true, redact: true)
+    field(:leaked_password, :boolean, virtual: true)
     field(:hashed_token, :string, redact: true)
     field(:expire_at, :utc_datetime)
 
@@ -114,6 +115,10 @@ defmodule Flirtual.User.Session do
     Session |> where_token(token) |> delete_all()
   end
 
+  def delete(id: id) when is_binary(id) do
+    Session |> where(id: ^id) |> delete_all()
+  end
+
   def delete_others(user_id: user_id, token: token)
       when is_binary(user_id) and is_binary(token) do
     Session
@@ -176,7 +181,7 @@ defmodule Flirtual.User.Session do
              session
              |> change(%{expire_at: new_expire_at()})
              |> Repo.update(),
-           {:ok, _} <- ObanWorkers.update_user(user.id, [:elasticsearch]) do
+           {:ok, _} <- ObanWorkers.update_user(user.id, [:search_index]) do
         {:ok, Map.put(session, :user, user)}
       end
     end
@@ -204,6 +209,7 @@ defimpl Jason.Encoder, for: Flirtual.User.Session do
     only: [
       :user,
       :sudoer_id,
+      :leaked_password,
       :updated_at,
       :created_at
     ]

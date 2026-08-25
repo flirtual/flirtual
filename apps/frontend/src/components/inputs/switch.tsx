@@ -31,6 +31,30 @@ export const InputSwitch: React.FC<InputSwitchProps> = (props) => {
 		props.onChange(next);
 	}
 
+	function onKeyDown(event: React.KeyboardEvent) {
+		const { key } = event;
+
+		if (value === null) {
+			if (key !== "Enter" && key !== "ArrowLeft" && key !== "ArrowRight")
+				return;
+
+			event.preventDefault();
+			select(true);
+			return;
+		}
+
+		if (key === "ArrowLeft" || key === "ArrowRight") {
+			event.preventDefault();
+			select(!value);
+			return;
+		}
+
+		if (key === "Enter" && props.deselectable) {
+			event.preventDefault();
+			props.onChange(null);
+		}
+	}
+
 	return (
 		<div
 			className={twMerge(
@@ -41,6 +65,7 @@ export const InputSwitch: React.FC<InputSwitchProps> = (props) => {
 			data-checked={ariaChecked}
 			role="checkbox"
 			tabIndex={0}
+			onKeyDown={onKeyDown}
 		>
 			<input
 				checked={value || false}
@@ -60,9 +85,9 @@ export const InputSwitch: React.FC<InputSwitchProps> = (props) => {
 						opacity: 0.8,
 					}}
 					style={{
-						justifySelf: value
-							? "start"
-							: "end"
+						insetInlineStart: value
+							? 0
+							: "50%"
 					}}
 					transition={{
 						type: "spring",
@@ -70,7 +95,7 @@ export const InputSwitch: React.FC<InputSwitchProps> = (props) => {
 						ease: "easeInOut",
 						bounce: 0.25
 					}}
-					className="absolute inset-0 w-1/2 rounded-xl bg-brand-gradient"
+					className="absolute inset-y-0 w-1/2 rounded-xl bg-brand-gradient"
 				/>
 			)}
 			<span

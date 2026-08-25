@@ -76,7 +76,7 @@ export function meta({
 		{ name: "theme-color", media: "(prefers-color-scheme: dark)", content: "#111111" },
 
 		{ name: "twitter:card", content: "summary" },
-		{ name: "twitter:site", content: `@${urls.socials.twitter.split("twitter.com/")[1]}` },
+		{ name: "twitter:site", content: `@${urls.socials.x.split("x.com/")[1]}` },
 		{ name: "twitter:title", content: t("flirtual") },
 		{ name: "twitter:description", content: t("green_plain_mongoose_lend") },
 		{ name: "twitter:image:type", content: "image/png" },

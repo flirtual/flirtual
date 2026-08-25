@@ -13,14 +13,15 @@ defmodule Flirtual.User do
 
   alias Flirtual.{
     Attribute,
+    Connection,
     Discord,
     Flag,
     Hash,
     # Languages,
     ObanWorkers,
     Repo,
+    Entitlement,
     Report,
-    Subscription,
     Talkjs,
     User
   }
@@ -75,6 +76,7 @@ defmodule Flirtual.User do
     field(:password_hash, :string, redact: true)
     field(:talkjs_id, :string, virtual: true)
     field(:talkjs_token, :string, virtual: true)
+    field(:has_password, :boolean, virtual: true)
     field(:talkjs_signature, :string, redact: true)
     field(:listmonk_id, :integer)
     field(:unsubscribe_token, Ecto.ShortUUID)
@@ -117,7 +119,7 @@ defmodule Flirtual.User do
     has_many(:passkeys, Flirtual.User.Passkey)
 
     has_one(:preferences, Flirtual.User.Preferences)
-    has_one(:subscription, Subscription)
+    has_many(:entitlements, Entitlement)
     has_one(:profile, Flirtual.User.Profile)
 
     timestamps()
@@ -125,7 +127,7 @@ defmodule Flirtual.User do
 
   def default_assoc do
     [
-      subscription: Flirtual.Subscription.default_assoc(),
+      entitlements: Flirtual.Entitlement.default_assoc(),
       connections: Flirtual.Connection.default_assoc(),
       passkeys: Flirtual.User.Passkey.default_assoc(),
       preferences: Flirtual.User.Preferences.default_assoc(),
@@ -234,7 +236,11 @@ defmodule Flirtual.User do
     %{profile: profile} = user
 
     not is_nil(user.born_at) and
-      not Enum.empty?(filter_by(profile.attributes, :type, "gender")) and
+      not Enum.empty?(
+        profile.attributes
+        |> filter_by(:type, "gender")
+        |> Attribute.reject_pronouns()
+      ) and
       not Enum.empty?(filter_by(profile.attributes, :type, "game")) and
       not Enum.empty?(
         filter_by(profile.attributes, :type, "interest") ++ profile.custom_interests
@@ -331,10 +337,13 @@ defmodule Flirtual.User do
   end
 
   @miles_countries [:us, :gb, :lr, :mm]
-  @miles_buckets [50, 100, 250, 500, 1000, 2000, 3000, 4000, 5000]
-  @km_buckets [100, 250, 500, 1000, 2000, 3000, 4000, 5000]
+  @miles_buckets [50, 100, 250, 500, 1000]
+  @km_buckets [100, 250, 500, 1000, 1500, 2000]
 
-  defp round_to_nearest(value, [last]), do: if(value > last, do: :max, else: last)
+  @miles_max 4000
+  @km_max 6500
+
+  defp round_to_nearest(value, [last]), do: if(value >= last, do: :max, else: last)
 
   defp round_to_nearest(value, [a, b | rest]) do
     if value <= (a + b) / 2, do: a, else: round_to_nearest(value, [b | rest])
@@ -343,20 +352,28 @@ defmodule Flirtual.User do
   defp format_distance(meters, country) when country in @miles_countries do
     mi = meters / 1609.34
 
-    case round_to_nearest(mi, @miles_buckets) do
-      :max -> "5000mi+"
-      50 -> "<50mi"
-      n -> "#{n}mi"
+    if mi > @miles_max do
+      nil
+    else
+      case round_to_nearest(mi, @miles_buckets) do
+        :max -> "#{List.last(@miles_buckets)}mi+"
+        50 -> "<50mi"
+        n -> "~#{n}mi"
+      end
     end
   end
 
   defp format_distance(meters, _) do
     km = meters / 1000
 
-    case round_to_nearest(km, @km_buckets) do
-      :max -> "5000km+"
-      100 -> "<100km"
-      n -> "#{n}km"
+    if km > @km_max do
+      nil
+    else
+      case round_to_nearest(km, @km_buckets) do
+        :max -> "#{List.last(@km_buckets)}km+"
+        100 -> "<100km"
+        n -> "~#{n}km"
+      end
     end
   end
 
@@ -510,7 +527,13 @@ defmodule Flirtual.User do
   end
 
   defp field_condition({:connections, key}, _term, pattern) do
-    dynamic([connections: connections], ilike(field(connections, ^key), ^pattern))
+    connections =
+      from(connection in Connection,
+        where: ilike(field(connection, ^key), ^pattern),
+        select: connection.user_id
+      )
+
+    dynamic([user: user], user.id in subquery(connections))
   end
 
   defp field_condition(key, term, pattern) when is_atom(key) do
@@ -523,8 +546,11 @@ defmodule Flirtual.User do
 
       :integer ->
         case Integer.parse(term) do
-          {value, ""} -> dynamic([user: user], field(user, ^key) == ^value)
-          _ -> nil
+          {value, ""} when value in -2_147_483_648..2_147_483_647 ->
+            dynamic([user: user], field(user, ^key) == ^value)
+
+          _ ->
+            nil
         end
 
       _ ->
@@ -580,9 +606,13 @@ defmodule Flirtual.User do
         ])
 
       {:connections, key}, query ->
-        order_by(query, [connections: connections], [
-          {^order, fragment("similarity(?, ?)", field(connections, ^key), ^value)}
-        ])
+        similarity =
+          from(connection in Connection,
+            where: connection.user_id == parent_as(:user).id,
+            select: max(fragment("similarity(?, ?)", field(connection, ^key), ^value))
+          )
+
+        order_by(query, [], [{^order, subquery(similarity)}])
 
       key, query when is_atom(key) ->
         if User.__schema__(:type, key) === :string do
@@ -626,14 +656,39 @@ defmodule Flirtual.User do
     end
   end
 
-  # The synthetic "premium" tag filters to users with an active subscription.
-  defp premium_condition do
-    subscriptions =
-      from(subscription in Subscription,
-        where: subscription.user_id == parent_as(:user).id and is_nil(subscription.cancelled_at)
+  defp premium_condition(:subscription),
+    do:
+      premium_condition(
+        dynamic(
+          [entitlement],
+          entitlement.kind == :subscription and entitlement.store != :promotional
+        )
       )
 
-    dynamic(exists(subscriptions))
+  defp premium_condition(:lifetime),
+    do:
+      premium_condition(
+        dynamic(
+          [entitlement],
+          entitlement.kind == :one_time and entitlement.store != :promotional
+        )
+      )
+
+  defp premium_condition(:promotional),
+    do: premium_condition(dynamic([entitlement], entitlement.store == :promotional))
+
+  defp premium_condition(condition) do
+    entitlements =
+      from(entitlement in Entitlement,
+        join: plan in assoc(entitlement, :plan),
+        where:
+          entitlement.user_id == parent_as(:user).id and plan.product == "premium" and
+            (is_nil(entitlement.entitled_until) or
+               entitlement.entitled_until > ^DateTime.utc_now()),
+        where: ^condition
+      )
+
+    dynamic(exists(entitlements))
   end
 
   defp apply_search(query, _fields, "", _sort, _sort_order), do: query
@@ -740,10 +795,7 @@ defmodule Flirtual.User do
            sort_order = if(attrs.order === "asc", do: :asc_nulls_first, else: :desc_nulls_last),
            query <-
              from(user in User, as: :user)
-             |> join(:left, [user: user], profile in assoc(user, :profile), as: :profile)
-             |> join(:left, [user: user], connections in assoc(user, :connections),
-               as: :connections
-             ),
+             |> join(:left, [user: user], profile in assoc(user, :profile), as: :profile),
            query <- apply_search(query, @default_search_fields, value, attrs.sort, sort_order),
            query <-
              (case attrs.status do
@@ -757,8 +809,14 @@ defmodule Flirtual.User do
              (case attrs.tags do
                 tags when is_list(tags) ->
                   Enum.reduce(tags, query, fn
-                    "premium", query ->
-                      where(query, ^premium_condition())
+                    "premium_subscription", query ->
+                      where(query, ^premium_condition(:subscription))
+
+                    "lifetime_premium", query ->
+                      where(query, ^premium_condition(:lifetime))
+
+                    "promotional_premium", query ->
+                      where(query, ^premium_condition(:promotional))
 
                     tag, query ->
                       where(query, [user: user], ^tag in user.tags)
@@ -815,7 +873,8 @@ defmodule Flirtual.User do
         %User{} = user,
         %Attribute{type: "ban-reason"} = reason,
         message,
-        %User{} = moderator
+        %User{} = moderator,
+        options \\ []
       ) do
     now = DateTime.utc_now() |> DateTime.truncate(:second)
     message = message || reason.metadata["details"]
@@ -827,14 +886,15 @@ defmodule Flirtual.User do
              |> Repo.update(),
            {:ok, _} <- Report.list(target_id: user.id) |> Report.clear_all(moderator, true),
            {:ok, user} <- User.update_status(user),
-           {:ok, _} <- ObanWorkers.update_user(user.id, [:elasticsearch, :listmonk, :talkjs]),
+           {:ok, _} <- ObanWorkers.update_user(user.id, [:search_index, :listmonk, :talkjs]),
            {_, _} <- Session.delete(user_id: user.id),
            User.Email.deliver(user, :suspended, message) do
         Discord.deliver_webhook(:suspended,
           user: user,
           moderator: moderator,
           reason: reason,
-          message: message
+          message: message,
+          automatic: Keyword.get(options, :automatic)
         )
 
         user
@@ -854,9 +914,9 @@ defmodule Flirtual.User do
            {:ok, user} <- User.update_status(user),
            {:ok, _} <-
              ObanWorkers.update_user(user.id, [
-               :elasticsearch,
+               :search_index,
                :listmonk,
-               :refresh_prospects,
+               :compute_queue,
                :talkjs
              ]),
            :ok <-
@@ -883,9 +943,9 @@ defmodule Flirtual.User do
            {:ok, user} <- User.update_status(user),
            {:ok, _} <-
              ObanWorkers.update_user(user.id, [
-               :elasticsearch,
+               :search_index,
                :listmonk,
-               :refresh_prospects,
+               :compute_queue,
                :talkjs
              ]),
            :ok <-
@@ -910,9 +970,9 @@ defmodule Flirtual.User do
            {:ok, user} <- User.update_status(user),
            {:ok, _} <-
              ObanWorkers.update_user(user.id, [
-               :elasticsearch,
+               :search_index,
                :listmonk,
-               :refresh_prospects,
+               :compute_queue,
                :talkjs
              ]),
            :ok <-
@@ -978,7 +1038,7 @@ defmodule Flirtual.User do
            {:ok, user} <- User.update_status(user),
            {:ok, _} <-
              ObanWorkers.update_user(if(shadowban, do: user.id, else: []), [
-               :elasticsearch,
+               :search_index,
                :talkjs
              ]),
            :ok <-
@@ -1023,6 +1083,8 @@ defmodule Flirtual.User do
       end
     end)
   end
+
+  def acknowledge_warn(%User{moderator_message: nil} = user), do: {:ok, user}
 
   def acknowledge_warn(%User{} = user) do
     now = DateTime.utc_now() |> DateTime.truncate(:second)
@@ -1346,6 +1408,9 @@ defmodule Flirtual.User do
     user |> change(email_confirmed_at: now)
   end
 
+  def has_password?(%User{password_hash: password_hash}), do: is_binary(password_hash)
+  def has_password?(_), do: false
+
   @doc """
   Verifies the password.
 
@@ -1378,99 +1443,12 @@ defmodule Flirtual.User do
       add_error(changeset, field, "invalid_password")
     end
   end
-end
 
-defmodule Flirtual.User.SearchDocument do
-  alias Flirtual.Attribute
-  import Flirtual.Utilities
-  import Ecto.Query
-
-  alias Flirtual.Elasticsearch
-  alias Flirtual.User.Profile.LikesAndPasses
-  alias Flirtual.User
-  alias Flirtual.Repo
-
-  def encode(%User{} = user) do
-    profile = user.profile
-
-    attributes =
-      profile.attributes
-      |> Attribute.normalize_aliases()
-      |> then(
-        &if(user.preferences.nsfw,
-          do: &1,
-          else: exclude_by(&1, :type, "kink")
-        )
-      )
-      |> Enum.map(& &1.id)
-      |> Enum.sort()
-
-    attributes_lf =
-      profile.preferences.attributes
-      |> then(
-        &if(user.preferences.nsfw,
-          do:
-            &1 ++
-              (profile.attributes
-               |> filter_by(:type, "kink")
-               |> Attribute.normalize_pairs()),
-          else: exclude_by(&1, :type, "kink")
-        )
-      )
-      |> Enum.map(& &1.id)
-      |> Enum.sort()
-
-    document =
-      Map.merge(
-        %{
-          id: user.id,
-          dob: user.born_at,
-          active_at: user.active_at,
-          platforms: user.platforms,
-          agemin: profile.preferences.agemin || 18,
-          agemax: profile.preferences.agemax || 128,
-          openness: profile.openness,
-          conscientiousness: profile.conscientiousness,
-          agreeableness: profile.agreeableness,
-          custom_interests:
-            profile.custom_interests
-            |> Enum.map(
-              &(&1
-                |> String.downcase()
-                |> String.replace(~r/[^[:alnum:]]/u, ""))
-            ),
-          attributes: attributes,
-          attributes_lf: attributes_lf,
-          country: profile.country,
-          monopoly: profile.monopoly,
-          relationships: profile.relationships,
-          nsfw: user.preferences.nsfw,
-          languages: profile.languages,
-          liked:
-            LikesAndPasses
-            |> where(profile_id: ^profile.user_id, type: :like)
-            |> select([item], item.target_id)
-            |> Repo.all(),
-          hidden_from_nonvisible:
-            user.tns_discord_in_biography !== nil and :moderator not in user.tags and
-              :admin not in user.tags
-        },
-        if(user.preferences.nsfw,
-          do: %{
-            domsub: user.profile.domsub
-          },
-          else: %{}
-        )
-      )
-
-    document
-  end
-
-  def delete_if_exists(id) do
-    case Snap.Document.delete(Elasticsearch, "users", id) do
-      {:ok, _} -> :ok
-      {:error, %Snap.ResponseError{type: "not_found"}} -> :ok
-      error -> error
+  def validate_current_password_if_set(changeset, user, options \\ []) do
+    if has_password?(user) do
+      validate_current_password(changeset, user, options)
+    else
+      changeset
     end
   end
 end
@@ -1483,6 +1461,7 @@ defimpl Jason.Encoder, for: Flirtual.User do
       :slug,
       :age,
       :born_at,
+      :has_password,
       :moderator_message,
       :moderator_note,
       :talkjs_signature,
@@ -1509,7 +1488,7 @@ defimpl Jason.Encoder, for: Flirtual.User do
       # :relationship,
       # :matched,
       # :blocked,
-      :subscription,
+      :entitlements,
       :tns_discord_in_biography,
       :preferences,
       :profile,

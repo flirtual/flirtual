@@ -12,7 +12,7 @@ defmodule FlirtualWeb.UsersController do
   import Flirtual.Utilities
   import Flirtual.Attribute, only: [validate_attribute: 3]
 
-  alias Flirtual.{Discord, IpAddress, ObanWorkers, Policy, Repo, Subscription, User, Users}
+  alias Flirtual.{Discord, Entitlement, IpAddress, ObanWorkers, Policy, Repo, User, Users}
   alias Flirtual.User.Session
   alias Flirtual.User.Profile.Block
   alias FlirtualWeb.SessionController
@@ -103,7 +103,7 @@ defmodule FlirtualWeb.UsersController do
     end
   end
 
-  def inspect(conn, %{"user_id" => user_id, "type" => "elasticsearch"}) do
+  def inspect(conn, %{"user_id" => user_id, "type" => "search"}) do
     user =
       if(conn.assigns[:session].user.id === user_id,
         do: conn.assigns[:session].user,
@@ -113,7 +113,7 @@ defmodule FlirtualWeb.UsersController do
     if is_nil(user) or Policy.cannot?(conn, :inspect, user) do
       {:error, {:not_found, :user_not_found, %{user_id: user_id}}}
     else
-      conn |> json_with_etag(Flirtual.User.SearchDocument.encode(user))
+      conn |> json_with_etag(Flirtual.Search.Document.encode(user))
     end
   end
 
@@ -261,7 +261,7 @@ defmodule FlirtualWeb.UsersController do
 
   def confirm_email(conn, params) do
     with {:ok, user} <- Users.confirm_update_email(params),
-         {:ok, _} <- ObanWorkers.update_user(user.id, [:elasticsearch, :listmonk, :talkjs]) do
+         {:ok, _} <- ObanWorkers.update_user(user.id, [:search_index, :listmonk, :talkjs]) do
       conn
       |> json(%{
         user_id: user.id,
@@ -451,7 +451,7 @@ defmodule FlirtualWeb.UsersController do
     if is_nil(user) or Policy.cannot?(conn, :manage_subscription, user) do
       {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
     else
-      case Subscription.grant_promotional(user) do
+      case Entitlement.grant_promotional(user) do
         {:ok, _} -> conn |> json(Policy.transform(conn, Users.get(user_id)))
         {:error, :existing_subscription} -> {:error, {:conflict, :existing_subscription}}
         {:error, reason} -> {:error, {:bad_request, reason}}
@@ -465,7 +465,7 @@ defmodule FlirtualWeb.UsersController do
     if is_nil(user) or Policy.cannot?(conn, :manage_subscription, user) do
       {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
     else
-      case Subscription.revoke_promotional(user) do
+      case Entitlement.revoke_promotional(user) do
         {:ok, _} -> conn |> json(Policy.transform(conn, Users.get(user_id)))
         {:error, :not_promotional} -> {:error, {:conflict, :not_promotional}}
         {:error, reason} -> {:error, {:bad_request, reason}}
@@ -487,6 +487,7 @@ defmodule FlirtualWeb.UsersController do
     def changeset(value, _, _) do
       value
       |> validate_attribute(:reason_id, "warn-reason")
+      |> update_change(:message, &String.trim/1)
       |> validate_length(:message, min: 8, max: 10_000)
     end
   end
@@ -660,6 +661,53 @@ defmodule FlirtualWeb.UsersController do
       end
     end
   end
+
+  defmodule AgeRange do
+    use Flirtual.EmbeddedSchema
+
+    @optional [:platform, :declaration, :age_lower, :age_upper]
+
+    embedded_schema do
+      field(:platform, :string)
+      field(:declaration, :string)
+      field(:age_lower, :integer)
+      field(:age_upper, :integer)
+    end
+
+    def changeset(value, _, _) do
+      value
+      |> validate_inclusion(:platform, ["android", "apple"])
+      |> validate_inclusion(:declaration, ["SELF_DECLARED", "GUARDIAN_DECLARED", "CONFIRMED"])
+      |> validate_number(:age_lower, greater_than_or_equal_to: 0, less_than_or_equal_to: 120)
+      |> validate_number(:age_upper, greater_than_or_equal_to: 0, less_than_or_equal_to: 120)
+    end
+  end
+
+  def age_range(
+        %{assigns: %{session: %{user: %User{id: user_id} = user}}} = conn,
+        %{"user_id" => user_id} = params
+      ) do
+    with {:ok, attrs} <- AgeRange.apply(params) do
+      if is_integer(attrs.age_upper) and attrs.age_upper < 18 do
+        Users.autoban_underage(
+          user,
+          {:age_range,
+           %{
+             platform: attrs.platform,
+             declaration: attrs.declaration,
+             age_lower: attrs.age_lower,
+             age_upper: attrs.age_upper,
+             region: get_conn_region(conn)
+           }}
+        )
+      else
+        conn |> send_resp(:no_content, "")
+      end
+    end
+  end
+
+  def age_range(_, %{"user_id" => user_id}),
+    do: {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
 
   def remove_news(conn, %{"user_id" => user_id, "news" => news}) when is_list(news) do
     user =

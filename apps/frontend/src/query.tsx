@@ -2,10 +2,11 @@
 import type { QueryFunctionContext, QueryKey, QueryState, UseMutationOptions, UseQueryOptions } from "@tanstack/react-query";
 import { useMutation as _useMutation, useQuery as _useQuery, hashKey, QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import ms from "ms.macro";
+import ms from "ms" with { type: "macro" };
 import type { Dispatch, PropsWithChildren } from "react";
-import { use, useDebugValue, useEffect, useState } from "react";
+import { use, useCallback, useDebugValue, useSyncExternalStore } from "react";
 
+import { getAgeRange } from "./age-range";
 import type { AttributeType } from "./api/attributes";
 import { Attribute } from "./api/attributes";
 import { Authentication } from "./api/auth";
@@ -18,9 +19,9 @@ import { Matchmaking } from "./api/matchmaking";
 import { Plan } from "./api/plan";
 import { User } from "./api/user";
 import { Personality } from "./api/user/profile/personality";
-import { commitId, development, server } from "./const";
+import { development, server } from "./const";
 import { log as _log } from "./log";
-import { getPreferences, setPreferences } from "./preferences";
+import { getPreferences } from "./preferences";
 import { isUid } from "./utilities";
 
 export const configKey = () => ["config"] as const;
@@ -33,9 +34,12 @@ export function sessionFetcher({ signal }: QueryFunctionContext<ReturnType<typeo
 	return Authentication.getOptionalSession({ ...signal });
 }
 
-export const attributeKey = <T extends AttributeType>(type: T) => ["attribute", type] as const;
-export function attributeFetcher<T extends AttributeType>({ queryKey: [, type], signal }: QueryFunctionContext<ReturnType<typeof attributeKey<T>>>) {
-	return Attribute.list(type, { signal });
+export const ageRangeKey = () => ["age-range"] as const;
+export const ageRangeFetcher = () => getAgeRange();
+
+export const attributeKey = <T extends AttributeType>(type: T, version?: string) => ["attribute", type, version ?? null] as const;
+export function attributeFetcher<T extends AttributeType>({ queryKey: [, type, version], signal }: QueryFunctionContext<ReturnType<typeof attributeKey<T>>>) {
+	return Attribute.list(type, version ?? undefined, { signal });
 }
 
 export const userKey = (userId?: string | null) => ["user", userId || null] as const;
@@ -96,6 +100,8 @@ export async function preloadAll() {
 
 		preload({ queryKey: plansKey(), queryFn: plansFetcher }),
 
+		preload({ queryKey: ageRangeKey(), queryFn: ageRangeFetcher, staleTime: Number.POSITIVE_INFINITY }),
+
 		// ...([
 		// 	"country",
 		// 	"game",
@@ -155,92 +161,12 @@ declare module "@tanstack/react-query" {
 	}
 }
 
-interface QueryPreference {
-	v: string;
-	q: Array<{
-		k: QueryKey;
-		h: string;
-		a?: number;
-		s: QueryState;
-	}>;
-}
-
 export type MinimalQueryOptions<T> = Pick<UseQueryOptions<T, Error, T, QueryKey>, "placeholderData">;
-
-const cacheVersion = commitId;
-const defaultCacheTime = ms("1d");
-
-export async function saveQueries() {
-	return; // Disable for now.
-
-	log("saveQueries()");
-	const queries = queryCache.getAll();
-
-	const eligibleQueries = queries.filter(({
-		queryKey,
-		queryHash,
-		state,
-		meta: { cacheTime = defaultCacheTime } = {}
-	}) => {
-		if (!queryKey || !queryHash || !state.dataUpdatedAt || cacheTime === 0) return false;
-		if (state.status !== "success") return false;
-
-		return true;
-	}).map(({
-		queryKey,
-		queryHash,
-		state,
-		meta: { cacheTime } = {}
-	}) => ({
-		k: queryKey,
-		h: queryHash,
-		a: cacheTime,
-		s: state
-	}));
-
-	await setPreferences<QueryPreference>("queries", {
-		v: cacheVersion,
-		q: eligibleQueries
-	});
-}
 
 export async function evictQueries() {
 	log("evictQueries()");
 
 	await queryClient.resetQueries();
-	return; // Disable for now.
-
-	queryCache.clear();
-	await setPreferences("queries", null);
-}
-
-export async function restoreQueries() {
-	return; // Disable for now.
-
-	log("restoreQueries()");
-
-	const { v: version, q: potentialQueries } = await getPreferences<QueryPreference>("queries") || { v: cacheVersion, q: [] };
-
-	if (version !== cacheVersion) {
-		log("Cache version mismatch.");
-		await evictQueries();
-
-		return;
-	}
-
-	const queries = potentialQueries.map(({
-		k: queryKey,
-		h: queryHash,
-		a: cacheTime = defaultCacheTime,
-		s: state
-	}) => {
-		if (Date.now() - state.dataUpdatedAt > Math.min(cacheTime, defaultCacheTime)) return null;
-		if (state.status !== "success") return null;
-
-		return queryCache.build(queryClient, { queryKey, queryHash }, state);
-	}).filter(Boolean);
-
-	log("restoreQueries() => %O", new Map(queries.map(({ queryKey, state: { data } }) => [queryKey, data])));
 }
 
 let usedQuery = false;
@@ -290,16 +216,19 @@ export function useQuery<
 	return use(promise);
 }
 
+const emptyQueryState = {};
+
 export function useQueryState<T>(queryKey: QueryKey): Partial<QueryState<T>> {
 	const queryHash = hashKey(queryKey);
-	const [state, setState] = useState(() => queryClient.getQueryState<T>(queryKey));
 
-	useEffect(() => queryCache.subscribe(({ query, }) => {
-		if (query.queryHash !== queryHash) return;
-		setState(query.state);
-	}));
-
-	return state || {};
+	// Read through the cache on every render, so a changed key doesn't keep
+	// serving the previous query's state until the new one happens to emit.
+	return useSyncExternalStore(
+		useCallback((onChange) => queryCache.subscribe(({ query }) => {
+			if (query.queryHash === queryHash) onChange();
+		}), [queryHash]),
+		() => queryCache.get<T>(queryHash)?.state
+	) || emptyQueryState;
 }
 
 export function useMutation<T = unknown, Variables = void, Context = unknown>({

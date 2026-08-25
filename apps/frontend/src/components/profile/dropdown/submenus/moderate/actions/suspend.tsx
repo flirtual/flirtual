@@ -207,7 +207,7 @@ export const SuspendAction: FC<{ user: User }> = ({ user }) => {
 		<DropdownMenuItem
 			asChild
 			className="text-red-500"
-			disabled={!!user.bannedAt}
+			disabled={!!user.bannedAt || !!user.tags?.includes("review")}
 			onSelect={() => {
 				const dialog = <SuspendDialog user={user} onClose={() => dialogs.remove(dialog)} />;
 				dialogs.add(dialog);

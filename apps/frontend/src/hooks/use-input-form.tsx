@@ -6,6 +6,7 @@ import { entries, fromEntries, toCamelCase } from "remeda";
 import { WretchError } from "wretch/resolver";
 
 import { isWretchError } from "~/api/common";
+import type { WretchIssue } from "~/api/common";
 import type { FormCaptchaReference } from "~/components/forms/captcha";
 import { FormField } from "~/components/forms/field";
 import type { FormFieldFC } from "~/components/forms/field";
@@ -159,7 +160,7 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 								[
 									toCamelCase(key),
 									issues.map(({ error, details }) =>
-										t(`errors.${error}` as any, details)
+										t(`errors.${error}` as any, details as Record<string, string>)
 									)
 								] as const
 						)
@@ -177,13 +178,13 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 				}
 
 				if (reason instanceof WretchError) {
-					const { error } = reason.json ?? {};
+					const { error, details } = (reason as WretchIssue).json ?? {};
 
 					const errors = [
 						t(
 							`errors.${error}` as any,
-							reason.json.details
-						)
+							details as Record<string, string>
+						) as string
 					];
 
 					const fieldErrors = {};

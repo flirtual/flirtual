@@ -1,5 +1,5 @@
 import { captureException } from "@sentry/react-router";
-import { Chrome, RotateCw, Send, Smartphone, WifiOff } from "lucide-react";
+import { AppWindow, RotateCw, Send, Smartphone, WifiOff } from "lucide-react";
 import { m } from "motion/react";
 import type { FC } from "react";
 import { useCallback, useEffect, useMemo } from "react";
@@ -217,7 +217,7 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, reset }) => {
 									<li>
 										<Trans
 											components={{
-												"browser-icon": <Chrome className="mr-1 inline-block size-4 shrink-0" />,
+												"browser-icon": <AppWindow className="mr-1 inline-block size-4 shrink-0" />,
 												"device-icon": <Smartphone className="mr-0.5 inline-block size-4 shrink-0" />
 											}}
 											i18nKey={native ? "sweet_strong_poodle_endure" : "heroic_pink_gull_breathe"}

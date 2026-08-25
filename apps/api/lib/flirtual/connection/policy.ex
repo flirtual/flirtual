@@ -20,18 +20,17 @@ defmodule Flirtual.Connection.Policy do
       ),
       do: true
 
-  # Any user can view the other user's connections if they have matched.
+  # Matches and moderators can view other users' visible connections.
   def authorize(:read, _, %Connection{
+        type: type,
         user: %User{
           relationship: %User.Relationship{
             matched: true
           }
         }
-      }) do
-    true
-  end
+      }),
+      do: Connection.visible?(type)
 
-  # Moderators can view any other user's connections.
   def authorize(
         :read,
         %Plug.Conn{
@@ -39,9 +38,9 @@ defmodule Flirtual.Connection.Policy do
             session: session
           }
         },
-        _
+        %Connection{type: type}
       ),
-      do: :moderator in session.user.tags
+      do: Connection.visible?(type) and :moderator in session.user.tags
 
   # Any other action, or credentials are disallowed.
   def authorize(_, _, _), do: false

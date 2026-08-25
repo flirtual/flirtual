@@ -1,23 +1,23 @@
 import type { FC, PropsWithChildren } from "react";
-import { ShepherdTour } from "react-shepherd";
-import type { Tour } from "react-shepherd";
+import { useState } from "react";
+import Shepherd from "shepherd.js";
+import type { TourOptions } from "shepherd.js";
 
-import { emptyArray } from "~/utilities";
+import { ShepherdContext } from "./context";
 
 const tourOptions = {
 	useModalOverlay: true,
+	exitOnEsc: false,
 	defaultStepOptions: {
 		canClickTarget: false,
 		cancelIcon: {
-			enabled: true
+			enabled: false
 		}
 	}
-} satisfies Tour.TourOptions;
+} satisfies TourOptions;
 
 export const ShepherdProvider: FC<PropsWithChildren> = ({ children }) => {
-	return (
-		<ShepherdTour steps={emptyArray} tourOptions={tourOptions}>
-			{children}
-		</ShepherdTour>
-	);
+	const [tour] = useState(() => new Shepherd.Tour(tourOptions));
+
+	return <ShepherdContext value={tour}>{children}</ShepherdContext>;
 };

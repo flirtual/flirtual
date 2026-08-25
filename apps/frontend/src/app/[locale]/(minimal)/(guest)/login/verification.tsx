@@ -11,16 +11,18 @@ import { Form } from "~/components/forms";
 import { FormInputMessages } from "~/components/forms/input-messages";
 import { InlineLink } from "~/components/inline-link";
 import { useInterval } from "~/hooks/use-interval";
+import { rememberLeakedPassword } from "~/hooks/use-leaked-password";
 import { invalidate, mutate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
 export interface VerificationFormProps {
 	loginId: string;
 	email: string;
+	leakedPassword?: boolean;
 	onBack: () => void;
 }
 
-export const VerificationForm: FC<VerificationFormProps> = ({ loginId, email, onBack }) => {
+export const VerificationForm: FC<VerificationFormProps> = ({ loginId, email, leakedPassword, onBack }) => {
 	const { t } = useTranslation();
 	const firstInputReference = useRef<HTMLInputElement>(null);
 	const [code, setCode] = useState("");
@@ -71,6 +73,8 @@ export const VerificationForm: FC<VerificationFormProps> = ({ loginId, email, on
 
 					throw [t(`errors.${value.error}` as any)];
 				}
+
+				await rememberLeakedPassword(value.user.id, leakedPassword);
 
 				await invalidate({ refetchType: "none" });
 				await mutate(sessionKey(), value);

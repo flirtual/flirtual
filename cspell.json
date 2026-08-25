@@ -6,6 +6,8 @@
     "chargebeex",
     "ecto",
     "elasticsearch",
+    "esbuild",
+    "exifreader",
     "flirtual",
     "flirtualbot",
     "gethostname",
@@ -16,10 +18,13 @@
     "listmonk",
     "oban",
     "postgrex",
+    "protobufjs",
     "revenuecat",
+    "shgysk",
     "talkjs",
     "totp",
     "unconfigured",
-    "vrchat"
+    "vrchat",
+    "workerd"
   ]
 }

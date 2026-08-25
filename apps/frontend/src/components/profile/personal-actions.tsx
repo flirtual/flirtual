@@ -4,12 +4,13 @@ import { useTranslation } from "react-i18next";
 
 import type { Session } from "~/api/auth";
 import { User } from "~/api/user";
+import { shortHost } from "~/const";
 import { useSession } from "~/hooks/use-session";
 import { useShare } from "~/hooks/use-share";
 import { useToast } from "~/hooks/use-toast";
 import { useNavigate } from "~/i18n";
 import { mutate, sessionKey } from "~/query";
-import { toAbsoluteUrl, urls } from "~/urls";
+import { toShortUrl, urls } from "~/urls";
 
 import { Button, ButtonLink } from "../button";
 import { CopyClick } from "../copy-click";
@@ -74,7 +75,8 @@ export const PersonalActions: React.FC<{ user: User }> = ({ user }) => {
 														{...field.props}
 														startContent={(
 															<span className="shrink-0 pl-4 font-mono">
-																flirtu.al/
+																{shortHost}
+																/
 															</span>
 														)}
 														className="pl-0 font-mono"
@@ -99,7 +101,7 @@ export const PersonalActions: React.FC<{ user: User }> = ({ user }) => {
 										onClick={async () => {
 											await share({
 												text: t("icy_stock_herring_burn"),
-												url: toAbsoluteUrl(urls.profile(profileLink)).toString()
+												url: toShortUrl(urls.profile(profileLink)).toString()
 											}).catch(toasts.addError);
 										}}
 									>
@@ -107,7 +109,7 @@ export const PersonalActions: React.FC<{ user: User }> = ({ user }) => {
 									</Button>
 								)}
 								<CopyClick
-									value={toAbsoluteUrl(urls.profile(profileLink)).toString()}
+									value={toShortUrl(urls.profile(profileLink)).toString()}
 								>
 									<Button
 										className="grow"

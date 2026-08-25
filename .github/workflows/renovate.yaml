@@ -1,0 +1,39 @@
+name: Renovate
+on:
+  schedule:
+    - cron: 0 */4 * * *
+  workflow_dispatch:
+  issues:
+    types: [edited]
+  pull_request:
+    types: [edited]
+permissions:
+  contents: read
+concurrency:
+  group: renovate
+jobs:
+  renovate:
+    name: Renovate
+    runs-on: ubuntu-latest
+    if: >-
+      (github.event_name != 'issues' && github.event_name != 'pull_request')
+      || (github.event.sender.id != 317127550
+      && (github.event.issue.user.id == 317127550
+      || github.event.pull_request.user.id == 317127550))
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/create-github-app-token@v3.2.0
+        id: app-token
+        with:
+          client-id: ${{ vars.RENOVATE_APP_CLIENT_ID }}
+          private-key: ${{ secrets.RENOVATE_APP_PRIVATE_KEY }}
+
+      - uses: renovatebot/github-action@v46.2.2
+        with:
+          docker-cmd-file: .github/renovate-entrypoint.sh
+          docker-user: root
+          token: ${{ steps.app-token.outputs.token }}
+        env:
+          RENOVATE_REPOSITORIES: ${{ github.repository }}
+          RENOVATE_BINARY_SOURCE: global

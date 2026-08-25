@@ -1,5 +1,6 @@
 import { Clipboard } from "@capacitor/clipboard";
 import { Slot } from "@radix-ui/react-slot";
+import { isValidElement } from "react";
 import type { ComponentProps, FC } from "react";
 import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
@@ -18,7 +19,7 @@ export const CopyClick: FC<CopyClickProps> = ({
 	const { t } = useTranslation();
 	const toasts = useToast();
 
-	const Component = asChild ? Slot : "span";
+	const Component = asChild && isValidElement(children) ? Slot : "span";
 	if (value === null) return children;
 
 	return (

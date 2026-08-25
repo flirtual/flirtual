@@ -1,6 +1,7 @@
 import { DatetimePicker, ErrorCode } from "@capawesome-team/capacitor-datetime-picker";
 import { useCallback, useRef, useState } from "react";
 
+import { toAsciiDigits } from "~/date";
 import { useBreakpoint } from "~/hooks/use-breakpoint";
 import { useDevice } from "~/hooks/use-device";
 import { useTheme } from "~/hooks/use-theme";
@@ -289,7 +290,10 @@ const InputDateSelectNative: React.FC<InputDateSelectNativeProps> = ({
 					max && (max === "now" ? new Date().toISOString() : max.toISOString())
 		}),
 		onSuccess: ({ value }) => {
-			const newDate = new Date(value);
+			// The Android plugin formats the value with the device locale's digits.
+			// Date() can only parse ASCII/latin numerals.
+			const newDate = new Date(toAsciiDigits(value));
+			if (Number.isNaN(newDate.getTime())) return;
 
 			setSelectedDate(newDate);
 			onChange(newDate);
@@ -303,14 +307,16 @@ const InputDateSelectNative: React.FC<InputDateSelectNativeProps> = ({
 	});
 
 	return (
-		<div className={disabled ? "[&_input]:pointer-events-none" : undefined} onClick={() => disabled && onDisabledClick?.()}>
+		<div
+			className={disabled ? "[&_input]:pointer-events-none" : undefined}
+			onClick={() => disabled ? onDisabledClick?.() : mutate()}
+		>
 			<InputText
 				readOnly
 				className="w-full"
 				disabled={disabled}
 				type="date"
 				value={selectedDate.toLocaleDateString(undefined, { weekday: undefined })}
-				onClick={() => !disabled && mutate()}
 			/>
 		</div>
 	);

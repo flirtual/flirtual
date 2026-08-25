@@ -1,13 +1,14 @@
 {
-	"$schema": "https://unpkg.com/knip@5/schema.json",
+	"$schema": "https://unpkg.com/knip@6/schema.json",
 	"ignoreDependencies": [
-		"@capacitor/keyboard",
-		"@capacitor/assets",
+		"@capacitor-community/safe-area",
+		"@capacitor/dialog",
 		"@eslint-react/eslint-plugin",
-		"babel-plugin-dev-expression",
-		"babel-plugin-macros",
+		"@tailwindcss/forms",
 		"eslint-plugin-react-hooks",
 		"eslint-plugin-react-refresh",
+		"flag-icons",
+		"isbot",
 		"vite-plugin-checker"
 	],
 	"ignoreBinaries": [

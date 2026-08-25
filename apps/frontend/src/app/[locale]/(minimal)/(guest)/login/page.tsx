@@ -8,6 +8,13 @@ import { metaMerge, rootMeta } from "~/meta";
 
 import type { Route } from "./+types/page";
 import { LoginForm } from "./form";
+import { resolveLoginConnection } from "./last-connection";
+
+export async function clientLoader({ request }: Route.ClientLoaderArgs) {
+	await resolveLoginConnection(request);
+}
+
+clientLoader.hydrate = true as const;
 
 export const meta: Route.MetaFunction = (options) => {
 	invariant(isLocale(options.params.locale));

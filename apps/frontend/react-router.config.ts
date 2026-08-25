@@ -4,10 +4,7 @@ import { sentryOnBuildEnd } from "@sentry/react-router";
 import { locales } from "./src/i18n/languages";
 
 export default {
-	future: {
-		// unstable_subResourceIntegrity: true,
-		unstable_splitRouteModules: false,
-	},
+	splitRouteModules: false,
 	ssr: false,
 	routeDiscovery: {
 		mode: "initial"
@@ -51,6 +48,7 @@ export default {
 		"/.well-known/assetlinks.json",
 		"/.well-known/apple-app-site-association",
 		"/.well-known/apple-developer-merchantid-domain-association",
+		"/.well-known/webauthn",
 		"/_redirects",
 		"/_headers",
 		"/wrangler.json"

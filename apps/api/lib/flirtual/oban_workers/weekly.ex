@@ -30,7 +30,7 @@ defmodule Flirtual.ObanWorkers.Weekly do
         on:
           lap.profile_id == opposite.target_id and
             lap.target_id == opposite.profile_id and
-            opposite.type == :like,
+            (opposite.type == :like or opposite.source == :likes),
         left_join: block in Block,
         on:
           lap.profile_id == block.target_id and

@@ -19,6 +19,7 @@ defmodule Flirtual.User.Profile.Image do
     field(:original_file, :string)
     field(:external_id, :string)
     field(:blur_id, :string)
+    field(:blur_hash, :string)
     field(:hash, :integer)
     field(:order, :integer)
     field(:spatial_id, :string)
@@ -38,6 +39,7 @@ defmodule Flirtual.User.Profile.Image do
       :original_file,
       :external_id,
       :blur_id,
+      :blur_hash,
       :hash,
       :order,
       :spatial_id,
@@ -49,6 +51,7 @@ defmodule Flirtual.User.Profile.Image do
     |> validate_required([:original_file])
     |> validate_uid(:profile_id)
     |> foreign_key_constraint(:profile_id)
+    |> unique_constraint(:original_file)
     |> validate_uid(:external_id)
     |> validate_uid(:blur_id)
     |> validate_uid(:spatial_id)
@@ -156,6 +159,7 @@ defmodule Flirtual.User.Profile.Image do
   # (blur uses blur_id)
   @content_variants ~w(full profile thumb icon)
 
+  # sobelow_skip ["Traversal.FileModule"]
   def delete_objects(%Image{} = image) do
     uploads_keys = if is_binary(image.original_file), do: [image.original_file], else: []
 
@@ -240,6 +244,7 @@ defmodule Flirtual.User.Profile.Image do
 
   defp copy_source(_), do: nil
 
+  # sobelow_skip ["Traversal.FileModule"]
   def put_spatial(spatial_id, body)
       when is_binary(spatial_id) and is_binary(body) do
     key = "#{spatial_id}/spatial"
@@ -299,42 +304,71 @@ defmodule Flirtual.User.Profile.Image do
     :ok
   end
 
-  def update_variants(original_file, external_id, blur_id) do
+  def update_variants(original_file, external_id, blur_id, blur_hash) do
     Repo.transaction(fn ->
       now = DateTime.truncate(DateTime.utc_now(), :second)
 
-      existing_image =
-        Image
-        |> where(original_file: ^original_file)
-        |> order_by([image], desc: image.created_at)
-        |> Repo.one()
+      attrs = %{
+        external_id: external_id,
+        blur_id: blur_id,
+        blur_hash: blur_hash,
+        updated_at: now
+      }
 
-      changeset =
-        if existing_image do
-          Image.changeset(existing_image, %{
-            external_id: external_id,
-            blur_id: blur_id,
-            updated_at: now
-          })
-        else
-          %Image{}
-          |> Image.changeset(%{
-            original_file: original_file,
-            external_id: external_id,
-            blur_id: blur_id,
-            updated_at: now,
-            created_at: now
-          })
-        end
-
-      case Repo.insert_or_update(changeset) do
+      original_file
+      |> upsert_variant_rows(attrs, now)
+      |> Enum.map(fn
         {:ok, image} ->
           Image.Moderation.enqueue_scan(image)
           image
 
         {:error, reason} ->
           Repo.rollback(reason)
-      end
+      end)
+      |> List.first()
+    end)
+  end
+
+  # A key can match several rows: attached one(s), an in-flight row created
+  # before the profile was saved, and retained hash rows, which must stay
+  # frozen. Update every attached row, else the newest in-flight row, else
+  # create one; when the insert loses the race against
+  # Profiles.create_images, adopt the winner's row instead.
+  defp upsert_variant_rows(original_file, attrs, now, retry? \\ true) do
+    existing_images =
+      Image
+      |> where(original_file: ^original_file)
+      |> where([image], is_nil(image.suspended_url))
+      |> order_by([image], desc: image.created_at)
+      |> Repo.all()
+
+    case Enum.filter(existing_images, &(not is_nil(&1.profile_id))) do
+      [] when existing_images == [] ->
+        %Image{}
+        |> Image.changeset(Map.merge(attrs, %{original_file: original_file, created_at: now}))
+        |> Repo.insert(mode: :savepoint)
+        |> case do
+          {:error, changeset} = error ->
+            if retry? and original_file_conflict?(changeset),
+              do: upsert_variant_rows(original_file, attrs, now, false),
+              else: [error]
+
+          ok ->
+            [ok]
+        end
+
+      [] ->
+        [Repo.update(Image.changeset(List.first(existing_images), attrs))]
+
+      attached ->
+        Enum.map(attached, &Repo.update(Image.changeset(&1, attrs)))
+    end
+  end
+
+  def original_file_conflict?(%Ecto.Changeset{errors: errors}) do
+    Enum.any?(errors, fn
+      {:original_file, {_, meta}} -> meta[:constraint] == :unique
+      _ -> false
     end)
   end
 
@@ -344,6 +378,7 @@ defmodule Flirtual.User.Profile.Image do
         :id,
         :original_file,
         :external_id,
+        :blur_hash,
         :spatial_id,
         :updated_at,
         :created_at,

@@ -1,10 +1,11 @@
 import { SelectItemText } from "@radix-ui/react-select";
-import { useQuery } from "@tanstack/react-query";
-import { createContext, use, useMemo } from "react";
+import ms from "ms" with { type: "macro" };
+import { createContext, use, useCallback, useMemo } from "react";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 
-import { listTimezones } from "~/api/timezones";
+import { useAttributes } from "~/hooks/use-attribute";
+import { useIntervalValue } from "~/hooks/use-interval";
 
 import { InputSelect, SelectItem } from "../select";
 import type { InputSelectProps } from "../select";
@@ -55,11 +56,7 @@ export type InputTimezoneSelectProps = {
 export function InputTimezoneSelect({ prefer, ...props }: InputTimezoneSelectProps) {
 	const { t } = useTranslation();
 
-	const { data: timezones = [] } = useQuery({
-		queryKey: ["timezones"],
-		queryFn: listTimezones,
-		staleTime: Infinity
-	});
+	const timezones = useAttributes("timezone");
 
 	const browserTimezone = useMemo(
 		() => Intl.DateTimeFormat().resolvedOptions().timeZone,
@@ -72,7 +69,7 @@ export function InputTimezoneSelect({ prefer, ...props }: InputTimezoneSelectPro
 		[timezones]
 	);
 
-	const options = useMemo(() => {
+	const options = useIntervalValue(useCallback(() => {
 		return timezones
 			.map((tz) => {
 				const city = getCityName(tz.id);
@@ -80,7 +77,7 @@ export function InputTimezoneSelect({ prefer, ...props }: InputTimezoneSelectPro
 
 				return {
 					id: tz.id,
-					name: `${city} (${time})`,
+					name: `${city} time (${time})`,
 					offset: tz.offset
 				};
 			})
@@ -89,7 +86,7 @@ export function InputTimezoneSelect({ prefer, ...props }: InputTimezoneSelectPro
 				if (b.id === preferredTimezone) return 1;
 				return 0;
 			});
-	}, [timezones, preferredTimezone]);
+	}, [preferredTimezone, timezones]), ms("5s"));
 
 	return (
 		<OffsetMapContext value={offsetMap}>
