@@ -84,6 +84,15 @@ export const NewsDialog: FC<NewsDialogProps> = (props) => {
 		return session.user.news.filter((id) => newsItems[id]).toReversed();
 	}, [props.news, session?.user.news, tourCompleted]);
 
+	const newsKey = news.join();
+	const [shownKey, setShownKey] = useState(newsKey);
+
+	if (shownKey !== newsKey) {
+		setShownKey(newsKey);
+		setCurrentIndex(0);
+		setPendingAction(null);
+	}
+
 	const registerForm = useCallback(
 		(id: string, submit: NewsFormSubmit | null) => {
 			if (submit) submitters.current.set(id, submit);
@@ -130,11 +139,16 @@ export const NewsDialog: FC<NewsDialogProps> = (props) => {
 		if (closing.current) return;
 		closing.current = true;
 
-		if (!props.news && session) {
-			const updatedUser = await User.removeNews(session.user.id, news);
-			await mutate<Session>(sessionKey(), (session) => session && { ...session, user: updatedUser });
+		try {
+			if (!props.news && session) {
+				const updatedUser = await User.removeNews(session.user.id, news);
+				await mutate<Session>(sessionKey(), (session) => session && { ...session, user: updatedUser });
+			}
+			props.onClose?.();
 		}
-		props.onClose?.();
+		finally {
+			closing.current = false;
+		}
 	};
 
 	const performAction = async (action: NewsAction) => {
