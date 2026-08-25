@@ -14,8 +14,8 @@ import { defineConfig, loadEnv } from "vite";
 import { imagetools } from "vite-imagetools";
 import { ViteImageOptimizer as imageOptimize } from "vite-plugin-image-optimizer";
 
-import { browserslist, targets } from "./src/polyfill";
-import { hush } from "./vite-plugin-hush";
+import { browserslist, targets } from "./src/polyfill.ts";
+import { hush } from "./vite-plugin-hush.ts";
 
 const mkcertPaths = {
 	cert: "./certificates/localhost.pem",

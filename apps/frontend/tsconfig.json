@@ -20,6 +20,7 @@
 				"./src/*"
 			]
 		},
+		"allowImportingTsExtensions": true,
 		"resolveJsonModule": true,
 		"types": [
 			"vite/client",
