@@ -12,6 +12,7 @@ import type { PropsWithChildren } from "react";
 import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
+import { isPluginUnimplemented, reportAppOutdated } from "~/capacitor";
 import type { IconComponent } from "~/components/icons";
 
 import { device } from "./use-device";
@@ -124,7 +125,9 @@ export const ToastProvider: React.FC<PropsWithChildren> = ({ children }) => {
 	);
 
 	const addError = useCallback(
-		(reason: unknown, { expected = false }: AddErrorOptions = {}) => {
+		async (reason: unknown, { expected = false }: AddErrorOptions = {}) => {
+			if (reportAppOutdated(reason)) return;
+
 			const message
 				= (typeof reason === "object"
 					&& reason !== null
@@ -134,7 +137,7 @@ export const ToastProvider: React.FC<PropsWithChildren> = ({ children }) => {
 				|| (typeof reason === "string" && reason)
 				|| t("errors.internal_server_error");
 
-			if (!expected) captureException(reason);
+			if (!expected && !isPluginUnimplemented(reason)) captureException(reason);
 
 			return add({
 				type: "error",

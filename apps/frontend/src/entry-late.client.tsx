@@ -4,6 +4,7 @@ import { hydrateRoot } from "react-dom/client";
 import { HydratedRouter } from "react-router/dom";
 
 import { setupAnalytics } from "./analytics";
+import { reportAppOutdated } from "./capacitor";
 import { setupMonitoring } from "./monitoring";
 import { preloadAll } from "./query";
 import { isRedirectError } from "./redirect";
@@ -12,6 +13,8 @@ import { deepLinkToRelativeUrl } from "./urls";
 
 void setupMonitoring();
 void setupAnalytics();
+
+window.addEventListener("unhandledrejection", ({ reason }) => void reportAppOutdated(reason));
 
 const launchDeepLinkKey = "launch-deep-link-consumed";
 

@@ -23,9 +23,11 @@ import MarkBackground from "virtual:remote/flirtual-mark-background.png?no-inlin
 
 import type { Route } from "./+types/root";
 import { App } from "./app";
+import { isAppOutdated } from "./capacitor";
 import { HavingIssuesViewport } from "./components/error";
 import { Loading } from "./components/loading";
 import { ConditionalSnowfall } from "./components/snowfall";
+import { UpdateRequiredDialog } from "./components/update-required";
 import {
 	apiOrigin,
 	appBundleId,
@@ -259,6 +261,8 @@ export function Layout({ children }: PropsWithChildren) {
 export default App;
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
+	if (isAppOutdated(error)) return <UpdateRequiredDialog />;
+
 	return <HavingIssuesViewport error={error} />;
 }
 

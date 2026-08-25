@@ -39,7 +39,10 @@ async function getNotificationPermission(): Promise<PermissionStatus["receive"]>
 	const { receive } = await PushNotifications.checkPermissions();
 	if (receive !== "granted" || !device.native || !device.android) return receive;
 
-	const { enabled } = await NotificationSettings.areEnabled();
+	const { enabled } = await NotificationSettings
+		.areEnabled()
+		.catch(() => ({ enabled: true }));
+
 	return enabled ? "granted" : "denied";
 }
 

@@ -361,6 +361,8 @@
 	"update_available_description_native_unsaved": "We're always improving Flirtual, and a new version is ready for you. Save anything you're in the middle of, then update Flirtual from {platform, select, apple {the App Store} other {Google Play}}. You may encounter bugs if you skip this update.",
 	"update_available_description_web": "We're always improving Flirtual. Refresh the page to see the newest version, or you may encounter bugs.",
 	"update_available_description_web_unsaved": "We're always improving Flirtual. Save anything you're in the middle of, then refresh the page to see the newest version, or you may encounter bugs.",
+	"update_required": "Update Flirtual",
+	"update_required_description": "An update is required for this feature. Please install the latest version of Flirtual from {platform, select, apple {the App Store} other {Google Play}}, then try again.",
 	"not_now": "Not now",
 	"loose_fancy_marlin_zip": "Copied to clipboard",
 	"learn_more": "Learn more",

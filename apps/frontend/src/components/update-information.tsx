@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import { useMatches } from "react-router";
 import { withSuspense, } from "with-suspense";
 
+import { dismissAppOutdated, useAppOutdated } from "~/capacitor";
 import { appStoreId, client, commitId, siteOrigin } from "~/const";
 import { device } from "~/hooks/use-device";
 import { useQuery } from "~/query";
@@ -21,6 +22,7 @@ import {
 	DialogTitle
 } from "./dialog/dialog";
 import { DrawerOrDialog } from "./drawer-or-dialog";
+import { UpdateRequiredDialog } from "./update-required";
 
 function useVersionCheck() {
 	return useQuery({
@@ -104,6 +106,7 @@ export const UpdateInformationDialog: React.FC<{ native: boolean; onUpdate: () =
 };
 
 export const UpdateInformation: React.FC = withSuspense(() => {
+	const appOutdated = useAppOutdated();
 	const serverVersion = useVersionCheck();
 	const webUpdateAvailable = !!serverVersion && serverVersion !== commitId;
 
@@ -138,6 +141,9 @@ export const UpdateInformation: React.FC = withSuspense(() => {
 	const nativeUpdateAvailable = updateInformation
 		&& updateInformation.updateAvailability === AppUpdateAvailability.UPDATE_AVAILABLE
 		&& !updateInformation.flexibleUpdateAllowed;
+
+	if (appOutdated)
+		return <UpdateRequiredDialog onDismiss={dismissAppOutdated} />;
 
 	if (!webUpdateAvailable && !nativeUpdateAvailable)
 		return null;
