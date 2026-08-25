@@ -56,7 +56,7 @@ jobs:
         if: steps.cache-restore.outputs.cache-matched-key != ''
         run: sudo chown -R 12021:0 /tmp/renovate/
 
-      - uses: renovatebot/github-action@v46.2.2
+      - uses: renovatebot/github-action@5402b206248e5a8c8427a15102702eb9c1793efc # v46.2.4
         with:
           docker-cmd-file: .github/renovate-entrypoint.sh
           docker-user: root
