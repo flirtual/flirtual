@@ -5,18 +5,26 @@ import { notFoundImage } from "~/api/user/profile/images";
 export type ImageProps = {
 	src: string;
 	priority?: boolean;
+	placeholder?: boolean;
 } & ComponentProps<"img">;
 
-export const Image: FC<ImageProps> = ({ src, priority, ...props }) => {
+export const Image: FC<ImageProps> = ({ src, priority, placeholder, ...props }) => {
 	return (
 		<img
 			{...props}
 			fetchPriority={priority ? "high" : "low"}
 			loading={priority ? "eager" : "lazy"}
 			src={src}
-			onError={({ currentTarget }) => {
-				// If the image fails to load (doesn't exist), use a fallback.
-				currentTarget.src = notFoundImage.url;
+			onError={(event) => {
+				const { currentTarget } = event;
+
+				if (placeholder)
+					currentTarget.removeAttribute("src");
+				else
+					// If the image fails to load (doesn't exist), use a fallback.
+					currentTarget.src = notFoundImage.url;
+
+				props.onError?.(event);
 			}}
 		/>
 	);
