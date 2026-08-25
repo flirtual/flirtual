@@ -3,6 +3,15 @@ on:
   schedule:
     - cron: 0 */4 * * *
   workflow_dispatch:
+    inputs:
+      repoCache:
+        description: Reset or disable the repository cache?
+        type: choice
+        default: enabled
+        options:
+          - enabled
+          - disabled
+          - reset
   issues:
     types: [edited]
   pull_request:
@@ -11,6 +20,9 @@ permissions:
   contents: read
 concurrency:
   group: renovate
+env:
+  cache_dir: /tmp/renovate/cache/renovate/repository
+  cache_key: renovate-cache
 jobs:
   renovate:
     name: Renovate
@@ -29,6 +41,21 @@ jobs:
           client-id: ${{ vars.RENOVATE_APP_CLIENT_ID }}
           private-key: ${{ secrets.RENOVATE_APP_PRIVATE_KEY }}
 
+      - name: Restore repository cache
+        id: cache-restore
+        if: github.event.inputs.repoCache != 'disabled' && github.event.inputs.repoCache != 'reset'
+        uses: actions/cache/restore@v6
+        with:
+          path: ${{ env.cache_dir }}
+          key: ${{ env.cache_key }}-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: |
+            ${{ env.cache_key }}-
+
+      # https://github.com/renovatebot/github-action#persisting-the-repository-cache
+      - name: Fix restored cache ownership
+        if: steps.cache-restore.outputs.cache-matched-key != ''
+        run: sudo chown -R 12021:0 /tmp/renovate/
+
       - uses: renovatebot/github-action@v46.2.2
         with:
           docker-cmd-file: .github/renovate-entrypoint.sh
@@ -37,3 +64,11 @@ jobs:
         env:
           RENOVATE_REPOSITORIES: ${{ github.repository }}
           RENOVATE_BINARY_SOURCE: global
+          RENOVATE_REPOSITORY_CACHE: ${{ github.event.inputs.repoCache || 'enabled' }}
+
+      - name: Save repository cache
+        if: github.event.inputs.repoCache != 'disabled' && steps.cache-restore.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v6
+        with:
+          path: ${{ env.cache_dir }}
+          key: ${{ env.cache_key }}-${{ github.run_id }}-${{ github.run_attempt }}
