@@ -327,7 +327,11 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
         target_id: response.target_id,
         answered:
           type(
-            fragment("bool_or(?)", response.type == :like or response.source == :likes),
+            fragment(
+              "bool_or(?)",
+              response.type == :like or response.source == :likes or
+                response.source == :unknown
+            ),
             :boolean
           )
       }

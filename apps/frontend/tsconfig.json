@@ -20,13 +20,13 @@
 				"./src/*"
 			]
 		},
-		"allowImportingTsExtensions": true,
 		"resolveJsonModule": true,
 		"types": [
 			"vite/client",
 			"unplugin-info/client",
 			"unplugin-remote-assets/client"
 		],
+		"allowImportingTsExtensions": true,
 		"strict": true,
 		"noEmit": true,
 		"esModuleInterop": true,

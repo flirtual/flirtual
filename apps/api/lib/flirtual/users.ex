@@ -421,9 +421,29 @@ defmodule Flirtual.Users do
   end
 
   def remove_news(%User{} = user, news) when is_list(news) do
-    user
-    |> change(%{news: Enum.reject(user.news, &(&1 in news))})
-    |> Repo.update()
+    now = DateTime.utc_now() |> DateTime.truncate(:second)
+
+    query =
+      from(u in User,
+        where: u.id == ^user.id,
+        update: [
+          set: [
+            news:
+              fragment(
+                "array(select item from unnest(?) with ordinality as t(item, ord) where item <> all(?) order by ord)",
+                u.news,
+                type(^news, {:array, :string})
+              ),
+            updated_at: ^now
+          ]
+        ],
+        select: u.news
+      )
+
+    case Repo.update_all(query, []) do
+      {1, [news]} -> {:ok, %{user | news: news, updated_at: now}}
+      {0, _} -> {:error, {:not_found}}
+    end
   end
 
   def deactivate(%User{} = user) do
