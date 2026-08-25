@@ -8,7 +8,7 @@ import type { User } from "./api/user";
 import type { Profile } from "./api/user/profile";
 import type { ProfileImage } from "./api/user/profile/images";
 import type { DiscoverGroup } from "./app/[locale]/(app)/(authenticated)/(onboarded)/discover/page";
-import { apiUrl, bucketContentOrigin, bucketUploadsOrigin, shortOrigin, siteOrigin } from "./const";
+import { apiUrl, appBundleId, appStoreId, bucketContentOrigin, bucketUploadsOrigin, shortOrigin, siteOrigin } from "./const";
 import { defaultLocale } from "./i18n";
 import type { Locale } from "./i18n";
 import { escapeVRChat } from "./vrchat";
@@ -285,8 +285,8 @@ export const urls = {
 	},
 
 	apps: {
-		apple: "https://apps.apple.com/app/flirtual-vr-dating-app/id6450485324",
-		google: "https://play.google.com/store/apps/details?id=zone.homie.flirtual.pwa",
+		apple: `https://apps.apple.com/app/flirtual-vr-dating-app/id${appStoreId}`,
+		google: `https://play.google.com/store/apps/details?id=${appBundleId}`,
 		microsoft: "https://apps.microsoft.com/store/detail/flirtual/9NWCSDGB6CS3",
 		sideQuest: "https://sidequestvr.com/app/9195"
 	},
