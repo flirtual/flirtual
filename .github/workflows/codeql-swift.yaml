@@ -30,6 +30,7 @@ jobs:
       VITE_ORIGIN: https://flirtu.al
       VITE_API_URL: https://api.flirtu.al/v1/
       VITE_APP_BUNDLE_ID: zone.homie.flirtual.pwa
+      VITE_APP_STORE_ID: "6450485324"
     steps:
       - uses: actions/checkout@v7
 

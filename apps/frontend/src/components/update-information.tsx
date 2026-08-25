@@ -8,9 +8,10 @@ import { useTranslation } from "react-i18next";
 import { useMatches } from "react-router";
 import { withSuspense, } from "with-suspense";
 
-import { client, commitId, siteOrigin } from "~/const";
+import { appStoreId, client, commitId, siteOrigin } from "~/const";
 import { device } from "~/hooks/use-device";
 import { useQuery } from "~/query";
+import { urls } from "~/urls";
 
 import { Button } from "./button";
 import {
@@ -146,7 +147,10 @@ export const UpdateInformation: React.FC = withSuspense(() => {
 			native={!!nativeUpdateAvailable}
 			onUpdate={() => {
 				if (nativeUpdateAvailable) {
-					AppUpdate.openAppStore();
+					void AppUpdate
+						.openAppStore(device.apple ? { appId: appStoreId } : {})
+						.catch(() => void window.open(device.apple ? urls.apps.apple : urls.apps.google, "_blank"));
+
 					return;
 				}
 

@@ -6,7 +6,7 @@ import { shouldPolyfill as needsNumberFormat } from "@formatjs/intl-numberformat
 import { shouldPolyfill as needsPluralRules } from "@formatjs/intl-pluralrules/should-polyfill.js";
 import { shouldPolyfill as needsRelativeTimeFormat } from "@formatjs/intl-relativetimeformat/should-polyfill.js";
 
-import type { Locale } from "./i18n/languages";
+import type { Locale } from "./i18n/languages.ts";
 
 export const targets = [
 	"chrome106",

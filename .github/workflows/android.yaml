@@ -51,6 +51,7 @@ jobs:
       VITE_ORIGIN: ${{ inputs.channel == 'production' && 'https://flirtu.al' || 'https://beta.flirtual.dev' }}
       VITE_API_URL: ${{ inputs.channel == 'production' && 'https://api.flirtu.al/v1/' || 'https://beta-api.flirtual.dev/v1/' }}
       VITE_APP_BUNDLE_ID: ${{ inputs.channel == 'production' && 'zone.homie.flirtual.pwa' || 'zone.homie.flirtual.beta' }}
+      VITE_APP_STORE_ID: "6450485324"
       FLAVOR: ${{ inputs.channel == 'production' && 'production' || 'beta' }}
     steps:
       - uses: actions/checkout@v7

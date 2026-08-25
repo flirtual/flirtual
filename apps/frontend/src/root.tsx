@@ -28,6 +28,8 @@ import { Loading } from "./components/loading";
 import { ConditionalSnowfall } from "./components/snowfall";
 import {
 	apiOrigin,
+	appBundleId,
+	appStoreId,
 	client,
 	development,
 	nativeOverride,
@@ -97,12 +99,12 @@ export function meta({
 
 		{ name: "mobile-web-app-capable", content: "yes" },
 
-		{ name: "apple-itunes-app", content: "app-id=6450485324" },
+		{ name: "apple-itunes-app", content: `app-id=${appStoreId}` },
 		{ name: "apple-mobile-web-app-title", content: t("flirtual") },
 		{ name: "apple-mobile-web-app-status-bar-style", content: "default" },
-		{ property: "al:ios:app_store_id", content: "6450485324" },
+		{ property: "al:ios:app_store_id", content: appStoreId },
 		{ property: "al:ios:url", content: urls.apps.apple },
-		{ property: "al:android:package", content: "zone.homie.flirtual.pwa" },
+		{ property: "al:android:package", content: appBundleId },
 		{ property: "al:android:url", content: urls.apps.google },
 		{ property: "al:web:should_fallback", content: (true).toString() },
 		{ property: "al:web:url", content: siteOrigin },

@@ -78,6 +78,7 @@ export const UserImage: React.FC<UserImageProps> = ({ src, blurHash, ...props })
 				backgroundImage: background ? `url(${background})` : "none",
 				...props.style
 			}}
+			placeholder={!!background}
 			src={src}
 			onLoad={(event) => {
 				setLoaded(true);
