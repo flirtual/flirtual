@@ -361,6 +361,8 @@
 	"update_available_description_native_unsaved": "Flirtualは常に改善を続けており、新しいバージョンをご用意しました。作業中の内容を保存し、{platform, select, apple {App Store} other {Google Play}}からFlirtualを更新してください。このアップデートをスキップすると、不具合が発生する可能性があります。",
 	"update_available_description_web": "Flirtualは常に改善を続けています。ページを再読み込みして最新バージョンをご利用ください。そのままでは不具合が発生する可能性があります。",
 	"update_available_description_web_unsaved": "Flirtualは常に改善を続けています。作業中の内容を保存し、ページを再読み込みして最新バージョンをご利用ください。そのままでは不具合が発生する可能性があります。",
+	"update_required": "Flirtualを更新してください",
+	"update_required_description": "この機能を利用するにはアップデートが必要です。{platform, select, apple {App Store} other {Google Play}}から最新バージョンのFlirtualをインストールして、もう一度お試しください。",
 	"not_now": "後で",
 	"loose_fancy_marlin_zip": "クリップボードにコピーしました",
 	"learn_more": "詳細はこちら",

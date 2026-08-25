@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import type { QueryFunctionContext, QueryKey, QueryState, UseMutationOptions, UseQueryOptions } from "@tanstack/react-query";
-import { useMutation as _useMutation, useQuery as _useQuery, hashKey, QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useMutation as _useMutation, useQuery as _useQuery, hashKey, MutationCache, QueryCache, QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import ms from "ms" with { type: "macro" };
 import type { Dispatch, PropsWithChildren } from "react";
@@ -19,6 +19,7 @@ import { Matchmaking } from "./api/matchmaking";
 import { Plan } from "./api/plan";
 import { User } from "./api/user";
 import { Personality } from "./api/user/profile/personality";
+import { reportAppOutdated } from "./capacitor";
 import { development, server } from "./const";
 import { log as _log } from "./log";
 import { getPreferences } from "./preferences";
@@ -126,6 +127,8 @@ export async function preloadAll() {
 const log = _log.extend("query");
 
 export const queryClient = new QueryClient({
+	queryCache: new QueryCache({ onError: reportAppOutdated }),
+	mutationCache: new MutationCache({ onError: reportAppOutdated }),
 	defaultOptions: {
 		queries: {
 			experimental_prefetchInRender: true,
