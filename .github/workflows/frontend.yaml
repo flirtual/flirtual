@@ -222,16 +222,3 @@ jobs:
           VITE_ORIGIN: https://beta.flirtual.dev
           VITE_API_URL: https://beta-api.flirtual.dev/v1/
         run: pnpm run canary
-
-      - name: Post preview check
-        if: matrix.environment == 'canary' && github.ref == 'refs/heads/main'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          jq -n --arg sha "$GITHUB_SHA" --arg url "https://$PREVIEW_LABEL.flirtual.dev" '{
-            name: "preview",
-            head_sha: $sha,
-            status: "completed",
-            conclusion: "success",
-            output: { title: "Preview deployed", summary: "→ \($url)" }
-          }' | gh api repos/${{ github.repository }}/check-runs --input -

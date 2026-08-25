@@ -113,6 +113,7 @@ jobs:
             label="${GITHUB_SHA::7}"
           fi
           echo "PREVIEW_LABEL=$label" >> "$GITHUB_ENV"
+          echo "url=https://api-$label.flirtual.dev" >> "$GITHUB_OUTPUT"
 
           # runtime.exs requires these in prod, so every machine needs them,
           # even one that only runs migrations.
