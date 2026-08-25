@@ -1,14 +1,19 @@
 {
 	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
 	"extends": [
-		"config:recommended"
+		"config:best-practices"
 	],
-	"minimumReleaseAge": "3 days",
+	"timezone": "America/New_York",
 	"semanticCommits": "enabled",
 	"semanticCommitScope": "{{#if parentDir}}{{parentDir}}{{else}}repo{{/if}}",
-	"dependencyDashboardApproval": true,
+	"osvVulnerabilityAlerts": true,
+	"dependencyDashboardOSVVulnerabilitySummary": "unresolved",
+	"major": {
+		"dependencyDashboardApproval": true
+	},
 	"lockFileMaintenance": {
 		"enabled": true,
+		"automerge": true,
 		"schedule": [
 			"before 6am on monday"
 		]
@@ -54,8 +59,13 @@
 	],
 	"packageRules": [
 		{
-			"matchUpdateTypes": ["pin", "lockFileMaintenance", "rollback", "bump", "replacement"],
-			"minimumReleaseAge": null
+			"description": "Custom managers capture no currentDigest group, so they cannot be pinned by digest",
+			"matchManagers": ["custom.regex"],
+			"pinDigests": false
+		},
+		{
+			"matchFileNames": [".github/**"],
+			"semanticCommitScope": "ci"
 		},
 		{
 			"matchManagers": ["gradle", "gradle-wrapper"],
@@ -122,6 +132,20 @@
 				"containerbase/erlang-prebuild"
 			],
 			"groupName": "elixir toolchain"
+		},
+		{
+			"matchUpdateTypes": ["digest", "pinDigest"],
+			"automerge": true
+		},
+		{
+			"matchManagers": ["github-actions"],
+			"matchUpdateTypes": ["minor", "patch"],
+			"automerge": true
+		},
+		{
+			"matchDepTypes": ["devDependencies", "pnpm.catalog.default"],
+			"matchUpdateTypes": ["minor", "patch"],
+			"automerge": true
 		}
 	]
 }
