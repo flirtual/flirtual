@@ -2,6 +2,7 @@ on:
   push:
     branches: [main, production]
   pull_request:
+  merge_group:
   workflow_dispatch:
 
 permissions:
@@ -68,7 +69,7 @@ jobs:
       run: mix check --except compiler
 
   image:
-    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    if: github.event_name != 'merge_group' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
     needs: [build]
     runs-on: ubuntu-latest
     steps:
