@@ -2,6 +2,10 @@ import type { LucideProps } from "lucide-react";
 import { Clock1, Clock2, Clock3, Clock4, Clock5, Clock6, Clock7, Clock8, Clock9, Clock10, Clock11, Clock12 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
+import { wallClockInTimezone } from "~/date";
+import { useSession } from "~/hooks/use-session";
+import { useLocale } from "~/i18n";
+
 import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
 
 export interface TimeDiffProps {
@@ -27,6 +31,8 @@ const clockIcons: Array<React.FC<LucideProps> | null> = [
 
 export const TimeDiff: React.FC<TimeDiffProps> = ({ diff, displayName }) => {
 	const { t } = useTranslation();
+	const [locale] = useLocale();
+	const { user: { profile: { timezone } } } = useSession();
 
 	const absDiff = Math.abs(diff);
 	const hours = Math.floor(absDiff / 3600);
@@ -35,14 +41,14 @@ export const TimeDiff: React.FC<TimeDiffProps> = ({ diff, displayName }) => {
 		? t("time_diff_hm", { sign: diff < 0 ? "-" : "+", hours, minutes })
 		: t("time_diff_h", { sign: diff < 0 ? "-" : "+", hours });
 
-	const now = new Date();
-	const theirTime = new Date(now.getTime() + diff * 1000);
-	const formattedTime = theirTime.toLocaleTimeString(undefined, {
+	const theirTime = new Date(wallClockInTimezone(new Date(), timezone).getTime() + diff * 1000);
+	const formattedTime = theirTime.toLocaleTimeString(locale, {
 		hour: "numeric",
-		minute: "numeric"
+		minute: "numeric",
+		timeZone: "UTC"
 	});
 
-	const hourHand = theirTime.getHours() % 12 || 12;
+	const hourHand = theirTime.getUTCHours() % 12 || 12;
 	const ClockIcon = clockIcons[hourHand] || Clock4;
 
 	return (

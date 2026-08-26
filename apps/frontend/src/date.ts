@@ -30,3 +30,31 @@ export function endOfYear(date: Date = new Date()): Date {
 export function toLocalDateString(date: Date): string {
 	return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
 }
+
+// Returns a Date whose UTC fields hold the wall-clock time in `timezone`, so it can be
+// formatted or shifted without relying on the device's own timezone.
+export function wallClockInTimezone(date: Date, timezone?: string): Date {
+	const parts = Object.fromEntries(
+		new Intl.DateTimeFormat("en-US", {
+			timeZone: timezone,
+			hourCycle: "h23",
+			year: "numeric",
+			month: "2-digit",
+			day: "2-digit",
+			hour: "2-digit",
+			minute: "2-digit",
+			second: "2-digit"
+		})
+			.formatToParts(date)
+			.map(({ type, value }) => [type, value])
+	);
+
+	return new Date(Date.UTC(
+		Number(parts.year),
+		Number(parts.month) - 1,
+		Number(parts.day),
+		Number(parts.hour) % 24,
+		Number(parts.minute),
+		Number(parts.second)
+	));
+}
