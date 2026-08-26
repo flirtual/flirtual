@@ -53,7 +53,6 @@ defmodule FlirtualWeb.ConversationController do
     with user <- conn.assigns[:session].user,
          {:ok, conversation} <- Conversation.get(conversation_id),
          :ok <- Policy.can(conn, :send_message, conversation),
-         conversation <- Policy.transform(conn, conversation),
          {:ok, result} <-
            Talkjs.create_messages(conversation_id, [
              %{
@@ -87,8 +86,7 @@ defmodule FlirtualWeb.ConversationController do
 
   def leave(conn, %{"conversation_id" => conversation_id}) do
     with user <- conn.assigns[:session].user,
-         {:ok, conversation} <- Conversation.get(conversation_id),
-         conversation <- Policy.transform(conn, conversation),
+         {:ok, _conversation} <- Conversation.get(conversation_id),
          {:ok, _} <- Talkjs.delete_participant(conversation_id, user.id) do
       conn
       |> json(%{success: true})

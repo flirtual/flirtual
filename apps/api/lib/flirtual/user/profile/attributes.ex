@@ -68,8 +68,6 @@ defmodule Flirtual.User.Profile.Attributes do
       from(a in Attribute, where: a.type == ^type)
       |> Repo.all()
 
-    total_count = length(attributes)
-
     scores =
       Enum.map(attributes, fn attr ->
         recent = Map.get(recent_counts, attr.id, 0)
