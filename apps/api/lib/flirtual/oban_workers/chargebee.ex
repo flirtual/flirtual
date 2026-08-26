@@ -1,5 +1,5 @@
 defmodule Flirtual.ObanWorkers.Chargebee do
-  use Oban.Worker, unique: [period: :infinity, states: [:available, :scheduled]]
+  use Oban.Worker, unique: [period: :infinity, states: :incomplete]
 
   import Ecto.Query
 

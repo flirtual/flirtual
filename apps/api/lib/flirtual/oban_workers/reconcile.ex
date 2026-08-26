@@ -2,7 +2,7 @@ defmodule Flirtual.ObanWorkers.Reconcile do
   use Oban.Worker,
     queue: :default,
     max_attempts: 8,
-    unique: [keys: [:user_id], states: [:available, :scheduled, :retryable]]
+    unique: [keys: [:user_id], states: :incomplete]
 
   alias Flirtual.Reconciliation
   alias Flirtual.Users

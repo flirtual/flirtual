@@ -243,9 +243,7 @@ defmodule Flirtual.User.Email do
         </script>
         """
       }
-      |> Flirtual.ObanWorkers.Email.new(
-        unique: [period: 60 * 60, states: [:available, :scheduled, :executing, :completed]]
-      )
+      |> Flirtual.ObanWorkers.Email.new(unique: [period: 60 * 60, states: :successful])
       |> Oban.insert()
     end)
   end

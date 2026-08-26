@@ -3,7 +3,7 @@ defmodule Flirtual.ObanWorkers.ComputeQueue do
     queue: :matchmaking,
     unique: [
       period: 60,
-      states: [:available, :scheduled, :executing],
+      states: :incomplete,
       keys: [:user_id, :kind]
     ]
 

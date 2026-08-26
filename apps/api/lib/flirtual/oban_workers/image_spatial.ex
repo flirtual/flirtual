@@ -4,7 +4,7 @@ defmodule Flirtual.ObanWorkers.ImageSpatial do
     unique: [
       keys: [:image_id],
       period: :infinity,
-      states: [:available, :scheduled, :executing, :retryable, :suspended]
+      states: :incomplete
     ]
 
   import Ecto.Changeset
