@@ -156,14 +156,14 @@ defmodule FlirtualWeb.ConnectionController do
     end
   end
 
+  defp verify_oauth_state(_state), do: {:error, :invalid_state}
+
   defp claim(claims, key) do
     case claims[key] do
       :null -> nil
       value -> value
     end
   end
-
-  defp verify_oauth_state(_state), do: {:error, :invalid_state}
 
   # Where an OAuth error/cancel returns: connection page, /sign-up, or /login.
   defp oauth_next(%{user_id: user_id, next: next}) when not is_nil(user_id), do: next

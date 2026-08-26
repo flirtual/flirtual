@@ -56,13 +56,6 @@ defmodule FlirtualWeb.UsersController do
     end
   end
 
-  def get_relationship(conn, %{"user_id" => user_id}) do
-    conn
-    |> json_with_etag(
-      Policy.transform(conn, User.Relationship.get(conn.assigns[:session].user[:id], user_id))
-    )
-  end
-
   def get(conn, %{"slug" => slug}) do
     user_id =
       if(conn.assigns[:session].user.slug === slug,
@@ -80,6 +73,13 @@ defmodule FlirtualWeb.UsersController do
       conn
       |> redirect(to: "/v1/users/#{user_id}")
     end
+  end
+
+  def get_relationship(conn, %{"user_id" => user_id}) do
+    conn
+    |> json_with_etag(
+      Policy.transform(conn, User.Relationship.get(conn.assigns[:session].user[:id], user_id))
+    )
   end
 
   def preview(conn, %{"user_id" => user_id}) do

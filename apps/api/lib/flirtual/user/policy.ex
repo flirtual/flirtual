@@ -94,15 +94,6 @@ defmodule Flirtual.User.Policy do
       ),
       do: can_read?(session.user, target)
 
-  def can_read?(%User{} = user, %User{} = target) do
-    cond do
-      :moderator in user.tags -> true
-      target.status != :visible -> false
-      User.blocked?(target, user) -> false
-      true -> true
-    end
-  end
-
   @admin_actions [
     :unsuspend,
     :payments_ban,
@@ -149,6 +140,15 @@ defmodule Flirtual.User.Policy do
 
   # Any other action, or credentials are disallowed.
   def authorize(_, _, _), do: false
+
+  def can_read?(%User{} = user, %User{} = target) do
+    cond do
+      :moderator in user.tags -> true
+      target.status != :visible -> false
+      User.blocked?(target, user) -> false
+      true -> true
+    end
+  end
 
   def transform(
         %Plug.Conn{
