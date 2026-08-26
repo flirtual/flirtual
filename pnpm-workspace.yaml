@@ -3,7 +3,7 @@ packages:
 
 catalog:
   "@ariesclark/eslint-config": 3.2.1-canary.1
-  "@cloudflare/vitest-pool-workers": ^0.21.0
+  "@cloudflare/vitest-pool-workers": ^0.22.0
   eslint: ^9.39.1
   typescript: ^5.9.2
   vitest: ~4.1.10
