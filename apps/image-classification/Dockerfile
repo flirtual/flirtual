@@ -2,7 +2,7 @@
 
 ARG NODE_VERSION=22.23.1
 
-FROM node:${NODE_VERSION}-slim as base
+FROM node:${NODE_VERSION}-slim AS base
 
 LABEL fly_launch_runtime="NodeJS"
 WORKDIR /app
@@ -14,7 +14,7 @@ RUN apt-get update -qq
 # Fetch Deep Danbooru
 # We want to do this as early as possible so we can
 # cache the stage for subsequent builds.
-FROM base as fetch-deep-danbooru
+FROM base AS fetch-deep-danbooru
 RUN apt-get install -y unzip curl git
 
 ARG DEEP_DANBOORU_REF=main
@@ -29,7 +29,7 @@ RUN curl -L https://github.com/flirtual/deep-danbooru/releases/download/${DEEP_D
 RUN unzip ./model.zip -d . && rm ./model.zip
 
 # Build Deep Danbooru.
-FROM base as build-deep-danbooru
+FROM base AS build-deep-danbooru
 
 COPY --from=fetch-deep-danbooru /app/deep-danbooru /app/deep-danbooru
 WORKDIR /app/deep-danbooru
@@ -43,7 +43,7 @@ RUN pip install --break-system-packages "tensorflow==2.15.1" "tensorflow-io==0.3
 # Build application.
 # We want to do this as late as possible so we can
 # utilize the cache for the previous stages.
-FROM base as build
+FROM base AS build
 WORKDIR /repo
 
 ## Install node modules.
