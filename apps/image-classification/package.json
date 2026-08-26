@@ -19,7 +19,7 @@
 	},
 	"devDependencies": {
 		"@ariesclark/eslint-config": "catalog:",
-		"@total-typescript/ts-reset": "^0.4.2",
+		"@total-typescript/ts-reset": "^0.6.0",
 		"@types/mime-types": "^2.1.4",
 		"@types/node": "^22.19.2",
 		"eslint": "catalog:",
