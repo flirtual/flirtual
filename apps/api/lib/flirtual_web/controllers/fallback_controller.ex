@@ -1,5 +1,5 @@
 defmodule FlirtualWeb.FallbackController do
-  use Phoenix.Controller
+  use Phoenix.Controller, formats: []
 
   import FlirtualWeb.ErrorHelpers
 

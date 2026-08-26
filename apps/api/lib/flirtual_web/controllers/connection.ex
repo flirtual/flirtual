@@ -225,7 +225,7 @@ defmodule FlirtualWeb.ConnectionController do
 
   defp has_email?(%User{email: email}), do: is_binary(email) and email != ""
 
-  defp grant_next(conn, redirect_type, next \\ nil) do
+  defp grant_next(conn, redirect_type, next) do
     next = safe_next(next) || safe_next(get_session(conn, :next))
 
     conn

@@ -78,7 +78,7 @@ defmodule Flirtual.Discord do
     end
   end
 
-  defp deliver_webhook(name, body, token, opts \\ []) do
+  defp deliver_webhook(name, body, token, opts) do
     wait = Keyword.get(opts, :wait, false)
     query = "?with_components=true" <> if(wait, do: "&wait=true", else: "")
 
@@ -162,7 +162,9 @@ defmodule Flirtual.Discord do
     |> Base.url_encode64(padding: false)
   end
 
-  def exchange_code(code, options \\ []) when is_binary(code) do
+  def exchange_code(code, options \\ [])
+
+  def exchange_code(code, options) when is_binary(code) do
     params = %{
       client_id: config(:client_id),
       client_secret: config(:client_secret),

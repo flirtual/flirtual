@@ -45,10 +45,8 @@ defmodule Flirtual.Connection.Provider do
       end
 
       def redirect_url!(options \\ []) do
-        case redirect_url(options) do
-          {:ok, url} -> url
-          {:error, reason} -> raise reason
-        end
+        {:ok, url} = redirect_url(options)
+        url
       end
 
       def exchange_code(_, _) do
