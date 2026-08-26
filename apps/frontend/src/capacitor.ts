@@ -12,26 +12,32 @@ const log = _log.extend("capacitor");
 // `"Foo.bar()" is not implemented on platform`.
 const pluginNameExpression = /^"(?<name>[^".(]+)/;
 
-function pluginName({ message }: CapacitorException) {
-	return pluginNameExpression.exec(message)?.groups?.name || message;
+const missingPermissionsExpression = /^Missing the following permissions in AndroidManifest\.xml:\s*(?<permissions>.*)/s;
+
+function missingSupport({ message }: Error) {
+	return (
+		pluginNameExpression.exec(message)?.groups?.name
+		|| missingPermissionsExpression.exec(message)?.groups?.permissions.trim().replaceAll(/\s+/g, ", ")
+		|| message
+	);
 }
 
 // Don't prompt to update for these plugins.
 const ignoredPlugins = new Set(["NotificationSettings"]);
 
-export function isPluginUnimplemented(reason: unknown): reason is CapacitorException {
+export function isPluginUnsupported(reason: unknown): reason is Error {
 	return (
-		reason instanceof CapacitorException
-		&& reason.code === ExceptionCode.Unimplemented
+		(reason instanceof CapacitorException && reason.code === ExceptionCode.Unimplemented)
+		|| (reason instanceof Error && missingPermissionsExpression.test(reason.message))
 	);
 }
 
-export function isAppOutdated(reason: unknown): reason is CapacitorException {
+export function isAppOutdated(reason: unknown): reason is Error {
 	return (
 		client
 		&& device.native
-		&& isPluginUnimplemented(reason)
-		&& !ignoredPlugins.has(pluginName(reason))
+		&& isPluginUnsupported(reason)
+		&& !ignoredPlugins.has(missingSupport(reason))
 	);
 }
 
@@ -52,16 +58,16 @@ function emit() {
 export function reportAppOutdated(reason: unknown): boolean {
 	if (!isAppOutdated(reason)) return false;
 
-	const plugin = pluginName(reason);
-	log("%s is unimplemented, the app is outdated.", plugin);
+	const missing = missingSupport(reason);
+	log("%s is unsupported, the app is outdated.", missing);
 
-	if (!reported.has(plugin)) {
-		reported.add(plugin);
-		captureException(reason, { tags: { plugin } });
+	if (!reported.has(missing)) {
+		reported.add(missing);
+		captureException(reason, { tags: { missing } });
 	}
 
-	if (outdatedFor !== plugin) {
-		outdatedFor = plugin;
+	if (outdatedFor !== missing) {
+		outdatedFor = missing;
 		emit();
 	}
 
@@ -75,7 +81,7 @@ export function dismissAppOutdated() {
 	emit();
 }
 
-// The missing plugin.
+// The missing plugin or permissions.
 export function useAppOutdated() {
 	return useSyncExternalStore(subscribe, () => outdatedFor, () => null);
 }

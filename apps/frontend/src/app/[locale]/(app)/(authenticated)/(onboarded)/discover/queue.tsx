@@ -203,7 +203,7 @@ export const Queue: FC<{ kind: ProspectKind }> = ({ kind }) => {
 	const displayed = (guest !== current ? guest : null) ?? current;
 
 	useEffect(() => {
-		if (displayed) displayedProfile.current = { userId: displayed, mode: kind };
+		displayedProfile.current = displayed ? { userId: displayed, mode: kind } : null;
 	}, [displayed, kind]);
 
 	if (error === "finish_profile")

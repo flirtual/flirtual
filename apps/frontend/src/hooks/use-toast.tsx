@@ -12,7 +12,7 @@ import type { PropsWithChildren } from "react";
 import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
-import { isPluginUnimplemented, reportAppOutdated } from "~/capacitor";
+import { isPluginUnsupported, reportAppOutdated } from "~/capacitor";
 import type { IconComponent } from "~/components/icons";
 
 import { device } from "./use-device";
@@ -137,7 +137,7 @@ export const ToastProvider: React.FC<PropsWithChildren> = ({ children }) => {
 				|| (typeof reason === "string" && reason)
 				|| t("errors.internal_server_error");
 
-			if (!expected && !isPluginUnimplemented(reason)) captureException(reason);
+			if (!expected && !isPluginUnsupported(reason)) captureException(reason);
 
 			return add({
 				type: "error",

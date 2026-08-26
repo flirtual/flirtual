@@ -78,10 +78,10 @@ export function setupMonitoring() {
 		]
 	});
 
-	const { native, vision } = device;
+	const { native, vision, build, version } = device;
 
-	getGlobalScope().setAttributes({
-		native,
-		vision
-	});
+	const app = native ? { native, vision, build, version } : { native, vision };
+
+	getGlobalScope().setAttributes(app);
+	getGlobalScope().setTags(app);
 }
