@@ -5,8 +5,6 @@ on:
       - apps/frontend/android/**
       - apps/frontend/capacitor.config.ts
       - apps/frontend/package.json
-      - pnpm-lock.yaml
-      - pnpm-workspace.yaml
       - .github/workflows/codeql-java.yaml
   pull_request:
     paths: *paths

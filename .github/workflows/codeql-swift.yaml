@@ -5,8 +5,6 @@ on:
       - apps/frontend/ios/**
       - apps/frontend/capacitor.config.ts
       - apps/frontend/package.json
-      - pnpm-lock.yaml
-      - pnpm-workspace.yaml
       - .github/workflows/codeql-swift.yaml
   pull_request:
     paths: *paths
