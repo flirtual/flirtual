@@ -50,9 +50,7 @@ defmodule Flirtual.User.Push do
         "url" => "flirtual://matches/" <> conversation_id,
         "match_notification" => true
       }
-      |> Flirtual.ObanWorkers.Push.new(
-        unique: [period: 60 * 60, states: [:available, :scheduled, :executing, :completed]]
-      )
+      |> Flirtual.ObanWorkers.Push.new(unique: [period: 60 * 60, states: :successful])
       |> Oban.insert()
     end)
   end

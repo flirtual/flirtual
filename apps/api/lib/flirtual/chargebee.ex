@@ -35,8 +35,8 @@ defmodule Flirtual.Chargebee do
         |> Enum.flat_map(&subscription_row/1)
         |> then(&{:ok, &1})
 
-      _ ->
-        {:error, :chargebee_unavailable}
+      error ->
+        failure(:subscription_rows, customer_id, error)
     end
   end
 
@@ -108,8 +108,8 @@ defmodule Flirtual.Chargebee do
       {:error, 404, _, _} ->
         {:ok, :perpetual}
 
-      _ ->
-        {:error, :chargebee_unavailable}
+      error ->
+        failure(:one_time_state, store_id, error)
     end
   end
 
@@ -154,8 +154,45 @@ defmodule Flirtual.Chargebee do
          |> Enum.map(&(&1["amount"] || 0))
          |> Enum.sum()}
 
+      error ->
+        failure(:refunded_amount, customer_id, error)
+    end
+  end
+
+  defp failure(source, id, {:error, 429, headers, _}) do
+    seconds = retry_after(headers)
+    log(:warning, [source, id], "rate limited, waiting #{seconds}s")
+    {:error, {:chargebee_rate_limited, seconds}}
+  end
+
+  defp failure(source, id, {:error, status, _, body}) do
+    log(:error, [source, id], %{status: status, body: body})
+    {:error, :chargebee_unavailable}
+  end
+
+  defp failure(source, id, other) do
+    log(:error, [source, id], other)
+    {:error, :chargebee_unavailable}
+  end
+
+  @default_retry_after 60
+  @max_retry_after 3600
+
+  defp retry_after(headers) do
+    headers
+    |> Enum.find_value(fn
+      {"retry-after", value} -> value
+      _ -> nil
+    end)
+    |> case do
+      value when is_binary(value) ->
+        case Integer.parse(value) do
+          {seconds, _} when seconds > 0 -> min(seconds, @max_retry_after)
+          _ -> @default_retry_after
+        end
+
       _ ->
-        {:error, :chargebee_unavailable}
+        @default_retry_after
     end
   end
 

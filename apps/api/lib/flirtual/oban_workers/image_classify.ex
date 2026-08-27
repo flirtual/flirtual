@@ -4,7 +4,7 @@ defmodule Flirtual.ObanWorkers.ImageClassify do
     unique: [
       keys: [:image_id],
       period: :infinity,
-      states: [:available, :scheduled, :executing, :retryable, :suspended]
+      states: :incomplete
     ]
 
   alias Flirtual.User.Profile.Image

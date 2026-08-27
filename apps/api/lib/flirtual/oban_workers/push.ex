@@ -2,7 +2,7 @@ defmodule Flirtual.ObanWorkers.Push do
   use Oban.Worker,
     queue: :notifications,
     priority: 1,
-    unique: [period: :infinity, states: [:available, :scheduled]]
+    unique: [period: :infinity, states: :incomplete]
 
   alias Flirtual.{PushNotification, User}
 

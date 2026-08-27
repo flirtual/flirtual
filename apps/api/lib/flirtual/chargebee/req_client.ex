@@ -23,7 +23,7 @@ defmodule Flirtual.Chargebee.ReqClient do
         {:ok, status, Req.get_headers_list(response), response_body}
 
       {:error, reason} ->
-        {:error, 0, [], reason}
+        {:ok, 0, [], Exception.message(reason)}
     end
   end
 end

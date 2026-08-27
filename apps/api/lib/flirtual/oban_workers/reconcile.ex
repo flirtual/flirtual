@@ -1,13 +1,14 @@
 defmodule Flirtual.ObanWorkers.Reconcile do
   use Oban.Worker,
     queue: :default,
-    max_attempts: 8,
-    unique: [keys: [:user_id], states: [:available, :scheduled, :retryable]]
+    max_attempts: 8
 
   alias Flirtual.Reconciliation
   alias Flirtual.Users
 
   @backoff_schedule [30, 90, 300, 900, 1800, 3600, 7200]
+
+  @unique [keys: [:user_id], states: [:available, :scheduled, :retryable]]
 
   @impl Oban.Worker
   def perform(%Oban.Job{args: %{"user_id" => user_id}}) do
@@ -18,6 +19,7 @@ defmodule Flirtual.ObanWorkers.Reconcile do
       user ->
         case Reconciliation.reconcile(user) do
           :ok -> :ok
+          {:retry, {:chargebee_rate_limited, seconds}} -> {:snooze, seconds}
           {:retry, reason} -> {:error, reason}
         end
     end
@@ -29,7 +31,17 @@ defmodule Flirtual.ObanWorkers.Reconcile do
   end
 
   def enqueue(user_id) do
-    %{"user_id" => user_id} |> new() |> Oban.insert()
+    %{"user_id" => user_id}
+    |> new(
+      scheduled_at: DateTime.utc_now(),
+      replace: [scheduled: [:scheduled_at]],
+      unique: @unique
+    )
+    |> Oban.insert()
+  end
+
+  def enqueue_in(user_id, seconds) do
+    %{"user_id" => user_id} |> new(schedule_in: seconds, unique: @unique) |> Oban.insert()
   end
 
   # When we learn a paid-through date, we schedule a reconcile for that moment:
@@ -42,7 +54,8 @@ defmodule Flirtual.ObanWorkers.Reconcile do
       %{"user_id" => user_id}
       |> new(
         scheduled_at: DateTime.add(entitled_until, 60, :second),
-        replace: [scheduled: [:scheduled_at]]
+        replace: [scheduled: [:scheduled_at]],
+        unique: @unique
       )
       |> Oban.insert()
     else
