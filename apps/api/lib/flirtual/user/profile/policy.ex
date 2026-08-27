@@ -5,6 +5,7 @@ defmodule Flirtual.User.Profile.Policy do
 
   alias Flirtual.Attribute
   alias Flirtual.Entitlement
+  alias Flirtual.Timezones
   alias Flirtual.User
   alias Flirtual.User.Profile
 
@@ -81,12 +82,8 @@ defmodule Flirtual.User.Profile.Policy do
           timezone: timezone
         }
       )
-      when not is_nil(timezone) do
-    case TzExtra.canonical_time_zone_id(timezone) do
-      {:ok, canonical} -> canonical
-      _ -> timezone
-    end
-  end
+      when not is_nil(timezone),
+      do: Timezones.resolve(timezone) || timezone
 
   def transform(
         key,

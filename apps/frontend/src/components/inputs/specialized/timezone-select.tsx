@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 
 import { useAttributes } from "~/hooks/use-attribute";
 import { useIntervalValue } from "~/hooks/use-interval";
+import { useBrowserTimezone } from "~/hooks/use-timezone";
 
 import { InputSelect, SelectItem } from "../select";
 import type { InputSelectProps } from "../select";
@@ -58,10 +59,7 @@ export function InputTimezoneSelect({ prefer, ...props }: InputTimezoneSelectPro
 
 	const timezones = useAttributes("timezone");
 
-	const browserTimezone = useMemo(
-		() => Intl.DateTimeFormat().resolvedOptions().timeZone,
-		[]
-	);
+	const browserTimezone = useBrowserTimezone();
 	const preferredTimezone = prefer ?? browserTimezone;
 
 	const offsetMap = useMemo(

@@ -13,6 +13,7 @@ defmodule Flirtual.Attribute do
 
   alias Flirtual.Countries
   alias Flirtual.Languages
+  alias Flirtual.Timezones
 
   @derive {Inspect, only: [:id, :type, :metadata]}
   @internal_metadata_keys ["curated"]
@@ -95,8 +96,7 @@ defmodule Flirtual.Attribute do
   def list(type: "timezone") do
     now = DateTime.utc_now()
 
-    TzExtra.time_zone_ids()
-    |> Enum.reject(&String.starts_with?(&1, "Etc/"))
+    Timezones.list()
     |> Enum.map(fn id ->
       {:ok, dt} = DateTime.shift_zone(now, id)
       offset = dt.utc_offset + dt.std_offset
@@ -105,7 +105,13 @@ defmodule Flirtual.Attribute do
     end)
     |> Enum.sort_by(fn {_id, offset, city} -> {offset, city} end)
     |> Enum.map(fn {id, offset, _city} ->
-      %Attribute{id: id, type: "timezone", metadata: %{offset: offset}}
+      metadata =
+        case Timezones.aliases_of(id) do
+          [] -> %{offset: offset}
+          aliases -> %{offset: offset, aliases: aliases}
+        end
+
+      %Attribute{id: id, type: "timezone", metadata: metadata}
     end)
   end
 
