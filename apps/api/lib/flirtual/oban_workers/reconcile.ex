@@ -19,6 +19,7 @@ defmodule Flirtual.ObanWorkers.Reconcile do
       user ->
         case Reconciliation.reconcile(user) do
           :ok -> :ok
+          {:retry, {:chargebee_rate_limited, seconds}} -> {:snooze, seconds}
           {:retry, reason} -> {:error, reason}
         end
     end
@@ -30,7 +31,17 @@ defmodule Flirtual.ObanWorkers.Reconcile do
   end
 
   def enqueue(user_id) do
-    %{"user_id" => user_id} |> new(unique: @unique) |> Oban.insert()
+    %{"user_id" => user_id}
+    |> new(
+      scheduled_at: DateTime.utc_now(),
+      replace: [scheduled: [:scheduled_at]],
+      unique: @unique
+    )
+    |> Oban.insert()
+  end
+
+  def enqueue_in(user_id, seconds) do
+    %{"user_id" => user_id} |> new(schedule_in: seconds, unique: @unique) |> Oban.insert()
   end
 
   # When we learn a paid-through date, we schedule a reconcile for that moment:

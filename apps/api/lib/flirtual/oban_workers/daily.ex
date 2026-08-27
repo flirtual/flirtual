@@ -47,25 +47,35 @@ defmodule Flirtual.ObanWorkers.Daily do
   # Check entitlements webhooks and the scheduled lapse reconcile can miss:
   # lifetime refunds, subs near their lapse, subs with a pending payment, and
   # rows never reconciled.
+  #
+  # Spread over a window to avoid Chargebee rate limits.
+  @reconcile_window 20 * 60 * 60
+
   defp reconcile_entitlements do
     now = DateTime.utc_now()
 
-    Entitlement
-    |> where(
-      [entitlement],
-      entitlement.store not in [:promotional, :stripe] and entitlement.kind != :consumable
-    )
-    |> where(
-      [entitlement],
-      is_nil(entitlement.entitled_until) or
-        is_nil(entitlement.reconciled_at) or
-        entitlement.renewal_pending or
-        entitlement.entitled_until > ^DateTime.add(now, -2, :day)
-    )
-    |> distinct(true)
-    |> select([entitlement], entitlement.user_id)
-    |> Repo.all()
-    |> Enum.each(&Reconcile.enqueue/1)
+    user_ids =
+      Entitlement
+      |> where(
+        [entitlement],
+        entitlement.store not in [:promotional, :stripe] and entitlement.kind != :consumable
+      )
+      |> where(
+        [entitlement],
+        is_nil(entitlement.entitled_until) or
+          is_nil(entitlement.reconciled_at) or
+          entitlement.renewal_pending or
+          entitlement.entitled_until > ^DateTime.add(now, -2, :day)
+      )
+      |> distinct(true)
+      |> select([entitlement], entitlement.user_id)
+      |> Repo.all()
+
+    spacing = max(div(@reconcile_window, max(length(user_ids), 1)), 1)
+
+    user_ids
+    |> Enum.with_index()
+    |> Enum.each(fn {user_id, index} -> Reconcile.enqueue_in(user_id, index * spacing) end)
   end
 
   defp prune_banned do
