@@ -82,7 +82,7 @@ export const UpdateInformationDialog: React.FC<{ native: boolean; onUpdate: () =
 					<DialogTitle>{t("update_available")}</DialogTitle>
 					<DialogDescription className="sr-only" />
 				</DialogHeader>
-				<DialogBody className="min-h-48">
+				<DialogBody className="group-data-[drawer]:min-h-48">
 					<p>
 						{native
 							? browsingOnly
