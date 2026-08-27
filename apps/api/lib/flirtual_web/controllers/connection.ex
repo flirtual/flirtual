@@ -793,7 +793,9 @@ defmodule FlirtualWeb.ConnectionController do
 
   # Run moderation checks on connection data
   defp run_connection_checks(user_id, profile, type) do
-    if profile.display_name, do: Flag.check_flags(user_id, profile.display_name)
+    if profile.display_name && profile.display_name != profile.email,
+      do: Flag.check_flags(user_id, profile.display_name)
+
     if profile.email, do: Flag.check_email_flags(user_id, profile.email)
     if profile.email, do: Hash.check_hash(user_id, "email", profile.email)
     Hash.check_hash(user_id, "#{Connection.provider_name!(type)} ID", profile.uid)
