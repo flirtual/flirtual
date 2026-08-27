@@ -10,6 +10,8 @@ defmodule Flirtual.ObanWorkers do
   alias Flirtual.User
   alias Flirtual.User.Profile.Queue
 
+  @sync_unique [period: :infinity, states: [:available, :scheduled]]
+
   def update_user(
         user_ids,
         workers \\ [:chargebee, :compute_queue, :listmonk, :search_index, :talkjs]
@@ -36,19 +38,19 @@ defmodule Flirtual.ObanWorkers do
       |> Enum.flat_map(fn worker ->
         case worker do
           :chargebee ->
-            [Oban.insert(Chargebee.new(args))]
+            [Oban.insert(Chargebee.new(args, unique: @sync_unique))]
 
           :compute_queue ->
             insert_compute_queue(user_ids)
 
           :listmonk ->
-            [Oban.insert(Listmonk.new(args))]
+            [Oban.insert(Listmonk.new(args, unique: @sync_unique))]
 
           :search_index ->
-            [Oban.insert(SearchIndex.new(args))]
+            [Oban.insert(SearchIndex.new(args, unique: @sync_unique))]
 
           :talkjs ->
-            [Oban.insert(Talkjs.new(args))]
+            [Oban.insert(Talkjs.new(args, unique: @sync_unique))]
         end
       end)
 

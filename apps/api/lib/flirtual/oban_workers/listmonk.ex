@@ -1,5 +1,5 @@
 defmodule Flirtual.ObanWorkers.Listmonk do
-  use Oban.Worker, unique: [period: :infinity, states: [:available, :scheduled]]
+  use Oban.Worker
 
   import Ecto.Query
 

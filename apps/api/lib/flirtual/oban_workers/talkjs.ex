@@ -1,5 +1,5 @@
 defmodule Flirtual.ObanWorkers.Talkjs do
-  use Oban.Worker, unique: [period: :infinity, states: [:available, :scheduled]]
+  use Oban.Worker
 
   import Ecto.Query
 

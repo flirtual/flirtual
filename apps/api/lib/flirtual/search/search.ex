@@ -49,9 +49,7 @@ defmodule Flirtual.Search do
     with {:ok, [%{"c" => 0}]} <- query_rows("SELECT COUNT(*) c FROM #{@table}") do
       {:ok, _} =
         %{"reindex" => true}
-        |> ObanWorkers.SearchIndex.new(
-          unique: [period: 300, states: [:available, :scheduled, :executing]]
-        )
+        |> ObanWorkers.SearchIndex.new(unique: [period: 300, states: :incomplete])
         |> Oban.insert()
 
       log(:info, ["bootstrap"], :reindex_enqueued)
