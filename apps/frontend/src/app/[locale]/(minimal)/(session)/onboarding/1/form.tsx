@@ -25,6 +25,7 @@ import {
 import type { AttributeTranslation } from "~/hooks/use-attribute";
 import { useConfig } from "~/hooks/use-config";
 import { useSession } from "~/hooks/use-session";
+import { useBrowserTimezone } from "~/hooks/use-timezone";
 import { useToast } from "~/hooks/use-toast";
 import { useNavigate } from "~/i18n";
 import { useOptimisticRoute } from "~/preload";
@@ -44,6 +45,7 @@ export const Onboarding1Form: FC = () => {
 	const applyGeolocation = useApplyGeolocation();
 
 	const genders = useAttributes("gender");
+	const browserTimezone = useBrowserTimezone();
 
 	const tAttribute = useAttributeTranslation();
 
@@ -56,7 +58,7 @@ export const Onboarding1Form: FC = () => {
 					? new Date(user.bornAt.replaceAll("-", "/"))
 					: new Date(),
 				country: user.profile.country ?? country ?? null,
-				timezone: (profile.timezone ?? Intl.DateTimeFormat().resolvedOptions().timeZone) as string | null,
+				timezone: profile.timezone ?? browserTimezone,
 				gender: profile.attributes.gender || [],
 				geolocation: true
 			}}

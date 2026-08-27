@@ -105,6 +105,7 @@ export interface AttributeMetadata {
 	};
 	timezone: {
 		offset: number;
+		aliases?: Array<string>;
 	};
 }
 
