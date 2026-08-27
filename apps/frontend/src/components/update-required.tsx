@@ -31,7 +31,7 @@ export const UpdateRequiredDialog: FC<{ onDismiss?: () => void }> = ({ onDismiss
 					<DialogTitle>{t("update_required")}</DialogTitle>
 					<DialogDescription className="sr-only" />
 				</DialogHeader>
-				<DialogBody className="min-h-48">
+				<DialogBody className="group-data-[drawer]:min-h-48">
 					<p>{t("update_required_description", { platform })}</p>
 					<div className="flex gap-2">
 						<ButtonLink

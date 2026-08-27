@@ -119,13 +119,13 @@ defmodule Flirtual.User.Profile.Image do
     end
   end
 
+  def url(_, variant) do
+    url(not_found(), variant)
+  end
+
   defp local_file_url(path) do
     origin = Application.fetch_env!(:flirtual, :origin)
     "#{origin}/v1/images/files/#{path |> URI.encode()}"
-  end
-
-  def url(_, variant) do
-    url(not_found(), variant)
   end
 
   def get(image_id) when is_uid(image_id) do

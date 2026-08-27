@@ -135,11 +135,6 @@ defmodule Flirtual.User.Profile do
       join_keys: [profile_id: :user_id, target_id: :user_id]
     )
 
-    many_to_many(:prospects, Profile,
-      join_through: Profile.Prospects,
-      join_keys: [profile_id: :user_id, target_id: :user_id]
-    )
-
     timestamps(inserted_at: false)
   end
 

@@ -8,6 +8,7 @@ import { Loading } from "./components/loading";
 import { development, server } from "./const";
 import { ConfigSubscriber } from "./hooks/use-config";
 import { DialogProvider } from "./hooks/use-dialog";
+import { InterruptionProvider } from "./hooks/use-interruption";
 import { ToastProvider } from "./hooks/use-toast";
 import { QueryProvider } from "./query";
 
@@ -24,16 +25,18 @@ export function App() {
 							<ConfigSubscriber />
 						</Suspense>
 					)}
-					<UpdateInformation />
-					<ToastProvider>
-						<DialogProvider>
-							<Suspense fallback={<Loading />}>
-								<AgeGate>
-									<Outlet />
-								</AgeGate>
-							</Suspense>
-						</DialogProvider>
-					</ToastProvider>
+					<InterruptionProvider>
+						<UpdateInformation />
+						<ToastProvider>
+							<DialogProvider>
+								<Suspense fallback={<Loading />}>
+									<AgeGate>
+										<Outlet />
+									</AgeGate>
+								</Suspense>
+							</DialogProvider>
+						</ToastProvider>
+					</InterruptionProvider>
 				</AnalyticsProvider>
 			</QueryProvider>
 		</>

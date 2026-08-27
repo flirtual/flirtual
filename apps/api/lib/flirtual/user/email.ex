@@ -130,52 +130,6 @@ defmodule Flirtual.User.Email do
     end)
   end
 
-  def deliver(%User{} = user, :password_changed) do
-    language = user.preferences.language || "en"
-
-    action_url =
-      Application.fetch_env!(:flirtual, :frontend_origin)
-      |> URI.merge("/forgot")
-      |> URI.to_string()
-
-    Gettext.with_locale(language, fn ->
-      %{
-        "user_id" => user.id,
-        "reply_to" => "security",
-        "language" => language,
-        "type" => "transactional",
-        "action_url" => action_url,
-        "subject" => dgettext("notifications", "password_changed.subject"),
-        "body_text" =>
-          dgettext("notifications", "password_changed.body_text", action_url: action_url),
-        "body_html" =>
-          dgettext("notifications", "password_changed.body_html", action_url: action_url)
-      }
-      |> Flirtual.ObanWorkers.Email.new()
-      |> Oban.insert()
-    end)
-  end
-
-  def deliver(%User{previous_email: nil}, :email_changed), do: {:ok, nil}
-
-  def deliver(%User{} = user, :email_changed) do
-    language = user.preferences.language || "en"
-
-    Gettext.with_locale(language, fn ->
-      %{
-        "to" => user.previous_email,
-        "reply_to" => "security",
-        "language" => language,
-        "type" => "transactional",
-        "subject" => dgettext("notifications", "email_changed.subject"),
-        "body_text" => dgettext("notifications", "email_changed.body_text", email: user.email),
-        "body_html" => dgettext("notifications", "email_changed.body_html", email: user.email)
-      }
-      |> Flirtual.ObanWorkers.Email.new()
-      |> Oban.insert()
-    end)
-  end
-
   def deliver(%User{} = user, :new_match, options) do
     language = user.preferences.language || "en"
 
@@ -362,6 +316,52 @@ defmodule Flirtual.User.Email do
         "action_url" => action_url,
         "body_text" => body_text,
         "body_html" => body_html
+      }
+      |> Flirtual.ObanWorkers.Email.new()
+      |> Oban.insert()
+    end)
+  end
+
+  def deliver(%User{} = user, :password_changed) do
+    language = user.preferences.language || "en"
+
+    action_url =
+      Application.fetch_env!(:flirtual, :frontend_origin)
+      |> URI.merge("/forgot")
+      |> URI.to_string()
+
+    Gettext.with_locale(language, fn ->
+      %{
+        "user_id" => user.id,
+        "reply_to" => "security",
+        "language" => language,
+        "type" => "transactional",
+        "action_url" => action_url,
+        "subject" => dgettext("notifications", "password_changed.subject"),
+        "body_text" =>
+          dgettext("notifications", "password_changed.body_text", action_url: action_url),
+        "body_html" =>
+          dgettext("notifications", "password_changed.body_html", action_url: action_url)
+      }
+      |> Flirtual.ObanWorkers.Email.new()
+      |> Oban.insert()
+    end)
+  end
+
+  def deliver(%User{previous_email: nil}, :email_changed), do: {:ok, nil}
+
+  def deliver(%User{} = user, :email_changed) do
+    language = user.preferences.language || "en"
+
+    Gettext.with_locale(language, fn ->
+      %{
+        "to" => user.previous_email,
+        "reply_to" => "security",
+        "language" => language,
+        "type" => "transactional",
+        "subject" => dgettext("notifications", "email_changed.subject"),
+        "body_text" => dgettext("notifications", "email_changed.body_text", email: user.email),
+        "body_html" => dgettext("notifications", "email_changed.body_html", email: user.email)
       }
       |> Flirtual.ObanWorkers.Email.new()
       |> Oban.insert()

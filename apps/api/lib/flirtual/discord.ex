@@ -78,7 +78,7 @@ defmodule Flirtual.Discord do
     end
   end
 
-  defp deliver_webhook(name, body, token, opts \\ []) do
+  defp deliver_webhook(name, body, token, opts) do
     wait = Keyword.get(opts, :wait, false)
     query = "?with_components=true" <> if(wait, do: "&wait=true", else: "")
 
@@ -162,7 +162,9 @@ defmodule Flirtual.Discord do
     |> Base.url_encode64(padding: false)
   end
 
-  def exchange_code(code, options \\ []) when is_binary(code) do
+  def exchange_code(code, options \\ [])
+
+  def exchange_code(code, options) when is_binary(code) do
     params = %{
       client_id: config(:client_id),
       client_secret: config(:client_secret),
@@ -1052,18 +1054,6 @@ defmodule Flirtual.Discord do
     })
   end
 
-  defp reverse_image_search_buttons(image_url) do
-    encoded = URI.encode_www_form(image_url)
-
-    [
-      {"Google", "https://lens.google.com/uploadbyurl?url=#{encoded}"},
-      {"Yandex", "https://yandex.com/images/search?url=#{encoded}&rpt=imageview"},
-      {"Bing",
-       "https://www.bing.com/images/search?q=imgurl:#{encoded}&view=detailv2&iss=sbi&FORM=IRSBIQ"}
-    ]
-    |> Enum.map(fn {label, url} -> %{type: 2, label: label, style: 5, url: url} end)
-  end
-
   def deliver_webhook(:duplicate_image,
         user: %User{} = user,
         image: %Image{} = image,
@@ -1305,5 +1295,17 @@ defmodule Flirtual.Discord do
         }
       ]
     })
+  end
+
+  defp reverse_image_search_buttons(image_url) do
+    encoded = URI.encode_www_form(image_url)
+
+    [
+      {"Google", "https://lens.google.com/uploadbyurl?url=#{encoded}"},
+      {"Yandex", "https://yandex.com/images/search?url=#{encoded}&rpt=imageview"},
+      {"Bing",
+       "https://www.bing.com/images/search?q=imgurl:#{encoded}&view=detailv2&iss=sbi&FORM=IRSBIQ"}
+    ]
+    |> Enum.map(fn {label, url} -> %{type: 2, label: label, style: 5, url: url} end)
   end
 end

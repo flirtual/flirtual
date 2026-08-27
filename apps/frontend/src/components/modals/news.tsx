@@ -15,6 +15,7 @@ import {
 } from "~/components/dialog/dialog";
 import { useDismissed } from "~/hooks/use-dismissed";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
+import { useInterruption } from "~/hooks/use-interruption";
 import { useOptionalSession } from "~/hooks/use-session";
 import { mutate, sessionKey } from "~/query";
 
@@ -84,6 +85,8 @@ export const NewsDialog: FC<NewsDialogProps> = (props) => {
 		return session.user.news.filter((id) => newsItems[id]).toReversed();
 	}, [props.news, session?.user.news, tourCompleted]);
 
+	const active = useInterruption("news", !props.news && news.length > 0);
+
 	const newsKey = news.join();
 	const [shownKey, setShownKey] = useState(newsKey);
 
@@ -125,6 +128,7 @@ export const NewsDialog: FC<NewsDialogProps> = (props) => {
 	);
 
 	if (news.length === 0 || !newsItems[news[currentIndex]]) return null;
+	if (!props.news && !active) return null;
 
 	const currentId = news[currentIndex]!;
 	const dismissable = currentIndex >= news.length - 1;

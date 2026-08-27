@@ -11,6 +11,7 @@ import { withSuspense, } from "with-suspense";
 import { dismissAppOutdated, useAppOutdated } from "~/capacitor";
 import { appStoreId, client, commitId, siteOrigin } from "~/const";
 import { device } from "~/hooks/use-device";
+import { useInterruption } from "~/hooks/use-interruption";
 import { useQuery } from "~/query";
 import { urls } from "~/urls";
 
@@ -64,19 +65,24 @@ function useBrowsingOnly() {
 	);
 }
 
-export const UpdateInformationDialog: React.FC<{ native: boolean; onUpdate: () => void }> = ({ native, onUpdate }) => {
+export const UpdateInformationDialog: React.FC<{ native: boolean; onUpdate: () => void; onDismiss: () => void }> = ({ native, onUpdate, onDismiss }) => {
 	const { t } = useTranslation();
 	const [open, setOpen] = useState(true);
 	const browsingOnly = useBrowsingOnly();
 
+	const dismiss = () => {
+		setOpen(false);
+		onDismiss();
+	};
+
 	return (
-		<DrawerOrDialog closable className="desktop:max-w-lg" open={open} onOpenChange={setOpen}>
+		<DrawerOrDialog closable className="desktop:max-w-lg" open={open} onOpenChange={(open) => !open && dismiss()}>
 			<>
 				<DialogHeader>
 					<DialogTitle>{t("update_available")}</DialogTitle>
 					<DialogDescription className="sr-only" />
 				</DialogHeader>
-				<DialogBody className="min-h-48">
+				<DialogBody className="group-data-[drawer]:min-h-48">
 					<p>
 						{native
 							? browsingOnly
@@ -94,7 +100,7 @@ export const UpdateInformationDialog: React.FC<{ native: boolean; onUpdate: () =
 							className="grow"
 							kind="tertiary"
 							size="sm"
-							onClick={() => setOpen(false)}
+							onClick={dismiss}
 						>
 							{t("not_now")}
 						</Button>
@@ -107,6 +113,7 @@ export const UpdateInformationDialog: React.FC<{ native: boolean; onUpdate: () =
 
 export const UpdateInformation: React.FC = withSuspense(() => {
 	const appOutdated = useAppOutdated();
+	const [dismissed, setDismissed] = useState(false);
 	const serverVersion = useVersionCheck();
 	const webUpdateAvailable = !!serverVersion && serverVersion !== commitId;
 
@@ -142,15 +149,21 @@ export const UpdateInformation: React.FC = withSuspense(() => {
 		&& updateInformation.updateAvailability === AppUpdateAvailability.UPDATE_AVAILABLE
 		&& !updateInformation.flexibleUpdateAllowed;
 
-	if (appOutdated)
+	const required = useInterruption("update_required", !!appOutdated);
+	const available = useInterruption(
+		"update_available",
+		!appOutdated && !dismissed && (webUpdateAvailable || !!nativeUpdateAvailable)
+	);
+
+	if (required)
 		return <UpdateRequiredDialog onDismiss={dismissAppOutdated} />;
 
-	if (!webUpdateAvailable && !nativeUpdateAvailable)
-		return null;
+	if (!available) return null;
 
 	return (
 		<UpdateInformationDialog
 			native={!!nativeUpdateAvailable}
+			onDismiss={() => setDismissed(true)}
 			onUpdate={() => {
 				if (nativeUpdateAvailable) {
 					void AppUpdate

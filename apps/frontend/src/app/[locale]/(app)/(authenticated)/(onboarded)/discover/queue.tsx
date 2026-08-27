@@ -13,8 +13,8 @@ import { Profile } from "~/components/profile";
 import { ProfileSkeleton } from "~/components/profile/skeleton";
 import { useDevice } from "~/hooks/use-device";
 import { useDismissed } from "~/hooks/use-dismissed";
+import { useInterruption } from "~/hooks/use-interruption";
 import { useQueue } from "~/hooks/use-queue";
-import { useSession } from "~/hooks/use-session";
 import { useDefaultTour } from "~/hooks/use-tour";
 import { useUser } from "~/hooks/use-user";
 import { invalidate, mutate, queryClient, queueKey, useMutation, userKey } from "~/query";
@@ -24,9 +24,11 @@ import { ConfirmEmailError, FinishProfileError, OutOfProspects } from "./out-of-
 import { QueueActions } from "./queue-actions";
 
 function DefaultTour() {
-	const { user } = useSession();
 	const { vision } = useDevice();
-	useDefaultTour(!user.moderatorMessage && !vision);
+	const [completed] = useDismissed("tour_browsing");
+
+	const active = useInterruption("tour", !vision && !completed);
+	useDefaultTour(!vision && (completed || active));
 
 	return null;
 }
