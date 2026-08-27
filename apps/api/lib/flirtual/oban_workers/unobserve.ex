@@ -1,5 +1,5 @@
 defmodule Flirtual.ObanWorkers.Unobserve do
-  use Oban.Worker, unique: [period: :infinity, states: :incomplete]
+  use Oban.Worker, unique: [period: :infinity, states: :scheduled]
 
   alias Flirtual.Talkjs
 
