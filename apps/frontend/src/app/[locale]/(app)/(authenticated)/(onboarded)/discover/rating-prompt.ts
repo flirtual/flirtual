@@ -4,14 +4,16 @@ import { useEffect } from "react";
 
 import { User } from "~/api/user";
 import { useDevice } from "~/hooks/use-device";
+import { useInterrupted } from "~/hooks/use-interruption";
 import { useSession } from "~/hooks/use-session";
 
 export function useRatingPrompt() {
 	const { user: { id, ratingPrompts, createdAt } } = useSession();
 	const { native } = useDevice();
+	const interrupted = useInterrupted();
 
 	useEffect(() => {
-		if (!native) return;
+		if (!native || interrupted) return;
 
 		const monthsRegistered = Math.floor(
 			(Date.now() - new Date(createdAt!).getTime()) / ms("30d")
@@ -27,5 +29,5 @@ export function useRatingPrompt() {
 				ratingPrompts: monthsRegistered >= 6 ? 3 : monthsRegistered >= 3 ? 2 : 1
 			});
 		}
-	}, [id, ratingPrompts, createdAt, native]);
+	}, [id, ratingPrompts, createdAt, native, interrupted]);
 }

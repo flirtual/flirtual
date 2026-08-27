@@ -18,6 +18,7 @@ import { User } from "~/api/user";
 import { queryClient, useQuery } from "~/query";
 
 import { device, useDevice } from "./use-device";
+import { useInterrupted } from "./use-interruption";
 import { useOptionalSession } from "./use-session";
 
 export interface NotificationContext {
@@ -65,17 +66,19 @@ let promptedThisSession = false;
 export function useNotificationPrompt() {
 	const { native } = useDevice();
 	const session = useOptionalSession();
+	const interrupted = useInterrupted();
 
 	const wantsNotifications = Object
 		.values(session?.user.preferences?.pushNotifications ?? {})
 		.some(Boolean);
 
 	useEffect(() => {
-		if (!native || !wantsNotifications || promptedThisSession) return;
+		if (!native || !wantsNotifications || interrupted || promptedThisSession)
+			return;
 		promptedThisSession = true;
 
 		void requestNotificationPermission();
-	}, [native, wantsNotifications]);
+	}, [native, wantsNotifications, interrupted]);
 }
 
 const NotificationContext = createContext({} as NotificationContext);

@@ -8,6 +8,7 @@ import { withSuspense } from "with-suspense";
 import type { Session } from "~/api/auth";
 import { User } from "~/api/user";
 import { Image } from "~/components/image";
+import { useInterruption } from "~/hooks/use-interruption";
 import { useOptionalSession, useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { useNavigate } from "~/i18n";
@@ -24,7 +25,12 @@ export const ModerationMessageDialog: FC = withSuspense(() => {
 	const toasts = useToast();
 	const { t } = useTranslation();
 
-	if (!session?.user.moderatorMessage) return null;
+	const active = useInterruption(
+		"moderator_message",
+		!!session?.user.moderatorMessage
+	);
+
+	if (!active || !session?.user.moderatorMessage) return null;
 
 	return (
 		<TrustAndSafetyDialog
@@ -55,6 +61,14 @@ export const DiscordSpamDialog: FC = withSuspense(() => {
 
 	const { t } = useTranslation();
 
+	const active = useInterruption(
+		"discord_spam",
+		!!session?.user.tnsDiscordInBiography
+		&& new Date(session.user.tnsDiscordInBiography).getTime() <= Date.now()
+		&& !session.user.tags?.includes("moderator")
+		&& !session.user.tags?.includes("admin")
+	);
+
 	const remindMeLater = async (quiet: boolean = false) => {
 		if (!session) return;
 
@@ -66,13 +80,7 @@ export const DiscordSpamDialog: FC = withSuspense(() => {
 		await mutate<Session>(sessionKey(), (session) => ({ ...session, user }));
 	};
 
-	if (
-		!session?.user.tnsDiscordInBiography
-		|| new Date(session?.user.tnsDiscordInBiography).getTime() > Date.now()
-		|| session.user.tags?.includes("moderator")
-		|| session.user.tags?.includes("admin")
-	)
-		return null;
+	if (!active) return null;
 
 	return (
 		<TrustAndSafetyDialog
