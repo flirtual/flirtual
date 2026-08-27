@@ -119,17 +119,19 @@ defmodule Flirtual.Matchmaking do
 
   # Blocking a prospect counts towards the daily free pass limit.
   def record_block_passes(%User{} = user, kinds) when is_list(kinds) do
-    Enum.each(kinds, fn kind ->
-      _ = ensure_fresh_queue(Queue.get(user.id, kind))
-      {:ok, _} = Queue.increment(user.id, kind, :passes_count)
-    end)
-
     if kinds != [] do
       {_, nil} =
         User
         |> where(id: ^user.id)
         |> Repo.update_all(inc: [passes_count: 1])
     end
+
+    Queue.kinds()
+    |> Enum.filter(&(&1 in kinds))
+    |> Enum.each(fn kind ->
+      _ = ensure_fresh_queue(Queue.get(user.id, kind))
+      {:ok, _} = Queue.increment(user.id, kind, :passes_count)
+    end)
 
     :ok
   end
@@ -239,8 +241,6 @@ defmodule Flirtual.Matchmaking do
   # When matchmaking settings are updated, prune each queue to the current
   # and previous profile, then recompute everything after them.
   def refresh_queues(user_id, opts \\ []) do
-    if Keyword.get(opts, :filters_updated, false), do: Queue.touch_filters_updated(user_id)
-
     Enum.each(Queue.kinds(), fn kind ->
       protected_ids =
         [
@@ -254,9 +254,11 @@ defmodule Flirtual.Matchmaking do
       Prospect
       |> where([p], p.profile_id == ^user_id and p.kind == ^kind and p.id not in ^protected_ids)
       |> Repo.delete_all()
-
-      enqueue_compute(user_id, kind)
     end)
+
+    if Keyword.get(opts, :filters_updated, false), do: Queue.touch_filters_updated(user_id)
+
+    Enum.each(Queue.kinds(), &enqueue_compute(user_id, &1))
 
     :ok
   end
