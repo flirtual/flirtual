@@ -52,6 +52,51 @@ const UnreadConversationContext = createContext({} as {
 	setUnreadConversations: Dispatch<SetStateAction<Array<Talk.UnreadConversation>>>;
 });
 
+function expiresAt(token: string) {
+	try {
+		const [, payload] = token.split(".");
+		const { exp } = JSON.parse(atob(payload.replaceAll("-", "+").replaceAll("_", "/"))) as { exp: number };
+		return exp * 1000;
+	}
+	catch {
+		return 0;
+	}
+}
+
+let talkjsToken: string | null = null;
+let talkjsTokenExpiresAt = 0;
+
+// Talk.js asks for a token ~1/s and never asks again once we reject, so cache by
+// the token's own expiry and never throw. `mutate(sessionKey(), …)` keeps the
+// query fresh with a stale token.
+async function fetchTalkjsToken() {
+	if (talkjsToken && Date.now() < talkjsTokenExpiresAt - ms("30s")) return talkjsToken;
+
+	for (let attempt = 0; ; attempt++) {
+		try {
+			const session = await queryClient.fetchQuery({
+				queryKey: sessionKey(),
+				queryFn: sessionFetcher,
+				staleTime: 0
+			});
+
+			const token = session?.user.talkjsToken;
+
+			if (token) {
+				talkjsToken = token;
+				talkjsTokenExpiresAt = expiresAt(token);
+
+				return token;
+			}
+		}
+		catch {
+			// 4xx rejects immediately; `queryClient` retries the rest.
+		}
+
+		await new Promise((resolve) => setTimeout(resolve, Math.min(1000 * 2 ** attempt, ms("5m"))));
+	}
+}
+
 const TalkjsProvider_: React.FC<React.PropsWithChildren> = ({ children }) => {
 	const [ready, setReady] = useState(false);
 	const authSession = useOptionalSession();
@@ -68,18 +113,7 @@ const TalkjsProvider_: React.FC<React.PropsWithChildren> = ({ children }) => {
 		return new Talk.Session({
 			appId: talkjsAppId,
 			me: new Talk.User(talkjsUserId),
-			tokenFetcher: async () => {
-				const session = await queryClient.fetchQuery({
-					queryKey: sessionKey(),
-					queryFn: sessionFetcher,
-					staleTime: ms("30m")
-				});
-
-				const token = session?.user.talkjsToken;
-				if (!token) throw new Error("Couldn't fetch Talk.js token");
-
-				return token;
-			}
+			tokenFetcher: fetchTalkjsToken
 		});
 	}, [talkjsUserId, ready]);
 

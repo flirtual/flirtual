@@ -82,7 +82,7 @@ defmodule Flirtual.Reconciliation do
     after_rows =
       untouched ++ Enum.map(updated ++ inserted, &Repo.preload(&1, :plan, force: true))
 
-    transition(user, was_premium, Entitlement.premium?(after_rows))
+    transition(user, was_premium, after_rows)
     schedule_lapse(user, after_rows)
 
     :ok
@@ -116,9 +116,17 @@ defmodule Flirtual.Reconciliation do
     |> Map.merge(Map.new(attrs.ids))
   end
 
-  defp transition(user, false, true), do: Entitlement.reset_matchmaking_timer(user.profile)
-  defp transition(user, true, false), do: Entitlement.reset_premium_settings(user.profile)
-  defp transition(_, _, _), do: {:ok, :unchanged}
+  defp transition(user, was_premium, after_rows) do
+    premium = Entitlement.premium?(after_rows)
+
+    if not was_premium and premium,
+      do: Entitlement.reset_matchmaking_timer(user.profile)
+
+    if not premium and not Enum.any?(after_rows, & &1.renewal_pending),
+      do: Entitlement.reset_premium_settings(user.profile)
+
+    :ok
+  end
 
   defp schedule_lapse(user, rows) do
     rows
