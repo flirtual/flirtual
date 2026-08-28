@@ -37,10 +37,10 @@ export const SignUpForm: FC = () => {
 
 	const [primaryConnectionType, ...secondaryConnectionTypes] = useLoginConnectionTypes(
 		device.apple
-			? (["apple", "google", "discord", "meta"] as const)
+			? (["apple", "google", "discord"] as const)
 			: device.android
-				? (["google", "discord", "meta"] as const)
-				: (["discord", "google", "meta"] as const)
+				? (["google", "discord"] as const)
+				: (["discord", "google"] as const)
 	);
 
 	return (

@@ -166,6 +166,12 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 	// revocation tokens.
 	if (!connection && type === "apple" && device.native && device.android) return null;
 
+	if (
+		!connection
+		&& type === "meta"
+		&& !session.user.tags?.includes("beta_tester")
+	) return null;
+
 	return (
 		<div
 			className={twMerge(
