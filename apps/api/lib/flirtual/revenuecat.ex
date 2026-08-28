@@ -101,6 +101,7 @@ defmodule Flirtual.RevenueCat do
       when type in @reconcile_types do
     case resolve_user(customer_id) do
       %User{} = user -> reconcile(user)
+      {:retry, _reason} -> {:unhandled, :unknown_user}
       other -> other
     end
   end
