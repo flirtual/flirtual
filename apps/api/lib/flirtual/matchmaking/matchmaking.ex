@@ -33,6 +33,9 @@ defmodule Flirtual.Matchmaking do
   # Recompute is queued once this number of uncompleted prospects remain.
   @refresh_threshold 5
 
+  # How long a drained queue waits before searching again.
+  @exhausted_cooldown_seconds 15 * 60
+
   def next_reset_at do
     now = DateTime.utc_now()
     today_9am = DateTime.new!(Date.utc_today(), Time.new!(9, 0, 0, 0))
@@ -189,7 +192,7 @@ defmodule Flirtual.Matchmaking do
 
   defp maybe_enqueue_compute(user_id, kind, %Queue{} = queue, remaining) do
     cond do
-      # Drained and nothing has changed; don't re-search on every read.
+      # Drained recently and nothing has changed; don't re-search on every read.
       exhausted?(queue) ->
         :ok
 
@@ -207,7 +210,8 @@ defmodule Flirtual.Matchmaking do
     end
   end
 
-  # A drained queue re-arms on a filter change or after the daily reset.
+  # A drained queue re-arms on a filter change, once the cooldown elapses, or
+  # at the daily reset.
   defp exhausted?(%Queue{exhausted_at: nil}), do: false
 
   defp exhausted?(%Queue{exhausted_at: exhausted_at, filters_updated_at: filters_updated_at}) do
@@ -216,7 +220,10 @@ defmodule Flirtual.Matchmaking do
 
     same_reset_window = DateTime.compare(exhausted_at, last_reset_at()) != :lt
 
-    filters_unchanged and same_reset_window
+    within_cooldown =
+      DateTime.diff(DateTime.utc_now(), exhausted_at, :second) < @exhausted_cooldown_seconds
+
+    filters_unchanged and same_reset_window and within_cooldown
   end
 
   defp last_reset_at, do: DateTime.add(next_reset_at(), -24 * 60 * 60)

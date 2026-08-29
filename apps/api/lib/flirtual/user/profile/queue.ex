@@ -16,8 +16,6 @@ defmodule Flirtual.User.Profile.Queue do
     field(:fallback_active, :boolean, default: false)
     field(:fallback_notified_at, :utc_datetime)
     field(:filters_updated_at, :utc_datetime)
-    # Set when the last recompute found no one, so we stop re-searching until
-    # something changes (filters/profile) or the next daily reset.
     field(:exhausted_at, :utc_datetime)
     field(:undone, :boolean, default: false)
     field(:likes_count, :integer, default: 0)
