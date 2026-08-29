@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import type { FC } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
@@ -17,6 +16,7 @@ import {
 	useApplyGeolocation
 } from "~/components/inputs/specialized";
 import { useSession } from "~/hooks/use-session";
+import { useBrowserTimezone } from "~/hooks/use-timezone";
 import { useToast } from "~/hooks/use-toast";
 import { invalidate, sessionKey } from "~/query";
 
@@ -32,10 +32,7 @@ export const Location2025: FC<{ onSaved?: () => void }> = ({ onSaved }) => {
 
 	const { customWeights = DefaultProfileCustomWeights } = user.profile;
 
-	const browserTimezone = useMemo<string | null>(
-		() => Intl.DateTimeFormat().resolvedOptions().timeZone,
-		[]
-	);
+	const browserTimezone = useBrowserTimezone();
 
 	return (
 		<Trans

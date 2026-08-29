@@ -73,26 +73,46 @@ defmodule FlirtualWeb.ErrorHelpers do
   def transform_changeset_errors(%Ecto.Changeset{} = changeset) do
     changeset
     |> Ecto.Changeset.traverse_errors(fn {msg, opts} ->
-      opts = Enum.into(opts, %{})
-
       Issue.new(%{
         error: normalize_changeset_error(msg),
-        details:
-          case opts do
-            %{type: {:parameterized, Ecto.Enum, %{mappings: mappings}}} ->
-              opts
-              |> Map.put(:type, :enum)
-              |> Map.put(:values, Enum.into(mappings, [], fn {k, _} -> k end))
-
-            %{type: {:array, array_type}} ->
-              opts
-              |> Map.put(:type, :array)
-              |> Map.put(:array_type, array_type)
-
-            opts ->
-              opts
-          end
+        details: opts |> Enum.into(%{}) |> describe_type() |> encodable()
       })
     end)
+  end
+
+  defp describe_type(%{type: {:parameterized, {Ecto.Enum, %{mappings: mappings}}}} = opts) do
+    opts
+    |> Map.put(:type, :enum)
+    |> Map.put(:values, Keyword.keys(mappings))
+  end
+
+  defp describe_type(
+         %{type: {:array, {:parameterized, {Ecto.Enum, %{mappings: mappings}}}}} = opts
+       ) do
+    opts
+    |> Map.put(:type, :array)
+    |> Map.put(:array_type, :enum)
+    |> Map.put(:values, Keyword.keys(mappings))
+  end
+
+  defp describe_type(%{type: {:array, array_type}} = opts) do
+    opts
+    |> Map.put(:type, :array)
+    |> Map.put(:array_type, array_type)
+  end
+
+  defp describe_type(opts), do: opts
+
+  # Error options carry arbitrary Ecto terms, and an unencodable one raises
+  # mid-response, turning the validation error into a 500.
+  defp encodable(value) when is_list(value), do: Enum.map(value, &encodable/1)
+
+  defp encodable(value) when is_map(value) and not is_struct(value),
+    do: Map.new(value, fn {key, value} -> {key, encodable(value)} end)
+
+  defp encodable(value) do
+    if Jason.Encoder.impl_for(value) in [nil, Jason.Encoder.Any],
+      do: inspect(value),
+      else: value
   end
 end

@@ -104,11 +104,18 @@ defmodule Flirtual.Talkjs do
             {"content-type", "application/json"}
           ],
           decode_body: false,
-          retry: false,
+          retry: &retry_closed/2,
+          max_retries: 1,
+          retry_delay: 0,
           finch: Flirtual.Finch
         )
     end
   end
+
+  defp retry_closed(%Req.Request{method: method}, %Req.TransportError{reason: :closed}),
+    do: method in [:get, :head]
+
+  defp retry_closed(_, _), do: false
 
   def batch(operations) when length(operations) > 10 do
     case Enum.all?(
