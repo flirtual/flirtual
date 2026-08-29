@@ -22,6 +22,9 @@ defmodule FlirtualWeb.ConversationController do
       {:error, :unauthorized} ->
         {:error, {:forbidden, :not_conversation_participant}}
 
+      {:error, :upstream} ->
+        {:error, {:bad_gateway, :upstream}}
+
       reason ->
         reason
     end
@@ -39,6 +42,12 @@ defmodule FlirtualWeb.ConversationController do
         data: data,
         metadata: metadata
       })
+    else
+      {:error, :upstream} ->
+        {:error, {:bad_gateway, :upstream}}
+
+      {:error, :invalid_limit} ->
+        {:error, {:bad_request, :invalid_limit}}
     end
   end
 
