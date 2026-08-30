@@ -7,6 +7,9 @@ defmodule Flirtual.Flag do
   alias Flirtual.{Connection, Discord, Disposable, Flag, Hash, Repo, User, Users}
   alias Flirtual.User.Profile
 
+  @block_elements ~w(p h1 h2 h3 h4 h5 h6 blockquote li pre)
+  @context_words 6
+
   @derive {Jason.Encoder, only: [:id, :type, :flag, :updated_at]}
   schema "flags" do
     field(:type, :string)
@@ -155,32 +158,45 @@ defmodule Flirtual.Flag do
   end
 
   defp extract_flag_context(text, flag) do
-    pattern = ~r/(?<![[:alnum:]])#{Regex.escape(flag)}(?![[:alnum:]])/i
+    pattern = ~r/(?<![[:alnum:]])#{Regex.escape(flag)}(?![[:alnum:]])/iu
 
     case Regex.scan(pattern, text, return: :index) do
       [] ->
         flag
 
       matches ->
-        matches
-        |> Enum.map(fn [{start, len}] ->
-          context_before =
-            text
-            |> String.slice(0, start)
-            |> String.split()
-            |> Enum.take(-6)
+        Enum.map_join(matches, "\n", fn [{start, len}] ->
+          stop = start + len
 
-          context_after =
-            text
-            |> String.slice(start + len, String.length(text))
-            |> String.split()
-            |> Enum.take(6)
+          context_before = text |> binary_part(0, start) |> trailing_words()
+          context_after = text |> binary_part(stop, byte_size(text) - stop) |> leading_words()
 
-          matched = "**#{String.slice(text, start, len)}**"
-
-          (context_before ++ [matched] ++ context_after) |> Enum.join(" ")
+          "#{context_before}**#{binary_part(text, start, len)}**#{context_after}"
+          |> String.split()
+          |> Enum.join(" ")
         end)
-        |> Enum.join("\n")
+    end
+  end
+
+  defp trailing_words(text) do
+    case Regex.scan(~r/\S+/u, text, return: :index) do
+      [] ->
+        ""
+
+      words ->
+        [{offset, _}] = words |> Enum.take(-@context_words) |> hd()
+        binary_part(text, offset, byte_size(text) - offset)
+    end
+  end
+
+  defp leading_words(text) do
+    case Regex.scan(~r/\S+/u, text, return: :index) do
+      [] ->
+        ""
+
+      words ->
+        [{offset, len}] = words |> Enum.take(@context_words) |> List.last()
+        binary_part(text, 0, offset + len)
     end
   end
 
@@ -291,11 +307,23 @@ defmodule Flirtual.Flag do
   def check_profile_biography(%Profile{biography: biography}, biography), do: :ok
 
   def check_profile_biography(profile, biography) do
-    with biography_text <- biography |> Floki.parse_fragment!() |> Floki.text(),
-         :ok <- check_flags(profile.user_id, biography_text),
+    with :ok <- check_flags(profile.user_id, biography_text(biography)),
          :ok <- check_discord_in_biography(profile, biography) do
       :ok
     end
+  end
+
+  defp biography_text(biography) do
+    biography
+    |> Floki.parse_fragment!()
+    |> Floki.traverse_and_update(fn
+      {tag, attributes, children} when tag in @block_elements ->
+        {tag, attributes, children ++ ["\n"]}
+
+      node ->
+        node
+    end)
+    |> Floki.text()
   end
 
   def check_profile_custom_interests(_, nil), do: :ok
