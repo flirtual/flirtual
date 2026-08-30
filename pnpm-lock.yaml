@@ -383,19 +383,19 @@ importers:
         specifier: 5.20260813.1
         version: 5.20260813.1
       '@eslint-react/eslint-plugin':
-        specifier: ^1.53.0
+        specifier: 1.53.1
         version: 1.53.1(eslint@9.39.5(jiti@1.21.7)(supports-color@10.2.2))(supports-color@10.2.2)(ts-api-utils@2.5.0(typescript@5.9.3))(typescript@5.9.3)
       '@react-router/dev':
-        specifier: ^8.2.0
+        specifier: 8.3.0
         version: 8.3.0(@react-router/serve@8.3.0(react-router@8.3.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(supports-color@10.2.2)(typescript@5.9.3))(react-router@8.3.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(supports-color@10.2.2)(typescript@5.9.3)(vite@8.2.1(@types/node@26.2.0)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.102.0)(tsx@4.23.12)(yaml@2.9.0))(wrangler@4.125.0(@cloudflare/workers-types@5.20260813.1))
       '@tailwindcss/typography':
-        specifier: ^0.5.20
+        specifier: 0.5.20
         version: 0.5.20(tailwindcss@3.4.19(tsx@4.23.12)(yaml@2.9.0))
       '@types/ms':
-        specifier: ^2.1.0
+        specifier: 2.1.0
         version: 2.1.0
       '@types/node':
-        specifier: ^26.1.1
+        specifier: 26.2.0
         version: 26.2.0
       '@types/react':
         specifier: 19.2.17
@@ -404,10 +404,10 @@ importers:
         specifier: 19.2.3
         version: 19.2.3(@types/react@19.2.17)
       '@types/sanitize-html':
-        specifier: ^2.16.1
+        specifier: 2.16.1
         version: 2.16.1
       autoprefixer:
-        specifier: ^10.5.2
+        specifier: 10.5.4
         version: 10.5.4(postcss@8.5.26)
       eslint:
         specifier: 'catalog:'
@@ -422,28 +422,28 @@ importers:
         specifier: 3.18.2
         version: 3.18.2(tailwindcss@3.4.19(tsx@4.23.12)(yaml@2.9.0))
       knip:
-        specifier: ^6.26.0
+        specifier: 6.32.2
         version: 6.32.2
       ms:
-        specifier: ^2.1.3
+        specifier: 2.1.3
         version: 2.1.3
       postcss:
-        specifier: ^8.5.23
+        specifier: 8.5.26
         version: 8.5.26
       sharp:
-        specifier: ^0.35.3
+        specifier: 0.35.3
         version: 0.35.3(@types/node@26.2.0)
       sonda:
-        specifier: ^0.14.0
+        specifier: 0.14.0
         version: 0.14.0
       svgo:
-        specifier: ^4.0.2
+        specifier: 4.0.2
         version: 4.0.2
       tailwindcss:
-        specifier: ^3.4.17
+        specifier: 3.4.19
         version: 3.4.19(tsx@4.23.12)(yaml@2.9.0)
       tailwindcss-hocus:
-        specifier: ^0.0.7
+        specifier: 0.0.7
         version: 0.0.7(tailwindcss@3.4.19(tsx@4.23.12)(yaml@2.9.0))
       tailwindcss-motion:
         specifier: 1.1.1
@@ -452,22 +452,22 @@ importers:
         specifier: 'catalog:'
         version: 5.9.3
       unplugin-macros:
-        specifier: npm:@ariesclark/unplugin-macros@^0.20.3
+        specifier: npm:@ariesclark/unplugin-macros@0.20.3
         version: '@ariesclark/unplugin-macros@0.20.3(@types/node@26.2.0)(esbuild@0.28.2)(jiti@1.21.7)(rolldown@1.2.4)(sass@1.102.0)(tsx@4.23.12)(yaml@2.9.0)'
       unplugin-remote-assets:
-        specifier: ^0.4.3
+        specifier: 0.4.3
         version: 0.4.3(esbuild@0.28.2)(vite@8.2.1(@types/node@26.2.0)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.102.0)(tsx@4.23.12)(yaml@2.9.0))
       vite:
-        specifier: ^8.2.1
+        specifier: 8.2.1
         version: 8.2.1(@types/node@26.2.0)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.102.0)(tsx@4.23.12)(yaml@2.9.0)
       vite-imagetools:
-        specifier: ^10.0.1
+        specifier: 10.0.1
         version: 10.0.1(@types/node@26.2.0)(vite@8.2.1(@types/node@26.2.0)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.102.0)(tsx@4.23.12)(yaml@2.9.0))
       vite-plugin-checker:
-        specifier: ^0.14.4
+        specifier: 0.14.5
         version: 0.14.5(eslint@9.39.5(jiti@1.21.7)(supports-color@10.2.2))(optionator@0.9.4)(typescript@5.9.3)(vite@8.2.1(@types/node@26.2.0)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.102.0)(tsx@4.23.12)(yaml@2.9.0))
       vite-plugin-image-optimizer:
-        specifier: ^2.0.3
+        specifier: 2.0.3
         version: 2.0.3(sharp@0.35.3(@types/node@26.2.0))(svgo@4.0.2)(vite@8.2.1(@types/node@26.2.0)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.102.0)(tsx@4.23.12)(yaml@2.9.0))
       wrangler:
         specifier: 'catalog:'
@@ -492,19 +492,19 @@ importers:
         specifier: 'catalog:'
         version: 3.2.1-canary.1(341f94cb1c3bf8c5fa7d8896bdb54224)
       '@total-typescript/ts-reset':
-        specifier: ^0.6.0
+        specifier: 0.6.1
         version: 0.6.1
       '@types/mime-types':
-        specifier: ^2.1.4
+        specifier: 2.1.4
         version: 2.1.4
       '@types/node':
-        specifier: ^22.19.2
+        specifier: 22.20.1
         version: 22.20.1
       eslint:
         specifier: 'catalog:'
         version: 9.39.5(jiti@2.7.0)(supports-color@10.2.2)
       pino-pretty:
-        specifier: ^10.3.1
+        specifier: 10.3.1
         version: 10.3.1
       typescript:
         specifier: 'catalog:'
@@ -592,10 +592,10 @@ importers:
         specifier: 'catalog:'
         version: 0.22.0(@vitest/runner@4.1.11)(@vitest/snapshot@4.1.11)(vitest@4.1.11(@opentelemetry/api@1.9.1)(@types/node@25.9.5)(vite@8.2.1(@types/node@25.9.5)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.102.0)(tsx@4.23.12)(yaml@2.9.0)))
       '@types/node':
-        specifier: ^25.5.0
+        specifier: 25.9.5
         version: 25.9.5
       tus-js-client:
-        specifier: ^4.3.1
+        specifier: 4.3.1
         version: 4.3.1
       typescript:
         specifier: 'catalog:'

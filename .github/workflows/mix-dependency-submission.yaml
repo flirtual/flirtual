@@ -20,10 +20,10 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v7
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
     - name: Set up Elixir
-      uses: erlef/setup-beam@v1
+      uses: erlef/setup-beam@54075bcc5e249e4758d363f27d099f55d843f124 # v1
       with:
         version-type: strict
         version-file: apps/api/.tool-versions

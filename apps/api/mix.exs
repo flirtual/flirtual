@@ -90,11 +90,11 @@ defmodule Flirtual.MixProject do
       {:libcluster, "~> 3.3"},
       {:floki, "~> 0.36.0"},
       {:fast_html, "~> 2.0"},
-      {:ex_check, "~> 0.16.0", only: [:dev], runtime: false},
-      {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
-      {:mix_audit, "~> 2.1", only: [:dev, :test], runtime: false},
-      {:sobelow, "~> 0.15.0", only: [:dev, :test], runtime: false},
-      {:tidewave, "~> 0.8.0", only: :dev},
+      {:ex_check, "== 0.16.0", only: [:dev], runtime: false},
+      {:credo, "== 1.7.19", only: [:dev, :test], runtime: false},
+      {:mix_audit, "== 2.1.5", only: [:dev, :test], runtime: false},
+      {:sobelow, "== 0.15.0", only: [:dev, :test], runtime: false},
+      {:tidewave, "== 0.8.4", only: :dev},
       {:kadabra, "~> 0.6.3"},
       {:vrchat, "~> 1.20.0"}
     ]
