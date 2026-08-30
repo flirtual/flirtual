@@ -7,6 +7,8 @@ defmodule Flirtual.Flag do
   alias Flirtual.{Connection, Discord, Disposable, Flag, Hash, Repo, User, Users}
   alias Flirtual.User.Profile
 
+  @block_elements ~w(p h1 h2 h3 h4 h5 h6 blockquote li pre)
+
   @derive {Jason.Encoder, only: [:id, :type, :flag, :updated_at]}
   schema "flags" do
     field(:type, :string)
@@ -291,11 +293,23 @@ defmodule Flirtual.Flag do
   def check_profile_biography(%Profile{biography: biography}, biography), do: :ok
 
   def check_profile_biography(profile, biography) do
-    with biography_text <- biography |> Floki.parse_fragment!() |> Floki.text(),
-         :ok <- check_flags(profile.user_id, biography_text),
+    with :ok <- check_flags(profile.user_id, biography_text(biography)),
          :ok <- check_discord_in_biography(profile, biography) do
       :ok
     end
+  end
+
+  defp biography_text(biography) do
+    biography
+    |> Floki.parse_fragment!()
+    |> Floki.traverse_and_update(fn
+      {tag, attributes, children} when tag in @block_elements ->
+        {tag, attributes, children ++ ["\n"]}
+
+      node ->
+        node
+    end)
+    |> Floki.text()
   end
 
   def check_profile_custom_interests(_, nil), do: :ok
