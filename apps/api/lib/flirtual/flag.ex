@@ -165,7 +165,8 @@ defmodule Flirtual.Flag do
         flag
 
       matches ->
-        Enum.map_join(matches, "\n", fn [{start, len}] ->
+        Enum.map_join(matches, "\n", fn [{match_start, match_len}] ->
+          {start, len} = expand_over_url(text, match_start, match_len)
           stop = start + len
 
           context_before = text |> binary_part(0, start) |> trailing_words()
@@ -175,6 +176,33 @@ defmodule Flirtual.Flag do
           |> String.split()
           |> Enum.join(" ")
         end)
+    end
+  end
+
+  # Highlight full URLs instead of the flag substring, else Discord urlencodes
+  # the asterisks.
+  defp expand_over_url(text, start, len) do
+    stop = start + len
+    token_start = start - trailing_run(binary_part(text, 0, start))
+    token_stop = stop + leading_run(binary_part(text, stop, byte_size(text) - stop))
+    token = binary_part(text, token_start, token_stop - token_start)
+
+    if String.contains?(token, "://") or String.starts_with?(token, "www."),
+      do: {token_start, token_stop - token_start},
+      else: {start, len}
+  end
+
+  defp trailing_run(text) do
+    case Regex.run(~r/\S*\z/u, text, return: :index) do
+      [{_, len}] -> len
+      _ -> 0
+    end
+  end
+
+  defp leading_run(text) do
+    case Regex.run(~r/\A\S*/u, text, return: :index) do
+      [{_, len}] -> len
+      _ -> 0
     end
   end
 
