@@ -33,9 +33,9 @@ jobs:
       && (github.event.issue.user.id == 317127550
       || github.event.pull_request.user.id == 317127550))
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
-      - uses: actions/create-github-app-token@v3.2.0
+      - uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
         id: app-token
         with:
           client-id: ${{ vars.RENOVATE_APP_CLIENT_ID }}
@@ -44,7 +44,7 @@ jobs:
       - name: Restore repository cache
         id: cache-restore
         if: github.event.inputs.repoCache != 'disabled' && github.event.inputs.repoCache != 'reset'
-        uses: actions/cache/restore@v6
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
         with:
           path: ${{ env.cache_dir }}
           key: ${{ env.cache_key }}-${{ github.run_id }}-${{ github.run_attempt }}
@@ -68,7 +68,7 @@ jobs:
 
       - name: Save repository cache
         if: github.event.inputs.repoCache != 'disabled' && steps.cache-restore.outputs.cache-hit != 'true'
-        uses: actions/cache/save@v6
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
         with:
           path: ${{ env.cache_dir }}
           key: ${{ env.cache_key }}-${{ github.run_id }}-${{ github.run_attempt }}
