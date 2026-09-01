@@ -24,7 +24,7 @@ def capacitor_pods
   pod 'CapacitorShare', :path => '../../../../node_modules/.pnpm/@capacitor+share@8.0.1_@capacitor+core@8.5.0/node_modules/@capacitor/share'
   pod 'CapacitorToast', :path => '../../../../node_modules/.pnpm/@capacitor+toast@8.0.1_@capacitor+core@8.5.0/node_modules/@capacitor/toast'
   pod 'CapawesomeTeamCapacitorDatetimePicker', :path => '../../../../node_modules/.pnpm/@capawesome-team+capacitor-datetime-picker@8.1.1_@capacitor+core@8.5.0/node_modules/@capawesome-team/capacitor-datetime-picker'
-  pod 'CapawesomeCapacitorAgeSignals', :path => '../../../../node_modules/.pnpm/@capawesome+capacitor-age-signals@0.4.1_@capacitor+core@8.5.0/node_modules/@capawesome/capacitor-age-signals'
+  pod 'CapawesomeCapacitorAgeSignals', :path => '../../../../node_modules/.pnpm/@capawesome+capacitor-age-signals@0.5.0_@capacitor+core@8.5.0/node_modules/@capawesome/capacitor-age-signals'
   pod 'CapawesomeCapacitorAppUpdate', :path => '../../../../node_modules/.pnpm/@capawesome+capacitor-app-update@8.0.3_@capacitor+core@8.5.0/node_modules/@capawesome/capacitor-app-update'
   pod 'CapgoCapacitorInappbrowser', :path => '../../../../node_modules/.pnpm/@capgo+capacitor-inappbrowser@8.12.3_@capacitor+core@8.5.0/node_modules/@capgo/capacitor-inappbrowser'
   pod 'CapgoCapacitorSocialLogin', :path => '../../../../node_modules/.pnpm/@capgo+capacitor-social-login@8.4.1_@capacitor+core@8.5.0/node_modules/@capgo/capacitor-social-login'

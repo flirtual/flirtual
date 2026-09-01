@@ -91,8 +91,8 @@ importers:
         specifier: ^8.1.1
         version: 8.1.1(@capacitor/core@8.5.0)
       '@capawesome/capacitor-age-signals':
-        specifier: ^0.4.1
-        version: 0.4.1(@capacitor/core@8.5.0)
+        specifier: ^0.5.0
+        version: 0.5.0(@capacitor/core@8.5.0)
       '@capawesome/capacitor-app-update':
         specifier: ^8.0.3
         version: 8.0.3(@capacitor/core@8.5.0)
@@ -939,8 +939,8 @@ packages:
     peerDependencies:
       '@capacitor/core': '>=8.0.0'
 
-  '@capawesome/capacitor-age-signals@0.4.1':
-    resolution: {integrity: sha512-RHZoe/gTEP5KlO/tjwhYty7fDvqj3oF1CSGRli1Pr5/Qlhdo7OXplz9gcYhNF11f2PqyLILLJb7L0rC48PmO6g==}
+  '@capawesome/capacitor-age-signals@0.5.0':
+    resolution: {integrity: sha512-t7CPDgEaz6QyZf3FTDkI3PtpjJvE9wzj6lFKlnOeZxJU1emo6SbUck0VkEwAz+q/RpB1oXVCalc/zbvHjU+oow==}
     peerDependencies:
       '@capacitor/core': '>=8.0.0'
 
@@ -7864,7 +7864,7 @@ snapshots:
     dependencies:
       '@capacitor/core': 8.5.0
 
-  '@capawesome/capacitor-age-signals@0.4.1(@capacitor/core@8.5.0)':
+  '@capawesome/capacitor-age-signals@0.5.0(@capacitor/core@8.5.0)':
     dependencies:
       '@capacitor/core': 8.5.0
 

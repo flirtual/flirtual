@@ -42,7 +42,7 @@ PODS:
     - Capacitor
   - CapacitorToast (8.0.1):
     - Capacitor
-  - CapawesomeCapacitorAgeSignals (0.4.1):
+  - CapawesomeCapacitorAgeSignals (0.5.0):
     - Capacitor
   - CapawesomeCapacitorAppUpdate (8.0.3):
     - Capacitor
@@ -100,7 +100,7 @@ DEPENDENCIES:
   - "CapacitorPushNotifications (from `../../../../node_modules/.pnpm/@capacitor+push-notifications@8.1.2_@capacitor+core@8.5.0/node_modules/@capacitor/push-notifications`)"
   - "CapacitorShare (from `../../../../node_modules/.pnpm/@capacitor+share@8.0.1_@capacitor+core@8.5.0/node_modules/@capacitor/share`)"
   - "CapacitorToast (from `../../../../node_modules/.pnpm/@capacitor+toast@8.0.1_@capacitor+core@8.5.0/node_modules/@capacitor/toast`)"
-  - "CapawesomeCapacitorAgeSignals (from `../../../../node_modules/.pnpm/@capawesome+capacitor-age-signals@0.4.1_@capacitor+core@8.5.0/node_modules/@capawesome/capacitor-age-signals`)"
+  - "CapawesomeCapacitorAgeSignals (from `../../../../node_modules/.pnpm/@capawesome+capacitor-age-signals@0.5.0_@capacitor+core@8.5.0/node_modules/@capawesome/capacitor-age-signals`)"
   - "CapawesomeCapacitorAppUpdate (from `../../../../node_modules/.pnpm/@capawesome+capacitor-app-update@8.0.3_@capacitor+core@8.5.0/node_modules/@capawesome/capacitor-app-update`)"
   - "CapawesomeTeamCapacitorDatetimePicker (from `../../../../node_modules/.pnpm/@capawesome-team+capacitor-datetime-picker@8.1.1_@capacitor+core@8.5.0/node_modules/@capawesome-team/capacitor-datetime-picker`)"
   - "CapgoCapacitorInappbrowser (from `../../../../node_modules/.pnpm/@capgo+capacitor-inappbrowser@8.12.3_@capacitor+core@8.5.0/node_modules/@capgo/capacitor-inappbrowser`)"
@@ -155,7 +155,7 @@ EXTERNAL SOURCES:
   CapacitorToast:
     :path: "../../../../node_modules/.pnpm/@capacitor+toast@8.0.1_@capacitor+core@8.5.0/node_modules/@capacitor/toast"
   CapawesomeCapacitorAgeSignals:
-    :path: "../../../../node_modules/.pnpm/@capawesome+capacitor-age-signals@0.4.1_@capacitor+core@8.5.0/node_modules/@capawesome/capacitor-age-signals"
+    :path: "../../../../node_modules/.pnpm/@capawesome+capacitor-age-signals@0.5.0_@capacitor+core@8.5.0/node_modules/@capawesome/capacitor-age-signals"
   CapawesomeCapacitorAppUpdate:
     :path: "../../../../node_modules/.pnpm/@capawesome+capacitor-app-update@8.0.3_@capacitor+core@8.5.0/node_modules/@capawesome/capacitor-app-update"
   CapawesomeTeamCapacitorDatetimePicker:
@@ -186,7 +186,7 @@ SPEC CHECKSUMS:
   CapacitorPushNotifications: 32a7f840815f319fd9ba1c1c9b0b914be9d95237
   CapacitorShare: 0c58305114538568059bfc07111f22dcb9cb2a82
   CapacitorToast: 408036fbd702120d3adde3980b740f3c0fb60c9e
-  CapawesomeCapacitorAgeSignals: 40458b043d58e51a6df8b04040bd27e637a8fee5
+  CapawesomeCapacitorAgeSignals: e4eed710de950609b93f009a5be68e9b9af978eb
   CapawesomeCapacitorAppUpdate: 3a7537c6a6696837b51d06f26b2e909fd7b9226f
   CapawesomeTeamCapacitorDatetimePicker: 7248569efbab419c8791d5e6f4656548d2f99d28
   CapgoCapacitorInappbrowser: ee6293211c1c7ba0098dc6bee29a506a40898831
@@ -203,6 +203,6 @@ SPEC CHECKSUMS:
   RevenueCat: 72d1e14966339bf38c41d9b2841ef64c8fd79646
   RevenuecatPurchasesCapacitor: 691a18ebcfed0100a041e4cba91ba9ae8787b1a7
 
-PODFILE CHECKSUM: c738e55a3d2e6788314435c6508dd80a4e68c5b2
+PODFILE CHECKSUM: 48d9a65127086b339c61f240a6ed70a8e29fdba4
 
 COCOAPODS: 1.16.2

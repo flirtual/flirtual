@@ -423,15 +423,12 @@ defmodule Flirtual.Discord do
          },
          %{
            name: "Age range",
-           value: format_age_range(age_lower, age_upper) <> age_declaration(declaration),
+           value:
+             format_age_range(age_lower, age_upper) <>
+               if(declaration, do: " (#{declaration})", else: ""),
            inline: true
          }
        ]
-
-  defp age_declaration("SELF_DECLARED"), do: " (self-declared)"
-  defp age_declaration("GUARDIAN_DECLARED"), do: " (guardian-declared)"
-  defp age_declaration("CONFIRMED"), do: " (verified)"
-  defp age_declaration(_), do: ""
 
   defp age_range_source("apple"), do: "Apple Declared Age Range"
   defp age_range_source("android"), do: "Google Play Age Signals"
