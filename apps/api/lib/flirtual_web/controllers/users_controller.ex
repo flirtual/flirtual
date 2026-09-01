@@ -674,12 +674,41 @@ defmodule FlirtualWeb.UsersController do
       field(:age_upper, :integer)
     end
 
+    @declarations ~w(self_declared guardian_declared estimated verified unknown)
+
+    @self_declared ~w(SELF_DECLARED TIER_A)
+    @guardian_declared ~w(GUARDIAN_DECLARED GUARDIAN_CHECKED_BY_OTHER_METHOD
+                          GUARDIAN_GOVERNMENT_ID_CHECKED GUARDIAN_PAYMENT_CHECKED TIER_B)
+    @estimated ~w(CHECKED_BY_OTHER_METHOD CONFIRMED GOVERNMENT_ID_CHECKED PAYMENT_CHECKED TIER_C)
+    @verified ~w(TIER_D)
+
     def changeset(value, _, _) do
       value
       |> validate_inclusion(:platform, ["android", "apple"])
-      |> validate_inclusion(:declaration, ["SELF_DECLARED", "GUARDIAN_DECLARED", "CONFIRMED"])
+      |> update_change(:declaration, &normalize_declaration/1)
+      |> validate_inclusion(:declaration, @declarations)
       |> validate_number(:age_lower, greater_than_or_equal_to: 0, less_than_or_equal_to: 120)
       |> validate_number(:age_upper, greater_than_or_equal_to: 0, less_than_or_equal_to: 120)
+    end
+
+    defp normalize_declaration(declaration) when declaration in @self_declared,
+      do: "self_declared"
+
+    defp normalize_declaration(declaration) when declaration in @guardian_declared,
+      do: "guardian_declared"
+
+    defp normalize_declaration(declaration) when declaration in @estimated,
+      do: "estimated"
+
+    defp normalize_declaration(declaration) when declaration in @verified,
+      do: "verified"
+
+    defp normalize_declaration(declaration) when declaration in @declarations,
+      do: declaration
+
+    defp normalize_declaration(declaration) do
+      Logger.warning("Unrecognised age range declaration: #{inspect(declaration)}")
+      "unknown"
     end
   end
 

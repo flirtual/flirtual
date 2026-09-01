@@ -76,7 +76,7 @@ function AgeUnresolved() {
 				<div className="flex flex-col gap-4">
 					{/* Apple Settings isn't linkable. */}
 					{!apple && (
-						<ButtonLink href={urls.apps.google} kind="secondary">
+						<ButtonLink href="https://play.google.com/store" kind="secondary">
 							{t("open_google_play")}
 						</ButtonLink>
 					)}
