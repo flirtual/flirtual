@@ -8,7 +8,7 @@
 #   - https://hub.docker.com/_/debian?tab=tags - for the release image
 #   - https://pkgs.org/ - resource for finding needed packages
 
-FROM elixir:1.18.3-otp-27-slim AS builder
+FROM elixir:1.20.4-otp-27-slim@sha256:efa8b0ff276221319df670cc3a9c9f4b429117602907a853ee9902d89185579d AS builder
 
 # install build dependencies
 RUN apt-get update -y && apt-get install -y build-essential cmake git \
