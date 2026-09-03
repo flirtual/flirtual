@@ -8,7 +8,7 @@ set -e
 POSTGRES_VERSION=17.7
 POSTGRES_IMAGE=postgres:${POSTGRES_VERSION}-alpine
 # renovate: datasource=docker depName=manticoresearch/manticore
-MANTICORE_IMAGE=manticoresearch/manticore:28.4.4
+MANTICORE_IMAGE=manticoresearch/manticore:28.6.6
 
 if [ -d "$HOME/Library/Application Support/com.apple.container" ]; then
   container system start
