@@ -69,7 +69,7 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
     implementation project(':capacitor-cordova-android-plugins')
     implementation "com.google.firebase:firebase-messaging:22.0.0"
-    implementation "androidx.core:core:1.6.0"
+    implementation "androidx.core:core:1.19.0"
 }
 
 apply from: 'capacitor.build.gradle'
