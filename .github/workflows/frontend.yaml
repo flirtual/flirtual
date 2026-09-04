@@ -13,7 +13,32 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
-  eslint:
+  changes:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      frontend: ${{ steps.filter.outputs.frontend }}
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4
+        id: filter
+        if: github.event_name != 'workflow_dispatch'
+        with:
+          filters: |
+            frontend:
+              - 'apps/frontend/**'
+              - '.github/workflows/frontend.yaml'
+              - 'package.json'
+              - 'pnpm-lock.yaml'
+              - 'pnpm-workspace.yaml'
+
+  lint:
+    needs: changes
+    if: needs.changes.outputs.frontend != 'false'
     runs-on: ubuntu-latest
     permissions:
       checks: write
@@ -43,6 +68,8 @@ jobs:
         run: ./node_modules/.bin/eslint -f stylish
 
   audit:
+    needs: changes
+    if: needs.changes.outputs.frontend != 'false'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
@@ -64,21 +91,53 @@ jobs:
       - name: Audit dependencies
         run: pnpm audit --audit-level low --ignore-registry-errors
 
-  typescript:
-    strategy:
-      matrix:
-        environment: [production, canary]
-        exclude:
-          - environment: ${{ github.ref != 'refs/heads/production' && 'production' || null }}
+  build:
+    needs: changes
+    if: needs.changes.outputs.frontend != 'false'
     runs-on: ubuntu-latest
     environment:
-      name: ${{ matrix.environment }}
+      name: ${{ github.ref == 'refs/heads/production' && 'production' || 'preview' }}
       deployment: false
     permissions:
       checks: write
     defaults:
       run:
         working-directory: apps/frontend
+    env:
+      VITE_TURNSTILE_SITE_KEY: ${{ vars.VITE_TURNSTILE_SITE_KEY }}
+      VITE_TALKJS_APP_ID: ${{ vars.VITE_TALKJS_APP_ID }}
+      VITE_CHARGEBEE_NAMESPACE: ${{ vars.VITE_CHARGEBEE_NAMESPACE }}
+      VITE_RC_APPL_PUBLIC_KEY: ${{ vars.VITE_RC_APPL_PUBLIC_KEY }}
+      VITE_RC_GOOG_PUBLIC_KEY: ${{ vars.VITE_RC_GOOG_PUBLIC_KEY }}
+      VITE_SENTRY_DSN: ${{ vars.VITE_SENTRY_DSN }}
+      VITE_SENTRY_ORGANIZATION: ${{ vars.VITE_SENTRY_ORGANIZATION }}
+      VITE_SENTRY_PROJECT_ID: ${{ vars.VITE_SENTRY_PROJECT_ID }}
+      VITE_SENTRY_REPORT_TO: ${{ vars.VITE_SENTRY_REPORT_TO }}
+      VITE_SENTRY_TRACES: ${{ vars.VITE_SENTRY_TRACES }}
+      VITE_SENTRY_LOGS: ${{ vars.VITE_SENTRY_LOGS }}
+      VITE_POSTHOG_KEY: ${{ vars.VITE_POSTHOG_KEY }}
+      VITE_POSTHOG_HOST: ${{ vars.VITE_POSTHOG_HOST }}
+      VITE_CLOUDFLARE_BEACON_ID: ${{ vars.VITE_CLOUDFLARE_BEACON_ID }}
+      VITE_FRESHWORKS_WIDGET_ID: ${{ vars.VITE_FRESHWORKS_WIDGET_ID }}
+      VITE_UPPY_COMPANION_URL: ${{ vars.VITE_UPPY_COMPANION_URL }}
+      VITE_UPPY_BUCKET_ORIGIN: ${{ vars.VITE_UPPY_BUCKET_ORIGIN }}
+      VITE_API_URL: ${{ vars.VITE_API_URL }}
+      VITE_ORIGIN: ${{ vars.VITE_ORIGIN }}
+      VITE_SHORT_ORIGIN: ${{ vars.VITE_SHORT_ORIGIN }}
+      VITE_APP_BUNDLE_ID: ${{ vars.VITE_APP_BUNDLE_ID }}
+      VITE_APP_STORE_ID: ${{ vars.VITE_APP_STORE_ID }}
+      VITE_PICO_APP_ID: ${{ vars.VITE_PICO_APP_ID }}
+      VITE_APPLE_SIGNIN_SERVICE_ID: ${{ vars.VITE_APPLE_SIGNIN_SERVICE_ID }}
+      VITE_GOOGLE_CLIENT_ID: ${{ vars.VITE_GOOGLE_CLIENT_ID }}
+      VITE_GOOGLE_IOS_CLIENT_ID: ${{ vars.VITE_GOOGLE_IOS_CLIENT_ID }}
+      VITE_PLATFORM_OVERRIDE: ${{ vars.VITE_PLATFORM_OVERRIDE }}
+      VITE_BUCKET_CONTENT_ORIGIN: ${{ vars.VITE_BUCKET_CONTENT_ORIGIN }}
+      VITE_BUCKET_UPLOADS_ORIGIN: ${{ vars.VITE_BUCKET_UPLOADS_ORIGIN }}
+      VITE_ASSETLINKS_JSON: ${{ vars.VITE_ASSETLINKS_JSON }}
+      VITE_APPLE_APP_SITE_ASSOCIATION_JSON: ${{ vars.VITE_APPLE_APP_SITE_ASSOCIATION_JSON }}
+      VITE_APPLE_DEVELOPER_MERCHANTID_DOMAIN_ASSOCIATION: ${{ vars.VITE_APPLE_DEVELOPER_MERCHANTID_DOMAIN_ASSOCIATION }}
+      VITE_WEBAUTHN_JSON: ${{ vars.VITE_WEBAUTHN_JSON }}
+
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
@@ -98,13 +157,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Typegen
-        env:
-          VITE_ORIGIN: ${{ vars.VITE_ORIGIN }}
-          VITE_SENTRY_ORGANIZATION: ${{ vars.VITE_SENTRY_ORGANIZATION }}
-          VITE_SENTRY_PROJECT_ID: ${{ vars.VITE_SENTRY_PROJECT_ID }}
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-        run: pnpm typegen
+      - name: Build
+        run: pnpm build
 
       - name: TypeScript
         run: |
@@ -113,19 +167,14 @@ jobs:
 
   release:
     if: github.event_name != 'merge_group' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
-    needs: [typescript]
-    strategy:
-      matrix:
-        environment: [production, canary]
-        exclude:
-          - environment: ${{ github.ref != 'refs/heads/production' && 'production' || null }}
+    needs: [build]
     runs-on: ubuntu-latest
     continue-on-error: true
     permissions:
       contents: read
       checks: write
     environment:
-      name: ${{ matrix.environment }}
+      name: ${{ github.ref == 'refs/heads/production' && 'production' || 'preview' }}
       url: ${{ steps.preview.outputs.url }}
     defaults:
       run:
@@ -166,7 +215,7 @@ jobs:
       VITE_WEBAUTHN_JSON: ${{ vars.VITE_WEBAUTHN_JSON }}
 
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
@@ -189,16 +238,16 @@ jobs:
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
         with:
           path: apps/frontend/node_modules/.cache
-          key: build-cache-${{ matrix.environment }}-${{ github.run_id }}
-          restore-keys: build-cache-${{ matrix.environment }}-
+          key: build-cache-${{ github.ref_name }}-${{ github.run_id }}
+          restore-keys: build-cache-${{ github.ref_name }}-
 
       - name: Deploy production
-        if: matrix.environment == 'production'
+        if: github.ref == 'refs/heads/production'
         run: pnpm run production
 
       - name: Compute preview alias
         id: preview
-        if: matrix.environment == 'canary'
+        if: github.ref != 'refs/heads/production'
         env:
           PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
@@ -212,19 +261,28 @@ jobs:
           echo "url=https://$label.flirtual.dev" >> "$GITHUB_OUTPUT"
 
       - name: Upload preview version
-        if: matrix.environment == 'canary'
+        if: github.ref != 'refs/heads/production'
         env:
           VITE_ORIGIN: https://${{ env.PREVIEW_LABEL }}.flirtual.dev
           VITE_API_URL: https://api-${{ env.PREVIEW_LABEL }}.flirtual.dev/v1/
         run: pnpm run preview "$PREVIEW_ALIAS"
 
       - name: Point flirtual.dev at this preview
-        if: matrix.environment == 'canary' && github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main'
         run: pnpm exec wrangler kv key put latest "$PREVIEW_LABEL" --binding=PREVIEW_STATE -c ../preview-router/wrangler.jsonc --remote
 
       - name: Deploy beta
-        if: matrix.environment == 'canary' && github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main'
         env:
           VITE_ORIGIN: https://beta.flirtual.dev
           VITE_API_URL: https://beta-api.flirtual.dev/v1/
         run: pnpm run canary
+
+  frontend:
+    if: always()
+    needs: [changes, lint, audit, build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Determine overall status
+        if: contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')
+        run: exit 1
