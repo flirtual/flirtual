@@ -3,6 +3,8 @@ on:
     branches: [main, production]
   pull_request:
   merge_group:
+  schedule:
+    - cron: 0 12 * * 1
   workflow_dispatch:
 
 permissions:
@@ -26,7 +28,7 @@ jobs:
 
       - uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4
         id: filter
-        if: github.event_name != 'workflow_dispatch'
+        if: github.event_name != 'schedule' && github.event_name != 'workflow_dispatch'
         with:
           filters: |
             frontend:
@@ -69,6 +71,7 @@ jobs:
 
   audit:
     needs: changes
+    continue-on-error: ${{ github.event_name != 'schedule' }}
     if: needs.changes.outputs.frontend != 'false'
     runs-on: ubuntu-latest
     steps:
@@ -166,7 +169,7 @@ jobs:
           exit ${PIPESTATUS[0]}
 
   release:
-    if: github.event_name != 'merge_group' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
+    if: github.event_name != 'merge_group' && github.event_name != 'schedule' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
     needs: [build]
     runs-on: ubuntu-latest
     continue-on-error: true
