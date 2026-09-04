@@ -37,7 +37,7 @@ defmodule Flirtual.MixProject do
       {:bcrypt_elixir, "~> 3.0"},
       {:phoenix, "~> 1.8.0"},
       {:phoenix_view, "~> 2.0"},
-      {:phoenix_live_dashboard, "~> 0.8.7"},
+      {:phoenix_live_dashboard, "~> 0.9.0"},
       {:ecto_psql_extras, "~> 0.8.8"},
       {:bodyguard, "~> 2.4"},
       {:phoenix_ecto, "~> 4.4"},
