@@ -143,7 +143,7 @@ importers:
         version: 1.6.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       '@posthog/react':
         specifier: ^1.10.3
-        version: 1.10.3(@types/react@19.2.17)(posthog-js@1.418.10)(react@19.2.7)
+        version: 1.10.5(@types/react@19.2.17)(posthog-js@1.418.10)(react@19.2.7)
       '@radix-ui/react-alert-dialog':
         specifier: ^1.1.19
         version: 1.1.23(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
@@ -2515,8 +2515,8 @@ packages:
   '@posthog/core@1.48.8':
     resolution: {integrity: sha512-LAOBOjMQrQmgcbZxnubl74l2GQd5OWqxCJJ8mzcWdZRWbfO6Y/A6E3fqWjDtm68hY4LxC/bbopG60cxZW8cfWw==}
 
-  '@posthog/react@1.10.3':
-    resolution: {integrity: sha512-Qu//fGQmVlX0B9kTA3LLg67e7AYLEmeuA0Bf1qSyUM0uUILcRQGjQezhNQPLYSTakOqvXEnl6fM2iQBF6Toxrw==}
+  '@posthog/react@1.10.5':
+    resolution: {integrity: sha512-lehh9+mJwb6iEjRBkIvh8olnJ6RV+YgQgdgJ6fdTr+T7EMoml/G1k+q92Oil8vZPcA9Dzg+2n0xaLY5yZrY3YA==}
     peerDependencies:
       '@types/react': '>=16.8.0'
       posthog-js: '>=1.257.2'
@@ -9230,7 +9230,7 @@ snapshots:
     dependencies:
       '@posthog/types': 1.405.1
 
-  '@posthog/react@1.10.3(@types/react@19.2.17)(posthog-js@1.418.10)(react@19.2.7)':
+  '@posthog/react@1.10.5(@types/react@19.2.17)(posthog-js@1.418.10)(react@19.2.7)':
     dependencies:
       posthog-js: 1.418.10
       react: 19.2.7
