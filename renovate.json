@@ -9,9 +9,6 @@
 	"osvVulnerabilityAlerts": true,
 	"dependencyDashboardOSVVulnerabilitySummary": "unresolved",
 	"prBodyTemplate": "{{{header}}}{{{table}}}{{{warnings}}}{{{notes}}}{{{changelogs}}}{{{controls}}}",
-	"major": {
-		"dependencyDashboardApproval": true
-	},
 	"lockFileMaintenance": {
 		"enabled": true,
 		"automerge": true,
