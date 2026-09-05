@@ -44,64 +44,64 @@ importers:
     dependencies:
       '@capacitor-community/in-app-review':
         specifier: ^8.0.0
-        version: 8.0.0(@capacitor/core@8.5.0)
+        version: 8.0.0(@capacitor/core@8.5.1)
       '@capacitor-community/safe-area':
         specifier: ^8.0.1
-        version: 8.0.1(@capacitor/core@8.5.0)
+        version: 8.0.1(@capacitor/core@8.5.1)
       '@capacitor/android':
         specifier: ^8.4.2
-        version: 8.5.0(@capacitor/core@8.5.0)
+        version: 8.5.1(@capacitor/core@8.5.1)
       '@capacitor/app':
         specifier: ^8.1.1
-        version: 8.1.1(@capacitor/core@8.5.0)
+        version: 8.1.1(@capacitor/core@8.5.1)
       '@capacitor/clipboard':
         specifier: ^8.0.1
-        version: 8.0.1(@capacitor/core@8.5.0)
+        version: 8.0.1(@capacitor/core@8.5.1)
       '@capacitor/core':
         specifier: ^8.4.2
-        version: 8.5.0
+        version: 8.5.1
       '@capacitor/device':
         specifier: ^8.0.3
-        version: 8.0.3(@capacitor/core@8.5.0)
+        version: 8.0.3(@capacitor/core@8.5.1)
       '@capacitor/dialog':
         specifier: ^8.0.1
-        version: 8.0.1(@capacitor/core@8.5.0)
+        version: 8.0.1(@capacitor/core@8.5.1)
       '@capacitor/geolocation':
         specifier: ^8.2.0
-        version: 8.2.1(@capacitor/core@8.5.0)
+        version: 8.2.2(@capacitor/core@8.5.1)
       '@capacitor/ios':
         specifier: ^8.4.2
-        version: 8.5.0(@capacitor/core@8.5.0)
+        version: 8.5.1(@capacitor/core@8.5.1)
       '@capacitor/keyboard':
         specifier: ^8.0.5
-        version: 8.0.5(@capacitor/core@8.5.0)
+        version: 8.0.5(@capacitor/core@8.5.1)
       '@capacitor/preferences':
         specifier: ^8.0.1
-        version: 8.0.1(@capacitor/core@8.5.0)
+        version: 8.0.1(@capacitor/core@8.5.1)
       '@capacitor/push-notifications':
         specifier: ^8.1.2
-        version: 8.1.2(@capacitor/core@8.5.0)
+        version: 8.1.2(@capacitor/core@8.5.1)
       '@capacitor/share':
         specifier: ^8.0.1
-        version: 8.0.1(@capacitor/core@8.5.0)
+        version: 8.0.1(@capacitor/core@8.5.1)
       '@capacitor/toast':
         specifier: ^8.0.1
-        version: 8.0.1(@capacitor/core@8.5.0)
+        version: 8.0.1(@capacitor/core@8.5.1)
       '@capawesome-team/capacitor-datetime-picker':
         specifier: ^8.1.1
-        version: 8.1.1(@capacitor/core@8.5.0)
+        version: 8.1.3(@capacitor/core@8.5.1)
       '@capawesome/capacitor-age-signals':
         specifier: ^0.5.0
-        version: 0.5.0(@capacitor/core@8.5.0)
+        version: 0.5.1(@capacitor/core@8.5.1)
       '@capawesome/capacitor-app-update':
         specifier: ^8.0.3
-        version: 8.0.3(@capacitor/core@8.5.0)
+        version: 8.0.5(@capacitor/core@8.5.1)
       '@capgo/capacitor-inappbrowser':
-        specifier: 8.12.3
-        version: 8.12.3(@capacitor/core@8.5.0)
+        specifier: 8.16.2
+        version: 8.16.2(@capacitor/core@8.5.1)
       '@capgo/capacitor-social-login':
         specifier: ^8.3.37
-        version: 8.4.1(@capacitor/core@8.5.0)
+        version: 8.5.4(@capacitor/core@8.5.1)
       '@dnd-kit/core':
         specifier: ^6.3.1
         version: 6.3.1(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
@@ -178,8 +178,8 @@ importers:
         specifier: ^8.2.0
         version: 8.3.0(react-router@8.3.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(supports-color@10.2.2)(typescript@5.9.3)
       '@revenuecat/purchases-capacitor':
-        specifier: 13.2.3
-        version: 13.2.3(@capacitor/core@8.5.0)
+        specifier: 13.4.2
+        version: 13.4.2(@capacitor/core@8.5.1)
       '@sentry/react-router':
         specifier: ^10.65.0
         version: 10.70.0(@opentelemetry/core@2.10.0(@opentelemetry/api@1.9.1))(@react-router/node@8.3.0(react-router@8.3.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(typescript@5.9.3))(react-router@8.3.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react@19.2.7)(supports-color@10.2.2)
@@ -260,7 +260,7 @@ importers:
         version: 2.0.5
       capacitor-native-settings:
         specifier: ^8.1.0
-        version: 8.2.0(@capacitor/core@8.5.0)
+        version: 8.2.0(@capacitor/core@8.5.1)
       core-js:
         specifier: ^3.49.0
         version: 3.50.0
@@ -377,7 +377,7 @@ importers:
         specifier: 'catalog:'
         version: 3.2.1-canary.1(027d4380f43a721b22a508d546fe1ccc)
       '@capacitor/cli':
-        specifier: ^8.4.2
+        specifier: 8.5.0
         version: 8.5.0(supports-color@10.2.2)
       '@cloudflare/workers-types':
         specifier: 5.20260813.1
@@ -863,8 +863,8 @@ packages:
     peerDependencies:
       '@capacitor/core': '>=8.0.0'
 
-  '@capacitor/android@8.5.0':
-    resolution: {integrity: sha512-Rb3prJeQiTp0pQhSSOReJuG9VgibOGMG4ECs+UhMwr6TCCHZ3NCZO811bDA0HxD0xrT/gCrJAsY5yfEATu84JQ==}
+  '@capacitor/android@8.5.1':
+    resolution: {integrity: sha512-o8fUIPDSEASeXHHrDz26WU7OlyiRb+QqtI9KFdnLS1jUL77o5iGrvegibaZX8rWpiCyDJ6jlUhhhHlfeq3ou9A==}
     peerDependencies:
       '@capacitor/core': ^8.5.0
 
@@ -883,8 +883,8 @@ packages:
     peerDependencies:
       '@capacitor/core': '>=8.0.0'
 
-  '@capacitor/core@8.5.0':
-    resolution: {integrity: sha512-Ca4krtqH1hothjtBIwf2J2TW7IhYq1ujp8QeItTiJohNsqij8ja2DYYH3DU0l8RmxCWaBAFTGA2TgOgOMCSNsQ==}
+  '@capacitor/core@8.5.1':
+    resolution: {integrity: sha512-IOQ7ynG1qgrJ/RLuCO3WgyRGmkmmG/cdStRR4ftU2dWEN1FdtLrnI/XpZmZuUsOEHEnzBRJY/PmRH8eTLiXfhA==}
 
   '@capacitor/device@8.0.3':
     resolution: {integrity: sha512-rliPCCZwxtjU6200jJNDAsQhioyozV3fGgiP+NgRqtDOI7i+Jdz+DYNwEup+3MGZZ4NEmkuFaBeWLM3T01vJRg==}
@@ -896,13 +896,13 @@ packages:
     peerDependencies:
       '@capacitor/core': '>=8.0.0'
 
-  '@capacitor/geolocation@8.2.1':
-    resolution: {integrity: sha512-1QprZ0KXKKuCkwrv0Ot8ao63QZQ0wIQC/vYbB54eSHmyNjSQ/o7rTbzRtW4VsGMhcx4EmY9RxlyzcnM7Da+lqw==}
+  '@capacitor/geolocation@8.2.2':
+    resolution: {integrity: sha512-X8ryw6CfL4LspJnnfVL4++DUKKZVfdUIA9JljWVRljEDIQxZQZtz6xf7qstht+ymc+le6oa5EaUChVA6KsCYlA==}
     peerDependencies:
       '@capacitor/core': '>=8.0.0'
 
-  '@capacitor/ios@8.5.0':
-    resolution: {integrity: sha512-7k1TfohJu5BzRXc1F3g04Q8QQ0fyQgms6h1AvhnHb04VaNr9EdHOx03hL8O+OigEKMQnyJd1ZOjTPPNHCqL5Yw==}
+  '@capacitor/ios@8.5.1':
+    resolution: {integrity: sha512-0EVqwCYf3RUp2JAjUGZ04xmG6dSpIsPmPacI9zKxn6mu9RSiHhmFF230ghe00HrkyB6ig6SfNdoADvVODxYhlQ==}
     peerDependencies:
       '@capacitor/core': ^8.5.0
 
@@ -934,28 +934,28 @@ packages:
     peerDependencies:
       '@capacitor/core': '>=8.0.0'
 
-  '@capawesome-team/capacitor-datetime-picker@8.1.1':
-    resolution: {integrity: sha512-Fyghonjm9KrC1BuXmKVWCRbY0HkX7wfqgAsZBwKxK64iucDEcTkVGx8qBwcrIsvO5WbYXukSrSLsWO2Hod/YjQ==}
+  '@capawesome-team/capacitor-datetime-picker@8.1.3':
+    resolution: {integrity: sha512-nIY58tpaZYa9AE47FkBu7DPXBT+CEUXfaS0D6SFNFBc1Cg5vcGwaZY6Sm+crw6ZAuzCSZa80L7GKwfeyXsh21A==}
     peerDependencies:
       '@capacitor/core': '>=8.0.0'
 
-  '@capawesome/capacitor-age-signals@0.5.0':
-    resolution: {integrity: sha512-t7CPDgEaz6QyZf3FTDkI3PtpjJvE9wzj6lFKlnOeZxJU1emo6SbUck0VkEwAz+q/RpB1oXVCalc/zbvHjU+oow==}
+  '@capawesome/capacitor-age-signals@0.5.1':
+    resolution: {integrity: sha512-Qff0ry4PkkXyrDN1d0indxw929oqKe/IjQDXU0ir/1KQ+idsa72Vx1EUEV00vtF6oPGtOA/GkiV46ugkesBbdg==}
     peerDependencies:
       '@capacitor/core': '>=8.0.0'
 
-  '@capawesome/capacitor-app-update@8.0.3':
-    resolution: {integrity: sha512-5pS9I+i2TuUl8b6L3h2WsWF/PE68exzoc9CciXK/I2SdB2fIkdxObrYBeYS2Z09ndCGqJgx4iwZJmhXwVcMh4w==}
+  '@capawesome/capacitor-app-update@8.0.5':
+    resolution: {integrity: sha512-MyK6Iq5dCiQx7VJE//I00o6RN11tkgl8pMXEq/0xYwzDsGsEZfS7VNDp/WLrLY8h7F/ShQrpHBOwVT1nD7byvQ==}
     peerDependencies:
       '@capacitor/core': '>=8.0.0'
 
-  '@capgo/capacitor-inappbrowser@8.12.3':
-    resolution: {integrity: sha512-4hikXYjmzMGzryR+2NiFoRNy7KiqVy8q8PprDoy/42m22D/g1cd3tSJ0nPmXpSgl4lp7KW5gexDpIbtH1PncYg==}
+  '@capgo/capacitor-inappbrowser@8.16.2':
+    resolution: {integrity: sha512-Pjt9hoeicVsabIRiDIRceU+6cwRIBObBeBGxuuUAtn1jyK75M4iYKqklQl/Ia9Zk0nYHag86PDRolLJHJc7Xcg==}
     peerDependencies:
       '@capacitor/core': '>=8.0.0'
 
-  '@capgo/capacitor-social-login@8.4.1':
-    resolution: {integrity: sha512-CvhJs4h+BhF+i38/PP7j/zToKSA74fmVszyXSFRlHQXCO+PnlrfkhpJfzAAAJraj72gbkg28tyILDiyRuR7DJw==}
+  '@capgo/capacitor-social-login@8.5.4':
+    resolution: {integrity: sha512-kHks4PF1Oweyn77NRJyD1ZZqeOtlWU8BmvuuQIPj+695IGRJFa7hLy60f/ZIIIxyBjY23jceCMjfocy42z7IXQ==}
     peerDependencies:
       '@capacitor/core': '>=8.0.0'
 
@@ -2952,13 +2952,13 @@ packages:
   '@remix-run/node-fetch-server@0.13.3':
     resolution: {integrity: sha512-UfjOXed/DQteaM5VyTfqTeGpHwyL2J5aoRGY6cydip4tt1ehNNeSwuXCC7AEGE0RWBs/7bgKxYkL/B/+UDe4AA==}
 
-  '@revenuecat/purchases-capacitor@13.2.3':
-    resolution: {integrity: sha512-fW10KEjRnDev5G/KLBkMHyE8XRrDv4ivzV+Jv/2ACj9u28CXAcc39323rKaYsQiiTen40JEyeQXBsQUtTNyFBg==}
+  '@revenuecat/purchases-capacitor@13.4.2':
+    resolution: {integrity: sha512-fdewWFCHBscNc10pwqnlpoA5mzQC9QcerV5XWnLblOTqCxYfy6JhJOt7VfRHFfUWfMHCtrZkN11fN9UVNpY+yw==}
     peerDependencies:
       '@capacitor/core': '>=8.0.0'
 
-  '@revenuecat/purchases-typescript-internal-esm@18.21.0':
-    resolution: {integrity: sha512-6aOc/RaWiIL8w69DzGZX9eenQ+dATc0ZcLbQlusFT28+6ODukSYyy4xPbVo7uZO5wkeZ0nRO74Yoi00kTOdfhg==}
+  '@revenuecat/purchases-typescript-internal-esm@18.32.1':
+    resolution: {integrity: sha512-eevn4M374ARaK7praFB5526iHqMdXOGpSq6bs5tECa4wGSa9xcVPw8SvxnAAJYBtxbcKCq6l8DCH285EuPJ8nw==}
 
   '@rolldown/binding-android-arm64@1.2.4':
     resolution: {integrity: sha512-jHC2cnyKz5xU2fhECtFl8OZ83cYNt13GZQD+0uMJ/X3o+ijmd56okHhTUwxVSHPx1IRVIJEZ1/1pPzeLCU6XKA==}
@@ -3799,11 +3799,6 @@ packages:
     resolution: {integrity: sha512-Cl/p9RW8XO/W3voYooVrr3c49SC4t1ijfnvYPB0kMzRp021SO8RGKWt0xDT93ys2cBbI9/X1tLQfPZM/KJlQ0Q==}
     peerDependencies:
       react: '>= 15'
-
-  '@xmldom/xmldom@0.9.11':
-    resolution: {integrity: sha512-tW8bcK3hsG0/uqSnNz6TK4BkcuZSezoU7DlnYssILmZDktPnSHHuDJJFM0AJv+13gz2r0iGdrj6qqKeUnxXEDg==}
-    engines: {node: '>=14.6'}
-    deprecated: this version has critical issues, please update to the latest version
 
   '@xmldom/xmldom@0.9.12':
     resolution: {integrity: sha512-5AXjrcMClTryPe9LgZrygpB1lj7s0S9E0+W+AHaVKAVyHanafK86iPSvG5xHVSp/jC+VH1UXu0TAEmY279xH7A==}
@@ -7774,21 +7769,21 @@ snapshots:
       '@babel/helper-string-parser': 8.0.0
       '@babel/helper-validator-identifier': 8.0.4
 
-  '@capacitor-community/in-app-review@8.0.0(@capacitor/core@8.5.0)':
+  '@capacitor-community/in-app-review@8.0.0(@capacitor/core@8.5.1)':
     dependencies:
-      '@capacitor/core': 8.5.0
+      '@capacitor/core': 8.5.1
 
-  '@capacitor-community/safe-area@8.0.1(@capacitor/core@8.5.0)':
+  '@capacitor-community/safe-area@8.0.1(@capacitor/core@8.5.1)':
     dependencies:
-      '@capacitor/core': 8.5.0
+      '@capacitor/core': 8.5.1
 
-  '@capacitor/android@8.5.0(@capacitor/core@8.5.0)':
+  '@capacitor/android@8.5.1(@capacitor/core@8.5.1)':
     dependencies:
-      '@capacitor/core': 8.5.0
+      '@capacitor/core': 8.5.1
 
-  '@capacitor/app@8.1.1(@capacitor/core@8.5.0)':
+  '@capacitor/app@8.1.1(@capacitor/core@8.5.1)':
     dependencies:
-      '@capacitor/core': 8.5.0
+      '@capacitor/core': 8.5.1
 
   '@capacitor/cli@8.5.0(supports-color@10.2.2)':
     dependencies:
@@ -7813,72 +7808,72 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@capacitor/clipboard@8.0.1(@capacitor/core@8.5.0)':
+  '@capacitor/clipboard@8.0.1(@capacitor/core@8.5.1)':
     dependencies:
-      '@capacitor/core': 8.5.0
+      '@capacitor/core': 8.5.1
 
-  '@capacitor/core@8.5.0':
+  '@capacitor/core@8.5.1':
     dependencies:
       tslib: 2.8.1
 
-  '@capacitor/device@8.0.3(@capacitor/core@8.5.0)':
+  '@capacitor/device@8.0.3(@capacitor/core@8.5.1)':
     dependencies:
-      '@capacitor/core': 8.5.0
+      '@capacitor/core': 8.5.1
 
-  '@capacitor/dialog@8.0.1(@capacitor/core@8.5.0)':
+  '@capacitor/dialog@8.0.1(@capacitor/core@8.5.1)':
     dependencies:
-      '@capacitor/core': 8.5.0
+      '@capacitor/core': 8.5.1
 
-  '@capacitor/geolocation@8.2.1(@capacitor/core@8.5.0)':
+  '@capacitor/geolocation@8.2.2(@capacitor/core@8.5.1)':
     dependencies:
-      '@capacitor/core': 8.5.0
+      '@capacitor/core': 8.5.1
       '@capacitor/synapse': 1.0.4
 
-  '@capacitor/ios@8.5.0(@capacitor/core@8.5.0)':
+  '@capacitor/ios@8.5.1(@capacitor/core@8.5.1)':
     dependencies:
-      '@capacitor/core': 8.5.0
+      '@capacitor/core': 8.5.1
 
-  '@capacitor/keyboard@8.0.5(@capacitor/core@8.5.0)':
+  '@capacitor/keyboard@8.0.5(@capacitor/core@8.5.1)':
     dependencies:
-      '@capacitor/core': 8.5.0
+      '@capacitor/core': 8.5.1
 
-  '@capacitor/preferences@8.0.1(@capacitor/core@8.5.0)':
+  '@capacitor/preferences@8.0.1(@capacitor/core@8.5.1)':
     dependencies:
-      '@capacitor/core': 8.5.0
+      '@capacitor/core': 8.5.1
 
-  '@capacitor/push-notifications@8.1.2(@capacitor/core@8.5.0)':
+  '@capacitor/push-notifications@8.1.2(@capacitor/core@8.5.1)':
     dependencies:
-      '@capacitor/core': 8.5.0
+      '@capacitor/core': 8.5.1
 
-  '@capacitor/share@8.0.1(@capacitor/core@8.5.0)':
+  '@capacitor/share@8.0.1(@capacitor/core@8.5.1)':
     dependencies:
-      '@capacitor/core': 8.5.0
+      '@capacitor/core': 8.5.1
 
   '@capacitor/synapse@1.0.4': {}
 
-  '@capacitor/toast@8.0.1(@capacitor/core@8.5.0)':
+  '@capacitor/toast@8.0.1(@capacitor/core@8.5.1)':
     dependencies:
-      '@capacitor/core': 8.5.0
+      '@capacitor/core': 8.5.1
 
-  '@capawesome-team/capacitor-datetime-picker@8.1.1(@capacitor/core@8.5.0)':
+  '@capawesome-team/capacitor-datetime-picker@8.1.3(@capacitor/core@8.5.1)':
     dependencies:
-      '@capacitor/core': 8.5.0
+      '@capacitor/core': 8.5.1
 
-  '@capawesome/capacitor-age-signals@0.5.0(@capacitor/core@8.5.0)':
+  '@capawesome/capacitor-age-signals@0.5.1(@capacitor/core@8.5.1)':
     dependencies:
-      '@capacitor/core': 8.5.0
+      '@capacitor/core': 8.5.1
 
-  '@capawesome/capacitor-app-update@8.0.3(@capacitor/core@8.5.0)':
+  '@capawesome/capacitor-app-update@8.0.5(@capacitor/core@8.5.1)':
     dependencies:
-      '@capacitor/core': 8.5.0
+      '@capacitor/core': 8.5.1
 
-  '@capgo/capacitor-inappbrowser@8.12.3(@capacitor/core@8.5.0)':
+  '@capgo/capacitor-inappbrowser@8.16.2(@capacitor/core@8.5.1)':
     dependencies:
-      '@capacitor/core': 8.5.0
+      '@capacitor/core': 8.5.1
 
-  '@capgo/capacitor-social-login@8.4.1(@capacitor/core@8.5.0)':
+  '@capgo/capacitor-social-login@8.5.4(@capacitor/core@8.5.1)':
     dependencies:
-      '@capacitor/core': 8.5.0
+      '@capacitor/core': 8.5.1
       tslib: 2.8.1
 
   '@clack/core@0.5.0':
@@ -9694,12 +9689,12 @@ snapshots:
 
   '@remix-run/node-fetch-server@0.13.3': {}
 
-  '@revenuecat/purchases-capacitor@13.2.3(@capacitor/core@8.5.0)':
+  '@revenuecat/purchases-capacitor@13.4.2(@capacitor/core@8.5.1)':
     dependencies:
-      '@capacitor/core': 8.5.0
-      '@revenuecat/purchases-typescript-internal-esm': 18.21.0
+      '@capacitor/core': 8.5.1
+      '@revenuecat/purchases-typescript-internal-esm': 18.32.1
 
-  '@revenuecat/purchases-typescript-internal-esm@18.21.0': {}
+  '@revenuecat/purchases-typescript-internal-esm@18.32.1': {}
 
   '@rolldown/binding-android-arm64@1.2.4':
     optional: true
@@ -10769,10 +10764,7 @@ snapshots:
       '@widgetbot/embed-api': 1.2.18
       react: 19.2.7
 
-  '@xmldom/xmldom@0.9.11': {}
-
-  '@xmldom/xmldom@0.9.12':
-    optional: true
+  '@xmldom/xmldom@0.9.12': {}
 
   abort-controller@3.0.0:
     dependencies:
@@ -10980,9 +10972,9 @@ snapshots:
 
   caniuse-lite@1.0.30001809: {}
 
-  capacitor-native-settings@8.2.0(@capacitor/core@8.5.0):
+  capacitor-native-settings@8.2.0(@capacitor/core@8.5.1):
     dependencies:
-      '@capacitor/core': 8.5.0
+      '@capacitor/core': 8.5.1
 
   ccount@2.0.1: {}
 
@@ -13575,7 +13567,7 @@ snapshots:
 
   plist@3.1.1:
     dependencies:
-      '@xmldom/xmldom': 0.9.11
+      '@xmldom/xmldom': 0.9.12
       base64-js: 1.5.1
       xmlbuilder: 15.1.1
 
