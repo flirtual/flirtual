@@ -3,6 +3,8 @@ on:
     branches: [main, production]
   pull_request:
   merge_group:
+  schedule:
+    - cron: 0 12 * * 1
   workflow_dispatch:
 
 permissions:
@@ -13,7 +15,141 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
+  changes:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      api: ${{ steps.filter.outputs.api }}
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4
+        id: filter
+        if: github.event_name != 'schedule' && github.event_name != 'workflow_dispatch'
+        with:
+          filters: |
+            api:
+              - 'apps/api/**'
+              - '.github/workflows/api.yaml'
+
+  lint:
+    needs: changes
+    if: needs.changes.outputs.api != 'false'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./apps/api
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+    - name: Set up Elixir
+      uses: erlef/setup-beam@54075bcc5e249e4758d363f27d099f55d843f124 # v1
+      with:
+        version-type: strict
+        version-file: apps/api/.tool-versions
+
+    - name: Cache deps
+      uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+      env:
+        cache-name: cache-elixir-deps
+      with:
+        path: apps/api/deps
+        key: ${{ runner.os }}-mix-${{ env.cache-name }}-${{ hashFiles('**/mix.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-mix-${{ env.cache-name }}-
+
+    - name: Cache compiled build
+      uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+      env:
+        cache-name: cache-compiled-build
+      with:
+        path: apps/api/_build
+        key: ${{ runner.os }}-mix-${{ env.cache-name }}-${{ hashFiles('**/mix.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-mix-${{ env.cache-name }}-
+          ${{ runner.os }}-mix-
+
+    - name: Install dependencies
+      run: mix deps.get
+
+    - name: Formatted
+      run: mix format --check-formatted
+
+    - name: Credo
+      run: mix credo --mute-exit-status
+
+    - name: Unused dependencies
+      run: mix deps.unlock --check-unused
+
+  audit:
+    needs: changes
+    continue-on-error: ${{ github.event_name != 'schedule' }}
+    if: needs.changes.outputs.api != 'false'
+    permissions:
+      contents: read
+      security-events: write
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./apps/api
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+    - name: Set up Elixir
+      uses: erlef/setup-beam@54075bcc5e249e4758d363f27d099f55d843f124 # v1
+      with:
+        version-type: strict
+        version-file: apps/api/.tool-versions
+
+    - name: Cache deps
+      uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+      env:
+        cache-name: cache-elixir-deps
+      with:
+        path: apps/api/deps
+        key: ${{ runner.os }}-mix-${{ env.cache-name }}-${{ hashFiles('**/mix.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-mix-${{ env.cache-name }}-
+
+    - name: Cache compiled build
+      uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+      env:
+        cache-name: cache-compiled-build
+      with:
+        path: apps/api/_build
+        key: ${{ runner.os }}-mix-${{ env.cache-name }}-${{ hashFiles('**/mix.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-mix-${{ env.cache-name }}-
+          ${{ runner.os }}-mix-
+
+    - name: Install dependencies
+      run: mix deps.get
+
+    - name: Sobelow
+      run: mix sobelow --root . --skip --format sarif --out results.sarif
+
+    - name: Upload Sobelow results
+      uses: github/codeql-action/upload-sarif@cdf488f595d80d6e07e03d4674febd5ab45fa938 # v4
+      with:
+        sarif_file: apps/api/results.sarif
+        category: /language:elixir
+
+    - name: Retired packages
+      run: mix hex.audit
+
+    - name: Vulnerable dependencies
+      run: mix deps.audit
+
   build:
+    needs: changes
+    if: needs.changes.outputs.api != 'false'
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -65,12 +201,18 @@ jobs:
     - name: Compiles without warnings
       run: mix compile
 
-    - name: Mix check
-      run: mix check --except compiler
+  api:
+    if: always()
+    needs: [changes, build, audit, lint]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Determine overall status
+        if: contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')
+        run: exit 1
 
   image:
-    if: github.event_name != 'merge_group' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
-    needs: [build]
+    if: github.event_name != 'merge_group' && github.event_name != 'schedule' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
+    needs: [build, audit, lint]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
@@ -95,14 +237,14 @@ jobs:
     if: github.ref != 'refs/heads/production' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
     needs: [image]
     environment:
-      name: canary
+      name: preview
       url: ${{ steps.preview.outputs.url }}
     runs-on: ubuntu-latest
     env:
       FLY_APP: flirtual-canary
       FLY_IMAGE: registry.fly.io/flirtual:${{ github.sha }}
       FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
