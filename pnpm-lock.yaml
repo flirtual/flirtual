@@ -26,7 +26,7 @@ catalogs:
       version: 4.125.0
 
 overrides:
-  eslint-plugin-tailwindcss: 3.18.2
+  eslint-plugin-tailwindcss: 3.18.3
   tsup>esbuild: '>=0.28.1'
   shepherd.js>deepmerge-ts: '>=8.0.0'
 
@@ -375,7 +375,7 @@ importers:
     devDependencies:
       '@ariesclark/eslint-config':
         specifier: 'catalog:'
-        version: 3.2.1-canary.1(027d4380f43a721b22a508d546fe1ccc)
+        version: 3.2.1-canary.1(cb1106b471e21d4f96d9183ecbc00391)
       '@capacitor/cli':
         specifier: ^8.4.2
         version: 8.5.0(supports-color@10.2.2)
@@ -413,14 +413,14 @@ importers:
         specifier: 'catalog:'
         version: 9.39.5(jiti@1.21.7)(supports-color@10.2.2)
       eslint-plugin-react-hooks:
-        specifier: ^5.2.0
+        specifier: 5.2.0
         version: 5.2.0(eslint@9.39.5(jiti@1.21.7)(supports-color@10.2.2))
       eslint-plugin-react-refresh:
-        specifier: ^0.4.20
+        specifier: 0.4.26
         version: 0.4.26(eslint@9.39.5(jiti@1.21.7)(supports-color@10.2.2))
       eslint-plugin-tailwindcss:
-        specifier: 3.18.2
-        version: 3.18.2(tailwindcss@3.4.19(tsx@4.23.12)(yaml@2.9.0))
+        specifier: 3.18.3
+        version: 3.18.3(tailwindcss@3.4.19(tsx@4.23.12)(yaml@2.9.0))
       knip:
         specifier: 6.32.2
         version: 6.32.2
@@ -490,7 +490,7 @@ importers:
     devDependencies:
       '@ariesclark/eslint-config':
         specifier: 'catalog:'
-        version: 3.2.1-canary.1(341f94cb1c3bf8c5fa7d8896bdb54224)
+        version: 3.2.1-canary.1(92b069a96865872b0f4396eb1779faf2)
       '@total-typescript/ts-reset':
         specifier: 0.6.1
         version: 0.6.1
@@ -514,12 +514,12 @@ importers:
     devDependencies:
       '@ariesclark/eslint-config':
         specifier: 'catalog:'
-        version: 3.2.1-canary.1(1e81ce78ace39eb7ee50c3ce8fe682ac)
+        version: 3.2.1-canary.1(5197efc4f1fff8a8175da17a7714af48)
       eslint:
         specifier: 'catalog:'
         version: 9.39.5(jiti@2.7.0)(supports-color@10.2.2)
       eslint-plugin-format:
-        specifier: ^1.1.0
+        specifier: 1.5.0
         version: 1.5.0(eslint@9.39.5(jiti@2.7.0)(supports-color@10.2.2))
       wrangler:
         specifier: 'catalog:'
@@ -692,7 +692,7 @@ packages:
     peerDependencies:
       '@next/eslint-plugin-next': ^15
       eslint: ^9
-      eslint-plugin-tailwindcss: 3.18.2
+      eslint-plugin-tailwindcss: 3.18.3
     peerDependenciesMeta:
       '@next/eslint-plugin-next':
         optional: true
@@ -4636,11 +4636,11 @@ packages:
     peerDependencies:
       eslint: '>=8.44.0'
 
-  eslint-plugin-tailwindcss@3.18.2:
-    resolution: {integrity: sha512-QbkMLDC/OkkjFQ1iz/5jkMdHfiMu/uwujUHLAJK5iwNHD8RTxVTlsUezE0toTZ6VhybNBsk+gYGPDq2agfeRNA==}
+  eslint-plugin-tailwindcss@3.18.3:
+    resolution: {integrity: sha512-lqjNX7mt1Ip2qR236hvhbZ9ff2TFLUWou+tBHz82SA1nWFzOZSoEOI+9UBZmuf2977r2MMp9/y3/broyz8AYig==}
     engines: {node: '>=18.12.0'}
     peerDependencies:
-      tailwindcss: ^3.4.0
+      tailwindcss: ^3.4.0 || ^4.0.0
 
   eslint-plugin-toml@0.12.0:
     resolution: {integrity: sha512-+/wVObA9DVhwZB1nG83D2OAQRrcQZXy+drqUnFJKymqnmbnbfg/UPmEMCKrJNcEboUGxUjYrJlgy+/Y930mURQ==}
@@ -6556,6 +6556,11 @@ packages:
     resolution: {integrity: sha512-eNRKgb3z66Yp3D2CixVujOUvXLFUTij/zVnV8KRyvFdQwpz7I5DS8UfRkTeLzb64u+dkzDSdelE24izu+zSSUg==}
     engines: {node: ^14.18.0 || >=16.0.0}
 
+  tailwind-api-utils@1.0.3:
+    resolution: {integrity: sha512-KpzUHkH1ug1sq4394SLJX38ZtpeTiqQ1RVyFTTSY2XuHsNSTWUkRo108KmyyrMWdDbQrLYkSHaNKj/a3bmA4sQ==}
+    peerDependencies:
+      tailwindcss: ^3.3.0 || ^4.0.0 || ^4.0.0-beta
+
   tailwind-merge@3.6.0:
     resolution: {integrity: sha512-uxL7qAVQriqRQPAyK3pj66VqskWqoZ37PW94jwOTwNfq/z9oyu1V+eqrZqtR2+fCiXdYOZe/Modt8GtvqNzu+w==}
 
@@ -7426,46 +7431,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@ariesclark/eslint-config@3.2.1-canary.1(027d4380f43a721b22a508d546fe1ccc)':
-    dependencies:
-      '@antfu/eslint-config': 4.19.0(@eslint-react/eslint-plugin@1.53.1(eslint@9.39.5(jiti@1.21.7)(supports-color@10.2.2))(supports-color@10.2.2)(ts-api-utils@2.5.0(typescript@5.9.3))(typescript@5.9.3))(@typescript-eslint/typescript-estree@8.67.0(supports-color@10.2.2)(typescript@5.9.3))(@typescript-eslint/utils@8.67.0(eslint@9.39.5(jiti@1.21.7)(supports-color@10.2.2))(supports-color@10.2.2)(typescript@5.9.3))(@vue/compiler-sfc@3.5.41)(eslint-plugin-format@1.5.0(eslint@9.39.5(jiti@1.21.7)(supports-color@10.2.2)))(eslint-plugin-react-hooks@5.2.0(eslint@9.39.5(jiti@1.21.7)(supports-color@10.2.2)))(eslint-plugin-react-refresh@0.4.26(eslint@9.39.5(jiti@1.21.7)(supports-color@10.2.2)))(eslint@9.39.5(jiti@1.21.7)(supports-color@10.2.2))(supports-color@10.2.2)(typescript@5.9.3)(vitest@4.1.11(@opentelemetry/api@1.9.1)(@types/node@26.2.0)(vite@8.2.1(@types/node@26.2.0)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.102.0)(tsx@4.23.12)(yaml@2.9.0)))
-      eslint: 9.39.5(jiti@1.21.7)(supports-color@10.2.2)
-      eslint-flat-config-utils: 2.1.4
-      esno: 4.8.0
-      local-pkg: 1.2.1
-      tsup: 8.5.1(jiti@1.21.7)(postcss@8.5.26)(supports-color@10.2.2)(tsx@4.23.12)(typescript@5.9.3)(yaml@2.9.0)
-    optionalDependencies:
-      eslint-plugin-tailwindcss: 3.18.2(tailwindcss@3.4.19(tsx@4.23.12)(yaml@2.9.0))
-    transitivePeerDependencies:
-      - '@eslint-react/eslint-plugin'
-      - '@eslint/json'
-      - '@microsoft/api-extractor'
-      - '@prettier/plugin-xml'
-      - '@swc/core'
-      - '@typescript-eslint/typescript-estree'
-      - '@typescript-eslint/utils'
-      - '@unocss/eslint-plugin'
-      - '@vue/compiler-sfc'
-      - astro-eslint-parser
-      - eslint-plugin-astro
-      - eslint-plugin-format
-      - eslint-plugin-react-hooks
-      - eslint-plugin-react-refresh
-      - eslint-plugin-solid
-      - eslint-plugin-svelte
-      - eslint-plugin-vuejs-accessibility
-      - jiti
-      - postcss
-      - prettier-plugin-astro
-      - prettier-plugin-slidev
-      - supports-color
-      - svelte-eslint-parser
-      - tsx
-      - typescript
-      - vitest
-      - yaml
-
-  '@ariesclark/eslint-config@3.2.1-canary.1(1e81ce78ace39eb7ee50c3ce8fe682ac)':
+  '@ariesclark/eslint-config@3.2.1-canary.1(5197efc4f1fff8a8175da17a7714af48)':
     dependencies:
       '@antfu/eslint-config': 4.19.0(@eslint-react/eslint-plugin@1.53.1(eslint@9.39.5(jiti@2.7.0)(supports-color@10.2.2))(supports-color@10.2.2)(ts-api-utils@2.5.0(typescript@5.9.3))(typescript@5.9.3))(@typescript-eslint/typescript-estree@8.67.0(supports-color@10.2.2)(typescript@5.9.3))(@typescript-eslint/utils@8.67.0(eslint@9.39.5(jiti@2.7.0)(supports-color@10.2.2))(supports-color@10.2.2)(typescript@5.9.3))(@vue/compiler-sfc@3.5.41)(eslint-plugin-format@1.5.0(eslint@9.39.5(jiti@2.7.0)(supports-color@10.2.2)))(eslint-plugin-react-hooks@5.2.0(eslint@9.39.5(jiti@2.7.0)(supports-color@10.2.2)))(eslint-plugin-react-refresh@0.4.26(eslint@9.39.5(jiti@2.7.0)(supports-color@10.2.2)))(eslint@9.39.5(jiti@2.7.0)(supports-color@10.2.2))(supports-color@10.2.2)(typescript@5.9.3)(vitest@4.1.11(@opentelemetry/api@1.9.1)(@types/node@26.2.0)(vite@8.2.1(@types/node@26.2.0)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.102.0)(tsx@4.23.12)(yaml@2.9.0)))
       eslint: 9.39.5(jiti@2.7.0)(supports-color@10.2.2)
@@ -7474,7 +7440,7 @@ snapshots:
       local-pkg: 1.2.1
       tsup: 8.5.1(jiti@2.7.0)(postcss@8.5.26)(supports-color@10.2.2)(tsx@4.23.12)(typescript@5.9.3)(yaml@2.9.0)
     optionalDependencies:
-      eslint-plugin-tailwindcss: 3.18.2(tailwindcss@3.4.19(tsx@4.23.12)(yaml@2.9.0))
+      eslint-plugin-tailwindcss: 3.18.3(tailwindcss@3.4.19(tsx@4.23.12)(yaml@2.9.0))
     transitivePeerDependencies:
       - '@eslint-react/eslint-plugin'
       - '@eslint/json'
@@ -7504,7 +7470,7 @@ snapshots:
       - vitest
       - yaml
 
-  '@ariesclark/eslint-config@3.2.1-canary.1(341f94cb1c3bf8c5fa7d8896bdb54224)':
+  '@ariesclark/eslint-config@3.2.1-canary.1(92b069a96865872b0f4396eb1779faf2)':
     dependencies:
       '@antfu/eslint-config': 4.19.0(@eslint-react/eslint-plugin@1.53.1(eslint@9.39.5(jiti@2.7.0)(supports-color@10.2.2))(supports-color@10.2.2)(ts-api-utils@2.5.0(typescript@5.9.3))(typescript@5.9.3))(@typescript-eslint/typescript-estree@8.67.0(supports-color@10.2.2)(typescript@5.9.3))(@typescript-eslint/utils@8.67.0(eslint@9.39.5(jiti@2.7.0)(supports-color@10.2.2))(supports-color@10.2.2)(typescript@5.9.3))(@vue/compiler-sfc@3.5.41)(eslint-plugin-format@1.5.0(eslint@9.39.5(jiti@2.7.0)(supports-color@10.2.2)))(eslint-plugin-react-hooks@5.2.0(eslint@9.39.5(jiti@2.7.0)(supports-color@10.2.2)))(eslint-plugin-react-refresh@0.4.26(eslint@9.39.5(jiti@2.7.0)(supports-color@10.2.2)))(eslint@9.39.5(jiti@2.7.0)(supports-color@10.2.2))(supports-color@10.2.2)(typescript@5.9.3)(vitest@4.1.11(@opentelemetry/api@1.9.1)(@types/node@22.20.1)(vite@8.2.1(@types/node@22.20.1)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.102.0)(tsx@4.23.12)(yaml@2.9.0)))
       eslint: 9.39.5(jiti@2.7.0)(supports-color@10.2.2)
@@ -7513,7 +7479,46 @@ snapshots:
       local-pkg: 1.2.1
       tsup: 8.5.1(jiti@2.7.0)(postcss@8.5.26)(supports-color@10.2.2)(tsx@4.23.12)(typescript@5.9.3)(yaml@2.9.0)
     optionalDependencies:
-      eslint-plugin-tailwindcss: 3.18.2(tailwindcss@3.4.19(tsx@4.23.12)(yaml@2.9.0))
+      eslint-plugin-tailwindcss: 3.18.3(tailwindcss@3.4.19(tsx@4.23.12)(yaml@2.9.0))
+    transitivePeerDependencies:
+      - '@eslint-react/eslint-plugin'
+      - '@eslint/json'
+      - '@microsoft/api-extractor'
+      - '@prettier/plugin-xml'
+      - '@swc/core'
+      - '@typescript-eslint/typescript-estree'
+      - '@typescript-eslint/utils'
+      - '@unocss/eslint-plugin'
+      - '@vue/compiler-sfc'
+      - astro-eslint-parser
+      - eslint-plugin-astro
+      - eslint-plugin-format
+      - eslint-plugin-react-hooks
+      - eslint-plugin-react-refresh
+      - eslint-plugin-solid
+      - eslint-plugin-svelte
+      - eslint-plugin-vuejs-accessibility
+      - jiti
+      - postcss
+      - prettier-plugin-astro
+      - prettier-plugin-slidev
+      - supports-color
+      - svelte-eslint-parser
+      - tsx
+      - typescript
+      - vitest
+      - yaml
+
+  '@ariesclark/eslint-config@3.2.1-canary.1(cb1106b471e21d4f96d9183ecbc00391)':
+    dependencies:
+      '@antfu/eslint-config': 4.19.0(@eslint-react/eslint-plugin@1.53.1(eslint@9.39.5(jiti@1.21.7)(supports-color@10.2.2))(supports-color@10.2.2)(ts-api-utils@2.5.0(typescript@5.9.3))(typescript@5.9.3))(@typescript-eslint/typescript-estree@8.67.0(supports-color@10.2.2)(typescript@5.9.3))(@typescript-eslint/utils@8.67.0(eslint@9.39.5(jiti@1.21.7)(supports-color@10.2.2))(supports-color@10.2.2)(typescript@5.9.3))(@vue/compiler-sfc@3.5.41)(eslint-plugin-format@1.5.0(eslint@9.39.5(jiti@1.21.7)(supports-color@10.2.2)))(eslint-plugin-react-hooks@5.2.0(eslint@9.39.5(jiti@1.21.7)(supports-color@10.2.2)))(eslint-plugin-react-refresh@0.4.26(eslint@9.39.5(jiti@1.21.7)(supports-color@10.2.2)))(eslint@9.39.5(jiti@1.21.7)(supports-color@10.2.2))(supports-color@10.2.2)(typescript@5.9.3)(vitest@4.1.11(@opentelemetry/api@1.9.1)(@types/node@26.2.0)(vite@8.2.1(@types/node@26.2.0)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.102.0)(tsx@4.23.12)(yaml@2.9.0)))
+      eslint: 9.39.5(jiti@1.21.7)(supports-color@10.2.2)
+      eslint-flat-config-utils: 2.1.4
+      esno: 4.8.0
+      local-pkg: 1.2.1
+      tsup: 8.5.1(jiti@1.21.7)(postcss@8.5.26)(supports-color@10.2.2)(tsx@4.23.12)(typescript@5.9.3)(yaml@2.9.0)
+    optionalDependencies:
+      eslint-plugin-tailwindcss: 3.18.3(tailwindcss@3.4.19(tsx@4.23.12)(yaml@2.9.0))
     transitivePeerDependencies:
       - '@eslint-react/eslint-plugin'
       - '@eslint/json'
@@ -11932,10 +11937,12 @@ snapshots:
       regexp-ast-analysis: 0.7.1
       scslre: 0.3.0
 
-  eslint-plugin-tailwindcss@3.18.2(tailwindcss@3.4.19(tsx@4.23.12)(yaml@2.9.0)):
+  eslint-plugin-tailwindcss@3.18.3(tailwindcss@3.4.19(tsx@4.23.12)(yaml@2.9.0)):
     dependencies:
       fast-glob: 3.3.3
       postcss: 8.5.26
+      synckit: 0.11.13
+      tailwind-api-utils: 1.0.3(tailwindcss@3.4.19(tsx@4.23.12)(yaml@2.9.0))
       tailwindcss: 3.4.19(tsx@4.23.12)(yaml@2.9.0)
 
   eslint-plugin-toml@0.12.0(eslint@9.39.5(jiti@1.21.7)(supports-color@10.2.2))(supports-color@10.2.2):
@@ -14321,6 +14328,13 @@ snapshots:
   synckit@0.11.13:
     dependencies:
       '@pkgr/core': 0.3.6
+
+  tailwind-api-utils@1.0.3(tailwindcss@3.4.19(tsx@4.23.12)(yaml@2.9.0)):
+    dependencies:
+      enhanced-resolve: 5.24.5
+      jiti: 2.7.0
+      local-pkg: 1.2.1
+      tailwindcss: 3.4.19(tsx@4.23.12)(yaml@2.9.0)
 
   tailwind-merge@3.6.0: {}
 
