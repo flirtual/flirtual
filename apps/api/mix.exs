@@ -88,7 +88,7 @@ defmodule Flirtual.MixProject do
       {:sentry, "~> 13.0"},
       {:bandit, "~> 1.6"},
       {:libcluster, "~> 3.3"},
-      {:floki, "~> 0.36.0"},
+      {:floki, "~> 0.38.0"},
       {:fast_html, "~> 2.0"},
       {:ex_check, "== 0.16.0", only: [:dev], runtime: false},
       {:credo, "== 1.7.19", only: [:dev, :test], runtime: false},
