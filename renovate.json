@@ -4,6 +4,7 @@
 		"config:best-practices"
 	],
 	"timezone": "America/New_York",
+	"rebaseWhen": "automerging",
 	"semanticCommits": "enabled",
 	"semanticCommitScope": "{{#if parentDir}}{{parentDir}}{{else}}repo{{/if}}",
 	"osvVulnerabilityAlerts": true,
