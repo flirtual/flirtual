@@ -51,7 +51,7 @@ jobs:
 
   build:
     needs: changes
-    if: needs.changes.outputs.native == 'true' && (github.event_name == 'pull_request' || github.event_name == 'merge_group')
+    if: needs.changes.outputs.native == 'true' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -87,68 +87,59 @@ jobs:
 
       - name: Build app bundle
         working-directory: apps/frontend/android
-        run: ./gradlew "bundle${FLAVOR^}Release"
-
-  release:
-    needs: changes
-    if: (needs.changes.outputs.native == 'true' && github.event_name == 'push') || github.event_name == 'workflow_dispatch'
-    runs-on: ubuntu-latest
-    environment: mobile
-    defaults:
-      run:
-        working-directory: apps/frontend
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-
-      - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6
-        name: Install pnpm
-        with:
-          run_install: false
-
-      - name: Install Node.js
-        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
-        with:
-          node-version: 24
-          cache: pnpm
-
-      - name: Install Java
-        uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5
-        with:
-          distribution: temurin
-          java-version: 21
-
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@9c971963bec38e04b3d30dcc455b5382be2fdbfb # v6
-
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Sync native project
-        run: pnpm cap sync android
-
-      - name: Decode keystore
         env:
-          ANDROID_KEYSTORE: ${{ secrets.ANDROID_KEYSTORE }}
-        run: printf '%s' "$ANDROID_KEYSTORE" | base64 -d > "$RUNNER_TEMP/upload.keystore"
-
-      - name: Build app bundle
-        working-directory: apps/frontend/android
-        env:
-          ANDROID_KEYSTORE_PATH: ${{ runner.temp }}/upload.keystore
-          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
-          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
-          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
           BUILD_NUMBER_OFFSET: ${{ vars.BUILD_NUMBER_OFFSET }}
         run: |
           export CI_VERSION_CODE=$(( GITHUB_RUN_NUMBER + ${BUILD_NUMBER_OFFSET:-100} ))
           ./gradlew "bundle${FLAVOR^}Release"
+
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: android-${{ env.FLAVOR }}
+          path: apps/frontend/android/app/build/outputs/bundle/${{ env.FLAVOR }}Release/app-${{ env.FLAVOR }}-release.aab
+          if-no-files-found: error
+          retention-days: 7
+
+  release:
+    needs: [changes, build]
+    if: (needs.changes.outputs.native == 'true' && github.event_name == 'push') || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    environment:
+      name: mobile
+      deployment: false
+    steps:
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: android-${{ env.FLAVOR }}
+          path: ${{ runner.temp }}/bundle
+
+      - name: Install Java
+        uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Sign app bundle
+        env:
+          ANDROID_KEYSTORE: ${{ secrets.ANDROID_KEYSTORE }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          printf '%s' "$ANDROID_KEYSTORE" | base64 -d > "$RUNNER_TEMP/upload.keystore"
+          jarsigner \
+            -keystore "$RUNNER_TEMP/upload.keystore" \
+            -storepass "$ANDROID_KEYSTORE_PASSWORD" \
+            -keypass "$ANDROID_KEY_PASSWORD" \
+            -sigalg SHA256withRSA -digestalg SHA-256 \
+            "$RUNNER_TEMP/bundle/app-$FLAVOR-release.aab" "$ANDROID_KEY_ALIAS"
 
       - name: Upload to Google Play
         uses: r0adkll/upload-google-play@e738b9dd8f2476ea806d921b64aacd24f34515a5 # v1
         with:
           serviceAccountJsonPlainText: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
           packageName: ${{ env.VITE_APP_BUNDLE_ID }}
-          releaseFiles: apps/frontend/android/app/build/outputs/bundle/${{ env.FLAVOR }}Release/app-${{ env.FLAVOR }}-release.aab
+          releaseFiles: ${{ runner.temp }}/bundle/app-${{ env.FLAVOR }}-release.aab
           track: internal
           status: completed
 
