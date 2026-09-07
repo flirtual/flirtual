@@ -89,9 +89,7 @@ jobs:
     needs: changes
     if: (needs.changes.outputs.native == 'true' && github.event_name == 'push') || github.event_name == 'workflow_dispatch'
     runs-on: macos-26
-    environment:
-      name: mobile
-      deployment: false
+    environment: mobile
     defaults:
       run:
         working-directory: apps/frontend
