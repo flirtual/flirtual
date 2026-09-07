@@ -145,6 +145,12 @@
 			"matchDepTypes": ["devDependencies", "pnpm.catalog.default"],
 			"matchUpdateTypes": ["minor", "patch"],
 			"automerge": true
+		},
+		{
+			"matchDepTypes": ["dependencies", "prod"],
+			"matchUpdateTypes": ["minor", "patch"],
+			"matchCurrentVersion": "!/^0\\./",
+			"automerge": true
 		}
 	]
 }
