@@ -1,0 +1,33 @@
+name: Detect changes
+description: Match the changed files against the filters in filters.yaml
+
+inputs:
+  filter:
+    required: false
+
+outputs:
+  changed:
+    value: ${{ steps.dependencies.outputs.changed || steps.filter.outputs[inputs.filter] }}
+  results:
+    value: ${{ toJSON(steps.filter.outputs) }}
+
+runs:
+  using: composite
+  steps:
+    - uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4
+      id: filter
+      if: github.event_name != 'schedule' && github.event_name != 'workflow_dispatch'
+      with:
+        filters: ${{ github.action_path }}/filters.yaml
+        base: ${{ github.event_name == 'push' && github.ref || '' }}
+
+    - id: dependencies
+      if: (inputs.filter == 'android' || inputs.filter == 'ios') && steps.filter.outputs[inputs.filter] == 'false' && steps.filter.outputs.capacitor == 'true'
+      shell: bash
+      env:
+        BASE: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha || 'HEAD~1' }}
+      run: |
+        if git diff -U0 "$BASE" HEAD -- apps/frontend/package.json \
+           | grep -qE '^[+-].*"(@capacitor|@capgo|@capawesome|@revenuecat|capacitor-)'; then
+          echo changed=true >> "$GITHUB_OUTPUT"
+        fi

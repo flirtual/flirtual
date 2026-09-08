@@ -28,26 +28,20 @@ env:
 jobs:
   changes:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
     outputs:
-      native: ${{ steps.check.outputs.native }}
+      native: ${{ steps.changes.outputs.changed }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           fetch-depth: 0
 
-      - id: check
-        env:
-          BASE: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha || 'HEAD~1' }}
-        run: |
-          if git diff --name-only "$BASE" HEAD \
-             | grep -qE '^apps/frontend/(android/|capacitor\.config\.ts)|^\.github/workflows/android\.yaml'; then
-            echo native=true >> "$GITHUB_OUTPUT"
-          elif git diff -U0 "$BASE" HEAD -- apps/frontend/package.json \
-             | grep -qE '^[+-].*"(@capacitor|@capgo|@capawesome|@revenuecat|capacitor-)'; then
-            echo native=true >> "$GITHUB_OUTPUT"
-          else
-            echo native=false >> "$GITHUB_OUTPUT"
-          fi
+      - uses: ./.github/actions/changes
+        id: changes
+        with:
+          filter: android
 
   build:
     needs: changes
@@ -133,7 +127,7 @@ jobs:
           status: completed
 
   android:
-    if: always()
+    if: always() && needs.changes.outputs.native != 'false'
     needs: [changes, build, release]
     runs-on: ubuntu-latest
     steps:

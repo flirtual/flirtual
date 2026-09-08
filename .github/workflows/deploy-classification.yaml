@@ -14,20 +14,14 @@ jobs:
       contents: read
       pull-requests: read
     outputs:
-      image-classification: ${{ steps.filter.outputs.image-classification }}
+      image-classification: ${{ steps.changes.outputs.changed }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
-      - uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4
-        id: filter
-        if: github.event_name != 'workflow_dispatch'
+      - uses: ./.github/actions/changes
+        id: changes
         with:
-          filters: |
-            image-classification:
-              - 'apps/image-classification/**'
-              - 'pnpm-lock.yaml'
-              - 'pnpm-workspace.yaml'
-              - '.github/workflows/deploy-classification.yaml'
+          filter: image-classification
 
   image:
     name: Build Image Classification
@@ -58,7 +52,7 @@ jobs:
           cache-to: type=gha,mode=max
 
   image-classification:
-    if: always()
+    if: always() && needs.changes.outputs.image-classification != 'false'
     needs: [changes, image]
     runs-on: ubuntu-latest
     steps:

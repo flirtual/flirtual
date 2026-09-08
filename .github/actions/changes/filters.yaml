@@ -1,0 +1,73 @@
+self: &self
+  - .github/actions/changes/**
+
+workspace: &workspace
+  - package.json
+  - pnpm-lock.yaml
+  - pnpm-workspace.yaml
+
+capacitor: &capacitor
+  - apps/frontend/capacitor.config.ts
+  - apps/frontend/package.json
+
+api:
+  - apps/api/**
+  - .github/workflows/api.yaml
+  - *self
+
+frontend:
+  - apps/frontend/**
+  - .github/workflows/frontend.yaml
+  - *workspace
+  - *self
+
+image-classification:
+  - apps/image-classification/**
+  - .github/workflows/deploy-classification.yaml
+  - *workspace
+  - *self
+
+android:
+  - apps/frontend/android/**
+  - apps/frontend/capacitor.config.ts
+  - .github/workflows/android.yaml
+  - *self
+
+ios:
+  - apps/frontend/ios/**
+  - apps/frontend/capacitor.config.ts
+  - .github/workflows/ios.yaml
+  - *self
+
+actions:
+  - .github/workflows/**
+  - *self
+
+javascript-typescript:
+  - "**/*.cjs"
+  - "**/*.js"
+  - "**/*.jsx"
+  - "**/*.mjs"
+  - "**/*.ts"
+  - "**/*.tsx"
+  - .github/workflows/codeql.yaml
+  - *self
+
+python:
+  - "**/*.py"
+  - .github/workflows/codeql.yaml
+  - *self
+
+java-kotlin:
+  - apps/frontend/android/**
+  - .github/workflows/codeql.yaml
+  - *capacitor
+  - *workspace
+  - *self
+
+swift:
+  - apps/frontend/ios/**
+  - .github/workflows/codeql.yaml
+  - *capacitor
+  - *workspace
+  - *self

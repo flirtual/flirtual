@@ -21,42 +21,12 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
-      - uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4
-        id: filter
-        if: github.event_name != 'schedule' && github.event_name != 'workflow_dispatch'
-        with:
-          filters: |
-            actions:
-              - '.github/workflows/**'
-            javascript-typescript:
-              - '**/*.cjs'
-              - '**/*.js'
-              - '**/*.jsx'
-              - '**/*.mjs'
-              - '**/*.ts'
-              - '**/*.tsx'
-              - '.github/workflows/codeql.yaml'
-            python:
-              - '**/*.py'
-              - '.github/workflows/codeql.yaml'
-            java-kotlin:
-              - 'apps/frontend/android/**'
-              - 'apps/frontend/capacitor.config.ts'
-              - 'apps/frontend/package.json'
-              - 'pnpm-lock.yaml'
-              - 'pnpm-workspace.yaml'
-              - '.github/workflows/codeql.yaml'
-            swift:
-              - 'apps/frontend/ios/**'
-              - 'apps/frontend/capacitor.config.ts'
-              - 'apps/frontend/package.json'
-              - 'pnpm-lock.yaml'
-              - 'pnpm-workspace.yaml'
-              - '.github/workflows/codeql.yaml'
+      - uses: ./.github/actions/changes
+        id: changes
 
       - id: matrix
         env:
-          CHANGED: ${{ toJSON(steps.filter.outputs) }}
+          CHANGED: ${{ steps.changes.outputs.results }}
           ALL: ${{ github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
         run: |
           languages='[

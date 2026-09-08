@@ -21,22 +21,15 @@ jobs:
       contents: read
       pull-requests: read
     outputs:
-      frontend: ${{ steps.filter.outputs.frontend }}
+      frontend: ${{ steps.changes.outputs.changed }}
 
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
-      - uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4
-        id: filter
-        if: github.event_name != 'schedule' && github.event_name != 'workflow_dispatch'
+      - uses: ./.github/actions/changes
+        id: changes
         with:
-          filters: |
-            frontend:
-              - 'apps/frontend/**'
-              - '.github/workflows/frontend.yaml'
-              - 'package.json'
-              - 'pnpm-lock.yaml'
-              - 'pnpm-workspace.yaml'
+          filter: frontend
 
   lint:
     needs: changes
@@ -244,7 +237,7 @@ jobs:
         run: pnpm run canary
 
   frontend:
-    if: always()
+    if: always() && needs.changes.outputs.frontend != 'false'
     needs: [changes, lint, audit, build]
     runs-on: ubuntu-latest
     steps:
