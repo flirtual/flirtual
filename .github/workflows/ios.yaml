@@ -27,6 +27,7 @@ env:
 
 jobs:
   changes:
+    name: Detect changes
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -34,16 +35,19 @@ jobs:
     outputs:
       native: ${{ steps.changes.outputs.changed }}
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           fetch-depth: 0
 
-      - uses: ./.github/actions/changes
+      - name: Detect changes
+        uses: ./.github/actions/changes
         id: changes
         with:
           filter: ios
 
   build:
+    name: Build
     needs: changes
     if: needs.changes.outputs.native == 'true' && (github.event_name == 'pull_request' || github.event_name == 'merge_group')
     runs-on: macos-26
@@ -51,9 +55,11 @@ jobs:
       run:
         working-directory: apps/frontend
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
-      - uses: pnpm/setup@703c52620218391530e48b9e8870d5c0082e1b9b # v2.1.0
+      - name: Install pnpm and Node.js
+        uses: pnpm/setup@703c52620218391530e48b9e8870d5c0082e1b9b # v2.1.0
         with:
           runtime: node@24.20.0
           cache: true
@@ -71,6 +77,7 @@ jobs:
             CODE_SIGNING_ALLOWED=NO
 
   release:
+    name: Release
     needs: changes
     if: (needs.changes.outputs.native == 'true' && github.event_name == 'push') || github.event_name == 'workflow_dispatch'
     runs-on: macos-26
@@ -82,9 +89,11 @@ jobs:
       ASC_API_KEY_ID: ${{ secrets.ASC_API_KEY_ID }}
       ASC_API_ISSUER_ID: ${{ secrets.ASC_API_ISSUER_ID }}
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
-      - uses: pnpm/setup@703c52620218391530e48b9e8870d5c0082e1b9b # v2.1.0
+      - name: Install pnpm and Node.js
+        uses: pnpm/setup@703c52620218391530e48b9e8870d5c0082e1b9b # v2.1.0
         with:
           runtime: node@24.20.0
           cache: true
@@ -175,6 +184,7 @@ jobs:
             -authenticationKeyIssuerID "$ASC_API_ISSUER_ID"
 
   ios:
+    name: iOS
     if: always() && needs.changes.outputs.native != 'false'
     needs: [changes, build, release]
     runs-on: ubuntu-latest

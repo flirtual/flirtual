@@ -14,14 +14,16 @@ outputs:
 runs:
   using: composite
   steps:
-    - uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4
+    - name: Match changed paths
+      uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4
       id: filter
       if: github.event_name != 'schedule' && github.event_name != 'workflow_dispatch'
       with:
         filters: ${{ github.action_path }}/filters.yaml
         base: ${{ github.event_name == 'push' && github.ref || '' }}
 
-    - id: dependencies
+    - name: Check Capacitor dependencies
+      id: dependencies
       if: (inputs.filter == 'android' || inputs.filter == 'ios') && steps.filter.outputs[inputs.filter] == 'false' && steps.filter.outputs.capacitor == 'true'
       shell: bash
       env:

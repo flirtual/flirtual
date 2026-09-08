@@ -12,6 +12,7 @@ permissions:
 
 jobs:
   changes:
+    name: Detect changes
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -19,12 +20,15 @@ jobs:
     outputs:
       matrix: ${{ steps.matrix.outputs.matrix }}
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
-      - uses: ./.github/actions/changes
+      - name: Detect changes
+        uses: ./.github/actions/changes
         id: changes
 
-      - id: matrix
+      - name: Build matrix
+        id: matrix
         env:
           CHANGED: ${{ steps.changes.outputs.results }}
           ALL: ${{ github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
@@ -59,9 +63,11 @@ jobs:
       VITE_APP_BUNDLE_ID: zone.homie.flirtual.pwa
       VITE_APP_STORE_ID: "6450485324"
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
-      - uses: pnpm/setup@703c52620218391530e48b9e8870d5c0082e1b9b # v2.1.0
+      - name: Install pnpm and Node.js
+        uses: pnpm/setup@703c52620218391530e48b9e8870d5c0082e1b9b # v2.1.0
         if: matrix.platform
         with:
           runtime: node@24.20.0
