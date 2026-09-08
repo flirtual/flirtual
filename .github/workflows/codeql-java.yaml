@@ -53,11 +53,7 @@ jobs:
         uses: github/codeql-action/init@cdf488f595d80d6e07e03d4674febd5ab45fa938 # v4
         with:
           languages: java-kotlin
-          build-mode: manual
-
-      - name: Build app
-        working-directory: apps/frontend/android
-        run: ./gradlew --no-daemon assembleProductionDebug
+          build-mode: none
 
       - name: Perform CodeQL analysis
         uses: github/codeql-action/analyze@cdf488f595d80d6e07e03d4674febd5ab45fa938 # v4
