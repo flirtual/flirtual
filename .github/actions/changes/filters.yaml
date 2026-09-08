@@ -15,6 +15,10 @@ api:
   - .github/workflows/api.yaml
   - *self
 
+mix:
+  - apps/api/mix.exs
+  - apps/api/mix.lock
+
 frontend:
   - apps/frontend/**
   - .github/workflows/frontend.yaml

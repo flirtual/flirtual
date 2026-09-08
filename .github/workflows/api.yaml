@@ -23,6 +23,7 @@ jobs:
       pull-requests: read
     outputs:
       api: ${{ steps.changes.outputs.changed }}
+      mix: ${{ fromJSON(steps.changes.outputs.results).mix }}
 
     steps:
       - name: Checkout
@@ -201,10 +202,33 @@ jobs:
     - name: Compiles without warnings
       run: mix compile
 
+  dependencies:
+    name: Submit dependencies
+    needs: changes
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && needs.changes.outputs.mix != 'false'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: Set up Elixir
+        uses: erlef/setup-beam@54075bcc5e249e4758d363f27d099f55d843f124 # v1
+        with:
+          version-type: strict
+          version-file: apps/api/.tool-versions
+
+      - name: Submit dependencies
+        uses: erlef/mix-dependency-submission@764980370c6cdddd16b9c00141a628203dee1b7b # v1.3.3
+        with:
+          project-path: apps/api
+          install-deps: true
+
   api:
     name: API
     if: always() && needs.changes.outputs.api != 'false'
-    needs: [changes, build, audit, lint]
+    needs: [changes, build, audit, lint, dependencies]
     runs-on: ubuntu-latest
     steps:
       - name: Determine overall status
