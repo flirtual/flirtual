@@ -248,11 +248,16 @@ defmodule Flirtual.User.Profile.Image do
   defp source_metadata(%Image{} = image, moderator_id) do
     [
       {"source-url", url(:uploads, image.original_file)},
+      {"url-full", if(image.external_id, do: url(:content, "#{image.external_id}/full"))},
+      {"url-profile", if(image.external_id, do: url(:content, "#{image.external_id}/profile"))},
+      {"url-thumb", if(image.external_id, do: url(:content, "#{image.external_id}/thumb"))},
+      {"url-icon", if(image.external_id, do: url(:content, "#{image.external_id}/icon"))},
+      {"url-blur", if(image.blur_id, do: url(:content, "#{image.blur_id}/blur"))},
+      {"url-spatial", if(image.spatial_id, do: url(:content, "#{image.spatial_id}/spatial"))},
       {"image-id", image.id},
       {"user-id", image.profile_id},
       {"moderator-id", moderator_id},
-      {"original-file", image.original_file},
-      {"external-id", image.external_id},
+      {"phash", image.hash && to_string(image.hash)},
       {"retained-at", DateTime.utc_now() |> DateTime.to_iso8601()}
     ]
     |> Enum.filter(fn {_, value} -> is_binary(value) end)
