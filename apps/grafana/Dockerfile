@@ -1,4 +1,4 @@
-FROM grafana/grafana:9.2.3@sha256:129d050943ae2d9c473191c0b573a2e53facce6f7808c5d48f1a66d424c4e81b
+FROM grafana/grafana:9.5.21@sha256:ec106c7d446c88377f9d6c4cd363361b5846c361a28f5669d1b5e92926d94891
 
 COPY ./grafana.ini /etc/grafana/grafana.ini
 
