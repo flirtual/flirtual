@@ -1,0 +1,118 @@
+name: CodeQL
+on:
+  push:
+    branches: [main, production]
+  pull_request:
+  schedule:
+    - cron: 13 19 * * 6
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  changes:
+    name: Detect changes
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      matrix: ${{ steps.matrix.outputs.matrix }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: Detect changes
+        uses: ./.github/actions/changes
+        id: changes
+
+      - name: Build matrix
+        id: matrix
+        env:
+          CHANGED: ${{ steps.changes.outputs.results }}
+          ALL: ${{ github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
+        run: |
+          languages='[
+            {"language": "actions", "runner": "ubuntu-latest", "build-mode": "none"},
+            {"language": "javascript-typescript", "runner": "ubuntu-latest", "build-mode": "none"},
+            {"language": "python", "runner": "ubuntu-latest", "build-mode": "none"},
+            {"language": "java-kotlin", "runner": "ubuntu-latest", "build-mode": "none", "platform": "android"},
+            {"language": "swift", "runner": "macos-26", "build-mode": "manual", "platform": "ios"}
+          ]'
+          matrix=$(jq -c --argjson changed "$CHANGED" --argjson all "$ALL" \
+            '{include: map(select($all or $changed[.language] == "true"))}' <<< "$languages")
+          echo "matrix=$matrix" >> "$GITHUB_OUTPUT"
+
+  analyze:
+    name: Analyze (${{ matrix.language }})
+    needs: changes
+    if: needs.changes.outputs.matrix != '{"include":[]}'
+    runs-on: ${{ matrix.runner }}
+    permissions:
+      actions: read
+      contents: read
+      packages: read
+      security-events: write
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.changes.outputs.matrix) }}
+    env:
+      VITE_ORIGIN: https://flirtu.al
+      VITE_API_URL: https://api.flirtu.al/v1/
+      VITE_APP_BUNDLE_ID: zone.homie.flirtual.pwa
+      VITE_APP_STORE_ID: "6450485324"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: Install pnpm and Node.js
+        uses: pnpm/setup@703c52620218391530e48b9e8870d5c0082e1b9b # v2.1.0
+        if: matrix.platform
+        with:
+          runtime: node@24.20.0
+          cache: true
+
+      - name: Sync native project
+        if: matrix.platform
+        working-directory: apps/frontend
+        run: pnpm cap sync ${{ matrix.platform }}
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@cdf488f595d80d6e07e03d4674febd5ab45fa938 # v4
+        with:
+          languages: ${{ matrix.language }}
+          build-mode: ${{ matrix.build-mode }}
+
+      - name: Build iOS app
+        if: matrix.language == 'swift'
+        working-directory: apps/frontend/ios/App
+        run: |
+          xcodebuild build \
+            -workspace App.xcworkspace \
+            -scheme Flirtual \
+            -destination generic/platform=iOS \
+            CODE_SIGNING_ALLOWED=NO
+
+      - name: Perform CodeQL analysis
+        uses: github/codeql-action/analyze@cdf488f595d80d6e07e03d4674febd5ab45fa938 # v4
+        with:
+          category: /language:${{ matrix.language }}
+          output: sarif
+          upload: false
+
+      - name: Drop results from vendored code
+        run: |
+          for file in sarif/*.sarif; do
+            jq '.runs[].results |= map(select(
+              (.locations[0].physicalLocation.artifactLocation.uri // "")
+                | test("(^|/)(node_modules|Pods)/") | not
+            ))' "$file" > "$file.filtered"
+            mv "$file.filtered" "$file"
+          done
+
+      - name: Upload results
+        uses: github/codeql-action/upload-sarif@cdf488f595d80d6e07e03d4674febd5ab45fa938 # v4
+        with:
+          sarif_file: sarif
+          category: /language:${{ matrix.language }}

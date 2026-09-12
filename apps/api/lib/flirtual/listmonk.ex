@@ -83,16 +83,15 @@ defmodule Flirtual.Listmonk do
 
   defp escape_sql_literal(value), do: String.replace(value, "'", "''")
 
+  def create_subscriber(%User{email_confirmed_at: nil}) do
+    {:ok, nil}
+  end
+
   def create_subscriber(%User{} = user) do
     body = %{
       "email" => user.email,
       "name" => user.profile[:display_name] || "_",
-      "status" =>
-        if is_nil(user.email_confirmed_at) do
-          "disabled"
-        else
-          "enabled"
-        end,
+      "status" => "enabled",
       "preconfirm_subscriptions" => true,
       "lists" => get_subscriber_lists(user)
     }
@@ -126,6 +125,17 @@ defmodule Flirtual.Listmonk do
       reason ->
         log(:error, [reason], body)
         {:error, :unknown}
+    end
+  end
+
+  def update_subscriber(%User{email_confirmed_at: nil, listmonk_id: nil}) do
+    {:ok, nil}
+  end
+
+  def update_subscriber(%User{email_confirmed_at: nil} = user) do
+    with {:ok, _} <- delete_subscriber(user) do
+      change(user, %{listmonk_id: nil})
+      |> Repo.update()
     end
   end
 
@@ -163,12 +173,7 @@ defmodule Flirtual.Listmonk do
   end
 
   defp put_subscriber(%User{} = user, listmonk_id, subscriber) do
-    status =
-      cond do
-        subscriber["status"] == "blocklisted" -> "blocklisted"
-        is_nil(user.email_confirmed_at) -> "disabled"
-        true -> "enabled"
-      end
+    status = if subscriber["status"] == "blocklisted", do: "blocklisted", else: "enabled"
 
     body = %{
       "email" => user.email,

@@ -288,7 +288,7 @@ defmodule FlirtualWeb.ImageController do
                Discord.deliver_webhook(:removed_image,
                  user: image_owner,
                  moderator: user,
-                 image_url: Image.retain_object(image)
+                 image_url: Image.retain_object(image, user.id)
                ),
              else: :ok
            ),
@@ -309,8 +309,7 @@ defmodule FlirtualWeb.ImageController do
     with %Image{} = image <- Image.get(image_id),
          %User{} = image_owner <- User.get(image.profile_id),
          :ok <- Policy.can(conn, :delete_illegal, image),
-         retention when retention != :error <- Image.retain_illegal_object(image),
-         key = if(match?({:ok, _}, retention), do: elem(retention, 1)),
+         {:ok, key} <- Image.retain_illegal_object(image, user.id),
          :ok <-
            Discord.deliver_webhook(:illegal_image,
              user: image_owner,

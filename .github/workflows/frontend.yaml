@@ -16,29 +16,26 @@ concurrency:
 
 jobs:
   changes:
+    name: Detect changes
     runs-on: ubuntu-latest
     permissions:
       contents: read
       pull-requests: read
     outputs:
-      frontend: ${{ steps.filter.outputs.frontend }}
+      frontend: ${{ steps.changes.outputs.changed }}
 
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
-      - uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4
-        id: filter
-        if: github.event_name != 'schedule' && github.event_name != 'workflow_dispatch'
+      - name: Detect changes
+        uses: ./.github/actions/changes
+        id: changes
         with:
-          filters: |
-            frontend:
-              - 'apps/frontend/**'
-              - '.github/workflows/frontend.yaml'
-              - 'package.json'
-              - 'pnpm-lock.yaml'
-              - 'pnpm-workspace.yaml'
+          filter: frontend
 
   lint:
+    name: Lint
     needs: changes
     if: needs.changes.outputs.frontend != 'false'
     runs-on: ubuntu-latest
@@ -48,53 +45,40 @@ jobs:
       run:
         working-directory: apps/frontend
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
-      - run: echo "::add-matcher::.github/annotation-eslint.json"
+      - name: Register ESLint annotations
+        run: echo "::add-matcher::.github/annotation-eslint.json"
 
-      - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6
-        name: Install pnpm
+      - name: Install pnpm and Node.js
+        uses: pnpm/setup@703c52620218391530e48b9e8870d5c0082e1b9b # v2.1.0
         with:
-          run_install: false
-
-      - name: Install Node.js
-        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
-        with:
-          node-version: 24
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install
+          runtime: node@24.20.0
+          cache: true
 
       - name: ESLint
         run: ./node_modules/.bin/eslint -f stylish
 
   audit:
-    needs: changes
-    continue-on-error: ${{ github.event_name != 'schedule' }}
-    if: needs.changes.outputs.frontend != 'false'
+    name: Audit dependencies
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
-      - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6
-        name: Install pnpm
+      - name: Install pnpm and Node.js
+        uses: pnpm/setup@703c52620218391530e48b9e8870d5c0082e1b9b # v2.1.0
         with:
-          run_install: false
-
-      - name: Install Node.js
-        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
-        with:
-          node-version: 24
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install
+          runtime: node@24.20.0
+          cache: true
 
       - name: Audit dependencies
         run: pnpm audit --audit-level low --ignore-registry-errors
 
   build:
+    name: Build
     needs: changes
     if: needs.changes.outputs.frontend != 'false'
     runs-on: ubuntu-latest
@@ -142,23 +126,17 @@ jobs:
       VITE_WEBAUTHN_JSON: ${{ vars.VITE_WEBAUTHN_JSON }}
 
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
-      - run: echo "::add-matcher::.github/annotation-typescript.json"
+      - name: Register TypeScript annotations
+        run: echo "::add-matcher::.github/annotation-typescript.json"
 
-      - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6
-        name: Install pnpm
+      - name: Install pnpm and Node.js
+        uses: pnpm/setup@703c52620218391530e48b9e8870d5c0082e1b9b # v2.1.0
         with:
-          run_install: false
-
-      - name: Install Node.js
-        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
-        with:
-          node-version: 24
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install
+          runtime: node@24.20.0
+          cache: true
 
       - name: Build
         run: pnpm build
@@ -169,6 +147,7 @@ jobs:
           exit ${PIPESTATUS[0]}
 
   release:
+    name: Deploy
     if: github.event_name != 'merge_group' && github.event_name != 'schedule' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
     needs: [build]
     runs-on: ubuntu-latest
@@ -221,21 +200,14 @@ jobs:
       CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
-      - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6
-        name: Install pnpm
+      - name: Install pnpm and Node.js
+        uses: pnpm/setup@703c52620218391530e48b9e8870d5c0082e1b9b # v2.1.0
         with:
-          run_install: false
-
-      - name: Install Node.js
-        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
-        with:
-          node-version: 24
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install
+          runtime: node@24.20.0
+          cache: true
 
       - name: Cache build caches
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
@@ -282,7 +254,8 @@ jobs:
         run: pnpm run canary
 
   frontend:
-    if: always()
+    name: Frontend
+    if: always() && needs.changes.outputs.frontend != 'false'
     needs: [changes, lint, audit, build]
     runs-on: ubuntu-latest
     steps:

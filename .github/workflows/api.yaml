@@ -16,28 +16,32 @@ concurrency:
 
 jobs:
   changes:
+    name: Detect changes
     runs-on: ubuntu-latest
     permissions:
       contents: read
       pull-requests: read
     outputs:
-      api: ${{ steps.filter.outputs.api }}
+      api: ${{ steps.changes.outputs.changed }}
+      mix: ${{ fromJSON(steps.changes.outputs.results).mix }}
 
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
-      - uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4
-        id: filter
-        if: github.event_name != 'schedule' && github.event_name != 'workflow_dispatch'
+      - name: Detect changes
+        uses: ./.github/actions/changes
+        id: changes
         with:
-          filters: |
-            api:
-              - 'apps/api/**'
-              - '.github/workflows/api.yaml'
+          filter: api
 
   lint:
+    name: Lint
     needs: changes
     if: needs.changes.outputs.api != 'false'
+    permissions:
+      contents: read
+      security-events: write
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -86,13 +90,18 @@ jobs:
     - name: Unused dependencies
       run: mix deps.unlock --check-unused
 
+    - name: Sobelow
+      run: mix sobelow --root . --skip --format sarif --out results.sarif
+
+    - name: Upload Sobelow results
+      uses: github/codeql-action/upload-sarif@cdf488f595d80d6e07e03d4674febd5ab45fa938 # v4
+      with:
+        sarif_file: apps/api/results.sarif
+        category: /language:elixir
+
   audit:
-    needs: changes
-    continue-on-error: ${{ github.event_name != 'schedule' }}
-    if: needs.changes.outputs.api != 'false'
-    permissions:
-      contents: read
-      security-events: write
+    name: Audit dependencies
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -132,15 +141,6 @@ jobs:
     - name: Install dependencies
       run: mix deps.get
 
-    - name: Sobelow
-      run: mix sobelow --root . --skip --format sarif --out results.sarif
-
-    - name: Upload Sobelow results
-      uses: github/codeql-action/upload-sarif@cdf488f595d80d6e07e03d4674febd5ab45fa938 # v4
-      with:
-        sarif_file: apps/api/results.sarif
-        category: /language:elixir
-
     - name: Retired packages
       run: mix hex.audit
 
@@ -148,6 +148,7 @@ jobs:
       run: mix deps.audit
 
   build:
+    name: Build
     needs: changes
     if: needs.changes.outputs.api != 'false'
     runs-on: ubuntu-latest
@@ -201,9 +202,33 @@ jobs:
     - name: Compiles without warnings
       run: mix compile
 
+  dependencies:
+    name: Submit dependencies
+    needs: changes
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && needs.changes.outputs.mix != 'false'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: Set up Elixir
+        uses: erlef/setup-beam@54075bcc5e249e4758d363f27d099f55d843f124 # v1
+        with:
+          version-type: strict
+          version-file: apps/api/.tool-versions
+
+      - name: Submit dependencies
+        uses: erlef/mix-dependency-submission@764980370c6cdddd16b9c00141a628203dee1b7b # v1.3.3
+        with:
+          project-path: apps/api
+          install-deps: true
+
   api:
-    if: always()
-    needs: [changes, build, audit, lint]
+    name: API
+    if: always() && needs.changes.outputs.api != 'false'
+    needs: [changes, build, audit, lint, dependencies]
     runs-on: ubuntu-latest
     steps:
       - name: Determine overall status
@@ -211,21 +236,26 @@ jobs:
         run: exit 1
 
   image:
+    name: Build image
     if: github.event_name != 'merge_group' && github.event_name != 'schedule' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
-    needs: [build, audit, lint]
+    needs: [build, lint]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
-      - uses: docker/setup-buildx-action@37fe631027851001ddb9b187196cc803df7f5f0e # v4
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@37fe631027851001ddb9b187196cc803df7f5f0e # v4
 
-      - uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4
+      - name: Log in to the Fly registry
+        uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4
         with:
           registry: registry.fly.io
           username: x
           password: ${{ secrets.FLY_API_TOKEN }}
 
-      - uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a # v7
+      - name: Build image
+        uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a # v7
         with:
           context: apps/api
           push: true
@@ -234,6 +264,7 @@ jobs:
           cache-to: type=gha,mode=max
 
   preview:
+    name: Deploy preview
     if: github.ref != 'refs/heads/production' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
     needs: [image]
     environment:
@@ -247,8 +278,10 @@ jobs:
       CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-      - uses: superfly/flyctl-actions/setup-flyctl@ed8efb33836e8b2096c7fd3ba1c8afe303ebbff1 # master
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - name: Install flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@ed8efb33836e8b2096c7fd3ba1c8afe303ebbff1 # master
 
       - name: Compute preview label
         id: preview
@@ -438,6 +471,7 @@ jobs:
           done
 
   deploy-production:
+    name: Deploy production
     if: github.ref == 'refs/heads/production' && github.event_name == 'push'
     needs: [image]
     environment:
@@ -445,9 +479,12 @@ jobs:
       url: https://api.flirtu.al
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-      - uses: superfly/flyctl-actions/setup-flyctl@ed8efb33836e8b2096c7fd3ba1c8afe303ebbff1 # master
-      - run: |
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - name: Install flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@ed8efb33836e8b2096c7fd3ba1c8afe303ebbff1 # master
+      - name: Deploy to Fly
+        run: |
           GIT_COMMIT_SHA=$(git rev-parse HEAD)
           flyctl deploy --image registry.fly.io/flirtual:${{ github.sha }} --env GIT_COMMIT_SHA="$GIT_COMMIT_SHA"
         working-directory: ./apps/api

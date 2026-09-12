@@ -49,3 +49,7 @@ allowBuilds:
 minimumReleaseAgeExclude:
   # Renovate security update: sanitize-html@2.17.7
   - sanitize-html@2.17.7
+  # Renovate security update: svgo@4.1.0
+  - svgo@4.1.0
+  # Renovate security update: sharp@0.35.4
+  - sharp@0.35.4

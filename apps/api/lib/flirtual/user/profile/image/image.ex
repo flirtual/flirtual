@@ -207,42 +207,78 @@ defmodule Flirtual.User.Profile.Image do
     do:
       if(Application.get_env(:flirtual, :canary?), do: "pfpretained-canary", else: "pfpretained")
 
-  def retain_object(%Image{} = image) do
+  def retain_object(%Image{} = image, moderator_id) do
     if Application.get_env(:flirtual, :local_uploads?) do
       nil
     else
-      case copy_object(image, retained_bucket()) do
+      case copy_object(image, retained_bucket(), moderator_id) do
         {:ok, id} -> url(:retained, id)
         :error -> nil
       end
     end
   end
 
-  def retain_illegal_object(%Image{} = image) do
+  def retain_illegal_object(%Image{} = image, moderator_id) do
     if Application.get_env(:flirtual, :local_uploads?),
-      do: :skip,
-      else: copy_object(image, "quarantine")
+      do: {:ok, nil},
+      else: copy_object(image, "quarantine", moderator_id)
   end
 
-  defp copy_object(%Image{} = image, bucket) do
+  defp copy_object(%Image{original_file: original_file} = image, bucket, moderator_id)
+       when is_binary(original_file) do
     id = Ecto.UUID.generate()
+    headers = source_headers(uploads_bucket(), original_file)
 
-    with {source_bucket, source_key} <- copy_source(image),
-         {:ok, _} <-
-           ExAws.S3.put_object_copy(bucket, id, source_bucket, source_key) |> ExAws.request() do
+    with {:ok, _} <-
+           ExAws.S3.put_object_copy(bucket, id, uploads_bucket(), original_file,
+             metadata_directive: "REPLACE",
+             content_type: header(headers, "content-type"),
+             cache_control: header(headers, "cache-control"),
+             meta: inherited_meta(headers) ++ source_metadata(image, moderator_id)
+           )
+           |> ExAws.request() do
       {:ok, id}
     else
       _ -> :error
     end
   end
 
-  defp copy_source(%Image{external_id: external_id}) when is_binary(external_id),
-    do: {content_bucket(), external_id <> "/full"}
+  defp copy_object(_, _, _), do: :error
 
-  defp copy_source(%Image{original_file: original_file}) when is_binary(original_file),
-    do: {uploads_bucket(), original_file}
+  defp source_metadata(%Image{} = image, moderator_id) do
+    [
+      {"source-url", url(:uploads, image.original_file)},
+      {"url-full", if(image.external_id, do: url(:content, "#{image.external_id}/full"))},
+      {"url-profile", if(image.external_id, do: url(:content, "#{image.external_id}/profile"))},
+      {"url-thumb", if(image.external_id, do: url(:content, "#{image.external_id}/thumb"))},
+      {"url-icon", if(image.external_id, do: url(:content, "#{image.external_id}/icon"))},
+      {"url-blur", if(image.blur_id, do: url(:content, "#{image.blur_id}/blur"))},
+      {"url-spatial", if(image.spatial_id, do: url(:content, "#{image.spatial_id}/spatial"))},
+      {"image-id", image.id},
+      {"user-id", image.profile_id},
+      {"moderator-id", moderator_id},
+      {"phash", image.hash && to_string(image.hash)},
+      {"retained-at", DateTime.utc_now() |> DateTime.to_iso8601()}
+    ]
+    |> Enum.filter(fn {_, value} -> is_binary(value) end)
+  end
 
-  defp copy_source(_), do: nil
+  defp source_headers(bucket, key) do
+    case ExAws.S3.head_object(bucket, key) |> ExAws.request() do
+      {:ok, %{headers: headers}} -> Enum.map(headers, &downcase_name/1)
+      _ -> []
+    end
+  end
+
+  defp downcase_name({name, value}), do: {String.downcase(name), value}
+
+  defp header(headers, name) do
+    Enum.find_value(headers, fn {key, value} -> if key == name, do: value end)
+  end
+
+  defp inherited_meta(headers) do
+    for {"x-amz-meta-" <> name, value} <- headers, do: {name, value}
+  end
 
   # sobelow_skip ["Traversal.FileModule"]
   def put_spatial(spatial_id, body)
