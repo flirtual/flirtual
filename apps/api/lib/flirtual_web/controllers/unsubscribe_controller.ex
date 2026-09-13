@@ -1,6 +1,7 @@
 defmodule FlirtualWeb.UnsubscribeController do
   use FlirtualWeb, :controller
 
+  alias Flirtual.User
   alias Flirtual.Users
 
   def get(conn, _) do
@@ -15,7 +16,7 @@ defmodule FlirtualWeb.UnsubscribeController do
   end
 
   def post(conn, %{"token" => token}) do
-    with user <- Users.get_by_unsubscribe_token(token),
+    with %User{} = user <- Users.get_by_unsubscribe_token(token),
          {:ok, _} <-
            Users.update_notification_preferences(user.preferences.email_notifications, %{
              matches: false,
