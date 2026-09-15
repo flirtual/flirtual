@@ -555,20 +555,22 @@ defmodule Flirtual.Profiles do
       image_count = Kernel.length(profile.images)
 
       files
+      |> Enum.map(fn file ->
+        {file,
+         if(is_shortuuid(file["id"]),
+           do:
+             Image
+             |> where(id: ^file["id"], profile_id: ^profile.user_id)
+             |> Repo.one(),
+           else: nil
+         )}
+      end)
+      # Drop stale images that were deleted elsewhere while the page was open.
+      |> Enum.reject(fn {file, image} -> is_nil(image) and is_shortuuid(file["id"]) end)
       |> Enum.with_index()
-      |> Enum.map(fn {file, file_idx} ->
-        existing_complete_image =
-          if(is_shortuuid(file["id"]),
-            do:
-              Image
-              |> where(id: ^file["id"])
-              |> Repo.one(),
-            else: nil
-          )
-
-        if is_nil(existing_complete_image),
-          do: attach_file(profile, file, image_count + file_idx, now),
-          else: {:ok, existing_complete_image}
+      |> Enum.map(fn
+        {{_, %Image{} = image}, _} -> {:ok, image}
+        {{file, nil}, file_idx} -> attach_file(profile, file, image_count + file_idx, now)
       end)
       |> Enum.map(fn
         {:ok, image} -> image

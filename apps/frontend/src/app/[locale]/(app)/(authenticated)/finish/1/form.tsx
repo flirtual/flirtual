@@ -77,10 +77,12 @@ export const Finish1Form: FC = () => {
 							worldName: image.worldName
 						})).filter((file) => file.id)
 					).then((images) =>
-						Profile.Image.update(
-							user.id,
-							images.map((image) => image.id)
-						)
+						images.length === 0
+							? null
+							: Profile.Image.update(
+									user.id,
+									images.map((image) => image.id)
+								)
 					),
 					Profile.updatePrompts(user.id, values.prompts)
 				]);
