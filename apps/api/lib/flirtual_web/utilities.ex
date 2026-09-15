@@ -129,14 +129,14 @@ defmodule FlirtualWeb.Utilities do
       |> to_string()
       |> String.downcase()
 
-    case String.split(user_agent) |> List.last() do
-      "flirtual-native" ->
-        if(String.contains?(user_agent, "android"), do: "android", else: "ios")
-
-      "flirtual-vision" ->
+    cond do
+      String.contains?(user_agent, "flirtual-vision") ->
         "vision"
 
-      _ ->
+      String.contains?(user_agent, "flirtual-native") ->
+        if(String.contains?(user_agent, "android"), do: "android", else: "ios")
+
+      true ->
         "web"
     end
   end
