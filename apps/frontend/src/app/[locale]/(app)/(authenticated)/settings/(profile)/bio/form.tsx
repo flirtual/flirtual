@@ -76,10 +76,12 @@ export const BiographyForm: FC = () => {
 							worldName: image.worldName
 						})).filter((file) => file.id)
 					).then((images) =>
-						ProfileImage.update(
-							user.id,
-							images.map((image) => image.id)
-						)
+						images.length === 0
+							? null
+							: ProfileImage.update(
+									user.id,
+									images.map((image) => image.id)
+								)
 					),
 					Profile.updatePrompts(user.id, values.prompts)
 				]);
