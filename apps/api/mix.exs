@@ -65,7 +65,7 @@ defmodule Flirtual.MixProject do
       {:gen_smtp, "~> 1.2"},
       {:goth, "~> 1.4"},
       {:pigeon, "~> 2.0"},
-      {:wax_, "~> 0.6.0"},
+      {:wax_, "~> 0.7.0"},
       {:httpoison, "~> 3.0", override: true},
       {:tls_certificate_check, "~> 1.20"},
       {:finch, "~> 0.23.0"},
