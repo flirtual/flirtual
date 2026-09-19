@@ -4,7 +4,7 @@ defmodule Flirtual.Hash do
   import Ecto.Changeset
   import Ecto.Query
 
-  alias Flirtual.{Discord, Hash, IpAddress, Repo, User, Users}
+  alias Flirtual.{Discord, Hash, IpAddress, ModerationEvent, Repo, User, Users}
 
   schema "hashes" do
     belongs_to(:user, User)
@@ -113,19 +113,11 @@ defmodule Flirtual.Hash do
 
         named =
           named
-          |> Enum.map(fn
-            %{user_id: id} when not is_nil(id) ->
-              case Users.get(id) do
-                %User{} = user ->
-                  Discord.md_display_name(user)
-
-                _ ->
-                  url = Application.fetch_env!(:flirtual, :frontend_origin) |> URI.merge("/#{id}")
-                  "[#{id}](#{url})"
-              end
-
-            %{suspended_url: url} when not is_nil(url) ->
-              "[Banned user](#{url})"
+          |> Enum.map(fn hash ->
+            case hash.user_id && Users.get(hash.user_id) do
+              %User{} = user -> Discord.md_display_name(user)
+              _ -> departed_duplicate(hash)
+            end
           end)
 
         anonymous =
@@ -135,14 +127,35 @@ defmodule Flirtual.Hash do
             n -> ["#{n}x Banned user (not found)"]
           end
 
+        text = if(type == "IP address", do: IpAddress.anonymize(text), else: text)
+
+        ModerationEvent.create(:flagged_duplicate, %{
+          user_id: user_id,
+          details: %{
+            type: type,
+            text: text,
+            duplicate_user_ids: duplicates |> Enum.map(& &1.user_id) |> Enum.reject(&is_nil/1),
+            duplicate_ban_urls:
+              duplicates
+              |> Enum.filter(&(is_nil(&1.user_id) and not is_nil(&1.suspended_url)))
+              |> Enum.map(& &1.suspended_url)
+          }
+        })
+
         Discord.deliver_webhook(:flagged_duplicate,
           user: Users.get(user_id),
           duplicates: named ++ anonymous,
           type: type,
-          text: if(type == "IP address", do: IpAddress.anonymize(text), else: text)
+          text: text
         )
 
         :ok
     end
   end
+
+  defp departed_duplicate(%{suspended_url: url}) when is_binary(url),
+    do: "[Banned user](#{url})"
+
+  defp departed_duplicate(%{user_id: id}) when is_binary(id),
+    do: "[#{id}](#{Application.fetch_env!(:flirtual, :frontend_origin) |> URI.merge("/#{id}")})"
 end

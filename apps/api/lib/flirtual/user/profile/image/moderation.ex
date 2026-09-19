@@ -7,6 +7,7 @@ defmodule Flirtual.User.Profile.Image.Moderation do
 
   alias Flirtual.User
   alias Flirtual.Discord
+  alias Flirtual.ModerationEvent
   alias Flirtual.ObanWorkers.ImageClassify
   alias Flirtual.ObanWorkers.ImageSpatial
   alias Flirtual.Repo
@@ -159,6 +160,15 @@ defmodule Flirtual.User.Profile.Image.Moderation do
 
     if not safe do
       with %User{} = user <- User.get(image.profile_id) do
+        ModerationEvent.create(:flagged_image, %{
+          user: user,
+          details: %{
+            image_id: image.id,
+            classification: to_string(type),
+            classifications: flagged_tags(classifications)
+          }
+        })
+
         Discord.deliver_webhook(:flagged_image,
           user: user,
           image: image,
@@ -205,6 +215,17 @@ defmodule Flirtual.User.Profile.Image.Moderation do
         distance = variant_distance(query_hashes, List.first(closest))
 
         with %User{} = user <- User.get(profile_id) do
+          ModerationEvent.create(:flagged_duplicate_image, %{
+            user: user,
+            details: %{
+              image_id: image.id,
+              distance: distance,
+              match_image_ids: closest |> Enum.take(3) |> Enum.map(& &1.id),
+              duplicate_user_ids:
+                matches |> Enum.map(& &1.profile_id) |> Enum.reject(&is_nil/1) |> Enum.uniq()
+            }
+          })
+
           Discord.deliver_webhook(:duplicate_image,
             user: user,
             image: image,

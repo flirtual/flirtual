@@ -12,7 +12,18 @@ defmodule FlirtualWeb.UsersController do
   import Flirtual.Utilities
   import Flirtual.Attribute, only: [validate_attribute: 3]
 
-  alias Flirtual.{Discord, Entitlement, IpAddress, ObanWorkers, Policy, Repo, User, Users}
+  alias Flirtual.{
+    Discord,
+    Entitlement,
+    IpAddress,
+    ModerationEvent,
+    ObanWorkers,
+    Policy,
+    Repo,
+    User,
+    Users
+  }
+
   alias Flirtual.User.Session
   alias Flirtual.User.Profile.Block
   alias FlirtualWeb.SessionController
@@ -427,7 +438,7 @@ defmodule FlirtualWeb.UsersController do
     if is_nil(user) or Policy.cannot?(conn, :payments_ban, user) do
       {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
     else
-      with {:ok, user} <- User.payments_ban(user) do
+      with {:ok, user} <- User.payments_ban(user, conn.assigns[:session].user) do
         conn |> json(Policy.transform(conn, user))
       end
     end
@@ -439,7 +450,7 @@ defmodule FlirtualWeb.UsersController do
     if is_nil(user) or Policy.cannot?(conn, :payments_unban, user) do
       {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
     else
-      with {:ok, user} <- User.payments_unban(user) do
+      with {:ok, user} <- User.payments_unban(user, conn.assigns[:session].user) do
         conn |> json(Policy.transform(conn, user))
       end
     end
@@ -760,11 +771,18 @@ defmodule FlirtualWeb.UsersController do
     if is_nil(user) or Policy.cannot?(conn, :delete, user) do
       {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
     else
+      moderator = conn.assigns[:session].user
+
       with {:ok, _} <-
+             ModerationEvent.create(:deleted, %{
+               user: user,
+               moderator: moderator
+             }),
+           {:ok, _} <-
              Users.admin_delete(user) do
         Discord.deliver_webhook(:admin_deleted,
           user: user,
-          moderator: conn.assigns[:session].user
+          moderator: moderator
         )
 
         conn |> json(%{deleted: true})

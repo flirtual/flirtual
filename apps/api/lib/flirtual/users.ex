@@ -19,6 +19,7 @@ defmodule Flirtual.Users do
     Jwt,
     # Languages,
     Listmonk,
+    ModerationEvent,
     ObanWorkers,
     Repo,
     RevenueCat,
@@ -116,6 +117,14 @@ defmodule Flirtual.Users do
                 |> DateTime.new!(~T[00:00:00], "Etc/UTC")
 
               if DateTime.after?(turns_18_utc, user.created_at) do
+                ModerationEvent.create(:flagged_registered_underage, %{
+                  user: user,
+                  details: %{
+                    previous_born_at: previous_born_at,
+                    born_at: born_at
+                  }
+                })
+
                 Discord.deliver_webhook(:flagged_registered_underage,
                   user: user,
                   previous_born_at: previous_born_at,

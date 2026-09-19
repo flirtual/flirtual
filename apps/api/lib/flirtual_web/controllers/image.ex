@@ -3,7 +3,7 @@ defmodule FlirtualWeb.ImageController do
 
   import FlirtualWeb.Utilities
 
-  alias Flirtual.{Discord, ImageClassification, ObanWorkers, Policy, User}
+  alias Flirtual.{Discord, ImageClassification, ModerationEvent, ObanWorkers, Policy, User}
   alias Flirtual.User.Profile.Image
   alias Flirtual.User.Profile.Image.Moderation
   alias Ecto.UUID
@@ -284,12 +284,7 @@ defmodule FlirtualWeb.ImageController do
          :ok <- Policy.can(conn, :delete, image),
          :ok <-
            if(:moderator in user.tags and user.id != image_owner.id,
-             do:
-               Discord.deliver_webhook(:removed_image,
-                 user: image_owner,
-                 moderator: user,
-                 image_url: Image.retain_object(image, user.id)
-               ),
+             do: record_removed_image(image, image_owner, user),
              else: :ok
            ),
          {:ok, _} <- Image.delete(image),
@@ -303,6 +298,22 @@ defmodule FlirtualWeb.ImageController do
     end
   end
 
+  defp record_removed_image(image, image_owner, moderator) do
+    image_url = Image.retain_object(image, moderator.id)
+
+    ModerationEvent.create(:image_removed, %{
+      user: image_owner,
+      moderator: moderator,
+      details: %{image_id: image.id, image_url: image_url}
+    })
+
+    Discord.deliver_webhook(:removed_image,
+      user: image_owner,
+      moderator: moderator,
+      image_url: image_url
+    )
+  end
+
   def delete_illegal(conn, %{"image_id" => image_id}) do
     user = conn.assigns[:session].user
 
@@ -310,6 +321,12 @@ defmodule FlirtualWeb.ImageController do
          %User{} = image_owner <- User.get(image.profile_id),
          :ok <- Policy.can(conn, :delete_illegal, image),
          {:ok, key} <- Image.retain_illegal_object(image, user.id),
+         {:ok, _} <-
+           ModerationEvent.create(:image_quarantined, %{
+             user: image_owner,
+             moderator: user,
+             details: %{image_id: image.id, key: key}
+           }),
          :ok <-
            Discord.deliver_webhook(:illegal_image,
              user: image_owner,

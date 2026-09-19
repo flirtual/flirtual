@@ -18,6 +18,7 @@ defmodule Flirtual.User do
     Flag,
     Hash,
     # Languages,
+    ModerationEvent,
     ObanWorkers,
     Repo,
     Entitlement,
@@ -878,12 +879,23 @@ defmodule Flirtual.User do
       ) do
     now = DateTime.utc_now() |> DateTime.truncate(:second)
     message = message || reason.metadata["details"]
+    automatic = Keyword.get(options, :automatic)
+    {automatic?, automatic_details} = automatic_details(automatic)
 
     Repo.transaction(fn ->
       with {:ok, user} <-
              user
              |> change(%{banned_at: now})
              |> Repo.update(),
+           {:ok, _} <-
+             ModerationEvent.create(:banned, %{
+               user: user,
+               moderator: if(automatic?, do: nil, else: moderator),
+               reason: reason,
+               message: message,
+               automatic: automatic?,
+               details: automatic_details
+             }),
            {:ok, _} <- Report.list(target_id: user.id) |> Report.clear_all(moderator, true),
            {:ok, user} <- User.update_status(user),
            {:ok, _} <- ObanWorkers.update_user(user.id, [:search_index, :listmonk, :talkjs]),
@@ -894,7 +906,7 @@ defmodule Flirtual.User do
           moderator: moderator,
           reason: reason,
           message: message,
-          automatic: Keyword.get(options, :automatic)
+          automatic: automatic
         )
 
         user
@@ -905,12 +917,24 @@ defmodule Flirtual.User do
     end)
   end
 
+  defp automatic_details(nil), do: {false, %{}}
+  defp automatic_details(:date_of_birth), do: {true, %{source: "date_of_birth"}}
+
+  defp automatic_details({:age_range, payload}),
+    do: {true, %{source: "age_range", age_range: payload}}
+
+  defp automatic_details(source), do: {true, %{source: inspect(source)}}
+
   def unsuspend(%User{} = user, %User{} = moderator) do
     Repo.transaction(fn ->
       with {:ok, user} <-
              user
              |> change(%{banned_at: nil, shadowbanned_at: nil, indef_shadowbanned_at: nil})
              |> Repo.update(),
+           {:ok, _} <-
+             ModerationEvent.create(:unbanned, %{user: user, moderator: moderator}),
+           {_, _} <-
+             ModerationEvent.revoke(user.id, [:banned, :indef_shadowbanned], moderator),
            {:ok, user} <- User.update_status(user),
            {:ok, _} <-
              ObanWorkers.update_user(user.id, [
@@ -940,6 +964,8 @@ defmodule Flirtual.User do
              user
              |> change(%{indef_shadowbanned_at: now})
              |> Repo.update(),
+           {:ok, _} <-
+             ModerationEvent.create(:indef_shadowbanned, %{user: user, moderator: moderator}),
            {:ok, user} <- User.update_status(user),
            {:ok, _} <-
              ObanWorkers.update_user(user.id, [
@@ -967,6 +993,9 @@ defmodule Flirtual.User do
              user
              |> change(%{indef_shadowbanned_at: nil, shadowbanned_at: nil})
              |> Repo.update(),
+           {:ok, _} <-
+             ModerationEvent.create(:unindef_shadowbanned, %{user: user, moderator: moderator}),
+           {_, _} <- ModerationEvent.revoke(user.id, [:indef_shadowbanned], moderator),
            {:ok, user} <- User.update_status(user),
            {:ok, _} <-
              ObanWorkers.update_user(user.id, [
@@ -988,14 +1017,16 @@ defmodule Flirtual.User do
     end)
   end
 
-  def payments_ban(%User{} = user) do
+  def payments_ban(%User{} = user, %User{} = moderator) do
     now = DateTime.utc_now() |> DateTime.truncate(:second)
 
     Repo.transaction(fn ->
       with {:ok, user} <-
              user
              |> change(%{payments_banned_at: now})
-             |> Repo.update() do
+             |> Repo.update(),
+           {:ok, _} <-
+             ModerationEvent.create(:payments_banned, %{user: user, moderator: moderator}) do
         user
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -1004,12 +1035,15 @@ defmodule Flirtual.User do
     end)
   end
 
-  def payments_unban(%User{} = user) do
+  def payments_unban(%User{} = user, %User{} = moderator) do
     Repo.transaction(fn ->
       with {:ok, user} <-
              user
              |> change(%{payments_banned_at: nil})
-             |> Repo.update() do
+             |> Repo.update(),
+           {:ok, _} <-
+             ModerationEvent.create(:payments_unbanned, %{user: user, moderator: moderator}),
+           {_, _} <- ModerationEvent.revoke(user.id, [:payments_banned], moderator) do
         user
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -1035,6 +1069,14 @@ defmodule Flirtual.User do
                shadowbanned_at: if(shadowban, do: now, else: user.shadowbanned_at)
              })
              |> Repo.update(),
+           {:ok, _} <-
+             ModerationEvent.create(:warned, %{
+               user: user,
+               moderator: moderator,
+               reason: reason,
+               message: message,
+               details: %{shadowbanned: !!shadowban}
+             }),
            {:ok, user} <- User.update_status(user),
            {:ok, _} <-
              ObanWorkers.update_user(if(shadowban, do: user.id, else: []), [
@@ -1069,6 +1111,9 @@ defmodule Flirtual.User do
              user
              |> change(%{moderator_message: nil})
              |> Repo.update(),
+           {:ok, _} <-
+             ModerationEvent.create(:warn_revoked, %{user: user, moderator: moderator}),
+           {_, _} <- ModerationEvent.revoke(user.id, [:warned], moderator),
            {:ok, _} <- Report.maybe_resolve_shadowban(user.id),
            :ok <-
              Discord.deliver_webhook(:warn_revoked,
@@ -1095,6 +1140,9 @@ defmodule Flirtual.User do
              user
              |> change(%{moderator_message: nil})
              |> Repo.update(),
+           {:ok, _} <-
+             ModerationEvent.create(:warn_acknowledged, %{user: user, message: message}),
+           {_, _} <- ModerationEvent.acknowledge(user.id, [:warned]),
            {:ok, _} <- Report.maybe_resolve_shadowban(user.id),
            :ok <-
              Discord.deliver_webhook(:warn_acknowledged,

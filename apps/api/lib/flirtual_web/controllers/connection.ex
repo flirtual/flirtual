@@ -7,7 +7,7 @@ defmodule FlirtualWeb.ConnectionController do
   import Ecto.Changeset
   import Flirtual.Utilities
 
-  alias Flirtual.{Connection, Discord, Flag, Hash, Jwt, Meta, Repo, User, Users}
+  alias Flirtual.{Connection, Discord, Flag, Hash, Jwt, Meta, ModerationEvent, Repo, User, Users}
   alias Flirtual.User.Login
   alias FlirtualWeb.SessionController
 
@@ -685,6 +685,16 @@ defmodule FlirtualWeb.ConnectionController do
         respond_error(conn, :connection_in_use, type, connection, options, options[:next])
 
       true ->
+        ModerationEvent.create(:flagged_duplicate, %{
+          user: user,
+          details: %{
+            type: "connection",
+            provider: to_string(type),
+            text: "#{profile.display_name || profile.uid} (#{profile.uid})",
+            duplicate_user_ids: [connection.user.id]
+          }
+        })
+
         Discord.deliver_webhook(:flagged_duplicate,
           user: user,
           duplicates: [User.url(connection.user) |> URI.to_string()],
