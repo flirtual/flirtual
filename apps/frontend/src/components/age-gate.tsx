@@ -30,10 +30,10 @@ function useReportAgeRange({ group, platform, declaration, ageLower, ageUpper }:
 		void User
 			.reportAgeRange(userId, { platform, declaration, ageLower, ageUpper })
 			.catch((reason) => {
-				// The account was banned, so the session is gone. A child sees the
-				// block gate, a teen goes to the underage ban page.
-				if (isWretchError(reason) && reason.json?.error === "banned_underage") {
-					if (group !== "child") window.location.href = urls.underage;
+				// The account was banned. A child sees the block gate; anyone else can
+				// verify their age.
+				if (isWretchError(reason) && ["account_banned", "banned_underage"].includes(reason.json?.error)) {
+					if (group !== "child") window.location.href = urls.banned;
 					return;
 				}
 

@@ -39,7 +39,7 @@ defmodule FlirtualWeb.SessionController do
                |> validate_required([:login, :password])
                |> update_change(:login, &String.trim/1)
                |> apply_action(:update),
-             %User{banned_at: nil} = user <-
+             %User{} = user <-
                Users.get_by_login_and_password(
                  attrs[:login],
                  attrs[:password]
@@ -70,14 +70,6 @@ defmodule FlirtualWeb.SessionController do
         else
           false ->
             {:error, {:unauthorized, :turnstile_invalid}}
-
-          %User{banned_at: banned_at} = user when not is_nil(banned_at) ->
-            Login.log_login_attempt(conn, user.id, nil,
-              method: :password,
-              device_id: params["device_id"]
-            )
-
-            {:error, {:unauthorized, :account_banned}}
 
           _ ->
             login = String.trim(params["login"] || "")
@@ -112,7 +104,7 @@ defmodule FlirtualWeb.SessionController do
 
   def verify(conn, %{"login_id" => login_id, "code" => code}) do
     with %Login{user_id: user_id} <- Login.get(login_id),
-         %User{banned_at: nil} = user <- Users.get(user_id),
+         %User{} = user <- Users.get(user_id),
          :ok <- Verification.verify(login_id, code) do
       session = Session.create(user)
 
@@ -132,10 +124,6 @@ defmodule FlirtualWeb.SessionController do
       nil ->
         {:error, {:unauthorized, :verification_invalid_code}}
 
-      %User{banned_at: banned_at} = user when not is_nil(banned_at) ->
-        Login.log_login_attempt(conn, user.id, nil, method: :password)
-        {:error, {:unauthorized, :account_banned}}
-
       {:error, :verification_rate_limit} ->
         with %Login{user_id: user_id} <- Login.get(login_id) do
           Login.untrust(user_id)
@@ -151,16 +139,13 @@ defmodule FlirtualWeb.SessionController do
   def magic_login(conn, %{"token" => token}) do
     with {:ok, claims} <-
            Joken.verify_and_validate(Jwt.config("magic-login", 30 * 24 * 60 * 60), token),
-         %User{banned_at: nil} = user <- Users.get(claims["sub"]) do
+         %User{} = user <- Users.get(claims["sub"]) do
       {session, conn} = create(conn, user, method: :magic)
 
       conn
       |> put_status(:created)
       |> json(Policy.transform(conn, session))
     else
-      %User{banned_at: banned_at} when not is_nil(banned_at) ->
-        {:error, {:unauthorized, :account_banned}}
-
       _ ->
         {:error, {:unauthorized, :invalid_token}}
     end
@@ -181,7 +166,8 @@ defmodule FlirtualWeb.SessionController do
       with {:ok, session} <-
              session |> Session.sudo(user) do
         conn
-        |> json(Policy.transform(conn, session))
+        |> assign(:session, session)
+        |> then(&json(&1, Policy.transform(&1, session)))
       end
     end
   end

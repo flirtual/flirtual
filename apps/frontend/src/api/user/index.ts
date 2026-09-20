@@ -74,6 +74,13 @@ export const UserStatuses = [
 
 export type UserStatus = (typeof UserStatuses)[number];
 
+export interface UserBan {
+	at: string;
+	reasonId?: string;
+	message?: string;
+	appealed?: boolean;
+}
+
 export type User = {
 	email?: string;
 	slug: string;
@@ -102,6 +109,7 @@ export type User = {
 	indefShadowbannedAt?: string;
 	paymentsBannedAt?: string;
 	bannedAt?: string;
+	ban?: UserBan;
 	deactivatedAt?: string;
 	preferences?: Preferences;
 	profile: Profile;

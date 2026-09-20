@@ -25,6 +25,7 @@ defmodule Flirtual.ModerationEvent do
     :flagged_duplicate_image,
     :flagged_registered_underage,
     :flagged_honeypot,
+    :appealed,
     :deleted
   ]
 

@@ -4,7 +4,7 @@ import AbortAddon from "wretch/addons/abort";
 import QueryAddon from "wretch/addons/queryString";
 import { WretchError } from "wretch/resolver";
 
-import { development } from "~/const";
+import { client, development } from "~/const";
 import { urls } from "~/urls";
 import { newIdempotencyKey, toCamelObject, toSnakeObject } from "~/utilities";
 
@@ -78,6 +78,16 @@ export const api = wretch(urls.api)
 				() => error
 			)
 	)
+	.catcher(403, (error) => {
+		if (
+			!client
+			|| (error as WretchIssue).json?.error !== "account_banned"
+			|| location.pathname.endsWith(urls.banned)
+		) throw error;
+
+		location.href = urls.banned;
+		return new Promise<never>(() => {});
+	})
 	.defer((wretch, _url, options) => {
 		const headers = new Headers(options.headers || {});
 		if (headers.get("content-type") === "application/json" && options.transformRequest !== false)

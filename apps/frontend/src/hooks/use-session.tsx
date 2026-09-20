@@ -73,6 +73,8 @@ export function useGuest() {
 	let next = searchParameters.get("next");
 	if (next && !allowedOrigins.includes(absoluteUrl(next).origin)) next = null;
 
+	if (session?.user.ban) next = urls.banned;
+
 	if (!next)
 		next = session?.user.status === "registered"
 			? urls.onboarding(1)
@@ -92,5 +94,8 @@ export function useSession(queryOptions: MinimalQueryOptions<Session | null> = {
 	});
 
 	if (!session) throwRedirect(urls.login(toRelativeUrl(location)));
+
+	if (session.user.ban) throwRedirect(urls.banned);
+
 	return session;
 }

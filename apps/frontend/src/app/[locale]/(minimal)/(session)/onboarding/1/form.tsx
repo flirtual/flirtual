@@ -86,7 +86,7 @@ export const Onboarding1Form: FC = () => {
 					})
 					.catch((reason) => {
 						if (isWretchError(reason) && reason.json?.error === "banned_underage") {
-							window.location.href = urls.underage;
+							window.location.href = urls.banned;
 							return;
 						}
 						throw reason;

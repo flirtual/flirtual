@@ -151,8 +151,7 @@ defmodule FlirtualWeb.PasskeyController do
              challenge,
              [{credential_id, :erlang.binary_to_term(cose_key, [:safe])}]
            ),
-         login_user <- User.get(user_id),
-         %User{banned_at: nil} <- login_user do
+         %User{} = login_user <- User.get(user_id) do
       {session, conn} =
         SessionController.create(conn, login_user, method: :passkey, device_id: device_id)
 
@@ -160,10 +159,6 @@ defmodule FlirtualWeb.PasskeyController do
       |> put_status(:ok)
       |> json(Policy.transform(conn, session))
     else
-      %User{} = user ->
-        Login.log_login_attempt(conn, user.id, nil, method: :passkey, device_id: device_id)
-        {:error, {:unauthorized, :account_banned}}
-
       _ ->
         Login.log_login_attempt(conn, nil, nil, method: :passkey, device_id: device_id)
         {:error, {:unauthorized, :passkey_login_failed}}

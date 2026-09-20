@@ -28,7 +28,7 @@ defmodule Flirtual.User do
   }
 
   alias Flirtual.User.Profile.{Block, Image, LikesAndPasses}
-  alias Flirtual.User.{Login, Profile, Relationship, Session}
+  alias Flirtual.User.{Login, Profile, Relationship}
 
   @tags [
     :admin,
@@ -100,6 +100,7 @@ defmodule Flirtual.User do
     field(:password, :string, virtual: true, redact: true)
     field(:relationship, :map, virtual: true)
     field(:age, :integer, virtual: true)
+    field(:ban, :map, virtual: true)
 
     field(:tags, {:array, Ecto.Enum},
       values: @tags,
@@ -899,7 +900,6 @@ defmodule Flirtual.User do
            {:ok, _} <- Report.list(target_id: user.id) |> Report.clear_all(moderator, true),
            {:ok, user} <- User.update_status(user),
            {:ok, _} <- ObanWorkers.update_user(user.id, [:search_index, :listmonk, :talkjs]),
-           {_, _} <- Session.delete(user_id: user.id),
            User.Email.deliver(user, :suspended, message) do
         Discord.deliver_webhook(:suspended,
           user: user,
@@ -1525,6 +1525,7 @@ defimpl Jason.Encoder, for: Flirtual.User do
       :chargebee_id,
       :revenuecat_id,
       :banned_at,
+      :ban,
       :shadowbanned_at,
       :indef_shadowbanned_at,
       :payments_banned_at,

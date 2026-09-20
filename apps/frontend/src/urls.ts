@@ -182,7 +182,7 @@ export const urls = {
 	register: "/sign-up",
 	login: (next?: string) => url("/login", { next }),
 	forgotPassword: "/forgot",
-	underage: "/underage",
+	banned: "/banned",
 	user: {
 		me: "/me"
 	},

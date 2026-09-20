@@ -7,7 +7,19 @@ defmodule FlirtualWeb.ConnectionController do
   import Ecto.Changeset
   import Flirtual.Utilities
 
-  alias Flirtual.{Connection, Discord, Flag, Hash, Jwt, Meta, ModerationEvent, Repo, User, Users}
+  alias Flirtual.{
+    Connection,
+    Discord,
+    Flag,
+    Hash,
+    Jwt,
+    Meta,
+    ModerationEvent,
+    Repo,
+    User,
+    Users
+  }
+
   alias Flirtual.User.Login
   alias FlirtualWeb.SessionController
 
@@ -616,14 +628,10 @@ defmodule FlirtualWeb.ConnectionController do
       when user.id != other_user_id ->
         transfer_connection(conn, user, connection, profile, type, options)
 
-      # Not logged in, connection exists for active user -> log them in
-      {nil, %Connection{user: %User{banned_at: nil} = login_user} = connection} ->
+      # Not logged in, connection exists -> log them in.
+      {nil, %Connection{user: %User{} = login_user} = connection} ->
         maybe_refresh_tokens(connection, profile)
         create_session(conn, login_user, type, options)
-
-      # Not logged in, connection exists for banned user -> reject
-      {nil, %Connection{user: %User{}} = connection} ->
-        respond_error(conn, :account_banned, type, connection, options)
 
       # Not logged in, no connection: register only from the sign-up flow, else reject.
       {nil, nil} ->
@@ -827,7 +835,7 @@ defmodule FlirtualWeb.ConnectionController do
     end
   end
 
-  defp respond_error(conn, message, type, connection, options, next \\ nil) do
+  defp respond_error(conn, message, type, connection, options, next) do
     case options[:response] do
       :redirect ->
         grant_error(conn, options[:redirect_type], message, type, connection, next)

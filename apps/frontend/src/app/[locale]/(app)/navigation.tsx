@@ -34,7 +34,7 @@ const NavigationalSwitch: FC<ComponentProps<"div">> = ({
 const NavigationContent: FC = () => {
 	const session = useOptionalSession();
 
-	if (!session)
+	if (!session || session.user.ban)
 		return (
 			<NavigationalSwitch>
 				<NavigationalSwitchItem
