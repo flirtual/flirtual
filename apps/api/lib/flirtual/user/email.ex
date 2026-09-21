@@ -1,13 +1,14 @@
 defmodule Flirtual.User.Email do
   use Gettext, backend: Flirtual.Gettext
 
-  alias Flirtual.{Entitlement, Jwt, User}
+  alias Flirtual.{Attribute, Entitlement, Jwt, User}
 
-  def deliver(%User{} = user, :suspended, message) do
+  def deliver(%User{} = user, :suspended, %Attribute{} = reason, message) do
     language = user.preferences.language || "en"
-    message = message |> Plug.HTML.html_escape()
 
     Gettext.with_locale(language, fn ->
+      message = (message || ban_reason_details(reason)) |> Plug.HTML.html_escape()
+
       %{
         "user_id" => user.id,
         "reply_to" => "moderation",
@@ -20,6 +21,14 @@ defmodule Flirtual.User.Email do
       |> Flirtual.ObanWorkers.Email.new()
       |> Oban.insert()
     end)
+  end
+
+  # Auto-bans don't store a message, so we resolve in the caller's (recipient
+  # for email, default for webhook) locale from the reason.
+  def ban_reason_details(%Attribute{id: id}) do
+    if id === Attribute.underage_ban_reason_id() do
+      dgettext("notifications", "suspended.reason.underage")
+    end
   end
 
   def deliver(%User{} = user, :confirm_email, token) do

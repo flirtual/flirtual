@@ -7,6 +7,7 @@ import type { Dispatch, PropsWithChildren } from "react";
 import { use, useCallback, useDebugValue, useSyncExternalStore } from "react";
 
 import { getAgeRange } from "./age-range";
+import { AgeVerification } from "./api/age-verification";
 import type { AttributeType } from "./api/attributes";
 import { Attribute } from "./api/attributes";
 import { Authentication } from "./api/auth";
@@ -37,6 +38,9 @@ export function sessionFetcher({ signal }: QueryFunctionContext<ReturnType<typeo
 
 export const ageRangeKey = () => ["age-range"] as const;
 export const ageRangeFetcher = () => getAgeRange();
+
+export const ageVerificationKey = () => ["age-verification"] as const;
+export const ageVerificationFetcher = () => AgeVerification.get();
 
 export const attributeKey = <T extends AttributeType>(type: T, version?: string) => ["attribute", type, version ?? null] as const;
 export function attributeFetcher<T extends AttributeType>({ queryKey: [, type, version], signal }: QueryFunctionContext<ReturnType<typeof attributeKey<T>>>) {

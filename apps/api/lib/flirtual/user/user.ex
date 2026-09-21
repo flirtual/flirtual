@@ -871,6 +871,15 @@ defmodule Flirtual.User do
     |> Repo.update_all(pull: [tags: to_string(tag)])
   end
 
+  def banned_underage?(%User{banned_at: nil}), do: false
+
+  def banned_underage?(%User{id: user_id}),
+    do:
+      ModerationEvent.active_reason_id(user_id, :banned) ===
+        Attribute.underage_ban_reason_id()
+
+  def banned_underage?(_), do: false
+
   def suspend(
         %User{} = user,
         %Attribute{type: "ban-reason"} = reason,
@@ -893,19 +902,19 @@ defmodule Flirtual.User do
                user: user,
                moderator: if(automatic?, do: nil, else: moderator),
                reason: reason,
-               message: message,
+               message: if(automatic?, do: nil, else: message),
                automatic: automatic?,
                details: automatic_details
              }),
            {:ok, _} <- Report.list(target_id: user.id) |> Report.clear_all(moderator, true),
            {:ok, user} <- User.update_status(user),
            {:ok, _} <- ObanWorkers.update_user(user.id, [:search_index, :listmonk, :talkjs]),
-           User.Email.deliver(user, :suspended, message) do
+           User.Email.deliver(user, :suspended, reason, message) do
         Discord.deliver_webhook(:suspended,
           user: user,
           moderator: moderator,
           reason: reason,
-          message: message,
+          message: message || User.Email.ban_reason_details(reason),
           automatic: automatic
         )
 
@@ -923,18 +932,29 @@ defmodule Flirtual.User do
   defp automatic_details({:age_range, payload}),
     do: {true, %{source: "age_range", age_range: payload}}
 
+  defp automatic_details({:age_verification, %{id: id, method: method}}),
+    do: {true, %{source: "age_verification", age_verification_id: id, method: method}}
+
   defp automatic_details(source), do: {true, %{source: inspect(source)}}
 
-  def unsuspend(%User{} = user, %User{} = moderator) do
+  def unsuspend(%User{} = user, %User{} = moderator, options \\ []) do
+    automatic = Keyword.get(options, :automatic)
+    {automatic?, automatic_details} = automatic_details(automatic)
+    actor = if(automatic?, do: nil, else: moderator)
+
     Repo.transaction(fn ->
       with {:ok, user} <-
              user
              |> change(%{banned_at: nil, shadowbanned_at: nil, indef_shadowbanned_at: nil})
              |> Repo.update(),
            {:ok, _} <-
-             ModerationEvent.create(:unbanned, %{user: user, moderator: moderator}),
-           {_, _} <-
-             ModerationEvent.revoke(user.id, [:banned, :indef_shadowbanned], moderator),
+             ModerationEvent.create(:unbanned, %{
+               user: user,
+               moderator: actor,
+               automatic: automatic?,
+               details: automatic_details
+             }),
+           {_, _} <- ModerationEvent.revoke(user.id, [:banned, :indef_shadowbanned], actor),
            {:ok, user} <- User.update_status(user),
            {:ok, _} <-
              ObanWorkers.update_user(user.id, [
@@ -946,7 +966,8 @@ defmodule Flirtual.User do
            :ok <-
              Discord.deliver_webhook(:unsuspended,
                user: user,
-               moderator: moderator
+               moderator: moderator,
+               automatic: automatic
              ) do
         user
       else

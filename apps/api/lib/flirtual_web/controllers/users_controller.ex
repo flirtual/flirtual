@@ -13,6 +13,7 @@ defmodule FlirtualWeb.UsersController do
   import Flirtual.Attribute, only: [validate_attribute: 3]
 
   alias Flirtual.{
+    AgeVerification,
     Discord,
     Entitlement,
     IpAddress,
@@ -728,18 +729,18 @@ defmodule FlirtualWeb.UsersController do
         %{"user_id" => user_id} = params
       ) do
     with {:ok, attrs} <- AgeRange.apply(params) do
+      report = %{
+        platform: attrs.platform,
+        declaration: attrs.declaration,
+        age_lower: attrs.age_lower,
+        age_upper: attrs.age_upper,
+        region: get_conn_region(conn)
+      }
+
+      AgeVerification.record_age_range(user, report)
+
       if is_integer(attrs.age_upper) and attrs.age_upper < 18 do
-        Users.autoban_underage(
-          user,
-          {:age_range,
-           %{
-             platform: attrs.platform,
-             declaration: attrs.declaration,
-             age_lower: attrs.age_lower,
-             age_upper: attrs.age_upper,
-             region: get_conn_region(conn)
-           }}
-        )
+        Users.autoban_underage(user, {:age_range, report})
       else
         conn |> send_resp(:no_content, "")
       end

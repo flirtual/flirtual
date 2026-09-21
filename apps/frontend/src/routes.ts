@@ -40,6 +40,7 @@ export default [
 		]),
 		layout("(minimal)", [
 			page("banned", "(minimal)/banned"),
+			page("verify-age", "(minimal)/verify-age"),
 			layout("(minimal)/(guest)", [
 				page("login", "(minimal)/(guest)/login"),
 				page("sign-up", "(minimal)/(guest)/sign-up"),

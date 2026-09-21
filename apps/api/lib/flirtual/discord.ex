@@ -4,6 +4,7 @@ defmodule Flirtual.Discord do
 
   import Flirtual.Utilities
 
+  alias Flirtual.AgeVerification
   alias Flirtual.Attribute
   alias Flirtual.Connection
   alias Flirtual.ObanWorkers
@@ -439,6 +440,25 @@ defmodule Flirtual.Discord do
   defp format_age_range(nil, upper), do: "0–#{upper}"
   defp format_age_range(lower, upper), do: "#{lower}–#{upper}"
 
+  defp unban_fields(nil), do: []
+
+  defp unban_fields({:age_verification, %AgeVerification{} = verification}),
+    do: [
+      %{
+        name: "Age verification",
+        value: age_verification_method(verification.method),
+        inline: true
+      }
+    ]
+
+  defp age_verification_method(method) when is_binary(method) and method != "",
+    do:
+      method
+      |> String.split("_")
+      |> Enum.map_join(" ", &String.capitalize/1)
+
+  defp age_verification_method(_), do: "Yoti"
+
   def deliver_webhook(:suspended,
         user: %User{} = user,
         moderator: %User{} = moderator,
@@ -506,13 +526,15 @@ defmodule Flirtual.Discord do
 
   def deliver_webhook(:unsuspended,
         user: %User{} = user,
-        moderator: %User{} = moderator
+        moderator: %User{} = moderator,
+        automatic: automatic
       ) do
     webhook(:moderation_actions, %{
       embeds: [
         %{
           author: webhook_author(user),
           title: "User unbanned",
+          fields: unban_fields(automatic),
           color: @success_color,
           footer: webhook_author_footer(moderator),
           timestamp: DateTime.utc_now() |> DateTime.to_iso8601()

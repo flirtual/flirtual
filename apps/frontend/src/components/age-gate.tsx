@@ -33,7 +33,7 @@ function useReportAgeRange({ group, platform, declaration, ageLower, ageUpper }:
 				// The account was banned. A child sees the block gate; anyone else can
 				// verify their age.
 				if (isWretchError(reason) && ["account_banned", "banned_underage"].includes(reason.json?.error)) {
-					if (group !== "child") window.location.href = urls.banned;
+					if (group !== "child") window.location.href = urls.verifyAge;
 					return;
 				}
 

@@ -35,6 +35,18 @@ defmodule FlirtualWeb.Router do
     end
   end
 
+  def require_verifiable_user(conn, _opts) do
+    case conn.assigns[:session] do
+      nil ->
+        conn |> put_error(:unauthorized, :invalid_credentials) |> halt()
+
+      %{user: %Flirtual.User{} = user} ->
+        if is_nil(user.banned_at) or Flirtual.AgeVerification.required?(user),
+          do: conn,
+          else: conn |> put_error(:forbidden, :account_banned) |> halt()
+    end
+  end
+
   def fetch_authorization_token(conn, _) do
     with authorization_header when is_list(authorization_header) <-
            get_req_header(conn, "authorization"),
@@ -199,6 +211,10 @@ defmodule FlirtualWeb.Router do
         post("/", UnsubscribeController, :post)
       end
 
+      scope "/age-verification" do
+        post("/notification", AgeVerificationController, :notification)
+      end
+
       get("/health", HealthController, :health)
     end
 
@@ -231,6 +247,13 @@ defmodule FlirtualWeb.Router do
           pipe_through(:allow_banned_user)
 
           post("/", AppealController, :create)
+        end
+
+        scope "/age-verification" do
+          pipe_through(:require_verifiable_user)
+
+          get("/", AgeVerificationController, :get)
+          post("/", AgeVerificationController, :create)
         end
 
         scope "/auth" do

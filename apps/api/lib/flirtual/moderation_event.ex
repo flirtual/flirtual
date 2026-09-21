@@ -120,6 +120,16 @@ defmodule Flirtual.ModerationEvent do
     |> Repo.one()
   end
 
+  # For hot-path checks that only need the reason, without loading the event.
+  def active_reason_id(user_id, type) when is_binary(user_id) and type in @types do
+    where_user_types(user_id, [type])
+    |> where_active()
+    |> order_by([event], desc: event.created_at, desc: event.id)
+    |> limit(1)
+    |> select([event], event.reason_id)
+    |> Repo.one()
+  end
+
   def latest(user_id, type) when is_binary(user_id) and type in @types do
     ModerationEvent
     |> where(user_id: ^user_id, type: ^type)

@@ -78,6 +78,8 @@ export interface UserBan {
 	at: string;
 	reasonId?: string;
 	message?: string;
+	automatic?: boolean;
+	verificationRequired?: boolean;
 	appealed?: boolean;
 }
 

@@ -224,6 +224,13 @@ config :flirtual, Flirtual.Freshdesk,
   moderation_group_id:
     Env.get("FRESHDESK_MODERATION_GROUP_ID") |> then(&(&1 && String.to_integer(&1)))
 
+config :flirtual, Flirtual.Yoti,
+  sdk_id: Env.get("YOTI_SDK_ID"),
+  private_key: Env.get("YOTI_PRIVATE_KEY"),
+  api_key: Env.get("YOTI_API_KEY"),
+  notification_public_key: Env.get("YOTI_NOTIFICATION_PUBLIC_KEY"),
+  sandbox?: Env.bool("YOTI_SANDBOX", default: dev?)
+
 config :flirtual, Flirtual.Listmonk,
   url: Env.get!("LISTMONK_URL"),
   username: Env.get!("LISTMONK_USERNAME"),

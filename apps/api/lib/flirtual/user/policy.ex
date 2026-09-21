@@ -3,6 +3,7 @@ defmodule Flirtual.User.Policy do
 
   import Flirtual.Utilities
 
+  alias Flirtual.AgeVerification
   alias Flirtual.Appeal
   alias Flirtual.ModerationEvent
   alias Flirtual.Policy
@@ -366,6 +367,8 @@ defmodule Flirtual.User.Policy do
       at: banned_at,
       reason_id: event && event.reason_id,
       message: event && event.message,
+      automatic: !!(event && event.automatic),
+      verification_required: AgeVerification.required?(event, user.id),
       appealed: Appeal.appealed?(user.id, event)
     }
   end
