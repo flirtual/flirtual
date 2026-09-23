@@ -19,6 +19,7 @@ defmodule Flirtual.ModerationEvent do
     :image_removed,
     :image_quarantined,
     :flagged_keyword,
+    :flagged_bio,
     :flagged_domain,
     :flagged_duplicate,
     :flagged_image,
