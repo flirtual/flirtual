@@ -72,7 +72,7 @@ export const DeleteForm: FC = () => {
 										<br />
 										<Trans
 											components={{
-												link: (
+												appStoreLink: (
 													<InlineLink
 														className="underline"
 														href={urls.manageSubscription.app_store}
