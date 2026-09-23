@@ -28,16 +28,6 @@ Frontend → `/v1/*` (wretch) → Phoenix router (`lib/flirtual_web/router.ex`, 
 controllers → context modules → Ecto. Oban runs async/scheduled work (email/push, TalkJS/Listmonk
 sync, session/account pruning).
 
-## Environment
-
-```sh
-# Commands needing local env + secrets (run in apps/api or apps/frontend)
-source .env.local
-bws run --project-id $BWS_PROJECT_ID -- [command]   # e.g. `iex -S mix phx.server`, `pnpm dev`
-```
-
-Per-app build/run/deploy commands live in each app's CLAUDE.md.
-
 ## pnpm workspace
 
 One workspace at the repo root: `pnpm-workspace.yaml` (`apps/*`) and a single `pnpm-lock.yaml`.
