@@ -71,6 +71,10 @@ defmodule Flirtual.Application do
         {
           has_config?(Flirtual.FCM, [:project_id]),
           [{2, {Goth, name: Flirtual.Goth}}, {2, Flirtual.FCM}]
+        },
+        {
+          has_config?(Flirtual.Yoti, [:sdk_id, :private_key]),
+          [{2, Flirtual.Yoti.Token}]
         }
       ]
       |> Enum.flat_map(fn {start?, specs} -> if start?, do: specs, else: [] end)

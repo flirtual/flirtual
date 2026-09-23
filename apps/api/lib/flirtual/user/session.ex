@@ -226,19 +226,15 @@ defmodule Flirtual.User.Session.Policy do
         %Plug.Conn{
           assigns: %{
             session: %Session{
-              id: id,
-              user: %User{
-                banned_at: nil
-              }
+              id: id
             }
           }
         },
         %Session{
           id: id
         }
-      ) do
-    true
-  end
+      ),
+      do: true
 
   def authorize(_, _, _), do: false
 end

@@ -39,11 +39,12 @@ export default [
 		// route("/", "(public)/route"),
 		]),
 		layout("(minimal)", [
+			page("banned", "(minimal)/banned"),
+			page("verify-age", "(minimal)/verify-age"),
 			layout("(minimal)/(guest)", [
 				page("login", "(minimal)/(guest)/login"),
 				page("sign-up", "(minimal)/(guest)/sign-up"),
 				page("forgot", "(minimal)/(guest)/forgot"),
-				page("underage", "(minimal)/(guest)/underage"),
 			]),
 			layout("(minimal)/(session)", [
 				page("onboarding/1", "(minimal)/(session)/onboarding/1"),

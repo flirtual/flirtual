@@ -19,6 +19,7 @@ defmodule Flirtual.Users do
     Jwt,
     # Languages,
     Listmonk,
+    ModerationEvent,
     ObanWorkers,
     Repo,
     RevenueCat,
@@ -26,12 +27,10 @@ defmodule Flirtual.Users do
     User
   }
 
+  alias Flirtual.AgeVerification
   alias Flirtual.Attribute
   alias Flirtual.User.{Login, Preferences}
   alias Flirtual.User.Profile.Image
-
-  @underage_ban_reason_id "muXMqNjneKnwqxT8nqcy4d"
-  @underage_ban_message "Underaged. You must be at least 18 years of age to use Flirtual. If you believe you have been banned in error, you can reply to this email to appeal and we'll send you a secure link to verify your I.D. in order to unban your account."
 
   def get(id, preload \\ User.default_assoc())
       when is_binary(id) do
@@ -116,6 +115,14 @@ defmodule Flirtual.Users do
                 |> DateTime.new!(~T[00:00:00], "Etc/UTC")
 
               if DateTime.after?(turns_18_utc, user.created_at) do
+                ModerationEvent.create(:flagged_registered_underage, %{
+                  user: user,
+                  details: %{
+                    previous_born_at: previous_born_at,
+                    born_at: born_at
+                  }
+                })
+
                 Discord.deliver_webhook(:flagged_registered_underage,
                   user: user,
                   previous_born_at: previous_born_at,
@@ -142,13 +149,25 @@ defmodule Flirtual.Users do
     do: {:error, {:forbidden, :banned_underage}}
 
   def autoban_underage(%User{} = user, automatic) do
-    case Attribute.get(@underage_ban_reason_id, "ban-reason") do
+    case Attribute.get(Attribute.underage_ban_reason_id(), "ban-reason") do
       %Attribute{} = reason ->
-        User.suspend(user, reason, @underage_ban_message, user, automatic: automatic)
+        User.suspend(user, reason, nil, user, automatic: automatic)
         {:error, {:forbidden, :banned_underage}}
 
       _ ->
         {:error, {:internal_error, :attribute_not_found}}
+    end
+  end
+
+  def unban_age_verified(user_id, %AgeVerification{} = verification) when is_binary(user_id) do
+    user = get(user_id)
+
+    with true <- User.banned_underage?(user),
+         %ModerationEvent{created_at: banned_at} <- ModerationEvent.active(user_id, :banned),
+         true <- DateTime.after?(verification.created_at, banned_at) do
+      User.unsuspend(user, user, automatic: {:age_verification, verification})
+    else
+      _ -> {:ok, user}
     end
   end
 

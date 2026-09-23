@@ -15,10 +15,35 @@ defmodule FlirtualWeb.Router do
   end
 
   def require_authenticated_user(conn, _opts) do
+    case conn.assigns[:session] do
+      nil ->
+        conn |> put_error(:unauthorized, :invalid_credentials) |> halt()
+
+      %{user: %Flirtual.User{banned_at: banned_at}} when not is_nil(banned_at) ->
+        conn |> put_error(:forbidden, :account_banned) |> halt()
+
+      _ ->
+        conn
+    end
+  end
+
+  def allow_banned_user(conn, _opts) do
     if conn.assigns[:session] do
       conn
     else
       conn |> put_error(:unauthorized, :invalid_credentials) |> halt()
+    end
+  end
+
+  def require_verifiable_user(conn, _opts) do
+    case conn.assigns[:session] do
+      nil ->
+        conn |> put_error(:unauthorized, :invalid_credentials) |> halt()
+
+      %{user: %Flirtual.User{} = user} ->
+        if is_nil(user.banned_at) or Flirtual.AgeVerification.required?(user),
+          do: conn,
+          else: conn |> put_error(:forbidden, :account_banned) |> halt()
     end
   end
 
@@ -186,6 +211,10 @@ defmodule FlirtualWeb.Router do
         post("/", UnsubscribeController, :post)
       end
 
+      scope "/age-verification" do
+        post("/notification", AgeVerificationController, :notification)
+      end
+
       get("/health", HealthController, :health)
     end
 
@@ -207,11 +236,24 @@ defmodule FlirtualWeb.Router do
           end
 
           scope "/" do
-            pipe_through(:require_authenticated_user)
+            pipe_through(:allow_banned_user)
 
             get("/", SessionController, :get)
             delete("/", SessionController, :delete)
           end
+        end
+
+        scope "/appeals" do
+          pipe_through(:allow_banned_user)
+
+          post("/", AppealController, :create)
+        end
+
+        scope "/age-verification" do
+          pipe_through(:require_verifiable_user)
+
+          get("/", AgeVerificationController, :get)
+          post("/", AgeVerificationController, :create)
         end
 
         scope "/auth" do
@@ -249,10 +291,17 @@ defmodule FlirtualWeb.Router do
           end
 
           scope "/sudo" do
-            pipe_through(:require_authenticated_user)
+            scope "/" do
+              pipe_through(:require_authenticated_user)
 
-            post("/", SessionController, :sudo)
-            delete("/", SessionController, :revoke_sudo)
+              post("/", SessionController, :sudo)
+            end
+
+            scope "/" do
+              pipe_through(:allow_banned_user)
+
+              delete("/", SessionController, :revoke_sudo)
+            end
           end
 
           scope "/verification" do

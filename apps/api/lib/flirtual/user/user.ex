@@ -18,6 +18,7 @@ defmodule Flirtual.User do
     Flag,
     Hash,
     # Languages,
+    ModerationEvent,
     ObanWorkers,
     Repo,
     Entitlement,
@@ -27,7 +28,7 @@ defmodule Flirtual.User do
   }
 
   alias Flirtual.User.Profile.{Block, Image, LikesAndPasses}
-  alias Flirtual.User.{Login, Profile, Relationship, Session}
+  alias Flirtual.User.{Login, Profile, Relationship}
 
   @tags [
     :admin,
@@ -99,6 +100,7 @@ defmodule Flirtual.User do
     field(:password, :string, virtual: true, redact: true)
     field(:relationship, :map, virtual: true)
     field(:age, :integer, virtual: true)
+    field(:ban, :map, virtual: true)
 
     field(:tags, {:array, Ecto.Enum},
       values: @tags,
@@ -869,6 +871,15 @@ defmodule Flirtual.User do
     |> Repo.update_all(pull: [tags: to_string(tag)])
   end
 
+  def banned_underage?(%User{banned_at: nil}), do: false
+
+  def banned_underage?(%User{id: user_id}),
+    do:
+      ModerationEvent.active_reason_id(user_id, :banned) ===
+        Attribute.underage_ban_reason_id()
+
+  def banned_underage?(_), do: false
+
   def suspend(
         %User{} = user,
         %Attribute{type: "ban-reason"} = reason,
@@ -878,23 +889,33 @@ defmodule Flirtual.User do
       ) do
     now = DateTime.utc_now() |> DateTime.truncate(:second)
     message = message || reason.metadata["details"]
+    automatic = Keyword.get(options, :automatic)
+    {automatic?, automatic_details} = automatic_details(automatic)
 
     Repo.transaction(fn ->
       with {:ok, user} <-
              user
              |> change(%{banned_at: now})
              |> Repo.update(),
+           {:ok, _} <-
+             ModerationEvent.create(:banned, %{
+               user: user,
+               moderator: if(automatic?, do: nil, else: moderator),
+               reason: reason,
+               message: if(automatic?, do: nil, else: message),
+               automatic: automatic?,
+               details: automatic_details
+             }),
            {:ok, _} <- Report.list(target_id: user.id) |> Report.clear_all(moderator, true),
            {:ok, user} <- User.update_status(user),
            {:ok, _} <- ObanWorkers.update_user(user.id, [:search_index, :listmonk, :talkjs]),
-           {_, _} <- Session.delete(user_id: user.id),
-           User.Email.deliver(user, :suspended, message) do
+           User.Email.deliver(user, :suspended, reason, message) do
         Discord.deliver_webhook(:suspended,
           user: user,
           moderator: moderator,
           reason: reason,
-          message: message,
-          automatic: Keyword.get(options, :automatic)
+          message: message || User.Email.ban_reason_details(reason),
+          automatic: automatic
         )
 
         user
@@ -905,12 +926,35 @@ defmodule Flirtual.User do
     end)
   end
 
-  def unsuspend(%User{} = user, %User{} = moderator) do
+  defp automatic_details(nil), do: {false, %{}}
+  defp automatic_details(:date_of_birth), do: {true, %{source: "date_of_birth"}}
+
+  defp automatic_details({:age_range, payload}),
+    do: {true, %{source: "age_range", age_range: payload}}
+
+  defp automatic_details({:age_verification, %{id: id, method: method}}),
+    do: {true, %{source: "age_verification", age_verification_id: id, method: method}}
+
+  defp automatic_details(source), do: {true, %{source: inspect(source)}}
+
+  def unsuspend(%User{} = user, %User{} = moderator, options \\ []) do
+    automatic = Keyword.get(options, :automatic)
+    {automatic?, automatic_details} = automatic_details(automatic)
+    actor = if(automatic?, do: nil, else: moderator)
+
     Repo.transaction(fn ->
       with {:ok, user} <-
              user
              |> change(%{banned_at: nil, shadowbanned_at: nil, indef_shadowbanned_at: nil})
              |> Repo.update(),
+           {:ok, _} <-
+             ModerationEvent.create(:unbanned, %{
+               user: user,
+               moderator: actor,
+               automatic: automatic?,
+               details: automatic_details
+             }),
+           {_, _} <- ModerationEvent.revoke(user.id, [:banned, :indef_shadowbanned], actor),
            {:ok, user} <- User.update_status(user),
            {:ok, _} <-
              ObanWorkers.update_user(user.id, [
@@ -922,7 +966,8 @@ defmodule Flirtual.User do
            :ok <-
              Discord.deliver_webhook(:unsuspended,
                user: user,
-               moderator: moderator
+               moderator: moderator,
+               automatic: automatic
              ) do
         user
       else
@@ -940,6 +985,8 @@ defmodule Flirtual.User do
              user
              |> change(%{indef_shadowbanned_at: now})
              |> Repo.update(),
+           {:ok, _} <-
+             ModerationEvent.create(:indef_shadowbanned, %{user: user, moderator: moderator}),
            {:ok, user} <- User.update_status(user),
            {:ok, _} <-
              ObanWorkers.update_user(user.id, [
@@ -967,6 +1014,9 @@ defmodule Flirtual.User do
              user
              |> change(%{indef_shadowbanned_at: nil, shadowbanned_at: nil})
              |> Repo.update(),
+           {:ok, _} <-
+             ModerationEvent.create(:unindef_shadowbanned, %{user: user, moderator: moderator}),
+           {_, _} <- ModerationEvent.revoke(user.id, [:indef_shadowbanned], moderator),
            {:ok, user} <- User.update_status(user),
            {:ok, _} <-
              ObanWorkers.update_user(user.id, [
@@ -988,14 +1038,16 @@ defmodule Flirtual.User do
     end)
   end
 
-  def payments_ban(%User{} = user) do
+  def payments_ban(%User{} = user, %User{} = moderator) do
     now = DateTime.utc_now() |> DateTime.truncate(:second)
 
     Repo.transaction(fn ->
       with {:ok, user} <-
              user
              |> change(%{payments_banned_at: now})
-             |> Repo.update() do
+             |> Repo.update(),
+           {:ok, _} <-
+             ModerationEvent.create(:payments_banned, %{user: user, moderator: moderator}) do
         user
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -1004,12 +1056,15 @@ defmodule Flirtual.User do
     end)
   end
 
-  def payments_unban(%User{} = user) do
+  def payments_unban(%User{} = user, %User{} = moderator) do
     Repo.transaction(fn ->
       with {:ok, user} <-
              user
              |> change(%{payments_banned_at: nil})
-             |> Repo.update() do
+             |> Repo.update(),
+           {:ok, _} <-
+             ModerationEvent.create(:payments_unbanned, %{user: user, moderator: moderator}),
+           {_, _} <- ModerationEvent.revoke(user.id, [:payments_banned], moderator) do
         user
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -1035,6 +1090,14 @@ defmodule Flirtual.User do
                shadowbanned_at: if(shadowban, do: now, else: user.shadowbanned_at)
              })
              |> Repo.update(),
+           {:ok, _} <-
+             ModerationEvent.create(:warned, %{
+               user: user,
+               moderator: moderator,
+               reason: reason,
+               message: message,
+               details: %{shadowbanned: !!shadowban}
+             }),
            {:ok, user} <- User.update_status(user),
            {:ok, _} <-
              ObanWorkers.update_user(if(shadowban, do: user.id, else: []), [
@@ -1069,6 +1132,9 @@ defmodule Flirtual.User do
              user
              |> change(%{moderator_message: nil})
              |> Repo.update(),
+           {:ok, _} <-
+             ModerationEvent.create(:warn_revoked, %{user: user, moderator: moderator}),
+           {_, _} <- ModerationEvent.revoke(user.id, [:warned], moderator),
            {:ok, _} <- Report.maybe_resolve_shadowban(user.id),
            :ok <-
              Discord.deliver_webhook(:warn_revoked,
@@ -1095,6 +1161,9 @@ defmodule Flirtual.User do
              user
              |> change(%{moderator_message: nil})
              |> Repo.update(),
+           {:ok, _} <-
+             ModerationEvent.create(:warn_acknowledged, %{user: user, message: message}),
+           {_, _} <- ModerationEvent.acknowledge(user.id, [:warned]),
            {:ok, _} <- Report.maybe_resolve_shadowban(user.id),
            :ok <-
              Discord.deliver_webhook(:warn_acknowledged,
@@ -1477,6 +1546,7 @@ defimpl Jason.Encoder, for: Flirtual.User do
       :chargebee_id,
       :revenuecat_id,
       :banned_at,
+      :ban,
       :shadowbanned_at,
       :indef_shadowbanned_at,
       :payments_banned_at,

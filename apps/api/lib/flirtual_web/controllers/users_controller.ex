@@ -12,7 +12,19 @@ defmodule FlirtualWeb.UsersController do
   import Flirtual.Utilities
   import Flirtual.Attribute, only: [validate_attribute: 3]
 
-  alias Flirtual.{Discord, Entitlement, IpAddress, ObanWorkers, Policy, Repo, User, Users}
+  alias Flirtual.{
+    AgeVerification,
+    Discord,
+    Entitlement,
+    IpAddress,
+    ModerationEvent,
+    ObanWorkers,
+    Policy,
+    Repo,
+    User,
+    Users
+  }
+
   alias Flirtual.User.Session
   alias Flirtual.User.Profile.Block
   alias FlirtualWeb.SessionController
@@ -427,7 +439,7 @@ defmodule FlirtualWeb.UsersController do
     if is_nil(user) or Policy.cannot?(conn, :payments_ban, user) do
       {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
     else
-      with {:ok, user} <- User.payments_ban(user) do
+      with {:ok, user} <- User.payments_ban(user, conn.assigns[:session].user) do
         conn |> json(Policy.transform(conn, user))
       end
     end
@@ -439,7 +451,7 @@ defmodule FlirtualWeb.UsersController do
     if is_nil(user) or Policy.cannot?(conn, :payments_unban, user) do
       {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
     else
-      with {:ok, user} <- User.payments_unban(user) do
+      with {:ok, user} <- User.payments_unban(user, conn.assigns[:session].user) do
         conn |> json(Policy.transform(conn, user))
       end
     end
@@ -717,18 +729,18 @@ defmodule FlirtualWeb.UsersController do
         %{"user_id" => user_id} = params
       ) do
     with {:ok, attrs} <- AgeRange.apply(params) do
+      report = %{
+        platform: attrs.platform,
+        declaration: attrs.declaration,
+        age_lower: attrs.age_lower,
+        age_upper: attrs.age_upper,
+        region: get_conn_region(conn)
+      }
+
+      AgeVerification.record_age_range(user, report)
+
       if is_integer(attrs.age_upper) and attrs.age_upper < 18 do
-        Users.autoban_underage(
-          user,
-          {:age_range,
-           %{
-             platform: attrs.platform,
-             declaration: attrs.declaration,
-             age_lower: attrs.age_lower,
-             age_upper: attrs.age_upper,
-             region: get_conn_region(conn)
-           }}
-        )
+        Users.autoban_underage(user, {:age_range, report})
       else
         conn |> send_resp(:no_content, "")
       end
@@ -760,11 +772,18 @@ defmodule FlirtualWeb.UsersController do
     if is_nil(user) or Policy.cannot?(conn, :delete, user) do
       {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
     else
+      moderator = conn.assigns[:session].user
+
       with {:ok, _} <-
+             ModerationEvent.create(:deleted, %{
+               user: user,
+               moderator: moderator
+             }),
+           {:ok, _} <-
              Users.admin_delete(user) do
         Discord.deliver_webhook(:admin_deleted,
           user: user,
-          moderator: conn.assigns[:session].user
+          moderator: moderator
         )
 
         conn |> json(%{deleted: true})

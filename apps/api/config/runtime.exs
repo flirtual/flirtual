@@ -218,6 +218,19 @@ config :flirtual, Flirtual.Turnstile,
   # https://developers.cloudflare.com/turnstile/troubleshooting/testing/#test-secret-keys
   access_token: Env.get!("TURNSTILE_ACCESS_TOKEN", default: "1x0000000000000000000000000000000AA")
 
+config :flirtual, Flirtual.Freshdesk,
+  domain: Env.get("FRESHDESK_DOMAIN"),
+  api_key: Env.get("FRESHDESK_API_KEY"),
+  moderation_group_id:
+    Env.get("FRESHDESK_MODERATION_GROUP_ID") |> then(&(&1 && String.to_integer(&1)))
+
+config :flirtual, Flirtual.Yoti,
+  sdk_id: Env.get("YOTI_SDK_ID"),
+  private_key: Env.get("YOTI_PRIVATE_KEY"),
+  api_key: Env.get("YOTI_API_KEY"),
+  notification_public_key: Env.get("YOTI_NOTIFICATION_PUBLIC_KEY"),
+  sandbox?: Env.bool("YOTI_SANDBOX", default: dev?)
+
 config :flirtual, Flirtual.Listmonk,
   url: Env.get!("LISTMONK_URL"),
   username: Env.get!("LISTMONK_USERNAME"),

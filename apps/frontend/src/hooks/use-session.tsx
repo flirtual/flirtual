@@ -4,6 +4,7 @@ import { useSearchParams } from "react-router";
 
 import type { Session } from "~/api/auth";
 import { Authentication } from "~/api/auth";
+import type { UserBan } from "~/api/user";
 import { client } from "~/const";
 import type {
 	MinimalQueryOptions
@@ -66,12 +67,19 @@ export function useOptionalSession(queryOptions: MinimalQueryOptions<Session | n
 	return session;
 }
 
+export function verifyAgeDirect(ban: UserBan) {
+	return !!ban.automatic && !!ban.verificationRequired;
+}
+
 export function useGuest() {
 	const session = useOptionalSession();
 	const [searchParameters] = useSearchParams();
 
 	let next = searchParameters.get("next");
 	if (next && !allowedOrigins.includes(absoluteUrl(next).origin)) next = null;
+
+	if (session?.user.ban)
+		next = verifyAgeDirect(session.user.ban) ? urls.verifyAge : urls.banned;
 
 	if (!next)
 		next = session?.user.status === "registered"
@@ -92,5 +100,9 @@ export function useSession(queryOptions: MinimalQueryOptions<Session | null> = {
 	});
 
 	if (!session) throwRedirect(urls.login(toRelativeUrl(location)));
+
+	if (session.user.ban)
+		throwRedirect(verifyAgeDirect(session.user.ban) ? urls.verifyAge : urls.banned);
+
 	return session;
 }

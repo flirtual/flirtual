@@ -4,7 +4,7 @@ defmodule Flirtual.Flag do
   import Ecto.Changeset
   import Ecto.Query
 
-  alias Flirtual.{Connection, Discord, Disposable, Flag, Hash, Repo, User, Users}
+  alias Flirtual.{Connection, Discord, Disposable, Flag, Hash, ModerationEvent, Repo, User, Users}
   alias Flirtual.User.Profile
 
   @block_elements ~w(p h1 h2 h3 h4 h5 h6 blockquote li pre)
@@ -130,6 +130,7 @@ defmodule Flirtual.Flag do
   def check_honeypot(_, ""), do: :ok
 
   def check_honeypot(user_id, _) do
+    ModerationEvent.create(:flagged_honeypot, %{user_id: user_id})
     Discord.deliver_webhook(:honeypot, user: Users.get(user_id))
   end
 
@@ -150,6 +151,11 @@ defmodule Flirtual.Flag do
 
     if flags != [] do
       flags_with_context = Enum.map(flags, fn flag -> extract_flag_context(text, flag) end)
+
+      ModerationEvent.create(:flagged_keyword, %{
+        user: user,
+        details: %{flags: flags, context: flags_with_context}
+      })
 
       Discord.deliver_webhook(:flagged_keyword, user: user, flags: flags_with_context)
     end
@@ -388,17 +394,25 @@ defmodule Flirtual.Flag do
 
     if Regex.match?(~r/@#{keywords}|@.*\.#{keywords}|@.*#{keywords}\./i, email) and
          not String.ends_with?(email, ".edu") do
-      Discord.deliver_webhook(:flagged_keyword,
+      flags = [email |> String.split("@") |> List.last()]
+
+      ModerationEvent.create(:flagged_keyword, %{
         user: user,
-        flags: [email |> String.split("@") |> List.last()]
-      )
+        details: %{flags: flags, source: "email_domain"}
+      })
+
+      Discord.deliver_webhook(:flagged_keyword, user: user, flags: flags)
     end
 
     if Regex.match?(~r/^(?!.*\+flirtual).*flirtual.*@/i, email) do
-      Discord.deliver_webhook(:flagged_keyword,
+      flags = [email |> String.split("@") |> List.first()]
+
+      ModerationEvent.create(:flagged_keyword, %{
         user: user,
-        flags: [email |> String.split("@") |> List.first()]
-      )
+        details: %{flags: flags, source: "email_local"}
+      })
+
+      Discord.deliver_webhook(:flagged_keyword, user: user, flags: flags)
     end
 
     :ok
@@ -418,6 +432,8 @@ defmodule Flirtual.Flag do
 
     if not existing_domain? do
       user = Users.get(user_id)
+
+      ModerationEvent.create(:flagged_domain, %{user: user, details: %{domain: domain}})
       Discord.deliver_webhook(:flagged_domain, user: user, domain: domain)
     end
 

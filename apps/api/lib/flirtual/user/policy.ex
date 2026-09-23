@@ -3,6 +3,9 @@ defmodule Flirtual.User.Policy do
 
   import Flirtual.Utilities
 
+  alias Flirtual.AgeVerification
+  alias Flirtual.Appeal
+  alias Flirtual.ModerationEvent
   alias Flirtual.Policy
   alias Flirtual.Talkjs
   alias Flirtual.User
@@ -342,6 +345,35 @@ defmodule Flirtual.User.Policy do
       do: User.has_password?(user)
 
   def transform(:has_password, _, _), do: nil
+
+  def transform(
+        :ban,
+        %Plug.Conn{
+          assigns: %{
+            session: %{
+              user_id: user_id,
+              user: %User{banned_at: banned_at}
+            }
+          }
+        },
+        %User{
+          id: user_id
+        } = user
+      )
+      when not is_nil(banned_at) do
+    event = ModerationEvent.active(user.id, :banned)
+
+    %{
+      at: banned_at,
+      reason_id: event && event.reason_id,
+      message: event && event.message,
+      automatic: !!(event && event.automatic),
+      verification_required: AgeVerification.required?(event, user.id),
+      appealed: Appeal.appealed?(user.id, event)
+    }
+  end
+
+  def transform(:ban, _, _), do: nil
 
   @admin_property_keys [
     :email,

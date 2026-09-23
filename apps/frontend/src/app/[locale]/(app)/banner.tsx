@@ -86,7 +86,7 @@ export const AppBanner: FC = () => {
 	// load bearing, do not remove.
 	useTranslation();
 
-	if (!session) return null;
+	if (!session || session.user.ban) return null;
 
 	if (!["finished_profile", "visible"].includes(session.user.status)) {
 		return (

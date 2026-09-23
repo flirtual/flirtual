@@ -88,9 +88,12 @@ Likes-you 40, interests 3/5/20 by strength, custom interests 25, games 1, locati
 
 - **Reports** (`Flirtual.Report`): predefined reasons + optional message/images; `/reports` (mods/admins); auto-shadowban after several reports, lifted on clear.
 - **User search**: `/search` (mods/admins); search/sort/filter by user properties.
-- **Actions**: ban (`suspended_at`, can't log in, profile hidden); shadowban (`indef_shadowbanned_at`, hidden from matchmaking, app still usable); warn (`warned_at`, message shown, optionally shadowbanned until acknowledged); payments ban (`payments_banned_at`); note (mod-only).
+- **Actions**: ban (`suspended_at`, profile hidden, app locked to the suspended screen); shadowban (`indef_shadowbanned_at`, hidden from matchmaking, app still usable); warn (`warned_at`, message shown, optionally shadowbanned until acknowledged); payments ban (`payments_banned_at`); note (mod-only).
 - **Flags** (`Flirtual.Flag`): keyword/phrase patterns for bios/names/custom interests, AI bio flags, disposable/blocked/flagged email domains, registration honeypot; run on profile updates via `Flag.check_profile_flags/2`.
-- **Hashes** (`Flirtual.Hash`): track prior usernames, display names, Discord/VRChat connections, IPv4, IPv6 /48 blocks, devices, etc. to catch duplicates/ban evasion.
+- **Moderation events** (`Flirtual.ModerationEvent`): every action and flag above also writes a `moderation_events` row. Lifting one adds its own row *and* stamps `revoked_at`/`revoked_by` on the original, so `active/2` means "still standing"; `reviewed_at`/`reviewed_by` are reserved for flag triage and unwritten. Reports aren't duplicated here.
+- **Hashes** (`Flirtual.Hash`): track prior usernames, display names, Discord/VRChat connections, IPv4, IPv6 /48 blocks, devices, etc. to catch duplicates/ban evasion. Dropped when an unbanned account is deleted, kept (with `user_id`, and `suspended_url` pointing at the ban message) when a banned one is — so a `user_id` here need not still resolve.
+- **Suspended accounts still sign in.** A ban keeps its sessions; `require_authenticated_user` rejects banned users everywhere except `/v1/session` and `/v1/appeals` (`allow_banned_user`), so the frontend can show the ban reason and message and take an appeal (`Flirtual.Appeal`, filed as a Freshdesk ticket via Oban, recorded as an `:appealed` event, one per ban).
+- **Age verification** (`Flirtual.AgeVerification`/`Flirtual.Yoti`): an underage ban gets the verify flow instead of the appeal form — `require_verifiable_user` also opens `/v1/age-verification`, and a Yoti "over 18" check unbans them. Only once: `AgeVerification.required?/1` is false if they have already passed one.
 - All of the above notify via Discord webhook.
 
 ## Database schema
@@ -113,6 +116,8 @@ Key tables:
 - **connections**: OAuth connection metadata (Discord, VRChat, Google, Apple, ...).
 - **sessions**: active sessions + tokens. **user_passkeys**: WebAuthn credentials. **logins**: attempt history. **verifications**: email codes for new login locations.
 - **reports**: reasons, messages, evidence images. **flags**: keyword/domain patterns. **hashes**: historical hashes for duplicate detection.
+- **moderation_events**: audit log of bans, shadowbans, warns, payments bans, flags and image actions; no user FK, so deleting an account never erases its record.
+- **age_verifications**: Yoti sessions and results, plus Apple/Google age-range reports.
 - **profile_prompts**: prompt responses.
 - **subscriptions**: Chargebee/RevenueCat data (Stripe deprecated). **plans**: available plans.
 

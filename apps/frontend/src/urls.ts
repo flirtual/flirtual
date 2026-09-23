@@ -182,7 +182,8 @@ export const urls = {
 	register: "/sign-up",
 	login: (next?: string) => url("/login", { next }),
 	forgotPassword: "/forgot",
-	underage: "/underage",
+	banned: "/banned",
+	verifyAge: "/verify-age",
 	user: {
 		me: "/me"
 	},
@@ -266,6 +267,7 @@ export const urls = {
 		termsOfService: "/terms",
 		privacyPolicy: "/privacy",
 		paymentTerms: "/payments",
+		yotiPrivacy: "https://www.yoti.com/privacy/age-verification/",
 		contact: "https://hello.flirtu.al/",
 		contactDirect: "https://hello.flirtu.al/support/tickets/new",
 		vulnerabilityReport:

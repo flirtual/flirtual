@@ -11,130 +11,130 @@
 msgid ""
 msgstr ""
 
-#: lib/flirtual/mailer.ex:43
-#: lib/flirtual/mailer.ex:292
+#: lib/flirtual/mailer.ex:39
+#: lib/flirtual/mailer.ex:288
 #, elixir-autogen, elixir-format
 msgid "discord"
 msgstr ""
 
-#: lib/flirtual/mailer.ex:289
+#: lib/flirtual/mailer.ex:285
 #, elixir-autogen, elixir-format
 msgid "if_the_link_does_not_work"
 msgstr ""
 
-#: lib/flirtual/mailer.ex:47
-#: lib/flirtual/mailer.ex:296
+#: lib/flirtual/mailer.ex:43
+#: lib/flirtual/mailer.ex:292
 #, elixir-autogen, elixir-format
 msgid "unsubscribe"
 msgstr ""
 
-#: lib/flirtual/mailer.ex:44
-#: lib/flirtual/mailer.ex:293
+#: lib/flirtual/mailer.ex:40
+#: lib/flirtual/mailer.ex:289
 #, elixir-autogen, elixir-format
 msgid "x"
 msgstr ""
 
-#: lib/flirtual/user/email.ex:14
+#: lib/flirtual/user/email.ex:15
 #, elixir-autogen, elixir-format
 msgid "suspended.subject"
 msgstr ""
 
-#: lib/flirtual/user/email.ex:44
+#: lib/flirtual/user/email.ex:54
 #, elixir-autogen, elixir-format
 msgid "confirm_email.body_html"
 msgstr ""
 
-#: lib/flirtual/user/email.ex:42
+#: lib/flirtual/user/email.ex:52
 #, elixir-autogen, elixir-format
 msgid "confirm_email.body_text"
 msgstr ""
 
-#: lib/flirtual/user/email.ex:37
-#: lib/flirtual/user/email.ex:50
+#: lib/flirtual/user/email.ex:47
+#: lib/flirtual/user/email.ex:60
 #, elixir-autogen, elixir-format
 msgid "confirm_email.subject"
 msgstr ""
 
-#: lib/flirtual/user/email.ex:89
+#: lib/flirtual/user/email.ex:99
 #, elixir-autogen, elixir-format
 msgid "reset_password.body_html"
 msgstr ""
 
-#: lib/flirtual/user/email.ex:87
+#: lib/flirtual/user/email.ex:97
 #, elixir-autogen, elixir-format
 msgid "reset_password.body_text"
 msgstr ""
 
-#: lib/flirtual/user/email.ex:82
-#: lib/flirtual/user/email.ex:95
+#: lib/flirtual/user/email.ex:92
+#: lib/flirtual/user/email.ex:105
 #, elixir-autogen, elixir-format
 msgid "reset_password.subject"
 msgstr ""
 
-#: lib/flirtual/user/email.ex:18
+#: lib/flirtual/user/email.ex:19
 #, elixir-autogen, elixir-format
 msgid "suspended.body_html"
 msgstr ""
 
-#: lib/flirtual/user/email.ex:17
+#: lib/flirtual/user/email.ex:18
 #, elixir-autogen, elixir-format
 msgid "suspended.body_text"
 msgstr ""
 
-#: lib/flirtual/user/email.ex:54
-#: lib/flirtual/user/email.ex:99
-#: lib/flirtual/user/email.ex:328
+#: lib/flirtual/user/email.ex:64
+#: lib/flirtual/user/email.ex:109
+#: lib/flirtual/user/email.ex:290
 #, elixir-autogen, elixir-format
 msgid "continue"
 msgstr ""
 
-#: lib/flirtual/user/email.ex:172
+#: lib/flirtual/user/email.ex:372
 #, elixir-autogen, elixir-format
 msgid "email_changed.body_html"
 msgstr ""
 
-#: lib/flirtual/user/email.ex:171
+#: lib/flirtual/user/email.ex:371
 #, elixir-autogen, elixir-format
 msgid "email_changed.body_text"
 msgstr ""
 
-#: lib/flirtual/user/email.ex:170
+#: lib/flirtual/user/email.ex:370
 #, elixir-autogen, elixir-format
 msgid "email_changed.subject"
 msgstr ""
 
-#: lib/flirtual/user/email.ex:152
+#: lib/flirtual/user/email.ex:352
 #, elixir-autogen, elixir-format
 msgid "password_changed.body_html"
 msgstr ""
 
-#: lib/flirtual/user/email.ex:150
+#: lib/flirtual/user/email.ex:350
 #, elixir-autogen, elixir-format
 msgid "password_changed.body_text"
 msgstr ""
 
-#: lib/flirtual/user/email.ex:148
+#: lib/flirtual/user/email.ex:348
 #, elixir-autogen, elixir-format
 msgid "password_changed.subject"
 msgstr ""
 
-#: lib/flirtual/user/email.ex:223
-#: lib/flirtual/user/email.ex:235
+#: lib/flirtual/user/email.ex:187
+#: lib/flirtual/user/email.ex:199
 #, elixir-autogen, elixir-format
 msgid "message"
 msgstr ""
 
-#: lib/flirtual/user/email.ex:209
+#: lib/flirtual/user/email.ex:173
 #, elixir-autogen, elixir-format
 msgid "new_match.looking_for_date_ideas"
 msgstr ""
 
-#: lib/flirtual/user/email.ex:218
+#: lib/flirtual/user/email.ex:182
 #, elixir-autogen, elixir-format
 msgid "new_match.looking_for_date_ideas_html"
 msgstr ""
 
-#: lib/flirtual/user/email.ex:231
+#: lib/flirtual/user/email.ex:195
 #, elixir-autogen, elixir-format
 msgid "send_them_a_message"
 msgstr ""
@@ -149,179 +149,184 @@ msgstr ""
 msgid "daily_profiles_ready_message"
 msgstr ""
 
-#: lib/flirtual/user/email.ex:207
-#: lib/flirtual/user/email.ex:216
+#: lib/flirtual/user/email.ex:171
+#: lib/flirtual/user/email.ex:180
 #: lib/flirtual/user/push.ex:48
 #, elixir-autogen, elixir-format
 msgid "homied_you"
 msgstr ""
 
-#: lib/flirtual/user/email.ex:200
+#: lib/flirtual/user/email.ex:164
 #: lib/flirtual/user/push.ex:42
 #, elixir-autogen, elixir-format
 msgid "its_a_match"
 msgstr ""
 
-#: lib/flirtual/user/email.ex:201
+#: lib/flirtual/user/email.ex:165
 #: lib/flirtual/user/push.ex:43
 #, elixir-autogen, elixir-format
 msgid "its_a_match_homie"
 msgstr ""
 
-#: lib/flirtual/user/email.ex:206
-#: lib/flirtual/user/email.ex:215
+#: lib/flirtual/user/email.ex:170
+#: lib/flirtual/user/email.ex:179
 #: lib/flirtual/user/push.ex:47
 #, elixir-autogen, elixir-format
 msgid "liked_you"
 msgstr ""
 
-#: lib/flirtual/user/email.ex:294
-#: lib/flirtual/user/push.ex:70
+#: lib/flirtual/user/email.ex:256
+#: lib/flirtual/user/push.ex:68
 #, elixir-autogen, elixir-format
 msgid "someone_liked_you"
 msgid_plural "x_people_liked_you"
 msgstr[0] ""
 msgstr[1] ""
 
-#: lib/flirtual/user/email.ex:303
-#: lib/flirtual/user/push.ex:78
+#: lib/flirtual/user/email.ex:265
+#: lib/flirtual/user/push.ex:76
 #, elixir-autogen, elixir-format
 msgid "browse_profiles_to_see_if_its_a_match"
 msgstr ""
 
-#: lib/flirtual/user/push.ex:76
+#: lib/flirtual/user/push.ex:74
 #, elixir-autogen, elixir-format
 msgid "see_who_likes_you_and_match"
 msgstr ""
 
-#: lib/flirtual/user/email.ex:324
+#: lib/flirtual/user/email.ex:286
 #, elixir-autogen, elixir-format
 msgid "browse_profiles"
 msgstr ""
 
-#: lib/flirtual/user/email.ex:313
+#: lib/flirtual/user/email.ex:275
 #, elixir-autogen, elixir-format
 msgid "browse_profiles_to_see_if_its_a_match_html"
 msgstr ""
 
-#: lib/flirtual/user/email.ex:306
+#: lib/flirtual/user/email.ex:268
 #, elixir-autogen, elixir-format
 msgid "or_upgrade_to_premium"
 msgstr ""
 
-#: lib/flirtual/user/email.ex:302
-#: lib/flirtual/user/email.ex:312
-#: lib/flirtual/user/email.ex:323
+#: lib/flirtual/user/email.ex:264
+#: lib/flirtual/user/email.ex:274
+#: lib/flirtual/user/email.ex:285
 #, elixir-autogen, elixir-format
 msgid "see_who_likes_you"
 msgstr ""
 
-#: lib/flirtual/user/email.ex:299
-#: lib/flirtual/user/email.ex:309
+#: lib/flirtual/user/email.ex:261
+#: lib/flirtual/user/email.ex:271
 #, elixir-autogen, elixir-format
 msgid "this_week_1_person_liked_you"
 msgid_plural "this_week_x_people_liked_you"
 msgstr[0] ""
 msgstr[1] ""
 
-#: lib/flirtual/user/email.ex:126
+#: lib/flirtual/user/email.ex:136
 #, elixir-autogen, elixir-format
 msgid "verification_code.body_html"
 msgstr ""
 
-#: lib/flirtual/user/email.ex:125
+#: lib/flirtual/user/email.ex:135
 #, elixir-autogen, elixir-format
 msgid "verification_code.body_text"
 msgstr ""
 
-#: lib/flirtual/user/email.ex:124
+#: lib/flirtual/user/email.ex:134
 #, elixir-autogen, elixir-format
 msgid "verification_code.subject"
 msgstr ""
 
-#: lib/flirtual/user/email.ex:375
+#: lib/flirtual/user/email.ex:383
 #, elixir-autogen, elixir-format
 msgid "deletion_reminder_670.body_html"
 msgstr ""
 
-#: lib/flirtual/user/email.ex:374
+#: lib/flirtual/user/email.ex:382
 #, elixir-autogen, elixir-format
 msgid "deletion_reminder_670.body_text"
 msgstr ""
 
-#: lib/flirtual/user/push.ex:107
+#: lib/flirtual/user/push.ex:105
 #, elixir-autogen, elixir-format
 msgid "deletion_reminder_670.push_message"
 msgstr ""
 
-#: lib/flirtual/user/push.ex:106
+#: lib/flirtual/user/push.ex:104
 #, elixir-autogen, elixir-format
 msgid "deletion_reminder_670.push_title"
 msgstr ""
 
-#: lib/flirtual/user/email.ex:373
+#: lib/flirtual/user/email.ex:381
 #, elixir-autogen, elixir-format
 msgid "deletion_reminder_670.subject"
 msgstr ""
 
-#: lib/flirtual/user/email.ex:383
+#: lib/flirtual/user/email.ex:391
 #, elixir-autogen, elixir-format
 msgid "deletion_reminder_700.body_html"
 msgstr ""
 
-#: lib/flirtual/user/email.ex:382
+#: lib/flirtual/user/email.ex:390
 #, elixir-autogen, elixir-format
 msgid "deletion_reminder_700.body_text"
 msgstr ""
 
-#: lib/flirtual/user/push.ex:114
+#: lib/flirtual/user/push.ex:112
 #, elixir-autogen, elixir-format
 msgid "deletion_reminder_700.push_message"
 msgstr ""
 
-#: lib/flirtual/user/push.ex:113
+#: lib/flirtual/user/push.ex:111
 #, elixir-autogen, elixir-format
 msgid "deletion_reminder_700.push_title"
 msgstr ""
 
-#: lib/flirtual/user/email.ex:381
+#: lib/flirtual/user/email.ex:389
 #, elixir-autogen, elixir-format
 msgid "deletion_reminder_700.subject"
 msgstr ""
 
-#: lib/flirtual/user/email.ex:391
+#: lib/flirtual/user/email.ex:399
 #, elixir-autogen, elixir-format
 msgid "deletion_reminder_723.body_html"
 msgstr ""
 
-#: lib/flirtual/user/email.ex:390
+#: lib/flirtual/user/email.ex:398
 #, elixir-autogen, elixir-format
 msgid "deletion_reminder_723.body_text"
 msgstr ""
 
-#: lib/flirtual/user/push.ex:121
+#: lib/flirtual/user/push.ex:119
 #, elixir-autogen, elixir-format
 msgid "deletion_reminder_723.push_message"
 msgstr ""
 
-#: lib/flirtual/user/push.ex:120
+#: lib/flirtual/user/push.ex:118
 #, elixir-autogen, elixir-format
 msgid "deletion_reminder_723.push_title"
 msgstr ""
 
-#: lib/flirtual/user/email.ex:389
+#: lib/flirtual/user/email.ex:397
 #, elixir-autogen, elixir-format
 msgid "deletion_reminder_723.subject"
 msgstr ""
 
-#: lib/flirtual/mailer.ex:45
-#: lib/flirtual/mailer.ex:294
+#: lib/flirtual/mailer.ex:41
+#: lib/flirtual/mailer.ex:290
 #, elixir-autogen, elixir-format
 msgid "bluesky"
 msgstr ""
 
-#: lib/flirtual/mailer.ex:46
-#: lib/flirtual/mailer.ex:295
+#: lib/flirtual/mailer.ex:42
+#: lib/flirtual/mailer.ex:291
 #, elixir-autogen, elixir-format
 msgid "instagram"
+msgstr ""
+
+#: lib/flirtual/user/email.ex:31
+#, elixir-autogen, elixir-format
+msgid "suspended.reason.underage"
 msgstr ""

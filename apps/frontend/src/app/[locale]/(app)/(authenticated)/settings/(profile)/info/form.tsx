@@ -93,7 +93,7 @@ export const InfoForm: FC = () => {
 					})
 				]).catch((reason) => {
 					if (isWretchError(reason) && reason.json?.error === "banned_underage") {
-						window.location.href = urls.underage;
+						window.location.href = urls.verifyAge;
 						return;
 					}
 					throw reason;

@@ -20,7 +20,10 @@ mix:
   - apps/api/mix.lock
 
 frontend:
-  - apps/frontend/**
+  - apps/frontend/src/**
+  - apps/frontend/public/**
+  - apps/frontend/messages/**
+  - apps/frontend/*.{ts,js,mjs,cjs,json,yaml,yml}
   - .github/workflows/frontend.yaml
   - *workspace
   - *self
