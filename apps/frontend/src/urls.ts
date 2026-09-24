@@ -8,7 +8,7 @@ import type { User } from "./api/user";
 import type { Profile } from "./api/user/profile";
 import type { ProfileImage } from "./api/user/profile/images";
 import type { DiscoverGroup } from "./app/[locale]/(app)/(authenticated)/(onboarded)/discover/page";
-import { apiUrl, appBundleId, appStoreId, bucketContentOrigin, bucketUploadsOrigin, shortOrigin, siteOrigin } from "./const";
+import { apiUrl, appBundleId, appStoreId, bucketContentOrigin, bucketUploadsOrigin, rcProjectId, shortOrigin, siteOrigin } from "./const";
 import { defaultLocale } from "./i18n";
 import type { Locale } from "./i18n";
 import { escapeVRChat } from "./vrchat";
@@ -244,7 +244,9 @@ export const urls = {
 		search: "/search",
 		queue: (options: { tab?: ModerationQueueTab; userId?: string; targetId?: string; eventId?: string } = {}) =>
 			url("/mod", options),
-		checkDomain: (domain: string) => `https://verifymail.io/domain/${encodeURIComponent(domain)}`
+		checkDomain: (domain: string) => `https://verifymail.io/domain/${encodeURIComponent(domain)}`,
+		revenuecatCustomer: (revenuecatId?: string) =>
+			`https://app.revenuecat.com/projects/${rcProjectId}/customers/${encodeURIComponent(revenuecatId ?? "")}`
 	},
 
 	admin: {
