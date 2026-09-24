@@ -149,7 +149,7 @@ defmodule Flirtual.Flag do
       |> Repo.all()
       |> Enum.map(& &1.flag)
 
-    if flags != [] do
+    if flags != [] and not ModerationEvent.repeated?(user_id, :flagged_keyword, %{flags: flags}) do
       flags_with_context = Enum.map(flags, fn flag -> extract_flag_context(text, flag) end)
 
       ModerationEvent.create(:flagged_keyword, %{
@@ -388,31 +388,37 @@ defmodule Flirtual.Flag do
 
   def check_email_flags(user_id, email) do
     user = Users.get(user_id)
+    domain_flags = [email |> String.split("@") |> List.last()]
+    local_flags = [email |> String.split("@") |> List.first()]
 
     keywords =
       "(?:alumno|escola|escolas|escuela|escuelas|estudante|estudantes|estudiante|estudiantes|k12|school|schools|scoala|scuola|scuole|skola|skolas|stu|student|students)"
 
     if Regex.match?(~r/@#{keywords}|@.*\.#{keywords}|@.*#{keywords}\./i, email) and
-         not String.ends_with?(email, ".edu") do
-      flags = [email |> String.split("@") |> List.last()]
-
+         not String.ends_with?(email, ".edu") and
+         not ModerationEvent.repeated?(user_id, :flagged_keyword, %{
+           flags: domain_flags,
+           source: "email_domain"
+         }) do
       ModerationEvent.create(:flagged_keyword, %{
         user: user,
-        details: %{flags: flags, source: "email_domain"}
+        details: %{flags: domain_flags, source: "email_domain"}
       })
 
-      Discord.deliver_webhook(:flagged_keyword, user: user, flags: flags)
+      Discord.deliver_webhook(:flagged_keyword, user: user, flags: domain_flags)
     end
 
-    if Regex.match?(~r/^(?!.*\+flirtual).*flirtual.*@/i, email) do
-      flags = [email |> String.split("@") |> List.first()]
-
+    if Regex.match?(~r/^(?!.*\+flirtual).*flirtual.*@/i, email) and
+         not ModerationEvent.repeated?(user_id, :flagged_keyword, %{
+           flags: local_flags,
+           source: "email_local"
+         }) do
       ModerationEvent.create(:flagged_keyword, %{
         user: user,
-        details: %{flags: flags, source: "email_local"}
+        details: %{flags: local_flags, source: "email_local"}
       })
 
-      Discord.deliver_webhook(:flagged_keyword, user: user, flags: flags)
+      Discord.deliver_webhook(:flagged_keyword, user: user, flags: local_flags)
     end
 
     :ok
@@ -430,7 +436,8 @@ defmodule Flirtual.Flag do
       |> where([user], ilike(user.email, ^"%@#{domain}"))
       |> Repo.exists?()
 
-    if not existing_domain? do
+    if not existing_domain? and
+         not ModerationEvent.repeated?(user_id, :flagged_domain, %{domain: domain}) do
       user = Users.get(user_id)
 
       ModerationEvent.create(:flagged_domain, %{user: user, details: %{domain: domain}})

@@ -74,7 +74,7 @@ defmodule Flirtual.ModerationEvent do
     "FaceTime"
   ]
 
-  @reviewable_types [
+  @flag_types [
     :flagged_keyword,
     :flagged_bio,
     :flagged_domain,
@@ -82,9 +82,10 @@ defmodule Flirtual.ModerationEvent do
     :flagged_image,
     :flagged_duplicate_image,
     :flagged_registered_underage,
-    :flagged_honeypot,
-    :warn_acknowledged
+    :flagged_honeypot
   ]
+
+  @reviewable_types [:warn_acknowledged | @flag_types]
 
   def types, do: @types
 
@@ -139,6 +140,43 @@ defmodule Flirtual.ModerationEvent do
         :error -> {key, value}
       end
     end)
+  end
+
+  # An identical flag since the user last acknowledged a warning. Lists compare as sets.
+  def repeated?(user_id, type, identity) when is_binary(user_id) and type in @flag_types do
+    identity = identity |> Jason.encode!() |> Jason.decode!()
+
+    acknowledged_at =
+      ModerationEvent
+      |> where(user_id: ^user_id, type: :warn_acknowledged)
+      |> select([event], max(event.created_at))
+      |> Repo.one()
+
+    ModerationEvent
+    |> where(user_id: ^user_id, type: ^type)
+    |> then(
+      &if(acknowledged_at,
+        do: where(&1, [event], event.created_at > ^acknowledged_at),
+        else: &1
+      )
+    )
+    |> where([event], fragment("? @> ?", event.details, type(^identity, :map)))
+    |> then(
+      &Enum.reduce(identity, &1, fn {key, value}, query ->
+        where(
+          query,
+          [event],
+          fragment(
+            "? @> jsonb_build_object(?::text, ? -> ?::text)",
+            type(^%{key => value}, :map),
+            ^key,
+            event.details,
+            ^key
+          )
+        )
+      end)
+    )
+    |> Repo.exists?()
   end
 
   def get(id) when is_binary(id) do

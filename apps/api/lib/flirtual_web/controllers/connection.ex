@@ -693,22 +693,27 @@ defmodule FlirtualWeb.ConnectionController do
         respond_error(conn, :connection_in_use, type, connection, options, options[:next])
 
       true ->
-        ModerationEvent.create(:flagged_duplicate, %{
-          user: user,
-          details: %{
-            type: "connection",
-            provider: to_string(type),
-            text: "#{profile.display_name || profile.uid} (#{profile.uid})",
-            duplicate_user_ids: [connection.user.id]
-          }
-        })
+        details = %{
+          type: "connection",
+          provider: to_string(type),
+          text: "#{profile.display_name || profile.uid} (#{profile.uid})",
+          duplicate_user_ids: [connection.user.id]
+        }
 
-        Discord.deliver_webhook(:flagged_duplicate,
-          user: user,
-          duplicates: [User.url(connection.user) |> URI.to_string()],
-          type: "#{Connection.provider_name!(type)} (connection updated)",
-          text: "#{profile.display_name || profile.uid} (#{profile.uid})"
-        )
+        if not ModerationEvent.repeated?(
+             user.id,
+             :flagged_duplicate,
+             Map.take(details, [:type, :provider, :text])
+           ) do
+          ModerationEvent.create(:flagged_duplicate, %{user: user, details: details})
+
+          Discord.deliver_webhook(:flagged_duplicate,
+            user: user,
+            duplicates: [User.url(connection.user) |> URI.to_string()],
+            type: "#{Connection.provider_name!(type)} (connection updated)",
+            text: details.text
+          )
+        end
 
         connection
         |> change(%{user_id: user.id})

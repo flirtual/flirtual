@@ -114,7 +114,10 @@ defmodule Flirtual.Users do
                 skip_invalid_leap_day(born_at.year + 18, born_at.month, born_at.day)
                 |> DateTime.new!(~T[00:00:00], "Etc/UTC")
 
-              if DateTime.after?(turns_18_utc, user.created_at) do
+              if DateTime.after?(turns_18_utc, user.created_at) and
+                   not ModerationEvent.repeated?(user.id, :flagged_registered_underage, %{
+                     born_at: born_at
+                   }) do
                 ModerationEvent.create(:flagged_registered_underage, %{
                   user: user,
                   details: %{

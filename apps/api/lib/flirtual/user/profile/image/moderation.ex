@@ -159,7 +159,9 @@ defmodule Flirtual.User.Profile.Image.Moderation do
     })
 
     if not safe do
-      with %User{} = user <- User.get(image.profile_id) do
+      with %User{} = user <- User.get(image.profile_id),
+           false <-
+             ModerationEvent.repeated?(user.id, :flagged_image, %{image_id: image.id}) do
         ModerationEvent.create(:flagged_image, %{
           user: user,
           details: %{
@@ -206,11 +208,14 @@ defmodule Flirtual.User.Profile.Image.Moderation do
       |> Enum.reject(&(&1.profile_id == profile_id))
       |> Enum.reject(&(is_nil(&1.profile_id) and variant_distance(query_hashes, &1) > 0))
 
-    case matches do
-      [] ->
+    cond do
+      matches == [] ->
         :ok
 
-      matches ->
+      ModerationEvent.repeated?(profile_id, :flagged_duplicate_image, %{image_id: image.id}) ->
+        :ok
+
+      true ->
         closest = Enum.sort_by(matches, &variant_distance(query_hashes, &1))
         distance = variant_distance(query_hashes, List.first(closest))
 
