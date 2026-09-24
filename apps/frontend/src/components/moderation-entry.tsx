@@ -531,13 +531,15 @@ const EntryImages: FC<{ images: Array<EntryImage>; small?: boolean }> = ({ image
 									src={current.full}
 								/>
 							</div>
-							{current.image && session?.user?.tags?.includes("moderator") && (
-								<ImageToolbar
-									image={current.image}
-									userId={current.userId}
-									onDeleted={() => invalidate({ queryKey: ["mod-queue"] })}
-								/>
-							)}
+							{session?.user?.tags?.includes("moderator") && (current.image
+								? (
+										<ImageToolbar
+											image={current.image}
+											userId={current.userId}
+											onDeleted={() => invalidate({ queryKey: ["mod-queue"] })}
+										/>
+									)
+								: <ImageToolbar url={current.full} />)}
 						</>
 					)}
 				</DialogContent>
