@@ -369,6 +369,10 @@ defmodule Flirtual.Attribute do
 
   def underage_ban_reason_id, do: @underage_ban_reason_id
 
+  @duplicate_ban_reason_id "5H9nMhQacZBD9Zomu7Tbt9"
+
+  def duplicate_ban_reason_id, do: @duplicate_ban_reason_id
+
   def ban_reasons(),
     do: %{
       "tUaxdXYAcyeb3G4Qc7gNLh" => "Spam",

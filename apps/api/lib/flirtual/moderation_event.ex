@@ -510,6 +510,62 @@ defmodule Flirtual.ModerationEvent do
     |> Repo.update_all(set: [acknowledged_at: now(), updated_at: now()])
   end
 
+  def review_warned(user_id, reviewer) when is_binary(user_id),
+    do: where_user_types(user_id, [:flagged_keyword, :flagged_bio]) |> review_all(reviewer)
+
+  # Any ban settles the user's content flags; one for being underage or a duplicate
+  # settles those flags too; or a duplicate ban on either account.
+  def review_banned(user_id, reason_id, reviewer) when is_binary(user_id) do
+    types =
+      [:flagged_keyword, :flagged_bio, :flagged_image, :flagged_honeypot, :warn_acknowledged] ++
+        if(reason_id == Attribute.underage_ban_reason_id(),
+          do: [:flagged_registered_underage],
+          else: []
+        )
+
+    {reviewed, _} = where_user_types(user_id, types) |> review_all(reviewer)
+
+    {duplicates, _} =
+      if reason_id == Attribute.duplicate_ban_reason_id(),
+        do:
+          ModerationEvent
+          |> where([event], event.type in [:flagged_duplicate, :flagged_duplicate_image])
+          |> where(
+            [event],
+            event.user_id == ^user_id or
+              fragment("jsonb_exists(?->'duplicate_user_ids', ?)", event.details, ^user_id)
+          )
+          |> review_all(reviewer),
+        else: {0, nil}
+
+    {reviewed + duplicates, nil}
+  end
+
+  # Backfilled events hold the image's id as a plain UUID.
+  def review_removed_image(image_id, reviewer) when is_binary(image_id) do
+    {:ok, uuid} = Ecto.ShortUUID.dump(image_id)
+
+    ModerationEvent
+    |> where([event], event.type == :flagged_image)
+    |> where(
+      [event],
+      fragment("?->>'image_id'", event.details) in ^[image_id, Ecto.UUID.load!(uuid)]
+    )
+    |> review_all(reviewer)
+  end
+
+  defp review_all(query, reviewer) do
+    query
+    |> where([event], is_nil(event.reviewed_at))
+    |> Repo.update_all(
+      set: [
+        reviewed_at: now(),
+        reviewed_by: if(match?(%User{}, reviewer), do: reviewer.id, else: nil),
+        updated_at: now()
+      ]
+    )
+  end
+
   def where_active(query), do: where(query, [event], is_nil(event.revoked_at))
 
   defp where_user_types(user_id, types) do
