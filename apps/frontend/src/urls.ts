@@ -69,6 +69,8 @@ export function urlEqual(a: URL, b: URL, strict: boolean = true) {
 	);
 }
 
+export type ModerationQueueTab = "acks" | "admin" | "all" | "dupes" | "flags" | "logs" | "pics" | "reports";
+
 function url(
 	pathname: string,
 	query: Record<string, number | string | undefined> = {}
@@ -240,8 +242,9 @@ export const urls = {
 	moderation: {
 		flags: "/flags",
 		search: "/search",
-		reports: (options: { userId?: string; targetId?: string } = {}) =>
-			url("/reports", options)
+		queue: (options: { tab?: ModerationQueueTab; userId?: string; targetId?: string; eventId?: string } = {}) =>
+			url("/mod", options),
+		checkDomain: (domain: string) => `https://verifymail.io/domain/${encodeURIComponent(domain)}`
 	},
 
 	admin: {

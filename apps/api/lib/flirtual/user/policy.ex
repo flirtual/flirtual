@@ -69,7 +69,9 @@ defmodule Flirtual.User.Policy do
     :unindef_shadowban,
     :warn,
     :note,
-    :search
+    :search,
+    :read_moderation_events,
+    :review_moderation_events
   ]
 
   def authorize(

@@ -106,6 +106,21 @@ defmodule Flirtual.Utilities do
       else: String.slice(text, 0, max_length - String.length(ellipsis)) <> ellipsis
   end
 
+  # Translate our search syntax into an ILIKE pattern. SQL symbols (`%`, `_`,
+  # `\`) are escaped first so they only match literally, then `*` = any text and
+  # `?` = any single character.
+  def to_ilike_pattern(term) do
+    escaped =
+      term
+      |> String.replace("\\", "\\\\")
+      |> String.replace("%", "\\%")
+      |> String.replace("_", "\\_")
+      |> String.replace("*", "%")
+      |> String.replace("?", "_")
+
+    "%" <> escaped <> "%"
+  end
+
   def truncate_join(items, max_length, separator, ellipsis \\ "…") do
     joined = Enum.join(items, separator)
 

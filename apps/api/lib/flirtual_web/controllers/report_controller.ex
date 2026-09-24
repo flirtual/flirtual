@@ -10,7 +10,7 @@ defmodule FlirtualWeb.ReportController do
   action_fallback(FlirtualWeb.FallbackController)
 
   def list(conn, params) do
-    with {:ok, reports} <- Report.list(params) do
+    with {:ok, reports} <- Report.list(split_list_params(params, ["reason_ids"])) do
       conn |> json_with_etag(reports |> Enum.filter(&Policy.can?(conn, :read, &1)))
     end
   end

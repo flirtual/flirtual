@@ -101,12 +101,21 @@ const SingleImage: React.FC<SingleImageProps> = (props) => {
 	);
 };
 
-const ImageToolbar: React.FC<{ image: ProfileImage; user: User }> = ({ image, user }) => {
+export const ImageToolbar: React.FC<{
+	image: ProfileImage;
+	userId?: string;
+	onDeleted?: () => Promise<unknown>;
+}> = ({ image, userId, onDeleted }) => {
 	const { t } = useTranslation();
 	const [locale] = useLocale();
 	const dialogs = useDialog();
 
 	const toasts = useToast();
+
+	const deleted = async () => {
+		if (userId) await invalidate({ queryKey: userKey(userId) });
+		await onDeleted?.();
+	};
 
 	const formattedUploadTime = new Intl.RelativeTimeFormat(locale).format(
 		Math.round((new Date(image.createdAt).getTime() - Date.now()) / (1000 * 60 * 60 * 24)),
@@ -209,7 +218,7 @@ const ImageToolbar: React.FC<{ image: ProfileImage; user: User }> = ({ image, us
 												.then(() => toasts.add(t("image_deleted")))
 												.catch(toasts.addError);
 
-											await invalidate({ queryKey: userKey(user.id) });
+											await deleted();
 										}}
 									>
 										{t("delete_image")}
@@ -227,7 +236,7 @@ const ImageToolbar: React.FC<{ image: ProfileImage; user: User }> = ({ image, us
 										.then(() => toasts.add(t("image_deleted")))
 										.catch(toasts.addError);
 
-									await invalidate({ queryKey: userKey(user.id) });
+									await deleted();
 								}}
 							>
 								<Trash2 className="size-5" />
@@ -417,7 +426,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 									)}
 								</div>
 								{session?.user?.tags?.includes("moderator") && (
-									<ImageToolbar image={currentImage} user={user} />
+									<ImageToolbar image={currentImage} userId={user.id} />
 								)}
 							</DialogContent>
 						</Dialog>

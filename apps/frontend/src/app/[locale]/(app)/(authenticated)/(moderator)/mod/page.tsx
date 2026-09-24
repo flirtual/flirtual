@@ -2,7 +2,7 @@ import { defaultLocale, i18n } from "~/i18n";
 import { metaMerge, rootMeta } from "~/meta";
 
 import type { Route } from "./+types/page";
-import { ReportView } from "./report-view";
+import { ModerationQueue } from "./queue";
 
 export const meta: Route.MetaFunction = (options) => {
 	const { params: { locale } } = options;
@@ -12,12 +12,12 @@ export const meta: Route.MetaFunction = (options) => {
 		...rootMeta(options),
 		{
 			title: t("page_title", {
-				name: "Reports"
+				name: "Mod Queue"
 			})
 		}
 	]);
 };
 
-export default function ReportPage() {
-	return <ReportView />;
+export default function ModuleQueuePage() {
+	return <ModerationQueue />;
 }
