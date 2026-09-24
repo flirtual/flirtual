@@ -315,6 +315,8 @@ defmodule FlirtualWeb.ImageController do
       details: %{image_id: image.id, image_url: image_url}
     })
 
+    ModerationEvent.review_removed_image(image.id, moderator)
+
     Discord.deliver_webhook(:removed_image,
       user: image_owner,
       moderator: moderator,
@@ -335,6 +337,7 @@ defmodule FlirtualWeb.ImageController do
              moderator: user,
              details: %{image_id: image.id, key: key}
            }),
+         {_, _} <- ModerationEvent.review_removed_image(image.id, user),
          :ok <-
            Discord.deliver_webhook(:illegal_image,
              user: image_owner,

@@ -899,6 +899,12 @@ defmodule Flirtual.User do
                automatic: automatic?,
                details: automatic_details
              }),
+           {_, _} <-
+             ModerationEvent.review_banned(
+               user.id,
+               reason.id,
+               if(automatic?, do: nil, else: moderator)
+             ),
            {:ok, _} <- Report.list(target_id: user.id) |> Report.clear_all(moderator, true),
            {:ok, user} <- User.update_status(user),
            {:ok, _} <- ObanWorkers.update_user(user.id, [:search_index, :listmonk, :talkjs]),
@@ -1091,6 +1097,7 @@ defmodule Flirtual.User do
                message: message,
                details: %{shadowbanned: !!shadowban}
              }),
+           {_, _} <- ModerationEvent.review_warned(user.id, moderator),
            {:ok, user} <- User.update_status(user),
            {:ok, _} <-
              ObanWorkers.update_user(if(shadowban, do: user.id, else: []), [
