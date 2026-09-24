@@ -546,6 +546,12 @@ defmodule Flirtual.Users do
              :ok <- RevenueCat.cancel_subscriptions(user),
              :ok <- RevenueCat.delete_customer(user),
              :ok <- enqueue_revocations(user),
+             {:ok, _} <-
+               ModerationEvent.create(:exit_survey, %{
+                 reason: attrs.reason,
+                 message: attrs.comment,
+                 details: exit_survey_details(user)
+               }),
              :ok <-
                Discord.deliver_webhook(:exit_survey,
                  user: user,
@@ -560,6 +566,19 @@ defmodule Flirtual.Users do
       end,
       timeout: @delete_timeout
     )
+  end
+
+  defp exit_survey_details(%User{} = user) do
+    if user.preferences.privacy.analytics do
+      %{
+        age: get_years_since(user.born_at),
+        gender_ids: user.profile.attributes |> filter_by(:type, "gender") |> Enum.map(& &1.id),
+        looking_for_ids:
+          user.profile.preferences.attributes |> filter_by(:type, "gender") |> Enum.map(& &1.id)
+      }
+    else
+      %{}
+    end
   end
 
   def admin_delete(%User{} = user) do
