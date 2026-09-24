@@ -9,6 +9,7 @@ defmodule Flirtual.Discord do
   alias Flirtual.Connection
   alias Flirtual.ObanWorkers
   alias Flirtual.Report
+  alias Flirtual.RevenueCat
   alias Flirtual.Entitlement
   alias Flirtual.User
   alias Flirtual.User.Profile.Image
@@ -393,8 +394,8 @@ defmodule Flirtual.Discord do
       when is_binary(store_id) ->
         "[#{chargebee_label}](https://flirtual.chargebee.com/d/subscriptions/#{store_id})"
 
-      %Entitlement{store: :play_store} ->
-        "[#{play_label}](https://app.revenuecat.com/customers/cf0649d1/#{user.revenuecat_id})"
+      %Entitlement{store: :play_store} when is_binary(user.revenuecat_id) ->
+        "[#{play_label}](#{RevenueCat.customer_url(user.revenuecat_id)})"
 
       _ ->
         fallback
@@ -850,7 +851,7 @@ defmodule Flirtual.Discord do
               %{
                 name: "Report",
                 value:
-                  "[View report](#{Application.fetch_env!(:flirtual, :frontend_origin) |> URI.merge("/reports?userId=#{report.user_id}&targetId=#{report.target_id}")})",
+                  "[View report](#{Application.fetch_env!(:flirtual, :frontend_origin) |> URI.merge("/mod?tab=reports&userId=#{report.user_id}&targetId=#{report.target_id}")})",
                 inline: true
               },
               if(was_shadow_banned,
@@ -1135,7 +1136,7 @@ defmodule Flirtual.Discord do
     end
 
     format_rc = fn
-      id when is_binary(id) -> "[#{id}](https://app.revenuecat.com/customers/cf0649d1/#{id})"
+      id when is_binary(id) -> "[#{id}](#{RevenueCat.customer_url(id)})"
       _ -> "Not found"
     end
 

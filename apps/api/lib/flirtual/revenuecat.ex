@@ -8,6 +8,11 @@ defmodule Flirtual.RevenueCat do
     Application.get_env(:flirtual, FlirtualWeb.RevenueCatController)[key]
   end
 
+  def customer_url(revenuecat_id),
+    do:
+      "https://app.revenuecat.com/projects/#{config(:project_id)}/customers/" <>
+        URI.encode(revenuecat_id, &URI.char_unreserved?/1)
+
   def new_url(pathname, query) do
     URI.parse("https://api.revenuecat.com/v1/" <> pathname)
     |> then(&if(is_nil(query), do: &1, else: Map.put(&1, :query, URI.encode_query(query))))

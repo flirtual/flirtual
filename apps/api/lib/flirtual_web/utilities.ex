@@ -14,6 +14,19 @@ defmodule FlirtualWeb.Utilities do
 
   def split_to_atom_list(_, _), do: []
 
+  # Query strings carry lists as comma-separated values.
+  def split_list_params(params, keys) do
+    Enum.reduce(keys, params, fn key, params ->
+      case params do
+        %{^key => value} when is_binary(value) ->
+          Map.put(params, key, String.split(value, ",", trim: true))
+
+        _ ->
+          params
+      end
+    end)
+  end
+
   defp cache_control_duration_to_seconds(duration) do
     duration
     |> Enum.reduce(0, fn

@@ -123,6 +123,33 @@ defmodule Flirtual.User.Profile.Image do
     url(not_found(), variant)
   end
 
+  @max_fetch_size 10_000_000
+
+  def fetch(url) when is_binary(url) do
+    uri = URI.parse(url)
+
+    trusted? =
+      [:content_origin, :uploads_origin, :retained_origin]
+      |> Enum.map(&Application.get_env(:flirtual, &1))
+      |> Enum.any?(&(is_struct(&1, URI) and &1.scheme == uri.scheme and &1.host == uri.host))
+
+    with true <- trusted?,
+         {:ok, %Req.Response{status: 200, body: body}} when byte_size(body) <= @max_fetch_size <-
+           Req.request(
+             method: :get,
+             url: url,
+             decode_body: false,
+             redirect: false,
+             retry: false,
+             finch: Flirtual.Finch
+           ) do
+      {:ok, body}
+    else
+      false -> {:error, :forbidden_origin}
+      _ -> {:error, :not_found}
+    end
+  end
+
   defp local_file_url(path) do
     origin = Application.fetch_env!(:flirtual, :origin)
     "#{origin}/v1/images/files/#{path |> URI.encode()}"

@@ -8,7 +8,7 @@ import type { User } from "./api/user";
 import type { Profile } from "./api/user/profile";
 import type { ProfileImage } from "./api/user/profile/images";
 import type { DiscoverGroup } from "./app/[locale]/(app)/(authenticated)/(onboarded)/discover/page";
-import { apiUrl, appBundleId, appStoreId, bucketContentOrigin, bucketUploadsOrigin, shortOrigin, siteOrigin } from "./const";
+import { apiUrl, appBundleId, appStoreId, bucketContentOrigin, bucketUploadsOrigin, rcProjectId, shortOrigin, siteOrigin } from "./const";
 import { defaultLocale } from "./i18n";
 import type { Locale } from "./i18n";
 import { escapeVRChat } from "./vrchat";
@@ -68,6 +68,8 @@ export function urlEqual(a: URL, b: URL, strict: boolean = true) {
 		&& (strict ? a.search === b.search : true)
 	);
 }
+
+export type ModerationQueueTab = "acks" | "admin" | "all" | "dupes" | "flags" | "logs" | "pics" | "reports";
 
 function url(
 	pathname: string,
@@ -240,8 +242,11 @@ export const urls = {
 	moderation: {
 		flags: "/flags",
 		search: "/search",
-		reports: (options: { userId?: string; targetId?: string } = {}) =>
-			url("/reports", options)
+		queue: (options: { tab?: ModerationQueueTab; userId?: string; targetId?: string; eventId?: string } = {}) =>
+			url("/mod", options),
+		checkDomain: (domain: string) => `https://verifymail.io/domain/${encodeURIComponent(domain)}`,
+		revenuecatCustomer: (revenuecatId?: string) =>
+			`https://app.revenuecat.com/projects/${rcProjectId}/customers/${encodeURIComponent(revenuecatId ?? "")}`
 	},
 
 	admin: {

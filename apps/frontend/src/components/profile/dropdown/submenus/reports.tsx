@@ -14,6 +14,7 @@ import {
 import { Link } from "~/components/link";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
+import { invalidate } from "~/query";
 import { urls } from "~/urls";
 
 export const ProfileDropdownReportsSubmenu: FC<
@@ -33,7 +34,7 @@ export const ProfileDropdownReportsSubmenu: FC<
 				<DropdownMenuItem asChild disabled={session?.user.id === user.id}>
 					<Link
 						className="gap-2"
-						href={urls.moderation.reports({ targetId: user.id })}
+						href={urls.moderation.queue({ tab: "reports", targetId: user.id })}
 					>
 						<Search className="size-5" />
 						Created against user
@@ -42,7 +43,7 @@ export const ProfileDropdownReportsSubmenu: FC<
 				<DropdownMenuItem asChild>
 					<Link
 						className="gap-2"
-						href={urls.moderation.reports({ userId: user.id })}
+						href={urls.moderation.queue({ tab: "reports", userId: user.id })}
 					>
 						<Search className="size-5" />
 						Created by user
@@ -61,6 +62,8 @@ export const ProfileDropdownReportsSubmenu: FC<
 							await Report.clearAll(user.id)
 								.then(({ count }) => toasts.add(t("cleared_count_reports", { count })))
 								.catch(toasts.addError);
+
+							await invalidate({ queryKey: ["reports"] });
 						}}
 					>
 						<ShieldCheck className="size-5" />

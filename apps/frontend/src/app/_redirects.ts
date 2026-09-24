@@ -112,6 +112,10 @@ export const redirects = [
 		destination: Bimi
 	},
 	{
+		source: "/reports",
+		destination: "/mod"
+	},
+	{
 		source: "/user/:slug",
 		destination: "/:slug"
 	}

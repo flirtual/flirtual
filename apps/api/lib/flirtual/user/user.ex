@@ -497,21 +497,6 @@ defmodule Flirtual.User do
 
   def get(_), do: nil
 
-  # Translate our search syntax into an ILIKE pattern. SQL symbols (`%`, `_`,
-  # `\`) are escaped first so they only match literally, then `*` = any text and
-  # `?` = any single character.
-  defp to_ilike_pattern(term) do
-    escaped =
-      term
-      |> String.replace("\\", "\\\\")
-      |> String.replace("%", "\\%")
-      |> String.replace("_", "\\_")
-      |> String.replace("*", "%")
-      |> String.replace("?", "_")
-
-    "%" <> escaped <> "%"
-  end
-
   # Match the raw characters literally, escaping SQL wildcards so `*`, `?` and
   # `,` match themselves.
   defp to_literal_pattern(value) do
@@ -755,7 +740,7 @@ defmodule Flirtual.User do
   end
 
   # Order determines priority of similarity.
-  @default_search_fields [
+  @identifier_fields [
     :id,
     {:profile, :display_name},
     :slug,
@@ -771,11 +756,19 @@ defmodule Flirtual.User do
     :stripe_id,
     :chargebee_id,
     :revenuecat_id,
-    :listmonk_id,
-    {:profile, :biography},
-    :moderator_message,
-    :moderator_note
+    :listmonk_id
   ]
+
+  @default_search_fields @identifier_fields ++
+                           [{:profile, :biography}, :moderator_message, :moderator_note]
+
+  # IDs of users with an identifier matching the search.
+  def identifier_query(value) do
+    from(user in User, as: :user)
+    |> join(:left, [user: user], profile in assoc(user, :profile), as: :profile)
+    |> where(^fields_condition(@identifier_fields, value, to_ilike_pattern(value)))
+    |> select([user: user], user.id)
+  end
 
   def search(attrs) do
     attrs =

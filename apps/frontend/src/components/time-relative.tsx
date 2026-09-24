@@ -22,7 +22,7 @@ function format(locale: Locale, date: Date, options: Intl.RelativeTimeFormatOpti
 	const divisor = unitIndex ? unitsInSec[unitIndex - 1] : 1;
 
 	const rtf = new Intl.RelativeTimeFormat(locale, { numeric: "auto", ...options });
-	return rtf.format(Math.floor(secondsDiff / divisor), unitStrings[unitIndex]);
+	return rtf.format(Math.trunc(secondsDiff / divisor), unitStrings[unitIndex]);
 }
 
 export const TimeRelative: FC<TimeRelativeProps> = (props) => {

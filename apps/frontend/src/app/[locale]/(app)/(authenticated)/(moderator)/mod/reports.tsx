@@ -4,8 +4,7 @@ import {
 	ChevronRight,
 	ExternalLink,
 	MessagesSquare,
-	ShieldCheck,
-	X
+	ShieldCheck
 } from "lucide-react";
 import type {
 	ComponentProps,
@@ -17,7 +16,6 @@ import {
 	useState
 } from "react";
 import { useTranslation } from "react-i18next";
-import { useSearchParams } from "react-router";
 import { entries, groupBy, prop, sortBy } from "remeda";
 import { twMerge } from "tailwind-merge";
 import { withSuspense } from "with-suspense";
@@ -29,9 +27,7 @@ import { DateTimeRelative } from "~/components/datetime-relative";
 import { Dialog, DialogContent } from "~/components/dialog/dialog";
 import { Image } from "~/components/image";
 import { InlineLink } from "~/components/inline-link";
-import { InputCheckbox, InputLabel } from "~/components/inputs";
 import { Link } from "~/components/link";
-import { ModelCard } from "~/components/model-card";
 import { ProfileDropdown } from "~/components/profile/dropdown";
 import { TimeRelative } from "~/components/time-relative";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
@@ -48,6 +44,7 @@ interface ProfileReportViewProps {
 	targetId?: string;
 	reports: Array<Report>;
 	filtered?: boolean;
+	order: "asc" | "desc";
 }
 
 const reportsKey = (options: ListReportOptions) => ["reports", options] as const;
@@ -64,7 +61,7 @@ function useReports(options: ListReportOptions = {}): Array<Report> {
 	});
 }
 
-const UserDisplayName: FC<{ userId?: string } & ComponentProps<"span">> = withSuspense(({ userId = "", ...props }) => {
+export const UserDisplayName: FC<{ userId?: string } & ComponentProps<"span">> = withSuspense(({ userId = "", ...props }) => {
 	const user = useUser(userId);
 
 	return (
@@ -102,7 +99,8 @@ const UserShadowban: FC<{ userId?: string }> = withSuspense(({ userId = "" }) =>
 const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 	targetId,
 	reports,
-	filtered
+	filtered,
+	order
 }) => {
 	const [collapsed, setCollapsed] = useState(!filtered && reports.length >= 2);
 	const [observedConversation, setObservedConversation] = useState<
@@ -225,7 +223,7 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 							)
 						: (
 								<div className="flex flex-col gap-2">
-									{sortBy(reports, prop("createdAt")).map((report) => (
+									{sortBy(reports, [prop("createdAt"), order]).map((report) => (
 										<div
 											key={report.id}
 											className={twMerge(
@@ -252,7 +250,7 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 															href={
 																report.userId
 																	? urls.profile(report.userId)
-																	: urls.moderation.reports()
+																	: urls.moderation.queue()
 															}
 															className="select-children"
 														>
@@ -343,21 +341,7 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 	);
 };
 
-export const ReportView: React.FC = () => {
-	const [searchParameters, setSearchParameters] = useSearchParams();
-	const targetId = searchParameters.get("targetId") || undefined;
-	const userId = searchParameters.get("userId") || undefined;
-	const filtered = !!(targetId || userId);
-
-	const [toggles, setToggles] = useState<{ reviewed?: boolean; indefShadowbanned?: boolean }>({});
-
-	const options = useMemo<ListReportOptions>(() => ({
-		reviewed: toggles.reviewed ?? filtered,
-		indefShadowbanned: toggles.indefShadowbanned ?? filtered,
-		...(targetId && { targetId }),
-		...(userId && { userId })
-	}), [toggles, filtered, targetId, userId]);
-
+export const ReportsTab: FC<{ options: ListReportOptions; filtered: boolean }> = ({ options, filtered }) => {
 	const reports = useReports(options);
 
 	const grouped = useMemo(
@@ -366,104 +350,23 @@ export const ReportView: React.FC = () => {
 	);
 
 	return (
-
-		<ModelCard
-			data-block
-			className="desktop:max-w-4xl"
-			containerProps={{ className: "gap-8 min-h-screen" }}
-			title="Reports"
-		>
-			{filtered && (
-				<div className="flex flex-wrap gap-2">
-					{targetId && (
-						<span className="flex items-center gap-1 rounded-full bg-white-40 px-3 py-1 text-sm dark:bg-black-60">
-							Target:
-							{" "}
-							<UserDisplayName userId={targetId} />
-							<button
-								type="button"
-								onClick={() => {
-									setSearchParameters((previous) => {
-										previous.delete("targetId");
-										return previous;
-									});
-									if (!userId) setToggles({});
-								}}
-							>
-								<X className="size-4" />
-							</button>
-						</span>
-					)}
-					{userId && (
-						<span className="flex items-center gap-1 rounded-full bg-white-40 px-3 py-1 text-sm dark:bg-black-60">
-							Reporter:
-							{" "}
-							<UserDisplayName userId={userId} />
-							<button
-								type="button"
-								onClick={() => {
-									setSearchParameters((previous) => {
-										previous.delete("userId");
-										return previous;
-									});
-									if (!targetId) setToggles({});
-								}}
-							>
-								<X className="size-4" />
-							</button>
-						</span>
-					)}
-				</div>
-			)}
-			<div className="flex gap-8">
-				<div className="flex items-center gap-4">
-					<InputCheckbox
-						id="reviewed"
-						value={options.reviewed}
-						onChange={(value) => {
-							setToggles((previous) => ({
-								...previous,
-								reviewed: value
-							}));
-						}}
-					/>
-					<InputLabel inline htmlFor="reviewed">
-						Include reviewed
-					</InputLabel>
-				</div>
-				<div className="flex items-center gap-4">
-					<InputCheckbox
-						id="indefShadowbanned"
-						value={options.indefShadowbanned}
-						onChange={(value) => {
-							setToggles((previous) => ({
-								...previous,
-								indefShadowbanned: value
-							}));
-						}}
-					/>
-					<InputLabel inline htmlFor="indefShadowbanned">
-						Include indef. shadowbanned
-					</InputLabel>
-				</div>
-			</div>
-			<div>
-				<span>
-					{reports.length}
-					{" "}
-					reports
-				</span>
-			</div>
+		<>
+			<span>
+				{reports.length}
+				{" "}
+				reports
+			</span>
 			<div className="flex flex-col gap-4">
 				{entries(grouped).map(([targetId, reports]) => (
 					<ProfileReportView
 						key={targetId}
 						filtered={filtered}
+						order={options.order ?? "desc"}
 						reports={reports}
 						targetId={reports[0]?.targetId}
 					/>
 				))}
 			</div>
-		</ModelCard>
+		</>
 	);
 };

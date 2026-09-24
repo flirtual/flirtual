@@ -16,8 +16,7 @@ import { useQuery } from "~/query";
 
 import { ProfileImagesCard } from "./profile-images-card";
 
-// Either an uploaded file or an existing profile image to match against.
-export type SearchImageSource = { file: File } | { imageId: string };
+export type SearchImageSource = { file: File } | { imageId: string } | { url: string };
 
 export interface SearchImageDialogProps {
 	source: SearchImageSource;
@@ -25,14 +24,19 @@ export interface SearchImageDialogProps {
 }
 
 function searchImageKey(source: SearchImageSource) {
-	return "file" in source
-		? ["search-image", "upload", source.file.name, source.file.size, source.file.lastModified] as const
+	if ("file" in source)
+		return ["search-image", "upload", source.file.name, source.file.size, source.file.lastModified] as const;
+
+	return "url" in source
+		? ["search-image", "url", source.url] as const
 		: ["search-image", source.imageId] as const;
 }
 
 function search(source: SearchImageSource) {
-	return "file" in source
-		? ProfileImageApi.searchByImage(source.file)
+	if ("file" in source) return ProfileImageApi.searchByImage(source.file);
+
+	return "url" in source
+		? ProfileImageApi.searchByUrl(source.url)
 		: ProfileImageApi.searchSimilar(source.imageId);
 }
 

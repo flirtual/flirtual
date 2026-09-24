@@ -156,9 +156,9 @@ export const NavigationItemProfile: FC = () => {
 							{user.tags?.includes("moderator") && (
 								<>
 									<hr className="my-2 w-full border-t-2 border-white-40" />
-									<ProfileNavigationItem href={urls.moderation.reports()}>
+									<ProfileNavigationItem href={urls.moderation.queue()}>
 										<ShieldAlert className="size-6 shrink-0" />
-										<span className="whitespace-nowrap">{t("reports")}</span>
+										<span className="whitespace-nowrap">{t("mod_queue")}</span>
 									</ProfileNavigationItem>
 									<ProfileNavigationItem href={urls.moderation.search}>
 										<Search className="size-6 shrink-0" />

@@ -66,8 +66,8 @@ export const SettingsNavigation: FC = () => {
 						<NavigationCategory name="Staff">
 							{user.tags?.includes("moderator") && (
 								<>
-									<NavigationLink href={urls.moderation.reports()} Icon={ShieldAlert}>
-										{t("reports")}
+									<NavigationLink href={urls.moderation.queue()} Icon={ShieldAlert}>
+										{t("mod_queue")}
 									</NavigationLink>
 									<NavigationLink href={urls.moderation.search} Icon={Search}>
 										{t("search")}

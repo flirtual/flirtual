@@ -11,6 +11,7 @@ import { AlertDialogTrigger } from "../dialog/alert";
 import { BlockDialog } from "./dialogs/block";
 import { ReportDialog } from "./dialogs/report";
 import { ProfileDropdown } from "./dropdown";
+import { ProfileModerationHistory } from "./moderation-history";
 import { ProfileModeratorInfo } from "./moderator-info";
 
 export const ProfileActionBar: FC<{ user: User; hideModeratorInfo?: boolean }> = ({ user, hideModeratorInfo }) => {
@@ -27,7 +28,12 @@ export const ProfileActionBar: FC<{ user: User; hideModeratorInfo?: boolean }> =
 
 	return (
 		<div className="flex flex-col gap-8 px-8 py-4 pt-0 desktop:pb-8 desktop:dark:bg-black-70">
-			{!hideModeratorInfo && <ProfileModeratorInfo userId={user.id} />}
+			{!hideModeratorInfo && session.user.tags?.includes("moderator") && (
+				<div className="flex flex-col gap-4">
+					<ProfileModeratorInfo userId={user.id} />
+					<ProfileModerationHistory userId={user.id} />
+				</div>
+			)}
 			<div className="flex w-full gap-4 pb-4 desktop:pb-0">
 				{!hideModeratorInfo
 					&& (session.user.tags?.includes("moderator") || session.user.tags?.includes("admin"))

@@ -11,6 +11,7 @@ import { usePreferences } from "~/hooks/use-preferences";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useUser } from "~/hooks/use-user";
 import { useLocale } from "~/i18n";
+import { urls } from "~/urls";
 
 import { CopyClick } from "../copy-click";
 import { DateTimeRelative } from "../datetime-relative";
@@ -344,7 +345,7 @@ export const ProfileModeratorInfo: FC<{
 								<InlineLink
 									className="underline"
 									highlight={false}
-									href={`https://app.revenuecat.com/customers/cf0649d1/${user.revenuecatId}`}
+									href={urls.moderation.revenuecatCustomer(user.revenuecatId)}
 								>
 									{user.revenuecatId}
 								</InlineLink>

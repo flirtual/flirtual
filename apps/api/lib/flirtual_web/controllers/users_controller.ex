@@ -133,6 +133,24 @@ defmodule FlirtualWeb.UsersController do
     {:error, {:bad_request, :unknown_inspect_type}}
   end
 
+  def list_moderation_events(conn, %{"user_id" => user_id}) do
+    user = Users.get(user_id)
+
+    if is_nil(user) or Policy.cannot?(conn, :read_moderation_events, user) do
+      {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
+    else
+      types =
+        ModerationEvent.visible_types(conn.assigns[:session].user) --
+          ModerationEvent.anonymous_types()
+
+      conn
+      |> json_with_etag(
+        ModerationEvent.list(user.id, types: types)
+        |> ModerationEvent.with_related()
+      )
+    end
+  end
+
   def update(conn, %{"user_id" => user_id} = params) do
     user =
       if(conn.assigns[:session].user.id === user_id,

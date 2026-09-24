@@ -98,7 +98,7 @@ export default [
 				]),
 				layout("(app)/(authenticated)/(moderator)", [
 					page("flags", "(app)/(authenticated)/(moderator)/flags"),
-					page("reports", "(app)/(authenticated)/(moderator)/reports"),
+					page("mod", "(app)/(authenticated)/(moderator)/mod"),
 					page("search", "(app)/(authenticated)/(moderator)/search"),
 				]),
 				layout("(app)/(authenticated)/(debugger)", [
