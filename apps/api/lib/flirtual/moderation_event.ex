@@ -179,6 +179,21 @@ defmodule Flirtual.ModerationEvent do
     |> Repo.exists?()
   end
 
+  # Images removed from this user's profile, and images quarantined from anyone's. Not
+  # including automatic removals.
+  def removed_images(user_id) when is_binary(user_id) do
+    ModerationEvent
+    |> where(
+      [event],
+      (event.type == :image_removed and event.user_id == ^user_id) or
+        event.type == :image_quarantined
+    )
+    |> where([event], not event.automatic)
+    |> where([event], fragment("jsonb_typeof(?->'hash') = 'number'", event.details))
+    |> order_by([event], desc: event.created_at, desc: event.id)
+    |> Repo.all()
+  end
+
   def get(id) when is_binary(id) do
     case Ecto.ShortUUID.cast(id) do
       {:ok, id} -> ModerationEvent |> where(id: ^id) |> preload(^default_assoc()) |> Repo.one()

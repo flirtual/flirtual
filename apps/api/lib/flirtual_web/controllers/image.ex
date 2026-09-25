@@ -312,7 +312,7 @@ defmodule FlirtualWeb.ImageController do
     ModerationEvent.create(:image_removed, %{
       user: image_owner,
       moderator: moderator,
-      details: %{image_id: image.id, image_url: image_url}
+      details: %{image_id: image.id, image_url: image_url, hash: image.hash}
     })
 
     ModerationEvent.review_removed_image(image.id, moderator)
@@ -335,7 +335,7 @@ defmodule FlirtualWeb.ImageController do
            ModerationEvent.create(:image_quarantined, %{
              user: image_owner,
              moderator: user,
-             details: %{image_id: image.id, key: key}
+             details: %{image_id: image.id, key: key, hash: image.hash}
            }),
          {_, _} <- ModerationEvent.review_removed_image(image.id, user),
          :ok <-
