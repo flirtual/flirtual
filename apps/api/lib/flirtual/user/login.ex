@@ -118,6 +118,24 @@ defmodule Flirtual.User.Login do
     |> Repo.update_all(set: [status: "successful", session_id: session_id])
   end
 
+  # Most recent first; `ip_region` is "<region>, <country>" or a bare country.
+  def locations(user_id, precision) when precision in [:region, :country] do
+    location =
+      case precision do
+        :region -> dynamic([login], login.ip_region)
+        :country -> dynamic([login], fragment("regexp_replace(?, '^.*, ', '')", login.ip_region))
+      end
+
+    Login
+    |> where([login], login.user_id == ^user_id)
+    |> where([login], login.status in ["successful", "untrusted"])
+    |> where([login], not is_nil(login.ip_region) and login.ip_region != "Unknown")
+    |> group_by(^[location])
+    |> order_by([login], desc: max(login.created_at))
+    |> select(^location)
+    |> Repo.all()
+  end
+
   def untrust(user_id) do
     Login
     |> where([login], login.user_id == ^user_id)

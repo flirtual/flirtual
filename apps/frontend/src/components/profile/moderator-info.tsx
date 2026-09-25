@@ -17,6 +17,7 @@ import { CopyClick } from "../copy-click";
 import { DateTimeRelative } from "../datetime-relative";
 import { InlineLink } from "../inline-link";
 import { ModeratorNoteDialog } from "./dialogs/moderator-note";
+import { getCountryName } from "./pill/country";
 
 function stripTimestamps(note: string | undefined): string {
 	if (!note) return "None";
@@ -144,6 +145,27 @@ export const ProfileModeratorInfo: FC<{
 							<span className="font-bold">Date of birth:</span>
 							{" "}
 							<span>{user.bornAt}</span>
+						</span>
+						<span>
+							<span className="font-bold">Login locations:</span>
+							{" "}
+							<span>
+								{user.loginLocations && user.loginLocations.length > 0
+									? user.loginLocations
+											.map((location) => {
+												const parts = location.split(", ");
+												const country = parts.pop()!;
+
+												return [
+													...parts,
+													/^[A-Z]{2}$/.test(country)
+														? getCountryName(systemLanguage, country) ?? country
+														: country
+												].join(", ");
+											})
+											.join("; ")
+									: "None"}
+							</span>
 						</span>
 					</div>
 					<div className="flex flex-col">

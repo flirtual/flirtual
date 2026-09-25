@@ -9,6 +9,7 @@ defmodule Flirtual.User.Policy do
   alias Flirtual.Policy
   alias Flirtual.Talkjs
   alias Flirtual.User
+  alias Flirtual.User.Login
   alias Flirtual.User.Session
 
   def authorize(
@@ -376,6 +377,24 @@ defmodule Flirtual.User.Policy do
   end
 
   def transform(:ban, _, _), do: nil
+
+  def transform(
+        :login_locations,
+        %Plug.Conn{
+          assigns: %{
+            session: session
+          }
+        },
+        %User{} = user
+      ) do
+    cond do
+      :admin in session.user.tags -> Login.locations(user.id, :region)
+      :moderator in session.user.tags -> Login.locations(user.id, :country)
+      true -> nil
+    end
+  end
+
+  def transform(:login_locations, _, _), do: nil
 
   @admin_property_keys [
     :email,
