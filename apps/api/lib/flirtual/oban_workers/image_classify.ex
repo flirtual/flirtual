@@ -17,8 +17,10 @@ defmodule Flirtual.ObanWorkers.ImageClassify do
       when is_binary(external_id) and not is_nil(profile_id) ->
         case Moderation.classify_remote(image) do
           {:ok, %{classifications: classifications, hashes: hashes}} ->
-            Moderation.classify_image(image, classifications, hashes)
-            :ok
+            case Moderation.classify_image(image, classifications, hashes) do
+              {:error, :image_retention_failed} = error -> error
+              _ -> :ok
+            end
 
           {:error, reason} ->
             {:error, reason}

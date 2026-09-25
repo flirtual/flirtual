@@ -731,6 +731,41 @@ defmodule Flirtual.Discord do
     webhook(:moderation_pics, %{embeds: [embed]})
   end
 
+  def deliver_webhook(:reuploaded_image, user: %User{} = user, image_url: image_url) do
+    embed = %{
+      author: webhook_author(user),
+      title: "Re-uploaded image removed",
+      color: @destructive_color,
+      footer: %{text: "Automatic"},
+      timestamp: DateTime.utc_now() |> DateTime.to_iso8601()
+    }
+
+    embed = if is_binary(image_url), do: Map.put(embed, :image, %{url: image_url}), else: embed
+
+    webhook(:moderation_pics, %{embeds: [embed]})
+  end
+
+  def deliver_webhook(:reuploaded_illegal_image, user: %User{} = user, key: key) do
+    webhook(:moderation_pics, %{
+      content: "<@&458465845887369243>",
+      embeds: [
+        %{
+          author: webhook_author(user),
+          title: "Re-uploaded illegal image removed",
+          fields: [
+            %{
+              name: "Quarantined",
+              value: key || "failed"
+            }
+          ],
+          color: @destructive_color,
+          footer: %{text: "Automatic"},
+          timestamp: DateTime.utc_now() |> DateTime.to_iso8601()
+        }
+      ]
+    })
+  end
+
   def deliver_webhook(:illegal_image,
         user: %User{} = user,
         moderator: %User{} = moderator,

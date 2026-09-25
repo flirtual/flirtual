@@ -110,6 +110,8 @@ const hiddenDetails = new Set([
 	"imageId",
 	"imageKey",
 	"imageUrl",
+	"hash",
+	"matchEventId",
 	"matchImageIds",
 	"username",
 	"moderatorUsername",
