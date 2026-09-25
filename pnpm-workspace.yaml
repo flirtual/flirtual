@@ -1,10 +1,14 @@
 packages:
   - apps/*
+  - packages/*
+  - pulumi
 
 catalog:
   "@ariesclark/eslint-config": 3.2.1-canary.1
   "@cloudflare/vitest-pool-workers": ^0.22.0
+  "@pulumi/pulumi": 3.253.0
   eslint: ^9.39.1
+  execa: ^10.0.1
   typescript: ^5.9.2
   vitest: ~4.1.10
   wrangler: ^4.120.1
@@ -37,6 +41,9 @@ strictPeerDependencies: false
 
 allowBuilds:
   "@parcel/watcher": true
+  "@pulumi/command": true
+  "@pulumi/discord@file:pulumi/sdks/discord": true
+  "@pulumi/docker-build": true
   "@sentry/cli": true
   "@shgysk8zer0/polyfills": false
   core-js: true
