@@ -42,10 +42,12 @@ strictPeerDependencies: false
 allowBuilds:
   "@parcel/watcher": true
   "@pulumi/apple@file:pulumi/sdks/apple": true
+  "@pulumi/chargebee@file:pulumi/sdks/chargebee": true
   "@pulumi/command": true
   "@pulumi/discord@file:pulumi/sdks/discord": true
   "@pulumi/docker-build": true
   "@pulumi/freshdesk@file:pulumi/sdks/freshdesk": true
+  "@pulumi/revenuecat@file:pulumi/sdks/revenuecat": true
   "@sentry/cli": true
   "@shgysk8zer0/polyfills": false
   core-js: true

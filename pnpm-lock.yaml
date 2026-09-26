@@ -642,6 +642,9 @@ importers:
       '@pulumi/aws':
         specifier: ^7.46.0
         version: 7.46.0(supports-color@10.2.2)(typescript@5.9.3)
+      '@pulumi/chargebee':
+        specifier: file:sdks/chargebee
+        version: file:pulumi/sdks/chargebee(supports-color@10.2.2)
       '@pulumi/cloudflare':
         specifier: 6.18.0
         version: 6.18.0(supports-color@10.2.2)(typescript@5.9.3)
@@ -666,6 +669,9 @@ importers:
       '@pulumi/random':
         specifier: ^4.21.0
         version: 4.21.0(supports-color@10.2.2)(typescript@5.9.3)
+      '@pulumi/revenuecat':
+        specifier: file:sdks/revenuecat
+        version: file:pulumi/sdks/revenuecat(supports-color@10.2.2)
       change-case:
         specifier: ^5.4.4
         version: 5.4.4
@@ -3080,6 +3086,9 @@ packages:
   '@pulumi/aws@7.46.0':
     resolution: {integrity: sha512-uu8B+NiUoQxZUgqk0UnnrRi0VSeFQISDS6/Kjuw3tdsVi33jYSUKEfcDO2nTwQcbTDmfCjvOwV4RqvSDuDMbLQ==}
 
+  '@pulumi/chargebee@file:pulumi/sdks/chargebee':
+    resolution: {directory: pulumi/sdks/chargebee, type: directory}
+
   '@pulumi/cloudflare@6.18.0':
     resolution: {integrity: sha512-L49neVgL7crzUKr+lfNYAmooqnmSGPg6TN8+PXouxyjojjwMdRM3WLNPkUxYu3vqr0WhD86afqdujee1Kz4R9w==}
 
@@ -3112,6 +3121,9 @@ packages:
 
   '@pulumi/random@4.21.0':
     resolution: {integrity: sha512-k4JHqQFOKXWkbSLZtX37xBlRsurfgZbLd1Zib0cLSDP4Dt3uTllR3CBWfMLSnXJGAoTr9MlwyHCer/5tmSaF0Q==}
+
+  '@pulumi/revenuecat@file:pulumi/sdks/revenuecat':
+    resolution: {directory: pulumi/sdks/revenuecat, type: directory}
 
   '@radix-ui/number@1.1.3':
     resolution: {integrity: sha512-Road2bidD0uu/1BGDOWNdPI06g0lIRy6IF9GZcIrDK2KGItfor8IQwQa+yM2ERgHM1MmHxaxpTzk0/Jp42lNfA==}
@@ -10729,6 +10741,15 @@ snapshots:
       - ts-node
       - typescript
 
+  '@pulumi/chargebee@file:pulumi/sdks/chargebee(supports-color@10.2.2)':
+    dependencies:
+      '@pulumi/pulumi': 3.253.0(supports-color@10.2.2)(typescript@4.9.5)
+      '@types/node': 20.19.43
+      typescript: 4.9.5
+    transitivePeerDependencies:
+      - supports-color
+      - ts-node
+
   '@pulumi/cloudflare@6.18.0(supports-color@10.2.2)(typescript@5.9.3)':
     dependencies:
       '@pulumi/pulumi': 3.253.0(supports-color@10.2.2)(typescript@5.9.3)
@@ -10850,6 +10871,15 @@ snapshots:
       - supports-color
       - ts-node
       - typescript
+
+  '@pulumi/revenuecat@file:pulumi/sdks/revenuecat(supports-color@10.2.2)':
+    dependencies:
+      '@pulumi/pulumi': 3.253.0(supports-color@10.2.2)(typescript@4.9.5)
+      '@types/node': 20.19.43
+      typescript: 4.9.5
+    transitivePeerDependencies:
+      - supports-color
+      - ts-node
 
   '@radix-ui/number@1.1.3': {}
 
