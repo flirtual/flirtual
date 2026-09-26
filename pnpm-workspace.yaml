@@ -41,6 +41,7 @@ strictPeerDependencies: false
 
 allowBuilds:
   "@parcel/watcher": true
+  "@pulumi/apple@file:pulumi/sdks/apple": true
   "@pulumi/command": true
   "@pulumi/discord@file:pulumi/sdks/discord": true
   "@pulumi/docker-build": true

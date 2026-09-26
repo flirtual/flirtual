@@ -636,6 +636,9 @@ importers:
       '@flirtual/pulumi-fly':
         specifier: workspace:*
         version: link:../packages/pulumi-fly
+      '@pulumi/apple':
+        specifier: file:sdks/apple
+        version: file:pulumi/sdks/apple(supports-color@10.2.2)
       '@pulumi/aws':
         specifier: ^7.46.0
         version: 7.46.0(supports-color@10.2.2)(typescript@5.9.3)
@@ -3070,6 +3073,9 @@ packages:
 
   '@protobufjs/utf8@1.1.2':
     resolution: {integrity: sha512-b1UQwcEZ4yCnMCD8DAL1VlbvBJE9/IX4FTIp7BG1xYpf29SLazLSrqUkj4w7Y5y7cCVP6E5tcqqcI0xemPkHug==}
+
+  '@pulumi/apple@file:pulumi/sdks/apple':
+    resolution: {directory: pulumi/sdks/apple, type: directory}
 
   '@pulumi/aws@7.46.0':
     resolution: {integrity: sha512-uu8B+NiUoQxZUgqk0UnnrRi0VSeFQISDS6/Kjuw3tdsVi33jYSUKEfcDO2nTwQcbTDmfCjvOwV4RqvSDuDMbLQ==}
@@ -10704,6 +10710,15 @@ snapshots:
   '@protobufjs/pool@1.1.0': {}
 
   '@protobufjs/utf8@1.1.2': {}
+
+  '@pulumi/apple@file:pulumi/sdks/apple(supports-color@10.2.2)':
+    dependencies:
+      '@pulumi/pulumi': 3.253.0(supports-color@10.2.2)(typescript@4.9.5)
+      '@types/node': 20.19.43
+      typescript: 4.9.5
+    transitivePeerDependencies:
+      - supports-color
+      - ts-node
 
   '@pulumi/aws@7.46.0(supports-color@10.2.2)(typescript@5.9.3)':
     dependencies:
