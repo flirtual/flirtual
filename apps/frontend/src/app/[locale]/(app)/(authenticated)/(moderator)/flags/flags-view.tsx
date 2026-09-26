@@ -5,7 +5,7 @@ import {
 } from "@tanstack/react-table";
 import type { ColumnDef } from "@tanstack/react-table";
 import { Search, Trash2 } from "lucide-react";
-import { Suspense, useDeferredValue, useEffect, useState } from "react";
+import { Suspense, useDeferredValue, useEffect, useMemo, useState } from "react";
 import type { FC } from "react";
 
 import type { Paginate } from "~/api/common";
@@ -32,31 +32,32 @@ import { AddFlagForm } from "./add-flag-form";
 
 const flagsKey = (options: ListFlagOptions) => ["flags", options] as const;
 
-const ColumnActions: FC<{ flag: FlagModel }> = ({ flag }) => {
+const ColumnActions: FC<{ flag: FlagModel; type: FlagType }> = ({ flag, type }) => {
 	const toasts = useToast();
+	const domain = type === "email";
 
 	const deleteFlag = useMutation({
 		mutationFn: async (flagId: string) => {
 			await Flag.delete(flagId);
 		},
 		onSuccess: () => {
-			toasts.add("Deleted flag");
+			toasts.add(domain ? "Unblocked domain" : "Deleted flag");
 			invalidate({ queryKey: ["flags"] });
 		},
 		onError: () => {
-			toasts.add("Couldn't delete flag");
+			toasts.add(domain ? "Couldn't unblock domain" : "Couldn't delete flag");
 		}
 	});
 
 	const handleDelete = () => {
 		// eslint-disable-next-line no-alert
-		if (confirm(`Delete flag "${flag.flag}"?`)) {
+		if (confirm(domain ? `Unblock domain "${flag.flag}"?` : `Delete flag "${flag.flag}"?`)) {
 			deleteFlag.mutate(flag.id);
 		}
 	};
 
 	return (
-		<MinimalTooltip content="Delete flag">
+		<MinimalTooltip content={domain ? "Unblock domain" : "Delete flag"}>
 			<button
 				className="text-red-500 hover:text-red-600 disabled:opacity-50"
 				disabled={deleteFlag.isPending}
@@ -69,40 +70,44 @@ const ColumnActions: FC<{ flag: FlagModel }> = ({ flag }) => {
 	);
 };
 
-const columns: Array<ColumnDef<FlagModel>> = [
-	{
-		id: "flag",
-		header: "Flag",
-		cell: ({ row: { original: flag } }) => (
-			<span className="font-mono">{flag.flag}</span>
-		)
-	},
-	{
-		id: "updatedAt",
-		header: "Updated",
-		cell: ({ row: { original: flag } }) => (
-			<MinimalTooltip content={new Date(flag.updatedAt).toLocaleString()}>
-				<span className="whitespace-nowrap">
-					<TimeRelative value={flag.updatedAt} />
-				</span>
-			</MinimalTooltip>
-		)
-	},
-	{
-		id: "actions",
-		header: () => <div className="text-right">Actions</div>,
-		cell: ({ row: { original: flag } }) => (
-			<div className="flex justify-end">
-				<ColumnActions flag={flag} />
-			</div>
-		)
-	}
-];
+function flagColumns(type: FlagType): Array<ColumnDef<FlagModel>> {
+	return [
+		{
+			id: "flag",
+			header: type === "email" ? "Domain" : "Flag",
+			cell: ({ row: { original: flag } }) => (
+				<span className="font-mono">{flag.flag}</span>
+			)
+		},
+		{
+			id: "updatedAt",
+			header: "Updated",
+			cell: ({ row: { original: flag } }) => (
+				<MinimalTooltip content={new Date(flag.updatedAt).toLocaleString()}>
+					<span className="whitespace-nowrap">
+						<TimeRelative value={flag.updatedAt} />
+					</span>
+				</MinimalTooltip>
+			)
+		},
+		{
+			id: "actions",
+			header: () => <div className="text-right">Actions</div>,
+			cell: ({ row: { original: flag } }) => (
+				<div className="flex justify-end">
+					<ColumnActions flag={flag} type={type} />
+				</div>
+			)
+		}
+	];
+}
 
-const DataTable: FC<{ data: Array<FlagModel>; limit: number }> = ({
+const DataTable: FC<{ data: Array<FlagModel>; limit: number; type: FlagType }> = ({
 	data,
-	limit
+	limit,
+	type
 }) => {
+	const columns = useMemo(() => flagColumns(type), [type]);
 	const table = useReactTable({
 		data,
 		columns,
@@ -219,7 +224,7 @@ export const FlagsView: React.FC = () => {
 				<div className="flex gap-2">
 					<InputSwitch
 						className="w-full"
-						no="Email flags"
+						no="Blocked email domains"
 						value={activeTab === "text"}
 						yes="Text flags"
 						onChange={(value) => setActiveTab(value ? "text" : "email")}
@@ -231,7 +236,7 @@ export const FlagsView: React.FC = () => {
 						<span>Filter</span>
 						<InputText
 							Icon={Search}
-							placeholder="Search flags"
+							placeholder={activeTab === "email" ? "Search domains" : "Search flags"}
 							value={searchOptions.search}
 							onChange={(value) =>
 								setSearchOptions((options) => ({
@@ -245,7 +250,7 @@ export const FlagsView: React.FC = () => {
 						<div className="flex items-center gap-2">
 							<InputSelect
 								options={[
-									{ id: "flag", name: "Flag" },
+									{ id: "flag", name: activeTab === "email" ? "Domain" : "Flag" },
 									{ id: "updated_at", name: "Updated At" }
 								]}
 								value={searchOptions.sort}
@@ -273,6 +278,7 @@ export const FlagsView: React.FC = () => {
 				<DataTable
 					data={data.entries}
 					limit={data.metadata.limit}
+					type={activeTab}
 				/>
 
 				<div className="flex items-center justify-end gap-2">

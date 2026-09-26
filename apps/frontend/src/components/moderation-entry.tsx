@@ -574,12 +574,12 @@ const DomainActions: FC<{ domain: string }> = ({ domain }) => {
 				onClick={async () => {
 					setAdding(true);
 					await Flag.create({ type: "email", flag: domain })
-						.then(() => toasts.add("Added flag"))
+						.then(() => toasts.add("Blocked domain"))
 						.catch(toasts.addError)
 						.finally(() => setAdding(false));
 				}}
 			>
-				Add flag
+				Block domain
 			</Button>
 		</div>
 	);

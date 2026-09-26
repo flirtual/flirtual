@@ -14,11 +14,17 @@ export const AddFlagForm: React.FC<{ type: FlagType }> = ({ type }) => {
 	return (
 		<div className="flex flex-col gap-2">
 			<span className="text-lg font-semibold">
-				Add new
-				{" "}
-				{type}
-				{" "}
-				flag
+				{type === "email"
+					? "Block a domain"
+					: (
+							<>
+								Add new
+								{" "}
+								{type}
+								{" "}
+								flag
+							</>
+						)}
 			</span>
 			<Form
 				fields={{
@@ -30,7 +36,7 @@ export const AddFlagForm: React.FC<{ type: FlagType }> = ({ type }) => {
 						type,
 						flag: body.flag
 					});
-					toasts.add("Added flag");
+					toasts.add(type === "email" ? "Blocked domain" : "Added flag");
 					invalidate({ queryKey: ["flags"] });
 				}}
 			>
