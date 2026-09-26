@@ -3,54 +3,6 @@
 		{
 			"name": "💘 Flirtual",
 			"path": "../"
-		},
-		{
-			"name": "🧪 API",
-			"path": "../apps/api"
-		},
-		{
-			"name": "🖥️ Frontend",
-			"path": "../apps/frontend"
-		},
-		{
-			"name": "🤖 Android",
-			"path": "../apps/frontend/android"
-		},
-		{
-			"name": "🍎 iOS",
-			"path": "../apps/frontend/ios"
-		},
-		{
-			"name": "🥽 visionOS",
-			"path": "../apps/frontend/visionos"
-		},
-		{
-			"name": "🛡️ Image Classification",
-			"path": "../apps/image-classification"
-		},
-		{
-			"name": "🔎 Manticore",
-			"path": "../apps/manticore"
-		},
-		{
-			"name": "📊 Grafana",
-			"path": "../apps/grafana"
-		},
-		{
-			"name": "📊 Tempo",
-			"path": "../apps/tempo"
-		},
-		{
-			"name": "👷 Trace",
-			"path": "../apps/trace"
-		},
-		{
-			"name": "🚧 Maintenance",
-			"path": "../apps/maintenance"
-		},
-		{
-			"name": "🦔 PostHog Proxy",
-			"path": "../apps/posthog-proxy"
 		}
 	],
 	"settings": {
