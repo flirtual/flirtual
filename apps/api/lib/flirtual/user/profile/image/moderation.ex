@@ -179,11 +179,15 @@ defmodule Flirtual.User.Profile.Image.Moderation do
              ModerationEvent.repeated?(user.id, :flagged_image, %{image_id: image.id}) do
         ModerationEvent.create(:flagged_image, %{
           user: user,
-          details: %{
-            image_id: image.id,
-            classification: to_string(type),
-            classifications: flagged_tags(classifications)
-          }
+          details:
+            with_retained_copy(
+              %{
+                image_id: image.id,
+                classification: to_string(type),
+                classifications: flagged_tags(classifications)
+              },
+              image
+            )
         })
 
         Discord.deliver_webhook(:flagged_image,
@@ -233,13 +237,17 @@ defmodule Flirtual.User.Profile.Image.Moderation do
         with %User{} = user <- User.get(profile_id) do
           ModerationEvent.create(:flagged_duplicate_image, %{
             user: user,
-            details: %{
-              image_id: image.id,
-              distance: distance,
-              match_image_ids: closest |> Enum.take(3) |> Enum.map(& &1.id),
-              duplicate_user_ids:
-                matches |> Enum.map(& &1.profile_id) |> Enum.reject(&is_nil/1) |> Enum.uniq()
-            }
+            details:
+              with_retained_copy(
+                %{
+                  image_id: image.id,
+                  distance: distance,
+                  match_image_ids: closest |> Enum.take(3) |> Enum.map(& &1.id),
+                  duplicate_user_ids:
+                    matches |> Enum.map(& &1.profile_id) |> Enum.reject(&is_nil/1) |> Enum.uniq()
+                },
+                image
+              )
           })
 
           Discord.deliver_webhook(:duplicate_image,
@@ -256,6 +264,13 @@ defmodule Flirtual.User.Profile.Image.Moderation do
   end
 
   def check_duplicate(_, _), do: :ok
+
+  defp with_retained_copy(details, %Image{} = image) do
+    case Image.retain_object(image, nil) do
+      url when is_binary(url) -> Map.put(details, :image_url, url)
+      _ -> details
+    end
+  end
 
   # Moderators removed an image like this from the same profile, or quarantined
   # one from any profile.
