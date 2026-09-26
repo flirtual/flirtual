@@ -672,6 +672,9 @@ importers:
       '@pulumi/revenuecat':
         specifier: file:sdks/revenuecat
         version: file:pulumi/sdks/revenuecat(supports-color@10.2.2)
+      '@pulumiverse/sentry':
+        specifier: 0.0.9
+        version: 0.0.9(supports-color@10.2.2)(typescript@5.9.3)
       change-case:
         specifier: ^5.4.4
         version: 5.4.4
@@ -3124,6 +3127,9 @@ packages:
 
   '@pulumi/revenuecat@file:pulumi/sdks/revenuecat':
     resolution: {directory: pulumi/sdks/revenuecat, type: directory}
+
+  '@pulumiverse/sentry@0.0.9':
+    resolution: {integrity: sha512-3vNuGaRqze47Uc4qmk8NHagG0MO/SAl77exGKGs79sXKzSrtu4CK73/f4aYBpF9w03BcsLMiZSDu966Pjv1GxA==}
 
   '@radix-ui/number@1.1.3':
     resolution: {integrity: sha512-Road2bidD0uu/1BGDOWNdPI06g0lIRy6IF9GZcIrDK2KGItfor8IQwQa+yM2ERgHM1MmHxaxpTzk0/Jp42lNfA==}
@@ -10880,6 +10886,14 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
       - ts-node
+
+  '@pulumiverse/sentry@0.0.9(supports-color@10.2.2)(typescript@5.9.3)':
+    dependencies:
+      '@pulumi/pulumi': 3.253.0(supports-color@10.2.2)(typescript@5.9.3)
+    transitivePeerDependencies:
+      - supports-color
+      - ts-node
+      - typescript
 
   '@radix-ui/number@1.1.3': {}
 
