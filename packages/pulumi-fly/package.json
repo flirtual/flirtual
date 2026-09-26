@@ -13,7 +13,7 @@
 	},
 	"devDependencies": {
 		"@pulumi/pulumi": "catalog:",
-		"@types/node": "^22",
+		"@types/node": "^24.0.0",
 		"execa": "catalog:",
 		"json-schema-to-typescript": "^15.0.4",
 		"typescript": "catalog:"
