@@ -30,9 +30,13 @@ sync, session/account pruning).
 
 ## pnpm workspace
 
-One workspace at the repo root: `pnpm-workspace.yaml` (`apps/*`) and a single `pnpm-lock.yaml`.
-`pnpm install` from anywhere installs every app; `packageManager` lives only in the root
-`package.json`.
+One workspace at the repo root: `pnpm-workspace.yaml` (`apps/*`, `packages/*`, `pulumi`) and a
+single `pnpm-lock.yaml`. `pnpm install` from anywhere installs every app; `packageManager` lives
+only in the root `package.json`.
+
+- `packages/` holds libraries used by other members: `packages/pulumi-fly` is the Fly.io dynamic
+  provider behind the `pulumi` submodule. CI doesn't check out the submodule, and a frozen install
+  skips it.
 
 - Versions shared by more than one app (`typescript`, `eslint`, `wrangler`, `vitest`, …) live in
   the root `catalog:` and are referenced as `"typescript": "catalog:"`. Bump them there, not in the

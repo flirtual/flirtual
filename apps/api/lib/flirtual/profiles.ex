@@ -660,6 +660,8 @@ defmodule Flirtual.Profiles do
                end)
              end)
              |> Enum.filter(&(&1.order !== nil)),
+           {:ok, _} <-
+             profile.images |> Enum.reject(&(&1.id in image_ids)) |> Image.queue_delete_objects(),
            user = User.get(profile.user_id),
            {:ok, _} <- User.update_status(user),
            {:ok, _} <-

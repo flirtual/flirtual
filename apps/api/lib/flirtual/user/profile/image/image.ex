@@ -8,7 +8,7 @@ defmodule Flirtual.User.Profile.Image do
   import Flirtual.Utilities.Changeset
 
   alias Flirtual.User.Profile.Image
-  alias Flirtual.Repo
+  alias Flirtual.{ObanWorkers, Repo}
   alias Flirtual.User.Profile
 
   import Ecto.{Changeset, Query}
@@ -186,8 +186,8 @@ defmodule Flirtual.User.Profile.Image do
   # (blur uses blur_id)
   @content_variants ~w(full profile thumb icon)
 
-  # sobelow_skip ["Traversal.FileModule"]
-  def delete_objects(%Image{} = image) do
+  # An image's upload and every variant, as {bucket, key}.
+  def objects(%Image{} = image) do
     uploads_keys = if is_binary(image.original_file), do: [image.original_file], else: []
 
     content_keys =
@@ -198,23 +198,35 @@ defmodule Flirtual.User.Profile.Image do
         if(is_binary(image.blur_id), do: ["#{image.blur_id}/blur"], else: []) ++
         if(is_binary(image.spatial_id), do: ["#{image.spatial_id}/spatial"], else: [])
 
+    Enum.map(uploads_keys, &{uploads_bucket(), &1}) ++
+      Enum.map(content_keys, &{content_bucket(), &1})
+  end
+
+  def delete_objects(%Image{} = image), do: image |> objects() |> delete_objects()
+
+  # sobelow_skip ["Traversal.FileModule"]
+  def delete_objects(objects) when is_list(objects) do
     if Application.get_env(:flirtual, :local_uploads?) do
       dir = Application.fetch_env!(:flirtual, :local_uploads_dir)
 
-      (uploads_keys ++ content_keys)
-      |> Enum.map(&File.rm(Path.join(dir, &1)))
+      objects
+      |> Enum.map(fn {_, key} -> File.rm(Path.join(dir, key)) end)
       |> first_error()
     else
-      keys =
-        Enum.map(uploads_keys, &{uploads_bucket(), &1}) ++
-          Enum.map(content_keys, &{content_bucket(), &1})
-
-      keys
+      objects
       |> Enum.map(fn {bucket, key} ->
         ExAws.S3.delete_object(bucket, key) |> ExAws.request()
       end)
       |> first_error()
     end
+  end
+
+  def queue_delete_objects([]), do: {:ok, nil}
+
+  def queue_delete_objects(images) when is_list(images) do
+    %{objects: images |> Enum.flat_map(&objects/1) |> Enum.map(&Tuple.to_list/1)}
+    |> ObanWorkers.DeleteImageObjects.new()
+    |> Oban.insert()
   end
 
   defp first_error(results), do: Enum.find(results, :ok, &(not deleted?(&1)))
