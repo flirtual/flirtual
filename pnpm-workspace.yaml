@@ -44,6 +44,7 @@ allowBuilds:
   "@pulumi/command": true
   "@pulumi/discord@file:pulumi/sdks/discord": true
   "@pulumi/docker-build": true
+  "@pulumi/freshdesk@file:pulumi/sdks/freshdesk": true
   "@sentry/cli": true
   "@shgysk8zer0/polyfills": false
   core-js: true
