@@ -183,6 +183,25 @@ defmodule Flirtual.ModerationEvent do
     |> Repo.exists?()
   end
 
+  # Clear events for self-deleted account, except quarantines.
+  def delete_user_events(user_id) when is_binary(user_id) do
+    events =
+      ModerationEvent
+      |> where([event], event.user_id == ^user_id and event.type != :image_quarantined)
+
+    retained =
+      events
+      |> select([event], fragment("?->>'image_url'", event.details))
+      |> Repo.all()
+      |> Enum.map(&Image.retained_object/1)
+      |> Enum.reject(&is_nil/1)
+
+    with {:ok, _} <- Image.queue_delete_objects(retained) do
+      Repo.delete_all(events)
+      :ok
+    end
+  end
+
   # Images removed from this user's profile, and images quarantined from anyone's. Not
   # including automatic removals.
   def removed_images(user_id) when is_binary(user_id) do

@@ -792,13 +792,8 @@ defmodule FlirtualWeb.UsersController do
     else
       moderator = conn.assigns[:session].user
 
-      with {:ok, _} <-
-             ModerationEvent.create(:deleted, %{
-               user: user,
-               moderator: moderator
-             }),
-           {:ok, _} <-
-             Users.admin_delete(user) do
+      with {:ok, _} <- Users.admin_delete(user),
+           {:ok, _} <- ModerationEvent.create(:deleted, %{user: user, moderator: moderator}) do
         Discord.deliver_webhook(:admin_deleted,
           user: user,
           moderator: moderator
