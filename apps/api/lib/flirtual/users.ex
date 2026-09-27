@@ -540,6 +540,7 @@ defmodule Flirtual.Users do
       fn ->
         with {:ok, attrs} <- Delete.apply(attrs, context: %{user: user}),
              :ok <- Hash.delete(user.id),
+             :ok <- ModerationEvent.delete_user_events(user.id),
              :ok <- Image.delete_user_objects(user.id),
              {:ok, user} <- Repo.delete(user, timeout: @delete_timeout),
              :ok <- Flirtual.Search.delete_users([user.id]),
@@ -588,6 +589,7 @@ defmodule Flirtual.Users do
     Repo.transaction(
       fn ->
         with :ok <- delete_hashes(user),
+             :ok <- delete_events(user),
              :ok <- Image.delete_user_objects(user.id),
              :ok <- retain_image_hashes(user),
              {:ok, user} <- Repo.delete(user, timeout: @delete_timeout),
@@ -610,6 +612,11 @@ defmodule Flirtual.Users do
 
   defp delete_hashes(%User{banned_at: nil} = user), do: Hash.delete(user.id)
   defp delete_hashes(%User{}), do: :ok
+
+  defp delete_events(%User{banned_at: nil} = user),
+    do: ModerationEvent.delete_user_events(user.id)
+
+  defp delete_events(%User{}), do: :ok
 
   defp retain_image_hashes(%User{banned_at: nil}), do: :ok
 

@@ -223,11 +223,26 @@ defmodule Flirtual.User.Profile.Image do
 
   def queue_delete_objects([]), do: {:ok, nil}
 
-  def queue_delete_objects(images) when is_list(images) do
-    %{objects: images |> Enum.flat_map(&objects/1) |> Enum.map(&Tuple.to_list/1)}
+  def queue_delete_objects([%Image{} | _] = images),
+    do: images |> Enum.flat_map(&objects/1) |> queue_delete_objects()
+
+  def queue_delete_objects(objects) when is_list(objects) do
+    %{objects: Enum.map(objects, &Tuple.to_list/1)}
     |> ObanWorkers.DeleteImageObjects.new()
     |> Oban.insert()
   end
+
+  # The {bucket, key} behind a url(:retained, key).
+  def retained_object(url) when is_binary(url) do
+    origin = Application.get_env(:flirtual, :retained_origin)
+    uri = URI.parse(url)
+
+    if is_struct(origin, URI) and uri.scheme == origin.scheme and uri.host == origin.host and
+         is_binary(uri.path),
+       do: {retained_bucket(), uri.path |> String.trim_leading("/") |> URI.decode()}
+  end
+
+  def retained_object(_), do: nil
 
   defp first_error(results), do: Enum.find(results, :ok, &(not deleted?(&1)))
 
