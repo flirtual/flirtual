@@ -134,15 +134,19 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
   @gender_man "rhw3rcbheU7vc9vcSy6W6V"
   @gender_other "jAL62ePbibxaG4FPu7S8LG"
 
+  defp unrequited(profile_id) do
+    LikesAndPasses
+    |> where(target_id: ^profile_id, type: :like)
+    |> unanswered(profile_id)
+    |> exclude_blocked()
+    |> join(:left, [lap, _, _], user in User, on: lap.profile_id == user.id)
+    |> where([_, _, _, user], user.status == :visible)
+  end
+
   def list_unrequited(profile_id: profile_id, cursor: cursor, filters: filters) do
     query =
-      LikesAndPasses
-      |> where(target_id: ^profile_id, type: :like)
-      |> unanswered(profile_id)
+      unrequited(profile_id)
       |> select_merge([_, response], %{passed: not is_nil(response.target_id)})
-      |> exclude_blocked()
-      |> join(:left, [lap, _, _], user in User, on: lap.profile_id == user.id)
-      |> where([_, _, _, user], user.status == :visible)
       |> order_by([lap, response],
         asc: not is_nil(response.target_id),
         desc: lap.created_at,
@@ -217,30 +221,26 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
   end
 
   def list_unrequited(profile_id: profile_id, since: since) do
-    latest =
-      from(lap in LikesAndPasses,
-        where:
-          lap.target_id == ^profile_id and
-            lap.type == :like and
-            lap.created_at >= ^since,
-        group_by: [lap.profile_id, lap.target_id],
-        select: %{
-          profile_id: lap.profile_id,
-          target_id: lap.target_id,
-          latest_created_at: max(lap.created_at)
-        }
-      )
-
-    from(lap in subquery(latest))
-    |> unanswered(profile_id)
-    |> join(:left, [lap, _], block in Block,
-      on: lap.profile_id == block.profile_id and lap.target_id == block.target_id
-    )
-    |> join(:left, [lap, _, _], user in User, on: lap.profile_id == user.id)
-    |> where([_, _, block, user], is_nil(block) and user.status == :visible)
-    |> order_by([lap], desc: lap.latest_created_at)
-    |> select([lap], lap.profile_id)
+    unrequited_profile_ids(profile_id)
+    |> where([lap], lap.created_at >= ^since)
     |> Repo.all()
+  end
+
+  def list_unrequited(profile_id: profile_id, limit: limit) do
+    unrequited_profile_ids(profile_id)
+    |> limit(^limit)
+    |> Repo.all()
+  end
+
+  defp unrequited_profile_ids(profile_id) do
+    unrequited(profile_id)
+    |> group_by([lap, response], [lap.profile_id, response.target_id])
+    |> order_by([lap, response],
+      asc: not is_nil(response.target_id),
+      desc: max(lap.created_at),
+      desc: lap.profile_id
+    )
+    |> select([lap], lap.profile_id)
   end
 
   def count_unrequited(profile_id: profile_id) do
