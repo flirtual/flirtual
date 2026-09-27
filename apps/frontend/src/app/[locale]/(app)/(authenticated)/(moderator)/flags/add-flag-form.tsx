@@ -5,6 +5,7 @@ import { Flag } from "~/api/flag";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputText } from "~/components/inputs";
+import { InputCountrySelect } from "~/components/inputs/specialized";
 import { useToast } from "~/hooks/use-toast";
 import { invalidate } from "~/query";
 
@@ -16,15 +17,17 @@ export const AddFlagForm: React.FC<{ type: FlagType }> = ({ type }) => {
 			<span className="text-lg font-semibold">
 				{type === "email"
 					? "Block a domain"
-					: (
-							<>
-								Add new
-								{" "}
-								{type}
-								{" "}
-								flag
-							</>
-						)}
+					: type === "country"
+						? "Flag a country"
+						: (
+								<>
+									Add new
+									{" "}
+									{type}
+									{" "}
+									flag
+								</>
+							)}
 			</span>
 			<Form
 				fields={{
@@ -44,12 +47,19 @@ export const AddFlagForm: React.FC<{ type: FlagType }> = ({ type }) => {
 					<>
 						<div className="flex-1">
 							<FormField name="flag">
-								{(field) => (
-									<InputText
-										{...field.props}
-										placeholder={type === "email" ? "domain.com" : "keyword/phrase"}
-									/>
-								)}
+								{(field) => type === "country"
+									? (
+											<InputCountrySelect
+												{...field.props}
+												onChange={(value) => field.props.onChange(value ?? "")}
+											/>
+										)
+									: (
+											<InputText
+												{...field.props}
+												placeholder={type === "email" ? "domain.com" : "keyword/phrase"}
+											/>
+										)}
 							</FormField>
 						</div>
 						<FormButton Icon={Plus} size="sm">

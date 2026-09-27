@@ -2,6 +2,7 @@ import {
 	AtSign,
 	Baby,
 	Bot,
+	CalendarRange,
 	Check,
 	ChevronDown,
 	ChevronLeft,
@@ -15,6 +16,7 @@ import {
 	FileText,
 	Flag as FlagIcon,
 	Gavel,
+	Globe,
 	Image as ImageIcon,
 	ImageOff,
 	Images,
@@ -45,6 +47,7 @@ import { useAttributeTranslation } from "~/hooks/use-attribute";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { useUser } from "~/hooks/use-user";
+import { useLocale } from "~/i18n";
 import { invalidate } from "~/query";
 import { urls } from "~/urls";
 
@@ -55,6 +58,7 @@ import { Dialog, DialogContent, DialogTitle } from "./dialog/dialog";
 import { DiscordIcon } from "./icons";
 import { Image } from "./image";
 import { InlineLink } from "./inline-link";
+import { getCountryImage, getCountryName } from "./profile/pill/country";
 import { ImageToolbar } from "./profile/profile-image-display";
 import { TimeRelative } from "./time-relative";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./tooltip";
@@ -88,6 +92,8 @@ const entryTypes: Record<"report" | ModerationEventType, { title: string; Icon: 
 	flagged_duplicate_image: { title: "Potential duplicate image", Icon: Images, color: yellow },
 	flagged_registered_underage: { title: "Date of birth flagged (previously underage)", Icon: Baby, color: yellow },
 	flagged_honeypot: { title: "Registration honeypot tripped", Icon: Bot, color: gray },
+	flagged_age_range: { title: "Age range flagged", Icon: CalendarRange, color: yellow },
+	flagged_country: { title: "Country flagged", Icon: Globe, color: yellow },
 	appealed: { title: "Ban appealed", Icon: Megaphone, color: gray },
 	deleted: { title: "Admin deleted user", Icon: Trash2, color: red },
 	exit_survey: { title: "New exit survey", Icon: DoorOpen, color: gray }
@@ -351,6 +357,12 @@ function eventSummary(event: ModerationEvent): string | undefined {
 			return details.distance === undefined ? undefined : `Distance: ${details.distance}`;
 		case "flagged_registered_underage":
 			return `${text(details.previousBornAt) ?? "?"} → ${text(details.bornAt) ?? "?"}`;
+		case "flagged_age_range":
+			return `${details.agemin ?? "?"}–${details.agemax ?? "?"}`;
+		case "flagged_country": {
+			const country = text(details.country);
+			return country && `${details.source === "ip" ? "IP address" : "Profile"}: ${country.toUpperCase()}`;
+		}
 		default:
 			return undefined;
 	}
@@ -585,6 +597,22 @@ const DomainActions: FC<{ domain: string }> = ({ domain }) => {
 	);
 };
 
+const FlaggedCountry: FC<{ country: string; source: unknown }> = ({ country, source }) => {
+	const [locale] = useLocale();
+
+	return (
+		<div className="flex flex-col gap-1">
+			<span className="flex items-center gap-2 font-semibold">
+				<img className="aspect-[4/3] h-5 shrink-0 rounded" src={getCountryImage(country)} />
+				{getCountryName(locale, country) ?? country.toUpperCase()}
+			</span>
+			<span className="text-sm">
+				<Field label="Source">{source === "ip" ? "IP address" : "Profile"}</Field>
+			</span>
+		</div>
+	);
+};
+
 function useEntryBody(entry: ModerationEntry, compact: boolean): { content: Array<ReactNode>; fields: Array<ReactNode> } {
 	const { reasonName, summary, actorId, message } = useEntry(entry);
 	const tAttributes = useAttributeTranslation();
@@ -593,8 +621,12 @@ function useEntryBody(entry: ModerationEntry, compact: boolean): { content: Arra
 	const fields: Array<ReactNode> = [];
 
 	const exitSurvey = entry.kind === "event" && entry.event.type === "exit_survey";
+	const country = entry.kind === "event" && entry.event.type === "flagged_country"
+		? text(entry.event.details.country)
+		: undefined;
 
-	if (summary) content.push(<span key="summary" className="break-words font-semibold"><InlineMarkdown>{summary}</InlineMarkdown></span>);
+	if (country && entry.kind === "event") content.push(<FlaggedCountry key="country" country={country} source={entry.event.details.source} />);
+	else if (summary) content.push(<span key="summary" className="break-words font-semibold"><InlineMarkdown>{summary}</InlineMarkdown></span>);
 	if (message && !exitSurvey) content.push(<p key="message" className="select-text whitespace-pre-wrap break-words">{message}</p>);
 
 	if (entry.kind === "report") {
@@ -745,7 +777,7 @@ function useEntryBody(entry: ModerationEntry, compact: boolean): { content: Arra
 	}
 
 	for (const [name, value] of Object.entries(details)) {
-		if (hiddenDetails.has(name)) continue;
+		if (hiddenDetails.has(name) || (country && (name === "country" || name === "source"))) continue;
 
 		const attributeLabel = attributeDetails[name];
 		if (attributeLabel) {

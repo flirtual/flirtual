@@ -4,8 +4,21 @@ defmodule Flirtual.Flag do
   import Ecto.Changeset
   import Ecto.Query
 
-  alias Flirtual.{Connection, Discord, Disposable, Flag, Hash, ModerationEvent, Repo, User, Users}
+  alias Flirtual.{
+    Connection,
+    Countries,
+    Discord,
+    Disposable,
+    Flag,
+    Hash,
+    ModerationEvent,
+    Repo,
+    User,
+    Users
+  }
+
   alias Flirtual.User.Profile
+  alias Flirtual.User.Profile.Preferences
 
   @block_elements ~w(p h1 h2 h3 h4 h5 h6 blockquote li pre)
   @context_words 6
@@ -22,7 +35,20 @@ defmodule Flirtual.Flag do
     flag
     |> cast(attrs, [:type, :flag])
     |> validate_required([:type, :flag])
+    |> validate_country()
     |> unique_constraint(:flag, name: :flags_type_flag_index)
+  end
+
+  @country_codes Enum.map(Countries.list(:iso_3166_1), &Atom.to_string/1)
+
+  defp validate_country(changeset) do
+    if get_field(changeset, :type) == "country" do
+      changeset
+      |> update_change(:flag, &String.downcase/1)
+      |> validate_inclusion(:flag, @country_codes)
+    else
+      changeset
+    end
   end
 
   def get(flag, type) when is_binary(flag) and is_binary(type) do
@@ -373,16 +399,73 @@ defmodule Flirtual.Flag do
     end
   end
 
+  def check_profile_country(_, nil), do: :ok
+  def check_profile_country(_, :none), do: :ok
+  def check_profile_country(%Profile{country: country}, country), do: :ok
+
+  def check_profile_country(profile, country),
+    do: check_country(profile.user_id, Atom.to_string(country), "profile")
+
   def check_profile_flags(profile, attrs) do
     with :ok <- check_profile_display_name(profile, attrs.display_name),
          :ok <- check_profile_discord(profile, attrs.discord),
          :ok <- check_profile_vrchat(profile, attrs.vrchat),
          :ok <- check_profile_facetime(profile, attrs.facetime),
          :ok <- check_profile_biography(profile, attrs.biography),
-         :ok <- check_profile_custom_interests(profile, attrs.custom_interests) do
+         :ok <- check_profile_custom_interests(profile, attrs.custom_interests),
+         :ok <- check_profile_country(profile, attrs.country) do
       :ok
     end
   end
+
+  # `ip_region` is "<region>, <country>" or a bare country.
+  def check_ip_country(_, nil), do: :ok
+
+  def check_ip_country(user_id, ip_region) do
+    country = ip_region |> String.split(", ") |> List.last() |> String.downcase()
+
+    if country in @country_codes,
+      do: check_country(user_id, country, "ip"),
+      else: :ok
+  end
+
+  defp check_country(user_id, country, source) do
+    if not is_nil(get(country, "country")) and
+         not ModerationEvent.repeated?(user_id, :flagged_country, %{
+           country: country,
+           source: source
+         }) do
+      user = Users.get(user_id)
+
+      ModerationEvent.create(:flagged_country, %{
+        user: user,
+        details: %{country: country, source: source}
+      })
+
+      Discord.deliver_webhook(:flagged_country, user: user, country: country, source: source)
+    end
+
+    :ok
+  end
+
+  def check_age_range(%Preferences{agemin: 18, agemax: 18}, _), do: :ok
+
+  def check_age_range(_, %Preferences{agemin: 18, agemax: 18, profile_id: user_id}) do
+    if not ModerationEvent.repeated?(user_id, :flagged_age_range, %{}) do
+      user = Users.get(user_id)
+
+      ModerationEvent.create(:flagged_age_range, %{
+        user: user,
+        details: %{agemin: 18, agemax: 18}
+      })
+
+      Discord.deliver_webhook(:flagged_age_range, user: user)
+    end
+
+    :ok
+  end
+
+  def check_age_range(_, _), do: :ok
 
   def check_email_flags(_, nil), do: :ok
 

@@ -24,6 +24,8 @@ export const moderationEventTypes = [
 	"flagged_duplicate_image",
 	"flagged_registered_underage",
 	"flagged_honeypot",
+	"flagged_age_range",
+	"flagged_country",
 	"appealed",
 	"deleted",
 	"exit_survey"
@@ -48,6 +50,8 @@ export const reviewableModerationEventTypes: ReadonlyArray<ModerationEventType> 
 	"flagged_duplicate_image",
 	"flagged_registered_underage",
 	"flagged_honeypot",
+	"flagged_age_range",
+	"flagged_country",
 	"warn_acknowledged"
 ];
 

@@ -261,4 +261,7 @@ defmodule Flirtual.Countries do
   def list(), do: @countries
   def list(:iso_3166_1), do: @country_codes
   def list(:name), do: @country_names
+
+  def name(code),
+    do: Enum.find_value(@countries, &(to_string(&1.iso_3166_1) == to_string(code) && &1.name))
 end

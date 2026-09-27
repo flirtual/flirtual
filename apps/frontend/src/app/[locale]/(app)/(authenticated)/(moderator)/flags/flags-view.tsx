@@ -15,6 +15,7 @@ import { Flag } from "~/api/flag";
 import { Button } from "~/components/button";
 import { InputSelect, InputSwitch, InputText } from "~/components/inputs";
 import { ModelCard } from "~/components/model-card";
+import { getCountryImage, getCountryName } from "~/components/profile/pill/country";
 import {
 	Table,
 	TableBody,
@@ -23,9 +24,11 @@ import {
 	TableHeader,
 	TableRow
 } from "~/components/table";
+import { Tabs } from "~/components/tabs";
 import { TimeRelative } from "~/components/time-relative";
 import { MinimalTooltip } from "~/components/tooltip";
 import { useToast } from "~/hooks/use-toast";
+import { useLocale } from "~/i18n";
 import { invalidate, useMutation, useQuery } from "~/query";
 
 import { AddFlagForm } from "./add-flag-form";
@@ -70,14 +73,29 @@ const ColumnActions: FC<{ flag: FlagModel; type: FlagType }> = ({ flag, type }) 
 	);
 };
 
+function flagColumnName(type: FlagType) {
+	return type === "email" ? "Domain" : type === "country" ? "Country" : "Flag";
+}
+
+const CountryCell: FC<{ countryId: string }> = ({ countryId }) => {
+	const [locale] = useLocale();
+
+	return (
+		<span className="flex items-center gap-2">
+			<img className="aspect-[4/3] h-5 shrink-0 rounded" src={getCountryImage(countryId)} />
+			{getCountryName(locale, countryId) ?? countryId}
+		</span>
+	);
+};
+
 function flagColumns(type: FlagType): Array<ColumnDef<FlagModel>> {
 	return [
 		{
 			id: "flag",
-			header: type === "email" ? "Domain" : "Flag",
-			cell: ({ row: { original: flag } }) => (
-				<span className="font-mono">{flag.flag}</span>
-			)
+			header: flagColumnName(type),
+			cell: ({ row: { original: flag } }) => type === "country"
+				? <CountryCell countryId={flag.flag} />
+				: <span className="font-mono">{flag.flag}</span>
 		},
 		{
 			id: "updatedAt",
@@ -221,22 +239,22 @@ export const FlagsView: React.FC = () => {
 			title="Flags"
 		>
 			<div className="flex flex-col gap-4">
-				<div className="flex gap-2">
-					<InputSwitch
-						className="w-full"
-						no="Blocked email domains"
-						value={activeTab === "text"}
-						yes="Text flags"
-						onChange={(value) => setActiveTab(value ? "text" : "email")}
-					/>
-				</div>
+				<Tabs
+					tabs={[
+						{ id: "text", label: "Text flags" },
+						{ id: "email", label: "Blocked email domains" },
+						{ id: "country", label: "Flagged countries" }
+					]}
+					value={activeTab}
+					onChange={setActiveTab}
+				/>
 
 				<div className="grid gap-4 wide:grid-cols-2">
 					<div className="flex flex-col gap-2">
 						<span>Filter</span>
 						<InputText
 							Icon={Search}
-							placeholder={activeTab === "email" ? "Search domains" : "Search flags"}
+							placeholder={activeTab === "email" ? "Search domains" : activeTab === "country" ? "Search country codes" : "Search flags"}
 							value={searchOptions.search}
 							onChange={(value) =>
 								setSearchOptions((options) => ({
@@ -250,7 +268,7 @@ export const FlagsView: React.FC = () => {
 						<div className="flex items-center gap-2">
 							<InputSelect
 								options={[
-									{ id: "flag", name: activeTab === "email" ? "Domain" : "Flag" },
+									{ id: "flag", name: flagColumnName(activeTab) },
 									{ id: "updated_at", name: "Updated At" }
 								]}
 								value={searchOptions.sort}
