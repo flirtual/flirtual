@@ -1,0 +1,22 @@
+{
+	"name": "@flirtual/pulumi-listmonk",
+	"private": true,
+	"description": "Pulumi dynamic resources for Listmonk, driven through its REST API.",
+	"type": "module",
+	"exports": "./src/index.ts",
+	"scripts": {
+		"generate:api": "openapi-typescript https://raw.githubusercontent.com/knadh/listmonk/v6.2.0/docs/swagger/collections.yaml -o src/api.ts",
+		"postinstall": "pnpm generate:api"
+	},
+	"peerDependencies": {
+		"@pulumi/pulumi": "catalog:",
+		"openapi-fetch": "^0.17.0"
+	},
+	"devDependencies": {
+		"@pulumi/pulumi": "catalog:",
+		"@types/node": "^22",
+		"openapi-fetch": "^0.17.0",
+		"openapi-typescript": "^7.13.0",
+		"typescript": "catalog:"
+	}
+}
