@@ -7,6 +7,7 @@ defmodule Flirtual.Discord do
   alias Flirtual.AgeVerification
   alias Flirtual.Attribute
   alias Flirtual.Connection
+  alias Flirtual.Countries
   alias Flirtual.ObanWorkers
   alias Flirtual.Report
   alias Flirtual.RevenueCat
@@ -993,6 +994,71 @@ defmodule Flirtual.Discord do
           author: webhook_author(user),
           title: "Registration honeypot tripped",
           color: @default_color,
+          timestamp: DateTime.utc_now() |> DateTime.to_iso8601()
+        }
+      ],
+      components: [
+        %{
+          type: 1,
+          components: [
+            %{
+              type: 2,
+              label: "View profile",
+              style: 5,
+              url: User.url(user) |> URI.to_string()
+            }
+          ]
+        }
+      ]
+    })
+  end
+
+  def deliver_webhook(:flagged_age_range, user: %User{} = user) do
+    webhook(:moderation_flags, %{
+      embeds: [
+        %{
+          author: webhook_author(user),
+          title: "Age range flagged",
+          description: "18–18",
+          color: @warn_color,
+          timestamp: DateTime.utc_now() |> DateTime.to_iso8601()
+        }
+      ],
+      components: [
+        %{
+          type: 1,
+          components: [
+            %{
+              type: 2,
+              label: "View profile",
+              style: 5,
+              url: User.url(user) |> URI.to_string()
+            }
+          ]
+        }
+      ]
+    })
+  end
+
+  def deliver_webhook(:flagged_country, user: %User{} = user, country: country, source: source) do
+    webhook(:moderation_flags, %{
+      embeds: [
+        %{
+          author: webhook_author(user),
+          title: "Country flagged",
+          fields: [
+            %{
+              name: "Country",
+              value: Countries.name(country) || String.upcase(country),
+              inline: true
+            },
+            %{
+              name: "Source",
+              value: if(source == "ip", do: "IP address", else: "Profile"),
+              inline: true
+            }
+          ],
+          color: @warn_color,
           timestamp: DateTime.utc_now() |> DateTime.to_iso8601()
         }
       ],

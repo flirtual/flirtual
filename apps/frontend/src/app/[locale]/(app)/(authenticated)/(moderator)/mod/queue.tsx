@@ -1,6 +1,5 @@
 import { keepPreviousData, useInfiniteQuery } from "@tanstack/react-query";
 import { Search, X } from "lucide-react";
-import { m } from "motion/react";
 import type { FC } from "react";
 import { Suspense, useDeferredValue, useLayoutEffect, useMemo, useState } from "react";
 import { useInView } from "react-intersection-observer";
@@ -17,6 +16,7 @@ import { InputCheckbox, InputLabel, InputSwitch, InputText } from "~/components/
 import { ModelCard } from "~/components/model-card";
 import { ModerationEntryCard, toModerationEntries } from "~/components/moderation-entry";
 import type { ModerationEntry } from "~/components/moderation-entry";
+import { Tabs } from "~/components/tabs";
 import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
@@ -40,7 +40,7 @@ const categories: Record<Category, {
 	},
 	flags: {
 		label: "Flags",
-		types: ["flagged_keyword", "flagged_bio", "flagged_domain", "flagged_honeypot", "flagged_registered_underage"],
+		types: ["flagged_keyword", "flagged_bio", "flagged_domain", "flagged_honeypot", "flagged_registered_underage", "flagged_age_range", "flagged_country"],
 		reviewable: true
 	},
 	pics: {
@@ -99,6 +99,8 @@ const typeLabels: Record<ModerationEventType, string> = {
 	flagged_duplicate_image: "Duplicate Image",
 	flagged_registered_underage: "Prev. Underage",
 	flagged_honeypot: "Honeypot",
+	flagged_age_range: "Age Range",
+	flagged_country: "Country",
 	appealed: "Appealed",
 	deleted: "Deleted",
 	exit_survey: "Exit Survey"
@@ -120,64 +122,6 @@ const duplicateKinds = [
 ];
 
 const pageSize = 50;
-
-const Tabs: FC<{
-	tabs: Array<{ id: ModerationQueueTab; label: string }>;
-	value: ModerationQueueTab;
-	onChange: (value: ModerationQueueTab) => void;
-}> = ({ tabs, value, onChange }) => {
-	const index = tabs.findIndex(({ id }) => id === value);
-
-	function onKeyDown(event: React.KeyboardEvent<HTMLDivElement>) {
-		const next = {
-			ArrowLeft: index - 1,
-			ArrowRight: index + 1,
-			Home: 0,
-			End: tabs.length - 1
-		}[event.key];
-
-		if (next === undefined) return;
-		event.preventDefault();
-
-		const tab = tabs[(next + tabs.length) % tabs.length]!;
-		onChange(tab.id);
-
-		event.currentTarget
-			.querySelector(`[data-tab="${tab.id}"]`)
-			?.scrollIntoView({ block: "nearest", inline: "nearest" });
-	}
-
-	return (
-		<div
-			className="focusable-within relative isolate grid h-11 w-full shrink-0 cursor-pointer auto-cols-[minmax(max-content,1fr)] grid-flow-col items-center overflow-x-auto rounded-xl bg-white-30 shadow-brand-1 vision:bg-white-30/70 dark:bg-black-60"
-			role="tablist"
-			tabIndex={0}
-			onKeyDown={onKeyDown}
-		>
-			{tabs.map(({ id, label }) => (
-				<button
-					key={id}
-					aria-selected={id === value}
-					className="relative flex h-full items-center justify-center rounded-xl px-4 focus:outline-none aria-selected:text-white-10 vision:text-black-80"
-					data-tab={id}
-					role="tab"
-					tabIndex={-1}
-					type="button"
-					onClick={() => onChange(id)}
-				>
-					{id === value && (
-						<m.div
-							className="absolute inset-0 -z-10 rounded-xl bg-brand-gradient"
-							layoutId="moderation-queue-tab"
-							transition={{ type: "spring", duration: 0.3, bounce: 0.25 }}
-						/>
-					)}
-					{label}
-				</button>
-			))}
-		</div>
-	);
-};
 
 const Toggle: FC<{ id: string; label: string; value: boolean; onChange: (value: boolean) => void }> = ({ id, label, value, onChange }) => (
 	<div className="flex items-center gap-2">

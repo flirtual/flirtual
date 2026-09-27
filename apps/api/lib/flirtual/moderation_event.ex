@@ -28,6 +28,8 @@ defmodule Flirtual.ModerationEvent do
     :flagged_duplicate_image,
     :flagged_registered_underage,
     :flagged_honeypot,
+    :flagged_age_range,
+    :flagged_country,
     :appealed,
     :deleted,
     :exit_survey
@@ -82,7 +84,9 @@ defmodule Flirtual.ModerationEvent do
     :flagged_image,
     :flagged_duplicate_image,
     :flagged_registered_underage,
-    :flagged_honeypot
+    :flagged_honeypot,
+    :flagged_age_range,
+    :flagged_country
   ]
 
   @reviewable_types [:warn_acknowledged | @flag_types]

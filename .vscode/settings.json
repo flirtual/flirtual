@@ -1,6 +1,3 @@
 {
-	"files.exclude": {
-		"apps/": true
-	},
 	"elixirLS.useCurrentRootFolderAsProjectDir": true
 }
