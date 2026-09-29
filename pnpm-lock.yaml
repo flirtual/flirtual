@@ -347,7 +347,7 @@ importers:
         version: 2.2.0(react@19.2.8)
       '@marsidev/react-turnstile':
         specifier: ^1.5.3
-        version: 1.6.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+        version: 1.6.1(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       '@posthog/react':
         specifier: ^1.10.3
         version: 1.10.5(@types/react@19.2.18)(posthog-js@1.434.14(@types/react@19.2.18)(react@19.2.8))(react@19.2.8)
@@ -2339,8 +2339,8 @@ packages:
     resolution: {integrity: sha512-XGSsWDweP80Fks16lwkAUIr54ICyBs6PsI4mpfTLQaWgEJRtY9xEV+PeyDpJ+sJEGZxqINlpmAwe/6tS1pP8Ng==}
     engines: {node: '>=10.3.0'}
 
-  '@marsidev/react-turnstile@1.6.0':
-    resolution: {integrity: sha512-T2Um71ZdBgQBiyS01xgRMvDWk+mEsrLtXLFVhOC917OVEO584wbPOWj1sw35RaM17+q9QoADgLVcH60xr9NRqQ==}
+  '@marsidev/react-turnstile@1.6.1':
+    resolution: {integrity: sha512-ojI9NLYv821IRKi7KraTkxTto6KC/m58hNNyKxvYxm/cQBu5MI5eMkaiJs2JSQBFiXE3LPQI3seJVjv/2lgALA==}
     peerDependencies:
       react: ^17.0.2 || ^18.0.0 || ^19.0
       react-dom: ^17.0.2 || ^18.0.0 || ^19.0
@@ -10232,7 +10232,7 @@ snapshots:
 
   '@logdna/tail-file@2.2.0': {}
 
-  '@marsidev/react-turnstile@1.6.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
+  '@marsidev/react-turnstile@1.6.1(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
     dependencies:
       react: 19.2.8
       react-dom: 19.2.8(react@19.2.8)
