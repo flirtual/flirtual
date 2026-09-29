@@ -54,7 +54,7 @@ defmodule Flirtual.Listmonk do
           auth: {:basic, username <> ":" <> password},
           decode_body: false,
           retry: false,
-          finch: Flirtual.Finch
+          finch: [name: Flirtual.Finch]
         )
     end
   end

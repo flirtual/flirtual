@@ -98,11 +98,29 @@ defmodule Flirtual.Hash do
 
     if self == [], do: create(%{user_id: user_id, type: type, hash: hashed})
 
-    case duplicates do
-      [] ->
+    text = if(type == "IP address", do: IpAddress.anonymize(text), else: text)
+    duplicate_user_ids = duplicates |> Enum.map(& &1.user_id) |> Enum.reject(&is_nil/1)
+
+    duplicate_ban_urls =
+      duplicates
+      |> Enum.filter(&(is_nil(&1.user_id) and not is_nil(&1.suspended_url)))
+      |> Enum.map(& &1.suspended_url)
+
+    details = %{
+      type: type,
+      text: text,
+      duplicate_user_ids: duplicate_user_ids,
+      duplicate_ban_urls: duplicate_ban_urls
+    }
+
+    cond do
+      duplicates == [] ->
         :ok
 
-      _ ->
+      ModerationEvent.repeated?(user_id, :flagged_duplicate, %{type: type, text: text}) ->
+        :ok
+
+      true ->
         {named, anonymous} =
           duplicates
           |> Enum.split_with(fn
@@ -127,20 +145,7 @@ defmodule Flirtual.Hash do
             n -> ["#{n}x Banned user (not found)"]
           end
 
-        text = if(type == "IP address", do: IpAddress.anonymize(text), else: text)
-
-        ModerationEvent.create(:flagged_duplicate, %{
-          user_id: user_id,
-          details: %{
-            type: type,
-            text: text,
-            duplicate_user_ids: duplicates |> Enum.map(& &1.user_id) |> Enum.reject(&is_nil/1),
-            duplicate_ban_urls:
-              duplicates
-              |> Enum.filter(&(is_nil(&1.user_id) and not is_nil(&1.suspended_url)))
-              |> Enum.map(& &1.suspended_url)
-          }
-        })
+        ModerationEvent.create(:flagged_duplicate, %{user_id: user_id, details: details})
 
         Discord.deliver_webhook(:flagged_duplicate,
           user: Users.get(user_id),

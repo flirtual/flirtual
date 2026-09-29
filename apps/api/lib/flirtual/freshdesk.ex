@@ -50,7 +50,7 @@ defmodule Flirtual.Freshdesk do
            ],
            receive_timeout: 15_000,
            retry: false,
-           finch: Flirtual.Finch
+           finch: [name: Flirtual.Finch]
          ) do
       {:ok, %Req.Response{status: status, body: body}} when status in 200..299 ->
         {:ok, body}

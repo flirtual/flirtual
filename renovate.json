@@ -4,12 +4,15 @@
 		"config:best-practices"
 	],
 	"timezone": "America/New_York",
-	"rebaseWhen": "automerging",
+	"rebaseWhen": "conflicted",
+	"cloneSubmodules": true,
 	"semanticCommits": "enabled",
 	"semanticCommitScope": "{{#if parentDir}}{{parentDir}}{{else}}repo{{/if}}",
 	"osvVulnerabilityAlerts": true,
 	"dependencyDashboardOSVVulnerabilitySummary": "unresolved",
-	"prBodyTemplate": "{{{header}}}{{{table}}}{{{warnings}}}{{{notes}}}{{{changelogs}}}{{{controls}}}",
+	"prConcurrentLimit": 0,
+	"prHourlyLimit": 0,
+	"prBodyTemplate": "{{{header}}}{{{table}}}{{{warnings}}}{{{notes}}}{{{controls}}}{{{changelogs}}}",
 	"lockFileMaintenance": {
 		"enabled": true,
 		"automerge": true,
@@ -58,9 +61,12 @@
 	],
 	"packageRules": [
 		{
-			"description": "Custom managers capture no currentDigest group, so they cannot be pinned by digest",
 			"matchManagers": ["custom.regex"],
 			"pinDigests": false
+		},
+		{
+			"matchDatasources": ["hex"],
+			"minimumReleaseAge": "3 days"
 		},
 		{
 			"matchFileNames": [".github/**"],
@@ -142,7 +148,7 @@
 			"automerge": true
 		},
 		{
-			"matchDepTypes": ["devDependencies", "pnpm.catalog.default"],
+			"matchDepTypes": ["devDependencies", "pnpm.catalog.default", "pnpm.catalog.pulumi"],
 			"matchUpdateTypes": ["minor", "patch"],
 			"automerge": true
 		},

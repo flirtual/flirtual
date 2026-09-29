@@ -30,7 +30,7 @@ defmodule Flirtual.Disposable do
            url: @url,
            decode_body: false,
            retry: false,
-           finch: Flirtual.Finch
+           finch: [name: Flirtual.Finch]
          ) do
       {:ok, %Req.Response{status: 200, body: body}} ->
         domains = body |> String.split("\n", trim: true)

@@ -101,14 +101,25 @@ const SingleImage: React.FC<SingleImageProps> = (props) => {
 	);
 };
 
-const ImageToolbar: React.FC<{ image: ProfileImage; user: User }> = ({ image, user }) => {
+export const ImageToolbar: React.FC<{
+	userId?: string;
+	onDeleted?: () => Promise<unknown>;
+} & (
+	| { image: ProfileImage; url?: undefined }
+	| { image?: undefined; url: string }
+)> = ({ image, url, userId, onDeleted }) => {
 	const { t } = useTranslation();
 	const [locale] = useLocale();
 	const dialogs = useDialog();
 
 	const toasts = useToast();
 
-	const formattedUploadTime = new Intl.RelativeTimeFormat(locale).format(
+	const deleted = async () => {
+		if (userId) await invalidate({ queryKey: userKey(userId) });
+		await onDeleted?.();
+	};
+
+	const formattedUploadTime = image && new Intl.RelativeTimeFormat(locale).format(
 		Math.round((new Date(image.createdAt).getTime() - Date.now()) / (1000 * 60 * 60 * 24)),
 		"day"
 	);
@@ -116,13 +127,15 @@ const ImageToolbar: React.FC<{ image: ProfileImage; user: User }> = ({ image, us
 	return (
 		<div className="flex w-full items-center justify-between gap-4 bg-brand-gradient p-4 text-white-20">
 			<div className="select-children">
-				<Trans
-					values={{
-						uploaded: formattedUploadTime
-					}}
-					i18nKey="uploaded_date"
-				/>
-				{image.authorId && image.worldId && (
+				{formattedUploadTime && (
+					<Trans
+						values={{
+							uploaded: formattedUploadTime
+						}}
+						i18nKey="uploaded_date"
+					/>
+				)}
+				{image?.authorId && image.worldId && (
 					<>
 						{" "}
 						<Trans
@@ -152,7 +165,7 @@ const ImageToolbar: React.FC<{ image: ProfileImage; user: User }> = ({ image, us
 								onClick={() => {
 									const dialog = (
 										<SearchImageDialog
-											source={{ imageId: image.id }}
+											source={image ? { imageId: image.id } : { url }}
 											onClose={() => dialogs.remove(dialog)}
 										/>
 									);
@@ -168,7 +181,7 @@ const ImageToolbar: React.FC<{ image: ProfileImage; user: User }> = ({ image, us
 						<TooltipTrigger asChild>
 							<button
 								type="button"
-								onClick={() => reverseSearch(urls.image(image, "full"))}
+								onClick={() => reverseSearch(image ? urls.image(image, "full") : url)}
 							>
 								<Search className="size-5" strokeWidth={2} />
 							</button>
@@ -176,66 +189,68 @@ const ImageToolbar: React.FC<{ image: ProfileImage; user: User }> = ({ image, us
 						<TooltipContent>{t("search_image_external")}</TooltipContent>
 					</Tooltip>
 				</div>
-				<div className="flex gap-4">
-					<AlertDialog>
+				{image && (
+					<div className="flex gap-4">
+						<AlertDialog>
+							<Tooltip>
+								<TooltipTrigger asChild>
+									<AlertDialogTrigger asChild>
+										<button type="button">
+											<Siren className="size-5" />
+										</button>
+									</AlertDialogTrigger>
+								</TooltipTrigger>
+								<TooltipContent>Delete illegal image</TooltipContent>
+							</Tooltip>
+							<AlertDialogContent>
+								<AlertDialogHeader>
+									<AlertDialogTitle>Delete illegal image?</AlertDialogTitle>
+								</AlertDialogHeader>
+								<AlertDialogDescription>
+									The image will be quarantined to meet legal reporting requirements.
+								</AlertDialogDescription>
+								<DialogFooter>
+									<AlertDialogCancel asChild>
+										<Button kind="tertiary" size="sm">
+											{t("cancel")}
+										</Button>
+									</AlertDialogCancel>
+									<AlertDialogAction asChild>
+										<Button
+											size="sm"
+											onClick={async () => {
+												await ProfileImage.deleteIllegal(image.id)
+													.then(() => toasts.add(t("image_deleted")))
+													.catch(toasts.addError);
+
+												await deleted();
+											}}
+										>
+											{t("delete_image")}
+										</Button>
+									</AlertDialogAction>
+								</DialogFooter>
+							</AlertDialogContent>
+						</AlertDialog>
 						<Tooltip>
 							<TooltipTrigger asChild>
-								<AlertDialogTrigger asChild>
-									<button type="button">
-										<Siren className="size-5" />
-									</button>
-								</AlertDialogTrigger>
+								<button
+									type="button"
+									onClick={async () => {
+										await ProfileImage.delete(image.id)
+											.then(() => toasts.add(t("image_deleted")))
+											.catch(toasts.addError);
+
+										await deleted();
+									}}
+								>
+									<Trash2 className="size-5" />
+								</button>
 							</TooltipTrigger>
-							<TooltipContent>Delete illegal image</TooltipContent>
+							<TooltipContent>{t("delete_image")}</TooltipContent>
 						</Tooltip>
-						<AlertDialogContent>
-							<AlertDialogHeader>
-								<AlertDialogTitle>Delete illegal image?</AlertDialogTitle>
-							</AlertDialogHeader>
-							<AlertDialogDescription>
-								The image will be quarantined to meet legal reporting requirements.
-							</AlertDialogDescription>
-							<DialogFooter>
-								<AlertDialogCancel asChild>
-									<Button kind="tertiary" size="sm">
-										{t("cancel")}
-									</Button>
-								</AlertDialogCancel>
-								<AlertDialogAction asChild>
-									<Button
-										size="sm"
-										onClick={async () => {
-											await ProfileImage.deleteIllegal(image.id)
-												.then(() => toasts.add(t("image_deleted")))
-												.catch(toasts.addError);
-
-											await invalidate({ queryKey: userKey(user.id) });
-										}}
-									>
-										{t("delete_image")}
-									</Button>
-								</AlertDialogAction>
-							</DialogFooter>
-						</AlertDialogContent>
-					</AlertDialog>
-					<Tooltip>
-						<TooltipTrigger asChild>
-							<button
-								type="button"
-								onClick={async () => {
-									await ProfileImage.delete(image.id)
-										.then(() => toasts.add(t("image_deleted")))
-										.catch(toasts.addError);
-
-									await invalidate({ queryKey: userKey(user.id) });
-								}}
-							>
-								<Trash2 className="size-5" />
-							</button>
-						</TooltipTrigger>
-						<TooltipContent>{t("delete_image")}</TooltipContent>
-					</Tooltip>
-				</div>
+					</div>
+				)}
 			</div>
 		</div>
 	);
@@ -417,7 +432,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 									)}
 								</div>
 								{session?.user?.tags?.includes("moderator") && (
-									<ImageToolbar image={currentImage} user={user} />
+									<ImageToolbar image={currentImage} userId={user.id} />
 								)}
 							</DialogContent>
 						</Dialog>

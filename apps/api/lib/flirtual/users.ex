@@ -114,7 +114,10 @@ defmodule Flirtual.Users do
                 skip_invalid_leap_day(born_at.year + 18, born_at.month, born_at.day)
                 |> DateTime.new!(~T[00:00:00], "Etc/UTC")
 
-              if DateTime.after?(turns_18_utc, user.created_at) do
+              if DateTime.after?(turns_18_utc, user.created_at) and
+                   not ModerationEvent.repeated?(user.id, :flagged_registered_underage, %{
+                     born_at: born_at
+                   }) do
                 ModerationEvent.create(:flagged_registered_underage, %{
                   user: user,
                   details: %{
@@ -537,6 +540,7 @@ defmodule Flirtual.Users do
       fn ->
         with {:ok, attrs} <- Delete.apply(attrs, context: %{user: user}),
              :ok <- Hash.delete(user.id),
+             :ok <- ModerationEvent.delete_user_events(user.id),
              :ok <- Image.delete_user_objects(user.id),
              {:ok, user} <- Repo.delete(user, timeout: @delete_timeout),
              :ok <- Flirtual.Search.delete_users([user.id]),
@@ -546,6 +550,12 @@ defmodule Flirtual.Users do
              :ok <- RevenueCat.cancel_subscriptions(user),
              :ok <- RevenueCat.delete_customer(user),
              :ok <- enqueue_revocations(user),
+             {:ok, _} <-
+               ModerationEvent.create(:exit_survey, %{
+                 reason: attrs.reason,
+                 message: attrs.comment,
+                 details: exit_survey_details(user)
+               }),
              :ok <-
                Discord.deliver_webhook(:exit_survey,
                  user: user,
@@ -562,10 +572,24 @@ defmodule Flirtual.Users do
     )
   end
 
+  defp exit_survey_details(%User{} = user) do
+    if user.preferences.privacy.analytics do
+      %{
+        age: get_years_since(user.born_at),
+        gender_ids: user.profile.attributes |> filter_by(:type, "gender") |> Enum.map(& &1.id),
+        looking_for_ids:
+          user.profile.preferences.attributes |> filter_by(:type, "gender") |> Enum.map(& &1.id)
+      }
+    else
+      %{}
+    end
+  end
+
   def admin_delete(%User{} = user) do
     Repo.transaction(
       fn ->
         with :ok <- delete_hashes(user),
+             :ok <- delete_events(user),
              :ok <- Image.delete_user_objects(user.id),
              :ok <- retain_image_hashes(user),
              {:ok, user} <- Repo.delete(user, timeout: @delete_timeout),
@@ -588,6 +612,11 @@ defmodule Flirtual.Users do
 
   defp delete_hashes(%User{banned_at: nil} = user), do: Hash.delete(user.id)
   defp delete_hashes(%User{}), do: :ok
+
+  defp delete_events(%User{banned_at: nil} = user),
+    do: ModerationEvent.delete_user_events(user.id)
+
+  defp delete_events(%User{}), do: :ok
 
   defp retain_image_hashes(%User{banned_at: nil}), do: :ok
 

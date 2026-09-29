@@ -67,14 +67,12 @@ python:
 
 java-kotlin:
   - apps/frontend/android/**
+  - apps/frontend/capacitor.config.ts
   - .github/workflows/codeql.yaml
-  - *capacitor
-  - *workspace
   - *self
 
 swift:
   - apps/frontend/ios/**
+  - apps/frontend/capacitor.config.ts
   - .github/workflows/codeql.yaml
-  - *capacitor
-  - *workspace
   - *self

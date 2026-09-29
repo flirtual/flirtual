@@ -220,13 +220,8 @@ defmodule FlirtualWeb.MatchmakingController do
     variant = if Entitlement.premium?(user.entitlements), do: "icon", else: "blur"
 
     profile_ids =
-      LikesAndPasses.list_unrequited(
-        profile_id: user.id,
-        cursor: %LikesAndPasses.Cursor{limit: 3}
-      )
-      |> elem(0)
+      LikesAndPasses.list_unrequited(profile_id: user.id, limit: 3)
       |> Enum.reverse()
-      |> Enum.map(& &1.profile_id)
 
     images_by_profile =
       Image

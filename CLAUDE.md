@@ -28,21 +28,15 @@ Frontend → `/v1/*` (wretch) → Phoenix router (`lib/flirtual_web/router.ex`, 
 controllers → context modules → Ecto. Oban runs async/scheduled work (email/push, TalkJS/Listmonk
 sync, session/account pruning).
 
-## Environment
-
-```sh
-# Commands needing local env + secrets (run in apps/api or apps/frontend)
-source .env.local
-bws run --project-id $BWS_PROJECT_ID -- [command]   # e.g. `iex -S mix phx.server`, `pnpm dev`
-```
-
-Per-app build/run/deploy commands live in each app's CLAUDE.md.
-
 ## pnpm workspace
 
-One workspace at the repo root: `pnpm-workspace.yaml` (`apps/*`) and a single `pnpm-lock.yaml`.
-`pnpm install` from anywhere installs every app; `packageManager` lives only in the root
-`package.json`.
+One workspace at the repo root: `pnpm-workspace.yaml` (`apps/*`, `packages/*`, `pulumi`) and a
+single `pnpm-lock.yaml`. `pnpm install` from anywhere installs every app; `packageManager` lives
+only in the root `package.json`.
+
+- `packages/` holds libraries used by other members: `packages/pulumi-fly` and
+  `packages/pulumi-listmonk` are the Fly.io and Listmonk dynamic providers behind the `pulumi`
+  submodule. CI doesn't check out the submodule, and a frozen install skips it.
 
 - Versions shared by more than one app (`typescript`, `eslint`, `wrangler`, `vitest`, …) live in
   the root `catalog:` and are referenced as `"typescript": "catalog:"`. Bump them there, not in the

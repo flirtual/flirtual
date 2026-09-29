@@ -5,7 +5,7 @@ defmodule Flirtual.User.Login do
   import Ecto.Query
   import FlirtualWeb.Utilities
 
-  alias Flirtual.{Hash, Repo, User}
+  alias Flirtual.{Flag, Hash, Repo, User}
   alias Flirtual.User.{Login, Session}
 
   schema "logins" do
@@ -89,6 +89,11 @@ defmodule Flirtual.User.Login do
              if(status == "successful" and not is_nil(user_id),
                do: maybe_lock_dob(user_id, ip_region),
                else: :ok
+             ),
+           :ok <-
+             if(status == "successful" and not is_nil(user_id),
+               do: Flag.check_ip_country(user_id, ip_region),
+               else: :ok
              ) do
         login
       else
@@ -113,9 +118,31 @@ defmodule Flirtual.User.Login do
   end
 
   def verify(login_id, session_id) do
+    {_, logins} =
+      Login
+      |> where([login], login.id == ^login_id)
+      |> select([login], login)
+      |> Repo.update_all(set: [status: "successful", session_id: session_id])
+
+    Enum.each(logins, &Flag.check_ip_country(&1.user_id, &1.ip_region))
+  end
+
+  # Most recent first; `ip_region` is "<region>, <country>" or a bare country.
+  def locations(user_id, precision) when precision in [:region, :country] do
+    location =
+      case precision do
+        :region -> dynamic([login], login.ip_region)
+        :country -> dynamic([login], fragment("regexp_replace(?, '^.*, ', '')", login.ip_region))
+      end
+
     Login
-    |> where([login], login.id == ^login_id)
-    |> Repo.update_all(set: [status: "successful", session_id: session_id])
+    |> where([login], login.user_id == ^user_id)
+    |> where([login], login.status in ["successful", "untrusted"])
+    |> where([login], not is_nil(login.ip_region) and login.ip_region != "Unknown")
+    |> group_by(^[location])
+    |> order_by([login], desc: max(login.created_at))
+    |> select(^location)
+    |> Repo.all()
   end
 
   def untrust(user_id) do

@@ -5,7 +5,7 @@ import type { Expand } from "~/utilities";
 import { api } from "./common";
 import type { Paginate, PaginateOptions, UpdatedAtModel, UuidModel } from "./common";
 
-export type FlagType = "email" | "text" | "username";
+export type FlagType = "country" | "email" | "text" | "username";
 
 export type Flag = Expand<
 	{

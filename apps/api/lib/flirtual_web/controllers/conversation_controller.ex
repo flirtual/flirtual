@@ -19,8 +19,8 @@ defmodule FlirtualWeb.ConversationController do
       {:error, :not_found} ->
         {:error, {:not_found, :conversation_not_found}}
 
-      {:error, :unauthorized} ->
-        {:error, {:forbidden, :not_conversation_participant}}
+      {:error, {:unauthorized, _}} ->
+        {:error, {:not_found, :conversation_not_found}}
 
       {:error, :upstream} ->
         {:error, {:bad_gateway, :upstream}}
@@ -75,8 +75,8 @@ defmodule FlirtualWeb.ConversationController do
       {:error, :not_found} ->
         {:error, {:not_found, :conversation_not_found}}
 
-      {:error, :unauthorized} ->
-        {:error, {:forbidden, :not_conversation_participant}}
+      {:error, {:unauthorized, _}} ->
+        {:error, {:not_found, :conversation_not_found}}
 
       reason ->
         reason

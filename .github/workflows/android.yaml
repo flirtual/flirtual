@@ -1,3 +1,4 @@
+name: Android
 on:
   push:
     branches: [main]

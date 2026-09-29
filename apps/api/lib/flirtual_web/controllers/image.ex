@@ -13,11 +13,11 @@ defmodule FlirtualWeb.ImageController do
   @ten_megabytes 10_000_000
 
   # Profiles with an image matching the uploaded image.
-  def search(conn, _params) do
+  def search(conn, params) do
     if Policy.cannot?(conn, :search, conn.assigns[:session].user) do
       {:error, {:forbidden, :missing_permission}}
     else
-      with {:ok, body, conn} <- read_body(conn, length: @ten_megabytes),
+      with {:ok, body} <- search_image(conn, params),
            true <- byte_size(body) > 0,
            {:ok, {hash, flipped}} <- ImageClassification.hash(body) do
         hashes =
@@ -27,9 +27,17 @@ defmodule FlirtualWeb.ImageController do
       else
         false -> {:error, {:bad_request, :empty_body}}
         {:more, _, _conn} -> {:error, {:bad_request, :image_too_large}}
+        {:error, :forbidden_origin} -> {:error, {:bad_request, :forbidden_origin}}
+        {:error, :not_found} -> {:error, {:not_found, :image_not_found}}
         {:error, _} -> {:error, {:unprocessable_entity, :hash_failed}}
       end
     end
+  end
+
+  defp search_image(_conn, %{"url" => url}) when is_binary(url), do: Image.fetch(url)
+
+  defp search_image(conn, _) do
+    with {:ok, body, _conn} <- read_body(conn, length: @ten_megabytes), do: {:ok, body}
   end
 
   # Profiles with an image matching an existing image's hash.
@@ -304,8 +312,10 @@ defmodule FlirtualWeb.ImageController do
     ModerationEvent.create(:image_removed, %{
       user: image_owner,
       moderator: moderator,
-      details: %{image_id: image.id, image_url: image_url}
+      details: %{image_id: image.id, image_url: image_url, hash: image.hash}
     })
+
+    ModerationEvent.review_removed_image(image.id, moderator)
 
     Discord.deliver_webhook(:removed_image,
       user: image_owner,
@@ -325,8 +335,9 @@ defmodule FlirtualWeb.ImageController do
            ModerationEvent.create(:image_quarantined, %{
              user: image_owner,
              moderator: user,
-             details: %{image_id: image.id, key: key}
+             details: %{image_id: image.id, key: key, hash: image.hash}
            }),
+         {_, _} <- ModerationEvent.review_removed_image(image.id, user),
          :ok <-
            Discord.deliver_webhook(:illegal_image,
              user: image_owner,
