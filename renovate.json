@@ -65,10 +65,6 @@
 			"pinDigests": false
 		},
 		{
-			"matchFileNames": ["pulumi/**"],
-			"enabled": false
-		},
-		{
 			"matchDatasources": ["hex"],
 			"minimumReleaseAge": "3 days"
 		},
