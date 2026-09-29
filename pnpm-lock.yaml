@@ -199,8 +199,8 @@ catalogs:
       specifier: ^7.46.0
       version: 7.48.0
     '@pulumi/cloudflare':
-      specifier: 6.18.0
-      version: 6.18.0
+      specifier: 6.21.0
+      version: 6.21.0
     '@pulumi/command':
       specifier: 1.2.1
       version: 1.2.1
@@ -869,7 +869,7 @@ importers:
         version: file:pulumi/sdks/chargebee(supports-color@10.2.2)
       '@pulumi/cloudflare':
         specifier: catalog:pulumi
-        version: 6.18.0(supports-color@10.2.2)(typescript@5.9.3)
+        version: 6.21.0(supports-color@10.2.2)(typescript@5.9.3)
       '@pulumi/command':
         specifier: catalog:pulumi
         version: 1.2.1(supports-color@10.2.2)(typescript@5.9.3)
@@ -3258,8 +3258,8 @@ packages:
   '@pulumi/chargebee@file:pulumi/sdks/chargebee':
     resolution: {directory: pulumi/sdks/chargebee, type: directory}
 
-  '@pulumi/cloudflare@6.18.0':
-    resolution: {integrity: sha512-L49neVgL7crzUKr+lfNYAmooqnmSGPg6TN8+PXouxyjojjwMdRM3WLNPkUxYu3vqr0WhD86afqdujee1Kz4R9w==}
+  '@pulumi/cloudflare@6.21.0':
+    resolution: {integrity: sha512-IW8oBur+LcdXt2/Gv29P8TNxI7ILL+ZC2LKo8QtDcmCjQL5KFuR1A9rh0OxGEn08zPWxpMfHT6o1wZ5s0q3DIw==}
 
   '@pulumi/command@1.2.1':
     resolution: {integrity: sha512-mutNDIUYP67yCBYOVIidQyxuTwZDY9v/sx9EGbgIv4PXfyfolOKGgGLeoHEbI1lxRwaw2wbTZ3VNIynDnA5VKA==}
@@ -10855,7 +10855,7 @@ snapshots:
       - supports-color
       - ts-node
 
-  '@pulumi/cloudflare@6.18.0(supports-color@10.2.2)(typescript@5.9.3)':
+  '@pulumi/cloudflare@6.21.0(supports-color@10.2.2)(typescript@5.9.3)':
     dependencies:
       '@pulumi/pulumi': 3.253.0(supports-color@10.2.2)(typescript@5.9.3)
     transitivePeerDependencies:
