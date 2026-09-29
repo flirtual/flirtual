@@ -10,6 +10,8 @@
 	"semanticCommitScope": "{{#if parentDir}}{{parentDir}}{{else}}repo{{/if}}",
 	"osvVulnerabilityAlerts": true,
 	"dependencyDashboardOSVVulnerabilitySummary": "unresolved",
+	"prConcurrentLimit": 0,
+	"prHourlyLimit": 0,
 	"prBodyTemplate": "{{{header}}}{{{table}}}{{{warnings}}}{{{notes}}}{{{changelogs}}}{{{controls}}}",
 	"lockFileMaintenance": {
 		"enabled": true,
