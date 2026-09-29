@@ -335,7 +335,7 @@ importers:
         version: 5.3.12
       '@formatjs/intl-numberformat':
         specifier: ^9.3.13
-        version: 9.4.0
+        version: 9.4.3
       '@formatjs/intl-pluralrules':
         specifier: ^6.3.12
         version: 6.3.15
@@ -1827,14 +1827,11 @@ packages:
   '@formatjs/intl-locale@5.3.12':
     resolution: {integrity: sha512-bI5CrvuC6A5PMOIiHX+6ETTHXzUofHw1U/fkI59sQJ+BFbkglxIVVncFPxHf4IHmAqAs/Rlp2bdzTEcLaq2tQw==}
 
-  '@formatjs/intl-localematcher@0.8.13':
-    resolution: {integrity: sha512-kHEAFOkeJSPNi7c5PaKaRjxcBrJwzzt81ifUu+8uve1EDW/VJl83KsxmqgqNZLzcFEhSliZGvx3+pk/RH0IOmg==}
-
   '@formatjs/intl-localematcher@0.9.0':
     resolution: {integrity: sha512-Z7TD3ssNry1Av1dVDoq/mzpxGyxqWwU0ClWEo+BB3k0JQTeQvUGmeK9WZGYvlqStS0UqkaKXk3dfjsb6NaHAxw==}
 
-  '@formatjs/intl-numberformat@9.4.0':
-    resolution: {integrity: sha512-j7H3YoHOdfYjESj3yU9Aw/SApIBd3H91D87HpplkPWs0aIR7MOs9wh6GN8GSLKJQy6zXuK4d0Bgng5h+3JkrJg==}
+  '@formatjs/intl-numberformat@9.4.3':
+    resolution: {integrity: sha512-absVu2I7FlWl+Buictw2PL8Fl385uab3bEA3TCCTu+0DBHHFE+RTbmPmj0nUVO82U1b2Qw3/OA2I7KKLI48EpQ==}
 
   '@formatjs/intl-pluralrules@6.3.15':
     resolution: {integrity: sha512-/K6Up6SrvLcTP5mWVHp58A9Uk7I4jYbDYqtYdgKDeSY1HG0bhBMS4eVtqK2nFx8mWWdcHbt9ZqHBcCto573PNg==}
@@ -9723,18 +9720,14 @@ snapshots:
       '@formatjs/intl-getcanonicallocales': 3.2.12
       '@formatjs/intl-supportedvaluesof': 2.3.11
 
-  '@formatjs/intl-localematcher@0.8.13':
-    dependencies:
-      '@formatjs/fast-memoize': 3.1.7
-
   '@formatjs/intl-localematcher@0.9.0':
     dependencies:
       '@formatjs/fast-memoize': 3.1.7
 
-  '@formatjs/intl-numberformat@9.4.0':
+  '@formatjs/intl-numberformat@9.4.3':
     dependencies:
       '@formatjs/bigdecimal': 0.2.7
-      '@formatjs/intl-localematcher': 0.8.13
+      '@formatjs/intl-localematcher': 0.9.0
 
   '@formatjs/intl-pluralrules@6.3.15':
     dependencies:
