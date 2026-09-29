@@ -57,7 +57,7 @@ defmodule Flirtual.MixProject do
       {:myxql, "~> 0.9.0"},
       {:ex_aws, "~> 2.5"},
       {:ex_aws_s3, "~> 2.5"},
-      {:chargebeex, "~> 0.9.0"},
+      {:chargebeex, "~> 0.10.0"},
       {:phoenix_html, "~> 4.1"},
       {:faker, "~> 0.19.0"},
       {:recase, "~> 0.9.0"},
