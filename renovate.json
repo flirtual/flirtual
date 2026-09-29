@@ -148,7 +148,7 @@
 			"automerge": true
 		},
 		{
-			"matchDepTypes": ["devDependencies", "pnpm.catalog.default"],
+			"matchDepTypes": ["devDependencies", "pnpm.catalog.default", "pnpm.catalog.pulumi"],
 			"matchUpdateTypes": ["minor", "patch"],
 			"automerge": true
 		},
