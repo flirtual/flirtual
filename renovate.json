@@ -5,6 +5,7 @@
 	],
 	"timezone": "America/New_York",
 	"rebaseWhen": "automerging",
+	"cloneSubmodules": true,
 	"semanticCommits": "enabled",
 	"semanticCommitScope": "{{#if parentDir}}{{parentDir}}{{else}}repo{{/if}}",
 	"osvVulnerabilityAlerts": true,
@@ -61,6 +62,11 @@
 			"description": "Custom managers capture no currentDigest group, so they cannot be pinned by digest",
 			"matchManagers": ["custom.regex"],
 			"pinDigests": false
+		},
+		{
+			"description": "The pulumi submodule is cloned only so lockfile updates keep its importer; Renovate cannot commit inside a submodule",
+			"matchFileNames": ["pulumi/**"],
+			"enabled": false
 		},
 		{
 			"matchFileNames": [".github/**"],
