@@ -1,8 +1,6 @@
 # syntax = docker/dockerfile:1@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4d8cad5f295fc32
 
-ARG NODE_VERSION=22.23.1
-
-FROM node:${NODE_VERSION}-slim AS base
+FROM node:24.20.0-bookworm-slim@sha256:ba849c60be29959425b8734d57b8b4b7d56f98edd9504c9af091d5281095a71e AS base
 
 LABEL fly_launch_runtime="NodeJS"
 WORKDIR /app
