@@ -20,7 +20,7 @@
 	},
 	"devDependencies": {
 		"@cloudflare/vitest-pool-workers": "catalog:",
-		"@types/node": "25.9.5",
+		"@types/node": "25.9.8",
 		"tus-js-client": "4.3.1",
 		"typescript": "catalog:",
 		"vitest": "catalog:",
