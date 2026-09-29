@@ -393,7 +393,7 @@ importers:
         version: 1.104.0
       shepherd.js:
         specifier: ^15.2.3
-        version: 15.2.3
+        version: 15.3.0
       tailwind-merge:
         specifier: ^3.6.0
         version: 3.6.0
@@ -5040,9 +5040,9 @@ packages:
   deep-is@0.1.4:
     resolution: {integrity: sha512-oIPzksmTg4/MriiaYGO+okXDT7ztn/w3Eptv/+gSIdMdKsJo0u4CfYNFJPy+4SKMuCqGw2wxnA+URMg3t8a/bQ==}
 
-  deepmerge-ts@8.0.1:
-    resolution: {integrity: sha512-szCXE7YLCvLKR9bFPJcvsezOShdalctSvrgN/LM/QGUEPZQajwjmsMObZ6/DuANT5lxzM/wtO8Feubwdkz8myA==}
-    engines: {node: '>=16.0.0'}
+  deepmerge-ts@8.0.2:
+    resolution: {integrity: sha512-uqbvqLUMrc6p0MO+WBRtTxY55hmyh94WRwI5a++PZe54X+bfVh59FSN7uWCBCW1CCVjzjnrwzfI8zidE2obMMw==}
+    engines: {node: '>=16.9.0'}
 
   deepmerge@4.3.1:
     resolution: {integrity: sha512-3sUqbMEc77XqpdNO7FRyRog+eW3ph+GYCbj+rK+uYyRMuwsVy0rMiVtPn+QJlKFvWP/1PYpapqYn0Me2knFn+A==}
@@ -7514,8 +7514,8 @@ packages:
     resolution: {integrity: sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==}
     engines: {node: '>=8'}
 
-  shepherd.js@15.2.3:
-    resolution: {integrity: sha512-FyLH/c25YlTS5d+cL9oLajzfW0TzNl43sysQG6EK4bf60n9les7TsIUekHTTKyMEtcARIVHW2d1N9sqeDkIsbQ==}
+  shepherd.js@15.3.0:
+    resolution: {integrity: sha512-A9plZQ1qGX1aDLTrX0cbVowdnE0mOc1pjRie7O9c2cQHiDHI1zaxH2fVe65WH/2ch5nbK0JPu+vQecD7WYw5zw==}
     engines: {node: '>= 20'}
 
   side-channel-list@1.0.1:
@@ -13082,7 +13082,7 @@ snapshots:
 
   deep-is@0.1.4: {}
 
-  deepmerge-ts@8.0.1: {}
+  deepmerge-ts@8.0.2: {}
 
   deepmerge@4.3.1: {}
 
@@ -16472,10 +16472,10 @@ snapshots:
 
   shebang-regex@3.0.0: {}
 
-  shepherd.js@15.2.3:
+  shepherd.js@15.3.0:
     dependencies:
       '@floating-ui/dom': 1.8.0
-      deepmerge-ts: 8.0.1
+      deepmerge-ts: 8.0.2
 
   side-channel-list@1.0.1:
     dependencies:
