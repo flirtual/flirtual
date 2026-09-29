@@ -21,7 +21,7 @@ permissions:
 concurrency:
   group: renovate
 env:
-  cache_dir: /tmp/renovate/cache/renovate/repository
+  cache_dir: /tmp/renovate/cache
   cache_key: renovate-cache
 jobs:
   renovate:
@@ -44,12 +44,14 @@ jobs:
           private-key: ${{ secrets.RENOVATE_APP_PRIVATE_KEY }}
           repositories: flirtual,pulumi
 
-      - name: Restore repository cache
+      - name: Restore Renovate cache
         id: cache-restore
         if: github.event.inputs.repoCache != 'disabled' && github.event.inputs.repoCache != 'reset'
         uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
         with:
-          path: ${{ env.cache_dir }}
+          path: |
+            ${{ env.cache_dir }}
+            !${{ env.cache_dir }}/others/pnpm/store
           key: ${{ env.cache_key }}-${{ github.run_id }}-${{ github.run_attempt }}
           restore-keys: |
             ${{ env.cache_key }}-
@@ -70,9 +72,11 @@ jobs:
           RENOVATE_BINARY_SOURCE: global
           RENOVATE_REPOSITORY_CACHE: ${{ github.event.inputs.repoCache || 'enabled' }}
 
-      - name: Save repository cache
+      - name: Save Renovate cache
         if: github.event.inputs.repoCache != 'disabled' && steps.cache-restore.outputs.cache-hit != 'true'
         uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
         with:
-          path: ${{ env.cache_dir }}
+          path: |
+            ${{ env.cache_dir }}
+            !${{ env.cache_dir }}/others/pnpm/store
           key: ${{ env.cache_key }}-${{ github.run_id }}-${{ github.run_attempt }}
