@@ -14,12 +14,11 @@ on:
           - reset
   issues:
     types: [edited]
-  pull_request:
+  pull_request_target:
     types: [edited]
+    branches: [main]
 permissions:
   contents: read
-concurrency:
-  group: renovate
 env:
   cache_dir: /tmp/renovate/cache
   cache_key: renovate-cache
@@ -28,10 +27,12 @@ jobs:
     name: Renovate
     runs-on: ubuntu-latest
     if: >-
-      (github.event_name != 'issues' && github.event_name != 'pull_request')
+      (github.event_name != 'issues' && github.event_name != 'pull_request_target')
       || (github.event.sender.id != 317127550
       && (github.event.issue.user.id == 317127550
       || github.event.pull_request.user.id == 317127550))
+    concurrency:
+      group: renovate
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
