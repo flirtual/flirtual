@@ -59,7 +59,7 @@ defmodule Flirtual.Google do
              headers: [{"content-type", "application/x-www-form-urlencoded"}],
              decode_body: false,
              retry: false,
-             finch: Flirtual.Finch
+             finch: [name: Flirtual.Finch]
            ),
          {:ok, %{"id_token" => id_token} = response} <- Jason.decode(body) do
       {:ok,
@@ -109,7 +109,7 @@ defmodule Flirtual.Google do
            headers: [{"content-type", "application/x-www-form-urlencoded"}],
            decode_body: false,
            retry: false,
-           finch: Flirtual.Finch
+           finch: [name: Flirtual.Finch]
          ) do
       {:ok, %Req.Response{status: status}} when status in [200, 400] ->
         # 400 is already invalid/expired.

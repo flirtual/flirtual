@@ -44,7 +44,7 @@ defmodule Flirtual.Yoti do
              headers: headers,
              receive_timeout: 15_000,
              retry: false,
-             finch: Flirtual.Finch
+             finch: [name: Flirtual.Finch]
            ) do
       {:ok,
        %{
@@ -68,7 +68,7 @@ defmodule Flirtual.Yoti do
              headers: headers,
              receive_timeout: 15_000,
              retry: false,
-             finch: Flirtual.Finch
+             finch: [name: Flirtual.Finch]
            ) do
       {:ok, body}
     else
@@ -88,7 +88,7 @@ defmodule Flirtual.Yoti do
              headers: headers,
              receive_timeout: 15_000,
              retry: false,
-             finch: Flirtual.Finch
+             finch: [name: Flirtual.Finch]
            ) do
       {:ok, List.first(results)}
     else
@@ -130,7 +130,7 @@ defmodule Flirtual.Yoti do
              ],
              receive_timeout: 15_000,
              retry: false,
-             finch: Flirtual.Finch
+             finch: [name: Flirtual.Finch]
            ) do
       {:ok, access_token, body["expires_in"] || 1800}
     else

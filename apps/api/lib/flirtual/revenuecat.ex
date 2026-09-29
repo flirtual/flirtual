@@ -52,7 +52,7 @@ defmodule Flirtual.RevenueCat do
       headers: headers,
       decode_body: false,
       retry: false,
-      finch: Flirtual.Finch
+      finch: [name: Flirtual.Finch]
     )
   end
 
