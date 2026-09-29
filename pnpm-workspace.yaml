@@ -7,7 +7,7 @@ catalog:
   "@ariesclark/eslint-config": 3.2.1-canary.1
   "@cloudflare/vitest-pool-workers": ^0.22.0
   "@pulumi/pulumi": 3.253.0
-  eslint: ^9.39.1
+  eslint: ^10.0.0
   execa: ^10.0.1
   oxfmt: ^0.66.0
   oxlint: ^1.83.0
@@ -33,7 +33,7 @@ catalogs:
 overrides:
   # 3.18.3 fails to resolve Tailwind v3: "Error while loading rule
   # 'tailwindcss/enforces-negative-arbitrary-values': Could not resolve tailwindcss".
-  eslint-plugin-tailwindcss: 3.18.2
+  eslint-plugin-tailwindcss: 4.4.0
   # Override tsup's pinned esbuild ^0.27.0 to fix GHSA-g7r4-m6w7-qqqr.
   "tsup>esbuild": ">=0.28.1"
   # Override shepherd.js's pinned deepmerge-ts ^7 to fix GHSA-ggr8-5vv4-36mx.
