@@ -209,7 +209,7 @@ catalogs:
       version: 0.0.22
     '@pulumi/postgresql':
       specifier: ^3.18.0
-      version: 3.18.0
+      version: 3.18.1
     '@pulumi/random':
       specifier: ^4.21.0
       version: 4.21.0
@@ -884,7 +884,7 @@ importers:
         version: file:pulumi/sdks/freshdesk(supports-color@10.2.2)
       '@pulumi/postgresql':
         specifier: catalog:pulumi
-        version: 3.18.0(supports-color@10.2.2)(typescript@5.9.3)
+        version: 3.18.1(supports-color@10.2.2)(typescript@5.9.3)
       '@pulumi/pulumi':
         specifier: 'catalog:'
         version: 3.253.0(supports-color@10.2.2)(typescript@5.9.3)
@@ -3335,8 +3335,8 @@ packages:
   '@pulumi/freshdesk@file:pulumi/sdks/freshdesk':
     resolution: {directory: pulumi/sdks/freshdesk, type: directory}
 
-  '@pulumi/postgresql@3.18.0':
-    resolution: {integrity: sha512-OHPQ0UP/bFgR3kBXaYiu1PIHNz9Gp18y35Dyi1lu8Ar5PbYd4MLC8nkDT0LK3cKAkkwKDsnJ8cDy8Qt+BdPWvQ==}
+  '@pulumi/postgresql@3.18.1':
+    resolution: {integrity: sha512-Oxxj7lslz5b7Ubxhx/NdaENu90CsgmO+/DmECehX+zIV9BNOLUMtihXZ3NExncGUKGVAeef82cm6AfO7czL02g==}
 
   '@pulumi/pulumi@3.253.0':
     resolution: {integrity: sha512-riKRPh6hNCA/NRxVSOLx08c0rqgWYnKGOTgPZzCXi5TglVEERiXHW4U2DaTpP978FI1Xo1iqCa41vmd5i/PNHw==}
@@ -11009,7 +11009,7 @@ snapshots:
       - supports-color
       - ts-node
 
-  '@pulumi/postgresql@3.18.0(supports-color@10.2.2)(typescript@5.9.3)':
+  '@pulumi/postgresql@3.18.1(supports-color@10.2.2)(typescript@5.9.3)':
     dependencies:
       '@pulumi/pulumi': 3.253.0(supports-color@10.2.2)(typescript@5.9.3)
     transitivePeerDependencies:
