@@ -6,7 +6,7 @@ packages:
 catalog:
   "@ariesclark/eslint-config": 3.2.1-canary.1
   "@cloudflare/vitest-pool-workers": ^0.22.0
-  "@pulumi/pulumi": 3.253.0
+  "@pulumi/pulumi": 3.265.0
   eslint: ^9.39.1
   execa: ^10.0.1
   oxfmt: ^0.66.0
