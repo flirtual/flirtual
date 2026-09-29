@@ -190,7 +190,6 @@ const UserName: FC<{ userId: string; fallback?: string; className?: string }> = 
 							className="underline"
 							highlight={false}
 							href={urls.profile(userId)}
-							target="_blank"
 						>
 							{name}
 						</InlineLink>
