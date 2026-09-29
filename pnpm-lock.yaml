@@ -218,7 +218,7 @@ catalogs:
       version: 0.0.9
     '@types/node':
       specifier: ^22
-      version: 22.20.1
+      version: 22.20.4
     change-case:
       specifier: ^5.4.4
       version: 5.4.4
@@ -821,7 +821,7 @@ importers:
         version: 3.253.0(supports-color@10.2.2)(typescript@5.9.3)
       '@types/node':
         specifier: ^22
-        version: 22.20.1
+        version: 22.20.4
       execa:
         specifier: 'catalog:'
         version: 10.0.1
@@ -839,7 +839,7 @@ importers:
         version: 3.253.0(supports-color@10.2.2)(typescript@5.9.3)
       '@types/node':
         specifier: ^22
-        version: 22.20.1
+        version: 22.20.4
       openapi-fetch:
         specifier: ^0.17.0
         version: 0.17.0
@@ -915,7 +915,7 @@ importers:
     devDependencies:
       '@types/node':
         specifier: catalog:pulumi
-        version: 22.20.1
+        version: 22.20.4
       oxfmt:
         specifier: 'catalog:'
         version: 0.66.0
@@ -4285,6 +4285,9 @@ packages:
 
   '@types/node@22.20.1':
     resolution: {integrity: sha512-EANqOCF9QFyra+4pfxUcX9STKJpCLjMbObVzljIJomAWSnuSIEAvyzEU53GaajbXJEgdh0iEcPL+DGvpUd4k1Q==}
+
+  '@types/node@22.20.4':
+    resolution: {integrity: sha512-zJRE40jpHtKqE/C4fgHrAKQLJuSpzEnP9ff9Y7YtoR3Wd2pwqzlekDeEuUQXjRd+QCYnVnNwuJYmhdk9XV8gvA==}
 
   '@types/node@25.9.8':
     resolution: {integrity: sha512-VfMrScDmMhUJQmd5hArdQnFvK0OIeD36uN2Va1FcpYaLB/BgkgM8Ulc50XtYISPMz7APJ30+N0T5EM0jlcdfRw==}
@@ -11934,6 +11937,10 @@ snapshots:
       undici-types: 6.21.0
 
   '@types/node@22.20.1':
+    dependencies:
+      undici-types: 6.21.0
+
+  '@types/node@22.20.4':
     dependencies:
       undici-types: 6.21.0
 
