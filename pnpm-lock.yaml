@@ -668,8 +668,8 @@ importers:
         specifier: 8.2.2
         version: 8.2.2(@types/node@26.6.3)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.104.0)(tsx@4.23.12)(yaml@2.9.1)
       vite-imagetools:
-        specifier: 10.0.1
-        version: 10.0.1(@types/node@26.6.3)(vite@8.2.2(@types/node@26.6.3)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.104.0)(tsx@4.23.12)(yaml@2.9.1))
+        specifier: 12.0.1
+        version: 12.0.1(@types/node@26.6.3)(vite@8.2.2(@types/node@26.6.3)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.104.0)(tsx@4.23.12)(yaml@2.9.1))
       vite-plugin-checker:
         specifier: 0.14.5
         version: 0.14.5(eslint@9.39.5(jiti@1.21.7)(supports-color@10.2.2))(optionator@0.9.4)(oxlint@1.85.0)(typescript@5.9.3)(vite@8.2.2(@types/node@26.6.3)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.104.0)(tsx@4.23.12)(yaml@2.9.1))
@@ -3272,18 +3272,6 @@ packages:
 
   '@pulumi/postgresql@3.18.1':
     resolution: {integrity: sha512-Oxxj7lslz5b7Ubxhx/NdaENu90CsgmO+/DmECehX+zIV9BNOLUMtihXZ3NExncGUKGVAeef82cm6AfO7czL02g==}
-
-  '@pulumi/pulumi@3.253.0':
-    resolution: {integrity: sha512-riKRPh6hNCA/NRxVSOLx08c0rqgWYnKGOTgPZzCXi5TglVEERiXHW4U2DaTpP978FI1Xo1iqCa41vmd5i/PNHw==}
-    engines: {node: '>=22'}
-    peerDependencies:
-      ts-node: '>= 7.0.1 < 12'
-      typescript: '>= 3.8.3 < 7'
-    peerDependenciesMeta:
-      ts-node:
-        optional: true
-      typescript:
-        optional: true
 
   '@pulumi/pulumi@3.265.0':
     resolution: {integrity: sha512-rg/aFiQ1DIWcqQOQLuzg/9vIC5J4L6eLLkT54FPlIf0yhYTvEnREF7uip+WLSdHhHTi81PzeU0MPYRtiPTJ+IQ==}
@@ -6029,8 +6017,8 @@ packages:
     resolution: {integrity: sha512-BAg6QkE8W+TuQLrrw0Ugr7HegXduRuuj8/ti2kSOc+jz1dmx8/WNcjr6XGnq5YpDWxFwwaavqD0+jIUOKelTsw==}
     engines: {node: '>= 4'}
 
-  imagetools-core@10.0.0:
-    resolution: {integrity: sha512-wirG+oESU1QTORt+fqR6DAsVMgW5CXgrRaGgf1lo4hu/3q6269GfHBmYpVWzmMIuHM/H01QcaWrHR6kHCC7bOw==}
+  imagetools-core@12.0.0:
+    resolution: {integrity: sha512-9u1nEZrA6qd/dv1okXT/i1bLOnL9YAAg7k5BqnBJe5PxYYRecZ/GNyGxUXG5x6ybyvCa25zlx5XX++nSEAkjQw==}
     engines: {node: '>=22.0.0'}
 
   immutable@5.1.9:
@@ -8281,11 +8269,11 @@ packages:
     resolution: {integrity: sha512-zj/ob3UsvJGN0whEAKFp53REA5X66hvffVqoCtVQAakJKnKlH+/PcOfMoFwIG/o4rElqLv/ycAFlx8ZlXUorCg==}
     engines: {node: '>=18.12.0'}
 
-  vite-imagetools@10.0.1:
-    resolution: {integrity: sha512-JfM1rUSLQoPAA+8RB9TFxxpfSjmBpLTkU5zaSFPlWYlgfc3g2gFfYH+u+HghqNy+6HCw6zJBmq+2exx6pMJFOg==}
+  vite-imagetools@12.0.1:
+    resolution: {integrity: sha512-BZcU5TLmCKJyLo6FIk8detM9TYtFkbwOaZ8ebd+Kt7YQKHXL+xJH/Oxg4bBNx8xcP3NPVblE6DI/VCaKja5nYQ==}
     engines: {node: '>=22.0.0'}
     peerDependencies:
-      vite: '>=7.0.0'
+      vite: '>=8.0.0'
 
   vite-node@6.0.0:
     resolution: {integrity: sha512-oj4PVrT+pDh6GYf5wfUXkcZyekYS8kKPfLPXVl8qe324Ec6l4K2DUKNadRbZ3LQl0qGcDz+PyOo7ZAh00Y+JjQ==}
@@ -10839,7 +10827,7 @@ snapshots:
 
   '@pulumi/apple@file:pulumi/sdks/apple(supports-color@10.2.2)':
     dependencies:
-      '@pulumi/pulumi': 3.253.0(supports-color@10.2.2)(typescript@4.9.5)
+      '@pulumi/pulumi': 3.265.0(supports-color@10.2.2)(typescript@4.9.5)
       '@types/node': 20.19.43
       typescript: 4.9.5
     transitivePeerDependencies:
@@ -10857,7 +10845,7 @@ snapshots:
 
   '@pulumi/chargebee@file:pulumi/sdks/chargebee(supports-color@10.2.2)':
     dependencies:
-      '@pulumi/pulumi': 3.253.0(supports-color@10.2.2)(typescript@4.9.5)
+      '@pulumi/pulumi': 3.265.0(supports-color@10.2.2)(typescript@4.9.5)
       '@types/node': 20.19.43
       typescript: 4.9.5
     transitivePeerDependencies:
@@ -10882,7 +10870,7 @@ snapshots:
 
   '@pulumi/discord@file:pulumi/sdks/discord(supports-color@10.2.2)':
     dependencies:
-      '@pulumi/pulumi': 3.253.0(supports-color@10.2.2)(typescript@4.9.5)
+      '@pulumi/pulumi': 3.265.0(supports-color@10.2.2)(typescript@4.9.5)
       '@types/node': 20.19.43
       typescript: 4.9.5
     transitivePeerDependencies:
@@ -10899,7 +10887,7 @@ snapshots:
 
   '@pulumi/freshdesk@file:pulumi/sdks/freshdesk(supports-color@10.2.2)':
     dependencies:
-      '@pulumi/pulumi': 3.253.0(supports-color@10.2.2)(typescript@4.9.5)
+      '@pulumi/pulumi': 3.265.0(supports-color@10.2.2)(typescript@4.9.5)
       '@types/node': 20.19.43
       typescript: 4.9.5
     transitivePeerDependencies:
@@ -10914,7 +10902,7 @@ snapshots:
       - ts-node
       - typescript
 
-  '@pulumi/pulumi@3.253.0(supports-color@10.2.2)(typescript@4.9.5)':
+  '@pulumi/pulumi@3.265.0(supports-color@10.2.2)(typescript@4.9.5)':
     dependencies:
       '@grpc/grpc-js': 1.14.5
       '@logdna/tail-file': 2.2.0
@@ -10988,7 +10976,7 @@ snapshots:
 
   '@pulumi/revenuecat@file:pulumi/sdks/revenuecat(supports-color@10.2.2)':
     dependencies:
-      '@pulumi/pulumi': 3.253.0(supports-color@10.2.2)(typescript@4.9.5)
+      '@pulumi/pulumi': 3.265.0(supports-color@10.2.2)(typescript@4.9.5)
       '@types/node': 20.19.43
       typescript: 4.9.5
     transitivePeerDependencies:
@@ -11535,7 +11523,7 @@ snapshots:
     dependencies:
       '@types/estree': 1.0.9
       estree-walker: 2.0.2
-      picomatch: 4.0.5
+      picomatch: 4.0.7
 
   '@rollup/rollup-android-arm-eabi@4.62.4':
     optional: true
@@ -14414,7 +14402,7 @@ snapshots:
 
   ignore@7.0.6: {}
 
-  imagetools-core@10.0.0: {}
+  imagetools-core@12.0.0: {}
 
   immutable@5.1.9: {}
 
@@ -16959,10 +16947,10 @@ snapshots:
 
   verkit@0.3.2: {}
 
-  vite-imagetools@10.0.1(@types/node@26.6.3)(vite@8.2.2(@types/node@26.6.3)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.104.0)(tsx@4.23.12)(yaml@2.9.1)):
+  vite-imagetools@12.0.1(@types/node@26.6.3)(vite@8.2.2(@types/node@26.6.3)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.104.0)(tsx@4.23.12)(yaml@2.9.1)):
     dependencies:
       '@rollup/pluginutils': 5.4.0
-      imagetools-core: 10.0.0
+      imagetools-core: 12.0.0
       sharp: 0.35.4(@types/node@26.6.3)
       vite: 8.2.2(@types/node@26.6.3)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.104.0)(tsx@4.23.12)(yaml@2.9.1)
     transitivePeerDependencies:
