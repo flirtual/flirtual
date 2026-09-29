@@ -12,7 +12,7 @@
 	"dependencyDashboardOSVVulnerabilitySummary": "unresolved",
 	"prConcurrentLimit": 0,
 	"prHourlyLimit": 0,
-	"prBodyTemplate": "{{{header}}}{{{table}}}{{{warnings}}}{{{notes}}}{{{changelogs}}}{{{controls}}}",
+	"prBodyTemplate": "{{{header}}}{{{table}}}{{{warnings}}}{{{notes}}}{{{controls}}}{{{changelogs}}}",
 	"lockFileMaintenance": {
 		"enabled": true,
 		"automerge": true,
