@@ -197,7 +197,7 @@ catalogs:
   pulumi:
     '@pulumi/aws':
       specifier: ^7.46.0
-      version: 7.46.0
+      version: 7.48.0
     '@pulumi/cloudflare':
       specifier: 6.18.0
       version: 6.18.0
@@ -863,7 +863,7 @@ importers:
         version: file:pulumi/sdks/apple(supports-color@10.2.2)
       '@pulumi/aws':
         specifier: catalog:pulumi
-        version: 7.46.0(supports-color@10.2.2)(typescript@5.9.3)
+        version: 7.48.0(supports-color@10.2.2)(typescript@5.9.3)
       '@pulumi/chargebee':
         specifier: file:sdks/chargebee
         version: file:pulumi/sdks/chargebee(supports-color@10.2.2)
@@ -3252,8 +3252,8 @@ packages:
   '@pulumi/apple@file:pulumi/sdks/apple':
     resolution: {directory: pulumi/sdks/apple, type: directory}
 
-  '@pulumi/aws@7.46.0':
-    resolution: {integrity: sha512-uu8B+NiUoQxZUgqk0UnnrRi0VSeFQISDS6/Kjuw3tdsVi33jYSUKEfcDO2nTwQcbTDmfCjvOwV4RqvSDuDMbLQ==}
+  '@pulumi/aws@7.48.0':
+    resolution: {integrity: sha512-roKXYZ2EyjvapKYacvRQNUeW2UBI8MKwzO2338XwdXtCf75TabY4DVy56zY2HbnEU0H1fbBXct8oAx9ynQeMrA==}
 
   '@pulumi/chargebee@file:pulumi/sdks/chargebee':
     resolution: {directory: pulumi/sdks/chargebee, type: directory}
@@ -10830,7 +10830,7 @@ snapshots:
       - supports-color
       - ts-node
 
-  '@pulumi/aws@7.46.0(supports-color@10.2.2)(typescript@5.9.3)':
+  '@pulumi/aws@7.48.0(supports-color@10.2.2)(typescript@5.9.3)':
     dependencies:
       '@pulumi/pulumi': 3.253.0(supports-color@10.2.2)(typescript@5.9.3)
       mime: 2.6.0
