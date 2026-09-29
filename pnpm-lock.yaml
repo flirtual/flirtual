@@ -21,6 +21,12 @@ catalogs:
     execa:
       specifier: ^10.0.1
       version: 10.0.1
+    oxfmt:
+      specifier: ^0.66.0
+      version: 0.66.0
+    oxlint:
+      specifier: ^1.83.0
+      version: 1.83.0
     typescript:
       specifier: ^5.9.2
       version: 5.9.3
@@ -30,6 +36,43 @@ catalogs:
     wrangler:
       specifier: ^4.120.1
       version: 4.125.0
+  pulumi:
+    '@pulumi/aws':
+      specifier: ^7.46.0
+      version: 7.46.0
+    '@pulumi/cloudflare':
+      specifier: 6.18.0
+      version: 6.18.0
+    '@pulumi/command':
+      specifier: 1.2.1
+      version: 1.2.1
+    '@pulumi/docker-build':
+      specifier: ^0.0.22
+      version: 0.0.22
+    '@pulumi/postgresql':
+      specifier: ^3.18.0
+      version: 3.18.0
+    '@pulumi/random':
+      specifier: ^4.21.0
+      version: 4.21.0
+    '@pulumiverse/sentry':
+      specifier: 0.0.9
+      version: 0.0.9
+    '@types/node':
+      specifier: ^22
+      version: 22.20.1
+    change-case:
+      specifier: ^5.4.4
+      version: 5.4.4
+    globby:
+      specifier: ^16.2.2
+      version: 16.2.2
+    openapi-fetch:
+      specifier: ^0.17.0
+      version: 0.17.0
+    yaml:
+      specifier: ^2.9.0
+      version: 2.9.0
 
 overrides:
   eslint-plugin-tailwindcss: 3.18.2
@@ -661,65 +704,65 @@ importers:
         specifier: file:sdks/apple
         version: file:pulumi/sdks/apple(supports-color@10.2.2)
       '@pulumi/aws':
-        specifier: ^7.46.0
+        specifier: catalog:pulumi
         version: 7.46.0(supports-color@10.2.2)(typescript@5.9.3)
       '@pulumi/chargebee':
         specifier: file:sdks/chargebee
         version: file:pulumi/sdks/chargebee(supports-color@10.2.2)
       '@pulumi/cloudflare':
-        specifier: 6.18.0
+        specifier: catalog:pulumi
         version: 6.18.0(supports-color@10.2.2)(typescript@5.9.3)
       '@pulumi/command':
-        specifier: 1.2.1
+        specifier: catalog:pulumi
         version: 1.2.1(supports-color@10.2.2)(typescript@5.9.3)
       '@pulumi/discord':
         specifier: file:sdks/discord
         version: file:pulumi/sdks/discord(supports-color@10.2.2)
       '@pulumi/docker-build':
-        specifier: ^0.0.22
+        specifier: catalog:pulumi
         version: 0.0.22(supports-color@10.2.2)(typescript@5.9.3)
       '@pulumi/freshdesk':
         specifier: file:sdks/freshdesk
         version: file:pulumi/sdks/freshdesk(supports-color@10.2.2)
       '@pulumi/postgresql':
-        specifier: ^3.18.0
+        specifier: catalog:pulumi
         version: 3.18.0(supports-color@10.2.2)(typescript@5.9.3)
       '@pulumi/pulumi':
         specifier: 'catalog:'
         version: 3.253.0(supports-color@10.2.2)(typescript@5.9.3)
       '@pulumi/random':
-        specifier: ^4.21.0
+        specifier: catalog:pulumi
         version: 4.21.0(supports-color@10.2.2)(typescript@5.9.3)
       '@pulumi/revenuecat':
         specifier: file:sdks/revenuecat
         version: file:pulumi/sdks/revenuecat(supports-color@10.2.2)
       '@pulumiverse/sentry':
-        specifier: 0.0.9
+        specifier: catalog:pulumi
         version: 0.0.9(supports-color@10.2.2)(typescript@5.9.3)
       change-case:
-        specifier: ^5.4.4
+        specifier: catalog:pulumi
         version: 5.4.4
       execa:
         specifier: 'catalog:'
         version: 10.0.1
       globby:
-        specifier: ^16.2.2
+        specifier: catalog:pulumi
         version: 16.2.2
       openapi-fetch:
-        specifier: ^0.17.0
+        specifier: catalog:pulumi
         version: 0.17.0
       yaml:
-        specifier: ^2.9.0
+        specifier: catalog:pulumi
         version: 2.9.0
     devDependencies:
       '@types/node':
-        specifier: ^22
+        specifier: catalog:pulumi
         version: 22.20.1
       oxfmt:
-        specifier: ^0.66.0
+        specifier: 'catalog:'
         version: 0.66.0
       oxlint:
-        specifier: ^1.83.0
+        specifier: 'catalog:'
         version: 1.83.0
       typescript:
         specifier: 'catalog:'
