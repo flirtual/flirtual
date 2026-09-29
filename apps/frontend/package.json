@@ -142,7 +142,7 @@
 		"@types/react": "19.2.18",
 		"@types/react-dom": "19.2.7",
 		"@types/sanitize-html": "2.16.1",
-		"autoprefixer": "10.5.4",
+		"autoprefixer": "10.6.1",
 		"eslint": "catalog:",
 		"eslint-plugin-react-hooks": "^5.2.0",
 		"eslint-plugin-react-refresh": "^0.4.20",
