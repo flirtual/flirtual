@@ -44,6 +44,7 @@ import type { ModerationEvent, ModerationEventType } from "~/api/moderation-even
 import type { Report } from "~/api/report";
 import type { ProfileImage } from "~/api/user/profile/images";
 import { useAttributeTranslation } from "~/hooks/use-attribute";
+import { useDialog } from "~/hooks/use-dialog";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { useUser } from "~/hooks/use-user";
@@ -58,6 +59,7 @@ import { Dialog, DialogContent, DialogTitle } from "./dialog/dialog";
 import { DiscordIcon } from "./icons";
 import { Image } from "./image";
 import { InlineLink } from "./inline-link";
+import { WarnDialog } from "./profile/dropdown/submenus/moderate/actions/warn";
 import { getCountryImage, getCountryName } from "./profile/pill/country";
 import { ImageToolbar } from "./profile/profile-image-display";
 import { TimeRelative } from "./time-relative";
@@ -428,6 +430,40 @@ const ReviewButton: FC<{ entry: ModerationEntry; onReview: ReviewHandler; classN
 				</button>
 			</TooltipTrigger>
 			<TooltipContent>{entry.kind === "report" ? "Clear report" : "Mark reviewed"}</TooltipContent>
+		</Tooltip>
+	);
+};
+
+const ResendWarningButton: FC<{ entry: ModerationEntry; onReview: ReviewHandler }> = ({ entry, onReview }) => {
+	const dialogs = useDialog();
+	const event = entry.kind === "event" && entry.event.type === "warn_acknowledged" ? entry.event : undefined;
+	const user = useUser(event?.userId);
+
+	const { reasonId, message, details } = event?.related?.warn ?? {};
+	if (!user || !reasonId || !message) return null;
+
+	return (
+		<Tooltip>
+			<TooltipTrigger asChild>
+				<button
+					className="h-fit"
+					type="button"
+					onClick={() => {
+						const dialog = (
+							<WarnDialog
+								initial={{ reasonId, message, shadowban: !!details?.shadowbanned }}
+								user={user}
+								onClose={() => dialogs.remove(dialog)}
+								onWarn={() => onReview(entry)}
+							/>
+						);
+						dialogs.add(dialog);
+					}}
+				>
+					<MailWarning className="size-5 text-yellow-500" />
+				</button>
+			</TooltipTrigger>
+			<TooltipContent>Re-send warning</TooltipContent>
 		</Tooltip>
 	);
 };
@@ -915,7 +951,12 @@ export const ModerationEntryCard: FC<{
 						</div>
 					)}
 				</div>
-				{onReview && reviewable && <ReviewButton className="size-5" entry={entry} onReview={onReview} />}
+				{onReview && reviewable && (
+					<div className="flex h-fit gap-2">
+						<ResendWarningButton entry={entry} onReview={onReview} />
+						<ReviewButton className="size-5" entry={entry} onReview={onReview} />
+					</div>
+				)}
 			</div>
 			{content}
 			{fields.length > 0 && <div className="flex flex-col text-sm">{fields}</div>}

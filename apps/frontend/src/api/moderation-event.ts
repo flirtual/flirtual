@@ -72,6 +72,7 @@ export type ModerationEvent = Expand<
 		related?: {
 			duplicateBans?: Array<ModerationEvent>;
 			ban?: ModerationEvent;
+			warn?: ModerationEvent;
 			images?: Array<{ image: ProfileImage; userId?: string }>;
 			quarantineUrl?: string;
 		};

@@ -400,7 +400,8 @@ defmodule Flirtual.ModerationEvent do
   def with_related(events) when is_list(events) do
     active_bans = events |> Enum.flat_map(&duplicate_user_ids/1) |> active_bans_by_user_id()
     bans_by_id = events |> Enum.flat_map(&appealed_ban_ids/1) |> bans_by_id()
-    lifted_bans = lifted_bans(events)
+    lifted_bans = preceding(events, :unbanned, :banned)
+    acknowledged_warns = preceding(events, :warn_acknowledged, :warned)
     images = events |> Enum.flat_map(&image_ids/1) |> images_by_id()
 
     Enum.map(events, fn event ->
@@ -417,6 +418,7 @@ defmodule Flirtual.ModerationEvent do
               :unbanned -> lifted_bans[event.id]
               _ -> nil
             end,
+          warn: acknowledged_warns[event.id],
           images:
             event
             |> image_ids()
@@ -473,26 +475,27 @@ defmodule Flirtual.ModerationEvent do
     |> Map.new(&{&1.id, &1})
   end
 
-  # The ban an unban lifted: the user's last ban before it.
-  defp lifted_bans(events) do
-    unbans = Enum.filter(events, &(&1.type == :unbanned and is_binary(&1.user_id)))
-    user_ids = unbans |> Enum.map(& &1.user_id) |> Enum.uniq()
+  # The ban an unban lifted, or the warning an acknowledgement settled: the user's
+  # last event of that type before it.
+  defp preceding(events, type, preceding_type) do
+    events = Enum.filter(events, &(&1.type == type and is_binary(&1.user_id)))
+    user_ids = events |> Enum.map(& &1.user_id) |> Enum.uniq()
 
-    bans =
+    candidates =
       if user_ids == [],
         do: [],
         else:
           ModerationEvent
-          |> where([event], event.type == :banned and event.user_id in ^user_ids)
+          |> where([event], event.type == ^preceding_type and event.user_id in ^user_ids)
           |> order_by([event], desc: event.created_at, desc: event.id)
           |> Repo.all()
 
-    Map.new(unbans, fn unban ->
-      {unban.id,
+    Map.new(events, fn event ->
+      {event.id,
        Enum.find(
-         bans,
-         &(&1.user_id == unban.user_id and
-             DateTime.compare(&1.created_at, unban.created_at) != :gt)
+         candidates,
+         &(&1.user_id == event.user_id and
+             DateTime.compare(&1.created_at, event.created_at) != :gt)
        )}
     end)
   end
