@@ -60,7 +60,7 @@ defmodule Flirtual.MixProject do
       {:chargebeex, "~> 0.9.0"},
       {:phoenix_html, "~> 4.1"},
       {:faker, "~> 0.19.0"},
-      {:recase, "~> 0.8.1"},
+      {:recase, "~> 0.9.0"},
       {:swoosh, "~> 1.3"},
       {:gen_smtp, "~> 1.2"},
       {:goth, "~> 1.4"},
