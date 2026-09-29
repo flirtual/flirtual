@@ -82,7 +82,7 @@ defmodule Flirtual.MixProject do
       {:opentelemetry_ecto, "~> 1.2"},
       {:opentelemetry_oban, "~> 1.2"},
       {:opentelemetry_finch, "~> 0.2.0"},
-      {:gettext, "~> 0.26.2"},
+      {:gettext, "~> 1.0.0"},
       {:jason, "~> 1.4"},
       {:joken, "~> 2.5"},
       {:sentry, "~> 13.0"},
