@@ -42,7 +42,7 @@ defmodule Flirtual.MixProject do
       {:bodyguard, "~> 2.4"},
       {:phoenix_ecto, "~> 4.4"},
       {:cors_plug, "~> 3.0"},
-      {:shortuuid, "~> 2.0"},
+      {:shortuuid, "~> 4.0"},
       {:ecto_shortuuid, "~> 0.4.0"},
       {:ecto_network, "~> 1.6"},
       {:ecto_sql, "~> 3.10"},
