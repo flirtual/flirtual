@@ -1,3 +1,4 @@
+name: Frontend
 on:
   push:
     branches: [main, production]

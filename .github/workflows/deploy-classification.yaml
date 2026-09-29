@@ -1,4 +1,4 @@
-name: Deploy Image Classification
+name: Image classification
 on:
   push:
     branches: [main, production]

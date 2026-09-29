@@ -1,3 +1,4 @@
+name: iOS
 on:
   push:
     branches: [main]
