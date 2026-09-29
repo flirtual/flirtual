@@ -224,7 +224,7 @@ catalogs:
       version: 5.4.4
     globby:
       specifier: ^16.2.2
-      version: 16.2.2
+      version: 16.2.4
     openapi-fetch:
       specifier: ^0.17.0
       version: 0.17.0
@@ -905,7 +905,7 @@ importers:
         version: 10.0.1
       globby:
         specifier: catalog:pulumi
-        version: 16.2.2
+        version: 16.2.4
       openapi-fetch:
         specifier: catalog:pulumi
         version: 0.17.0
@@ -5942,8 +5942,8 @@ packages:
     resolution: {integrity: sha512-c/c15i26VrJ4IRt5Z89DnIzCGDn9EcebibhAOjw5ibqEHsE1wLUgkPn9RDmNcUKyU87GeaL633nyJ+pplFR2ZQ==}
     engines: {node: '>=18'}
 
-  globby@16.2.2:
-    resolution: {integrity: sha512-NLvV9ubZ6NDsJaOpKPy3cQeJpKi9DcWiyCiFUpJPA0YihRqiE6RWaLUmgNNPr8MgPpLZjnBjSmou7uZBRJv9wA==}
+  globby@16.2.4:
+    resolution: {integrity: sha512-c8B/VNLmxRcmqqenRA9t+9IyOjf9+V6lTxPaUJLqOCONdQkWZ0ETYgX0qbtJqPsgCNusT9MZ5Jeidw8Eb9tn2g==}
     engines: {node: '>=20'}
 
   globrex@0.1.2:
@@ -14382,12 +14382,13 @@ snapshots:
 
   globals@16.5.0: {}
 
-  globby@16.2.2:
+  globby@16.2.4:
     dependencies:
       '@sindresorhus/merge-streams': 4.0.0
       fast-glob: 3.3.3
       ignore: 7.0.6
       is-path-inside: 4.0.0
+      micromatch: 4.0.8
       slash: 5.1.0
       unicorn-magic: 0.4.0
 
