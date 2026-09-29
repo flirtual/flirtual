@@ -4,12 +4,19 @@
 		"config:best-practices"
 	],
 	"timezone": "America/New_York",
-	"rebaseWhen": "automerging",
+	"rebaseWhen": "conflicted",
+	"cloneSubmodules": true,
 	"semanticCommits": "enabled",
 	"semanticCommitScope": "{{#if parentDir}}{{parentDir}}{{else}}repo{{/if}}",
 	"osvVulnerabilityAlerts": true,
 	"dependencyDashboardOSVVulnerabilitySummary": "unresolved",
-	"prBodyTemplate": "{{{header}}}{{{table}}}{{{warnings}}}{{{notes}}}{{{changelogs}}}{{{controls}}}",
+	"prConcurrentLimit": 0,
+	"prHourlyLimit": 0,
+	"labels": ["dependencies"],
+	"vulnerabilityAlerts": {
+		"addLabels": ["security"]
+	},
+	"prBodyTemplate": "{{{header}}}{{{table}}}{{{warnings}}}{{{notes}}}{{{controls}}}{{{changelogs}}}",
 	"lockFileMaintenance": {
 		"enabled": true,
 		"automerge": true,
@@ -58,13 +65,104 @@
 	],
 	"packageRules": [
 		{
-			"description": "Custom managers capture no currentDigest group, so they cannot be pinned by digest",
 			"matchManagers": ["custom.regex"],
 			"pinDigests": false
 		},
 		{
+			"matchDatasources": ["hex"],
+			"minimumReleaseAge": "3 days"
+		},
+		{
 			"matchFileNames": [".github/**"],
 			"semanticCommitScope": "ci"
+		},
+		{
+			"matchUpdateTypes": ["major"],
+			"addLabels": ["major"]
+		},
+		{
+			"matchUpdateTypes": ["minor"],
+			"addLabels": ["minor"]
+		},
+		{
+			"matchUpdateTypes": ["patch"],
+			"addLabels": ["patch"]
+		},
+		{
+			"matchFileNames": ["apps/api/**"],
+			"addLabels": ["api"]
+		},
+		{
+			"matchFileNames": ["apps/app-redirect/**"],
+			"addLabels": ["app redirect"]
+		},
+		{
+			"matchFileNames": ["apps/frontend/**"],
+			"addLabels": ["frontend"]
+		},
+		{
+			"matchFileNames": ["apps/frontend/android/**"],
+			"addLabels": ["android"]
+		},
+		{
+			"matchFileNames": ["apps/frontend/ios/**"],
+			"addLabels": ["ios"]
+		},
+		{
+			"matchFileNames": ["apps/grafana/**"],
+			"addLabels": ["grafana"]
+		},
+		{
+			"matchFileNames": ["apps/image-classification/**"],
+			"addLabels": ["image classification"]
+		},
+		{
+			"matchFileNames": ["apps/maintenance/**"],
+			"addLabels": ["maintenance"]
+		},
+		{
+			"matchFileNames": ["apps/manticore/**"],
+			"addLabels": ["manticore"]
+		},
+		{
+			"matchFileNames": ["apps/posthog-proxy/**"],
+			"addLabels": ["posthog proxy"]
+		},
+		{
+			"matchFileNames": ["apps/preview-router/**"],
+			"addLabels": ["preview router"]
+		},
+		{
+			"matchFileNames": ["apps/session-transfer/**"],
+			"addLabels": ["session transfer"]
+		},
+		{
+			"matchFileNames": ["apps/tempo/**"],
+			"addLabels": ["tempo"]
+		},
+		{
+			"matchFileNames": ["apps/trace/**"],
+			"addLabels": ["trace"]
+		},
+		{
+			"matchFileNames": ["apps/tus-server/**"],
+			"addLabels": ["tus server"]
+		},
+		{
+			"matchFileNames": ["packages/pulumi-fly/**"],
+			"addLabels": ["pulumi fly"]
+		},
+		{
+			"matchFileNames": ["packages/pulumi-listmonk/**"],
+			"addLabels": ["pulumi listmonk"]
+		},
+		{
+			"matchFileNames": ["{package.json,pnpm-workspace.yaml}"],
+			"addLabels": ["workspace"]
+		},
+		{
+			"matchFileNames": [".github/**"],
+			"addLabels": ["ci"]
 		},
 		{
 			"matchManagers": ["gradle", "gradle-wrapper"],
@@ -87,7 +185,20 @@
 				"/capacitor/",
 				"@capgo/**"
 			],
-			"groupName": "capacitor"
+			"groupName": "capacitor",
+			"postUpgradeTasks": {
+				"commands": [
+					"pnpm install --frozen-lockfile --ignore-scripts --filter frontend",
+					"pnpm --config.verify-deps-before-run=false --dir apps/frontend exec cap update"
+				],
+				"fileFilters": [
+					"apps/frontend/android/capacitor.settings.gradle",
+					"apps/frontend/android/app/capacitor.build.gradle",
+					"apps/frontend/ios/App/Podfile",
+					"apps/frontend/ios/App/Podfile.lock"
+				],
+				"executionMode": "branch"
+			}
 		},
 		{
 			"matchPackageNames": [
@@ -142,7 +253,7 @@
 			"automerge": true
 		},
 		{
-			"matchDepTypes": ["devDependencies", "pnpm.catalog.default"],
+			"matchDepTypes": ["devDependencies", "pnpm.catalog.default", "pnpm.catalog.pulumi"],
 			"matchUpdateTypes": ["minor", "patch"],
 			"automerge": true
 		},

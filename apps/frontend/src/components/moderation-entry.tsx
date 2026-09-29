@@ -190,7 +190,6 @@ const UserName: FC<{ userId: string; fallback?: string; className?: string }> = 
 							className="underline"
 							highlight={false}
 							href={urls.profile(userId)}
-							target="_blank"
 						>
 							{name}
 						</InlineLink>
@@ -712,6 +711,20 @@ function useEntryBody(entry: ModerationEntry, compact: boolean): { content: Arra
 	if (duplicateUserIds.length > 0 || banUrls.length > 0) {
 		fields.push(
 			<Field key="duplicates" label={event.type === "flagged_duplicate_image" ? "Matching profiles" : "Duplicates"}>
+				{duplicateUserIds.length > 0 && (
+					<button
+						className="inline-flex items-center gap-1 underline"
+						type="button"
+						onClick={() => {
+							for (const userId of new Set([event.userId, ...duplicateUserIds])) {
+								if (userId) window.open(urls.profile(userId), "_blank");
+							}
+						}}
+					>
+						Open all
+						<ExternalLink className="size-3.5" />
+					</button>
+				)}
 				<span className="flex flex-col">
 					{duplicateUserIds.map((userId) => {
 						const ban = related?.duplicateBans?.find((ban) => ban.userId === userId);

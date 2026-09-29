@@ -9,6 +9,10 @@ install-tool elixir 1.18.3
 # renovate: datasource=node-version depName=node
 install-tool node 24.19.0
 # renovate: datasource=npm depName=pnpm
-install-tool pnpm 11.22.0
+install-tool pnpm 12.6.0
+# renovate: datasource=github-releases depName=containerbase/ruby-prebuild
+install-tool ruby 3.3.12
+# renovate: datasource=rubygems depName=cocoapods
+install-tool cocoapods 1.16.2
 
 runuser -u ubuntu renovate

@@ -120,7 +120,7 @@ defmodule Flirtual.User.Profile.Image.Moderation do
              headers: [{"authorization", "Bearer " <> token}],
              receive_timeout: 60_000,
              retry: false,
-             finch: Flirtual.FinchInternal
+             finch: [name: Flirtual.FinchInternal]
            ) do
         {:ok, %Req.Response{status: 200, body: %{"classifications" => classifications} = body}} ->
           {:ok, %{classifications: classifications, hashes: Map.take(body, ["hash", "flipped"])}}

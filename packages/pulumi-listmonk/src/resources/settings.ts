@@ -1,20 +1,8 @@
 import * as pulumi from "@pulumi/pulumi";
 
-import {
-  type components,
-  type Connection,
-  type ConnectionArgs,
-  connect,
-  ready,
-  unwrap,
-} from "../client.ts";
+import { type components, Configured, unwrap } from "../client.ts";
 
 type Values = Record<string, unknown>;
-
-interface SettingsInputs {
-  connection: Connection;
-  values: Values;
-}
 
 // Listmonk returns secrets masked as "•••", and keeps the stored secret only when sent an empty one.
 const masked = (value: unknown) => typeof value === "string" && /^•+$/u.test(value);
@@ -54,85 +42,81 @@ function stable(value: unknown): string {
   return JSON.stringify(value);
 }
 
+// pulumi.dynamic.Resource keeps its serialized implementation among the inputs, as `__provider`.
+const settingsOf = (inputs: Values): Values =>
+  Object.fromEntries(Object.entries(inputs).filter(([key]) => key !== "__provider"));
+
 // The spec's Settings schema predates keys Listmonk has had since v3 (`bounce.actions`,
 // `privacy.record_optin_ip`), so settings go by the running instance's keys instead.
-async function current(connection: Connection) {
-  const listmonk = await connect(connection);
-  return unwrap(await listmonk.GET("/settings")) as Values;
-}
+class SettingsProvider
+  extends Configured
+  implements pulumi.dynamic.ResourceProvider<Values, Values>
+{
+  private async current() {
+    const listmonk = await this.connect();
+    return unwrap(await listmonk.GET("/settings")) as Values;
+  }
 
-async function apply({ connection, values }: SettingsInputs) {
-  const listmonk = await connect(connection);
-  await ready(listmonk, connection.endpoint);
+  private async apply(inputs: Values) {
+    const values = settingsOf(inputs);
+    const listmonk = await this.connect();
+    await this.ready(listmonk);
 
-  // A PUT replaces every setting, so start from the current ones.
-  const settings = unmask(await current(connection)) as Values;
+    // A PUT replaces every setting, so start from the current ones.
+    const settings = unmask(await this.current()) as Values;
 
-  const unknown = Object.keys(values).filter((key) => !(key in settings));
-  if (unknown.length > 0) throw new Error(`Listmonk has no settings named ${unknown.join(", ")}.`);
+    const unknown = Object.keys(values).filter((key) => !(key in settings));
+    if (unknown.length > 0)
+      throw new Error(`Listmonk has no settings named ${unknown.join(", ")}.`);
 
-  unwrap(
-    await listmonk.PUT("/settings", {
-      body: { ...settings, ...values } as components["schemas"]["Settings"],
-    }),
-  );
+    unwrap(
+      await listmonk.PUT("/settings", {
+        body: { ...settings, ...values } as components["schemas"]["Settings"],
+      }),
+    );
 
-  // Saving settings restarts Listmonk in place.
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-  await ready(listmonk, connection.endpoint);
-}
+    // Saving settings restarts Listmonk in place.
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    await this.ready(listmonk);
+  }
 
-const provider: pulumi.dynamic.ResourceProvider<SettingsInputs, SettingsInputs> = {
-  async diff(_id, olds, news) {
-    const changes =
-      stable(olds.connection) !== stable(news.connection) ||
-      stable(olds.values) !== stable(news.values);
+  async diff(_id: string, olds: Values, news: Values) {
+    return { changes: stable(settingsOf(olds)) !== stable(settingsOf(news)) };
+  }
 
-    return { changes };
-  },
+  async create(inputs: Values) {
+    await this.apply(inputs);
+    return { id: this.connection.endpoint, outs: inputs };
+  }
 
-  async create(inputs) {
-    await apply(inputs);
-    return { id: inputs.connection.endpoint, outs: inputs };
-  },
-
-  async update(_id, _olds, news) {
-    await apply(news);
+  async update(_id: string, _olds: Values, news: Values) {
+    await this.apply(news);
     return { outs: news };
-  },
+  }
 
-  async read(id, props) {
+  async read(id: string, props?: Values) {
     if (!props)
       throw new Error(`Listmonk settings "${id}" can't be imported; secrets are unreadable.`);
 
-    const live = await current(props.connection);
+    const live = await this.current();
 
-    const values = Object.fromEntries(
-      Object.keys(props.values).map((key) => [key, restore(live[key], props.values[key])]),
-    );
+    const settings = Object.keys(settingsOf(props)).map((key) => [
+      key,
+      restore(live[key], props[key]),
+    ]);
 
-    return { id, props: { ...props, values } };
-  },
+    return { id, props: { ...props, ...Object.fromEntries(settings) } };
+  }
 
   // Listmonk always has settings; leaving them is all a delete can do.
-  async delete() {},
-};
-
-export interface SettingsArgs {
-  connection: pulumi.Input<ConnectionArgs>;
-  // Keyed as GET /api/settings keys them (`app.root_url`, `smtp`, …). Unlisted settings are kept.
-  values: pulumi.Input<Record<string, pulumi.Input<unknown>>>;
+  async delete() {}
 }
+
+// Keyed as GET /api/settings keys them (`app.root_url`, `smtp`, …). Unlisted settings are kept.
+export type SettingsArgs = Record<string, pulumi.Input<unknown>>;
 
 export class Settings extends pulumi.dynamic.Resource {
   constructor(name: string, args: SettingsArgs, options?: pulumi.CustomResourceOptions) {
-    super(
-      provider,
-      name,
-      args,
-      { ...options, additionalSecretOutputs: ["connection", "values"] },
-      "listmonk",
-      "Settings",
-    );
+    super(new SettingsProvider(), name, args, options, "listmonk", "Settings");
   }
 }

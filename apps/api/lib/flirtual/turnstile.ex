@@ -23,7 +23,7 @@ defmodule Flirtual.Turnstile do
              ],
              decode_body: false,
              retry: false,
-             finch: Flirtual.Finch
+             finch: [name: Flirtual.Finch]
            ),
          {:ok, body} <- Jason.decode(response.body) do
       body

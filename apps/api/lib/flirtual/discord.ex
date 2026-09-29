@@ -92,7 +92,7 @@ defmodule Flirtual.Discord do
            headers: [{"content-type", "application/json"}],
            decode_body: false,
            retry: false,
-           finch: Flirtual.Finch
+           finch: [name: Flirtual.Finch]
          ) do
       {:ok, %Req.Response{status: 204}} ->
         :ok
@@ -193,7 +193,7 @@ defmodule Flirtual.Discord do
              headers: [{"content-type", "application/x-www-form-urlencoded"}],
              decode_body: false,
              retry: false,
-             finch: Flirtual.Finch
+             finch: [name: Flirtual.Finch]
            ),
          {:ok, body} <- Jason.decode(body),
          %{"access_token" => access_token, "token_type" => token_type} <- body do
@@ -255,7 +255,7 @@ defmodule Flirtual.Discord do
            headers: [{"content-type", "application/x-www-form-urlencoded"}],
            decode_body: false,
            retry: false,
-           finch: Flirtual.Finch
+           finch: [name: Flirtual.Finch]
          ) do
       {:ok, %Req.Response{status: 200}} ->
         :ok
@@ -274,7 +274,7 @@ defmodule Flirtual.Discord do
              headers: [{"authorization", authorization}],
              decode_body: false,
              retry: false,
-             finch: Flirtual.Finch
+             finch: [name: Flirtual.Finch]
            ),
          {:ok, profile} <- Jason.decode(body),
          %{
@@ -319,7 +319,7 @@ defmodule Flirtual.Discord do
           headers: [{"authorization", "Bot " <> token}],
           decode_body: false,
           retry: false,
-          finch: Flirtual.Finch
+          finch: [name: Flirtual.Finch]
         )
         |> handle_get_user()
     end

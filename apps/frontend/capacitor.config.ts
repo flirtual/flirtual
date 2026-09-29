@@ -5,80 +5,86 @@ import invariant from "tiny-invariant";
 
 function nativeVersion(path: string, pattern: RegExp) {
 	const versions = new Set(
-		[...readFileSync(path, "utf8").matchAll(pattern)].map(([, version]) => version)
+		[...readFileSync(path, "utf8").matchAll(pattern)].map(([, version]) => version),
 	);
 
 	invariant(versions.size === 1, `Expected one version in ${path}, found ${versions.size}`);
 	return [...versions][0] as string;
 }
 
-const androidVersion = nativeVersion("android/app/build.gradle", /versionName\s+'([^']+)'/g);
-const iosVersion = nativeVersion(
-	"ios/App/App.xcodeproj/project.pbxproj",
-	/MARKETING_VERSION = ([^;]+);/g
-);
-
-const origin = process.env.VITE_ORIGIN;
-invariant(origin, "VITE_ORIGIN is not set");
-
-const frontendUrl = new URL(origin);
-const frontendScheme = frontendUrl.protocol.slice(0, -1);
-
-const appId = process.env.VITE_APP_BUNDLE_ID;
-invariant(appId, "VITE_APP_BUNDLE_ID is not set");
-
 const androidFlavors: Record<string, string> = {
 	"zone.homie.flirtual.pwa": "production",
-	"zone.homie.flirtual.beta": "beta"
+	"zone.homie.flirtual.beta": "beta",
 };
-const androidFlavor = androidFlavors[appId];
 
 const iosSchemes: Record<string, string> = {
 	"zone.homie.flirtual.pwa": "Flirtual",
-	"zone.homie.flirtual.beta": "Flirtual Beta"
+	"zone.homie.flirtual.beta": "Flirtual Beta",
 };
-const iosScheme = iosSchemes[appId];
 
-const apiUrl = process.env.VITE_API_URL;
-invariant(apiUrl, "VITE_API_URL is not set");
+function config(): CapacitorConfig {
+	// `capacitor update` does not need an environment. A server URL skips its web assets check:
+	// https://github.com/ionic-team/capacitor/blob/8.5.0/cli/src/common.ts#L24-L28
+	if (process.env.CAPACITOR_UPDATE_ONLY) return { server: { url: "https://update.invalid" } };
 
-export default {
-	appId,
-	appName: "Flirtual",
-	server: {
-		androidScheme: frontendScheme,
-		hostname: frontendUrl.hostname,
-		url: frontendUrl.origin,
-		cleartext: frontendScheme === "http",
-		allowNavigation: ["flirtual.com"] // migration prep
-	},
-	android: {
-		flavor: androidFlavor,
-		appendUserAgent: `Flirtual-Native/${androidVersion}`
-	},
-	ios: {
-		scheme: iosScheme,
-		appendUserAgent: `Flirtual-Native/${iosVersion}`
-	},
-	appendUserAgent: "Flirtual-Native",
-	plugins: {
-		Flirtual: {
-			apiUrl
+	const origin = process.env.VITE_ORIGIN;
+	invariant(origin, "VITE_ORIGIN is not set");
+
+	const frontendUrl = new URL(origin);
+	const frontendScheme = frontendUrl.protocol.slice(0, -1);
+
+	const appId = process.env.VITE_APP_BUNDLE_ID;
+	invariant(appId, "VITE_APP_BUNDLE_ID is not set");
+
+	const apiUrl = process.env.VITE_API_URL;
+	invariant(apiUrl, "VITE_API_URL is not set");
+
+	const androidVersion = nativeVersion("android/app/build.gradle", /versionName\s+'([^']+)'/g);
+	const iosVersion = nativeVersion(
+		"ios/App/App.xcodeproj/project.pbxproj",
+		/MARKETING_VERSION = ([^;]+);/g,
+	);
+
+	return {
+		appId,
+		appName: "Flirtual",
+		server: {
+			androidScheme: frontendScheme,
+			hostname: frontendUrl.hostname,
+			url: frontendUrl.origin,
+			cleartext: frontendScheme === "http",
+			allowNavigation: ["flirtual.com"], // migration prep
 		},
-		SystemBars: {
-			insetsHandling: "disable"
+		android: {
+			flavor: androidFlavors[appId],
+			appendUserAgent: `Flirtual-Native/${androidVersion}`,
 		},
-		SafeArea: {
-			initialViewportFitCover: true,
-			detectViewportFitCoverChanges: false
+		ios: {
+			scheme: iosSchemes[appId],
+			appendUserAgent: `Flirtual-Native/${iosVersion}`,
 		},
-		SocialLogin: {
-			providers: {
-				google: true,
-				facebook: false,
-				apple: true,
-				twitter: false
-			}
-		}
-	}
-} satisfies CapacitorConfig;
+		appendUserAgent: "Flirtual-Native",
+		plugins: {
+			Flirtual: {
+				apiUrl,
+			},
+			SystemBars: {
+				insetsHandling: "disable",
+			},
+			SafeArea: {
+				initialViewportFitCover: true,
+				detectViewportFitCoverChanges: false,
+			},
+			SocialLogin: {
+				providers: {
+					google: true,
+					facebook: false,
+					apple: true,
+					twitter: false,
+				},
+			},
+		},
+	};
+}
+
+export default config();

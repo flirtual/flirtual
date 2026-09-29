@@ -66,7 +66,7 @@ defmodule Flirtual.Meta do
                  }),
              decode_body: false,
              retry: false,
-             finch: Flirtual.Finch
+             finch: [name: Flirtual.Finch]
            ),
          {:ok, %{"oauth_token" => oauth_token}} <- Jason.decode(body) do
       {:ok, oauth_token}
@@ -116,7 +116,7 @@ defmodule Flirtual.Meta do
                  URI.encode_query(%{access_token: oauth_token, fields: "id,alias"}),
              decode_body: false,
              retry: false,
-             finch: Flirtual.Finch
+             finch: [name: Flirtual.Finch]
            ),
          {:ok, decoded} <- Jason.decode(body) do
       case decoded do

@@ -141,7 +141,7 @@ defmodule Flirtual.User.Profile.Image do
              decode_body: false,
              redirect: false,
              retry: false,
-             finch: Flirtual.Finch
+             finch: [name: Flirtual.Finch]
            ) do
       {:ok, body}
     else

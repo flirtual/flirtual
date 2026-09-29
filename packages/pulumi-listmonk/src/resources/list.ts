@@ -1,18 +1,10 @@
 import * as pulumi from "@pulumi/pulumi";
 
-import {
-  type components,
-  type Connection,
-  type ConnectionArgs,
-  connect,
-  ready,
-  unwrap,
-} from "../client.ts";
+import { type components, Configured, unwrap } from "../client.ts";
 
 type ListFields = Required<components["schemas"]["NewList"]>;
 
 interface ListInputs extends ListFields {
-  connection: Connection;
   listId?: number;
 }
 
@@ -28,11 +20,14 @@ const fields = ({
   description = "",
 }: components["schemas"]["NewList"]): ListFields => ({ name, type, optin, tags, description });
 
-const provider: pulumi.dynamic.ResourceProvider<ListInputs, ListOutputs> = {
-  async diff(_id, olds, news) {
+class ListProvider
+  extends Configured
+  implements pulumi.dynamic.ResourceProvider<ListInputs, ListOutputs>
+{
+  async diff(_id: string, olds: ListOutputs, news: ListInputs) {
     const replaces = news.listId !== undefined && news.listId !== olds.listId ? ["listId"] : [];
 
-    const changed = (["name", "type", "optin", "description", "connection"] as const).some(
+    const changed = (["name", "type", "optin", "description"] as const).some(
       (key) => JSON.stringify(olds[key]) !== JSON.stringify(news[key]),
     );
 
@@ -40,12 +35,12 @@ const provider: pulumi.dynamic.ResourceProvider<ListInputs, ListOutputs> = {
       changes: replaces.length > 0 || changed || olds.tags.join() !== news.tags.join(),
       replaces,
     };
-  },
+  }
 
-  async create(inputs) {
-    const { connection, listId } = inputs;
-    const listmonk = await connect(connection);
-    await ready(listmonk, connection.endpoint);
+  async create(inputs: ListInputs) {
+    const { listId } = inputs;
+    const listmonk = await this.connect();
+    await this.ready(listmonk);
 
     if (listId !== undefined) {
       const path = { params: { path: { list_id: listId } } };
@@ -64,10 +59,10 @@ const provider: pulumi.dynamic.ResourceProvider<ListInputs, ListOutputs> = {
       throw new Error(`Listmonk created "${inputs.name}" as list ${created.id}, not ${listId}.`);
 
     return { id: String(created.id), outs: { ...inputs, listId: created.id } };
-  },
+  }
 
-  async update(id, _olds, news) {
-    const listmonk = await connect(news.connection);
+  async update(id: string, _olds: ListOutputs, news: ListInputs) {
+    const listmonk = await this.connect();
 
     unwrap(
       await listmonk.PUT("/lists/{list_id}", {
@@ -77,12 +72,12 @@ const provider: pulumi.dynamic.ResourceProvider<ListInputs, ListOutputs> = {
     );
 
     return { outs: { ...news, listId: Number(id) } };
-  },
+  }
 
-  async read(id, props) {
-    if (!props) throw new Error(`Listmonk list "${id}" can't be imported without a connection.`);
+  async read(id: string, props?: ListOutputs) {
+    if (!props) throw new Error(`Listmonk list "${id}" can't be imported without its inputs.`);
 
-    const listmonk = await connect(props.connection);
+    const listmonk = await this.connect();
     const live = unwrap(
       await listmonk.GET("/lists/{list_id}", { params: { path: { list_id: Number(id) } } }),
     );
@@ -98,18 +93,17 @@ const provider: pulumi.dynamic.ResourceProvider<ListInputs, ListOutputs> = {
     });
 
     return { id, props: { ...props, ...read, listId: Number(id) } };
-  },
+  }
 
-  async delete(id, props) {
-    const listmonk = await connect(props.connection);
+  async delete(id: string) {
+    const listmonk = await this.connect();
     unwrap(
       await listmonk.DELETE("/lists/{list_id}", { params: { path: { list_id: Number(id) } } }),
     );
-  },
-};
+  }
+}
 
 export interface ListArgs {
-  connection: pulumi.Input<ConnectionArgs>;
   // Takes over this list if it exists, and fails rather than create the list under another id.
   listId?: pulumi.Input<number>;
   name: pulumi.Input<string>;
@@ -124,10 +118,10 @@ export class List extends pulumi.dynamic.Resource {
 
   constructor(name: string, args: ListArgs, options?: pulumi.CustomResourceOptions) {
     super(
-      provider,
+      new ListProvider(),
       name,
       { tags: [], description: "", ...args, listId: args.listId },
-      { ...options, additionalSecretOutputs: ["connection"] },
+      options,
       "listmonk",
       "List",
     );
