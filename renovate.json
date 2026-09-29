@@ -71,6 +71,10 @@
 			"enabled": false
 		},
 		{
+			"matchDatasources": ["hex"],
+			"minimumReleaseAge": "3 days"
+		},
+		{
 			"matchFileNames": [".github/**"],
 			"semanticCommitScope": "ci"
 		},
