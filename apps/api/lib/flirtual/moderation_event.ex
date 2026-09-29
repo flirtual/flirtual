@@ -400,7 +400,8 @@ defmodule Flirtual.ModerationEvent do
   def with_related(events) when is_list(events) do
     active_bans = events |> Enum.flat_map(&duplicate_user_ids/1) |> active_bans_by_user_id()
     bans_by_id = events |> Enum.flat_map(&appealed_ban_ids/1) |> bans_by_id()
-    lifted_bans = lifted_bans(events)
+    lifted_bans = preceding(events, :unbanned, :banned)
+    acknowledged_warns = preceding(events, :warn_acknowledged, :warned)
     images = events |> Enum.flat_map(&image_ids/1) |> images_by_id()
 
     Enum.map(events, fn event ->
@@ -417,6 +418,7 @@ defmodule Flirtual.ModerationEvent do
               :unbanned -> lifted_bans[event.id]
               _ -> nil
             end,
+          warn: acknowledged_warns[event.id],
           images:
             event
             |> image_ids()
@@ -473,26 +475,27 @@ defmodule Flirtual.ModerationEvent do
     |> Map.new(&{&1.id, &1})
   end
 
-  # The ban an unban lifted: the user's last ban before it.
-  defp lifted_bans(events) do
-    unbans = Enum.filter(events, &(&1.type == :unbanned and is_binary(&1.user_id)))
-    user_ids = unbans |> Enum.map(& &1.user_id) |> Enum.uniq()
+  # The ban an unban lifted, or the warning an acknowledgement settled: the user's
+  # last event of that type before it.
+  defp preceding(events, type, preceding_type) do
+    events = Enum.filter(events, &(&1.type == type and is_binary(&1.user_id)))
+    user_ids = events |> Enum.map(& &1.user_id) |> Enum.uniq()
 
-    bans =
+    candidates =
       if user_ids == [],
         do: [],
         else:
           ModerationEvent
-          |> where([event], event.type == :banned and event.user_id in ^user_ids)
+          |> where([event], event.type == ^preceding_type and event.user_id in ^user_ids)
           |> order_by([event], desc: event.created_at, desc: event.id)
           |> Repo.all()
 
-    Map.new(unbans, fn unban ->
-      {unban.id,
+    Map.new(events, fn event ->
+      {event.id,
        Enum.find(
-         bans,
-         &(&1.user_id == unban.user_id and
-             DateTime.compare(&1.created_at, unban.created_at) != :gt)
+         candidates,
+         &(&1.user_id == event.user_id and
+             DateTime.compare(&1.created_at, event.created_at) != :gt)
        )}
     end)
   end
@@ -551,32 +554,52 @@ defmodule Flirtual.ModerationEvent do
   def review_warned(user_id, reviewer) when is_binary(user_id),
     do: where_user_types(user_id, [:flagged_keyword, :flagged_bio]) |> review_all(reviewer)
 
-  # Any ban settles the user's content flags; one for being underage or a duplicate
-  # settles those flags too; or a duplicate ban on either account.
+  @duplicate_flag_types [:flagged_duplicate, :flagged_duplicate_image]
+
+  # A ban settles all the user's flags except domain ones. Duplicate flags on
+  # either account are settled by a duplicate ban, or by any other ban if all
+  # accounts listed are banned.
   def review_banned(user_id, reason_id, reviewer) when is_binary(user_id) do
-    types =
-      [:flagged_keyword, :flagged_bio, :flagged_image, :flagged_honeypot, :warn_acknowledged] ++
-        if(reason_id == Attribute.underage_ban_reason_id(),
-          do: [:flagged_registered_underage],
-          else: []
-        )
+    {reviewed, _} =
+      where_user_types(user_id, @reviewable_types -- [:flagged_domain | @duplicate_flag_types])
+      |> review_all(reviewer)
 
-    {reviewed, _} = where_user_types(user_id, types) |> review_all(reviewer)
+    duplicates =
+      ModerationEvent
+      |> where([event], event.type in ^@duplicate_flag_types and is_nil(event.reviewed_at))
+      |> where(
+        [event],
+        event.user_id == ^user_id or
+          fragment("jsonb_exists(?->'duplicate_user_ids', ?)", event.details, ^user_id)
+      )
+      |> Repo.all()
 
-    {duplicates, _} =
+    duplicates =
       if reason_id == Attribute.duplicate_ban_reason_id(),
-        do:
-          ModerationEvent
-          |> where([event], event.type in [:flagged_duplicate, :flagged_duplicate_image])
-          |> where(
-            [event],
-            event.user_id == ^user_id or
-              fragment("jsonb_exists(?->'duplicate_user_ids', ?)", event.details, ^user_id)
-          )
-          |> review_all(reviewer),
-        else: {0, nil}
+        do: duplicates,
+        else: reject_unbanned_duplicates(duplicates)
 
-    {reviewed + duplicates, nil}
+    {reviewed_duplicates, _} =
+      ModerationEvent
+      |> where([event], event.id in ^Enum.map(duplicates, & &1.id))
+      |> review_all(reviewer)
+
+    {reviewed + reviewed_duplicates, nil}
+  end
+
+  defp reject_unbanned_duplicates(events) do
+    user_ids = Enum.flat_map(events, &[&1.user_id | duplicate_user_ids(&1)]) |> Enum.uniq()
+
+    unbanned =
+      User
+      |> where([user], user.id in ^user_ids and is_nil(user.banned_at))
+      |> select([user], user.id)
+      |> Repo.all()
+      |> MapSet.new()
+
+    Enum.reject(events, fn event ->
+      Enum.any?([event.user_id | duplicate_user_ids(event)], &(&1 in unbanned))
+    end)
   end
 
   # Backfilled events hold the image's id as a plain UUID.

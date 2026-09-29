@@ -259,7 +259,8 @@ export const ModerationQueue: FC = () => {
 	const deferredSearch = useDeferredValue(search.trim());
 	const reasonIds = useReasonIds(deferredSearch);
 
-	const [order, setOrder] = useState<"asc" | "desc">("desc");
+	const [orderOverride, setOrder] = useState<"asc" | "desc">();
+	const order = orderOverride ?? (tab === "reports" ? "desc" : "asc");
 	const [toggles, setToggles] = useState<{ reviewed?: boolean; indefShadowbanned?: boolean }>({});
 	const reviewed = toggles.reviewed ?? filtered;
 	const indefShadowbanned = toggles.indefShadowbanned ?? filtered;
@@ -309,6 +310,7 @@ export const ModerationQueue: FC = () => {
 			previous.delete("userId");
 			return previous;
 		});
+		setOrder(undefined);
 		if (filtered) setToggles({});
 	};
 

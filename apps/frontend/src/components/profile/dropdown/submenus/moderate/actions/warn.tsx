@@ -29,7 +29,12 @@ import { useToast } from "~/hooks/use-toast";
 import { defaultLocale, i18n, useLocale } from "~/i18n";
 import { invalidate, userKey } from "~/query";
 
-const WarnDialog: FC<{ user: User; onClose: () => void }> = withSuspense(({ user, onClose }) => {
+export const WarnDialog: FC<{
+	user: User;
+	initial?: { reasonId: string; message: string; shadowban: boolean };
+	onWarn?: () => unknown;
+	onClose: () => void;
+}> = withSuspense(({ user, initial, onWarn, onClose }) => {
 	const toasts = useToast();
 	const { t } = useTranslation();
 	const [locale] = useLocale();
@@ -69,9 +74,9 @@ const WarnDialog: FC<{ user: User; onClose: () => void }> = withSuspense(({ user
 					<Form
 						fields={{
 							targetId: user.id,
-							reasonId: defaultReason,
-							message: user.moderatorMessage || tAttribute[defaultReason]?.details || "",
-							shadowban: defaultShadowban
+							reasonId: initial?.reasonId ?? defaultReason,
+							message: initial?.message ?? (user.moderatorMessage || tAttribute[defaultReason]?.details || ""),
+							shadowban: initial?.shadowban ?? defaultShadowban
 						}}
 						className="flex flex-col gap-8"
 						requireChange={false}
@@ -100,6 +105,7 @@ const WarnDialog: FC<{ user: User; onClose: () => void }> = withSuspense(({ user
 
 							await User.warn(targetId, { reasonId, message, shadowban });
 							await invalidate({ queryKey: userKey(user.id) });
+							await onWarn?.();
 
 							toasts.add(t("account_warned"));
 							onClose();

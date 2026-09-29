@@ -345,12 +345,15 @@ defmodule Flirtual.Flag do
     end
   end
 
-  def check_profile_vrchat(_, nil), do: :ok
+  @placeholder_vrchat_names ["vrchat", "ask", "ask!", "ask+me", "ask me", "n/a"]
 
-  def check_profile_vrchat(profile, vrchat) do
-    with :ok <- check_flags(profile.user_id, vrchat),
-         :ok <- Hash.check_hash(profile.user_id, "VRChat", vrchat) do
-      :ok
+  def check_profile_vrchat(_, nil, _), do: :ok
+
+  def check_profile_vrchat(profile, vrchat, vrchat_name) do
+    with :ok <- check_flags(profile.user_id, vrchat) do
+      if String.downcase(String.trim(vrchat_name || "")) in @placeholder_vrchat_names,
+        do: :ok,
+        else: Hash.check_hash(profile.user_id, "VRChat", vrchat)
     end
   end
 
@@ -409,7 +412,7 @@ defmodule Flirtual.Flag do
   def check_profile_flags(profile, attrs) do
     with :ok <- check_profile_display_name(profile, attrs.display_name),
          :ok <- check_profile_discord(profile, attrs.discord),
-         :ok <- check_profile_vrchat(profile, attrs.vrchat),
+         :ok <- check_profile_vrchat(profile, attrs.vrchat, attrs.vrchat_name),
          :ok <- check_profile_facetime(profile, attrs.facetime),
          :ok <- check_profile_biography(profile, attrs.biography),
          :ok <- check_profile_custom_interests(profile, attrs.custom_interests),
