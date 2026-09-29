@@ -8,6 +8,7 @@ defmodule Flirtual.User.Profile.Image.Moderation do
   alias Flirtual.User
   alias Flirtual.Discord
   alias Flirtual.ModerationEvent
+  alias Flirtual.ObanWorkers
   alias Flirtual.ObanWorkers.ImageClassify
   alias Flirtual.ObanWorkers.ImageSpatial
   alias Flirtual.Repo
@@ -150,6 +151,20 @@ defmodule Flirtual.User.Profile.Image.Moderation do
   @search_threshold 6
 
   def classify_image(%Image{} = image, classifications, hashes \\ nil) do
+    hashes = hashes || %{}
+    hash = Image.hash_to_integer(hashes["hash"])
+    flipped = Image.hash_to_integer(hashes["flipped"])
+
+    case removed_match(image, hash, flipped) do
+      {%ModerationEvent{} = removal, distance} ->
+        remove_reupload(image, hash, removal, distance)
+
+      nil ->
+        classify_new_image(image, classifications, hash, flipped)
+    end
+  end
+
+  defp classify_new_image(%Image{} = image, classifications, hash, flipped) do
     type = classify_flag?(classifications)
     safe = type == :safe
 
@@ -159,14 +174,20 @@ defmodule Flirtual.User.Profile.Image.Moderation do
     })
 
     if not safe do
-      with %User{} = user <- User.get(image.profile_id) do
+      with %User{} = user <- User.get(image.profile_id),
+           false <-
+             ModerationEvent.repeated?(user.id, :flagged_image, %{image_id: image.id}) do
         ModerationEvent.create(:flagged_image, %{
           user: user,
-          details: %{
-            image_id: image.id,
-            classification: to_string(type),
-            classifications: flagged_tags(classifications)
-          }
+          details:
+            with_retained_copy(
+              %{
+                image_id: image.id,
+                classification: to_string(type),
+                classifications: flagged_tags(classifications)
+              },
+              image
+            )
         })
 
         Discord.deliver_webhook(:flagged_image,
@@ -177,10 +198,6 @@ defmodule Flirtual.User.Profile.Image.Moderation do
         )
       end
     end
-
-    hashes = hashes || %{}
-    hash = Image.hash_to_integer(hashes["hash"])
-    flipped = Image.hash_to_integer(hashes["flipped"])
 
     attrs = if is_integer(hash), do: %{hash: hash}, else: %{}
 
@@ -206,24 +223,31 @@ defmodule Flirtual.User.Profile.Image.Moderation do
       |> Enum.reject(&(&1.profile_id == profile_id))
       |> Enum.reject(&(is_nil(&1.profile_id) and variant_distance(query_hashes, &1) > 0))
 
-    case matches do
-      [] ->
+    cond do
+      matches == [] ->
         :ok
 
-      matches ->
+      ModerationEvent.repeated?(profile_id, :flagged_duplicate_image, %{image_id: image.id}) ->
+        :ok
+
+      true ->
         closest = Enum.sort_by(matches, &variant_distance(query_hashes, &1))
         distance = variant_distance(query_hashes, List.first(closest))
 
         with %User{} = user <- User.get(profile_id) do
           ModerationEvent.create(:flagged_duplicate_image, %{
             user: user,
-            details: %{
-              image_id: image.id,
-              distance: distance,
-              match_image_ids: closest |> Enum.take(3) |> Enum.map(& &1.id),
-              duplicate_user_ids:
-                matches |> Enum.map(& &1.profile_id) |> Enum.reject(&is_nil/1) |> Enum.uniq()
-            }
+            details:
+              with_retained_copy(
+                %{
+                  image_id: image.id,
+                  distance: distance,
+                  match_image_ids: closest |> Enum.take(3) |> Enum.map(& &1.id),
+                  duplicate_user_ids:
+                    matches |> Enum.map(& &1.profile_id) |> Enum.reject(&is_nil/1) |> Enum.uniq()
+                },
+                image
+              )
           })
 
           Discord.deliver_webhook(:duplicate_image,
@@ -241,8 +265,76 @@ defmodule Flirtual.User.Profile.Image.Moderation do
 
   def check_duplicate(_, _), do: :ok
 
-  # Closest distance between image hash and any query hash.
-  defp variant_distance(query_hashes, %Image{hash: hash}) do
+  defp with_retained_copy(details, %Image{} = image) do
+    case Image.retain_object(image, nil) do
+      url when is_binary(url) -> Map.put(details, :image_url, url)
+      _ -> details
+    end
+  end
+
+  # Moderators removed an image like this from the same profile, or quarantined
+  # one from any profile.
+  defp removed_match(%Image{profile_id: profile_id}, hash, flipped)
+       when is_integer(hash) and not is_nil(profile_id) do
+    query_hashes = [hash, flipped] |> Enum.filter(&is_integer/1) |> Enum.uniq()
+
+    profile_id
+    |> ModerationEvent.removed_images()
+    |> Enum.map(&{&1, min_distance(query_hashes, &1.details["hash"])})
+    |> Enum.filter(fn {_, distance} -> distance <= @duplicate_threshold end)
+    |> Enum.min_by(
+      fn {removal, distance} -> {removal.type != :image_quarantined, distance} end,
+      fn -> nil end
+    )
+  end
+
+  defp removed_match(_, _, _), do: nil
+
+  defp remove_reupload(%Image{} = image, hash, %ModerationEvent{} = removal, distance) do
+    details = %{image_id: image.id, hash: hash, distance: distance, match_event_id: removal.id}
+
+    with %User{} = user <- User.get(image.profile_id),
+         :ok <- record_reupload(removal.type, image, user, details),
+         {:ok, _} = result <- Image.delete(image),
+         {:ok, _} <- User.update_status(User.get(user.id)),
+         {:ok, _} <- ObanWorkers.update_user(user.id, [:search_index, :talkjs]) do
+      result
+    end
+  end
+
+  defp record_reupload(:image_quarantined, image, user, details) do
+    with {:ok, key} <- Image.retain_illegal_object(image, nil),
+         {:ok, _} <-
+           ModerationEvent.create(:image_quarantined, %{
+             user: user,
+             automatic: true,
+             details: Map.put(details, :key, key)
+           }) do
+      Discord.deliver_webhook(:reuploaded_illegal_image, user: user, key: key)
+      :ok
+    else
+      :error -> {:error, :image_retention_failed}
+      error -> error
+    end
+  end
+
+  defp record_reupload(:image_removed, image, user, details) do
+    image_url = Image.retain_object(image, nil)
+
+    ModerationEvent.create(:image_removed, %{
+      user: user,
+      automatic: true,
+      details: Map.put(details, :image_url, image_url)
+    })
+
+    Discord.deliver_webhook(:reuploaded_image, user: user, image_url: image_url)
+    :ok
+  end
+
+  defp variant_distance(query_hashes, %Image{hash: hash}), do: min_distance(query_hashes, hash)
+
+  # Closest distance between a hash and any query hash.
+  defp min_distance(query_hashes, hash) do
     query_hashes |> Enum.map(&hamming_distance(&1, hash)) |> Enum.min()
   end
 

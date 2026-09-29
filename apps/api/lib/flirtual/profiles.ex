@@ -405,12 +405,13 @@ defmodule Flirtual.Profiles do
     end)
   end
 
-  def update_preferences(%Profile.Preferences{} = preferences, attrs, options \\ []) do
+  def update_preferences(%Profile.Preferences{} = previous, attrs, options \\ []) do
     Repo.transaction(fn ->
       with {:ok, preferences} <-
-             preferences
+             previous
              |> Profile.Preferences.changeset(attrs, options)
              |> Repo.update(),
+           :ok <- Flag.check_age_range(previous, preferences),
            user = User.get(preferences.profile_id),
            {:ok, _} <- User.update_status(user),
            {:ok, _} <-
@@ -660,6 +661,8 @@ defmodule Flirtual.Profiles do
                end)
              end)
              |> Enum.filter(&(&1.order !== nil)),
+           {:ok, _} <-
+             profile.images |> Enum.reject(&(&1.id in image_ids)) |> Image.queue_delete_objects(),
            user = User.get(profile.user_id),
            {:ok, _} <- User.update_status(user),
            {:ok, _} <-

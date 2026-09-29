@@ -11,7 +11,7 @@ defmodule Flirtual.Report do
   import Ecto.Query
   import Flirtual.Utilities.Changeset
 
-  alias Flirtual.{Attribute, Discord, ObanWorkers, Repo, Report, User}
+  alias Flirtual.{Attribute, Discord, ModerationCursor, ObanWorkers, Repo, Report, User}
   alias Flirtual.User.Profile.Block
 
   schema "reports" do
@@ -177,7 +177,7 @@ defmodule Flirtual.Report do
   defmodule List do
     use Flirtual.EmbeddedSchema
 
-    @optional [:reason_id, :target_id, :user_id]
+    @optional [:reason_id, :target_id, :user_id, :search, :reason_ids, :order, :limit, :cursor]
 
     embedded_schema do
       field(:reason_id, :string)
@@ -185,10 +185,18 @@ defmodule Flirtual.Report do
       field(:user_id, :string)
       field(:reviewed, :boolean, default: false)
       field(:indef_shadowbanned, :boolean, default: false)
+      field(:search, :string, default: "")
+      field(:reason_ids, {:array, Ecto.ShortUUID}, default: [])
+      field(:order, :string, default: "desc")
+      field(:limit, :integer)
+      field(:cursor, :string)
     end
 
     def changeset(value, _, _) do
       value
+      |> validate_inclusion(:order, ["asc", "desc"])
+      |> validate_number(:limit, greater_than_or_equal_to: 1, less_than_or_equal_to: 1000)
+      |> ModerationCursor.validate(:cursor)
       |> validate_attribute(:reason_id, "report-reason")
       |> validate_uid(:target_id)
       |> validate_uid(:user_id)
@@ -226,14 +234,20 @@ defmodule Flirtual.Report do
     with {:ok, attrs} <- List.apply(attrs) do
       include_reviewed = attrs[:reviewed] || false
       include_indef_shadowbanned = attrs[:indef_shadowbanned] || false
+      order = String.to_existing_atom(attrs.order)
+      {:ok, cursor} = ModerationCursor.parse(attrs.cursor)
 
       query =
         from(report in Report,
           where: ^include_reviewed or is_nil(report.reviewed_at),
           join: user in assoc(report, :target),
           where: ^include_indef_shadowbanned or is_nil(user.indef_shadowbanned_at),
-          order_by: [desc: report.created_at]
+          order_by: [{^order, report.created_at}, {^order, report.id}]
         )
+
+      query = where_search(query, String.trim(attrs.search), attrs.reason_ids)
+      query = ModerationCursor.where_after(query, cursor, "report", order)
+      query = if attrs.limit, do: limit(query, ^attrs.limit), else: query
 
       query =
         if attrs[:user_id],
@@ -247,6 +261,20 @@ defmodule Flirtual.Report do
 
       {:ok, Repo.all(query)}
     end
+  end
+
+  defp where_search(query, "", _), do: query
+
+  defp where_search(query, search, reason_ids) do
+    pattern = to_ilike_pattern(search)
+
+    where(
+      query,
+      [report],
+      report.target_id in subquery(User.identifier_query(search)) or
+        ilike(report.message, ^pattern) or
+        report.reason_id in ^reason_ids
+    )
   end
 
   def list_unresolved(target_id: target_id) when is_uid(target_id) do

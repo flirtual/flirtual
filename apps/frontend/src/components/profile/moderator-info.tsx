@@ -11,11 +11,13 @@ import { usePreferences } from "~/hooks/use-preferences";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useUser } from "~/hooks/use-user";
 import { useLocale } from "~/i18n";
+import { urls } from "~/urls";
 
 import { CopyClick } from "../copy-click";
 import { DateTimeRelative } from "../datetime-relative";
 import { InlineLink } from "../inline-link";
 import { ModeratorNoteDialog } from "./dialogs/moderator-note";
+import { getCountryName } from "./pill/country";
 
 function stripTimestamps(note: string | undefined): string {
 	if (!note) return "None";
@@ -143,6 +145,27 @@ export const ProfileModeratorInfo: FC<{
 							<span className="font-bold">Date of birth:</span>
 							{" "}
 							<span>{user.bornAt}</span>
+						</span>
+						<span>
+							<span className="font-bold">Login locations:</span>
+							{" "}
+							<span>
+								{user.loginLocations && user.loginLocations.length > 0
+									? user.loginLocations
+											.map((location) => {
+												const parts = location.split(", ");
+												const country = parts.pop()!;
+
+												return [
+													...parts,
+													/^[A-Z]{2}$/.test(country)
+														? getCountryName(systemLanguage, country) ?? country
+														: country
+												].join(", ");
+											})
+											.join("; ")
+									: "None"}
+							</span>
 						</span>
 					</div>
 					<div className="flex flex-col">
@@ -344,7 +367,7 @@ export const ProfileModeratorInfo: FC<{
 								<InlineLink
 									className="underline"
 									highlight={false}
-									href={`https://app.revenuecat.com/customers/cf0649d1/${user.revenuecatId}`}
+									href={urls.moderation.revenuecatCustomer(user.revenuecatId)}
 								>
 									{user.revenuecatId}
 								</InlineLink>

@@ -1,0 +1,21 @@
+{
+	"name": "@flirtual/pulumi-fly",
+	"private": true,
+	"description": "Pulumi dynamic resources for Fly.io, driven through flyctl.",
+	"type": "module",
+	"exports": "./src/index.ts",
+	"scripts": {
+		"generate:config": "schema=$(mktemp) && curl -sfL https://json.schemastore.org/fly.json -o \"$schema\" && json2ts -i \"$schema\" -o src/config.ts --bannerComment \"// Generated from https://json.schemastore.org/fly.json by \\`pnpm generate:config\\`.\" && rm -f \"$schema\""
+	},
+	"peerDependencies": {
+		"@pulumi/pulumi": "catalog:",
+		"execa": "catalog:"
+	},
+	"devDependencies": {
+		"@pulumi/pulumi": "catalog:",
+		"@types/node": "^22",
+		"execa": "catalog:",
+		"json-schema-to-typescript": "^15.0.4",
+		"typescript": "catalog:"
+	}
+}

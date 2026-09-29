@@ -248,7 +248,8 @@ config :flirtual, FlirtualWeb.RevenueCatController,
   api_key: Env.get!("REVENUECAT_ACCESS_TOKEN"),
   apple_key: Env.get!("REVENUECAT_APPLE_KEY"),
   google_key: Env.get!("REVENUECAT_GOOGLE_KEY"),
-  signing_secret: Env.get!("REVENUECAT_SIGNING_SECRET")
+  signing_secret: Env.get!("REVENUECAT_SIGNING_SECRET"),
+  project_id: Env.get!("REVENUECAT_PROJECT_ID")
 
 config :flirtual, Flirtual.LLM,
   model: Env.get("LLM_MODEL", default: "anthropic:claude-sonnet-latest")

@@ -7,8 +7,10 @@ defmodule Flirtual.Discord do
   alias Flirtual.AgeVerification
   alias Flirtual.Attribute
   alias Flirtual.Connection
+  alias Flirtual.Countries
   alias Flirtual.ObanWorkers
   alias Flirtual.Report
+  alias Flirtual.RevenueCat
   alias Flirtual.Entitlement
   alias Flirtual.User
   alias Flirtual.User.Profile.Image
@@ -393,8 +395,8 @@ defmodule Flirtual.Discord do
       when is_binary(store_id) ->
         "[#{chargebee_label}](https://flirtual.chargebee.com/d/subscriptions/#{store_id})"
 
-      %Entitlement{store: :play_store} ->
-        "[#{play_label}](https://app.revenuecat.com/customers/cf0649d1/#{user.revenuecat_id})"
+      %Entitlement{store: :play_store} when is_binary(user.revenuecat_id) ->
+        "[#{play_label}](#{RevenueCat.customer_url(user.revenuecat_id)})"
 
       _ ->
         fallback
@@ -730,6 +732,41 @@ defmodule Flirtual.Discord do
     webhook(:moderation_pics, %{embeds: [embed]})
   end
 
+  def deliver_webhook(:reuploaded_image, user: %User{} = user, image_url: image_url) do
+    embed = %{
+      author: webhook_author(user),
+      title: "Re-uploaded image removed",
+      color: @destructive_color,
+      footer: %{text: "Automatic"},
+      timestamp: DateTime.utc_now() |> DateTime.to_iso8601()
+    }
+
+    embed = if is_binary(image_url), do: Map.put(embed, :image, %{url: image_url}), else: embed
+
+    webhook(:moderation_pics, %{embeds: [embed]})
+  end
+
+  def deliver_webhook(:reuploaded_illegal_image, user: %User{} = user, key: key) do
+    webhook(:moderation_pics, %{
+      content: "<@&458465845887369243>",
+      embeds: [
+        %{
+          author: webhook_author(user),
+          title: "Re-uploaded illegal image removed",
+          fields: [
+            %{
+              name: "Quarantined",
+              value: key || "failed"
+            }
+          ],
+          color: @destructive_color,
+          footer: %{text: "Automatic"},
+          timestamp: DateTime.utc_now() |> DateTime.to_iso8601()
+        }
+      ]
+    })
+  end
+
   def deliver_webhook(:illegal_image,
         user: %User{} = user,
         moderator: %User{} = moderator,
@@ -850,7 +887,7 @@ defmodule Flirtual.Discord do
               %{
                 name: "Report",
                 value:
-                  "[View report](#{Application.fetch_env!(:flirtual, :frontend_origin) |> URI.merge("/reports?userId=#{report.user_id}&targetId=#{report.target_id}")})",
+                  "[View report](#{Application.fetch_env!(:flirtual, :frontend_origin) |> URI.merge("/mod?tab=reports&userId=#{report.user_id}&targetId=#{report.target_id}")})",
                 inline: true
               },
               if(was_shadow_banned,
@@ -957,6 +994,71 @@ defmodule Flirtual.Discord do
           author: webhook_author(user),
           title: "Registration honeypot tripped",
           color: @default_color,
+          timestamp: DateTime.utc_now() |> DateTime.to_iso8601()
+        }
+      ],
+      components: [
+        %{
+          type: 1,
+          components: [
+            %{
+              type: 2,
+              label: "View profile",
+              style: 5,
+              url: User.url(user) |> URI.to_string()
+            }
+          ]
+        }
+      ]
+    })
+  end
+
+  def deliver_webhook(:flagged_age_range, user: %User{} = user) do
+    webhook(:moderation_flags, %{
+      embeds: [
+        %{
+          author: webhook_author(user),
+          title: "Age range flagged",
+          description: "18–18",
+          color: @warn_color,
+          timestamp: DateTime.utc_now() |> DateTime.to_iso8601()
+        }
+      ],
+      components: [
+        %{
+          type: 1,
+          components: [
+            %{
+              type: 2,
+              label: "View profile",
+              style: 5,
+              url: User.url(user) |> URI.to_string()
+            }
+          ]
+        }
+      ]
+    })
+  end
+
+  def deliver_webhook(:flagged_country, user: %User{} = user, country: country, source: source) do
+    webhook(:moderation_flags, %{
+      embeds: [
+        %{
+          author: webhook_author(user),
+          title: "Country flagged",
+          fields: [
+            %{
+              name: "Country",
+              value: Countries.name(country) || String.upcase(country),
+              inline: true
+            },
+            %{
+              name: "Source",
+              value: if(source == "ip", do: "IP address", else: "Profile"),
+              inline: true
+            }
+          ],
+          color: @warn_color,
           timestamp: DateTime.utc_now() |> DateTime.to_iso8601()
         }
       ],
@@ -1135,7 +1237,7 @@ defmodule Flirtual.Discord do
     end
 
     format_rc = fn
-      id when is_binary(id) -> "[#{id}](https://app.revenuecat.com/customers/cf0649d1/#{id})"
+      id when is_binary(id) -> "[#{id}](#{RevenueCat.customer_url(id)})"
       _ -> "Not found"
     end
 

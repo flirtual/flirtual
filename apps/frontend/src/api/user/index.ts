@@ -112,6 +112,7 @@ export type User = {
 	paymentsBannedAt?: string;
 	bannedAt?: string;
 	ban?: UserBan;
+	loginLocations?: Array<string>;
 	deactivatedAt?: string;
 	preferences?: Preferences;
 	profile: Profile;

@@ -19,6 +19,11 @@ export type ListReportOptions = Partial<
 	{
 		reviewed: boolean;
 		indefShadowbanned: boolean;
+		search: string;
+		reasonIds: Array<string>;
+		order: "asc" | "desc";
+		limit: number;
+		cursor: string;
 	} & Pick<Report, "targetId" | "userId">
 >;
 
@@ -33,8 +38,11 @@ export const Report = {
 	create(options: CreateReportOptions) {
 		return this.api.json(options).post().json<Report>();
 	},
-	list(options: ListReportOptions) {
-		return this.api.query(options).get().json<Array<Report>>();
+	list({ reasonIds, ...options }: ListReportOptions) {
+		return this.api
+			.query({ ...options, reasonIds: reasonIds?.join(",") }, { omitUndefinedOrNullValues: true })
+			.get()
+			.json<Array<Report>>();
 	},
 	get(reportId: string) {
 		return this.api.url(`/${reportId}`).get().json<Report>();

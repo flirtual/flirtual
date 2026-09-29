@@ -387,6 +387,13 @@ defmodule FlirtualWeb.Router do
           end
         end
 
+        scope "/moderation-events" do
+          pipe_through([:require_authenticated_user, :require_valid_user])
+
+          get("/", ModerationEventController, :list)
+          post("/:event_id/review", ModerationEventController, :review)
+        end
+
         scope "/attributes" do
           pipe_through([:require_authenticated_user, :require_valid_user])
 
@@ -495,6 +502,7 @@ defmodule FlirtualWeb.Router do
             delete("/", UsersController, :admin_delete)
 
             get("/inspect", UsersController, :inspect)
+            get("/moderation-events", UsersController, :list_moderation_events)
 
             post("/deactivate", UsersController, :deactivate)
             delete("/deactivate", UsersController, :reactivate)

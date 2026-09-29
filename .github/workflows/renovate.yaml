@@ -42,6 +42,7 @@ jobs:
         with:
           client-id: ${{ vars.RENOVATE_APP_CLIENT_ID }}
           private-key: ${{ secrets.RENOVATE_APP_PRIVATE_KEY }}
+          repositories: flirtual,pulumi
 
       - name: Restore repository cache
         id: cache-restore

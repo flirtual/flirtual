@@ -69,6 +69,9 @@ export const ProfileImage = {
 			.post()
 			.json<Array<WorldProfileItem>>();
 	},
+	searchByUrl(url: string) {
+		return api.url("images/search").query({ url }).post().json<Array<WorldProfileItem>>();
+	},
 	searchSimilar(imageId: string) {
 		return api.url(`images/${imageId}/similar`).get().json<Array<WorldProfileItem>>();
 	}
