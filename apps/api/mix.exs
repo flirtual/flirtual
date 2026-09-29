@@ -69,7 +69,7 @@ defmodule Flirtual.MixProject do
       {:httpoison, "~> 3.0", override: true},
       {:tls_certificate_check, "~> 1.20"},
       {:finch, "~> 0.23.0"},
-      {:req, "~> 0.6.2"},
+      {:req, "~> 0.7.0"},
       {:req_llm, "~> 1.17"},
       {:telemetry_metrics, "~> 1.0"},
       {:telemetry_poller, "~> 1.0"},

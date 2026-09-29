@@ -25,7 +25,7 @@ defmodule Flirtual.Stereo2Spatial do
         receive_timeout: @receive_timeout,
         decode_body: false,
         retry: false,
-        finch: Flirtual.Finch
+        finch: [name: Flirtual.Finch]
       )
 
     case result do

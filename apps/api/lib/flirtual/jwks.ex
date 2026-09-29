@@ -47,7 +47,7 @@ defmodule Flirtual.Jwks do
              url: keys_url,
              decode_body: false,
              retry: false,
-             finch: Flirtual.Finch
+             finch: [name: Flirtual.Finch]
            ),
          {:ok, %{"keys" => keys}} <- Jason.decode(body) do
       expiry = System.system_time(:millisecond) + @cache_ttl

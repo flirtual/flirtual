@@ -107,7 +107,7 @@ defmodule Flirtual.Talkjs do
           retry: &retry_closed/2,
           max_retries: 1,
           retry_delay: 0,
-          finch: Flirtual.Finch
+          finch: [name: Flirtual.Finch]
         )
     end
   end

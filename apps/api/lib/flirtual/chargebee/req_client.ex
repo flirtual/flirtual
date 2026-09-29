@@ -15,7 +15,7 @@ defmodule Flirtual.Chargebee.ReqClient do
       headers: headers,
       decode_body: false,
       retry: false,
-      finch: Flirtual.Finch
+      finch: [name: Flirtual.Finch]
     ]
     |> Req.request()
     |> case do

@@ -65,7 +65,7 @@ defmodule Flirtual.Apple do
              headers: [{"content-type", "application/x-www-form-urlencoded"}],
              decode_body: false,
              retry: false,
-             finch: Flirtual.Finch
+             finch: [name: Flirtual.Finch]
            ),
          {:ok, %{"id_token" => id_token} = response} <- Jason.decode(body) do
       {:ok,
@@ -122,7 +122,7 @@ defmodule Flirtual.Apple do
              headers: [{"content-type", "application/x-www-form-urlencoded"}],
              decode_body: false,
              retry: false,
-             finch: Flirtual.Finch
+             finch: [name: Flirtual.Finch]
            ),
          {:ok, response} <- Jason.decode(body) do
       {:ok, %{access_token: response["access_token"], refresh_token: response["refresh_token"]}}
@@ -166,7 +166,7 @@ defmodule Flirtual.Apple do
              headers: [{"content-type", "application/x-www-form-urlencoded"}],
              decode_body: false,
              retry: false,
-             finch: Flirtual.Finch
+             finch: [name: Flirtual.Finch]
            ) do
       cond do
         response.status in 200..299 ->

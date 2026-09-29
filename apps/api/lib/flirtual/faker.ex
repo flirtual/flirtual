@@ -394,7 +394,7 @@ defmodule Flirtual.Faker do
              url: api_url,
              decode_body: false,
              retry: false,
-             finch: Flirtual.Finch
+             finch: [name: Flirtual.Finch]
            ),
          {:ok, %{"url" => image_url}} <- Jason.decode(body),
          {:ok, %Req.Response{status: 200, body: image_data}} <-
@@ -403,7 +403,7 @@ defmodule Flirtual.Faker do
              url: image_url,
              decode_body: false,
              retry: false,
-             finch: Flirtual.Finch
+             finch: [name: Flirtual.Finch]
            ) do
       {:ok, image_data}
     else
