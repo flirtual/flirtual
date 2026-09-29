@@ -212,7 +212,7 @@ catalogs:
       version: 3.18.1
     '@pulumi/random':
       specifier: ^4.21.0
-      version: 4.21.0
+      version: 4.21.2
     '@pulumiverse/sentry':
       specifier: 0.0.9
       version: 0.0.9
@@ -890,7 +890,7 @@ importers:
         version: 3.253.0(supports-color@10.2.2)(typescript@5.9.3)
       '@pulumi/random':
         specifier: catalog:pulumi
-        version: 4.21.0(supports-color@10.2.2)(typescript@5.9.3)
+        version: 4.21.2(supports-color@10.2.2)(typescript@5.9.3)
       '@pulumi/revenuecat':
         specifier: file:sdks/revenuecat
         version: file:pulumi/sdks/revenuecat(supports-color@10.2.2)
@@ -3350,8 +3350,8 @@ packages:
       typescript:
         optional: true
 
-  '@pulumi/random@4.21.0':
-    resolution: {integrity: sha512-k4JHqQFOKXWkbSLZtX37xBlRsurfgZbLd1Zib0cLSDP4Dt3uTllR3CBWfMLSnXJGAoTr9MlwyHCer/5tmSaF0Q==}
+  '@pulumi/random@4.21.2':
+    resolution: {integrity: sha512-yQVSPeQE55oqL4KHoWwKqTTTjx3jYGaJ3RCXnlUOcqmGW5zT3hmKWqAS+5nBYCtrVPA8J06UqjC1ZOrQP+Q5yg==}
 
   '@pulumi/revenuecat@file:pulumi/sdks/revenuecat':
     resolution: {directory: pulumi/sdks/revenuecat, type: directory}
@@ -11081,7 +11081,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@pulumi/random@4.21.0(supports-color@10.2.2)(typescript@5.9.3)':
+  '@pulumi/random@4.21.2(supports-color@10.2.2)(typescript@5.9.3)':
     dependencies:
       '@pulumi/pulumi': 3.253.0(supports-color@10.2.2)(typescript@5.9.3)
     transitivePeerDependencies:
