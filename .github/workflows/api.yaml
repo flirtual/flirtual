@@ -220,7 +220,7 @@ jobs:
           version-file: apps/api/.tool-versions
 
       - name: Submit dependencies
-        uses: erlef/mix-dependency-submission@764980370c6cdddd16b9c00141a628203dee1b7b # v1.3.3
+        uses: erlef/mix-dependency-submission@257b2df58056895d7a0f3f7dba5b0520d71d9a46 # v1.3.4
         with:
           project-path: apps/api
           install-deps: true
