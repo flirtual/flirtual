@@ -1,0 +1,5 @@
+{
+	"$schema": "https://docs.renovatebot.com/renovate-global-schema.json",
+	"repositories": ["flirtual/flirtual"],
+	"binarySource": "global"
+}
