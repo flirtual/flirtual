@@ -338,7 +338,7 @@ importers:
         version: 9.4.0
       '@formatjs/intl-pluralrules':
         specifier: ^6.3.12
-        version: 6.3.13
+        version: 6.3.15
       '@formatjs/intl-relativetimeformat':
         specifier: ^12.3.12
         version: 12.3.13
@@ -1898,8 +1898,8 @@ packages:
   '@formatjs/intl-numberformat@9.4.0':
     resolution: {integrity: sha512-j7H3YoHOdfYjESj3yU9Aw/SApIBd3H91D87HpplkPWs0aIR7MOs9wh6GN8GSLKJQy6zXuK4d0Bgng5h+3JkrJg==}
 
-  '@formatjs/intl-pluralrules@6.3.13':
-    resolution: {integrity: sha512-78dxY4nu4BbB9J7WqqIFzr1EbhrbB6VE4KOGw4qlmX+IpS6YPM7tVYLLhDq7qOQCzq9+741iDMrgB1JlhHUM/Q==}
+  '@formatjs/intl-pluralrules@6.3.15':
+    resolution: {integrity: sha512-/K6Up6SrvLcTP5mWVHp58A9Uk7I4jYbDYqtYdgKDeSY1HG0bhBMS4eVtqK2nFx8mWWdcHbt9ZqHBcCto573PNg==}
 
   '@formatjs/intl-relativetimeformat@12.3.13':
     resolution: {integrity: sha512-qgH6XQugzCrFyZIMvhi5xlk6JcJxyF87kcWzH8XT6X8oJQpdljt4xQSsF55TjaRHhi+iK1Nu7YAI9QkNGF7L2g==}
@@ -9855,10 +9855,10 @@ snapshots:
       '@formatjs/bigdecimal': 0.2.7
       '@formatjs/intl-localematcher': 0.8.13
 
-  '@formatjs/intl-pluralrules@6.3.13':
+  '@formatjs/intl-pluralrules@6.3.15':
     dependencies:
       '@formatjs/bigdecimal': 0.2.7
-      '@formatjs/intl-localematcher': 0.8.13
+      '@formatjs/intl-localematcher': 0.9.0
 
   '@formatjs/intl-relativetimeformat@12.3.13':
     dependencies:
