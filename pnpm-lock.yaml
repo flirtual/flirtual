@@ -479,7 +479,7 @@ importers:
         version: 4.3.1
       exifreader:
         specifier: ^4.41.3
-        version: 4.45.2
+        version: 4.46.0
       fast-fuzzy:
         specifier: ^1.12.0
         version: 1.12.0
@@ -5739,8 +5739,8 @@ packages:
   exifr@7.1.3:
     resolution: {integrity: sha512-g/aje2noHivrRSLbAUtBPWFbxKdKhgj/xr1vATDdUXPOFYJlQ62Ft0oy+72V6XLIpDJfHs6gXLbBLAolqOXYRw==}
 
-  exifreader@4.45.2:
-    resolution: {integrity: sha512-1VWbirfHfRlDUIOXJYAe5wv/tAdOl51z7mr71KeTt4ueF8j2DToHnIS9DZFno/xy2MmBdvAgirBItXs5UufjmQ==}
+  exifreader@4.46.0:
+    resolution: {integrity: sha512-ksHTpjXKWzbckY+bYlGaomG0EobHJkaMWLg5OPbzlTPda04F2dfrDfYSz8iAPp/kXYUSQdINBVI6nCAjQ8PQ/Q==}
     hasBin: true
 
   exit-hook@5.1.0:
@@ -8389,49 +8389,6 @@ packages:
       svgo:
         optional: true
 
-  vite@8.2.2:
-    resolution: {integrity: sha512-cFKLV/PRgAUlIRm5WjMjJ86jrftzpqcgH+Us+DS8mI3CDNiH30Whrz8uHL3+MOLPAgqbMBAqWdAHAphOAM+z/Q==}
-    engines: {node: ^20.19.0 || >=22.12.0}
-    hasBin: true
-    peerDependencies:
-      '@types/node': ^20.19.0 || >=22.12.0
-      '@vitejs/devtools': ^0.4.0 || ^0.5.0
-      esbuild: ^0.27.0 || ^0.28.0
-      jiti: '>=1.21.0'
-      less: ^4.0.0
-      sass: ^1.70.0
-      sass-embedded: ^1.70.0
-      stylus: '>=0.54.8'
-      sugarss: ^5.0.0
-      terser: ^5.16.0
-      tsx: ^4.8.1
-      yaml: ^2.4.2
-    peerDependenciesMeta:
-      '@types/node':
-        optional: true
-      '@vitejs/devtools':
-        optional: true
-      esbuild:
-        optional: true
-      jiti:
-        optional: true
-      less:
-        optional: true
-      sass:
-        optional: true
-      sass-embedded:
-        optional: true
-      stylus:
-        optional: true
-      sugarss:
-        optional: true
-      terser:
-        optional: true
-      tsx:
-        optional: true
-      yaml:
-        optional: true
-
   vite@8.3.1:
     resolution: {integrity: sha512-/bvH9E9tmCXRGp2uXY3WbOldqpTwFkbha/8ANaEQ6VkxhH60KyqLwgZq6lG2y+4uT55x9+9eUHMpQ7uGnOCKjA==}
     engines: {node: ^20.19.0 || >=22.12.0}
@@ -9009,8 +8966,8 @@ snapshots:
       ast-kit: 3.0.0
       magic-string-ast: 2.1.1
       rolldown-string: 0.3.1(rolldown@1.2.4)
-      unplugin: 3.3.0(esbuild@0.28.2)(rolldown@1.2.4)(vite@8.2.2(@types/node@26.6.3)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.104.0)(tsx@4.23.12)(yaml@2.9.1))
-      vite: 8.2.2(@types/node@26.6.3)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.104.0)(tsx@4.23.12)(yaml@2.9.1)
+      unplugin: 3.3.0(esbuild@0.28.2)(rolldown@1.2.4)(vite@8.3.1(@types/node@26.6.3)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.104.0)(tsx@4.23.12)(yaml@2.9.1))
+      vite: 8.3.1(@types/node@26.6.3)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.104.0)(tsx@4.23.12)(yaml@2.9.1)
       vite-node: 6.0.0(@types/node@26.6.3)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.104.0)(tsx@4.23.12)(yaml@2.9.1)
     transitivePeerDependencies:
       - '@farmfe/core'
@@ -10538,7 +10495,8 @@ snapshots:
   '@oxc-parser/binding-win32-x64-msvc@0.150.0':
     optional: true
 
-  '@oxc-project/types@0.144.0': {}
+  '@oxc-project/types@0.144.0':
+    optional: true
 
   '@oxc-project/types@0.150.0': {}
 
@@ -14135,7 +14093,7 @@ snapshots:
 
   exifr@7.1.3: {}
 
-  exifreader@4.45.2:
+  exifreader@4.46.0:
     optionalDependencies:
       '@xmldom/xmldom': 0.9.12
 
@@ -16271,6 +16229,7 @@ snapshots:
       '@rolldown/binding-openharmony-arm64': 1.2.4
       '@rolldown/binding-win32-arm64-msvc': 1.2.4
       '@rolldown/binding-win32-x64-msvc': 1.2.4
+    optional: true
 
   rollup@4.62.4:
     dependencies:
@@ -17029,7 +16988,7 @@ snapshots:
       picomatch: 4.0.5
       webpack-virtual-modules: 0.6.2
 
-  unplugin@3.3.0(esbuild@0.28.2)(rolldown@1.2.4)(vite@8.2.2(@types/node@26.6.3)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.104.0)(tsx@4.23.12)(yaml@2.9.1)):
+  unplugin@3.3.0(esbuild@0.28.2)(rolldown@1.2.4)(vite@8.3.1(@types/node@26.6.3)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.104.0)(tsx@4.23.12)(yaml@2.9.1)):
     dependencies:
       '@jridgewell/remapping': 2.3.5
       picomatch: 4.0.7
@@ -17037,7 +16996,7 @@ snapshots:
     optionalDependencies:
       esbuild: 0.28.2
       rolldown: 1.2.4
-      vite: 8.2.2(@types/node@26.6.3)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.104.0)(tsx@4.23.12)(yaml@2.9.1)
+      vite: 8.3.1(@types/node@26.6.3)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.104.0)(tsx@4.23.12)(yaml@2.9.1)
 
   untildify@4.0.0: {}
 
@@ -17134,7 +17093,7 @@ snapshots:
       es-module-lexer: 2.3.1
       obug: 2.2.1
       pathe: 2.0.3
-      vite: 8.2.2(@types/node@26.6.3)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.104.0)(tsx@4.23.12)(yaml@2.9.1)
+      vite: 8.3.1(@types/node@26.6.3)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.104.0)(tsx@4.23.12)(yaml@2.9.1)
     transitivePeerDependencies:
       - '@types/node'
       - '@vitejs/devtools'
@@ -17173,22 +17132,6 @@ snapshots:
     optionalDependencies:
       sharp: 0.35.4(@types/node@26.6.3)
       svgo: 4.1.0
-
-  vite@8.2.2(@types/node@26.6.3)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.104.0)(tsx@4.23.12)(yaml@2.9.1):
-    dependencies:
-      lightningcss: 1.33.0
-      picomatch: 4.0.7
-      postcss: 8.5.28
-      rolldown: 1.2.4
-      tinyglobby: 0.2.17
-    optionalDependencies:
-      '@types/node': 26.6.3
-      esbuild: 0.28.2
-      fsevents: 2.3.3
-      jiti: 1.21.7
-      sass: 1.104.0
-      tsx: 4.23.12
-      yaml: 2.9.1
 
   vite@8.3.1(@types/node@22.20.4)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.104.0)(tsx@4.23.12)(yaml@2.9.1):
     dependencies:
