@@ -17,9 +17,24 @@ export interface Operations<Inputs, Live> {
   update?: (api: Api, id: string, inputs: Inputs, olds: Outputs<Inputs, Live>) => Promise<Live>;
   delete: (api: Api, id: string, inputs: Inputs) => Promise<void>;
   id: (live: Live) => string;
-  // Maps the live resource back onto inputs, so a refresh can see drift.
-  inputs?: (live: Live) => Partial<Inputs>;
+  // Maps the live resource back onto inputs, so a refresh can see drift. `inputs` are the stored
+  // ones, for what the live object can't tell apart, such as the order of a set.
+  inputs?: (live: Live, inputs: Inputs) => Partial<Inputs>;
   replaceOnChanges?: Array<keyof Inputs & string>;
+  secretOutputs?: Array<(keyof Inputs & string) | "output">;
+}
+
+// A resource whose operations take more than routes; `defineConfig` takes the class as it takes
+// routes. Its methods are called on one instance, so they can share its members.
+export abstract class FetchResource<Inputs, Live> implements Operations<Inputs, Live> {
+  abstract create(api: Api, inputs: Inputs): Promise<Live>;
+  abstract read(api: Api, id: string, inputs: Inputs, previous?: Live): Promise<Live | undefined>;
+  update?(api: Api, id: string, inputs: Inputs, olds: Outputs<Inputs, Live>): Promise<Live>;
+  abstract delete(api: Api, id: string, inputs: Inputs): Promise<void>;
+  abstract id(live: Live): string;
+  inputs?(live: Live, inputs: Inputs): Partial<Inputs>;
+  readonly replaceOnChanges?: Array<keyof Inputs & string>;
+  readonly secretOutputs?: Array<(keyof Inputs & string) | "output">;
 }
 
 const reserved = new Set(["__provider", "output"]);
@@ -85,15 +100,15 @@ class FetchProvider<Inputs extends object, Live> implements pulumi.dynamic.Resou
     const live = await this.operations.read(this.api, id, inputs, previous);
     if (live === undefined) return {};
 
-    return { id, props: { ...inputs, ...this.operations.inputs?.(live), output: live } };
+    return { id, props: { ...inputs, ...this.operations.inputs?.(live, inputs), output: live } };
   }
 
   async update(id: string, olds: Outputs<Inputs, Live>, news: Serialized<Inputs>) {
-    const { update } = this.operations;
-    if (!update) throw new Error(`Resource ${id} has no update; it should have been replaced.`);
+    if (!this.operations.update)
+      throw new Error(`Resource ${id} has no update; it should have been replaced.`);
 
     const inputs = inputsOf<Inputs>(news);
-    const live = await update(this.api, id, inputs, olds);
+    const live = await this.operations.update(this.api, id, inputs, olds);
 
     return { outs: { ...inputs, output: live } };
   }
@@ -108,13 +123,6 @@ export function createProvider<Inputs extends object, Live>(operations: Operatio
 }
 
 export type Args<Inputs> = { [Key in keyof Inputs]: pulumi.Input<Inputs[Key]> };
-
-export interface Definition<Inputs, Live> extends Operations<Inputs, Live> {
-  // The resource's type token is `pulumi-nodejs:dynamic/<module>:<type>`.
-  module: string;
-  type: string;
-  secretOutputs?: Array<(keyof Inputs & string) | "output">;
-}
 
 // The live object's fields, each an Output. `id` and `urn` stay the resource's own.
 export type LiveFields<Live> = {
@@ -133,13 +141,14 @@ const untouched = new Set(["then", "toJSON", "constructor", "valueOf", "toString
 const isLiveField = (target: object, key: string | symbol): key is string =>
   typeof key === "string" && !key.startsWith("__") && !untouched.has(key) && !(key in target);
 
-export function define<Inputs extends object, Live>({
-  module,
-  type,
-  secretOutputs = [],
-  ...operations
-}: Definition<Inputs, Live>): ResourceClass<Inputs, Live> {
+// The resource's type token is `pulumi-nodejs:dynamic/<module>:<type>`.
+export function define<Inputs extends object, Live>(
+  module: string,
+  type: string,
+  operations: Operations<Inputs, Live>,
+): ResourceClass<Inputs, Live> {
   const provider = createProvider(operations);
+  const { secretOutputs = [] } = operations;
 
   return class extends pulumi.dynamic.Resource {
     declare readonly output: pulumi.Output<Live>;

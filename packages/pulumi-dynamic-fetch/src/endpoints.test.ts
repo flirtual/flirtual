@@ -31,9 +31,9 @@ const settled = (resource: pulumi.Resource) =>
 const { Provider, WebhookIntegration } = defineConfig({
   ...revenuecatTypes,
   module: "revenuecat",
-  provider: ({ apiKey }: { apiKey: string }) => ({
+  provider: ({ token }: { token: pulumi.Input<string> }) => ({
     baseUrl: "https://api.revenuecat.com/v2",
-    headers: { authorization: `Bearer ${apiKey}` },
+    headers: { authorization: pulumi.interpolate`Bearer ${token}` },
   }),
   resources: {
     WebhookIntegration: {
@@ -48,7 +48,7 @@ const { Provider, WebhookIntegration } = defineConfig({
 
 describe("Provider", () => {
   it("builds its connection from its arguments, keeping the headers secret", async () => {
-    await settled(new Provider("revenuecat", { apiKey: "sk_test" }));
+    await settled(new Provider("revenuecat", { token: "sk_test" }));
 
     const { type, inputs } = registered.find(({ name }) => name === "revenuecat")!;
     expect(type).toBe("pulumi:providers:pulumi-nodejs");
@@ -62,7 +62,7 @@ describe("Provider", () => {
 
   it("takes Pulumi inputs for each argument", () => {
     expectTypeOf<ConstructorParameters<typeof Provider>[1]>().toEqualTypeOf<{
-      apiKey: pulumi.Input<string>;
+      token: pulumi.Input<string>;
     }>();
   });
 });
@@ -197,12 +197,11 @@ describe("routes", () => {
       module: "example",
       provider: () => ({ baseUrl: "https://example.com" }),
       resources: {
+        // @ts-expect-error: the path exists, but has no DELETE.
         Resource: {
           create: "post /webhook_endpoints",
           read: "get /webhook_endpoints/{webhook-endpoint-id}",
-          // @ts-expect-error: the path exists, but has no DELETE.
           delete: { method: "delete", path: "/webhook_endpoints/{webhook-endpoint-id}" },
-          // @ts-expect-error: with one route wrong, the entry falls back to every route.
           model: "webhook_endpoint",
         },
       },

@@ -5,7 +5,7 @@
 	"type": "module",
 	"exports": "./src/index.ts",
 	"scripts": {
-		"generate:api": "openapi-typescript https://raw.githubusercontent.com/knadh/listmonk/v6.2.0/docs/swagger/collections.yaml -o src/generated/index.ts",
+		"generate:api": "typed-openapi https://raw.githubusercontent.com/knadh/listmonk/v6.2.0/docs/swagger/collections.yaml --no-include-client -o src/generated/index.ts",
 		"postinstall": "pnpm generate:api",
 		"test": "vitest run"
 	},
@@ -18,7 +18,7 @@
 	"devDependencies": {
 		"@pulumi/pulumi": "catalog:",
 		"@types/node": "^22",
-		"openapi-typescript": "^7.13.0",
+		"typed-openapi": "^4.1.0",
 		"typescript": "catalog:",
 		"vitest": "catalog:"
 	}

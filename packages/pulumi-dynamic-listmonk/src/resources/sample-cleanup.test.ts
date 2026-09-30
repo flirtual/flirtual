@@ -1,7 +1,9 @@
 import { afterEach, expect, it, vi } from "vitest";
 
 import { api, ok, stubListmonk } from "../fetch.fixtures.ts";
-import { sampleCleanupOperations as cleanup } from "./sample-cleanup.ts";
+import { SampleCleanupResource } from "./sample-cleanup.ts";
+
+const cleanup = new SampleCleanupResource();
 
 afterEach(() => {
   vi.unstubAllGlobals();
@@ -14,7 +16,6 @@ const subscribers = `GET /subscribers?${new URLSearchParams({
 
 it("deletes the seeded opt-in list and example subscribers", async () => {
   const sent = stubListmonk({
-    "GET /health": [ok(true)],
     "GET /lists/2": [ok({ id: 2, name: "Opt-in list" })],
     "DELETE /lists/2": [ok(true)],
     [subscribers]: [ok({ results: [{ id: 1 }, { id: 2 }] })],
@@ -22,10 +23,9 @@ it("deletes the seeded opt-in list and example subscribers", async () => {
     "DELETE /subscribers/2": [ok(true)],
   });
 
-  await cleanup.create(api, {});
+  await cleanup.create(api);
 
   expect(sent.map(({ route }) => route)).toEqual([
-    "GET /health",
     "GET /lists/2",
     "DELETE /lists/2",
     subscribers,
@@ -36,16 +36,15 @@ it("deletes the seeded opt-in list and example subscribers", async () => {
 
 it("leaves list 2 alone once it's something else", async () => {
   const sent = stubListmonk({
-    "GET /health": [ok(true)],
     "GET /lists/2": [ok({ id: 2, name: "Beta testers" })],
     [subscribers]: [ok({ results: [] })],
   });
 
-  await cleanup.create(api, {});
+  await cleanup.create(api);
 
-  expect(sent.map(({ route }) => route)).toEqual(["GET /health", "GET /lists/2", subscribers]);
+  expect(sent.map(({ route }) => route)).toEqual(["GET /lists/2", subscribers]);
 });
 
 it("stays in state after a refresh, with nothing to read", async () => {
-  expect(await cleanup.read(api, "sample-cleanup", {})).toEqual({});
+  expect(await cleanup.read()).toEqual({});
 });

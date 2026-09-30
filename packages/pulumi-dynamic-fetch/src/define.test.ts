@@ -35,9 +35,7 @@ beforeAll(async () => {
   );
 });
 
-const Webhook = define<Inputs, Live>({
-  module: "example",
-  type: "Webhook",
+const Webhook = define<Inputs, Live>("example", "Webhook", {
   create: async () => live,
   read: async () => live,
   delete: async () => {},

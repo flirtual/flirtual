@@ -17,6 +17,7 @@ export interface Routes {
   // The inputs a refresh reads back from the live object, to see drift.
   inputs?: Array<string>;
   replaceOnChanges?: Array<string>;
+  secretOutputs?: Array<string>;
 }
 
 // Path templates are flat `{name}` tokens.
@@ -121,5 +122,6 @@ export function operationsFor<Inputs, Live>(routes: Routes): Operations<Inputs, 
               inputs.map((key) => [key, (live as Record<string, unknown>)[key]]),
             ) as Partial<Inputs>,
     replaceOnChanges: routes.replaceOnChanges as Operations<Inputs, Live>["replaceOnChanges"],
+    secretOutputs: routes.secretOutputs as Operations<Inputs, Live>["secretOutputs"],
   };
 }

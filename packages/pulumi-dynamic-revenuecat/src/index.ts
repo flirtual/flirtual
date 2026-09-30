@@ -1,4 +1,5 @@
 import { defineConfig, types } from "@flirtual/pulumi-dynamic-fetch";
+import * as pulumi from "@pulumi/pulumi";
 
 import type { EndpointByMethod } from "./generated/index.ts";
 
@@ -6,10 +7,14 @@ export const { Provider, WebhookIntegration } = defineConfig({
   ...types<EndpointByMethod>(),
   module: "revenuecat",
   // A v2 secret key with write access to the project.
-  provider: ({ apiKey }: { apiKey: string }) => ({
-    baseUrl: "https://api.revenuecat.com/v2",
-    headers: { authorization: `Bearer ${apiKey}` },
-  }),
+  provider: (args: { token?: pulumi.Input<string> }, { config }) => {
+    const { token = process.env.REVENUECAT_TOKEN || config.requireSecret("token") } = args;
+
+    return {
+      baseUrl: "https://api.revenuecat.com/v2",
+      headers: { authorization: pulumi.interpolate`Bearer ${token}` },
+    };
+  },
   resources: {
     WebhookIntegration: {
       create: "post /projects/{project_id}/integrations/webhooks",

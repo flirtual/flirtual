@@ -1,18 +1,12 @@
-import {
-  type Api,
-  type Args,
-  type Body,
-  define,
-  type Operations,
-} from "@flirtual/pulumi-dynamic-fetch";
-import type * as pulumi from "@pulumi/pulumi";
+import { type Api, type Body, FetchResource } from "@flirtual/pulumi-dynamic-fetch";
 
-import { call, type components, ready, required } from "../client.ts";
+import { request, type Schemas, required } from "../client.ts";
 
-type Fields = Required<components["schemas"]["NewList"]>;
-type Live = components["schemas"]["List"];
+type Fields = Required<Schemas.NewList>;
+type Live = Schemas.List;
 
-export interface ListInputs extends Fields {
+export interface ListInputs
+  extends Pick<Fields, "name" | "type" | "optin">, Partial<Pick<Fields, "tags" | "description">> {
   // Takes over this list if it exists, and fails rather than create the list under another id.
   listId?: number;
 }
@@ -36,21 +30,21 @@ const fields = ({
 async function takeOver(api: Api, inputs: ListInputs) {
   const { listId } = inputs;
   if (listId === undefined) return undefined;
-  if (!(await call<Live>(api, "GET", `/lists/${listId}`))) return undefined;
+  if (!(await request<Live>(api, "GET", `/lists/${listId}`))) return undefined;
 
-  return call<Live>(api, "PUT", `/lists/${listId}`, fields(inputs));
+  return request<Live>(api, "PUT", `/lists/${listId}`, fields(inputs));
 }
 
-export const listOperations: Operations<ListInputs, Live> = {
-  async create(api, inputs) {
-    await ready(api);
+export class ListResource extends FetchResource<ListInputs, Live> {
+  readonly replaceOnChanges = ["listId" as const];
 
+  async create(api: Api, inputs: ListInputs) {
     const taken = await takeOver(api, inputs);
     if (taken) return taken;
 
     // Listmonk numbers lists itself, so a missing list only gets the id asked for when it's next.
     const created = required(
-      await call<Live>(api, "POST", "/lists", fields(inputs)),
+      await request<Live>(api, "POST", "/lists", fields(inputs)),
       `Listmonk didn't return the list "${inputs.name}".`,
     );
     if (inputs.listId !== undefined && created.id !== inputs.listId)
@@ -59,26 +53,32 @@ export const listOperations: Operations<ListInputs, Live> = {
       );
 
     return created;
-  },
-  read: (api, id) => call<Live>(api, "GET", `/lists/${id}`),
-  update: async (api, id, inputs) =>
-    required(
-      await call<Live>(api, "PUT", `/lists/${id}`, fields(inputs)),
+  }
+
+  read(api: Api, id: string) {
+    return request<Live>(api, "GET", `/lists/${id}`);
+  }
+
+  async update(api: Api, id: string, inputs: ListInputs) {
+    return required(
+      await request<Live>(api, "PUT", `/lists/${id}`, fields(inputs)),
       `Listmonk didn't return list ${id}.`,
-    ),
-  delete: async (api, id) => {
-    await call(api, "DELETE", `/lists/${id}`);
-  },
-  id: (live) => String(live.id),
-  inputs: (live) => ({ listId: live.id, ...fields(live) }),
-  replaceOnChanges: ["listId"],
-};
+    );
+  }
 
-export type ListArgs = Omit<Args<ListInputs>, "tags" | "description"> &
-  Partial<Pick<Args<ListInputs>, "tags" | "description">>;
+  async delete(api: Api, id: string) {
+    await request(api, "DELETE", `/lists/${id}`);
+  }
 
-export class List extends define({ module: "listmonk", type: "List", ...listOperations }) {
-  constructor(name: string, args: ListArgs, options?: pulumi.CustomResourceOptions) {
-    super(name, { tags: [], description: "", ...args }, options);
+  id(live: Live) {
+    return String(live.id);
+  }
+
+  // Only the fields the inputs set, so an unset one isn't drift.
+  inputs(live: Live, inputs: ListInputs) {
+    const read: Partial<ListInputs> = { listId: live.id, ...fields(live) };
+    return Object.fromEntries(
+      Object.entries(read).filter(([key]) => key in inputs),
+    ) as Partial<ListInputs>;
   }
 }

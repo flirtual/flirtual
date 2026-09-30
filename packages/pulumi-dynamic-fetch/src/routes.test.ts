@@ -112,7 +112,12 @@ describe("a resource whose responses wrap the object in a model key", () => {
   });
 
   it("reads the listed inputs back off the live object", () => {
-    expect(chargebee.inputs!({ ...endpoint, enabled_events: ["a"] })).toEqual({
+    expect(
+      chargebee.inputs!(
+        { ...endpoint, enabled_events: ["a"] },
+        { name: "stored", url: "https://stored.example" },
+      ),
+    ).toEqual({
       name: "api",
       url: "https://api.example/v1/chargebee",
       enabled_events: ["a"],

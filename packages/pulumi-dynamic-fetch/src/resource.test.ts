@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 
 import type { Api } from "./api.ts";
 import { configKey } from "./provider.ts";
-import { createProvider, type Operations } from "./resource.ts";
+import { createProvider, FetchResource, type Operations } from "./resource.ts";
 
 interface Inputs {
   name: string;
@@ -112,6 +112,15 @@ describe("createProvider", () => {
     });
   });
 
+  it("gives `inputs` the stored inputs too, to keep what the live object can't tell apart", async () => {
+    const inputs = vi.fn(({ name }: Live) => ({ name }));
+    const provider = await configured(operations({ inputs }));
+
+    await provider.read("we_1", { name: "a", url: "https://a.example" });
+
+    expect(inputs).toHaveBeenCalledWith(live, { name: "a", url: "https://a.example" });
+  });
+
   it("gives read the live object stored before it, for values the API only returns once", async () => {
     const ops = operations();
     const provider = await configured(ops);
@@ -169,6 +178,55 @@ describe("createProvider", () => {
       name: "a",
       url: "https://a.example",
     });
+  });
+});
+
+describe("a FetchResource subclass", () => {
+  class Webhook extends FetchResource<Inputs, Live> {
+    readonly calls: Array<string> = [];
+
+    private record(call: string) {
+      this.calls.push(call);
+      return live;
+    }
+
+    async create() {
+      return this.record("create");
+    }
+
+    async read() {
+      return this.record("read");
+    }
+
+    async update() {
+      return this.record("update");
+    }
+
+    async delete() {
+      this.record("delete");
+    }
+
+    id(live: Live) {
+      return live.id;
+    }
+
+    inputs({ name }: Live) {
+      this.record("inputs");
+      return { name };
+    }
+  }
+
+  it("runs each operation as a method, so it can use its own members", async () => {
+    const webhook = new Webhook();
+    const provider = await configured(webhook);
+    const inputs = { name: "a", url: "https://a.example" };
+
+    await provider.create(withProvider(inputs));
+    await provider.read("we_1", inputs);
+    await provider.update("we_1", { ...inputs, output: live }, withProvider(inputs));
+    await provider.delete("we_1", { ...inputs, output: live });
+
+    expect(webhook.calls).toEqual(["create", "read", "inputs", "update", "delete"]);
   });
 });
 

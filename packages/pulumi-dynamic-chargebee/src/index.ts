@@ -1,4 +1,5 @@
 import { defineConfig, types } from "@flirtual/pulumi-dynamic-fetch";
+import * as pulumi from "@pulumi/pulumi";
 
 import type { EndpointByMethod } from "./generated/index.ts";
 
@@ -7,11 +8,22 @@ export const { Provider, WebhookEndpoint } = defineConfig({
   module: "chargebee",
   // Chargebee takes the API key as the Basic auth username and form-encoded request bodies
   // (https://apidocs.chargebee.com/docs/api/getting-started).
-  provider: ({ site, apiKey }: { site: string; apiKey: string }) => ({
-    baseUrl: `https://${site}.chargebee.com/api/v2`,
-    headers: { authorization: `Basic ${Buffer.from(`${apiKey}:`).toString("base64")}` },
-    encoding: "form",
-  }),
+  provider: (args: { site?: pulumi.Input<string>; token?: pulumi.Input<string> }, { config }) => {
+    const {
+      site = process.env.CHARGEBEE_SITE || config.require("site"),
+      token = process.env.CHARGEBEE_TOKEN || config.requireSecret("token"),
+    } = args;
+
+    return {
+      baseUrl: pulumi.interpolate`https://${site}.chargebee.com/api/v2`,
+      headers: {
+        authorization: pulumi
+          .output(token)
+          .apply((token) => `Basic ${Buffer.from(`${token}:`).toString("base64")}`),
+      },
+      encoding: "form",
+    };
+  },
   resources: {
     WebhookEndpoint: {
       create: "post /webhook_endpoints",
