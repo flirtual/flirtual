@@ -1,4 +1,4 @@
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Headset } from "lucide-react";
 import { useMemo } from "react";
 import type { FC } from "react";
 import { capitalize } from "remeda";
@@ -16,6 +16,7 @@ import { urls } from "~/urls";
 import { CopyClick } from "../copy-click";
 import { DateTimeRelative } from "../datetime-relative";
 import { InlineLink } from "../inline-link";
+import { Link } from "../link";
 import { ModeratorNoteDialog } from "./dialogs/moderator-note";
 import { ProfileModerationHistory } from "./moderation-history";
 import { getCountryName } from "./pill/country";
@@ -30,6 +31,17 @@ function stripTimestamps(note: string | undefined): string {
 
 	return filteredLines.join("\n").trim() || "None";
 }
+
+const HelpdeskLink: FC<{ email: string }> = ({ email }) => (
+	<Link
+		className="ml-1 inline-flex align-middle opacity-75 hover:opacity-100"
+		href={urls.moderation.helpdeskContact(email)}
+		target="_blank"
+		title="Search helpdesk"
+	>
+		<Headset className="size-4" />
+	</Link>
+);
 
 export const ProfileModeratorInfo: FC<{
 	userId: string;
@@ -53,6 +65,8 @@ export const ProfileModeratorInfo: FC<{
 	const ShownIcon = shown ? Eye : EyeOff;
 
 	if (!user || !session || !session.user?.tags?.includes("moderator")) return null;
+
+	const isAdmin = session.user.tags.includes("admin");
 
 	return (
 		<div
@@ -120,6 +134,7 @@ export const ProfileModeratorInfo: FC<{
 									{user.email}
 								</span>
 							</CopyClick>
+							{isAdmin && user.email && <HelpdeskLink email={user.email} />}
 						</span>
 						{user.previousEmail && (
 							<span>
@@ -130,6 +145,7 @@ export const ProfileModeratorInfo: FC<{
 										{user.previousEmail}
 									</span>
 								</CopyClick>
+								{isAdmin && <HelpdeskLink email={user.previousEmail} />}
 							</span>
 						)}
 					</div>
@@ -376,7 +392,7 @@ export const ProfileModeratorInfo: FC<{
 								: "None"}
 						</span>
 					</span>
-					{session.user.tags.includes("admin") && (
+					{isAdmin && (
 						<div className="flex flex-col">
 							<span>
 								<span className="font-bold">RevenueCat customer:</span>

@@ -245,6 +245,8 @@ export const urls = {
 		queue: (options: { tab?: ModerationQueueTab; userId?: string; targetId?: string; eventId?: string } = {}) =>
 			url("/mod", options),
 		checkDomain: (domain: string) => `https://verifymail.io/domain/${encodeURIComponent(domain)}`,
+		helpdeskContact: (email?: string) =>
+			`https://hello.flirtu.al/a/search/contacts?term=${encodeURIComponent(email ?? "")}`,
 		revenuecatCustomer: (revenuecatId?: string) =>
 			`https://app.revenuecat.com/projects/${rcProjectId}/customers/${encodeURIComponent(revenuecatId ?? "")}`
 	},
