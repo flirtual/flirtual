@@ -1,0 +1,27 @@
+{
+	"name": "@flirtual/pulumi-dynamic-revenuecat",
+	"private": true,
+	"description": "Pulumi dynamic resources for RevenueCat, typed from its OpenAPI spec.",
+	"type": "module",
+	"exports": "./src/index.ts",
+	"scripts": {
+		"generate:api": "node scripts/generate-api.ts",
+		"postinstall": "pnpm generate:api",
+		"test": "vitest run"
+	},
+	"dependencies": {
+		"@flirtual/pulumi-dynamic-fetch": "workspace:*"
+	},
+	"peerDependencies": {
+		"@pulumi/pulumi": "catalog:"
+	},
+	"devDependencies": {
+		"@pulumi/pulumi": "catalog:",
+		"@types/node": "^22",
+		"marked": "^18.0.14",
+		"typed-openapi": "^4.1.0",
+		"typescript": "catalog:",
+		"vitest": "catalog:",
+		"yaml": "catalog:pulumi"
+	}
+}
