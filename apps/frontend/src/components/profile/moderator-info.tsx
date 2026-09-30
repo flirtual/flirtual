@@ -17,6 +17,7 @@ import { CopyClick } from "../copy-click";
 import { DateTimeRelative } from "../datetime-relative";
 import { InlineLink } from "../inline-link";
 import { ModeratorNoteDialog } from "./dialogs/moderator-note";
+import { ProfileModerationHistory } from "./moderation-history";
 import { getCountryName } from "./pill/country";
 
 function stripTimestamps(note: string | undefined): string {
@@ -396,6 +397,8 @@ export const ProfileModeratorInfo: FC<{
 							</span>
 						</div>
 					)}
+					<hr className="border-t-2 border-black-50/20 dark:border-white-50/20" />
+					<ProfileModerationHistory user={user} />
 				</>
 			)}
 		</div>
