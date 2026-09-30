@@ -23,7 +23,7 @@ services:
       - 9306:9306
       - 9308:9308
   listmonk:
-    image: listmonk/listmonk:v6.2.0
+    image: listmonk/listmonk:v6.2.0@sha256:f535d59e14991337a9f2d570273685378ae86b0d7698c3e00da444e3bc205286
     profiles: [deploy]
 volumes:
   postgres_data:
