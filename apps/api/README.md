@@ -38,7 +38,7 @@
 
   * Start postgres:
 
-    * Docker: `docker compose up -d postgres`
+    * Docker: `docker compose --file ../../compose.yaml up -d postgres`
     * Apple Container: `container run --detach --name postgres --publish 5432:5432 -e POSTGRES_PASSWORD=postgres -e PGDATA=/var/lib/postgresql/data/pgdata -v pgdata:/var/lib/postgresql/data postgres:17-alpine postgres -N 500`
 
   * Run `mix setup` to install dependencies, create the database, and run migrations.

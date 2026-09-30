@@ -46,7 +46,7 @@
 		{
 			"customType": "regex",
 			"managerFilePatterns": [
-				"/(^|/)docker-compose\\.ya?ml$/"
+				"/(^|/)(docker-)?compose\\.ya?ml$/"
 			],
 			"matchStrings": [
 				"# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\s+image: \\S+?:(?<currentValue>[\\d.]+)"
@@ -250,6 +250,14 @@
 				"manticoresearch/manticore"
 			],
 			"groupName": "manticore"
+		},
+		{
+			"description": "The spec types the image's API, so both move together",
+			"matchPackageNames": [
+				"listmonk/listmonk",
+				"knadh/listmonk"
+			],
+			"groupName": "listmonk"
 		},
 		{
 			"matchPackageNames": [
