@@ -153,8 +153,20 @@
 			"addLabels": ["pulumi fly"]
 		},
 		{
-			"matchFileNames": ["packages/pulumi-listmonk/**"],
-			"addLabels": ["pulumi listmonk"]
+			"matchFileNames": ["packages/pulumi-dynamic-chargebee/**"],
+			"addLabels": ["pulumi dynamic chargebee"]
+		},
+		{
+			"matchFileNames": ["packages/pulumi-dynamic-fetch/**"],
+			"addLabels": ["pulumi dynamic fetch"]
+		},
+		{
+			"matchFileNames": ["packages/pulumi-dynamic-listmonk/**"],
+			"addLabels": ["pulumi dynamic listmonk"]
+		},
+		{
+			"matchFileNames": ["packages/pulumi-dynamic-revenuecat/**"],
+			"addLabels": ["pulumi dynamic revenuecat"]
 		},
 		{
 			"matchFileNames": ["{package.json,pnpm-workspace.yaml}"],
