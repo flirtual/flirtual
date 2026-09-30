@@ -398,6 +398,7 @@ defmodule Flirtual.User.Policy do
 
   @admin_property_keys [
     :email,
+    :previous_email,
     :born_at,
     :chargebee_id,
     :stripe_id,

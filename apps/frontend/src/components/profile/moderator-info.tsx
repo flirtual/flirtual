@@ -121,6 +121,17 @@ export const ProfileModeratorInfo: FC<{
 								</span>
 							</CopyClick>
 						</span>
+						{user.previousEmail && (
+							<span>
+								<span className="font-bold">Previous email:</span>
+								{" "}
+								<CopyClick value={user.previousEmail}>
+									<span className="cursor-pointer hover:underline">
+										{user.previousEmail}
+									</span>
+								</CopyClick>
+							</span>
+						)}
 					</div>
 					<div className="flex flex-col">
 						{user.createdAt && (
