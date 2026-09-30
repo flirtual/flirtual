@@ -204,9 +204,6 @@ catalogs:
     '@pulumi/command':
       specifier: 1.2.1
       version: 1.2.1
-    '@pulumi/docker-build':
-      specifier: ^0.0.22
-      version: 0.0.22
     '@pulumi/postgresql':
       specifier: ^3.18.0
       version: 3.18.1
@@ -948,9 +945,6 @@ importers:
       '@pulumi/discord':
         specifier: file:sdks/discord
         version: file:pulumi/sdks/discord(supports-color@10.2.2)
-      '@pulumi/docker-build':
-        specifier: catalog:pulumi
-        version: 0.0.22(supports-color@10.2.2)(typescript@5.9.3)
       '@pulumi/freshdesk':
         specifier: file:sdks/freshdesk
         version: file:pulumi/sdks/freshdesk(supports-color@10.2.2)
@@ -3450,9 +3444,6 @@ packages:
 
   '@pulumi/discord@file:pulumi/sdks/discord':
     resolution: {directory: pulumi/sdks/discord, type: directory}
-
-  '@pulumi/docker-build@0.0.22':
-    resolution: {integrity: sha512-DcnwoDv7kBM6MBhuEfkiATDwKDqGCNPICxUt7gbYSdpb/UuT+6K7pNMQu7mCNZV7feqZh9EJ3P20UXCq1R+YQg==}
 
   '@pulumi/freshdesk@file:pulumi/sdks/freshdesk':
     resolution: {directory: pulumi/sdks/freshdesk, type: directory}
@@ -11234,14 +11225,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
       - ts-node
-
-  '@pulumi/docker-build@0.0.22(supports-color@10.2.2)(typescript@5.9.3)':
-    dependencies:
-      '@pulumi/pulumi': 3.265.0(supports-color@10.2.2)(typescript@5.9.3)
-    transitivePeerDependencies:
-      - supports-color
-      - ts-node
-      - typescript
 
   '@pulumi/freshdesk@file:pulumi/sdks/freshdesk(supports-color@10.2.2)':
     dependencies:
