@@ -108,13 +108,7 @@ export default defineConfig((config) => {
 			...(mode === "development" && {
 				https: mkcertExists
 					? { cert: readFileSync(mkcertPaths.cert), key: readFileSync(mkcertPaths.key) }
-					: undefined,
-				proxy: {
-					"/tidewave": {
-						target: new URL(apiUrl).origin,
-						secure: false
-					}
-				}
+					: undefined
 			})
 		},
 		plugins: [

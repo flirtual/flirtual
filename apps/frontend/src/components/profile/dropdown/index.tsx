@@ -90,7 +90,7 @@ export const ProfileDropdown: FC<ProfileDropdownProps> = ({ userId }) => {
 						<DropdownMenuItem asChild>
 							<Link
 								className="gap-2"
-								href={`https://hello.flirtu.al/a/search/contacts?term=${user.email}`}
+								href={urls.moderation.helpdeskContact(user.email)}
 								target="_blank"
 							>
 								<Headset className="size-5" />

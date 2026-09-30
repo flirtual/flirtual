@@ -107,6 +107,7 @@ export type User = {
 	bornAt?: string;
 	activeAt?: string;
 	emailConfirmedAt?: string;
+	previousEmail?: string;
 	shadowbannedAt?: string;
 	indefShadowbannedAt?: string;
 	paymentsBannedAt?: string;

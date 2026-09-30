@@ -35,7 +35,7 @@ export function getLocale(to: To, relativeTo: string = location.pathname): Local
 	const match = pathname.match(localePathnameRegex);
 	if (!match) return null;
 
-	const [, locale] = match as [never, Locale | undefined];
+	const [, , locale] = match as [never, never, Locale | undefined];
 	return locale && locales.includes(locale) ? locale : null;
 }
 

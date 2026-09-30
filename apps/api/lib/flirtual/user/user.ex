@@ -1528,6 +1528,7 @@ defimpl Jason.Encoder, for: Flirtual.User do
     only: [
       :id,
       :email,
+      :previous_email,
       :slug,
       :age,
       :born_at,
