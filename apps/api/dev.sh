@@ -42,8 +42,8 @@ if [ -d "$HOME/Library/Application Support/com.apple.container" ]; then
     esac
   done
 else
-  docker compose down
-  docker compose up -d --remove-orphans
+  docker compose --file ../../compose.yaml down
+  docker compose --file ../../compose.yaml up -d --remove-orphans
 fi
 
 # . .env.local

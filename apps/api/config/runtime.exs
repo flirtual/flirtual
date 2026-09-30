@@ -164,12 +164,25 @@ config :flirtual, Flirtual.Discord,
   webhook_moderation_acknowledgements: Env.get("DISCORD_WEBHOOK_MODERATION_ACKNOWLEDGEMENTS"),
   webhook_admin: Env.get("DISCORD_WEBHOOK_ADMIN")
 
-config :flirtual, Flirtual.Apple,
-  key: Env.get!("APPLE_KEY"),
-  key_id: Env.get!("APPLE_KEY_ID"),
-  team_id: Env.get!("APPLE_TEAM_ID"),
-  app_id: Env.get!("APPLE_SIGNIN_APP_ID"),
-  service_id: Env.get!("APPLE_SIGNIN_SERVICE_ID")
+# Each integration below is off until its first variable is set; the rest are then required.
+apple_key = Env.get("APPLE_KEY")
+
+if apple_key do
+  config :flirtual, Flirtual.Apple,
+    key: apple_key,
+    key_id: Env.get!("APPLE_KEY_ID", always?: true),
+    team_id: Env.get!("APPLE_TEAM_ID", always?: true),
+    app_id: Env.get!("APPLE_SIGNIN_APP_ID", always?: true),
+    service_id: Env.get!("APPLE_SIGNIN_SERVICE_ID", always?: true)
+
+  config :flirtual, Flirtual.APNS,
+    adapter: Pigeon.APNS,
+    key: apple_key,
+    key_identifier: Env.get!("APPLE_KEY_ID", always?: true),
+    team_id: Env.get!("APPLE_TEAM_ID", always?: true),
+    topic: Env.get!("APNS_TOPIC", always?: true),
+    mode: if(prod?, do: :prod, else: :dev)
+end
 
 config :flirtual, Flirtual.Google,
   web_client_id: Env.get("GOOGLE_CLIENT_ID"),
@@ -181,10 +194,14 @@ config :flirtual, Flirtual.Meta,
   app_secret: Env.get("META_APP_SECRET"),
   organization_id: Env.get("META_ORGANIZATION_ID")
 
-config :flirtual, Flirtual.VRChat,
-  username: Env.get!("VRCHAT_USERNAME"),
-  password: Env.get!("VRCHAT_PASSWORD"),
-  totp_secret: Env.get!("VRCHAT_TOTP_SECRET")
+vrchat_username = Env.get("VRCHAT_USERNAME")
+
+if vrchat_username do
+  config :flirtual, Flirtual.VRChat,
+    username: vrchat_username,
+    password: Env.get!("VRCHAT_PASSWORD", always?: true),
+    totp_secret: Env.get!("VRCHAT_TOTP_SECRET", always?: true)
+end
 
 # We pin rp_id to flirtu.al to keep passkeys valid that were created before
 # moving to flirtual.com.
@@ -195,22 +212,22 @@ config :wax_,
 config :joken,
   default_signer: Env.get!("JOKEN_SECRET", default: "local_Ru3m3hN7uAxO2snCb030SDyzDyR")
 
-config :flirtual, Flirtual.APNS,
-  adapter: Pigeon.APNS,
-  key: Env.get!("APPLE_KEY"),
-  key_identifier: Env.get!("APPLE_KEY_ID"),
-  team_id: Env.get!("APPLE_TEAM_ID"),
-  topic: Env.get!("APNS_TOPIC"),
-  mode: if(prod?, do: :prod, else: :dev)
+fcm_project_id = Env.get("FCM_PROJECT_ID")
 
-config :flirtual, Flirtual.FCM,
-  adapter: Pigeon.FCM,
-  project_id: Env.get!("FCM_PROJECT_ID"),
-  auth: Flirtual.Goth
+if fcm_project_id do
+  config :flirtual, Flirtual.FCM,
+    adapter: Pigeon.FCM,
+    project_id: fcm_project_id,
+    auth: Flirtual.Goth
+end
 
-config :flirtual, Flirtual.Talkjs,
-  app_id: Env.get!("TALKJS_APP_ID"),
-  access_token: Env.get!("TALKJS_ACCESS_TOKEN")
+talkjs_app_id = Env.get("TALKJS_APP_ID")
+
+if talkjs_app_id do
+  config :flirtual, Flirtual.Talkjs,
+    app_id: talkjs_app_id,
+    access_token: Env.get!("TALKJS_ACCESS_TOKEN", always?: true)
+end
 
 config :flirtual, Flirtual.Turnstile,
   app_id: Env.get!("TURNSTILE_APP_ID"),
@@ -231,25 +248,37 @@ config :flirtual, Flirtual.Yoti,
   notification_public_key: Env.get("YOTI_NOTIFICATION_PUBLIC_KEY"),
   sandbox?: Env.bool("YOTI_SANDBOX", default: dev?)
 
-config :flirtual, Flirtual.Listmonk,
-  url: Env.get!("LISTMONK_URL"),
-  username: Env.get!("LISTMONK_USERNAME"),
-  password: Env.get!("LISTMONK_PASSWORD")
+listmonk_url = Env.get("LISTMONK_URL")
 
-config :chargebeex,
-  namespace: Env.get!("CHARGEBEE_NAMESPACE"),
-  api_key: Env.get!("CHARGEBEE_ACCESS_TOKEN"),
-  http_client: Flirtual.Chargebee.ReqClient
+if listmonk_url do
+  config :flirtual, Flirtual.Listmonk,
+    url: listmonk_url,
+    username: Env.get!("LISTMONK_USERNAME", always?: true),
+    password: Env.get!("LISTMONK_PASSWORD", always?: true)
+end
 
-config :flirtual, FlirtualWeb.ChargebeeController,
-  signing_secret: Env.get!("CHARGEBEE_SIGNING_SECRET")
+chargebee_namespace = Env.get("CHARGEBEE_NAMESPACE")
 
-config :flirtual, FlirtualWeb.RevenueCatController,
-  api_key: Env.get!("REVENUECAT_ACCESS_TOKEN"),
-  apple_key: Env.get!("REVENUECAT_APPLE_KEY"),
-  google_key: Env.get!("REVENUECAT_GOOGLE_KEY"),
-  signing_secret: Env.get!("REVENUECAT_SIGNING_SECRET"),
-  project_id: Env.get!("REVENUECAT_PROJECT_ID")
+if chargebee_namespace do
+  config :chargebeex,
+    namespace: chargebee_namespace,
+    api_key: Env.get!("CHARGEBEE_ACCESS_TOKEN", always?: true),
+    http_client: Flirtual.Chargebee.ReqClient
+
+  config :flirtual, FlirtualWeb.ChargebeeController,
+    signing_secret: Env.get!("CHARGEBEE_SIGNING_SECRET", always?: true)
+end
+
+revenuecat_access_token = Env.get("REVENUECAT_ACCESS_TOKEN")
+
+if revenuecat_access_token do
+  config :flirtual, FlirtualWeb.RevenueCatController,
+    api_key: revenuecat_access_token,
+    apple_key: Env.get!("REVENUECAT_APPLE_KEY", always?: true),
+    google_key: Env.get!("REVENUECAT_GOOGLE_KEY", always?: true),
+    signing_secret: Env.get!("REVENUECAT_SIGNING_SECRET", always?: true),
+    project_id: Env.get!("REVENUECAT_PROJECT_ID", always?: true)
+end
 
 config :flirtual, Flirtual.LLM,
   model: Env.get("LLM_MODEL", default: "anthropic:claude-sonnet-latest")
@@ -259,7 +288,11 @@ config :req_llm, anthropic_api_key: Env.get("ANTHROPIC_ACCESS_TOKEN")
 config :flirtual, Flirtual.ObanWorkers,
   enabled_workers:
     if(prod?,
-      do: [:chargebee, :compute_queue, :listmonk, :search_index, :search_state, :talkjs],
+      do:
+        [:compute_queue, :search_index, :search_state] ++
+          if(chargebee_namespace, do: [:chargebee], else: []) ++
+          if(listmonk_url, do: [:listmonk], else: []) ++
+          if(talkjs_app_id, do: [:talkjs], else: []),
       else: [:compute_queue, :search_index, :search_state]
     ),
   enabled_cron_tasks:
@@ -281,7 +314,7 @@ config :flirtual, Flirtual.ObanWorkers,
         :update_attribute_order
       ]
     ),
-  email_rate_limit: Env.get!("EMAIL_RATE_LIMIT", default: "1") |> String.to_integer()
+  email_rate_limit: Env.get("EMAIL_RATE_LIMIT", default: "1") |> String.to_integer()
 
 config :flirtual, Oban,
   queues: [
@@ -336,11 +369,20 @@ if prod? do
 
   config :flirtual, Oban, get_dynamic_repo: {Flirtual.Repo, :oban_repo, []}
 
-  config :flirtual, Flirtual.Mailer,
-    adapter: Swoosh.Adapters.AmazonSES,
-    region: Env.get!("SES_REGION"),
-    access_key: Env.get!("SES_ACCESS_KEY"),
-    secret: Env.get!("SES_SECRET")
+  ses_region = Env.get("SES_REGION")
+
+  # Without SES, mail is logged whole, so a new stack's confirmation links can still be read.
+  config :flirtual,
+         Flirtual.Mailer,
+         if(ses_region,
+           do: [
+             adapter: Swoosh.Adapters.AmazonSES,
+             region: ses_region,
+             access_key: Env.get!("SES_ACCESS_KEY"),
+             secret: Env.get!("SES_SECRET")
+           ],
+           else: [adapter: Swoosh.Adapters.Logger, log_full_email: true]
+         )
 
   config :swoosh, :api_client, Swoosh.ApiClient.Finch
 end

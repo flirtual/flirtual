@@ -45,7 +45,7 @@ const categories: Record<Category, {
 	},
 	pics: {
 		label: "Pics",
-		types: ["flagged_image", "image_removed", "image_quarantined"],
+		types: ["flagged_image"],
 		reviewable: true
 	},
 	acks: {
@@ -61,7 +61,9 @@ const categories: Record<Category, {
 			"indef_shadowbanned",
 			"unindef_shadowbanned",
 			"warned",
-			"warn_revoked"
+			"warn_revoked",
+			"image_removed",
+			"image_quarantined"
 		],
 		reviewable: false
 	},
@@ -89,7 +91,7 @@ const typeLabels: Record<ModerationEventType, string> = {
 	warn_acknowledged: "Acknowledged",
 	payments_banned: "Payments Banned",
 	payments_unbanned: "Payments Unbanned",
-	image_removed: "Removed",
+	image_removed: "Pic removed",
 	image_quarantined: "Quarantined",
 	flagged_keyword: "Keyword",
 	flagged_bio: "Bio",
@@ -260,13 +262,13 @@ export const ModerationQueue: FC = () => {
 	const reasonIds = useReasonIds(deferredSearch);
 
 	const [orderOverride, setOrder] = useState<"asc" | "desc">();
-	const order = orderOverride ?? (tab === "reports" ? "desc" : "asc");
+	const order = orderOverride ?? (["all", "logs", "reports"].includes(tab) ? "desc" : "asc");
 	const [toggles, setToggles] = useState<{ reviewed?: boolean; indefShadowbanned?: boolean }>({});
 	const reviewed = toggles.reviewed ?? filtered;
 	const indefShadowbanned = toggles.indefShadowbanned ?? filtered;
 
-	// Hidden categories (on All) and event types (on the other tabs).
-	const [hidden, setHidden] = useState<Array<string>>([]);
+	// Hidden categories (on All) and event types.
+	const [hidden, setHidden] = useState<Array<string>>(["image_removed"]);
 	const shown = (key: string) => !hidden.includes(key);
 	const setShown = (key: string, value: boolean) =>
 		setHidden((previous) => value ? previous.filter((item) => item !== key) : [...previous, key]);
@@ -291,7 +293,7 @@ export const ModerationQueue: FC = () => {
 	const types = tab === "all"
 		? visibleCategories
 				.filter(([category]) => shown(category))
-				.flatMap(([, { types }]) => types)
+				.flatMap(([, { types }]) => types.filter(shown))
 		: tab === "reports"
 			? []
 			: categories[tab].types.filter((type) =>

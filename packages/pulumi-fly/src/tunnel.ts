@@ -6,58 +6,56 @@ export function tunnel(name: string, app: string, ports: { local: number; remote
 
   const state: { opening?: Promise<void> } = {};
 
-  const open = new pulumi.ResourceHook(
-    `${name}-tunnel`,
-    async () => {
-      state.opening ??= (async () => {
-        const { execa } = await import("execa");
-        const { createConnection } = await import("node:net");
+  const connect = async () => {
+    state.opening ??= (async () => {
+      const { execa } = await import("execa");
+      const { createConnection } = await import("node:net");
 
-        const subprocess = execa("fly", ["proxy", `${local}:${remote}`, "--app", app], {
-          stdio: "ignore",
-          cleanup: true,
-        });
+      const subprocess = execa("fly", ["proxy", `${local}:${remote}`, "--app", app], {
+        stdio: "ignore",
+        cleanup: true,
+      });
 
-        subprocess.catch(() => {});
+      subprocess.catch(() => {});
 
-        // Without this the child holds the event loop open and the operation never ends.
-        subprocess.nodeChildProcess.unref();
+      // Without this the child holds the event loop open and the operation never ends.
+      subprocess.nodeChildProcess.unref();
 
-        const reachable = () =>
-          new Promise<boolean>((resolve) => {
-            const socket = createConnection({ host: "127.0.0.1", port: local }, () => {
-              socket.end();
-              resolve(true);
-            });
-
-            socket.on("error", () => resolve(false));
-            socket.setTimeout(1000, () => {
-              socket.destroy();
-              resolve(false);
-            });
+      const reachable = () =>
+        new Promise<boolean>((resolve) => {
+          const socket = createConnection({ host: "127.0.0.1", port: local }, () => {
+            socket.end();
+            resolve(true);
           });
 
-        const deadline = Date.now() + 30_000;
+          socket.on("error", () => resolve(false));
+          socket.setTimeout(1000, () => {
+            socket.destroy();
+            resolve(false);
+          });
+        });
 
-        const wait = async (): Promise<void> => {
-          if (await reachable()) return;
-          if (Date.now() > deadline) throw new Error(`No tunnel to "${app}" after 30s.`);
+      const deadline = Date.now() + 30_000;
 
-          await new Promise((resolve) => setTimeout(resolve, 500));
-          return wait();
-        };
+      const wait = async (): Promise<void> => {
+        if (await reachable()) return;
+        if (Date.now() > deadline) throw new Error(`No tunnel to "${app}" after 30s.`);
 
-        await wait();
-        pulumi.log.info(`Tunnel to ${app} open on ${local}.`);
-      })();
+        await new Promise((resolve) => setTimeout(resolve, 500));
+        return wait();
+      };
 
-      await state.opening;
-    },
-    { onDryRun: true },
-  );
+      await wait();
+      pulumi.log.info(`Tunnel to ${app} open on ${local}.`);
+    })();
 
+    await state.opening;
+  };
+
+  // A preview diffs an update against the live database, but plans a create without it; on a new
+  // stack the app to tunnel to doesn't exist until the operation runs.
   return {
-    beforeCreate: [open],
-    beforeUpdate: [open],
+    beforeCreate: [new pulumi.ResourceHook(`${name}-tunnel-create`, connect)],
+    beforeUpdate: [new pulumi.ResourceHook(`${name}-tunnel`, connect, { onDryRun: true })],
   };
 }

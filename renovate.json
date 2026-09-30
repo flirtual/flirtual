@@ -46,11 +46,35 @@
 		{
 			"customType": "regex",
 			"managerFilePatterns": [
-				"/(^|/)docker-compose\\.ya?ml$/"
+				"/(^|/)(docker-)?compose\\.ya?ml$/"
 			],
 			"matchStrings": [
 				"# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\s+image: \\S+?:(?<currentValue>[\\d.]+)"
 			]
+		},
+		{
+			"customType": "regex",
+			"description": "Chargebee's OpenAPI spec, which is untagged, so pinned to a commit on main",
+			"managerFilePatterns": [
+				"/^packages/pulumi-dynamic-chargebee/package\\.json$/"
+			],
+			"matchStrings": [
+				"https://raw\\.githubusercontent\\.com/(?<depName>chargebee/openapi)/(?<currentDigest>[0-9a-f]{40})/"
+			],
+			"datasourceTemplate": "git-refs",
+			"packageNameTemplate": "https://github.com/{{{depName}}}",
+			"currentValueTemplate": "main"
+		},
+		{
+			"customType": "regex",
+			"description": "Listmonk's OpenAPI spec, at a release tag",
+			"managerFilePatterns": [
+				"/^packages/pulumi-dynamic-listmonk/package\\.json$/"
+			],
+			"matchStrings": [
+				"https://raw\\.githubusercontent\\.com/(?<depName>knadh/listmonk)/(?<currentValue>v[^/]+)/"
+			],
+			"datasourceTemplate": "github-releases"
 		},
 		{
 			"customType": "regex",
@@ -153,8 +177,20 @@
 			"addLabels": ["pulumi fly"]
 		},
 		{
-			"matchFileNames": ["packages/pulumi-listmonk/**"],
-			"addLabels": ["pulumi listmonk"]
+			"matchFileNames": ["packages/pulumi-dynamic-chargebee/**"],
+			"addLabels": ["pulumi dynamic chargebee"]
+		},
+		{
+			"matchFileNames": ["packages/pulumi-dynamic-fetch/**"],
+			"addLabels": ["pulumi dynamic fetch"]
+		},
+		{
+			"matchFileNames": ["packages/pulumi-dynamic-listmonk/**"],
+			"addLabels": ["pulumi dynamic listmonk"]
+		},
+		{
+			"matchFileNames": ["packages/pulumi-dynamic-revenuecat/**"],
+			"addLabels": ["pulumi dynamic revenuecat"]
 		},
 		{
 			"matchFileNames": ["{package.json,pnpm-workspace.yaml}"],
@@ -216,6 +252,14 @@
 			"groupName": "manticore"
 		},
 		{
+			"description": "The spec types the image's API, so both move together",
+			"matchPackageNames": [
+				"listmonk/listmonk",
+				"knadh/listmonk"
+			],
+			"groupName": "listmonk"
+		},
+		{
 			"matchPackageNames": [
 				"pnpm"
 			],
@@ -262,6 +306,12 @@
 			"matchUpdateTypes": ["minor", "patch"],
 			"matchCurrentVersion": "!/^0\\./",
 			"automerge": true
+		},
+		{
+			"description": "A spec change regenerates the package's types, which no CI check builds",
+			"matchDepNames": ["chargebee/openapi", "knadh/listmonk"],
+			"matchManagers": ["custom.regex"],
+			"automerge": false
 		}
 	]
 }
