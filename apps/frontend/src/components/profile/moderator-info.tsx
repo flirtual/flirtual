@@ -111,7 +111,12 @@ export const ProfileModeratorInfo: FC<{
 							<span className="font-bold">Email:</span>
 							{" "}
 							<CopyClick value={user.email ?? null}>
-								<span className="cursor-pointer hover:underline">
+								<span
+									className={twMerge(
+										"cursor-pointer hover:underline",
+										!user.emailConfirmedAt && "text-red-600"
+									)}
+								>
 									{user.email}
 								</span>
 							</CopyClick>
