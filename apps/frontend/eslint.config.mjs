@@ -24,6 +24,15 @@ export default configure({
 		// todo: disable eventually, flags bug-prone code.
 		"react-hooks-extra/no-direct-set-state-in-use-effect": "off",
 
+		"react-refresh/only-export-components": [
+			"warn",
+			{
+				allowConstantExport: true,
+				// Preserved from the base config, which this rule would otherwise replace.
+				allowExportNames: ["meta", "links", "headers", "loader", "action", "clientLoader", "clientAction", "handle", "shouldRevalidate", "clientMiddleware"]
+			}
+		],
+
 		"node/prefer-global/buffer": "off",
 		"node/prefer-global/process": "off",
 		// "antfu/no-top-level-await": "off",
