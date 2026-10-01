@@ -22,7 +22,6 @@ catalogs:
     "@pulumi/command": 1.2.1
     "@pulumi/postgresql": ^3.18.0
     "@pulumi/random": ^4.21.0
-    "@pulumiverse/sentry": 0.0.9
     "@types/node": ^22
     change-case: ^5.4.4
     globby: ^16.2.2
@@ -60,6 +59,7 @@ allowBuilds:
   "@pulumi/command": true
   "@pulumi/discord@file:pulumi/sdks/discord": true
   "@pulumi/freshdesk@file:pulumi/sdks/freshdesk": true
+  "@pulumi/sentry@file:pulumi/sdks/sentry": true
   "@sentry/cli": true
   "@shgysk8zer0/polyfills": false
   core-js: true
