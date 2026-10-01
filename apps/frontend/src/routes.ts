@@ -139,5 +139,4 @@ export default [
 	file(".well-known/apple-developer-merchantid-domain-association"),
 	file("_redirects"),
 	file("_headers"),
-	file("wrangler.json"),
 ] satisfies RouteConfig;
