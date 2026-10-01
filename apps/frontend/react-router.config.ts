@@ -50,7 +50,6 @@ export default {
 		"/.well-known/apple-developer-merchantid-domain-association",
 		"/.well-known/webauthn",
 		"/_redirects",
-		"/_headers",
-		"/wrangler.json"
+		"/_headers"
 	]
 } satisfies Config;

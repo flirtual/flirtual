@@ -96,8 +96,7 @@ export const redirects = [
 	},
 	{
 		source: "/.well-known/change-password",
-		destination: "/settings/password",
-		run_worker_first: false
+		destination: "/settings/password"
 	},
 	{
 		source: "/security.txt",

@@ -14,30 +14,30 @@ export default {
 	async fetch(request): Promise<Response> {
 		const url = new URL(request.url);
 
-		const locale = getLocale(url.pathname, url.pathname);
-		if (!locale) {
-			const legacyLocale = url.searchParams.get("language");
-			const recommendedLocale = getRecommendedLocale(request.headers.get("accept-language")) || defaultLocale;
+		if (url.pathname.startsWith("/static/")) return new Response(null, { status: 404 });
 
-			const locale = (legacyLocale && isLocale(legacyLocale) && legacyLocale) || recommendedLocale;
+		if (getLocale(url.pathname, url.pathname))
+			return env.ASSETS.fetch(new Request(new URL("/", url), request));
 
-			const probablyLoggedIn = request.headers.get("cookie")?.includes("logged_in=");
-			if (url.pathname === "/") url.pathname = probablyLoggedIn ? "/dates" : "/";
+		const legacyLocale = url.searchParams.get("language");
+		const recommendedLocale = getRecommendedLocale(request.headers.get("accept-language")) || defaultLocale;
 
-			const newUrl = new URL(createPath(replaceLanguage(url, locale, url.pathname)), url);
-			newUrl.searchParams.delete("language");
+		const locale = (legacyLocale && isLocale(legacyLocale) && legacyLocale) || recommendedLocale;
 
-			return new Response(null, {
-				status: 301,
-				headers: {
-					location: newUrl.href,
-					"cache-control": "public, max-age=3600, immutable",
-					vary: "accept-language, cookie",
-				}
-			});
-		}
+		const probablyLoggedIn = request.headers.get("cookie")?.includes("logged_in=");
+		if (url.pathname === "/") url.pathname = probablyLoggedIn ? "/dates" : "/";
 
-		return env.ASSETS.fetch(request);
+		const newUrl = new URL(createPath(replaceLanguage(url, locale, url.pathname)), url);
+		newUrl.searchParams.delete("language");
+
+		return new Response(null, {
+			status: 301,
+			headers: {
+				location: newUrl.href,
+				"cache-control": "public, max-age=3600, immutable",
+				vary: "accept-language, cookie",
+			}
+		});
 	},
 	queue
 } satisfies ExportedHandler<Env, any>;
