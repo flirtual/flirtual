@@ -20,11 +20,9 @@ export function App() {
 			{development && <InsetPreview />}
 			<QueryProvider>
 				<AnalyticsProvider>
-					{!server && (
-						<Suspense fallback={null}>
-							<ConfigSubscriber />
-						</Suspense>
-					)}
+					<Suspense fallback={null}>
+						{!server && <ConfigSubscriber />}
+					</Suspense>
 					<InterruptionProvider>
 						<UpdateInformation />
 						<ToastProvider>
