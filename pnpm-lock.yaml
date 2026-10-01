@@ -425,7 +425,7 @@ importers:
         version: 3.4.2(@uppy/core@4.5.3)
       '@uppy/locales':
         specifier: ^5.1.1
-        version: 5.2.1
+        version: 5.3.0
       '@uppy/progress-bar':
         specifier: ^4.3.2
         version: 4.3.2(@uppy/core@4.5.3)
@@ -4860,8 +4860,8 @@ packages:
   '@uppy/core@4.5.3':
     resolution: {integrity: sha512-52VLeBUY/j904h48lpPGykuWikkOOS4Lz/qkmalDiBQfNALb6iB1MOZs079IM3o/uMLYxzZRL80C3sKpkBUYcw==}
 
-  '@uppy/core@6.0.2':
-    resolution: {integrity: sha512-SIhNEwjm4owIihc394TudwrSBTfoo6x2QpJv56Pk9zlvPvBdEXnycLvxqFQP3rYjuY4pJxneU71Zs0N36xTwYw==}
+  '@uppy/core@6.1.0':
+    resolution: {integrity: sha512-nnr4p73oM70slbBEDzSDacFue7zZ92lvrZaCUgP1MKJw4I1UaZ0zmYyfWuedR3rLX/cpClKctdftRmiElM1yFA==}
 
   '@uppy/dashboard@4.4.3':
     resolution: {integrity: sha512-IwgDDTbk9p4OoAJvvvx6sQSemKTIJq9IDSryNVgbbC6NiR9HSyRcu0+WdOZLiR9DOhDg2oYcoNgv7DMlrktI6g==}
@@ -4918,8 +4918,8 @@ packages:
     peerDependencies:
       '@uppy/core': ^4.5.2
 
-  '@uppy/locales@5.2.1':
-    resolution: {integrity: sha512-lA0VE9Bz57qJq8iHBacf9m1WD7DSd/2uKwP/uNFPdU7Udz0yqcd86MqPq8kUKy0nqjf1vlUmhSYKiaIyPEkHoA==}
+  '@uppy/locales@5.3.0':
+    resolution: {integrity: sha512-kiMnX5iluE1QdM+Uvqfd/XNgaZV+b5+6B+sGp4F0wuFcsgrFNPcnRJb3ghDau4RLwnKbWS5A2N9CJ4DFvwmMTA==}
 
   '@uppy/onedrive@4.3.2':
     resolution: {integrity: sha512-dfJAl9qsoQsL1LdIrDPKEKmAj82VNA63BInsJ80nF8bx3tf67AvlMz4O1I9fDW2zctfgOiFlGz47kamz01eSPQ==}
@@ -12827,7 +12827,7 @@ snapshots:
     transitivePeerDependencies:
       - preact-render-to-string
 
-  '@uppy/core@6.0.2':
+  '@uppy/core@6.1.0':
     dependencies:
       '@transloadit/prettier-bytes': 2.0.0
       classnames: 2.5.1
@@ -12946,9 +12946,9 @@ snapshots:
     transitivePeerDependencies:
       - preact-render-to-string
 
-  '@uppy/locales@5.2.1':
+  '@uppy/locales@5.3.0':
     dependencies:
-      '@uppy/core': 6.0.2
+      '@uppy/core': 6.1.0
     transitivePeerDependencies:
       - preact-render-to-string
 
