@@ -16,10 +16,20 @@ export function useKeyboardVisible() {
 			setKeyboardVisible(false);
 		});
 
-		return () => void Promise.all([
-			showListener.then((listener) => listener.remove()),
-			hideListener.then((listener) => listener.remove())
-		]);
+		// The hide event can be missed, and the viewport resizes whenever the keyboard does.
+		const onResize = () => {
+			if (!document.activeElement?.matches("input, textarea, select, [contenteditable]"))
+				setKeyboardVisible(false);
+		};
+		window.addEventListener("resize", onResize);
+
+		return () => {
+			window.removeEventListener("resize", onResize);
+			void Promise.all([
+				showListener.then((listener) => listener.remove()),
+				hideListener.then((listener) => listener.remove())
+			]);
+		};
 	}, []);
 
 	return keyboardVisible;

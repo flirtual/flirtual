@@ -49,7 +49,7 @@ export const ConversationAside: FC<ConversationAsideProps> = (props) => {
 				&& "desktop:mx-auto desktop:w-full desktop:max-w-md"
 			)}
 		>
-			<div className="flex w-full items-center justify-center bg-black-70 p-4 pt-[max(calc(var(--safe-area-inset-top,0rem)+0.5rem),1rem)] text-white-20 desktop:static desktop:bg-transparent desktop:pt-[1.125rem]">
+			<div className="flex min-h-[var(--status-bar-height,0rem)] w-full items-center justify-center bg-black-70 p-4 pl-[calc(1rem+var(--status-bar-clearance-left,0rem))] pr-[calc(1rem+var(--status-bar-clearance-right,0rem))] pt-[max(calc(var(--status-bar-inset-top,var(--safe-area-inset-top,0rem))+0.5rem),1rem)] text-white-20 bleed-x desktop:static desktop:bg-transparent desktop:px-4 desktop:pt-[1.125rem]">
 				<Link
 					href={
 						activeConversationId

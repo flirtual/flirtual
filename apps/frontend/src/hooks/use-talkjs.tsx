@@ -222,7 +222,7 @@ export const ConversationChatbox: React.FC<
 	const [element, setElement] = useState<HTMLDivElement | null>(null);
 
 	const [theme] = useTheme();
-	const { native, vision } = useDevice();
+	const { native, vision, nativeNavigation } = useDevice();
 	const { t } = useTranslation();
 	const [locale] = useLocale();
 	const [fontSize] = usePreferences<number>("font_size", 16);
@@ -255,10 +255,10 @@ export const ConversationChatbox: React.FC<
 	const height = useMemo(() => {
 		if (!element) return "0px";
 		const unit = CSS.supports("height", "100dvh") ? "dvh" : "vh";
-		return vision
-			? `calc(100${unit} - 8.125rem)`
-			: `calc(100${unit} - max(calc(var(--safe-area-inset-top, 0rem) + 0.5rem), 1rem) - max(calc(var(--safe-area-inset-bottom, 0rem) - 0.25rem), 0.5rem) - 11.125rem)`;
-	}, [element, vision]);
+		if (vision) return `calc(100${unit} - 8.125rem)`;
+		if (nativeNavigation) return `calc(100${unit} - max(var(--status-bar-height, 0rem), calc(max(calc(var(--status-bar-inset-top, var(--safe-area-inset-top, 0rem)) + 0.5rem), 1rem) + 3rem)) - max(calc(var(--safe-area-inset-bottom, 0rem) - 0.5rem), 0.5rem) - 4.125rem)`;
+		return `calc(100${unit} - max(calc(var(--safe-area-inset-top, 0rem) + 0.5rem), 1rem) - max(calc(var(--safe-area-inset-bottom, 0rem) - 0.25rem), 0.5rem) - 11.125rem)`;
+	}, [element, vision, nativeNavigation]);
 
 	useEffect(() => {
 		if (!chatbox || !conversation) return;

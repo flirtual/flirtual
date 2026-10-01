@@ -51,7 +51,7 @@ jobs:
     name: Build
     needs: changes
     if: needs.changes.outputs.native == 'true' && (github.event_name == 'pull_request' || github.event_name == 'merge_group')
-    runs-on: macos-26
+    runs-on: xcode-27
     defaults:
       run:
         working-directory: apps/frontend
@@ -81,7 +81,7 @@ jobs:
     name: Release
     needs: changes
     if: (needs.changes.outputs.native == 'true' && github.event_name == 'push') || github.event_name == 'workflow_dispatch'
-    runs-on: macos-26
+    runs-on: xcode-27
     environment: mobile
     defaults:
       run:

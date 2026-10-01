@@ -168,10 +168,11 @@ module.exports = {
 		require("tailwindcss-hocus"),
 		require("tailwindcss-animate"),
 		require("tailwindcss-motion"),
-		plugin(({ addVariant, addComponents }) => {
+		plugin(({ addVariant, addComponents, addUtilities, theme }) => {
 			// Device specific variants
 			addVariant("native", `:is([data-native] &)`);
 			addVariant("vision", `:is([data-vision] &)`);
+			addVariant("native-nav", `:where([data-native-navigation]) &`);
 
 			for (const platform of ["web", "android", "apple"])
 				addVariant(platform, `:is([data-platform="${platform}"] &)`);
@@ -179,6 +180,22 @@ module.exports = {
 			// Language specific variants
 			for (const language of languageTags)
 				addVariant(language, `:is([lang="${language}"] &)`);
+
+			// Runs a background out to the screen edge across the layout's side insets (--content-inset-*,
+			// set only under the native tab bar), keeping the content where it was: the transparent
+			// borders take the space the negative margins give back. Phone layouts only.
+			addUtilities({
+				".bleed-x": {
+					[`@media not all and (min-width: ${theme("screens.desktop")})`]: {
+						marginLeft: "calc(-1 * var(--content-inset-left, 0px))",
+						marginRight: "calc(-1 * var(--content-inset-right, 0px))",
+						width: "calc(100% + var(--content-inset-left, 0px) + var(--content-inset-right, 0px))",
+						borderLeft: "var(--content-inset-left, 0px) solid transparent",
+						borderRight: "var(--content-inset-right, 0px) solid transparent",
+						backgroundOrigin: "border-box"
+					}
+				}
+			});
 
 			addComponents({
 				".focused": {

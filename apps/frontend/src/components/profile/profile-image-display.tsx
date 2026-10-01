@@ -125,7 +125,7 @@ export const ImageToolbar: React.FC<{
 	);
 
 	return (
-		<div className="flex w-full items-center justify-between gap-4 bg-brand-gradient p-4 text-white-20">
+		<div className="flex w-full items-center justify-between gap-4 bg-brand-gradient p-4 pl-[calc(1rem+var(--safe-area-inset-left,0rem))] pr-[calc(1rem+var(--safe-area-inset-right,0rem))] text-white-20 desktop:px-4">
 			<div className="select-children">
 				{formattedUploadTime && (
 					<Trans
@@ -379,18 +379,18 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 									{images.length > 1 && (
 										<div className="absolute z-10 flex size-full">
 											<button
-												className="group flex h-full w-1/4 items-center justify-start px-8 opacity-70 outline-none transition-opacity hover:opacity-100"
+												className="group flex h-full w-1/4 items-center justify-start px-8 pl-[calc(2rem+var(--safe-area-inset-left,0rem))] opacity-70 outline-none transition-opacity hover:opacity-100 desktop:px-8"
 												type="button"
 												onClick={() => set(-1)}
 											>
-												<ChevronLeft className="size-10 rounded-md text-white-10 drop-shadow group-focus-visible:ring-2 group-focus-visible:ring-white-10" />
+												<ChevronLeft className="size-10 shrink-0 rounded-md text-white-10 drop-shadow group-focus-visible:ring-2 group-focus-visible:ring-white-10" />
 											</button>
 											<button
-												className="group ml-auto flex h-full w-1/4 items-center justify-end px-8 opacity-70 outline-none transition-opacity hover:opacity-100"
+												className="group ml-auto flex h-full w-1/4 items-center justify-end px-8 pr-[calc(2rem+var(--safe-area-inset-right,0rem))] opacity-70 outline-none transition-opacity hover:opacity-100 desktop:px-8"
 												type="button"
 												onClick={() => set(1)}
 											>
-												<ChevronRight className="size-10 rounded-md text-white-10 drop-shadow group-focus-visible:ring-2 group-focus-visible:ring-white-10" />
+												<ChevronRight className="size-10 shrink-0 rounded-md text-white-10 drop-shadow group-focus-visible:ring-2 group-focus-visible:ring-white-10" />
 											</button>
 										</div>
 									)}
@@ -401,7 +401,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 										image={currentImage}
 									/>
 									{currentImage.worldId && currentImage.worldName && (
-										<div className="absolute bottom-2 right-2 z-20 flex items-center gap-2 rounded-full bg-black-70/80 px-2 pb-[3px] pt-1 text-xs text-white-20 opacity-80 shadow-brand-1 transition-opacity hover:opacity-100 desktop:bottom-4 desktop:right-4 desktop:gap-4 desktop:pb-1.5 desktop:pl-3 desktop:pr-3.5 desktop:pt-2 desktop:text-sm">
+										<div className="absolute bottom-2 right-[calc(0.5rem+var(--safe-area-inset-right,0rem))] z-20 flex items-center gap-2 rounded-full bg-black-70/80 px-2 pb-[3px] pt-1 text-xs text-white-20 opacity-80 shadow-brand-1 transition-opacity hover:opacity-100 desktop:bottom-4 desktop:right-4 desktop:gap-4 desktop:pb-1.5 desktop:pl-3 desktop:pr-3.5 desktop:pt-2 desktop:text-sm">
 											<InlineLink
 												className="flex items-center gap-1.5 desktop:gap-2"
 												highlight={false}
@@ -442,27 +442,27 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 					<>
 						<div className="pointer-events-none absolute flex size-full">
 							<button
-								className="group pointer-events-auto flex h-full w-1/4 items-center justify-start px-6 opacity-70 outline-none transition-opacity hover:opacity-100"
+								className="group pointer-events-auto flex h-full w-[calc(25%+var(--content-inset-left,0rem))] items-center justify-start px-6 pl-[calc(1.5rem+var(--content-inset-left,0rem))] opacity-70 outline-none transition-opacity hover:opacity-100"
 								type="button"
 								onClick={() => set(-1)}
 							>
-								<ChevronLeft className="size-10 rounded-md text-white-10 drop-shadow group-focus-visible:ring-2 group-focus-visible:ring-white-10" />
+								<ChevronLeft className="size-10 shrink-0 rounded-md text-white-10 drop-shadow group-focus-visible:ring-2 group-focus-visible:ring-white-10" />
 							</button>
 							<button
-								className="group pointer-events-auto ml-auto flex h-full w-1/4 items-center justify-end px-6 opacity-70 outline-none transition-opacity hover:opacity-100"
+								className="group pointer-events-auto ml-auto flex h-full w-[calc(25%+var(--content-inset-right,0rem))] items-center justify-end px-6 pr-[calc(1.5rem+var(--content-inset-right,0rem))] opacity-70 outline-none transition-opacity hover:opacity-100"
 								type="button"
 								onClick={() => set(1)}
 							>
-								<ChevronRight className="size-10 rounded-md text-white-10 drop-shadow group-focus-visible:ring-2 group-focus-visible:ring-white-10" />
+								<ChevronRight className="size-10 shrink-0 rounded-md text-white-10 drop-shadow group-focus-visible:ring-2 group-focus-visible:ring-white-10" />
 							</button>
 						</div>
 
-						<div className="pointer-events-auto absolute top-0 flex w-full px-8">
+						<div className="pointer-events-auto absolute top-0 flex w-full px-8 pl-[calc(2rem+var(--content-inset-left,0rem)+var(--status-bar-clearance-left,0rem))] pr-[calc(2rem+var(--content-inset-right,0rem)+var(--status-bar-clearance-right,0rem))]">
 							<div className="-mx-1 flex grow items-center">
 								{images.map((image) => (
 									<button
 										key={image.id}
-										className="group grow px-1 py-6 pt-[max(calc(var(--safe-area-inset-top,0rem)+0.25rem),1.5rem)]"
+										className="group grow px-1 py-6 pt-[max(calc(var(--status-bar-inset-top,var(--safe-area-inset-top,0rem))+0.25rem),1.5rem)]"
 										type="button"
 										onClick={() => set(0, image.id)}
 									>

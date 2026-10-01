@@ -93,6 +93,11 @@ body[data-theme="dark"] {
   --chart-5: #8e6bc8;
 }
 
+body[data-native-navigation] {
+  --content-inset-left: var(--safe-area-inset-left, 0px);
+  --content-inset-right: var(--safe-area-inset-right, 0px);
+}
+
 body[data-theme-style="friend"] {
   --theme-1: var(--friend-theme-1);
   --theme-2: var(--friend-theme-2);

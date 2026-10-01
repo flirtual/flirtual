@@ -43,7 +43,7 @@ import { NavigationLink } from "./navigation-link";
 
 export const SettingsNavigation: FC = () => {
 	const { user, sudoerId } = useSession();
-	const { vision } = useDevice();
+	const { vision, nativeNavigation } = useDevice();
 
 	const matches = useMatches();
 	const listOnly = matches.at(-1)?.pathname.endsWith(urls.settings.list()) || false;
@@ -62,7 +62,7 @@ export const SettingsNavigation: FC = () => {
 						!listOnly ? "hidden desktop:flex" : "flex"
 					)}
 				>
-					{vision && (user.tags?.includes("moderator") || user.tags?.includes("admin") || sudoerId) && (
+					{(vision || nativeNavigation) && (user.tags?.includes("moderator") || user.tags?.includes("admin") || sudoerId) && (
 						<NavigationCategory name="Staff">
 							{user.tags?.includes("moderator") && (
 								<>

@@ -4,7 +4,7 @@ export function ProfileSkeleton({ className }: { className?: string }) {
 	return (
 		<div
 			className={twMerge(
-				"flex w-full vision:bg-none desktop:max-w-lg desktop:rounded-3xl desktop:bg-brand-gradient desktop:p-1 desktop:shadow-brand-1",
+				"ml-[calc(-1*var(--content-inset-left,0rem))] mr-[calc(-1*var(--content-inset-right,0rem))] flex w-[calc(100%+var(--content-inset-left,0rem)+var(--content-inset-right,0rem))] vision:bg-none desktop:mx-0 desktop:w-full desktop:max-w-lg desktop:rounded-3xl desktop:bg-brand-gradient desktop:p-1 desktop:shadow-brand-1",
 				className
 			)}
 		>
@@ -14,7 +14,7 @@ export function ProfileSkeleton({ className }: { className?: string }) {
 					<div className="relative flex aspect-square w-full shrink-0 bg-black-70">
 						<div className="size-full bg-white-10/20 bg-brand-gradient" />
 						<div className="absolute bottom-0 h-1/3 w-full bg-gradient-to-b from-transparent via-black-90/20 to-black-90/60">
-							<div className="absolute bottom-0 flex w-full flex-col gap-2 p-8">
+							<div className="absolute bottom-0 flex w-full flex-col gap-2 p-8 pl-[calc(2rem+var(--content-inset-left,0rem))] pr-[calc(2rem+var(--content-inset-right,0rem))] desktop:px-8">
 								{/* Name/age */}
 								<div className="flex items-baseline gap-4">
 									<div className="h-9 w-48 animate-pulse rounded bg-white-10/30" />
@@ -31,7 +31,7 @@ export function ProfileSkeleton({ className }: { className?: string }) {
 				</div>
 
 				<div className="h-1 shrink-0 bg-brand-gradient desktop:hidden" />
-				<div className="flex h-full grow flex-col gap-6 break-words p-8">
+				<div className="flex h-full grow flex-col gap-6 break-words p-8 pl-[calc(2rem+var(--content-inset-left,0rem))] pr-[calc(2rem+var(--content-inset-right,0rem))] desktop:px-8">
 					{/* Bio */}
 					<div className="flex flex-col gap-2">
 						<div className="h-4 w-full animate-pulse rounded bg-black-90/10 dark:bg-white-10/20" />

@@ -55,9 +55,9 @@ export const ModelCard: React.FC<ModelCardProps> = ({
 					<div
 						{...titleProps}
 						className={twMerge(
-							"w-full bg-brand-gradient px-8 py-7 text-center font-montserrat text-3xl font-extrabold text-white-20 desktop:w-full desktop:rounded-t-2xl desktop:pb-4 desktop:pt-[1.125rem] desktop:text-2xl android:desktop:pt-[1.125rem]",
+							"w-full bg-brand-gradient px-8 py-7 text-center font-montserrat text-3xl font-extrabold text-white-20 bleed-x desktop:w-full desktop:rounded-t-2xl desktop:pb-4 desktop:pt-[1.125rem] desktop:text-2xl android:desktop:pt-[1.125rem]",
 							inset
-							&& "pt-[max(calc(var(--safe-area-inset-top,0rem)+1rem),1.75rem)]",
+							&& "pl-[calc(2rem+var(--status-bar-clearance-left,0rem))] pr-[calc(2rem+var(--status-bar-clearance-right,0rem))] pt-[max(calc(var(--status-bar-inset-top,var(--safe-area-inset-top,0rem))+1rem),1.75rem)] desktop:px-8",
 							titleProps.className
 						)}
 					>

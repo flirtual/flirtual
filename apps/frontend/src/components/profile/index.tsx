@@ -133,7 +133,7 @@ export const Profile = withSuspense(({
 			{...elementProps}
 			data-mask
 			className={twMerge(
-				"flex w-full vision:bg-none desktop:max-w-lg desktop:rounded-3xl desktop:bg-brand-gradient desktop:p-1 desktop:shadow-brand-1",
+				"ml-[calc(-1*var(--content-inset-left,0rem))] mr-[calc(-1*var(--content-inset-right,0rem))] flex w-[calc(100%+var(--content-inset-left,0rem)+var(--content-inset-right,0rem))] vision:bg-none desktop:mx-0 desktop:w-full desktop:max-w-lg desktop:rounded-3xl desktop:bg-brand-gradient desktop:p-1 desktop:shadow-brand-1",
 				className
 			)}
 		>
@@ -142,7 +142,7 @@ export const Profile = withSuspense(({
 					current={id !== "next-profile"}
 					user={user}
 				>
-					<div className="absolute bottom-0 flex w-full flex-col gap-2 p-8 text-white-10">
+					<div className="absolute bottom-0 flex w-full flex-col gap-2 p-8 pl-[calc(2rem+var(--content-inset-left,0rem))] pr-[calc(2rem+var(--content-inset-right,0rem))] text-white-10 desktop:px-8">
 						<div className="pointer-events-auto flex w-fit items-baseline gap-4 font-montserrat">
 							<span
 								className={twMerge(
@@ -197,7 +197,7 @@ export const Profile = withSuspense(({
 					</div>
 				</ProfileImageDisplay>
 				<div className="h-1 shrink-0 bg-brand-gradient desktop:hidden" />
-				<div className="flex h-full grow flex-col gap-6 break-words p-8">
+				<div className="flex h-full grow flex-col gap-6 break-words p-8 pl-[calc(2rem+var(--content-inset-left,0rem))] pr-[calc(2rem+var(--content-inset-right,0rem))] desktop:px-8">
 					{myProfile && <PersonalActions user={user} />}
 					<RelationActions direct={direct} userId={user.id} />
 					{(((me.tags?.includes("admin") || me.tags?.includes("moderator")) && moderatorInfoVisible)
