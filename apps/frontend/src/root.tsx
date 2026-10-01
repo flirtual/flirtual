@@ -50,6 +50,7 @@ import {
 	i18n,
 	localePathnameRegex,
 	locales,
+	redirect,
 	replaceLanguage,
 	useMatch
 } from "./i18n";
@@ -61,6 +62,15 @@ import { absoluteUrl, bucketOrigins, urls } from "./urls";
 import "@fontsource-variable/montserrat";
 import "@fontsource-variable/nunito";
 import "./app/index.css";
+
+export const clientMiddleware: Array<Route.ClientMiddlewareFunction> = [
+	({ params: { locale }, request }) => {
+		if (!locale || isLocale(locale)) return;
+
+		const { pathname, search } = new URL(request.url);
+		throw redirect(`${pathname}${search}`);
+	}
+];
 
 export function meta({
 	location: { pathname },
