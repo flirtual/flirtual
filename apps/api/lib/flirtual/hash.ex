@@ -106,11 +106,15 @@ defmodule Flirtual.Hash do
       |> Enum.filter(&(is_nil(&1.user_id) and not is_nil(&1.suspended_url)))
       |> Enum.map(& &1.suspended_url)
 
+    {named, unknown_bans} =
+      Enum.split_with(duplicates, &(not is_nil(&1.user_id) or not is_nil(&1.suspended_url)))
+
     details = %{
       type: type,
       text: text,
       duplicate_user_ids: duplicate_user_ids,
-      duplicate_ban_urls: duplicate_ban_urls
+      duplicate_ban_urls: duplicate_ban_urls,
+      unknown_ban_count: length(unknown_bans)
     }
 
     cond do
@@ -121,14 +125,6 @@ defmodule Flirtual.Hash do
         :ok
 
       true ->
-        {named, anonymous} =
-          duplicates
-          |> Enum.split_with(fn
-            %{user_id: id} when not is_nil(id) -> true
-            %{suspended_url: url} when not is_nil(url) -> true
-            _ -> false
-          end)
-
         named =
           named
           |> Enum.map(fn hash ->
@@ -139,7 +135,7 @@ defmodule Flirtual.Hash do
           end)
 
         anonymous =
-          case length(anonymous) do
+          case length(unknown_bans) do
             0 -> []
             1 -> ["Banned user (not found)"]
             n -> ["#{n}x Banned user (not found)"]
