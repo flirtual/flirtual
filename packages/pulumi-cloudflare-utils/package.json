@@ -1,0 +1,29 @@
+{
+	"name": "@flirtual/pulumi-cloudflare-utils",
+	"private": true,
+	"description": "Pulumi dynamic resources for Cloudflare Workers, deployed from cf Build Output through the cf CLI.",
+	"type": "module",
+	"exports": {
+		".": "./src/index.ts",
+		"./providers/*": "./src/providers/*.ts"
+	},
+	"scripts": {
+		"test": "vitest run"
+	},
+	"peerDependencies": {
+		"@pulumi/pulumi": "catalog:"
+	},
+	"devDependencies": {
+		"@pulumi/pulumi": "catalog:",
+		"@types/node": "^22",
+		"typescript": "catalog:",
+		"vitest": "catalog:"
+	},
+	"dependencies": {
+		"@cloudflare/build-output-utils": "catalog:",
+		"@cloudflare/config": "catalog:",
+		"@flirtual/pulumi-utils": "workspace:*",
+		"cf": "catalog:",
+		"execa": "catalog:"
+	}
+}
