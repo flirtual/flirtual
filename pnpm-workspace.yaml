@@ -5,8 +5,11 @@ packages:
 
 catalog:
   "@ariesclark/eslint-config": 3.2.1-canary.1
+  "@cloudflare/build-output-utils": 0.8.4
+  "@cloudflare/config": 0.22.0
   "@cloudflare/vitest-pool-workers": ^0.22.0
   "@pulumi/pulumi": 3.265.0
+  cf: 1.0.0-beta.10
   eslint: ^9.39.1
   execa: ^10.0.1
   oxfmt: ^0.71.0
@@ -76,3 +79,14 @@ minimumReleaseAgeExclude:
   - svgo@4.1.0
   # Renovate security update: sharp@0.35.4
   - sharp@0.35.4
+  # cf is in beta and ships fixes daily; a 3-day delay pins it to stale betas.
+  # Its exact-pinned dependencies release with it, including the runtime
+  # Wrangler shares.
+  - cf
+  - "@cloudflare/build-output-utils"
+  - "@cloudflare/codemods"
+  - "@cloudflare/config"
+  - "@cloudflare/runtime-types"
+  - "@cloudflare/workerd-*"
+  - miniflare
+  - workerd
