@@ -193,6 +193,14 @@
 			"addLabels": ["pulumi dynamic revenuecat"]
 		},
 		{
+			"matchFileNames": ["packages/pulumi-utils/**"],
+			"addLabels": ["pulumi utils"]
+		},
+		{
+			"matchFileNames": ["packages/pulumi-cloudflare-utils/**"],
+			"addLabels": ["pulumi cloudflare utils"]
+		},
+		{
 			"matchFileNames": ["{package.json,pnpm-workspace.yaml}"],
 			"addLabels": ["workspace"]
 		},
@@ -306,6 +314,17 @@
 			"matchUpdateTypes": ["minor", "patch"],
 			"matchCurrentVersion": "!/^0\\./",
 			"automerge": true
+		},
+		{
+			"description": "cf pins @cloudflare/config and @cloudflare/build-output-utils exactly, ships betas daily, and no CI check deploys through it",
+			"matchPackageNames": [
+				"cf",
+				"@cloudflare/config",
+				"@cloudflare/build-output-utils"
+			],
+			"groupName": "cf",
+			"minimumReleaseAge": null,
+			"automerge": false
 		},
 		{
 			"description": "A spec change regenerates the package's types, which no CI check builds",
