@@ -757,7 +757,8 @@ defmodule FlirtualWeb.UsersController do
 
       AgeVerification.record_age_range(user, report)
 
-      if is_integer(attrs.age_upper) and attrs.age_upper < 18 do
+      if is_integer(attrs.age_upper) and attrs.age_upper < 18 and
+           not AgeVerification.passed?(user.id) do
         Users.autoban_underage(user, {:age_range, report})
       else
         conn |> send_resp(:no_content, "")

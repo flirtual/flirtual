@@ -168,7 +168,15 @@ defmodule Flirtual.Users do
     with true <- User.banned_underage?(user),
          %ModerationEvent{created_at: banned_at} <- ModerationEvent.active(user_id, :banned),
          true <- DateTime.after?(verification.created_at, banned_at) do
-      User.unsuspend(user, user, automatic: {:age_verification, verification})
+      Repo.transaction(fn ->
+        with {:ok, user} <- user |> change(born_at: nil) |> Repo.update(),
+             {:ok, user} <-
+               User.unsuspend(user, user, automatic: {:age_verification, verification}) do
+          user
+        else
+          {:error, reason} -> Repo.rollback(reason)
+        end
+      end)
     else
       _ -> {:ok, user}
     end
