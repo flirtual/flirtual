@@ -276,7 +276,7 @@
 			"groupName": "elixir toolchain"
 		},
 		{
-			"matchUpdateTypes": ["digest", "pinDigest"],
+			"matchUpdateTypes": ["digest"],
 			"automerge": true
 		},
 		{
@@ -332,6 +332,11 @@
 			"matchDepNames": ["chargebee/openapi", "knadh/listmonk"],
 			"matchManagers": ["custom.regex"],
 			"automerge": false
+		},
+		{
+			"matchUpdateTypes": ["pin", "pinDigest"],
+			"groupName": "pin dependencies",
+			"automerge": true
 		}
 	]
 }
