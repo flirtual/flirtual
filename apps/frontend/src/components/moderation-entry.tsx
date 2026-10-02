@@ -1,4 +1,5 @@
 import {
+	ArrowRightLeft,
 	AtSign,
 	Baby,
 	Bot,
@@ -92,6 +93,7 @@ const entryTypes: Record<"report" | ModerationEventType, { title: string; Icon: 
 	flagged_duplicate: { title: "Potential duplicate", Icon: Files, color: gray },
 	flagged_image: { title: "Image auto-flagged", Icon: ImageIcon, color: gray },
 	flagged_duplicate_image: { title: "Potential duplicate image", Icon: Images, color: yellow },
+	subscription_transferred: { title: "Subscription transferred", Icon: ArrowRightLeft, color: red },
 	flagged_registered_underage: { title: "Date of birth flagged (previously underage)", Icon: Baby, color: yellow },
 	flagged_honeypot: { title: "Registration honeypot tripped", Icon: Bot, color: gray },
 	flagged_age_range: { title: "Age range flagged", Icon: CalendarRange, color: yellow },
@@ -142,7 +144,9 @@ const hiddenDetails = new Set([
 	"text",
 	"distance",
 	"previousBornAt",
-	"bornAt"
+	"bornAt",
+	"fromRevenuecatId",
+	"toRevenuecatId"
 ]);
 
 export type ModerationEntry = { id: string; createdAt: string } & (
@@ -746,7 +750,12 @@ function useEntryBody(entry: ModerationEntry, compact: boolean): { content: Arra
 
 	if (duplicateUserIds.length > 0 || banUrls.length > 0) {
 		fields.push(
-			<Field key="duplicates" label={event.type === "flagged_duplicate_image" ? "Matching profiles" : "Duplicates"}>
+			<Field
+				key="duplicates"
+				label={event.type === "flagged_duplicate_image"
+					? "Matching profiles"
+					: event.type === "subscription_transferred" ? "Transferred from" : "Duplicates"}
+			>
 				{duplicateUserIds.length > 0 && (
 					<button
 						className="inline-flex items-center gap-1 underline"
@@ -781,6 +790,19 @@ function useEntryBody(entry: ModerationEntry, compact: boolean): { content: Arra
 						</span>
 					))}
 				</span>
+			</Field>
+		);
+	}
+
+	for (const [name, label] of [["fromRevenuecatId", "From RC customer"], ["toRevenuecatId", "To RC customer"]] as const) {
+		const revenuecatId = text(details[name]);
+		if (!revenuecatId) continue;
+
+		fields.push(
+			<Field key={name} label={label}>
+				<InlineLink className="underline" highlight={false} href={urls.moderation.revenuecatCustomer(revenuecatId)}>
+					{revenuecatId}
+				</InlineLink>
 			</Field>
 		);
 	}

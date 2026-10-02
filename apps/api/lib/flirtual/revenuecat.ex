@@ -1,7 +1,7 @@
 defmodule Flirtual.RevenueCat do
   use Flirtual.Logger, :revenuecat
 
-  alias Flirtual.{Discord, Plan, Reconciliation, User}
+  alias Flirtual.{Discord, ModerationEvent, Plan, Reconciliation, User}
   alias Flirtual.ObanWorkers.Reconcile
 
   defp config(key) do
@@ -120,12 +120,24 @@ defmodule Flirtual.RevenueCat do
     from_id = event |> Map.get("transferred_from", []) |> List.first()
     to_id = event |> Map.get("transferred_to", []) |> List.first()
     store = Map.get(event, "store")
+    from_user = safe_user_lookup(from_id)
+    to_user = safe_user_lookup(to_id)
 
-    with :ok <-
+    with {:ok, _} <-
+           ModerationEvent.create(:subscription_transferred, %{
+             user: to_user,
+             details: %{
+               duplicate_user_ids: if(from_user, do: [from_user.id], else: []),
+               from_revenuecat_id: from_id,
+               to_revenuecat_id: to_id,
+               store: store
+             }
+           }),
+         :ok <-
            Discord.deliver_webhook(:subscription_transferred,
-             from_user: safe_user_lookup(from_id),
+             from_user: from_user,
              from_revenuecat_id: from_id,
-             to_user: safe_user_lookup(to_id),
+             to_user: to_user,
              to_revenuecat_id: to_id,
              store: store
            ),

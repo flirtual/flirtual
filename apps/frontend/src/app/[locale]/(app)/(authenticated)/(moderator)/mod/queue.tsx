@@ -35,7 +35,7 @@ const categories: Record<Category, {
 }> = {
 	dupes: {
 		label: "Dupes",
-		types: ["flagged_duplicate", "flagged_duplicate_image"],
+		types: ["flagged_duplicate", "flagged_duplicate_image", "subscription_transferred"],
 		reviewable: true
 	},
 	flags: {
@@ -99,6 +99,7 @@ const typeLabels: Record<ModerationEventType, string> = {
 	flagged_duplicate: "Duplicate",
 	flagged_image: "Flagged",
 	flagged_duplicate_image: "Duplicate Image",
+	subscription_transferred: "Sub. transferred",
 	flagged_registered_underage: "Prev. Underage",
 	flagged_honeypot: "Honeypot",
 	flagged_age_range: "Age Range",

@@ -26,6 +26,7 @@ defmodule Flirtual.ModerationEvent do
     :flagged_duplicate,
     :flagged_image,
     :flagged_duplicate_image,
+    :subscription_transferred,
     :flagged_registered_underage,
     :flagged_honeypot,
     :flagged_age_range,
@@ -83,6 +84,7 @@ defmodule Flirtual.ModerationEvent do
     :flagged_duplicate,
     :flagged_image,
     :flagged_duplicate_image,
+    :subscription_transferred,
     :flagged_registered_underage,
     :flagged_honeypot,
     :flagged_age_range,
@@ -554,7 +556,7 @@ defmodule Flirtual.ModerationEvent do
   def review_warned(user_id, reviewer) when is_binary(user_id),
     do: where_user_types(user_id, [:flagged_keyword, :flagged_bio]) |> review_all(reviewer)
 
-  @duplicate_flag_types [:flagged_duplicate, :flagged_duplicate_image]
+  @duplicate_flag_types [:flagged_duplicate, :flagged_duplicate_image, :subscription_transferred]
 
   # A ban settles all the user's flags except domain ones. Duplicate flags on
   # either account are settled by a duplicate ban, or by any other ban if all
