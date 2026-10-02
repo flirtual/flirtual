@@ -265,8 +265,21 @@ const InlineMarkdown: FC<{ children: string }> = ({ children }) => (
 	</>
 );
 
-function DetailValue({ value }: { value: unknown }): ReactNode {
+const enumDetails = new Set(["source", "declaration", "method", "platform", "store"]);
+
+const enumLabels: Record<string, string> = {
+	self_declared: "Self-declared",
+	guardian_declared: "Guardian-declared"
+};
+
+function enumLabel(value: string): string {
+	const key = value.toLowerCase();
+	return enumLabels[key] ?? capitalize(key.replaceAll("_", " "));
+}
+
+function DetailValue({ name, value }: { name: string; value: unknown }): ReactNode {
 	if (Array.isArray(value)) return value.length === 0 ? "None" : value.map((item) => text(item) ?? JSON.stringify(item)).join(", ");
+	if (typeof value === "string" && enumDetails.has(name) && /^\w+$/.test(value)) return enumLabel(value);
 	if (isUrl(value)) {
 		return (
 			<InlineLink className="underline" highlight={false} href={value}>
@@ -277,7 +290,16 @@ function DetailValue({ value }: { value: unknown }): ReactNode {
 
 	if (value === null || value === undefined) return "None";
 	if (typeof value === "boolean") return value ? "Yes" : "No";
-	if (typeof value === "object") return JSON.stringify(value);
+	if (typeof value === "object") {
+		return Object.entries(value).map(([key, item], index) => (
+			<span key={key}>
+				{index > 0 && ", "}
+				{`${humanize(key)}: `}
+				<DetailValue name={key} value={item} />
+			</span>
+		));
+	}
+
 	return <InlineMarkdown>{String(value)}</InlineMarkdown>;
 }
 
@@ -878,7 +900,7 @@ function useEntryBody(entry: ModerationEntry, compact: boolean): { content: Arra
 			continue;
 		}
 
-		fields.push(<Field key={name} label={humanize(name)}><DetailValue value={value} /></Field>);
+		fields.push(<Field key={name} label={humanize(name)}><DetailValue name={name} value={value} /></Field>);
 	}
 
 	return { content, fields };
