@@ -6,6 +6,7 @@ dist
 build
 .sonda
 .react-router
+.cloudflare
 # Sentry Auth Token
 .sentryclirc
 
