@@ -146,7 +146,8 @@ const hiddenDetails = new Set([
 	"previousBornAt",
 	"bornAt",
 	"fromRevenuecatId",
-	"toRevenuecatId"
+	"toRevenuecatId",
+	"unknownBanCount"
 ]);
 
 export type ModerationEntry = { id: string; createdAt: string } & (
@@ -699,6 +700,7 @@ function useEntryBody(entry: ModerationEntry, compact: boolean): { content: Arra
 	const domain = text(details.domain);
 	const duplicateUserIds = [details.duplicateUserIds].flat().map(text).filter(Boolean) as Array<string>;
 	const banUrls = [details.duplicateBanUrls].flat().filter(isUrl);
+	const unknownBanCount = typeof details.unknownBanCount === "number" ? details.unknownBanCount : 0;
 	const moderatorUsername = text(details.moderatorUsername);
 
 	for (const [index, line] of context.entries()) {
@@ -748,7 +750,7 @@ function useEntryBody(entry: ModerationEntry, compact: boolean): { content: Arra
 		fields.push(<Field key="moderator" label="Moderator">Automatic</Field>);
 	}
 
-	if (duplicateUserIds.length > 0 || banUrls.length > 0) {
+	if (duplicateUserIds.length > 0 || banUrls.length > 0 || unknownBanCount > 0) {
 		fields.push(
 			<Field
 				key="duplicates"
@@ -789,6 +791,13 @@ function useEntryBody(entry: ModerationEntry, compact: boolean): { content: Arra
 							<BanSummary url={url} />
 						</span>
 					))}
+					{unknownBanCount > 0 && (
+						<span className="flex items-center gap-1 italic">
+							<Gavel className="size-3.5 shrink-0" />
+							{unknownBanCount > 1 && `${unknownBanCount}x `}
+							Banned user (not found)
+						</span>
+					)}
 				</span>
 			</Field>
 		);
