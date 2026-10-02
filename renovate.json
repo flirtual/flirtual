@@ -226,26 +226,6 @@
 		},
 		{
 			"matchPackageNames": [
-				"/capacitor/",
-				"@capgo/**"
-			],
-			"groupName": "capacitor",
-			"postUpgradeTasks": {
-				"commands": [
-					"pnpm install --frozen-lockfile --ignore-scripts --filter frontend",
-					"pnpm --config.verify-deps-before-run=false --dir apps/frontend exec cap update"
-				],
-				"fileFilters": [
-					"apps/frontend/android/capacitor.settings.gradle",
-					"apps/frontend/android/app/capacitor.build.gradle",
-					"apps/frontend/ios/App/Podfile",
-					"apps/frontend/ios/App/Podfile.lock"
-				],
-				"executionMode": "branch"
-			}
-		},
-		{
-			"matchPackageNames": [
 				"eslint",
 				"@eslint/**",
 				"eslint-**",
@@ -325,6 +305,27 @@
 			"groupName": "cf",
 			"minimumReleaseAge": null,
 			"automerge": false
+		},
+		{
+			"matchPackageNames": [
+				"/capacitor/",
+				"@capgo/**"
+			],
+			"groupName": "capacitor",
+			"automerge": false,
+			"postUpgradeTasks": {
+				"commands": [
+					"pnpm install --frozen-lockfile --ignore-scripts --filter frontend",
+					"pnpm --config.verify-deps-before-run=false --dir apps/frontend exec cap update"
+				],
+				"fileFilters": [
+					"apps/frontend/android/capacitor.settings.gradle",
+					"apps/frontend/android/app/capacitor.build.gradle",
+					"apps/frontend/ios/App/Podfile",
+					"apps/frontend/ios/App/Podfile.lock"
+				],
+				"executionMode": "branch"
+			}
 		},
 		{
 			"description": "A spec change regenerates the package's types, which no CI check builds",
