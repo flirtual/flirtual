@@ -185,12 +185,13 @@ function humanize(key: string): string {
 		.replaceAll(/\b(id|url)(s?)\b/gi, (_, word: string, plural: string) => word.toUpperCase() + plural);
 }
 
-const UserName: FC<{ userId: string; fallback?: string; className?: string }> = withSuspense(({ userId, fallback, className }) => {
+const UserName: FC<{ userId: string; fallback?: string; className?: string; markBanned?: boolean }> = withSuspense(({ userId, fallback, className, markBanned }) => {
 	const user = useUser(userId);
 	const name = user ? user.profile.displayName || user.slug : fallback ?? "Deleted user";
 
 	return (
 		<span className={className}>
+			{markBanned && user?.bannedAt && <Gavel className="mr-1 inline size-4 shrink-0 align-[-0.125em]" />}
 			{user
 				? (
 						<InlineLink
@@ -234,7 +235,7 @@ const Subject: FC<{ userId?: string; fallback?: string }> = ({ userId, fallback 
 			? (
 					<>
 						<SubjectAvatar userId={userId} />
-						<UserName className="text-lg" fallback={fallback} userId={userId} />
+						<UserName markBanned className="text-lg" fallback={fallback} userId={userId} />
 					</>
 				)
 			: <span className="text-lg italic">{fallback ?? "Deleted user"}</span>}
