@@ -330,6 +330,13 @@ const BanSummary: FC<{ ban?: ModerationEvent; url?: string }> = ({ ban, url }) =
 	);
 };
 
+const DateOfBirthSource: FC<{ userId?: string }> = withSuspense(({ userId }) => {
+	const user = useUser(userId);
+	return user?.bornAt ? `Date of birth (${user.bornAt})` : "Date of birth";
+}, {
+	fallback: () => <span className="animate-pulse">Date of birth</span>
+});
+
 // A { tag: score } map (tags camel-cased by the API client), or the Discord
 // embed's text for backfilled events.
 function classificationsText(value: unknown): string | undefined {
@@ -858,6 +865,11 @@ function useEntryBody(entry: ModerationEntry, compact: boolean): { content: Arra
 
 	for (const [name, value] of Object.entries(details)) {
 		if (hiddenDetails.has(name) || (country && (name === "country" || name === "source"))) continue;
+
+		if (event.type === "banned" && name === "source" && (value === "date_of_birth" || value === "Date of birth")) {
+			fields.push(<Field key={name} label="Source"><DateOfBirthSource userId={event.userId} /></Field>);
+			continue;
+		}
 
 		const attributeLabel = attributeDetails[name];
 		if (attributeLabel) {
