@@ -12,6 +12,7 @@ defmodule Flirtual.User do
   alias Ecto.Changeset
 
   alias Flirtual.{
+    AgeVerification,
     Attribute,
     Connection,
     Discord,
@@ -458,6 +459,9 @@ defmodule Flirtual.User do
           %{born_at: "invalid_age"}
 
         underage?(born_at) === :maybe ->
+          %{born_at: "ambiguous_age"}
+
+        underage?(born_at) === true and AgeVerification.passed?(user.id) ->
           %{born_at: "ambiguous_age"}
 
         true ->
