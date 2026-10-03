@@ -1,8 +1,6 @@
 {
 	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
-	"extends": [
-		"config:best-practices"
-	],
+	"extends": ["config:best-practices"],
 	"timezone": "America/New_York",
 	"rebaseWhen": "conflicted",
 	"cloneSubmodules": true,
@@ -20,34 +18,26 @@
 	"lockFileMaintenance": {
 		"enabled": true,
 		"automerge": true,
-		"schedule": [
-			"before 6am on monday"
-		]
+		"schedule": ["before 6am on monday"]
 	},
 	"customManagers": [
 		{
 			"customType": "regex",
-			"managerFilePatterns": [
-				"/(^|/)renovate-entrypoint\\.sh$/"
-			],
+			"managerFilePatterns": ["/(^|/)renovate-entrypoint\\.sh$/"],
 			"matchStrings": [
 				"# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)(?: extractVersion=(?<extractVersion>\\S+))?(?: versioning=(?<versioning>\\S+))?\\s+install-tool \\w+ (?<currentValue>\\S+)"
 			]
 		},
 		{
 			"customType": "regex",
-			"managerFilePatterns": [
-				"/(^|/)dev\\.sh$/"
-			],
+			"managerFilePatterns": ["/(^|/)dev\\.sh$/"],
 			"matchStrings": [
 				"# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\s+\\w+=(?:\\S+:)?(?<currentValue>[^\\s:]+)"
 			]
 		},
 		{
 			"customType": "regex",
-			"managerFilePatterns": [
-				"/(^|/)(docker-)?compose\\.ya?ml$/"
-			],
+			"managerFilePatterns": ["/(^|/)(docker-)?compose\\.ya?ml$/"],
 			"matchStrings": [
 				"# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\s+image: \\S+?:(?<currentValue>[\\d.]+)"
 			]
@@ -55,9 +45,7 @@
 		{
 			"customType": "regex",
 			"description": "Chargebee's OpenAPI spec, which is untagged, so pinned to a commit on main",
-			"managerFilePatterns": [
-				"/^packages/pulumi-dynamic-chargebee/package\\.json$/"
-			],
+			"managerFilePatterns": ["/^packages/pulumi-dynamic-chargebee/package\\.json$/"],
 			"matchStrings": [
 				"https://raw\\.githubusercontent\\.com/(?<depName>chargebee/openapi)/(?<currentDigest>[0-9a-f]{40})/"
 			],
@@ -68,9 +56,7 @@
 		{
 			"customType": "regex",
 			"description": "Listmonk's OpenAPI spec, at a release tag",
-			"managerFilePatterns": [
-				"/^packages/pulumi-dynamic-listmonk/package\\.json$/"
-			],
+			"managerFilePatterns": ["/^packages/pulumi-dynamic-listmonk/package\\.json$/"],
 			"matchStrings": [
 				"https://raw\\.githubusercontent\\.com/(?<depName>knadh/listmonk)/(?<currentValue>v[^/]+)/"
 			],
@@ -78,12 +64,8 @@
 		},
 		{
 			"customType": "regex",
-			"managerFilePatterns": [
-				"/(^|/)fly\\.toml$/"
-			],
-			"matchStrings": [
-				"image ?= ?\"(?<depName>[^:\"]+):(?<currentValue>[^\"]+)\""
-			],
+			"managerFilePatterns": ["/(^|/)fly\\.toml$/"],
+			"matchStrings": ["image ?= ?\"(?<depName>[^:\"]+):(?<currentValue>[^\"]+)\""],
 			"datasourceTemplate": "docker"
 		}
 	],
@@ -217,52 +199,32 @@
 			"semanticCommitScope": "actions"
 		},
 		{
-			"matchPackageNames": [
-				"wrangler",
-				"miniflare",
-				"@cloudflare/**"
-			],
+			"matchPackageNames": ["wrangler", "miniflare", "@cloudflare/**"],
 			"groupName": "cloudflare"
 		},
 		{
-			"matchPackageNames": [
-				"eslint",
-				"@eslint/**",
-				"eslint-**",
-				"@ariesclark/eslint-config"
-			],
+			"matchPackageNames": ["eslint", "@eslint/**", "eslint-**", "@ariesclark/eslint-config"],
 			"groupName": "eslint"
 		},
 		{
-			"matchPackageNames": [
-				"manticoresearch/manticore"
-			],
+			"matchPackageNames": ["manticoresearch/manticore"],
 			"groupName": "manticore"
 		},
 		{
 			"description": "The spec types the image's API, so both move together",
-			"matchPackageNames": [
-				"listmonk/listmonk",
-				"knadh/listmonk"
-			],
+			"matchPackageNames": ["listmonk/listmonk", "knadh/listmonk"],
 			"groupName": "listmonk"
 		},
 		{
-			"matchPackageNames": [
-				"pnpm"
-			],
+			"matchPackageNames": ["pnpm"],
 			"groupName": "pnpm"
 		},
 		{
-			"matchPackageNames": [
-				"postgres"
-			],
+			"matchPackageNames": ["postgres"],
 			"enabled": false
 		},
 		{
-			"matchPackageNames": [
-				"flyio/postgres-flex"
-			],
+			"matchPackageNames": ["flyio/postgres-flex"],
 			"groupName": "postgres"
 		},
 		{
@@ -297,20 +259,13 @@
 		},
 		{
 			"description": "cf pins @cloudflare/config and @cloudflare/build-output-utils exactly, ships betas daily, and no CI check deploys through it",
-			"matchPackageNames": [
-				"cf",
-				"@cloudflare/config",
-				"@cloudflare/build-output-utils"
-			],
+			"matchPackageNames": ["cf", "@cloudflare/config", "@cloudflare/build-output-utils"],
 			"groupName": "cf",
 			"minimumReleaseAge": null,
 			"automerge": false
 		},
 		{
-			"matchPackageNames": [
-				"/capacitor/",
-				"@capgo/**"
-			],
+			"matchPackageNames": ["/capacitor/", "@capgo/**"],
 			"groupName": "capacitor",
 			"automerge": false,
 			"postUpgradeTasks": {
