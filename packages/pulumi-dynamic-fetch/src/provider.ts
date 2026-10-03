@@ -8,35 +8,35 @@ import type { Connection, Encoding } from "./api.ts";
 export const configKey = (name: keyof Connection) => `fetch:${name}`;
 
 export interface ProviderArgs {
-  baseUrl: pulumi.Input<string>;
-  // Credentials belong here rather than on each resource, so they stay out of resource state.
-  headers?: pulumi.Input<Record<string, pulumi.Input<string>>>;
-  encoding?: pulumi.Input<Encoding>;
+	baseUrl: pulumi.Input<string>;
+	// Credentials belong here rather than on each resource, so they stay out of resource state.
+	headers?: pulumi.Input<Record<string, pulumi.Input<string>>>;
+	encoding?: pulumi.Input<Encoding>;
 }
 
 export class Provider extends pulumi.ProviderResource {
-  constructor(name: string, args: ProviderArgs, options?: pulumi.ResourceOptions) {
-    super(
-      "pulumi-nodejs",
-      name,
-      {
-        [configKey("baseUrl")]: args.baseUrl,
-        [configKey("headers")]: pulumi.secret(pulumi.jsonStringify(args.headers ?? {})),
-        [configKey("encoding")]: args.encoding ?? "json",
-      },
-      options,
-    );
-  }
+	constructor(name: string, args: ProviderArgs, options?: pulumi.ResourceOptions) {
+		super(
+			"pulumi-nodejs",
+			name,
+			{
+				[configKey("baseUrl")]: args.baseUrl,
+				[configKey("headers")]: pulumi.secret(pulumi.jsonStringify(args.headers ?? {})),
+				[configKey("encoding")]: args.encoding ?? "json",
+			},
+			options,
+		);
+	}
 }
 
 export function connectionFrom(config: pulumi.dynamic.ConfigureRequest["config"]): Connection {
-  const encoding = config.require(configKey("encoding"));
-  if (encoding !== "json" && encoding !== "form")
-    throw new Error(`Unknown encoding "${encoding}"; expected "json" or "form".`);
+	const encoding = config.require(configKey("encoding"));
+	if (encoding !== "json" && encoding !== "form")
+		throw new Error(`Unknown encoding "${encoding}"; expected "json" or "form".`);
 
-  return {
-    baseUrl: config.require(configKey("baseUrl")),
-    headers: JSON.parse(config.require(configKey("headers"))) as Record<string, string>,
-    encoding,
-  };
+	return {
+		baseUrl: config.require(configKey("baseUrl")),
+		headers: JSON.parse(config.require(configKey("headers"))) as Record<string, string>,
+		encoding,
+	};
 }

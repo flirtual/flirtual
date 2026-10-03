@@ -12,16 +12,16 @@ type Provider<Inputs, Outputs> = pulumi.dynamic.ResourceProvider<Inputs, Outputs
  * A method the module's provider leaves out behaves as Pulumi's host treats a missing one.
  */
 export function moduleProvider<Inputs, Outputs>(
-  load: () => Promise<{ default: Provider<Inputs, Outputs> }>,
+	load: () => Promise<{ default: Provider<Inputs, Outputs> }>,
 ): Provider<Inputs, Outputs> {
-  const provider = async () => (await load()).default;
+	const provider = async () => (await load()).default;
 
-  return {
-    check: async (olds, news) => (await provider()).check?.(olds, news) ?? { inputs: news },
-    diff: async (id, olds, news) => (await provider()).diff?.(id, olds, news) ?? {},
-    create: async (inputs) => (await provider()).create(inputs),
-    read: async (id, props) => (await provider()).read?.(id, props) ?? { id, props },
-    update: async (id, olds, news) => (await provider()).update?.(id, olds, news) ?? {},
-    delete: async (id, props) => (await provider()).delete?.(id, props),
-  };
+	return {
+		check: async (olds, news) => (await provider()).check?.(olds, news) ?? { inputs: news },
+		diff: async (id, olds, news) => (await provider()).diff?.(id, olds, news) ?? {},
+		create: async (inputs) => (await provider()).create(inputs),
+		read: async (id, props) => (await provider()).read?.(id, props) ?? { id, props },
+		update: async (id, olds, news) => (await provider()).update?.(id, olds, news) ?? {},
+		delete: async (id, props) => (await provider()).delete?.(id, props),
+	};
 }

@@ -10,32 +10,32 @@ const subscribers = ["john@example.com", "anon@example.com"];
 type Nothing = Record<string, never>;
 
 export class SampleCleanupResource extends FetchResource<Nothing, Nothing> {
-  async create(api: Api) {
-    const list = await request<Schemas.List>(api, "GET", `/lists/${optinList.id}`);
-    if (list?.name === optinList.name) await request(api, "DELETE", `/lists/${optinList.id}`);
+	async create(api: Api) {
+		const list = await request<Schemas.List>(api, "GET", `/lists/${optinList.id}`);
+		if (list?.name === optinList.name) await request(api, "DELETE", `/lists/${optinList.id}`);
 
-    const query = `subscribers.email in (${subscribers.map((email) => `'${email}'`).join(", ")})`;
-    const found = await request<{ results?: Array<Schemas.Subscriber> }>(
-      api,
-      "GET",
-      `/subscribers?${new URLSearchParams({ per_page: "all", query })}`,
-    );
+		const query = `subscribers.email in (${subscribers.map((email) => `'${email}'`).join(", ")})`;
+		const found = await request<{ results?: Array<Schemas.Subscriber> }>(
+			api,
+			"GET",
+			`/subscribers?${new URLSearchParams({ per_page: "all", query })}`,
+		);
 
-    for (const { id } of found?.results ?? [])
-      if (id !== undefined) await request(api, "DELETE", `/subscribers/${id}`);
+		for (const { id } of found?.results ?? [])
+			if (id !== undefined) await request(api, "DELETE", `/subscribers/${id}`);
 
-    return {};
-  }
+		return {};
+	}
 
-  // Nothing remains to read, and it must not read as gone.
-  async read() {
-    return {};
-  }
+	// Nothing remains to read, and it must not read as gone.
+	async read() {
+		return {};
+	}
 
-  // Nothing to put back.
-  async delete() {}
+	// Nothing to put back.
+	async delete() {}
 
-  id() {
-    return "sample-cleanup";
-  }
+	id() {
+		return "sample-cleanup";
+	}
 }

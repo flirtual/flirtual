@@ -13,11 +13,19 @@ import { cf } from "./client.ts";
 import { create, diff, update } from "./deployment.ts";
 import type { DeploymentInputs } from "./deployment.ts";
 
-vi.mock("./client.ts", async (original) => ({ ...(await original<typeof import("./client.ts")>()), cf: vi.fn() }));
+vi.mock("./client.ts", async (original) => ({
+	...(await original<typeof import("./client.ts")>()),
+	cf: vi.fn(),
+}));
 
 const project = join(dirname(fileURLToPath(import.meta.url)), "..", "fixtures", "project");
 const workerConfig = (root: string, directory = "default"): ParsedOutputWorkerConfig =>
-	JSON.parse(readFileSync(join(root, `.cloudflare/output/v0/workers/${directory}/worker.config.json`), "utf8"));
+	JSON.parse(
+		readFileSync(
+			join(root, `.cloudflare/output/v0/workers/${directory}/worker.config.json`),
+			"utf8",
+		),
+	);
 const built = workerConfig(project);
 
 const record = await recordBuild(project);
@@ -73,7 +81,10 @@ beforeEach(() => {
 			config: workerConfig(cwd!),
 			otherConfig: workerConfig(cwd!, "other"),
 			rootConfig: JSON.parse(readFileSync(join(cwd!, ".cloudflare/output/v0/config.json"), "utf8")),
-			index: readFileSync(join(cwd!, ".cloudflare/output/v0/workers/default/assets/index.html"), "utf8"),
+			index: readFileSync(
+				join(cwd!, ".cloudflare/output/v0/workers/default/assets/index.html"),
+				"utf8",
+			),
 			secrets: JSON.parse(readFileSync(secretsFile, "utf8")),
 		});
 		return "";
@@ -86,9 +97,14 @@ it("deploys a copy of the project's build carrying the given config, leaving the
 	expect(result.id).toBe("example-production");
 	expect(deploys).toHaveLength(1);
 	expect(deploys[0]!.args).toStrictEqual([
-		"deploy", "--prebuilt", "--mode", "development",
-		"--secrets-file", expect.any(String),
-		"--tag", "1.2.3",
+		"deploy",
+		"--prebuilt",
+		"--mode",
+		"development",
+		"--secrets-file",
+		expect.any(String),
+		"--tag",
+		"1.2.3",
 	]);
 	expect(deploys[0]!.accountId).toBe("account");
 	expect(deploys[0]!.config).toStrictEqual(deployed);
@@ -104,8 +120,12 @@ const rebuildFrom = (fixture: string, extra = "") =>
 		fs.writeFileSync("rebuilt-with", process.env.MARKER);
 		${extra}`,
 	);
-const rebuildInputs = (root: string, extra?: string): DeploymentInputs =>
-	({ ...inputs, project: root, command: rebuildFrom(project, extra), environment: { MARKER: "from-pulumi" } });
+const rebuildInputs = (root: string, extra?: string): DeploymentInputs => ({
+	...inputs,
+	project: root,
+	command: rebuildFrom(project, extra),
+	environment: { MARKER: "from-pulumi" },
+});
 
 it("rebuilds a checkout that has no Build Output, then deploys it", async () => {
 	const root = mkdtempSync(join(tmpdir(), "checkout-"));
@@ -122,7 +142,12 @@ it("rebuilds a Build Output that differs from the recorded one, deploying the ne
 	cpSync(project, root, { recursive: true });
 	writeFileSync(join(root, ".cloudflare/output/v0/workers/default/assets/index.html"), "stale\n");
 
-	await create(rebuildInputs(root, `fs.writeFileSync(".cloudflare/output/v0/workers/default/assets/index.html", "rebuilt\\n");`));
+	await create(
+		rebuildInputs(
+			root,
+			`fs.writeFileSync(".cloudflare/output/v0/workers/default/assets/index.html", "rebuilt\\n");`,
+		),
+	);
 
 	expect(readFileSync(join(root, "rebuilt-with"), "utf8")).toBe("from-pulumi");
 	expect(deploys).toHaveLength(1);
@@ -155,7 +180,11 @@ it("deploys to its own account, overriding one the project's settings name", asy
 	cpSync(project, root, { recursive: true });
 	writeFileSync(
 		join(root, ".cloudflare/output/v0/config.json"),
-		JSON.stringify({ accountId: "development-account", complianceRegion: "public", buildContext: { isPreview: false, mode: "development" } }),
+		JSON.stringify({
+			accountId: "development-account",
+			complianceRegion: "public",
+			buildContext: { isPreview: false, mode: "development" },
+		}),
 	);
 
 	await create({ ...inputs, project: root, record: JSON.stringify(await recordBuild(root)) });
@@ -174,25 +203,40 @@ it("deploys another Worker in the Build Output by the name it's deployed under",
 	await create({ ...inputs, record: JSON.stringify(other), config: JSON.stringify(config) });
 
 	expect(deploys[0]!.args).toStrictEqual([
-		"deploy", "--prebuilt", "--mode", "development",
-		"--worker", "other-production",
-		"--secrets-file", expect.any(String),
-		"--tag", "1.2.3",
+		"deploy",
+		"--prebuilt",
+		"--mode",
+		"development",
+		"--worker",
+		"other-production",
+		"--secrets-file",
+		expect.any(String),
+		"--tag",
+		"1.2.3",
 	]);
 	expect(deploys[0]!.otherConfig).toStrictEqual(config);
 	expect(deploys[0]!.config).toStrictEqual(built);
 });
 
 it("refuses a malformed config before deploying, as cf deploy reads it", async () => {
-	const deployment = create({ ...inputs, config: JSON.stringify({ ...deployed, domains: "example.com" }) });
+	const deployment = create({
+		...inputs,
+		config: JSON.stringify({ ...deployed, domains: "example.com" }),
+	});
 
 	await expect(deployment).rejects.toThrow(BuildOutputError);
-	await expect(deployment).rejects.toThrow(/invalid Worker config at .*workers\/default\/worker\.config\.json\.\n.*domains/s);
+	await expect(deployment).rejects.toThrow(
+		/invalid Worker config at .*workers\/default\/worker\.config\.json\.\n.*domains/s,
+	);
 	expect(calls).not.toHaveBeenCalled();
 });
 
 it("deletes secrets a new deploy no longer carries", async () => {
-	await update("example-production", { ...inputs, secrets: { TOKEN: "token", OLD: "old" } }, inputs);
+	await update(
+		"example-production",
+		{ ...inputs, secrets: { TOKEN: "token", OLD: "old" } },
+		inputs,
+	);
 
 	expect(deploys).toHaveLength(1);
 	expect(calls).toHaveBeenLastCalledWith(
@@ -204,15 +248,23 @@ it("deletes secrets a new deploy no longer carries", async () => {
 it("redeploys when the build, config or secrets change, and only then", async () => {
 	const renamed = JSON.stringify({ ...deployed, name: "renamed" });
 
-	expect(await diff("example-production", inputs, { ...inputs, config: renamed })).toStrictEqual({ changes: true });
+	expect(await diff("example-production", inputs, { ...inputs, config: renamed })).toStrictEqual({
+		changes: true,
+	});
 	const rebuilt = JSON.stringify({ ...record, digest: "1".repeat(64) });
-	expect(await diff("example-production", inputs, { ...inputs, record: rebuilt })).toStrictEqual({ changes: true });
-	expect(await diff("example-production", inputs, { ...inputs, secrets: { TOKEN: "rotated" } })).toStrictEqual({ changes: true });
+	expect(await diff("example-production", inputs, { ...inputs, record: rebuilt })).toStrictEqual({
+		changes: true,
+	});
+	expect(
+		await diff("example-production", inputs, { ...inputs, secrets: { TOKEN: "rotated" } }),
+	).toStrictEqual({ changes: true });
 	expect(await diff("example-production", inputs, { ...inputs })).toStrictEqual({ changes: false });
 });
 
 it("redeploys when the config isn't known yet, as in a preview where a resource it names changes", async () => {
-	expect(await diff("example-production", inputs, { ...inputs, config: pulumi.runtime.unknownValue })).toStrictEqual({ changes: true });
+	expect(
+		await diff("example-production", inputs, { ...inputs, config: pulumi.runtime.unknownValue }),
+	).toStrictEqual({ changes: true });
 });
 
 it("leaves an equal config alone, whatever order its keys come in", async () => {
@@ -220,6 +272,7 @@ it("leaves an equal config alone, whatever order its keys come in", async () => 
 	const reordered = JSON.stringify({ ...rest, env });
 
 	expect(reordered).not.toBe(inputs.config);
-	expect(await diff("example-production", inputs, { ...inputs, config: reordered })).toStrictEqual({ changes: false });
+	expect(await diff("example-production", inputs, { ...inputs, config: reordered })).toStrictEqual({
+		changes: false,
+	});
 });
-

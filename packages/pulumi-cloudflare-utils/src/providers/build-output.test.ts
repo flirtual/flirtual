@@ -17,7 +17,10 @@ const output = join(project, ".cloudflare/output/v0");
 const config = (directory: string) =>
 	JSON.parse(readFileSync(join(output, "workers", directory, "worker.config.json"), "utf8"));
 const digest = (directory: string) =>
-	hashFiles([".cloudflare/output/v0/config.json", `.cloudflare/output/v0/workers/${directory}/**`], { cwd: project, dot: true, gitignore: false });
+	hashFiles(
+		[".cloudflare/output/v0/config.json", `.cloudflare/output/v0/workers/${directory}/**`],
+		{ cwd: project, dot: true, gitignore: false },
+	);
 
 const copy = () => {
 	const root = mkdtempSync(join(tmpdir(), "record-"));
@@ -26,15 +29,25 @@ const copy = () => {
 };
 
 it("records the default Worker's config and a digest of its files", async () => {
-	expect(await recordBuild(project)).toStrictEqual({ directory: "default", config: config("default"), digest: digest("default") });
+	expect(await recordBuild(project)).toStrictEqual({
+		directory: "default",
+		config: config("default"),
+		digest: digest("default"),
+	});
 });
 
 it("records another Worker by its name, as cf deploy --worker selects it", async () => {
-	expect(await recordBuild(project, { worker: "other" })).toStrictEqual({ directory: "other", config: config("other"), digest: digest("other") });
+	expect(await recordBuild(project, { worker: "other" })).toStrictEqual({
+		directory: "other",
+		config: config("other"),
+		digest: digest("other"),
+	});
 });
 
 it("types the config as readBuildOutput resolves it, manifest complete", () => {
-	expectTypeOf<Awaited<ReturnType<typeof recordBuild>>["config"]>().toEqualTypeOf<ResolvedOutputWorkerConfig>();
+	expectTypeOf<
+		Awaited<ReturnType<typeof recordBuild>>["config"]
+	>().toEqualTypeOf<ResolvedOutputWorkerConfig>();
 });
 
 it("refuses a Worker name the Build Output doesn't contain", async () => {
@@ -46,7 +59,10 @@ it("refuses a Worker name the Build Output doesn't contain", async () => {
 it("refuses a Worker name the Build Output contains more than once, as cf deploy does", async () => {
 	const root = copy();
 	const configFile = join(root, ".cloudflare/output/v0/workers/other/worker.config.json");
-	writeFileSync(configFile, JSON.stringify({ ...JSON.parse(readFileSync(configFile, "utf8")), name: "example" }));
+	writeFileSync(
+		configFile,
+		JSON.stringify({ ...JSON.parse(readFileSync(configFile, "utf8")), name: "example" }),
+	);
 
 	await expect(recordBuild(root, { worker: "example" })).rejects.toThrow(
 		`The Build Output in ${root} contains more than one Worker named "example".`,
@@ -55,7 +71,10 @@ it("refuses a Worker name the Build Output contains more than once, as cf deploy
 
 it("refuses a Build Output whose Worker config doesn't match the schema", async () => {
 	const root = copy();
-	writeFileSync(join(root, ".cloudflare/output/v0/workers/default/worker.config.json"), JSON.stringify({ name: 1 }));
+	writeFileSync(
+		join(root, ".cloudflare/output/v0/workers/default/worker.config.json"),
+		JSON.stringify({ name: 1 }),
+	);
 
 	await expect(recordBuild(root)).rejects.toThrow(BuildOutputError);
 });
@@ -65,12 +84,17 @@ it("leaves a Worker's digest alone when only another Worker changes", async () =
 	writeFileSync(join(root, ".cloudflare/output/v0/workers/other/bundle/index.js"), "changed\n");
 
 	expect((await recordBuild(root)).digest).toBe((await recordBuild(project)).digest);
-	expect((await recordBuild(root, { worker: "other" })).digest).not.toBe((await recordBuild(project, { worker: "other" })).digest);
+	expect((await recordBuild(root, { worker: "other" })).digest).not.toBe(
+		(await recordBuild(project, { worker: "other" })).digest,
+	);
 });
 
 it("digests dotfiles too, since assets such as .well-known/ ship with the Worker", async () => {
 	const root = copy();
-	writeFileSync(join(root, ".cloudflare/output/v0/workers/default/assets/.well-known/security.txt"), "changed\n");
+	writeFileSync(
+		join(root, ".cloudflare/output/v0/workers/default/assets/.well-known/security.txt"),
+		"changed\n",
+	);
 
 	expect((await recordBuild(root)).digest).not.toBe((await recordBuild(project)).digest);
 });
@@ -95,9 +119,14 @@ it("builds the project with its environment, then records what the build produce
 	const root = empty();
 	const { id, outs } = await create(buildInputs(root));
 
-	expect(readFileSync(join(root, ".cloudflare/output/v0/workers/default/assets/marker.txt"), "utf8")).toBe("from-pulumi");
+	expect(
+		readFileSync(join(root, ".cloudflare/output/v0/workers/default/assets/marker.txt"), "utf8"),
+	).toBe("from-pulumi");
 	expect(id).toBe(root);
-	expect(outs).toStrictEqual({ ...buildInputs(root), record: JSON.stringify(await recordBuild(root)) });
+	expect(outs).toStrictEqual({
+		...buildInputs(root),
+		record: JSON.stringify(await recordBuild(root)),
+	});
 });
 
 it("records the named Worker when one is given", async () => {
@@ -119,9 +148,17 @@ it("rebuilds when the command, environment, Worker or triggers change, and only 
 	const olds = { ...buildInputs(project), record: "{}" };
 	const diffFrom = (news: BuildInputs) => diff(project, olds, news);
 
-	expect(await diffFrom({ ...buildInputs(project), command: "true" })).toStrictEqual({ changes: true });
-	expect(await diffFrom({ ...buildInputs(project), environment: { MARKER: "changed" } })).toStrictEqual({ changes: true });
-	expect(await diffFrom({ ...buildInputs(project), worker: "other" })).toStrictEqual({ changes: true });
-	expect(await diffFrom({ ...buildInputs(project), triggers: ["source-2"] })).toStrictEqual({ changes: true });
+	expect(await diffFrom({ ...buildInputs(project), command: "true" })).toStrictEqual({
+		changes: true,
+	});
+	expect(
+		await diffFrom({ ...buildInputs(project), environment: { MARKER: "changed" } }),
+	).toStrictEqual({ changes: true });
+	expect(await diffFrom({ ...buildInputs(project), worker: "other" })).toStrictEqual({
+		changes: true,
+	});
+	expect(await diffFrom({ ...buildInputs(project), triggers: ["source-2"] })).toStrictEqual({
+		changes: true,
+	});
 	expect(await diffFrom(buildInputs(project))).toStrictEqual({ changes: false });
 });

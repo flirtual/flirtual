@@ -14,10 +14,15 @@ const describeFailure = (command: string, error: unknown, output: string | undef
 	const { exitCode, message } = error as { exitCode?: number; message: string };
 	const reason = exitCode === undefined ? message.split("\n")[0] : `exit code ${exitCode}`;
 
-	return output?.trim() ? `\`${command}\` failed with ${reason}.\n${output.trim()}` : `\`${command}\` failed with ${reason}.`;
+	return output?.trim()
+		? `\`${command}\` failed with ${reason}.\n${output.trim()}`
+		: `\`${command}\` failed with ${reason}.`;
 };
 
-export async function cf(argumentList: Array<string>, { cwd, accountId }: Options): Promise<string> {
+export async function cf(
+	argumentList: Array<string>,
+	{ cwd, accountId }: Options,
+): Promise<string> {
 	try {
 		const { stdout } = await execa("cf", argumentList, {
 			cwd,
@@ -28,19 +33,26 @@ export async function cf(argumentList: Array<string>, { cwd, accountId }: Option
 
 		return stdout;
 	} catch (error) {
-		throw new Error(describeFailure(`cf ${argumentList.join(" ")}`, error, (error as { stderr?: string }).stderr));
+		throw new Error(
+			describeFailure(`cf ${argumentList.join(" ")}`, error, (error as { stderr?: string }).stderr),
+		);
 	}
 }
 
 const reportedLines = 50;
 
 /** Runs a shell command, failing with the end of its combined output. */
-export async function run(command: string, { cwd, environment }: { cwd: string; environment: Record<string, string> }) {
+export async function run(
+	command: string,
+	{ cwd, environment }: { cwd: string; environment: Record<string, string> },
+) {
 	try {
 		await execa(command, { shell: true, cwd, env: environment, all: true });
 	} catch (error) {
 		const output = (error as { all?: string }).all;
 
-		throw new Error(describeFailure(command, error, output?.split("\n").slice(-reportedLines).join("\n")));
+		throw new Error(
+			describeFailure(command, error, output?.split("\n").slice(-reportedLines).join("\n")),
+		);
 	}
 }

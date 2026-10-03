@@ -22,9 +22,17 @@ it("hands every call to the loaded module's provider", async () => {
 
 	expect(await provider.check!(olds, news)).toStrictEqual({ inputs: { name: "checked" } });
 	expect(await provider.diff!("id", olds, news)).toStrictEqual({ changes: true });
-	expect(await provider.create(news)).toStrictEqual({ id: "created", outs: { name: "created", id: "created" } });
-	expect(await provider.read!("id", olds)).toStrictEqual({ id: "read", props: { name: "read", id: "read" } });
-	expect(await provider.update!("id", olds, news)).toStrictEqual({ outs: { name: "updated", id: "updated" } });
+	expect(await provider.create(news)).toStrictEqual({
+		id: "created",
+		outs: { name: "created", id: "created" },
+	});
+	expect(await provider.read!("id", olds)).toStrictEqual({
+		id: "read",
+		props: { name: "read", id: "read" },
+	});
+	expect(await provider.update!("id", olds, news)).toStrictEqual({
+		outs: { name: "updated", id: "updated" },
+	});
 	await provider.delete!("id", olds);
 
 	expect(complete.check).toHaveBeenCalledWith(olds, news);
