@@ -3,7 +3,7 @@
 services:
   postgres:
     # renovate: datasource=docker depName=flyio/postgres-flex
-    image: postgres:17.7-alpine
+    image: postgres:18.1-alpine
     shm_size: 256m
     command: postgres -N 500
     restart: always
