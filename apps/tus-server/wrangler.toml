@@ -1,7 +1,7 @@
 name = "flirtual-tus"
 main = "src/index.ts"
 compatibility_date = "2025-09-01"
-compatibility_flags = ["nodejs_compat"]
+compatibility_flags = ["nodejs_compat", "unhandled_rejection_after_microtask_checkpoint"]
 workers_dev = false
 
 r2_buckets = [

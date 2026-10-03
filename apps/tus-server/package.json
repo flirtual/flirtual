@@ -15,13 +15,13 @@
 		"deploy:production": "wrangler deploy --env=production"
 	},
 	"dependencies": {
-		"itty-router": "^5.0.23",
-		"jose": "^6.2.2"
+		"signal-tus-server": "github:signalapp/tus-server#5cbbc5c42d1d126bb2c1b4f837b5103d5d8f5407"
 	},
 	"devDependencies": {
 		"@cloudflare/vitest-pool-workers": "catalog:",
 		"@types/node": "25.9.8",
-		"tus-js-client": "4.3.1",
+		"cf": "catalog:",
+		"jose": "^6.2.12",
 		"typescript": "catalog:",
 		"vitest": "catalog:",
 		"wrangler": "catalog:"

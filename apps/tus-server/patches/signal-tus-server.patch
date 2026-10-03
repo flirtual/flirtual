@@ -1,0 +1,149 @@
+diff --git a/src/index.ts b/src/index.ts
+index ae522de92ba3e80f35ae11466b3a24413ba65311..2d82adb0f0d971872e96a37ec0032e450f95eef1 100644
+--- a/src/index.ts
++++ b/src/index.ts
+@@ -480,7 +480,10 @@ function withAuthorizedKeyFromPath(request: IRequest, _env: Env, _ctx: Execution
+ // Set request.key to the name extracted from the uploadMetadata, if the authenticated subject matches the name
+ function withAuthorizedKeyFromMetadata(request: IRequest, _env: Env, _ctx: ExecutionContext): Response | undefined {
+     const claims = authenticatedClaims(request);
+-    const key = parseUploadMetadata(request.headers).filename;
++    // Flirtual: prefer `id` so the user-visible filename is unaffected, but keep
++    // accepting `filename` as upstream does.
++    const metadata = parseUploadMetadata(request.headers);
++    const key = metadata.id ?? metadata.filename;
+     if (claims.subject !== key) {
+         return error(401);
+     }
+diff --git a/src/parse.ts b/src/parse.ts
+index c6507a2899bce39359431f5064d792156fa19ab5..d405bcea64e844e4b5f7a5df6dda05bf3a47c203 100644
+--- a/src/parse.ts
++++ b/src/parse.ts
+@@ -7,6 +7,12 @@ import {X_SIGNAL_CHECKSUM_SHA256} from './uploadHandler';
+ 
+ export interface UploadMetadata {
+     filename?: string,
++    // Flirtual: the R2 key, kept separate from filename so the name the user sees
++    // is preserved.
++    id?: string,
++    // Flirtual: written through to the object so the image pipeline can read them.
++    filetype?: string,
++    stereoLayout?: string,
+ }
+ 
+ // Parse "Upload-Metadata" header as described in the TUS creation extension
+@@ -37,6 +43,15 @@ export function parseUploadMetadata(headers: Headers): UploadMetadata {
+         if (key === 'filename') {
+             ret.filename = new TextDecoder().decode(valueBytes);
+         }
++        if (key === 'id') {
++            ret.id = new TextDecoder().decode(valueBytes);
++        }
++        if (key === 'filetype') {
++            ret.filetype = new TextDecoder().decode(valueBytes);
++        }
++        if (key === 'stereoLayout') {
++            ret.stereoLayout = new TextDecoder().decode(valueBytes);
++        }
+     }
+     return ret;
+ }
+diff --git a/src/retry.ts b/src/retry.ts
+index 0aca07e22119ab17ef0455542d8b6046a65b482f..9239a2d4411e35c9096750e3ed36bf069111db8e 100644
+--- a/src/retry.ts
++++ b/src/retry.ts
+@@ -98,11 +98,13 @@ export class RetryBucket {
+     async put(
+         key: string,
+         value: (ArrayBuffer | ArrayBufferView) | string | Blob,
+-        checksum?: string | ArrayBuffer | Uint8Array
++        checksum?: string | ArrayBuffer | Uint8Array,
++        // Flirtual: object metadata, so a completed upload carries its content type.
++        options?: Pick<R2PutOptions, 'httpMetadata' | 'customMetadata'>
+     ): ReturnType<R2Bucket['put']> {
+ 
+         return retry(
+-            () => this.bucket.put(key, value, {sha256: checksum}), {
++            () => this.bucket.put(key, value, {...options, sha256: checksum}), {
+                 params: this.params,
+                 shouldRetry: error => !isR2ChecksumError(error)
+             }
+diff --git a/src/uploadHandler.ts b/src/uploadHandler.ts
+index 0198a53c805a81509d5d168e2123bd0f281e3ad2..7e76c3083519cb27024cdcc57a6ef9bfd87318b6 100644
+--- a/src/uploadHandler.ts
++++ b/src/uploadHandler.ts
+@@ -47,7 +47,10 @@ interface StoredR2Part {
+ interface StoredUploadInfo {
+     uploadLength?: number,
+     checksum?: Uint8Array,
+-    multipartUploadId?: string
++    multipartUploadId?: string,
++    // Flirtual: carried from upload metadata so the finished object describes itself.
++    contentType?: string,
++    stereoLayout?: string
+ }
+ 
+ 
+@@ -141,7 +144,8 @@ export class UploadHandler {
+         const uploadMetadata = parseUploadMetadata(request.headers);
+         const checksum = parseChecksum(request.headers);
+ 
+-        const r2Key = uploadMetadata.filename;
++        // Flirtual: `id` is the object key, matching withAuthorizedKeyFromMetadata.
++        const r2Key = uploadMetadata.id ?? uploadMetadata.filename;
+         if (r2Key == null) {
+             return error(400, 'bad filename metadata');
+         }
+@@ -183,6 +187,12 @@ export class UploadHandler {
+         if (checksum != null) {
+             uploadInfo.checksum = checksum;
+         }
++        if (uploadMetadata.filetype != null) {
++            uploadInfo.contentType = uploadMetadata.filetype;
++        }
++        if (uploadMetadata.stereoLayout != null) {
++            uploadInfo.stereoLayout = uploadMetadata.stereoLayout;
++        }
+         await this.state.storage.put(UPLOAD_OFFSET_KEY, 0);
+         await this.state.storage.put(UPLOAD_INFO_KEY, uploadInfo);
+ 
+@@ -354,7 +364,7 @@ export class UploadHandler {
+                     } else if (!this.multipart) {
+                         // all the bytes fit into a single in memory buffer, so we can just upload
+                         // it directly without using multipart
+-                        await this.r2Put(r2Key, part.bytes, checksum);
++                        await this.r2Put(r2Key, part.bytes, checksum, uploadInfo);
+                         uploadOffset += part.bytes.byteLength;
+                         await this.cleanup();
+                     } else {
+@@ -479,7 +489,10 @@ export class UploadHandler {
+         if (uploadInfo.checksum != null) {
+             customMetadata[X_SIGNAL_CHECKSUM_SHA256] = toBase64(uploadInfo.checksum);
+         }
+-        const upload = await this.retryBucket.createMultipartUpload(r2Key, {customMetadata});
++        const upload = await this.retryBucket.createMultipartUpload(r2Key, {
++            customMetadata: {...customMetadata, ...this.objectMetadata(uploadInfo).customMetadata},
++            httpMetadata: this.objectMetadata(uploadInfo).httpMetadata
++        });
+         uploadInfo.multipartUploadId = upload.r2MultipartUpload.uploadId;
+         await this.state.storage.put(UPLOAD_INFO_KEY, uploadInfo);
+         return upload;
+@@ -489,9 +502,17 @@ export class UploadHandler {
+         return this.retryBucket.resumeMultipartUpload(r2Key, multipartUploadId);
+     }
+ 
+-    async r2Put(r2Key: string, bytes: Uint8Array, checksum?: Uint8Array) {
++    // Flirtual: object metadata for a finished upload, mapped from upload metadata.
++    objectMetadata(uploadInfo: StoredUploadInfo): Pick<R2PutOptions, 'httpMetadata' | 'customMetadata'> {
++        return {
++            ...(uploadInfo.contentType == null ? {} : {httpMetadata: {contentType: uploadInfo.contentType}}),
++            ...(uploadInfo.stereoLayout == null ? {} : {customMetadata: {stereo: uploadInfo.stereoLayout}})
++        };
++    }
++
++    async r2Put(r2Key: string, bytes: Uint8Array, checksum?: Uint8Array, uploadInfo?: StoredUploadInfo) {
+         try {
+-            await this.retryBucket.put(r2Key, bytes, checksum);
++            await this.retryBucket.put(r2Key, bytes, checksum, uploadInfo && this.objectMetadata(uploadInfo));
+         } catch (e) {
+             if (isR2ChecksumError(e)) {
+                 console.error(`checksum failure: ${e}`);

@@ -90,3 +90,5 @@ minimumReleaseAgeExclude:
   - "@cloudflare/workerd-*"
   - miniflare
   - workerd
+patchedDependencies:
+  attachments@0.15.0: apps/tus-server/patches/signal-tus-server.patch
