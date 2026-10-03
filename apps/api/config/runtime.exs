@@ -93,6 +93,14 @@ config :flirtual,
   retained_origin: retained_origin && URI.parse(retained_origin),
   image_classification_origin: image_classification_origin
 
+config :flirtual, :buckets, %{
+  content: Env.get!("BUCKET_CONTENT"),
+  content_uploads: Env.get!("BUCKET_CONTENT_UPLOADS"),
+  content_retained: Env.get!("BUCKET_CONTENT_RETAINED"),
+  content_quarantine: Env.get!("BUCKET_CONTENT_QUARANTINE"),
+  stats: Env.get!("BUCKET_STATS")
+}
+
 config :flirtual, Flirtual.Mailer,
   domains: %{
     "transactional" =>

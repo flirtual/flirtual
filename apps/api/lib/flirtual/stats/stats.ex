@@ -1,6 +1,4 @@
 defmodule Flirtual.Stats do
-  @bucket "stats"
-
   # Allowed filename characters.
   @name_pattern ~r/^[a-z0-9_]+$/
 
@@ -34,7 +32,9 @@ defmodule Flirtual.Stats do
     if Application.get_env(:flirtual, :local_uploads?) do
       {:error, {:service_unavailable, :stats_unavailable}}
     else
-      case ExAws.S3.get_object(@bucket, key) |> ExAws.request() do
+      bucket = Application.fetch_env!(:flirtual, :buckets).stats
+
+      case ExAws.S3.get_object(bucket, key) |> ExAws.request() do
         {:ok, %{body: body}} -> {:ok, body}
         {:error, {:http_error, 404, _}} -> {:error, {:not_found, :stat_not_found}}
         {:error, _} -> {:error, {:internal_server_error, :stats_unavailable}}
