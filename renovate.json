@@ -115,20 +115,12 @@
 			"addLabels": ["ios"]
 		},
 		{
-			"matchFileNames": ["apps/grafana/**"],
-			"addLabels": ["grafana"]
-		},
-		{
 			"matchFileNames": ["apps/image-classification/**"],
 			"addLabels": ["image classification"]
 		},
 		{
 			"matchFileNames": ["apps/maintenance/**"],
 			"addLabels": ["maintenance"]
-		},
-		{
-			"matchFileNames": ["apps/manticore/**"],
-			"addLabels": ["manticore"]
 		},
 		{
 			"matchFileNames": ["apps/posthog-proxy/**"],
@@ -141,14 +133,6 @@
 		{
 			"matchFileNames": ["apps/session-transfer/**"],
 			"addLabels": ["session transfer"]
-		},
-		{
-			"matchFileNames": ["apps/tempo/**"],
-			"addLabels": ["tempo"]
-		},
-		{
-			"matchFileNames": ["apps/trace/**"],
-			"addLabels": ["trace"]
 		},
 		{
 			"matchFileNames": ["apps/tus-server/**"],

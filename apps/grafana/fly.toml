@@ -1,4 +1,0 @@
-app = "flirtual-grafana"
-
-[build]
-dockerfile = "./Dockerfile"
