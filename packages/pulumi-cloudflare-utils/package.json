@@ -15,7 +15,7 @@
 	},
 	"devDependencies": {
 		"@pulumi/pulumi": "catalog:",
-		"@types/node": "^22",
+		"@types/node": "22.20.4",
 		"typescript": "catalog:",
 		"vitest": "catalog:"
 	},
