@@ -1111,6 +1111,9 @@ importers:
         specifier: catalog:pulumi
         version: 2.9.1
     devDependencies:
+      '@flirtual/config':
+        specifier: workspace:*
+        version: link:../packages/config
       '@types/node':
         specifier: catalog:pulumi
         version: 22.20.4
