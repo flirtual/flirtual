@@ -5,17 +5,25 @@
 	"type": "module",
 	"exports": "./src/index.ts",
 	"scripts": {
-		"generate:config": "schema=$(mktemp) && curl -sfL https://json.schemastore.org/fly.json -o \"$schema\" && json2ts -i \"$schema\" -o src/config.ts --bannerComment \"// Generated from https://json.schemastore.org/fly.json by \\`pnpm generate:config\\`.\" && rm -f \"$schema\""
-	},
-	"peerDependencies": {
-		"@pulumi/pulumi": "catalog:",
-		"execa": "catalog:"
+		"generate:config": "schema=$(mktemp) && curl -sfL https://json.schemastore.org/fly.json -o \"$schema\" && json2ts -i \"$schema\" -o src/config.ts --bannerComment \"// Generated from https://json.schemastore.org/fly.json by \\`pnpm generate:config\\`.\" && rm -f \"$schema\"",
+		"build": "tsc",
+		"lint": "oxlint && oxfmt --check",
+		"fmt": "oxfmt",
+		"test": "vitest run --passWithNoTests"
 	},
 	"devDependencies": {
+		"@flirtual/config": "workspace:*",
 		"@pulumi/pulumi": "catalog:",
 		"@types/node": "22.20.4",
 		"execa": "catalog:",
 		"json-schema-to-typescript": "15.0.4",
-		"typescript": "catalog:"
+		"oxfmt": "catalog:",
+		"oxlint": "catalog:",
+		"typescript": "catalog:",
+		"vitest": "catalog:"
+	},
+	"peerDependencies": {
+		"@pulumi/pulumi": "catalog:",
+		"execa": "catalog:"
 	}
 }

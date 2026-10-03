@@ -245,7 +245,14 @@ patchedDependencies:
 
 importers:
 
-  .: {}
+  .:
+    devDependencies:
+      '@flirtual/config':
+        specifier: workspace:*
+        version: link:packages/config
+      oxfmt:
+        specifier: 'catalog:'
+        version: 0.71.0
 
   apps/app-redirect:
     devDependencies:
@@ -820,6 +827,21 @@ importers:
         specifier: 'catalog:'
         version: 4.143.1(@cloudflare/workers-types@5.20260926.1)(@types/node@25.9.8)
 
+  packages/config:
+    devDependencies:
+      oxfmt:
+        specifier: 'catalog:'
+        version: 0.71.0
+      oxlint:
+        specifier: 'catalog:'
+        version: 1.86.0
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.11(@opentelemetry/api@1.9.1)(@types/node@26.6.3)(vite@8.3.1(@types/node@26.6.3)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.0)(tsx@4.23.12)(yaml@2.9.1))
+
   packages/pulumi-cloudflare-utils:
     dependencies:
       '@cloudflare/build-output-utils':
@@ -838,12 +860,21 @@ importers:
         specifier: 'catalog:'
         version: 10.0.1
     devDependencies:
+      '@flirtual/config':
+        specifier: workspace:*
+        version: link:../config
       '@pulumi/pulumi':
         specifier: 'catalog:'
         version: 3.265.0(supports-color@10.2.2)(typescript@5.9.3)
       '@types/node':
         specifier: ^22
         version: 22.20.4
+      oxfmt:
+        specifier: 'catalog:'
+        version: 0.71.0
+      oxlint:
+        specifier: 'catalog:'
+        version: 1.86.0
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
@@ -857,12 +888,21 @@ importers:
         specifier: workspace:*
         version: link:../pulumi-dynamic-fetch
     devDependencies:
+      '@flirtual/config':
+        specifier: workspace:*
+        version: link:../config
       '@pulumi/pulumi':
         specifier: 'catalog:'
         version: 3.265.0(supports-color@10.2.2)(typescript@5.9.3)
       '@types/node':
         specifier: 22.20.4
         version: 22.20.4
+      oxfmt:
+        specifier: 'catalog:'
+        version: 0.71.0
+      oxlint:
+        specifier: 'catalog:'
+        version: 1.86.0
       typed-openapi:
         specifier: 4.1.0
         version: 4.1.0(openapi-types@12.1.3)(react@19.3.0)(supports-color@10.2.2)
@@ -875,12 +915,21 @@ importers:
 
   packages/pulumi-dynamic-fetch:
     devDependencies:
+      '@flirtual/config':
+        specifier: workspace:*
+        version: link:../config
       '@pulumi/pulumi':
         specifier: 'catalog:'
         version: 3.265.0(supports-color@10.2.2)(typescript@5.9.3)
       '@types/node':
         specifier: 22.20.4
         version: 22.20.4
+      oxfmt:
+        specifier: 'catalog:'
+        version: 0.71.0
+      oxlint:
+        specifier: 'catalog:'
+        version: 1.86.0
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
@@ -894,12 +943,21 @@ importers:
         specifier: workspace:*
         version: link:../pulumi-dynamic-fetch
     devDependencies:
+      '@flirtual/config':
+        specifier: workspace:*
+        version: link:../config
       '@pulumi/pulumi':
         specifier: 'catalog:'
         version: 3.265.0(supports-color@10.2.2)(typescript@5.9.3)
       '@types/node':
         specifier: 22.20.4
         version: 22.20.4
+      oxfmt:
+        specifier: 'catalog:'
+        version: 0.71.0
+      oxlint:
+        specifier: 'catalog:'
+        version: 1.86.0
       typed-openapi:
         specifier: 4.1.0
         version: 4.1.0(openapi-types@12.1.3)(react@19.3.0)(supports-color@10.2.2)
@@ -916,6 +974,9 @@ importers:
         specifier: workspace:*
         version: link:../pulumi-dynamic-fetch
     devDependencies:
+      '@flirtual/config':
+        specifier: workspace:*
+        version: link:../config
       '@pulumi/pulumi':
         specifier: 'catalog:'
         version: 3.265.0(supports-color@10.2.2)(typescript@5.9.3)
@@ -925,6 +986,12 @@ importers:
       marked:
         specifier: 18.0.14
         version: 18.0.14
+      oxfmt:
+        specifier: 'catalog:'
+        version: 0.71.0
+      oxlint:
+        specifier: 'catalog:'
+        version: 1.86.0
       typed-openapi:
         specifier: 4.1.0
         version: 4.1.0(openapi-types@12.1.3)(react@19.3.0)(supports-color@10.2.2)
@@ -940,6 +1007,9 @@ importers:
 
   packages/pulumi-fly:
     devDependencies:
+      '@flirtual/config':
+        specifier: workspace:*
+        version: link:../config
       '@pulumi/pulumi':
         specifier: 'catalog:'
         version: 3.265.0(supports-color@10.2.2)(typescript@5.9.3)
@@ -952,9 +1022,18 @@ importers:
       json-schema-to-typescript:
         specifier: 15.0.4
         version: 15.0.4
+      oxfmt:
+        specifier: 'catalog:'
+        version: 0.71.0
+      oxlint:
+        specifier: 'catalog:'
+        version: 1.86.0
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.11(@opentelemetry/api@1.9.1)(@types/node@22.20.4)(vite@8.3.1(@types/node@22.20.4)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.0)(tsx@4.23.12)(yaml@2.9.1))
 
   packages/pulumi-utils:
     dependencies:
@@ -962,12 +1041,21 @@ importers:
         specifier: catalog:pulumi
         version: 16.2.4
     devDependencies:
+      '@flirtual/config':
+        specifier: workspace:*
+        version: link:../config
       '@pulumi/pulumi':
         specifier: 'catalog:'
         version: 3.265.0(supports-color@10.2.2)(typescript@5.9.3)
       '@types/node':
         specifier: ^22
         version: 22.20.4
+      oxfmt:
+        specifier: 'catalog:'
+        version: 0.71.0
+      oxlint:
+        specifier: 'catalog:'
+        version: 1.86.0
       typescript:
         specifier: 'catalog:'
         version: 5.9.3

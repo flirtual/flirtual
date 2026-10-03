@@ -1,0 +1,27 @@
+{
+	"name": "@flirtual/config",
+	"private": true,
+	"description": "Shared oxlint, oxfmt and TypeScript configuration for the workspace's TypeScript projects.",
+	"type": "module",
+	"exports": {
+		"./oxlint": "./src/oxlint.ts",
+		"./oxfmt": "./src/oxfmt.ts",
+		"./tsconfig": "./tsconfig.base.json"
+	},
+	"scripts": {
+		"build": "tsc",
+		"lint": "oxlint && oxfmt --check",
+		"fmt": "oxfmt",
+		"test": "vitest run --passWithNoTests"
+	},
+	"devDependencies": {
+		"oxfmt": "catalog:",
+		"oxlint": "catalog:",
+		"typescript": "catalog:",
+		"vitest": "catalog:"
+	},
+	"peerDependencies": {
+		"oxfmt": "catalog:",
+		"oxlint": "catalog:"
+	}
+}

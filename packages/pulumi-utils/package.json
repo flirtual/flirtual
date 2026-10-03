@@ -1,22 +1,28 @@
 {
-  "name": "@flirtual/pulumi-utils",
-  "private": true,
-  "description": "Small helpers for Pulumi programs: fingerprinting files and typing deeply nested inputs.",
-  "type": "module",
-  "exports": "./src/index.ts",
-  "scripts": {
-    "test": "vitest run"
-  },
-  "dependencies": {
-    "globby": "catalog:pulumi"
-  },
-  "peerDependencies": {
-    "@pulumi/pulumi": "catalog:"
-  },
-  "devDependencies": {
-    "@pulumi/pulumi": "catalog:",
-    "@types/node": "^22",
-    "typescript": "catalog:",
-    "vitest": "catalog:"
-  }
+	"name": "@flirtual/pulumi-utils",
+	"private": true,
+	"description": "Small helpers for Pulumi programs: fingerprinting files and typing deeply nested inputs.",
+	"type": "module",
+	"exports": "./src/index.ts",
+	"scripts": {
+		"test": "vitest run",
+		"build": "tsc",
+		"lint": "oxlint && oxfmt --check",
+		"fmt": "oxfmt"
+	},
+	"dependencies": {
+		"globby": "catalog:pulumi"
+	},
+	"devDependencies": {
+		"@flirtual/config": "workspace:*",
+		"@pulumi/pulumi": "catalog:",
+		"@types/node": "^22",
+		"oxfmt": "catalog:",
+		"oxlint": "catalog:",
+		"typescript": "catalog:",
+		"vitest": "catalog:"
+	},
+	"peerDependencies": {
+		"@pulumi/pulumi": "catalog:"
+	}
 }

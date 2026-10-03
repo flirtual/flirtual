@@ -1,19 +1,25 @@
 {
-  "name": "@flirtual/pulumi-dynamic-fetch",
-  "private": true,
-  "description": "Pulumi dynamic resources for any HTTP API, defined by a function per lifecycle step.",
-  "type": "module",
-  "exports": "./src/index.ts",
-  "scripts": {
-    "test": "vitest run"
-  },
-  "devDependencies": {
-    "@pulumi/pulumi": "catalog:",
-    "@types/node": "22.20.4",
-    "typescript": "catalog:",
-    "vitest": "catalog:"
-  },
-  "peerDependencies": {
-    "@pulumi/pulumi": "catalog:"
-  }
+	"name": "@flirtual/pulumi-dynamic-fetch",
+	"private": true,
+	"description": "Pulumi dynamic resources for any HTTP API, defined by a function per lifecycle step.",
+	"type": "module",
+	"exports": "./src/index.ts",
+	"scripts": {
+		"test": "vitest run",
+		"build": "tsc",
+		"lint": "oxlint && oxfmt --check",
+		"fmt": "oxfmt"
+	},
+	"devDependencies": {
+		"@flirtual/config": "workspace:*",
+		"@pulumi/pulumi": "catalog:",
+		"@types/node": "22.20.4",
+		"oxfmt": "catalog:",
+		"oxlint": "catalog:",
+		"typescript": "catalog:",
+		"vitest": "catalog:"
+	},
+	"peerDependencies": {
+		"@pulumi/pulumi": "catalog:"
+	}
 }

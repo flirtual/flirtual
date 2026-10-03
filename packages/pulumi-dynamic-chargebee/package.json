@@ -7,19 +7,25 @@
 	"scripts": {
 		"generate:api": "typed-openapi https://raw.githubusercontent.com/chargebee/openapi/06f6ff8a4dd98577961acb29bf1d2d0c41684748/spec/chargebee_api_v2_pc_v2_spec.json --no-include-client -o src/generated/index.ts",
 		"postinstall": "pnpm generate:api",
-		"test": "vitest run"
+		"test": "vitest run",
+		"build": "tsc",
+		"lint": "oxlint && oxfmt --check",
+		"fmt": "oxfmt"
 	},
 	"dependencies": {
 		"@flirtual/pulumi-dynamic-fetch": "workspace:*"
 	},
-	"peerDependencies": {
-		"@pulumi/pulumi": "catalog:"
-	},
 	"devDependencies": {
+		"@flirtual/config": "workspace:*",
 		"@pulumi/pulumi": "catalog:",
 		"@types/node": "22.20.4",
+		"oxfmt": "catalog:",
+		"oxlint": "catalog:",
 		"typed-openapi": "4.1.0",
 		"typescript": "catalog:",
 		"vitest": "catalog:"
+	},
+	"peerDependencies": {
+		"@pulumi/pulumi": "catalog:"
 	}
 }
