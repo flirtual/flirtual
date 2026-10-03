@@ -11,5 +11,5 @@
 		"@flirtual/config": "workspace:*",
 		"oxfmt": "catalog:"
 	},
-	"packageManager": "pnpm@12.6.0"
+	"packageManager": "pnpm@12.8.2"
 }
