@@ -13,6 +13,6 @@ install-tool pnpm 12.6.0
 # renovate: datasource=github-releases depName=containerbase/ruby-prebuild
 install-tool ruby 3.3.12
 # renovate: datasource=rubygems depName=cocoapods
-install-tool cocoapods 1.16.2
+install-tool cocoapods 1.17.0
 
 runuser -u ubuntu renovate
