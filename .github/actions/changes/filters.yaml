@@ -5,6 +5,7 @@ workspace: &workspace
   - package.json
   - pnpm-lock.yaml
   - pnpm-workspace.yaml
+  - patches/**
 
 capacitor: &capacitor
   - apps/frontend/capacitor.config.ts
