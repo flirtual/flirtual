@@ -19,9 +19,9 @@
 	},
 	"devDependencies": {
 		"@cloudflare/vitest-pool-workers": "catalog:",
-		"@types/node": "25.9.8",
+		"@types/node": "catalog:",
 		"cf": "catalog:",
-		"jose": "^6.2.12",
+		"jose": "catalog:",
 		"typescript": "catalog:",
 		"vitest": "catalog:",
 		"wrangler": "catalog:"

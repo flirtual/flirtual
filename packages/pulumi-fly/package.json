@@ -13,8 +13,8 @@
 	},
 	"devDependencies": {
 		"@flirtual/config": "workspace:*",
-		"@pulumi/pulumi": "catalog:",
-		"@types/node": "22.20.4",
+		"@pulumi/pulumi": "catalog:pulumi",
+		"@types/node": "catalog:",
 		"execa": "catalog:",
 		"json-schema-to-typescript": "15.0.4",
 		"oxfmt": "catalog:",
@@ -23,7 +23,7 @@
 		"vitest": "catalog:"
 	},
 	"peerDependencies": {
-		"@pulumi/pulumi": "catalog:",
+		"@pulumi/pulumi": "catalog:pulumi",
 		"execa": "catalog:"
 	}
 }

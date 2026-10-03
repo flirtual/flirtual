@@ -17,15 +17,15 @@
 	},
 	"devDependencies": {
 		"@flirtual/config": "workspace:*",
-		"@pulumi/pulumi": "catalog:",
-		"@types/node": "22.20.4",
+		"@pulumi/pulumi": "catalog:pulumi",
+		"@types/node": "catalog:",
 		"oxfmt": "catalog:",
 		"oxlint": "catalog:",
-		"typed-openapi": "4.1.0",
+		"typed-openapi": "catalog:",
 		"typescript": "catalog:",
 		"vitest": "catalog:"
 	},
 	"peerDependencies": {
-		"@pulumi/pulumi": "catalog:"
+		"@pulumi/pulumi": "catalog:pulumi"
 	}
 }

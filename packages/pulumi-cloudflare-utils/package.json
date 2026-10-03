@@ -22,14 +22,14 @@
 	},
 	"devDependencies": {
 		"@flirtual/config": "workspace:*",
-		"@pulumi/pulumi": "catalog:",
-		"@types/node": "^22",
+		"@pulumi/pulumi": "catalog:pulumi",
+		"@types/node": "catalog:",
 		"oxfmt": "catalog:",
 		"oxlint": "catalog:",
 		"typescript": "catalog:",
 		"vitest": "catalog:"
 	},
 	"peerDependencies": {
-		"@pulumi/pulumi": "catalog:"
+		"@pulumi/pulumi": "catalog:pulumi"
 	}
 }
