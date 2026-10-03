@@ -9,7 +9,7 @@ async function run(
   values: Array<Value>,
   { json = false, input }: Options & { json?: boolean } = {},
 ) {
-  // Imported lazily: a top-level import breaks provider serialization (docs/learnings.md).
+  // Imported lazily: a top-level import breaks provider serialization (docs/gotchas.md).
   const { execa, parseCommandString } = await import("execa");
 
   const argumentList = templates.flatMap((chunk, index) => [

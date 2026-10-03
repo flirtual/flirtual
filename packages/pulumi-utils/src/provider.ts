@@ -5,7 +5,7 @@ type Provider<Inputs, Outputs> = pulumi.dynamic.ResourceProvider<Inputs, Outputs
 /**
  * A dynamic provider whose implementation is the default export of the module `load` imports.
  *
- * Pulumi serializes a dynamic provider and rebuilds it in another process (pulumi/docs/learnings.md); this one
+ * Pulumi serializes a dynamic provider and rebuilds it in another process (pulumi/docs/gotchas.md); this one
  * serializes only `load`. Its bare specifier resolves against the program, which depends on the package
  * holding the module, and that module then imports its own dependencies as any module does.
  *
