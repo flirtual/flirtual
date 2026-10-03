@@ -49,6 +49,7 @@ ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
 RUN corepack enable pnpm
 
 COPY --link package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY --link patches ./patches
 COPY --link apps/image-classification/package.json ./apps/image-classification/
 
 RUN pnpm install --frozen-lockfile --prod=false --filter image-classification
@@ -58,10 +59,7 @@ COPY --link apps/image-classification ./apps/image-classification
 RUN pnpm --filter image-classification exec tsc
 
 ## Emit a self-contained tree without devDependencies.
-# --legacy is required because pnpm otherwise refuses to deploy from a
-# workspace that doesn't set inject-workspace-packages.
-# https://pnpm.io/11.x/cli/deploy
-RUN pnpm --filter image-classification deploy --prod --legacy /app
+RUN pnpm --filter image-classification deploy --prod /app
 
 # Final image.
 # Build upon the "build-deep-danbooru" stage because
