@@ -28,6 +28,18 @@ frontend:
   - *workspace
   - *self
 
+packages:
+  - packages/**
+  - .github/workflows/packages.yaml
+  - *workspace
+  - *self
+
+tus-server:
+  - apps/tus-server/**
+  - .github/workflows/tus-server.yaml
+  - *workspace
+  - *self
+
 image-classification:
   - apps/image-classification/**
   - .github/workflows/deploy-classification.yaml

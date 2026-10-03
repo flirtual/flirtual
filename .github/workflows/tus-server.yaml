@@ -1,0 +1,83 @@
+name: tus-server
+on:
+  push:
+    branches: [main]
+  pull_request:
+  merge_group:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  changes:
+    name: Detect changes
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      tus-server: ${{ steps.changes.outputs.changed }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: Detect changes
+        uses: ./.github/actions/changes
+        id: changes
+        with:
+          filter: tus-server
+
+  check:
+    name: Type-check, test and build
+    needs: changes
+    if: needs.changes.outputs.tus-server != 'false'
+    runs-on: ubuntu-latest
+    permissions:
+      checks: write
+    defaults:
+      run:
+        working-directory: apps/tus-server
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: Register TypeScript annotations
+        run: echo "::add-matcher::.github/annotation-typescript.json"
+
+      - name: Install pnpm and Node.js
+        uses: pnpm/setup@fbda4c85fc2e1e08721cd8763afea8f48d60f024 # v3.0.0
+        with:
+          runtime: node@24.20.0
+          cache: true
+          install: false
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile --filter tus-server
+
+      - name: TypeScript
+        run: |
+          pnpm --silent typegen
+          ./node_modules/.bin/tsc --pretty false | sed -E "s#^([^ ].*\([0-9]+,[0-9]+\): error TS)#apps/tus-server/\1#"
+          exit "${PIPESTATUS[0]}"
+
+      - name: Test
+        run: pnpm --silent test
+
+      - name: Build
+        run: pnpm --silent build
+
+  tus-server:
+    name: tus-server
+    if: always() && needs.changes.outputs.tus-server != 'false'
+    needs: [changes, check]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Determine overall status
+        if: contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')
+        run: exit 1
