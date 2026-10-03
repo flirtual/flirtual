@@ -19,7 +19,7 @@ catalog:
   sharp: 0.35.5
   typed-openapi: 4.1.0
   typescript: ^5.9.2
-  vitest: ~4.1.10
+  vitest: ~5.0.0
   wrangler: ^4.120.1
 
 catalogs:
