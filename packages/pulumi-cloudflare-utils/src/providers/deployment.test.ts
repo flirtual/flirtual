@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 
 import { BuildOutputError } from "@cloudflare/build-output-utils";
 import type { ParsedOutputWorkerConfig } from "@cloudflare/config";
+import * as pulumi from "@pulumi/pulumi";
 import { beforeEach, expect, it, vi } from "vitest";
 
 import { recordBuild } from "./build-output.ts";
@@ -208,6 +209,10 @@ it("redeploys when the build, config or secrets change, and only then", async ()
 	expect(await diff("example-production", inputs, { ...inputs, record: rebuilt })).toStrictEqual({ changes: true });
 	expect(await diff("example-production", inputs, { ...inputs, secrets: { TOKEN: "rotated" } })).toStrictEqual({ changes: true });
 	expect(await diff("example-production", inputs, { ...inputs })).toStrictEqual({ changes: false });
+});
+
+it("redeploys when the config isn't known yet, as in a preview where a resource it names changes", async () => {
+	expect(await diff("example-production", inputs, { ...inputs, config: pulumi.runtime.unknownValue })).toStrictEqual({ changes: true });
 });
 
 it("leaves an equal config alone, whatever order its keys come in", async () => {

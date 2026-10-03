@@ -12,7 +12,7 @@ import {
 	writeWorkerConfig,
 } from "@cloudflare/build-output-utils";
 import type { ParsedOutputRootConfig, ParsedOutputWorkerConfig } from "@cloudflare/config";
-import type * as pulumi from "@pulumi/pulumi";
+import * as pulumi from "@pulumi/pulumi";
 
 import { digestWorker } from "./build-output.ts";
 import type { BuildRecord } from "./build-output.ts";
@@ -80,12 +80,11 @@ async function deploy(inputs: DeploymentInputs, removed: Array<string> = []): Pr
 
 const compared = ["accountId", "project", "record", "secrets", "tag"] as const;
 
+const sameConfig = (olds: DeploymentInputs, news: DeploymentInputs) =>
+	news.config !== pulumi.runtime.unknownValue && isDeepStrictEqual(JSON.parse(olds.config), JSON.parse(news.config));
+
 export async function diff(_id: string, olds: DeploymentInputs, news: DeploymentInputs) {
-	return {
-		changes:
-			compared.some((key) => !isDeepStrictEqual(olds[key], news[key]))
-			|| !isDeepStrictEqual(JSON.parse(olds.config), JSON.parse(news.config)),
-	};
+	return { changes: compared.some((key) => !isDeepStrictEqual(olds[key], news[key])) || !sameConfig(olds, news) };
 }
 
 export async function create(inputs: DeploymentInputs) {
