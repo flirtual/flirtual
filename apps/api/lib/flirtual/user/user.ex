@@ -103,6 +103,7 @@ defmodule Flirtual.User do
     field(:age, :integer, virtual: true)
     field(:ban, :map, virtual: true)
     field(:login_locations, {:array, :string}, virtual: true)
+    field(:age_verifications, {:array, :map}, virtual: true)
 
     field(:tags, {:array, Ecto.Enum},
       values: @tags,
@@ -1554,6 +1555,7 @@ defimpl Jason.Encoder, for: Flirtual.User do
       :banned_at,
       :ban,
       :login_locations,
+      :age_verifications,
       :shadowbanned_at,
       :indef_shadowbanned_at,
       :payments_banned_at,
