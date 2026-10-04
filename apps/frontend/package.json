@@ -100,7 +100,7 @@
 		"i18next-icu": "^2.4.4",
 		"jose": "catalog:",
 		"lucide-react": "^1.24.0",
-		"motion": "13.4.6",
+		"motion": "13.5.0",
 		"obug": "^3.0.0",
 		"posthog-js": "^1.413.3",
 		"react": "19.3.0",
