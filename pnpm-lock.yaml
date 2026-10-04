@@ -229,8 +229,8 @@ catalogs:
       specifier: ^3.18.0
       version: 3.18.1
     '@pulumi/pulumi':
-      specifier: 3.266.0
-      version: 3.266.0
+      specifier: 3.267.0
+      version: 3.267.0
     '@pulumi/random':
       specifier: ^4.21.0
       version: 4.21.2
@@ -862,7 +862,7 @@ importers:
         version: link:../config
       '@pulumi/pulumi':
         specifier: catalog:pulumi
-        version: 3.266.0(supports-color@10.2.2)(typescript@5.9.3)
+        version: 3.267.0(supports-color@10.2.2)(typescript@5.9.3)
       '@types/node':
         specifier: 'catalog:'
         version: 24.19.0
@@ -890,7 +890,7 @@ importers:
         version: link:../config
       '@pulumi/pulumi':
         specifier: catalog:pulumi
-        version: 3.266.0(supports-color@10.2.2)(typescript@5.9.3)
+        version: 3.267.0(supports-color@10.2.2)(typescript@5.9.3)
       '@types/node':
         specifier: 'catalog:'
         version: 24.19.0
@@ -917,7 +917,7 @@ importers:
         version: link:../config
       '@pulumi/pulumi':
         specifier: catalog:pulumi
-        version: 3.266.0(supports-color@10.2.2)(typescript@5.9.3)
+        version: 3.267.0(supports-color@10.2.2)(typescript@5.9.3)
       '@types/node':
         specifier: 'catalog:'
         version: 24.19.0
@@ -945,7 +945,7 @@ importers:
         version: link:../config
       '@pulumi/pulumi':
         specifier: catalog:pulumi
-        version: 3.266.0(supports-color@10.2.2)(typescript@5.9.3)
+        version: 3.267.0(supports-color@10.2.2)(typescript@5.9.3)
       '@types/node':
         specifier: 'catalog:'
         version: 24.19.0
@@ -976,7 +976,7 @@ importers:
         version: link:../config
       '@pulumi/pulumi':
         specifier: catalog:pulumi
-        version: 3.266.0(supports-color@10.2.2)(typescript@5.9.3)
+        version: 3.267.0(supports-color@10.2.2)(typescript@5.9.3)
       '@types/node':
         specifier: 'catalog:'
         version: 24.19.0
@@ -1009,7 +1009,7 @@ importers:
         version: link:../config
       '@pulumi/pulumi':
         specifier: catalog:pulumi
-        version: 3.266.0(supports-color@10.2.2)(typescript@5.9.3)
+        version: 3.267.0(supports-color@10.2.2)(typescript@5.9.3)
       '@types/node':
         specifier: 'catalog:'
         version: 24.19.0
@@ -1043,7 +1043,7 @@ importers:
         version: link:../config
       '@pulumi/pulumi':
         specifier: catalog:pulumi
-        version: 3.266.0(supports-color@10.2.2)(typescript@5.9.3)
+        version: 3.267.0(supports-color@10.2.2)(typescript@5.9.3)
       '@types/node':
         specifier: 'catalog:'
         version: 24.19.0
@@ -1103,7 +1103,7 @@ importers:
         version: 3.18.1(supports-color@10.2.2)(typescript@5.9.3)
       '@pulumi/pulumi':
         specifier: catalog:pulumi
-        version: 3.266.0(supports-color@10.2.2)(typescript@5.9.3)
+        version: 3.267.0(supports-color@10.2.2)(typescript@5.9.3)
       '@pulumi/random':
         specifier: catalog:pulumi
         version: 4.21.2(supports-color@10.2.2)(typescript@5.9.3)
@@ -3777,6 +3777,18 @@ packages:
 
   '@pulumi/pulumi@3.266.0':
     resolution: {integrity: sha512-aM1TzVKR0XkqcvEVT4ewZY6m6c/UHyj0JLy9OuTLzGjLl+OBzrFfS0XM3kEW1RGDG9aEboyTyVrk8Tzs4OLmPA==}
+    engines: {node: '>=22'}
+    peerDependencies:
+      ts-node: '>= 7.0.1 < 12'
+      typescript: '>= 3.8.3 < 7'
+    peerDependenciesMeta:
+      ts-node:
+        optional: true
+      typescript:
+        optional: true
+
+  '@pulumi/pulumi@3.267.0':
+    resolution: {integrity: sha512-dd/K3sxqNKqiYAvcg14TtEL7ZYqSyphMQMuqDeZvooX7jIKaa0t6QeNBnu6KeyH4bqKqNzmta07a/tgmUkw8/w==}
     engines: {node: '>=22'}
     peerDependencies:
       ts-node: '>= 7.0.1 < 12'
@@ -11710,7 +11722,7 @@ snapshots:
 
   '@pulumi/aws@7.48.0(supports-color@10.2.2)(typescript@5.9.3)':
     dependencies:
-      '@pulumi/pulumi': 3.266.0(supports-color@10.2.2)(typescript@5.9.3)
+      '@pulumi/pulumi': 3.267.0(supports-color@10.2.2)(typescript@5.9.3)
       mime: 2.6.0
     transitivePeerDependencies:
       - supports-color
@@ -11719,7 +11731,7 @@ snapshots:
 
   '@pulumi/cloudflare@6.21.0(supports-color@10.2.2)(typescript@5.9.3)':
     dependencies:
-      '@pulumi/pulumi': 3.266.0(supports-color@10.2.2)(typescript@5.9.3)
+      '@pulumi/pulumi': 3.267.0(supports-color@10.2.2)(typescript@5.9.3)
     transitivePeerDependencies:
       - supports-color
       - ts-node
@@ -11727,7 +11739,7 @@ snapshots:
 
   '@pulumi/command@1.2.1(supports-color@10.2.2)(typescript@5.9.3)':
     dependencies:
-      '@pulumi/pulumi': 3.266.0(supports-color@10.2.2)(typescript@5.9.3)
+      '@pulumi/pulumi': 3.267.0(supports-color@10.2.2)(typescript@5.9.3)
     transitivePeerDependencies:
       - supports-color
       - ts-node
@@ -11753,7 +11765,7 @@ snapshots:
 
   '@pulumi/postgresql@3.18.1(supports-color@10.2.2)(typescript@5.9.3)':
     dependencies:
-      '@pulumi/pulumi': 3.266.0(supports-color@10.2.2)(typescript@5.9.3)
+      '@pulumi/pulumi': 3.267.0(supports-color@10.2.2)(typescript@5.9.3)
     transitivePeerDependencies:
       - supports-color
       - ts-node
@@ -11791,7 +11803,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@pulumi/pulumi@3.266.0(supports-color@10.2.2)(typescript@5.9.3)':
+  '@pulumi/pulumi@3.267.0(supports-color@10.2.2)(typescript@5.9.3)':
     dependencies:
       '@grpc/grpc-js': 1.14.5
       '@logdna/tail-file': 2.2.0
@@ -11825,7 +11837,7 @@ snapshots:
 
   '@pulumi/random@4.21.2(supports-color@10.2.2)(typescript@5.9.3)':
     dependencies:
-      '@pulumi/pulumi': 3.266.0(supports-color@10.2.2)(typescript@5.9.3)
+      '@pulumi/pulumi': 3.267.0(supports-color@10.2.2)(typescript@5.9.3)
     transitivePeerDependencies:
       - supports-color
       - ts-node
