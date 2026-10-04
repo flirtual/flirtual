@@ -10,6 +10,7 @@ import { isWretchError } from "~/api/common";
 import { User } from "~/api/user";
 import { useDevice } from "~/hooks/use-device";
 import { useOptionalSession } from "~/hooks/use-session";
+import { getPreferences, setPreferences } from "~/preferences";
 import { ageRangeFetcher, ageRangeKey, queryClient } from "~/query";
 import { urls } from "~/urls";
 
@@ -18,17 +19,27 @@ import { ModelCard } from "./model-card";
 
 const unknownRange: AgeRange = { group: "unknown" };
 
+const reportedKey = "age_range_reported";
+
 function useReportAgeRange({ group, platform, declaration, ageLower, ageUpper }: AgeRange) {
 	const session = useOptionalSession();
 	const userId = session?.user.id;
 
-	const underage = group === "child" || group === "teen";
+	const resolved = group !== "unknown" && group !== "unresolved";
 
 	useEffect(() => {
-		if (!underage || !userId) return;
+		if (!resolved || !userId) return;
 
-		void User
-			.reportAgeRange(userId, { platform, declaration, ageLower, ageUpper })
+		const reported = JSON.stringify([userId, platform, declaration, ageLower, ageUpper]);
+
+		void getPreferences<string>(reportedKey)
+			.catch(() => null)
+			.then(async (previous) => {
+				if (previous === reported) return;
+
+				await User.reportAgeRange(userId, { platform, declaration, ageLower, ageUpper });
+				await setPreferences(reportedKey, reported).catch(() => {});
+			})
 			.catch((reason) => {
 				// The account was banned. A child sees the block gate; anyone else can
 				// verify their age.
@@ -39,7 +50,7 @@ function useReportAgeRange({ group, platform, declaration, ageLower, ageUpper }:
 
 				console.error(reason);
 			});
-	}, [underage, group, userId, platform, declaration, ageLower, ageUpper]);
+	}, [resolved, group, userId, platform, declaration, ageLower, ageUpper]);
 }
 
 function AgeCard({ children, title }: PropsWithChildren<{ title: string }>) {
