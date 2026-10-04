@@ -430,7 +430,9 @@ function useEntry(entry: ModerationEntry) {
 						: gray)
 			: type === "flagged_duplicate_image"
 				? (details.distance === 0 ? red : yellow)
-				: color,
+				: type === "warned" && entry.kind === "event" && entry.event.acknowledgedAt
+					? gray
+					: color,
 		reasonName: (reasonId && (tAttributes[reasonId]?.name ?? reasonId)) || text(details.reasonText),
 		summary: entry.kind === "event" ? eventSummary(entry.event) : undefined,
 		subjectId: entry.kind === "event" ? entry.event.userId : entry.report.targetId,
