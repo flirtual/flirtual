@@ -262,7 +262,10 @@ if listmonk_url do
   config :flirtual, Flirtual.Listmonk,
     url: listmonk_url,
     username: Env.get!("LISTMONK_USERNAME", always?: true),
-    password: Env.get!("LISTMONK_PASSWORD", always?: true)
+    password: Env.get!("LISTMONK_PASSWORD", always?: true),
+    newsletter_list_id:
+      Env.get!("LISTMONK_NEWSLETTER_LIST_ID", always?: true) |> String.to_integer(),
+    everyone_list_id: Env.get!("LISTMONK_EVERYONE_LIST_ID", always?: true) |> String.to_integer()
 end
 
 chargebee_namespace = Env.get("CHARGEBEE_NAMESPACE")
