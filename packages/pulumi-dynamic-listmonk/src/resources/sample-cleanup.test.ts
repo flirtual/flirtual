@@ -18,9 +18,10 @@ const subscribers = `GET /subscribers?${new URLSearchParams({
 	query: "subscribers.email in ('john@example.com', 'anon@example.com')",
 })}`;
 
-it("deletes the seeded opt-in list and example subscribers", async () => {
+it("deletes the seeded lists and example subscribers", async () => {
 	const sent = stubListmonk({
 		[lists]: [page({ id: 1, name: "Default list" }, { id: 2, name: "Opt-in list" })],
+		"DELETE /lists/1": [ok(true)],
 		"DELETE /lists/2": [ok(true)],
 		[subscribers]: [ok({ results: [{ id: 1 }, { id: 2 }] })],
 		"DELETE /subscribers/1": [ok(true)],
@@ -31,6 +32,7 @@ it("deletes the seeded opt-in list and example subscribers", async () => {
 
 	expect(sent.map(({ route }) => route)).toEqual([
 		lists,
+		"DELETE /lists/1",
 		"DELETE /lists/2",
 		subscribers,
 		"DELETE /subscribers/1",
@@ -38,9 +40,9 @@ it("deletes the seeded opt-in list and example subscribers", async () => {
 	]);
 });
 
-it("leaves list 2 alone once it's something else", async () => {
+it("leaves a seeded id alone once it holds another list", async () => {
 	const sent = stubListmonk({
-		[lists]: [page({ id: 2, name: "Beta testers" })],
+		[lists]: [page({ id: 1, name: "Newsletter" }, { id: 2, name: "Beta testers" })],
 		[subscribers]: [ok({ results: [] })],
 	});
 
@@ -49,9 +51,9 @@ it("leaves list 2 alone once it's something else", async () => {
 	expect(sent.map(({ route }) => route)).toEqual([lists, subscribers]);
 });
 
-it("moves on when list 2 is already gone", async () => {
+it("moves on when the seeded lists are already gone", async () => {
 	const sent = stubListmonk({
-		[lists]: [page({ id: 1, name: "Default list" })],
+		[lists]: [ok([])],
 		[subscribers]: [ok({ results: [] })],
 	});
 
