@@ -16,6 +16,8 @@ export const { Provider, List, Role, User, Settings, SampleCleanup } = defineCon
 			endpoint?: pulumi.Input<string>;
 			username?: pulumi.Input<string>;
 			password?: pulumi.Input<string>;
+			// Sent with every request, such as a Cloudflare Access service token for an instance behind it.
+			headers?: pulumi.Input<Record<string, pulumi.Input<string>>>;
 		},
 		{ config },
 	) => {
@@ -23,10 +25,12 @@ export const { Provider, List, Role, User, Settings, SampleCleanup } = defineCon
 			endpoint = config.require("endpoint"),
 			username = config.require("username"),
 			password = config.requireSecret("password"),
+			headers = {},
 		} = args;
 
 		return {
 			baseUrl: pulumi.output(endpoint).apply((endpoint) => new URL("/api", endpoint).href),
+			headers,
 			credentials: { username, password },
 		};
 	},

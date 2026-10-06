@@ -44,6 +44,27 @@ it("signs in through the admin login form and keeps only the session cookie", as
 	expect(await sent[0]!.text()).toBe("username=admin&password=hunter22");
 });
 
+it("sends the connection's headers, so the login passes a proxy such as Cloudflare Access", async () => {
+	const sent = stubLogin(
+		new Response(null, {
+			status: 302,
+			headers: [["set-cookie", "session=s3ss10n; Path=/; HttpOnly"]],
+		}),
+	);
+
+	await login(
+		{
+			...connection,
+			headers: { "cf-access-client-id": "id.access", "cf-access-client-secret": "secret" },
+		},
+		{ username: "admin", password: "hunter22" },
+	);
+
+	expect(sent[0]!.headers.get("cf-access-client-id")).toBe("id.access");
+	expect(sent[0]!.headers.get("cf-access-client-secret")).toBe("secret");
+	expect(sent[0]!.headers.get("content-type")).toBe("application/x-www-form-urlencoded");
+});
+
 it("fails when Listmonk answers without a session, as it does for a wrong password", async () => {
 	stubLogin(
 		new Response("<html>login page</html>", {

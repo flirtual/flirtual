@@ -47,6 +47,20 @@ it("points at the instance's /api and signs in as the admin user, sending no sta
 	expect(inputs["fetch:encoding"]).toBe("json");
 });
 
+it("sends the headers it's given, such as a Cloudflare Access service token, with every request", async () => {
+	await settled(
+		new Provider("listmonk-headers", {
+			endpoint: "https://news.example",
+			username: "admin",
+			password: "hunter22",
+			headers: { "cf-access-client-id": "id.access" },
+		}),
+	);
+
+	const { inputs } = registered.find(({ name }) => name === "listmonk-headers")!;
+	expect(inputs["fetch:headers"]).toEqual(secret({ "cf-access-client-id": "id.access" }));
+});
+
 it("falls back to the listmonk:endpoint, listmonk:username and listmonk:password config", async () => {
 	pulumi.runtime.setAllConfig(
 		{

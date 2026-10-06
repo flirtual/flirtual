@@ -2,10 +2,10 @@ import type { Connection, Credentials } from "@flirtual/pulumi-dynamic-fetch";
 
 // The API takes an admin's session cookie as it takes an API user's token, and an install can set
 // the admin's password but not an API token: it always generates one (listmonk cmd/install.go).
-export async function login({ baseUrl }: Connection, { username, password }: Credentials) {
+export async function login({ baseUrl, headers }: Connection, { username, password }: Credentials) {
 	const response = await fetch(new URL("/admin/login", baseUrl), {
 		method: "POST",
-		headers: { "content-type": "application/x-www-form-urlencoded" },
+		headers: { ...headers, "content-type": "application/x-www-form-urlencoded" },
 		body: new URLSearchParams({ username: username!, password: password! }),
 		redirect: "manual",
 	});
