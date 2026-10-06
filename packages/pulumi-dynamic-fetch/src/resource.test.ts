@@ -247,6 +247,59 @@ describe("a serialized provider", () => {
 	});
 });
 
+describe("authenticate", () => {
+	it("trades the credentials for headers once, and sends them with every operation", async () => {
+		const authenticate = vi.fn(async () => ({ cookie: "session=abc" }));
+		const seen: Array<Record<string, string>> = [];
+		const record = async (api: Api) => {
+			seen.push(api.connection.headers);
+			return live;
+		};
+		const provider = createProvider<Inputs, Live>(
+			operations({ create: record, read: record }),
+			authenticate,
+		);
+		const values: Record<string, string> = {
+			[configKey("baseUrl")]: "https://example.com",
+			[configKey("headers")]: JSON.stringify({ accept: "application/json" }),
+			[configKey("encoding")]: "json",
+			[configKey("credentials")]: JSON.stringify({ username: "admin", password: "secret" }),
+		};
+		const config = { require: (key: string) => values[key]! } as unknown as pulumi.Config;
+		await provider.configure({ config } as pulumi.dynamic.ConfigureRequest);
+
+		await provider.create(withProvider({ name: "a", url: "https://a.example" }));
+		await provider.read("we_1", { name: "a", url: "https://a.example" });
+
+		expect(authenticate).toHaveBeenCalledOnce();
+		expect(authenticate).toHaveBeenCalledWith(
+			{ baseUrl: "https://example.com", headers: { accept: "application/json" }, encoding: "json" },
+			{ username: "admin", password: "secret" },
+		);
+		expect(seen).toEqual([
+			{ accept: "application/json", cookie: "session=abc" },
+			{ accept: "application/json", cookie: "session=abc" },
+		]);
+	});
+
+	it("fails to configure when authentication fails", async () => {
+		const provider = createProvider<Inputs, Live>(operations(), async () => {
+			throw new Error("login refused");
+		});
+		const values: Record<string, string> = {
+			[configKey("baseUrl")]: "https://example.com",
+			[configKey("headers")]: JSON.stringify({}),
+			[configKey("encoding")]: "json",
+			[configKey("credentials")]: JSON.stringify({}),
+		};
+		const config = { require: (key: string) => values[key]! } as unknown as pulumi.Config;
+
+		await expect(provider.configure({ config } as pulumi.dynamic.ConfigureRequest)).rejects.toThrow(
+			"login refused",
+		);
+	});
+});
+
 describe("a FetchResource subclass", () => {
 	class Webhook extends FetchResource<Inputs, Live> {
 		readonly calls: Array<string> = [];

@@ -11,7 +11,7 @@ import type {
 	Types,
 } from "./endpoints.ts";
 import { Provider as FetchProvider, type ProviderArgs } from "./provider.ts";
-import { define, type FetchResource, type ResourceClass } from "./resource.ts";
+import { type Authenticate, define, type FetchResource, type ResourceClass } from "./resource.ts";
 import { type Route as AnyRoute, operationsFor, type Routes } from "./routes.ts";
 
 interface Entry<E extends Endpoints> {
@@ -59,6 +59,8 @@ export interface Config<
 	// environment variable, a secret config) make them optional, and let a resource without a
 	// provider get one.
 	provider: (args: Args, options: ProviderOptions) => ProviderArgs;
+	// Trades the provider's `credentials` for headers, as an API that only takes a login session needs.
+	authenticate?: Authenticate;
 	resources: Resources & { [Name in keyof Resources]: Checked<E, Resources[Name]> };
 }
 
@@ -92,6 +94,7 @@ export function defineConfig<
 >({
 	module,
 	provider: connect,
+	authenticate,
 	resources,
 }: Config<E, Args, Resources>): Defined<E, Args, Resources> {
 	class Provider extends FetchProvider {
@@ -119,6 +122,7 @@ export function defineConfig<
 			typeof resource === "function"
 				? new resource()
 				: operationsFor<Record<string, unknown>, Record<string, unknown>>(resource),
+			authenticate,
 		);
 
 		return class extends Resource {
