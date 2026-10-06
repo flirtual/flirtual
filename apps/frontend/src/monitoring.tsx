@@ -94,7 +94,11 @@ export function setupMonitoring() {
 		if (session?.user.id === userId) return;
 
 		userId = session?.user.id;
+		const sudo = !!session?.sudoerId;
+
 		getGlobalScope().setUser(userId ? { id: userId } : null);
+		getGlobalScope().setAttributes({ sudo });
+		getGlobalScope().setTags({ sudo });
 	};
 
 	identify();
