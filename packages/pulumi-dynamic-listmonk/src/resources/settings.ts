@@ -35,13 +35,19 @@ function restore(live: unknown, applied: unknown): unknown {
 const current = async (api: Api) =>
 	required(await request<Values>(api, "GET", "/settings"), "Listmonk returned no settings.");
 
+// Settings Listmonk leaves out of GET /settings while they're empty (`omitempty` in listmonk
+// models/settings.go).
+const omittedWhenEmpty = ["upload.s3.aws_secret_access_key"];
+
 // The spec's Settings schema predates keys Listmonk has had since v3 (`bounce.actions`,
 // `privacy.record_optin_ip`), so settings go by the running instance's keys instead.
 async function apply(api: Api, values: Values) {
 	// A PUT replaces every setting, so start from the current ones.
 	const settings = unmask(await current(api)) as Values;
 
-	const unknown = Object.keys(values).filter((key) => !(key in settings));
+	const unknown = Object.keys(values).filter(
+		(key) => !(key in settings) && !omittedWhenEmpty.includes(key),
+	);
 	if (unknown.length > 0) throw new Error(`Listmonk has no settings named ${unknown.join(", ")}.`);
 
 	await request(api, "PUT", "/settings", { ...settings, ...values });

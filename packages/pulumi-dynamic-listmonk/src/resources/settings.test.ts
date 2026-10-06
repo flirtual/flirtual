@@ -34,6 +34,22 @@ describe("create and update", () => {
 		});
 	});
 
+	it("sets the S3 secret key, which Listmonk leaves out of its settings while it's empty", async () => {
+		const sent = stubListmonk({
+			"GET /settings": [ok(current)],
+			"PUT /settings": [ok(true)],
+		});
+
+		await settings.create(api, { "upload.s3.aws_secret_access_key": "s3cret" });
+
+		expect(sent[1]!.body).toEqual({
+			"app.root_url": "https://old.example",
+			"app.site_name": "Listmonk",
+			smtp: [{ host: "smtp.example", password: "" }],
+			"upload.s3.aws_secret_access_key": "s3cret",
+		});
+	});
+
 	it("refuses a setting Listmonk doesn't have", async () => {
 		stubListmonk({ "GET /settings": [ok(current)] });
 
