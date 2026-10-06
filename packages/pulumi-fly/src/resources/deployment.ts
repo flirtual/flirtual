@@ -8,6 +8,7 @@ interface DeploymentInputs {
 	app: string;
 	configuration: string;
 	secrets: Record<string, string>;
+	singleMachine: boolean;
 }
 
 interface DeploymentOutputs extends DeploymentInputs {
@@ -15,7 +16,7 @@ interface DeploymentOutputs extends DeploymentInputs {
 }
 
 async function deploy(
-	{ app, configuration, secrets }: DeploymentInputs,
+	{ app, configuration, secrets, singleMachine }: DeploymentInputs,
 	removed: Array<string> = [],
 ): Promise<DeploymentOutputs> {
 	const { mkdtemp, rm, writeFile } = await import("node:fs/promises");
@@ -31,18 +32,28 @@ async function deploy(
 		const file = join(directory, "fly.json");
 		await writeFile(file, configuration);
 
-		await fly`deploy --config ${file} --yes`;
+		await fly`deploy --config ${file} --yes ${singleMachine ? ["--ha=false"] : []}`;
 	} finally {
 		await rm(directory, { recursive: true, force: true });
 	}
 
-	return { app, configuration, secrets, digests: await record(app, Object.keys(secrets)) };
+	// `--ha=false` only applies to the machines a deploy creates, not ones already running.
+	if (singleMachine) await fly`scale count 1 --app ${app} --yes`;
+
+	return {
+		app,
+		configuration,
+		secrets,
+		singleMachine,
+		digests: await record(app, Object.keys(secrets)),
+	};
 }
 
-const provider: pulumi.dynamic.ResourceProvider<DeploymentInputs, DeploymentOutputs> = {
+export const provider: pulumi.dynamic.ResourceProvider<DeploymentInputs, DeploymentOutputs> = {
 	async diff(_id, olds, news) {
 		if (olds.app !== news.app) return { changes: true, replaces: ["app"] };
 		if (olds.configuration !== news.configuration) return { changes: true };
+		if ((olds.singleMachine ?? false) !== news.singleMachine) return { changes: true };
 
 		const names = new Set([...Object.keys(olds.secrets), ...Object.keys(news.secrets)]);
 		if ([...names].some((name) => olds.secrets[name] !== news.secrets[name]))
@@ -81,6 +92,8 @@ const provider: pulumi.dynamic.ResourceProvider<DeploymentInputs, DeploymentOutp
 
 export interface DeploymentArgs extends Omit<Config, "app" | "build" | "env"> {
 	app: pulumi.Input<string>;
+	/** Runs exactly one Machine, without the spare Fly adds by default, for an app that mustn’t run twice. */
+	singleMachine?: boolean;
 	build?: Omit<NonNullable<Config["build"]>, "image"> & { image?: pulumi.Input<string> };
 	env?: Record<string, pulumi.Input<string>>;
 }
@@ -107,7 +120,7 @@ function partition(environment: Record<string, pulumi.Input<string>>) {
 
 export class Deployment extends pulumi.dynamic.Resource {
 	constructor(name: string, args: DeploymentArgs, options?: pulumi.CustomResourceOptions) {
-		const { env = {}, ...configuration } = args;
+		const { env = {}, singleMachine = false, ...configuration } = args;
 		const split = partition(env);
 
 		super(
@@ -121,6 +134,7 @@ export class Deployment extends pulumi.dynamic.Resource {
 						JSON.stringify({ ...configuration, env } satisfies Config),
 					),
 				secrets: split.apply(({ secrets }) => secrets),
+				singleMachine,
 				digests: undefined,
 			},
 			{ ...options, additionalSecretOutputs: ["secrets"] },
