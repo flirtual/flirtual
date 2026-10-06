@@ -69,7 +69,9 @@ class FetchProvider<Inputs extends object, Live> implements pulumi.dynamic.Resou
 	Inputs,
 	Outputs<Inputs, Live>
 > {
-	declare private api: Api;
+	// A promise, since the dynamic provider host can send an operation before `configure` settles
+	// (@pulumi/pulumi cmd/dynamic-provider).
+	declare private api: Promise<Api>;
 
 	private readonly operations: Operations<Inputs, Live>;
 	private readonly authenticate?: Authenticate;
@@ -80,14 +82,16 @@ class FetchProvider<Inputs extends object, Live> implements pulumi.dynamic.Resou
 	}
 
 	async configure({ config }: pulumi.dynamic.ConfigureRequest) {
+		this.api = this.connect(config);
+		await this.api;
+	}
+
+	private async connect(config: pulumi.dynamic.ConfigureRequest["config"]) {
 		const connection = connectionFrom(config);
-		if (!this.authenticate) {
-			this.api = new Api(connection);
-			return;
-		}
+		if (!this.authenticate) return new Api(connection);
 
 		const headers = await this.authenticate(connection, credentialsFrom(config));
-		this.api = new Api({ ...connection, headers: { ...connection.headers, ...headers } });
+		return new Api({ ...connection, headers: { ...connection.headers, ...headers } });
 	}
 
 	async diff(_id: string, olds: Serialized<Outputs<Inputs, Live>>, news: Serialized<Inputs>) {
@@ -108,7 +112,7 @@ class FetchProvider<Inputs extends object, Live> implements pulumi.dynamic.Resou
 
 	async create(news: Serialized<Inputs>) {
 		const inputs = inputsOf<Inputs>(news);
-		const live = await this.operations.create(this.api, inputs);
+		const live = await this.operations.create(await this.api, inputs);
 
 		return { id: this.operations.id(live), outs: { ...inputs, output: live } };
 	}
@@ -117,7 +121,7 @@ class FetchProvider<Inputs extends object, Live> implements pulumi.dynamic.Resou
 	async read(id: string, props?: Inputs | Outputs<Inputs, Live>) {
 		const inputs = inputsOf<Inputs>(props ?? {});
 		const previous = props && "output" in props ? props.output : undefined;
-		const live = await this.operations.read(this.api, id, inputs, previous);
+		const live = await this.operations.read(await this.api, id, inputs, previous);
 		if (live === undefined) return {};
 
 		return { id, props: { ...inputs, ...this.operations.inputs?.(live, inputs), output: live } };
@@ -128,13 +132,13 @@ class FetchProvider<Inputs extends object, Live> implements pulumi.dynamic.Resou
 			throw new Error(`Resource ${id} has no update; it should have been replaced.`);
 
 		const inputs = inputsOf<Inputs>(news);
-		const live = await this.operations.update(this.api, id, inputs, olds);
+		const live = await this.operations.update(await this.api, id, inputs, olds);
 
 		return { outs: { ...inputs, output: live } };
 	}
 
 	async delete(id: string, olds: Outputs<Inputs, Live>) {
-		await this.operations.delete(this.api, id, inputsOf<Inputs>(olds));
+		await this.operations.delete(await this.api, id, inputsOf<Inputs>(olds));
 	}
 }
 

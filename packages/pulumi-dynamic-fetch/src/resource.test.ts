@@ -282,6 +282,40 @@ describe("authenticate", () => {
 		]);
 	});
 
+	it("makes an operation that arrives during authentication wait for it", async () => {
+		// The dynamic provider host caches a provider before its `configure` settles
+		// (@pulumi/pulumi cmd/dynamic-provider), so another resource's operation can arrive mid-login.
+		let logIn: (headers: Record<string, string>) => void = () => {};
+		const loggedIn = new Promise<Record<string, string>>((resolve) => {
+			logIn = resolve;
+		});
+		const seen: Array<Record<string, string>> = [];
+		const provider = createProvider<Inputs, Live>(
+			operations({
+				read: async (api: Api) => {
+					seen.push(api.connection.headers);
+					return live;
+				},
+			}),
+			() => loggedIn,
+		);
+		const values: Record<string, string> = {
+			[configKey("baseUrl")]: "https://example.com",
+			[configKey("headers")]: JSON.stringify({}),
+			[configKey("encoding")]: "json",
+			[configKey("credentials")]: JSON.stringify({}),
+		};
+		const config = { require: (key: string) => values[key]! } as unknown as pulumi.Config;
+
+		const configuring = provider.configure({ config } as pulumi.dynamic.ConfigureRequest);
+		const reading = provider.read("we_1", { name: "a", url: "https://a.example" });
+		logIn({ cookie: "session=abc" });
+		await configuring;
+		await reading;
+
+		expect(seen).toEqual([{ cookie: "session=abc" }]);
+	});
+
 	it("fails to configure when authentication fails", async () => {
 		const provider = createProvider<Inputs, Live>(operations(), async () => {
 			throw new Error("login refused");
