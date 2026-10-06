@@ -17,11 +17,12 @@ const body = {
 	status: "enabled",
 	user_role_id: 3,
 };
-// Listmonk answers with the whole user; the live object keeps what the stack reads.
+// Listmonk answers with the whole user; the live object keeps what the stack reads. The role id
+// comes back under `user_role`, with `user_role_id` zeroed and so left out.
 const answered = {
 	id: 5,
 	username: "flirtual",
-	user_role_id: 3,
+	user_role: { id: 3, name: "Flirtual", permissions: ["lists:get_all"] },
 	name: "flirtual",
 	status: "enabled",
 };

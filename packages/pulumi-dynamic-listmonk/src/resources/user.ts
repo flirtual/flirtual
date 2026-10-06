@@ -11,7 +11,9 @@ interface UserInputs {
 interface AnsweredUser {
 	id: number;
 	username: string;
-	user_role_id: number;
+	// Listmonk moves the role id here and zeroes `user_role_id`, which its JSON then leaves out
+	// (internal/core/users.go in knadh/listmonk).
+	user_role: { id: number };
 	// An API user's token, returned only by the request that creates the user.
 	password?: string;
 }
@@ -31,10 +33,10 @@ const body = ({ username, roleId }: UserInputs) => ({
 	user_role_id: Number(roleId),
 });
 
-const live = ({ id, username, user_role_id }: AnsweredUser, token: string): LiveUser => ({
+const live = ({ id, username, user_role }: AnsweredUser, token: string): LiveUser => ({
 	id,
 	username,
-	user_role_id,
+	user_role_id: user_role.id,
 	token,
 });
 
