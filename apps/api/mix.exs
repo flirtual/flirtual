@@ -90,7 +90,7 @@ defmodule Flirtual.MixProject do
       {:libcluster, "~> 3.3"},
       {:floki, "~> 0.38.0"},
       {:fast_html, "~> 2.0"},
-      {:ex_check, "== 0.16.0", only: [:dev], runtime: false},
+      {:ex_check, "== 0.17.0", only: [:dev], runtime: false},
       {:credo, "== 1.7.19", only: [:dev, :test], runtime: false},
       {:mix_audit, "== 2.1.5", only: [:dev, :test], runtime: false},
       {:sobelow, "== 0.15.0", only: [:dev, :test], runtime: false},
