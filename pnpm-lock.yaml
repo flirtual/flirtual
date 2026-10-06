@@ -168,11 +168,11 @@ catalogs:
       specifier: 3.2.1-canary.1
       version: 3.2.1-canary.1
     '@cloudflare/build-output-utils':
-      specifier: 0.8.5
-      version: 0.8.5
+      specifier: 0.8.6
+      version: 0.8.6
     '@cloudflare/config':
-      specifier: 0.23.0
-      version: 0.23.0
+      specifier: 0.24.0
+      version: 0.24.0
     '@cloudflare/vitest-pool-workers':
       specifier: ^0.22.0
       version: 0.22.0
@@ -843,10 +843,10 @@ importers:
     dependencies:
       '@cloudflare/build-output-utils':
         specifier: 'catalog:'
-        version: 0.8.5
+        version: 0.8.6
       '@cloudflare/config':
         specifier: 'catalog:'
-        version: 0.23.0
+        version: 0.24.0
       '@flirtual/pulumi-utils':
         specifier: workspace:*
         version: link:../pulumi-utils
@@ -1453,12 +1453,18 @@ packages:
   '@cloudflare/build-output-utils@0.8.5':
     resolution: {integrity: sha512-xnwcDCyBSErZeOj5eUy1gTrmVjwIY51TZ0Pz9W7mZqLGA3IkIckud7dNtFdGhKSXL2szfxBRbGM4R4qFE4SoPA==}
 
+  '@cloudflare/build-output-utils@0.8.6':
+    resolution: {integrity: sha512-Ku4UL7tUX9kpto9AisUg2jPNS4yXC6lMy8DMMKdDquArNjxpqDJfkW68WSlA8yfrLSFO3fgxMWW47rtxv/GHgQ==}
+
   '@cloudflare/codemods@0.4.0':
     resolution: {integrity: sha512-qeRpKNXtvqhTtagx/5cLmDaFx/voBhWJ1S6SdFdBkE3OtgcPVz+Q8MtIG26zltW9Z0Icsu2FGBxV5RFmuHI/Bg==}
     hasBin: true
 
   '@cloudflare/config@0.23.0':
     resolution: {integrity: sha512-oE0S7X54esZmJHr9hhCoqODR+yTxxkSYWCLtRiItQdPs0gQuqYw9a13zChhK+8DmdCUJIFBsMAR6t+mfu8g+9w==}
+
+  '@cloudflare/config@0.24.0':
+    resolution: {integrity: sha512-DBKkL2fFfHIL0cdjXOoWybNzBxD5xAvuebu0nfcBphWeUiWKnSUYu8JMaboKzmAJRp6V1RGtPAdfdtXMHueqAA==}
 
   '@cloudflare/kv-asset-handler@0.5.0':
     resolution: {integrity: sha512-jxQYkj8dSIzc0cD6cMMNdOc1UVjqSqu8BZdor5s8cGjW2I8BjODt/kWPVdY+u9zj3ms75Q5qaZgnxUad83+eAg==}
@@ -9888,9 +9894,17 @@ snapshots:
     dependencies:
       '@cloudflare/config': 0.23.0
 
+  '@cloudflare/build-output-utils@0.8.6':
+    dependencies:
+      '@cloudflare/config': 0.24.0
+
   '@cloudflare/codemods@0.4.0': {}
 
   '@cloudflare/config@0.23.0':
+    dependencies:
+      zod: 4.4.3
+
+  '@cloudflare/config@0.24.0':
     dependencies:
       zod: 4.4.3
 
