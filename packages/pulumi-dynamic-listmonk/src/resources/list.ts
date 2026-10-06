@@ -27,10 +27,24 @@ const fields = ({
 	description: description as Fields["description"],
 });
 
+// Listmonk answers `GET /lists/{id}` for a missing list with a 400, as it does a bad request
+// (listmonk internal/core/lists.go), so find the list among all of them instead. With no lists,
+// the minimal listing's `data` is a bare array rather than a page.
+export async function findList(api: Api, id: number | string) {
+	const listing = await request<{ results: Array<Live> } | Array<Live>>(
+		api,
+		"GET",
+		"/lists?minimal=true",
+	);
+	const lists = Array.isArray(listing) ? listing : (listing?.results ?? []);
+
+	return lists.find((list) => String(list.id) === String(id));
+}
+
 async function takeOver(api: Api, inputs: ListInputs) {
 	const { listId } = inputs;
 	if (listId === undefined) return undefined;
-	if (!(await request<Live>(api, "GET", `/lists/${listId}`))) return undefined;
+	if (!(await findList(api, listId))) return undefined;
 
 	return request<Live>(api, "PUT", `/lists/${listId}`, fields(inputs));
 }
@@ -56,7 +70,7 @@ export class ListResource extends FetchResource<ListInputs, Live> {
 	}
 
 	read(api: Api, id: string) {
-		return request<Live>(api, "GET", `/lists/${id}`);
+		return findList(api, id);
 	}
 
 	async update(api: Api, id: string, inputs: ListInputs) {

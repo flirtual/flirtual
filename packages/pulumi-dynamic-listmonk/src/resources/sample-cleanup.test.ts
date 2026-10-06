@@ -9,6 +9,10 @@ afterEach(() => {
 	vi.unstubAllGlobals();
 });
 
+const lists = "GET /lists?minimal=true";
+const page = (...results: Array<object>) =>
+	ok({ results, total: results.length, page: 1, per_page: results.length });
+
 const subscribers = `GET /subscribers?${new URLSearchParams({
 	per_page: "all",
 	query: "subscribers.email in ('john@example.com', 'anon@example.com')",
@@ -16,7 +20,7 @@ const subscribers = `GET /subscribers?${new URLSearchParams({
 
 it("deletes the seeded opt-in list and example subscribers", async () => {
 	const sent = stubListmonk({
-		"GET /lists/2": [ok({ id: 2, name: "Opt-in list" })],
+		[lists]: [page({ id: 1, name: "Default list" }, { id: 2, name: "Opt-in list" })],
 		"DELETE /lists/2": [ok(true)],
 		[subscribers]: [ok({ results: [{ id: 1 }, { id: 2 }] })],
 		"DELETE /subscribers/1": [ok(true)],
@@ -26,7 +30,7 @@ it("deletes the seeded opt-in list and example subscribers", async () => {
 	await cleanup.create(api);
 
 	expect(sent.map(({ route }) => route)).toEqual([
-		"GET /lists/2",
+		lists,
 		"DELETE /lists/2",
 		subscribers,
 		"DELETE /subscribers/1",
@@ -36,13 +40,24 @@ it("deletes the seeded opt-in list and example subscribers", async () => {
 
 it("leaves list 2 alone once it's something else", async () => {
 	const sent = stubListmonk({
-		"GET /lists/2": [ok({ id: 2, name: "Beta testers" })],
+		[lists]: [page({ id: 2, name: "Beta testers" })],
 		[subscribers]: [ok({ results: [] })],
 	});
 
 	await cleanup.create(api);
 
-	expect(sent.map(({ route }) => route)).toEqual(["GET /lists/2", subscribers]);
+	expect(sent.map(({ route }) => route)).toEqual([lists, subscribers]);
+});
+
+it("moves on when list 2 is already gone", async () => {
+	const sent = stubListmonk({
+		[lists]: [page({ id: 1, name: "Default list" })],
+		[subscribers]: [ok({ results: [] })],
+	});
+
+	await cleanup.create(api);
+
+	expect(sent.map(({ route }) => route)).toEqual([lists, subscribers]);
 });
 
 it("stays in state after a refresh, with nothing to read", async () => {

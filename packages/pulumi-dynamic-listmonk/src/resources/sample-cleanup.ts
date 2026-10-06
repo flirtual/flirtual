@@ -1,6 +1,7 @@
 import { type Api, FetchResource } from "@flirtual/pulumi-dynamic-fetch";
 
 import { request, type Schemas } from "../client.ts";
+import { findList } from "./list.ts";
 
 // What `listmonk --install` seeds besides list 1 and the templates. The example subscribers sit on
 // list 1, so a newsletter would otherwise mail example.com and bounce.
@@ -11,7 +12,7 @@ type Nothing = Record<string, never>;
 
 export class SampleCleanupResource extends FetchResource<Nothing, Nothing> {
 	async create(api: Api) {
-		const list = await request<Schemas.List>(api, "GET", `/lists/${optinList.id}`);
+		const list = await findList(api, optinList.id);
 		if (list?.name === optinList.name) await request(api, "DELETE", `/lists/${optinList.id}`);
 
 		const query = `subscribers.email in (${subscribers.map((email) => `'${email}'`).join(", ")})`;
