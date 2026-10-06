@@ -34,6 +34,72 @@ describe("create and update", () => {
 		});
 	});
 
+	it("overlays a nested object, keeping the fields it isn't given", async () => {
+		const sent = stubListmonk({
+			"GET /settings": [
+				ok({
+					...current,
+					"bounce.actions": {
+						hard: { count: 1, action: "blocklist" },
+						soft: { count: 2, action: "none" },
+					},
+				}),
+			],
+			"PUT /settings": [ok(true)],
+		});
+
+		await settings.create(api, { "bounce.actions": { hard: { count: 3 } } });
+
+		expect((sent[1]!.body as Record<string, unknown>)["bounce.actions"]).toEqual({
+			hard: { count: 3, action: "blocklist" },
+			soft: { count: 2, action: "none" },
+		});
+	});
+
+	it("overlays array items by position, and keeps only as many as it's given", async () => {
+		const sent = stubListmonk({
+			"GET /settings": [
+				ok({
+					...current,
+					smtp: [
+						{ host: "smtp.example", password: "••••", msg_retry_delay: "10ms", from_addresses: [] },
+						{
+							host: "smtp.gmail.com",
+							password: "••••",
+							msg_retry_delay: "10ms",
+							from_addresses: [],
+						},
+					],
+				}),
+			],
+			"PUT /settings": [ok(true)],
+		});
+
+		await settings.create(api, { smtp: [{ host: "email-smtp.example", password: "s3cret" }] });
+
+		expect((sent[1]!.body as Record<string, unknown>)["smtp"]).toEqual([
+			{
+				host: "email-smtp.example",
+				password: "s3cret",
+				msg_retry_delay: "10ms",
+				from_addresses: [],
+			},
+		]);
+	});
+
+	it("keeps a stored secret it isn't given, by sending it back empty", async () => {
+		const sent = stubListmonk({
+			"GET /settings": [ok(current)],
+			"PUT /settings": [ok(true)],
+		});
+
+		await settings.create(api, { smtp: [{ host: "other.example" }] });
+
+		expect((sent[1]!.body as Record<string, unknown>)["smtp"]).toEqual([
+			{ host: "other.example", password: "" },
+		]);
+	});
+
 	it("sets the S3 secret key, which Listmonk leaves out of its settings while it's empty", async () => {
 		const sent = stubListmonk({
 			"GET /settings": [ok(current)],
@@ -73,6 +139,53 @@ describe("read", () => {
 			smtp: [{ host: "smtp.example", password: "hunter2" }],
 		});
 		expect(settings.inputs(read!)).toEqual(read);
+	});
+
+	it("reads back only the paths it sets, so a field Listmonk adds isn't drift", async () => {
+		stubListmonk({
+			"GET /settings": [
+				ok({
+					...current,
+					smtp: [{ host: "smtp.example", password: "••••", msg_retry_delay: "10ms" }],
+					"bounce.actions": { hard: { count: 1, action: "blocklist" } },
+				}),
+			],
+		});
+
+		const read = await settings.read(api, "settings", {
+			smtp: [{ host: "smtp.example", password: "hunter2" }],
+			"bounce.actions": { hard: { count: 1 } },
+		});
+
+		expect(read).toEqual({
+			smtp: [{ host: "smtp.example", password: "hunter2" }],
+			"bounce.actions": { hard: { count: 1 } },
+		});
+	});
+
+	it("reads back array items beyond the ones it sets, so an extra one is drift", async () => {
+		stubListmonk({
+			"GET /settings": [
+				ok({
+					...current,
+					smtp: [
+						{ host: "smtp.example", password: "••••" },
+						{ host: "smtp.gmail.com", password: "••••" },
+					],
+				}),
+			],
+		});
+
+		const read = await settings.read(api, "settings", {
+			smtp: [{ host: "smtp.example", password: "hunter2" }],
+		});
+
+		expect(read).toEqual({
+			smtp: [
+				{ host: "smtp.example", password: "hunter2" },
+				{ host: "smtp.gmail.com", password: "••••" },
+			],
+		});
 	});
 
 	it("can't import, since secrets are unreadable", async () => {
