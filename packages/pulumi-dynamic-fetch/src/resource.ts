@@ -37,10 +37,14 @@ export abstract class FetchResource<Inputs, Live> implements Operations<Inputs, 
 	readonly secretOutputs?: Array<(keyof Inputs & string) | "output">;
 }
 
-const reserved = new Set(["__provider", "output"]);
+// An array, not a Set: the provider is serialized with its captured values, and Pulumi's closure
+// serializer rebuilds a Set as a plain object that `Set.prototype.has` rejects.
+const reserved = ["__provider", "output"];
 
 function inputsOf<Inputs>(props: object): Inputs {
-	return Object.fromEntries(Object.entries(props).filter(([key]) => !reserved.has(key))) as Inputs;
+	return Object.fromEntries(
+		Object.entries(props).filter(([key]) => !reserved.includes(key)),
+	) as Inputs;
 }
 
 function stable(value: unknown): string {

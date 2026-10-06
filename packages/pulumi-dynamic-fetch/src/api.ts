@@ -15,7 +15,11 @@ export class FetchError extends Error {
 	readonly body: string;
 
 	constructor(method: string, url: string, status: number, body: string) {
-		super(`${method} ${url} failed with ${status}: ${body}`);
+		const message = `${method} ${url} failed with ${status}: ${body}`;
+		super(message);
+		// Pulumi's closure serializer rewrites `super(message)` as `Error.call(this, message)`, which
+		// returns a new error and leaves `this` without a message.
+		this.message = message;
 		this.name = "FetchError";
 		this.method = method;
 		this.url = url;

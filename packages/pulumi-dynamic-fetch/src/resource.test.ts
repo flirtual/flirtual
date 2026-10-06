@@ -1,5 +1,7 @@
-import type * as pulumi from "@pulumi/pulumi";
+import * as pulumi from "@pulumi/pulumi";
 import { afterEach, describe, expect, it, vi } from "vitest";
+
+import { createRequire } from "node:module";
 
 import type { Api } from "./api.ts";
 import { configKey } from "./provider.ts";
@@ -47,6 +49,7 @@ const withProvider = (inputs: Inputs) => ({ ...inputs, __provider: "serialized" 
 
 afterEach(() => {
 	vi.restoreAllMocks();
+	vi.unstubAllGlobals();
 });
 
 describe("createProvider", () => {
@@ -178,6 +181,69 @@ describe("createProvider", () => {
 			name: "a",
 			url: "https://a.example",
 		});
+	});
+});
+
+// Round-trips the provider the way Pulumi does: `pulumi.dynamic.Resource` serializes
+// `() => provider`, and the dynamic provider host loads that text and calls its `handler`.
+async function serialized<Provider>(provider: Provider): Promise<Provider> {
+	const { text, exportName } = await pulumi.runtime.serializeFunction(() => provider);
+	const module = { exports: {} as Record<string, () => Provider> };
+	new Function("module", "exports", "require", text)(
+		module,
+		module.exports,
+		createRequire(import.meta.url),
+	);
+	return module.exports[exportName]!();
+}
+
+describe("a serialized provider", () => {
+	it("creates, diffs and deletes after a round trip through Pulumi's closure serializer", async () => {
+		const provider = await serialized(
+			createProvider<Inputs, Live>({
+				create: async () => live,
+				read: async () => live,
+				update: async () => live,
+				delete: async () => {},
+				id: (live) => live.id,
+			}),
+		);
+		const inputs = { name: "a", url: "https://a.example" };
+
+		const created = await provider.create(withProvider(inputs));
+		const diff = await provider.diff("we_1", { ...inputs, output: live }, withProvider(inputs));
+
+		expect(created).toEqual({ id: "we_1", outs: { ...inputs, output: live } });
+		expect(diff).toEqual({ changes: false, replaces: [] });
+		await expect(provider.delete("we_1", { ...inputs, output: live })).resolves.toBeUndefined();
+	});
+
+	it("keeps the message of an API failure, which the provider host reports as the error", async () => {
+		vi.stubGlobal(
+			"fetch",
+			vi.fn(async () => new Response("nope", { status: 500 })),
+		);
+		const provider = await serialized(
+			createProvider<Inputs, Live>({
+				create: async (api) => (await api.request<Live>("POST", "/things"))!,
+				read: async () => live,
+				delete: async () => {},
+				id: (live) => live.id,
+			}),
+		);
+		const values: Record<string, string> = {
+			[configKey("baseUrl")]: "https://example.com",
+			[configKey("headers")]: JSON.stringify({}),
+			[configKey("encoding")]: "json",
+		};
+		const config = { require: (key: string) => values[key]! } as unknown as pulumi.Config;
+		await provider.configure({ config } as pulumi.dynamic.ConfigureRequest);
+
+		const error = await provider
+			.create(withProvider({ name: "a", url: "https://a.example" }))
+			.catch((error: unknown) => error);
+
+		expect((error as Error).message).toBe("POST https://example.com/things failed with 500: nope");
 	});
 });
 
