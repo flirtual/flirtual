@@ -234,6 +234,12 @@ catalogs:
     '@pulumi/random':
       specifier: ^4.21.0
       version: 4.21.2
+    '@pulumi/tls':
+      specifier: ^5.6.1
+      version: 5.6.1
+    '@pulumiverse/time':
+      specifier: ^0.1.1
+      version: 0.1.1
     change-case:
       specifier: ^5.4.4
       version: 5.4.4
@@ -1110,6 +1116,12 @@ importers:
       '@pulumi/sentry':
         specifier: file:sdks/sentry
         version: file:pulumi/sdks/sentry(supports-color@10.2.2)
+      '@pulumi/tls':
+        specifier: catalog:pulumi
+        version: 5.6.1(supports-color@10.2.2)(typescript@5.9.3)
+      '@pulumiverse/time':
+        specifier: catalog:pulumi
+        version: 0.1.1(supports-color@10.2.2)(typescript@5.9.3)
       change-case:
         specifier: catalog:pulumi
         version: 5.4.4
@@ -3828,6 +3840,12 @@ packages:
 
   '@pulumi/sentry@file:pulumi/sdks/sentry':
     resolution: {directory: pulumi/sdks/sentry, type: directory}
+
+  '@pulumi/tls@5.6.1':
+    resolution: {integrity: sha512-Uijxsh1TfNpr52a307WA3kUTYLOu/jU/nApuz5ovYRZseZkLTLrrF/PiYpIwudum0AXt04XiBHPCHqleM7YX2Q==}
+
+  '@pulumiverse/time@0.1.1':
+    resolution: {integrity: sha512-M5twzGcPVir5BO3p57taxrGY8oSM896aoLufxDXJ91S508ruKfLiVejusc84sbblU2us90T8lJFGCq7j7tuwCQ==}
 
   '@radix-ui/number@1.1.3':
     resolution: {integrity: sha512-Road2bidD0uu/1BGDOWNdPI06g0lIRy6IF9GZcIrDK2KGItfor8IQwQa+yM2ERgHM1MmHxaxpTzk0/Jp42lNfA==}
@@ -11856,6 +11874,22 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
       - ts-node
+
+  '@pulumi/tls@5.6.1(supports-color@10.2.2)(typescript@5.9.3)':
+    dependencies:
+      '@pulumi/pulumi': 3.267.0(supports-color@10.2.2)(typescript@5.9.3)
+    transitivePeerDependencies:
+      - supports-color
+      - ts-node
+      - typescript
+
+  '@pulumiverse/time@0.1.1(supports-color@10.2.2)(typescript@5.9.3)':
+    dependencies:
+      '@pulumi/pulumi': 3.267.0(supports-color@10.2.2)(typescript@5.9.3)
+    transitivePeerDependencies:
+      - supports-color
+      - ts-node
+      - typescript
 
   '@radix-ui/number@1.1.3': {}
 
