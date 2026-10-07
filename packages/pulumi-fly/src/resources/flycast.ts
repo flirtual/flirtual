@@ -28,7 +28,7 @@ async function allocated(app: string, network: string) {
 	return address.Address;
 }
 
-const provider: pulumi.dynamic.ResourceProvider<FlycastInputs, FlycastOutputs> = {
+export const provider: pulumi.dynamic.ResourceProvider<FlycastInputs, FlycastOutputs> = {
 	async diff(_id, olds, news) {
 		const replaces = ["app", "network"].filter(
 			(key) => olds[key as keyof FlycastInputs] !== news[key as keyof FlycastInputs],
@@ -38,7 +38,20 @@ const provider: pulumi.dynamic.ResourceProvider<FlycastInputs, FlycastOutputs> =
 	},
 
 	async create({ app, network }) {
-		await fly`ips allocate-v6 --private --network ${network} --app ${app}`;
+		// Fly briefly refuses allocations on a network it has just created.
+		const allocate = async (attempt: number): Promise<void> => {
+			try {
+				await fly`ips allocate-v6 --private --network ${network} --app ${app}`;
+			} catch (error) {
+				const transient = String(error).includes("unable to allocate an IP address");
+				if (!transient || attempt >= 5) throw error;
+
+				await new Promise((resolve) => setTimeout(resolve, attempt * 2_000));
+				return allocate(attempt + 1);
+			}
+		};
+
+		await allocate(1);
 
 		const address = await allocated(app, network);
 		return { id: `${app}/${address}`, outs: { app, network, address } };
