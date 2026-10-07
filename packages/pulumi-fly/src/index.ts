@@ -4,6 +4,7 @@ export { Certificate, type CertificateArgs } from "./resources/certificate.ts";
 export { Command, type CommandArgs } from "./resources/command.ts";
 export { Deployment, type DeploymentArgs } from "./resources/deployment.ts";
 export { Flycast, type FlycastArgs } from "./resources/flycast.ts";
+export { PublicAddresses, type PublicAddressesArgs } from "./resources/public.ts";
 export { Postgres, type PostgresArgs } from "./resources/postgres.ts";
 export { tunnel } from "./tunnel.ts";
 export { Secret, type SecretArgs, Secrets, type SecretsArgs } from "./resources/secret.ts";

@@ -32,7 +32,8 @@ async function deploy(
 		const file = join(directory, "fly.json");
 		await writeFile(file, configuration);
 
-		await fly`deploy --config ${file} --yes ${singleMachine ? ["--ha=false"] : []}`;
+		// Public IPs come from PublicAddresses, not from a first deploy.
+		await fly`deploy --config ${file} --yes --no-public-ips ${singleMachine ? ["--ha=false"] : []}`;
 	} finally {
 		await rm(directory, { recursive: true, force: true });
 	}

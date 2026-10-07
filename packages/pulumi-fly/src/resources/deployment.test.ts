@@ -38,14 +38,14 @@ const inputs = { app: "flirtual-latest-listmonk", configuration: "{}", secrets: 
 it("deploys with Fly's spare machines by default", async () => {
 	await provider.create({ ...inputs, singleMachine: false });
 
-	expect(commands).toEqual(["deploy --config <file> --yes"]);
+	expect(commands).toEqual(["deploy --config <file> --yes --no-public-ips"]);
 });
 
 it("keeps a single-machine app to exactly one machine, including one Fly already doubled", async () => {
 	await provider.create({ ...inputs, singleMachine: true });
 
 	expect(commands).toEqual([
-		"deploy --config <file> --yes --ha=false",
+		"deploy --config <file> --yes --no-public-ips --ha=false",
 		"scale count 1 --app flirtual-latest-listmonk --yes",
 	]);
 });
