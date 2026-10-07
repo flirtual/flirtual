@@ -22,6 +22,9 @@ defmodule Flirtual.ObanWorkers.ImageClassify do
               _ -> :ok
             end
 
+          {:error, {:classify_failed, 503}} ->
+            {:snooze, 30}
+
           {:error, reason} ->
             {:error, reason}
         end
