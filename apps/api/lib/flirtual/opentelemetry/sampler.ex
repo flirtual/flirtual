@@ -1,7 +1,8 @@
 defmodule Flirtual.OpenTelemetry.Sampler do
   @moduledoc """
   OpenTelemetry sampler that drops client spans targeting Sentry's own ingest
-  endpoint, then delegates every other decision to `Sentry.OpenTelemetry.Sampler`.
+  endpoint, inherits an incoming trace's sampling decision, then delegates every other
+  decision to `Sentry.OpenTelemetry.Sampler`.
   """
 
   @behaviour :otel_sampler
@@ -21,8 +22,35 @@ defmodule Flirtual.OpenTelemetry.Sampler do
       when is_binary(ingest_host),
       do: {:drop, [], []}
 
+  # Sentry's propagator continues an incoming trace without its sampling decision, so
+  # `SentrySampler` re-rolls every request. Inherit the caller's decision from baggage,
+  # which only carries `sentry-sampled` once the caller has decided.
   def should_sample(ctx, trace_id, links, span_name, span_kind, attributes, {_, config}) do
-    SentrySampler.should_sample(ctx, trace_id, links, span_name, span_kind, attributes, config)
+    case incoming_sampled(ctx) do
+      nil ->
+        SentrySampler.should_sample(
+          ctx,
+          trace_id,
+          links,
+          span_name,
+          span_kind,
+          attributes,
+          config
+        )
+
+      sampled ->
+        decision = if sampled, do: :record_and_sample, else: :drop
+        {decision, [], [{"sentry-sampled", to_string(sampled)}]}
+    end
+  end
+
+  defp incoming_sampled(ctx) do
+    with baggage when is_binary(baggage) <- :otel_ctx.get_value(ctx, :"sentry-baggage", nil),
+         [_, sampled] <- Regex.run(~r/(?:^|,)\s*sentry-sampled=(true|false)\b/, baggage) do
+      sampled == "true"
+    else
+      _ -> nil
+    end
   end
 
   defp ingest_host do
