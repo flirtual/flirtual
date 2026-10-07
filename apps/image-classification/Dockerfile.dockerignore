@@ -1,10 +1,12 @@
+apps/*
+!apps/image-classification
+packages
+pulumi
+
 **/node_modules
 **/dist
 **/.git
 **/.env.*
 **/tmp
-
-apps/*
-!apps/image-classification
 
 apps/image-classification/deep-danbooru
