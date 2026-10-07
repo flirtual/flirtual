@@ -1,6 +1,7 @@
 export type { FlyIoConfigSchemaFlyToml as Config } from "./config.ts";
 export { App, type AppArgs } from "./resources/app.ts";
 export { Certificate, type CertificateArgs } from "./resources/certificate.ts";
+export { Command, type CommandArgs } from "./resources/command.ts";
 export { Deployment, type DeploymentArgs } from "./resources/deployment.ts";
 export { Flycast, type FlycastArgs } from "./resources/flycast.ts";
 export { Postgres, type PostgresArgs } from "./resources/postgres.ts";
