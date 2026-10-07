@@ -10,6 +10,10 @@ defmodule Flirtual.Release do
   # The rows a new database starts with, by table, from priv/repo/exports.
   @seeds ["attributes", "plans"]
 
+  # Fly starts a stopped database on the first connection, which takes Postgres seconds to accept:
+  # https://github.com/fly-apps/postgres-flex/blob/master/cmd/start/main.go
+  @wait_for_database_start [queue_target: 30_000, queue_interval: 30_000]
+
   def migrate do
     load_app()
 
@@ -48,5 +52,10 @@ defmodule Flirtual.Release do
 
   defp load_app do
     Application.load(@app)
+
+    for repo <- repos() do
+      config = Application.get_env(@app, repo, [])
+      Application.put_env(@app, repo, Keyword.merge(config, @wait_for_database_start))
+    end
   end
 end
