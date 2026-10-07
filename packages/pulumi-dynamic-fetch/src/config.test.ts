@@ -82,16 +82,6 @@ const { Provider: OtherProvider } = defineConfig({
 	resources: {},
 });
 
-const { Provider: SessionProvider } = defineConfig({
-	module: "session",
-	provider: ({ password }: { password: pulumi.Input<string> }) => ({
-		baseUrl: "https://session.example",
-		credentials: { username: "admin", password },
-	}),
-	authenticate: async () => ({ cookie: "session=abc" }),
-	resources: {},
-});
-
 const providerOf = (name: string) =>
 	registered.find((resource) => resource.name === name)!.provider;
 
@@ -107,20 +97,6 @@ describe("Provider", () => {
 			value: JSON.stringify({ authorization: "Bearer key" }),
 		});
 		expect(inputs["fetch:encoding"]).toBe("form");
-	});
-
-	it("keeps credentials for `authenticate` secret, and leaves them out when there are none", async () => {
-		await settled(new SessionProvider("session", { password: "hunter22" }));
-		await settled(new Provider("no-credentials", { site: "acme", token: "key" }));
-
-		const { inputs } = registered.find(({ name }) => name === "session")!;
-		expect(inputs["fetch:credentials"]).toEqual({
-			[pulumi.runtime.specialSigKey]: pulumi.runtime.specialSecretSig,
-			value: JSON.stringify({ username: "admin", password: "hunter22" }),
-		});
-		expect(registered.find(({ name }) => name === "no-credentials")!.inputs).not.toHaveProperty(
-			"fetch:credentials",
-		);
 	});
 
 	it("fills the arguments it isn't given from their defaults", async () => {

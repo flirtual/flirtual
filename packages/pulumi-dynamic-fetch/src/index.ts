@@ -1,8 +1,7 @@
 export { Api, type Body, type Connection, type Encoding, FetchError, formEncode } from "./api.ts";
-export { type Credentials, Provider, type ProviderArgs } from "./provider.ts";
+export { Provider, type ProviderArgs } from "./provider.ts";
 export {
 	type Args,
-	type Authenticate,
 	FetchResource,
 	type LiveFields,
 	type Operations,

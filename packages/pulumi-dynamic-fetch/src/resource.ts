@@ -1,7 +1,7 @@
 import * as pulumi from "@pulumi/pulumi";
 
-import { Api, type Connection } from "./api.ts";
-import { connectionFrom, type Credentials, credentialsFrom } from "./provider.ts";
+import { Api } from "./api.ts";
+import { connectionFrom } from "./provider.ts";
 
 export type Outputs<Inputs, Live> = Inputs & { output: Live };
 
@@ -41,13 +41,6 @@ export abstract class FetchResource<Inputs, Live> implements Operations<Inputs, 
 // serializer rebuilds a Set as a plain object that `Set.prototype.has` rejects.
 const reserved = ["__provider", "output"];
 
-// Runs once when the provider starts, before any operation. The headers it resolves to are sent
-// alongside the connection's own, as a session cookie from a login would be.
-export type Authenticate = (
-	connection: Connection,
-	credentials: Credentials,
-) => Promise<Record<string, string>>;
-
 function inputsOf<Inputs>(props: object): Inputs {
 	return Object.fromEntries(
 		Object.entries(props).filter(([key]) => !reserved.includes(key)),
@@ -69,29 +62,16 @@ class FetchProvider<Inputs extends object, Live> implements pulumi.dynamic.Resou
 	Inputs,
 	Outputs<Inputs, Live>
 > {
-	// A promise, since the dynamic provider host can send an operation before `configure` settles
-	// (@pulumi/pulumi cmd/dynamic-provider).
-	declare private api: Promise<Api>;
+	declare private api: Api;
 
 	private readonly operations: Operations<Inputs, Live>;
-	private readonly authenticate?: Authenticate;
 
-	constructor(operations: Operations<Inputs, Live>, authenticate?: Authenticate) {
+	constructor(operations: Operations<Inputs, Live>) {
 		this.operations = operations;
-		this.authenticate = authenticate;
 	}
 
 	async configure({ config }: pulumi.dynamic.ConfigureRequest) {
-		this.api = this.connect(config);
-		await this.api;
-	}
-
-	private async connect(config: pulumi.dynamic.ConfigureRequest["config"]) {
-		const connection = connectionFrom(config);
-		if (!this.authenticate) return new Api(connection);
-
-		const headers = await this.authenticate(connection, credentialsFrom(config));
-		return new Api({ ...connection, headers: { ...connection.headers, ...headers } });
+		this.api = new Api(connectionFrom(config));
 	}
 
 	async diff(_id: string, olds: Serialized<Outputs<Inputs, Live>>, news: Serialized<Inputs>) {
@@ -112,7 +92,7 @@ class FetchProvider<Inputs extends object, Live> implements pulumi.dynamic.Resou
 
 	async create(news: Serialized<Inputs>) {
 		const inputs = inputsOf<Inputs>(news);
-		const live = await this.operations.create(await this.api, inputs);
+		const live = await this.operations.create(this.api, inputs);
 
 		return { id: this.operations.id(live), outs: { ...inputs, output: live } };
 	}
@@ -121,7 +101,7 @@ class FetchProvider<Inputs extends object, Live> implements pulumi.dynamic.Resou
 	async read(id: string, props?: Inputs | Outputs<Inputs, Live>) {
 		const inputs = inputsOf<Inputs>(props ?? {});
 		const previous = props && "output" in props ? props.output : undefined;
-		const live = await this.operations.read(await this.api, id, inputs, previous);
+		const live = await this.operations.read(this.api, id, inputs, previous);
 		if (live === undefined) return {};
 
 		return { id, props: { ...inputs, ...this.operations.inputs?.(live, inputs), output: live } };
@@ -132,21 +112,18 @@ class FetchProvider<Inputs extends object, Live> implements pulumi.dynamic.Resou
 			throw new Error(`Resource ${id} has no update; it should have been replaced.`);
 
 		const inputs = inputsOf<Inputs>(news);
-		const live = await this.operations.update(await this.api, id, inputs, olds);
+		const live = await this.operations.update(this.api, id, inputs, olds);
 
 		return { outs: { ...inputs, output: live } };
 	}
 
 	async delete(id: string, olds: Outputs<Inputs, Live>) {
-		await this.operations.delete(await this.api, id, inputsOf<Inputs>(olds));
+		await this.operations.delete(this.api, id, inputsOf<Inputs>(olds));
 	}
 }
 
-export function createProvider<Inputs extends object, Live>(
-	operations: Operations<Inputs, Live>,
-	authenticate?: Authenticate,
-) {
-	return new FetchProvider(operations, authenticate);
+export function createProvider<Inputs extends object, Live>(operations: Operations<Inputs, Live>) {
+	return new FetchProvider(operations);
 }
 
 export type Args<Inputs> = { [Key in keyof Inputs]: pulumi.Input<Inputs[Key]> };
@@ -173,9 +150,8 @@ export function define<Inputs extends object, Live>(
 	module: string,
 	type: string,
 	operations: Operations<Inputs, Live>,
-	authenticate?: Authenticate,
 ): ResourceClass<Inputs, Live> {
-	const provider = createProvider(operations, authenticate);
+	const provider = createProvider(operations);
 	const { secretOutputs = [] } = operations;
 
 	return class extends pulumi.dynamic.Resource {
