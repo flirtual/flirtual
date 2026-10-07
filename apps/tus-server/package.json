@@ -8,6 +8,7 @@
 		"typegen": "wrangler types",
 		"type-check": "pnpm typegen && tsc",
 		"build": "pnpm typegen && wrangler deploy --dry-run --outdir=dist",
+		"build:cloudflare": "cf-wrangler build --mode development",
 		"pretest": "pnpm typegen",
 		"test": "vitest run",
 		"dev": "wrangler dev",

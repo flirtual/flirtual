@@ -16,6 +16,7 @@ export const worker = defineWorker({
 			exportName: "AttachmentUploadHandler",
 		}),
 		SHARED_AUTH_SECRET: bindings.secret(),
+		ALLOWED_ORIGIN: bindings.text("https://localhost:3000"),
 	},
 });
 
