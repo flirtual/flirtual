@@ -109,3 +109,110 @@ it("rejects an upload token used on the unbound backups namespace", async () => 
 
 	expect(response.status).toBe(401);
 });
+
+describe("the /tus collection", () => {
+	const origin = "https://app.example";
+
+	async function create(id: string, headers: Record<string, string> = {}) {
+		return worker.fetch("http://localhost/tus/", {
+			method: "POST",
+			headers: {
+				Origin: origin,
+				Authorization: await authorization(id),
+				"Tus-Resumable": "1.0.0",
+				"Upload-Length": "4",
+				"Upload-Metadata": metadata({ id, filename: "photo.jpg" }),
+				...headers,
+			},
+		});
+	}
+
+	it("creates an upload whose location stays under /tus", async () => {
+		const id = crypto.randomUUID();
+		const response = await create(id);
+
+		expect(response.status).toBe(201);
+		expect(new URL(response.headers.get("Location")!).pathname).toBe(`/tus/${id}`);
+	});
+
+	it("finishes an upload into the bucket, under its id", async () => {
+		const id = crypto.randomUUID();
+		const location = (await create(id)).headers.get("Location")!;
+
+		const patch = await worker.fetch(location, {
+			method: "PATCH",
+			headers: {
+				Origin: origin,
+				Authorization: await authorization(id),
+				"Tus-Resumable": "1.0.0",
+				"Content-Type": "application/offset+octet-stream",
+				"Upload-Offset": "0",
+			},
+			body: new Uint8Array(4),
+		});
+
+		expect(patch.status).toBe(204);
+		expect(patch.headers.get("Upload-Offset")).toBe("4");
+		expect((await env.ATTACHMENT_BUCKET.head(id))?.size).toBe(4);
+	});
+
+	it("lets the frontend read the headers a tus client needs", async () => {
+		const response = await create(crypto.randomUUID());
+
+		expect(response.headers.get("Access-Control-Allow-Origin")).toBe(origin);
+		expect(response.headers.get("Vary")).toContain("Origin");
+		expect(response.headers.get("Access-Control-Expose-Headers")?.split(/,\s*/u)).toEqual(
+			expect.arrayContaining(["Location", "Upload-Offset", "Upload-Length", "Tus-Resumable"]),
+		);
+	});
+
+	it("doesn't let another origin read its responses", async () => {
+		const response = await create(crypto.randomUUID(), { Origin: "https://elsewhere.example" });
+
+		expect(response.headers.get("Access-Control-Allow-Origin")).toBeNull();
+	});
+
+	it("answers the preflight before a PATCH to an upload", async () => {
+		const response = await worker.fetch(`http://localhost/tus/${crypto.randomUUID()}`, {
+			method: "OPTIONS",
+			headers: {
+				Origin: origin,
+				"Access-Control-Request-Method": "PATCH",
+				"Access-Control-Request-Headers": "authorization, tus-resumable, upload-offset, content-type",
+			},
+		});
+
+		expect(response.status).toBe(204);
+		expect(response.headers.get("Access-Control-Allow-Origin")).toBe(origin);
+		expect(response.headers.get("Access-Control-Allow-Methods")?.split(/,\s*/u)).toEqual(
+			expect.arrayContaining(["POST", "PATCH", "HEAD"]),
+		);
+		expect(
+			response.headers
+				.get("Access-Control-Allow-Headers")
+				?.toLowerCase()
+				.split(/,\s*/u),
+		).toEqual(
+			expect.arrayContaining(["authorization", "tus-resumable", "upload-offset", "content-type", "upload-length", "upload-metadata"]),
+		);
+		expect(response.headers.get("Tus-Resumable")).toBe("1.0.0");
+	});
+
+	it("leaves Signal's own /upload paths as they were, without CORS", async () => {
+		const id = crypto.randomUUID();
+		const response = await worker.fetch("http://localhost/upload/attachments", {
+			method: "POST",
+			headers: {
+				Origin: origin,
+				Authorization: await authorization(id),
+				"Tus-Resumable": "1.0.0",
+				"Upload-Length": "4",
+				"Upload-Metadata": metadata({ id, filename: "photo.jpg" }),
+			},
+		});
+
+		expect(response.status).toBe(201);
+		expect(new URL(response.headers.get("Location")!).pathname).toBe(`/upload/attachments/${id}`);
+		expect(response.headers.get("Access-Control-Allow-Origin")).toBeNull();
+	});
+});

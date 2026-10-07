@@ -6,7 +6,7 @@ export default defineConfig({
 		cloudflareTest({
 			main: "./src/index.ts",
 			wrangler: { configPath: "./wrangler.toml" },
-			miniflare: { bindings: { SHARED_AUTH_SECRET: "test" } },
+			miniflare: { bindings: { SHARED_AUTH_SECRET: "test", ALLOWED_ORIGIN: "https://app.example" } },
 		}),
 	],
 });
