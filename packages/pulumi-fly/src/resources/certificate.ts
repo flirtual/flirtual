@@ -5,13 +5,12 @@ import { flyDelete, flyJson } from "../client.ts";
 interface CertificateInputs {
 	app: string;
 	hostname: string;
+	fullchain: string;
+	privateKey: string;
 }
 
 export interface DnsRequirements {
-	a: Array<string>;
-	aaaa: Array<string>;
 	cname: string;
-	acmeChallenge: { name: string; target: string };
 	ownership: { name: string; appValue: string; orgValue: string };
 }
 
@@ -20,27 +19,19 @@ interface CertificateOutputs extends CertificateInputs {
 }
 
 interface CertificateDetail {
-	hostname: string;
-	configured: boolean;
 	dns_requirements: {
-		a: Array<string>;
-		aaaa: Array<string>;
 		cname: string;
-		acme_challenge: { name: string; target: string };
 		ownership: { name: string; app_value: string; org_value: string };
 	};
 }
 
 function toOutputs(inputs: CertificateInputs, detail: CertificateDetail): CertificateOutputs {
-	const { a, aaaa, cname, acme_challenge, ownership } = detail.dns_requirements;
+	const { cname, ownership } = detail.dns_requirements;
 
 	return {
 		...inputs,
 		dnsRequirements: {
-			a,
-			aaaa,
 			cname,
-			acmeChallenge: acme_challenge,
 			ownership: {
 				name: ownership.name,
 				appValue: ownership.app_value,
@@ -50,29 +41,52 @@ function toOutputs(inputs: CertificateInputs, detail: CertificateDetail): Certif
 	};
 }
 
-const provider: pulumi.dynamic.ResourceProvider<CertificateInputs, CertificateOutputs> = {
-	async diff(_id, olds, news) {
-		const replaces = ["app", "hostname"].filter(
-			(key) => olds[key as keyof CertificateInputs] !== news[key as keyof CertificateInputs],
-		);
+async function importCertificate({ app, hostname, fullchain, privateKey }: CertificateInputs) {
+	const { mkdtemp, rm, writeFile } = await import("node:fs/promises");
+	const { tmpdir } = await import("node:os");
+	const { join } = await import("node:path");
 
-		return { changes: replaces.length > 0, replaces };
+	const directory = await mkdtemp(join(tmpdir(), "fly-certificate-"));
+	try {
+		const fullchainFile = join(directory, "fullchain.pem");
+		const keyFile = join(directory, "key.pem");
+		await writeFile(fullchainFile, fullchain, { mode: 0o600 });
+		await writeFile(keyFile, privateKey, { mode: 0o600 });
+
+		return await flyJson<CertificateDetail>`certs import ${hostname} --app ${app}
+      --fullchain ${fullchainFile} --private-key ${keyFile}`;
+	} finally {
+		await rm(directory, { recursive: true, force: true });
+	}
+}
+
+const replacing = ["app", "hostname"] as const;
+const updating = ["fullchain", "privateKey"] as const;
+
+export const provider: pulumi.dynamic.ResourceProvider<CertificateInputs, CertificateOutputs> = {
+	async diff(_id, olds, news) {
+		const replaces = replacing.filter((key) => olds[key] !== news[key]);
+		const updates = updating.filter((key) => olds[key] !== news[key]);
+
+		return { changes: replaces.length + updates.length > 0, replaces: [...replaces] };
 	},
 
 	async create(inputs) {
-		const { app, hostname } = inputs;
-		const detail = await flyJson<CertificateDetail>`certs add ${hostname} --app ${app}`;
-
-		return { id: `${app}/${hostname}`, outs: toOutputs(inputs, detail) };
+		const detail = await importCertificate(inputs);
+		return { id: `${inputs.app}/${inputs.hostname}`, outs: toOutputs(inputs, detail) };
 	},
 
-	async read(id) {
+	async update(_id, _olds, news) {
+		return { outs: toOutputs(news, await importCertificate(news)) };
+	},
+
+	async read(id, props) {
 		const [app, hostname] = id.split("/");
 		if (!app || !hostname) throw new Error(`Fly certificate "${id}" must be "<app>/<hostname>".`);
+		if (!props) throw new Error(`Fly certificate "${id}" can't be imported; its key is unknown.`);
 
-		const detail = await flyJson<CertificateDetail>`certs check ${hostname} --app ${app}`;
-
-		return { id, props: toOutputs({ app, hostname }, detail) };
+		const detail = await flyJson<CertificateDetail>`certs show ${hostname} --app ${app}`;
+		return { id, props: toOutputs(props, detail) };
 	},
 
 	async delete(_id, props) {
@@ -83,8 +97,11 @@ const provider: pulumi.dynamic.ResourceProvider<CertificateInputs, CertificateOu
 export interface CertificateArgs {
 	app: pulumi.Input<string>;
 	hostname: pulumi.Input<string>;
+	fullchain: pulumi.Input<string>;
+	privateKey: pulumi.Input<string>;
 }
 
+// A certificate we bring, so Fly never asks Let's Encrypt for one.
 export class Certificate extends pulumi.dynamic.Resource {
 	declare public readonly hostname: pulumi.Output<string>;
 	declare public readonly dnsRequirements: pulumi.Output<DnsRequirements>;
@@ -93,11 +110,11 @@ export class Certificate extends pulumi.dynamic.Resource {
 		super(
 			provider,
 			name,
+			{ ...args, dnsRequirements: undefined },
 			{
-				...args,
-				dnsRequirements: undefined,
+				...options,
+				additionalSecretOutputs: [...(options?.additionalSecretOutputs ?? []), "privateKey"],
 			},
-			options,
 			"fly",
 			"Certificate",
 		);
