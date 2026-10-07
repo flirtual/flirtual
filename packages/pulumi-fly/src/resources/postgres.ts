@@ -14,11 +14,35 @@ interface PostgresInputs {
 	memory: number;
 }
 
+interface PostgresOutputs extends PostgresInputs {
+	idleTimeout?: string;
+}
+
 interface FlyApp {
 	Name: string;
 }
 
-const provider: pulumi.dynamic.ResourceProvider<PostgresInputs, PostgresInputs> = {
+interface FlyMachine {
+	id: string;
+}
+
+// flyctl's own scale-to-zero for a single-node cluster, which `fly pg create` only offers in its
+// interactive prompt: https://github.com/superfly/flyctl/blob/master/flypg/launcher.go
+const idleTimeout = "1h";
+
+async function scaleToZero(app: string) {
+	const machines = await flyJson<Array<FlyMachine>>`machines list --app ${app}`;
+
+	await Promise.all(
+		machines.map(
+			({ id }) =>
+				fly`machine update ${id} --app ${app} --env ${`FLY_SCALE_TO_ZERO=${idleTimeout}`}
+          --autostart=true --restart on-failure --yes`,
+		),
+	);
+}
+
+export const provider: pulumi.dynamic.ResourceProvider<PostgresInputs, PostgresOutputs> = {
 	async check(_olds, news) {
 		const help = await fly`pg create --help`.catch(() => "");
 
@@ -50,7 +74,7 @@ const provider: pulumi.dynamic.ResourceProvider<PostgresInputs, PostgresInputs> 
 			] as const
 		).filter((key) => olds[key] !== news[key]);
 
-		return { changes: replaces.length > 0, replaces };
+		return { changes: replaces.length > 0 || olds.idleTimeout !== idleTimeout, replaces };
 	},
 
 	async create(inputs) {
@@ -62,7 +86,15 @@ const provider: pulumi.dynamic.ResourceProvider<PostgresInputs, PostgresInputs> 
       --initial-cluster-size ${String(clusterSize)} --volume-size ${String(volumeSize)}
       --vm-cpu-kind shared --vm-cpus 1 --vm-memory ${String(memory)}`;
 
-		return { id: name, outs: inputs };
+		await scaleToZero(name);
+
+		return { id: name, outs: { ...inputs, idleTimeout } };
+	},
+
+	async update(_id, olds, news) {
+		if (olds.idleTimeout !== idleTimeout) await scaleToZero(news.name);
+
+		return { outs: { ...news, idleTimeout } };
 	},
 
 	async read(id, props) {
