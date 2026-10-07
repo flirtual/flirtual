@@ -81,7 +81,12 @@ defmodule Flirtual.MixProject do
       {:opentelemetry_bandit, "~> 0.3.0"},
       {:opentelemetry_ecto, "~> 1.2"},
       {:opentelemetry_oban, "~> 1.2"},
-      {:opentelemetry_finch, "~> 0.2.0"},
+      # 0.2.0 crashes on Req 0.7's stream results; the fix is unreleased:
+      # https://github.com/open-telemetry/opentelemetry-erlang-contrib/commit/7f48f84
+      {:opentelemetry_finch,
+       github: "open-telemetry/opentelemetry-erlang-contrib",
+       ref: "72547ccffcfdef4d35c5a89b9461ed3cc009e59d",
+       sparse: "instrumentation/opentelemetry_finch"},
       {:gettext, "~> 1.0.0"},
       {:jason, "~> 1.4"},
       {:joken, "~> 2.5"},

@@ -15,10 +15,10 @@ defmodule Flirtual.OpenTelemetry.Sampler do
   @impl true
   def description({_, config}), do: SentrySampler.description(config)
 
-  # opentelemetry_finch puts the destination host in `net.peer.name`; repeating
+  # opentelemetry_finch puts the destination host in `server.address`; repeating
   # `ingest_host` across the attributes and the setup tuple makes this an equality match.
   @impl true
-  def should_sample(_, _, _, _, _, %{"net.peer.name": ingest_host}, {ingest_host, _})
+  def should_sample(_, _, _, _, _, %{"server.address": ingest_host}, {ingest_host, _})
       when is_binary(ingest_host),
       do: {:drop, [], []}
 
