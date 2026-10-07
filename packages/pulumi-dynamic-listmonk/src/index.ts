@@ -1,40 +1,44 @@
 import { defineConfig } from "@flirtual/pulumi-dynamic-fetch";
 import * as pulumi from "@pulumi/pulumi";
 
-import { login } from "./login.ts";
 import { ListResource } from "./resources/list.ts";
 import { RoleResource } from "./resources/role.ts";
 import { SampleCleanupResource } from "./resources/sample-cleanup.ts";
 import { SettingsResource } from "./resources/settings.ts";
 import { UserResource } from "./resources/user.ts";
 
+export { installedApiToken } from "./install.ts";
+
 export const { Provider, List, Role, User, Settings, SampleCleanup } = defineConfig({
 	module: "listmonk",
-	// Signs in as a user with a password, such as the admin an install creates.
+	// An API user's token goes in Basic auth as its password. The variables are the ones the API
+	// reads (apps/api/config/runtime.exs).
 	provider: (
 		args: {
 			endpoint?: pulumi.Input<string>;
 			username?: pulumi.Input<string>;
-			password?: pulumi.Input<string>;
-			// Sent with every request, such as a Cloudflare Access service token for an instance behind it.
-			headers?: pulumi.Input<Record<string, pulumi.Input<string>>>;
+			token?: pulumi.Input<string>;
 		},
 		{ config },
 	) => {
 		const {
-			endpoint = config.require("endpoint"),
-			username = config.require("username"),
-			password = config.requireSecret("password"),
-			headers = {},
+			endpoint = process.env.LISTMONK_URL || config.require("endpoint"),
+			username = process.env.LISTMONK_USERNAME || config.require("username"),
+			token = process.env.LISTMONK_PASSWORD || config.requireSecret("token"),
 		} = args;
 
 		return {
 			baseUrl: pulumi.output(endpoint).apply((endpoint) => new URL("/api", endpoint).href),
-			headers,
-			credentials: { username, password },
+			headers: {
+				authorization: pulumi
+					.all([username, token])
+					.apply(
+						([username, token]) =>
+							`Basic ${Buffer.from(`${username}:${token}`).toString("base64")}`,
+					),
+			},
 		};
 	},
-	authenticate: login,
 	resources: {
 		List: ListResource,
 		Role: RoleResource,
