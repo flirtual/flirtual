@@ -141,7 +141,7 @@ local_uploads_dir =
 config :flirtual,
   local_uploads?: local_uploads?,
   local_uploads_dir: local_uploads_dir,
-  upload_origin: URI.parse(Env.get("UPLOAD_ORIGIN", default: frontend_origin)),
+  upload_url: Env.get("UPLOAD_URL", default: frontend_origin <> "/upload/attachments"),
   upload_secret: Env.get("UPLOAD_SECRET") || Base.encode64(secret_key_base)
 
 unless local_uploads? do
