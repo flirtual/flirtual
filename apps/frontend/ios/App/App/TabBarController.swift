@@ -17,7 +17,21 @@ final class TabBarController: UITabBarController, UITabBarControllerDelegate {
     private var items: [NavigationTab] = []
     private var containers: [String: TabContentViewController] = [:]
     private var sidebarHidden = false
-    private(set) var topCorners: [String: Double] = [:]
+    // Whether the page asked for the tab bar. isTabBarHidden can't say, since the bar is briefly
+    // hidden and shown again to refresh it after new tabs.
+    fileprivate private(set) var showsTabBar = false
+    private var topCorners: [String: Double] = [:]
+    private var fold: [String: Double] = [:]
+    private var sideBar: [String: Double] = [:]
+    private var settled: DispatchWorkItem?
+
+    var layout: JSObject {
+        [
+            "topCorners": topCorners.mapValues { $0 as JSValue },
+            "fold": fold.mapValues { $0 as JSValue },
+            "sideBar": sideBar.mapValues { $0 as JSValue }
+        ]
+    }
 
     private let placeholderId = ""
 
@@ -67,6 +81,12 @@ final class TabBarController: UITabBarController, UITabBarControllerDelegate {
             }
 
             items = newItems
+
+            // The new tabs' view controllers don't get the tab bar's safe area until it's laid out again.
+            if !isTabBarHidden {
+                setTabBarHidden(true, animated: false)
+                setTabBarHidden(false, animated: false)
+            }
         }
 
         for tab in tabs {
@@ -82,6 +102,7 @@ final class TabBarController: UITabBarController, UITabBarControllerDelegate {
     }
 
     private func setVisible(_ visible: Bool) {
+        showsTabBar = visible
         guard visible == isTabBarHidden else { return }
 
         if visible {
@@ -138,24 +159,83 @@ final class TabBarController: UITabBarController, UITabBarControllerDelegate {
     }
 
     fileprivate func contentDidLayout(_ webView: WKWebView) {
-        let corners = Self.topCornerClearance(of: webView)
-        guard corners != topCorners else { return }
+        report(webView)
 
-        topCorners = corners
-        plugin?.notifyListeners("layout", data: corners.mapValues { $0 as JSValue })
+        // The tab bar settles after the page lays out, sometimes at the end of an animation, without
+        // laying the page out again.
+        settled?.cancel()
+        let settled = DispatchWorkItem { [weak self, weak webView] in
+            guard let self, let webView, webView.window != nil else { return }
+            self.report(webView)
+        }
+        self.settled = settled
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: settled)
     }
 
-    // What the system reserves in the top corners, like iPhone Duo's status bar in inner portrait,
-    // which leaves the rest of the top edge free for the page. Anything else along the top edge,
-    // like a Dynamic Island, means it isn't.
+    private func report(_ webView: WKWebView) {
+        let corners = Self.topCornerClearance(of: webView)
+        let fold = Self.fold(in: webView)
+        let sideBar = sideBar(in: webView)
+        guard corners != topCorners || fold != self.fold || sideBar != self.sideBar else { return }
+
+        topCorners = corners
+        self.fold = fold
+        self.sideBar = sideBar
+        plugin?.notifyListeners("layout", data: layout)
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        if let webView = bridgeViewController.webView, webView.window != nil {
+            contentDidLayout(webView)
+        }
+    }
+
+    // Where the tab bar starts when it runs down a side, as on iPhone Duo in landscape. Its buttons
+    // are anchored to the bottom, leaving the rest of the column free. There's no API for where
+    // they are, so this finds the controls in the side's safe area.
+    private func sideBar(in webView: WKWebView) -> [String: Double] {
+        guard showsTabBar, let window = view.window else { return [:] }
+
+        let bounds = webView.bounds
+        let insets = webView.safeAreaInsets
+        var frame = CGRect.null
+
+        func visit(_ view: UIView) {
+            guard !view.isHidden, view.alpha > 0, !(view is WKWebView) else { return }
+            if view is UIControl {
+                let control = webView.convert(view.bounds, from: view)
+                if control.maxX <= insets.left || control.minX >= bounds.maxX - insets.right {
+                    frame = frame.union(control)
+                }
+            }
+            view.subviews.forEach(visit)
+        }
+        visit(window)
+
+        guard !frame.isNull, frame.height > frame.width else { return [:] }
+        return ["top": frame.minY]
+    }
+
+    // A fold splitting the page side by side, as when iPhone Duo is partially open in landscape.
+    private static func fold(in view: UIView) -> [String: Double] {
+        guard #available(iOS 27.1, *),
+              let frame = view.reservedRegions(kind: .division)
+                .first(where: { $0.isActive && $0.frame.height >= view.bounds.height })?.frame else { return [:] }
+
+        return ["x": frame.minX, "width": frame.width]
+    }
+
+    // What the system reserves in the top corners, like iPhone Duo's status bar, so content along
+    // the top can sit beside it, down to its bottom. The height is only there when it fits in the
+    // top safe area, as in inner portrait, leaving the rest of the top edge free. Anything else
+    // along the top edge, like a Dynamic Island, means none of it is.
     private static func topCornerClearance(of view: UIView) -> [String: Double] {
         guard #available(iOS 27.1, *) else { return [:] }
 
         var left = 0.0, right = 0.0, height = 0.0
         for region in view.reservedRegions(kind: .occlusion) where region.isActive && region.frame.minY <= 0 {
-            // Taller than the top safe area means a status bar down the side, as in landscape.
-            guard region.frame.maxY <= view.safeAreaInsets.top else { return [:] }
-
             if region.frame.maxX >= view.bounds.maxX {
                 right = max(right, view.bounds.maxX - region.frame.minX)
             } else if region.frame.minX <= 0 {
@@ -166,7 +246,13 @@ final class TabBarController: UITabBarController, UITabBarControllerDelegate {
             height = max(height, region.frame.maxY)
         }
 
-        return height > 0 ? ["left": left, "right": right, "height": height] : [:]
+        guard left > 0 || right > 0 else { return [:] }
+
+        var corners = ["left": left, "right": right, "bottom": height]
+        if height <= view.safeAreaInsets.top {
+            corners["height"] = height
+        }
+        return corners
     }
 
     // Only called for user interaction, including a tap on the tab that's already selected, which
@@ -205,7 +291,7 @@ private final class TabContentViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
-        let insets = tabBarController?.isTabBarHidden == false ? .zero : view.safeAreaInsets
+        let insets = (tabBarController as? TabBarController)?.showsTabBar == true ? .zero : view.safeAreaInsets
         content?.frame = view.bounds.inset(by: UIEdgeInsets(top: 0, left: insets.left, bottom: 0, right: insets.right))
 
         if let content {

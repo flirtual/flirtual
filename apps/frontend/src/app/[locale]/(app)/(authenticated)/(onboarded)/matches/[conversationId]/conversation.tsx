@@ -24,7 +24,7 @@ export const Conversation = withSuspense<{ id: string }>(({ id: conversationId }
 	if (!conversation || !user) {
 		return (
 			<div className="mt-0 h-fit w-full shrink-0 bg-brand-gradient vision:bg-none desktop:max-w-[38rem] desktop:shrink desktop:rounded-2xl desktop:p-1 desktop:shadow-brand-1">
-				<div className="flex h-16 w-full items-center justify-center bg-brand-gradient px-3 bleed-x vision:bg-none desktop:mt-0 desktop:rounded-t-xl android:desktop:mt-0">
+				<div className="flex h-16 w-full items-center justify-center bg-brand-gradient px-3 pl-[calc(0.75rem+min(var(--status-bar-clearance-left,0rem),max(0rem,(var(--status-bar-bottom,0rem)-max(var(--status-bar-height,0rem),4rem))*1000)))] pr-[calc(0.75rem+min(var(--status-bar-clearance-right,0rem),max(0rem,(var(--status-bar-bottom,0rem)-max(var(--status-bar-height,0rem),4rem))*1000)))] full-bleed-x vision:bg-none split:pl-[calc(0.75rem+var(--status-bar-clearance-left,0rem))] split:pr-[calc(0.75rem+var(--status-bar-clearance-right,0rem))] desktop:mt-0 desktop:rounded-t-xl android:desktop:mt-0">
 					<span className="text-center font-montserrat text-2xl font-semibold text-white-20 desktop:font-extrabold">
 						{t("chat_unavailable")}
 					</span>
@@ -43,7 +43,7 @@ export const Conversation = withSuspense<{ id: string }>(({ id: conversationId }
 
 	return (
 		<div className="mt-0 h-fit w-full shrink-0 bg-brand-gradient vision:bg-none desktop:max-w-[38rem] desktop:shrink desktop:rounded-2xl desktop:p-1 desktop:shadow-brand-1">
-			<div className="flex w-full items-center bg-brand-gradient p-3 bleed-x vision:bg-none desktop:mt-0 desktop:rounded-t-xl android:desktop:mt-0">
+			<div className="flex w-full items-center bg-brand-gradient p-3 pl-[calc(0.75rem+min(var(--status-bar-clearance-left,0rem),max(0rem,(var(--status-bar-bottom,0rem)-max(var(--status-bar-height,0rem),4rem))*1000)))] pr-[calc(0.75rem+min(var(--status-bar-clearance-right,0rem),max(0rem,(var(--status-bar-bottom,0rem)-max(var(--status-bar-height,0rem),4rem))*1000)))] full-bleed-x vision:bg-none split:h-16 split:pl-[calc(0.75rem+var(--status-bar-clearance-left,0rem))] split:pr-[calc(0.75rem+var(--status-bar-clearance-right,0rem))] desktop:mt-0 desktop:rounded-t-xl android:desktop:mt-0">
 				<InlineLink
 					className="flex items-center gap-4 hocus:no-underline"
 					href={urls.profile(user)}
@@ -76,7 +76,7 @@ export const Conversation = withSuspense<{ id: string }>(({ id: conversationId }
 }, {
 	fallback: (
 		<div className="mt-0 size-full shrink-0 bg-brand-gradient vision:bg-none desktop:max-w-[38rem] desktop:shrink desktop:rounded-2xl desktop:p-1 desktop:shadow-brand-1">
-			<div className="flex w-full items-center bg-brand-gradient p-3 bleed-x vision:bg-none desktop:mt-0 desktop:rounded-t-xl android:desktop:mt-0">
+			<div className="flex w-full items-center bg-brand-gradient p-3 pl-[calc(0.75rem+min(var(--status-bar-clearance-left,0rem),max(0rem,(var(--status-bar-bottom,0rem)-max(var(--status-bar-height,0rem),4rem))*1000)))] pr-[calc(0.75rem+min(var(--status-bar-clearance-right,0rem),max(0rem,(var(--status-bar-bottom,0rem)-max(var(--status-bar-height,0rem),4rem))*1000)))] full-bleed-x vision:bg-none split:h-16 split:pl-[calc(0.75rem+var(--status-bar-clearance-left,0rem))] split:pr-[calc(0.75rem+var(--status-bar-clearance-right,0rem))] desktop:mt-0 desktop:rounded-t-xl android:desktop:mt-0">
 				<div className="size-10 animate-pulse rounded-full bg-white-20"></div>
 				<div className="ml-4 h-6 w-32 animate-pulse rounded bg-white-20"></div>
 			</div>

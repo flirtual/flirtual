@@ -11,9 +11,9 @@ export const NavigationHeader: React.FC<{ listOnly: boolean }> = ({ listOnly }) 
 	const Icon = listOnly ? X : ChevronLeft;
 
 	return (
-		<div className="sticky top-0 flex min-h-[var(--status-bar-height,0rem)] w-full items-center justify-center bg-black-70 p-4 pl-[calc(1rem+var(--status-bar-clearance-left,0rem))] pr-[calc(1rem+var(--status-bar-clearance-right,0rem))] pt-[max(calc(var(--status-bar-inset-top,var(--safe-area-inset-top,0rem))+0.5rem),1rem)] text-white-20 bleed-x desktop:static desktop:bg-transparent desktop:px-4 desktop:pb-4 desktop:pt-[1.125rem]">
+		<div className="sticky top-0 flex min-h-[var(--status-bar-height,0rem)] w-full items-center justify-center bg-black-70 p-4 pl-[calc(1rem+var(--status-bar-clearance-left,0rem))] pr-[calc(1rem+var(--status-bar-clearance-right,0rem))] pt-[max(calc(var(--status-bar-inset-top,var(--safe-area-inset-top,0rem))+0.5rem),1rem)] text-white-20 full-bleed-x split:shrink-0 split:border-r split:border-r-black-70 desktop:static desktop:border-r-0 desktop:bg-transparent desktop:px-4 desktop:pb-4 desktop:pt-[1.125rem]">
 			<button
-				className="absolute left-4 flex shrink-0 vision:left-8 desktop:hidden"
+				className="absolute left-[calc(1rem+var(--status-bar-clearance-left,0rem))] flex shrink-0 vision:left-8 split:hidden desktop:hidden"
 				type="button"
 				onClick={() => listOnly ? navigate(urls.discover("dates")) : navigate(-1)}
 			>

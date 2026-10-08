@@ -58,7 +58,7 @@ const platform: DevicePlatform = platformOverride || ({
 const userAgent = client ? navigator.userAgent : "";
 const vision = userAgent.includes("Flirtual-Vision");
 
-const nativeNavigation = client && Capacitor.isPluginAvailable("NativeNavigation");
+export const nativeNavigation = client && Capacitor.isPluginAvailable("NativeNavigation");
 
 // const native = ua.includes("Flirtual-Native");
 const native = nativeOverride || (nativePlatform && nativePlatform !== "web");

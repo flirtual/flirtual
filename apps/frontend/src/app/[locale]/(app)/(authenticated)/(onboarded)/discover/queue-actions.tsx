@@ -133,7 +133,7 @@ export const QueueActions: FC<{
 	);
 
 	return (
-		<div className="flex h-20 w-full items-center justify-center">
+		<div className="flex h-20 w-full items-center justify-center split:desktop:hidden">
 			<div className="fixed bottom-[max(calc(var(--safe-area-inset-bottom,0rem)+5.5rem),6rem)] z-20 flex flex-col items-center justify-center gap-2 native-nav:bottom-[max(calc(var(--safe-area-inset-bottom,0rem)+0.5rem),2rem)] desktop:bottom-12">
 				<QueueDebugger kind={mode} />
 				<div className="flex items-center gap-2 text-white-10">

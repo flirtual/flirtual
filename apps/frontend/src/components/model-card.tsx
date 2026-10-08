@@ -53,9 +53,10 @@ export const ModelCard: React.FC<ModelCardProps> = ({
 			>
 				{title && (
 					<div
+						data-model-card-title
 						{...titleProps}
 						className={twMerge(
-							"w-full bg-brand-gradient px-8 py-7 text-center font-montserrat text-3xl font-extrabold text-white-20 bleed-x desktop:w-full desktop:rounded-t-2xl desktop:pb-4 desktop:pt-[1.125rem] desktop:text-2xl android:desktop:pt-[1.125rem]",
+							"w-full bg-brand-gradient px-8 py-7 text-center font-montserrat text-3xl font-extrabold text-white-20 full-bleed-x desktop:w-full desktop:rounded-t-2xl desktop:pb-4 desktop:pt-[1.125rem] desktop:text-2xl android:desktop:pt-[1.125rem]",
 							inset
 							&& "pl-[calc(2rem+var(--status-bar-clearance-left,0rem))] pr-[calc(2rem+var(--status-bar-clearance-right,0rem))] pt-[max(calc(var(--status-bar-inset-top,var(--safe-area-inset-top,0rem))+1rem),1.75rem)] desktop:px-8",
 							titleProps.className
@@ -68,7 +69,7 @@ export const ModelCard: React.FC<ModelCardProps> = ({
 					<div
 						{...containerProps}
 						className={twMerge(
-							"flex size-full flex-col px-8 py-10 pb-[max(var(--safe-area-inset-bottom,0rem),2.5rem)] vision:bg-transparent vision:text-white-20 dark:bg-transparent dark:text-white-20 desktop:rounded-xl desktop:bg-white-20 desktop:px-16 desktop:shadow-brand-inset dark:desktop:bg-black-70",
+							"flex size-full flex-col px-8 py-10 pb-[max(var(--safe-area-inset-bottom,0rem),2.5rem)] vision:bg-transparent vision:text-white-20 native-nav:pb-[max(calc(2.5rem-var(--safe-area-inset-bottom,0rem)),0rem)] dark:bg-transparent dark:text-white-20 desktop:rounded-xl desktop:bg-white-20 desktop:px-16 desktop:pb-10 desktop:shadow-brand-inset dark:desktop:bg-black-70",
 							containerProps.className
 						)}
 					>

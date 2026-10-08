@@ -7,6 +7,7 @@ import { clamp } from "remeda";
 
 import type { User } from "~/api/user";
 import { useBreakpoint } from "~/hooks/use-breakpoint";
+import { useHasConversations } from "~/hooks/use-conversations";
 import { useUnreadConversations } from "~/hooks/use-talkjs";
 import { useLocale, useMatch, useNavigate } from "~/i18n";
 import { urls } from "~/urls";
@@ -19,35 +20,74 @@ interface NativeNavigationTab {
 	badge?: string;
 }
 
-// What the system reserves in the top corners (iPhone Duo's status bar in inner portrait), in
-// points. Empty unless the rest of the top edge is free.
+// What the system reserves in the top corners (iPhone Duo's status bar), in points. The height is
+// only there when it fits in the top safe area, leaving the rest of the top edge free.
 interface TopCorners {
 	left?: number;
 	right?: number;
+	bottom?: number;
 	height?: number;
 }
 
+// A fold splitting the page side by side (iPhone Duo partially open in landscape), in points.
+interface Fold {
+	x?: number;
+	width?: number;
+}
+
+// Where the tab bar starts when it runs down a side, in points. Its buttons are anchored to the
+// bottom, so anything above this is clear of them.
+interface SideBar {
+	top?: number;
+}
+
+interface Layout {
+	topCorners: TopCorners;
+	fold: Fold;
+	sideBar: SideBar;
+}
+
 const NativeNavigationPlugin = registerPlugin<{
-	update: (options: { visible: boolean; selected?: string; tabs?: Array<NativeNavigationTab>; tint?: string }) => Promise<{ topCorners: TopCorners }>;
-	addListener: ((eventName: "layout", listener: (event: TopCorners) => void) => Promise<PluginListenerHandle>)
+	update: (options: { visible: boolean; selected?: string; tabs?: Array<NativeNavigationTab>; tint?: string }) => Promise<Layout>;
+	addListener: ((eventName: "layout", listener: (event: Layout) => void) => Promise<PluginListenerHandle>)
 		& ((eventName: "select", listener: (event: { id: string }) => void) => Promise<PluginListenerHandle>);
 }>("NativeNavigation");
 
-// Lets headers sit beside a corner status bar instead of below it, level with it: they use
-// --status-bar-inset-top in place of the top safe area, and keep the clearance on either side.
-function setTopCorners({ left = 0, right = 0, height }: TopCorners) {
+// Lets content along the top sit beside a corner status bar, keeping the clearance on either side.
+// When the status bar fits in the top safe area, headers also move up level with it, using
+// --status-bar-inset-top in place of the top safe area.
+function setTopCorners({ left, right, bottom, height }: TopCorners) {
+	const { style } = document.body;
+	const set = (property: string, value: string | undefined) => value === undefined
+		? style.removeProperty(property)
+		: style.setProperty(property, value);
+
+	set("--status-bar-clearance-left", left === undefined ? undefined : `${left}px`);
+	set("--status-bar-clearance-right", right === undefined ? undefined : `${right}px`);
+	set("--status-bar-bottom", bottom === undefined ? undefined : `${bottom}px`);
+	set("--status-bar-height", height === undefined ? undefined : `${height}px`);
+	set("--status-bar-inset-top", height === undefined ? undefined : `calc(${height}px / 2 - 1.5rem)`);
+}
+
+// Splits the panes down the middle of the fold, so each fills its own half.
+function setFold({ x, width }: Fold) {
 	const { style } = document.body;
 
-	if (!height) {
-		for (const property of ["--status-bar-height", "--status-bar-inset-top", "--status-bar-clearance-left", "--status-bar-clearance-right"])
-			style.removeProperty(property);
+	if (x === undefined || width === undefined) {
+		style.removeProperty("--split-list-width");
 		return;
 	}
 
-	style.setProperty("--status-bar-height", `${height}px`);
-	style.setProperty("--status-bar-inset-top", `calc(${height}px / 2 - 1.5rem)`);
-	style.setProperty("--status-bar-clearance-left", `${left}px`);
-	style.setProperty("--status-bar-clearance-right", `${right}px`);
+	style.setProperty("--split-list-width", `calc(${x + width / 2}px - var(--content-inset-left, 0px))`);
+}
+
+function setLayout({ topCorners, fold, sideBar }: Layout) {
+	setTopCorners(topCorners);
+	setFold(fold);
+
+	const { style } = document.body;
+	if (sideBar.top === undefined) style.removeProperty("--side-bar-top");
+	else style.setProperty("--side-bar-top", `${sideBar.top}px`);
 }
 
 export const NativeNavigation: FC<{ user: User }> = ({ user }) => {
@@ -55,6 +95,10 @@ export const NativeNavigation: FC<{ user: User }> = ({ user }) => {
 	const [locale] = useLocale();
 	const navigate = useNavigate();
 	const isDesktop = useBreakpoint("desktop");
+	// Wide screens keep the match list beside the queue, once there are matches.
+	const wide = useBreakpoint("split");
+	const hasConversations = useHasConversations();
+	const split = wide && hasConversations;
 
 	const { unreadConversations } = useUnreadConversations();
 	const conversationCount = clamp(unreadConversations.length, { min: 0, max: 99 });
@@ -68,7 +112,7 @@ export const NativeNavigation: FC<{ user: User }> = ({ user }) => {
 		{ id: "matches", title: t("matches"), icon: "bubble.fill", href: urls.conversations.list(), badge },
 		{ id: "profile", title: t("profile"), icon: "person.crop.circle.fill", href: urls.profile(user.slug) },
 		{ id: "settings", title: t("settings"), icon: "gearshape.fill", href: isDesktop ? urls.settings.matchmaking() : urls.settings.list() }
-	], [t, badge, user.slug, isDesktop]);
+	].filter(({ id }) => !split || id !== "matches"), [t, badge, user.slug, isDesktop, split]);
 
 	const active: Record<string, boolean> = {
 		dates: !!useMatch({ path: urls.discover("dates") }),
@@ -83,7 +127,7 @@ export const NativeNavigation: FC<{ user: User }> = ({ user }) => {
 	useEffect(() => {
 		const tint = getComputedStyle(document.body).getPropertyValue("--theme-2").trim();
 		void NativeNavigationPlugin.update({ visible: true, selected, tabs, tint })
-			.then(({ topCorners }) => setTopCorners(topCorners));
+			.then(setLayout);
 	}, [selected, tabs]);
 
 	useEffect(() => {
@@ -91,7 +135,7 @@ export const NativeNavigation: FC<{ user: User }> = ({ user }) => {
 
 		return () => {
 			delete document.body.dataset.nativeNavigation;
-			setTopCorners({});
+			setLayout({ topCorners: {}, fold: {}, sideBar: {} });
 			void NativeNavigationPlugin.update({ visible: false });
 		};
 	}, []);
@@ -107,7 +151,7 @@ export const NativeNavigation: FC<{ user: User }> = ({ user }) => {
 	useEffect(() => {
 		const listeners = [
 			NativeNavigationPlugin.addListener("select", (event) => onSelect(event)),
-			NativeNavigationPlugin.addListener("layout", setTopCorners)
+			NativeNavigationPlugin.addListener("layout", setLayout)
 		];
 		return () => void Promise.all(listeners.map((listener) => listener.then((handle) => handle.remove())));
 	// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -116,6 +160,6 @@ export const NativeNavigation: FC<{ user: User }> = ({ user }) => {
 	// Takes the web navigation's place in the layout, reserving the inset that pages don't already
 	// pad for: the tab bar at the bottom on phones, and whatever's above the desktop layout.
 	return (
-		<div className="order-last h-[var(--safe-area-inset-bottom,0rem)] shrink-0 desktop:order-none desktop:h-[var(--safe-area-inset-top,0rem)]" />
+		<div className="order-last h-[var(--safe-area-inset-bottom,0rem)] shrink-0 split:hidden desktop:order-none desktop:block desktop:h-[var(--safe-area-inset-top,0rem)]" />
 	);
 };

@@ -15,14 +15,18 @@ export function preloadConversations() {
 	});
 }
 
-export function useConversations() {
-	const { promise, fetchNextPage } = useInfiniteQuery({
+function conversationsOptions() {
+	return {
 		queryKey: conversationsKey(),
-		queryFn: ({ pageParam, signal }) => Conversation.list(pageParam, { signal }),
+		queryFn: ({ pageParam, signal }: { pageParam: string; signal: AbortSignal }) => Conversation.list(pageParam, { signal }),
 		initialPageParam: undefined as unknown as string,
-		getNextPageParam: ({ metadata: { next } }) => next,
-		getPreviousPageParam: ({ metadata: { previous } }) => previous
-	});
+		getNextPageParam: ({ metadata: { next } }: Awaited<ReturnType<typeof Conversation.list>>) => next,
+		getPreviousPageParam: ({ metadata: { previous } }: Awaited<ReturnType<typeof Conversation.list>>) => previous
+	};
+}
+
+export function useConversations() {
+	const { promise, fetchNextPage } = useInfiniteQuery(conversationsOptions());
 	const { pages } = use(promise);
 
 	return {
@@ -30,6 +34,11 @@ export function useConversations() {
 		loadMore: fetchNextPage,
 		invalidate: () => invalidate({ queryKey: conversationsKey() })
 	};
+}
+
+export function useHasConversations() {
+	const { data } = useInfiniteQuery(conversationsOptions());
+	return !!data?.pages[0]?.data.length;
 }
 
 export function useConversation(conversationId: string) {

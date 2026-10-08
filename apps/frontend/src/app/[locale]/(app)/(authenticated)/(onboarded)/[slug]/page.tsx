@@ -10,6 +10,7 @@ import { throwRedirect } from "~/redirect";
 import { urls } from "~/urls";
 
 import { QueueActions } from "../discover/queue-actions";
+import { SplitLayout } from "../matches/split-layout";
 
 export const handle = {
 	preload: preloadProfileAttributes
@@ -49,11 +50,11 @@ export default function ProfilePage() {
 		return throwRedirect(urls.finish(1));
 
 	return (
-		<>
+		<SplitLayout>
 			<Profile direct userId={user.id} />
 			<Suspense>
 				<ProfileQueueActions userId={user.id} />
 			</Suspense>
-		</>
+		</SplitLayout>
 	);
 }

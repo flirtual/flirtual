@@ -337,7 +337,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 	);
 
 	return (
-		<div className="relative shrink-0 overflow-hidden" {...swipeHandlers}>
+		<div className="relative shrink-0 overflow-hidden [container-type:inline-size]" {...swipeHandlers}>
 			<div className="relative flex aspect-square shrink-0 bg-black-70 landscape-phone:aspect-video">
 				{currentImage
 					? (
@@ -445,14 +445,14 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 					<>
 						<div className="pointer-events-none absolute flex size-full">
 							<button
-								className="group pointer-events-auto flex h-full w-[calc(25%+var(--content-inset-left,0rem))] items-center justify-start px-6 pl-[calc(1.5rem+var(--content-inset-left,0rem))] opacity-70 outline-none transition-opacity hover:opacity-100"
+								className="group pointer-events-auto flex h-full w-[calc(25%+min(var(--content-inset-left,0rem),max(0rem,(50cqw+1.25rem-var(--side-bar-top,0rem))*1000)))] items-center justify-start px-6 pl-[calc(1.5rem+min(var(--content-inset-left,0rem),max(0rem,(50cqw+1.25rem-var(--side-bar-top,0rem))*1000)))] opacity-70 outline-none transition-opacity hover:opacity-100"
 								type="button"
 								onClick={() => set(-1)}
 							>
 								<ChevronLeft className="size-10 shrink-0 rounded-md text-white-10 drop-shadow group-focus-visible:ring-2 group-focus-visible:ring-white-10" />
 							</button>
 							<button
-								className="group pointer-events-auto ml-auto flex h-full w-[calc(25%+var(--content-inset-right,0rem))] items-center justify-end px-6 pr-[calc(1.5rem+var(--content-inset-right,0rem))] opacity-70 outline-none transition-opacity hover:opacity-100"
+								className="group pointer-events-auto ml-auto flex h-full w-[calc(25%+min(var(--content-inset-right,0rem),max(0rem,(50cqw+1.25rem-var(--side-bar-top,0rem))*1000)))] items-center justify-end px-6 pr-[calc(1.5rem+min(var(--content-inset-right,0rem),max(0rem,(50cqw+1.25rem-var(--side-bar-top,0rem))*1000)))] opacity-70 outline-none transition-opacity hover:opacity-100"
 								type="button"
 								onClick={() => set(1)}
 							>
@@ -460,12 +460,12 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 							</button>
 						</div>
 
-						<div className="pointer-events-auto absolute top-0 flex w-full px-8 pl-[calc(2rem+var(--content-inset-left,0rem)+var(--status-bar-clearance-left,0rem))] pr-[calc(2rem+var(--content-inset-right,0rem)+var(--status-bar-clearance-right,0rem))]">
+						<div className="pointer-events-auto absolute top-0 flex w-full px-8 pl-[calc(2rem+var(--status-bar-clearance-left,0rem))] pr-[calc(2rem+var(--status-bar-clearance-right,0rem))]">
 							<div className="-mx-1 flex grow items-center">
 								{images.map((image) => (
 									<button
 										key={image.id}
-										className="group grow px-1 py-6 pt-[max(calc(var(--status-bar-inset-top,var(--safe-area-inset-top,0rem))+0.25rem),1.5rem)]"
+										className="group grow px-1 py-6 pt-[max(calc(var(--status-bar-inset-top,var(--safe-area-inset-top,0rem))+0.25rem),1.5rem)] desktop:pt-6"
 										type="button"
 										onClick={() => set(0, image.id)}
 									>

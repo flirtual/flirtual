@@ -34,7 +34,7 @@ final class NativeNavigationPlugin: CAPPlugin, CAPBridgedPlugin {
             }
 
             controller.update(visible: visible, tabs: tabs, badges: badges, selected: selected, tint: tint)
-            call.resolve(["topCorners": controller.topCorners.mapValues { $0 as JSValue }])
+            call.resolve(controller.layout)
         }
     }
 }

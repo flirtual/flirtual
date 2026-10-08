@@ -174,6 +174,11 @@ module.exports = {
 			addVariant("native", `:is([data-native] &)`);
 			addVariant("vision", `:is([data-vision] &)`);
 			addVariant("native-nav", `:where([data-native-navigation]) &`);
+			addVariant("web-nav", `:where(body:not([data-native-navigation])) &`);
+			// Side-by-side panes, on iPhone Duo's inner display in landscape and on iPad, while a page shows
+			// them. They rely on the native tab bar, which drops the Matches tab for them. Tailwind orders
+			// this with the screens, so desktop: still overrides it.
+			addVariant("split", `@media (min-width: 900px) { :where([data-native-navigation]:has([data-split-panes])) & }`);
 
 			for (const platform of ["web", "android", "apple"])
 				addVariant(platform, `:is([data-platform="${platform}"] &)`);
@@ -182,10 +187,20 @@ module.exports = {
 			for (const language of languageTags)
 				addVariant(language, `:is([lang="${language}"] &)`);
 
-			// Runs a background out to the screen edge across the layout's side insets (--content-inset-*,
-			// set only under the native tab bar), keeping the content where it was: the transparent
-			// borders take the space the negative margins give back. Phone layouts only.
+			// Run a background out to the screen edge across the layout's side insets (--content-inset-*,
+			// set only under the native tab bar). Phone layouts only.
 			addUtilities({
+				// Takes the content along, for headers: their content can sit beneath a vertical bar,
+				// which leaves the top of its column free.
+				".full-bleed-x": {
+					[`@media not all and (min-width: ${theme("screens.desktop")})`]: {
+						marginLeft: "calc(-1 * var(--content-inset-left, 0px))",
+						marginRight: "calc(-1 * var(--content-inset-right, 0px))",
+						width: "calc(100% + var(--content-inset-left, 0px) + var(--content-inset-right, 0px))"
+					}
+				},
+				// Keeps the content where it was: the transparent borders take the space the negative
+				// margins give back.
 				".bleed-x": {
 					[`@media not all and (min-width: ${theme("screens.desktop")})`]: {
 						marginLeft: "calc(-1 * var(--content-inset-left, 0px))",

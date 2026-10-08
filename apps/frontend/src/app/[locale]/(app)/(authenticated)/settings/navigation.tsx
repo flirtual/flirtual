@@ -53,13 +53,13 @@ export const SettingsNavigation: FC = () => {
 	const dialogs = useDialog();
 
 	return (
-		<div className="sticky top-0 z-10 flex w-full shrink-0 grow-0 flex-col self-baseline desktop:relative desktop:w-80 desktop:rounded-2xl desktop:bg-brand-gradient desktop:text-white-20 desktop:shadow-brand-1">
+		<div className="sticky top-0 z-10 flex w-full shrink-0 grow-0 flex-col self-baseline split:h-full desktop:relative desktop:h-auto desktop:max-h-full desktop:w-80 desktop:rounded-2xl desktop:bg-brand-gradient desktop:text-white-20 desktop:shadow-brand-1">
 			<NavigationHeader listOnly={listOnly} />
-			<div className="vision:bg-none desktop:rounded-2xl desktop:rounded-t-none desktop:bg-brand-gradient desktop:p-1 desktop:pt-0">
+			<div className="vision:bg-none split:flex split:min-h-0 split:flex-1 split:flex-col split:border-r split:border-r-black-90/10 dark:split:border-r-white-10/10 desktop:rounded-2xl desktop:rounded-t-none desktop:border-r-0 desktop:bg-brand-gradient desktop:p-1 desktop:pt-0">
 				<nav
 					className={twMerge(
-						"flex-col gap-8 py-6 vision:bg-transparent dark:bg-transparent desktop:rounded-xl desktop:bg-white-20 desktop:pb-4 desktop:pt-6 desktop:shadow-brand-inset android:desktop:pt-6 dark:desktop:bg-black-70",
-						!listOnly ? "hidden desktop:flex" : "flex"
+						"flex-col gap-8 py-6 vision:bg-transparent split:min-h-0 split:flex-1 split:overflow-y-auto native-nav:split:pb-[var(--safe-area-inset-bottom,0rem)] dark:bg-transparent desktop:rounded-xl desktop:bg-white-20 desktop:pb-4 desktop:pt-6 desktop:shadow-brand-inset android:desktop:pt-6 dark:desktop:bg-black-70",
+						!listOnly ? "hidden split:flex desktop:flex" : "flex"
 					)}
 				>
 					{(vision || nativeNavigation) && (user.tags?.includes("moderator") || user.tags?.includes("admin") || sudoerId) && (

@@ -14,7 +14,7 @@ export const NavigationItemMessage: FC = () => {
 	const conversationCount = clamp(unreadConversations.length, { min: 0, max: 99 });
 
 	return (
-		<NavigationItem id="conversation-button" href={urls.conversations.list()}>
+		<NavigationItem id="conversation-button" className="split:hidden" href={urls.conversations.list()}>
 			<div className="relative">
 				<ChatBubbleLeftRightIcon
 					className="aspect-square w-8"
