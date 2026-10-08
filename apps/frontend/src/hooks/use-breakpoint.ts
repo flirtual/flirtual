@@ -7,7 +7,7 @@ const mediaQueries = {
 	split: "(min-width: 900px)",
 	desktop: "(min-width: 960px)",
 	wide: "(min-width: 1024px)",
-	"landscape-phone": "(orientation: landscape) and (max-height: 450px) and (max-width: 959.98px)"
+	narrow: "(max-width: 959.98px) and (min-aspect-ratio: 3/4)"
 } as const;
 
 export type Breakpoint = keyof typeof mediaQueries;

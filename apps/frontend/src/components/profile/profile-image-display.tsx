@@ -88,8 +88,8 @@ function reverseSearch(url: string) {
 
 const SingleImage: React.FC<SingleImageProps> = (props) => {
 	const { className, image, large = false, priority = false } = props;
-	const landscape = useBreakpoint("landscape-phone");
-	const full = large || landscape;
+	const narrow = useBreakpoint("narrow");
+	const full = large || narrow;
 
 	return (
 		<UserImage
@@ -338,7 +338,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 
 	return (
 		<div className="relative shrink-0 overflow-hidden [container-type:inline-size]" {...swipeHandlers}>
-			<div className="relative flex aspect-square shrink-0 bg-black-70 landscape-phone:aspect-video">
+			<div className="relative flex aspect-square shrink-0 bg-black-70 narrow:aspect-video">
 				{currentImage
 					? (
 							images.map((image, imageIndex) => (

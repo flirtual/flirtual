@@ -160,7 +160,7 @@ module.exports = {
 			desktop: "960px",
 			wide: "1024px",
 			tall: { raw: "(min-height: 800px)" },
-			"landscape-phone": { raw: "(orientation: landscape) and (max-height: 450px) and (max-width: 959.98px)" }
+			narrow: { raw: "(max-width: 959.98px) and (min-aspect-ratio: 3/4)" }
 		}
 	},
 	plugins: [
