@@ -40,7 +40,6 @@ export default function NewsPage() {
 		<>
 			<ModelCard
 				className="desktop:max-w-3xl"
-				inset={false}
 				title={t("updates")}
 			>
 				<div className="flex flex-col gap-4">
