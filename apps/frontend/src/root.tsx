@@ -76,12 +76,16 @@ export function meta({
 	location: { pathname },
 	params: { locale }
 }: Pick<Route.MetaArgs, "location" | "params">): Route.MetaDescriptors {
-	if (!locale || !isLocale(locale)) return [];
+	const document: Route.MetaDescriptors = [
+		{ charSet: "utf-8" },
+		{ name: "viewport", content: "width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover, user-scalable=no" }
+	];
+
+	if (!locale || !isLocale(locale)) return document;
 	const t = i18n.getFixedT(locale);
 
 	return [
-		{ charSet: "utf-8" },
-		{ name: "viewport", content: "width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover, user-scalable=no" },
+		...document,
 
 		{ title: t("flirtual") },
 		{ name: "description", content: t("knotty_direct_mongoose_bend") },
