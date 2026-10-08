@@ -11,7 +11,7 @@
 	"devDependencies": {
 		"@ariesclark/eslint-config": "catalog:",
 		"eslint": "catalog:",
-		"eslint-plugin-format": "^1.1.0",
+		"eslint-plugin-format": "1.5.0",
 		"wrangler": "catalog:"
 	}
 }
