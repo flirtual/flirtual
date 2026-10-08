@@ -255,7 +255,7 @@
 			"postUpgradeTasks": {
 				"commands": [
 					"pnpm install --frozen-lockfile --ignore-scripts --filter frontend",
-					"pnpm --config.verify-deps-before-run=false --dir apps/frontend exec cap update"
+					"pnpm --config.verify-deps-before-run=false --dir apps/frontend exec cap sync"
 				],
 				"fileFilters": [
 					"apps/frontend/android/capacitor.settings.gradle",

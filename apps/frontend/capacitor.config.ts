@@ -22,10 +22,20 @@ const iosSchemes: Record<string, string> = {
 	"zone.homie.flirtual.beta": "Flirtual Beta",
 };
 
+const socialLogin = {
+	providers: {
+		google: true,
+		facebook: false,
+		apple: true,
+		twitter: false,
+	},
+};
+
 function config(): CapacitorConfig {
-	// `capacitor update` does not need an environment. A server URL skips its web assets check:
-	// https://github.com/ionic-team/capacitor/blob/8.5.0/cli/src/common.ts#L24-L28
-	if (process.env.CAPACITOR_UPDATE_ONLY) return { server: { url: "https://update.invalid" } };
+	// Regenerating the native projects does not need an environment. A server URL skips the web
+	// assets check: https://github.com/ionic-team/capacitor/blob/8.5.0/cli/src/common.ts#L24-L28
+	if (process.env.CAPACITOR_UPDATE_ONLY)
+		return { server: { url: "https://update.invalid" }, plugins: { SocialLogin: socialLogin } };
 
 	const origin = process.env.VITE_ORIGIN;
 	invariant(origin, "VITE_ORIGIN is not set");
@@ -75,14 +85,7 @@ function config(): CapacitorConfig {
 				initialViewportFitCover: true,
 				detectViewportFitCoverChanges: false,
 			},
-			SocialLogin: {
-				providers: {
-					google: true,
-					facebook: false,
-					apple: true,
-					twitter: false,
-				},
-			},
+			SocialLogin: socialLogin,
 		},
 	};
 }

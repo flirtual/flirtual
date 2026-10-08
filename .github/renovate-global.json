@@ -4,7 +4,7 @@
 	"binarySource": "global",
 	"allowedCommands": [
 		"^pnpm install --frozen-lockfile --ignore-scripts --filter frontend$",
-		"^pnpm --config.verify-deps-before-run=false --dir apps/frontend exec cap update$"
+		"^pnpm --config.verify-deps-before-run=false --dir apps/frontend exec cap sync$"
 	],
 	"customEnvVariables": {
 		"CAPACITOR_UPDATE_ONLY": "1"
