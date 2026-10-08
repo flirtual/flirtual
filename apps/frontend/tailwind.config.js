@@ -159,7 +159,8 @@ module.exports = {
 		screens: {
 			desktop: "960px",
 			wide: "1024px",
-			tall: { raw: "(min-height: 800px)" }
+			tall: { raw: "(min-height: 800px)" },
+			"landscape-phone": { raw: "(orientation: landscape) and (max-height: 450px) and (max-width: 959.98px)" }
 		}
 	},
 	plugins: [

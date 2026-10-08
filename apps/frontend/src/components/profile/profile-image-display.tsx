@@ -20,6 +20,7 @@ import {
 	AlertDialogTrigger
 } from "~/components/dialog/alert";
 import { DialogFooter } from "~/components/dialog/dialog";
+import { useBreakpoint } from "~/hooks/use-breakpoint";
 import { useDialog } from "~/hooks/use-dialog";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
 import { useOptionalSession } from "~/hooks/use-session";
@@ -87,16 +88,18 @@ function reverseSearch(url: string) {
 
 const SingleImage: React.FC<SingleImageProps> = (props) => {
 	const { className, image, large = false, priority = false } = props;
+	const landscape = useBreakpoint("landscape-phone");
+	const full = large || landscape;
 
 	return (
 		<UserImage
 			alt=""
 			blurHash={image.blurHash}
 			className={twMerge(className, large && "bg-black-90 object-contain")}
-			height={large ? undefined : 512}
+			height={full ? undefined : 512}
 			priority={priority}
-			src={urls.image(image, large ? "full" : "profile")}
-			width={large ? undefined : 512}
+			src={urls.image(image, full ? "full" : "profile")}
+			width={full ? undefined : 512}
 		/>
 	);
 };
@@ -335,7 +338,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 
 	return (
 		<div className="relative shrink-0 overflow-hidden" {...swipeHandlers}>
-			<div className="relative flex aspect-square shrink-0 bg-black-70">
+			<div className="relative flex aspect-square shrink-0 bg-black-70 landscape-phone:aspect-video">
 				{currentImage
 					? (
 							images.map((image, imageIndex) => (
