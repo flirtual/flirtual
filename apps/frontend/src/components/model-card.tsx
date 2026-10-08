@@ -69,7 +69,7 @@ export const ModelCard: React.FC<ModelCardProps> = ({
 					<div
 						{...containerProps}
 						className={twMerge(
-							"flex size-full flex-col px-8 py-10 pb-[max(var(--safe-area-inset-bottom,0rem),2.5rem)] vision:bg-transparent vision:text-white-20 native-nav:pb-[max(calc(2.5rem-var(--safe-area-inset-bottom,0rem)),0rem)] dark:bg-transparent dark:text-white-20 desktop:rounded-xl desktop:bg-white-20 desktop:px-16 desktop:pb-10 desktop:shadow-brand-inset dark:desktop:bg-black-70",
+							"flex size-full flex-col px-8 py-10 pb-[max(var(--safe-area-inset-bottom,0rem),2.5rem)] vision:bg-transparent vision:text-white-20 native-nav:pb-[max(calc(2.5rem-var(--safe-area-inset-bottom,0rem)),var(--tab-bar-gap,0rem))] dark:bg-transparent dark:text-white-20 desktop:rounded-xl desktop:bg-white-20 desktop:px-16 desktop:pb-10 desktop:shadow-brand-inset dark:desktop:bg-black-70",
 							containerProps.className
 						)}
 					>

@@ -264,9 +264,10 @@ export const ConversationChatbox: React.FC<
 			: nativeNavigation
 				? "max(var(--status-bar-height, 0rem), calc(max(calc(var(--status-bar-inset-top, var(--safe-area-inset-top, 0rem)) + 0.5rem), 1rem) + 3rem))"
 				: "calc(max(calc(var(--safe-area-inset-top, 0rem) + 0.5rem), 1rem) + 3rem)";
-		// Natively, the composer's own padding sits in the safe area, overlapping the space reserved for it.
+		// Natively, the composer's own padding sits in the safe area, overlapping the space reserved for
+		// it. Above a tab bar along the bottom, that padding counts towards the gap kept from the bar.
 		const below = nativeNavigation
-			? "max(calc(var(--safe-area-inset-bottom, 0rem) - 0.75rem), 0rem)"
+			? "max(calc(var(--safe-area-inset-bottom, 0rem) - 0.75rem + var(--tab-bar-gap, 0rem)), 0rem)"
 			: "calc(max(calc(var(--safe-area-inset-bottom, 0rem) - 0.25rem), 0.5rem) + 4rem)";
 
 		return `calc(100${unit} - ${above} - ${below} - ${split ? "4rem" : "4.125rem"})`;
@@ -292,7 +293,7 @@ export const ConversationChatbox: React.FC<
 					height
 				} as CSSProperties
 			}
-			className="relative w-full overflow-hidden bg-white-20 vision:bg-transparent native-nav:mb-[calc(-1*min(var(--safe-area-inset-bottom,0rem),0.75rem))] dark:bg-black-70 desktop:mb-0 desktop:max-h-[38rem] desktop:rounded-xl desktop:pt-0 desktop:before:pointer-events-none desktop:before:absolute desktop:before:inset-0 desktop:before:z-10 desktop:before:size-full desktop:before:rounded-xl desktop:before:shadow-brand-inset desktop:before:content-['']"
+			className="relative w-full overflow-hidden bg-white-20 vision:bg-transparent native-nav:mb-[calc(-1*min(var(--safe-area-inset-bottom,0rem),0.75rem))] tab-bar-bottom:mb-0 dark:bg-black-70 desktop:mb-0 desktop:max-h-[38rem] desktop:rounded-xl desktop:pt-0 desktop:before:pointer-events-none desktop:before:absolute desktop:before:inset-0 desktop:before:z-10 desktop:before:size-full desktop:before:rounded-xl desktop:before:shadow-brand-inset desktop:before:content-['']"
 			{...props}
 			ref={setElement}
 		/>

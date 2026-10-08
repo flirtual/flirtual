@@ -175,6 +175,8 @@ module.exports = {
 			addVariant("vision", `:is([data-vision] &)`);
 			addVariant("native-nav", `:where([data-native-navigation]) &`);
 			addVariant("web-nav", `:where(body:not([data-native-navigation])) &`);
+			// The native tab bar runs along the bottom, inside the bottom safe area (iPhone).
+			addVariant("tab-bar-bottom", `:where([data-tab-bar-bottom]) &`);
 			// Side-by-side panes, on iPhone Duo's inner display in landscape and on iPad, while a page shows
 			// them. They rely on the native tab bar, which drops the Matches tab for them. Tailwind orders
 			// this with the screens, so desktop: still overrides it.

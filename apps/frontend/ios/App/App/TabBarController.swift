@@ -23,13 +23,16 @@ final class TabBarController: UITabBarController, UITabBarControllerDelegate {
     private var topCorners: [String: Double] = [:]
     private var fold: [String: Double] = [:]
     private var sideBar: [String: Double] = [:]
+    private var bottomBar: [String: Double] = [:]
+    private var refreshedTabBarSize: CGSize?
     private var settled: DispatchWorkItem?
 
     var layout: JSObject {
         [
             "topCorners": topCorners.mapValues { $0 as JSValue },
             "fold": fold.mapValues { $0 as JSValue },
-            "sideBar": sideBar.mapValues { $0 as JSValue }
+            "sideBar": sideBar.mapValues { $0 as JSValue },
+            "bottomBar": bottomBar.mapValues { $0 as JSValue }
         ]
     }
 
@@ -139,6 +142,8 @@ final class TabBarController: UITabBarController, UITabBarControllerDelegate {
         guard bridgeViewController.parent !== container else { return }
 
         let previous = bridgeViewController.parent as? TabContentViewController
+        // Switching tabs can bring back the stale tab bar height, so it may need laying out again.
+        refreshedTabBarSize = nil
 
         bridgeViewController.willMove(toParent: nil)
         previous?.content = nil
@@ -176,20 +181,43 @@ final class TabBarController: UITabBarController, UITabBarControllerDelegate {
         let corners = Self.topCornerClearance(of: webView)
         let fold = Self.fold(in: webView)
         let sideBar = sideBar(in: webView)
-        guard corners != topCorners || fold != self.fold || sideBar != self.sideBar else { return }
+        let bottomBar = bottomBar(in: webView)
+        guard corners != topCorners || fold != self.fold || sideBar != self.sideBar || bottomBar != self.bottomBar else { return }
 
         topCorners = corners
         self.fold = fold
         self.sideBar = sideBar
+        self.bottomBar = bottomBar
         plugin?.notifyListeners("layout", data: layout)
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
+        // UIKit sometimes keeps the portrait tab bar's height in landscape, leaving the bar floating
+        // above the bottom edge. Showing it again lays it out afresh, once for each size and tab.
+        let bar = tabBar.frame
+        if showsTabBar, !isTabBarHidden, bar.width > bar.height, bar.midY > view.bounds.midY,
+           bar.maxY < view.bounds.maxY - 1, refreshedTabBarSize != view.bounds.size {
+            refreshedTabBarSize = view.bounds.size
+            setTabBarHidden(true, animated: false)
+            setTabBarHidden(false, animated: false)
+        }
+
         if let webView = bridgeViewController.webView, webView.window != nil {
             contentDidLayout(webView)
         }
+    }
+
+    // Where the tab bar starts when it runs along the bottom, as on iPhone. It sits in the bottom
+    // safe area, so content that pads itself into that area needs to keep clear of it. Not on iPad,
+    // where it's at the top, or when it runs down a side.
+    private func bottomBar(in webView: WKWebView) -> [String: Double] {
+        guard showsTabBar, !tabBar.isHidden, tabBar.window != nil else { return [:] }
+
+        let frame = webView.convert(tabBar.bounds, from: tabBar)
+        guard frame.width > frame.height, frame.maxY >= webView.bounds.maxY - 1 else { return [:] }
+        return ["top": frame.minY]
     }
 
     // Where the tab bar starts when it runs down a side, as on iPhone Duo in landscape. Its buttons
@@ -267,7 +295,14 @@ final class TabBarController: UITabBarController, UITabBarControllerDelegate {
 
 @available(iOS 26, *)
 private final class TabContentViewController: UIViewController {
+    // The web app's loading screen.
+    private static var pageBackground = UIColor { $0.userInterfaceStyle == .dark
+        ? UIColor(red: 0x1E / 255, green: 0x1E / 255, blue: 0x1E / 255, alpha: 1)
+        : UIColor(red: 0xF5 / 255, green: 0xF5 / 255, blue: 0xF5 / 255, alpha: 1) }
+
     private var backgroundObservation: NSKeyValueObservation?
+    private var leading: NSLayoutConstraint?
+    private var trailing: NSLayoutConstraint?
 
     var content: WKWebView? {
         didSet {
@@ -276,23 +311,52 @@ private final class TabContentViewController: UIViewController {
 
             guard let content else { return }
             view.addSubview(content)
+
+            // The page ends at the keyboard, as Capacitor's own keyboard resizing would leave it.
+            content.translatesAutoresizingMaskIntoConstraints = false
+            let leading = content.leadingAnchor.constraint(equalTo: view.leadingAnchor)
+            let trailing = view.trailingAnchor.constraint(equalTo: content.trailingAnchor)
+            NSLayoutConstraint.activate([
+                leading,
+                trailing,
+                content.topAnchor.constraint(equalTo: view.topAnchor),
+                content.bottomAnchor.constraint(equalTo: view.keyboardLayoutGuide.topAnchor)
+            ])
+            self.leading = leading
+            self.trailing = trailing
             view.setNeedsLayout()
 
-            backgroundObservation = content.observe(\.underPageBackgroundColor, options: [.initial, .new]) { [weak self] webView, _ in
+            // Until the page paints a background, WebKit reports plain white, so the page's colour
+            // only replaces the loading screen's once it changes.
+            view.backgroundColor = Self.pageBackground
+            backgroundObservation = content.observe(\.underPageBackgroundColor, options: [.new]) { [weak self] webView, _ in
+                Self.pageBackground = webView.underPageBackgroundColor
                 self?.view.backgroundColor = webView.underPageBackgroundColor
             }
         }
     }
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        // Without a keyboard, the page still reaches the bottom edge and pads for it itself.
+        view.keyboardLayoutGuide.usesBottomSafeArea = false
+    }
+
     // While the tab bar shows, the page spans the full width and keeps its own content clear of
     // whatever sits on the sides (iPhone Duo's vertical bars, the iPad sidebar), so headers and
     // images can run beneath them. Pages without it aren't built for that, so they're kept clear
-    // here, with the page's own background beneath. Top and bottom always stay edge to edge.
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
+    // here, with the page's own background beneath. The top always stays edge to edge.
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
 
         let insets = (tabBarController as? TabBarController)?.showsTabBar == true ? .zero : view.safeAreaInsets
-        content?.frame = view.bounds.inset(by: UIEdgeInsets(top: 0, left: insets.left, bottom: 0, right: insets.right))
+        leading?.constant = insets.left
+        trailing?.constant = insets.right
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
 
         if let content {
             (tabBarController as? TabBarController)?.contentDidLayout(content)

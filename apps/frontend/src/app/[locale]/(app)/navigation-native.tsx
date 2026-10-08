@@ -41,10 +41,16 @@ interface SideBar {
 	top?: number;
 }
 
+// Where the tab bar starts when it runs along the bottom (iPhone), in points.
+interface BottomBar {
+	top?: number;
+}
+
 interface Layout {
 	topCorners: TopCorners;
 	fold: Fold;
 	sideBar: SideBar;
+	bottomBar: BottomBar;
 }
 
 const NativeNavigationPlugin = registerPlugin<{
@@ -81,13 +87,24 @@ function setFold({ x, width }: Fold) {
 	style.setProperty("--split-list-width", `calc(${x + width / 2}px - var(--content-inset-left, 0px))`);
 }
 
-function setLayout({ topCorners, fold, sideBar }: Layout) {
+function setLayout({ topCorners, fold, sideBar, bottomBar }: Layout) {
 	setTopCorners(topCorners);
 	setFold(fold);
 
 	const { style } = document.body;
 	if (sideBar.top === undefined) style.removeProperty("--side-bar-top");
 	else style.setProperty("--side-bar-top", `${sideBar.top}px`);
+
+	// The bottom safe area holds the tab bar here, not just the home indicator, so content that pads
+	// itself into it keeps this much clear of the bar.
+	if (bottomBar.top === undefined) {
+		delete document.body.dataset.tabBarBottom;
+		style.removeProperty("--tab-bar-gap");
+	}
+	else {
+		document.body.dataset.tabBarBottom = "";
+		style.setProperty("--tab-bar-gap", "1rem");
+	}
 }
 
 export const NativeNavigation: FC<{ user: User }> = ({ user }) => {
@@ -135,7 +152,7 @@ export const NativeNavigation: FC<{ user: User }> = ({ user }) => {
 
 		return () => {
 			delete document.body.dataset.nativeNavigation;
-			setLayout({ topCorners: {}, fold: {}, sideBar: {} });
+			setLayout({ topCorners: {}, fold: {}, sideBar: {}, bottomBar: {} });
 			void NativeNavigationPlugin.update({ visible: false });
 		};
 	}, []);
