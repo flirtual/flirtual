@@ -207,6 +207,11 @@ export const SettingsNavigation: FC = () => {
 					</div>
 					<div className="desktop:hidden">
 						<NavigationCategory name={t("info")}>
+							{nativeNavigation && (
+								<NavigationLink href={urls.news}>
+									{t("updates")}
+								</NavigationLink>
+							)}
 							<NavigationLink href={urls.resources.about}>
 								{t("about")}
 							</NavigationLink>

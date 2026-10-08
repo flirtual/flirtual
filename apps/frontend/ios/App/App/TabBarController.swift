@@ -16,7 +16,6 @@ final class TabBarController: UITabBarController, UITabBarControllerDelegate {
     private let bridgeViewController: BridgeViewController
     private var items: [NavigationTab] = []
     private var containers: [String: TabContentViewController] = [:]
-    private var sidebarHidden = false
     // Whether the page asked for the tab bar. isTabBarHidden can't say, since the bar is briefly
     // hidden and shown again to refresh it after new tabs.
     fileprivate private(set) var showsTabBar = false
@@ -51,10 +50,7 @@ final class TabBarController: UITabBarController, UITabBarControllerDelegate {
         super.viewDidLoad()
 
         delegate = self
-        mode = .tabSidebar
-
-        sidebarHidden = sidebar.isHidden
-        sidebar.isHidden = true
+        mode = .tabBar
         isTabBarHidden = true
 
         host(in: container(for: placeholderId))
@@ -78,10 +74,6 @@ final class TabBarController: UITabBarController, UITabBarControllerDelegate {
             host(in: container(for: target))
             setTabs(newItems.map(makeTab), animated: false)
             selectedTab = tab(forIdentifier: target)
-
-            for (item, tab) in zip(tabBar.items ?? [], newItems) {
-                item.accessibilityLabel = tab.title
-            }
 
             items = newItems
 
@@ -108,13 +100,6 @@ final class TabBarController: UITabBarController, UITabBarControllerDelegate {
         showsTabBar = visible
         guard visible == isTabBarHidden else { return }
 
-        if visible {
-            sidebar.isHidden = sidebarHidden
-        } else {
-            sidebarHidden = sidebar.isHidden
-            sidebar.isHidden = true
-        }
-
         setTabBarHidden(!visible, animated: true)
         selectedViewController?.view.setNeedsLayout()
     }
@@ -122,10 +107,7 @@ final class TabBarController: UITabBarController, UITabBarControllerDelegate {
     private func makeTab(_ item: NavigationTab) -> UITab {
         let image = UIImage(named: item.icon) ?? UIImage(systemName: item.icon)
 
-        // Icons only on iPhone, which never shows the sidebar. The title stays for VoiceOver.
-        let title = traitCollection.userInterfaceIdiom == .phone ? "" : item.title
-
-        return UITab(title: title, image: image, identifier: item.id) { [unowned self] tab in
+        return UITab(title: item.title, image: image, identifier: item.id) { [unowned self] tab in
             self.container(for: tab.identifier)
         }
     }
@@ -156,6 +138,7 @@ final class TabBarController: UITabBarController, UITabBarControllerDelegate {
 
         if let scrollView = bridgeViewController.webView?.scrollView {
             container.setContentScrollView(scrollView)
+            scrollView.topEdgeEffect.isHidden = true
         }
     }
 
@@ -344,9 +327,9 @@ private final class TabContentViewController: UIViewController {
     }
 
     // While the tab bar shows, the page spans the full width and keeps its own content clear of
-    // whatever sits on the sides (iPhone Duo's vertical bars, the iPad sidebar), so headers and
-    // images can run beneath them. Pages without it aren't built for that, so they're kept clear
-    // here, with the page's own background beneath. The top always stays edge to edge.
+    // whatever sits on the sides (iPhone Duo's vertical bars), so headers and images can run
+    // beneath them. Pages without it aren't built for that, so they're kept clear here, with the
+    // page's own background beneath. The top always stays edge to edge.
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
 

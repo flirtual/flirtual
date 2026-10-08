@@ -124,11 +124,11 @@ export const NativeNavigation: FC<{ user: User }> = ({ user }) => {
 		: new Intl.NumberFormat(locale).format(conversationCount);
 
 	const tabs = useMemo(() => [
-		{ id: "dates", title: t("browse"), icon: "heart", href: urls.discover("dates") },
-		{ id: "homies", title: t("homie_mode"), icon: "peace", href: urls.discover("homies") },
+		{ id: "dates", title: t("dates"), icon: "heart", href: urls.discover("dates") },
+		{ id: "homies", title: t("homies"), icon: "peace", href: urls.discover("homies") },
 		{ id: "matches", title: t("matches"), icon: "bubble.fill", href: urls.conversations.list(), badge },
-		{ id: "profile", title: t("profile"), icon: "person.crop.circle.fill", href: urls.profile(user.slug) },
-		{ id: "settings", title: t("settings"), icon: "gearshape.fill", href: isDesktop ? urls.settings.matchmaking() : urls.settings.list() }
+		{ id: "settings", title: t("settings"), icon: "gearshape.fill", href: isDesktop ? urls.settings.matchmaking() : urls.settings.list() },
+		{ id: "profile", title: t("profile"), icon: "person.crop.circle.fill", href: urls.profile(user.slug) }
 	].filter(({ id }) => !split || id !== "matches"), [t, badge, user.slug, isDesktop, split]);
 
 	const active: Record<string, boolean> = {
