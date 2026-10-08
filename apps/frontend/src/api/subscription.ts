@@ -81,5 +81,8 @@ export const Subscription = {
 	},
 	manage() {
 		return this.api.url("/manage").get().json<ChargebeePortalSession>();
+	},
+	reconcile() {
+		return this.api.url("/reconcile").post().res();
 	}
 };

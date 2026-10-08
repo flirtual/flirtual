@@ -1,4 +1,4 @@
-import type { PurchasesPackage } from "@revenuecat/purchases-capacitor";
+import type { CustomerInfo, PurchasesPackage } from "@revenuecat/purchases-capacitor";
 import {
 	createContext,
 
@@ -14,6 +14,7 @@ import { useTranslation } from "react-i18next";
 import { getChargebee } from "~/api/chargebee";
 import { isWretchError } from "~/api/common";
 import { Subscription } from "~/api/subscription";
+import { premium } from "~/api/user";
 import { rcAppleKey, rcGoogleKey } from "~/const";
 import { useNavigate } from "~/i18n";
 import { invalidate, sessionKey } from "~/query";
@@ -66,6 +67,27 @@ async function ensureIdentified(appUserID: string) {
 	await Purchases.logIn({ appUserID });
 }
 
+const reconciled = new Set<string>();
+
+// Out-of-app purchases don't reach the user's customer until the SDK syncs them.
+async function reconcileUnseen(customerInfo: CustomerInfo) {
+	const entitlement = customerInfo.entitlements.active.premium;
+	if (!entitlement) return;
+
+	const key = `${entitlement.productIdentifier}:${entitlement.latestPurchaseDate}`;
+	if (reconciled.has(key)) return;
+	reconciled.add(key);
+
+	try {
+		await Subscription.reconcile();
+	}
+	catch (reason) {
+		reconciled.delete(key);
+		throw reason;
+	}
+	await invalidate({ queryKey: sessionKey() });
+}
+
 async function getPackage(revenuecatId: string) {
 	const { Purchases } = await getPurchaseModule();
 	return (await Purchases.getOfferings()).current?.availablePackages.find(
@@ -108,6 +130,48 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 			cancelled = true;
 		};
 	}, [platform, native, revenuecatId]);
+
+	const hasPremium = user ? premium(user) : false;
+
+	useEffect(() => {
+		if (!revenuecatId || !native || hasPremium) return;
+		if (platform === "web") return;
+
+		let cancelled = false;
+		let listener: string | null = null;
+
+		const onCustomerInfo = (customerInfo: CustomerInfo) => {
+			if (cancelled) return;
+			reconcileUnseen(customerInfo).catch(() => {});
+		};
+
+		void (async () => {
+			await ensureConfigured(platform, revenuecatId);
+			await ensureIdentified(revenuecatId);
+			if (cancelled) return;
+
+			const { Purchases } = await getPurchaseModule();
+			const callbackId = await Purchases.addCustomerInfoUpdateListener(onCustomerInfo);
+			if (cancelled) {
+				await Purchases.removeCustomerInfoUpdateListener({ listenerToRemove: callbackId });
+				return;
+			}
+			listener = callbackId;
+
+			const { customerInfo } = await Purchases.getCustomerInfo();
+			onCustomerInfo(customerInfo);
+		})();
+
+		return () => {
+			cancelled = true;
+			if (!listener) return;
+
+			const listenerToRemove = listener;
+			void getPurchaseModule().then(({ Purchases }) =>
+				Purchases.removeCustomerInfoUpdateListener({ listenerToRemove })
+			);
+		};
+	}, [platform, native, revenuecatId, hasPremium]);
 
 	const purchase = useCallback(
 		async (planId?: string): Promise<void> => {

@@ -5,9 +5,12 @@ defmodule FlirtualWeb.SubscriptionController do
   import FlirtualWeb.Utilities
   import Phoenix.Controller
 
-  alias Flirtual.{Chargebee, Plan, Policy}
+  alias Flirtual.{Chargebee, Plan, Policy, Reconciliation, User}
+  alias Flirtual.ObanWorkers.Reconcile
 
   action_fallback(FlirtualWeb.FallbackController)
+
+  @fifteen_minutes 900_000
 
   def list_plans(conn, _) do
     plans = Policy.transform(conn, Plan.list())
@@ -42,6 +45,23 @@ defmodule FlirtualWeb.SubscriptionController do
            Chargebee.manage(conn.assigns[:session].user) do
       conn |> json(serialize_portal_session(portal_session))
     else
+      value -> value
+    end
+  end
+
+  def reconcile(%{assigns: %{session: %{user: %User{} = user}}} = conn, _) do
+    case ExRated.check_rate("reconcile:#{user.id}", @fifteen_minutes, 10) do
+      {:ok, _} -> reconcile_now(conn, user)
+      {:error, _} -> {:error, {:too_many_requests, :reconcile_rate_limit}}
+    end
+  end
+
+  defp reconcile_now(conn, user) do
+    with {:retry, _reason} <- Reconciliation.reconcile(user),
+         {:ok, _} <- Reconcile.enqueue(user.id) do
+      send_resp(conn, :accepted, "")
+    else
+      :ok -> send_resp(conn, :no_content, "")
       value -> value
     end
   end
