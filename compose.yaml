@@ -14,7 +14,7 @@ services:
     ports:
       - 5432:5432
   manticore:
-    image: manticoresearch/manticore:28.4.4@sha256:e44d8c9ced8147e73421d3b86e138fbdd3f4fefbcc1cbe043db648fb1cc75a7b
+    image: manticoresearch/manticore:29.9.0@sha256:461b419739a2bbbffb4be0b32db26c41d7b435bf7fd1fce95b414ca5ccbb3775
     restart: always
     mem_limit: 2g
     volumes:
