@@ -3,9 +3,9 @@ import { Outlet } from "react-router";
 
 import { AnalyticsProvider } from "./analytics";
 import { AgeGate } from "./components/age-gate";
-import { InsetPreview } from "./components/inset-preview";
+import { DebugTools } from "./components/debug-tools";
 import { Loading } from "./components/loading";
-import { development, server } from "./const";
+import { server } from "./const";
 import { ConfigSubscriber } from "./hooks/use-config";
 import { DialogProvider } from "./hooks/use-dialog";
 import { InterruptionProvider } from "./hooks/use-interruption";
@@ -17,8 +17,8 @@ const UpdateInformation = lazy(() => import("./components/update-information").t
 export function App() {
 	return (
 		<>
-			{development && <InsetPreview />}
 			<QueryProvider>
+				<DebugTools />
 				<AnalyticsProvider>
 					<Suspense fallback={null}>
 						{!server && <ConfigSubscriber />}
