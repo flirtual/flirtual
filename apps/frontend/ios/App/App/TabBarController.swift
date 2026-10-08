@@ -179,11 +179,17 @@ final class TabBarController: UITabBarController, UITabBarControllerDelegate {
         plugin?.notifyListeners("layout", data: layout)
     }
 
+    override func viewWillTransition(to size: CGSize, with coordinator: any UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        // Turning back to a size already seen can bring the stale height back too.
+        refreshedTabBarSize = nil
+    }
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
         // UIKit sometimes keeps the portrait tab bar's height in landscape, leaving the bar floating
-        // above the bottom edge. Showing it again lays it out afresh, once for each size and tab.
+        // above the bottom edge. Showing it again lays it out afresh, once for each rotation and tab.
         let bar = tabBar.frame
         if showsTabBar, !isTabBarHidden, bar.width > bar.height, bar.midY > view.bounds.midY,
            bar.maxY < view.bounds.maxY - 1, refreshedTabBarSize != view.bounds.size {
