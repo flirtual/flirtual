@@ -47,10 +47,10 @@ import { useOptionalSession } from "./use-session";
 import { useTheme } from "./use-theme";
 
 const TalkjsContext = createContext<Talk.Session | null>(null);
-const UnreadConversationContext = createContext({} as {
+const UnreadConversationContext = createContext<{
 	unreadConversations: Array<Talk.UnreadConversation>;
 	setUnreadConversations: Dispatch<SetStateAction<Array<Talk.UnreadConversation>>>;
-});
+}>({ unreadConversations: emptyArray, setUnreadConversations: doNothing });
 
 function expiresAt(token: string) {
 	try {
