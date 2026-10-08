@@ -53,8 +53,8 @@ export const SettingsNavigation: FC = () => {
 	const dialogs = useDialog();
 
 	return (
-		<div className="sticky top-0 z-10 flex w-full shrink-0 grow-0 flex-col self-baseline split:h-full desktop:relative desktop:h-auto desktop:max-h-full desktop:w-80 desktop:rounded-2xl desktop:bg-brand-gradient desktop:text-white-20 desktop:shadow-brand-1">
-			<NavigationHeader listOnly={listOnly} />
+		<div className={twMerge("sticky top-0 z-10 flex w-full shrink-0 grow-0 flex-col self-baseline split:h-full desktop:relative desktop:h-auto desktop:max-h-full desktop:w-80 desktop:rounded-2xl desktop:bg-brand-gradient desktop:text-white-20 desktop:shadow-brand-1", !listOnly && "hidden split:flex desktop:flex")}>
+			<NavigationHeader />
 			<div className="vision:bg-none split:flex split:min-h-0 split:flex-1 split:flex-col split:border-r split:border-r-black-90/10 dark:split:border-r-white-10/10 desktop:rounded-2xl desktop:rounded-t-none desktop:border-r-0 desktop:bg-brand-gradient desktop:p-1 desktop:pt-0">
 				<nav
 					className={twMerge(

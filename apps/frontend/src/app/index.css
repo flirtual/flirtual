@@ -96,6 +96,8 @@ body[data-theme="dark"] {
 body[data-native-navigation] {
   --content-inset-left: var(--safe-area-inset-left, 0px);
   --content-inset-right: var(--safe-area-inset-right, 0px);
+  --top-clearance-left: var(--content-inset-left);
+  --top-clearance-right: var(--content-inset-right);
 }
 
 body[data-theme-style="friend"] {

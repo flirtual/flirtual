@@ -23,6 +23,7 @@ final class TabBarController: UITabBarController, UITabBarControllerDelegate {
     private var fold: [String: Double] = [:]
     private var sideBar: [String: Double] = [:]
     private var bottomBar: [String: Double] = [:]
+    private var corners: [String: Double] = [:]
     private var refreshedTabBarSize: CGSize?
     private var settled: DispatchWorkItem?
 
@@ -31,7 +32,8 @@ final class TabBarController: UITabBarController, UITabBarControllerDelegate {
             "topCorners": topCorners.mapValues { $0 as JSValue },
             "fold": fold.mapValues { $0 as JSValue },
             "sideBar": sideBar.mapValues { $0 as JSValue },
-            "bottomBar": bottomBar.mapValues { $0 as JSValue }
+            "bottomBar": bottomBar.mapValues { $0 as JSValue },
+            "corners": corners.mapValues { $0 as JSValue }
         ]
     }
 
@@ -165,12 +167,15 @@ final class TabBarController: UITabBarController, UITabBarControllerDelegate {
         let fold = Self.fold(in: webView)
         let sideBar = sideBar(in: webView)
         let bottomBar = bottomBar(in: webView)
-        guard corners != topCorners || fold != self.fold || sideBar != self.sideBar || bottomBar != self.bottomBar else { return }
+        let screenCorners = Self.cornerInsets(of: webView)
+        guard corners != topCorners || fold != self.fold || sideBar != self.sideBar || bottomBar != self.bottomBar
+            || screenCorners != self.corners else { return }
 
         topCorners = corners
         self.fold = fold
         self.sideBar = sideBar
         self.bottomBar = bottomBar
+        self.corners = screenCorners
         plugin?.notifyListeners("layout", data: layout)
     }
 
@@ -226,7 +231,15 @@ final class TabBarController: UITabBarController, UITabBarControllerDelegate {
         visit(window)
 
         guard !frame.isNull, frame.height > frame.width else { return [:] }
-        return ["top": frame.minY]
+        return ["top": frame.minY, "x": frame.midX]
+    }
+
+    // How much further than the safe area content must keep from each side to clear the screen's
+    // rounded corners, for the top of a side where nothing else is reserved.
+    private static func cornerInsets(of view: UIView) -> [String: Double] {
+        let adapted = view.edgeInsets(for: .safeArea(cornerAdaptation: .horizontal))
+        let safe = view.safeAreaInsets
+        return ["left": max(0, adapted.left - safe.left), "right": max(0, adapted.right - safe.right)]
     }
 
     // A fold splitting the page side by side, as when iPhone Duo is partially open in landscape.

@@ -460,7 +460,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 							</button>
 						</div>
 
-						<div className="pointer-events-auto absolute top-0 flex w-full px-8 pl-[calc(2rem+var(--status-bar-clearance-left,0rem))] pr-[calc(2rem+var(--status-bar-clearance-right,0rem))]">
+						<div className="pointer-events-auto absolute top-0 flex w-full px-8 pl-[calc(2rem+var(--top-clearance-left,0rem))] pr-[calc(2rem+var(--top-clearance-right,0rem))]">
 							<div className="-mx-1 flex grow items-center">
 								{images.map((image) => (
 									<button

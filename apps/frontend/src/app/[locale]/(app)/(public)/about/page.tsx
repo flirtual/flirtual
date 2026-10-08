@@ -51,12 +51,13 @@ export default function AboutPage() {
 	return (
 		<ModelCard
 			className="w-full desktop:max-w-2xl"
-			containerProps={{ className: "!p-0 overflow-hidden" }}
+			containerProps={{ className: "!p-0 desktop:overflow-hidden" }}
 			title={t("about_us")}
 		>
 			<Image
 				priority
 				alt={t("voice_spiritual_polite_entertaining")}
+				className="max-w-none full-bleed-x"
 				height={618}
 				src={TeamPicture}
 				width={1888}
@@ -186,7 +187,7 @@ export default function AboutPage() {
 					i18nKey="hard_cause_trick_puzzling"
 				/>
 			</div>
-			<div className="grid grid-cols-3">
+			<div className="grid grid-cols-3 full-bleed-x native-nav:mb-[calc(-1*var(--safe-area-inset-bottom,0rem))] desktop:mb-0">
 				{Object.entries(images).map(([index, { image_alt, link }]) => (
 					<Tooltip key={index}>
 						<TooltipTrigger asChild>

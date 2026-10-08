@@ -1,4 +1,4 @@
-import { CheckCheck, ChevronLeft, X } from "lucide-react";
+import { CheckCheck } from "lucide-react";
 import { Fragment, Suspense, useLayoutEffect, useState } from "react";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
@@ -7,11 +7,9 @@ import { twMerge } from "tailwind-merge";
 
 import { Conversation } from "~/api/conversations";
 import { Button } from "~/components/button";
-import { Link } from "~/components/link";
 import { useConversations } from "~/hooks/use-conversations";
 import { useUnreadConversations } from "~/hooks/use-talkjs";
 import { useToast } from "~/hooks/use-toast";
-import { urls } from "~/urls";
 
 import { LikesYouButton } from "./likes-you-button";
 import {
@@ -28,7 +26,6 @@ export const ConversationAside: FC<ConversationAsideProps> = (props) => {
 	const { t } = useTranslation();
 
 	const { activeConversationId } = props;
-	const HeaderIcon = activeConversationId ? ChevronLeft : X;
 
 	const { data, invalidate, loadMore } = useConversations();
 	const [loadMoreReference, loadMoreInView] = useInView();
@@ -45,21 +42,12 @@ export const ConversationAside: FC<ConversationAsideProps> = (props) => {
 		<div
 			className={twMerge(
 				"flex w-full shrink-0 grow-0 flex-col split:h-full desktop:h-auto desktop:max-h-full desktop:w-96 desktop:rounded-2xl desktop:bg-brand-gradient desktop:shadow-brand-1",
-				!activeConversationId
-				&& "desktop:mx-auto desktop:w-full desktop:max-w-md"
+				activeConversationId
+					? "hidden split:flex desktop:flex"
+					: "desktop:mx-auto desktop:w-full desktop:max-w-md"
 			)}
 		>
-			<div className="flex min-h-[var(--status-bar-height,0rem)] w-full items-center justify-center bg-black-70 p-4 pl-[calc(1rem+var(--status-bar-clearance-left,0rem))] pr-[calc(1rem+var(--status-bar-clearance-right,0rem))] pt-[max(calc(var(--status-bar-inset-top,var(--safe-area-inset-top,0rem))+0.5rem),1rem)] text-white-20 full-bleed-x split:shrink-0 split:border-r split:border-r-black-70 desktop:static desktop:border-r-0 desktop:bg-transparent desktop:px-4 desktop:pt-[1.125rem]">
-				<Link
-					href={
-						activeConversationId
-							? urls.conversations.list()
-							: urls.discover("dates")
-					}
-					className="absolute left-[calc(1rem+var(--status-bar-clearance-left,0rem))] flex shrink-0 vision:left-8 split:hidden desktop:hidden"
-				>
-					<HeaderIcon className="w-6" />
-				</Link>
+			<div className="flex min-h-[var(--status-bar-height,0rem)] w-full items-center justify-center bg-black-70 p-4 pl-[calc(1rem+var(--top-clearance-left,0rem))] pr-[calc(1rem+var(--top-clearance-right,0rem))] pt-[max(calc(var(--status-bar-inset-top,var(--safe-area-inset-top,0rem))+0.5rem),1rem)] text-white-20 full-bleed-x split:shrink-0 split:border-r split:border-r-black-70 desktop:static desktop:border-r-0 desktop:bg-transparent desktop:px-4 desktop:pt-[1.125rem]">
 				<span className="font-montserrat text-2xl font-extrabold">{t("matches")}</span>
 			</div>
 			<div className="h-full split:flex split:min-h-0 split:flex-1 split:flex-col split:border-r split:border-r-black-90/10 dark:split:border-r-white-10/10 desktop:border-r-0 desktop:p-1 desktop:pt-0">

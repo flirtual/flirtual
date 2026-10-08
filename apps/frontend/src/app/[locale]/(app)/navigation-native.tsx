@@ -39,6 +39,8 @@ interface Fold {
 // bottom, so anything above this is clear of them.
 interface SideBar {
 	top?: number;
+	// Its middle, to tell which side it's on.
+	x?: number;
 }
 
 // Where the tab bar starts when it runs along the bottom (iPhone), in points.
@@ -46,11 +48,19 @@ interface BottomBar {
 	top?: number;
 }
 
+// How much further than the safe area content keeps from each side to clear the screen's rounded
+// corners, in points.
+interface Corners {
+	left?: number;
+	right?: number;
+}
+
 interface Layout {
 	topCorners: TopCorners;
 	fold: Fold;
 	sideBar: SideBar;
 	bottomBar: BottomBar;
+	corners: Corners;
 }
 
 const NativeNavigationPlugin = registerPlugin<{
@@ -59,17 +69,14 @@ const NativeNavigationPlugin = registerPlugin<{
 		& ((eventName: "select", listener: (event: { id: string }) => void) => Promise<PluginListenerHandle>);
 }>("NativeNavigation");
 
-// Lets content along the top sit beside a corner status bar, keeping the clearance on either side.
-// When the status bar fits in the top safe area, headers also move up level with it, using
-// --status-bar-inset-top in place of the top safe area.
-function setTopCorners({ left, right, bottom, height }: TopCorners) {
+// Where a corner status bar ends. When it fits in the top safe area, headers move up level with
+// it, using --status-bar-inset-top in place of the top safe area.
+function setTopCorners({ bottom, height }: TopCorners) {
 	const { style } = document.body;
 	const set = (property: string, value: string | undefined) => value === undefined
 		? style.removeProperty(property)
 		: style.setProperty(property, value);
 
-	set("--status-bar-clearance-left", left === undefined ? undefined : `${left}px`);
-	set("--status-bar-clearance-right", right === undefined ? undefined : `${right}px`);
 	set("--status-bar-bottom", bottom === undefined ? undefined : `${bottom}px`);
 	set("--status-bar-height", height === undefined ? undefined : `${height}px`);
 	set("--status-bar-inset-top", height === undefined ? undefined : `calc(${height}px / 2 - 1.5rem)`);
@@ -87,8 +94,28 @@ function setFold({ x, width }: Fold) {
 	style.setProperty("--split-list-width", `calc(${x + width / 2}px - var(--content-inset-left, 0px))`);
 }
 
-function setLayout({ topCorners, fold, sideBar, bottomBar }: Layout) {
+// Content along the top keeps clear of a status bar in that corner. Above a vertical tab bar the
+// top of its column is free, so content can run into it, short of the screen's corner. Elsewhere it
+// keeps to the safe area and clear of the corner.
+function setTopClearance(topCorners: TopCorners, sideBar: SideBar, corners: Corners) {
+	const { style } = document.body;
+	const barSide = sideBar.x === undefined ? undefined : sideBar.x < window.innerWidth / 2 ? "left" : "right";
+
+	for (const side of ["left", "right"] as const) {
+		const property = `--top-clearance-${side}`;
+		const statusBar = topCorners[side];
+		const corner = corners[side] ?? 0;
+
+		if (statusBar) style.setProperty(property, `${statusBar}px`);
+		else if (barSide === side) style.setProperty(property, `${corner}px`);
+		else if (corner) style.setProperty(property, `calc(var(--content-inset-${side}) + ${corner}px)`);
+		else style.removeProperty(property);
+	}
+}
+
+function setLayout({ topCorners, fold, sideBar, bottomBar, corners }: Layout) {
 	setTopCorners(topCorners);
+	setTopClearance(topCorners, sideBar, corners);
 	setFold(fold);
 
 	const { style } = document.body;
@@ -152,7 +179,7 @@ export const NativeNavigation: FC<{ user: User }> = ({ user }) => {
 
 		return () => {
 			delete document.body.dataset.nativeNavigation;
-			setLayout({ topCorners: {}, fold: {}, sideBar: {}, bottomBar: {} });
+			setLayout({ topCorners: {}, fold: {}, sideBar: {}, bottomBar: {}, corners: {} });
 			void NativeNavigationPlugin.update({ visible: false });
 		};
 	}, []);
