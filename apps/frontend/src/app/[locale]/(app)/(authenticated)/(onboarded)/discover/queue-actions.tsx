@@ -16,6 +16,7 @@ import { PeaceIcon } from "~/components/icons/gradient/peace";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
 import { useTimeout } from "~/hooks/use-interval";
+import { useNativeActions } from "~/hooks/use-native-actions";
 import { useQueue } from "~/hooks/use-queue";
 import { useSession } from "~/hooks/use-session";
 import { relationshipKey, useQueryState } from "~/query";
@@ -103,6 +104,23 @@ export const QueueActions: FC<{
 
 	const tooFast = mutating || didAction;
 
+	const [actionsElement, setActionsElement] = useState<HTMLDivElement | null>(null);
+	const theme = (name: string) => getComputedStyle(document.body).getPropertyValue(name).trim();
+	const nativeActions = useNativeActions(actionsElement, [
+		{ id: "undo", icon: "arrow.uturn.backward", enabled: !explicitUserId && canUndo && !tooFast },
+		...(mode === "love" ? [{ id: "like", icon: "heart", prominent: true, tint: theme("--theme-2"), enabled: !tooFast && !blocked }] : []),
+		...(direct || mode === "friend" ? [{ id: "homie", icon: "peace", prominent: true, tint: theme("--friend-theme-2"), enabled: !tooFast && !blocked }] : []),
+		{ id: "pass", icon: "xmark", enabled: !tooFast }
+	], (id) => {
+		if (id === "undo") void undo();
+		if (id === "like") {
+			if (genderMismatch) setHomieInstead(true);
+			else void like(explicitUserId);
+		}
+		if (id === "homie") void homie(explicitUserId);
+		if (id === "pass") void pass(explicitUserId);
+	});
+
 	useGlobalEventListener(
 		"document",
 		"keydown",
@@ -134,9 +152,9 @@ export const QueueActions: FC<{
 
 	return (
 		<div className="flex h-20 w-full items-center justify-center split:desktop:hidden">
-			<div className="fixed bottom-[max(calc(var(--safe-area-inset-bottom,0rem)+5.5rem),6rem)] z-20 flex flex-col items-center justify-center gap-2 native-nav:bottom-[max(calc(var(--safe-area-inset-bottom,0rem)+0.5rem),2rem)] desktop:bottom-12">
+			<div className="fixed bottom-[max(calc(var(--safe-area-inset-bottom,0rem)+5.5rem),6rem)] z-20 flex flex-col items-center justify-center gap-2 native-nav:bottom-[max(calc(var(--safe-area-inset-bottom,0rem)+0.75rem),2.25rem)] desktop:bottom-12">
 				<QueueDebugger kind={mode} />
-				<div className="flex items-center gap-2 text-white-10">
+				<div className={twMerge("flex items-center gap-2 text-white-10", nativeActions && "invisible")} ref={setActionsElement}>
 					<Tooltip touchable={false}>
 						<TooltipTrigger asChild>
 							<m.button

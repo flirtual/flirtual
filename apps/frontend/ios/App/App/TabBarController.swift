@@ -8,6 +8,14 @@ struct NavigationTab: Equatable {
     let icon: String
 }
 
+struct NavigationAction: Equatable {
+    let id: String
+    let icon: String
+    let tint: UIColor?
+    let prominent: Bool
+    let enabled: Bool
+}
+
 // Hosts the one Capacitor bridge under a native tab bar. Each tab gets an empty container, and the
 // bridge moves into whichever container is selected, so switching tabs never reloads the page. The
 // web app owns the tabs and the selection; this only mirrors what it sends and reports taps back.
@@ -26,6 +34,9 @@ final class TabBarController: UITabBarController, UITabBarControllerDelegate {
     private var corners: [String: Double] = [:]
     private var refreshedTabBarSize: CGSize?
     private var settled: DispatchWorkItem?
+    private lazy var actionBar = ActionBar { [weak self] id in
+        self?.plugin?.notifyListeners("action", data: ["id": id])
+    }
 
     var layout: JSObject {
         [
@@ -142,6 +153,20 @@ final class TabBarController: UITabBarController, UITabBarControllerDelegate {
             container.setContentScrollView(scrollView)
             scrollView.topEdgeEffect.isHidden = true
         }
+    }
+
+    // The page lays out its own actions, hidden, and sends where they are, so these sit in their place.
+    func setActions(_ actions: [NavigationAction], frame: CGRect?) {
+        guard !actions.isEmpty, let frame, !frame.isEmpty, let webView = bridgeViewController.webView else {
+            actionBar.removeFromSuperview()
+            return
+        }
+
+        if actionBar.superview !== view {
+            view.insertSubview(actionBar, belowSubview: tabBar)
+        }
+        actionBar.set(actions)
+        actionBar.frame = view.convert(frame, from: webView)
     }
 
     private var plugin: NativeNavigationPlugin? {
@@ -376,4 +401,79 @@ private final class TabContentViewController: UIViewController {
     override var childForStatusBarStyle: UIViewController? { children.first }
     override var childForStatusBarHidden: UIViewController? { children.first }
     override var childForHomeIndicatorAutoHidden: UIViewController? { children.first }
+}
+
+// Liquid Glass buttons in a row, centred in their frame.
+@available(iOS 26, *)
+private final class ActionBar: UIView {
+    private let stack = UIStackView()
+    private let onSelect: (String) -> Void
+    private var actions: [NavigationAction] = []
+
+    init(onSelect: @escaping (String) -> Void) {
+        self.onSelect = onSelect
+        super.init(frame: .zero)
+
+        stack.axis = .horizontal
+        stack.alignment = .center
+        stack.spacing = 8
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(stack)
+        NSLayoutConstraint.activate([
+            stack.centerXAnchor.constraint(equalTo: centerXAnchor),
+            stack.centerYAnchor.constraint(equalTo: centerYAnchor)
+        ])
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // Taps outside the buttons reach the page beneath.
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        let view = super.hitTest(point, with: event)
+        return view === self || view === stack ? nil : view
+    }
+
+    func set(_ actions: [NavigationAction]) {
+        // Rebuilding mid-press would cancel it, so buttons that stay only change their state.
+        guard actions.map(\.id) == self.actions.map(\.id) else {
+            self.actions = actions
+            stack.arrangedSubviews.forEach { $0.removeFromSuperview() }
+            actions.map(makeButton).forEach(stack.addArrangedSubview)
+            return
+        }
+
+        self.actions = actions
+        for (button, action) in zip(stack.arrangedSubviews.compactMap { $0 as? UIButton }, actions) {
+            button.isEnabled = action.enabled
+            button.tintColor = action.tint
+        }
+    }
+
+    private func makeButton(_ action: NavigationAction) -> UIButton {
+        var configuration: UIButton.Configuration = action.prominent ? .prominentGlass() : .glass()
+        configuration.image = (UIImage(named: action.icon) ?? UIImage(systemName: action.icon))?
+            .withRenderingMode(.alwaysTemplate)
+        configuration.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(
+            pointSize: action.prominent ? 28 : 22,
+            weight: .bold
+        )
+        configuration.baseForegroundColor = action.prominent ? .white : .label
+        configuration.cornerStyle = .capsule
+
+        let button = UIButton(configuration: configuration, primaryAction: UIAction { [onSelect] _ in
+            onSelect(action.id)
+        })
+        button.tintColor = action.tint
+        button.isEnabled = action.enabled
+
+        let size: CGFloat = action.prominent ? 68 : 56
+        button.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            button.widthAnchor.constraint(equalToConstant: size),
+            button.heightAnchor.constraint(equalToConstant: size)
+        ])
+        return button
+    }
 }

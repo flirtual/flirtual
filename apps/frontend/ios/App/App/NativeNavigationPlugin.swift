@@ -5,7 +5,8 @@ final class NativeNavigationPlugin: CAPPlugin, CAPBridgedPlugin {
     let identifier = "NativeNavigationPlugin"
     let jsName = "NativeNavigation"
     let pluginMethods: [CAPPluginMethod] = [
-        CAPPluginMethod(name: "update", returnType: CAPPluginReturnPromise)
+        CAPPluginMethod(name: "update", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "actions", returnType: CAPPluginReturnPromise)
     ]
 
     @objc func update(_ call: CAPPluginCall) {
@@ -37,6 +38,37 @@ final class NativeNavigationPlugin: CAPPlugin, CAPBridgedPlugin {
             call.resolve(controller.layout)
         }
     }
+
+    // Buttons floating over the page, where it laid out its own. An empty list removes them.
+    @objc func actions(_ call: CAPPluginCall) {
+        let actions = (call.getArray("actions", JSObject.self) ?? []).compactMap { object -> NavigationAction? in
+            guard let id = object["id"] as? String, let icon = object["icon"] as? String else { return nil }
+            return NavigationAction(
+                id: id,
+                icon: icon,
+                tint: (object["tint"] as? String).flatMap(UIColor.init(hex:)),
+                prominent: object["prominent"] as? Bool ?? false,
+                enabled: object["enabled"] as? Bool ?? true
+            )
+        }
+        let frame = call.getObject("frame").flatMap { frame -> CGRect? in
+            guard let x = frame["x"] as? Double, let y = frame["y"] as? Double,
+                  let width = frame["width"] as? Double, let height = frame["height"] as? Double else { return nil }
+            return CGRect(x: x, y: y, width: width, height: height)
+        }
+
+        DispatchQueue.main.async {
+            guard #available(iOS 26, *),
+                  let controller = self.bridge?.viewController?.tabBarController as? TabBarController else {
+                call.unavailable()
+                return
+            }
+
+            controller.setActions(actions, frame: frame)
+            call.resolve()
+        }
+    }
+
 }
 
 private extension UIColor {

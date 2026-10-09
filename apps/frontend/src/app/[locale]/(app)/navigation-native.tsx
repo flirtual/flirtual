@@ -1,5 +1,3 @@
-import { registerPlugin } from "@capacitor/core";
-import type { PluginListenerHandle } from "@capacitor/core";
 import { useEffect, useEffectEvent, useMemo } from "react";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
@@ -10,64 +8,9 @@ import { useBreakpoint } from "~/hooks/use-breakpoint";
 import { useHasConversations } from "~/hooks/use-conversations";
 import { useUnreadConversations } from "~/hooks/use-talkjs";
 import { useLocale, useMatch, useNavigate } from "~/i18n";
+import { NativeNavigationPlugin } from "~/native-navigation";
+import type { Corners, Fold, Layout, SideBar, TopCorners } from "~/native-navigation";
 import { urls } from "~/urls";
-
-interface NativeNavigationTab {
-	id: string;
-	title: string;
-	// An asset in the app's catalog, or an SF Symbol.
-	icon: string;
-	badge?: string;
-}
-
-// What the system reserves in the top corners (iPhone Duo's status bar), in points. The height is
-// only there when it fits in the top safe area, leaving the rest of the top edge free.
-interface TopCorners {
-	left?: number;
-	right?: number;
-	bottom?: number;
-	height?: number;
-}
-
-// A fold splitting the page side by side (iPhone Duo partially open in landscape), in points.
-interface Fold {
-	x?: number;
-	width?: number;
-}
-
-// Where the tab bar starts when it runs down a side, in points. Its buttons are anchored to the
-// bottom, so anything above this is clear of them.
-interface SideBar {
-	top?: number;
-	// Its middle, to tell which side it's on.
-	x?: number;
-}
-
-// Where the tab bar starts when it runs along the bottom (iPhone), in points.
-interface BottomBar {
-	top?: number;
-}
-
-// How much further than the safe area content keeps from each side to clear the screen's rounded
-// corners, in points.
-interface Corners {
-	left?: number;
-	right?: number;
-}
-
-interface Layout {
-	topCorners: TopCorners;
-	fold: Fold;
-	sideBar: SideBar;
-	bottomBar: BottomBar;
-	corners: Corners;
-}
-
-const NativeNavigationPlugin = registerPlugin<{
-	update: (options: { visible: boolean; selected?: string; tabs?: Array<NativeNavigationTab>; tint?: string }) => Promise<Layout>;
-	addListener: ((eventName: "layout", listener: (event: Layout) => void) => Promise<PluginListenerHandle>)
-		& ((eventName: "select", listener: (event: { id: string }) => void) => Promise<PluginListenerHandle>);
-}>("NativeNavigation");
 
 // Where a corner status bar ends. When it fits in the top safe area, headers move up level with
 // it, using --status-bar-inset-top in place of the top safe area.
