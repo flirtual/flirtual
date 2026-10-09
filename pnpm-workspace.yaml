@@ -25,7 +25,7 @@ catalog:
 catalogs:
   pulumi:
     "@pulumi/aws": ^7.46.0
-    "@pulumi/cloudflare": 6.21.0
+    "@pulumi/cloudflare": 6.22.0
     "@pulumi/command": 1.2.1
     "@pulumi/postgresql": ^3.18.0
     "@pulumi/pulumi": 3.267.0
