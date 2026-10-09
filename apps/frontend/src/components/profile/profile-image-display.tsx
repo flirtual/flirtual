@@ -338,7 +338,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 
 	return (
 		<div className="relative shrink-0 overflow-hidden [container-type:inline-size]" {...swipeHandlers}>
-			<div className="relative flex aspect-square shrink-0 bg-black-70 narrow:aspect-video">
+			<div className="relative flex aspect-square shrink-0 bg-black-70 split:!aspect-square narrow:aspect-video">
 				{currentImage
 					? (
 							images.map((image, imageIndex) => (
