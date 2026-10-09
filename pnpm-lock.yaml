@@ -381,7 +381,7 @@ importers:
         version: 1.6.1(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       '@posthog/react':
         specifier: ^1.10.3
-        version: 1.11.3(@types/react@19.3.0)(posthog-js@1.436.1(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)
+        version: 1.11.3(@types/react@19.3.0)(posthog-js@1.438.1(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)
       '@radix-ui/react-alert-dialog':
         specifier: ^1.1.19
         version: 1.1.23(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
@@ -531,7 +531,7 @@ importers:
         version: 3.0.0
       posthog-js:
         specifier: ^1.413.3
-        version: 1.436.1(@types/react@19.3.0)(react@19.3.0)
+        version: 1.438.1(@types/react@19.3.0)(react@19.3.0)
       react:
         specifier: 19.3.0
         version: 19.3.0
@@ -3757,14 +3757,11 @@ packages:
   '@poppinss/exception@1.2.3':
     resolution: {integrity: sha512-dCED+QRChTVatE9ibtoaxc+WkdzOSjYTKi/+uacHWIsfodVfpsueo3+DKpgU5Px8qXjgmXkSvhXvSCz3fnP9lw==}
 
-  '@posthog/browser-common@0.9.1':
-    resolution: {integrity: sha512-Dl8uV2OZAxfHfWyC7K0Y3HtT7ld+WGLbXIwgCgAGziOMGDIa/bepCRrCxy7IxsEzqY1HOrq/VDdcoNN7hBTSQQ==}
+  '@posthog/browser-common@0.9.2':
+    resolution: {integrity: sha512-kD0ayI59d+DVcqEFLFA1TU1B03PFNV/Hy18Yv1EOB24Px0CDDowkTR3pBE2j8MYeqtp+4XOoVTXrcJaJUp6zrg==}
 
-  '@posthog/core@1.55.3':
-    resolution: {integrity: sha512-XnmG9jo7WlxTeN4oCNWH4ESLQHR6ZPZ+mcq+8JxU62k5i1BAe3BSrybnmXHjqKp7e3rUvLK2bOzGZGSlfHvlNA==}
-
-  '@posthog/core@1.56.0':
-    resolution: {integrity: sha512-WNlOoFQbOZyJzX54DhAslSpTjwDyXX5VLuRFNJjv172uOE9qHVUvtZAPP9dHZdq2HZkkLjbY27idH7UhzKSBVA==}
+  '@posthog/core@1.57.0':
+    resolution: {integrity: sha512-ZpIWCSkog0v4whufAXetagBsVLqE1Zjl5DsHC2squTy8nS/vqZ9W5JvWkJFgHK8hk5x1gdwMoXY7FK2S0YRT1Q==}
 
   '@posthog/react@1.11.3':
     resolution: {integrity: sha512-YqvZb2y9jh/yW0ojUtAns0l4yHWqpu+5UeIBxZlXpyGuWlh8M4siXRMtqhEh1BKfqp6Sq2usdsQCuoUzx1QFWQ==}
@@ -3776,8 +3773,8 @@ packages:
       '@types/react':
         optional: true
 
-  '@posthog/types@1.413.0':
-    resolution: {integrity: sha512-tYAVzNojWckuG/wxBB0fwE70sFruQQq4xbhkci7eH2ARU3mMfUTkvpN1HwBMpm0AtbxidLiH0IFvagmdJ8opPw==}
+  '@posthog/types@1.415.1':
+    resolution: {integrity: sha512-7Qs2wcqipl8KcFpIkIKE1Wcj1djX4dEB3cfq907HrNpKK7/xKh3U4N4bkOD6h9+8j3SxWWrj9JNpE8CZXsE35w==}
 
   '@protobufjs/aspromise@1.1.2':
     resolution: {integrity: sha512-j+gKExEuLmKwvz3OgROXtrJ2UG2x8Ch2YZUxahh+s1F2HZ+wAceUNLkvy6zKCPVRkU++ZWQrdxsUeQXmcg4uoQ==}
@@ -7906,8 +7903,8 @@ packages:
     resolution: {integrity: sha512-49cGhUbXj8Qenv0iTMxA1cFBzxXoctpC9Ujd77t1WcbJIr6nF/eI7g/8MgxrYldFRuAXvja7xQRwavoW7kgrxQ==}
     engines: {node: ^10 || ^12 || >=14}
 
-  posthog-js@1.436.1:
-    resolution: {integrity: sha512-+uPcck+hcaBbjtxBwOtiiZ9BcBXyJmewumUMVP5MrIZO36BHHZ+SzvHTxFsA5soNbPo2fuLppsWfpNnuSjbNeA==}
+  posthog-js@1.438.1:
+    resolution: {integrity: sha512-0ro5G2kkl2SJrXPmKRh/bzPa016hJ9FbbKXojgs7Q2aMLjzXiu3U7ogyBjbnz1XkgWwU6a5IrRMqycdHGuDHeg==}
     peerDependencies:
       '@types/react': '>=16.8.0'
       react: '>=16.8.0'
@@ -9055,49 +9052,6 @@ packages:
       svgo:
         optional: true
 
-  vite@8.3.2:
-    resolution: {integrity: sha512-SQr1x6W5vVSbROg7vsyXIaxK9b0G7zsT68acdWWRmnBUsgDieLCRG+Rep9WdZgcposvv/GSnr4GUUBqB3vXq6w==}
-    engines: {node: ^20.19.0 || >=22.12.0}
-    hasBin: true
-    peerDependencies:
-      '@types/node': ^20.19.0 || >=22.12.0
-      '@vitejs/devtools': ^0.7.1
-      esbuild: ^0.27.0 || ^0.28.0
-      jiti: '>=1.21.0'
-      less: ^4.0.0
-      sass: ^1.70.0
-      sass-embedded: ^1.70.0
-      stylus: '>=0.54.8'
-      sugarss: ^5.0.0
-      terser: ^5.16.0
-      tsx: ^4.8.1
-      yaml: ^2.4.2
-    peerDependenciesMeta:
-      '@types/node':
-        optional: true
-      '@vitejs/devtools':
-        optional: true
-      esbuild:
-        optional: true
-      jiti:
-        optional: true
-      less:
-        optional: true
-      sass:
-        optional: true
-      sass-embedded:
-        optional: true
-      stylus:
-        optional: true
-      sugarss:
-        optional: true
-      terser:
-        optional: true
-      tsx:
-        optional: true
-      yaml:
-        optional: true
-
   vite@8.3.3:
     resolution: {integrity: sha512-cTAldKPImjg6c+gk48U19POPn3GCBzZwpdsN8ZMEEcbpes+6/wvfqUd0C2y3qYY4wsj8PwgFwrZ/1jBPVttMSg==}
     engines: {node: ^20.19.0 || >=22.12.0}
@@ -9696,8 +9650,8 @@ snapshots:
       ast-kit: 3.0.0
       magic-string-ast: 2.1.1
       rolldown-string: 0.3.1(rolldown@1.2.4)
-      unplugin: 3.3.0(esbuild@0.28.2)(rolldown@1.2.4)(vite@8.3.2(@types/node@24.19.0)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.105.1)(tsx@4.23.12)(yaml@2.9.1))
-      vite: 8.3.2(@types/node@24.19.0)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.105.1)(tsx@4.23.12)(yaml@2.9.1)
+      unplugin: 3.3.0(esbuild@0.28.2)(rolldown@1.2.4)(vite@8.3.3(@types/node@24.19.0)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.105.1)(tsx@4.23.12)(yaml@2.9.1))
+      vite: 8.3.3(@types/node@24.19.0)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.105.1)(tsx@4.23.12)(yaml@2.9.1)
       vite-node: 6.0.0(@types/node@24.19.0)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.105.1)(tsx@4.23.12)(yaml@2.9.1)
     transitivePeerDependencies:
       - '@farmfe/core'
@@ -11747,27 +11701,23 @@ snapshots:
 
   '@poppinss/exception@1.2.3': {}
 
-  '@posthog/browser-common@0.9.1':
+  '@posthog/browser-common@0.9.2':
     dependencies:
-      '@posthog/core': 1.55.3
-      '@posthog/types': 1.413.0
+      '@posthog/core': 1.57.0
+      '@posthog/types': 1.415.1
 
-  '@posthog/core@1.55.3':
+  '@posthog/core@1.57.0':
     dependencies:
-      '@posthog/types': 1.413.0
+      '@posthog/types': 1.415.1
 
-  '@posthog/core@1.56.0':
+  '@posthog/react@1.11.3(@types/react@19.3.0)(posthog-js@1.438.1(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)':
     dependencies:
-      '@posthog/types': 1.413.0
-
-  '@posthog/react@1.11.3(@types/react@19.3.0)(posthog-js@1.436.1(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)':
-    dependencies:
-      posthog-js: 1.436.1(@types/react@19.3.0)(react@19.3.0)
+      posthog-js: 1.438.1(@types/react@19.3.0)(react@19.3.0)
       react: 19.3.0
     optionalDependencies:
       '@types/react': 19.3.0
 
-  '@posthog/types@1.413.0': {}
+  '@posthog/types@1.415.1': {}
 
   '@protobufjs/aspromise@1.1.2': {}
 
@@ -16854,11 +16804,11 @@ snapshots:
       picocolors: 1.1.1
       source-map-js: 1.2.2
 
-  posthog-js@1.436.1(@types/react@19.3.0)(react@19.3.0):
+  posthog-js@1.438.1(@types/react@19.3.0)(react@19.3.0):
     dependencies:
-      '@posthog/browser-common': 0.9.1
-      '@posthog/core': 1.56.0
-      '@posthog/types': 1.413.0
+      '@posthog/browser-common': 0.9.2
+      '@posthog/core': 1.57.0
+      '@posthog/types': 1.415.1
       core-js: 3.50.0
       dompurify: 3.4.16
       fflate: 0.4.9
@@ -18001,7 +17951,7 @@ snapshots:
       picomatch: 4.0.5
       webpack-virtual-modules: 0.6.2
 
-  unplugin@3.3.0(esbuild@0.28.2)(rolldown@1.2.4)(vite@8.3.2(@types/node@24.19.0)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.105.1)(tsx@4.23.12)(yaml@2.9.1)):
+  unplugin@3.3.0(esbuild@0.28.2)(rolldown@1.2.4)(vite@8.3.3(@types/node@24.19.0)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.105.1)(tsx@4.23.12)(yaml@2.9.1)):
     dependencies:
       '@jridgewell/remapping': 2.3.5
       picomatch: 4.0.7
@@ -18009,7 +17959,7 @@ snapshots:
     optionalDependencies:
       esbuild: 0.28.2
       rolldown: 1.2.4
-      vite: 8.3.2(@types/node@24.19.0)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.105.1)(tsx@4.23.12)(yaml@2.9.1)
+      vite: 8.3.3(@types/node@24.19.0)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.105.1)(tsx@4.23.12)(yaml@2.9.1)
 
   untildify@4.0.0: {}
 
@@ -18104,7 +18054,7 @@ snapshots:
       es-module-lexer: 2.3.1
       obug: 2.2.1
       pathe: 2.0.3
-      vite: 8.3.2(@types/node@24.19.0)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.105.1)(tsx@4.23.12)(yaml@2.9.1)
+      vite: 8.3.3(@types/node@24.19.0)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.105.1)(tsx@4.23.12)(yaml@2.9.1)
     transitivePeerDependencies:
       - '@types/node'
       - '@vitejs/devtools'
@@ -18143,22 +18093,6 @@ snapshots:
     optionalDependencies:
       sharp: 0.35.5(@types/node@24.19.0)
       svgo: 4.1.0
-
-  vite@8.3.2(@types/node@24.19.0)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.105.1)(tsx@4.23.12)(yaml@2.9.1):
-    dependencies:
-      lightningcss: 1.33.0
-      picomatch: 4.0.7
-      postcss: 8.5.29
-      rolldown: 1.2.11
-      tinyglobby: 0.2.17
-    optionalDependencies:
-      '@types/node': 24.19.0
-      esbuild: 0.28.2
-      fsevents: 2.3.3
-      jiti: 1.21.7
-      sass: 1.105.1
-      tsx: 4.23.12
-      yaml: 2.9.1
 
   vite@8.3.3(@types/node@24.19.0)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.105.1)(tsx@4.23.12)(yaml@2.9.1):
     dependencies:
