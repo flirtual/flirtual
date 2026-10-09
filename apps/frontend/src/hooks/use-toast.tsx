@@ -14,6 +14,7 @@ import { twMerge } from "tailwind-merge";
 
 import { isPluginUnsupported, reportAppOutdated } from "~/capacitor";
 import type { IconComponent } from "~/components/icons";
+import { NativeNavigationPlugin } from "~/native-navigation";
 
 import { device } from "./use-device";
 
@@ -78,6 +79,13 @@ export interface AddErrorOptions {
 	expected?: boolean;
 }
 
+// iOS's system colours.
+const nativeToastIcons = {
+	success: { icon: "checkmark.circle.fill", tint: "#34C759" },
+	warning: { icon: "exclamationmark.triangle.fill", tint: "#FF9500" },
+	error: { icon: "xmark.octagon.fill", tint: "#FF3B30" }
+};
+
 export const ToastProvider: React.FC<PropsWithChildren> = ({ children }) => {
 	const { t } = useTranslation();
 	const [toasts, setToasts] = useState<Array<Toast>>([]);
@@ -91,6 +99,20 @@ export const ToastProvider: React.FC<PropsWithChildren> = ({ children }) => {
 			if (typeof options === "string") options = { value: options };
 			const { type = "success", icon, duration = "short", value } = options;
 
+			// See https://capacitorjs.com/docs/apis/toast
+			const ttl = duration === "short" ? 2000 : 3500;
+
+			// The native tab bar would cover Capacitor's toast, so we show our own
+			// Liquid Glass toast at the top.
+			if (device.nativeNavigation) {
+				const shown = await NativeNavigationPlugin.toast({
+					text: value,
+					...nativeToastIcons[type],
+					duration: ttl
+				}).then(() => true, () => false);
+				if (shown) return;
+			}
+
 			if (device.native)
 				return NativeToast.show({
 					duration,
@@ -103,9 +125,6 @@ export const ToastProvider: React.FC<PropsWithChildren> = ({ children }) => {
 					// Android only supports bottom position.
 					position: "bottom"
 				});
-
-			// See https://capacitorjs.com/docs/apis/toast
-			const ttl = duration === "short" ? 2000 : 3500;
 
 			const toast: Toast = {
 				id: String(performance.now()),

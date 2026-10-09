@@ -6,7 +6,8 @@ final class NativeNavigationPlugin: CAPPlugin, CAPBridgedPlugin {
     let jsName = "NativeNavigation"
     let pluginMethods: [CAPPluginMethod] = [
         CAPPluginMethod(name: "update", returnType: CAPPluginReturnPromise),
-        CAPPluginMethod(name: "actions", returnType: CAPPluginReturnPromise)
+        CAPPluginMethod(name: "actions", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "toast", returnType: CAPPluginReturnPromise)
     ]
 
     @objc func update(_ call: CAPPluginCall) {
@@ -69,6 +70,26 @@ final class NativeNavigationPlugin: CAPPlugin, CAPBridgedPlugin {
         }
     }
 
+    @objc func toast(_ call: CAPPluginCall) {
+        guard let text = call.getString("text") else {
+            call.reject("text is required")
+            return
+        }
+        let icon = call.getString("icon")
+        let tint = call.getString("tint").flatMap(UIColor.init(hex:))
+        let duration = call.getDouble("duration", 2000) / 1000
+
+        DispatchQueue.main.async {
+            guard #available(iOS 26, *),
+                  let controller = self.bridge?.viewController?.tabBarController as? TabBarController else {
+                call.unavailable()
+                return
+            }
+
+            controller.showToast(text, icon: icon, tint: tint, duration: duration)
+            call.resolve()
+        }
+    }
 }
 
 private extension UIColor {

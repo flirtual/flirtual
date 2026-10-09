@@ -169,6 +169,76 @@ final class TabBarController: UITabBarController, UITabBarControllerDelegate {
         actionBar.frame = view.convert(frame, from: webView)
     }
 
+    private weak var toast: UIView?
+
+    // Positioned at the top of the screen, below anything reserved (iPad's tab
+    // bar). It replaces any still showing.
+    func showToast(_ text: String, icon: String?, tint: UIColor?, duration: TimeInterval) {
+        toast?.removeFromSuperview()
+        guard let container = selectedViewController?.view else { return }
+
+        let label = UILabel()
+        label.text = text
+        label.font = .preferredFont(forTextStyle: .subheadline)
+        label.adjustsFontForContentSizeCategory = true
+        label.numberOfLines = 0
+
+        let stack = UIStackView(arrangedSubviews: [label])
+        stack.axis = .horizontal
+        stack.alignment = .center
+        stack.spacing = 8
+        if let icon, let image = UIImage(systemName: icon) {
+            let imageView = UIImageView(image: image)
+            imageView.tintColor = tint
+            imageView.setContentHuggingPriority(.required, for: .horizontal)
+            stack.insertArrangedSubview(imageView, at: 0)
+        }
+
+        let glass = UIVisualEffectView()
+        glass.cornerConfiguration = .capsule()
+        glass.contentView.addSubview(stack)
+        glass.translatesAutoresizingMaskIntoConstraints = false
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        view.insertSubview(glass, belowSubview: tabBar)
+        toast = glass
+
+        let area = container.safeAreaLayoutGuide
+        NSLayoutConstraint.activate([
+            stack.topAnchor.constraint(equalTo: glass.contentView.topAnchor, constant: 12),
+            stack.bottomAnchor.constraint(equalTo: glass.contentView.bottomAnchor, constant: -12),
+            stack.leadingAnchor.constraint(equalTo: glass.contentView.leadingAnchor, constant: 18),
+            stack.trailingAnchor.constraint(equalTo: glass.contentView.trailingAnchor, constant: -18),
+            glass.centerXAnchor.constraint(equalTo: area.centerXAnchor),
+            glass.leadingAnchor.constraint(greaterThanOrEqualTo: area.leadingAnchor, constant: 16),
+            glass.topAnchor.constraint(equalTo: area.topAnchor, constant: 8)
+        ])
+
+        UIAccessibility.post(notification: .announcement, argument: text)
+
+        // Glass materialises by animating its effect in, rather than its alpha. Drops in from
+        // above.
+        stack.alpha = 0
+        view.layoutIfNeeded()
+        glass.transform = CGAffineTransform(translationX: 0, y: -24).scaledBy(x: 0.9, y: 0.9)
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.75, initialSpringVelocity: 0) {
+            glass.effect = UIGlassEffect()
+            glass.transform = .identity
+            stack.alpha = 1
+        }
+
+        // Started only when it's due: a delayed animation takes over the properties at once.
+        DispatchQueue.main.asyncAfter(deadline: .now() + duration) { [weak glass] in
+            guard let glass else { return }
+            UIView.animate(withDuration: 0.35) {
+                glass.effect = nil
+                glass.transform = CGAffineTransform(translationX: 0, y: -12)
+                stack.alpha = 0
+            } completion: { _ in
+                glass.removeFromSuperview()
+            }
+        }
+    }
+
     private var plugin: NativeNavigationPlugin? {
         bridgeViewController.bridge?.plugin(withName: "NativeNavigation") as? NativeNavigationPlugin
     }
