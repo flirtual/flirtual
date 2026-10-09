@@ -516,7 +516,7 @@ importers:
         version: 26.4.2(typescript@5.9.3)
       i18next-icu:
         specifier: ^2.4.4
-        version: 2.4.5(intl-messageformat@11.2.13)
+        version: 2.5.0(intl-messageformat@11.2.13)
       jose:
         specifier: 'catalog:'
         version: 6.2.12
@@ -6678,8 +6678,8 @@ packages:
     resolution: {integrity: sha512-eKCa6bwnJhvxj14kZk5NCPc6Hb6BdsU9DZcOnmQKSnO1VKrfV0zCvtttPZUsBvjmNDn8rpcJfpwSYnHBjc95MQ==}
     engines: {node: '>=18.18.0'}
 
-  i18next-icu@2.4.5:
-    resolution: {integrity: sha512-Si4EJ9bnlClZM5Xlz0x5FuIdnwxT10UlmN9BqAuf6+2TR1oa7eJqB1Fnei7HT2I2QSTVHMclF+jGYiDM6AF39A==}
+  i18next-icu@2.5.0:
+    resolution: {integrity: sha512-/du0wHUfcJhP3gzHw4ZHp9n0XA6xpDD029ZVNy9e2ohWEZHJUnW8X/ZAC0ltE72hceRa+XcAz72NU2UVF+Guuw==}
     peerDependencies:
       intl-messageformat: '>=10.3.3 <13.0.0'
 
@@ -15348,7 +15348,7 @@ snapshots:
 
   human-signals@8.0.1: {}
 
-  i18next-icu@2.4.5(intl-messageformat@11.2.13):
+  i18next-icu@2.5.0(intl-messageformat@11.2.13):
     dependencies:
       intl-messageformat: 11.2.13
 
