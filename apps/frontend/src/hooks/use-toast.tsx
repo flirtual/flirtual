@@ -1,3 +1,4 @@
+import { Capacitor, registerPlugin } from "@capacitor/core";
 import { Toast as NativeToast } from "@capacitor/toast";
 import { captureException } from "@sentry/react-router";
 import { AlertTriangle, Check } from "lucide-react";
@@ -79,6 +80,11 @@ export interface AddErrorOptions {
 	expected?: boolean;
 }
 
+const Snackbar = registerPlugin<{
+	// In milliseconds, and CSS pixels kept clear at the bottom.
+	show: (options: { text: string; duration: number; bottom: number; dark?: boolean }) => Promise<void>;
+}>("Snackbar");
+
 // iOS's system colours.
 const nativeToastIcons = {
 	success: { icon: "checkmark.circle.fill", tint: "#34C759" },
@@ -113,18 +119,31 @@ export const ToastProvider: React.FC<PropsWithChildren> = ({ children }) => {
 				if (shown) return;
 			}
 
-			if (device.native)
+			if (device.native) {
+				const text = type === "success"
+					? value
+					: type === "warning"
+						? `⚠️ ${value}`
+						: `🚫 ${value}`;
+
+				// Android toasts only fit 2 lines of text, so use snackbars when available.
+				if (device.android && Capacitor.isPluginAvailable("Snackbar")) {
+					const tops = [...document.querySelectorAll("header, [data-snackbar-anchor]")]
+						.map((element) => element.getBoundingClientRect())
+						.filter(({ height, top }) => height > 0 && top > window.innerHeight / 2)
+						.map(({ top }) => top);
+					const bottom = tops.length > 0 ? window.innerHeight - Math.min(...tops) : 0;
+
+					return Snackbar.show({ text, duration: ttl, bottom, dark: document.body.dataset.theme === "dark" });
+				}
+
 				return NativeToast.show({
 					duration,
-					text:
-						type === "success"
-							? value
-							: type === "warning"
-								? `⚠️ ${value}`
-								: `🚫 ${value}`,
+					text,
 					// Android only supports bottom position.
 					position: "bottom"
 				});
+			}
 
 			const toast: Toast = {
 				id: String(performance.now()),

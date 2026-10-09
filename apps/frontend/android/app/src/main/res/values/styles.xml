@@ -7,6 +7,15 @@
         <item name="colorPrimary">@color/brand</item>
     </style>
 
+    <!-- The page's own light and dark themes, which can differ from the system's. -->
+    <style name="AppTheme.Light" parent="Theme.Material3.Light.NoActionBar">
+        <item name="colorPrimary">@color/brand</item>
+    </style>
+
+    <style name="AppTheme.Dark" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="colorPrimary">@color/brand</item>
+    </style>
+
     <!-- The date picker plugin's own dialog themes, which would otherwise keep their teal accent, and
          stretch the dialog past the picker's fixed width. -->
     <style name="MaterialLightTheme" parent="android:Theme.Material.Light.Dialog.Alert">
