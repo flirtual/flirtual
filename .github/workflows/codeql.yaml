@@ -38,7 +38,7 @@ jobs:
             {"language": "javascript-typescript", "runner": "ubuntu-latest", "build-mode": "none"},
             {"language": "python", "runner": "ubuntu-latest", "build-mode": "none"},
             {"language": "java-kotlin", "runner": "ubuntu-latest", "build-mode": "none", "platform": "android"},
-            {"language": "swift", "runner": "xcode-27", "build-mode": "manual", "platform": "ios"}
+            {"language": "swift", "runner": "macos-26", "build-mode": "manual", "platform": "ios"}
           ]'
           matrix=$(jq -c --argjson changed "$CHANGED" --argjson all "$ALL" \
             '{include: map(select($all or $changed[.language] == "true"))}' <<< "$languages")
@@ -87,8 +87,6 @@ jobs:
       - name: Build iOS app
         if: matrix.language == 'swift'
         working-directory: apps/frontend/ios/App
-        env:
-          DEVELOPER_DIR: /Applications/Xcode_27.1.app/Contents/Developer
         run: |
           xcodebuild build \
             -workspace App.xcworkspace \

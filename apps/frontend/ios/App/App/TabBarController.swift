@@ -250,11 +250,15 @@ final class TabBarController: UITabBarController, UITabBarControllerDelegate {
 
     // A fold splitting the page side by side, as when iPhone Duo is partially open in landscape.
     private static func fold(in view: UIView) -> [String: Double] {
+        #if compiler(>=6.4)
         guard #available(iOS 27.1, *),
               let frame = view.reservedRegions(kind: .division)
                 .first(where: { $0.isActive && $0.frame.height >= view.bounds.height })?.frame else { return [:] }
 
         return ["x": frame.minX, "width": frame.width]
+        #else
+        return [:]
+        #endif
     }
 
     // What the system reserves in the top corners, like iPhone Duo's status bar, so content along
@@ -262,6 +266,7 @@ final class TabBarController: UITabBarController, UITabBarControllerDelegate {
     // top safe area, as in inner portrait, leaving the rest of the top edge free. Anything else
     // along the top edge, like a Dynamic Island, means none of it is.
     private static func topCornerClearance(of view: UIView) -> [String: Double] {
+        #if compiler(>=6.4)
         guard #available(iOS 27.1, *) else { return [:] }
 
         var left = 0.0, right = 0.0, height = 0.0
@@ -283,6 +288,9 @@ final class TabBarController: UITabBarController, UITabBarControllerDelegate {
             corners["height"] = height
         }
         return corners
+        #else
+        return [:]
+        #endif
     }
 
     // Only called for user interaction, including a tap on the tab that's already selected, which
