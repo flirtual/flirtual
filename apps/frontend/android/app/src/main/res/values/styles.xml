@@ -1,15 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+    <!-- Base application theme, for what the page doesn't draw itself: native dialogs, pickers
+         and snackbars. -->
+    <style name="AppTheme" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/brand</item>
     </style>
 
-    <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.DayNight.NoActionBar">
+    <!-- The date picker plugin's own dialog themes, which would otherwise keep their teal accent, and
+         stretch the dialog past the picker's fixed width. -->
+    <style name="MaterialLightTheme" parent="android:Theme.Material.Light.Dialog.Alert">
+        <item name="android:colorAccent">@color/brand</item>
+        <item name="android:windowMinWidthMajor">0dp</item>
+        <item name="android:windowMinWidthMinor">0dp</item>
+    </style>
+
+    <style name="MaterialDarkTheme" parent="android:Theme.Material.Dialog.Alert">
+        <item name="android:colorAccent">@color/brand</item>
+        <item name="android:windowMinWidthMajor">0dp</item>
+        <item name="android:windowMinWidthMinor">0dp</item>
+    </style>
+
+    <!-- What Capacitor's BridgeActivity switches to on start. -->
+    <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:background">@null</item>
