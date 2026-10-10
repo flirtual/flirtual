@@ -12,7 +12,7 @@ PODS:
     - PromisesObjC (~> 2.4)
     - PromisesSwift (~> 2.4)
     - RecaptchaInterop (~> 101.0)
-  - Capacitor (8.5.0):
+  - Capacitor (8.5.1):
     - CapacitorCordova
   - CapacitorApp (8.1.1):
     - Capacitor
@@ -22,7 +22,7 @@ PODS:
     - Capacitor
   - CapacitorCommunitySafeArea (8.0.1):
     - Capacitor
-  - CapacitorCordova (8.5.0)
+  - CapacitorCordova (8.5.1)
   - CapacitorDevice (8.0.3):
     - Capacitor
   - CapacitorDialog (8.0.1):
@@ -85,12 +85,12 @@ PODS:
     - PurchasesHybridCommon (= 18.21.0)
 
 DEPENDENCIES:
-  - "Capacitor (from `../../../../node_modules/.pnpm/@capacitor+ios@8.5.0_@capacitor+core@8.5.0/node_modules/@capacitor/ios`)"
+  - "Capacitor (from `../../../../node_modules/.pnpm/@capacitor+ios@8.5.1_@capacitor+core@8.5.0/node_modules/@capacitor/ios`)"
   - "CapacitorApp (from `../../../../node_modules/.pnpm/@capacitor+app@8.1.1_@capacitor+core@8.5.0/node_modules/@capacitor/app`)"
   - "CapacitorClipboard (from `../../../../node_modules/.pnpm/@capacitor+clipboard@8.0.1_@capacitor+core@8.5.0/node_modules/@capacitor/clipboard`)"
   - "CapacitorCommunityInAppReview (from `../../../../node_modules/.pnpm/@capacitor-community+in-app-review@8.0.0_@capacitor+core@8.5.0/node_modules/@capacitor-community/in-app-review`)"
   - "CapacitorCommunitySafeArea (from `../../../../node_modules/.pnpm/@capacitor-community+safe-area@8.0.1_@capacitor+core@8.5.0/node_modules/@capacitor-community/safe-area`)"
-  - "CapacitorCordova (from `../../../../node_modules/.pnpm/@capacitor+ios@8.5.0_@capacitor+core@8.5.0/node_modules/@capacitor/ios`)"
+  - "CapacitorCordova (from `../../../../node_modules/.pnpm/@capacitor+ios@8.5.1_@capacitor+core@8.5.0/node_modules/@capacitor/ios`)"
   - "CapacitorDevice (from `../../../../node_modules/.pnpm/@capacitor+device@8.0.3_@capacitor+core@8.5.0/node_modules/@capacitor/device`)"
   - "CapacitorDialog (from `../../../../node_modules/.pnpm/@capacitor+dialog@8.0.1_@capacitor+core@8.5.0/node_modules/@capacitor/dialog`)"
   - "CapacitorGeolocation (from `../../../../node_modules/.pnpm/@capacitor+geolocation@8.2.1_@capacitor+core@8.5.0/node_modules/@capacitor/geolocation`)"
@@ -125,7 +125,7 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   Capacitor:
-    :path: "../../../../node_modules/.pnpm/@capacitor+ios@8.5.0_@capacitor+core@8.5.0/node_modules/@capacitor/ios"
+    :path: "../../../../node_modules/.pnpm/@capacitor+ios@8.5.1_@capacitor+core@8.5.0/node_modules/@capacitor/ios"
   CapacitorApp:
     :path: "../../../../node_modules/.pnpm/@capacitor+app@8.1.1_@capacitor+core@8.5.0/node_modules/@capacitor/app"
   CapacitorClipboard:
@@ -135,7 +135,7 @@ EXTERNAL SOURCES:
   CapacitorCommunitySafeArea:
     :path: "../../../../node_modules/.pnpm/@capacitor-community+safe-area@8.0.1_@capacitor+core@8.5.0/node_modules/@capacitor-community/safe-area"
   CapacitorCordova:
-    :path: "../../../../node_modules/.pnpm/@capacitor+ios@8.5.0_@capacitor+core@8.5.0/node_modules/@capacitor/ios"
+    :path: "../../../../node_modules/.pnpm/@capacitor+ios@8.5.1_@capacitor+core@8.5.0/node_modules/@capacitor/ios"
   CapacitorDevice:
     :path: "../../../../node_modules/.pnpm/@capacitor+device@8.0.3_@capacitor+core@8.5.0/node_modules/@capacitor/device"
   CapacitorDialog:
@@ -171,12 +171,12 @@ SPEC CHECKSUMS:
   Alamofire: 7193b3b92c74a07f85569e1a6c4f4237291e7496
   AppAuth: ef4da5a3fc2e10b90c09a0a94a9baeaedc0341d5
   AppCheckCore: e215d35177a9cf469927863e69c13e220df32a8b
-  Capacitor: 00b87168591cc006ea6f5c0de681ec5c39a2c8eb
+  Capacitor: 8ca6676b3b1147b00f7f3a547ccf68defd658d55
   CapacitorApp: 305bd13c44f6f9d164e2ee66a4faa956ed8c0e06
   CapacitorClipboard: c75fdaa6e622111119f35e7914ecfc67b05efecb
   CapacitorCommunityInAppReview: 4492bdd34aad4d27ed87949376022cc93b294ea1
   CapacitorCommunitySafeArea: 91738f4ae7f47d2d94e06e429e16fb73cd8fdc48
-  CapacitorCordova: 9d3acbb574048e7167d2af127a0af2123e619f2f
+  CapacitorCordova: eb79411a3a0ed517eeb4c6dcf5933ce4bcbb5c9e
   CapacitorDevice: 708e742b60a61572cd593e44c809592e8f31da14
   CapacitorDialog: 854c5dac405081cae697c177ca43bcaa95ae67bf
   CapacitorGeolocation: 039806032910adee1101791520c7ff00e2de0e1b
@@ -203,6 +203,6 @@ SPEC CHECKSUMS:
   RevenueCat: 72d1e14966339bf38c41d9b2841ef64c8fd79646
   RevenuecatPurchasesCapacitor: 691a18ebcfed0100a041e4cba91ba9ae8787b1a7
 
-PODFILE CHECKSUM: 48d9a65127086b339c61f240a6ed70a8e29fdba4
+PODFILE CHECKSUM: d0bd1a49e244a26c9f81118e865d6c417d31b9fe
 
 COCOAPODS: 1.16.2
