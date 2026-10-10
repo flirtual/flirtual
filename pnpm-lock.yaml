@@ -309,7 +309,7 @@ importers:
         version: 8.2.1(@capacitor/core@8.5.0)
       '@capacitor/ios':
         specifier: ^8.4.2
-        version: 8.5.0(@capacitor/core@8.5.0)
+        version: 8.5.1(@capacitor/core@8.5.0)
       '@capacitor/keyboard':
         specifier: ^8.0.5
         version: 8.0.5(@capacitor/core@8.5.0)
@@ -1398,8 +1398,8 @@ packages:
     peerDependencies:
       '@capacitor/core': '>=8.0.0'
 
-  '@capacitor/ios@8.5.0':
-    resolution: {integrity: sha512-7k1TfohJu5BzRXc1F3g04Q8QQ0fyQgms6h1AvhnHb04VaNr9EdHOx03hL8O+OigEKMQnyJd1ZOjTPPNHCqL5Yw==}
+  '@capacitor/ios@8.5.1':
+    resolution: {integrity: sha512-0EVqwCYf3RUp2JAjUGZ04xmG6dSpIsPmPacI9zKxn6mu9RSiHhmFF230ghe00HrkyB6ig6SfNdoADvVODxYhlQ==}
     peerDependencies:
       '@capacitor/core': ^8.5.0
 
@@ -3856,18 +3856,6 @@ packages:
 
   '@pulumi/postgresql@3.18.1':
     resolution: {integrity: sha512-Oxxj7lslz5b7Ubxhx/NdaENu90CsgmO+/DmECehX+zIV9BNOLUMtihXZ3NExncGUKGVAeef82cm6AfO7czL02g==}
-
-  '@pulumi/pulumi@3.267.0':
-    resolution: {integrity: sha512-dd/K3sxqNKqiYAvcg14TtEL7ZYqSyphMQMuqDeZvooX7jIKaa0t6QeNBnu6KeyH4bqKqNzmta07a/tgmUkw8/w==}
-    engines: {node: '>=22'}
-    peerDependencies:
-      ts-node: '>= 7.0.1 < 12'
-      typescript: '>= 3.8.3 < 7'
-    peerDependenciesMeta:
-      ts-node:
-        optional: true
-      typescript:
-        optional: true
 
   '@pulumi/pulumi@3.268.0':
     resolution: {integrity: sha512-VtTIr44eC78BX4cAeh2MEqJqVFu5/UfrmsxjLdH73YIPr5igPEo9JB4g5yqncTHcXNxbkxJXndMOEm1CkpJA5Q==}
@@ -9909,7 +9897,7 @@ snapshots:
       '@capacitor/core': 8.5.0
       '@capacitor/synapse': 1.0.4
 
-  '@capacitor/ios@8.5.0(@capacitor/core@8.5.0)':
+  '@capacitor/ios@8.5.1(@capacitor/core@8.5.0)':
     dependencies:
       '@capacitor/core': 8.5.0
 
@@ -11814,7 +11802,7 @@ snapshots:
 
   '@pulumi/apple@file:pulumi/sdks/apple(supports-color@10.2.2)':
     dependencies:
-      '@pulumi/pulumi': 3.267.0(supports-color@10.2.2)(typescript@4.9.5)
+      '@pulumi/pulumi': 3.268.0(supports-color@10.2.2)(typescript@4.9.5)
       '@types/node': 20.19.43
       typescript: 4.9.5
     transitivePeerDependencies:
@@ -11848,7 +11836,7 @@ snapshots:
 
   '@pulumi/discord@file:pulumi/sdks/discord(supports-color@10.2.2)':
     dependencies:
-      '@pulumi/pulumi': 3.267.0(supports-color@10.2.2)(typescript@4.9.5)
+      '@pulumi/pulumi': 3.268.0(supports-color@10.2.2)(typescript@4.9.5)
       '@types/node': 20.19.43
       typescript: 4.9.5
     transitivePeerDependencies:
@@ -11857,7 +11845,7 @@ snapshots:
 
   '@pulumi/freshdesk@file:pulumi/sdks/freshdesk(supports-color@10.2.2)':
     dependencies:
-      '@pulumi/pulumi': 3.267.0(supports-color@10.2.2)(typescript@4.9.5)
+      '@pulumi/pulumi': 3.268.0(supports-color@10.2.2)(typescript@4.9.5)
       '@types/node': 20.19.43
       typescript: 4.9.5
     transitivePeerDependencies:
@@ -11872,7 +11860,7 @@ snapshots:
       - ts-node
       - typescript
 
-  '@pulumi/pulumi@3.267.0(supports-color@10.2.2)(typescript@4.9.5)':
+  '@pulumi/pulumi@3.268.0(supports-color@10.2.2)(typescript@4.9.5)':
     dependencies:
       '@grpc/grpc-js': 1.14.5
       '@logdna/tail-file': 2.2.0
@@ -11946,7 +11934,7 @@ snapshots:
 
   '@pulumi/sentry@file:pulumi/sdks/sentry(supports-color@10.2.2)':
     dependencies:
-      '@pulumi/pulumi': 3.267.0(supports-color@10.2.2)(typescript@4.9.5)
+      '@pulumi/pulumi': 3.268.0(supports-color@10.2.2)(typescript@4.9.5)
       '@types/node': 20.19.43
       typescript: 4.9.5
     transitivePeerDependencies:
