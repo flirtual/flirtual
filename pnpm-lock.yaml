@@ -681,8 +681,8 @@ importers:
         specifier: 3.4.19
         version: 3.4.19(tsx@4.23.12)(yaml@2.9.1)
       tailwindcss-hocus:
-        specifier: 0.0.7
-        version: 0.0.7(tailwindcss@3.4.19(tsx@4.23.12)(yaml@2.9.1))
+        specifier: 1.0.0
+        version: 1.0.0(tailwindcss@3.4.19(tsx@4.23.12)(yaml@2.9.1))
       tailwindcss-motion:
         specifier: 1.1.1
         version: 1.1.1(tailwindcss@3.4.19(tsx@4.23.12)(yaml@2.9.1))
@@ -8619,10 +8619,10 @@ packages:
     peerDependencies:
       tailwindcss: '>=3.0.0 || insiders'
 
-  tailwindcss-hocus@0.0.7:
-    resolution: {integrity: sha512-KY3jLlppAoPkCLRhDqbe503c1Ryq//G1bLQqFCZz1pnB0JFzHa3VK0bXvjTa8n/dwCxgkhi5uJm1d6gp8OzPhw==}
+  tailwindcss-hocus@1.0.0:
+    resolution: {integrity: sha512-PLgBHiCHZOCgY/VtRuatNwsqzqf1aYa7GI2+ZxwUbh/U8A9yn9baow3G3HUc+bPALLxC/yDcDZhznRY8efwVKQ==}
     peerDependencies:
-      tailwindcss: ^3.0.0
+      tailwindcss: ^4.0.0
 
   tailwindcss-motion@1.1.1:
     resolution: {integrity: sha512-CeeQAc5o31BuEPMyWdq/786X7QWNeifa+8khfu74Fs8lGkgEwjNYv6dGv+lRFS8FWXV5dp7F3AU9JjBXjiaQfw==}
@@ -17710,7 +17710,7 @@ snapshots:
     dependencies:
       tailwindcss: 3.4.19(tsx@4.23.12)(yaml@2.9.1)
 
-  tailwindcss-hocus@0.0.7(tailwindcss@3.4.19(tsx@4.23.12)(yaml@2.9.1)):
+  tailwindcss-hocus@1.0.0(tailwindcss@3.4.19(tsx@4.23.12)(yaml@2.9.1)):
     dependencies:
       tailwindcss: 3.4.19(tsx@4.23.12)(yaml@2.9.1)
 
