@@ -96,5 +96,7 @@ minimumReleaseAgeExclude:
   - "@cloudflare/workerd-*"
   - miniflare
   - workerd
+  # Renovate security update: @capacitor/android@8.5.1
+  - "@capacitor/android@8.5.1"
 patchedDependencies:
   attachments@0.15.0: patches/signal-tus-server.patch
