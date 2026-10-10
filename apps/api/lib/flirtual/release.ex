@@ -3,7 +3,16 @@ defmodule Flirtual.Release do
   Used for executing DB release tasks when run in production without Mix
   installed.
   """
+  import Ecto.Query
+
   @app :flirtual
+
+  # The rows a new database starts with, by table, from priv/repo/exports.
+  @seeds ["attributes", "plans"]
+
+  # Fly starts a stopped database on the first connection, which takes Postgres seconds to accept:
+  # https://github.com/fly-apps/postgres-flex/blob/master/cmd/start/main.go
+  @wait_for_database_start [queue_target: 30_000, queue_interval: 30_000]
 
   def migrate do
     load_app()
@@ -11,6 +20,25 @@ defmodule Flirtual.Release do
     for repo <- repos() do
       {:ok, _, _} = Ecto.Migrator.with_repo(repo, &Ecto.Migrator.run(&1, :up, all: true))
     end
+  end
+
+  # Seeds each table only while it's empty, so it runs on every deploy but fills a database once.
+  def seed do
+    load_app()
+
+    {:ok, _, _} =
+      Ecto.Migrator.with_repo(Flirtual.Repo, fn repo ->
+        for table <- @seeds, not repo.exists?(from(row in table, select: 1)) do
+          {:ok, _} = repo.transaction(fn -> seed!(repo, table) end)
+        end
+      end)
+  end
+
+  defp seed!(repo, table) do
+    Application.app_dir(@app, "priv/repo/exports/#{table}.sql")
+    |> File.read!()
+    |> String.split(";\n", trim: true)
+    |> Enum.each(&Ecto.Adapters.SQL.query!(repo, &1))
   end
 
   def rollback(repo, version) do
@@ -24,5 +52,10 @@ defmodule Flirtual.Release do
 
   defp load_app do
     Application.load(@app)
+
+    for repo <- repos() do
+      config = Application.get_env(@app, repo, [])
+      Application.put_env(@app, repo, Keyword.merge(config, @wait_for_database_start))
+    end
   end
 end

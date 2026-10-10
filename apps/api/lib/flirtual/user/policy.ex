@@ -396,6 +396,20 @@ defmodule Flirtual.User.Policy do
 
   def transform(:login_locations, _, _), do: nil
 
+  def transform(
+        :age_verifications,
+        %Plug.Conn{
+          assigns: %{
+            session: session
+          }
+        },
+        %User{} = user
+      ) do
+    if :moderator in session.user.tags, do: AgeVerification.completed_by_provider(user.id)
+  end
+
+  def transform(:age_verifications, _, _), do: nil
+
   @admin_property_keys [
     :email,
     :previous_email,

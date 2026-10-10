@@ -14,18 +14,21 @@
 The first VR dating app.
 
 ## Architecture
+
 Flirtual is a monorepo, with the following applications:
 
-* [**Frontend**](/apps/frontend/) - The main service which users interact with, written in TypeScript, served using [React Router](https://reactrouter.com/).
+- [**Frontend**](/apps/frontend/) - The main service which users interact with, written in TypeScript, served using [React Router](https://reactrouter.com/).
 
-* [**API**](/apps/api/) - The backend service, written in Elixir, served using [Phoenix](https://phoenixframework.org/); Responsible for handling all user data, authentication, and communication between the frontend and other services.
+- [**API**](/apps/api/) - The backend service, written in Elixir, served using [Phoenix](https://phoenixframework.org/); Responsible for handling all user data, authentication, and communication between the frontend and other services.
 
-* [**Image Classification**](/apps/image-classification/) - The image classification service, written in TypeScript; AI classification using [TensorFlow](https://www.tensorflow.org).
+- [**Image Classification**](/apps/image-classification/) - The image classification service, written in TypeScript; AI classification using [TensorFlow](https://www.tensorflow.org).
 
 ## Contributing
+
 See the [contribution guide](/.github/CONTRIBUTING.md) for more information.
 
 ## License
+
 Copyright (C) 2018-2026 Flirtual
 
 This program is free software: you can redistribute it and/or modify

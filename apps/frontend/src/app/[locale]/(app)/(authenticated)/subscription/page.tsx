@@ -2,7 +2,7 @@ import ms from "ms" with { type: "macro" };
 import { useTranslation } from "react-i18next";
 import invariant from "tiny-invariant";
 
-import { ModelCard } from "~/components/model-card";
+import { ModelCard, ModelCardBack } from "~/components/model-card";
 import { getSession } from "~/hooks/use-session";
 import { i18n, redirect } from "~/i18n";
 import { isLocale } from "~/i18n/languages";
@@ -65,12 +65,14 @@ export default function SubscriptionPage() {
 	const { t } = useTranslation();
 
 	return (
-		<ModelCard
-			className="desktop:max-w-3xl"
-			containerProps={{ className: "gap-8" }}
-			title={t("flirtual_premium")}
-		>
-			<SubscriptionForm />
-		</ModelCard>
+		<ModelCardBack>
+			<ModelCard
+				className="desktop:max-w-3xl"
+				containerProps={{ className: "gap-8" }}
+				title={t("flirtual_premium")}
+			>
+				<SubscriptionForm />
+			</ModelCard>
+		</ModelCardBack>
 	);
 }

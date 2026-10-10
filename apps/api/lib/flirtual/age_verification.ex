@@ -81,7 +81,7 @@ defmodule Flirtual.AgeVerification do
       |> change(%{
         user_id: user.id,
         provider: platform,
-        status: age_range_status(attrs[:age_lower], attrs[:age_upper]),
+        status: :complete,
         threshold: @threshold,
         age_lower: attrs[:age_lower],
         age_upper: attrs[:age_upper],
@@ -93,18 +93,30 @@ defmodule Flirtual.AgeVerification do
     end
   end
 
-  defp age_range_status(age_lower, age_upper) do
-    cond do
-      is_integer(age_upper) and age_upper < @threshold -> :fail
-      is_integer(age_lower) and age_lower >= @threshold -> :complete
-      true -> :unknown
-    end
-  end
-
   def passed?(user_id) when is_binary(user_id) do
     AgeVerification
     |> where(user_id: ^user_id, provider: :yoti, status: :complete)
     |> Repo.exists?()
+  end
+
+  def completed_by_provider(user_id) when is_binary(user_id) do
+    AgeVerification
+    |> where(user_id: ^user_id, status: :complete)
+    |> distinct([verification], verification.provider)
+    |> order_by([verification], desc: verification.completed_at)
+    |> select(
+      [verification],
+      map(verification, [
+        :provider,
+        :status,
+        :method,
+        :declaration,
+        :age_lower,
+        :age_upper,
+        :completed_at
+      ])
+    )
+    |> Repo.all()
   end
 
   def required?(%User{} = user), do: User.banned_underage?(user) and not passed?(user.id)

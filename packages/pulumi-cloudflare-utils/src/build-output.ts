@@ -1,7 +1,9 @@
 import { moduleProvider } from "@flirtual/pulumi-utils";
 import * as pulumi from "@pulumi/pulumi";
 
-export const provider = moduleProvider(() => import("@flirtual/pulumi-cloudflare-utils/providers/build-output"));
+export const provider = moduleProvider(
+	() => import("@flirtual/pulumi-cloudflare-utils/providers/build-output"),
+);
 
 export interface BuildOutputArgs {
 	/** The project to build, which holds the Build Output afterwards. */

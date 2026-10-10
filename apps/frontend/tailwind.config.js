@@ -159,7 +159,8 @@ module.exports = {
 		screens: {
 			desktop: "960px",
 			wide: "1024px",
-			tall: { raw: "(min-height: 800px)" }
+			tall: { raw: "(min-height: 800px)" },
+			narrow: { raw: "(max-width: 959.98px) and (min-aspect-ratio: 3/4)" }
 		}
 	},
 	plugins: [
@@ -168,10 +169,18 @@ module.exports = {
 		require("tailwindcss-hocus"),
 		require("tailwindcss-animate"),
 		require("tailwindcss-motion"),
-		plugin(({ addVariant, addComponents }) => {
+		plugin(({ addVariant, addComponents, addUtilities, theme }) => {
 			// Device specific variants
 			addVariant("native", `:is([data-native] &)`);
 			addVariant("vision", `:is([data-vision] &)`);
+			addVariant("native-nav", `:where([data-native-navigation]) &`);
+			addVariant("web-nav", `:where(body:not([data-native-navigation])) &`);
+			// The native tab bar runs along the bottom, inside the bottom safe area (iPhone).
+			addVariant("tab-bar-bottom", `:where([data-tab-bar-bottom]) &`);
+			// Side-by-side panes, on iPhone Duo's inner display in landscape and on iPad, while a page shows
+			// them. They rely on the native tab bar, which drops the Matches tab for them. Tailwind orders
+			// this with the screens, so desktop: still overrides it.
+			addVariant("split", `@media (min-width: 900px) { :where([data-native-navigation]:has([data-split-panes])) & }`);
 
 			for (const platform of ["web", "android", "apple"])
 				addVariant(platform, `:is([data-platform="${platform}"] &)`);
@@ -179,6 +188,32 @@ module.exports = {
 			// Language specific variants
 			for (const language of languageTags)
 				addVariant(language, `:is([lang="${language}"] &)`);
+
+			// Run a background out to the screen edge across the layout's side insets (--content-inset-*,
+			// set only under the native tab bar). Phone layouts only.
+			addUtilities({
+				// Takes the content along, for headers: their content can sit beneath a vertical bar,
+				// which leaves the top of its column free.
+				".full-bleed-x": {
+					[`@media not all and (min-width: ${theme("screens.desktop")})`]: {
+						marginLeft: "calc(-1 * var(--content-inset-left, 0px))",
+						marginRight: "calc(-1 * var(--content-inset-right, 0px))",
+						width: "calc(100% + var(--content-inset-left, 0px) + var(--content-inset-right, 0px))"
+					}
+				},
+				// Keeps the content where it was: the transparent borders take the space the negative
+				// margins give back.
+				".bleed-x": {
+					[`@media not all and (min-width: ${theme("screens.desktop")})`]: {
+						marginLeft: "calc(-1 * var(--content-inset-left, 0px))",
+						marginRight: "calc(-1 * var(--content-inset-right, 0px))",
+						width: "calc(100% + var(--content-inset-left, 0px) + var(--content-inset-right, 0px))",
+						borderLeft: "var(--content-inset-left, 0px) solid transparent",
+						borderRight: "var(--content-inset-right, 0px) solid transparent",
+						backgroundOrigin: "border-box"
+					}
+				}
+			});
 
 			addComponents({
 				".focused": {

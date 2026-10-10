@@ -469,12 +469,7 @@ defmodule Flirtual.Faker do
     end
   end
 
-  defp uploads_bucket do
-    case Application.get_env(:flirtual, :canary?) do
-      true -> "pfpup-canary"
-      _ -> "pfpup"
-    end
-  end
+  defp uploads_bucket, do: Application.fetch_env!(:flirtual, :buckets).content_uploads
 
   def create_likes_passes(options) do
     profile_id = Keyword.get(options, :profile_id)

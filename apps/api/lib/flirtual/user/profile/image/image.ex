@@ -251,15 +251,11 @@ defmodule Flirtual.User.Profile.Image do
   defp deleted?({:error, :enoent}), do: true
   defp deleted?(_), do: false
 
-  defp uploads_bucket,
-    do: if(Application.get_env(:flirtual, :canary?), do: "pfpup-canary", else: "pfpup")
+  defp bucket(name), do: Application.fetch_env!(:flirtual, :buckets) |> Map.fetch!(name)
 
-  defp content_bucket,
-    do: if(Application.get_env(:flirtual, :canary?), do: "pfp-canary", else: "pfp")
-
-  defp retained_bucket,
-    do:
-      if(Application.get_env(:flirtual, :canary?), do: "pfpretained-canary", else: "pfpretained")
+  defp uploads_bucket, do: bucket(:content_uploads)
+  defp content_bucket, do: bucket(:content)
+  defp retained_bucket, do: bucket(:content_retained)
 
   def retain_object(%Image{} = image, moderator_id) do
     if Application.get_env(:flirtual, :local_uploads?) do
@@ -275,7 +271,7 @@ defmodule Flirtual.User.Profile.Image do
   def retain_illegal_object(%Image{} = image, moderator_id) do
     if Application.get_env(:flirtual, :local_uploads?),
       do: {:ok, nil},
-      else: copy_object(image, "quarantine", moderator_id)
+      else: copy_object(image, bucket(:content_quarantine), moderator_id)
   end
 
   defp copy_object(%Image{original_file: original_file} = image, bucket, moderator_id)

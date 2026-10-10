@@ -7,6 +7,7 @@ import { development } from "~/const";
 import type { Locale } from "~/i18n";
 import { isUid } from "~/utilities";
 
+import type { AgeVerificationProvider } from "../age-verification";
 import type { Attribute } from "../attributes";
 import { api } from "../common";
 import type { DatedModel, Paginate, PaginateOptions, UuidModel } from "../common";
@@ -83,6 +84,16 @@ export interface UserBan {
 	appealed?: boolean;
 }
 
+export interface UserAgeVerification {
+	provider: AgeVerificationProvider;
+	status: "complete";
+	method?: string;
+	declaration?: string;
+	ageLower?: number;
+	ageUpper?: number;
+	completedAt: string;
+}
+
 export type User = {
 	email?: string;
 	slug: string;
@@ -114,6 +125,7 @@ export type User = {
 	bannedAt?: string;
 	ban?: UserBan;
 	loginLocations?: Array<string>;
+	ageVerifications?: Array<UserAgeVerification>;
 	deactivatedAt?: string;
 	preferences?: Preferences;
 	profile: Profile;

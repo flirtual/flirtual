@@ -4,6 +4,8 @@ import type { FC } from "react";
 import { capitalize } from "remeda";
 import { twMerge } from "tailwind-merge";
 
+import type { AgeVerificationProvider } from "~/api/age-verification";
+import type { UserAgeVerification } from "~/api/user";
 import { activeEntitlements, premium } from "~/api/user";
 import { useAttributeTranslation } from "~/hooks/use-attribute";
 import { useDialog } from "~/hooks/use-dialog";
@@ -30,6 +32,32 @@ function stripTimestamps(note: string | undefined): string {
 	);
 
 	return filteredLines.join("\n").trim() || "None";
+}
+
+const ageVerificationProviders: Array<AgeVerificationProvider> = ["yoti", "android", "apple"];
+
+const ageVerificationLabels: Record<AgeVerificationProvider, string> = {
+	yoti: "Yoti age verification",
+	android: "Google age range",
+	apple: "Apple age range"
+};
+
+function adult({ ageLower, ageUpper }: UserAgeVerification): boolean {
+	if (ageUpper != null && ageUpper < 18) return false;
+	return (ageLower ?? 18) >= 18;
+}
+
+function formatAgeRange({ ageLower, ageUpper }: UserAgeVerification): string {
+	if (ageLower != null && ageUpper != null)
+		return ageLower === ageUpper ? String(ageLower) : `${ageLower}-${ageUpper}`;
+	if (ageLower != null) return `${ageLower}+`;
+	if (ageUpper != null) return `under ${ageUpper + 1}`;
+	return "18+";
+}
+
+function formatAgeVerificationMethod({ method, declaration }: UserAgeVerification): string | null {
+	const value = method ?? declaration;
+	return value ? `${value} ` : null;
 }
 
 const HelpdeskLink: FC<{ email: string }> = ({ email }) => (
@@ -175,11 +203,6 @@ export const ProfileModeratorInfo: FC<{
 							</span>
 						)}
 						<span>
-							<span className="font-bold">Date of birth:</span>
-							{" "}
-							<span>{user.bornAt}</span>
-						</span>
-						<span>
 							<span className="font-bold">Login locations:</span>
 							{" "}
 							<span>
@@ -200,6 +223,33 @@ export const ProfileModeratorInfo: FC<{
 									: "None"}
 							</span>
 						</span>
+						<span>
+							<span className="font-bold">Date of birth:</span>
+							{" "}
+							<span>{user.bornAt}</span>
+						</span>
+						{user.ageVerifications
+							?.toSorted((a, b) => ageVerificationProviders.indexOf(a.provider) - ageVerificationProviders.indexOf(b.provider))
+							.map((verification) => (
+								<span key={verification.provider}>
+									<span className="font-bold">
+										{ageVerificationLabels[verification.provider]}
+										:
+									</span>
+									{" "}
+									<span className={adult(verification) ? "text-green-600" : "text-red-600"}>
+										{formatAgeRange(verification)}
+										{" "}
+										{formatAgeVerificationMethod(verification)}
+										<CopyClick value={verification.completedAt}>
+											<DateTimeRelative
+												className="hover:underline"
+												value={verification.completedAt}
+											/>
+										</CopyClick>
+									</span>
+								</span>
+							))}
 					</div>
 					<div className="flex flex-col">
 						<span>

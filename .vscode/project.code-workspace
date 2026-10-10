@@ -2,34 +2,27 @@
 	"folders": [
 		{
 			"name": "💘 Flirtual",
-			"path": "../"
-		}
+			"path": "../",
+		},
 	],
 	"settings": {
 		"files.exclude": {
 			// "**/node_modules/": true,
-			"**/pnpm-lock.yaml": true
+			"**/pnpm-lock.yaml": true,
 		},
 		"editor.formatOnSave": true,
-		"cSpell.words": [
-			"flirtual"
-		],
+		"cSpell.words": ["flirtual"],
 		"java.configuration.updateBuildConfiguration": "automatic",
-		"java.project.resourceFilters": [
-			"node_modules",
-			".git"
-		],
+		"java.project.resourceFilters": ["node_modules", ".git"],
 		"typescript.tsdk": "🖥️ Frontend/node_modules/typescript/lib",
 		"files.insertFinalNewline": true,
 		"typescript.format.enable": false,
 		"javascript.format.enable": false,
-		"editor.defaultFormatter": "dbaeumer.vscode-eslint"
+		"editor.defaultFormatter": "dbaeumer.vscode-eslint",
 	},
 	"editor.defaultFormatter": "dbaeumer.vscode-eslint",
 	"eslint.format.enable": true,
 	"extensions": {
-		"recommendations": [
-			"dbaeumer.vscode-eslint"
-		],
-	}
+		"recommendations": ["dbaeumer.vscode-eslint"],
+	},
 }

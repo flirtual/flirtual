@@ -93,6 +93,13 @@ body[data-theme="dark"] {
   --chart-5: #8e6bc8;
 }
 
+body[data-native-navigation] {
+  --content-inset-left: var(--safe-area-inset-left, 0px);
+  --content-inset-right: var(--safe-area-inset-right, 0px);
+  --top-clearance-left: var(--content-inset-left);
+  --top-clearance-right: var(--content-inset-right);
+}
+
 body[data-theme-style="friend"] {
   --theme-1: var(--friend-theme-1);
   --theme-2: var(--friend-theme-2);
@@ -102,12 +109,11 @@ iframe {
   user-select: none;
 }
 
-#freshworks-frame-wrapper>iframe {
-  @apply p-[var(--safe-area-inset-top)_var(--safe-area-inset-right)_var(--safe-area-inset-bottom)_var(--safe-area-inset-left)];
-}
-
-#freshworks-frame-wrapper>iframe {
-  background-image: linear-gradient(to bottom, var(--light-theme-2) 50%, #fff 50%);
+@media only screen and (max-device-width: 667px), screen and (max-width: 450px) {
+  #freshworks-frame-wrapper>iframe {
+    @apply p-[var(--safe-area-inset-top)_var(--safe-area-inset-right)_var(--safe-area-inset-bottom)_var(--safe-area-inset-left)];
+    background-image: linear-gradient(to bottom, var(--light-theme-2) calc(var(--safe-area-inset-top, 0px) + 184px), #f5f7f9 0);
+  }
 }
 
 #cb-container {

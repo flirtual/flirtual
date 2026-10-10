@@ -1,3 +1,4 @@
+import { Capacitor, registerPlugin } from "@capacitor/core";
 import { Toast as NativeToast } from "@capacitor/toast";
 import { captureException } from "@sentry/react-router";
 import { AlertTriangle, Check } from "lucide-react";
@@ -14,6 +15,7 @@ import { twMerge } from "tailwind-merge";
 
 import { isPluginUnsupported, reportAppOutdated } from "~/capacitor";
 import type { IconComponent } from "~/components/icons";
+import { NativeNavigationPlugin } from "~/native-navigation";
 
 import { device } from "./use-device";
 
@@ -78,6 +80,18 @@ export interface AddErrorOptions {
 	expected?: boolean;
 }
 
+const Snackbar = registerPlugin<{
+	// In milliseconds, and CSS pixels kept clear at the bottom.
+	show: (options: { text: string; duration: number; bottom: number; dark?: boolean }) => Promise<void>;
+}>("Snackbar");
+
+// iOS's system colours.
+const nativeToastIcons = {
+	success: { icon: "checkmark.circle.fill", tint: "#34C759" },
+	warning: { icon: "exclamationmark.triangle.fill", tint: "#FF9500" },
+	error: { icon: "xmark.octagon.fill", tint: "#FF3B30" }
+};
+
 export const ToastProvider: React.FC<PropsWithChildren> = ({ children }) => {
 	const { t } = useTranslation();
 	const [toasts, setToasts] = useState<Array<Toast>>([]);
@@ -91,21 +105,45 @@ export const ToastProvider: React.FC<PropsWithChildren> = ({ children }) => {
 			if (typeof options === "string") options = { value: options };
 			const { type = "success", icon, duration = "short", value } = options;
 
-			if (device.native)
+			// See https://capacitorjs.com/docs/apis/toast
+			const ttl = duration === "short" ? 2000 : 3500;
+
+			// The native tab bar would cover Capacitor's toast, so we show our own
+			// Liquid Glass toast at the top.
+			if (device.nativeNavigation) {
+				const shown = await NativeNavigationPlugin.toast({
+					text: value,
+					...nativeToastIcons[type],
+					duration: ttl
+				}).then(() => true, () => false);
+				if (shown) return;
+			}
+
+			if (device.native) {
+				const text = type === "success"
+					? value
+					: type === "warning"
+						? `⚠️ ${value}`
+						: `🚫 ${value}`;
+
+				// Android toasts only fit 2 lines of text, so use snackbars when available.
+				if (device.android && Capacitor.isPluginAvailable("Snackbar")) {
+					const tops = [...document.querySelectorAll("header, [data-snackbar-anchor]")]
+						.map((element) => element.getBoundingClientRect())
+						.filter(({ height, top }) => height > 0 && top > window.innerHeight / 2)
+						.map(({ top }) => top);
+					const bottom = tops.length > 0 ? window.innerHeight - Math.min(...tops) : 0;
+
+					return Snackbar.show({ text, duration: ttl, bottom, dark: document.body.dataset.theme === "dark" });
+				}
+
 				return NativeToast.show({
 					duration,
-					text:
-						type === "success"
-							? value
-							: type === "warning"
-								? `⚠️ ${value}`
-								: `🚫 ${value}`,
+					text,
 					// Android only supports bottom position.
 					position: "bottom"
 				});
-
-			// See https://capacitorjs.com/docs/apis/toast
-			const ttl = duration === "short" ? 2000 : 3500;
+			}
 
 			const toast: Toast = {
 				id: String(performance.now()),

@@ -26,7 +26,7 @@ export const ProfileActionBar: FC<{ user: User; hideModeratorInfo?: boolean }> =
 		return null;
 
 	return (
-		<div className="flex flex-col gap-8 px-8 py-4 pt-0 desktop:pb-8 desktop:dark:bg-black-70">
+		<div className="flex flex-col gap-8 py-4 pl-[calc(2rem+var(--content-inset-left,0rem))] pr-[calc(2rem+var(--content-inset-right,0rem))] pt-0 desktop:px-8 desktop:pb-8 desktop:dark:bg-black-70">
 			{!hideModeratorInfo && session.user.tags?.includes("moderator") && (
 				<ProfileModeratorInfo userId={user.id} />
 			)}

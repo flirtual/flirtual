@@ -7,6 +7,7 @@ import { isLocale } from "~/i18n/languages";
 import { metaMerge, rootMeta } from "~/meta";
 import { preload, queueFetcher, queueKey } from "~/query";
 
+import { SplitLayout } from "../matches/split-layout";
 import type { Route } from "./+types/page";
 import { Queue } from "./queue";
 import { useRatingPrompt } from "./rating-prompt";
@@ -49,11 +50,13 @@ export default function DiscoverPage({ matches: [,,,,{ id: group }] }: Route.Com
 	useRatingPrompt();
 
 	return (
-		<Queue
-			kind={({
-				dates: "love",
-				homies: "friend"
-			} as const)[group] ?? "love"}
-		/>
+		<SplitLayout>
+			<Queue
+				kind={({
+					dates: "love",
+					homies: "friend"
+				} as const)[group] ?? "love"}
+			/>
+		</SplitLayout>
 	);
 }

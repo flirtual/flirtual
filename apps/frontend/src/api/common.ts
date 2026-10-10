@@ -56,6 +56,14 @@ export interface CursorPaginate<T> {
 	metadata: CursorPaginateMetadata;
 }
 
+// Artificially slow requests for debuggers in development, ensuring we can see
+// loading/pending states.
+let slowRequests = false;
+
+export function setSlowRequests(value: boolean) {
+	slowRequests = value;
+}
+
 export const api = wretch(urls.api)
 	.addon(QueryAddon)
 	.addon(AbortAddon())
@@ -65,8 +73,7 @@ export const api = wretch(urls.api)
 	.middlewares(
 		[
 			timeout(ms("30s")),
-			// Artificially slow requests in development, ensuring we can see loading/pending states.
-			development && delay((_, { method }) => 500 * Math.random() * (method === "GET" ? 1 : 2))
+			development && delay((_, { method }) => slowRequests ? 500 * Math.random() * (method === "GET" ? 1 : 2) : 0)
 		].filter(Boolean)
 	)
 	.customError((error, response) =>

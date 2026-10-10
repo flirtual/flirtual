@@ -2,5 +2,14 @@
 	"name": "flirtual",
 	"private": true,
 	"license": "AGPL-3.0-or-later",
+	"type": "module",
+	"scripts": {
+		"lint": "oxfmt --check",
+		"fmt": "oxfmt"
+	},
+	"devDependencies": {
+		"@flirtual/config": "workspace:*",
+		"oxfmt": "catalog:"
+	},
 	"packageManager": "pnpm@12.6.0"
 }

@@ -104,7 +104,7 @@ defmodule FlirtualWeb.ImageController do
   defp upload_url do
     if local_uploads?(),
       do: "#{Application.fetch_env!(:flirtual, :origin)}/v1/images/uploads",
-      else: "#{Application.fetch_env!(:flirtual, :upload_origin)}/upload/#{@upload_audience}"
+      else: Application.fetch_env!(:flirtual, :upload_url)
   end
 
   defp upload_signer do

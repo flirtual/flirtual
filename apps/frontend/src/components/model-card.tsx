@@ -1,9 +1,13 @@
-import { Info } from "lucide-react";
+import { ChevronLeft, Info } from "lucide-react";
+import { createContext, use } from "react";
+import type { FC, PropsWithChildren } from "react";
 import type React from "react";
 import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
 import { InlineThemeSelect } from "~/app/[locale]/(app)/(authenticated)/settings/(account)/appearance/theme-preview";
+import { useBack } from "~/hooks/use-back";
+import { useOptionalSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 import { emptyObject } from "~/utilities";
 
@@ -11,6 +15,20 @@ import { InlineLanguageSelect } from "./inputs/specialized/language-select";
 import { SupportButton } from "./layout/support-button";
 import { Link } from "./link";
 import { FlirtualLogo } from "./logo";
+
+const ModelCardBackContext = createContext<(() => void) | null>(null);
+
+// Gives the cards below a back arrow in their titles on narrow screens. With nothing to go back
+// to, it leads to the settings list, or the landing page when logged out.
+export const ModelCardBack: FC<PropsWithChildren<{ fallback?: string }>> = ({ fallback, children }) => {
+	const session = useOptionalSession();
+
+	return (
+		<ModelCardBackContext value={useBack(fallback ?? (session ? urls.settings.list() : urls.landing))}>
+			{children}
+		</ModelCardBackContext>
+	);
+};
 
 export type ModelCardProps = {
 	title?: React.ReactNode;
@@ -34,6 +52,7 @@ export const ModelCard: React.FC<ModelCardProps> = ({
 	...props
 }) => {
 	const { t } = useTranslation();
+	const back = use(ModelCardBackContext);
 
 	const BrandedComponent = brandedLink ? Link : "div";
 
@@ -53,14 +72,26 @@ export const ModelCard: React.FC<ModelCardProps> = ({
 			>
 				{title && (
 					<div
+						data-model-card-title
 						{...titleProps}
 						className={twMerge(
-							"w-full bg-brand-gradient px-8 py-7 text-center font-montserrat text-3xl font-extrabold text-white-20 desktop:w-full desktop:rounded-t-2xl desktop:pb-4 desktop:pt-[1.125rem] desktop:text-2xl android:desktop:pt-[1.125rem]",
-							inset
-							&& "pt-[max(calc(var(--safe-area-inset-top,0rem)+1rem),1.75rem)]",
+							"relative w-full bg-brand-gradient px-8 py-7 text-center font-montserrat text-3xl font-extrabold text-white-20 full-bleed-x desktop:w-full desktop:rounded-t-2xl desktop:pb-4 desktop:pt-[1.125rem] desktop:text-2xl android:desktop:pt-[1.125rem]",
+							(inset || back)
+							&& "pl-[calc(2rem+var(--top-clearance-left,0rem))] pr-[calc(2rem+var(--top-clearance-right,0rem))] pt-[max(calc(var(--status-bar-inset-top,var(--safe-area-inset-top,0rem))+1rem),1.75rem)] desktop:px-8",
+							back && "flex min-h-[max(var(--status-bar-height,0rem),calc(max(calc(var(--status-bar-inset-top,var(--safe-area-inset-top,0rem))+0.25rem),0.75rem)+3.3125rem))] items-center justify-center pb-3 pt-[max(calc(var(--status-bar-inset-top,var(--safe-area-inset-top,0rem))+0.25rem),0.75rem)] text-2xl desktop:block desktop:min-h-0",
 							titleProps.className
 						)}
 					>
+						{back && (
+							<button
+								aria-label={t("back")}
+								className="absolute bottom-3 left-[calc(1rem+var(--top-clearance-left,0rem))] top-[max(calc(var(--status-bar-inset-top,var(--safe-area-inset-top,0rem))+0.25rem),0.75rem)] flex items-center split:hidden desktop:hidden"
+								type="button"
+								onClick={back}
+							>
+								<ChevronLeft className="w-6" />
+							</button>
+						)}
 						{title}
 					</div>
 				)}
@@ -68,7 +99,7 @@ export const ModelCard: React.FC<ModelCardProps> = ({
 					<div
 						{...containerProps}
 						className={twMerge(
-							"flex size-full flex-col px-8 py-10 pb-[max(var(--safe-area-inset-bottom,0rem),2.5rem)] vision:bg-transparent vision:text-white-20 dark:bg-transparent dark:text-white-20 desktop:rounded-xl desktop:bg-white-20 desktop:px-16 desktop:shadow-brand-inset dark:desktop:bg-black-70",
+							"flex size-full flex-col px-[max(2rem,calc((100%-40rem)/2))] py-10 pb-[max(var(--safe-area-inset-bottom,0rem),2.5rem)] vision:bg-transparent vision:text-white-20 native-nav:pb-[max(calc(2.5rem-var(--safe-area-inset-bottom,0rem)),var(--tab-bar-gap,0rem))] dark:bg-transparent dark:text-white-20 desktop:rounded-xl desktop:bg-white-20 desktop:px-16 desktop:pb-10 desktop:shadow-brand-inset dark:desktop:bg-black-70",
 							containerProps.className
 						)}
 					>

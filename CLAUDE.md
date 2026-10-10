@@ -12,11 +12,9 @@ Flirtual is a dating app for VR users. The monorepo contains:
 - **API** (apps/api/): Elixir/Phoenix; data, auth, business logic. See [apps/api/CLAUDE.md](apps/api/CLAUDE.md) for stack, commands, patterns, matchmaking, moderation, schema, prod/DB ops.
 
 Other services, all under `apps/`:
+
 - **image-classification/**: TensorFlow image moderation (NSFW/inappropriate).
-- **manticore/**: the matchmaking search index (Fly app `flirtual-manticore`, MySQL protocol on 9306); see the API's CLAUDE.md for how `Flirtual.Search` uses it.
 - **session-transfer/**: carries a logged-in session across the flirtu.al → flirtual.com migration via a single-use, API-minted token.
-- **trace/**: trace-forwarding proxy with loop detection.
-- **grafana/** + **tempo/**: tracing and metrics (Tempo OTLP backend, Grafana UI).
 - **app-redirect/**: Worker that sends a link into the native app, or to the right store listing when it isn't installed.
 - **maintenance/**: Worker serving a 503 maintenance page; a `flirtual-maintenance` cookie matching `TOKEN` passes through. Also holds the static legal pages and `.well-known/` files.
 - **posthog-proxy/**: Worker proxying PostHog ingest and caching its static assets.

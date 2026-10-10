@@ -1,1 +1,11 @@
-{"name":"other","compatibilityDate":"2025-09-01","compatibilityFlags":[],"workersDev":false,"manifest":{"type":"complete","mainModule":"index.js","modules":{"index.js":{"type":"esm"}}}}
+{
+	"name": "other",
+	"compatibilityDate": "2025-09-01",
+	"compatibilityFlags": [],
+	"workersDev": false,
+	"manifest": {
+		"type": "complete",
+		"mainModule": "index.js",
+		"modules": { "index.js": { "type": "esm" } }
+	}
+}

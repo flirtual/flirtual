@@ -49,56 +49,56 @@ jobs:
         working-directory: ./apps/api
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - name: Checkout code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
-    - name: Set up Elixir
-      uses: erlef/setup-beam@54075bcc5e249e4758d363f27d099f55d843f124 # v1
-      with:
-        version-type: strict
-        version-file: apps/api/.tool-versions
+      - name: Set up Elixir
+        uses: erlef/setup-beam@54075bcc5e249e4758d363f27d099f55d843f124 # v1
+        with:
+          version-type: strict
+          version-file: apps/api/.tool-versions
 
-    - name: Cache deps
-      uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
-      env:
-        cache-name: cache-elixir-deps
-      with:
-        path: apps/api/deps
-        key: ${{ runner.os }}-mix-${{ env.cache-name }}-${{ hashFiles('**/mix.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-mix-${{ env.cache-name }}-
+      - name: Cache deps
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        env:
+          cache-name: cache-elixir-deps
+        with:
+          path: apps/api/deps
+          key: ${{ runner.os }}-mix-${{ env.cache-name }}-${{ hashFiles('**/mix.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-mix-${{ env.cache-name }}-
 
-    - name: Cache compiled build
-      uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
-      env:
-        cache-name: cache-compiled-build
-      with:
-        path: apps/api/_build
-        key: ${{ runner.os }}-mix-${{ env.cache-name }}-${{ hashFiles('**/mix.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-mix-${{ env.cache-name }}-
-          ${{ runner.os }}-mix-
+      - name: Cache compiled build
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        env:
+          cache-name: cache-compiled-build
+        with:
+          path: apps/api/_build
+          key: ${{ runner.os }}-mix-${{ env.cache-name }}-${{ hashFiles('**/mix.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-mix-${{ env.cache-name }}-
+            ${{ runner.os }}-mix-
 
-    - name: Install dependencies
-      run: mix deps.get
+      - name: Install dependencies
+        run: mix deps.get
 
-    - name: Formatted
-      run: mix format --check-formatted
+      - name: Formatted
+        run: mix format --check-formatted
 
-    - name: Credo
-      run: mix credo --mute-exit-status
+      - name: Credo
+        run: mix credo --mute-exit-status
 
-    - name: Unused dependencies
-      run: mix deps.unlock --check-unused
+      - name: Unused dependencies
+        run: mix deps.unlock --check-unused
 
-    - name: Sobelow
-      run: mix sobelow --root . --skip --format sarif --out results.sarif
+      - name: Sobelow
+        run: mix sobelow --root . --skip --format sarif --out results.sarif
 
-    - name: Upload Sobelow results
-      uses: github/codeql-action/upload-sarif@2892aa5e19bbd11bc0cff5427e3b750a04d9e3c2 # v4
-      with:
-        sarif_file: apps/api/results.sarif
-        category: /language:elixir
+      - name: Upload Sobelow results
+        uses: github/codeql-action/upload-sarif@24c54180a607b1449ed407dd24f251e4e9147c8d # v4
+        with:
+          sarif_file: apps/api/results.sarif
+          category: /language:elixir
 
   audit:
     name: Audit dependencies
@@ -109,44 +109,44 @@ jobs:
         working-directory: ./apps/api
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - name: Checkout code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
-    - name: Set up Elixir
-      uses: erlef/setup-beam@54075bcc5e249e4758d363f27d099f55d843f124 # v1
-      with:
-        version-type: strict
-        version-file: apps/api/.tool-versions
+      - name: Set up Elixir
+        uses: erlef/setup-beam@54075bcc5e249e4758d363f27d099f55d843f124 # v1
+        with:
+          version-type: strict
+          version-file: apps/api/.tool-versions
 
-    - name: Cache deps
-      uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
-      env:
-        cache-name: cache-elixir-deps
-      with:
-        path: apps/api/deps
-        key: ${{ runner.os }}-mix-${{ env.cache-name }}-${{ hashFiles('**/mix.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-mix-${{ env.cache-name }}-
+      - name: Cache deps
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        env:
+          cache-name: cache-elixir-deps
+        with:
+          path: apps/api/deps
+          key: ${{ runner.os }}-mix-${{ env.cache-name }}-${{ hashFiles('**/mix.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-mix-${{ env.cache-name }}-
 
-    - name: Cache compiled build
-      uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
-      env:
-        cache-name: cache-compiled-build
-      with:
-        path: apps/api/_build
-        key: ${{ runner.os }}-mix-${{ env.cache-name }}-${{ hashFiles('**/mix.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-mix-${{ env.cache-name }}-
-          ${{ runner.os }}-mix-
+      - name: Cache compiled build
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        env:
+          cache-name: cache-compiled-build
+        with:
+          path: apps/api/_build
+          key: ${{ runner.os }}-mix-${{ env.cache-name }}-${{ hashFiles('**/mix.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-mix-${{ env.cache-name }}-
+            ${{ runner.os }}-mix-
 
-    - name: Install dependencies
-      run: mix deps.get
+      - name: Install dependencies
+        run: mix deps.get
 
-    - name: Retired packages
-      run: mix hex.audit
+      - name: Retired packages
+        run: mix hex.audit
 
-    - name: Vulnerable dependencies
-      run: mix deps.audit
+      - name: Vulnerable dependencies
+        run: mix deps.audit
 
   build:
     name: Build
@@ -158,50 +158,50 @@ jobs:
         working-directory: ./apps/api
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - name: Checkout code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
-    - name: Set up Elixir
-      uses: erlef/setup-beam@54075bcc5e249e4758d363f27d099f55d843f124 # v1
-      with:
-        version-type: strict
-        version-file: apps/api/.tool-versions
+      - name: Set up Elixir
+        uses: erlef/setup-beam@54075bcc5e249e4758d363f27d099f55d843f124 # v1
+        with:
+          version-type: strict
+          version-file: apps/api/.tool-versions
 
-    - name: Cache deps
-      id: cache-deps
-      uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
-      env:
-        cache-name: cache-elixir-deps
-      with:
-        path: apps/api/deps
-        key: ${{ runner.os }}-mix-${{ env.cache-name }}-${{ hashFiles('**/mix.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-mix-${{ env.cache-name }}-
+      - name: Cache deps
+        id: cache-deps
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        env:
+          cache-name: cache-elixir-deps
+        with:
+          path: apps/api/deps
+          key: ${{ runner.os }}-mix-${{ env.cache-name }}-${{ hashFiles('**/mix.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-mix-${{ env.cache-name }}-
 
-    - name: Cache compiled build
-      id: cache-build
-      uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
-      env:
-        cache-name: cache-compiled-build
-      with:
-        path: apps/api/_build
-        key: ${{ runner.os }}-mix-${{ env.cache-name }}-${{ hashFiles('**/mix.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-mix-${{ env.cache-name }}-
-          ${{ runner.os }}-mix-
+      - name: Cache compiled build
+        id: cache-build
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        env:
+          cache-name: cache-compiled-build
+        with:
+          path: apps/api/_build
+          key: ${{ runner.os }}-mix-${{ env.cache-name }}-${{ hashFiles('**/mix.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-mix-${{ env.cache-name }}-
+            ${{ runner.os }}-mix-
 
-    - name: Clean to rule out incremental build as a source of flakiness
-      if: github.run_attempt != '1'
-      run: |
-        mix deps.clean --all
-        mix clean
-      shell: sh
+      - name: Clean to rule out incremental build as a source of flakiness
+        if: github.run_attempt != '1'
+        run: |
+          mix deps.clean --all
+          mix clean
+        shell: sh
 
-    - name: Install dependencies
-      run: mix deps.get
+      - name: Install dependencies
+        run: mix deps.get
 
-    - name: Compiles without warnings
-      run: mix compile
+      - name: Compiles without warnings
+        run: mix compile
 
   dependencies:
     name: Submit dependencies

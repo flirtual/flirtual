@@ -1,7 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import type { QueryFunctionContext, QueryKey, QueryState, UseMutationOptions, UseQueryOptions } from "@tanstack/react-query";
 import { useMutation as _useMutation, useQuery as _useQuery, hashKey, MutationCache, QueryCache, QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import ms from "ms" with { type: "macro" };
 import type { Dispatch, PropsWithChildren } from "react";
 import { use, useCallback, useDebugValue, useSyncExternalStore } from "react";
@@ -291,7 +290,6 @@ export const preload = queryClient.prefetchQuery.bind(queryClient);
 export function QueryProvider({ children }: PropsWithChildren) {
 	return (
 		<QueryClientProvider client={queryClient}>
-			{development && <ReactQueryDevtools client={queryClient} />}
 			{children}
 		</QueryClientProvider>
 	);

@@ -7,21 +7,27 @@
 	"scripts": {
 		"generate:api": "node scripts/generate-api.ts",
 		"postinstall": "pnpm generate:api",
-		"test": "vitest run"
+		"test": "vitest run",
+		"build": "tsc",
+		"lint": "oxlint && oxfmt --check",
+		"fmt": "oxfmt"
 	},
 	"dependencies": {
 		"@flirtual/pulumi-dynamic-fetch": "workspace:*"
 	},
-	"peerDependencies": {
-		"@pulumi/pulumi": "catalog:"
-	},
 	"devDependencies": {
-		"@pulumi/pulumi": "catalog:",
-		"@types/node": "^22",
-		"marked": "^18.0.14",
-		"typed-openapi": "^4.1.0",
+		"@flirtual/config": "workspace:*",
+		"@pulumi/pulumi": "catalog:pulumi",
+		"@types/node": "catalog:",
+		"marked": "18.1.0",
+		"oxfmt": "catalog:",
+		"oxlint": "catalog:",
+		"typed-openapi": "catalog:",
 		"typescript": "catalog:",
 		"vitest": "catalog:",
 		"yaml": "catalog:pulumi"
+	},
+	"peerDependencies": {
+		"@pulumi/pulumi": "catalog:pulumi"
 	}
 }

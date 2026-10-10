@@ -15,6 +15,7 @@ defmodule Flirtual.User.Email do
         "subject" => dgettext("notifications", "suspended.subject"),
         "language" => language,
         "type" => "transactional",
+        "kind" => "suspended",
         "body_text" => dgettext("notifications", "suspended.body_text", message: message),
         "body_html" => dgettext("notifications", "suspended.body_html", message: message)
       }
@@ -46,6 +47,7 @@ defmodule Flirtual.User.Email do
         "subject" => dgettext("notifications", "confirm_email.subject"),
         "language" => language,
         "type" => "transactional",
+        "kind" => "confirm_email",
         "action_url" => action_url,
         "body_text" =>
           dgettext("notifications", "confirm_email.body_text", action_url: action_url),
@@ -91,6 +93,7 @@ defmodule Flirtual.User.Email do
         "subject" => dgettext("notifications", "reset_password.subject"),
         "language" => language,
         "type" => "transactional",
+        "kind" => "reset_password",
         "action_url" => action_url,
         "body_text" =>
           dgettext("notifications", "reset_password.body_text", action_url: action_url),
@@ -130,6 +133,7 @@ defmodule Flirtual.User.Email do
         "reply_to" => "security",
         "language" => language,
         "type" => "transactional",
+        "kind" => "verification_code",
         "subject" => dgettext("notifications", "verification_code.subject", code: code),
         "body_text" => dgettext("notifications", "verification_code.body_text", code: code),
         "body_html" => dgettext("notifications", "verification_code.body_html", code: code)
@@ -158,6 +162,7 @@ defmodule Flirtual.User.Email do
       %{
         "user_id" => user.id,
         "type" => "marketing",
+        "kind" => "new_match",
         "subject" =>
           if(match_kind == :love,
             do: dgettext("notifications", "its_a_match"),
@@ -251,6 +256,7 @@ defmodule Flirtual.User.Email do
       %{
         "user_id" => user.id,
         "type" => "marketing",
+        "kind" => "like_digest",
         "subject" =>
           dngettext("notifications", "someone_liked_you", "x_people_liked_you", like_count, %{
             count: like_count
@@ -319,6 +325,7 @@ defmodule Flirtual.User.Email do
       %{
         "user_id" => user.id,
         "type" => "transactional",
+        "kind" => "deletion_reminder",
         "subject" => subject,
         "action_url" => action_url,
         "body_text" => body_text,
@@ -343,6 +350,7 @@ defmodule Flirtual.User.Email do
         "reply_to" => "security",
         "language" => language,
         "type" => "transactional",
+        "kind" => "password_changed",
         "action_url" => action_url,
         "subject" => dgettext("notifications", "password_changed.subject"),
         "body_text" =>
@@ -366,6 +374,7 @@ defmodule Flirtual.User.Email do
         "reply_to" => "security",
         "language" => language,
         "type" => "transactional",
+        "kind" => "email_changed",
         "subject" => dgettext("notifications", "email_changed.subject"),
         "body_text" => dgettext("notifications", "email_changed.body_text", email: user.email),
         "body_html" => dgettext("notifications", "email_changed.body_html", email: user.email)

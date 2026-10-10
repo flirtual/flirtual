@@ -18,15 +18,27 @@ const project = join(dirname(fileURLToPath(import.meta.url)), "fixtures", "proje
 const record = await recordBuild(project);
 
 it("leaves the Worker alone when the deployment is deleted, since the consumer owns it", async () => {
-	await expect(provider.delete!("example-production", {} as DeploymentInputs)).resolves.toBeUndefined();
+	await expect(
+		provider.delete!("example-production", {} as DeploymentInputs),
+	).resolves.toBeUndefined();
 	expect(cf).not.toHaveBeenCalled();
 });
 
 it("hands diffs to the provider module, which Pulumi loads by URL", async () => {
-	const inputs = { accountId: "account", project, command: "true", environment: {}, record: JSON.stringify(record), config: "{}", secrets: {} };
+	const inputs = {
+		accountId: "account",
+		project,
+		command: "true",
+		environment: {},
+		record: JSON.stringify(record),
+		config: "{}",
+		secrets: {},
+	};
 
 	expect(await provider.diff!("worker", inputs, inputs)).toStrictEqual({ changes: false });
-	expect(await provider.diff!("worker", inputs, { ...inputs, accountId: "other" })).toStrictEqual({ changes: true });
+	expect(await provider.diff!("worker", inputs, { ...inputs, accountId: "other" })).toStrictEqual({
+		changes: true,
+	});
 });
 
 const registered: Array<pulumi.runtime.MockResourceArgs> = [];
@@ -50,7 +62,10 @@ beforeAll(async () => {
 });
 
 it("deploys the config applied to the build's settings, with secret values split out", async () => {
-	const built = { ...record.config, env: { ...record.config.env, TOKEN: { type: "secret" as const } } };
+	const built = {
+		...record.config,
+		env: { ...record.config.env, TOKEN: { type: "secret" as const } },
+	};
 	const apply = vi.fn((settings: BuildSettings) => ({
 		...settings,
 		name: pulumi.output("example-production"),

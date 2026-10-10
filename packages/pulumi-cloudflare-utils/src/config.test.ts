@@ -9,18 +9,31 @@ import { bindingProblems, deployedConfig, settingsOf, splitSecrets } from "./con
 
 const built: ResolvedOutputWorkerConfig = JSON.parse(
 	readFileSync(
-		join(dirname(fileURLToPath(import.meta.url)), "fixtures/project/.cloudflare/output/v0/workers/default/worker.config.json"),
+		join(
+			dirname(fileURLToPath(import.meta.url)),
+			"fixtures/project/.cloudflare/output/v0/workers/default/worker.config.json",
+		),
 		"utf8",
 	),
 );
 
 it("keeps the build's settings, leaving out every field that names a resource", () => {
-	expect(settingsOf({ ...built, domains: ["example.dev"], tailConsumers: [{ worker: "tail" }] })).toStrictEqual({
+	expect(
+		settingsOf({ ...built, domains: ["example.dev"], tailConsumers: [{ worker: "tail" }] }),
+	).toStrictEqual({
 		compatibilityDate: "2025-09-01",
 		compatibilityFlags: [],
 		workersDev: false,
-		assets: { htmlHandling: "drop-trailing-slash", notFoundHandling: "none", runWorkerFirst: ["/"] },
-		manifest: { type: "complete", mainModule: "index.js", modules: { "index.js": { type: "esm" } } },
+		assets: {
+			htmlHandling: "drop-trailing-slash",
+			notFoundHandling: "none",
+			runWorkerFirst: ["/"],
+		},
+		manifest: {
+			type: "complete",
+			mainModule: "index.js",
+			modules: { "index.js": { type: "esm" } },
+		},
 	});
 });
 
@@ -70,7 +83,11 @@ it("applies the deployed config to the build's settings alone", () => {
 });
 
 it("refuses a deployed config whose bindings don't match the build, naming each problem", () => {
-	const apply = () => ({ name: "example-production", compatibilityDate: "2025-09-01", env: { ASSETS: { type: "assets" } } });
+	const apply = () => ({
+		name: "example-production",
+		compatibilityDate: "2025-09-01",
+		env: { ASSETS: { type: "assets" } },
+	});
 
 	expect(() => deployedConfig(built, apply)).toThrow(
 		[
@@ -83,9 +100,15 @@ it("refuses a deployed config whose bindings don't match the build, naming each 
 
 it("takes secret values out of the config, leaving their bindings", () => {
 	const value = { secret: true };
-	const { config, secrets } = splitSecrets({ name: "example-production", env: { ...provided, TOKEN: { type: "secret", value } } });
+	const { config, secrets } = splitSecrets({
+		name: "example-production",
+		env: { ...provided, TOKEN: { type: "secret", value } },
+	});
 
-	expect(config).toStrictEqual({ name: "example-production", env: { ...provided, TOKEN: { type: "secret" } } });
+	expect(config).toStrictEqual({
+		name: "example-production",
+		env: { ...provided, TOKEN: { type: "secret" } },
+	});
 	expect(secrets).toStrictEqual({ TOKEN: value });
 	expect(secrets.TOKEN).toBe(value);
 });

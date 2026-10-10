@@ -12,7 +12,7 @@ import {
 	writeWorkerConfig,
 } from "@cloudflare/build-output-utils";
 import type { ParsedOutputRootConfig, ParsedOutputWorkerConfig } from "@cloudflare/config";
-import type * as pulumi from "@pulumi/pulumi";
+import * as pulumi from "@pulumi/pulumi";
 
 import { digestWorker } from "./build-output.ts";
 import type { BuildRecord } from "./build-output.ts";
@@ -29,9 +29,14 @@ export interface DeploymentInputs {
 	tag?: string;
 }
 
-async function deploy(inputs: DeploymentInputs, removed: Array<string> = []): Promise<DeploymentInputs> {
+async function deploy(
+	inputs: DeploymentInputs,
+	removed: Array<string> = [],
+): Promise<DeploymentInputs> {
 	const record: BuildRecord = JSON.parse(inputs.record);
-	const recorded = existsSync(getRootConfigPath(inputs.project)) && digestWorker(inputs.project, record.directory) === record.digest;
+	const recorded =
+		existsSync(getRootConfigPath(inputs.project)) &&
+		digestWorker(inputs.project, record.directory) === record.digest;
 
 	if (!recorded) {
 		await run(inputs.command, { cwd: inputs.project, environment: inputs.environment });
@@ -39,13 +44,17 @@ async function deploy(inputs: DeploymentInputs, removed: Array<string> = []): Pr
 		const { workers } = await readBuildOutput(inputs.project);
 
 		if (!isDeepStrictEqual(workers[record.directory]?.config, record.config))
-			throw new Error(`Rebuilding ${inputs.project} gave a different Worker config than the recorded build, so the deployed config would be out of date. Replace the BuildOutput resource (\`pulumi up --replace <urn>\`) to build and record it again.`);
+			throw new Error(
+				`Rebuilding ${inputs.project} gave a different Worker config than the recorded build, so the deployed config would be out of date. Replace the BuildOutput resource (\`pulumi up --replace <urn>\`) to build and record it again.`,
+			);
 	}
 
 	const directory = await mkdtemp(path.join(tmpdir(), "cf-deploy-"));
 
 	try {
-		await cp(path.join(inputs.project, buildOutputRoot), path.join(directory, buildOutputRoot), { recursive: true });
+		await cp(path.join(inputs.project, buildOutputRoot), path.join(directory, buildOutputRoot), {
+			recursive: true,
+		});
 
 		const { rootConfig } = await readBuildOutput(directory);
 		const { buildContext } = rootConfig;
@@ -54,23 +63,36 @@ async function deploy(inputs: DeploymentInputs, removed: Array<string> = []): Pr
 		const { manifest, ...config } = worker;
 
 		await writeWorkerConfig({ root: directory, config, manifest, directoryName: record.directory });
-		await writeFile(getRootConfigPath(directory), JSON.stringify({ ...rootConfig, accountId: inputs.accountId } satisfies ParsedOutputRootConfig));
+		await writeFile(
+			getRootConfigPath(directory),
+			JSON.stringify({
+				...rootConfig,
+				accountId: inputs.accountId,
+			} satisfies ParsedOutputRootConfig),
+		);
 		await readBuildOutput(directory);
 
 		const secretsFile = path.join(directory, "secrets.json");
 		await writeFile(secretsFile, JSON.stringify(inputs.secrets), { mode: 0o600 });
 
 		// Always passing a secrets file keeps the Worker's other secrets (cloudflare/cf#72).
-		await cf([
-			"deploy", "--prebuilt",
-			...(buildContext?.mode ? ["--mode", buildContext.mode] : []),
-			...(record.directory === defaultWorkerDirectory ? [] : ["--worker", worker.name]),
-			"--secrets-file", secretsFile,
-			...(inputs.tag ? ["--tag", inputs.tag] : []),
-		], { cwd: directory, accountId: inputs.accountId });
+		await cf(
+			[
+				"deploy",
+				"--prebuilt",
+				...(buildContext?.mode ? ["--mode", buildContext.mode] : []),
+				...(record.directory === defaultWorkerDirectory ? [] : ["--worker", worker.name]),
+				"--secrets-file",
+				secretsFile,
+				...(inputs.tag ? ["--tag", inputs.tag] : []),
+			],
+			{ cwd: directory, accountId: inputs.accountId },
+		);
 
 		for (const secret of removed)
-			await cf(["workers", "secrets", "delete", secret, "--worker", worker.name, "--force"], { accountId: inputs.accountId });
+			await cf(["workers", "secrets", "delete", secret, "--worker", worker.name, "--force"], {
+				accountId: inputs.accountId,
+			});
 	} finally {
 		await rm(directory, { recursive: true, force: true });
 	}
@@ -80,11 +102,14 @@ async function deploy(inputs: DeploymentInputs, removed: Array<string> = []): Pr
 
 const compared = ["accountId", "project", "record", "secrets", "tag"] as const;
 
+const sameConfig = (olds: DeploymentInputs, news: DeploymentInputs) =>
+	news.config !== pulumi.runtime.unknownValue &&
+	isDeepStrictEqual(JSON.parse(olds.config), JSON.parse(news.config));
+
 export async function diff(_id: string, olds: DeploymentInputs, news: DeploymentInputs) {
 	return {
 		changes:
-			compared.some((key) => !isDeepStrictEqual(olds[key], news[key]))
-			|| !isDeepStrictEqual(JSON.parse(olds.config), JSON.parse(news.config)),
+			compared.some((key) => !isDeepStrictEqual(olds[key], news[key])) || !sameConfig(olds, news),
 	};
 }
 
@@ -98,4 +123,7 @@ export async function update(_id: string, olds: DeploymentInputs, news: Deployme
 	return { outs: await deploy(news, removed) };
 }
 
-export default { diff, create, update } satisfies pulumi.dynamic.ResourceProvider<DeploymentInputs, DeploymentInputs>;
+export default { diff, create, update } satisfies pulumi.dynamic.ResourceProvider<
+	DeploymentInputs,
+	DeploymentInputs
+>;

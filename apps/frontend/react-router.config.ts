@@ -9,6 +9,9 @@ export default {
 	routeDiscovery: {
 		mode: "initial"
 	},
+	future: {
+		unstable_optimizeDeps: true
+	},
 	appDirectory: "src",
 	buildDirectory: "dist",
 	buildEnd: (build) => {

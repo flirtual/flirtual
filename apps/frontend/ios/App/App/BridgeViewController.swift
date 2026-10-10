@@ -5,6 +5,12 @@ import WebKit
 class BridgeViewController: CAPBridgeViewController {
     private var navigationProxy: WebViewRetryProxy?
 
+    override func capacitorDidLoad() {
+        if #available(iOS 26, *) {
+            bridge?.registerPluginInstance(NativeNavigationPlugin())
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 

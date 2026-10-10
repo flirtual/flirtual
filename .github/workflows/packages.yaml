@@ -1,0 +1,72 @@
+name: Packages
+on:
+  push:
+    branches: [main]
+  pull_request:
+  merge_group:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  changes:
+    name: Detect changes
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      packages: ${{ steps.changes.outputs.changed }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: Detect changes
+        uses: ./.github/actions/changes
+        id: changes
+        with:
+          filter: packages
+
+  check:
+    name: Lint, build and test
+    needs: changes
+    if: needs.changes.outputs.packages != 'false'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: Install pnpm and Node.js
+        uses: pnpm/setup@fbda4c85fc2e1e08721cd8763afea8f48d60f024 # v3.0.0
+        with:
+          runtime: node@24.20.0
+          cache: true
+          install: false
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile --filter './packages/*'
+
+      - name: Lint
+        run: pnpm -r --filter './packages/*' run lint
+
+      - name: Build
+        run: pnpm -r --filter './packages/*' run build
+
+      - name: Test
+        run: pnpm -r --filter './packages/*' run test
+
+  packages:
+    name: Packages
+    if: always() && needs.changes.outputs.packages != 'false'
+    needs: [changes, check]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Determine overall status
+        if: contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')
+        run: exit 1

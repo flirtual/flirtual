@@ -6,7 +6,9 @@ import {
 	replayIntegration,
 	spanStreamingIntegration
 } from "@sentry/react-router";
+import { hashKey } from "@tanstack/react-query";
 
+import type { Session } from "~/api/auth";
 import {
 	apiOrigin,
 	development,
@@ -18,6 +20,7 @@ import {
 	siteOrigin
 } from "~/const";
 import { device } from "~/hooks/use-device";
+import { queryClient, sessionKey } from "~/query";
 
 export function setupMonitoring() {
 	init({
@@ -84,4 +87,22 @@ export function setupMonitoring() {
 
 	getGlobalScope().setAttributes(app);
 	getGlobalScope().setTags(app);
+
+	let userId: string | undefined;
+	const identify = () => {
+		const session = queryClient.getQueryData<Session | null>(sessionKey());
+		if (session?.user.id === userId) return;
+
+		userId = session?.user.id;
+		const sudo = !!session?.sudoerId;
+
+		getGlobalScope().setUser(userId ? { id: userId } : null);
+		getGlobalScope().setAttributes({ sudo });
+		getGlobalScope().setTags({ sudo });
+	};
+
+	identify();
+	queryClient.getQueryCache().subscribe(({ query }) => {
+		if (query.queryHash === hashKey(sessionKey())) identify();
+	});
 }

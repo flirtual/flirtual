@@ -40,6 +40,7 @@ import { conversationsKey, invalidate, queryClient, sessionFetcher, sessionKey }
 import { absoluteUrl } from "~/urls";
 import { emptyArray } from "~/utilities";
 
+import { useBreakpoint } from "./use-breakpoint";
 import { useDevice } from "./use-device";
 import { warnOnce } from "./use-log";
 import { usePreferences } from "./use-preferences";
@@ -47,10 +48,10 @@ import { useOptionalSession } from "./use-session";
 import { useTheme } from "./use-theme";
 
 const TalkjsContext = createContext<Talk.Session | null>(null);
-const UnreadConversationContext = createContext({} as {
+const UnreadConversationContext = createContext<{
 	unreadConversations: Array<Talk.UnreadConversation>;
 	setUnreadConversations: Dispatch<SetStateAction<Array<Talk.UnreadConversation>>>;
-});
+}>({ unreadConversations: emptyArray, setUnreadConversations: doNothing });
 
 function expiresAt(token: string) {
 	try {
@@ -222,7 +223,8 @@ export const ConversationChatbox: React.FC<
 	const [element, setElement] = useState<HTMLDivElement | null>(null);
 
 	const [theme] = useTheme();
-	const { native, vision } = useDevice();
+	const { native, vision, nativeNavigation } = useDevice();
+	const split = useBreakpoint("split");
 	const { t } = useTranslation();
 	const [locale] = useLocale();
 	const [fontSize] = usePreferences<number>("font_size", 16);
@@ -255,10 +257,19 @@ export const ConversationChatbox: React.FC<
 	const height = useMemo(() => {
 		if (!element) return "0px";
 		const unit = CSS.supports("height", "100dvh") ? "dvh" : "vh";
-		return vision
-			? `calc(100${unit} - 8.125rem)`
-			: `calc(100${unit} - max(calc(var(--safe-area-inset-top, 0rem) + 0.5rem), 1rem) - max(calc(var(--safe-area-inset-bottom, 0rem) - 0.25rem), 0.5rem) - 11.125rem)`;
-	}, [element, vision]);
+		if (vision) return `calc(100${unit} - 8.125rem)`;
+
+		const header = split
+			? "calc(var(--safe-area-inset-top, 0rem) + 4rem)"
+			: "max(var(--status-bar-height, 0rem), calc(max(calc(var(--status-bar-inset-top, var(--safe-area-inset-top, 0rem)) + 0.25rem), 0.75rem) + 3.375rem))";
+		// Natively, the composer's own padding sits in the safe area, overlapping the space reserved for
+		// it. Above a tab bar along the bottom, that padding counts towards the gap kept from the bar.
+		const below = nativeNavigation
+			? "max(calc(var(--safe-area-inset-bottom, 0rem) - 0.75rem + var(--tab-bar-gap, 0rem)), 0rem)"
+			: "calc(max(calc(var(--safe-area-inset-bottom, 0rem) - 0.25rem), 0.5rem) + 4rem)";
+
+		return `calc(100${unit} - ${header} - ${below})`;
+	}, [element, vision, nativeNavigation, split]);
 
 	useEffect(() => {
 		if (!chatbox || !conversation) return;
@@ -280,7 +291,7 @@ export const ConversationChatbox: React.FC<
 					height
 				} as CSSProperties
 			}
-			className="relative w-full overflow-hidden bg-white-20 vision:bg-transparent dark:bg-black-70 desktop:max-h-[38rem] desktop:rounded-xl desktop:pt-0 desktop:before:pointer-events-none desktop:before:absolute desktop:before:inset-0 desktop:before:z-10 desktop:before:size-full desktop:before:rounded-xl desktop:before:shadow-brand-inset desktop:before:content-['']"
+			className="relative w-full overflow-hidden bg-white-20 vision:bg-transparent native-nav:mb-[calc(-1*min(var(--safe-area-inset-bottom,0rem),0.75rem))] tab-bar-bottom:mb-0 dark:bg-black-70 desktop:mb-0 desktop:max-h-[38rem] desktop:rounded-xl desktop:pt-0 desktop:before:pointer-events-none desktop:before:absolute desktop:before:inset-0 desktop:before:z-10 desktop:before:size-full desktop:before:rounded-xl desktop:before:shadow-brand-inset desktop:before:content-['']"
 			{...props}
 			ref={setElement}
 		/>

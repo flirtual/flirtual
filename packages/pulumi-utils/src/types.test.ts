@@ -32,9 +32,13 @@ it("wraps every level of a structure in the given type constructor", () => {
 });
 
 it("is pulumi.Input at every level for DeepInput", () => {
-	expectTypeOf<DeepInput<{ name: string }>>().toEqualTypeOf<pulumi.Input<{ name: pulumi.Input<string> }>>();
+	expectTypeOf<DeepInput<{ name: string }>>().toEqualTypeOf<
+		pulumi.Input<{ name: pulumi.Input<string> }>
+	>();
 });
 
 it("is pulumi.Output at every level for DeepOutput", () => {
-	expectTypeOf<DeepOutput<{ name: string }>>().toEqualTypeOf<pulumi.Output<{ name: pulumi.Output<string> }>>();
+	expectTypeOf<DeepOutput<{ name: string }>>().toEqualTypeOf<
+		pulumi.Output<{ name: pulumi.Output<string> }>
+	>();
 });

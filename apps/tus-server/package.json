@@ -8,6 +8,7 @@
 		"typegen": "wrangler types",
 		"type-check": "pnpm typegen && tsc",
 		"build": "pnpm typegen && wrangler deploy --dry-run --outdir=dist",
+		"build:cloudflare": "cf-wrangler build --mode development",
 		"pretest": "pnpm typegen",
 		"test": "vitest run",
 		"dev": "wrangler dev",
@@ -15,13 +16,13 @@
 		"deploy:production": "wrangler deploy --env=production"
 	},
 	"dependencies": {
-		"itty-router": "^5.0.23",
-		"jose": "^6.2.2"
+		"signal-tus-server": "github:signalapp/tus-server#5cbbc5c42d1d126bb2c1b4f837b5103d5d8f5407"
 	},
 	"devDependencies": {
 		"@cloudflare/vitest-pool-workers": "catalog:",
-		"@types/node": "25.9.8",
-		"tus-js-client": "4.3.1",
+		"@types/node": "catalog:",
+		"cf": "catalog:",
+		"jose": "catalog:",
 		"typescript": "catalog:",
 		"vitest": "catalog:",
 		"wrangler": "catalog:"

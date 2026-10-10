@@ -5,7 +5,9 @@ import { deployedConfig, splitSecrets } from "./config.ts";
 import type { BuildSettings, DeployedConfig } from "./config.ts";
 import type { BuildRecord } from "./providers/build-output.ts";
 
-export const provider = moduleProvider(() => import("@flirtual/pulumi-cloudflare-utils/providers/deployment"));
+export const provider = moduleProvider(
+	() => import("@flirtual/pulumi-cloudflare-utils/providers/deployment"),
+);
 
 export interface DeploymentArgs {
 	accountId: pulumi.Input<string>;
@@ -31,7 +33,9 @@ export class Deployment extends pulumi.dynamic.Resource {
 	constructor(name: string, args: DeploymentArgs, options?: pulumi.CustomResourceOptions) {
 		const deployed = pulumi
 			.output(args.build.record)
-			.apply((record) => splitSecrets(deployedConfig((JSON.parse(record) as BuildRecord).config, args.apply)));
+			.apply((record) =>
+				splitSecrets(deployedConfig((JSON.parse(record) as BuildRecord).config, args.apply)),
+			);
 
 		super(
 			provider,
@@ -42,7 +46,9 @@ export class Deployment extends pulumi.dynamic.Resource {
 				command: args.build.command,
 				environment: args.build.environment,
 				record: args.build.record,
-				config: deployed.apply(({ config }) => pulumi.output(config)).apply((config) => JSON.stringify(config)),
+				config: deployed
+					.apply(({ config }) => pulumi.output(config))
+					.apply((config) => JSON.stringify(config)),
 				secrets: deployed.apply(({ secrets }) => pulumi.output(secrets)),
 				tag: args.tag,
 			},

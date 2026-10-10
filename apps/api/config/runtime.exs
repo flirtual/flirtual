@@ -93,6 +93,14 @@ config :flirtual,
   retained_origin: retained_origin && URI.parse(retained_origin),
   image_classification_origin: image_classification_origin
 
+config :flirtual, :buckets, %{
+  content: Env.get!("BUCKET_CONTENT"),
+  content_uploads: Env.get!("BUCKET_CONTENT_UPLOADS"),
+  content_retained: Env.get!("BUCKET_CONTENT_RETAINED"),
+  content_quarantine: Env.get!("BUCKET_CONTENT_QUARANTINE"),
+  stats: Env.get!("BUCKET_STATS")
+}
+
 config :flirtual, Flirtual.Mailer,
   domains: %{
     "transactional" =>
@@ -133,7 +141,7 @@ local_uploads_dir =
 config :flirtual,
   local_uploads?: local_uploads?,
   local_uploads_dir: local_uploads_dir,
-  upload_origin: URI.parse(Env.get("UPLOAD_ORIGIN", default: frontend_origin)),
+  upload_url: Env.get("UPLOAD_URL", default: frontend_origin <> "/upload/attachments"),
   upload_secret: Env.get("UPLOAD_SECRET") || Base.encode64(secret_key_base)
 
 unless local_uploads? do
@@ -239,7 +247,15 @@ config :flirtual, Flirtual.Freshdesk,
   domain: Env.get("FRESHDESK_DOMAIN"),
   api_key: Env.get("FRESHDESK_API_KEY"),
   moderation_group_id:
-    Env.get("FRESHDESK_MODERATION_GROUP_ID") |> then(&(&1 && String.to_integer(&1)))
+    Env.get("FRESHDESK_MODERATION_GROUP_ID") |> then(&(&1 && String.to_integer(&1))),
+  # The `cf_` names Freshdesk generated for the appeal ticket fields.
+  appeal_fields: %{
+    profile: Env.get!("FRESHDESK_FLIRTUAL_PROFILE_FIELD"),
+    date: Env.get!("FRESHDESK_BAN_DATE_FIELD"),
+    moderator: Env.get!("FRESHDESK_MODERATOR_FIELD"),
+    reason: Env.get!("FRESHDESK_BAN_REASON_FIELD"),
+    details: Env.get!("FRESHDESK_BAN_DETAILS_FIELD")
+  }
 
 config :flirtual, Flirtual.Yoti,
   sdk_id: Env.get("YOTI_SDK_ID"),
@@ -254,7 +270,10 @@ if listmonk_url do
   config :flirtual, Flirtual.Listmonk,
     url: listmonk_url,
     username: Env.get!("LISTMONK_USERNAME", always?: true),
-    password: Env.get!("LISTMONK_PASSWORD", always?: true)
+    password: Env.get!("LISTMONK_PASSWORD", always?: true),
+    newsletter_list_id:
+      Env.get!("LISTMONK_NEWSLETTER_LIST_ID", always?: true) |> String.to_integer(),
+    everyone_list_id: Env.get!("LISTMONK_EVERYONE_LIST_ID", always?: true) |> String.to_integer()
 end
 
 chargebee_namespace = Env.get("CHARGEBEE_NAMESPACE")

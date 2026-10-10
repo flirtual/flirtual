@@ -8,16 +8,10 @@
 		"./providers/*": "./src/providers/*.ts"
 	},
 	"scripts": {
-		"test": "vitest run"
-	},
-	"peerDependencies": {
-		"@pulumi/pulumi": "catalog:"
-	},
-	"devDependencies": {
-		"@pulumi/pulumi": "catalog:",
-		"@types/node": "^22",
-		"typescript": "catalog:",
-		"vitest": "catalog:"
+		"test": "vitest run",
+		"build": "tsc",
+		"lint": "oxlint && oxfmt --check",
+		"fmt": "oxfmt"
 	},
 	"dependencies": {
 		"@cloudflare/build-output-utils": "catalog:",
@@ -25,5 +19,17 @@
 		"@flirtual/pulumi-utils": "workspace:*",
 		"cf": "catalog:",
 		"execa": "catalog:"
+	},
+	"devDependencies": {
+		"@flirtual/config": "workspace:*",
+		"@pulumi/pulumi": "catalog:pulumi",
+		"@types/node": "catalog:",
+		"oxfmt": "catalog:",
+		"oxlint": "catalog:",
+		"typescript": "catalog:",
+		"vitest": "catalog:"
+	},
+	"peerDependencies": {
+		"@pulumi/pulumi": "catalog:pulumi"
 	}
 }

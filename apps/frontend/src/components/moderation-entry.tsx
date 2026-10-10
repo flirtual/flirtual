@@ -430,7 +430,9 @@ function useEntry(entry: ModerationEntry) {
 						: gray)
 			: type === "flagged_duplicate_image"
 				? (details.distance === 0 ? red : yellow)
-				: color,
+				: type === "warned" && entry.kind === "event" && entry.event.acknowledgedAt
+					? gray
+					: color,
 		reasonName: (reasonId && (tAttributes[reasonId]?.name ?? reasonId)) || text(details.reasonText),
 		summary: entry.kind === "event" ? eventSummary(entry.event) : undefined,
 		subjectId: entry.kind === "event" ? entry.event.userId : entry.report.targetId,
@@ -594,14 +596,14 @@ const EntryImages: FC<{ images: Array<EntryImage>; small?: boolean }> = ({ image
 								{images.length > 1 && (
 									<div className="absolute z-10 flex size-full">
 										<button
-											className="group flex h-full w-1/4 items-center justify-start px-8 opacity-70 outline-none transition-opacity hover:opacity-100"
+											className="group flex h-full w-1/4 items-center justify-start px-8 pl-[calc(2rem+var(--safe-area-inset-left,0rem))] opacity-70 outline-none transition-opacity hover:opacity-100 desktop:px-8"
 											type="button"
 											onClick={() => step(-1)}
 										>
 											<ChevronLeft className="size-10 rounded-md text-white-10 drop-shadow group-focus-visible:ring-2 group-focus-visible:ring-white-10" />
 										</button>
 										<button
-											className="group ml-auto flex h-full w-1/4 items-center justify-end px-8 opacity-70 outline-none transition-opacity hover:opacity-100"
+											className="group ml-auto flex h-full w-1/4 items-center justify-end px-8 pr-[calc(2rem+var(--safe-area-inset-right,0rem))] opacity-70 outline-none transition-opacity hover:opacity-100 desktop:px-8"
 											type="button"
 											onClick={() => step(1)}
 										>

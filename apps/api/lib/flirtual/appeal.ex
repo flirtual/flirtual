@@ -3,12 +3,6 @@ defmodule Flirtual.Appeal do
 
   alias Flirtual.{Attribute, Freshdesk, ModerationEvent, ObanWorkers, Repo, User}
 
-  @profile_field :cf_flirtual_profile
-  @date_field :cf_ban_date
-  @moderator_field :cf_moderator
-  @reason_field :cf_ban_reason
-  @details_field :cf_ban_details
-
   def appealed?(user_id) when is_binary(user_id),
     do: appealed?(user_id, ModerationEvent.active(user_id, :banned))
 
@@ -55,6 +49,7 @@ defmodule Flirtual.Appeal do
 
   defp ticket(%User{} = user, ban, message) do
     name = User.display_name(user)
+    fields = Freshdesk.config(:appeal_fields)
 
     Freshdesk.ticket(%{
       subject: "Flirtual ban appeal - #{name}",
@@ -63,11 +58,11 @@ defmodule Flirtual.Appeal do
       email: user.email,
       group_id: Freshdesk.config(:moderation_group_id),
       custom_fields: %{
-        @profile_field => User.url(user, :id) |> URI.to_string(),
-        @date_field => ban && DateTime.to_date(ban.created_at) |> Date.to_iso8601(),
-        @moderator_field => moderator_name(ban),
-        @reason_field => ban && Map.get(Attribute.ban_reasons(), ban.reason_id),
-        @details_field => ban && ban.message
+        fields.profile => User.url(user, :id) |> URI.to_string(),
+        fields.date => ban && DateTime.to_date(ban.created_at) |> Date.to_iso8601(),
+        fields.moderator => moderator_name(ban),
+        fields.reason => ban && Map.get(Attribute.ban_reasons(), ban.reason_id),
+        fields.details => ban && ban.message
       }
     })
   end

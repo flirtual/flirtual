@@ -1,5 +1,6 @@
 import type { AppInfo } from "@capacitor/app";
 import { App } from "@capacitor/app";
+import { Capacitor } from "@capacitor/core";
 import type { DeviceInfo } from "@capacitor/device";
 import { Device } from "@capacitor/device";
 
@@ -57,6 +58,8 @@ const platform: DevicePlatform = platformOverride || ({
 const userAgent = client ? navigator.userAgent : "";
 const vision = userAgent.includes("Flirtual-Vision");
 
+export const nativeNavigation = client && Capacitor.isPluginAvailable("NativeNavigation");
+
 // const native = ua.includes("Flirtual-Native");
 const native = nativeOverride || (nativePlatform && nativePlatform !== "web");
 
@@ -69,6 +72,7 @@ const _device = {
 	android: platformOverride === "android" || os === "android",
 	native,
 	vision,
+	nativeNavigation,
 	os,
 	build,
 	version,

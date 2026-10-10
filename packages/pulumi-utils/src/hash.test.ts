@@ -18,7 +18,9 @@ function directory(files: Record<string, string>) {
 const all = (cwd: string, options = {}) => hashFiles(["**"], { cwd, ...options });
 
 it("gives identical trees the same hash, whatever order they were written in", () => {
-	expect(all(directory({ "a.js": "a", "b/c.js": "c" }))).toBe(all(directory({ "b/c.js": "c", "a.js": "a" })));
+	expect(all(directory({ "a.js": "a", "b/c.js": "c" }))).toBe(
+		all(directory({ "b/c.js": "c", "a.js": "a" })),
+	);
 });
 
 it("changes when a file's contents change", () => {

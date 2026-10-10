@@ -195,13 +195,15 @@ export function useQueue(mode: ProspectKind = "love", source: ResponseSource = m
 				}
 
 				// Keep the optimistic head so a mismatched next[0] from the server doesn't trigger a second
-				// key change in AnimatePresence and orphan the previous Profile.
+				// key change in AnimatePresence and orphan the previous Profile. Skip the profile we just acted
+				// on, which a stale queue response can leave at the head.
 				await queryClient.cancelQueries({ queryKey });
 				queryClient.setQueryData<Queue>(queryKey, (cache) => {
-					if (action === "undo" || !cache || !("next" in cache) || !cache.next[0])
-						return queue;
+					if (action === "undo" || !cache || !("next" in cache)) return queue;
 
-					const head = cache.next[0];
+					const head = cache.next.find((id) => id !== userId);
+					if (!head) return queue;
+
 					return {
 						...queue,
 						next: [head, ...queue.next.filter((id) => id !== head)],

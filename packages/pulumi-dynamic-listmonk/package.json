@@ -7,19 +7,25 @@
 	"scripts": {
 		"generate:api": "typed-openapi https://raw.githubusercontent.com/knadh/listmonk/v6.2.0/docs/swagger/collections.yaml --no-include-client -o src/generated/index.ts",
 		"postinstall": "pnpm generate:api",
-		"test": "vitest run"
+		"test": "vitest run",
+		"build": "tsc",
+		"lint": "oxlint && oxfmt --check",
+		"fmt": "oxfmt"
 	},
 	"dependencies": {
 		"@flirtual/pulumi-dynamic-fetch": "workspace:*"
 	},
-	"peerDependencies": {
-		"@pulumi/pulumi": "catalog:"
-	},
 	"devDependencies": {
-		"@pulumi/pulumi": "catalog:",
-		"@types/node": "^22",
-		"typed-openapi": "^4.1.0",
+		"@flirtual/config": "workspace:*",
+		"@pulumi/pulumi": "catalog:pulumi",
+		"@types/node": "catalog:",
+		"oxfmt": "catalog:",
+		"oxlint": "catalog:",
+		"typed-openapi": "catalog:",
 		"typescript": "catalog:",
 		"vitest": "catalog:"
+	},
+	"peerDependencies": {
+		"@pulumi/pulumi": "catalog:pulumi"
 	}
 }

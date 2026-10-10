@@ -320,6 +320,8 @@ defmodule Flirtual.Mailer do
   def send(recipient, options) do
     type = Keyword.fetch!(options, :type)
     from = address("noreply", type)
+    configuration_set = configuration_set(type)
+    kind = Keyword.get(options, :kind)
     reply_to_mailbox = Keyword.get(options, :reply_to)
     subject = Keyword.fetch!(options, :subject)
     action_url = Keyword.get(options, :action_url)
@@ -331,7 +333,13 @@ defmodule Flirtual.Mailer do
         new()
         |> to(recipient)
         |> from({"Flirtual", from})
-        |> put_provider_option(:configuration_set_name, configuration_set(type))
+        |> put_provider_option(:configuration_set_name, configuration_set)
+        |> put_provider_option(
+          :tags,
+          [{"ses:feedback-id-a", kind}, {"ses:feedback-id-b", configuration_set}]
+          |> Enum.reject(fn {_, value} -> is_nil(value) end)
+          |> Enum.map(fn {name, value} -> %{name: name, value: value} end)
+        )
         |> subject(subject)
         |> text_body(
           Keyword.fetch!(options, :body_text)
