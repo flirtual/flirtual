@@ -156,7 +156,8 @@ final class TabBarController: UITabBarController, UITabBarControllerDelegate {
     }
 
     // The page lays out its own actions, hidden, and sends where they are, so these sit in their place.
-    func setActions(_ actions: [NavigationAction], frame: CGRect?) {
+    // Inert actions keep their look but let taps through.
+    func setActions(_ actions: [NavigationAction], frame: CGRect?, interactive: Bool = true) {
         guard !actions.isEmpty, let frame, !frame.isEmpty, let webView = bridgeViewController.webView else {
             actionBar.removeFromSuperview()
             return
@@ -166,6 +167,7 @@ final class TabBarController: UITabBarController, UITabBarControllerDelegate {
             view.insertSubview(actionBar, belowSubview: tabBar)
         }
         actionBar.set(actions)
+        actionBar.isUserInteractionEnabled = interactive
         actionBar.frame = view.convert(frame, from: webView)
     }
 
@@ -333,6 +335,45 @@ final class TabBarController: UITabBarController, UITabBarControllerDelegate {
 
         guard !frame.isNull, frame.height > frame.width else { return [:] }
         return ["top": frame.minY, "x": frame.midX]
+    }
+
+    // UIKit has no API for this, and iPad's floating tab bar has no accessibility elements without
+    // assistive tech, so this works outward from the tabs' title labels.
+    func tabFrames() -> (tabs: [String: CGRect], bar: CGRect?) {
+        guard showsTabBar, let window = view.window, let webView = bridgeViewController.webView else { return ([:], nil) }
+
+        var titles: [(id: String, label: UILabel)] = []
+        func visit(_ view: UIView) {
+            guard !view.isHidden, view.alpha > 0, !(view is WKWebView) else { return }
+            if let label = view as? UILabel, let item = items.first(where: { $0.title == label.text }) {
+                titles.append((item.id, label))
+            }
+            view.subviews.forEach(visit)
+        }
+        visit(window)
+
+        guard Set(titles.map(\.id)).count > 1 else { return ([:], nil) }
+
+        var frames: [String: CGRect] = [:]
+        for (id, label) in titles where frames[id] == nil {
+            var button: UIView = label
+            while let parent = button.superview, parent !== window,
+                  !titles.contains(where: { $0.id != id && $0.label.isDescendant(of: parent) }) {
+                button = parent
+            }
+
+            let frame = webView.convert(button.bounds, from: button)
+            if !frame.isEmpty, frame.intersects(webView.bounds) {
+                frames[id] = frame
+            }
+        }
+
+        var bar = titles[0].label.superview
+        while let candidate = bar, !titles.allSatisfy({ $0.label.isDescendant(of: candidate) }) {
+            bar = candidate.superview
+        }
+
+        return (frames, bar.map { webView.convert($0.bounds, from: $0) })
     }
 
     // How much further than the safe area content must keep from each side to clear the screen's

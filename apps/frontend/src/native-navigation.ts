@@ -73,9 +73,11 @@ export interface NativeNavigationFrame {
 export const NativeNavigationPlugin = registerPlugin<{
 	update: (options: { visible: boolean; selected?: string; tabs?: Array<NativeNavigationTab>; tint?: string }) => Promise<Layout>;
 	// Builds from before this have no such method.
-	actions: (options: { actions: Array<NativeNavigationAction>; frame?: NativeNavigationFrame }) => Promise<void>;
+	actions: (options: { actions: Array<NativeNavigationAction>; frame?: NativeNavigationFrame; interactive?: boolean }) => Promise<void>;
 	// An SF Symbol, tinted with a hex colour; the duration is in milliseconds.
 	toast: (options: { text: string; icon?: string; tint?: string; duration: number }) => Promise<void>;
+	// In CSS pixels. Builds from before this have no such method.
+	tabFrames: () => Promise<{ frames: Record<string, NativeNavigationFrame>; bar?: NativeNavigationFrame }>;
 	addListener: ((eventName: "action", listener: (event: { id: string }) => void) => Promise<PluginListenerHandle>)
 		& ((eventName: "layout", listener: (event: Layout) => void) => Promise<PluginListenerHandle>)
 		& ((eventName: "select", listener: (event: { id: string }) => void) => Promise<PluginListenerHandle>);

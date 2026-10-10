@@ -17,7 +17,7 @@ export const SplitPanes: FC<PropsWithChildren<SplitPanesProps>> = ({ aside, clas
 		<div className={twMerge("contents split:sticky split:top-[var(--split-top)] split:block split:h-[calc(100dvh-var(--split-top)-var(--split-bottom))] split:w-[var(--split-list-width,22rem)] split:shrink-0 split:[--content-inset-right:0px] split:[--top-clearance-right:0px]", asideClassName)}>
 			{aside}
 		</div>
-		<div className={twMerge("flex w-full flex-col items-center split:min-w-0 split:grow split:[--content-inset-left:0px] split:[--top-clearance-left:0px] native-nav:split:pb-[var(--safe-area-inset-bottom,0rem)] desktop:pb-0 web-nav:desktop:contents", mainClassName)}>
+		<div data-split-main className={twMerge("flex w-full flex-col items-center split:min-w-0 split:grow split:[--content-inset-left:0px] split:[--top-clearance-left:0px] native-nav:split:pb-[var(--safe-area-inset-bottom,0rem)] desktop:pb-0 web-nav:desktop:contents", mainClassName)}>
 			{children}
 		</div>
 	</div>
