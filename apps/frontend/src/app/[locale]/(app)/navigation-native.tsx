@@ -147,6 +147,6 @@ export const NativeNavigation: FC<{ user: User }> = ({ user }) => {
 	// Takes the web navigation's place in the layout, reserving the inset that pages don't already
 	// pad for: the tab bar at the bottom on phones, and whatever's above the desktop layout.
 	return (
-		<div className="order-last h-[var(--safe-area-inset-bottom,0rem)] shrink-0 split:hidden desktop:order-none desktop:block desktop:h-[var(--safe-area-inset-top,0rem)]" />
+		<div className="order-last h-[var(--safe-area-inset-bottom,0rem)] shrink-0 split:hidden desktop:order-none desktop:block desktop:h-[var(--safe-area-inset-top,0rem)] [[data-banner]~&]:desktop:hidden" />
 	);
 };
