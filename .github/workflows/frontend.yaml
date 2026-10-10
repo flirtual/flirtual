@@ -55,7 +55,7 @@ jobs:
       - name: Install pnpm and Node.js
         uses: pnpm/setup@fbda4c85fc2e1e08721cd8763afea8f48d60f024 # v3.0.0
         with:
-          runtime: node@24.20.0
+          runtime: node@24.21.0
           cache: true
 
       - name: ESLint
@@ -72,7 +72,7 @@ jobs:
       - name: Install pnpm and Node.js
         uses: pnpm/setup@fbda4c85fc2e1e08721cd8763afea8f48d60f024 # v3.0.0
         with:
-          runtime: node@24.20.0
+          runtime: node@24.21.0
           cache: true
 
       - name: Audit dependencies
@@ -137,7 +137,7 @@ jobs:
       - name: Install pnpm and Node.js
         uses: pnpm/setup@fbda4c85fc2e1e08721cd8763afea8f48d60f024 # v3.0.0
         with:
-          runtime: node@24.20.0
+          runtime: node@24.21.0
           cache: true
 
       - name: Build
@@ -209,7 +209,7 @@ jobs:
       - name: Install pnpm and Node.js
         uses: pnpm/setup@fbda4c85fc2e1e08721cd8763afea8f48d60f024 # v3.0.0
         with:
-          runtime: node@24.20.0
+          runtime: node@24.21.0
           cache: true
 
       - name: Cache build caches
