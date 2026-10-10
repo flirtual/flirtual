@@ -233,6 +233,33 @@ defmodule Flirtual.Conversation do
     end
   end
 
+  def list_messages(conversation_id, before \\ nil) do
+    query =
+      %{
+        limit: 30,
+        startingAfter: before
+      }
+      |> exclude_nil()
+
+    with {:ok, %Req.Response{status: 200, body: body}} <-
+           Talkjs.fetch(
+             :get,
+             "conversations/" <> conversation_id <> "/messages",
+             nil,
+             query: query
+           ),
+         {:ok, %{"data" => data}} when is_list(data) <- Jason.decode(body) do
+      {:ok, Message.decode(data)}
+    else
+      {:error, :not_configured} ->
+        {:ok, []}
+
+      reason ->
+        log(:error, [:list_messages], reason: reason)
+        {:error, :upstream}
+    end
+  end
+
   defp list_from_matches(user_id) do
     LikesAndPasses.list_matches(profile_id: user_id)
     |> Enum.map(fn lap ->

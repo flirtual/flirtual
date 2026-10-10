@@ -386,13 +386,16 @@ defmodule Flirtual.Talkjs do
     |> batch()
   end
 
-  def list_messages(conversation_id, options \\ []) do
-    case fetch(:get, "conversations/" <> conversation_id <> "/messages", nil, query: options) do
-      {:ok, %Req.Response{status: 200, body: body}} ->
-        Jason.decode!(body)["data"]
+  def mark_conversation_read(conversation_id, user_id) when is_uid(user_id) do
+    case fetch(
+           :post,
+           "conversations/" <> conversation_id <> "/readBy/" <> ShortUUID.decode!(user_id)
+         ) do
+      {:ok, %Req.Response{status: 200}} ->
+        {:ok, nil}
 
       {:error, :not_configured} ->
-        []
+        {:ok, nil}
     end
   end
 end

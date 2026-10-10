@@ -53,9 +53,26 @@ defmodule FlirtualWeb.ConversationController do
 
   def list(conn, _), do: list(conn, %{"cursor" => nil})
 
-  def list_messages(conn, %{"user_id" => user_id}) do
-    conversation_id = Talkjs.new_conversation_id(conn.assigns[:session].user.id, user_id)
-    conn |> json_with_etag(Talkjs.list_messages(conversation_id))
+  def list_messages(conn, %{"conversation_id" => conversation_id} = params) do
+    before = if is_binary(params["before"]), do: params["before"]
+
+    with {:ok, conversation} <- Conversation.get(conversation_id),
+         :ok <- Policy.can(conn, :read, conversation),
+         {:ok, messages} <- Conversation.list_messages(conversation_id, before) do
+      conn |> json(Policy.transform(conn, messages))
+    else
+      {:error, :not_found} ->
+        {:error, {:not_found, :conversation_not_found}}
+
+      {:error, {:unauthorized, _}} ->
+        {:error, {:not_found, :conversation_not_found}}
+
+      {:error, :upstream} ->
+        {:error, {:bad_gateway, :upstream}}
+
+      reason ->
+        reason
+    end
   end
 
   def send_message(conn, %{"conversation_id" => conversation_id, "text" => text}) do
@@ -90,6 +107,27 @@ defmodule FlirtualWeb.ConversationController do
 
     with {:ok, _} <- Talkjs.mark_conversations_read(user.id) do
       conn |> json(%{success: true})
+    end
+  end
+
+  def mark_conversation_read(conn, %{"conversation_id" => conversation_id}) do
+    with user <- conn.assigns[:session].user,
+         {:ok, conversation} <- Conversation.get(conversation_id),
+         :ok <- Policy.can(conn, :read, conversation),
+         {:ok, _} <- Talkjs.mark_conversation_read(conversation_id, user.id) do
+      conn |> json(%{success: true})
+    else
+      {:error, :not_found} ->
+        {:error, {:not_found, :conversation_not_found}}
+
+      {:error, {:unauthorized, _}} ->
+        {:error, {:not_found, :conversation_not_found}}
+
+      {:error, :upstream} ->
+        {:error, {:bad_gateway, :upstream}}
+
+      reason ->
+        reason
     end
   end
 
