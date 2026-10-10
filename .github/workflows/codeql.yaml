@@ -70,7 +70,7 @@ jobs:
         uses: pnpm/setup@fbda4c85fc2e1e08721cd8763afea8f48d60f024 # v3.0.0
         if: matrix.platform
         with:
-          runtime: node@24.20.0
+          runtime: node@24.21.0
           cache: true
 
       - name: Sync native project
