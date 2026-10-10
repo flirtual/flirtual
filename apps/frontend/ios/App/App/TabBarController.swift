@@ -564,7 +564,11 @@ private final class ActionBar: UIView {
 
     private func makeButton(_ action: NavigationAction) -> UIButton {
         var configuration: UIButton.Configuration = action.prominent ? .prominentGlass() : .glass()
-        configuration.image = (UIImage(named: action.icon) ?? UIImage(systemName: action.icon))?
+        let icon = UIImage(named: action.icon).map { image in
+            let size = CGSize(width: 34, height: 34)
+            return UIGraphicsImageRenderer(size: size).image { _ in image.draw(in: CGRect(origin: .zero, size: size)) }
+        }
+        configuration.image = (icon ?? UIImage(systemName: action.icon))?
             .withRenderingMode(.alwaysTemplate)
         configuration.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(
             pointSize: action.prominent ? 28 : 22,
