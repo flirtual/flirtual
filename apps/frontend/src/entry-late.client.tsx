@@ -6,6 +6,7 @@ import { HydratedRouter } from "react-router/dom";
 import { setupAnalytics } from "./analytics";
 import { reportAppOutdated } from "./capacitor";
 import { setupMonitoring } from "./monitoring";
+import { clearNativeActions } from "./native-navigation";
 import { preloadAll } from "./query";
 import { isRedirectError } from "./redirect";
 import { initializeSocialLogin } from "./social-login";
@@ -49,6 +50,7 @@ async function openLaunchDeepLink() {
 }
 
 void openLaunchDeepLink();
+clearNativeActions();
 void initializeSocialLogin();
 void preloadAll();
 

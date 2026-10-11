@@ -1,4 +1,4 @@
-import { registerPlugin } from "@capacitor/core";
+import { Capacitor, registerPlugin } from "@capacitor/core";
 import type { PluginListenerHandle } from "@capacitor/core";
 
 export interface NativeNavigationTab {
@@ -82,3 +82,14 @@ export const NativeNavigationPlugin = registerPlugin<{
 		& ((eventName: "layout", listener: (event: Layout) => void) => Promise<PluginListenerHandle>)
 		& ((eventName: "select", listener: (event: { id: string }) => void) => Promise<PluginListenerHandle>);
 }>("NativeNavigation");
+
+// Native views outlive page loads, so pages without them clear them.
+export function clearNativeActions() {
+	if (Capacitor.isPluginAvailable("NativeNavigation")) void NativeNavigationPlugin.actions({ actions: [] }).catch(() => {});
+}
+
+export function hideNativeNavigation() {
+	if (!Capacitor.isPluginAvailable("NativeNavigation")) return;
+	clearNativeActions();
+	void NativeNavigationPlugin.update({ visible: false }).catch(() => {});
+}
