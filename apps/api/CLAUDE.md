@@ -37,6 +37,7 @@ mix gettext.extract --merge    # extract translatable strings
 - **Changesets**: Ecto changesets validate and transform.
 - **Jobs**: Oban workers in `lib/flirtual/oban_workers/`, configured in `config/runtime.exs`.
 - **Sessions**: `FlirtualWeb.Session`. **Errors**: `FlirtualWeb.ErrorHelpers`.
+- **Native clients**: the watchOS app (`apps/frontend/ios/App/Watch/API.swift`) should be updated with any relevant breaking API changes. Unlike the web frontend, watchOS doesn't get API changes until an App Store update.
 
 ## Matchmaking
 
