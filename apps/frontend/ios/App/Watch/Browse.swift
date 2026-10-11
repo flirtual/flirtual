@@ -64,6 +64,14 @@ final class Browse {
         }
     }
 
+    // Reported or blocked profiles leave both queues without a like or pass, as on the web.
+    func remove(_ id: String) async {
+        guard let queue, queue.next.contains(id) else { return }
+        let remaining = Queue(previous: queue.previous, next: queue.next.filter { $0 != id }, limits: queue.limits, pending: queue.pending)
+        show(remaining)
+        await (remaining.next.isEmpty && remaining.pending ? load() : resolve())
+    }
+
     private func show(_ queue: Queue) {
         self.queue = queue
         if queue.next.isEmpty {

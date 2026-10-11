@@ -1135,6 +1135,7 @@
 		"match": "マッチ",
 		"unread": "未読",
 		"send_failed": "メッセージを送信できませんでした。",
-		"reply": "返信"
+		"reply": "返信",
+		"view_profile": "プロフィールを見る"
 	}
 }

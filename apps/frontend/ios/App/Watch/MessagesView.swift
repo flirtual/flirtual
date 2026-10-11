@@ -100,6 +100,10 @@ struct ChatView: View {
     @State private var user: User?
     @State private var failed = false
 
+    private var kind: Mode {
+        Inbox.shared.conversations?.first { $0.id == route.id }?.kind ?? .love
+    }
+
     init(route: ConversationRoute) {
         self.route = route
         _chat = State(initialValue: Chat(conversationId: route.id))
@@ -138,6 +142,18 @@ struct ChatView: View {
                     }
                     .padding(.top, 4)
                     .id("reply")
+
+                    if let user {
+                        NavigationLink {
+                            ProfileView(user: user, mode: kind, clearsBottomBar: false, onReport: {}) {
+                                Router.shared.path.removeAll()
+                                await Inbox.shared.load()
+                            }
+                        } label: {
+                            Label(t("watch.view_profile"), systemImage: "person.crop.circle")
+                        }
+                        .padding(.top, 16)
+                    }
                 }
                 .padding(.horizontal, .margin)
             }

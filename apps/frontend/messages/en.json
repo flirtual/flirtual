@@ -1144,6 +1144,7 @@
 		"match": "Match",
 		"unread": "Unread",
 		"send_failed": "Couldn't send your message.",
-		"reply": "Reply"
+		"reply": "Reply",
+		"view_profile": "View profile"
 	}
 }

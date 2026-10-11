@@ -111,9 +111,26 @@ struct ProfileImage: Decodable, Identifiable, Sendable {
 
 struct AttributeMetadata: Decodable, Identifiable, Sendable {
     let id: String
-    let aliasOf: String?
-    let simple: Bool?
-    let fallback: Bool?
+    var aliasOf: String?
+    var simple: Bool?
+    var fallback: Bool?
+
+    private enum CodingKeys: String, CodingKey {
+        case id, aliasOf, simple, fallback
+    }
+
+    init(from decoder: Decoder) throws {
+        if let id = try? decoder.singleValueContainer().decode(String.self) {
+            self.id = id
+            return
+        }
+
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(String.self, forKey: .id)
+        aliasOf = try container.decodeIfPresent(String.self, forKey: .aliasOf)
+        simple = try container.decodeIfPresent(Bool.self, forKey: .simple)
+        fallback = try container.decodeIfPresent(Bool.self, forKey: .fallback)
+    }
 }
 
 struct QueueLimits: Decodable, Sendable {
@@ -215,6 +232,14 @@ struct API: Sendable {
 
     func markRead(_ conversationId: String) async throws {
         let _: Empty = try await request("conversations/\(conversationId)/unread", method: "DELETE")
+    }
+
+    func report(_ userId: String, reason: String, message: String) async throws {
+        let _: Empty = try await request("reports", method: "POST", body: ["target_id": userId, "reason_id": reason, "message": message])
+    }
+
+    func block(_ userId: String) async throws {
+        let _: Empty = try await request("users/\(userId)/block", method: "POST")
     }
 
     func imageURL(_ image: ProfileImage, variant: String = "profile") -> URL {
