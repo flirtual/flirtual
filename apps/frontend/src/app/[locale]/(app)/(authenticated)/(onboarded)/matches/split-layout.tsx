@@ -12,7 +12,6 @@ import { ConversationAside } from "./aside";
 export const SplitLayout: FC<PropsWithChildren<{ activeConversationId?: string }>> = ({ activeConversationId, children }) => {
 	const split = useBreakpoint("split");
 	const hasConversations = useHasConversations();
-	if (!(split && hasConversations) && !activeConversationId) return children;
 
 	return (
 		<SplitPanes
@@ -23,6 +22,7 @@ export const SplitLayout: FC<PropsWithChildren<{ activeConversationId?: string }
 			)}
 			asideClassName="desktop:w-96"
 			className="web-nav:desktop:grow-0"
+			disabled={!(split && hasConversations) && !activeConversationId}
 			mainClassName="desktop:max-w-[38rem]"
 		>
 			{children}
