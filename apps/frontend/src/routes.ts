@@ -136,7 +136,6 @@ export default [
 	file(".well-known/assetlinks.json"),
 	file(".well-known/apple-app-site-association"),
 	file(".well-known/webauthn"),
-	file(".well-known/apple-developer-merchantid-domain-association"),
 	file("_redirects"),
 	file("_headers"),
 ] satisfies RouteConfig;
