@@ -326,8 +326,8 @@ importers:
         specifier: ^8.0.1
         version: 8.0.1(@capacitor/core@8.5.0)
       '@capawesome-team/capacitor-datetime-picker':
-        specifier: ^8.1.1
-        version: 8.1.1(@capacitor/core@8.5.0)
+        specifier: ^8.2.0
+        version: 8.2.0(@capacitor/core@8.5.0)
       '@capawesome/capacitor-age-signals':
         specifier: ^0.5.0
         version: 0.5.0(@capacitor/core@8.5.0)
@@ -1431,8 +1431,8 @@ packages:
     peerDependencies:
       '@capacitor/core': '>=8.0.0'
 
-  '@capawesome-team/capacitor-datetime-picker@8.1.1':
-    resolution: {integrity: sha512-Fyghonjm9KrC1BuXmKVWCRbY0HkX7wfqgAsZBwKxK64iucDEcTkVGx8qBwcrIsvO5WbYXukSrSLsWO2Hod/YjQ==}
+  '@capawesome-team/capacitor-datetime-picker@8.2.0':
+    resolution: {integrity: sha512-2Y6xup5sRX4PUfrfDF4LZXC3KYjzMQTfm7BqL/Xa9uC1b0QYBcD5zJeoGfoWDNOTHvCnWNdfW1CScEUzHsdaQA==}
     peerDependencies:
       '@capacitor/core': '>=8.0.0'
 
@@ -9923,7 +9923,7 @@ snapshots:
     dependencies:
       '@capacitor/core': 8.5.0
 
-  '@capawesome-team/capacitor-datetime-picker@8.1.1(@capacitor/core@8.5.0)':
+  '@capawesome-team/capacitor-datetime-picker@8.2.0(@capacitor/core@8.5.0)':
     dependencies:
       '@capacitor/core': 8.5.0
 
