@@ -14,7 +14,7 @@ import { urls } from "~/urls";
 import { NavigationalSwitchItem } from "./navigation-item";
 import { NavigationItemMessage } from "./navigation-item-message";
 import { NavigationItemProfile } from "./navigation-item-profile";
-import { NativeNavigation } from "./navigation-native";
+import { GuestNativeNavigation, NativeNavigation } from "./navigation-native";
 
 const NavigationalSwitch: FC<ComponentProps<"div">> = ({
 	children,
@@ -78,9 +78,10 @@ const NavigationContent: FC = () => {
 export function Navigation() {
 	const { nativeNavigation } = useDevice();
 	const session = useOptionalSession();
-
-	if (nativeNavigation && session && !session.user.ban)
-		return <NativeNavigation user={session.user} />;
+	if (nativeNavigation)
+		return session && !session.user.ban
+			? <NativeNavigation user={session.user} />
+			: <GuestNativeNavigation />;
 
 	return (
 		<header className="sticky bottom-0 z-30 order-last flex w-screen flex-col items-center justify-center bg-brand-gradient text-white-20 shadow-brand-1 vision:hidden desktop:bottom-auto desktop:top-0 desktop:order-none">
