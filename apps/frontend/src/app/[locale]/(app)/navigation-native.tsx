@@ -54,6 +54,10 @@ function setTopClearance(topCorners: TopCorners, sideBar: SideBar, corners: Corn
 		else if (barSide === side) style.setProperty(property, `${corner}px`);
 		else if (corner) style.setProperty(property, `calc(var(--content-inset-${side}) + ${corner}px)`);
 		else style.removeProperty(property);
+
+		// Extra room for content that runs up to the curved top corner.
+		if (!statusBar && corner) style.setProperty(`--corner-gap-${side}`, "0.5rem");
+		else style.removeProperty(`--corner-gap-${side}`);
 	}
 }
 

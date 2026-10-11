@@ -238,7 +238,7 @@ export function InputAutocomplete<K extends string>(
 							// touch events that can bypass the scroll lock.
 							dropdown && overlayVisible && desktop && "pointer-events-auto touch-none",
 							fullscreen
-							&& "shrink-0 rounded-none pt-[calc(var(--safe-area-inset-top,0rem)+0.25rem)] focus-within:ring-0 focus-within:ring-offset-0 dark:bg-black-50"
+							&& "shrink-0 rounded-none pl-[calc(var(--screen-top-clearance-left,var(--safe-area-inset-left,0rem))+var(--corner-gap-left,0rem)+0.375rem)] pr-[calc(var(--screen-top-clearance-right,var(--safe-area-inset-right,0rem))+var(--corner-gap-right,0rem)+0.375rem)] pt-[calc(var(--safe-area-inset-top,0rem)+0.25rem)] focus-within:ring-0 focus-within:ring-offset-0 dark:bg-black-50"
 						)}
 						ref={anchorReference}
 						// Keep focus in the input: the keyboard stays up, and focus never
@@ -427,7 +427,7 @@ export function InputAutocomplete<K extends string>(
 						</DismissableLayer>
 					</PopoverContent>
 				</Popover>
-				{fullscreen && optionWindow}
+				{fullscreen && <div className="relative flex min-h-0 flex-1 flex-col pb-[var(--safe-area-inset-bottom,0rem)] pl-[var(--safe-area-inset-left,0rem)] pr-[var(--safe-area-inset-right,0rem)]">{optionWindow}</div>}
 			</div>
 		</div>
 	);

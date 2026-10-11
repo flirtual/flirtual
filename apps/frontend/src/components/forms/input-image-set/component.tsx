@@ -554,7 +554,7 @@ const ArrangeableImageDialog: React.FC<{
 
 	return (
 		<Dialog open onOpenChange={onOpenChange}>
-			<DialogContent className="pointer-events-none w-fit max-w-[95svw] overflow-hidden p-0 desktop:max-w-[95svw]">
+			<DialogContent className="pointer-events-none w-fit overflow-hidden p-0 desktop:max-w-[calc(95svw-var(--safe-area-inset-left,0rem)-var(--safe-area-inset-right,0rem))]">
 				<UserImage
 					alt={t("profile_picture")}
 					blurHash={image.blurHash}

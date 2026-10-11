@@ -159,7 +159,7 @@ function SelectContent({ ref: reference, ...props }: { ref?: React.Ref<React.Com
 			>
 				{fullscreen && (
 					<>
-						<div className="flex shrink-0 items-center gap-1 bg-white-40 px-1.5 py-1 pt-[calc(var(--safe-area-inset-top,0rem)+0.25rem)] text-black-70 shadow-brand-1 vision:bg-white-40/70 dark:bg-black-50 dark:text-white-20">
+						<div className="flex shrink-0 items-center gap-1 bg-white-40 py-1 pl-[calc(var(--screen-top-clearance-left,var(--safe-area-inset-left,0rem))+var(--corner-gap-left,0rem)+0.375rem)] pr-[calc(var(--screen-top-clearance-right,var(--safe-area-inset-right,0rem))+var(--corner-gap-right,0rem)+0.375rem)] pt-[calc(var(--safe-area-inset-top,0rem)+0.25rem)] text-black-70 shadow-brand-1 vision:bg-white-40/70 dark:bg-black-50 dark:text-white-20">
 							<button
 								aria-label={t("back")}
 								className="-ml-0.5 flex shrink-0 items-center self-stretch px-1"
@@ -176,7 +176,7 @@ function SelectContent({ ref: reference, ...props }: { ref?: React.Ref<React.Com
 						<div className="h-0.5 shrink-0 bg-brand-gradient" />
 					</>
 				)}
-				<div className="relative flex min-h-0 flex-1 flex-col">
+				<div className={twMerge("relative flex min-h-0 flex-1 flex-col", fullscreen && "pb-[var(--safe-area-inset-bottom,0rem)] pl-[var(--safe-area-inset-left,0rem)] pr-[var(--safe-area-inset-right,0rem)]")}>
 					<SelectScrollUpButton />
 					<SelectPrimitive.Viewport
 						style={{
