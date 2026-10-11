@@ -61,6 +61,7 @@ function patchPosthogLogger() {
 
 // eslint-disable-next-line react-refresh/only-export-components
 export async function setupAnalytics() {
+	if (!posthogKey) return;
 	patchPosthogLogger();
 
 	// Wait for session (and analytical preferences) to be available.
