@@ -51,11 +51,13 @@
 		5FBD1C300913B7F963096727 /* FlirtualApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95E749C94A3BB9B3F0EFC9E7 /* FlirtualApp.swift */; };
 		6295F7CEB2951BCFDA4031D6 /* MessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D90D76A172D628A8AD20D9A /* MessagesView.swift */; };
 		6307C2A1188B15A0462E111F /* messages in Resources */ = {isa = PBXBuildFile; fileRef = 1525C16BC241D3963F1B07B9 /* messages */; };
+		662EC3CF382E820523C8D7D6 /* libwebp in Frameworks */ = {isa = PBXBuildFile; productRef = 90B1A32E7BAD5445F13B537E /* libwebp */; };
 		69554D378E05F9822264AE79 /* WatchSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47A99B0670C014DC30D2B5C /* WatchSession.swift */; };
 		69CF3E410146318E8115ED98 /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1BD4F20286164CFEB1AFF9 /* Users.swift */; };
 		6B13F90BFD3D4F5FF1EEC026 /* BrowseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EA95AF713E26EDAD869C7D /* BrowseView.swift */; };
 		712FDA1FA5B212B716509D5A /* Pods_Flirtual.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA9733435BC1F064FD4CE607 /* Pods_Flirtual.framework */; };
 		7181AA928C9ECA925B3CB584 /* Pods_Flirtual.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA9733435BC1F064FD4CE607 /* Pods_Flirtual.framework */; };
+		83D2EEDA7EF8890D79A3B253 /* libwebp in Frameworks */ = {isa = PBXBuildFile; productRef = 9DEE9583DA3A47009E71556D /* libwebp */; };
 		86EFE4EDF8C28747052DAAD5 /* Inbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8463BA8005F4E6E2B764AD47 /* Inbox.swift */; };
 		88A284387B7BA80B4243E3B4 /* BrowseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EA95AF713E26EDAD869C7D /* BrowseView.swift */; };
 		98F4F2639F5D6569BF2D44B3 /* Inbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8463BA8005F4E6E2B764AD47 /* Inbox.swift */; };
@@ -192,6 +194,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				662EC3CF382E820523C8D7D6 /* libwebp in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -199,6 +202,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83D2EEDA7EF8890D79A3B253 /* libwebp in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -371,6 +375,9 @@
 			dependencies = (
 			);
 			name = "Flirtual Watch";
+			packageProductDependencies = (
+				90B1A32E7BAD5445F13B537E /* libwebp */,
+			);
 			productName = "Flirtual Watch";
 			productReference = 7B106A6C5A875A6B1136E84B /* Flirtual Watch.app */;
 			productType = "com.apple.product-type.application";
@@ -388,6 +395,9 @@
 			dependencies = (
 			);
 			name = "Flirtual Beta Watch";
+			packageProductDependencies = (
+				9DEE9583DA3A47009E71556D /* libwebp */,
+			);
 			productName = "Flirtual Beta Watch";
 			productReference = 6EA75B3F555A36D5878ADFAB /* Flirtual Beta Watch.app */;
 			productType = "com.apple.product-type.application";
@@ -420,6 +430,9 @@
 				Base,
 			);
 			mainGroup = 504EC2FB1FED79650016851F;
+			packageReferences = (
+				4D0FA6E0264A16B4EBD45E91 /* XCRemoteSwiftPackageReference "libwebp-Xcode" */,
+			);
 			productRefGroup = 504EC3051FED79650016851F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -1036,6 +1049,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		4D0FA6E0264A16B4EBD45E91 /* XCRemoteSwiftPackageReference "libwebp-Xcode" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/libwebp-Xcode.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.6.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		90B1A32E7BAD5445F13B537E /* libwebp */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4D0FA6E0264A16B4EBD45E91 /* XCRemoteSwiftPackageReference "libwebp-Xcode" */;
+			productName = libwebp;
+		};
+		9DEE9583DA3A47009E71556D /* libwebp */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4D0FA6E0264A16B4EBD45E91 /* XCRemoteSwiftPackageReference "libwebp-Xcode" */;
+			productName = libwebp;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 504EC2FC1FED79650016851F /* Project object */;
 }

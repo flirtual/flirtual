@@ -1,7 +1,31 @@
 import * as pulumi from "@pulumi/pulumi";
 
-// No `beforeDelete`: a delete hook makes every `pulumi destroy` need --run-program.
-export function tunnel(name: string, app: string, ports: { local: number; remote: number }) {
+// Whether what's behind the tunnel answers on the local port yet.
+export type Ready = (port: number) => Promise<boolean>;
+
+const listening: Ready = async (port) => {
+	const { createConnection } = await import("node:net");
+
+	return new Promise((resolve) => {
+		const socket = createConnection({ host: "127.0.0.1", port }, () => {
+			socket.end();
+			resolve(true);
+		});
+
+		socket.on("error", () => resolve(false));
+		socket.setTimeout(1000, () => {
+			socket.destroy();
+			resolve(false);
+		});
+	});
+};
+
+export function tunnel(
+	name: string,
+	app: string,
+	ports: { local: number; remote: number },
+	ready: Ready = listening,
+) {
 	const { local, remote } = ports;
 
 	const state: { opening?: Promise<void> } = {};
@@ -9,37 +33,27 @@ export function tunnel(name: string, app: string, ports: { local: number; remote
 	const connect = async () => {
 		state.opening ??= (async () => {
 			const { execa } = await import("execa");
-			const { createConnection } = await import("node:net");
 
-			const subprocess = execa("fly", ["proxy", `${local}:${remote}`, "--app", app], {
-				stdio: "ignore",
-				cleanup: true,
-			});
+			// `.internal` lists only running machines; Flycast starts a stopped one.
+			const subprocess = execa(
+				"fly",
+				["proxy", `${local}:${remote}`, `${app}.flycast`, "--app", app],
+				{
+					stdio: "ignore",
+					cleanup: true,
+				},
+			);
 
 			subprocess.catch(() => {});
 
 			// Without this the child holds the event loop open and the operation never ends.
 			subprocess.nodeChildProcess.unref();
 
-			const reachable = () =>
-				new Promise<boolean>((resolve) => {
-					const socket = createConnection({ host: "127.0.0.1", port: local }, () => {
-						socket.end();
-						resolve(true);
-					});
-
-					socket.on("error", () => resolve(false));
-					socket.setTimeout(1000, () => {
-						socket.destroy();
-						resolve(false);
-					});
-				});
-
-			const deadline = Date.now() + 30_000;
+			const deadline = Date.now() + 120_000;
 
 			const wait = async (): Promise<void> => {
-				if (await reachable()) return;
-				if (Date.now() > deadline) throw new Error(`No tunnel to "${app}" after 30s.`);
+				if (await ready(local)) return;
+				if (Date.now() > deadline) throw new Error(`No tunnel to "${app}" after 2 minutes.`);
 
 				await new Promise((resolve) => setTimeout(resolve, 500));
 				return wait();
@@ -57,5 +71,6 @@ export function tunnel(name: string, app: string, ports: { local: number; remote
 	return {
 		beforeCreate: [new pulumi.ResourceHook(`${name}-tunnel-create`, connect)],
 		beforeUpdate: [new pulumi.ResourceHook(`${name}-tunnel`, connect, { onDryRun: true })],
+		beforeDelete: [new pulumi.ResourceHook(`${name}-tunnel-delete`, connect)],
 	};
 }

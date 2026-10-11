@@ -37,27 +37,35 @@ export async function processImage(key: string): Promise<void> {
 		: body;
 
 	const streams = fork(source, imageVariants.length + 1);
+	const written: Array<string> = [];
 
-	const [blurhash] = await Promise.all([
-		computeBlurhash(streams[0]),
-		Promise.all(imageVariants.map(async ({ name, ...transform }, index) => {
-			console.log(`↓ ${name}`);
+	try {
+		const [blurhash] = await Promise.all([
+			computeBlurhash(streams[0]),
+			Promise.all(imageVariants.map(async ({ name, ...transform }, index) => {
+				console.log(`↓ ${name}`);
 
-			const destinationKey = `${name === "blur" ? blurId : externalId}/${name}`;
+				const destinationKey = `${name === "blur" ? blurId : externalId}/${name}`;
 
-			const result = await env.IMAGES
-				.input(streams[index + 1])
-				.transform(transform)
-				.output({ format: "image/webp", quality: 90 });
+				const result = await env.IMAGES
+					.input(streams[index + 1])
+					.transform(transform)
+					.output({ format: "image/webp", quality: 90 });
 
-			await env.DESTINATION_BUCKET.put(destinationKey, result.image(), {
-				httpMetadata: {
-					contentType: result.contentType(),
-					cacheControl: "public, max-age=31536000, immutable"
-				}
-			});
-		}))
-	]);
+				await env.DESTINATION_BUCKET.put(destinationKey, result.image(), {
+					httpMetadata: {
+						contentType: result.contentType(),
+						cacheControl: "public, max-age=31536000, immutable"
+					}
+				});
+				written.push(destinationKey);
+			}))
+		]);
 
-	await updateVariants({ originalFile: key, externalId, blurId, blurhash });
+		await updateVariants({ originalFile: key, externalId, blurId, blurhash });
+	}
+	catch (reason) {
+		await env.DESTINATION_BUCKET.delete(written);
+		throw reason;
+	}
 }
