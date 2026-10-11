@@ -39,7 +39,7 @@ include ':capacitor-toast'
 project(':capacitor-toast').projectDir = new File('../../../node_modules/.pnpm/@capacitor+toast@8.0.1_@capacitor+core@8.5.0/node_modules/@capacitor/toast/android')
 
 include ':capawesome-team-capacitor-datetime-picker'
-project(':capawesome-team-capacitor-datetime-picker').projectDir = new File('../../../node_modules/.pnpm/@capawesome-team+capacitor-datetime-picker@8.1.1_@capacitor+core@8.5.0/node_modules/@capawesome-team/capacitor-datetime-picker/android')
+project(':capawesome-team-capacitor-datetime-picker').projectDir = new File('../../../node_modules/.pnpm/@capawesome-team+capacitor-datetime-picker@8.2.0_@capacitor+core@8.5.0/node_modules/@capawesome-team/capacitor-datetime-picker/android')
 
 include ':capawesome-capacitor-age-signals'
 project(':capawesome-capacitor-age-signals').projectDir = new File('../../../node_modules/.pnpm/@capawesome+capacitor-age-signals@0.5.0_@capacitor+core@8.5.0/node_modules/@capawesome/capacitor-age-signals/android')

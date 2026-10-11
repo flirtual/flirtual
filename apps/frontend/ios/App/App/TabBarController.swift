@@ -27,6 +27,8 @@ final class TabBarController: UITabBarController, UITabBarControllerDelegate {
     // Whether the page asked for the tab bar. isTabBarHidden can't say, since the bar is briefly
     // hidden and shown again to refresh it after new tabs.
     fileprivate private(set) var showsTabBar = false
+    // Whether a page without the tab bar keeps its own content clear of the sides.
+    fileprivate private(set) var edgeToEdge = false
     private var topCorners: [String: Double] = [:]
     private var fold: [String: Double] = [:]
     private var sideBar: [String: Double] = [:]
@@ -72,7 +74,7 @@ final class TabBarController: UITabBarController, UITabBarControllerDelegate {
         }]
     }
 
-    func update(visible: Bool, tabs newItems: [NavigationTab]?, badges: [String: String], selected: String?, tint: UIColor?) {
+    func update(visible: Bool, tabs newItems: [NavigationTab]?, badges: [String: String], selected: String?, tint: UIColor?, edgeToEdge: Bool = false) {
         if let tint {
             view.tintColor = tint
         }
@@ -106,6 +108,10 @@ final class TabBarController: UITabBarController, UITabBarControllerDelegate {
             selectedTab = tab
         }
 
+        if edgeToEdge != self.edgeToEdge {
+            self.edgeToEdge = edgeToEdge
+            selectedViewController?.view.setNeedsLayout()
+        }
         setVisible(visible && !items.isEmpty)
     }
 
@@ -491,12 +497,13 @@ private final class TabContentViewController: UIViewController {
 
     // While the tab bar shows, the page spans the full width and keeps its own content clear of
     // whatever sits on the sides (iPhone Duo's vertical bars), so headers and images can run
-    // beneath them. Pages without it aren't built for that, so they're kept clear here, with the
-    // page's own background beneath. The top always stays edge to edge.
+    // beneath them. Pages without it are kept clear here, with the page's own background beneath,
+    // unless they ask to be edge to edge. The top always stays edge to edge.
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
 
-        let insets = (tabBarController as? TabBarController)?.showsTabBar == true ? .zero : view.safeAreaInsets
+        let controller = tabBarController as? TabBarController
+        let insets = controller?.showsTabBar == true || controller?.edgeToEdge == true ? .zero : view.safeAreaInsets
         leading?.constant = insets.left
         trailing?.constant = insets.right
     }

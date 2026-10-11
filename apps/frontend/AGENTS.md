@@ -1,6 +1,6 @@
 # Flirtual Frontend
 
-Part of the Flirtual monorepo; see the [root CLAUDE.md](../../CLAUDE.md) for the overview, data
+Part of the Flirtual monorepo; see the [root AGENTS.md](../../AGENTS.md) for the overview, data
 flow, environment setup, and image pipeline.
 
 ## Stack
@@ -11,6 +11,7 @@ flow, environment setup, and image pipeline.
 - **API client**: wretch, auto snake_case (api) ↔ camelCase (frontend)
 - **i18n**: i18next (ICU), Weblate
 - **Mobile**: Capacitor (iOS/Android); plain webview for visionOS
+- **watchOS**: native SwiftUI app in `ios/App/Watch/`, embedded in the iOS app. `App/WatchSession.swift` sends the web view's API cookies to it over WatchConnectivity.
 - **Routes**: file-based under `src/app/[locale]/`: `(public)/` landing; `(app)/(minimal)/` auth/onboarding; `(app)/(public)/` other unauthenticated; `(app)/(authenticated)/` main app; `.../(onboarded)/` profiles/matchmaking/messaging; `.../(moderator)/`, `(admin)/`, `(debugger)/` privileged.
 
 ## Commands
@@ -64,6 +65,8 @@ Tailwind with custom classes and variants.
 ### Translations (i18next)
 
 All user-facing text goes through i18next; add ICU keys to `messages/en.json` and `messages/ja.json`.
+
+The watch app bundles `messages/` and reads it at runtime: its own strings live under `watch`, but it also reuses top-level keys and attribute names. Grep `ios/App/Watch/` before renaming or removing a key. Its `t()` only fills `{name}` placeholders and empty `<name/>` tags, so strings it uses can't rely on ICU plurals or `select`.
 
 ```tsx
 const { t } = useTranslation();

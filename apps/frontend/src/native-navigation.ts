@@ -1,4 +1,4 @@
-import { registerPlugin } from "@capacitor/core";
+import { Capacitor, registerPlugin } from "@capacitor/core";
 import type { PluginListenerHandle } from "@capacitor/core";
 
 export interface NativeNavigationTab {
@@ -71,7 +71,8 @@ export interface NativeNavigationFrame {
 }
 
 export const NativeNavigationPlugin = registerPlugin<{
-	update: (options: { visible: boolean; selected?: string; tabs?: Array<NativeNavigationTab>; tint?: string }) => Promise<Layout>;
+	// Without the tab bar, the page is inset from the sides unless it's `edgeToEdge`, which older builds ignore.
+	update: (options: { visible: boolean; selected?: string; tabs?: Array<NativeNavigationTab>; tint?: string; edgeToEdge?: boolean }) => Promise<Layout>;
 	// Builds from before this have no such method.
 	actions: (options: { actions: Array<NativeNavigationAction>; frame?: NativeNavigationFrame; interactive?: boolean }) => Promise<void>;
 	// An SF Symbol, tinted with a hex colour; the duration is in milliseconds.
@@ -82,3 +83,14 @@ export const NativeNavigationPlugin = registerPlugin<{
 		& ((eventName: "layout", listener: (event: Layout) => void) => Promise<PluginListenerHandle>)
 		& ((eventName: "select", listener: (event: { id: string }) => void) => Promise<PluginListenerHandle>);
 }>("NativeNavigation");
+
+// Native views outlive page loads, so pages without them clear them.
+export function clearNativeActions() {
+	if (Capacitor.isPluginAvailable("NativeNavigation")) void NativeNavigationPlugin.actions({ actions: [] }).catch(() => {});
+}
+
+export function hideNativeNavigation({ edgeToEdge = false } = {}) {
+	if (!Capacitor.isPluginAvailable("NativeNavigation")) return;
+	clearNativeActions();
+	void NativeNavigationPlugin.update({ visible: false, edgeToEdge }).catch(() => {});
+}

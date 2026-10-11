@@ -98,6 +98,8 @@ body[data-native-navigation] {
   --content-inset-right: var(--safe-area-inset-right, 0px);
   --top-clearance-left: var(--content-inset-left);
   --top-clearance-right: var(--content-inset-right);
+  --screen-top-clearance-left: var(--top-clearance-left);
+  --screen-top-clearance-right: var(--top-clearance-right);
 }
 
 body[data-theme-style="friend"] {

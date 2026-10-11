@@ -287,19 +287,19 @@ export const LoginForm: FC = () => {
 							</FormField>
 							<Captcha />
 							<div className="flex flex-col gap-4">
-								<div className="flex gap-2 desktop:flex-row-reverse">
+								<div className="flex flex-row-reverse gap-2">
 									<FormButton className="min-w-44" size="sm" tabIndex={4}>
 										{t("log_in")}
 									</FormButton>
 									<ButtonLink
-										className="flex w-fit flex-row gap-2 opacity-75 desktop:flex-row-reverse"
+										className="flex w-fit flex-row-reverse gap-2 opacity-75"
 										href={urls.register}
 										kind="tertiary"
 										size="sm"
 										tabIndex={5}
 									>
 										<span>{t("or_sign_up")}</span>
-										<MoveRight className="size-5 desktop:rotate-180" />
+										<MoveRight className="size-5 rotate-180" />
 									</ButtonLink>
 								</div>
 								<FormInputMessages

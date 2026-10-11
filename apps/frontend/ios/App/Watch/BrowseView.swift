@@ -82,7 +82,8 @@ struct BrowseView: View {
                 Task { await browse.load() }
             }
         case let .ready(user):
-            ProfileView(user: user, mode: mode)
+            let remove = { for store in stores.values { await store.remove(user.id) } }
+            ProfileView(user: user, mode: mode, onReport: remove, onBlock: remove)
                 .id(user.id)
         }
     }
@@ -91,6 +92,9 @@ struct BrowseView: View {
 struct ProfileView: View {
     let user: User
     let mode: Mode
+    var clearsBottomBar = true
+    let onReport: () async -> Void
+    let onBlock: () async -> Void
 
     var body: some View {
         ScrollView {
@@ -127,9 +131,12 @@ struct ProfileView: View {
                             }
                         }
                     }
+
+                    SafetyButtons(user: user, onReport: onReport, onBlock: onBlock)
+                        .padding(.top, 8)
                 }
                 .padding(.horizontal, .margin)
-                .padding(.bottom, .buttonClearance + 16)
+                .padding(.bottom, (clearsBottomBar ? .buttonClearance : 0) + 16)
             }
         }
         .contentMargins(.horizontal, 0, for: .scrollContent)

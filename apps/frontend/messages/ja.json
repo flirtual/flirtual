@@ -570,6 +570,7 @@
 	"browse": "閲覧",
 	"dates": "デート",
 	"homies": "ホーミー",
+	"home": "ホーム",
 	"likes_you": "あなたをいいねした人",
 	"matches": "マッチ",
 	"more_details": "詳細情報",
@@ -1135,6 +1136,7 @@
 		"match": "マッチ",
 		"unread": "未読",
 		"send_failed": "メッセージを送信できませんでした。",
-		"reply": "返信"
+		"reply": "返信",
+		"view_profile": "プロフィールを見る"
 	}
 }

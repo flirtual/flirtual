@@ -25,7 +25,9 @@ export function useNativeActions(
 		if (!element || supported === false) return;
 
 		let sent = "";
+		let stopped = false;
 		const send = () => {
+			if (stopped) return;
 			const { x, y, width, height } = element.getBoundingClientRect();
 			const frame = { x, y, width, height };
 			// Native views draw over the page, so they hide under overlays and tab bar tour steps.
@@ -74,6 +76,8 @@ export function useNativeActions(
 		opened.observe(document.documentElement, { attributeFilter: ["data-tour", "data-tour-navigation"] });
 
 		return () => {
+			// The layout listener is removed asynchronously and can still fire.
+			stopped = true;
 			cancelAnimationFrame(frame);
 			observer.disconnect();
 			opened.disconnect();

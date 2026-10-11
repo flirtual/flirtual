@@ -336,7 +336,7 @@
 	"active_recently": "Active recently",
 	"block": "Block",
 	"block_name": "Block {name}?",
-	"barbarous_hypnotic_thank_book": "This will prevent you from seeing each other's profiles and messaging each other. This action is permanent cannot be undone later.",
+	"barbarous_hypnotic_thank_book": "This will prevent you from seeing each other's profiles and messaging each other. This action is permanent and cannot be undone later.",
 	"cancel": "Cancel",
 	"blocked_name": "Blocked {name}",
 	"day_front_cat_cry": "Thanks for keeping Flirtual safe! We'll review your report as soon as possible.",
@@ -570,6 +570,7 @@
 	"browse": "Browse",
 	"dates": "Dates",
 	"homies": "Homies",
+	"home": "Home",
 	"likes_you": "Likes you",
 	"matches": "Matches",
 	"more_details": "More details",
@@ -1144,6 +1145,7 @@
 		"match": "Match",
 		"unread": "Unread",
 		"send_failed": "Couldn't send your message.",
-		"reply": "Reply"
+		"reply": "Reply",
+		"view_profile": "View profile"
 	}
 }

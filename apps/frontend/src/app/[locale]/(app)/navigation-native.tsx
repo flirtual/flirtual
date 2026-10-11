@@ -10,7 +10,7 @@ import { useHasConversations } from "~/hooks/use-conversations";
 import { useUnreadConversations } from "~/hooks/use-talkjs";
 import { replaceLanguage, useLocale, useMatch, useNavigate } from "~/i18n";
 import { NativeNavigationPlugin } from "~/native-navigation";
-import type { Corners, Fold, Layout, SideBar, TopCorners } from "~/native-navigation";
+import type { Corners, Fold, Layout, NativeNavigationTab, SideBar, TopCorners } from "~/native-navigation";
 import { urls } from "~/urls";
 
 // Where a corner status bar ends. When it fits in the top safe area, headers move up level with
@@ -54,6 +54,10 @@ function setTopClearance(topCorners: TopCorners, sideBar: SideBar, corners: Corn
 		else if (barSide === side) style.setProperty(property, `${corner}px`);
 		else if (corner) style.setProperty(property, `calc(var(--content-inset-${side}) + ${corner}px)`);
 		else style.removeProperty(property);
+
+		// Extra room for content that runs up to the curved top corner.
+		if (!statusBar && corner) style.setProperty(`--corner-gap-${side}`, "0.5rem");
+		else style.removeProperty(`--corner-gap-${side}`);
 	}
 }
 
@@ -84,39 +88,12 @@ function setLayout({ topCorners, fold, sideBar, bottomBar, corners }: Layout) {
 	}
 }
 
-export const NativeNavigation: FC<{ user: User }> = ({ user }) => {
-	const { t } = useTranslation();
-	const [locale] = useLocale();
+interface Tab extends NativeNavigationTab {
+	href: string;
+}
+
+const NativeTabs: FC<{ tabs: Array<Tab>; selected?: string }> = ({ tabs, selected }) => {
 	const navigate = useNavigate();
-	const isDesktop = useBreakpoint("desktop");
-	// Wide screens keep the match list beside the queue, once there are matches.
-	const wide = useBreakpoint("split");
-	const hasConversations = useHasConversations();
-	const split = wide && hasConversations;
-
-	const { unreadConversations } = useUnreadConversations();
-	const conversationCount = clamp(unreadConversations.length, { min: 0, max: 99 });
-	const badge = conversationCount === 0
-		? undefined
-		: new Intl.NumberFormat(locale).format(conversationCount);
-
-	const tabs = useMemo(() => [
-		{ id: "dates", title: t("dates"), icon: "heart", href: urls.discover("dates") },
-		{ id: "homies", title: t("homies"), icon: "peace", href: urls.discover("homies") },
-		{ id: "matches", title: t("matches"), icon: "bubble.fill", href: urls.conversations.list(), badge },
-		{ id: "settings", title: t("settings"), icon: "gearshape.fill", href: isDesktop ? urls.settings.matchmaking() : urls.settings.list() },
-		{ id: "profile", title: t("profile"), icon: "person.crop.circle.fill", href: urls.profile(user.slug) }
-	].filter(({ id }) => !split || id !== "matches"), [t, badge, user.slug, isDesktop, split]);
-
-	const active: Record<string, boolean> = {
-		dates: !!useMatch({ path: urls.discover("dates") }),
-		homies: !!useMatch({ path: urls.discover("homies") }),
-		matches: !!useMatch({ path: urls.conversations.list(), end: false }),
-		profile: !!useMatch({ path: urls.profile(user.slug) }),
-		settings: !!useMatch({ path: urls.settings.list(), end: false })
-	};
-	const selected = tabs.find(({ id }) => active[id])?.id;
-
 	const location = useLocation();
 
 	useEffect(() => {
@@ -170,4 +147,48 @@ export const NativeNavigation: FC<{ user: User }> = ({ user }) => {
 	return (
 		<div className="order-last h-[var(--safe-area-inset-bottom,0rem)] shrink-0 split:hidden desktop:order-none desktop:block desktop:h-[var(--safe-area-inset-top,0rem)] [[data-banner]~&]:desktop:hidden" />
 	);
+};
+
+export const NativeNavigation: FC<{ user: User }> = ({ user }) => {
+	const { t } = useTranslation();
+	const [locale] = useLocale();
+	const isDesktop = useBreakpoint("desktop");
+	const wide = useBreakpoint("split");
+	const hasConversations = useHasConversations();
+	const split = wide && hasConversations;
+
+	const { unreadConversations } = useUnreadConversations();
+	const conversationCount = clamp(unreadConversations.length, { min: 0, max: 99 });
+	const badge = conversationCount === 0
+		? undefined
+		: new Intl.NumberFormat(locale).format(conversationCount);
+
+	const tabs = useMemo(() => [
+		{ id: "dates", title: t("dates"), icon: "heart", href: urls.discover("dates") },
+		{ id: "homies", title: t("homies"), icon: "peace", href: urls.discover("homies") },
+		{ id: "matches", title: t("matches"), icon: "bubble.fill", href: urls.conversations.list(), badge },
+		{ id: "settings", title: t("settings"), icon: "gearshape.fill", href: isDesktop ? urls.settings.matchmaking() : urls.settings.list() },
+		{ id: "profile", title: t("profile"), icon: "person.crop.circle.fill", href: urls.profile(user.slug) }
+	].filter(({ id }) => !split || id !== "matches"), [t, badge, user.slug, isDesktop, split]);
+
+	const active: Record<string, boolean> = {
+		dates: !!useMatch({ path: urls.discover("dates") }),
+		homies: !!useMatch({ path: urls.discover("homies") }),
+		matches: !!useMatch({ path: urls.conversations.list(), end: false }),
+		profile: !!useMatch({ path: urls.profile(user.slug) }),
+		settings: !!useMatch({ path: urls.settings.list(), end: false })
+	};
+
+	return <NativeTabs selected={tabs.find(({ id }) => active[id])?.id} tabs={tabs} />;
+};
+
+export const GuestNativeNavigation: FC = () => {
+	const { t } = useTranslation();
+
+	const tabs = useMemo(() => [
+		{ id: "home", title: t("home"), icon: "house.fill", href: urls.landing },
+		{ id: "login", title: t("log_in"), icon: "person.crop.circle.fill", href: urls.login() }
+	], [t]);
+
+	return <NativeTabs tabs={tabs} />;
 };

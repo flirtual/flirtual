@@ -46,7 +46,7 @@ PODS:
     - Capacitor
   - CapawesomeCapacitorAppUpdate (8.0.3):
     - Capacitor
-  - CapawesomeTeamCapacitorDatetimePicker (8.1.1):
+  - CapawesomeTeamCapacitorDatetimePicker (8.2.0):
     - Capacitor
   - CapgoCapacitorInappbrowser (8.12.3):
     - Capacitor
@@ -102,7 +102,7 @@ DEPENDENCIES:
   - "CapacitorToast (from `../../../../node_modules/.pnpm/@capacitor+toast@8.0.1_@capacitor+core@8.5.0/node_modules/@capacitor/toast`)"
   - "CapawesomeCapacitorAgeSignals (from `../../../../node_modules/.pnpm/@capawesome+capacitor-age-signals@0.5.0_@capacitor+core@8.5.0/node_modules/@capawesome/capacitor-age-signals`)"
   - "CapawesomeCapacitorAppUpdate (from `../../../../node_modules/.pnpm/@capawesome+capacitor-app-update@8.0.3_@capacitor+core@8.5.0/node_modules/@capawesome/capacitor-app-update`)"
-  - "CapawesomeTeamCapacitorDatetimePicker (from `../../../../node_modules/.pnpm/@capawesome-team+capacitor-datetime-picker@8.1.1_@capacitor+core@8.5.0/node_modules/@capawesome-team/capacitor-datetime-picker`)"
+  - "CapawesomeTeamCapacitorDatetimePicker (from `../../../../node_modules/.pnpm/@capawesome-team+capacitor-datetime-picker@8.2.0_@capacitor+core@8.5.0/node_modules/@capawesome-team/capacitor-datetime-picker`)"
   - "CapgoCapacitorInappbrowser (from `../../../../node_modules/.pnpm/@capgo+capacitor-inappbrowser@8.12.3_@capacitor+core@8.5.0/node_modules/@capgo/capacitor-inappbrowser`)"
   - "CapgoCapacitorSocialLogin (from `../../../../node_modules/.pnpm/@capgo+capacitor-social-login@8.4.1_@capacitor+core@8.5.0/node_modules/@capgo/capacitor-social-login`)"
   - "RevenuecatPurchasesCapacitor (from `../../../../node_modules/.pnpm/@revenuecat+purchases-capacitor@13.2.3_@capacitor+core@8.5.0/node_modules/@revenuecat/purchases-capacitor`)"
@@ -159,7 +159,7 @@ EXTERNAL SOURCES:
   CapawesomeCapacitorAppUpdate:
     :path: "../../../../node_modules/.pnpm/@capawesome+capacitor-app-update@8.0.3_@capacitor+core@8.5.0/node_modules/@capawesome/capacitor-app-update"
   CapawesomeTeamCapacitorDatetimePicker:
-    :path: "../../../../node_modules/.pnpm/@capawesome-team+capacitor-datetime-picker@8.1.1_@capacitor+core@8.5.0/node_modules/@capawesome-team/capacitor-datetime-picker"
+    :path: "../../../../node_modules/.pnpm/@capawesome-team+capacitor-datetime-picker@8.2.0_@capacitor+core@8.5.0/node_modules/@capawesome-team/capacitor-datetime-picker"
   CapgoCapacitorInappbrowser:
     :path: "../../../../node_modules/.pnpm/@capgo+capacitor-inappbrowser@8.12.3_@capacitor+core@8.5.0/node_modules/@capgo/capacitor-inappbrowser"
   CapgoCapacitorSocialLogin:
@@ -188,7 +188,7 @@ SPEC CHECKSUMS:
   CapacitorToast: 408036fbd702120d3adde3980b740f3c0fb60c9e
   CapawesomeCapacitorAgeSignals: e4eed710de950609b93f009a5be68e9b9af978eb
   CapawesomeCapacitorAppUpdate: 3a7537c6a6696837b51d06f26b2e909fd7b9226f
-  CapawesomeTeamCapacitorDatetimePicker: 7248569efbab419c8791d5e6f4656548d2f99d28
+  CapawesomeTeamCapacitorDatetimePicker: e0ec746bbc0350e3c04176031943e3376b7f703c
   CapgoCapacitorInappbrowser: ee6293211c1c7ba0098dc6bee29a506a40898831
   CapgoCapacitorSocialLogin: 52458fad5e1a4e993437f6ffe683fca636026729
   GoogleSignIn: c7f09cfbc85a1abf69187be091997c317cc33b77
@@ -203,6 +203,6 @@ SPEC CHECKSUMS:
   RevenueCat: 72d1e14966339bf38c41d9b2841ef64c8fd79646
   RevenuecatPurchasesCapacitor: 691a18ebcfed0100a041e4cba91ba9ae8787b1a7
 
-PODFILE CHECKSUM: 48d9a65127086b339c61f240a6ed70a8e29fdba4
+PODFILE CHECKSUM: 4d7b2389685adabb953442ac5205cfd8a716327e
 
-COCOAPODS: 1.16.2
+COCOAPODS: 1.17.0

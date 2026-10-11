@@ -11,7 +11,7 @@ export function AvatarProfiles({ id }: TileProps) {
 	const { t } = useTranslation();
 
 	return (
-		<Tile id={id} className="content-center px-4 pt-8 desktop:px-28">
+		<Tile id={id} className="content-center pl-[calc(1rem+var(--safe-area-inset-left,0rem))] pr-[calc(1rem+var(--safe-area-inset-right,0rem))] pt-8 desktop:px-28">
 			<div className="mx-auto -mt-32 flex flex-col items-center justify-center gap-8 desktop:mt-0">
 				<Image
 					priority

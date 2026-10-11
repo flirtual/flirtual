@@ -62,6 +62,7 @@
 		9E94EE0CFBDC5DD83F69E498 /* Flirtual Beta Watch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 6EA75B3F555A36D5878ADFAB /* Flirtual Beta Watch.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A43BCCF4CD216A36752AEC27 /* RichText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627C1F1B13FFBCC53146B92C /* RichText.swift */; };
 		A6BD9AB94FDF5F2A0BDDB1CB /* Browse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A8790583AB68EF38535782 /* Browse.swift */; };
+		ACF5EA774700114CB7C05451 /* Safety.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A0855D32F78F28AF59907D3 /* Safety.swift */; };
 		B953DC4FBD431883D1906703 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16B3D52D1E607D145B97334 /* Account.swift */; };
 		C11E68242C2034A14F1770E5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 504EC30E1FED79650016851F /* Assets.xcassets */; };
 		C186A25299D348709B9C4E01 /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1BD4F20286164CFEB1AFF9 /* Users.swift */; };
@@ -70,6 +71,7 @@
 		DEC0D82BBAE4FC4D2F0C9507 /* WatchSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47A99B0670C014DC30D2B5C /* WatchSession.swift */; };
 		DF6815F559216296F8E92168 /* Browse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A8790583AB68EF38535782 /* Browse.swift */; };
 		E1BE5C466B78F6A4930A8081 /* MessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D90D76A172D628A8AD20D9A /* MessagesView.swift */; };
+		E64F6F152A0510DA27473C11 /* Safety.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A0855D32F78F28AF59907D3 /* Safety.swift */; };
 		F0A7844035D519FE73889D4A /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16B3D52D1E607D145B97334 /* Account.swift */; };
 		F271E6E89275CFBD2E7F4612 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00DFB61840269DB826C2E9 /* API.swift */; };
 		F36672B8842C3884BB44C313 /* messages in Resources */ = {isa = PBXBuildFile; fileRef = 1525C16BC241D3963F1B07B9 /* messages */; };
@@ -119,6 +121,7 @@
 
 /* Begin PBXFileReference section */
 		1525C16BC241D3963F1B07B9 /* messages */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = messages; path = ../../messages; sourceTree = "<group>"; };
+		1A0855D32F78F28AF59907D3 /* Safety.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Safety.swift; sourceTree = "<group>"; };
 		2714E3582A426D6600458704 /* Flirtual.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Flirtual.entitlements; sourceTree = "<group>"; };
 		2714E3592A426DBB00458704 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		273A40602FA9587B0058371B /* BridgeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BridgeViewController.swift; sourceTree = "<group>"; };
@@ -218,6 +221,7 @@
 				FF96C077105A9B97C9B311B8 /* Tags.swift */,
 				86BEDDE444877670A80F5930 /* RemoteImage.swift */,
 				627C1F1B13FFBCC53146B92C /* RichText.swift */,
+				1A0855D32F78F28AF59907D3 /* Safety.swift */,
 			);
 			name = Watch;
 			path = Watch;
@@ -596,6 +600,7 @@
 				224BDBA327D22768050E0A00 /* Tags.swift in Sources */,
 				326832089C1F449F339E6A6C /* RemoteImage.swift in Sources */,
 				A43BCCF4CD216A36752AEC27 /* RichText.swift in Sources */,
+				E64F6F152A0510DA27473C11 /* Safety.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -616,6 +621,7 @@
 				30E20DA046102454C0F01174 /* Tags.swift in Sources */,
 				09D5822F4C3EE225AA365269 /* RemoteImage.swift in Sources */,
 				4E92CE12F96479964AA74335 /* RichText.swift in Sources */,
+				ACF5EA774700114CB7C05451 /* Safety.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
