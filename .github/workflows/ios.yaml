@@ -16,7 +16,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event_name == 'workflow_dispatch' && inputs.channel || github.event_name }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 env:
@@ -61,7 +61,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
       - name: Install pnpm and Node.js
-        uses: pnpm/setup@fbda4c85fc2e1e08721cd8763afea8f48d60f024 # v3.0.0
+        uses: pnpm/setup@a0881977cd8ea73b1ed212236c99ca10dcc80cf4 # v3.1.1
         with:
           runtime: node@24.20.0
           cache: true
@@ -95,7 +95,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
       - name: Install pnpm and Node.js
-        uses: pnpm/setup@fbda4c85fc2e1e08721cd8763afea8f48d60f024 # v3.0.0
+        uses: pnpm/setup@a0881977cd8ea73b1ed212236c99ca10dcc80cf4 # v3.1.1
         with:
           runtime: node@24.20.0
           cache: true
@@ -125,16 +125,19 @@ jobs:
           security set-key-partition-list -S apple-tool:,apple: -s -k "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
           security list-keychains -d user -s "$KEYCHAIN_PATH" login.keychain-db
 
-      - name: Install provisioning profile
+      - name: Install provisioning profiles
         env:
-          PROFILE: ${{ inputs.channel == 'production' && secrets.APPLE_PROFILE_PRODUCTION || secrets.APPLE_PROFILE_BETA }}
+          APP_PROFILE: ${{ inputs.channel == 'production' && secrets.APPLE_PROFILE_PRODUCTION || secrets.APPLE_PROFILE_BETA }}
+          WATCH_PROFILE: ${{ inputs.channel == 'production' && secrets.APPLE_PROFILE_WATCH_PRODUCTION || secrets.APPLE_PROFILE_WATCH_BETA }}
         run: |
           mkdir -p "$HOME/Library/MobileDevice/Provisioning Profiles"
-          printf '%s' "$PROFILE" | base64 --decode > "$RUNNER_TEMP/profile.mobileprovision"
-          PLIST=$(security cms -D -i "$RUNNER_TEMP/profile.mobileprovision")
-          UUID=$(printf '%s' "$PLIST" | plutil -extract UUID raw -o - -)
-          cp "$RUNNER_TEMP/profile.mobileprovision" "$HOME/Library/MobileDevice/Provisioning Profiles/$UUID.mobileprovision"
-          echo "Installed profile: $(printf '%s' "$PLIST" | plutil -extract Name raw -o - -) ($UUID)"
+          for PROFILE in "$APP_PROFILE" "$WATCH_PROFILE"; do
+            printf '%s' "$PROFILE" | base64 --decode > "$RUNNER_TEMP/profile.mobileprovision"
+            PLIST=$(security cms -D -i "$RUNNER_TEMP/profile.mobileprovision")
+            UUID=$(printf '%s' "$PLIST" | plutil -extract UUID raw -o - -)
+            cp "$RUNNER_TEMP/profile.mobileprovision" "$HOME/Library/MobileDevice/Provisioning Profiles/$UUID.mobileprovision"
+            echo "Installed profile: $(printf '%s' "$PLIST" | plutil -extract Name raw -o - -) ($UUID)"
+          done
 
       - name: Archive
         working-directory: apps/frontend/ios/App
@@ -168,8 +171,12 @@ jobs:
             <dict>
               <key>zone.homie.flirtual.pwa</key>
               <string>Flirtual App Store</string>
+              <key>zone.homie.flirtual.pwa.watch</key>
+              <string>Flirtual Watch App Store</string>
               <key>zone.homie.flirtual.beta</key>
               <string>Flirtual Beta App Store</string>
+              <key>zone.homie.flirtual.beta.watch</key>
+              <string>Flirtual Beta Watch App Store</string>
             </dict>
             <key>teamID</key>
             <string>997W5KLYVR</string>

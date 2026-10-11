@@ -290,8 +290,7 @@ defmodule Flirtual.User do
             |> Enum.map(
               &%{
                 id: &1.id,
-                type: &1.type,
-                name: &1.name
+                type: &1.type
               }
             )
         ]

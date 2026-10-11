@@ -439,6 +439,8 @@ defmodule FlirtualWeb.Router do
           scope "/:conversation_id" do
             get("/", ConversationController, :get)
             delete("/", ConversationController, :leave)
+            delete("/unread", ConversationController, :mark_conversation_read)
+            get("/messages", ConversationController, :list_messages)
             post("/messages", ConversationController, :send_message)
           end
         end

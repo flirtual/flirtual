@@ -38,8 +38,9 @@ export function Banner({ children, className, ref, icon = defaultBannerIcon, onD
 
 	return (
 		<div
+			data-banner
 			className={twMerge(
-				"flex w-full justify-center bg-black-70 text-white-20",
+				"relative z-30 flex w-full justify-center bg-black-70 text-white-20",
 				className
 			)}
 			ref={ref}

@@ -28,20 +28,54 @@
 		@apply visible opacity-100;
 	}
 
+	// Centre within the tour area rather than the viewport.
+	&.shepherd-centered {
+		left: var(--tour-center-x, 50%) !important;
+		top: var(--tour-center-y, 50%) !important;
+	}
+
 	.shepherd-arrow {
 		@apply w-8 h-8 -z-10 bottom-0 absolute;
 	}
 
-	&[data-popper-placement^="top"] {
-		.shepherd-arrow {
-			@apply w-8 h-8 z-[998] bottom-0 absolute;
-			clip-path: inset(50% -100% -100% -100%);
+	&[data-popper-placement] .shepherd-arrow::before {
+		@apply bg-white-20 dark:bg-black-70 w-8 h-8 rotate-45 absolute;
+		content: "";
+	}
 
-			&::before {
-				@apply bg-white-20 dark:bg-black-70 w-8 h-8 rotate-45 absolute;
-				content: "";
-			}
+	// Only the half outside the popover shows.
+	&[data-popper-placement^="top"] .shepherd-arrow {
+		@apply z-[998] bottom-0;
+		clip-path: inset(50% -100% -100% -100%);
+	}
+
+	&[data-popper-placement^="bottom"] .shepherd-arrow {
+		@apply z-[998] top-0;
+		clip-path: inset(-100% -100% 50% -100%);
+
+		// Upright, so the header's gradient lines up.
+		&::before {
+			$size: 2rem * 1.4142;
+			@apply rotate-0;
+			width: $size;
+			height: $size;
+			left: calc(50% - #{$size} / 2);
+			top: calc(50% - #{$size} / 2);
+			clip-path: polygon(50% 0, 100% 50%, 0 50%);
+			background-image: linear-gradient(to right, var(--theme-1), var(--theme-2));
+			background-size: var(--tour-header-width, 100%) 100%;
+			background-position-x: calc(#{$size} / 2 - var(--tour-arrow-x, 0px));
 		}
+	}
+
+	&[data-popper-placement^="left"] .shepherd-arrow {
+		@apply z-[998] right-0;
+		clip-path: inset(-100% -100% -100% 50%);
+	}
+
+	&[data-popper-placement^="right"] .shepherd-arrow {
+		@apply z-[998] left-0;
+		clip-path: inset(-100% 50% -100% -100%);
 	}
 
 	.shepherd-content {

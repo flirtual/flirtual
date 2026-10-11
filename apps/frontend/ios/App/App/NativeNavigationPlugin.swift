@@ -7,7 +7,8 @@ final class NativeNavigationPlugin: CAPPlugin, CAPBridgedPlugin {
     let pluginMethods: [CAPPluginMethod] = [
         CAPPluginMethod(name: "update", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "actions", returnType: CAPPluginReturnPromise),
-        CAPPluginMethod(name: "toast", returnType: CAPPluginReturnPromise)
+        CAPPluginMethod(name: "toast", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "tabFrames", returnType: CAPPluginReturnPromise)
     ]
 
     @objc func update(_ call: CAPPluginCall) {
@@ -57,6 +58,7 @@ final class NativeNavigationPlugin: CAPPlugin, CAPBridgedPlugin {
                   let width = frame["width"] as? Double, let height = frame["height"] as? Double else { return nil }
             return CGRect(x: x, y: y, width: width, height: height)
         }
+        let interactive = call.getBool("interactive", true)
 
         DispatchQueue.main.async {
             guard #available(iOS 26, *),
@@ -65,7 +67,7 @@ final class NativeNavigationPlugin: CAPPlugin, CAPBridgedPlugin {
                 return
             }
 
-            controller.setActions(actions, frame: frame)
+            controller.setActions(actions, frame: frame, interactive: interactive)
             call.resolve()
         }
     }
@@ -88,6 +90,27 @@ final class NativeNavigationPlugin: CAPPlugin, CAPBridgedPlugin {
 
             controller.showToast(text, icon: icon, tint: tint, duration: duration)
             call.resolve()
+        }
+    }
+
+    @objc func tabFrames(_ call: CAPPluginCall) {
+        DispatchQueue.main.async {
+            guard #available(iOS 26, *),
+                  let controller = self.bridge?.viewController?.tabBarController as? TabBarController else {
+                call.unavailable()
+                return
+            }
+
+            func object(_ frame: CGRect) -> JSObject {
+                ["x": Double(frame.minX), "y": Double(frame.minY), "width": Double(frame.width), "height": Double(frame.height)]
+            }
+
+            let (tabs, bar) = controller.tabFrames()
+            var result: JSObject = ["frames": tabs.mapValues { object($0) as JSValue } as JSObject]
+            if let bar {
+                result["bar"] = object(bar)
+            }
+            call.resolve(result)
         }
     }
 }

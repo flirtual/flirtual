@@ -174,8 +174,8 @@ catalogs:
       specifier: 0.24.0
       version: 0.24.0
     '@cloudflare/vitest-pool-workers':
-      specifier: ^0.22.0
-      version: 0.22.0
+      specifier: ^0.23.0
+      version: 0.23.0
     '@total-typescript/ts-reset':
       specifier: 0.6.1
       version: 0.6.1
@@ -190,7 +190,7 @@ catalogs:
       version: 9.39.5
     execa:
       specifier: ^10.0.1
-      version: 10.0.1
+      version: 10.1.0
     jose:
       specifier: ^6.2.12
       version: 6.2.12
@@ -218,7 +218,7 @@ catalogs:
   pulumi:
     '@pulumi/aws':
       specifier: ^7.46.0
-      version: 7.48.0
+      version: 7.49.0
     '@pulumi/cloudflare':
       specifier: 6.22.0
       version: 6.22.0
@@ -229,8 +229,8 @@ catalogs:
       specifier: ^3.18.0
       version: 3.18.1
     '@pulumi/pulumi':
-      specifier: 3.267.0
-      version: 3.267.0
+      specifier: 3.268.0
+      version: 3.268.0
     '@pulumi/random':
       specifier: ^4.21.0
       version: 4.21.2
@@ -381,7 +381,7 @@ importers:
         version: 1.6.1(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       '@posthog/react':
         specifier: ^1.10.3
-        version: 1.11.3(@types/react@19.3.0)(posthog-js@1.438.1(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)
+        version: 1.11.3(@types/react@19.3.0)(posthog-js@1.438.2(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)
       '@radix-ui/react-alert-dialog':
         specifier: ^1.1.19
         version: 1.1.23(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
@@ -531,7 +531,7 @@ importers:
         version: 3.0.0
       posthog-js:
         specifier: ^1.413.3
-        version: 1.438.1(@types/react@19.3.0)(react@19.3.0)
+        version: 1.438.2(@types/react@19.3.0)(react@19.3.0)
       react:
         specifier: 19.3.0
         version: 19.3.0
@@ -612,14 +612,14 @@ importers:
         specifier: 8.5.0
         version: 8.5.0(supports-color@10.2.2)
       '@cloudflare/workers-types':
-        specifier: 5.20261006.1
-        version: 5.20261006.1
+        specifier: 5.20261007.1
+        version: 5.20261007.1
       '@eslint-react/eslint-plugin':
         specifier: 1.53.1
         version: 1.53.1(eslint@9.39.5(jiti@1.21.7)(supports-color@10.2.2))(supports-color@10.2.2)(ts-api-utils@2.5.0(typescript@5.9.3))(typescript@5.9.3)
       '@react-router/dev':
         specifier: 8.4.0
-        version: 8.4.0(@react-router/serve@8.4.0(react-router@8.4.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(supports-color@10.2.2)(typescript@5.9.3))(react-router@8.4.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(supports-color@10.2.2)(typescript@5.9.3)(vite@8.3.3(@types/node@24.19.0)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.105.1)(tsx@4.23.12)(yaml@2.9.1))(wrangler@4.148.0(@cloudflare/workers-types@5.20261006.1)(@types/node@24.19.0))
+        version: 8.4.0(@react-router/serve@8.4.0(react-router@8.4.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(supports-color@10.2.2)(typescript@5.9.3))(react-router@8.4.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(supports-color@10.2.2)(typescript@5.9.3)(vite@8.3.3(@types/node@24.19.0)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.105.1)(tsx@4.23.12)(yaml@2.9.1))(wrangler@4.148.0(@cloudflare/workers-types@5.20261007.1)(@types/node@24.19.0))
       '@tailwindcss/forms':
         specifier: 0.5.11
         version: 0.5.11(tailwindcss@3.4.19(tsx@4.23.12)(yaml@2.9.1))
@@ -660,8 +660,8 @@ importers:
         specifier: 3.18.2
         version: 3.18.2(tailwindcss@3.4.19(tsx@4.23.12)(yaml@2.9.1))
       knip:
-        specifier: 6.39.0
-        version: 6.39.0
+        specifier: 6.40.0
+        version: 6.40.0
       ms:
         specifier: 2.1.3
         version: 2.1.3
@@ -709,7 +709,7 @@ importers:
         version: 2.0.3(sharp@0.35.5(@types/node@24.19.0))(svgo@4.1.0)(vite@8.3.3(@types/node@24.19.0)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.105.1)(tsx@4.23.12)(yaml@2.9.1))
       wrangler:
         specifier: 'catalog:'
-        version: 4.148.0(@cloudflare/workers-types@5.20261006.1)(@types/node@24.19.0)
+        version: 4.148.0(@cloudflare/workers-types@5.20261007.1)(@types/node@24.19.0)
 
   apps/image-classification:
     dependencies:
@@ -767,7 +767,7 @@ importers:
     devDependencies:
       '@cloudflare/vitest-pool-workers':
         specifier: 'catalog:'
-        version: 0.22.0(@cloudflare/workers-types@5.20261006.1)(@vitest/runner@4.1.11)(@vitest/snapshot@4.1.11)(vitest@4.1.11(@opentelemetry/api@1.9.1)(@types/node@26.6.3)(vite@8.3.3(@types/node@26.6.3)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(tsx@4.23.12)(yaml@2.9.1)))
+        version: 0.23.0(@cloudflare/workers-types@5.20261006.1)(@vitest/runner@4.1.11)(@vitest/snapshot@4.1.11)(vitest@4.1.11(@opentelemetry/api@1.9.1)(@types/node@26.6.3)(vite@8.3.3(@types/node@26.6.3)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(tsx@4.23.12)(yaml@2.9.1)))
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
@@ -791,7 +791,7 @@ importers:
     devDependencies:
       '@cloudflare/vitest-pool-workers':
         specifier: 'catalog:'
-        version: 0.22.0(@cloudflare/workers-types@5.20261006.1)(@vitest/runner@4.1.11)(@vitest/snapshot@4.1.11)(vitest@4.1.11(@opentelemetry/api@1.9.1)(@types/node@26.6.3)(vite@8.3.3(@types/node@26.6.3)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(tsx@4.23.12)(yaml@2.9.1)))
+        version: 0.23.0(@cloudflare/workers-types@5.20261006.1)(@vitest/runner@4.1.11)(@vitest/snapshot@4.1.11)(vitest@4.1.11(@opentelemetry/api@1.9.1)(@types/node@26.6.3)(vite@8.3.3(@types/node@26.6.3)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(tsx@4.23.12)(yaml@2.9.1)))
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
@@ -810,7 +810,7 @@ importers:
     devDependencies:
       '@cloudflare/vitest-pool-workers':
         specifier: 'catalog:'
-        version: 0.22.0(@cloudflare/workers-types@5.20261006.1)(@vitest/runner@4.1.11)(@vitest/snapshot@4.1.11)(vitest@4.1.11(@opentelemetry/api@1.9.1)(@types/node@24.19.0)(vite@8.3.3(@types/node@24.19.0)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(tsx@4.23.12)(yaml@2.9.1)))
+        version: 0.23.0(@cloudflare/workers-types@5.20261006.1)(@vitest/runner@4.1.11)(@vitest/snapshot@4.1.11)(vitest@4.1.11(@opentelemetry/api@1.9.1)(@types/node@24.19.0)(vite@8.3.3(@types/node@24.19.0)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(tsx@4.23.12)(yaml@2.9.1)))
       '@types/node':
         specifier: 'catalog:'
         version: 24.19.0
@@ -861,14 +861,14 @@ importers:
         version: 1.0.0-beta.12(@types/node@24.19.0)
       execa:
         specifier: 'catalog:'
-        version: 10.0.1
+        version: 10.1.0
     devDependencies:
       '@flirtual/config':
         specifier: workspace:*
         version: link:../config
       '@pulumi/pulumi':
         specifier: catalog:pulumi
-        version: 3.267.0(supports-color@10.2.2)(typescript@5.9.3)
+        version: 3.268.0(supports-color@10.2.2)(typescript@5.9.3)
       '@types/node':
         specifier: 'catalog:'
         version: 24.19.0
@@ -896,7 +896,7 @@ importers:
         version: link:../config
       '@pulumi/pulumi':
         specifier: catalog:pulumi
-        version: 3.267.0(supports-color@10.2.2)(typescript@5.9.3)
+        version: 3.268.0(supports-color@10.2.2)(typescript@5.9.3)
       '@types/node':
         specifier: 'catalog:'
         version: 24.19.0
@@ -923,7 +923,7 @@ importers:
         version: link:../config
       '@pulumi/pulumi':
         specifier: catalog:pulumi
-        version: 3.267.0(supports-color@10.2.2)(typescript@5.9.3)
+        version: 3.268.0(supports-color@10.2.2)(typescript@5.9.3)
       '@types/node':
         specifier: 'catalog:'
         version: 24.19.0
@@ -951,7 +951,7 @@ importers:
         version: link:../config
       '@pulumi/pulumi':
         specifier: catalog:pulumi
-        version: 3.267.0(supports-color@10.2.2)(typescript@5.9.3)
+        version: 3.268.0(supports-color@10.2.2)(typescript@5.9.3)
       '@types/node':
         specifier: 'catalog:'
         version: 24.19.0
@@ -982,7 +982,7 @@ importers:
         version: link:../config
       '@pulumi/pulumi':
         specifier: catalog:pulumi
-        version: 3.267.0(supports-color@10.2.2)(typescript@5.9.3)
+        version: 3.268.0(supports-color@10.2.2)(typescript@5.9.3)
       '@types/node':
         specifier: 'catalog:'
         version: 24.19.0
@@ -1015,13 +1015,13 @@ importers:
         version: link:../config
       '@pulumi/pulumi':
         specifier: catalog:pulumi
-        version: 3.267.0(supports-color@10.2.2)(typescript@5.9.3)
+        version: 3.268.0(supports-color@10.2.2)(typescript@5.9.3)
       '@types/node':
         specifier: 'catalog:'
         version: 24.19.0
       execa:
         specifier: 'catalog:'
-        version: 10.0.1
+        version: 10.1.0
       json-schema-to-typescript:
         specifier: 15.0.4
         version: 15.0.4
@@ -1049,7 +1049,7 @@ importers:
         version: link:../config
       '@pulumi/pulumi':
         specifier: catalog:pulumi
-        version: 3.267.0(supports-color@10.2.2)(typescript@5.9.3)
+        version: 3.268.0(supports-color@10.2.2)(typescript@5.9.3)
       '@types/node':
         specifier: 'catalog:'
         version: 24.19.0
@@ -1091,7 +1091,7 @@ importers:
         version: file:pulumi/sdks/apple(supports-color@10.2.2)
       '@pulumi/aws':
         specifier: catalog:pulumi
-        version: 7.48.0(supports-color@10.2.2)(typescript@5.9.3)
+        version: 7.49.0(supports-color@10.2.2)(typescript@5.9.3)
       '@pulumi/cloudflare':
         specifier: catalog:pulumi
         version: 6.22.0(supports-color@10.2.2)(typescript@5.9.3)
@@ -1109,7 +1109,7 @@ importers:
         version: 3.18.1(supports-color@10.2.2)(typescript@5.9.3)
       '@pulumi/pulumi':
         specifier: catalog:pulumi
-        version: 3.267.0(supports-color@10.2.2)(typescript@5.9.3)
+        version: 3.268.0(supports-color@10.2.2)(typescript@5.9.3)
       '@pulumi/random':
         specifier: catalog:pulumi
         version: 4.21.2(supports-color@10.2.2)(typescript@5.9.3)
@@ -1127,7 +1127,7 @@ importers:
         version: 5.4.4
       execa:
         specifier: 'catalog:'
-        version: 10.0.1
+        version: 10.1.0
       openapi-fetch:
         specifier: catalog:pulumi
         version: 0.17.0
@@ -1503,8 +1503,8 @@ packages:
       workerd:
         optional: true
 
-  '@cloudflare/vitest-pool-workers@0.22.0':
-    resolution: {integrity: sha512-OJv/qikkOgxnKxJ5xrLS7zuOLZhc/6iziU+llqZm4tiQf2CJUYwlMuXN68VaWIQebORd1AUx4w6A0oy8XRbuaQ==}
+  '@cloudflare/vitest-pool-workers@0.23.0':
+    resolution: {integrity: sha512-4giZR3fuY9GcTx6Jb7gZX33SUOgeY7rQSm9qSdf9TPfI8i3fP+P1ZA8BM9rMOSoMtLpwo+Zw5zy3v2Ux7iAvNA==}
     deprecated: '@cloudflare/vitest-pool-workers has been renamed to @cloudflare/vitest-plugin. This package will not receive future updates.'
     peerDependencies:
       '@vitest/runner': ^4.1.0
@@ -1633,6 +1633,9 @@ packages:
 
   '@cloudflare/workers-types@5.20261006.1':
     resolution: {integrity: sha512-5OclwQK1d8f5LCPvOlyldC3ryKLUa4nLXegcgPZeUxAPudczQ9xujJDdpS2Tenp7JqbBLW3OgGciHJmuc7QShg==}
+
+  '@cloudflare/workers-types@5.20261007.1':
+    resolution: {integrity: sha512-NUzZ+p0tDFK6RXbJ/pa7sTG93y5zoK34gIV2PGvUMA+pwoKBBAeTlnvrLaQsDWswYW5gQA/b124+XZc0tn8Ihg==}
 
   '@cspotcode/source-map-support@0.8.1':
     resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}
@@ -3790,6 +3793,9 @@ packages:
   '@posthog/core@1.57.0':
     resolution: {integrity: sha512-ZpIWCSkog0v4whufAXetagBsVLqE1Zjl5DsHC2squTy8nS/vqZ9W5JvWkJFgHK8hk5x1gdwMoXY7FK2S0YRT1Q==}
 
+  '@posthog/core@1.57.1':
+    resolution: {integrity: sha512-0RQvInX+TlsETdwCnmpdu9Ji2BSqe/NyxxxiEHjsp6iA3W3UtyJ2yUYyZnadjYMArP3LvudEwhN1oSQYMw2pzQ==}
+
   '@posthog/react@1.11.3':
     resolution: {integrity: sha512-YqvZb2y9jh/yW0ojUtAns0l4yHWqpu+5UeIBxZlXpyGuWlh8M4siXRMtqhEh1BKfqp6Sq2usdsQCuoUzx1QFWQ==}
     peerDependencies:
@@ -3833,8 +3839,8 @@ packages:
   '@pulumi/apple@file:pulumi/sdks/apple':
     resolution: {directory: pulumi/sdks/apple, type: directory}
 
-  '@pulumi/aws@7.48.0':
-    resolution: {integrity: sha512-roKXYZ2EyjvapKYacvRQNUeW2UBI8MKwzO2338XwdXtCf75TabY4DVy56zY2HbnEU0H1fbBXct8oAx9ynQeMrA==}
+  '@pulumi/aws@7.49.0':
+    resolution: {integrity: sha512-WM27HFAJk0qwaKmnfC0/O48kv9neSd6Xh2emNptEIZ3KkRRF3QEhb1cm0TnbgOgz/IhA2vl8+ChAIyj28Y8u0g==}
 
   '@pulumi/cloudflare@6.22.0':
     resolution: {integrity: sha512-ljJpS3vhIaTNzTvoNURkUfXnzDlBS0gx2nxvg84JmH6kuYoCmsLiQ1afOdhXly4+G/JIgYqjdxo2QNliVUWYDw==}
@@ -3851,8 +3857,8 @@ packages:
   '@pulumi/postgresql@3.18.1':
     resolution: {integrity: sha512-Oxxj7lslz5b7Ubxhx/NdaENu90CsgmO+/DmECehX+zIV9BNOLUMtihXZ3NExncGUKGVAeef82cm6AfO7czL02g==}
 
-  '@pulumi/pulumi@3.267.0':
-    resolution: {integrity: sha512-dd/K3sxqNKqiYAvcg14TtEL7ZYqSyphMQMuqDeZvooX7jIKaa0t6QeNBnu6KeyH4bqKqNzmta07a/tgmUkw8/w==}
+  '@pulumi/pulumi@3.268.0':
+    resolution: {integrity: sha512-VtTIr44eC78BX4cAeh2MEqJqVFu5/UfrmsxjLdH73YIPr5igPEo9JB4g5yqncTHcXNxbkxJXndMOEm1CkpJA5Q==}
     engines: {node: '>=22'}
     peerDependencies:
       ts-node: '>= 7.0.1 < 12'
@@ -6375,8 +6381,8 @@ packages:
     resolution: {integrity: sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q==}
     engines: {node: '>=0.8.x'}
 
-  execa@10.0.1:
-    resolution: {integrity: sha512-ge98qjkRK4IB7tL7Ju/6qmm5LHoH1eEMt5FNZrz3f4UIYhF28lggX20z3FaX1sgc67msLEn0N0BscOs29iuwyw==}
+  execa@10.1.0:
+    resolution: {integrity: sha512-5HT/600HqXEtmkb9mK/PkTWw+bQSCzPnWiZ4/87wD3Hi0wFzCapOuNT9p4M08PDd+KLHdHvFhKjOWmNx/npRNQ==}
     engines: {node: '>=22'}
 
   execa@5.1.1:
@@ -6993,8 +6999,8 @@ packages:
     resolution: {integrity: sha512-o+NO+8WrRiQEE4/7nwRJhN1HWpVmJm511pBHUxPLtp0BUISzlBplORYSmTclCnJvQq2tKu/sgl3xVpkc7ZWuQQ==}
     engines: {node: '>=6'}
 
-  knip@6.39.0:
-    resolution: {integrity: sha512-Y7g6Ve1ATMox1u1v+gx3z9LTlvzVLTJISm/LVn9TgBU4qc7OoC63AWGO8qCFPVDDdaqlYdXkDDvvO1METBfTRw==}
+  knip@6.40.0:
+    resolution: {integrity: sha512-5Lp/ANJu3AkW5f+J+2QG14z7xKZGi/ybb5MU1EWjeGdt6MpuIaLpLFiyBi0ZKryTiuTHiJqo/WKJRaWYimvavw==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
 
@@ -7934,8 +7940,8 @@ packages:
     resolution: {integrity: sha512-49cGhUbXj8Qenv0iTMxA1cFBzxXoctpC9Ujd77t1WcbJIr6nF/eI7g/8MgxrYldFRuAXvja7xQRwavoW7kgrxQ==}
     engines: {node: ^10 || ^12 || >=14}
 
-  posthog-js@1.438.1:
-    resolution: {integrity: sha512-0ro5G2kkl2SJrXPmKRh/bzPa016hJ9FbbKXojgs7Q2aMLjzXiu3U7ogyBjbnz1XkgWwU6a5IrRMqycdHGuDHeg==}
+  posthog-js@1.438.2:
+    resolution: {integrity: sha512-4AbEQ0lJp4WupgA+y5fiBnepSril+qA1rAYuFy9oKQ0xd8yg19p5XNKDgZW/nGwJF2KVx/joy4vKWhyuJNoCVw==}
     peerDependencies:
       '@types/react': '>=16.8.0'
       react: '>=16.8.0'
@@ -9990,7 +9996,7 @@ snapshots:
     optionalDependencies:
       workerd: 1.20261006.1
 
-  '@cloudflare/vitest-pool-workers@0.22.0(@cloudflare/workers-types@5.20261006.1)(@vitest/runner@4.1.11)(@vitest/snapshot@4.1.11)(vitest@4.1.11(@opentelemetry/api@1.9.1)(@types/node@24.19.0)(vite@8.3.3(@types/node@24.19.0)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(tsx@4.23.12)(yaml@2.9.1)))':
+  '@cloudflare/vitest-pool-workers@0.23.0(@cloudflare/workers-types@5.20261006.1)(@vitest/runner@4.1.11)(@vitest/snapshot@4.1.11)(vitest@4.1.11(@opentelemetry/api@1.9.1)(@types/node@24.19.0)(vite@8.3.3(@types/node@24.19.0)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(tsx@4.23.12)(yaml@2.9.1)))':
     dependencies:
       '@vitest/runner': 4.1.11
       '@vitest/snapshot': 4.1.11
@@ -10005,7 +10011,7 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@cloudflare/vitest-pool-workers@0.22.0(@cloudflare/workers-types@5.20261006.1)(@vitest/runner@4.1.11)(@vitest/snapshot@4.1.11)(vitest@4.1.11(@opentelemetry/api@1.9.1)(@types/node@26.6.3)(vite@8.3.3(@types/node@26.6.3)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(tsx@4.23.12)(yaml@2.9.1)))':
+  '@cloudflare/vitest-pool-workers@0.23.0(@cloudflare/workers-types@5.20261006.1)(@vitest/runner@4.1.11)(@vitest/snapshot@4.1.11)(vitest@4.1.11(@opentelemetry/api@1.9.1)(@types/node@26.6.3)(vite@8.3.3(@types/node@26.6.3)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(tsx@4.23.12)(yaml@2.9.1)))':
     dependencies:
       '@vitest/runner': 4.1.11
       '@vitest/snapshot': 4.1.11
@@ -10080,7 +10086,10 @@ snapshots:
   '@cloudflare/workerd-windows-64@1.20261006.1':
     optional: true
 
-  '@cloudflare/workers-types@5.20261006.1': {}
+  '@cloudflare/workers-types@5.20261006.1':
+    optional: true
+
+  '@cloudflare/workers-types@5.20261007.1': {}
 
   '@cspotcode/source-map-support@0.8.1':
     dependencies:
@@ -11758,9 +11767,13 @@ snapshots:
     dependencies:
       '@posthog/types': 1.415.1
 
-  '@posthog/react@1.11.3(@types/react@19.3.0)(posthog-js@1.438.1(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)':
+  '@posthog/core@1.57.1':
     dependencies:
-      posthog-js: 1.438.1(@types/react@19.3.0)(react@19.3.0)
+      '@posthog/types': 1.415.1
+
+  '@posthog/react@1.11.3(@types/react@19.3.0)(posthog-js@1.438.2(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)':
+    dependencies:
+      posthog-js: 1.438.2(@types/react@19.3.0)(react@19.3.0)
       react: 19.3.0
     optionalDependencies:
       '@types/react': 19.3.0
@@ -11789,16 +11802,16 @@ snapshots:
 
   '@pulumi/apple@file:pulumi/sdks/apple(supports-color@10.2.2)':
     dependencies:
-      '@pulumi/pulumi': 3.267.0(supports-color@10.2.2)(typescript@4.9.5)
+      '@pulumi/pulumi': 3.268.0(supports-color@10.2.2)(typescript@4.9.5)
       '@types/node': 20.19.43
       typescript: 4.9.5
     transitivePeerDependencies:
       - supports-color
       - ts-node
 
-  '@pulumi/aws@7.48.0(supports-color@10.2.2)(typescript@5.9.3)':
+  '@pulumi/aws@7.49.0(supports-color@10.2.2)(typescript@5.9.3)':
     dependencies:
-      '@pulumi/pulumi': 3.267.0(supports-color@10.2.2)(typescript@5.9.3)
+      '@pulumi/pulumi': 3.268.0(supports-color@10.2.2)(typescript@5.9.3)
       mime: 2.6.0
     transitivePeerDependencies:
       - supports-color
@@ -11807,7 +11820,7 @@ snapshots:
 
   '@pulumi/cloudflare@6.22.0(supports-color@10.2.2)(typescript@5.9.3)':
     dependencies:
-      '@pulumi/pulumi': 3.267.0(supports-color@10.2.2)(typescript@5.9.3)
+      '@pulumi/pulumi': 3.268.0(supports-color@10.2.2)(typescript@5.9.3)
     transitivePeerDependencies:
       - supports-color
       - ts-node
@@ -11815,7 +11828,7 @@ snapshots:
 
   '@pulumi/command@1.2.1(supports-color@10.2.2)(typescript@5.9.3)':
     dependencies:
-      '@pulumi/pulumi': 3.267.0(supports-color@10.2.2)(typescript@5.9.3)
+      '@pulumi/pulumi': 3.268.0(supports-color@10.2.2)(typescript@5.9.3)
     transitivePeerDependencies:
       - supports-color
       - ts-node
@@ -11823,7 +11836,7 @@ snapshots:
 
   '@pulumi/discord@file:pulumi/sdks/discord(supports-color@10.2.2)':
     dependencies:
-      '@pulumi/pulumi': 3.267.0(supports-color@10.2.2)(typescript@4.9.5)
+      '@pulumi/pulumi': 3.268.0(supports-color@10.2.2)(typescript@4.9.5)
       '@types/node': 20.19.43
       typescript: 4.9.5
     transitivePeerDependencies:
@@ -11832,7 +11845,7 @@ snapshots:
 
   '@pulumi/freshdesk@file:pulumi/sdks/freshdesk(supports-color@10.2.2)':
     dependencies:
-      '@pulumi/pulumi': 3.267.0(supports-color@10.2.2)(typescript@4.9.5)
+      '@pulumi/pulumi': 3.268.0(supports-color@10.2.2)(typescript@4.9.5)
       '@types/node': 20.19.43
       typescript: 4.9.5
     transitivePeerDependencies:
@@ -11841,13 +11854,13 @@ snapshots:
 
   '@pulumi/postgresql@3.18.1(supports-color@10.2.2)(typescript@5.9.3)':
     dependencies:
-      '@pulumi/pulumi': 3.267.0(supports-color@10.2.2)(typescript@5.9.3)
+      '@pulumi/pulumi': 3.268.0(supports-color@10.2.2)(typescript@5.9.3)
     transitivePeerDependencies:
       - supports-color
       - ts-node
       - typescript
 
-  '@pulumi/pulumi@3.267.0(supports-color@10.2.2)(typescript@4.9.5)':
+  '@pulumi/pulumi@3.268.0(supports-color@10.2.2)(typescript@4.9.5)':
     dependencies:
       '@grpc/grpc-js': 1.14.5
       '@logdna/tail-file': 2.2.0
@@ -11879,7 +11892,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@pulumi/pulumi@3.267.0(supports-color@10.2.2)(typescript@5.9.3)':
+  '@pulumi/pulumi@3.268.0(supports-color@10.2.2)(typescript@5.9.3)':
     dependencies:
       '@grpc/grpc-js': 1.14.5
       '@logdna/tail-file': 2.2.0
@@ -11913,7 +11926,7 @@ snapshots:
 
   '@pulumi/random@4.21.2(supports-color@10.2.2)(typescript@5.9.3)':
     dependencies:
-      '@pulumi/pulumi': 3.267.0(supports-color@10.2.2)(typescript@5.9.3)
+      '@pulumi/pulumi': 3.268.0(supports-color@10.2.2)(typescript@5.9.3)
     transitivePeerDependencies:
       - supports-color
       - ts-node
@@ -11921,7 +11934,7 @@ snapshots:
 
   '@pulumi/sentry@file:pulumi/sdks/sentry(supports-color@10.2.2)':
     dependencies:
-      '@pulumi/pulumi': 3.267.0(supports-color@10.2.2)(typescript@4.9.5)
+      '@pulumi/pulumi': 3.268.0(supports-color@10.2.2)(typescript@4.9.5)
       '@types/node': 20.19.43
       typescript: 4.9.5
     transitivePeerDependencies:
@@ -11930,7 +11943,7 @@ snapshots:
 
   '@pulumi/tls@5.6.1(supports-color@10.2.2)(typescript@5.9.3)':
     dependencies:
-      '@pulumi/pulumi': 3.267.0(supports-color@10.2.2)(typescript@5.9.3)
+      '@pulumi/pulumi': 3.268.0(supports-color@10.2.2)(typescript@5.9.3)
     transitivePeerDependencies:
       - supports-color
       - ts-node
@@ -11938,7 +11951,7 @@ snapshots:
 
   '@pulumiverse/time@0.1.1(supports-color@10.2.2)(typescript@5.9.3)':
     dependencies:
-      '@pulumi/pulumi': 3.267.0(supports-color@10.2.2)(typescript@5.9.3)
+      '@pulumi/pulumi': 3.268.0(supports-color@10.2.2)(typescript@5.9.3)
     transitivePeerDependencies:
       - supports-color
       - ts-node
@@ -12330,7 +12343,7 @@ snapshots:
 
   '@radix-ui/rect@1.1.3': {}
 
-  '@react-router/dev@8.4.0(@react-router/serve@8.4.0(react-router@8.4.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(supports-color@10.2.2)(typescript@5.9.3))(react-router@8.4.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(supports-color@10.2.2)(typescript@5.9.3)(vite@8.3.3(@types/node@24.19.0)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.105.1)(tsx@4.23.12)(yaml@2.9.1))(wrangler@4.148.0(@cloudflare/workers-types@5.20261006.1)(@types/node@24.19.0))':
+  '@react-router/dev@8.4.0(@react-router/serve@8.4.0(react-router@8.4.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(supports-color@10.2.2)(typescript@5.9.3))(react-router@8.4.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(supports-color@10.2.2)(typescript@5.9.3)(vite@8.3.3(@types/node@24.19.0)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.105.1)(tsx@4.23.12)(yaml@2.9.1))(wrangler@4.148.0(@cloudflare/workers-types@5.20261007.1)(@types/node@24.19.0))':
     dependencies:
       '@babel/core': 7.29.7(supports-color@10.2.2)
       '@babel/generator': 7.29.8
@@ -12360,7 +12373,7 @@ snapshots:
     optionalDependencies:
       '@react-router/serve': 8.4.0(react-router@8.4.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(supports-color@10.2.2)(typescript@5.9.3)
       typescript: 5.9.3
-      wrangler: 4.148.0(@cloudflare/workers-types@5.20261006.1)(@types/node@24.19.0)
+      wrangler: 4.148.0(@cloudflare/workers-types@5.20261007.1)(@types/node@24.19.0)
     transitivePeerDependencies:
       - babel-plugin-macros
       - supports-color
@@ -15013,7 +15026,7 @@ snapshots:
 
   events@3.3.0: {}
 
-  execa@10.0.1:
+  execa@10.1.0:
     dependencies:
       '@sindresorhus/merge-streams': 4.0.0
       figures: 6.1.0
@@ -15606,7 +15619,7 @@ snapshots:
 
   kleur@4.1.5: {}
 
-  knip@6.39.0:
+  knip@6.40.0:
     dependencies:
       fdir: 6.5.0(picomatch@4.0.7)
       formatly: 0.7.1
@@ -16865,10 +16878,10 @@ snapshots:
       picocolors: 1.1.1
       source-map-js: 1.2.2
 
-  posthog-js@1.438.1(@types/react@19.3.0)(react@19.3.0):
+  posthog-js@1.438.2(@types/react@19.3.0)(react@19.3.0):
     dependencies:
       '@posthog/browser-common': 0.9.2
-      '@posthog/core': 1.57.0
+      '@posthog/core': 1.57.1
       '@posthog/types': 1.415.1
       core-js: 3.50.0
       dompurify: 3.4.16
@@ -18429,6 +18442,24 @@ snapshots:
       workerd: 1.20261006.1
     optionalDependencies:
       '@cloudflare/workers-types': 5.20261006.1
+      fsevents: 2.3.3
+    transitivePeerDependencies:
+      - '@types/node'
+      - bufferutil
+      - utf-8-validate
+
+  wrangler@4.148.0(@cloudflare/workers-types@5.20261007.1)(@types/node@24.19.0):
+    dependencies:
+      '@cloudflare/kv-asset-handler': 0.5.0
+      '@cloudflare/unenv-preset': 2.16.2(unenv@2.0.0-rc.24)(workerd@1.20261006.1)
+      blake3-wasm: 2.1.5
+      esbuild: 0.28.1
+      miniflare: 5.20261006.0-alpha(@types/node@24.19.0)
+      path-to-regexp: 6.3.0
+      unenv: 2.0.0-rc.24
+      workerd: 1.20261006.1
+    optionalDependencies:
+      '@cloudflare/workers-types': 5.20261007.1
       fsevents: 2.3.3
     transitivePeerDependencies:
       - '@types/node'

@@ -28,13 +28,15 @@ export function useNativeActions(
 		const send = () => {
 			const { x, y, width, height } = element.getBoundingClientRect();
 			const frame = { x, y, width, height };
-			// Native views draw over the whole page, so nothing the page opens can cover them.
-			const covered = !!document.querySelector(overlays);
-			const key = JSON.stringify([frame, covered]);
+			// Native views draw over the page, so they hide under overlays and tab bar tour steps.
+			const { dataset } = document.documentElement;
+			const covered = !!document.querySelector(overlays) || "tourNavigation" in dataset;
+			const interactive = !("tour" in dataset);
+			const key = JSON.stringify([frame, covered, interactive]);
 			if (key === sent) return;
 			sent = key;
 
-			NativeNavigationPlugin.actions({ actions: covered ? [] : JSON.parse(serialized) as Array<NativeNavigationAction>, frame })
+			NativeNavigationPlugin.actions({ actions: covered ? [] : JSON.parse(serialized) as Array<NativeNavigationAction>, frame, interactive })
 				.then(() => {
 					supported = true;
 					setNative(true);
@@ -69,6 +71,7 @@ export function useNativeActions(
 
 		const opened = new MutationObserver(send);
 		opened.observe(document.body, { subtree: true, childList: true, attributeFilter: ["data-state"] });
+		opened.observe(document.documentElement, { attributeFilter: ["data-tour", "data-tour-navigation"] });
 
 		return () => {
 			cancelAnimationFrame(frame);
@@ -83,7 +86,10 @@ export function useNativeActions(
 		if (supported) void NativeNavigationPlugin.actions({ actions: [] });
 	}, []);
 
-	const select = useEffectEvent((id: string) => onAction(id));
+	// Older builds ignore `interactive`.
+	const select = useEffectEvent((id: string) => {
+		if (!("tour" in document.documentElement.dataset)) onAction(id);
+	});
 
 	useEffect(() => {
 		if (supported === false) return;
