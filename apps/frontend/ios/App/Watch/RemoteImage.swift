@@ -1,4 +1,5 @@
 import ImageIO
+import libwebp
 import SwiftUI
 import UIKit
 
@@ -38,18 +39,60 @@ final class ImageLoader {
         for attempt in 0..<3 {
             if attempt > 0 { try? await Task.sleep(for: .seconds(attempt)) }
             guard let (data, response) = try? await API.session.data(from: url),
-                  (response as? HTTPURLResponse)?.statusCode == 200,
-                  let source = CGImageSourceCreateWithData(data as CFData, nil) else { continue }
+                  (response as? HTTPURLResponse)?.statusCode == 200 else { continue }
 
-            let options: [CFString: Any] = [
-                kCGImageSourceCreateThumbnailFromImageAlways: true,
-                kCGImageSourceCreateThumbnailWithTransform: true,
-                kCGImageSourceThumbnailMaxPixelSize: size
-            ]
-            guard let image = CGImageSourceCreateThumbnailAtIndex(source, 0, options as CFDictionary) else { return nil }
-            return UIImage(cgImage: image)
+            return (thumbnail(data, size: size) ?? webP(data, size: size)).map(UIImage.init(cgImage:))
         }
         return nil
+    }
+
+    private nonisolated static func thumbnail(_ data: Data, size: CGFloat) -> CGImage? {
+        guard let source = CGImageSourceCreateWithData(data as CFData, nil) else { return nil }
+        let options: [CFString: Any] = [
+            kCGImageSourceCreateThumbnailFromImageAlways: true,
+            kCGImageSourceCreateThumbnailWithTransform: true,
+            kCGImageSourceThumbnailMaxPixelSize: size
+        ]
+        return CGImageSourceCreateThumbnailAtIndex(source, 0, options as CFDictionary)
+    }
+
+    private nonisolated static func webP(_ data: Data, size: CGFloat) -> CGImage? {
+        var config = WebPDecoderConfig()
+        guard WebPInitDecoderConfig(&config) != 0 else { return nil }
+
+        return data.withUnsafeBytes { buffer -> CGImage? in
+            guard let bytes = buffer.bindMemory(to: UInt8.self).baseAddress,
+                  WebPGetFeatures(bytes, buffer.count, &config.input) == VP8_STATUS_OK else { return nil }
+
+            let scale = min(1, size / CGFloat(max(config.input.width, config.input.height)))
+            let width = max(1, Int((CGFloat(config.input.width) * scale).rounded()))
+            let height = max(1, Int((CGFloat(config.input.height) * scale).rounded()))
+            config.options.use_scaling = 1
+            config.options.scaled_width = Int32(width)
+            config.options.scaled_height = Int32(height)
+            config.output.colorspace = MODE_rgbA
+
+            guard WebPDecode(bytes, buffer.count, &config) == VP8_STATUS_OK else { return nil }
+            defer { WebPFreeDecBuffer(&config.output) }
+
+            let rgba = config.output.u.RGBA
+            guard let pixels = CFDataCreate(nil, rgba.rgba, rgba.size),
+                  let provider = CGDataProvider(data: pixels) else { return nil }
+
+            return CGImage(
+                width: width,
+                height: height,
+                bitsPerComponent: 8,
+                bitsPerPixel: 32,
+                bytesPerRow: Int(rgba.stride),
+                space: CGColorSpaceCreateDeviceRGB(),
+                bitmapInfo: CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedLast.rawValue),
+                provider: provider,
+                decode: nil,
+                shouldInterpolate: true,
+                intent: .defaultIntent
+            )
+        }
     }
 }
 
