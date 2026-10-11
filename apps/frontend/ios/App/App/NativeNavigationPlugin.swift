@@ -15,6 +15,7 @@ final class NativeNavigationPlugin: CAPPlugin, CAPBridgedPlugin {
         let visible = call.getBool("visible", false)
         let selected = call.getString("selected")
         let tint = call.getString("tint").flatMap(UIColor.init(hex:))
+        let edgeToEdge = call.getBool("edgeToEdge", false)
 
         let objects = call.getArray("tabs", JSObject.self)
         let tabs = objects?.compactMap { object -> NavigationTab? in
@@ -36,7 +37,7 @@ final class NativeNavigationPlugin: CAPPlugin, CAPBridgedPlugin {
                 return
             }
 
-            controller.update(visible: visible, tabs: tabs, badges: badges, selected: selected, tint: tint)
+            controller.update(visible: visible, tabs: tabs, badges: badges, selected: selected, tint: tint, edgeToEdge: edgeToEdge)
             call.resolve(controller.layout)
         }
     }

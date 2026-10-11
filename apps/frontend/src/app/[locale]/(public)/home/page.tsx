@@ -1,3 +1,6 @@
+import { useEffect } from "react";
+
+import { hideNativeNavigation } from "~/native-navigation";
 import { queryClient, userCountFetcher, userCountKey } from "~/query";
 
 import { TileGuide, TileProvider } from "./tiles";
@@ -25,6 +28,12 @@ export const handle = {
 };
 
 export default function LandingPage() {
+	// The tiles pad themselves clear of the sides, so their backgrounds can run beneath them.
+	useEffect(() => {
+		hideNativeNavigation({ edgeToEdge: true });
+		return () => hideNativeNavigation();
+	}, []);
+
 	return (
 		<TileProvider>
 			<div className="flex h-screen snap-x snap-mandatory overflow-y-hidden scroll-smooth bg-black-80 text-white-20 desktop:snap-y desktop:flex-col desktop:overflow-x-hidden desktop:overflow-y-scroll">
