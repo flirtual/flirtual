@@ -81,10 +81,13 @@ final class Browse {
 
     private func resolve() async {
         guard let queue, let id = queue.next.first else { return }
+        var users: [User] = []
 
         do {
             async let relationship: Void = Users.shared.loadRelationship(id)
-            phase = .ready(try await Users.shared.get(id))
+            let user = try await Users.shared.get(id)
+            phase = .ready(user)
+            users.append(user)
             await relationship
         } catch {
             if !API.isCancellation(error) { phase = .failed(Self.message(for: error)) }
@@ -92,8 +95,14 @@ final class Browse {
         }
 
         for id in queue.next.dropFirst() {
-            _ = try? await Users.shared.get(id)
+            if let user = try? await Users.shared.get(id) { users.append(user) }
             await Users.shared.loadRelationship(id)
+        }
+
+        Task {
+            for image in users.compactMap(\.profile.images.first) {
+                await PhotoCarousel.load(image)
+            }
         }
     }
 

@@ -146,18 +146,19 @@ struct ProfileView: View {
 }
 
 struct PhotoCarousel: View {
+    static let photoSize: CGFloat = 600
+
     let user: User
     @State private var index = 0
 
     var body: some View {
         let images = user.profile.images
-        let api = Account.shared.api
 
         ZStack(alignment: .bottomLeading) {
             Color.black
-            ForEach(Array(images.enumerated()), id: \.element.id) { offset, image in
-                RemoteImage(url: api?.imageURL(image), size: 600)
-                    .opacity(offset == index ? 1 : 0)
+            if images.indices.contains(index) {
+                RemoteImage(url: Self.url(images[index]), size: Self.photoSize)
+                    .id(images[index].id)
             }
 
             VStack(spacing: 0) {
@@ -197,6 +198,7 @@ struct PhotoCarousel: View {
         .clipped()
         .contentShape(Rectangle())
         .onTapGesture(perform: next)
+        .task(id: index) { await preloadNext() }
         .accessibilityElement(children: .combine)
         .accessibilityAction(named: t("watch.next_photo"), next)
     }
@@ -282,6 +284,22 @@ struct PhotoCarousel: View {
         let count = user.profile.images.count
         guard count > 1 else { return }
         index = (index + 1) % count
+    }
+
+    private func preloadNext() async {
+        let images = user.profile.images
+        guard images.count > 1, images.indices.contains(index) else { return }
+        await Self.load(images[index])
+        await Self.load(images[(index + 1) % images.count])
+    }
+
+    private static func url(_ image: ProfileImage) -> URL? {
+        Account.shared.api?.imageURL(image)
+    }
+
+    static func load(_ image: ProfileImage) async {
+        guard let url = url(image) else { return }
+        _ = await ImageLoader.shared.image(url, size: photoSize)
     }
 
     private static func flag(_ country: String) -> String? {
