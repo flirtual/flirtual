@@ -1,15 +1,15 @@
 # Flirtual — project instructions
 
-Shared, cross-app context for the monorepo; per-app details live in each app's own CLAUDE.md
+Shared, cross-app context for the monorepo; per-app details live in each app's own AGENTS.md
 (linked below). For work spanning both apps (API contract changes, the image pipeline, anything
-crossing the frontend/API boundary), load this file plus each relevant app's CLAUDE.md first.
+crossing the frontend/API boundary), load this file plus each relevant app's AGENTS.md first.
 
 ## Overview
 
 Flirtual is a dating app for VR users. The monorepo contains:
 
-- **Frontend** (apps/frontend/): TypeScript/React Router SPA on Cloudflare Workers, with Capacitor iOS/Android apps and native watchOS app. See [apps/frontend/CLAUDE.md](apps/frontend/CLAUDE.md) for stack, commands, styling, patterns, translations.
-- **API** (apps/api/): Elixir/Phoenix; data, auth, business logic. See [apps/api/CLAUDE.md](apps/api/CLAUDE.md) for stack, commands, patterns, matchmaking, moderation, schema, prod/DB ops.
+- **Frontend** (apps/frontend/): TypeScript/React Router SPA on Cloudflare Workers, with Capacitor iOS/Android apps and native watchOS app. See [apps/frontend/AGENTS.md](apps/frontend/AGENTS.md) for stack, commands, styling, patterns, translations.
+- **API** (apps/api/): Elixir/Phoenix; data, auth, business logic. See [apps/api/AGENTS.md](apps/api/AGENTS.md) for stack, commands, patterns, matchmaking, moderation, schema, prod/DB ops.
 
 Other services, all under `apps/`:
 

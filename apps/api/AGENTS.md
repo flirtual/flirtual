@@ -1,6 +1,6 @@
 # Flirtual API
 
-Part of the Flirtual monorepo; see the [root CLAUDE.md](../../CLAUDE.md) for the overview, data
+Part of the Flirtual monorepo; see the [root AGENTS.md](../../AGENTS.md) for the overview, data
 flow, and environment setup.
 
 ## Stack
