@@ -3,10 +3,8 @@ import { useEffect, useEffectEvent, useState } from "react";
 import { NativeNavigationPlugin } from "~/native-navigation";
 import type { NativeNavigationAction } from "~/native-navigation";
 
+import { openOverlays } from "./use-back-button";
 import { nativeNavigation } from "./use-device";
-
-// Dialogs, drawers and menus the page opens over its own buttons.
-const overlays = ["dialog", "alertdialog", "menu", "listbox"].map((role) => `[role="${role}"][data-state="open"]`).join(", ");
 
 // Unknown until the first call: builds from before native actions don't have the method.
 let supported = nativeNavigation ? undefined : false;
@@ -32,7 +30,7 @@ export function useNativeActions(
 			const frame = { x, y, width, height };
 			// Native views draw over the page, so they hide under overlays and tab bar tour steps.
 			const { dataset } = document.documentElement;
-			const covered = !!document.querySelector(overlays) || "tourNavigation" in dataset;
+			const covered = !!document.querySelector(openOverlays) || "tourNavigation" in dataset;
 			const interactive = !("tour" in dataset);
 			const key = JSON.stringify([frame, covered, interactive]);
 			if (key === sent) return;

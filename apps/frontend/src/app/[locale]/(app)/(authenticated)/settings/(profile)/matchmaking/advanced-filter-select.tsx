@@ -12,6 +12,7 @@ import { Badge } from "~/components/badge";
 import { Link } from "~/components/link";
 import { Popover, PopoverAnchor, PopoverContent } from "~/components/popover";
 import { ScrollIndicator } from "~/components/scroll-indicator";
+import { useBackButton } from "~/hooks/use-back-button";
 import { useBreakpoint } from "~/hooks/use-breakpoint";
 import { useSafeArea } from "~/hooks/use-safe-area";
 import { useScrollIndicator } from "~/hooks/use-scroll-indicator";
@@ -90,6 +91,11 @@ export const AdvancedFilterSelect: FC<{
 		setOverlayVisible(false);
 		setInputValue("");
 	}, []);
+
+	useBackButton(overlayVisible, () => {
+		inputReference.current?.blur();
+		close();
+	});
 
 	const filtering = inputValue.trim().length > 0;
 

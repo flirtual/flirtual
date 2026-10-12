@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import { RemoveScroll } from "react-remove-scroll";
 import { twMerge } from "tailwind-merge";
 
+import { useBackButton } from "~/hooks/use-back-button";
 import { useBreakpoint } from "~/hooks/use-breakpoint";
 import { useSafeArea } from "~/hooks/use-safe-area";
 import { emptyArray, suppressNextClick } from "~/utilities";
@@ -123,6 +124,11 @@ export function InputAutocomplete<K extends string>(
 		setOverlayVisible(false);
 		setInputValue("");
 	}, []);
+
+	useBackButton(overlayVisible, () => {
+		inputReference.current?.blur();
+		close();
+	});
 
 	const onInputChange = useCallback<React.ChangeEventHandler<HTMLInputElement>>(
 		({ currentTarget }) => {
