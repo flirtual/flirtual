@@ -170,6 +170,14 @@ export const AdvancedFilterSelect: FC<{
 			return;
 		}
 
+		// With no filter input, Enter closes the list instead of submitting the form.
+		if (key === "Enter") {
+			event.preventDefault();
+			if (fullscreen) inputReference.current?.blur();
+			close();
+			return;
+		}
+
 		if (key === "ArrowDown") {
 			const first = listReference.current?.querySelector<HTMLButtonElement>(
 				"button[data-option]:not(:disabled)"
@@ -455,6 +463,7 @@ export const AdvancedFilterSelect: FC<{
 											: 0
 								}}
 								autoComplete="off"
+								enterKeyHint="done"
 								placeholder={placeholder}
 								ref={inputReference}
 								type="text"
