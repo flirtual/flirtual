@@ -143,9 +143,10 @@ const NativeTabs: FC<{ tabs: Array<Tab>; selected?: string }> = ({ tabs, selecte
 	}, []);
 
 	// Takes the web navigation's place in the layout, reserving the inset that pages don't already
-	// pad for: the tab bar at the bottom on phones, and whatever's above the desktop layout.
+	// pad for: the tab bar at the bottom on phones, and whatever's above the desktop layout. Not a
+	// scroll anchor, as it comes before the page in the DOM.
 	return (
-		<div className="order-last h-[var(--safe-area-inset-bottom,0rem)] shrink-0 split:hidden desktop:order-none desktop:block desktop:h-[var(--safe-area-inset-top,0rem)] [[data-banner]~&]:desktop:hidden" />
+		<div className="order-last h-[var(--safe-area-inset-bottom,0rem)] shrink-0 [overflow-anchor:none] split:hidden desktop:order-none desktop:block desktop:h-[var(--safe-area-inset-top,0rem)] [[data-banner]~&]:desktop:hidden" />
 	);
 };
 
