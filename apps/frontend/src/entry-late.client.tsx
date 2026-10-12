@@ -12,6 +12,8 @@ import { isRedirectError } from "./redirect";
 import { initializeSocialLogin } from "./social-login";
 import { deepLinkToRelativeUrl } from "./urls";
 
+import "./hooks/use-back-button";
+
 void setupMonitoring();
 void setupAnalytics();
 

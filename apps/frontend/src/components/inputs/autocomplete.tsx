@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import { RemoveScroll } from "react-remove-scroll";
 import { twMerge } from "tailwind-merge";
 
+import { useBackButton } from "~/hooks/use-back-button";
 import { useBreakpoint } from "~/hooks/use-breakpoint";
 import { useSafeArea } from "~/hooks/use-safe-area";
 import { emptyArray, suppressNextClick } from "~/utilities";
@@ -123,6 +124,11 @@ export function InputAutocomplete<K extends string>(
 		setOverlayVisible(false);
 		setInputValue("");
 	}, []);
+
+	useBackButton(overlayVisible, () => {
+		inputReference.current?.blur();
+		close();
+	});
 
 	const onInputChange = useCallback<React.ChangeEventHandler<HTMLInputElement>>(
 		({ currentTarget }) => {
@@ -315,6 +321,7 @@ export function InputAutocomplete<K extends string>(
 											: 0
 								}}
 								autoComplete="off"
+								enterKeyHint="done"
 								placeholder={placeholder}
 								ref={inputReference}
 								type="text"
@@ -338,7 +345,16 @@ export function InputAutocomplete<K extends string>(
 									const { key, currentTarget } = event;
 									const value = currentTarget.value.trim();
 
-									if (key === "Enter" && value.length > 0) {
+									// With no filter input, Enter closes the list instead of submitting the form.
+									if (key === "Enter") {
+										event.preventDefault();
+
+										if (value.length === 0) {
+											if (fullscreen) inputReference.current?.blur();
+											close();
+											return;
+										}
+
 										const exactMatchOption = options.find(
 											({ label }) => label.toLowerCase() === value.toLowerCase()
 										);
@@ -354,18 +370,15 @@ export function InputAutocomplete<K extends string>(
 												exactMatchOption?.key ?? suggestions[0]!.key
 											]);
 											setInputValue("");
-
-											event.preventDefault();
 											return;
 										}
 
 										if (supportArbitrary) {
 											onChange([...values, value as K]);
 											setInputValue("");
-
-											event.preventDefault();
-											return;
 										}
+
+										return;
 									}
 
 									if (key !== "Backspace" || value.length > 0) return;

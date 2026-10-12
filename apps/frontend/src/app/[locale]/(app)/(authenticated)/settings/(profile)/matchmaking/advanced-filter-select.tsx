@@ -12,6 +12,7 @@ import { Badge } from "~/components/badge";
 import { Link } from "~/components/link";
 import { Popover, PopoverAnchor, PopoverContent } from "~/components/popover";
 import { ScrollIndicator } from "~/components/scroll-indicator";
+import { useBackButton } from "~/hooks/use-back-button";
 import { useBreakpoint } from "~/hooks/use-breakpoint";
 import { useSafeArea } from "~/hooks/use-safe-area";
 import { useScrollIndicator } from "~/hooks/use-scroll-indicator";
@@ -91,6 +92,11 @@ export const AdvancedFilterSelect: FC<{
 		setInputValue("");
 	}, []);
 
+	useBackButton(overlayVisible, () => {
+		inputReference.current?.blur();
+		close();
+	});
+
 	const filtering = inputValue.trim().length > 0;
 
 	const selectedOptions = useMemo(
@@ -167,6 +173,14 @@ export const AdvancedFilterSelect: FC<{
 			if (first) add(first.option.key, false);
 
 			event.preventDefault();
+			return;
+		}
+
+		// With no filter input, Enter closes the list instead of submitting the form.
+		if (key === "Enter") {
+			event.preventDefault();
+			if (fullscreen) inputReference.current?.blur();
+			close();
 			return;
 		}
 
@@ -455,6 +469,7 @@ export const AdvancedFilterSelect: FC<{
 											: 0
 								}}
 								autoComplete="off"
+								enterKeyHint="done"
 								placeholder={placeholder}
 								ref={inputReference}
 								type="text"

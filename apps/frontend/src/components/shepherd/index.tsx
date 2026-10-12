@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Shepherd from "shepherd.js";
 import type { TourOptions } from "shepherd.js";
 
+import { addBackHandler } from "~/hooks/use-back-button";
 import { nativeNavigation } from "~/hooks/use-device";
 import { NativeNavigationPlugin } from "~/native-navigation";
 
@@ -29,14 +30,24 @@ export const ShepherdProvider: FC<PropsWithChildren> = ({ children }) => {
 	useEffect(() => {
 		const { dataset } = document.documentElement;
 
+		// Android's back button steps back through the tour, and does nothing on its first step.
+		let removeBackHandler: (() => void) | undefined;
+		const back = () => {
+			const step = tour.getCurrentStep();
+			if (step && tour.steps.indexOf(step) > 0) tour.back();
+		};
+
 		const show = () => {
 			dataset.tour = "";
 			delete dataset.tourNavigation;
 			centerInTourArea();
+			removeBackHandler ??= addBackHandler(back);
 		};
 		const end = () => {
 			delete dataset.tour;
 			delete dataset.tourNavigation;
+			removeBackHandler?.();
+			removeBackHandler = undefined;
 		};
 
 		// Folding or rotating moves the tab bar and panes; re-show once the layout settles.
@@ -59,6 +70,7 @@ export const ShepherdProvider: FC<PropsWithChildren> = ({ children }) => {
 		const layout = nativeNavigation ? NativeNavigationPlugin.addListener("layout", relayout) : null;
 
 		return () => {
+			removeBackHandler?.();
 			clearTimeout(reshow);
 			tour.off("show", show);
 			tour.off("complete", end);
