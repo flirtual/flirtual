@@ -39,6 +39,16 @@ export async function logout() {
 	window.location.reload();
 }
 
+export async function impersonate(userId: string) {
+	await Authentication.impersonate(userId);
+	window.location.reload();
+}
+
+export async function revokeImpersonate() {
+	await Authentication.revokeImpersonate();
+	window.location.reload();
+}
+
 export const getSession = () => queryClient.ensureQueryData<Session | null>({ queryKey: sessionKey() });
 
 export function useOptionalSession(queryOptions: MinimalQueryOptions<Session | null> = {}): Session | null {
