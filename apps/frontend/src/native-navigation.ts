@@ -79,9 +79,13 @@ export const NativeNavigationPlugin = registerPlugin<{
 	toast: (options: { text: string; icon?: string; tint?: string; duration: number }) => Promise<void>;
 	// In CSS pixels. Builds from before this have no such method.
 	tabFrames: () => Promise<{ frames: Record<string, NativeNavigationFrame>; bar?: NativeNavigationFrame }>;
+	// iOS's history swipes, or a swipe to `up` when it isn't in history. Missing from older builds.
+	swipe: (options: { back: boolean; forward: boolean; up?: string }) => Promise<void>;
 	addListener: ((eventName: "action", listener: (event: { id: string }) => void) => Promise<PluginListenerHandle>)
 		& ((eventName: "layout", listener: (event: Layout) => void) => Promise<PluginListenerHandle>)
-		& ((eventName: "select", listener: (event: { id: string }) => void) => Promise<PluginListenerHandle>);
+		& ((eventName: "select", listener: (event: { id: string }) => void) => Promise<PluginListenerHandle>)
+		& ((eventName: "upCancel", listener: () => void) => Promise<PluginListenerHandle>)
+		& ((eventName: "upStart", listener: (event: { to: string }) => void) => Promise<PluginListenerHandle>);
 }>("NativeNavigation");
 
 // Native views outlive page loads, so pages without them clear them.

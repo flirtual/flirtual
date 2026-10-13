@@ -1,14 +1,17 @@
 import { useEffect, useEffectEvent, useMemo } from "react";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
+import { useLocation } from "react-router";
 import { clamp } from "remeda";
 
 import type { User } from "~/api/user";
+import { useBackClaimed } from "~/hooks/use-back-button";
 import { useBreakpoint } from "~/hooks/use-breakpoint";
 import { useHasConversations } from "~/hooks/use-conversations";
-import { useTabMemory } from "~/hooks/use-tab-memory";
+import { goUp, knownInTab, previousInTab, useUpTarget } from "~/hooks/use-history-tabs";
+import { restoreScroll, useTabMemory } from "~/hooks/use-tab-memory";
 import { useUnreadConversations } from "~/hooks/use-talkjs";
-import { useLocale, useMatch } from "~/i18n";
+import { replaceLanguage, useLocale, useMatch, useNavigate } from "~/i18n";
 import { NativeNavigationPlugin } from "~/native-navigation";
 import type { Corners, Fold, Layout, NativeNavigationTab, SideBar, TopCorners } from "~/native-navigation";
 import { urls } from "~/urls";
@@ -61,6 +64,12 @@ function setTopClearance(topCorners: TopCorners, sideBar: SideBar, corners: Corn
 	}
 }
 
+// Restored if an up swipe is cancelled.
+let leavingScroll: number | undefined;
+let returningScroll: number | undefined;
+
+const withoutLocale = (to: string) => replaceLanguage(to, null).pathname;
+
 function setLayout({ topCorners, fold, sideBar, bottomBar, corners }: Layout) {
 	setTopCorners(topCorners);
 	setTopClearance(topCorners, sideBar, corners);
@@ -87,6 +96,27 @@ interface Tab extends NativeNavigationTab {
 }
 
 const NativeTabs: FC<{ tabs: Array<Tab>; selected?: string }> = ({ tabs, selected }) => {
+	const navigate = useNavigate();
+	const location = useLocation();
+	const backClaimed = useBackClaimed();
+	const tabRoot = tabs.some(({ id, href }) => id === selected && replaceLanguage(location, null).pathname === withoutLocale(href));
+
+	const upTarget = useUpTarget();
+
+	// Swipes stay within the tab and are off while an overlay is open. Pages opened from another tab
+	// swipe up to their parent instead.
+	useEffect(() => {
+		const back = !backClaimed && !tabRoot && knownInTab(-1);
+		const up = !back && !backClaimed && !tabRoot && upTarget && !previousInTab() ? withoutLocale(upTarget) : undefined;
+		void NativeNavigationPlugin.swipe({ back, forward: !backClaimed && knownInTab(1), up }).catch(() => {});
+	}, [location, tabRoot, backClaimed, upTarget]);
+
+	useEffect(() => {
+		if (returningScroll === undefined) return;
+		void restoreScroll(returningScroll);
+		returningScroll = undefined;
+	}, [location]);
+
 	// Homie Mode's theme follows the route, so the selection changing covers it.
 	useEffect(() => {
 		const tint = getComputedStyle(document.body).getPropertyValue("--theme-2").trim();
@@ -101,6 +131,7 @@ const NativeTabs: FC<{ tabs: Array<Tab>; selected?: string }> = ({ tabs, selecte
 			delete document.body.dataset.nativeNavigation;
 			setLayout({ topCorners: {}, fold: {}, sideBar: {}, bottomBar: {}, corners: {} });
 			void NativeNavigationPlugin.update({ visible: false });
+			void NativeNavigationPlugin.swipe({ back: false, forward: false }).catch(() => {});
 		};
 	}, []);
 
@@ -110,7 +141,17 @@ const NativeTabs: FC<{ tabs: Array<Tab>; selected?: string }> = ({ tabs, selecte
 	useEffect(() => {
 		const listeners = [
 			NativeNavigationPlugin.addListener("select", (event) => onSelect(event)),
-			NativeNavigationPlugin.addListener("layout", setLayout)
+			NativeNavigationPlugin.addListener("layout", setLayout),
+			NativeNavigationPlugin.addListener("upStart", ({ to }) => {
+				leavingScroll = window.scrollY;
+				goUp(to);
+			}),
+			NativeNavigationPlugin.addListener("upCancel", () => {
+				if (leavingScroll === undefined) return;
+				returningScroll = leavingScroll;
+				leavingScroll = undefined;
+				void navigate(1);
+			})
 		];
 		return () => void Promise.all(listeners.map((listener) => listener.then((handle) => handle.remove())));
 	// eslint-disable-next-line react-hooks/exhaustive-deps

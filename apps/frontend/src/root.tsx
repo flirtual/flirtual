@@ -204,6 +204,12 @@ export function Layout({ children }: PropsWithChildren) {
 	useTranslateSSR(i18n.store.data, locale);
 	useEffect(() => void i18n.changeLanguage(locale), [locale]);
 
+	// WebKit only shows swipe snapshots with automatic scroll restoration. <ScrollRestoration />
+	// sets it to manual, but still works without it.
+	useEffect(() => {
+		if (device.nativeNavigation) history.scrollRestoration = "auto";
+	}, []);
+
 	preconnect(apiOrigin);
 	bucketOrigins.map((origin) => preconnect(origin));
 	preload(montserratNormal, { as: "font", type: "font/woff2", crossOrigin: "anonymous" });

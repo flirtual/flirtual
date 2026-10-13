@@ -8,6 +8,7 @@ import { LoginIcon } from "~/components/icons/gradient/login";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
 import { development } from "~/const";
 import { useDevice } from "~/hooks/use-device";
+import { useHistoryTabs } from "~/hooks/use-history-tabs";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useTabMemory } from "~/hooks/use-tab-memory";
 import { useMatch } from "~/i18n";
@@ -109,6 +110,7 @@ const NavigationContent: FC = () => {
 export function Navigation() {
 	const { nativeNavigation } = useDevice();
 	const session = useOptionalSession();
+	useHistoryTabs();
 	if (nativeNavigation)
 		return session && !session.user.ban
 			? <NativeNavigation user={session.user} />
