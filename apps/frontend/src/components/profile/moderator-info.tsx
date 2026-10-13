@@ -5,6 +5,7 @@ import { capitalize } from "remeda";
 import { twMerge } from "tailwind-merge";
 
 import type { AgeVerificationProvider } from "~/api/age-verification";
+import type { EntitlementStore } from "~/api/subscription";
 import type { UserAgeVerification } from "~/api/user";
 import { activeEntitlements, premium } from "~/api/user";
 import { useAttributeTranslation } from "~/hooks/use-attribute";
@@ -47,6 +48,14 @@ const platformLabels: Record<string, string> = {
 	ios: "iOS",
 	android: "Android",
 	vision: "visionOS"
+};
+
+const storeLabels: Record<EntitlementStore, string> = {
+	app_store: "App Store",
+	chargebee: "Chargebee",
+	play_store: "Play Store",
+	promotional: "Promotional",
+	stripe: "Stripe"
 };
 
 function adult({ ageLower, ageUpper }: UserAgeVerification): boolean {
@@ -373,7 +382,7 @@ export const ProfileModeratorInfo: FC<{
 								? (
 										<span className="text-green-600">
 											{activeEntitlements(user)
-												.map((entitlement) => entitlement.plan.name)
+												.map((entitlement) => `${entitlement.plan.name} (${storeLabels[entitlement.store]})`)
 												.join(", ")}
 										</span>
 									)
