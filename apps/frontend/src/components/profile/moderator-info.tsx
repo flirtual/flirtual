@@ -62,6 +62,19 @@ const storeLabels: Record<EntitlementStore, string> = {
 
 const authConnectionTypes: Array<ConnectionType> = ["google", "apple"];
 
+const loginMethodLabels: Record<string, string> = {
+	password: "Password",
+	passkey: "Passkey",
+	magic: "Magic link",
+	transfer: "Session transfer"
+};
+
+function loginMethodLabel(method: string): string {
+	return loginMethodLabels[method]
+		?? ConnectionMetadata[method as ConnectionType]?.name
+		?? method;
+}
+
 function adult({ ageLower, ageUpper }: UserAgeVerification): boolean {
 	if (ageUpper != null && ageUpper < 18) return false;
 	return (ageLower ?? 18) >= 18;
@@ -239,6 +252,7 @@ export const ProfileModeratorInfo: FC<{
 										value={user.activeAt}
 									/>
 								</CopyClick>
+								{user.lastLoginMethod && ` (${loginMethodLabel(user.lastLoginMethod)})`}
 							</span>
 						)}
 						<span>

@@ -145,6 +145,16 @@ defmodule Flirtual.User.Login do
     |> Repo.all()
   end
 
+  def last_method(user_id) do
+    Login
+    |> where([login], login.user_id == ^user_id)
+    |> where([login], login.status in ["successful", "untrusted"])
+    |> order_by([login], desc: login.created_at)
+    |> limit(1)
+    |> select([login], login.method)
+    |> Repo.one()
+  end
+
   def untrust(user_id) do
     Login
     |> where([login], login.user_id == ^user_id)

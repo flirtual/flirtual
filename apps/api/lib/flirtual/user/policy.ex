@@ -411,6 +411,20 @@ defmodule Flirtual.User.Policy do
 
   def transform(:age_verifications, _, _), do: nil
 
+  def transform(
+        :last_login_method,
+        %Plug.Conn{
+          assigns: %{
+            session: session
+          }
+        },
+        %User{} = user
+      ) do
+    if :moderator in session.user.tags, do: Login.last_method(user.id)
+  end
+
+  def transform(:last_login_method, _, _), do: nil
+
   @admin_property_keys [
     :email,
     :previous_email,

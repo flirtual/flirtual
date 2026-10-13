@@ -126,6 +126,7 @@ export type User = {
 	ban?: UserBan;
 	loginLocations?: Array<string>;
 	ageVerifications?: Array<UserAgeVerification>;
+	lastLoginMethod?: string;
 	deactivatedAt?: string;
 	preferences?: Preferences;
 	profile: Profile;
