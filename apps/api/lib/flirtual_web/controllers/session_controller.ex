@@ -109,6 +109,7 @@ defmodule FlirtualWeb.SessionController do
       session = Session.create(user)
 
       Login.verify(login_id, session.id)
+      User.update_platforms(user)
 
       conn =
         conn
