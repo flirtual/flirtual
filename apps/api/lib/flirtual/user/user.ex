@@ -105,6 +105,8 @@ defmodule Flirtual.User do
     field(:login_locations, {:array, :string}, virtual: true)
     field(:age_verifications, {:array, :map}, virtual: true)
     field(:last_login_method, :string, virtual: true)
+    field(:match_count, :integer, virtual: true)
+    field(:blocked_by_count, :integer, virtual: true)
 
     field(:tags, {:array, Ecto.Enum},
       values: @tags,
@@ -1558,6 +1560,8 @@ defimpl Jason.Encoder, for: Flirtual.User do
       :login_locations,
       :age_verifications,
       :last_login_method,
+      :match_count,
+      :blocked_by_count,
       :shadowbanned_at,
       :indef_shadowbanned_at,
       :payments_banned_at,

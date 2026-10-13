@@ -127,6 +127,8 @@ export type User = {
 	loginLocations?: Array<string>;
 	ageVerifications?: Array<UserAgeVerification>;
 	lastLoginMethod?: string;
+	matchCount?: number;
+	blockedByCount?: number;
 	deactivatedAt?: string;
 	preferences?: Preferences;
 	profile: Profile;

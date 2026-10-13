@@ -471,6 +471,29 @@ export const ProfileModeratorInfo: FC<{
 							{user.moderatorMessage ?? "None"}
 						</span>
 					</span>
+					{user.matchCount != null && user.blockedByCount != null && (
+						<div className="flex flex-col">
+							<span>
+								<span className="font-bold">Matches:</span>
+								{" "}
+								<span>{user.matchCount}</span>
+							</span>
+							<span>
+								<span className="font-bold">Blocked by:</span>
+								{" "}
+								<span>{user.blockedByCount}</span>
+							</span>
+							<span>
+								<span className="font-bold">Ratio:</span>
+								{" "}
+								<span>
+									{user.matchCount > 0
+										? (user.blockedByCount / user.matchCount).toFixed(3)
+										: "N/A"}
+								</span>
+							</span>
+						</div>
+					)}
 					<span>
 						<span className="font-bold">Looking for:</span>
 						{" "}

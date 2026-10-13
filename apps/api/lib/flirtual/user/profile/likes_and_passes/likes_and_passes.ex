@@ -130,6 +130,18 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
     |> Repo.all()
   end
 
+  def count_matches(profile_id: profile_id) do
+    from(lap in LikesAndPasses,
+      join: opposite in LikesAndPasses,
+      on:
+        opposite.profile_id == lap.target_id and opposite.target_id == lap.profile_id and
+          opposite.type == :like,
+      where: lap.profile_id == ^profile_id and lap.type == :like,
+      select: count(lap.target_id, :distinct)
+    )
+    |> Repo.one()
+  end
+
   @gender_woman "tpkW7r8PZ2RUuYGUSYi82N"
   @gender_man "rhw3rcbheU7vc9vcSy6W6V"
   @gender_other "jAL62ePbibxaG4FPu7S8LG"
