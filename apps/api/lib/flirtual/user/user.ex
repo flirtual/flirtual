@@ -1220,8 +1220,9 @@ defmodule Flirtual.User do
       Login
       |> where(user_id: ^user.id, status: "successful")
       |> where([login], not is_nil(login.platform))
+      |> group_by([login], login.platform)
+      |> order_by([login], desc: max(login.created_at), asc: login.platform)
       |> select([login], login.platform)
-      |> distinct(true)
       |> Repo.all()
 
     Repo.transaction(fn ->

@@ -259,6 +259,7 @@ defmodule Flirtual.User.Policy do
     :created_at,
     :connections,
     :entitlements,
+    :platforms,
     :tns_discord_in_biography
   ]
 

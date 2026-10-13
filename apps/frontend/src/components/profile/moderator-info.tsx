@@ -42,6 +42,13 @@ const ageVerificationLabels: Record<AgeVerificationProvider, string> = {
 	apple: "Apple age range"
 };
 
+const platformLabels: Record<string, string> = {
+	web: "Web",
+	ios: "iOS",
+	android: "Android",
+	vision: "visionOS"
+};
+
 function adult({ ageLower, ageUpper }: UserAgeVerification): boolean {
 	if (ageUpper != null && ageUpper < 18) return false;
 	return (ageLower ?? 18) >= 18;
@@ -202,6 +209,17 @@ export const ProfileModeratorInfo: FC<{
 								</CopyClick>
 							</span>
 						)}
+						<span>
+							<span className="font-bold">Platforms:</span>
+							{" "}
+							<span>
+								{user.platforms && user.platforms.length > 0
+									? user.platforms
+											.map((platform) => platformLabels[platform] ?? platform)
+											.join(", ")
+									: "None"}
+							</span>
+						</span>
 						<span>
 							<span className="font-bold">Login locations:</span>
 							{" "}
