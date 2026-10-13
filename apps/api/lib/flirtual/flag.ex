@@ -267,14 +267,16 @@ defmodule Flirtual.Flag do
         },
         biography
       ) do
-    biography_downcased = String.downcase(biography)
     discord_connection = Connection.get(user_id, :discord)
     discord_display_name = discord_connection[:display_name] || discord
+    text = biography_text(biography)
 
-    if (discord_display_name !== nil && discord_display_name !== "" &&
-          String.contains?(biography_downcased, discord_display_name)) ||
-         ((discord_display_name === nil || discord_display_name === "") &&
-            String.contains?(biography_downcased, "discord")) do
+    listed? =
+      if discord_display_name in [nil, ""],
+        do: lists_discord_username?(text),
+        else: contains_word?(text, discord_display_name)
+
+    if listed? do
       now = DateTime.utc_now() |> DateTime.truncate(:second)
 
       User
@@ -287,6 +289,43 @@ defmodule Flirtual.Flag do
     end
 
     :ok
+  end
+
+  defp contains_word?(text, word) do
+    Regex.match?(~r/(?<![[:alnum:]])#{Regex.escape(word)}(?![[:alnum:]])/iu, text)
+  end
+
+  # Non-username words to ignore.
+  @discord_username_stopwords ~w(ask at below easier here if just my same the this)
+
+  defp lists_discord_username?(text) do
+    [
+      # "discord: name", "dc - name", "discord & vrc: name", "my discord username is: name"
+      ~r/
+        (?<![[:alnum:]])(?:discord|disc|dc)
+        (?:\s*(?:and|&|\/|\+|,)\s*(?:vrc|vrchat|steam|telegram|snap|snapchat|insta|instagram|ig|twitter|x))*
+        (?:\s*(?:user\s*name|username|user|name|tag|handle|id|account|acc))?
+        (?:\s*[:;˸：⁝\-–—=|~>»→]+|\s+(?:is|it['’]?s)\b(?:\s*[:;\-–—=])?)
+        \s*[("'“”‘’]?\s*@?([a-z0-9_.]{2,32}(?:\#\d{4})?)(?![[:alnum:]_.\/\#])
+      /iux,
+      # "discord @name", "add me on dc name_99", "disc .name", "discord name#1234"
+      ~r/
+        (?<![[:alnum:]])(?:discord|disc|dc)\s*[(\s]\s*["'“”‘’]?
+        (@[a-z0-9_.]{2,32}|[a-z0-9_.]{2,32}\#\d{4}|(?=[a-z0-9_.]*[a-z])[a-z0-9_.]*(?:\d|_|\.(?=[a-z0-9_]))[a-z0-9_.]*)
+        (?![[:alnum:]_.\/\#])
+      /iux,
+      # "discord (name)"
+      ~r/(?<![[:alnum:]])(?:discord|disc|dc)\s*\(\s*@?([a-z0-9_.]{2,32}(?:#\d{4})?)\s*\)/iu,
+      # a line with only "discord name"
+      ~r/^[^[:alnum:]\n]*(?:discord|disc|dc)\s+([a-z0-9_.]{2,32})[^[:alnum:]\n]*$/imu,
+      # "name is my discord"
+      ~r/(?<![[:alnum:]_.])([a-z0-9_.]{2,32}) is my (?:discord|disc|dc)(?![[:alnum:]])/iu
+    ]
+    |> Enum.flat_map(&Regex.scan(&1, text, capture: :all_but_first))
+    |> Enum.any?(fn [username] ->
+      word = username |> String.downcase() |> String.trim_leading("@") |> String.trim(".")
+      word not in @discord_username_stopwords
+    end)
   end
 
   def check_discord_in_display_name(

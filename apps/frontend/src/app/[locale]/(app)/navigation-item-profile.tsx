@@ -17,16 +17,14 @@ import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router";
 import { twMerge } from "tailwind-merge";
 
-import { Authentication } from "~/api/auth";
 import { DiscordOutlineIcon } from "~/components/icons";
 import { Link } from "~/components/link";
 import { UserAvatar } from "~/components/user-avatar";
 import { useBreakpoint } from "~/hooks/use-breakpoint";
 import { useClickOutside } from "~/hooks/use-click-outside";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
-import { useSession } from "~/hooks/use-session";
+import { revokeImpersonate, useSession } from "~/hooks/use-session";
 import { useMatch } from "~/i18n";
-import { mutate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
 type ProfileNavigationItemProps = React.PropsWithChildren<
@@ -184,10 +182,7 @@ export const NavigationItemProfile: FC = () => {
 							)}
 							{session.sudoerId && (
 								<ProfileNavigationItem
-									onClick={async () => {
-										const session = await Authentication.revokeImpersonate();
-										await mutate(sessionKey(), session);
-									}}
+									onClick={revokeImpersonate}
 								>
 									<VenetianMask className="size-6 shrink-0" />
 									<span className="whitespace-nowrap">{t("unsudo")}</span>

@@ -104,6 +104,9 @@ defmodule Flirtual.User do
     field(:ban, :map, virtual: true)
     field(:login_locations, {:array, :string}, virtual: true)
     field(:age_verifications, {:array, :map}, virtual: true)
+    field(:last_login_method, :string, virtual: true)
+    field(:match_count, :integer, virtual: true)
+    field(:blocked_by_count, :integer, virtual: true)
 
     field(:tags, {:array, Ecto.Enum},
       values: @tags,
@@ -1220,8 +1223,9 @@ defmodule Flirtual.User do
       Login
       |> where(user_id: ^user.id, status: "successful")
       |> where([login], not is_nil(login.platform))
+      |> group_by([login], login.platform)
+      |> order_by([login], desc: max(login.created_at), asc: login.platform)
       |> select([login], login.platform)
-      |> distinct(true)
       |> Repo.all()
 
     Repo.transaction(fn ->
@@ -1555,6 +1559,9 @@ defimpl Jason.Encoder, for: Flirtual.User do
       :ban,
       :login_locations,
       :age_verifications,
+      :last_login_method,
+      :match_count,
+      :blocked_by_count,
       :shadowbanned_at,
       :indef_shadowbanned_at,
       :payments_banned_at,

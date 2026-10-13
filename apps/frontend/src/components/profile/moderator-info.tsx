@@ -5,6 +5,9 @@ import { capitalize } from "remeda";
 import { twMerge } from "tailwind-merge";
 
 import type { AgeVerificationProvider } from "~/api/age-verification";
+import { ConnectionMetadata } from "~/api/connections";
+import type { ConnectionType } from "~/api/connections";
+import type { EntitlementStore } from "~/api/subscription";
 import type { UserAgeVerification } from "~/api/user";
 import { activeEntitlements, premium } from "~/api/user";
 import { useAttributeTranslation } from "~/hooks/use-attribute";
@@ -41,6 +44,36 @@ const ageVerificationLabels: Record<AgeVerificationProvider, string> = {
 	android: "Google age range",
 	apple: "Apple age range"
 };
+
+const platformLabels: Record<string, string> = {
+	web: "Web",
+	ios: "iOS",
+	android: "Android",
+	vision: "visionOS"
+};
+
+const storeLabels: Record<EntitlementStore, string> = {
+	app_store: "App Store",
+	chargebee: "Chargebee",
+	play_store: "Play Store",
+	promotional: "Promotional",
+	stripe: "Stripe"
+};
+
+const authConnectionTypes: Array<ConnectionType> = ["google", "apple"];
+
+const loginMethodLabels: Record<string, string> = {
+	password: "Password",
+	passkey: "Passkey",
+	magic: "Magic link",
+	transfer: "Session transfer"
+};
+
+function loginMethodLabel(method: string): string {
+	return loginMethodLabels[method]
+		?? ConnectionMetadata[method as ConnectionType]?.name
+		?? method;
+}
 
 function adult({ ageLower, ageUpper }: UserAgeVerification): boolean {
 	if (ageUpper != null && ageUpper < 18) return false;
@@ -176,6 +209,25 @@ export const ProfileModeratorInfo: FC<{
 								{isAdmin && <HelpdeskLink email={user.previousEmail} />}
 							</span>
 						)}
+						{authConnectionTypes.map((type) => {
+							const connection = user.connections?.find((connection) => connection.type === type);
+							if (!connection) return null;
+
+							return (
+								<span key={type}>
+									<span className="font-bold">
+										{ConnectionMetadata[type].name}
+										:
+									</span>
+									{" "}
+									<CopyClick value={connection.displayName}>
+										<span className="cursor-pointer hover:underline">
+											{connection.displayName}
+										</span>
+									</CopyClick>
+								</span>
+							);
+						})}
 					</div>
 					<div className="flex flex-col">
 						{user.createdAt && (
@@ -200,8 +252,20 @@ export const ProfileModeratorInfo: FC<{
 										value={user.activeAt}
 									/>
 								</CopyClick>
+								{user.lastLoginMethod && ` (${loginMethodLabel(user.lastLoginMethod)})`}
 							</span>
 						)}
+						<span>
+							<span className="font-bold">Platforms:</span>
+							{" "}
+							<span>
+								{user.platforms && user.platforms.length > 0
+									? user.platforms
+											.map((platform) => platformLabels[platform] ?? platform)
+											.join(", ")
+									: "None"}
+							</span>
+						</span>
 						<span>
 							<span className="font-bold">Login locations:</span>
 							{" "}
@@ -355,7 +419,7 @@ export const ProfileModeratorInfo: FC<{
 								? (
 										<span className="text-green-600">
 											{activeEntitlements(user)
-												.map((entitlement) => entitlement.plan.name)
+												.map((entitlement) => `${entitlement.plan.name} (${storeLabels[entitlement.store]})`)
 												.join(", ")}
 										</span>
 									)
@@ -407,6 +471,29 @@ export const ProfileModeratorInfo: FC<{
 							{user.moderatorMessage ?? "None"}
 						</span>
 					</span>
+					{user.matchCount != null && user.blockedByCount != null && (
+						<div className="flex flex-col">
+							<span>
+								<span className="font-bold">Matches:</span>
+								{" "}
+								<span>{user.matchCount}</span>
+							</span>
+							<span>
+								<span className="font-bold">Blocked by:</span>
+								{" "}
+								<span>{user.blockedByCount}</span>
+							</span>
+							<span>
+								<span className="font-bold">Ratio:</span>
+								{" "}
+								<span>
+									{user.matchCount > 0
+										? (user.blockedByCount / user.matchCount).toFixed(3)
+										: "N/A"}
+								</span>
+							</span>
+						</div>
+					)}
 					<span>
 						<span className="font-bold">Looking for:</span>
 						{" "}

@@ -1,12 +1,15 @@
 import { useEffect, useEffectEvent, useMemo } from "react";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
-import { createPath, useLocation } from "react-router";
+import { useLocation } from "react-router";
 import { clamp } from "remeda";
 
 import type { User } from "~/api/user";
+import { useBackClaimed } from "~/hooks/use-back-button";
 import { useBreakpoint } from "~/hooks/use-breakpoint";
 import { useHasConversations } from "~/hooks/use-conversations";
+import { goUp, knownInTab, previousInTab, useUpTarget } from "~/hooks/use-history-tabs";
+import { restoreScroll, useTabMemory } from "~/hooks/use-tab-memory";
 import { useUnreadConversations } from "~/hooks/use-talkjs";
 import { replaceLanguage, useLocale, useMatch, useNavigate } from "~/i18n";
 import { NativeNavigationPlugin } from "~/native-navigation";
@@ -61,9 +64,9 @@ function setTopClearance(topCorners: TopCorners, sideBar: SideBar, corners: Corn
 	}
 }
 
-// The page last visited under each tab. Switching back within the same session
-// navigates there.
-const lastPages = new Map<string, string>();
+// Restored if an up swipe is cancelled.
+let leavingScroll: number | undefined;
+let returningScroll: number | undefined;
 
 const withoutLocale = (to: string) => replaceLanguage(to, null).pathname;
 
@@ -95,15 +98,24 @@ interface Tab extends NativeNavigationTab {
 const NativeTabs: FC<{ tabs: Array<Tab>; selected?: string }> = ({ tabs, selected }) => {
 	const navigate = useNavigate();
 	const location = useLocation();
+	const backClaimed = useBackClaimed();
+	const tabRoot = tabs.some(({ id, href }) => id === selected && replaceLanguage(location, null).pathname === withoutLocale(href));
+
+	const upTarget = useUpTarget();
+
+	// Swipes stay within the tab and are off while an overlay is open. Pages opened from another tab
+	// swipe up to their parent instead.
+	useEffect(() => {
+		const back = !backClaimed && !tabRoot && knownInTab(-1);
+		const up = !back && !backClaimed && !tabRoot && upTarget && !previousInTab() ? withoutLocale(upTarget) : undefined;
+		void NativeNavigationPlugin.swipe({ back, forward: !backClaimed && knownInTab(1), up }).catch(() => {});
+	}, [location, tabRoot, backClaimed, upTarget]);
 
 	useEffect(() => {
-		const tab = tabs.find(({ id }) => id === selected);
-		if (!tab) return;
-
-		const here = replaceLanguage(location, null);
-		if (here.pathname === withoutLocale(tab.href)) lastPages.delete(tab.id);
-		else lastPages.set(tab.id, createPath(here));
-	}, [tabs, selected, location]);
+		if (returningScroll === undefined) return;
+		void restoreScroll(returningScroll);
+		returningScroll = undefined;
+	}, [location]);
 
 	// Homie Mode's theme follows the route, so the selection changing covers it.
 	useEffect(() => {
@@ -119,33 +131,37 @@ const NativeTabs: FC<{ tabs: Array<Tab>; selected?: string }> = ({ tabs, selecte
 			delete document.body.dataset.nativeNavigation;
 			setLayout({ topCorners: {}, fold: {}, sideBar: {}, bottomBar: {}, corners: {} });
 			void NativeNavigationPlugin.update({ visible: false });
+			void NativeNavigationPlugin.swipe({ back: false, forward: false }).catch(() => {});
 		};
 	}, []);
 
-	const onSelect = useEffectEvent(({ id }: { id: string }) => {
-		const tab = tabs.find((tab) => tab.id === id);
-		if (!tab) return;
-
-		if (id !== selected) return void navigate(lastPages.get(id) ?? tab.href);
-
-		// Tapping the current tab goes back to its first page, then scrolls to the top.
-		if (replaceLanguage(location, null).pathname === withoutLocale(tab.href)) window.scrollTo({ top: 0, behavior: "smooth" });
-		else void navigate(tab.href);
-	});
+	const select = useTabMemory(tabs, selected);
+	const onSelect = useEffectEvent(({ id }: { id: string }) => select(id));
 
 	useEffect(() => {
 		const listeners = [
 			NativeNavigationPlugin.addListener("select", (event) => onSelect(event)),
-			NativeNavigationPlugin.addListener("layout", setLayout)
+			NativeNavigationPlugin.addListener("layout", setLayout),
+			NativeNavigationPlugin.addListener("upStart", ({ to }) => {
+				leavingScroll = window.scrollY;
+				goUp(to);
+			}),
+			NativeNavigationPlugin.addListener("upCancel", () => {
+				if (leavingScroll === undefined) return;
+				returningScroll = leavingScroll;
+				leavingScroll = undefined;
+				void navigate(1);
+			})
 		];
 		return () => void Promise.all(listeners.map((listener) => listener.then((handle) => handle.remove())));
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	// Takes the web navigation's place in the layout, reserving the inset that pages don't already
-	// pad for: the tab bar at the bottom on phones, and whatever's above the desktop layout.
+	// pad for: the tab bar at the bottom on phones, and whatever's above the desktop layout. Not a
+	// scroll anchor, as it comes before the page in the DOM.
 	return (
-		<div className="order-last h-[var(--safe-area-inset-bottom,0rem)] shrink-0 split:hidden desktop:order-none desktop:block desktop:h-[var(--safe-area-inset-top,0rem)] [[data-banner]~&]:desktop:hidden" />
+		<div className="order-last h-[var(--safe-area-inset-bottom,0rem)] shrink-0 [overflow-anchor:none] split:hidden desktop:order-none desktop:block desktop:h-[var(--safe-area-inset-top,0rem)] [[data-banner]~&]:desktop:hidden" />
 	);
 };
 

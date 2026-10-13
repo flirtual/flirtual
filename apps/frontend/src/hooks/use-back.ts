@@ -1,14 +1,17 @@
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 
 import { useNavigate } from "~/i18n";
 
-// Back through history, or to the fallback when the page was opened directly.
+import { addUpTarget, goUp, previousInTab } from "./use-history-tabs";
+
+// Back within the tab, or up to `fallback` if the page was opened from another tab.
 export function useBack(fallback: string) {
 	const navigate = useNavigate();
 
+	useEffect(() => addUpTarget(fallback), [fallback]);
+
 	return useCallback(() => {
-		const index = (window.history.state as { idx?: number } | null)?.idx ?? 0;
-		if (index > 0) void navigate(-1);
-		else void navigate(fallback);
+		if (previousInTab()) void navigate(-1);
+		else goUp(fallback);
 	}, [navigate, fallback]);
 }

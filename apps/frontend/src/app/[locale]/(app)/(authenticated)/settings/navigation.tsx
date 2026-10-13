@@ -26,15 +26,13 @@ import { useTranslation } from "react-i18next";
 import { useMatches } from "react-router";
 import { twMerge } from "tailwind-merge";
 
-import { Authentication } from "~/api/auth";
 import { InlineLink } from "~/components/inline-link";
 import { IdeasDialog } from "~/components/modals/ideas";
 import { commitIdShort } from "~/const";
 import { useDevice } from "~/hooks/use-device";
 import { useDialog } from "~/hooks/use-dialog";
 import { useFreshworks } from "~/hooks/use-freshworks";
-import { logout, useSession } from "~/hooks/use-session";
-import { evictQueries, invalidate, mutate, sessionKey } from "~/query";
+import { logout, revokeImpersonate, useSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 
 import { NavigationCategory } from "./navigation-category";
@@ -90,14 +88,7 @@ export const SettingsNavigation: FC = () => {
 							{sudoerId && (
 								<NavigationLink
 									Icon={VenetianMask}
-									onClick={async () => {
-										const session = await Authentication.revokeImpersonate();
-
-										await evictQueries();
-										await invalidate();
-
-										await mutate(sessionKey(), session);
-									}}
+									onClick={revokeImpersonate}
 								>
 									{t("unsudo")}
 								</NavigationLink>

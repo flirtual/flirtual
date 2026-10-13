@@ -78,7 +78,7 @@ export const ModelCard: React.FC<ModelCardProps> = ({
 							"relative w-full bg-brand-gradient px-8 py-7 text-center font-montserrat text-3xl font-extrabold text-white-20 full-bleed-x desktop:w-full desktop:rounded-t-2xl desktop:pb-4 desktop:pt-[1.125rem] desktop:text-2xl android:desktop:pt-[1.125rem]",
 							(inset || back)
 							&& "pl-[calc(2rem+var(--top-clearance-left,0rem))] pr-[calc(2rem+var(--top-clearance-right,0rem))] pt-[max(calc(var(--status-bar-inset-top,var(--safe-area-inset-top,0rem))+1rem),1.75rem)] desktop:px-8",
-							back && "flex min-h-[max(var(--status-bar-height,0rem),calc(max(calc(var(--status-bar-inset-top,var(--safe-area-inset-top,0rem))+0.25rem),0.75rem)+3.3125rem))] items-center justify-center pb-3 pt-[max(calc(var(--status-bar-inset-top,var(--safe-area-inset-top,0rem))+0.25rem),0.75rem)] text-2xl desktop:block desktop:min-h-0",
+							back && "flex min-h-[max(var(--status-bar-height,0rem),calc(max(calc(var(--status-bar-inset-top,var(--safe-area-inset-top,0rem))+0.25rem),0.75rem)+3.3125rem))] items-center justify-center pb-3 pl-[calc(3rem+var(--top-clearance-left,0rem))] pr-[calc(3rem+var(--top-clearance-right,0rem))] pt-[max(calc(var(--status-bar-inset-top,var(--safe-area-inset-top,0rem))+0.25rem),0.75rem)] text-2xl desktop:block desktop:min-h-0 desktop:px-8",
 							titleProps.className
 						)}
 					>

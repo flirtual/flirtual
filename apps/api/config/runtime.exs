@@ -299,8 +299,7 @@ if revenuecat_access_token do
     project_id: Env.get!("REVENUECAT_PROJECT_ID", always?: true)
 end
 
-config :flirtual, Flirtual.LLM,
-  model: Env.get("LLM_MODEL", default: "anthropic:claude-sonnet-latest")
+config :flirtual, Flirtual.LLM, model: Env.get("LLM_MODEL", default: "anthropic:claude-sonnet-5")
 
 config :req_llm, anthropic_api_key: Env.get("ANTHROPIC_ACCESS_TOKEN")
 

@@ -17,6 +17,7 @@ import type { PropsWithChildren } from "react";
 import { User } from "~/api/user";
 import { queryClient, useQuery } from "~/query";
 
+import { openDeepLink } from "./use-deep-links";
 import { device, useDevice } from "./use-device";
 import { useInterrupted } from "./use-interruption";
 import { useOptionalSession } from "./use-session";
@@ -164,8 +165,7 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 						catch {}
 					}
 
-					if (!url) return;
-					location.href = url.replace(/^flirtual:\/\//, "/");
+					if (url) openDeepLink(url);
 				}
 			);
 			return null;

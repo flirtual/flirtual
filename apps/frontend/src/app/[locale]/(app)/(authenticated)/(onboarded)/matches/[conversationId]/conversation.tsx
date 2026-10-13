@@ -70,6 +70,7 @@ export const Conversation = withSuspense<{ id: string }>(({ id: conversationId }
 				<InlineLink
 					className="flex items-center gap-4 hocus:no-underline"
 					href={urls.profile(user)}
+					state={{ conversationId }}
 				>
 					<UserAvatar
 						className="mb-[0.0625rem] rounded-full"

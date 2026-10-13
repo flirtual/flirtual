@@ -1,5 +1,5 @@
 import { m } from "motion/react";
-import type { ComponentProps, FC } from "react";
+import type { ComponentProps, FC, MouseEventHandler } from "react";
 import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 import RankedImage from "virtual:remote/ranked.jpg";
@@ -15,6 +15,7 @@ export interface NavigationalSwitchItemProps {
 	className?: string;
 	strict?: boolean;
 	id?: string;
+	onClick?: MouseEventHandler;
 }
 
 export const NavigationalSwitchItem: FC<NavigationalSwitchItemProps> = ({
@@ -79,7 +80,7 @@ export const NavigationalSwitchItem: FC<NavigationalSwitchItemProps> = ({
 export const NavigationItem: FC<
 	ComponentProps<typeof Link>
 > = ({ children, href, ...props }) => {
-	const active = useMatch({ path: href as string });
+	const active = useMatch({ path: href as string, end: false });
 
 	return (
 		<Link

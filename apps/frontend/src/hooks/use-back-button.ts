@@ -1,6 +1,8 @@
 import { App } from "@capacitor/app";
 import { Capacitor } from "@capacitor/core";
-import { useEffect, useEffectEvent } from "react";
+import { useEffect, useEffectEvent, useSyncExternalStore } from "react";
+
+import { goBack } from "./use-history-tabs";
 
 // Dialogs, drawers, menus and listboxes that are open.
 export const openOverlays = ["dialog", "alertdialog", "menu", "listbox"].map((role) => `[role="${role}"][data-state="open"]`).join(", ");
@@ -34,14 +36,56 @@ if (Capacitor.getPlatform() === "android") {
 			return;
 		}
 
-		if (canGoBack) history.back();
-		else void App.exitApp();
+		if (!goBack(canGoBack)) void App.exitApp();
 	});
 }
 
+const subscribers = new Set<() => void>();
+const notify = () => subscribers.forEach((subscriber) => subscriber());
+
 export function addBackHandler(handler: () => void) {
 	handlers.push(handler);
-	return () => void handlers.splice(handlers.indexOf(handler), 1);
+	notify();
+
+	return () => {
+		handlers.splice(handlers.indexOf(handler), 1);
+		notify();
+	};
+}
+
+// Whether back would close something or be ignored.
+function claimed() {
+	return handlers.length > 0 || !!document.querySelector(openOverlays) || thirdPartyOverlays.some(visible);
+}
+
+// Third-party overlays show and hide by restyling their containers.
+function subscribe(onChange: () => void) {
+	const styles = new MutationObserver(onChange);
+	const watchStyles = () => {
+		styles.disconnect();
+		for (const selector of thirdPartyOverlays) {
+			const element = document.querySelector(selector);
+			if (element) styles.observe(element, { attributeFilter: ["style", "class"] });
+		}
+	};
+
+	const tree = new MutationObserver(() => {
+		watchStyles();
+		onChange();
+	});
+	tree.observe(document.body, { subtree: true, childList: true, attributeFilter: ["data-state"] });
+	watchStyles();
+	subscribers.add(onChange);
+
+	return () => {
+		subscribers.delete(onChange);
+		tree.disconnect();
+		styles.disconnect();
+	};
+}
+
+export function useBackClaimed() {
+	return useSyncExternalStore(subscribe, claimed, () => false);
 }
 
 export function useBackButton(active: boolean, onBack: () => void) {

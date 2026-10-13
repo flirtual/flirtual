@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { useLocation } from "react-router";
 
 import { Matchmaking } from "~/api/matchmaking";
 import { premium } from "~/api/user";
@@ -6,6 +7,7 @@ import { invalidateMatch, invalidateQueue } from "~/hooks/use-queue";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { useRelationship, useUser } from "~/hooks/use-user";
+import { useNavigate } from "~/i18n";
 import { urls } from "~/urls";
 
 import { Button, ButtonLink } from "../button";
@@ -18,6 +20,8 @@ export const RelationActions: React.FC<{ userId: string; direct: boolean }> = ({
 }) => {
 	const user = useUser(userId);
 	const relationship = useRelationship(userId);
+	const location = useLocation();
+	const navigate = useNavigate();
 	const { user: current } = useSession();
 
 	const { t } = useTranslation();
@@ -32,6 +36,12 @@ export const RelationActions: React.FC<{ userId: string; direct: boolean }> = ({
 					className="w-full shrink text-theme-overlay"
 					href={urls.conversations.of(relationship.conversationId)}
 					size="sm"
+					onClick={(event) => {
+						// Opened from this conversation, so return to it rather than opening it again.
+						if ((location.state as { conversationId?: string } | null)?.conversationId !== relationship.conversationId) return;
+						event.preventDefault();
+						void navigate(-1);
+					}}
 				>
 					{t("message")}
 				</ButtonLink>

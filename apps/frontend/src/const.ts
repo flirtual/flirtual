@@ -15,6 +15,11 @@ invariant(siteOrigin, "VITE_ORIGIN is required");
 export const shortOrigin = import.meta.env.VITE_SHORT_ORIGIN as string || siteOrigin;
 export const shortHost = new URL(shortOrigin).host;
 
+export const deepLinkOrigins = [
+	shortOrigin,
+	...(import.meta.env.VITE_DEEP_LINK_ORIGINS as string || "").split(",").filter(Boolean)
+];
+
 export const apiUrl = import.meta.env.VITE_API_URL as string;
 invariant(apiUrl, "VITE_API_URL is required");
 

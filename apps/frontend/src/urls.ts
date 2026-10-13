@@ -8,7 +8,7 @@ import type { User } from "./api/user";
 import type { Profile } from "./api/user/profile";
 import type { ProfileImage } from "./api/user/profile/images";
 import type { DiscoverGroup } from "./app/[locale]/(app)/(authenticated)/(onboarded)/discover/page";
-import { apiUrl, appBundleId, appStoreId, bucketContentOrigin, bucketUploadsOrigin, rcProjectId, shortOrigin, siteOrigin } from "./const";
+import { apiUrl, appBundleId, appStoreId, bucketContentOrigin, bucketUploadsOrigin, deepLinkOrigins, rcProjectId, shortOrigin, siteOrigin } from "./const";
 import { defaultLocale } from "./i18n";
 import type { Locale } from "./i18n";
 import { escapeVRChat } from "./vrchat";
@@ -51,7 +51,7 @@ export function deepLinkToRelativeUrl(value: string) {
 	let relative: string;
 
 	if (url.protocol === "http:" || url.protocol === "https:") {
-		if (!allowedOrigins.includes(url.origin)) return null;
+		if (!allowedOrigins.includes(url.origin) && !deepLinkOrigins.includes(url.origin)) return null;
 		relative = toRelativeUrl(url);
 	}
 	else {

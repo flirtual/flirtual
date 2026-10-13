@@ -5,20 +5,28 @@ defmodule Flirtual.Release do
   """
   import Ecto.Query
 
+  alias DBConnection.ConnectionError
+
+  require Logger
+
   @app :flirtual
 
   # The rows a new database starts with, by table, from priv/repo/exports.
   @seeds ["attributes", "plans"]
 
-  # Fly starts a stopped database on the first connection, which takes Postgres seconds to accept:
-  # https://github.com/fly-apps/postgres-flex/blob/master/cmd/start/main.go
-  @wait_for_database_start [queue_target: 30_000, queue_interval: 30_000]
+  # A stopped database starts on the next connection, which has to wait for it.
+  # https://fly.io/docs/postgres/managing/scale-to-zero/
+  @connection_attempts 10
+  @pause_between_attempts 3_000
 
   def migrate do
     load_app()
 
     for repo <- repos() do
-      {:ok, _, _} = Ecto.Migrator.with_repo(repo, &Ecto.Migrator.run(&1, :up, all: true))
+      {:ok, _, _} =
+        retrying_disconnects(fn ->
+          Ecto.Migrator.with_repo(repo, &Ecto.Migrator.run(&1, :up, all: true))
+        end)
     end
   end
 
@@ -27,11 +35,25 @@ defmodule Flirtual.Release do
     load_app()
 
     {:ok, _, _} =
-      Ecto.Migrator.with_repo(Flirtual.Repo, fn repo ->
-        for table <- @seeds, not repo.exists?(from(row in table, select: 1)) do
-          {:ok, _} = repo.transaction(fn -> seed!(repo, table) end)
-        end
-      end)
+      retrying_disconnects(fn -> Ecto.Migrator.with_repo(Flirtual.Repo, &seed_empty_tables/1) end)
+  end
+
+  defp seed_empty_tables(repo) do
+    for table <- @seeds, not repo.exists?(from(row in table, select: 1)) do
+      {:ok, _} = repo.transaction(fn -> seed!(repo, table) end)
+    end
+  end
+
+  @doc false
+  def retrying_disconnects(task, pause \\ @pause_between_attempts, attempt \\ 1) do
+    task.()
+  rescue
+    error in ConnectionError ->
+      if attempt == @connection_attempts, do: reraise(error, __STACKTRACE__)
+
+      Logger.warning("The database isn't up yet (#{error.message}); retrying.")
+      Process.sleep(pause)
+      retrying_disconnects(task, pause, attempt + 1)
   end
 
   defp seed!(repo, table) do
@@ -52,10 +74,5 @@ defmodule Flirtual.Release do
 
   defp load_app do
     Application.load(@app)
-
-    for repo <- repos() do
-      config = Application.get_env(@app, repo, [])
-      Application.put_env(@app, repo, Keyword.merge(config, @wait_for_database_start))
-    end
   end
 end

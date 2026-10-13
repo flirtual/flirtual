@@ -4,7 +4,7 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
 
   import Ecto.Query
 
-  alias Flirtual.{ObanWorkers, Repo, User}
+  alias Flirtual.{Matchmaking, ObanWorkers, Repo, User}
   alias Flirtual.User.Profile.{Attributes, Block, LikesAndPasses}
 
   schema "likes_and_passes" do
@@ -124,10 +124,29 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
   def list_matches(profile_id: profile_id) do
     LikesAndPasses
     |> where(profile_id: ^profile_id, type: :like)
-    |> with_opposite(nil: false)
+    |> with_opposite()
+    |> where([_, opposite], opposite.type == :like)
     |> exclude_blocked()
     |> order_by(desc: :created_at)
     |> Repo.all()
+    |> Enum.group_by(& &1.target_id)
+    |> Enum.map(fn {_, items} ->
+      Enum.find(items, &(Matchmaking.reduce_kind(&1.kind, &1.opposite.kind) == :love)) ||
+        hd(items)
+    end)
+    |> Enum.sort_by(& &1.created_at, {:desc, DateTime})
+  end
+
+  def count_matches(profile_id: profile_id) do
+    from(lap in LikesAndPasses,
+      join: opposite in LikesAndPasses,
+      on:
+        opposite.profile_id == lap.target_id and opposite.target_id == lap.profile_id and
+          opposite.type == :like,
+      where: lap.profile_id == ^profile_id and lap.type == :like,
+      select: count(lap.target_id, :distinct)
+    )
+    |> Repo.one()
   end
 
   @gender_woman "tpkW7r8PZ2RUuYGUSYi82N"

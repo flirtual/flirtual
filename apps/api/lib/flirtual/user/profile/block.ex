@@ -67,6 +67,12 @@ defmodule Flirtual.User.Profile.Block do
     |> Repo.exists?()
   end
 
+  def count_blocked_by(user_id: user_id) do
+    Block
+    |> where(target_id: ^user_id)
+    |> Repo.aggregate(:count)
+  end
+
   def delete(%Block{} = item) do
     Repo.transaction(fn ->
       with {:ok, item} <- Repo.delete(item),

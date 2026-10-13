@@ -10,6 +10,7 @@ defmodule Flirtual.User.Policy do
   alias Flirtual.Talkjs
   alias Flirtual.User
   alias Flirtual.User.Login
+  alias Flirtual.User.Profile.{Block, LikesAndPasses}
   alias Flirtual.User.Session
 
   def authorize(
@@ -259,6 +260,7 @@ defmodule Flirtual.User.Policy do
     :created_at,
     :connections,
     :entitlements,
+    :platforms,
     :tns_discord_in_biography
   ]
 
@@ -409,6 +411,29 @@ defmodule Flirtual.User.Policy do
   end
 
   def transform(:age_verifications, _, _), do: nil
+
+  @moderator_computed_keys [:last_login_method, :match_count, :blocked_by_count]
+
+  def transform(
+        key,
+        %Plug.Conn{
+          assigns: %{
+            session: session
+          }
+        },
+        %User{} = user
+      )
+      when key in @moderator_computed_keys do
+    if :moderator in session.user.tags do
+      case key do
+        :last_login_method -> Login.last_method(user.id)
+        :match_count -> LikesAndPasses.count_matches(profile_id: user.id)
+        :blocked_by_count -> Block.count_blocked_by(user_id: user.id)
+      end
+    end
+  end
+
+  def transform(key, _, _) when key in @moderator_computed_keys, do: nil
 
   @admin_property_keys [
     :email,
