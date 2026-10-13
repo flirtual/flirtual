@@ -1,5 +1,5 @@
 import { ChatBubbleLeftRightIcon } from "@heroicons/react/24/solid";
-import type { FC } from "react";
+import type { FC, MouseEventHandler } from "react";
 import { clamp } from "remeda";
 
 import { useUnreadConversations } from "~/hooks/use-talkjs";
@@ -8,13 +8,13 @@ import { urls } from "~/urls";
 
 import { NavigationItem } from "./navigation-item";
 
-export const NavigationItemMessage: FC = () => {
+export const NavigationItemMessage: FC<{ onClick?: MouseEventHandler }> = ({ onClick }) => {
 	const [locale] = useLocale();
 	const { unreadConversations } = useUnreadConversations();
 	const conversationCount = clamp(unreadConversations.length, { min: 0, max: 99 });
 
 	return (
-		<NavigationItem id="conversation-button" className="split:hidden" href={urls.conversations.list()}>
+		<NavigationItem id="conversation-button" className="split:hidden" href={urls.conversations.list()} onClick={onClick}>
 			<div className="relative">
 				<ChatBubbleLeftRightIcon
 					className="aspect-square w-8"
