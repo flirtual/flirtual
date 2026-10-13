@@ -1,14 +1,14 @@
 import { useEffect, useEffectEvent, useMemo } from "react";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
-import { createPath, useLocation } from "react-router";
 import { clamp } from "remeda";
 
 import type { User } from "~/api/user";
 import { useBreakpoint } from "~/hooks/use-breakpoint";
 import { useHasConversations } from "~/hooks/use-conversations";
+import { useTabMemory } from "~/hooks/use-tab-memory";
 import { useUnreadConversations } from "~/hooks/use-talkjs";
-import { replaceLanguage, useLocale, useMatch, useNavigate } from "~/i18n";
+import { useLocale, useMatch } from "~/i18n";
 import { NativeNavigationPlugin } from "~/native-navigation";
 import type { Corners, Fold, Layout, NativeNavigationTab, SideBar, TopCorners } from "~/native-navigation";
 import { urls } from "~/urls";
@@ -61,12 +61,6 @@ function setTopClearance(topCorners: TopCorners, sideBar: SideBar, corners: Corn
 	}
 }
 
-// The page last visited under each tab. Switching back within the same session
-// navigates there.
-const lastPages = new Map<string, string>();
-
-const withoutLocale = (to: string) => replaceLanguage(to, null).pathname;
-
 function setLayout({ topCorners, fold, sideBar, bottomBar, corners }: Layout) {
 	setTopCorners(topCorners);
 	setTopClearance(topCorners, sideBar, corners);
@@ -93,18 +87,6 @@ interface Tab extends NativeNavigationTab {
 }
 
 const NativeTabs: FC<{ tabs: Array<Tab>; selected?: string }> = ({ tabs, selected }) => {
-	const navigate = useNavigate();
-	const location = useLocation();
-
-	useEffect(() => {
-		const tab = tabs.find(({ id }) => id === selected);
-		if (!tab) return;
-
-		const here = replaceLanguage(location, null);
-		if (here.pathname === withoutLocale(tab.href)) lastPages.delete(tab.id);
-		else lastPages.set(tab.id, createPath(here));
-	}, [tabs, selected, location]);
-
 	// Homie Mode's theme follows the route, so the selection changing covers it.
 	useEffect(() => {
 		const tint = getComputedStyle(document.body).getPropertyValue("--theme-2").trim();
@@ -122,16 +104,8 @@ const NativeTabs: FC<{ tabs: Array<Tab>; selected?: string }> = ({ tabs, selecte
 		};
 	}, []);
 
-	const onSelect = useEffectEvent(({ id }: { id: string }) => {
-		const tab = tabs.find((tab) => tab.id === id);
-		if (!tab) return;
-
-		if (id !== selected) return void navigate(lastPages.get(id) ?? tab.href);
-
-		// Tapping the current tab goes back to its first page, then scrolls to the top.
-		if (replaceLanguage(location, null).pathname === withoutLocale(tab.href)) window.scrollTo({ top: 0, behavior: "smooth" });
-		else void navigate(tab.href);
-	});
+	const select = useTabMemory(tabs, selected);
+	const onSelect = useEffectEvent(({ id }: { id: string }) => select(id));
 
 	useEffect(() => {
 		const listeners = [
