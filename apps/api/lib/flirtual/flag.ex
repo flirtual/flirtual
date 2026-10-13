@@ -272,7 +272,7 @@ defmodule Flirtual.Flag do
     discord_display_name = discord_connection[:display_name] || discord
 
     if (discord_display_name !== nil && discord_display_name !== "" &&
-          String.contains?(biography_downcased, discord_display_name)) ||
+          contains_word?(biography_text(biography), discord_display_name)) ||
          ((discord_display_name === nil || discord_display_name === "") &&
             String.contains?(biography_downcased, "discord")) do
       now = DateTime.utc_now() |> DateTime.truncate(:second)
@@ -287,6 +287,10 @@ defmodule Flirtual.Flag do
     end
 
     :ok
+  end
+
+  defp contains_word?(text, word) do
+    Regex.match?(~r/(?<![[:alnum:]])#{Regex.escape(word)}(?![[:alnum:]])/iu, text)
   end
 
   def check_discord_in_display_name(
