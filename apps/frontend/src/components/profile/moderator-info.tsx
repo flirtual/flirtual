@@ -5,6 +5,8 @@ import { capitalize } from "remeda";
 import { twMerge } from "tailwind-merge";
 
 import type { AgeVerificationProvider } from "~/api/age-verification";
+import { ConnectionMetadata } from "~/api/connections";
+import type { ConnectionType } from "~/api/connections";
 import type { EntitlementStore } from "~/api/subscription";
 import type { UserAgeVerification } from "~/api/user";
 import { activeEntitlements, premium } from "~/api/user";
@@ -57,6 +59,8 @@ const storeLabels: Record<EntitlementStore, string> = {
 	promotional: "Promotional",
 	stripe: "Stripe"
 };
+
+const authConnectionTypes: Array<ConnectionType> = ["google", "apple"];
 
 function adult({ ageLower, ageUpper }: UserAgeVerification): boolean {
 	if (ageUpper != null && ageUpper < 18) return false;
@@ -192,6 +196,25 @@ export const ProfileModeratorInfo: FC<{
 								{isAdmin && <HelpdeskLink email={user.previousEmail} />}
 							</span>
 						)}
+						{authConnectionTypes.map((type) => {
+							const connection = user.connections?.find((connection) => connection.type === type);
+							if (!connection) return null;
+
+							return (
+								<span key={type}>
+									<span className="font-bold">
+										{ConnectionMetadata[type].name}
+										:
+									</span>
+									{" "}
+									<CopyClick value={connection.displayName}>
+										<span className="cursor-pointer hover:underline">
+											{connection.displayName}
+										</span>
+									</CopyClick>
+								</span>
+							);
+						})}
 					</div>
 					<div className="flex flex-col">
 						{user.createdAt && (
