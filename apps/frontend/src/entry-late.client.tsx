@@ -5,12 +5,12 @@ import { HydratedRouter } from "react-router/dom";
 
 import { setupAnalytics } from "./analytics";
 import { reportAppOutdated } from "./capacitor";
+import { followLaunchDeepLink, openDeepLink } from "./hooks/use-deep-links";
 import { setupMonitoring } from "./monitoring";
 import { clearNativeActions } from "./native-navigation";
 import { preloadAll } from "./query";
 import { isRedirectError } from "./redirect";
 import { initializeSocialLogin } from "./social-login";
-import { deepLinkToRelativeUrl } from "./urls";
 
 import "./hooks/use-back-button";
 
@@ -19,46 +19,20 @@ void setupAnalytics();
 
 window.addEventListener("unhandledrejection", ({ reason }) => void reportAppOutdated(reason));
 
-const launchDeepLinkKey = "launch-deep-link-consumed";
-
-let lastDeepLink: string | null = null;
-
-function openDeepLink(value: string) {
-	const href = deepLinkToRelativeUrl(value);
-
-	// Native OAuth deep links are consumed by the plugin, not webview navigation.
-	if (
-		!href
-		|| href.startsWith("/oauth-callback")
-		|| href.startsWith("/apple-login")
-		|| href === lastDeepLink
-	) return;
-
-	lastDeepLink = href;
-	location.assign(href);
-}
-
-App.addListener("appUrlOpen", ({ url }) => openDeepLink(url));
-
-// appUrlOpen misses cold starts: Android only fires it from onNewIntent, iOS can
-// drop it before the bridge exists. The launch url persists for the process
-// lifetime, so consume it once per webview.
-async function openLaunchDeepLink() {
-	if (sessionStorage.getItem(launchDeepLinkKey)) return;
-	sessionStorage.setItem(launchDeepLinkKey, "1");
-
-	const { url } = await App.getLaunchUrl() ?? {};
-	if (url) openDeepLink(url);
-}
-
-void openLaunchDeepLink();
 clearNativeActions();
 void initializeSocialLogin();
 void preloadAll();
 
-const { searchParams } = new URL(location.href);
+async function start() {
+	const { searchParams } = new URL(location.href);
+	if (searchParams.has("__no_hydrate")) return;
 
-if (!searchParams.has("__no_hydrate"))
+	// Before listening, so a link the app was opened with starts it there rather than navigating once
+	// it has.
+	const redirecting = await followLaunchDeepLink() === "redirecting";
+	void App.addListener("appUrlOpen", ({ url }) => openDeepLink(url));
+	if (redirecting) return;
+
 	hydrateRoot(
 		document,
 		<StrictMode>
@@ -76,3 +50,6 @@ if (!searchParams.has("__no_hydrate"))
 			}
 		}
 	);
+}
+
+void start();

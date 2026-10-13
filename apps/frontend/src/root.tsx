@@ -39,6 +39,7 @@ import {
 	preview,
 	siteOrigin
 } from "./const";
+import { useDeepLinks } from "./hooks/use-deep-links";
 import { device } from "./hooks/use-device";
 import { useKeyboardVisible } from "./hooks/use-keyboard-visible";
 import { logOnce } from "./hooks/use-log";
@@ -203,6 +204,7 @@ export function Layout({ children }: PropsWithChildren) {
 
 	useTranslateSSR(i18n.store.data, locale);
 	useEffect(() => void i18n.changeLanguage(locale), [locale]);
+	useDeepLinks();
 
 	// WebKit only shows swipe snapshots with automatic scroll restoration. <ScrollRestoration />
 	// sets it to manual, but still works without it.
