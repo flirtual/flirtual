@@ -194,7 +194,7 @@ defmodule Flirtual.Languages do
     %{bcp_47: :fil},
     %{bcp_47: :gil},
     %{bcp_47: :gsw},
-    %{bcp_47: :hrv},
+    %{bcp_47: :hbs},
     %{bcp_47: :hsb},
     %{bcp_47: :kok},
     %{bcp_47: :moh},
