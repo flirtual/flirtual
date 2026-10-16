@@ -90,7 +90,7 @@ defmodule Flirtual.MixProject do
       {:gettext, "~> 1.0.0"},
       {:jason, "~> 1.4"},
       {:joken, "~> 2.5"},
-      {:sentry, "~> 13.0"},
+      {:sentry, "~> 14.0"},
       {:bandit, "~> 1.6"},
       {:libcluster, "~> 3.3"},
       {:floki, "~> 0.38.0"},
