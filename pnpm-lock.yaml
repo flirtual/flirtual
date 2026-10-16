@@ -239,7 +239,7 @@ catalogs:
       version: 4.21.2
     '@pulumi/tls':
       specifier: ^5.6.1
-      version: 5.6.1
+      version: 5.6.2
     '@pulumiverse/time':
       specifier: ^0.1.1
       version: 0.1.1
@@ -1133,7 +1133,7 @@ importers:
         version: file:pulumi/sdks/sentry(supports-color@10.2.2)
       '@pulumi/tls':
         specifier: catalog:pulumi
-        version: 5.6.1(supports-color@10.2.2)(typescript@5.9.3)
+        version: 5.6.2(supports-color@10.2.2)(typescript@5.9.3)
       '@pulumiverse/time':
         specifier: catalog:pulumi
         version: 0.1.1(supports-color@10.2.2)(typescript@5.9.3)
@@ -3906,8 +3906,8 @@ packages:
   '@pulumi/sentry@file:pulumi/sdks/sentry':
     resolution: {directory: pulumi/sdks/sentry, type: directory}
 
-  '@pulumi/tls@5.6.1':
-    resolution: {integrity: sha512-Uijxsh1TfNpr52a307WA3kUTYLOu/jU/nApuz5ovYRZseZkLTLrrF/PiYpIwudum0AXt04XiBHPCHqleM7YX2Q==}
+  '@pulumi/tls@5.6.2':
+    resolution: {integrity: sha512-Id9iwUsVONmXamwrAo1OR+RGjlR1WXqA50v2WQJevZSF+73ZZpZvp5rmd4CinWfvmoYVcBJGNpAzrUjUnUmuZg==}
 
   '@pulumiverse/time@0.1.1':
     resolution: {integrity: sha512-M5twzGcPVir5BO3p57taxrGY8oSM896aoLufxDXJ91S508ruKfLiVejusc84sbblU2us90T8lJFGCq7j7tuwCQ==}
@@ -12109,7 +12109,7 @@ snapshots:
       - supports-color
       - ts-node
 
-  '@pulumi/tls@5.6.1(supports-color@10.2.2)(typescript@5.9.3)':
+  '@pulumi/tls@5.6.2(supports-color@10.2.2)(typescript@5.9.3)':
     dependencies:
       '@pulumi/pulumi': 3.268.0(supports-color@10.2.2)(typescript@5.9.3)
     transitivePeerDependencies:
