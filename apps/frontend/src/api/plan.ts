@@ -9,6 +9,7 @@ export const SubscriptionFeatures = ["custom_weights"] as const;
 export type SubscriptionFeature = (typeof SubscriptionFeatures)[number];
 
 export const promotionalPlanId = "Duk5r7zeKUhqXv5L6P3m3Q";
+export const lifetimePlanId = "Di7Sypboma4ryhy6MUagyS";
 
 export type Plan = {
 	name: string;

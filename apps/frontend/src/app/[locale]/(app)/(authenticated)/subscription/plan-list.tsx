@@ -2,6 +2,7 @@ import { useState } from "react";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 
+import { lifetimePlanId } from "~/api/plan";
 import { activeEntitlements } from "~/api/user";
 import { useDevice } from "~/hooks/use-device";
 import { useOptionalSession } from "~/hooks/use-session";
@@ -62,7 +63,7 @@ export const PlanList: FC = () => {
 			})}
 			<div className="col-span-full flex flex-col gap-2">
 				<PlanCard
-					id="Di7Sypboma4ryhy6MUagyS"
+					id={lifetimePlanId}
 					disabled={purchasePending}
 					duration={t("lifetime")}
 					price={129.99}
