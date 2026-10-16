@@ -5,5 +5,9 @@
 		"cannot_unblock_user": "Error al desbloquear usuario (cuenta deshabilitada).",
 		"profile_not_blocked": "Error al desbloquear usuario (ya desbloqueado).",
 		"passkey_login_failed": "Error al iniciar sesión con contraseña; inténtelo nuevamente o utilice un método diferente."
-	}
+	},
+	"premium": "Premium",
+	"homie": "Amistad",
+	"like": "Me gusta",
+	"nsfw": "NSFW"
 }
