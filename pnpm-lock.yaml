@@ -190,7 +190,7 @@ catalogs:
       version: 9.39.5
     execa:
       specifier: ^10.0.1
-      version: 10.1.0
+      version: 10.1.1
     jose:
       specifier: ^6.2.12
       version: 6.2.12
@@ -870,7 +870,7 @@ importers:
         version: 1.0.0-beta.12(@types/node@24.19.0)
       execa:
         specifier: 'catalog:'
-        version: 10.1.0
+        version: 10.1.1
     devDependencies:
       '@flirtual/config':
         specifier: workspace:*
@@ -1030,7 +1030,7 @@ importers:
         version: 24.19.0
       execa:
         specifier: 'catalog:'
-        version: 10.1.0
+        version: 10.1.1
       json-schema-to-typescript:
         specifier: 15.0.4
         version: 15.0.4
@@ -1142,7 +1142,7 @@ importers:
         version: 5.4.4
       execa:
         specifier: 'catalog:'
-        version: 10.1.0
+        version: 10.1.1
       openapi-fetch:
         specifier: catalog:pulumi
         version: 0.17.0
@@ -6457,8 +6457,8 @@ packages:
     resolution: {integrity: sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q==}
     engines: {node: '>=0.8.x'}
 
-  execa@10.1.0:
-    resolution: {integrity: sha512-5HT/600HqXEtmkb9mK/PkTWw+bQSCzPnWiZ4/87wD3Hi0wFzCapOuNT9p4M08PDd+KLHdHvFhKjOWmNx/npRNQ==}
+  execa@10.1.1:
+    resolution: {integrity: sha512-yJAC9ulsE6fU0K6wzJBIH+wI+KAtMeu6Ck8rs23OVzvEhqXjGADdI6K+YNIDAjcQQ6AwXTD96cKExJo6xFJXyg==}
     engines: {node: '>=22'}
 
   execa@5.1.1:
@@ -15247,7 +15247,7 @@ snapshots:
 
   events@3.3.0: {}
 
-  execa@10.1.0:
+  execa@10.1.1:
     dependencies:
       '@sindresorhus/merge-streams': 4.0.0
       figures: 6.1.0
