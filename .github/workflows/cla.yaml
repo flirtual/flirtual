@@ -1,0 +1,38 @@
+name: CLA
+on:
+  issue_comment:
+    types: [created]
+  pull_request_target:
+    types: [opened, closed, synchronize]
+
+permissions:
+  actions: write
+  contents: write
+  pull-requests: write
+  statuses: write
+
+jobs:
+  cla:
+    name: CLA
+    runs-on: ubuntu-latest
+    if: >-
+      (github.event_name == 'pull_request_target' && github.event.pull_request.user.login != 'weblate')
+      || (github.event_name == 'issue_comment' && github.event.issue.pull_request
+          && (github.event.comment.body == 'recheck'
+              || github.event.comment.body == 'I have read the Flirtual CLA and I agree to it.'))
+    steps:
+      - uses: step-security/contributor-assistant-github-action@b9bd60bf1b766fa48dae03427059187137236239 # v2.6.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          path-to-document: https://github.com/flirtual/flirtual/blob/main/.github/CLA.md
+          path-to-signatures: signatures/v1/cla.json
+          branch: cla-signatures
+          allowlist: kfarwell,ariesclark,weblate
+          custom-pr-sign-comment: I have read the Flirtual CLA and I agree to it.
+          custom-notsigned-prcomment: >-
+            Thanks for contributing to Flirtual! Before we can merge this, please read our
+            [Contributor License Agreement](https://github.com/flirtual/flirtual/blob/main/.github/CLA.md)
+            and sign it by replying to this pull request with the comment below.
+          custom-allsigned-prcomment: All contributors have signed the Flirtual CLA. Thank you!
+          lock-pullrequest-aftermerge: false
