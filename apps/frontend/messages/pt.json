@@ -49,5 +49,9 @@
 		"cannot_unblock_user": "Erro desbloqueando usuário (conta desativada ou suspensa).",
 		"profile_not_blocked": "Erro desbloqueando usuário (já desbloqueado).",
 		"passkey_login_failed": "Login com chave de passe falhou, por favor tente novamente ou use outro método."
-	}
+	},
+	"premium": "Premium",
+	"homie": "Amizade",
+	"like": "Gosto",
+	"nsfw": "NSFW"
 }
