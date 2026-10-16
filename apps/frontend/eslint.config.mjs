@@ -15,6 +15,7 @@ export default configure({
 		"paraglide/",
 		"src/paraglide/",
 		"messages/",
+		"i18n/.staging/",
 		"android/",
 		"ios/",
 		"visionos/",
