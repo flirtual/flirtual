@@ -28,7 +28,6 @@ You accept and agree to the following terms and conditions for Your Contribution
 
 9. You agree to notify ROVR Labs of any facts or circumstances of which you become aware that would make these representations inaccurate in any respect.
 
-
 ## How to sign
 
 - **GitHub:** when you open your first pull request, a bot will ask you to sign. Reply on the pull request with the exact comment it gives you.
