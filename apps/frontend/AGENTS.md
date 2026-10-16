@@ -64,7 +64,31 @@ Tailwind with custom classes and variants.
 
 ### Translations (i18next)
 
-All user-facing text goes through i18next; add ICU keys to `messages/en.json` and `messages/ja.json`.
+All user-facing text goes through i18next; add ICU keys to `messages/en.json` only. Weblate
+(project `flirtual`: components `flirtual`, `attributes`, `notifications`, `glossary`) owns every
+other locale's file, so never hand-edit `messages/<locale>.json`, `attributes.<locale>.json` or
+non-English `.po` files. After adding or changing keys, run `/translate` (incremental mode): it
+writes context for the new keys, drafts translations with the translator agents, and uploads
+them to Weblate as "needs editing" or as suggestions, after you approve.
+
+`.env.weblate` at the repo root (git-ignored) holds `WEBLATE_URL`, `WEBLATE_PROJECT` and
+`WEBLATE_TOKEN` (a project-scoped `wlp_` token). Translation tooling lives in `i18n/`:
+`context.json` (per-key context), `style/` (style guide per locale, `glossary.json`),
+`translate.lock.json`, and `scripts/`:
+
+```sh
+cd apps/frontend
+/translate                      # incremental: new or changed keys, all target locales
+/translate incremental ja,ko    # specific locales
+/translate full ja              # every key
+/translate context              # refresh context, ask open questions, sync explanations
+
+node i18n/scripts/validate.ts <drafts.json> --locale ja      # ICU, placeholders, plurals, glossary
+node i18n/scripts/context.ts status                           # context coverage
+node --env-file=../../.env.weblate i18n/scripts/weblate.ts pull   # Weblate state → i18n/.staging
+```
+
+Writes to Weblate (`weblate.ts`, `screenshots.ts upload`) are dry runs unless given `--apply`.
 
 The watch app bundles `messages/` and reads it at runtime: its own strings live under `watch`, but it also reuses top-level keys and attribute names. Grep `ios/App/Watch/` before renaming or removing a key. Its `t()` only fills `{name}` placeholders and empty `<name/>` tags, so strings it uses can't rely on ICU plurals or `select`.
 
