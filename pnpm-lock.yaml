@@ -230,7 +230,7 @@ catalogs:
       version: 10.1.0
     '@pulumi/postgresql':
       specifier: ^3.18.0
-      version: 3.18.1
+      version: 3.18.2
     '@pulumi/pulumi':
       specifier: 3.268.0
       version: 3.268.0
@@ -1121,7 +1121,7 @@ importers:
         version: 10.1.0(supports-color@10.2.2)(typescript@5.9.3)
       '@pulumi/postgresql':
         specifier: catalog:pulumi
-        version: 3.18.1(supports-color@10.2.2)(typescript@5.9.3)
+        version: 3.18.2(supports-color@10.2.2)(typescript@5.9.3)
       '@pulumi/pulumi':
         specifier: catalog:pulumi
         version: 3.268.0(supports-color@10.2.2)(typescript@5.9.3)
@@ -3885,8 +3885,8 @@ packages:
   '@pulumi/gcp@10.1.0':
     resolution: {integrity: sha512-0q448t5FCZv6RZQsL1Do7J8z7RjLfZk8CCZKgViT0ZKwkhm+di941PAEYBi44X/lArPLeXTOwtdlgGLCCocKNA==}
 
-  '@pulumi/postgresql@3.18.1':
-    resolution: {integrity: sha512-Oxxj7lslz5b7Ubxhx/NdaENu90CsgmO+/DmECehX+zIV9BNOLUMtihXZ3NExncGUKGVAeef82cm6AfO7czL02g==}
+  '@pulumi/postgresql@3.18.2':
+    resolution: {integrity: sha512-faBHtgPkSsDSlw+GL5GAYEnfHLJ6pFpMptEK6SD0SP+2DT7hZnALN2/jHk+GZUz0140gMJV6dC3RJGuuVn312g==}
 
   '@pulumi/pulumi@3.268.0':
     resolution: {integrity: sha512-VtTIr44eC78BX4cAeh2MEqJqVFu5/UfrmsxjLdH73YIPr5igPEo9JB4g5yqncTHcXNxbkxJXndMOEm1CkpJA5Q==}
@@ -12020,7 +12020,7 @@ snapshots:
       - ts-node
       - typescript
 
-  '@pulumi/postgresql@3.18.1(supports-color@10.2.2)(typescript@5.9.3)':
+  '@pulumi/postgresql@3.18.2(supports-color@10.2.2)(typescript@5.9.3)':
     dependencies:
       '@pulumi/pulumi': 3.268.0(supports-color@10.2.2)(typescript@5.9.3)
     transitivePeerDependencies:
