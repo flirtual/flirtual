@@ -3160,11 +3160,11 @@
 	"warn-reason": {
 		"V7VcQEiYkiwHr5CHSVx5aS": {
 			"name": "Description et photos spam",
-			"details": "Veuillez actualiser votre description et téléverser des photos de votre avatar VR pour éviter d'être marqué comme spam."
+			"details": "Veuillez actualiser votre description et téléverser des photos originales de votre avatar VR pour éviter d'être marqué comme spam."
 		},
 		"aUurnuPnvjTwU2W3K5Se7X": {
 			"name": "Photo NSFW retirée",
-			"details": "Le ou les image(s) NSFW ont été retirées de votre profil. Veuillez téléverser uniquement des images SFW."
+			"details": "La ou les image(s) NSFW ont été retirées de votre profil. Veuillez téléverser uniquement des images SFW."
 		},
 		"MjxDKasduf9iHTctStGzYA": {
 			"name": "Description NSFW",
@@ -3172,11 +3172,11 @@
 		},
 		"CnaCPAcsLptyUgVVugubdf": {
 			"name": "Publicité",
-			"details": "Veuillez réduire les publicités/contenu promotionnels de votre profil. L'intérêt principal de votre profil devrait d'être de chercher des rencontres ou des amis."
+			"details": "Veuillez réduire les publicités/contenu promotionnels de votre profil. L'intérêt principal de votre profil devrait être de chercher des rencontres ou des amis."
 		},
 		"f8v44XrBausmXe6XybTVHd": {
 			"name": "Incitation",
-			"details": "Veuillez retirer toute sollicitation de votre profil. Demander pour de l'argent, des références ou des liens pour des services commerciaux ne sont pas acceptés sur Flirtual."
+			"details": "Veuillez retirer toute sollicitation de votre profil. Demander de l'argent, des références ou des liens pour des services commerciaux ne sont pas acceptés sur Flirtual."
 		},
 		"RdHQQqrswesTTwyh4QZqbH": {
 			"name": "Contenu haineux",
