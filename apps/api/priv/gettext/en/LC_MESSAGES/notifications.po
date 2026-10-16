@@ -106,7 +106,7 @@ msgstr "Your email address was changed"
 #: lib/flirtual/user/email.ex:352
 #, elixir-autogen, elixir-format
 msgid "password_changed.body_html"
-msgstr "<p>Someone, hopefully you, has changed the password on your Flirtual account.</p>\n\n<p>If you did not make this request, please <a href=\"#{action_url}\">reset your password</a> immediately or reply to this email if you need assistance.</p>"
+msgstr "<p>Someone, hopefully you, has changed the password on your Flirtual account.</p>\n\n<p>If you did not make this request, please <a href=\"%{action_url}\">reset your password</a> immediately or reply to this email if you need assistance.</p>"
 
 #: lib/flirtual/user/email.ex:350
 #, elixir-autogen, elixir-format
