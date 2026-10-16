@@ -8,16 +8,15 @@
 ### to merge POT files into PO files.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2025-02-18 01:09+0000\n"
-"Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
-"memory@weblate.org>\n"
+"PO-Revision-Date: 2026-10-16 16:28+0000\n"
+"Last-Translator: Claude <bot-flirtual-claude@bots.noreply.weblate.org>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/flirtual/"
 "notifications/ja/>\n"
 "Language: ja\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.10.1-dev\n"
+"X-Generator: Weblate 2026.11.dev0\n"
 
 #: lib/flirtual/mailer.ex:39
 #: lib/flirtual/mailer.ex:288
@@ -173,9 +172,9 @@ msgid "password_changed.body_html"
 msgstr ""
 "<p></p>\n"
 "\n"
-"<p> <a href=\"#{action_url}\""
-">もし、あなたがこのリクエストをしていないのであれば、 "
-"すぐにパスワードをリセットするか、このメールに返信してください。</a></p>"
+"<p> <a href=\"%{action_url}\">もし、あなたがこのリクエストをしていないのであ"
+"れば、 すぐにパスワードをリセットするか、このメールに返信してください。</a></"
+"p>"
 
 #: lib/flirtual/user/email.ex:350
 #, elixir-autogen, elixir-format, fuzzy
@@ -259,7 +258,7 @@ msgstr "名前}さんがあなたに「いいね!メッセージを送る"
 #, elixir-autogen, elixir-format, fuzzy
 msgid "someone_liked_you"
 msgid_plural "x_people_liked_you"
-msgstr[0] "今週、%{数}人があなたに「いいね！」をしました！"
+msgstr[0] "今週、%{count}人があなたに「いいね！」をしました！"
 
 #: lib/flirtual/user/email.ex:265
 #: lib/flirtual/user/push.ex:76
