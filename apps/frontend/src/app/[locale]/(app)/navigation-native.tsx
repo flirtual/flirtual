@@ -170,7 +170,7 @@ export const NativeNavigation: FC<{ user: User }> = ({ user }) => {
 	const [locale] = useLocale();
 	const isDesktop = useBreakpoint("desktop");
 	const wide = useBreakpoint("split");
-	const hasConversations = useHasConversations();
+	const hasConversations = useHasConversations({ enabled: !user.deactivatedAt });
 	const split = wide && hasConversations;
 
 	const { unreadConversations } = useUnreadConversations();

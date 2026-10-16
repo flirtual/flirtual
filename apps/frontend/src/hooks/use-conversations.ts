@@ -36,8 +36,8 @@ export function useConversations() {
 	};
 }
 
-export function useHasConversations() {
-	const { data } = useInfiniteQuery(conversationsOptions());
+export function useHasConversations({ enabled = true }: { enabled?: boolean } = {}) {
+	const { data } = useInfiniteQuery({ ...conversationsOptions(), enabled });
 	return !!data?.pages[0]?.data.length;
 }
 
