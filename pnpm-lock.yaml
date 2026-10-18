@@ -549,7 +549,7 @@ importers:
         version: 6.1.6(@types/react@19.3.0)(react@19.3.1)
       react-i18next:
         specifier: ^17.0.9
-        version: 17.0.16(i18next@26.4.5(typescript@5.9.3))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@5.9.3)
+        version: 17.0.17(i18next@26.4.5(typescript@5.9.3))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@5.9.3)
       react-intersection-observer:
         specifier: ^11.0.0
         version: 11.0.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
@@ -8217,8 +8217,8 @@ packages:
   react-fast-compare@3.2.2:
     resolution: {integrity: sha512-nsO+KSNgo1SbJqJEYRE9ERzo7YtYbou/OqjSQKxV7jcKox7+usiUVZOAC+XnDOABXggQTno0Y1CpVnuWEc1boQ==}
 
-  react-i18next@17.0.16:
-    resolution: {integrity: sha512-7uImVD9hG5yUOaP5KHVied1x0A004Di/KU031ULR35Ma+9e9H5GdnNZHgQEIByyAz+IAXBkRDTedNVzjPUH8ZA==}
+  react-i18next@17.0.17:
+    resolution: {integrity: sha512-/gI72sAiVDJh7WAFdF0Sd9BMsVjF97W6avaCjPqgYDPj4Sq6wv9/94Gti3t8g9bYqo6A9c+xdmL3gRRH8GaM2Q==}
     peerDependencies:
       i18next: '>= 26.2.0'
       react: '>= 16.8.0'
@@ -17309,7 +17309,7 @@ snapshots:
 
   react-fast-compare@3.2.2: {}
 
-  react-i18next@17.0.16(i18next@26.4.5(typescript@5.9.3))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@5.9.3):
+  react-i18next@17.0.17(i18next@26.4.5(typescript@5.9.3))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@5.9.3):
     dependencies:
       '@babel/runtime': 7.29.7
       html-parse-stringify: 4.0.1
