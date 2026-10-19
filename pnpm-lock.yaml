@@ -462,7 +462,7 @@ importers:
         version: 3.4.2(@uppy/core@4.5.3)
       '@uppy/locales':
         specifier: ^5.1.1
-        version: 5.3.0
+        version: 5.3.1
       '@uppy/progress-bar':
         specifier: ^4.3.2
         version: 4.3.2(@uppy/core@4.5.3)
@@ -5171,8 +5171,8 @@ packages:
   '@uppy/core@4.5.3':
     resolution: {integrity: sha512-52VLeBUY/j904h48lpPGykuWikkOOS4Lz/qkmalDiBQfNALb6iB1MOZs079IM3o/uMLYxzZRL80C3sKpkBUYcw==}
 
-  '@uppy/core@6.1.0':
-    resolution: {integrity: sha512-nnr4p73oM70slbBEDzSDacFue7zZ92lvrZaCUgP1MKJw4I1UaZ0zmYyfWuedR3rLX/cpClKctdftRmiElM1yFA==}
+  '@uppy/core@6.3.0':
+    resolution: {integrity: sha512-D6+iERQrI194UZO9dOIJWrT5GtOtyR9k4Wh6VU7cXThEaRNvMQDqXj1GzHDs2TffnZ5pRxufwB84Os8uH3+bVA==}
 
   '@uppy/dashboard@4.4.3':
     resolution: {integrity: sha512-IwgDDTbk9p4OoAJvvvx6sQSemKTIJq9IDSryNVgbbC6NiR9HSyRcu0+WdOZLiR9DOhDg2oYcoNgv7DMlrktI6g==}
@@ -5229,8 +5229,8 @@ packages:
     peerDependencies:
       '@uppy/core': ^4.5.2
 
-  '@uppy/locales@5.3.0':
-    resolution: {integrity: sha512-kiMnX5iluE1QdM+Uvqfd/XNgaZV+b5+6B+sGp4F0wuFcsgrFNPcnRJb3ghDau4RLwnKbWS5A2N9CJ4DFvwmMTA==}
+  '@uppy/locales@5.3.1':
+    resolution: {integrity: sha512-HcIY53cnr2s0TersBQgJbRxEi2fgnu+JXjdV+KRTxjLD+22lz6cWHxzB84k/J1ZYm6hi3HEXqwqg2CStuRrizA==}
 
   '@uppy/onedrive@4.3.2':
     resolution: {integrity: sha512-dfJAl9qsoQsL1LdIrDPKEKmAj82VNA63BInsJ80nF8bx3tf67AvlMz4O1I9fDW2zctfgOiFlGz47kamz01eSPQ==}
@@ -7845,6 +7845,10 @@ packages:
   p-retry@6.2.1:
     resolution: {integrity: sha512-hEt02O4hUct5wtwg4H4KcWgDdm+l1bOaEy/hWzd8xtXB9BqxTWBBhb+2ImAtH4Cv4rPjV76xN3Zumqk3k3AhhQ==}
     engines: {node: '>=16.17'}
+
+  p-retry@8.0.1:
+    resolution: {integrity: sha512-NAigyu8hfvJe7MsS18mnc4is0MZtau3QMdBklaJKK23oBQb6occO3UPM3vHmTckW8KhfyjMZaUOqdTFEYliHgg==}
+    engines: {node: '>=22'}
 
   p-timeout@6.1.4:
     resolution: {integrity: sha512-MyIV3ZA/PmyBN/ud8vV9XzwTrNtR4jFrObymZYnZqMmW0zA8Z17vnT0rBgFE/TlohB+YCHqXMgZzb3Csp49vqg==}
@@ -13392,7 +13396,7 @@ snapshots:
     transitivePeerDependencies:
       - preact-render-to-string
 
-  '@uppy/core@6.1.0':
+  '@uppy/core@6.3.0':
     dependencies:
       '@transloadit/prettier-bytes': 2.0.0
       classnames: 2.5.1
@@ -13401,7 +13405,7 @@ snapshots:
       namespace-emitter: 2.0.1
       nanoid: 6.0.1
       p-queue: 9.3.3
-      p-retry: 6.2.1
+      p-retry: 8.0.1
       preact: 10.29.8
     transitivePeerDependencies:
       - preact-render-to-string
@@ -13511,9 +13515,9 @@ snapshots:
     transitivePeerDependencies:
       - preact-render-to-string
 
-  '@uppy/locales@5.3.0':
+  '@uppy/locales@5.3.1':
     dependencies:
-      '@uppy/core': 6.1.0
+      '@uppy/core': 6.3.0
     transitivePeerDependencies:
       - preact-render-to-string
 
@@ -16927,6 +16931,10 @@ snapshots:
       '@types/retry': 0.12.2
       is-network-error: 1.3.2
       retry: 0.13.1
+
+  p-retry@8.0.1:
+    dependencies:
+      is-network-error: 1.3.2
 
   p-timeout@6.1.4: {}
 
