@@ -525,7 +525,7 @@ importers:
         version: 6.2.12
       lucide-react:
         specifier: ^1.24.0
-        version: 1.58.0(@types/react@19.3.0)(react@19.3.1)
+        version: 1.59.0(@types/react@19.3.0)(react@19.3.1)
       motion:
         specifier: 14.3.0
         version: 14.3.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
@@ -3881,18 +3881,6 @@ packages:
 
   '@pulumi/postgresql@3.18.2':
     resolution: {integrity: sha512-faBHtgPkSsDSlw+GL5GAYEnfHLJ6pFpMptEK6SD0SP+2DT7hZnALN2/jHk+GZUz0140gMJV6dC3RJGuuVn312g==}
-
-  '@pulumi/pulumi@3.268.0':
-    resolution: {integrity: sha512-VtTIr44eC78BX4cAeh2MEqJqVFu5/UfrmsxjLdH73YIPr5igPEo9JB4g5yqncTHcXNxbkxJXndMOEm1CkpJA5Q==}
-    engines: {node: '>=22'}
-    peerDependencies:
-      ts-node: '>= 7.0.1 < 12'
-      typescript: '>= 3.8.3 < 7'
-    peerDependenciesMeta:
-      ts-node:
-        optional: true
-      typescript:
-        optional: true
 
   '@pulumi/pulumi@3.270.0':
     resolution: {integrity: sha512-k2GSGtoP2yrkIe4r+1YvyKL6k7mM6SYnySv6tSzGrv/oTY7WemEmvNEvn7Qd/JbkCMmYeBhWULDS5qB9qpvgkg==}
@@ -7285,8 +7273,8 @@ packages:
   lru-cache@5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
 
-  lucide-react@1.58.0:
-    resolution: {integrity: sha512-hXaFNm6mk6QVtBnDGBn1YAs8j2tGUk0A4s/CpclIcczfxeXiW1rdOLVo6zCsoIih9XXsGvDODQerl749a2n7bA==}
+  lucide-react@1.59.0:
+    resolution: {integrity: sha512-5qgMyyCPU6OvnKpLS2t693+ZtiqA8oaSweWoUows0BLFKFf6V75m4+CptpmohZHpD5IuOVIBXHBBiv2vpLJmtw==}
     peerDependencies:
       '@types/react': '*'
       react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
@@ -11969,7 +11957,7 @@ snapshots:
 
   '@pulumi/apple@file:pulumi/sdks/apple(supports-color@10.2.2)':
     dependencies:
-      '@pulumi/pulumi': 3.268.0(supports-color@10.2.2)(typescript@4.9.5)
+      '@pulumi/pulumi': 3.270.0(supports-color@10.2.2)(typescript@4.9.5)
       '@types/node': 20.19.43
       typescript: 4.9.5
     transitivePeerDependencies:
@@ -12003,7 +11991,7 @@ snapshots:
 
   '@pulumi/discord@file:pulumi/sdks/discord(supports-color@10.2.2)':
     dependencies:
-      '@pulumi/pulumi': 3.268.0(supports-color@10.2.2)(typescript@4.9.5)
+      '@pulumi/pulumi': 3.270.0(supports-color@10.2.2)(typescript@4.9.5)
       '@types/node': 20.19.43
       typescript: 4.9.5
     transitivePeerDependencies:
@@ -12012,7 +12000,7 @@ snapshots:
 
   '@pulumi/freshdesk@file:pulumi/sdks/freshdesk(supports-color@10.2.2)':
     dependencies:
-      '@pulumi/pulumi': 3.268.0(supports-color@10.2.2)(typescript@4.9.5)
+      '@pulumi/pulumi': 3.270.0(supports-color@10.2.2)(typescript@4.9.5)
       '@types/node': 20.19.43
       typescript: 4.9.5
     transitivePeerDependencies:
@@ -12036,7 +12024,7 @@ snapshots:
       - ts-node
       - typescript
 
-  '@pulumi/pulumi@3.268.0(supports-color@10.2.2)(typescript@4.9.5)':
+  '@pulumi/pulumi@3.270.0(supports-color@10.2.2)(typescript@4.9.5)':
     dependencies:
       '@grpc/grpc-js': 1.14.5
       '@logdna/tail-file': 2.2.0
@@ -12110,7 +12098,7 @@ snapshots:
 
   '@pulumi/sentry@file:pulumi/sdks/sentry(supports-color@10.2.2)':
     dependencies:
-      '@pulumi/pulumi': 3.268.0(supports-color@10.2.2)(typescript@4.9.5)
+      '@pulumi/pulumi': 3.270.0(supports-color@10.2.2)(typescript@4.9.5)
       '@types/node': 20.19.43
       typescript: 4.9.5
     transitivePeerDependencies:
@@ -16052,7 +16040,7 @@ snapshots:
     dependencies:
       yallist: 3.1.1
 
-  lucide-react@1.58.0(@types/react@19.3.0)(react@19.3.1):
+  lucide-react@1.59.0(@types/react@19.3.0)(react@19.3.1):
     dependencies:
       react: 19.3.1
     optionalDependencies:
