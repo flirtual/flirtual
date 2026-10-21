@@ -60,7 +60,8 @@ class WebViewModel: NSObject, ObservableObject, WKNavigationDelegate, WKScriptMe
         
         webView.evaluateJavaScript("navigator.userAgent") { [weak webView] (result, error) in
             if let webView = webView, let userAgent = result as? String {
-                webView.customUserAgent = userAgent + " Flirtual-Vision"
+                let brandName = Bundle.main.object(forInfoDictionaryKey: "BrandName") as? String ?? "Flirtual"
+                webView.customUserAgent = userAgent + " \(brandName)-Vision"
             }
         }
     }

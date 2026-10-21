@@ -3,6 +3,7 @@ defmodule Flirtual.Matchmaking.Query do
   import Flirtual.Utilities
 
   alias Flirtual.Attribute
+  alias Flirtual.Features
   alias Flirtual.Matchmaking.Query
   alias Flirtual.Repo
   alias Flirtual.Search
@@ -33,7 +34,11 @@ defmodule Flirtual.Matchmaking.Query do
   # the user's own exclusions (retained prospects, fallback's primary results).
   def build(%User{} = user, kind, opts \\ []) do
     fallback = Keyword.get(opts, :fallback, false)
-    advanced_filters = AdvancedFilter.list(profile_id: user.id)
+    enabled_categories = AdvancedFilter.enabled_categories()
+
+    advanced_filters =
+      AdvancedFilter.list(profile_id: user.id)
+      |> Enum.filter(&(&1.category in enabled_categories))
 
     %Query{
       user_id: user.id,
@@ -343,9 +348,13 @@ defmodule Flirtual.Matchmaking.Query do
   end
 
   defp games(%User{profile: profile}, cw) do
-    profile.attributes
-    |> filter_by(:type, "game")
-    |> Enum.map(&{:token, Search.Tokens.attribute(&1.id), 1 * weight(cw, :games)})
+    if Features.vr_tags?() do
+      profile.attributes
+      |> filter_by(:type, "game")
+      |> Enum.map(&{:token, Search.Tokens.attribute(&1.id), 1 * weight(cw, :games)})
+    else
+      []
+    end
   end
 
   # Scale base location-related weights so they add up to 40 even if you don't
@@ -439,7 +448,12 @@ defmodule Flirtual.Matchmaking.Query do
 
   defp kinks(_user, _cw), do: nil
 
+  # Traits default to non-nil, so the nil guard below never disables this.
   defp personality(%User{profile: profile}, cw) do
+    if Features.personality?(), do: personality_factor(profile, cw)
+  end
+
+  defp personality_factor(profile, cw) do
     origins =
       %{
         openness: profile.openness,

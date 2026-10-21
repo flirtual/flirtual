@@ -129,7 +129,7 @@ defmodule Flirtual.Matchmaking do
         |> Repo.update_all(inc: [passes_count: 1])
     end
 
-    Queue.kinds()
+    Queue.all_kinds()
     |> Enum.filter(&(&1 in kinds))
     |> Enum.each(fn kind ->
       _ = ensure_fresh_queue(Queue.get(user.id, kind))
@@ -248,7 +248,7 @@ defmodule Flirtual.Matchmaking do
   # When matchmaking settings are updated, prune each queue to the current
   # and previous profile, then recompute everything after them.
   def refresh_queues(user_id, opts \\ []) do
-    Enum.each(Queue.kinds(), fn kind ->
+    Enum.each(Queue.all_kinds(), fn kind ->
       protected_ids =
         [
           Prospect.list_uncompleted(user_id, kind, 1),
@@ -415,13 +415,20 @@ defmodule Flirtual.Matchmaking do
 
     target = Keyword.get(opts, :target) || User.get(Keyword.get(opts, :target_id))
 
-    with {:ok, target} <- validate_target(user, target),
+    with :ok <- validate_mode(mode),
+         {:ok, target} <- validate_target(user, target),
          queue = ensure_fresh_queue(Queue.get(user.id, mode)),
          :ok <- check_limits(user, queue, type),
          {:ok, result} <- insert_response(user, target, type, mode, source) do
       after_respond(user, target, result, mode)
       {:ok, result}
     end
+  end
+
+  defp validate_mode(mode) do
+    if Queue.kind?(mode),
+      do: :ok,
+      else: {:error, {:bad_request, :invalid_mode}}
   end
 
   defp validate_target(_user, nil), do: {:error, {:not_found, :user_not_found}}

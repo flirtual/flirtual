@@ -6,7 +6,7 @@ defmodule FlirtualWeb.ProfileController do
   import FlirtualWeb.Utilities
 
   alias Flirtual.User.Profile
-  alias Flirtual.{Entitlement, Policy, Profiles, Users}
+  alias Flirtual.{Entitlement, Features, Policy, Profiles, Users}
 
   action_fallback(FlirtualWeb.FallbackController)
 
@@ -28,7 +28,7 @@ defmodule FlirtualWeb.ProfileController do
   end
 
   def get_personality(conn, %{"user_id" => user_id}) do
-    personality = Profiles.get_personality_by_user_id(user_id)
+    personality = if Features.personality?(), do: Profiles.get_personality_by_user_id(user_id)
     stub_profile = %Profile{user_id: user_id}
 
     if is_nil(personality) or Policy.cannot?(conn, :read, stub_profile) do
@@ -42,12 +42,17 @@ defmodule FlirtualWeb.ProfileController do
     user = Users.get(user_id)
     profile = %Profile{user.profile | user: user}
 
-    if is_nil(user) or Policy.cannot?(conn, :update, profile) do
-      {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
-    else
-      with {:ok, profile} <- Profiles.update_personality(profile, params) do
-        conn |> json(Policy.transform(conn, profile))
-      end
+    cond do
+      not Features.personality?() ->
+        {:error, {:not_found, :feature_disabled}}
+
+      is_nil(user) or Policy.cannot?(conn, :update, profile) ->
+        {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
+
+      true ->
+        with {:ok, profile} <- Profiles.update_personality(profile, params) do
+          conn |> json(Policy.transform(conn, profile))
+        end
     end
   end
 
@@ -203,7 +208,8 @@ defmodule FlirtualWeb.ProfileController do
     user = conn.assigns[:session].user
     moderator? = :moderator in user.tags
 
-    with true <-
+    with true <- Flirtual.Features.vrchat?() or {:feature_disabled},
+         true <-
            moderator? or Entitlement.premium?(user.entitlements) or {:subscription_required},
          true <-
            moderator? or Profiles.has_image_in_world?(user.id, world_id) or {:no_image_in_world} do
@@ -214,6 +220,7 @@ defmodule FlirtualWeb.ProfileController do
 
       conn |> json_with_etag(items)
     else
+      {:feature_disabled} -> {:error, {:not_found, :feature_disabled}}
       {:subscription_required} -> {:error, {:forbidden, :subscription_required}}
       {:no_image_in_world} -> {:error, {:forbidden, :no_image_in_world}}
     end

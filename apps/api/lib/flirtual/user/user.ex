@@ -249,7 +249,8 @@ defmodule Flirtual.User do
         |> filter_by(:type, "gender")
         |> Attribute.reject_pronouns()
       ) and
-      not Enum.empty?(filter_by(profile.attributes, :type, "game")) and
+      (not Flirtual.Features.vr_tags?() or
+         not Enum.empty?(filter_by(profile.attributes, :type, "game"))) and
       not Enum.empty?(
         filter_by(profile.attributes, :type, "interest") ++ profile.custom_interests
       ) and

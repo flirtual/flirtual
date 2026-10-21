@@ -10,7 +10,6 @@ import { InputLabel, InputText } from "~/components/inputs";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { useNavigate } from "~/i18n";
-import { urls } from "~/urls";
 
 import {
 	InterestSelectCount,
@@ -18,6 +17,7 @@ import {
 	InterestSelectList,
 	maximumInterests
 } from "../../settings/(profile)/interests/form";
+import { nextFinishStepUrl, previousFinishStepUrl } from "../navigation";
 
 export const Finish3Form: FC = () => {
 	const session = useOptionalSession();
@@ -44,7 +44,7 @@ export const Finish3Form: FC = () => {
 					interestId: defaultInterests
 				})
 					.then(() => {
-						return navigate(urls.finish(4));
+						return navigate(nextFinishStepUrl("interests"));
 					})
 					.catch(toasts.addError);
 			}}
@@ -122,7 +122,7 @@ export const Finish3Form: FC = () => {
 						<div className="flex justify-end gap-2">
 							<ButtonLink
 								className="flex w-fit flex-row gap-2 opacity-75"
-								href={urls.finish(2)}
+								href={previousFinishStepUrl("interests")}
 								kind="tertiary"
 								size="sm"
 							>

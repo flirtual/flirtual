@@ -11,6 +11,7 @@ import type { Relationship } from "~/api/user/relationship";
 import { HeartIcon } from "~/components/icons/gradient/heart";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
+import { homieMode } from "~/features";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
 import { useTimeout } from "~/hooks/use-interval";
 import { useLikesQueue } from "~/hooks/use-likes-queue";
@@ -59,7 +60,7 @@ export const LikesQueueActions: FC<{
 
 				if (event.key === "h" && previous) void undo();
 				if (event.key === "j" && !blocked) void like();
-				if (event.key === "k" && !blocked) void like("friend");
+				if (event.key === "k" && homieMode && !blocked) void like("friend");
 				if (event.key === "l") void pass();
 			},
 			[like, pass, undo, previous, tooFast, blocked]
@@ -116,31 +117,33 @@ export const LikesQueueActions: FC<{
 							</TooltipContent>
 						</Tooltip>
 					)}
-					<Tooltip touchable={false}>
-						<TooltipTrigger asChild>
-							<m.button
-								id="friend-button"
-								className={twMerge(
-									"flex items-center justify-center rounded-full border border-black-50/25 bg-gradient-to-tr from-theme-friend-1 to-theme-friend-2 p-4 shadow-brand-1 transition-all disabled:brightness-90 dark:disabled:brightness-[80%]",
-									blocked && "grayscale-[0.75]"
-								)}
-								disabled={tooFast || blocked}
-								type="button"
-								whileHover={{ scale: 1.05 }}
-								whileTap={{ scale: 0.95 }}
-								onClick={() => like("friend")}
-							>
-								<PeaceIcon
-									className="w-[2.125rem] shrink-0"
-									gradient={false}
-								/>
-							</m.button>
-						</TooltipTrigger>
-						<TooltipContent className="flex gap-3 px-3 py-1.5 native:hidden">
-							<span className="pt-1">{t("homie")}</span>
-							<Key label={mode === "love" ? "K" : "J"} />
-						</TooltipContent>
-					</Tooltip>
+					{homieMode && (
+						<Tooltip touchable={false}>
+							<TooltipTrigger asChild>
+								<m.button
+									id="friend-button"
+									className={twMerge(
+										"flex items-center justify-center rounded-full border border-black-50/25 bg-gradient-to-tr from-theme-friend-1 to-theme-friend-2 p-4 shadow-brand-1 transition-all disabled:brightness-90 dark:disabled:brightness-[80%]",
+										blocked && "grayscale-[0.75]"
+									)}
+									disabled={tooFast || blocked}
+									type="button"
+									whileHover={{ scale: 1.05 }}
+									whileTap={{ scale: 0.95 }}
+									onClick={() => like("friend")}
+								>
+									<PeaceIcon
+										className="w-[2.125rem] shrink-0"
+										gradient={false}
+									/>
+								</m.button>
+							</TooltipTrigger>
+							<TooltipContent className="flex gap-3 px-3 py-1.5 native:hidden">
+								<span className="pt-1">{t("homie")}</span>
+								<Key label={mode === "love" ? "K" : "J"} />
+							</TooltipContent>
+						</Tooltip>
+					)}
 					<Tooltip touchable={false}>
 						<TooltipTrigger asChild>
 							<m.button

@@ -7,6 +7,7 @@ import { isLocale } from "~/i18n/languages";
 import { metaMerge, rootMeta } from "~/meta";
 
 import { FinishProgress } from "../progress";
+import { finishStepNumber } from "../steps";
 import type { Route } from "./+types/page";
 import { Finish5Form } from "./form";
 
@@ -22,7 +23,7 @@ export default function Finish5Page() {
 
 	return (
 		<>
-			<FinishProgress page={5} />
+			<FinishProgress page={finishStepNumber("connections")} />
 			<ModelCard
 				className="shrink-0 pb-[max(calc(var(--safe-area-inset-bottom,0rem)-0.5rem),1rem)] desktop:max-w-2xl desktop:pb-0"
 				title={t("connections")}

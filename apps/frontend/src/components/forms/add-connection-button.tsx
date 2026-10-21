@@ -11,6 +11,7 @@ import {
 	ConnectionMetadata
 } from "~/api/connections";
 import type { ConnectionType } from "~/api/connections";
+import { connectionProvider } from "~/features";
 import { device, useDevice } from "~/hooks/use-device";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useTheme } from "~/hooks/use-theme";
@@ -162,15 +163,12 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 
 	if (!session) return null;
 
+	// Already-linked disabled providers still render, so they can be unlinked.
+	if (!connection && !connectionProvider(type)) return null;
+
 	// Don't allow Apple connections to be created from Android, or they won't get
 	// revocation tokens.
 	if (!connection && type === "apple" && device.native && device.android) return null;
-
-	if (
-		!connection
-		&& type === "meta"
-		&& !session.user.tags?.includes("beta_tester")
-	) return null;
 
 	return (
 		<div

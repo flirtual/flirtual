@@ -12,6 +12,7 @@ export function loader() {
 		"",
 		["Policy", absoluteUrl(urls.resources.communityGuidelines)],
 	]
+		.filter((line) => !Array.isArray(line) || line[1])
 		.map((line) => {
 			if (!line) return "";
 

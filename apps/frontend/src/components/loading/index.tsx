@@ -3,8 +3,8 @@ import ms from "ms" with { type: "macro" };
 import { useState } from "react";
 import type { PropsWithChildren } from "react";
 import { twMerge } from "tailwind-merge";
-import FlirtualBlack from "virtual:remote/static/flirtual-black.svg";
-import FlirtualWhite from "virtual:remote/static/flirtual-white.svg";
+import LogoBlack from "virtual:remote/brand/black.svg";
+import LogoWhite from "virtual:remote/brand/white.svg";
 
 import { Image } from "~/components/image";
 import { useTimeout } from "~/hooks/use-interval";
@@ -34,7 +34,7 @@ export function Loading({
 						className="hidden w-full vision:block dark:block"
 						draggable={false}
 						height={1000}
-						src={FlirtualWhite}
+						src={LogoWhite}
 						width={3468}
 					/>
 				)}
@@ -44,7 +44,7 @@ export function Loading({
 					className={twMerge("w-full", light !== true && "block vision:hidden dark:hidden")}
 					draggable={false}
 					height={1000}
-					src={FlirtualBlack}
+					src={LogoBlack}
 					width={3468}
 				/>
 			</div>

@@ -2,18 +2,20 @@ import SwiftUI
 
 extension Mode {
     var gradient: LinearGradient {
-        switch self {
-        case .love:
-            LinearGradient(colors: [Color(hex: 0xFF8975), Color(hex: 0xE9658B)], startPoint: .topLeading, endPoint: .bottomTrailing)
-        case .friend:
-            LinearGradient(colors: [Color(hex: 0x82BF72), Color(hex: 0x4D8888)], startPoint: .topLeading, endPoint: .bottomTrailing)
-        }
+        LinearGradient(colors: colors, startPoint: .topLeading, endPoint: .bottomTrailing)
     }
 
     var tint: Color {
         switch self {
-        case .love: Color(hex: 0xE9658B)
-        case .friend: Color(hex: 0x82BF72)
+        case .love: Brand.dateColors[1]
+        case .friend: Brand.homieColors[0]
+        }
+    }
+
+    private var colors: [Color] {
+        switch self {
+        case .love: Brand.dateColors
+        case .friend: Brand.homieColors
         }
     }
 

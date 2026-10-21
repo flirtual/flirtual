@@ -22,7 +22,8 @@ import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useNavigate } from "~/i18n";
 import { mutate, sessionKey } from "~/query";
-import { urls } from "~/urls";
+
+import { nextFinishStepUrl, previousFinishStepUrl } from "../navigation";
 
 export const Finish2Form: FC = () => {
 	const sexualities = useAttributes("sexuality");
@@ -63,7 +64,7 @@ export const Finish2Form: FC = () => {
 					}
 				});
 
-				navigate(urls.finish(3));
+				navigate(nextFinishStepUrl("details"));
 			}}
 		>
 			{({ FormField }) => (
@@ -149,7 +150,7 @@ export const Finish2Form: FC = () => {
 					<div className="flex justify-end gap-2">
 						<ButtonLink
 							className="flex w-fit flex-row gap-2 opacity-75"
-							href={urls.finish(1)}
+							href={previousFinishStepUrl("details")}
 							kind="tertiary"
 							size="sm"
 						>

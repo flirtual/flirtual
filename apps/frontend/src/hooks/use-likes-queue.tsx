@@ -23,7 +23,7 @@ import { newConversationId } from "~/utilities";
 
 import { useDialog } from "./use-dialog";
 import { useLikesYou } from "./use-likes-you";
-import { invalidateQueue } from "./use-queue";
+import { invalidateQueues } from "./use-queue";
 import { useSession } from "./use-session";
 
 function invalidateMatch(userId: string) {
@@ -173,8 +173,7 @@ export function useLikesQueue(mode: ProspectKind = "love", options: UseLikesQueu
 			}
 		},
 		onSettled: () => {
-			invalidateQueue("love");
-			invalidateQueue("friend");
+			void invalidateQueues();
 		}
 	});
 

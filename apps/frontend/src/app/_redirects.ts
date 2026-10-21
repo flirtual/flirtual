@@ -1,6 +1,7 @@
 import Bimi from "virtual:remote/76eef593-c3fb-498d-a6b6-1b75903a10fc.svg";
 import Favicon from "virtual:remote/b4c0e29e-4055-4924-8ddf-adee9bc505c3";
 
+import { homieMode } from "~/features";
 import { urls } from "~/urls";
 
 // see: https://developers.cloudflare.com/workers/static-assets/redirects/
@@ -24,7 +25,7 @@ export const redirects = [
 	},
 	{
 		source: "/discover/homies",
-		destination: "/homies"
+		destination: homieMode ? "/homies" : "/dates"
 	},
 	{
 		source: "/browse",
@@ -34,10 +35,12 @@ export const redirects = [
 		source: "/discover/dates",
 		destination: "/dates"
 	},
-	{
-		source: "/discord",
-		destination: urls.socials.discord
-	},
+	...(urls.socials.discord
+		? [{
+				source: "/discord",
+				destination: urls.socials.discord
+			}]
+		: []),
 	{
 		source: "/speeddate",
 		destination: "https://vrchat.com/home/world/wrld_f5844d7c-dc4d-4ee7-bf3f-63c8e6be5539"

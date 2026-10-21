@@ -43,7 +43,7 @@ defmodule FlirtualWeb.PasskeyController do
       publicKey: %{
         challenge: Base.encode64(challenge.bytes),
         rp: %{
-          name: "Flirtual",
+          name: Flirtual.Brand.name(),
           id: challenge.rp_id
         },
         user: %{

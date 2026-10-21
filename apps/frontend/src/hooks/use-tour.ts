@@ -7,6 +7,7 @@ import type { PopperPlacement, Step, StepOptions, Tour } from "shepherd.js";
 import { HeartIcon } from "~/components/icons/gradient/heart";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
 import { ShepherdContext } from "~/components/shepherd/context";
+import { homieMode } from "~/features";
 import { localePathnameRegex, useNavigate } from "~/i18n";
 import { NativeNavigationPlugin } from "~/native-navigation";
 import type { NativeNavigationFrame } from "~/native-navigation";
@@ -325,38 +326,42 @@ export function useDefaultTour(enabled: boolean = true) {
 									{ element: "#conversation-aside", on: "right", padding: 0, radius: 0 }
 								])
 							},
-							{
-								id: "browse-mode",
-								title: t("minor_gaudy_seal_ask"),
-								beforeShowPromise: async () => {
-									await ensureOnPage(urls.discover("dates"), nativeNavigation ? "#like-button" : "#browse-mode-switch");
-									await attach(["homies"], [{ element: "#browse-mode-switch", on: "top" }]);
-								},
-								text: () => `
+							...(homieMode
+								? [
+										{
+											id: "browse-mode",
+											title: t("minor_gaudy_seal_ask"),
+											beforeShowPromise: async () => {
+												await ensureOnPage(urls.discover("dates"), nativeNavigation ? "#like-button" : "#browse-mode-switch");
+												await attach(["homies"], [{ element: "#browse-mode-switch", on: "top" }]);
+											},
+											text: () => `
 					${t("chunky_zany_leopard_peek", {
-						heart: modeIcon("heart", HeartIcon),
-						homie: modeIcon("homie", PeaceIcon),
-						interpolation: { escapeValue: false }
-					})}
+									heart: modeIcon("heart", HeartIcon),
+									homie: modeIcon("homie", PeaceIcon),
+									interpolation: { escapeValue: false }
+								})}
 					<br/><br/>
 					${t("honest_loud_felix_favor")}`,
-								attachTo: {
-									element: "#browse-mode-switch",
-									on: "top"
-								},
-								modalOverlayOpeningRadius: mobile ? 28 : 33
-							},
-							{
-								id: "friend",
-								title: t("royal_house_peacock_roar"),
-								text: t("light_flat_racoon_buzz"),
-								attachTo: { element: "#friend-button", on: "top" },
-								modalOverlayOpeningRadius: 33,
-								beforeShowPromise: async () => {
-									await ensureOnPage(urls.discover("homies"), "#friend-button");
-									await attach([], [{ element: "#friend-button", on: "top" }]);
-								}
-							},
+											attachTo: {
+												element: "#browse-mode-switch",
+												on: "top" as const
+											},
+											modalOverlayOpeningRadius: mobile ? 28 : 33
+										},
+										{
+											id: "friend",
+											title: t("royal_house_peacock_roar"),
+											text: t("light_flat_racoon_buzz"),
+											attachTo: { element: "#friend-button", on: "top" as const },
+											modalOverlayOpeningRadius: 33,
+											beforeShowPromise: async () => {
+												await ensureOnPage(urls.discover("homies"), "#friend-button");
+												await attach([], [{ element: "#friend-button", on: "top" }]);
+											}
+										}
+									]
+								: []),
 							{
 								id: "profile-dropdown",
 								title: t("nice_wise_ibex_accept"),

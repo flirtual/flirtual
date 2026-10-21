@@ -2,6 +2,7 @@ import { AppWindow, RotateCw, Smartphone, WifiOff } from "lucide-react";
 import { m } from "motion/react";
 import { Trans, useTranslation } from "react-i18next";
 
+import * as brand from "~/brand";
 import { preview } from "~/const";
 import { urls } from "~/urls";
 
@@ -25,7 +26,11 @@ export function LongerThanUsual() {
 						{" "}
 						<strong>preview</strong>
 						{" "}
-						version of Flirtual that automatically turns off after a few minutes of use. It may take a minute to start up again.
+						version of
+						{" "}
+						{brand.name}
+						{" "}
+						that automatically turns off after a few minutes of use. It may take a minute to start up again.
 					</li>
 				)}
 				<li>
@@ -56,19 +61,21 @@ export function LongerThanUsual() {
 						{t("refresh_the_app")}
 					</button>
 				</li>
-				<li>
-					<Trans
-						components={{
-							contact: (
-								<Link
-									className="whitespace-nowrap lowercase underline"
-									href={urls.resources.contact}
-								/>
-							)
-						}}
-						i18nKey="yummy_salty_porpoise_greet"
-					/>
-				</li>
+				{urls.resources.contact && (
+					<li>
+						<Trans
+							components={{
+								contact: (
+									<Link
+										className="whitespace-nowrap lowercase underline"
+										href={urls.resources.contact}
+									/>
+								)
+							}}
+							i18nKey="yummy_salty_porpoise_greet"
+						/>
+					</li>
+				)}
 			</ul>
 		</m.div>
 	);

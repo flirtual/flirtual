@@ -9,6 +9,7 @@ import type {
 } from "~/api/user/profile";
 import { advancedFilterValueCategories } from "~/api/user/profile";
 import { getCountryName } from "~/components/profile/pill/country";
+import { personality, vrTags } from "~/features";
 import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
 import { useLocale } from "~/i18n";
 
@@ -135,24 +136,28 @@ export function useAdvancedFilterGroups(
 					}))
 					.sort(byLabel)
 			},
-			{
-				key: "headset",
-				label: t("vr_platforms"),
-				premium: false,
-				options: attributeOptions(
-					"platform",
-					allPlatforms.filter(({ kind }) => kind === "headset")
-				)
-			},
-			{
-				key: "accessory",
-				label: t("vr_accessories"),
-				premium: true,
-				options: attributeOptions(
-					"platform",
-					allPlatforms.filter(({ kind }) => kind === "accessory")
-				)
-			},
+			vrTags
+				? {
+						key: "headset",
+						label: t("vr_platforms"),
+						premium: false,
+						options: attributeOptions(
+							"platform",
+							allPlatforms.filter(({ kind }) => kind === "headset")
+						)
+					}
+				: null,
+			vrTags
+				? {
+						key: "accessory",
+						label: t("vr_accessories"),
+						premium: true,
+						options: attributeOptions(
+							"platform",
+							allPlatforms.filter(({ kind }) => kind === "accessory")
+						)
+					}
+				: null,
 			{
 				key: "country",
 				label: t("countries"),
@@ -199,25 +204,29 @@ export function useAdvancedFilterGroups(
 					allInterests.filter(({ category }) => category !== popularInterestCategory)
 				)
 			},
-			{
-				key: "game",
-				label: t("vr_apps_games"),
-				premium: true,
-				options: attributeOptions("game", games)
-			},
-			{
-				key: "personality",
-				label: t("personality"),
-				premium: true,
-				options: [
-					{ key: "personality:openminded", label: t("personality_openminded") },
-					{ key: "personality:practical", label: t("personality_practical") },
-					{ key: "personality:reliable", label: t("personality_reliable") },
-					{ key: "personality:freespirited", label: t("personality_freespirited") },
-					{ key: "personality:friendly", label: t("personality_friendly") },
-					{ key: "personality:straightforward", label: t("personality_straightforward") }
-				]
-			},
+			vrTags
+				? {
+						key: "game",
+						label: t("vr_apps_games"),
+						premium: true,
+						options: attributeOptions("game", games)
+					}
+				: null,
+			personality
+				? {
+						key: "personality",
+						label: t("personality"),
+						premium: true,
+						options: [
+							{ key: "personality:openminded", label: t("personality_openminded") },
+							{ key: "personality:practical", label: t("personality_practical") },
+							{ key: "personality:reliable", label: t("personality_reliable") },
+							{ key: "personality:freespirited", label: t("personality_freespirited") },
+							{ key: "personality:friendly", label: t("personality_friendly") },
+							{ key: "personality:straightforward", label: t("personality_straightforward") }
+						]
+					}
+				: null,
 			nsfw
 				? {
 						key: "domsub",

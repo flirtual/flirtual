@@ -9,7 +9,7 @@ import {
 	XIcon
 } from "~/components/icons";
 import type { IconComponent } from "~/components/icons";
-import { commitIdShort } from "~/const";
+import { commitIdShort, freshworksWidgetId } from "~/const";
 import { useDialog } from "~/hooks/use-dialog";
 import type { Theme } from "~/hooks/use-theme";
 import { urls } from "~/urls";
@@ -17,14 +17,15 @@ import { urls } from "~/urls";
 import { InlineLink } from "../inline-link";
 import { InlineLanguageSelect } from "../inputs/specialized/language-select";
 import { Link } from "../link";
-import { FlirtualLogo } from "../logo";
+import { Logo } from "../logo";
 import { IdeasDialog } from "../modals/ideas";
 import { MadeWithLove } from "./made-with-love";
 import { FooterIconSupportLink, FooterSupportLink } from "./support-button";
 
+// A null href is an unconfigured brand link, so the item isn't rendered.
 type LinkOrButtonProps<T> = T
 	& (
-		| Pick<React.ComponentProps<"a">, "href">
+		| { href: string | null }
 		| Pick<React.ComponentProps<"button">, "onClick">
 	);
 
@@ -42,11 +43,13 @@ export const FooterListIconLink: React.FC<FooterListIconLinkProps> = ({
 		<Icon className={twMerge("h-[1.125rem] w-auto desktop:h-6", className)} />
 	);
 
+	if ("href" in props && !props.href) return null;
+
 	return "href" in props
 		? (
 				<a
 					className="touch-callout-default cursor-pointer hover:brightness-90"
-					{...props}
+					href={props.href!}
 				>
 					{icon}
 				</a>
@@ -66,29 +69,30 @@ type FooterListLinkProps = LinkOrButtonProps<{
 	label: string;
 }>;
 
-export const FooterListLink: React.FC<FooterListLinkProps> = ({ label, ...props }) => (
-	<li>
-		{"href" in props
-			? (
-					<Link
-						{...props}
-						className="hover:underline data-[active]:font-bold hover:data-[active]:no-underline"
-						href={props.href || null}
-					>
-						{label}
-					</Link>
-				)
-			: (
-					<button
-						{...props}
-						className="cursor-pointer hover:underline"
-						type="button"
-					>
-						{label}
-					</button>
-				)}
-	</li>
-);
+export const FooterListLink: React.FC<FooterListLinkProps> = ({ label, ...props }) => "href" in props && !props.href
+	? null
+	: (
+			<li>
+				{"href" in props
+					? (
+							<Link
+								className="hover:underline data-[active]:font-bold hover:data-[active]:no-underline"
+								href={props.href}
+							>
+								{label}
+							</Link>
+						)
+					: (
+							<button
+								{...props}
+								className="cursor-pointer hover:underline"
+								type="button"
+							>
+								{label}
+							</button>
+						)}
+			</li>
+		);
 
 export type FooterProps = {
 	desktopOnly?: boolean;
@@ -120,10 +124,10 @@ export const Footer: React.FC<FooterProps> = ({
 				<div className="flex justify-between gap-8">
 					<div className="flex items-center gap-8">
 						<Link href={urls.landing}>
-							<FlirtualLogo className="w-36" theme={logoTheme} />
+							<Logo className="w-36" theme={logoTheme} />
 						</Link>
 						<div className="flex items-center gap-4">
-							<FooterIconSupportLink />
+							{freshworksWidgetId && <FooterIconSupportLink />}
 							<FooterListIconLink
 								href={urls.socials.discord}
 								Icon={DiscordIcon}
@@ -147,14 +151,16 @@ export const Footer: React.FC<FooterProps> = ({
 				<div className="grid max-w-screen-desktop grid-cols-3 gap-x-4 desktop:justify-center">
 					<ul>
 						<FooterListLink href={urls.resources.events} label={t("events")} />
-						<FooterSupportLink />
-						<FooterListLink
-							label={t("ideas")}
-							onClick={() => {
-								const dialog = <IdeasDialog onClose={() => dialogs.remove(dialog)} />;
-								dialogs.add(dialog);
-							}}
-						/>
+						{freshworksWidgetId && <FooterSupportLink />}
+						{urls.socials.discord && (
+							<FooterListLink
+								label={t("ideas")}
+								onClick={() => {
+									const dialog = <IdeasDialog onClose={() => dialogs.remove(dialog)} />;
+									dialogs.add(dialog);
+								}}
+							/>
+						)}
 						<FooterListLink
 							href={urls.news}
 							label={t("updates")}

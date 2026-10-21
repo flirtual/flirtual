@@ -61,7 +61,7 @@ defmodule Flirtual.Application do
           ]
         },
         {
-          has_config?(Flirtual.VRChat, [:username, :password]),
+          Flirtual.Features.vrchat?() and has_config?(Flirtual.VRChat, [:username, :password]),
           [{2, Flirtual.VRChatSession}]
         },
         {

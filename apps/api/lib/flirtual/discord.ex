@@ -393,7 +393,7 @@ defmodule Flirtual.Discord do
     case entitlement do
       %Entitlement{store: :chargebee, kind: :subscription, store_id: store_id}
       when is_binary(store_id) ->
-        "[#{chargebee_label}](https://flirtual.chargebee.com/d/subscriptions/#{store_id})"
+        "[#{chargebee_label}](https://#{Application.get_env(:chargebeex, :namespace)}.chargebee.com/d/subscriptions/#{store_id})"
 
       %Entitlement{store: :play_store} when is_binary(user.revenuecat_id) ->
         "[#{play_label}](#{RevenueCat.customer_url(user.revenuecat_id)})"
@@ -496,7 +496,11 @@ defmodule Flirtual.Discord do
                           user,
                           "Issue refund",
                           "Issue refund",
-                          "[Send refund reminder](https://hello.flirtu.al/a/tickets/compose-email)"
+                          if(Flirtual.Brand.support_origin(),
+                            do:
+                              "[Send refund reminder](#{Flirtual.Brand.support_origin()}/a/tickets/compose-email)",
+                            else: "Send refund reminder"
+                          )
                         )
                     }
                   ],
@@ -841,10 +845,7 @@ defmodule Flirtual.Discord do
             |> Enum.filter(&(!!&1)),
           image:
             if(report.images !== [],
-              do: %{
-                url:
-                  "https://uploads.flirtual.com/#{report.images |> List.first() |> URI.encode()}"
-              },
+              do: %{url: Image.url(:uploads, List.first(report.images))},
               else: nil
             ),
           color: @default_color,

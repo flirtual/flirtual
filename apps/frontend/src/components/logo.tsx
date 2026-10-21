@@ -2,14 +2,14 @@ import { useCallback } from "react";
 import type { ComponentProps, FC } from "react";
 import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
-import FlirtualBlack from "virtual:remote/static/flirtual-black.svg";
-import FlirtualWhite from "virtual:remote/static/flirtual-white.svg";
+import LogoBlack from "virtual:remote/brand/black.svg";
+import LogoWhite from "virtual:remote/brand/white.svg";
 
 import type { Theme } from "~/hooks/use-theme";
 import { useNavigate } from "~/i18n";
 import { urls } from "~/urls";
 
-export const FlirtualLogo: FC<{ theme?: Theme } & Omit<ComponentProps<"img">, "src">> = ({ className, theme, ...props }) => {
+export const Logo: FC<{ theme?: Theme } & Omit<ComponentProps<"img">, "src">> = ({ className, theme, ...props }) => {
 	const { t } = useTranslation();
 	const navigate = useNavigate();
 
@@ -27,8 +27,8 @@ export const FlirtualLogo: FC<{ theme?: Theme } & Omit<ComponentProps<"img">, "s
 			<img
 				{...elementProps}
 				src={{
-					dark: FlirtualWhite,
-					light: FlirtualBlack
+					dark: LogoWhite,
+					light: LogoBlack
 				}[theme]}
 				className={className}
 			/>
@@ -39,12 +39,12 @@ export const FlirtualLogo: FC<{ theme?: Theme } & Omit<ComponentProps<"img">, "s
 			<img
 				{...elementProps}
 				className={twMerge("dark:hidden", className)}
-				src={FlirtualBlack}
+				src={LogoBlack}
 			/>
 			<img
 				{...elementProps}
 				className={twMerge("hidden dark:block", className)}
-				src={FlirtualWhite}
+				src={LogoWhite}
 			/>
 		</>
 	);

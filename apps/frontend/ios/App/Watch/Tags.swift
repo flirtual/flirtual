@@ -39,9 +39,11 @@ struct Tag: Identifiable {
 
         add("sexuality", attributes("sexuality", mine: mine?.attributes("sexuality")))
 
-        let personality = personalityLabels(profile)
-        let myPersonality = mine.map(personalityLabels) ?? []
-        add("personality", personality.map { Tag(id: "personality:\($0)", name: t.message($0) ?? $0, shared: other && myPersonality.contains($0)) })
+        if Features.personality {
+            let personality = personalityLabels(profile)
+            let myPersonality = mine.map(personalityLabels) ?? []
+            add("personality", personality.map { Tag(id: "personality:\($0)", name: t.message($0) ?? $0, shared: other && myPersonality.contains($0)) })
+        }
 
         let myCustom = Set((mine?.customInterests ?? []).map(normalize))
         let interests = attributes("interest", mine: mine?.attributes("interest"))
@@ -49,7 +51,9 @@ struct Tag: Identifiable {
             + profile.customInterests.map { Tag(id: "custom:\($0)", name: $0, shared: other && myCustom.contains(normalize($0))) }
         add("interest", interests.filter(\.shared) + interests.filter { !$0.shared })
 
-        add("game", attributes("game", mine: mine?.attributes("game")))
+        if Features.vrTags {
+            add("game", attributes("game", mine: mine?.attributes("game")))
+        }
 
         if nsfw, let domsub = profile.domsub {
             let match = Set([domsub, mine?.domsub ?? ""])
@@ -73,7 +77,9 @@ struct Tag: Identifiable {
             )
         })
 
-        add("platform", attributes("platform", mine: mine?.attributes("platform")))
+        if Features.vrTags {
+            add("platform", attributes("platform", mine: mine?.attributes("platform")))
+        }
         return groups
     }
 

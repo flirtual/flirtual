@@ -3,7 +3,7 @@ import { useState } from "react";
 import type { FC, PropsWithChildren } from "react";
 import useSound from "use-sound";
 
-import { FlirtualMark } from "~/components/mark";
+import { Mark } from "~/components/mark";
 import { useToast } from "~/hooks/use-toast";
 import { useMessages } from "~/i18n";
 import { urls } from "~/urls";
@@ -121,7 +121,7 @@ export const SqueakyFlitty: FC<PropsWithChildren> = ({ children }) => {
 
 	return (
 		<div className="group/mark relative">
-			<FlirtualMark
+			<Mark
 				className="absolute right-1 top-0 w-16 origin-[bottom_center] rotate-[14deg] cursor-grab transition-all active:scale-x-110 active:scale-y-90 active:cursor-grabbing group-hocus-within/mark:-top-9"
 				onClick={() => {
 					squeak();

@@ -11,6 +11,7 @@ import { FaceTimeIcon, VRChatIcon } from "~/components/icons";
 import { InputText } from "~/components/inputs";
 import { ModelCard } from "~/components/model-card";
 import { ProfilePlaylist } from "~/components/profile/playlist";
+import { connectionProvider } from "~/features";
 import { useDevice } from "~/hooks/use-device";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
@@ -82,17 +83,19 @@ export const ConnectionsForm: FC = () => {
 							</div>
 							<div className="grid gap-4 wide:grid-cols-2">
 								<AddConnectionButton type="discord" />
-								<FormField name="vrchat">
-									{(field) => (
-										<InputText
-											Icon={VRChatIcon}
-											iconClassName="size-[1.625rem]"
-											iconColor="#095d6a"
-											placeholder="VRChat"
-											{...field.props}
-										/>
-									)}
-								</FormField>
+								{connectionProvider("vrchat") && (
+									<FormField name="vrchat">
+										{(field) => (
+											<InputText
+												Icon={VRChatIcon}
+												iconClassName="size-[1.625rem]"
+												iconColor="#095d6a"
+												placeholder="VRChat"
+												{...field.props}
+											/>
+										)}
+									</FormField>
+								)}
 								{vision && user.tags?.includes("debugger") && (
 									<FormField name="facetime">
 										{(field) => (

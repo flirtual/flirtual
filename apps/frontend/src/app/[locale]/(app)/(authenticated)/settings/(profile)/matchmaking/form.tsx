@@ -33,6 +33,7 @@ import { FormButton } from "~/components/forms/button";
 import { InputLabel, InputLabelHint, InputSelect } from "~/components/inputs";
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
 import { Slider } from "~/components/inputs/slider";
+import { personality, vrTags } from "~/features";
 import {
 
 	useAttributes,
@@ -352,6 +353,8 @@ export const MatchmakingForm: FC = () => {
 							(key === "monopoly" && !fields.monopoly.props.value)
 							|| (key === "relationships" && !fields.relationships.props.value)
 							|| (["domsub", "kinks"].includes(key) && !user.preferences?.nsfw)
+							|| (key === "personality" && !personality)
+							|| (key === "games" && !vrTags)
 						)
 							return null;
 

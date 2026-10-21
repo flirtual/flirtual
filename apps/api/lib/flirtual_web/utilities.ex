@@ -4,6 +4,8 @@ defmodule FlirtualWeb.Utilities do
   import Plug.Conn
   import Phoenix.Controller
 
+  alias Flirtual.Brand
+
   def split_to_atom_list(value, separator \\ ",")
   def split_to_atom_list(nil, _), do: []
   def split_to_atom_list("", _), do: []
@@ -142,11 +144,13 @@ defmodule FlirtualWeb.Utilities do
       |> to_string()
       |> String.downcase()
 
+    brand = Brand.name() |> String.downcase()
+
     cond do
-      String.contains?(user_agent, "flirtual-vision") ->
+      String.contains?(user_agent, brand <> "-vision") ->
         "vision"
 
-      String.contains?(user_agent, "flirtual-native") ->
+      String.contains?(user_agent, brand <> "-native") ->
         if(String.contains?(user_agent, "android"), do: "android", else: "ios")
 
       true ->

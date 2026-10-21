@@ -9,11 +9,14 @@ import { Form, FormButton } from "~/components/forms";
 import { AddConnectionButton } from "~/components/forms/add-connection-button";
 import { FaceTimeIcon, VRChatIcon } from "~/components/icons";
 import { InputText } from "~/components/inputs";
+import { connectionProvider } from "~/features";
 import { useDevice } from "~/hooks/use-device";
 import { useSession } from "~/hooks/use-session";
 import { useNavigate } from "~/i18n";
 import { mutate, sessionKey } from "~/query";
 import { urls } from "~/urls";
+
+import { previousFinishStepUrl } from "../navigation";
 
 export const Finish5Form: React.FC = () => {
 	const { vision } = useDevice();
@@ -61,17 +64,19 @@ export const Finish5Form: React.FC = () => {
 						<>
 							<div className="grid gap-4 wide:grid-cols-2">
 								<AddConnectionButton type="discord" />
-								<FormField name="vrchat">
-									{(field) => (
-										<InputText
-											Icon={VRChatIcon}
-											iconClassName="size-[1.625rem]"
-											iconColor="#095d6a"
-											placeholder={t("vrchat")}
-											{...field.props}
-										/>
-									)}
-								</FormField>
+								{connectionProvider("vrchat") && (
+									<FormField name="vrchat">
+										{(field) => (
+											<InputText
+												Icon={VRChatIcon}
+												iconClassName="size-[1.625rem]"
+												iconColor="#095d6a"
+												placeholder={t("vrchat")}
+												{...field.props}
+											/>
+										)}
+									</FormField>
+								)}
 								<AddConnectionButton type="meta" />
 								{vision && user.tags?.includes("debugger") && (
 									<FormField
@@ -91,7 +96,7 @@ export const Finish5Form: React.FC = () => {
 							<div className="flex justify-end gap-2">
 								<ButtonLink
 									className="flex w-fit flex-row gap-2 opacity-75"
-									href={urls.finish(4)}
+									href={previousFinishStepUrl("connections")}
 									kind="tertiary"
 									size="sm"
 								>

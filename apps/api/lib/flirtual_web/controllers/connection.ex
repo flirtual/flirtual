@@ -33,41 +33,11 @@ defmodule FlirtualWeb.ConnectionController do
     |> json(Connection.list_available(conn.assigns[:session].user))
   end
 
-  # Meta carries no state, so we return the signed state to the app, which passes
-  # it back to grant itself.
-  def authorize(conn, %{"type" => "meta", "next" => next, "json" => json} = params)
-      when not is_nil(json) do
-    with {:ok, state} <-
-           generate_oauth_state(
-             conn,
-             next,
-             truthy?(params["notifications"]),
-             truthy?(params["signup"])
-           ),
-         {:ok, authorize_url} <- Meta.authorize_url(conn, %{redirect: :app}) do
-      conn
-      |> json(%{
-        authorize_url: URI.to_string(authorize_url),
-        redirect_uri: Meta.redirect_url!(redirect: :app),
-        state: state
-      })
-    end
-  end
-
-  # Web opens our endpoint (302 to oculus) and stashes state in the session.
-  def authorize(conn, %{"type" => "meta", "next" => next} = params) do
-    with {:ok, state} <-
-           generate_oauth_state(
-             conn,
-             next,
-             truthy?(params["notifications"]),
-             truthy?(params["signup"])
-           ),
-         {:ok, authorize_url} <- Meta.authorize_url(conn, %{}) do
-      conn
-      |> put_session(:meta_state, state)
-      |> redirect(external: URI.to_string(authorize_url))
-    end
+  # Meta's stateless flow bypasses Connection.provider/1, so check the flag here.
+  def authorize(conn, %{"type" => "meta", "next" => _} = params) do
+    if Connection.enabled?(:meta),
+      do: authorize_meta(conn, params),
+      else: {:error, {:not_found, :provider_not_found, %{type: :meta}}}
   end
 
   # JSON authorize is only used by the native app: the provider redirects to
@@ -132,6 +102,43 @@ defmodule FlirtualWeb.ConnectionController do
     end
   end
 
+  # Meta carries no state, so we return the signed state to the app, which passes
+  # it back to grant itself.
+  defp authorize_meta(conn, %{"next" => next, "json" => json} = params)
+       when not is_nil(json) do
+    with {:ok, state} <-
+           generate_oauth_state(
+             conn,
+             next,
+             truthy?(params["notifications"]),
+             truthy?(params["signup"])
+           ),
+         {:ok, authorize_url} <- Meta.authorize_url(conn, %{redirect: :app}) do
+      conn
+      |> json(%{
+        authorize_url: URI.to_string(authorize_url),
+        redirect_uri: Meta.redirect_url!(redirect: :app),
+        state: state
+      })
+    end
+  end
+
+  # Web opens our endpoint (302 to oculus) and stashes state in the session.
+  defp authorize_meta(conn, %{"next" => next} = params) do
+    with {:ok, state} <-
+           generate_oauth_state(
+             conn,
+             next,
+             truthy?(params["notifications"]),
+             truthy?(params["signup"])
+           ),
+         {:ok, authorize_url} <- Meta.authorize_url(conn, %{}) do
+      conn
+      |> put_session(:meta_state, state)
+      |> redirect(external: URI.to_string(authorize_url))
+    end
+  end
+
   # Query parameters arrive as strings, JSON bodies as booleans.
   defp truthy?(value), do: value in [true, "true", "1"]
 
@@ -192,11 +199,17 @@ defmodule FlirtualWeb.ConnectionController do
     type = to_atom(type)
     user = conn.assigns[:session].user
 
-    with :ok <- ensure_email(user, type),
+    # Known, not enabled: a disabled provider can still be unlinked.
+    with :ok <- ensure_known_type(type),
+         :ok <- ensure_email(user, type),
          :ok <- ensure_email_independent(user, type),
          :ok <- Connection.delete(user.id, type) do
       conn |> json(%{deleted: true})
     end
+  end
+
+  defp ensure_known_type(type) do
+    if Connection.type?(type), do: :ok, else: {:error, {:bad_request, :provider_not_found}}
   end
 
   defp ensure_email(%User{} = user, :meta) do
@@ -320,8 +333,20 @@ defmodule FlirtualWeb.ConnectionController do
   </script>
   """
 
+  def meta_callback(conn, params) do
+    if Connection.enabled?(:meta),
+      do: do_meta_callback(conn, params),
+      else: {:error, {:not_found, :provider_not_found}}
+  end
+
+  def meta_callback_app(conn, params) do
+    if Connection.enabled?(:meta),
+      do: do_meta_callback_app(conn, params),
+      else: {:error, {:not_found, :provider_not_found}}
+  end
+
   # Web: read the state stashed in the session at /authorize, then hand to grant.
-  def meta_callback(conn, %{"payload" => payload}) do
+  defp do_meta_callback(conn, %{"payload" => payload}) do
     state = get_session(conn, :meta_state)
     conn = delete_session(conn, :meta_state)
 
@@ -342,13 +367,13 @@ defmodule FlirtualWeb.ConnectionController do
     end
   end
 
-  def meta_callback(conn, _), do: send_meta_bootstrap(conn)
+  defp do_meta_callback(conn, _), do: send_meta_bootstrap(conn)
 
   # App: no session, and the app already holds the state. Forward just the code
   # and org-scoped id to the app scheme; openSecureWindow prefix-matches, so
   # type=meta stays first. With no state to check here, a missing code can only
   # mean the user cancelled.
-  def meta_callback_app(conn, %{"payload" => payload}) do
+  defp do_meta_callback_app(conn, %{"payload" => payload}) do
     suffix =
       case decode_meta_payload(payload) do
         {:ok, code, org_scoped_id} ->
@@ -363,7 +388,7 @@ defmodule FlirtualWeb.ConnectionController do
     |> halt()
   end
 
-  def meta_callback_app(conn, _), do: send_meta_bootstrap(conn)
+  defp do_meta_callback_app(conn, _), do: send_meta_bootstrap(conn)
 
   defp send_meta_bootstrap(conn) do
     conn
@@ -398,18 +423,10 @@ defmodule FlirtualWeb.ConnectionController do
   # because the plugin embeds the redirect in the authorize URL without encoding
   # and drops extra &params.
   def grant(conn, %{"type" => "apple_android", "code" => code}) do
-    case Flirtual.Apple.exchange_code(code, platform: :android) do
-      {:ok, tokens} ->
-        app_grant_redirect(conn, %{
-          success: true,
-          id_token: tokens.id_token,
-          access_token: tokens.access_token,
-          refresh_token: tokens.refresh_token
-        })
-
-      {:error, reason} ->
-        log(:error, [:grant, :apple_android], reason: reason)
-        app_grant_redirect(conn, %{success: false})
+    if Connection.enabled?(:apple) do
+      apple_android_grant(conn, code)
+    else
+      app_grant_redirect(conn, %{success: false})
     end
   end
 
@@ -554,6 +571,22 @@ defmodule FlirtualWeb.ConnectionController do
       {:error, reason} when is_atom(reason) ->
         log(:error, [:grant], reason: reason)
         {:error, {:unauthorized, reason}}
+    end
+  end
+
+  defp apple_android_grant(conn, code) do
+    case Flirtual.Apple.exchange_code(code, platform: :android) do
+      {:ok, tokens} ->
+        app_grant_redirect(conn, %{
+          success: true,
+          id_token: tokens.id_token,
+          access_token: tokens.access_token,
+          refresh_token: tokens.refresh_token
+        })
+
+      {:error, reason} ->
+        log(:error, [:grant, :apple_android], reason: reason)
+        app_grant_redirect(conn, %{success: false})
     end
   end
 

@@ -8,6 +8,7 @@ import { FormButton } from "~/components/forms/button";
 import { InlineLink } from "~/components/inline-link";
 import { InputLabel, InputLabelHint, InputSwitch } from "~/components/inputs";
 import { InputPrivacySelect } from "~/components/inputs/specialized";
+import { personality } from "~/features";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { mutate, sessionKey } from "~/query";
@@ -40,16 +41,18 @@ export const PrivacyForm: React.FC = () => {
 		>
 			{({ FormField }) => (
 				<>
-					<FormField name="personality">
-						{(field) => (
-							<>
-								<InputLabel inline hint={t("personality_privacy_hint")}>
-									{t("personality_privacy")}
-								</InputLabel>
-								<InputPrivacySelect {...field.props} />
-							</>
-						)}
-					</FormField>
+					{personality && (
+						<FormField name="personality">
+							{(field) => (
+								<>
+									<InputLabel inline hint={t("personality_privacy_hint")}>
+										{t("personality_privacy")}
+									</InputLabel>
+									<InputPrivacySelect {...field.props} />
+								</>
+							)}
+						</FormField>
+					)}
 					<FormField name="sexuality">
 						{(field) => (
 							<>
