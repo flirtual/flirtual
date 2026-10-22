@@ -1,62 +1,62 @@
 {
 	"ban-reason": {
 		"tUaxdXYAcyeb3G4Qc7gNLh": {
-			"details": "Perfil de spam. O conteúdo do seu perfil foi marcado como spam. Você pode responder esse email para apelar seu banimento e ter sua conta desbanida. Podemos pedir que você atualize seu perfil com mais informação.",
+			"details": "Perfil de spam. O conteúdo do perfil foi assinalado como spam. Para reativar a conta, pode responder a este e-mail e recorrer do banimento. Poderemos pedir que acrescente mais informações ao perfil.",
 			"name": "Spam"
 		},
 		"nupwCrjodUd4ZvPizEBc8L": {
-			"details": "Solicitando. Você não pode solicitar dinheiro no Flirtual. Você pode responder este email para apelar seu banimento e remover qualquer solicitação do seu perfil para desbanir sua conta.",
-			"name": "Solicitando dinheiro"
+			"details": "Pedido de dinheiro. Não é permitido pedir dinheiro no Flirtual. Para reativar a conta, pode responder a este e-mail para recorrer do banimento e retirar do perfil qualquer pedido de dinheiro.",
+			"name": "Pedido de dinheiro"
 		},
 		"VgQw2st96dZKZotsnYUEaN": {
-			"details": "Evasão de Ban. Pareçe que você criou uma nova conta ou ignorou um banimento anterior. Se você gostaria de apelar seu ban anterior e ter sua conta desbanida, responda ao email do ban original.",
-			"name": "Evasão de Ban"
+			"details": "Evasão de banimento. Ao que parece, foi criada uma nova conta ou foi contornado de outra forma um banimento anterior no Flirtual. Para recorrer de um banimento anterior e reativar a conta, pode responder ao e-mail original do banimento.",
+			"name": "Evasão de banimento"
 		},
 		"muXMqNjneKnwqxT8nqcy4d": {
-			"details": "Menor de idade. Deve ter no mínimo 18 anos para utilizar o Flirtual. Se considera que foi banido por engano, pode iniciar sessão no Flirtual e verificar a sua idade em segurança para restaurar a sua conta.",
+			"details": "Menor de idade. É necessário ter pelo menos 18 anos para usar o Flirtual. Caso considere que a conta foi banida por engano, pode iniciar sessão no Flirtual e verificar a sua idade de forma segura para recuperar a conta.",
 			"name": "Menor de idade"
 		},
 		"hLwvdpKQiofFTCDHox75SY": {
-			"details": "Conteúdo odioso. Mensagens e conteúdo de ódio não são bem-vindos no Flirtual. Se você acredita que este ban foi um erro responda este email para apelar e ter sua conta desbanida.",
-			"name": "Conteúdo Odioso"
+			"details": "Conteúdo de ódio. Conteúdo de ódio em perfis ou mensagens não tem lugar no Flirtual. Caso considere que a conta foi banida por engano, pode responder a este e-mail para recorrer e reativar a conta.",
+			"name": "Conteúdo de ódio"
 		},
 		"EVU7hHnv5u6eQwRBTW8aYU": {
-			"details": "Nudez ou conteúdo adulto. Imagens de conteúdo adulto ou texto excessivamente obsceno não são permitidos no Flirtual. Você pode responder este email para apelar seu ban e atualizar seu perfil para desbanir sua conta.",
-			"name": "Conteúdo Adulto"
+			"details": "Nudez ou conteúdo sexual explícito. Não são permitidas no Flirtual imagens de nudez ou de conteúdo sexual explícito, nem texto excessivamente obsceno. Para reativar a conta, pode responder a este e-mail para recorrer do banimento e atualizar o perfil.",
+			"name": "Nudez ou conteúdo sexual explícito"
 		},
 		"WSD2yPcs64FB27qpb4AGuT": {
-			"details": "Personificação. Seu perfil aparenta estar se passando por outra pessoa. Se você acredita ter sido banido por erro responda este email para apelar e ter sua conta desbanida.",
-			"name": "Personificação"
+			"details": "Usurpação de identidade. O perfil parece estar a fazer-se passar por outra pessoa. Caso considere que a conta foi banida por engano, pode responder a este e-mail para recorrer e reativar a conta.",
+			"name": "Usurpação de identidade"
 		},
 		"dWDkcjmXQEQRVoXmNkutAB": {
 			"name": "Assédio",
-			"details": "Assédio. Se você gostaria de apelar seu banimento, por favor responda este email. Por favor note que não podemos compartilhar detalhes de denúncias de moderação, caso alguma tenha sido feita."
+			"details": "Assédio. Para recorrer do banimento e reativar a conta, responda a este e-mail. Informamos que não podemos partilhar detalhes de denúncias à moderação, caso existam."
 		},
 		"KfFVwKB4DYMXx7foyqGUZM": {
-			"details": "Conteúdo Violento/Perturbante. Seu perfil aparenta conter conteúdo violento ou perturbante. Se você quiser apelar este banimento, por favor responde este email.",
-			"name": "Conteúdo Violento/Perturbante"
+			"details": "Conteúdo violento/perturbador. O perfil parece conter conteúdo violento ou perturbador. Para recorrer deste banimento, responda a este e-mail.",
+			"name": "Conteúdo violento/perturbador"
 		},
 		"YLsXz4iHn9yNLLLmuMHLCT": {
-			"details": "Automutilação. Seu perfil ou atividade foi marcado como contendo referências a automutilação que pode ser perturbante para outros usuários, Nós temos alguns recursos em https://flirtu.al/mentalhealth que podem ser úteis. Por favor se cuide. Se você quiser apelar este banimento, porfavor responda este email.",
-			"name": "Automutilação"
+			"details": "Conteúdo de automutilação. O perfil ou a atividade na conta foram assinalados por conterem referências a automutilação que podem ser perturbadoras para outras pessoas. Temos alguns recursos de saúde mental em https://flirtu.al/mentalhealth que podem ajudar. Cuide de si. Para recorrer deste banimento, responda a este e-mail.",
+			"name": "Conteúdo de automutilação"
 		},
 		"HmF9W5yHfH3nLRYnt6F2cc": {
 			"name": "Conteúdo ilegal",
-			"details": "Conteúdo ilegal. Seu perfil ou atividade aparenta violar as leis Canadenses ou locais. Se você acredita ter sido banido por erro, responda este email para apelar."
+			"details": "Conteúdo ilegal. O perfil ou a atividade na conta parecem violar a lei canadiana ou local. Caso considere que a conta foi banida por engano, pode responder a este e-mail para recorrer."
 		},
 		"Lfb829DEo36f54Uu3H3ybj": {
-			"details": "Golpe, malware, ou links maliciosos. Seu perfil aparenta conter links ou atividade maliciosa. Se você acredita ter sido banido por erro, poderá apelar respondendo este email.",
-			"name": "Golpe, malware, ou links maliciosos"
+			"details": "Burla, malware ou links maliciosos. O perfil parece conter links ou atividade maliciosos. Caso considere que a conta foi banida por engano, pode responder a este e-mail para recorrer.",
+			"name": "Burla, malware ou links maliciosos"
 		},
 		"8P2pi5232LTpzGTDWkBprc": {
-			"name": "Outro"
+			"name": "Outro motivo"
 		},
 		"jBVZ29YcQ2dDXbURb6AxXk": {
-			"name": "Anúnciando",
-			"details": "Anúnciando. Seu perfil aparenta ser focado em promover uma conta ou serviço externo. Você é livre para mencionar suas redes sociais ou trabalho no seu perfil, mas o propósito principal do seu perfil deve ser encontrar amigos ou pares. Você pode responder esse email para apelar seu ban e atualizar seu perfil para desbanir sua conta."
+			"name": "Publicidade",
+			"details": "Publicidade. O perfil parece servir sobretudo para promover uma conta ou um serviço externo. Pode mencionar as suas redes sociais ou o seu trabalho no perfil, mas o objetivo principal do perfil deve ser procurar encontros ou amizades. Para reativar a conta, pode responder a este e-mail para recorrer do banimento e atualizar o perfil."
 		},
 		"5H9nMhQacZBD9Zomu7Tbt9": {
-			"details": "Conta duplicada. Criar múltiplas contas no Flirtual não é permitido. Essa conta foi desativada mas você ainda pode usar sua outra conta. Se você acredita ter sido banido por erro, ou gostaria de ter a outra conta desativada ao invés desta, porfavor responda esse email.",
+			"details": "Conta duplicada. Não é permitido criar várias contas no Flirtual. Esta conta foi desativada, mas pode continuar a usar a outra. Caso considere que a conta foi banida por engano, ou prefira que seja desativada a outra conta em vez desta, responda a este e-mail.",
 			"name": "Conta duplicada"
 		}
 	},
@@ -658,7 +658,7 @@
 			"name": "IRONSTRIKE"
 		},
 		"RwfdcvqjWW6aK2Upo5wNt3": {
-			"name": "Wands: Alliances"
+			"name": "Aliança das Varinhas"
 		},
 		"EaU8Vg4zaXw4h6BdAxqUCW": {
 			"name": "Block Buster"
@@ -826,7 +826,7 @@
 			"name": "Espire 2: Stealth Operatives"
 		},
 		"AWr2CAxhJsY4GoNJZDZarC": {
-			"name": "CleanSheet Soccer"
+			"name": "CleanSheet Futebol"
 		},
 		"3nhLdefwZxD4k5Y6WgWqHf": {
 			"name": "NHL Sense Arena"
@@ -925,7 +925,7 @@
 			"name": "ToyBoom"
 		},
 		"xLzD3wLfQto7sEivhuMNsG": {
-			"name": "Trivia Crack World"
+			"name": "Perguntados World"
 		},
 		"RKQufM5vt6bcF6Jbaen87o": {
 			"name": "VRFS"
@@ -1339,41 +1339,41 @@
 	},
 	"gender": {
 		"2ETbJJJ3shADLphvncUwSL": {
-			"name": "Mulher Cis",
-			"definition": "Uma mulher que se identifica com o gênero definido no nascimento.",
+			"name": "Mulher cis",
+			"definition": "Uma mulher cuja identidade de género corresponde ao sexo atribuído à nascença.",
 			"definitionLink": "https://nonbinary.wiki/wiki/Cisgender_women"
 		},
 		"879KtanHc548synGhcNE7J": {
-			"definition": "Alguém que não se identifica ou vivencia nenhum gênero.",
-			"name": "Agênero",
+			"definition": "Alguém que não se identifica com nenhum género nem o vivencia.",
+			"name": "Agénero",
 			"definitionLink": "https://nonbinary.wiki/wiki/Agender"
 		},
 		"CHkgoEoKzTSeVaLVByviBZ": {
-			"definition": "Alguém de gênero masculino que foi designado como mulher no nascimento.",
+			"definition": "Alguém com uma identidade de género masculina a quem foi atribuído o sexo feminino à nascença.",
 			"name": "Transmasculino",
 			"definitionLink": "https://nonbinary.wiki/wiki/Transmasculine"
 		},
 		"fAPzVgy7VyGPgAPhkwSkSU": {
-			"definition": "Alguém que não concorda com as expectativas ou normas sociais de gênero.",
-			"name": "Inconformidade de Gênero",
+			"definition": "Alguém que não segue as expectativas ou normas sociais de género.",
+			"name": "Género não conforme",
 			"definitionLink": "https://nonbinary.wiki/wiki/Gender_nonconformity"
 		},
 		"GJitRtRoYWT6DfVasptK7N": {
-			"definition": "Um homem cujo gênero corresponde ao sexo definido no nascimento.",
-			"name": "Homem Cis",
+			"definition": "Um homem cuja identidade de género corresponde ao sexo atribuído à nascença.",
+			"name": "Homem cis",
 			"definitionLink": "https://nonbinary.wiki/wiki/Cisgender_men"
 		},
 		"hv43aTXJZjMHfXRXvTcYiH": {
 			"name": "Ele/Dele"
 		},
 		"PFEmTKdmxAoPuxttYPwFZb": {
-			"definition": "Alguém que se identifica com múltiplos ou todos os gêneros.",
-			"name": "Pangênero",
+			"definition": "Alguém que se identifica com vários ou com todos os géneros.",
+			"name": "Pangénero",
 			"definitionLink": "https://nonbinary.wiki/wiki/Pangender"
 		},
 		"QwXvxjisosKeTP97ouczoZ": {
-			"definition": "Alguém cujo gênero está fora do binário de gêneros.",
-			"name": "Não-binário",
+			"definition": "Alguém cujo género fica fora do binarismo de género.",
+			"name": "Não binário",
 			"definitionLink": "https://nonbinary.wiki/wiki/Nonbinary"
 		},
 		"tpkW7r8PZ2RUuYGUSYi82N": {
@@ -1382,27 +1382,27 @@
 		},
 		"w3t9h2SyNhr2rBWouXim8c": {
 			"name": "Intersexo",
-			"definition": "Alguém que nasce com características sexuais que não se enquadram nas definições típicas de corpo masculino ou feminino.",
+			"definition": "Alguém que nasceu com características sexuais que não se enquadram nas definições típicas de corpos masculinos ou femininos.",
 			"definitionLink": "https://nonbinary.wiki/wiki/Intersex"
 		},
 		"XTVsHQMWXiJGEc5xCf7RUb": {
-			"definition": "Um homem que foi designado como mulher no nascimento.",
-			"name": "Homem Trans",
+			"definition": "Um homem a quem foi atribuído o sexo feminino à nascença.",
+			"name": "Homem trans",
 			"definitionLink": "https://nonbinary.wiki/wiki/Transgender_men"
 		},
 		"YBkoUyfKJd6jJGwbekY3HN": {
-			"name": "Bigênero",
-			"definition": "Alguém que vivencia duas identidades de gênero.",
+			"name": "Bigénero",
+			"definition": "Alguém que vivencia duas identidades de género.",
 			"definitionLink": "https://nonbinary.wiki/wiki/Bigender"
 		},
 		"zMta3qtGyqW4hFdcDFUHik": {
-			"definition": "Alguém cujo gênero está fora do binário tradicional de gêneros.",
-			"name": "Gêneroqueer",
+			"definition": "Alguém cujo género fica fora do binarismo de género tradicional.",
+			"name": "Genderqueer",
 			"definitionLink": "https://nonbinary.wiki/wiki/Genderqueer"
 		},
 		"aKEzfuPY6TaMkmnugQWLUd": {
-			"name": "Gênero Fluido",
-			"definition": "Alguém cujo gênero varia ao longo do tempo.",
+			"name": "Género fluido",
+			"definition": "Alguém cujo género varia ao longo do tempo.",
 			"definitionLink": "https://nonbinary.wiki/wiki/Genderfluid"
 		},
 		"mosDhQUt8JGumiup4yQWbZ": {
@@ -1416,32 +1416,32 @@
 			"name": "Homem"
 		},
 		"RdMpwqWGydDgk9X2u32BBW": {
-			"name": "Andrógine",
+			"name": "Andrógino",
 			"definition": "Alguém com uma combinação de traços masculinos e femininos.",
 			"definitionLink": "https://nonbinary.wiki/wiki/Androgyny"
 		},
 		"wJdnfUvuvACEWRSV4KBdzS": {
 			"name": "Hijra",
-			"definition": "Um terceiro gênero nas culturas do sul da Ásia.",
+			"definition": "Um terceiro género nas culturas do Sul da Ásia.",
 			"definitionLink": "https://nonbinary.wiki/wiki/Hijra"
 		},
 		"tyrdBY4Rbfitznr65hpRPR": {
-			"name": "Transgênero",
-			"definition": "Alguém que se identifica com gênero que não corresponde ao sexo atribuído no nascimento.",
+			"name": "Transgénero",
+			"definition": "Alguém cuja identidade de género não corresponde ao sexo atribuído à nascença.",
 			"definitionLink": "https://nonbinary.wiki/wiki/Transgender"
 		},
 		"HWte4cB6TUzzXZoJeuxJuf": {
-			"definition": "Uma mulher que foi designada como homem no nascimento.",
-			"name": "Mulher Trans",
+			"definition": "Uma mulher a quem foi atribuído o sexo masculino à nascença.",
+			"name": "Mulher trans",
 			"definitionLink": "https://nonbinary.wiki/wiki/Transgender_women"
 		},
 		"rGFyY9WbvBBJSUAUpY5iUE": {
-			"definition": "Alguém com identidade de gênero feminina que foi designada homem no nascimento.",
-			"name": "Transfeminino",
+			"definition": "Alguém com uma identidade de género feminina a quem foi atribuído o sexo masculino à nascença.",
+			"name": "Transfeminina",
 			"definitionLink": "https://nonbinary.wiki/wiki/Transfeminine"
 		},
 		"JL8AaDCJMVApbEuAfwG86Y": {
-			"definition": "Um terceiro gênero nas culturas indígenas norte-americanas.",
+			"definition": "Um terceiro género nas culturas indígenas da América do Norte.",
 			"name": "Dois Espíritos",
 			"definitionLink": "https://nonbinary.wiki/wiki/Two-spirit"
 		},
@@ -1604,7 +1604,7 @@
 			"name": "Natação 🏊"
 		},
 		"4THEgH4BLaftoQWAhYaFoM": {
-			"name": "Simuladores de Direção 🏎️"
+			"name": "Simuladores de condução 🏎️"
 		},
 		"4q9oopWm8XNXoX7z4RnQE8": {
 			"name": "ESTP (Empreendedor)"
@@ -1658,13 +1658,13 @@
 			"name": "Clássico 🎻"
 		},
 		"GzLxoRQCmGWBjABNrCZWiD": {
-			"name": "Jogos de esporte ⚽️"
+			"name": "Jogos de desporto ⚽️"
 		},
 		"bz9jVSncDmgYzdBdg98NV3": {
 			"name": "Militar"
 		},
 		"crtnnE8akbJwwA9BdqUFRc": {
-			"name": "Jogos Retrô 👾"
+			"name": "Jogos retro 👾"
 		},
 		"dQAeMiAqHwxcVbjHYkC6dC": {
 			"name": "Espiritual"
@@ -1676,13 +1676,13 @@
 			"name": "Zen pra caramba 🪷"
 		},
 		"kYABzgDPzJeaU9TJez4JKc": {
-			"name": "Cancer ♋️"
+			"name": "Caranguejo ♋️"
 		},
 		"NMCLsa8AfCkuZBTqYSzEQm": {
 			"name": "Aprender línguas"
 		},
 		"rDDDYYEjrdUWFjgaE4NSDM": {
-			"name": "Libra ♎️"
+			"name": "Balança ♎️"
 		},
 		"qDsrBajn8sdumFdSHNr4e2": {
 			"name": "Política"
@@ -1880,7 +1880,7 @@
 			"name": "ISTP (Virtuoso)"
 		},
 		"yZAPLKAMizp9ha78cErdkF": {
-			"name": "Jogos indies 🕹️"
+			"name": "Jogos indie 🕹️"
 		},
 		"fcHJKqULdrBvrAmPF4vuV9": {
 			"name": "Leão ♌️"
@@ -1931,7 +1931,7 @@
 			"name": "Religioso"
 		},
 		"M9FwNtCEQT3xUNV4EsnQ3d": {
-			"name": "Jogos de Ritmo 🎼"
+			"name": "Jogos de ritmo 🎼"
 		},
 		"TuaoosdiDnHXC7FHVArkdW": {
 			"name": "Quebra-cabeças 🧩"
@@ -2087,7 +2087,7 @@
 			"name": "Em forma 💪"
 		},
 		"jQD3WHErNsMnhtMeDgE6SE": {
-			"name": "Simuladores de avião ✈️"
+			"name": "Simuladores de voo ✈️"
 		},
 		"P8E5xJTRAgxycZMErjVMYa": {
 			"name": "Jardinagem 🪴"
@@ -2096,7 +2096,7 @@
 			"name": "Jogar 🎮"
 		},
 		"MneeWkir8YLxVNH2BxDtKR": {
-			"name": "Gêmeos ♊️"
+			"name": "Gémeos ♊️"
 		},
 		"NxJszSBMm3vkbRaZmPd2gh": {
 			"name": "Presentes 🎁"
@@ -2153,7 +2153,7 @@
 			"name": "Punk"
 		},
 		"xSLzANhRAqr5h3sXqhoKvT": {
-			"name": "Caótico bom"
+			"name": "Caótico e bom"
 		},
 		"RNP3HRDvwVZnCZ28wZcYGf": {
 			"name": "Campo de batalha"
@@ -2177,10 +2177,10 @@
 			"name": "Twitch"
 		},
 		"3MJtyHPdUjvYhPsbEci58W": {
-			"name": "Aries ♈️"
+			"name": "Carneiro ♈️"
 		},
 		"TJeFyc6EQhdBmEoLGqpYDh": {
-			"name": "Mal caótico"
+			"name": "Caótico e mau"
 		},
 		"3MbxP4iLYi6MC6FUbeqYbX": {
 			"name": "País 🤠"
@@ -2222,13 +2222,13 @@
 			"name": "LGBTQ+"
 		},
 		"QqXRreYsKwxs38WyUPPWwi": {
-			"name": "Legal neutro"
+			"name": "Leal e neutro"
 		},
 		"NdtkEKfWtyNqKux7gs5juV": {
-			"name": "Mal neutro"
+			"name": "Neutro e mau"
 		},
 		"2oxVb7fbNxvorrXZk7bgv3": {
-			"name": "Bom neutro"
+			"name": "Neutro e bom"
 		},
 		"pET4ZuyMW3ACUXzaYaxd3S": {
 			"name": "Rock 🥁"
@@ -2243,7 +2243,7 @@
 			"name": "Verdadeiro crime 🕵"
 		},
 		"YjvHypMDZzANaTkadS9apP": {
-			"name": "Verdadeiro neutro"
+			"name": "Neutro puro"
 		},
 		"pHU7w3PAb7fhcTDqFQWMKX": {
 			"name": "Tsundere 💢"
@@ -2264,7 +2264,7 @@
 			"name": "Indie"
 		},
 		"KpHyxBddWuMZzhx8vPHUwj": {
-			"name": "JRPGs"
+			"name": "JRPGs 🎌"
 		},
 		"rY6Mf9bdYcpLbCWpVBnhym": {
 			"name": "K-pop 🇰🇷"
@@ -2273,16 +2273,16 @@
 			"name": "Latim 💃"
 		},
 		"JAVpr44XUBC5wkmxtKX4rW": {
-			"name": "Mal legítimo"
+			"name": "Leal e mau"
 		},
 		"BTmeninByD4KaKKkQTiYga": {
-			"name": "Bem legal"
+			"name": "Leal e bom"
 		},
 		"JTp3btTZgozbnvZoatpJwR": {
 			"name": "Memelord"
 		},
 		"66TnRrCCPUeUdqjotUgReM": {
-			"name": "Neutro caótico"
+			"name": "Caótico e neutro"
 		},
 		"Bmkx6cmyU9kbuA3pdwv43o": {
 			"name": "Cuddles"
@@ -2294,10 +2294,10 @@
 			"name": "J-pop 🇯🇵"
 		},
 		"GH8sb9A9WRYBoKCurnTqFH": {
-			"name": "MMOs"
+			"name": "MMOs 🌐"
 		},
 		"hJoRPhWDwSDteA7nXarZ5i": {
-			"name": "MOBAS ⚔️"
+			"name": "MOBAs ⚔️"
 		},
 		"uDxAuTWV85Jr7r8YbnDxnd": {
 			"name": "Magia: O Encontro"
@@ -2335,13 +2335,13 @@
 	},
 	"interest-category": {
 		"43i5J3VsKCvU4HGRJHjehn": {
-			"name": "Tipos de personalidades"
+			"name": "Tipos de personalidade"
 		},
 		"9os9Yxxr6zGR4k7kh5BKrB": {
-			"name": "Linguagem de amor"
+			"name": "Linguagens do amor"
 		},
 		"DAweztCvdXBa5cKvhgNsPY": {
-			"name": "Esportes"
+			"name": "Desporto"
 		},
 		"fQK3RUCYFW4WeSfLkzVP42": {
 			"name": "Música"
@@ -2362,7 +2362,7 @@
 			"name": "Astrologia"
 		},
 		"tmQbiXNw7d9Ys2DG9Ddg28": {
-			"name": "Gêneros de jogo"
+			"name": "Géneros de jogos"
 		},
 		"iiCe39JvGQAAtsrTqnLddb": {
 			"name": "Populares"
