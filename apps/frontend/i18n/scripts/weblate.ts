@@ -1,4 +1,4 @@
-// Weblate sync. Run from apps/frontend: node --env-file=../../.env.weblate i18n/scripts/weblate.ts <command>
+// Weblate sync. Run from apps/frontend: node --env-file=.env.weblate i18n/scripts/weblate.ts <command>
 //
 //   pull [--locales ja,ko]                     units, history and human authorship → .staging/weblate
 //   locales [--apply]                          add missing target locales to components

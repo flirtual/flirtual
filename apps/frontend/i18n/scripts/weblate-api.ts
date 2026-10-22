@@ -5,7 +5,7 @@ export const project = process.env.WEBLATE_PROJECT ?? "flirtual";
 
 function token() {
 	const value = process.env.WEBLATE_TOKEN;
-	if (!value) throw new Error("WEBLATE_TOKEN is not set; run with `node --env-file=../../.env.weblate`.");
+	if (!value) throw new Error("WEBLATE_TOKEN is not set; run with `node --env-file=.env.weblate`.");
 	return value;
 }
 

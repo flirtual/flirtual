@@ -11,9 +11,10 @@ Localizes `apps/frontend/messages/en.json`, `apps/frontend/messages/attributes.e
 everything through Weblate. Arguments: a mode (default `incremental`) and optional locales
 (default all ten: de, es, fr, ja, ko, nl, pt, pt-BR, ru, sv; never any other).
 
-Run every command from `apps/frontend`. Commands that talk to Weblate need the token:
-`node --env-file=../../.env.weblate i18n/scripts/<script>.ts …`. Never print the token. Scripts
-that write to Weblate are dry runs unless given `--apply`.
+Run every command from `apps/frontend`. Commands that talk to Weblate need `WEBLATE_TOKEN` in the
+environment, e.g. from a git-ignored `apps/frontend/.env.weblate`:
+`node --env-file=.env.weblate i18n/scripts/<script>.ts …`. Never print the token. Scripts that
+write to Weblate are dry runs unless given `--apply`.
 
 ## Ground rules
 
@@ -30,12 +31,13 @@ that write to Weblate are dry runs unless given `--apply`.
   maintainer; don't retry.
 - **Locales:** only the ten above. `weblate.ts locales` may add a missing one of them to a
   component, after approval. Never enable locales in `src/i18n/languages.ts`.
-- **Agents, not inline translation:** drafting uses the `translator` agent, review uses the
-  `translation-reviewer` agent, the context pass uses `translation-context`. Don't translate in
-  the main session. No paid APIs.
-- **Models:** the `translator` drafts ja and ko on Fable (its default) and the eight European
-  locales on Opus (pass `model: "opus"` when spawning it for de, es, fr, nl, pt, pt-BR, ru, sv).
-  The `translation-reviewer` (Fable) reviews ja and ko; `translation-context` runs on Opus.
+- **Agents, not inline translation:** drafting, review and the context pass each run in a
+  subagent whose instructions are a file in this skill's `agents/` directory: `translator.md`,
+  `translation-reviewer.md` and `translation-context.md`. Give the subagent that file to follow
+  plus the task message below. Don't translate in the main session. No paid APIs.
+- **Models:** the `translator` drafts ja and ko on Fable and the eight European locales (de, es,
+  fr, nl, pt, pt-BR, ru, sv) on Opus. The `translation-reviewer` (Fable) reviews ja and ko;
+  `translation-context` runs on Opus.
 - **Unreviewed translations are never style references.** Bundles include only people's
   translations.
 - **Watch strings** (`watch: true` in context) only support `{name}` and empty `<name/>`.

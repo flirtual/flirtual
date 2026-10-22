@@ -71,7 +71,7 @@ non-English `.po` files. After adding or changing keys, run `/translate` (increm
 writes context for the new keys, drafts translations with the translator agents, and uploads
 them to Weblate as "needs editing" or as suggestions, after you approve.
 
-`.env.weblate` at the repo root (git-ignored) holds `WEBLATE_URL`, `WEBLATE_PROJECT` and
+`apps/frontend/.env.weblate` (git-ignored) holds `WEBLATE_URL`, `WEBLATE_PROJECT` and
 `WEBLATE_TOKEN` (a project-scoped `wlp_` token). Translation tooling lives in `i18n/`:
 `context.json` (per-key context), `style/` (style guide per locale, `glossary.json`),
 `translate.lock.json`, and `scripts/`:
@@ -85,7 +85,7 @@ cd apps/frontend
 
 node i18n/scripts/validate.ts <drafts.json> --locale ja      # ICU, placeholders, plurals, glossary
 node i18n/scripts/context.ts status                           # context coverage
-node --env-file=../../.env.weblate i18n/scripts/weblate.ts pull   # Weblate state → i18n/.staging
+node --env-file=.env.weblate i18n/scripts/weblate.ts pull   # Weblate state → i18n/.staging
 ```
 
 Writes to Weblate (`weblate.ts`, `screenshots.ts upload`) are dry runs unless given `--apply`.

@@ -1,5 +1,5 @@
 // Screenshots for strings whose meaning or placement isn't clear from text alone.
-// Run from apps/frontend: node --env-file=../../.env.weblate i18n/scripts/screenshots.ts <command>
+// Run from apps/frontend: node --env-file=.env.weblate i18n/scripts/screenshots.ts <command>
 //
 //   plan                                group flagged strings (context needsScreenshot) by screen
 //   capture [--base URL] [--api URL] [--screens a,b]
