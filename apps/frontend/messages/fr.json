@@ -1133,5 +1133,7 @@
 	"show_nsfw_hint": "Choisis d’afficher ou non les tags NSFW sur les profils des autres.",
 	"show_nsfw": "Afficher les tags NSFW sur les profils ?",
 	"kinks": "Fantasmes",
-	"i_am": "Je suis…"
+	"i_am": "Je suis…",
+	"background": "Arrière-plan",
+	"accent": "Accent"
 }
