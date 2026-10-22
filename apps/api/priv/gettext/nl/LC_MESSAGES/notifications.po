@@ -3,14 +3,15 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-10-16 18:18+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2026-10-22 03:51+0000\n"
+"Last-Translator: Claude <bot-flirtual-claude@bots.noreply.weblate.org>\n"
+"Language-Team: Dutch <https://hosted.weblate.org/projects/flirtual/"
+"notifications/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 3.20.0\n"
+"X-Generator: Weblate 2026.11.dev0\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 ## This file is a PO Template file.
@@ -23,323 +24,477 @@ msgstr ""
 ## date. Leave "msgstr"s empty as changing them here has no
 ## effect: edit them in PO (.po) files instead.
 #
-
 #: lib/flirtual/mailer.ex:39
 #: lib/flirtual/mailer.ex:288
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "discord"
-msgstr ""
+msgstr "Discord"
 
 #: lib/flirtual/mailer.ex:285
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "if_the_link_does_not_work"
-msgstr ""
+msgstr "Werkt de link hierboven niet? Kopieer dan deze URL naar je browser:"
 
 #: lib/flirtual/mailer.ex:43
 #: lib/flirtual/mailer.ex:292
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "unsubscribe"
-msgstr ""
+msgstr "Afmelden"
 
 #: lib/flirtual/mailer.ex:40
 #: lib/flirtual/mailer.ex:289
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "x"
-msgstr ""
+msgstr "X"
 
 #: lib/flirtual/user/email.ex:15
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "suspended.subject"
-msgstr ""
+msgstr "Uw account is uitgeschakeld"
 
 #: lib/flirtual/user/email.ex:54
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "confirm_email.body_html"
 msgstr ""
+"<p>Bijna klaar! Bevestig je e-mailadres door op de knop hieronder te tikken. "
+"Daarna kun je meteen beginnen met matchen!</p>\n"
+"\n"
+"<p><a href=\"%{action_url}\" class=\"btn\">Doorgaan</a></p>"
 
 #: lib/flirtual/user/email.ex:52
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "confirm_email.body_text"
 msgstr ""
+"Bijna klaar! Bevestig je e-mailadres door de link hieronder te openen.\n"
+"Daarna kun je meteen beginnen met matchen!\n"
+"\n"
+"%{action_url}"
 
 #: lib/flirtual/user/email.ex:47
 #: lib/flirtual/user/email.ex:60
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "confirm_email.subject"
-msgstr ""
+msgstr "Bevestig je account"
 
 #: lib/flirtual/user/email.ex:99
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "reset_password.body_html"
 msgstr ""
+"<p>Bijna klaar! Tik op de knop hieronder om je wachtwoord te resetten. "
+"Daarna kun je meteen inloggen.</p>\n"
+"\n"
+"<p><a href=\"%{action_url}\" class=\"btn\">Doorgaan</a></p>\n"
+"\n"
+"<p>Heb je dit niet aangevraagd? Dan kun je deze e-mail gewoon negeren.</p>"
 
 #: lib/flirtual/user/email.ex:97
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "reset_password.body_text"
 msgstr ""
+"Bijna klaar! Open de link hieronder om je wachtwoord te resetten.\n"
+"Daarna kun je meteen inloggen.\n"
+"\n"
+"%{action_url}\n"
+"\n"
+"Heb je dit niet aangevraagd? Dan kun je deze e-mail gewoon negeren."
 
 #: lib/flirtual/user/email.ex:92
 #: lib/flirtual/user/email.ex:105
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "reset_password.subject"
-msgstr ""
+msgstr "Wachtwoord resetten"
 
 #: lib/flirtual/user/email.ex:19
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "suspended.body_html"
 msgstr ""
+"<p>Ons moderatieteam heeft vastgesteld dat uw Flirtual-account in strijd is "
+"met onze regels.</p>\n"
+"\n"
+"<p><strong>Reden</strong>: %{message}</p>\n"
+"\n"
+"<p>Uw accountgegevens worden 30 dagen bewaard en daarna verwijderd, zoals "
+"beschreven in ons Privacybeleid.</p><p>Wilt u bezwaar maken tegen deze "
+"moderatiebeslissing en uw account laten deblokkeren? Beantwoord dit bericht "
+"dan binnen 30 dagen. Wij beoordelen alle bezwaren en laten het u weten als "
+"uw bezwaar wordt toegekend. Hoort u binnen 30 dagen niets van ons, dan "
+"blijft onze moderatiebeslissing van kracht.</p><p>Het Flirtual-team</p>"
 
 #: lib/flirtual/user/email.ex:18
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "suspended.body_text"
 msgstr ""
+"Ons moderatieteam heeft vastgesteld dat uw Flirtual-account in strijd is met "
+"onze regels.\n"
+"\n"
+"Reden: %{message}\n"
+"\n"
+"Uw accountgegevens worden 30 dagen bewaard en daarna verwijderd, zoals "
+"beschreven in ons Privacybeleid.\n"
+"\n"
+"Wilt u bezwaar maken tegen deze moderatiebeslissing en uw account laten "
+"deblokkeren? Beantwoord dit bericht dan binnen 30 dagen. Wij beoordelen alle "
+"bezwaren en laten het u weten als uw bezwaar wordt toegekend. Hoort u binnen "
+"30 dagen niets van ons, dan blijft onze moderatiebeslissing van kracht.\n"
+"\n"
+"Het Flirtual-team"
 
 #: lib/flirtual/user/email.ex:64
 #: lib/flirtual/user/email.ex:109
 #: lib/flirtual/user/email.ex:290
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "continue"
-msgstr ""
+msgstr "Doorgaan"
 
 #: lib/flirtual/user/email.ex:372
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "email_changed.body_html"
 msgstr ""
+"<p>Het e-mailadres van je Flirtual-account is gewijzigd naar %{email}.</p>\n"
+"\n"
+" <p>Heb je dit niet zelf gedaan? Beantwoord deze e-mail dan meteen, zodat we "
+"je account kunnen beveiligen.</p>"
 
 #: lib/flirtual/user/email.ex:371
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "email_changed.body_text"
 msgstr ""
+"Het e-mailadres van je Flirtual-account is gewijzigd naar %{email}.\n"
+"\n"
+"Heb je dit niet zelf gedaan? Beantwoord deze e-mail dan meteen, zodat we je "
+"account kunnen beveiligen."
 
 #: lib/flirtual/user/email.ex:370
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "email_changed.subject"
-msgstr ""
+msgstr "Je e-mailadres is gewijzigd"
 
 #: lib/flirtual/user/email.ex:352
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "password_changed.body_html"
 msgstr ""
+"<p>Iemand, hopelijk jij, heeft het wachtwoord van je Flirtual-account "
+"gewijzigd.</p>\n"
+"\n"
+"<p>Heb je dit niet zelf gedaan? <a href=\"%{action_url}\">Reset dan meteen "
+"je wachtwoord</a> of beantwoord deze e-mail als je hulp nodig hebt.</p>"
 
 #: lib/flirtual/user/email.ex:350
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "password_changed.body_text"
 msgstr ""
+"Iemand, hopelijk jij, heeft het wachtwoord van je Flirtual-account "
+"gewijzigd.\n"
+"\n"
+"Heb je dit niet zelf gedaan? Reset dan meteen je wachtwoord via %"
+"{action_url} of beantwoord deze e-mail als je hulp nodig hebt."
 
 #: lib/flirtual/user/email.ex:348
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "password_changed.subject"
-msgstr ""
+msgstr "Je wachtwoord is gewijzigd"
 
 #: lib/flirtual/user/email.ex:187
 #: lib/flirtual/user/email.ex:199
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "message"
-msgstr ""
+msgstr "Bericht"
 
 #: lib/flirtual/user/email.ex:173
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "new_match.looking_for_date_ideas"
 msgstr ""
+"Op zoek naar date-ideeën? Kijk eens in het kanaal #date-worlds op onze "
+"Discord-server: https://discord.gg/flirtual"
 
 #: lib/flirtual/user/email.ex:182
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "new_match.looking_for_date_ideas_html"
 msgstr ""
+"<p>Op zoek naar date-ideeën? Kijk eens in het kanaal #date-worlds op onze <a "
+"href=\"https://discord.gg/flirtual\">Discord-server</a>.</p>"
 
 #: lib/flirtual/user/email.ex:195
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "send_them_a_message"
-msgstr ""
+msgstr "Stuur een bericht"
 
 #: lib/flirtual/user/push.ex:14
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "daily_profiles_ready"
-msgstr ""
+msgstr "Je dagelijkse profielen staan klaar!"
 
 #: lib/flirtual/user/push.ex:16
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "daily_profiles_ready_message"
 msgstr ""
+"We hebben onze matchmakingmagie losgelaten op een verse lading profielen, "
+"speciaal voor jou. Tik om ze te bekijken!"
 
 #: lib/flirtual/user/email.ex:171
 #: lib/flirtual/user/email.ex:180
 #: lib/flirtual/user/push.ex:48
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "homied_you"
-msgstr ""
+msgstr "%{name} heeft je ook als maatje toegevoegd. Stuur een bericht!"
 
 #: lib/flirtual/user/email.ex:164
 #: lib/flirtual/user/push.ex:42
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "its_a_match"
-msgstr ""
+msgstr "Het is een match! 💞"
 
 #: lib/flirtual/user/email.ex:165
 #: lib/flirtual/user/push.ex:43
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "its_a_match_homie"
-msgstr ""
+msgstr "Het is een match! ✌️"
 
 #: lib/flirtual/user/email.ex:170
 #: lib/flirtual/user/email.ex:179
 #: lib/flirtual/user/push.ex:47
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "liked_you"
-msgstr ""
+msgstr "%{name} heeft je ook geliket. Stuur een bericht!"
 
 #: lib/flirtual/user/email.ex:256
 #: lib/flirtual/user/push.ex:68
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "someone_liked_you"
 msgid_plural "x_people_liked_you"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Iemand heeft je geliket!"
+msgstr[1] "%{count} mensen hebben je deze week geliket!"
 
 #: lib/flirtual/user/email.ex:265
 #: lib/flirtual/user/push.ex:76
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "browse_profiles_to_see_if_its_a_match"
-msgstr ""
+msgstr "Bekijk profielen en ontdek of het een match is."
 
 #: lib/flirtual/user/push.ex:74
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "see_who_likes_you_and_match"
-msgstr ""
+msgstr "Bekijk wie jou heeft geliket en match."
 
 #: lib/flirtual/user/email.ex:286
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "browse_profiles"
-msgstr ""
+msgstr "Profielen bekijken"
 
 #: lib/flirtual/user/email.ex:275
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "browse_profiles_to_see_if_its_a_match_html"
 msgstr ""
+"<a href=\"%{action_url}\">Bekijk profielen</a> en ontdek of het een match "
+"is.</p> <p>Of <a href=\"https://flirtu.al/subscription\">upgrade naar "
+"Premium</a> om meteen te zien wie jou heeft geliket en nooit meer een match "
+"te missen."
 
 #: lib/flirtual/user/email.ex:268
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "or_upgrade_to_premium"
 msgstr ""
+"Of upgrade naar Premium om meteen te zien wie jou heeft geliket en nooit "
+"meer een match te missen: https://flirtu.al/subscription"
 
 #: lib/flirtual/user/email.ex:264
 #: lib/flirtual/user/email.ex:274
 #: lib/flirtual/user/email.ex:285
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "see_who_likes_you"
-msgstr ""
+msgstr "Bekijk wie jou liket"
 
 #: lib/flirtual/user/email.ex:261
 #: lib/flirtual/user/email.ex:271
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "this_week_1_person_liked_you"
 msgid_plural "this_week_x_people_liked_you"
 msgstr[0] ""
+"Deze week heeft 1 persoon je profiel op Flirtual geliket of je als maatje "
+"toegevoegd!"
 msgstr[1] ""
+"Deze week hebben %{count} mensen je profiel op Flirtual geliket of je als "
+"maatje toegevoegd!"
 
 #: lib/flirtual/user/email.ex:136
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "verification_code.body_html"
 msgstr ""
+"<p>We hebben een verdachte inlogpoging gezien. Was jij dat? Vul dan de "
+"verificatiecode hieronder in:</p>\n"
+"\n"
+"<p style=\"font-size: 24px; font-weight: bold; letter-spacing: 0.2em; "
+"margin: 20px 0;\">%{code}</p>\n"
+"\n"
+"<p>Deze code verloopt over 15 minuten.</p>\n"
+"\n"
+"<p>Was jij dit niet? Wijzig dan je wachtwoord in de Flirtual-instellingen om "
+"je account te beveiligen.</p>"
 
 #: lib/flirtual/user/email.ex:135
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "verification_code.body_text"
 msgstr ""
+"We hebben een verdachte inlogpoging gezien. Was jij dat? Vul dan de "
+"verificatiecode hieronder in:\n"
+"\n"
+"%{code}\n"
+"\n"
+"Deze code verloopt over 15 minuten.\n"
+"\n"
+"Was jij dit niet? Wijzig dan je wachtwoord in de Flirtual-instellingen om je "
+"account te beveiligen."
 
 #: lib/flirtual/user/email.ex:134
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "verification_code.subject"
-msgstr ""
+msgstr "Je inlogcode voor Flirtual is %{code}"
 
 #: lib/flirtual/user/email.ex:383
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "deletion_reminder_670.body_html"
 msgstr ""
+"<p>Het is alweer een tijdje geleden dat je bent ingelogd. Flirtual is de "
+"afgelopen jaren flink vernieuwd, met onder meer een betere matchmaking en de "
+"Maatjesmodus (om vrienden te maken). We denken dat je het leuk vindt om weer "
+"contact te maken met onze community!</p><p>Log je in de komende 60 dagen een "
+"keer in, dan blijft je account actief en blijven al je profielgegevens "
+"bewaard.</p><p>Als je niet binnen 60 dagen inlogt, moeten we je account en "
+"gegevens verwijderen volgens ons privacybeleid. Maar we hopen dat je "
+"terugkomt en Flirtual nog een kans geeft!</p><p><a href=\"%{action_url}\" "
+"class=\"btn\">Inloggen</a></p>"
 
 #: lib/flirtual/user/email.ex:382
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "deletion_reminder_670.body_text"
 msgstr ""
+"Het is alweer een tijdje geleden dat je bent ingelogd. Flirtual is de "
+"afgelopen jaren flink vernieuwd, met onder meer een betere matchmaking en de "
+"Maatjesmodus (om vrienden te maken). We denken dat je het leuk vindt om weer "
+"contact te maken met onze community!\n"
+"\n"
+"Log je in de komende 60 dagen een keer in, dan blijft je account actief en "
+"blijven al je profielgegevens bewaard.\n"
+"\n"
+"Als je niet binnen 60 dagen inlogt, moeten we je account en gegevens "
+"verwijderen volgens ons privacybeleid. Maar we hopen dat je terugkomt en "
+"Flirtual nog een kans geeft!\n"
+"\n"
+"Log in wanneer je wilt om je account te houden: %{action_url}"
 
 #: lib/flirtual/user/push.ex:105
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "deletion_reminder_670.push_message"
-msgstr ""
+msgstr "Je account wordt over 60 dagen verwijderd als je niet inlogt"
 
 #: lib/flirtual/user/push.ex:104
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "deletion_reminder_670.push_title"
-msgstr ""
+msgstr "We missen je! Kom snel terug"
 
 #: lib/flirtual/user/email.ex:381
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "deletion_reminder_670.subject"
-msgstr ""
+msgstr "ACTIE VEREIST: je Flirtual-account wordt binnenkort verwijderd"
 
 #: lib/flirtual/user/email.ex:391
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "deletion_reminder_700.body_html"
 msgstr ""
+"<p>Wil je je Flirtual-account houden? Log dan in de komende 30 dagen een "
+"keer in, meer hoef je niet te doen.</p><p>Als je niet inlogt, worden je "
+"account en gegevens definitief verwijderd volgens ons privacybeleid.</p><p>"
+"<a href=\"%{action_url}\" class=\"btn\">Inloggen</a></p>"
 
 #: lib/flirtual/user/email.ex:390
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "deletion_reminder_700.body_text"
 msgstr ""
+"Wil je je Flirtual-account houden? Log dan in de komende 30 dagen een keer "
+"in, meer hoef je niet te doen.\n"
+"\n"
+"Als je niet inlogt, worden je account en gegevens definitief verwijderd "
+"volgens ons privacybeleid.\n"
+"\n"
+"Log nu in om je account te behouden: %{action_url}"
 
 #: lib/flirtual/user/push.ex:112
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "deletion_reminder_700.push_message"
-msgstr ""
+msgstr "Je account wordt over 30 dagen verwijderd als je niet inlogt"
 
 #: lib/flirtual/user/push.ex:111
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "deletion_reminder_700.push_title"
-msgstr ""
+msgstr "Kom terug naar Flirtual! Nog 30 dagen"
 
 #: lib/flirtual/user/email.ex:389
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "deletion_reminder_700.subject"
-msgstr ""
+msgstr "ACTIE VEREIST: je Flirtual-account wordt over een maand verwijderd"
 
 #: lib/flirtual/user/email.ex:399
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "deletion_reminder_723.body_html"
 msgstr ""
+"<p><strong>Dit is je laatste herinnering.</strong> Je Flirtual-account wordt "
+"over 7 dagen definitief verwijderd.</p><p>Je hoeft in de komende 7 dagen "
+"maar één keer in te loggen om te voorkomen dat je account wordt verwijderd. "
+"Verder hoef je niets te doen.</p><p>We hebben onze matchmaking verbeterd "
+"zodat je betere matches krijgt, en in de Maatjesmodus kun je vrienden "
+"maken.</p><p>Als je niet inlogt, worden je account en gegevens definitief "
+"verwijderd volgens ons privacybeleid.</p><p><a href=\"%{action_url}\" "
+"class=\"btn\">Inloggen</a></p>"
 
 #: lib/flirtual/user/email.ex:398
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "deletion_reminder_723.body_text"
 msgstr ""
+"Dit is je laatste herinnering. Je Flirtual-account wordt over 7 dagen "
+"definitief verwijderd.\n"
+"\n"
+"Je hoeft in de komende 7 dagen maar één keer in te loggen om te voorkomen "
+"dat je account wordt verwijderd. Verder hoef je niets te doen.\n"
+"\n"
+"We hebben onze matchmaking verbeterd zodat je betere matches krijgt, en in "
+"de Maatjesmodus kun je vrienden maken.\n"
+"\n"
+"Als je niet inlogt, worden je account en gegevens definitief verwijderd "
+"volgens ons privacybeleid.\n"
+"\n"
+"Raak je account niet kwijt. Log vandaag nog in: %{action_url}"
 
 #: lib/flirtual/user/push.ex:119
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "deletion_reminder_723.push_message"
-msgstr ""
+msgstr "Je account wordt over 7 dagen verwijderd als je niet inlogt"
 
 #: lib/flirtual/user/push.ex:118
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "deletion_reminder_723.push_title"
-msgstr ""
+msgstr "Laatste kans! Log vandaag in bij Flirtual"
 
 #: lib/flirtual/user/email.ex:397
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "deletion_reminder_723.subject"
-msgstr ""
+msgstr "ACTIE VEREIST: je Flirtual-account wordt over een week verwijderd"
 
 #: lib/flirtual/mailer.ex:41
 #: lib/flirtual/mailer.ex:290
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "bluesky"
-msgstr ""
+msgstr "Bluesky"
 
 #: lib/flirtual/mailer.ex:42
 #: lib/flirtual/mailer.ex:291
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "instagram"
-msgstr ""
+msgstr "Instagram"
 
 #: lib/flirtual/user/email.ex:31
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "suspended.reason.underage"
 msgstr ""
+"Minderjarig. U moet minstens 18 jaar oud zijn om Flirtual te gebruiken. "
+"Denkt u dat u onterecht bent geschorst? Log dan in op Flirtual en verifieer "
+"veilig uw leeftijd om uw account te herstellen."
