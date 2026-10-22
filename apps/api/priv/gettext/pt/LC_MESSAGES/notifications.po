@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-10-16 18:18+0200\n"
-"PO-Revision-Date: 2026-10-22 03:58+0000\n"
+"PO-Revision-Date: 2026-10-22 04:55+0000\n"
 "Last-Translator: Claude <bot-flirtual-claude@bots.noreply.weblate.org>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/flirtual/"
 "notifications/pt/>\n"
@@ -224,14 +224,16 @@ msgid "send_them_a_message"
 msgstr "Envia-lhe uma mensagem"
 
 #: lib/flirtual/user/push.ex:14
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "daily_profiles_ready"
-msgstr ""
+msgstr "Os perfis de hoje estão prontos!"
 
 #: lib/flirtual/user/push.ex:16
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "daily_profiles_ready_message"
 msgstr ""
+"Fizemos a nossa magia de matchmaking numa nova seleção de perfis só para ti. "
+"Toca para os veres!"
 
 #: lib/flirtual/user/email.ex:171
 #: lib/flirtual/user/email.ex:180
