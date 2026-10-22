@@ -1158,64 +1158,64 @@
 	},
 	"prompt": {
 		"WZygBQGJYXzez6K66JYcuE": {
-			"name": "Meu medo mais irracional"
+			"name": "O meu medo mais irracional"
 		},
 		"mLL9t4DgPHTNRsa8aVNbsR": {
-			"name": "Se eu tivesse que comer apensa uma coisa o resto da vida, seria"
+			"name": "Se tivesse de comer só uma coisa para o resto da vida, seria"
 		},
 		"HHrtwjS3BUvdGoyQMJeZvh": {
-			"name": "Meu mundo favorito do VRChat"
+			"name": "O meu mundo preferido no VRChat"
 		},
 		"x5XHpp7uDA4Y3aws7v4WGK": {
-			"name": "Eu penso muito sobre"
+			"name": "Penso muito em"
 		},
 		"g8KyzzfF9ijBSCoPJuvHX2": {
-			"name": "Eu sou obcecado em"
+			"name": "O meu lado geek vem ao de cima com"
 		},
 		"tEUfrkPqK47zjhcJKoRvhh": {
 			"name": "O segredo para me conhecer é"
 		},
 		"c9ztgC7hXX47zNRLNMZHca": {
-			"name": "Eu quero alguém que"
+			"name": "Quero alguém que"
 		},
 		"rnQjiqXivKanoxFtGi6RS8": {
-			"name": "Juntos poderíamos"
+			"name": "A dois, podíamos"
 		},
 		"JyC9xq83f47wfDTVEh77yC": {
-			"name": "Estou procurando por"
+			"name": "Procuro"
 		},
 		"JgCFt5P7ZvSt8Tor9NbkMB": {
-			"name": "Minha coisa favorita de se fazer no VR"
+			"name": "O que mais gosto de fazer em VR"
 		},
 		"aqXFM7oU7FsXhFnJ2AaVsg": {
-			"name": "Meu jogo favorito"
+			"name": "O meu jogo preferido de sempre"
 		},
 		"VW97RnUAmtUQTzEhCJbxC8": {
-			"name": "Eu acabei de descobrir que"
+			"name": "Acabei de descobrir que"
 		},
 		"esvDHHBdB4wow5YofJT9pJ": {
-			"name": "Eu escuto esse albúm no repetir"
+			"name": "Tenho em repetição o álbum"
 		},
 		"DcowtBMp6ZU5jHPWt3rhNe": {
-			"name": "Meu filme favorito é"
+			"name": "O meu filme preferido é"
 		},
 		"JLiCKV2g295AG5GYuH5vQM": {
-			"name": "Meu personagem fictício favorito"
+			"name": "A minha personagem fictícia preferida"
 		},
 		"NEGzuX2TMdtxqVkb4xrvDm": {
-			"name": "Opnião impopular, mas"
+			"name": "Opinião impopular, mas"
 		},
 		"s5U6p73oVaym6ujZq3doy4": {
-			"name": "Eu não vou parar de falar sobre"
+			"name": "Não consigo parar de falar de"
 		},
 		"CxdN69Xv6M9BPsDXJGTCHA": {
 			"name": "Eu nunca"
 		},
 		"VaCimF6SdZQxj2nAUDAiRY": {
-			"name": "Aposto que não consegue"
+			"name": "Aposto que não consegues"
 		},
 		"Hbemf67DabFCSCxGVMBxzg": {
-			"name": "Um objetivo de vida meu é"
+			"name": "Um dos meus objetivos de vida é"
 		}
 	},
 	"platform": {
@@ -1223,34 +1223,37 @@
 			"name": "PlayStation VR"
 		},
 		"aNGgneQH5YX4HyWpNEUpmQ": {
-			"name": "Outro VR"
+			"name": "Outros óculos VR"
 		},
 		"RNaigbGdB7H4ZMw5c8ysbi": {
 			"name": "Meta Quest"
 		},
 		"3Kagenz7boB64Ke6vEAKv6": {
-			"name": "PCVR"
+			"name": "PCVR",
+			"example": "(Quest Link, Index, Vive, etc.)"
 		},
 		"pzkBdEYqgAZiSEBZAcJMPZ": {
-			"name": "Haptic suit"
+			"name": "Fato háptico"
 		},
 		"N458aYKyg6hweVbyDEMDAR": {
-			"name": "VIVE Standalone"
+			"name": "VIVE Standalone",
+			"example": "(Focus Vision, XR Elite)"
 		},
 		"Qb3Ar9wqh7mAMwdevJCfYS": {
-			"name": "Android XR"
+			"name": "Android XR",
+			"example": "(Galaxy XR)"
 		},
 		"c255sGSiJpMNnm6NTUcvx6": {
 			"name": "Apple Vision"
 		},
 		"MLWTjDZEuacyr2qwbXEw4K": {
-			"name": "Full-body tracking"
+			"name": "Rastreio de corpo inteiro"
 		},
 		"x5T9enPhP8WpYwnoottGDL": {
-			"name": "Esteira de locomoção"
+			"name": "Passadeira de locomoção"
 		},
 		"m4S2N4Jn2f3WDbJm7bcbgQ": {
-			"name": "Tracking facial"
+			"name": "Rastreio facial"
 		},
 		"FEX8jjr4P9aeBurRUTLhU7": {
 			"name": "Pico"
@@ -1269,7 +1272,7 @@
 			"definitionLink": "https://bdsmtest.org/info#:~:text=Exhibitionist,to%20other%20people."
 		},
 		"9civt22SpMr7z4nuPcuL3V": {
-			"name": "Sádico",
+			"name": "Sádico/a",
 			"definitionLink": "https://bdsmtest.org/info#:~:text=Sadist,a%20sexual%20context."
 		},
 		"7WBnwThpTkEHyQHDZTbw47": {
@@ -1277,11 +1280,11 @@
 			"definitionLink": "https://bdsmtest.org/info#:~:text=Primal%20(Prey),from%20its%20predator."
 		},
 		"nSPurHtFp8dpHKvW4Ux9Q9": {
-			"name": "Caçador",
+			"name": "Caçador/a",
 			"definitionLink": "https://bdsmtest.org/info#:~:text=Primal%20(Hunter),its%20predator%20(you)."
 		},
 		"yamRiwkspejx4mnzbtMdxN": {
-			"name": "Garoto/Garota",
+			"name": "Boy/Girl",
 			"definitionLink": "https://bdsmtest.org/info#:~:text=they%20consider%20degrading.-,Little,can%20go%20a%20lot%20deeper%20and%20sometimes%20rival%20those%20of%20slaves.,-Masochist"
 		},
 		"HEPqnrrPsMqx9nQvDk5rHT": {
@@ -1289,27 +1292,27 @@
 			"definitionLink": "https://bdsmtest.org/info#:~:text=Masochist,levels%20of%20pain."
 		},
 		"pnebwXNPvGr56PEZwSRbHi": {
-			"name": "Escravo",
+			"name": "Escravo/a",
 			"definitionLink": "https://bdsmtest.org/info#:~:text=a%20sexual%20context.-,Slave,primary%20focus%20in%20life%20and%20they%20rarely%20have%20limits%20for%20them.,-Submissive"
 		},
 		"sNdx2sNbnG5RmNZDtTVNCg": {
-			"name": "Braçadeira",
+			"name": "Brat",
 			"definitionLink": "https://bdsmtest.org/info#:~:text=Brat,change%20this%20behavior."
 		},
 		"rGDn478bBZCDajvQRYAkLf": {
-			"name": "Pai",
+			"name": "Daddy/Mommy",
 			"definitionLink": "https://bdsmtest.org/info#:~:text=Daddy/Mommy,littles%20into%20obedience."
 		},
 		"9mbQ4hxFEMBL4bHVYomPz3": {
-			"name": "Degradecimentos",
+			"name": "Humilhador/a",
 			"definitionLink": "https://bdsmtest.org/info#:~:text=Degrader,they%20consider%20degrading."
 		},
 		"wZ4AXSmb3hufSDxGVEkoNo": {
-			"name": "Tamer Brat",
+			"name": "Domador/a de Brat",
 			"definitionLink": "https://bdsmtest.org/info#:~:text=Brat%20tamer,the%20first%20place)."
 		},
 		"dXxUHt5t69rNeg2g7EE3bR": {
-			"name": "Mestre / amante",
+			"name": "Mestre/Mestra",
 			"definitionLink": "https://bdsmtest.org/info#:~:text=Master/Mistress,allow%20optimal%20servitude."
 		},
 		"2D9uSBJtgiRRfgdwXhyvm5": {
@@ -1317,15 +1320,15 @@
 			"definitionLink": "https://bdsmtest.org/info#:~:text=Rigger,at%20their%20mercy."
 		},
 		"nEDgGpz9eHcomwcbsCaCZP": {
-			"name": "Proprietário",
+			"name": "Dono/a",
 			"definitionLink": "https://bdsmtest.org/info#:~:text=Owner,for%20the%20pet)."
 		},
 		"cKzdEwXmCY3naeYdHuowJ7": {
-			"name": "Animais de estimação",
+			"name": "Pet",
 			"definitionLink": "https://bdsmtest.org/info#:~:text=its%20predator%20(you).-,Pet,play%20(puppy%2C%20kitten%2C%20etc.)%2C%20although%20that%20is%20not%20a%20strict%20necessity.,-Primal%20(Prey)"
 		},
 		"werFoPERXyXK9J6roSzCXG": {
-			"name": "Bunny de corda",
+			"name": "Rope Bunny",
 			"definitionLink": "https://bdsmtest.org/info#:~:text=Rope%20bunny,their%20partner(s)."
 		},
 		"Jyy988TnEA8J2FeG5ZSyDh": {
@@ -1333,7 +1336,7 @@
 			"definitionLink": "https://bdsmtest.org/info#:~:text=Voyeur,of%20other%20people."
 		},
 		"RE2twp4mgYSXjhya266npP": {
-			"name": "Degradee",
+			"name": "Humilhado/a",
 			"definitionLink": "https://bdsmtest.org/info#:~:text=Degradee,they%20consider%20degrading."
 		}
 	},
@@ -1622,10 +1625,10 @@
 			"name": "Teatro 🎭"
 		},
 		"658ffCwnSFxaY3hQSDvkGW": {
-			"name": "Certificado para usar empilhadeiras 🦺"
+			"name": "Com carta de empilhador 🦺"
 		},
 		"7MxTQSH57TKECXfFJXjVea": {
-			"name": "Alma velha"
+			"name": "Alma antiga"
 		},
 		"7N7jNvobkTyCBG9PWvcRUm": {
 			"name": "Tempo de qualidade ⏳"
@@ -1634,46 +1637,46 @@
 			"name": "Comida 🍕"
 		},
 		"BmuNHSVwKnyyVMUqEMqpYg": {
-			"name": "Piloto de Mechas 🤖"
+			"name": "Piloto de mecha 🤖"
 		},
 		"bSH9xxw4iBP736fUjxeMrX": {
-			"name": "Criador de Mundos 🛠️"
+			"name": "Criação de mundos 🛠️"
 		},
 		"b65XzJUEmhkGcs4X6HtQvD": {
-			"name": "Ser DJ 🎧"
+			"name": "DJ 🎧"
 		},
 		"BMkKqLcXLZ7g77u47mHnza": {
-			"name": "Literalmente só vibando"
+			"name": "Literalmente só a curtir"
 		},
 		"fEnnW4XeNnNbqReCryY58R": {
 			"name": "Música 🎵"
 		},
 		"g4VXtqWN8TKiCTxzBcWeRU": {
-			"name": "Explorador da mente 🧠"
+			"name": "Exploração da consciência 🧠"
 		},
 		"gD4Tp9YNXnyTctMQwGaijR": {
 			"name": "Animais"
 		},
 		"gjdYnF6jWBxtweAB3YmcLU": {
-			"name": "Clássico 🎻"
+			"name": "Música clássica 🎻"
 		},
 		"GzLxoRQCmGWBjABNrCZWiD": {
 			"name": "Jogos de desporto ⚽️"
 		},
 		"bz9jVSncDmgYzdBdg98NV3": {
-			"name": "Militar"
+			"name": "Vida militar"
 		},
 		"crtnnE8akbJwwA9BdqUFRc": {
 			"name": "Jogos retro 👾"
 		},
 		"dQAeMiAqHwxcVbjHYkC6dC": {
-			"name": "Espiritual"
+			"name": "Espiritualidade"
 		},
 		"JAsmfUmdh2uL6ZLZTWp8dF": {
-			"name": "Procurando Grupo 🎮"
+			"name": "À procura de grupo 🎮"
 		},
 		"mpS9oivuYqhZk99Vca5dHn": {
-			"name": "Zen pra caramba 🪷"
+			"name": "Zen até dizer chega 🪷"
 		},
 		"kYABzgDPzJeaU9TJez4JKc": {
 			"name": "Caranguejo ♋️"
@@ -1688,10 +1691,10 @@
 			"name": "Política"
 		},
 		"Qec82XHyZh6r2HpREWULv2": {
-			"name": "Vegano 🌱"
+			"name": "Vegan 🌱"
 		},
 		"uwhn9iPM4kntT2Bq2WDXKN": {
-			"name": "Motos 🏍️"
+			"name": "Motas 🏍️"
 		},
 		"y53Q79KXYjdqCJps7Nzn8e": {
 			"name": "Futebol americano 🏈"
@@ -1712,13 +1715,13 @@
 			"name": "ESTJ (Executivo)"
 		},
 		"AGheroLVRTz6DvXnDdMJh3": {
-			"name": "Buscando um terceiro"
+			"name": "À procura de terceiro elemento"
 		},
 		"9HPT7wgAd7HJajQkAXMbrQ": {
 			"name": "Cozinhar 🍳"
 		},
 		"cqaodBdFdfeegFVzxuA3QB": {
-			"name": "Modelagem 3D"
+			"name": "Modelação 3D"
 		},
 		"eTSWVwrcAF6tzHDPDLvJAd": {
 			"name": "Impressão 3D 🖨️"
@@ -1727,40 +1730,40 @@
 			"name": "Atos de serviço 🤝"
 		},
 		"NZjaoEMBizfYF2ScZbYAuG": {
-			"name": "Amigável à verdinha 🍁"
+			"name": "Pró-canábis 🍁"
 		},
 		"vHGjkMhPppZ5bhh8uded4G": {
 			"name": "E s t é t i c a ✨"
 		},
 		"eGP3EZe6r5NUwfpgFc9Mv6": {
-			"name": "Sempre no modo escuro 🌚"
+			"name": "Sempre em modo escuro 🌚"
 		},
 		"iPWiK6ULojrRgUsMcQArYY": {
-			"name": "Alternativo 🎸"
+			"name": "Música alternativa 🎸"
 		},
 		"siBAM5nerfTqbBT6JCa6wf": {
-			"name": "Aventureiro"
+			"name": "Espírito aventureiro"
 		},
 		"qmthjNQK6U6zxeUHWQWFEY": {
 			"name": "Aquário ♒️"
 		},
 		"8VvHQ63mBuCLdtc5bXcAdb": {
-			"name": "Cafeinado ☕️"
+			"name": "Café na veia ☕️"
 		},
 		"ba58TDSPbjG9jtZixoneUn": {
 			"name": "Jogos de tabuleiro 🎲"
 		},
 		"R9vN8EaDE7xTuUFMXA4bkP": {
-			"name": "Avatares do Booth"
+			"name": "Avatares da Booth"
 		},
 		"ufVyJtRHU6RpqVjnFdsRU9": {
 			"name": "Ciclismo 🚲"
 		},
 		"wS9AhkYmx7jSgtoqwUw8oL": {
-			"name": "Basquete 🏀"
+			"name": "Basquetebol 🏀"
 		},
 		"7nnemBz5mR5iHZNjw8E4aB": {
-			"name": "Acampar 🏕️"
+			"name": "Campismo 🏕️"
 		},
 		"Eu7WzNKBxcQKXhPWgAWAYW": {
 			"name": "Carros 🚗"
@@ -1769,19 +1772,19 @@
 			"name": "Capricórnio ♑️"
 		},
 		"nzy5prmodZfCQmkr6nMP5m": {
-			"name": "Desenhos"
+			"name": "Desenhos animados"
 		},
 		"m9K2k5wXQrVdehe3KN9ZaY": {
 			"name": "Gatos 🐈"
 		},
 		"Hacqj4nYnvzcbCD8vxPniH": {
-			"name": "Festas 🪩"
+			"name": "Discotecas 🪩"
 		},
 		"Qf69ZcHcgzrGyW8tVUSvkk": {
 			"name": "Comédia"
 		},
 		"CrvLT7p3UtXCe3ZmG8dZt7": {
-			"name": "Criador de conteúdo"
+			"name": "Criação de conteúdo"
 		},
 		"GcPbtTWyfDWqVeiNLzsV7c": {
 			"name": "Concertos"
@@ -1790,19 +1793,19 @@
 			"name": "Dança 💃"
 		},
 		"EXYCJJeyc6JP5yKhkt2GoX": {
-			"name": "Piadas de pai"
+			"name": "Especialista em piadas secas"
 		},
 		"Hge2bJA39qY7XSnqqrrY9Y": {
-			"name": "Surdo"
+			"name": "Pessoa surda"
 		},
 		"BB9qTGoqRiniinjxcy7jzn": {
 			"name": "Documentários"
 		},
 		"RjqdzibeHN5ovVcvNuneSB": {
-			"name": "Desenhar 🖋️"
+			"name": "Desenho 🖋️"
 		},
 		"xXDcmmB7yrZEMWi4ZLg6z3": {
-			"name": "Cachorros 🐶"
+			"name": "Cães 🐶"
 		},
 		"aWrMMCsArXZAbRqYqyXL8g": {
 			"name": "ESFJ (Cônsul)"
@@ -1820,10 +1823,10 @@
 			"name": "ENTP (Inovador)"
 		},
 		"ETXYWLwrk2BQD3mpvjXaN6": {
-			"name": "Amigo de suporte emocional"
+			"name": "Amizade de apoio emocional"
 		},
 		"FjZaJeuY5TD2KhzNB67Y5T": {
-			"name": "Eletrônico 🎛️"
+			"name": "Eletrónica 🎛️"
 		},
 		"bR2veGptTAE4VHitxqZxJV": {
 			"name": "Jogos de luta 🥊"
@@ -1835,10 +1838,10 @@
 			"name": "Moda"
 		},
 		"7PSViCMY8iKswNUxAjDwiY": {
-			"name": "Gótico 🕷️"
+			"name": "Goth 🕷️"
 		},
 		"BJwi9ji9dCqrX6YwqVLb2X": {
-			"name": "Cafunés"
+			"name": "Festinhas na cabeça"
 		},
 		"ftwVayAr6jTqmUw8A4RWMg": {
 			"name": "Armas"
@@ -1847,13 +1850,13 @@
 			"name": "Caminhadas 🥾"
 		},
 		"QSS6J4qhxDDiyWrbVoHxyY": {
-			"name": "Desenvolvedor de jogos"
+			"name": "Desenvolvimento de jogos"
 		},
 		"daTRTaC6weg6cu9j6K5XZV": {
-			"name": "INFJ (Apoiador)"
+			"name": "INFJ (Advogado)"
 		},
 		"gAQLfYHHAQu7hhdBdBN35b": {
-			"name": "Caçar 🦌"
+			"name": "Caça 🦌"
 		},
 		"HVQvfazU9oX6qSeM8kXvaM": {
 			"name": "Terror 👻"
@@ -1886,10 +1889,10 @@
 			"name": "Leão ♌️"
 		},
 		"r9YDRMbRwSsoFybfDo6jdG": {
-			"name": "Longas caminhadas na praia 🏖️"
+			"name": "Longos passeios na praia 🏖️"
 		},
 		"tYzVk2i9uhMzVXuPXcXe2b": {
-			"name": "Vive no VR 🥽"
+			"name": "Vive em VR 🥽"
 		},
 		"fAgh4qEey9okWzNjooerLG": {
 			"name": "Meditação 🧘"
@@ -1898,22 +1901,22 @@
 			"name": "Artes marciais 🥋"
 		},
 		"8kbF5HwfJBoBC4q324xHJT": {
-			"name": "Produção de música 🎧"
+			"name": "Produção musical 🎧"
 		},
 		"Amq7oATgh6UcQx4SoeJdkD": {
 			"name": "Filmes 🍿"
 		},
 		"acyqyBz7FZQFSp8iHYWB5A": {
-			"name": "Parceiro em crime"
+			"name": "Cúmplice"
 		},
 		"bsKcuRDVC99WuWnBUiSEDN": {
-			"name": "Baladeiro 🎉"
+			"name": "Alma da festa 🎉"
 		},
 		"bTWW3iSkRQD8V3uQ9viWvN": {
-			"name": "Investigador paranormal 👻"
+			"name": "Caça-fantasmas 👻"
 		},
 		"zoEgxZ7KoBNRCrgA3XbdDA": {
-			"name": "Phantom sense"
+			"name": "Sentido fantasma"
 		},
 		"mmkY4XtSERJYxeEfdmY68D": {
 			"name": "Toque físico 🫂"
@@ -1925,19 +1928,19 @@
 			"name": "Peixes ♓️"
 		},
 		"gHSLGNxhyjKKkarcNq9nBa": {
-			"name": "Sinuca🎱"
+			"name": "Bilhar 🎱"
 		},
 		"is5SeEgzo3ZAH6GPTCX7ma": {
-			"name": "Religioso"
+			"name": "Pessoa religiosa"
 		},
 		"M9FwNtCEQT3xUNV4EsnQ3d": {
 			"name": "Jogos de ritmo 🎼"
 		},
 		"TuaoosdiDnHXC7FHVArkdW": {
-			"name": "Quebra-cabeças 🧩"
+			"name": "Puzzles 🧩"
 		},
 		"XJUTFqrF2avzVtHMA7AGzk": {
-			"name": "Ler 📖"
+			"name": "Leitura 📖"
 		},
 		"jEf5ZYAU7SMbteXJbQydZJ": {
 			"name": "Sagitário ♐️"
@@ -1946,28 +1949,28 @@
 			"name": "Cantar 🎤"
 		},
 		"EkGzXrWW5fEnC9HdJ9okWc": {
-			"name": "Linguagem de sinais"
+			"name": "Língua gestual"
 		},
 		"f2BCBxugmR8H3dGdrJRmpV": {
-			"name": "Tímido 🙈"
+			"name": "Pessoa tímida 🙈"
 		},
 		"k53DpziykEgW7M6engXhem": {
-			"name": "Esquiar ⛸️"
+			"name": "Patinagem ⛸️"
 		},
 		"o4MbotEvh3dhz2Symgvtbj": {
 			"name": "Escorpião ♏️"
 		},
 		"yNrG4wB8Et3kGTaofec3Be": {
-			"name": "Andar de skate🛹"
+			"name": "Skate 🛹"
 		},
 		"8NWGrqWSzC5KQ6QDanNwgf": {
-			"name": "Tênis 👟"
+			"name": "Sapatilhas 👟"
 		},
 		"dBCYhmt2vTLfw7DNgNmP53": {
-			"name": "Dorme no VR"
+			"name": "Dorme em VR"
 		},
 		"ibrUnfQBwhrzBdFPhxisp2": {
-			"name": "Dormir em chamada"
+			"name": "Chamadas para adormecer"
 		},
 		"MDRvcQGDrY6VMbaGtPk89m": {
 			"name": "Futebol ⚽️"
@@ -1976,7 +1979,7 @@
 			"name": "Jogos sociais 💬"
 		},
 		"AyaSxEYUdjX4maBsTuhxS5": {
-			"name": "Socialmente desajeitado"
+			"name": "Pouco jeito para o social"
 		},
 		"svS7TMjzrzjmsh2X3Qe23e": {
 			"name": "Espaço 🪐"
@@ -1985,7 +1988,7 @@
 			"name": "Borboleta social 🦋"
 		},
 		"xLnre8baC2zsrWJog4ypjm": {
-			"name": "Fazer speedruns"
+			"name": "Speedrunning"
 		},
 		"gUm9n5xfnMzCVtxA9rCnLV": {
 			"name": "Estudante 🎓"
@@ -1997,16 +2000,16 @@
 			"name": "Jogos de sobrevivência 🏕️"
 		},
 		"wZBbZRUrr68X5CjVXmruKL": {
-			"name": "Esportes"
+			"name": "Desporto"
 		},
 		"Y65RLPXEzBHsnZphF84Gnc": {
-			"name": "Streamar 🎥"
+			"name": "Fazer streaming 🎥"
 		},
 		"7mfqhCUsniXPWXa6EK7Qqh": {
-			"name": "Técnologia 💾"
+			"name": "Tecnologia 💾"
 		},
 		"fe2ysuwBXcZfCbbGNhbe3L": {
-			"name": "Viajar 🧳"
+			"name": "Viagens 🧳"
 		},
 		"iXKfPBmMRxKGzNZA38g3iS": {
 			"name": "Tatuagens"
@@ -2018,28 +2021,28 @@
 			"name": "Viajante do tempo ⏳"
 		},
 		"usxHtsoFwppLo787TfBvLF": {
-			"name": "Televisão 📺"
+			"name": "Séries e TV 📺"
 		},
 		"vJsJJUXQXc4c9jaaTyzmBZ": {
 			"name": "Touro ♉️"
 		},
 		"WPUHPKAHLmHw2kcbzfA9tb": {
-			"name": "Tênis 🎾"
+			"name": "Ténis 🎾"
 		},
 		"QpsRiXnBWQMG5ZYtZd8BoR": {
 			"name": "Videografia 🎥"
 		},
 		"6vPzqeBurT9AtnQcxG3knW": {
-			"name": "Voluntario🤝"
+			"name": "Voluntariado 🤝"
 		},
 		"Qm4yoeSbfnL9AoDZHwotWX": {
-			"name": "Nômade virtual"
+			"name": "Nómada virtual"
 		},
 		"Uv5MM3vocd3asfdE2VErQk": {
-			"name": "Vôlei 🏐"
+			"name": "Voleibol 🏐"
 		},
 		"XyLtoquzjjLdYyGHtojCo5": {
-			"name": "Dublagem 🎙️"
+			"name": "Dobragem 🎙️"
 		},
 		"zp25zogqt2XWNG9v2wi4ET": {
 			"name": "Virgem ♍️"
@@ -2051,40 +2054,40 @@
 			"name": "Palavras de afirmação 💬"
 		},
 		"WTw73CaXZ4AWmbiQpooJiQ": {
-			"name": "Escrever ✍️"
+			"name": "Escrita ✍️"
 		},
 		"XRjfs5BAZhgeKnofywDX8d": {
 			"name": "eSports"
 		},
 		"yfQMpqdsbfNqCKjzrJT4wR": {
-			"name": "Criador de avatares 🛠️"
+			"name": "Criação de avatares 🛠️"
 		},
 		"g2fAPyAgPKt7WaoVZYxPm2": {
 			"name": "Aviação ✈️"
 		},
 		"UPLtrF5xLGLpnfWkfv8WDg": {
-			"name": "Baseball ⚾️"
+			"name": "Basebol ⚾️"
 		},
 		"Tc4uFhvgWvKjVssZhGAQuj": {
-			"name": "Ruim com direções 🧭"
+			"name": "Zero sentido de orientação 🧭"
 		},
 		"JTnaqV7ZtSm7ecGmk9JbUN": {
 			"name": "Xadrez ♟️"
 		},
 		"pJfikJmWtJZnfKJbNXZqnE": {
-			"name": "Relaxando igual vilão 😎"
+			"name": "Na maior descontra 😎"
 		},
 		"fM4o5U2ebgVDFEvsD66hEe": {
-			"name": "Parceiro de bebidas 🍻"
+			"name": "Companhia para uns copos 🍻"
 		},
 		"mTwcM4tfp49ronrVRbPvVK": {
 			"name": "ENFJ (Protagonista)"
 		},
 		"BrKGJW7c8TvnQh7zxbJNuQ": {
-			"name": "Pescar 🎣"
+			"name": "Pesca 🎣"
 		},
 		"rG2FKKUdai8Gsn9U6cQp2T": {
-			"name": "Em forma 💪"
+			"name": "Fitness 💪"
 		},
 		"jQD3WHErNsMnhtMeDgE6SE": {
 			"name": "Simuladores de voo ✈️"
@@ -2093,7 +2096,7 @@
 			"name": "Jardinagem 🪴"
 		},
 		"PAepdb7ewc4GVEnpWDCbcK": {
-			"name": "Jogar 🎮"
+			"name": "Videojogos 🎮"
 		},
 		"MneeWkir8YLxVNH2BxDtKR": {
 			"name": "Gémeos ♊️"
@@ -2105,13 +2108,13 @@
 			"name": "Guitarra 🎸"
 		},
 		"K9MHU3GP3kVfW8yck8ZPdg": {
-			"name": "Karaokê 🎤"
+			"name": "Karaoke 🎤"
 		},
 		"jxfxsraaBHshyVCEHhk2Qg": {
 			"name": "Mistério 🔎"
 		},
 		"qjjjMrjxZHuqVMuC9ADyiZ": {
-			"name": "Mudo"
+			"name": "Pessoa muda"
 		},
 		"rsdnj8EDHstxBCLX4Z7kEn": {
 			"name": "Dungeons & Dragons 🏰"
@@ -2120,10 +2123,10 @@
 			"name": "Airsoft"
 		},
 		"PuMdJoFBdxvf8xWuSpDmP7": {
-			"name": "Histórias"
+			"name": "Banda desenhada"
 		},
 		"6bNZo7xhhuEXCekE5PyU2Z": {
-			"name": "DIY"
+			"name": "Faça você mesmo 🛠️"
 		},
 		"koZvXYA7RHi7hgPN7b3Vca": {
 			"name": "Disney"
@@ -2132,37 +2135,37 @@
 			"name": "Emo 🖤"
 		},
 		"D9xPvsU52DEStz6gnJJewe": {
-			"name": "Hóquei 🏒"
+			"name": "Hóquei no gelo 🏒"
 		},
 		"B4vkCyhTZJX5SvkQ7RWoJm": {
 			"name": "Kawaii 💖"
 		},
 		"QXAV9E84tkhjZKgKqgRjDA": {
-			"name": "Espelho habitação 🪞"
+			"name": "Habitante do espelho 🪞"
 		},
 		"8T5dMoiNwZyQuiD6xJKMVH": {
-			"name": "Nerd"
+			"name": "Nerd 🤓"
 		},
 		"KqYcEh6DTSd62kVJUU2Aim": {
 			"name": "Piano 🎹"
 		},
 		"YQSAPjKy33ZRxaSZqbTxCk": {
-			"name": "Pai"
+			"name": "Pop 🌟"
 		},
 		"dEWG2fauN29LXFiaGSAvK4": {
-			"name": "Punk"
+			"name": "Punk 🧷"
 		},
 		"xSLzANhRAqr5h3sXqhoKvT": {
 			"name": "Caótico e bom"
 		},
 		"RNP3HRDvwVZnCZ28wZcYGf": {
-			"name": "Campo de batalha"
+			"name": "Cottagecore 🌻"
 		},
 		"ygSknA4rAWip5bDjXwawYd": {
 			"name": "Jazz 🎷"
 		},
 		"ZwP6JmwP2Hk8PMpujmvGDY": {
-			"name": "K-drama"
+			"name": "K-drama 🇰🇷"
 		},
 		"g7SwgV8y7JQNG4UrQUJUCP": {
 			"name": "Marvel"
@@ -2171,7 +2174,7 @@
 			"name": "Metal 🤘"
 		},
 		"oYT4VenxFxNrBshwrsM2WH": {
-			"name": "Snowboarding ing"
+			"name": "Snowboard 🏂"
 		},
 		"aBheDEqVsh7iCgEVmNhsoE": {
 			"name": "Twitch"
@@ -2183,13 +2186,13 @@
 			"name": "Caótico e mau"
 		},
 		"3MbxP4iLYi6MC6FUbeqYbX": {
-			"name": "País 🤠"
+			"name": "Country 🤠"
 		},
 		"BTGLoHoCuPjvY2NrRKSWpb": {
-			"name": "Animação"
+			"name": "Anime 🌸"
 		},
 		"WpPJDKVjSHqLB5FhnYa6JQ": {
-			"name": "Chuunião"
+			"name": "Chuunibyou"
 		},
 		"4vTwGjfH9oEk6fLthm4HjX": {
 			"name": "Cosplay 👘"
@@ -2201,25 +2204,25 @@
 			"name": "FPS 🔫"
 		},
 		"mh6zGfyseAeUk82fuqu9VT": {
-			"name": "Ficção de fãs"
+			"name": "Fanfiction"
 		},
 		"3jGAehpXeSjweUPwpTRvJZ": {
 			"name": "Femboy"
 		},
 		"MTmW4A9pTEqZem2wZvGN3F": {
-			"name": "Furry"
+			"name": "Furry 🐾"
 		},
 		"VJfGs3Znz75RWK3nmWwaE5": {
-			"name": "Gacha"
+			"name": "Gacha 🎰"
 		},
 		"KUtsRJcw6NQPr8VCAbMaE2": {
 			"name": "Golfe ⛳️"
 		},
 		"7xQwxvJ5MDtfjTEHtRcdm9": {
-			"name": "Hippie"
+			"name": "Hippie 🌼"
 		},
 		"guNDL9je3iot5XcYqaj9uS": {
-			"name": "LGBTQ+"
+			"name": "LGBTQ+ 🏳️‍🌈"
 		},
 		"QqXRreYsKwxs38WyUPPWwi": {
 			"name": "Leal e neutro"
@@ -2234,13 +2237,13 @@
 			"name": "Rock 🥁"
 		},
 		"JS498WmSAassZnJU3dyvzj": {
-			"name": "Sci-fi"
+			"name": "Ficção científica 👽"
 		},
 		"Z3JAwEM6n7wuc5dAXX36DQ": {
-			"name": "Guerra das Estrelas"
+			"name": "Star Wars"
 		},
 		"KMrisZLkbq6VEeTqiAdSHc": {
-			"name": "Verdadeiro crime 🕵"
+			"name": "True crime 🕵️"
 		},
 		"YjvHypMDZzANaTkadS9apP": {
 			"name": "Neutro puro"
@@ -2249,19 +2252,19 @@
 			"name": "Tsundere 💢"
 		},
 		"jMDdcShxVDc5cj2uX4ygyX": {
-			"name": "Vaporwave"
+			"name": "Vaporwave 🌊"
 		},
 		"WEnom9DcbnWrCepxx2PNnE": {
-			"name": "Yandere"
+			"name": "Yandere 😍"
 		},
 		"neCdcEJXKyQdf4uSqd5Jig": {
-			"name": "Yoga 🧘"
+			"name": "Ioga 🧘"
 		},
 		"vDr4xQGTCNYMTMNUu8v5Wg": {
 			"name": "YouTube"
 		},
 		"brqEVFEEsMUdoAE5oabtAh": {
-			"name": "Indie"
+			"name": "Indie 📼"
 		},
 		"KpHyxBddWuMZzhx8vPHUwj": {
 			"name": "JRPGs 🎌"
@@ -2270,7 +2273,7 @@
 			"name": "K-pop 🇰🇷"
 		},
 		"sYGiQ4XuHJihLvWMZGPApc": {
-			"name": "Latim 💃"
+			"name": "Música latina 💃"
 		},
 		"JAVpr44XUBC5wkmxtKX4rW": {
 			"name": "Leal e mau"
@@ -2279,16 +2282,16 @@
 			"name": "Leal e bom"
 		},
 		"JTp3btTZgozbnvZoatpJwR": {
-			"name": "Memelord"
+			"name": "Máquina de memes"
 		},
 		"66TnRrCCPUeUdqjotUgReM": {
 			"name": "Caótico e neutro"
 		},
 		"Bmkx6cmyU9kbuA3pdwv43o": {
-			"name": "Cuddles"
+			"name": "Mimos 🥰"
 		},
 		"dumoS7nkPSh4vDaVCMNBYc": {
-			"name": "Hip hop 💿"
+			"name": "Hip-hop 💿"
 		},
 		"VviV5H6FZMUUrmvpV8A9N6": {
 			"name": "J-pop 🇯🇵"
@@ -2300,34 +2303,34 @@
 			"name": "MOBAs ⚔️"
 		},
 		"uDxAuTWV85Jr7r8YbnDxnd": {
-			"name": "Magia: O Encontro"
+			"name": "Magic: The Gathering"
 		},
 		"KsQnqSKQQKjhTvdHhYX86G": {
 			"name": "Manga 📚"
 		},
 		"wR9dYu4RUTPFwPtoKov2RB": {
-			"name": "Manhwa"
+			"name": "Manhwa 🇰🇷"
 		},
 		"vHWMgQ4fHUwUxY72vi5Sz7": {
 			"name": "Otaku"
 		},
 		"6UTLvYWp6y4Snv6hexijLD": {
-			"name": "Linda menina rave"
+			"name": "Miúda gira das raves"
 		},
 		"VPhvhASscLY49xNFjw4o8n": {
-			"name": "R&B:"
+			"name": "R&B 🎤"
 		},
 		"8t9ZxQYhZtPZSJM99pHqtB": {
-			"name": "RPGs s"
+			"name": "RPGs 🧙"
 		},
 		"jJmDX2sxgQ6YGVXN2CNJFV": {
 			"name": "VTuber"
 		},
 		"rj3SPLcAwa6bkKSuBxsfsD": {
-			"name": "Romances visuais s"
+			"name": "Visual novels 📖"
 		},
 		"V6dXwTJecCTbaUy4nbZip4": {
-			"name": "Vocalóide"
+			"name": "Vocaloid"
 		},
 		"tqFRhDSaSL6m2d9YHGQdSA": {
 			"name": "Warhammer"
@@ -2373,7 +2376,7 @@
 			"name": "Conteúdo ilegal"
 		},
 		"MyexHAyY8gzQjBQ6agCSx3": {
-			"name": "Golpe, malware, ou links maliciosos"
+			"name": "Burla, malware ou links maliciosos"
 		},
 		"9iwmQ8huhkngyY9BgLDE9W": {
 			"name": "Outro"
@@ -2382,19 +2385,19 @@
 			"name": "Assédio"
 		},
 		"Ec5fqqgVo5X3s4QCeFUJ6D": {
-			"name": "Personificando a mim ou outra pessoa"
+			"name": "Faz-se passar por mim ou por outra pessoa"
 		},
 		"ymWd4JdTqpnBLmGSLmJRvY": {
-			"name": "Fotos nuas ou impróprias"
+			"name": "Imagens com nudez ou conteúdo sexual explícito"
 		},
 		"L6FRU2xjUiZwHUbegAcWTa": {
-			"name": "Anúnciando ou solicitando"
+			"name": "Publicidade ou pedidos de dinheiro"
 		},
 		"vTzgZw4Eexx7fehzCM9PQY": {
-			"name": "Conteúdo de automultilação"
+			"name": "Conteúdo de automutilação"
 		},
 		"zu6HcxQxmJDDq4rmvJazkf": {
-			"name": "Usuário menor de idade"
+			"name": "Pessoa menor de idade"
 		},
 		"Ur6iAuTDCktZe3zZQGqtZ2": {
 			"name": "Conta de spam ou troll"
@@ -2403,758 +2406,802 @@
 			"name": "Conteúdo violento ou perturbador"
 		},
 		"wFkctcaaf5B4Ef5i3ggY3G": {
-			"name": "Conteúdo odioso"
+			"name": "Conteúdo de ódio"
 		}
 	},
 	"sexuality": {
 		"3cWT9ob4r7Zpikkd9kVPEg": {
 			"name": "Queer",
-			"definition": "Alguém com orientação sexual não normativa.",
-			"definitionLink": "https://en.wikipedia.org/wiki/Queer"
+			"definition": "Alguém com uma orientação sexual fora da norma.",
+			"definitionLink": "https://pt.wikipedia.org/wiki/Queer"
 		},
 		"a29qas632KmMpQ8T6arLxa": {
-			"definition": "Alguém atraído por vários gêneros.",
-			"name": "Bisexual",
+			"definition": "Alguém que sente atração por vários géneros.",
+			"name": "Bissexual",
 			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Bisexuality"
 		},
 		"4yJadhjWkDN6WSxbDcp33G": {
-			"definition": "Alguém que está explorando sua orientação sexual no VR ou cuja sexualidade difere no VR e pessoalmente.",
-			"name": "Experimentando no VR"
+			"definition": "Alguém que está a explorar a sua orientação sexual em RV ou cuja sexualidade é diferente em RV e na vida real.",
+			"name": "A experimentar em RV"
 		},
 		"gkKfqSoBJ7dUHtaKJ5Cfmk": {
-			"definition": "Alguém atraído por outras mulheres ou pessoas femininas.",
+			"definition": "Alguém que sente atração por outras mulheres ou por pessoas femininas.",
 			"name": "Lésbica",
 			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Lesbian"
 		},
 		"NC5wiUcxGavten9E8gw64n": {
-			"definition": "Alguém atraído por outras pessoas, independentemente do sexo.",
+			"definition": "Alguém que sente atração por outras pessoas, independentemente do seu género.",
 			"name": "Pansexual",
 			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Pansexuality"
 		},
 		"ndxSn4BdATmm5droBw6iQG": {
 			"name": "Homoflexível",
-			"definition": "Alguém que se sente predominantemente atraído pelo mesmo sexo, mas às vezes sente atração pelo sexo oposto.",
+			"definition": "Alguém que sente atração sobretudo pelo mesmo género, mas que por vezes também sente atração pelo género oposto.",
 			"definitionLink": "https://www.merriam-webster.com/words-at-play/homoflexible-heteroflexible-meaning-slang-definition"
 		},
 		"vu2pJzRmKRroA3GPZRsLxM": {
-			"definition": "Alguém que se sente predominantemente atraído pelo sexo oposto, mas às vezes sente atração pelo mesmo sexo.",
+			"definition": "Alguém que sente atração sobretudo pelo género oposto, mas que por vezes também sente atração pelo mesmo género.",
 			"name": "Heteroflexível",
 			"definitionLink": "https://www.merriam-webster.com/words-at-play/homoflexible-heteroflexible-meaning-slang-definition"
 		},
 		"rN7DERN6NdNQzNQ99pQUN4": {
-			"name": "Questionando",
-			"definition": "Alguém que está examinando sua orientação sexual.",
+			"name": "Em questionamento",
+			"definition": "Alguém que está a questionar a sua orientação sexual.",
 			"definitionLink": "https://en.wikipedia.org/wiki/Questioning_%28sexuality_and_gender%29"
 		},
 		"t5hhQahW7HQVKnhQX7xRqn": {
-			"definition": "Alguém atraído pelo sexo oposto.",
-			"name": "Hétero",
+			"definition": "Alguém que sente atração pelo género oposto.",
+			"name": "Heterossexual",
 			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Heterosexuality"
 		},
 		"wPATvG4t9CJhW2goGmBznU": {
-			"definition": "Alguém que só sente atração sexual depois de formar um vínculo emocional com alguém.",
-			"name": "Demisexual",
+			"definition": "Alguém que só sente atração sexual depois de criar um laço emocional com outra pessoa.",
+			"name": "Demissexual",
 			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Demisexuality_and_Gray-Asexuality"
 		},
 		"UxY3zSKrwKpts6cfZ3wYjM": {
-			"definition": "Alguém atraído por outras pessoas do mesmo sexo.",
+			"definition": "Alguém que sente atração por pessoas do mesmo género.",
 			"name": "Gay",
 			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Gay"
 		},
 		"neMSEFPb9zvFRhoZLUobW9": {
 			"definition": "Alguém que sente pouca ou nenhuma atração sexual.",
-			"name": "Asexual",
+			"name": "Assexual",
 			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Asexuality"
 		}
 	},
 	"language": {
 		"ab": {
-			"name": "abcázio"
+			"name": "Abcázio"
 		},
 		"aa": {
-			"name": "afar"
+			"name": "Afar"
 		},
 		"af": {
-			"name": "africâner"
+			"name": "Africânder"
 		},
 		"ak": {
-			"name": "akan"
+			"name": "Akan"
 		},
 		"sq": {
-			"name": "albanês"
+			"name": "Albanês"
 		},
 		"am": {
-			"name": "amárico"
+			"name": "Amárico"
 		},
 		"ar": {
-			"name": "árabe"
+			"name": "Árabe"
 		},
 		"an": {
-			"name": "aragonês"
+			"name": "Aragonês"
 		},
 		"hy": {
-			"name": "armênio"
+			"name": "Arménio"
 		},
 		"as": {
-			"name": "assamês"
+			"name": "Assamês"
 		},
 		"av": {
-			"name": "avárico"
+			"name": "Avárico"
 		},
 		"ae": {
-			"name": "avéstico"
+			"name": "Avéstico"
 		},
 		"ay": {
-			"name": "aimará"
+			"name": "Aimará"
 		},
 		"az": {
-			"name": "azerbaijano"
+			"name": "Azerbaijano"
 		},
 		"bm": {
-			"name": "bambara"
+			"name": "Bambara"
 		},
 		"ba": {
-			"name": "bashkir"
+			"name": "Bashkir"
 		},
 		"eu": {
-			"name": "basco"
+			"name": "Basco"
 		},
 		"be": {
-			"name": "bielorrusso"
+			"name": "Bielorrusso"
 		},
 		"bn": {
-			"name": "bengali"
+			"name": "Bengali"
 		},
 		"bi": {
-			"name": "bislamá"
+			"name": "Bislamá"
 		},
 		"bs": {
-			"name": "bósnio"
+			"name": "Bósnio"
 		},
 		"br": {
-			"name": "bretão"
+			"name": "Bretão"
 		},
 		"bg": {
-			"name": "búlgaro"
+			"name": "Búlgaro"
 		},
 		"my": {
-			"name": "birmanês"
+			"name": "Birmanês"
 		},
 		"ca": {
-			"name": "catalão"
+			"name": "Catalão"
 		},
 		"ch": {
-			"name": "chamorro"
+			"name": "Chamorro"
 		},
 		"ce": {
-			"name": "checheno"
+			"name": "Checheno"
 		},
 		"ny": {
-			"name": "nianja"
+			"name": "Nyanja"
 		},
 		"zh": {
-			"name": "chinês"
+			"name": "Chinês"
 		},
 		"cu": {
-			"name": "eslavo eclesiástico"
+			"name": "Eslavo eclesiástico"
 		},
 		"cv": {
-			"name": "tchuvache"
+			"name": "Tchuvache"
 		},
 		"kw": {
-			"name": "córnico"
+			"name": "Córnico"
 		},
 		"co": {
-			"name": "corso"
+			"name": "Corso"
 		},
 		"cr": {
-			"name": "cree"
+			"name": "Cree"
 		},
 		"hr": {
-			"name": "croata"
+			"name": "Croata"
 		},
 		"cs": {
-			"name": "tcheco"
+			"name": "Checo"
 		},
 		"da": {
-			"name": "dinamarquês"
+			"name": "Dinamarquês"
 		},
 		"dv": {
-			"name": "divehi"
+			"name": "Divehi"
 		},
 		"nl": {
-			"name": "holandês"
+			"name": "Neerlandês"
 		},
 		"dz": {
-			"name": "dzonga"
+			"name": "Dzonga"
 		},
 		"en": {
-			"name": "inglês"
+			"name": "Inglês"
 		},
 		"eo": {
-			"name": "esperanto"
+			"name": "Esperanto"
 		},
 		"et": {
-			"name": "estoniano"
+			"name": "Estónio"
 		},
 		"ee": {
-			"name": "ewe"
+			"name": "Ewe"
 		},
 		"fo": {
-			"name": "feroês"
+			"name": "Feroês"
 		},
 		"fj": {
-			"name": "fijiano"
+			"name": "Fijiano"
 		},
 		"fi": {
-			"name": "finlandês"
+			"name": "Finlandês"
 		},
 		"fr": {
-			"name": "francês"
+			"name": "Francês"
 		},
 		"ff": {
-			"name": "fula"
+			"name": "Fula"
 		},
 		"gd": {
-			"name": "gaélico escocês"
+			"name": "Gaélico escocês"
 		},
 		"gl": {
-			"name": "galego"
+			"name": "Galego"
 		},
 		"lg": {
-			"name": "luganda"
+			"name": "Luganda"
 		},
 		"ka": {
-			"name": "georgiano"
+			"name": "Georgiano"
 		},
 		"de": {
-			"name": "alemão"
+			"name": "Alemão"
 		},
 		"el": {
-			"name": "grego"
+			"name": "Grego"
 		},
 		"gn": {
-			"name": "guarani"
+			"name": "Guarani"
 		},
 		"gu": {
-			"name": "guzerate"
+			"name": "Guzerate"
 		},
 		"ht": {
-			"name": "haitiano"
+			"name": "Crioulo haitiano"
 		},
 		"ha": {
-			"name": "hauçá"
+			"name": "Haúça"
 		},
 		"he": {
-			"name": "hebraico"
+			"name": "Hebraico"
 		},
 		"hz": {
-			"name": "herero"
+			"name": "Herero"
 		},
 		"hi": {
-			"name": "híndi"
+			"name": "Hindi"
 		},
 		"ho": {
-			"name": "hiri motu"
+			"name": "Hiri motu"
 		},
 		"hu": {
-			"name": "húngaro"
+			"name": "Húngaro"
 		},
 		"is": {
-			"name": "islandês"
+			"name": "Islandês"
 		},
 		"io": {
-			"name": "ido"
+			"name": "Ido"
 		},
 		"ig": {
-			"name": "igbo"
+			"name": "Igbo"
 		},
 		"id": {
-			"name": "indonésio"
+			"name": "Indonésio"
 		},
 		"ia": {
-			"name": "interlíngua"
+			"name": "Interlíngua"
 		},
 		"ie": {
-			"name": "interlingue"
+			"name": "Interlingue"
 		},
 		"iu": {
-			"name": "inuktitut"
+			"name": "Inuktitut"
 		},
 		"ik": {
-			"name": "inupiaque"
+			"name": "Inupiaque"
 		},
 		"ga": {
-			"name": "irlandês"
+			"name": "Irlandês"
 		},
 		"it": {
-			"name": "italiano"
+			"name": "Italiano"
 		},
 		"ja": {
-			"name": "japonês"
+			"name": "Japonês"
 		},
 		"jv": {
-			"name": "javanês"
+			"name": "Javanês"
 		},
 		"kl": {
-			"name": "groenlandês"
+			"name": "Gronelandês"
 		},
 		"kn": {
-			"name": "canarim"
+			"name": "Canarim"
 		},
 		"kr": {
-			"name": "canúri"
+			"name": "Canúri"
 		},
 		"ks": {
-			"name": "caxemira"
+			"name": "Caxemira"
 		},
 		"kk": {
-			"name": "cazaque"
+			"name": "Cazaque"
 		},
 		"km": {
-			"name": "khmer"
+			"name": "Khmer"
 		},
 		"ki": {
-			"name": "quicuio"
+			"name": "Quicuio"
 		},
 		"rw": {
-			"name": "quiniaruanda"
+			"name": "Kinyarwanda"
 		},
 		"rn": {
-			"name": "rundi"
+			"name": "Rundi"
 		},
 		"kv": {
-			"name": "komi"
+			"name": "Komi"
 		},
 		"kg": {
-			"name": "congolês"
+			"name": "Congolês"
 		},
 		"ko": {
-			"name": "coreano"
+			"name": "Coreano"
 		},
 		"ku": {
-			"name": "curdo"
+			"name": "Curdo"
 		},
 		"kj": {
-			"name": "cuanhama"
+			"name": "Cuanhama"
 		},
 		"ky": {
-			"name": "quirguiz"
+			"name": "Quirguiz"
 		},
 		"lo": {
-			"name": "laosiano"
+			"name": "Laosiano"
 		},
 		"la": {
-			"name": "latim"
+			"name": "Latim"
 		},
 		"lv": {
-			"name": "letão"
+			"name": "Letão"
 		},
 		"li": {
-			"name": "limburguês"
+			"name": "Limburguês"
 		},
 		"ln": {
-			"name": "lingala"
+			"name": "Lingala"
 		},
 		"lt": {
-			"name": "lituano"
+			"name": "Lituano"
 		},
 		"lu": {
-			"name": "luba-catanga"
+			"name": "Luba-Catanga"
 		},
 		"lb": {
-			"name": "luxemburguês"
+			"name": "Luxemburguês"
 		},
 		"mk": {
-			"name": "macedônio"
+			"name": "Macedónio"
 		},
 		"mg": {
-			"name": "malgaxe"
+			"name": "Malgaxe"
 		},
 		"ms": {
-			"name": "malaio"
+			"name": "Malaio"
 		},
 		"ml": {
-			"name": "malaiala"
+			"name": "Malaiala"
 		},
 		"mt": {
-			"name": "maltês"
+			"name": "Maltês"
 		},
 		"gv": {
-			"name": "manx"
+			"name": "Manês"
 		},
 		"mi": {
-			"name": "maori"
+			"name": "Maori"
 		},
 		"mr": {
-			"name": "marati"
+			"name": "Marati"
 		},
 		"mh": {
-			"name": "marshalês"
+			"name": "Marshalês"
 		},
 		"mn": {
-			"name": "mongol"
+			"name": "Mongol"
 		},
 		"na": {
-			"name": "nauruano"
+			"name": "Nauruano"
 		},
 		"nv": {
-			"name": "navajo"
+			"name": "Navajo"
 		},
 		"ng": {
-			"name": "dongo"
+			"name": "Dongo"
 		},
 		"ne": {
-			"name": "nepalês"
+			"name": "Nepalês"
 		},
 		"nd": {
-			"name": "ndebele do norte"
+			"name": "Ndebele do Norte"
 		},
 		"se": {
-			"name": "sami setentrional"
+			"name": "Sami do Norte"
 		},
 		"nb": {
-			"name": "bokmål norueguês"
+			"name": "Norueguês bokmål"
 		},
 		"nn": {
-			"name": "nynorsk norueguês"
+			"name": "Norueguês nynorsk"
 		},
 		"no": {
-			"name": "norueguês"
+			"name": "Norueguês"
 		},
 		"ii": {
-			"name": "sichuan yi"
+			"name": "Yi de Sichuan"
 		},
 		"oc": {
-			"name": "occitânico"
+			"name": "Occitano"
 		},
 		"oj": {
-			"name": "ojibwa"
+			"name": "Ojibwa"
 		},
 		"or": {
-			"name": "oriá"
+			"name": "Oriá"
 		},
 		"om": {
-			"name": "oromo"
+			"name": "Oromo"
 		},
 		"os": {
-			"name": "osseto"
+			"name": "Ossético"
 		},
 		"pi": {
-			"name": "páli"
+			"name": "Páli"
 		},
 		"pa": {
-			"name": "panjabi"
+			"name": "Panjabi"
 		},
 		"ps": {
-			"name": "pashto"
+			"name": "Pastó"
 		},
 		"fa": {
-			"name": "persa"
+			"name": "Persa"
 		},
 		"pl": {
-			"name": "polonês"
+			"name": "Polaco"
 		},
 		"pt": {
-			"name": "português"
+			"name": "Português"
 		},
 		"qu": {
-			"name": "quíchua"
+			"name": "Quíchua"
 		},
 		"ro": {
-			"name": "romeno"
+			"name": "Romeno"
 		},
 		"rm": {
-			"name": "romanche"
+			"name": "Romanche"
 		},
 		"ru": {
-			"name": "russo"
+			"name": "Russo"
 		},
 		"sm": {
-			"name": "samoano"
+			"name": "Samoano"
 		},
 		"sg": {
-			"name": "sango"
+			"name": "Sango"
 		},
 		"sa": {
-			"name": "sânscrito"
+			"name": "Sânscrito"
 		},
 		"sc": {
-			"name": "sardo"
+			"name": "Sardo"
 		},
 		"sr": {
-			"name": "sérvio"
+			"name": "Sérvio"
 		},
 		"sn": {
-			"name": "xona"
+			"name": "Shona"
 		},
 		"sd": {
-			"name": "sindi"
+			"name": "Sindi"
 		},
 		"si": {
-			"name": "cingalês"
+			"name": "Cingalês"
 		},
 		"sk": {
-			"name": "eslovaco"
+			"name": "Eslovaco"
 		},
 		"sl": {
-			"name": "esloveno"
+			"name": "Esloveno"
 		},
 		"so": {
-			"name": "somali"
+			"name": "Somali"
 		},
 		"nr": {
-			"name": "ndebele do sul"
+			"name": "Ndebele do Sul"
 		},
 		"st": {
-			"name": "soto do sul"
+			"name": "Sesoto"
 		},
 		"es": {
-			"name": "espanhol"
+			"name": "Espanhol"
 		},
 		"su": {
-			"name": "sundanês"
+			"name": "Sundanês"
 		},
 		"sw": {
-			"name": "suaíli"
+			"name": "Suaíli"
 		},
 		"ss": {
-			"name": "suázi"
+			"name": "Suázi"
 		},
 		"sv": {
-			"name": "sueco"
+			"name": "Sueco"
 		},
 		"tl": {
-			"name": "tagalo"
+			"name": "Tagalo"
 		},
 		"ty": {
-			"name": "taitiano"
+			"name": "Taitiano"
 		},
 		"tg": {
-			"name": "tadjique"
+			"name": "Tajique"
 		},
 		"ta": {
-			"name": "tâmil"
+			"name": "Tâmil"
 		},
 		"tt": {
-			"name": "tártaro"
+			"name": "Tatar"
 		},
 		"te": {
-			"name": "télugo"
+			"name": "Telugu"
 		},
 		"th": {
-			"name": "tailandês"
+			"name": "Tailandês"
 		},
 		"bo": {
-			"name": "tibetano"
+			"name": "Tibetano"
 		},
 		"ti": {
-			"name": "tigrínia"
+			"name": "Tigrínia"
 		},
 		"to": {
-			"name": "tonganês"
+			"name": "Tonga"
 		},
 		"ts": {
-			"name": "tsonga"
+			"name": "Tsonga"
 		},
 		"tn": {
-			"name": "tswana"
+			"name": "Tswana"
 		},
 		"tr": {
-			"name": "turco"
+			"name": "Turco"
 		},
 		"tk": {
-			"name": "turcomeno"
+			"name": "Turcomano"
 		},
 		"tw": {
-			"name": "axante"
+			"name": "Twi"
 		},
 		"uk": {
-			"name": "ucraniano"
+			"name": "Ucraniano"
 		},
 		"ur": {
-			"name": "urdu"
+			"name": "Urdu"
 		},
 		"ug": {
-			"name": "uigur"
+			"name": "Uigur"
 		},
 		"uz": {
-			"name": "uzbeque"
+			"name": "Usbeque"
 		},
 		"ve": {
-			"name": "venda"
+			"name": "Venda"
 		},
 		"vi": {
-			"name": "vietnamita"
+			"name": "Vietnamita"
 		},
 		"vo": {
-			"name": "volapuque"
+			"name": "Volapuque"
 		},
 		"wa": {
-			"name": "valão"
+			"name": "Valão"
 		},
 		"cy": {
-			"name": "galês"
+			"name": "Galês"
 		},
 		"fy": {
-			"name": "frísio ocidental"
+			"name": "Frísico ocidental"
 		},
 		"wo": {
-			"name": "uolofe"
+			"name": "Uólofe"
 		},
 		"xh": {
-			"name": "xhosa"
+			"name": "Xosa"
 		},
 		"yi": {
-			"name": "iídiche"
+			"name": "Iídiche"
 		},
 		"yo": {
-			"name": "iorubá"
+			"name": "Ioruba"
 		},
 		"za": {
-			"name": "zhuang"
+			"name": "Zhuang"
 		},
 		"zu": {
-			"name": "zulu"
+			"name": "Zulu"
 		},
 		"arn": {
-			"name": "mapudungun"
+			"name": "Mapuche"
 		},
 		"ary": {
-			"name": "ary"
+			"name": "Árabe marroquino"
 		},
 		"ckb": {
-			"name": "curdo central"
+			"name": "Curdo central"
 		},
 		"dsb": {
-			"name": "baixo sorábio"
+			"name": "Baixo sorábio"
 		},
 		"fil": {
-			"name": "filipino"
+			"name": "Filipino"
 		},
 		"gil": {
-			"name": "gilbertês"
+			"name": "Gilbertês"
 		},
 		"gsw": {
-			"name": "alemão (Suíça)"
+			"name": "Alemão suíço"
 		},
 		"hrv": {
 			"name": "servo-croata"
 		},
 		"hsb": {
-			"name": "alto sorábio"
+			"name": "Alto sorábio"
 		},
 		"kok": {
-			"name": "concani"
+			"name": "Concani"
 		},
 		"moh": {
-			"name": "moicano"
+			"name": "Mohawk"
 		},
 		"pap": {
-			"name": "papiamento"
+			"name": "Papiamento"
 		},
 		"prs": {
-			"name": "dari"
+			"name": "Dari"
 		},
 		"quc": {
-			"name": "quiché"
+			"name": "Quiché"
 		},
 		"sah": {
-			"name": "sakha"
+			"name": "Sakha"
 		},
 		"sma": {
-			"name": "sami meridional"
+			"name": "Sami do sul"
 		},
 		"smj": {
-			"name": "sami de Lule"
+			"name": "Sami de Lule"
 		},
 		"smn": {
-			"name": "lapão de Inari"
+			"name": "Sami de Inari"
 		},
 		"sms": {
-			"name": "sami de Skolt"
+			"name": "Sami de Skolt"
 		},
 		"syc": {
-			"name": "siríaco clássico"
+			"name": "Siríaco clássico"
 		},
 		"tzm": {
-			"name": "tamazight do Atlas Central"
+			"name": "Tamazight do Atlas Central"
 		},
 		"ase": {
-			"name": "Línguagem de sinais Americana"
+			"name": "Língua Gestual Americana"
 		},
 		"bfi": {
-			"name": "Linguagem de sinais Britânica"
+			"name": "Língua Gestual Britânica"
 		},
 		"fsl": {
-			"name": "Linguagem de sinais Francesa"
+			"name": "Língua Gestual Francesa"
 		},
 		"csl": {
-			"name": "Linguagem de sinais Chinesa"
+			"name": "Língua Gestual Chinesa"
 		},
 		"gsg": {
-			"name": "Linguagem de sinais Alemã"
+			"name": "Língua Gestual Alemã"
 		},
 		"dse": {
-			"name": "Linguagem de sinais Holandesa"
+			"name": "Língua Gestual Neerlandesa"
 		},
 		"inl": {
-			"name": "Linguagem de sinais Indonésia"
+			"name": "Língua Gestual Indonésia"
 		},
 		"kvk": {
-			"name": "Línguagem de sinais Coreana"
+			"name": "Língua Gestual Coreana"
 		},
 		"mfs": {
-			"name": "Línguagem de sinais Mexicana"
+			"name": "Língua Gestual Mexicana"
 		},
 		"psr": {
-			"name": "Línguagem de sinais Portuguesa"
+			"name": "Língua Gestual Portuguesa"
 		},
 		"bzs": {
-			"name": "Linguagem de sinais Brasileira"
+			"name": "Língua Gestual Brasileira"
 		},
 		"ins": {
-			"name": "Línguagem de sinais Indo-Paquistanesa"
+			"name": "Língua Gestual Indo-Paquistanesa"
 		},
 		"ssp": {
-			"name": "Línguagem de sinais Espanhola"
+			"name": "Língua Gestual Espanhola"
 		},
 		"rsl": {
-			"name": "Línguagem de sinais Russa"
+			"name": "Língua Gestual Russa"
 		},
 		"jsl": {
-			"name": "Línguagem de sinais Japonesa"
+			"name": "Língua Gestual Japonesa"
 		}
 	},
 	"relationship": {
 		"friends": {
-			"name": "Novos amigos"
+			"name": "Novas amizades"
 		},
 		"hookups": {
-			"name": "Diversão casual"
+			"name": "Sexo casual"
 		},
 		"serious": {
-			"name": "Namoro sério"
+			"name": "Relação séria"
 		},
 		"vr": {
-			"name": "Namoro casual"
+			"name": "Encontros casuais"
 		}
 	},
 	"plans": {
 		"Wt4aFY7jVzvSNFK9qcYAr5": {
-			"name": "Premium (todos os 6 meses)"
+			"name": "Premium (semestral)"
 		},
 		"fBDvWjdgvG6zEZMj6ZfyNG": {
-			"name": "Premium (todos os 3 meses)"
+			"name": "Premium (trimestral)"
 		},
 		"Di7Sypboma4ryhy6MUagyS": {
-			"name": "Vida"
+			"name": "Vitalício"
 		},
 		"2nAci9TWPaMaYFzVASVgme": {
 			"name": "Early Premium"
 		},
 		"LVjvu5YE7PjUJxVrkfsnMi": {
 			"name": "Premium (mensal)"
+		},
+		"Duk5r7zeKUhqXv5L6P3m3Q": {
+			"name": "Premium promocional"
+		}
+	},
+	"warn-reason": {
+		"V7VcQEiYkiwHr5CHSVx5aS": {
+			"name": "Bio e fotos de spam",
+			"details": "Por favor, atualize a bio e carregue fotos originais do seu avatar de RV para evitar que o perfil seja marcado como spam."
+		},
+		"aUurnuPnvjTwU2W3K5Se7X": {
+			"name": "Foto explícita removida",
+			"details": "Foram removidas do perfil uma ou mais imagens com nudez ou conteúdo sexual explícito. Por favor, carregue apenas imagens sem nudez nem conteúdo sexual."
+		},
+		"MjxDKasduf9iHTctStGzYA": {
+			"details": "Por favor, reduza ao mínimo o conteúdo sexual explícito na bio e remova descrições gráficas ou referências a kinks. Pode usar as tags de kinks do Flirtual ou os interesses personalizados nas Definições.",
+			"name": "Bio explícita"
+		},
+		"CnaCPAcsLptyUgVVugubdf": {
+			"details": "Por favor, reduza o conteúdo publicitário ou promocional no perfil. O objetivo principal do perfil deve ser procurar encontros ou amizades.",
+			"name": "Publicidade"
+		},
+		"f8v44XrBausmXe6XybTVHd": {
+			"name": "Solicitação comercial",
+			"details": "Por favor, remova do perfil qualquer tipo de solicitação. Pedir dinheiro, bem como incluir referências e links para serviços comerciais, não é permitido no Flirtual."
+		},
+		"RdHQQqrswesTTwyh4QZqbH": {
+			"name": "Conteúdo de ódio",
+			"details": "Por favor, remova do perfil o conteúdo de ódio, pois viola as nossas Diretrizes da Comunidade."
+		},
+		"KNJu36SMz87wA5DrJZyc4L": {
+			"name": "Gentileza e respeito",
+			"details": "Devido a denúncia(s) recente(s), pedimos gentileza e respeito para com os outros membros."
+		},
+		"dC6h3tWeZueVwHGKLhC2sk": {
+			"name": "Conta inativa",
+			"details": "Em caso de regresso ao Flirtual, por favor atualize a bio. Para fazer uma pausa ou sair do Flirtual, é possível desativar temporariamente ou eliminar permanentemente a conta nas Definições."
+		},
+		"AhPZwBpeTm5HMf96bkVszj": {
+			"name": "Enviar provas",
+			"details": "Por favor, envie provas adicionais relativas à denúncia recente. Pode abrir um pedido de suporte em https://hello.flirtu.al ou https://discord.gg/flirtual."
+		},
+		"pDBkaykWpfYk9w7ZfPzMrb": {
+			"name": "Outro"
 		}
 	}
 }
