@@ -106,12 +106,83 @@ function glossaryFor(locale: TargetLocale, glossary: Array<GlossaryEntry>) {
 	}).join("\n");
 }
 
+const neighbourLimit = 40;
+const perWordLimit = 6;
+const sampleSize = 60;
+const stopwords = new Set(["and", "are", "but", "can", "for", "from", "has", "have", "here", "how", "into", "its", "just", "more", "not", "now", "one", "other", "our", "plural", "select", "that", "the", "their", "them", "then", "there", "they", "this", "was", "what", "when", "will", "with", "you", "your", "you're", "you'll"]);
+
+function words(value: Message) {
+	const text = englishText(value).replace(/\{\w+\}|<\/?[\w-]+\/?>/g, " ").toLowerCase();
+	return new Set((text.match(/\p{L}[\p{L}'’-]{2,}/gu) ?? []).filter((word) => !stopwords.has(word)));
+}
+
+function shortestFirst(source: Map<Id, Message>) {
+	return (a: Id, b: Id) => englishText(source.get(a)!).length - englishText(source.get(b)!).length || a.localeCompare(b);
+}
+
+// Small runs don't need the whole catalog for consistency: strings from the same screens,
+// strings sharing words or glossary terms with the ones being translated, and a fixed sample of
+// the rest of the app. Undefined means the selection is big enough to show everything.
+function catalogSelection(focus: Array<Id>, source: Map<Id, Message>, context: Record<Id, ContextEntry>) {
+	const selected = new Set<Id>(focus);
+	const add = (keys: Iterable<Id>, limit: number) => [...keys].filter((key) => !selected.has(key)).sort(shortestFirst(source)).slice(0, limit).forEach((key) => selected.add(key));
+
+	const neighbours = new Map<string, Array<Id>>();
+	const byWord = new Map<string, Array<Id>>();
+	const focusWords = new Set(focus.flatMap((key) => [...words(source.get(key)!)]));
+	const focusText = focus.map((key) => englishText(source.get(key)!).toLowerCase()).join("\n");
+	const terms = loadGlossary().map((entry) => entry.en.toLowerCase()).filter((term) => focusText.includes(term));
+	const neighbourhoods = (key: Id) => {
+		const [component, name] = parseId(key);
+		if (component === "attributes") return [`type:${name.split(".")[0]}`];
+		const entry = context[key];
+		return entry ? [`group:${entry.group}`, ...entry.screens.map((screen) => `screen:${screen}`)] : [];
+	};
+	const wanted = new Set(focus.flatMap(neighbourhoods));
+
+	for (const [key, value] of source) {
+		for (const neighbourhood of neighbourhoods(key)) if (wanted.has(neighbourhood)) neighbours.set(neighbourhood, [...(neighbours.get(neighbourhood) ?? []), key]);
+		const english = englishText(value).toLowerCase();
+		const matches = [...[...words(value)].filter((word) => focusWords.has(word)), ...terms.filter((term) => english.includes(term))];
+		for (const match of matches) byWord.set(match, [...(byWord.get(match) ?? []), key]);
+	}
+	for (const keys of neighbours.values()) add(keys, neighbourLimit);
+	for (const keys of byWord.values()) add(keys, perWordLimit);
+
+	// Spread across areas and kinds of string; ordered by hash so every run gets the same sample.
+	const perArea = new Map<string, number>();
+	const perElement = new Map<string, number>();
+	let sampled = 0;
+	const candidates = [...source.keys()]
+		.filter((key) => !selected.has(key) && parseId(key)[0] !== "attributes" && context[key] && !context[key].readOnly && !isLongForm(context[key]) && englishText(source.get(key)!).length <= 120)
+		.sort((a, b) => hash(a).localeCompare(hash(b)));
+	for (const key of candidates) {
+		if (sampled === sampleSize) break;
+		const { element, group } = context[key]!;
+		const area = group.split("/")[0]!;
+		if ((perArea.get(area) ?? 0) >= 2 || (perElement.get(element) ?? 0) >= 5) continue;
+		perArea.set(area, (perArea.get(area) ?? 0) + 1);
+		perElement.set(element, (perElement.get(element) ?? 0) + 1);
+		selected.add(key);
+		sampled++;
+	}
+	const types = new Map<string, Array<Id>>();
+	for (const key of source.keys()) {
+		const [component, name] = parseId(key);
+		if (component === "attributes") types.set(name.split(".")[0]!, [...(types.get(name.split(".")[0]!) ?? []), key]);
+	}
+	for (const keys of types.values()) add(keys.sort((a, b) => hash(a).localeCompare(hash(b))).slice(0, 3), 3);
+
+	return selected.size > source.size / 2 ? undefined : selected;
+}
+
 // Everything a translator needs, identical for every batch of a locale.
-function bundle(locale: TargetLocale) {
+function bundle(locale: TargetLocale, focus?: Array<Id>) {
 	const source = loadSource();
 	const context = loadContext();
 	const pulled = loadPulled(locale);
 	const humans = Object.entries(pulled).filter(([, unit]) => unit.human && unit.target[0]);
+	const selection = focus && catalogSelection(focus, source, context);
 
 	const lines = [
 		`# Translation bundle: ${locale}`,
@@ -133,10 +204,11 @@ function bundle(locale: TargetLocale) {
 		"# English catalog with context",
 		"",
 		"Use it to keep terminology and voice consistent across the whole app. App and notification strings have one line each: id, English, then a short note (element and the gist of where it's used). Attributes are listed per type under one shared note. The strings you translate come with their full notes in the batch.",
+		...selection ? ["", "This run is small, so the catalog is a selection: strings from the same screens as yours, strings sharing words or glossary terms with them, and a fixed sample of the rest of the app."] : [],
 		"",
-		...catalog(source, context)
+		...catalog(source, context, selection)
 	];
-	return lines.join("\n");
+	return { text: lines.join("\n"), catalog: selection ? selection.size : source.size };
 }
 
 // The catalog is for consistency, not for translating; the first sentence of a note is enough.
@@ -145,7 +217,7 @@ function gist(description: string) {
 	return sentence.length > 160 ? `${sentence.slice(0, 157)}…` : sentence;
 }
 
-function catalog(source: Map<Id, Message>, context: Record<Id, ContextEntry>) {
+function catalog(source: Map<Id, Message>, context: Record<Id, ContextEntry>, selection?: Set<Id>) {
 	const lines: Array<string> = [];
 	const types = new Map<string, Array<Id>>();
 
@@ -156,6 +228,7 @@ function catalog(source: Map<Id, Message>, context: Record<Id, ContextEntry>) {
 			types.set(type, [...(types.get(type) ?? []), key]);
 			continue;
 		}
+		if (selection && !selection.has(key)) continue;
 		const entry = context[key];
 		const english = englishText(value);
 		// Long pages are translated in their own batches; the opening is enough for consistency.
@@ -164,12 +237,14 @@ function catalog(source: Map<Id, Message>, context: Record<Id, ContextEntry>) {
 	}
 
 	for (const [type, keys] of types) {
+		const shown = selection ? keys.filter((key) => selection.has(key)) : keys;
+		if (shown.length === 0) continue;
 		// The most common description in a type is its shared note; per-key notes stay in batches.
 		const counts = new Map<string, number>();
 		for (const key of keys) counts.set(context[key]?.description ?? "", (counts.get(context[key]?.description ?? "") ?? 0) + 1);
 		const shared = [...counts.entries()].sort(([, a], [, b]) => b - a)[0]![0];
 		lines.push("", `## attributes: ${type}`, "", shared, "");
-		for (const key of keys) lines.push(`- \`${key}\`: ${JSON.stringify(englishText(source.get(key)!))}`);
+		for (const key of shown) lines.push(`- \`${key}\`: ${JSON.stringify(englishText(source.get(key)!))}`);
 	}
 	return lines;
 }
@@ -211,8 +286,9 @@ function plan(locales: Array<TargetLocale>, mode: string, ids: Array<string> | u
 			translation: pulled[key]!.target.length > 1 ? pulled[key]!.target : pulled[key]!.target[0],
 			author: pulled[key]!.human
 		})));
-		writeJson(join(directory, "bundle.json"), { locale, mode, createdAt: new Date().toISOString() });
-		writeText(join(directory, "bundle.md"), bundle(locale));
+		const { text, catalog } = bundle(locale, mode === "incremental" || ids ? [...toTranslate, ...humanReview] : undefined);
+		writeJson(join(directory, "bundle.json"), { locale, mode, catalog, createdAt: new Date().toISOString() });
+		writeText(join(directory, "bundle.md"), text);
 
 		console.log(`${locale}: ${toTranslate.length} to translate in ${batches.length} batches, ${humanReview.length} human translations to review → ${directory}`);
 	}
