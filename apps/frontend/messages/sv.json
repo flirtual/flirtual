@@ -1133,5 +1133,7 @@
 	"show_nsfw_hint": "Välj om NSFW-taggar ska visas på andras profiler.",
 	"show_nsfw": "Visa NSFW-taggar på profiler?",
 	"i_am": "Jag är…",
-	"kinks": "Kinks"
+	"kinks": "Kinks",
+	"accent": "Accentfärg",
+	"background": "Bakgrund"
 }
