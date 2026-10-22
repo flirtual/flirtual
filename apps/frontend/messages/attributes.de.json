@@ -25,7 +25,7 @@
 			"name": "Belästigung"
 		},
 		"muXMqNjneKnwqxT8nqcy4d": {
-			"details": "Minderjährig. Sie müssen mindestens 18 Jahre alt sein, um Flirtual nutzen zu können. Wenn Sie glauben, dass Sie zu Unrecht gesperrt wurden, können Sie sich bei Flirtual anmelden und Ihr Alter sicher bestätigen, um Ihr Konto wiederherzustellen.",
+			"details": "Minderjährig. Sie müssen mindestens 18 Jahre alt sein, um Flirtual zu nutzen. Wenn Sie glauben, dass Sie zu Unrecht gesperrt wurden, können Sie sich bei Flirtual anmelden und Ihr Alter auf sichere Weise bestätigen, um Ihr Konto wiederherzustellen.",
 			"name": "Minderjährig"
 		},
 		"KfFVwKB4DYMXx7foyqGUZM": {
@@ -56,8 +56,8 @@
 			"name": "Sonstiges"
 		},
 		"EVU7hHnv5u6eQwRBTW8aYU": {
-			"name": "NSFW Inhalt",
-			"details": "Nude oder nicht sicher für die Arbeit Inhalte. NSFW-Bilder oder obszöner Text ist auf Flirtual nicht erlaubt. Sie können auf diese E-Mail antworten, um Ihr Verbot anzusprechen und Ihr Profil zu aktualisieren, um Ihr Konto zu deaktivieren."
+			"name": "Nacktheit oder explizite sexuelle Inhalte",
+			"details": "Nacktheit oder explizite sexuelle Inhalte. Nacktbilder, sexuell explizite Bilder und übermäßig obszöne Texte sind auf Flirtual nicht erlaubt. Sie können auf diese E-Mail antworten, um gegen Ihre Sperrung Einspruch einzulegen, und Ihr Profil überarbeiten, damit die Sperrung Ihres Kontos aufgehoben wird."
 		}
 	},
 	"language": {
@@ -416,7 +416,7 @@
 			"name": "Norwegisch"
 		},
 		"ii": {
-			"name": "Yi"
+			"name": "Sichuan-Yi"
 		},
 		"oc": {
 			"name": "Okzitanisch"
@@ -509,7 +509,7 @@
 			"name": "Sundanesisch"
 		},
 		"sw": {
-			"name": "Suaheli"
+			"name": "Swahili"
 		},
 		"ss": {
 			"name": "Swazi"
@@ -650,7 +650,7 @@
 			"name": "Dari"
 		},
 		"quc": {
-			"name": "K’iche’"
+			"name": "Kʼicheʼ"
 		},
 		"sah": {
 			"name": "Jakutisch"
@@ -677,46 +677,46 @@
 			"name": "Amerikanische Gebärdensprache"
 		},
 		"bzs": {
-			"name": "Brasilianische Sprache"
+			"name": "Brasilianische Gebärdensprache"
 		},
 		"bfi": {
-			"name": "Englische Sprache"
+			"name": "Britische Gebärdensprache"
 		},
 		"csl": {
-			"name": "Chinesische Zeichensprache"
+			"name": "Chinesische Gebärdensprache"
 		},
 		"dse": {
-			"name": "Niederländische Zeichensprache"
+			"name": "Niederländische Gebärdensprache"
 		},
 		"fsl": {
-			"name": "Französische Sprache"
+			"name": "Französische Gebärdensprache"
 		},
 		"gsg": {
-			"name": "Englische Sprache"
+			"name": "Deutsche Gebärdensprache"
 		},
 		"ins": {
-			"name": "Indo-Pakistani Sprache auswählen"
+			"name": "Indopakistanische Gebärdensprache"
 		},
 		"inl": {
-			"name": "Indonesische Zeichensprache"
+			"name": "Indonesische Gebärdensprache"
 		},
 		"mfs": {
-			"name": "Englische Sprache"
+			"name": "Mexikanische Gebärdensprache"
 		},
 		"psr": {
-			"name": "Englische Sprache"
+			"name": "Portugiesische Gebärdensprache"
 		},
 		"rsl": {
-			"name": "Russische Zeichensprache"
+			"name": "Russische Gebärdensprache"
 		},
 		"jsl": {
-			"name": "Japanische Zeichensprache"
+			"name": "Japanische Gebärdensprache"
 		},
 		"kvk": {
-			"name": "Koreanische Zeichensprache"
+			"name": "Koreanische Gebärdensprache"
 		},
 		"ssp": {
-			"name": "Spanische Zeichensprache"
+			"name": "Spanische Gebärdensprache"
 		}
 	},
 	"delete-reason": {
@@ -1089,7 +1089,7 @@
 			"name": "All-In-One Sports VR"
 		},
 		"VAXHujeaGhwJspxF7WzkFA": {
-			"name": "Raccoon Lagoon"
+			"name": "Die Waschbärlagune"
 		},
 		"pLvV7HCfHi5c5fuW8W9Dsk": {
 			"name": "Sairento VR: Untethered"
@@ -1317,7 +1317,7 @@
 			"name": "IRONSTRIKE"
 		},
 		"RwfdcvqjWW6aK2Upo5wNt3": {
-			"name": "Wands: Alliances"
+			"name": "Allianz der Zauberstäbe"
 		},
 		"EaU8Vg4zaXw4h6BdAxqUCW": {
 			"name": "Block Buster"
@@ -1485,7 +1485,7 @@
 			"name": "Espire 2: Stealth Operatives"
 		},
 		"AWr2CAxhJsY4GoNJZDZarC": {
-			"name": "CleanSheet Soccer"
+			"name": "CleanSheet Fußball"
 		},
 		"3nhLdefwZxD4k5Y6WgWqHf": {
 			"name": "NHL Sense Arena"
@@ -1931,7 +1931,7 @@
 			"name": "Terraria"
 		},
 		"oYpeL2jBcwYoQfjs8gAHCN": {
-			"name": "The Sims"
+			"name": "Die Sims"
 		},
 		"dQdjQyL9M8kCxrL9Si2zqM": {
 			"name": "Touhou"
@@ -1958,34 +1958,34 @@
 			"name": "osu!"
 		},
 		"o4MbotEvh3dhz2Symgvtbj": {
-			"name": "Scorpio ♏️"
+			"name": "Skorpion ♏️"
 		},
 		"Dr4VrjyyvH8kbdrozsMMFd": {
 			"name": "Singen 🎤"
 		},
 		"VuojdaCuJQEAsPaxq26jmK": {
-			"name": "Überlebensspiele 🏕️"
+			"name": "Survival-Spiele 🏕️"
 		},
 		"cEfjsZtYLiWDSMSeg7q8V5": {
-			"name": "Tanz 💃"
+			"name": "Tanzen 💃"
 		},
 		"Tc4uFhvgWvKjVssZhGAQuj": {
-			"name": "Schlecht in Richtung 🧭"
+			"name": "Null Orientierungssinn 🧭"
 		},
 		"eTSWVwrcAF6tzHDPDLvJAd": {
 			"name": "3D-Druck 🖨️"
 		},
 		"siBAM5nerfTqbBT6JCa6wf": {
-			"name": "Abenteuer"
+			"name": "Abenteuerlustig"
 		},
 		"eGP3EZe6r5NUwfpgFc9Mv6": {
-			"name": "Immer im dunklen Modus 🌚"
+			"name": "Immer im Dark Mode 🌚"
 		},
 		"UPLtrF5xLGLpnfWkfv8WDg": {
 			"name": "Baseball ⚾️"
 		},
 		"8VvHQ63mBuCLdtc5bXcAdb": {
-			"name": "Koffeiniert ‡"
+			"name": "Koffeingesteuert ☕️"
 		},
 		"TJeFyc6EQhdBmEoLGqpYDh": {
 			"name": "Chaotisch böse"
@@ -2000,37 +2000,37 @@
 			"name": "Schach ♟️"
 		},
 		"WpPJDKVjSHqLB5FhnYa6JQ": {
-			"name": "Chuunisyou"
+			"name": "Chuunibyou"
 		},
 		"gjdYnF6jWBxtweAB3YmcLU": {
-			"name": "Klassische 🎻"
+			"name": "Klassik 🎻"
 		},
 		"PkuUGAJvgsGnkfeMcGg56J": {
-			"name": "ENFP (Campaigner)"
+			"name": "ENFP (Aktivist)"
 		},
 		"YBGsznRconrCoTa5YbQsBW": {
-			"name": "ENTP (Aussprache)"
+			"name": "ENTP (Debattierer)"
 		},
 		"aWrMMCsArXZAbRqYqyXL8g": {
-			"name": "ESFJ (Consul)"
+			"name": "ESFJ (Konsul)"
 		},
 		"mh6zGfyseAeUk82fuqu9VT": {
 			"name": "Fanfiction"
 		},
 		"658ffCwnSFxaY3hQSDvkGW": {
-			"name": "Gabelstapler zertifiziert 🦺"
+			"name": "Staplerschein vorhanden 🦺"
 		},
 		"MTmW4A9pTEqZem2wZvGN3F": {
-			"name": "Furnier 🐾"
+			"name": "Furry 🐾"
 		},
 		"QSS6J4qhxDDiyWrbVoHxyY": {
-			"name": "Spiel dev"
+			"name": "Spieleentwicklung"
 		},
 		"PAepdb7ewc4GVEnpWDCbcK": {
-			"name": "Spiele 🎮"
+			"name": "Gaming 🎮"
 		},
 		"MneeWkir8YLxVNH2BxDtKR": {
-			"name": "Gemini"
+			"name": "Zwillinge ♊️"
 		},
 		"KUtsRJcw6NQPr8VCAbMaE2": {
 			"name": "Golf ⛳️"
@@ -2042,40 +2042,40 @@
 			"name": "Waffen"
 		},
 		"VviV5H6FZMUUrmvpV8A9N6": {
-			"name": "J-pop 🇯🇵"
+			"name": "J-Pop 🇯🇵"
 		},
 		"guNDL9je3iot5XcYqaj9uS": {
-			"name": "LGBTQ+ 🏳️"
+			"name": "LGBTQ+ 🏳️‍🌈"
 		},
 		"NMCLsa8AfCkuZBTqYSzEQm": {
-			"name": "Sprachenlernen"
+			"name": "Sprachen lernen"
 		},
 		"uDxAuTWV85Jr7r8YbnDxnd": {
-			"name": "Magie: Das Sammeln"
+			"name": "Magic: The Gathering"
 		},
 		"g7SwgV8y7JQNG4UrQUJUCP": {
 			"name": "Marvel"
 		},
 		"9LGdoTTRR6eDXjTRqEwrxD": {
-			"name": "Metall 🤘"
+			"name": "Metal 🤘"
 		},
 		"8T5dMoiNwZyQuiD6xJKMVH": {
 			"name": "Nerd 🤓"
 		},
 		"TuaoosdiDnHXC7FHVArkdW": {
-			"name": "Rätsel 🧩"
+			"name": "Puzzles 🧩"
 		},
 		"JS498WmSAassZnJU3dyvzj": {
-			"name": "Sci-fi 👽"
+			"name": "Sci-Fi 👽"
 		},
 		"AGheroLVRTz6DvXnDdMJh3": {
-			"name": "Eine dritte"
+			"name": "Dritte Person gesucht"
 		},
 		"UkC6H5qf7xGFtpueRQQWxS": {
-			"name": "Social butterfly 🦋"
+			"name": "Kontaktfreudig 🦋"
 		},
 		"YjvHypMDZzANaTkadS9apP": {
-			"name": "Echt neutral"
+			"name": "Absolut neutral"
 		},
 		"jJmDX2sxgQ6YGVXN2CNJFV": {
 			"name": "VTuber"
@@ -2084,13 +2084,13 @@
 			"name": "YouTube"
 		},
 		"P8E5xJTRAgxycZMErjVMYa": {
-			"name": "Gardening 🪴"
+			"name": "Gärtnern 🪴"
 		},
 		"4q9oopWm8XNXoX7z4RnQE8": {
 			"name": "ESTP (Unternehmer)"
 		},
 		"mNhUREva2s5sfkMxLfwqk3": {
-			"name": "🖤"
+			"name": "Emo 🖤"
 		},
 		"WN28HaENtrSDwSgKxX8Xv7": {
 			"name": "INTJ (Architekt)"
@@ -2099,13 +2099,13 @@
 			"name": "Indie 📼"
 		},
 		"sYGiQ4XuHJihLvWMZGPApc": {
-			"name": "Lateinisch 💃"
+			"name": "Latin-Musik 💃"
 		},
 		"QqXRreYsKwxs38WyUPPWwi": {
-			"name": "Rechtmäßig neutral"
+			"name": "Rechtschaffen neutral"
 		},
 		"r9YDRMbRwSsoFybfDo6jdG": {
-			"name": "Langlaufen am Strand 🏖️"
+			"name": "Lange Strandspaziergänge 🏖️"
 		},
 		"2Wz4xFdHgY8PZf2mkqWpwa": {
 			"name": "Philosophie"
@@ -2117,16 +2117,16 @@
 			"name": "Tennis 🎾"
 		},
 		"Qm4yoeSbfnL9AoDZHwotWX": {
-			"name": "Virtueller Nomad"
+			"name": "Zieht durch VR-Welten"
 		},
 		"Uv5MM3vocd3asfdE2VErQk": {
 			"name": "Volleyball 🏐"
 		},
 		"XRjfs5BAZhgeKnofywDX8d": {
-			"name": "eSports"
+			"name": "E-Sport"
 		},
 		"NpxR4mSbkKEo2ru79eboyS": {
-			"name": "Funktionen des Dienstes 🤝"
+			"name": "Hilfsbereitschaft 🤝"
 		},
 		"iPWiK6ULojrRgUsMcQArYY": {
 			"name": "Alternative 🎸"
@@ -2141,19 +2141,19 @@
 			"name": "Basketball 🏀"
 		},
 		"fM4o5U2ebgVDFEvsD66hEe": {
-			"name": "Trinkknospen 🍻"
+			"name": "Zusammen anstoßen 🍻"
 		},
 		"4THEgH4BLaftoQWAhYaFoM": {
-			"name": "Fahrsims 🏎️"
+			"name": "Rennsimulationen 🏎️"
 		},
 		"xY4UQxjZP8Qb4ybKTvAka9": {
 			"name": "Geschichte 📜"
 		},
 		"BJwi9ji9dCqrX6YwqVLb2X": {
-			"name": "Kopfstücke"
+			"name": "Kopfstreicheln"
 		},
 		"D9xPvsU52DEStz6gnJJewe": {
-			"name": "Hockey 🏒"
+			"name": "Eishockey 🏒"
 		},
 		"HVQvfazU9oX6qSeM8kXvaM": {
 			"name": "Horror 👻"
@@ -2162,28 +2162,28 @@
 			"name": "Jagd 🦌"
 		},
 		"B4vkCyhTZJX5SvkQ7RWoJm": {
-			"name": "💖"
+			"name": "Kawaii 💖"
 		},
 		"JAVpr44XUBC5wkmxtKX4rW": {
-			"name": "Rechtliches Böse"
+			"name": "Rechtschaffen böse"
 		},
 		"BTmeninByD4KaKKkQTiYga": {
-			"name": "Rechtlich gut"
+			"name": "Rechtschaffen gut"
 		},
 		"fcHJKqULdrBvrAmPF4vuV9": {
-			"name": "Leo ♌️"
+			"name": "Löwe ♌️"
 		},
 		"rDDDYYEjrdUWFjgaE4NSDM": {
-			"name": "Bibliothek ♎️"
+			"name": "Waage ♎️"
 		},
 		"BMkKqLcXLZ7g77u47mHnza": {
-			"name": "Wörtlich nur vibing"
+			"name": "Einfach nur am Viben"
 		},
 		"tYzVk2i9uhMzVXuPXcXe2b": {
-			"name": "Leben in VR 🥽"
+			"name": "Lebt in VR 🥽"
 		},
 		"JAsmfUmdh2uL6ZLZTWp8dF": {
-			"name": "Suche nach Gruppe 🎮"
+			"name": "Suche Gruppe (LFG) 🎮"
 		},
 		"uwhn9iPM4kntT2Bq2WDXKN": {
 			"name": "Motorräder 🏍️"
@@ -2192,16 +2192,16 @@
 			"name": "Fotografie 📸"
 		},
 		"mmkY4XtSERJYxeEfdmY68D": {
-			"name": "Körperliche Berührung 🫂"
+			"name": "Zärtlichkeit 🫂"
 		},
 		"KqYcEh6DTSd62kVJUU2Aim": {
 			"name": "Klavier 🎹"
 		},
 		"gHSLGNxhyjKKkarcNq9nBa": {
-			"name": "Pool 🎱"
+			"name": "Billard 🎱"
 		},
 		"YQSAPjKy33ZRxaSZqbTxCk": {
-			"name": "Pop"
+			"name": "Pop 🌟"
 		},
 		"ZgUBUVj26rHvpPyoF6TF8c": {
 			"name": "Wissenschaft 🔬"
@@ -2210,7 +2210,7 @@
 			"name": "Sport"
 		},
 		"gUm9n5xfnMzCVtxA9rCnLV": {
-			"name": "Schüler 🎓"
+			"name": "Im Studium 🎓"
 		},
 		"jMDdcShxVDc5cj2uX4ygyX": {
 			"name": "Vaporwave 🌊"
@@ -2219,28 +2219,28 @@
 			"name": "Vegan 🌱"
 		},
 		"bSH9xxw4iBP736fUjxeMrX": {
-			"name": "Weltschöpfer 🛠️"
+			"name": "Welten bauen 🛠️"
 		},
 		"mpS9oivuYqhZk99Vca5dHn": {
-			"name": "Zen wie heck 🪷"
+			"name": "Zen hoch zehn 🪷"
 		},
 		"ygSknA4rAWip5bDjXwawYd": {
 			"name": "Jazz 🎷"
 		},
 		"f2BCBxugmR8H3dGdrJRmpV": {
-			"name": "Shy 🙈"
+			"name": "Schüchtern 🙈"
 		},
 		"dBCYhmt2vTLfw7DNgNmP53": {
-			"name": "Schlaf in VR"
+			"name": "Schläft in VR"
 		},
 		"5FcuhkdAngzscEJK4DiWPo": {
 			"name": "Schwimmen 🏊"
 		},
 		"usxHtsoFwppLo787TfBvLF": {
-			"name": "TV 📺"
+			"name": "Fernsehen 📺"
 		},
 		"iXKfPBmMRxKGzNZA38g3iS": {
-			"name": "Tätowierungen"
+			"name": "Tattoos"
 		},
 		"vsfvQqgYfRMqy9GcvYbSTF": {
 			"name": "Airsoft"
@@ -2249,13 +2249,13 @@
 			"name": "Camping 🏕️"
 		},
 		"pJfikJmWtJZnfKJbNXZqnE": {
-			"name": "Wie ein Bösewicht 😎"
+			"name": "Tiefenentspannt 😎"
 		},
 		"Hacqj4nYnvzcbCD8vxPniH": {
 			"name": "Clubbing 🪩"
 		},
 		"FjZaJeuY5TD2KhzNB67Y5T": {
-			"name": "Elektronische 🎛️"
+			"name": "Elektro 🎛️"
 		},
 		"fZEB4pAAHbst5B5dwnCFbS": {
 			"name": "Fantasy 🐉"
@@ -2264,31 +2264,31 @@
 			"name": "Mode"
 		},
 		"daTRTaC6weg6cu9j6K5XZV": {
-			"name": "INFJ (Werbung)"
+			"name": "INFJ (Advokat)"
 		},
 		"4CgRETn3q2iwk3h8fzWzSQ": {
 			"name": "INFP (Mediator)"
 		},
 		"rD5R2Aqg5yVnK5QfF22R3Z": {
-			"name": "INTP (Logician)"
+			"name": "INTP (Logiker)"
 		},
 		"K9piJDTQhCoabBZR4k6TzB": {
-			"name": "ISFJ (Defender)"
+			"name": "ISFJ (Verteidiger)"
 		},
 		"GH8sb9A9WRYBoKCurnTqFH": {
-			"name": "MMOs"
+			"name": "MMOs 🌐"
 		},
 		"hJoRPhWDwSDteA7nXarZ5i": {
-			"name": "MOBAs"
+			"name": "MOBAs ⚔️"
 		},
 		"KsQnqSKQQKjhTvdHhYX86G": {
 			"name": "Manga 📚"
 		},
 		"g4VXtqWN8TKiCTxzBcWeRU": {
-			"name": "Mind explorer 🧠"
+			"name": "Bewusstseinsreisen 🧠"
 		},
 		"QXAV9E84tkhjZKgKqgRjDA": {
-			"name": "Spiegelwohnung 🪞"
+			"name": "Wohnt vorm Spiegel 🪞"
 		},
 		"6PobkXZnqFst2ZAZQWeS2D": {
 			"name": "Natur 🌲"
@@ -2297,13 +2297,13 @@
 			"name": "Alte Seele"
 		},
 		"vHWMgQ4fHUwUxY72vi5Sz7": {
-			"name": "Oma"
+			"name": "Otaku"
 		},
 		"bTWW3iSkRQD8V3uQ9viWvN": {
-			"name": "Paranormaler Ermittler 👻"
+			"name": "Geisterjagd 👻"
 		},
 		"acyqyBz7FZQFSp8iHYWB5A": {
-			"name": "Partner für Kriminalität"
+			"name": "Partner in Crime"
 		},
 		"bsKcuRDVC99WuWnBUiSEDN": {
 			"name": "Partytier 🎉"
@@ -2312,43 +2312,43 @@
 			"name": "Fische ♓️"
 		},
 		"6UTLvYWp6y4Snv6hexijLD": {
-			"name": "Ziemlich rave Mädchen"
+			"name": "Pretty Rave Girl"
 		},
 		"EkGzXrWW5fEnC9HdJ9okWc": {
-			"name": "Sprache"
+			"name": "Gebärdensprache"
 		},
 		"AyaSxEYUdjX4maBsTuhxS5": {
-			"name": "Sozial awkward"
+			"name": "Sozial unbeholfen"
 		},
 		"svS7TMjzrzjmsh2X3Qe23e": {
-			"name": "Raum 🪐"
+			"name": "Weltraum 🪐"
 		},
 		"xLnre8baC2zsrWJog4ypjm": {
-			"name": "Fahrgeschwindigkeit"
+			"name": "Speedrunning"
 		},
 		"dQAeMiAqHwxcVbjHYkC6dC": {
-			"name": "Geist und Geist"
+			"name": "Spirituell"
 		},
 		"GzLxoRQCmGWBjABNrCZWiD": {
-			"name": "Sport Spiele ⚽️"
+			"name": "Sportspiele ⚽️"
 		},
 		"Z3JAwEM6n7wuc5dAXX36DQ": {
 			"name": "Star Wars"
 		},
 		"7mfqhCUsniXPWXa6EK7Qqh": {
-			"name": "Technologie 💾"
+			"name": "Technik 💾"
 		},
 		"47vHoxVTRx5ZuV7aJmxm5N": {
 			"name": "Theater 🎭"
 		},
 		"UCTar6EEZJDhncJtQtAjVC": {
-			"name": "Zeitreisende ⏳"
+			"name": "Zeitreisend ⏳"
 		},
 		"fe2ysuwBXcZfCbbGNhbe3L": {
 			"name": "Reisen 🧳"
 		},
 		"KMrisZLkbq6VEeTqiAdSHc": {
-			"name": "Wahres Verbrechen 🕵️"
+			"name": "True Crime 🕵️"
 		},
 		"pHU7w3PAb7fhcTDqFQWMKX": {
 			"name": "Tsundere 💢"
@@ -2357,16 +2357,16 @@
 			"name": "Twitch"
 		},
 		"QpsRiXnBWQMG5ZYtZd8BoR": {
-			"name": "Videografik 🎥"
+			"name": "Videografie 🎥"
 		},
 		"V6dXwTJecCTbaUy4nbZip4": {
 			"name": "Vocaloid"
 		},
 		"6vPzqeBurT9AtnQcxG3knW": {
-			"name": "Freiwillige 🤝"
+			"name": "Ehrenamt 🤝"
 		},
 		"uiFv8roivUuL7LFjXoPkiY": {
-			"name": "Worte der Bestätigung 💬"
+			"name": "Lob und Anerkennung 💬"
 		},
 		"WTw73CaXZ4AWmbiQpooJiQ": {
 			"name": "Schreiben ✍️"
@@ -2378,7 +2378,7 @@
 			"name": "3D-Modellierung"
 		},
 		"NZjaoEMBizfYF2ScZbYAuG": {
-			"name": "420 freundlich 🍁"
+			"name": "420-freundlich 🍁"
 		},
 		"ufVyJtRHU6RpqVjnFdsRU9": {
 			"name": "Radfahren 🚲"
@@ -2396,19 +2396,19 @@
 			"name": "Cosplay 👘"
 		},
 		"RNP3HRDvwVZnCZ28wZcYGf": {
-			"name": "Ferienhaus 🌻"
+			"name": "Cottagecore 🌻"
 		},
 		"EXYCJJeyc6JP5yKhkt2GoX": {
-			"name": "Papa Witze"
+			"name": "Flachwitz-Profi"
 		},
 		"PPeutfrRpwTs2v2CVNT6TR": {
-			"name": "ESTJ (ausführend)"
+			"name": "ESTJ (Manager)"
 		},
 		"3jGAehpXeSjweUPwpTRvJZ": {
 			"name": "Femboy"
 		},
 		"bR2veGptTAE4VHitxqZxJV": {
-			"name": "Kämpfe Spiele 🥊"
+			"name": "Prügelspiele 🥊"
 		},
 		"BrKGJW7c8TvnQh7zxbJNuQ": {
 			"name": "Angeln 🎣"
@@ -2417,13 +2417,13 @@
 			"name": "Fitness 💪"
 		},
 		"jQD3WHErNsMnhtMeDgE6SE": {
-			"name": "Flugsims ✈️"
+			"name": "Flugsimulatoren ✈️"
 		},
 		"9zSDJJgBFsgxjHGYCcEQ43": {
-			"name": "Lebensmittel 🍕"
+			"name": "Essen 🍕"
 		},
 		"dumoS7nkPSh4vDaVCMNBYc": {
-			"name": "Hip Hop 💿"
+			"name": "Hip-Hop 💿"
 		},
 		"7xQwxvJ5MDtfjTEHtRcdm9": {
 			"name": "Hippie 🌼"
@@ -2435,13 +2435,13 @@
 			"name": "Musik 🎵"
 		},
 		"qjjjMrjxZHuqVMuC9ADyiZ": {
-			"name": "Mut"
+			"name": "Stumm"
 		},
 		"jxfxsraaBHshyVCEHhk2Qg": {
-			"name": "Das Geheimnis"
+			"name": "Krimis 🔎"
 		},
 		"NdtkEKfWtyNqKux7gs5juV": {
-			"name": "Neutrales Böse"
+			"name": "Neutral böse"
 		},
 		"2oxVb7fbNxvorrXZk7bgv3": {
 			"name": "Neutral gut"
@@ -2453,79 +2453,79 @@
 			"name": "Punk 🧷"
 		},
 		"7N7jNvobkTyCBG9PWvcRUm": {
-			"name": "Qualitätszeit ⏳"
+			"name": "Zweisamkeit ⏳"
 		},
 		"VPhvhASscLY49xNFjw4o8n": {
 			"name": "R&B 🎤"
 		},
 		"8t9ZxQYhZtPZSJM99pHqtB": {
-			"name": "RPG 🧙"
+			"name": "RPGs 🧙"
 		},
 		"XJUTFqrF2avzVtHMA7AGzk": {
 			"name": "Lesen 📖"
 		},
 		"jEf5ZYAU7SMbteXJbQydZJ": {
-			"name": "Sagittarius"
+			"name": "Schütze ♐️"
 		},
 		"k53DpziykEgW7M6engXhem": {
-			"name": "Skating ⛸️"
+			"name": "Eislaufen ⛸️"
 		},
 		"ibrUnfQBwhrzBdFPhxisp2": {
-			"name": "Schlafanrufe"
+			"name": "Einschlaf-Calls"
 		},
 		"8NWGrqWSzC5KQ6QDanNwgf": {
 			"name": "Sneaker 👟"
 		},
 		"oYT4VenxFxNrBshwrsM2WH": {
-			"name": "Snowboarding 🏂"
+			"name": "Snowboarden 🏂"
 		},
 		"MDRvcQGDrY6VMbaGtPk89m": {
 			"name": "Fußball ⚽️"
 		},
 		"8ioURqcYyxmHCkcyKFiub2": {
-			"name": "Sozialspiele 💬"
+			"name": "Partyspiele 💬"
 		},
 		"NrsAVMm65UFBPsqEPkWgZT": {
 			"name": "Strategiespiele ♟️"
 		},
 		"Y65RLPXEzBHsnZphF84Gnc": {
-			"name": "Streaming 🎥"
+			"name": "Streamen 🎥"
 		},
 		"vJsJJUXQXc4c9jaaTyzmBZ": {
-			"name": "Taurus ♉️"
+			"name": "Stier ♉️"
 		},
 		"zp25zogqt2XWNG9v2wi4ET": {
-			"name": "Virgo"
+			"name": "Jungfrau ♍️"
 		},
 		"rj3SPLcAwa6bkKSuBxsfsD": {
-			"name": "Visuelle Romane 📖"
+			"name": "Visual Novels 📖"
 		},
 		"XyLtoquzjjLdYyGHtojCo5": {
-			"name": "Stimme handeln 🎙️"
+			"name": "Synchronsprechen 🎙️"
 		},
 		"tqFRhDSaSL6m2d9YHGQdSA": {
 			"name": "Warhammer"
 		},
 		"nZfksPK35VkxjtjBG5De7f": {
-			"name": "Witchcraft 🧙 ♀ ♀"
+			"name": "Hexerei 🧙‍♀️"
 		},
 		"WEnom9DcbnWrCepxx2PNnE": {
 			"name": "Yandere 😍"
 		},
 		"zoEgxZ7KoBNRCrgA3XbdDA": {
-			"name": "Phantom Sinne"
+			"name": "Phantomgefühl"
 		},
 		"qmthjNQK6U6zxeUHWQWFEY": {
 			"name": "Wassermann ♒️"
 		},
 		"3MJtyHPdUjvYhPsbEci58W": {
-			"name": "Aries ♈️"
+			"name": "Widder ♈️"
 		},
 		"ZNXNaLMr85qQbKmX2TsrGQ": {
-			"name": "Art 🎨"
+			"name": "Kunst 🎨"
 		},
 		"yfQMpqdsbfNqCKjzrJT4wR": {
-			"name": "Avatar Creator 🛠️"
+			"name": "Avatar-Creator 🛠️"
 		},
 		"g2fAPyAgPKt7WaoVZYxPm2": {
 			"name": "Luftfahrt ✈️"
@@ -2534,22 +2534,22 @@
 			"name": "Brettspiele 🎲"
 		},
 		"R9vN8EaDE7xTuUFMXA4bkP": {
-			"name": "Booth avatars"
+			"name": "Booth-Avatare"
 		},
 		"kYABzgDPzJeaU9TJez4JKc": {
-			"name": "Krebserkrankungen"
+			"name": "Krebs ♋️"
 		},
 		"F96TUKJtBt8UtbHEeDss8M": {
 			"name": "Steinbock ♑️"
 		},
 		"nzy5prmodZfCQmkr6nMP5m": {
-			"name": "Cartoons"
+			"name": "Zeichentrick"
 		},
 		"m9K2k5wXQrVdehe3KN9ZaY": {
 			"name": "Katzen 🐈"
 		},
 		"Qf69ZcHcgzrGyW8tVUSvkk": {
-			"name": "Komödie"
+			"name": "Comedy"
 		},
 		"PuMdJoFBdxvf8xWuSpDmP7": {
 			"name": "Comics"
@@ -2558,13 +2558,13 @@
 			"name": "Konzerte"
 		},
 		"3MbxP4iLYi6MC6FUbeqYbX": {
-			"name": "Land 🤠"
+			"name": "Country 🤠"
 		},
 		"Bmkx6cmyU9kbuA3pdwv43o": {
-			"name": "Küken 🥰"
+			"name": "Kuscheln 🥰"
 		},
 		"th2ujgrqPcZifgaLYuv99Y": {
-			"name": "Ich bin nicht da"
+			"name": "Cyberpunk"
 		},
 		"6bNZo7xhhuEXCekE5PyU2Z": {
 			"name": "DIY 🛠️"
@@ -2573,19 +2573,19 @@
 			"name": "DJing 🎧"
 		},
 		"Hge2bJA39qY7XSnqqrrY9Y": {
-			"name": "Blatt"
+			"name": "Gehörlos"
 		},
 		"koZvXYA7RHi7hgPN7b3Vca": {
 			"name": "Disney"
 		},
 		"BB9qTGoqRiniinjxcy7jzn": {
-			"name": "Dokumentation"
+			"name": "Dokus"
 		},
 		"xXDcmmB7yrZEMWi4ZLg6z3": {
 			"name": "Hunde 🐶"
 		},
 		"RjqdzibeHN5ovVcvNuneSB": {
-			"name": "Zeichnung 🖋️"
+			"name": "Zeichnen 🖋️"
 		},
 		"rsdnj8EDHstxBCLX4Z7kEn": {
 			"name": "Dungeons & Dragons 🏰"
@@ -2594,25 +2594,25 @@
 			"name": "ENFJ (Protagonist)"
 		},
 		"BkTRV57GEQdMUuYonoo3g4": {
-			"name": "ENTJ (Commander)"
+			"name": "ENTJ (Kommandeur)"
 		},
 		"Upgh5qK8AzorVt6rgiWTR7": {
 			"name": "ESFP (Entertainer)"
 		},
 		"ETXYWLwrk2BQD3mpvjXaN6": {
-			"name": "Emotionale Unterstützung"
+			"name": "Kummerkasten-Kumpel"
 		},
 		"4UEEGvGvhyBTRWKUjVAMMe": {
-			"name": "Welten entdecken 🗺️"
+			"name": "Welten erkunden 🗺️"
 		},
 		"3PrSVjk8jt594oPCrvDFvL": {
-			"name": "🔫"
+			"name": "Ego-Shooter 🔫"
 		},
 		"y53Q79KXYjdqCJps7Nzn8e": {
-			"name": "Fußball 🏈"
+			"name": "American Football 🏈"
 		},
 		"VJfGs3Znz75RWK3nmWwaE5": {
-			"name": "Gacha"
+			"name": "Gacha 🎰"
 		},
 		"NxJszSBMm3vkbRaZmPd2gh": {
 			"name": "Geschenke 🎁"
@@ -2624,37 +2624,37 @@
 			"name": "Wandern 🥾"
 		},
 		"EMiJ5kbdhDp6QtCr3P7pBV": {
-			"name": "ISFP (Adventurer)"
+			"name": "ISFP (Abenteurer)"
 		},
 		"dzBoXKdvDJ77aoh9GLnusi": {
 			"name": "ISTJ (Logistiker)"
 		},
 		"jaJkU3XRMqRmxGZia74XB8": {
-			"name": "ISTP (Virtuoso)"
+			"name": "ISTP (Virtuose)"
 		},
 		"yZAPLKAMizp9ha78cErdkF": {
-			"name": "Indie Spiele 🕹️"
+			"name": "Indie-Spiele 🕹️"
 		},
 		"KpHyxBddWuMZzhx8vPHUwj": {
-			"name": "🎌"
+			"name": "JRPGs 🎌"
 		},
 		"ZwP6JmwP2Hk8PMpujmvGDY": {
-			"name": "K-drama 🇰🇷"
+			"name": "K-Dramen 🇰🇷"
 		},
 		"rY6Mf9bdYcpLbCWpVBnhym": {
-			"name": "K-pop 🇰🇷"
+			"name": "K-Pop 🇰🇷"
 		},
 		"K9MHU3GP3kVfW8yck8ZPdg": {
-			"name": "🎤"
+			"name": "Karaoke 🎤"
 		},
 		"wR9dYu4RUTPFwPtoKov2RB": {
-			"name": "Manhwa"
+			"name": "Manhwa 🇰🇷"
 		},
 		"J9HbxPqPYnCFPKHUyg8ece": {
-			"name": "Kampfkunst 🥋"
+			"name": "Kampfsport 🥋"
 		},
 		"BmuNHSVwKnyyVMUqEMqpYg": {
-			"name": "Mech Pilot 🤖"
+			"name": "Mecha-Pilot 🤖"
 		},
 		"fAgh4qEey9okWzNjooerLG": {
 			"name": "Meditation 🧘"
@@ -2669,43 +2669,43 @@
 			"name": "Filme 🍿"
 		},
 		"2gBkrkuQN6PjTEeexms7nf": {
-			"name": "Programmierung ⌨️"
+			"name": "Programmieren ⌨️"
 		},
 		"is5SeEgzo3ZAH6GPTCX7ma": {
-			"name": "Religiöse"
+			"name": "Religiös"
 		},
 		"crtnnE8akbJwwA9BdqUFRc": {
-			"name": "Retro Spiele 👾"
+			"name": "Retro-Spiele 👾"
 		},
 		"M9FwNtCEQT3xUNV4EsnQ3d": {
-			"name": "Rhythm Spiele 🎼"
+			"name": "Rhythmusspiele 🎼"
 		},
 		"pET4ZuyMW3ACUXzaYaxd3S": {
 			"name": "Rock 🥁"
 		},
 		"znH7NHT6ysUrRHzVcqxNYQ": {
-			"name": "Lieben 🎭"
+			"name": "Roleplay 🎭"
 		},
 		"5XrzAmQSCM2onKyJBjbr6j": {
 			"name": "Laufen 🏃"
 		},
 		"yNrG4wB8Et3kGTaofec3Be": {
-			"name": "Skateboarding 🛹"
+			"name": "Skateboarden 🛹"
 		},
 		"j6ZmBCoKutQZ2ABFjJvZoK": {
-			"name": "Süßigkeiten"
+			"name": "Süßes 🍰"
 		},
 		"vHGjkMhPppZ5bhh8uded4G": {
-			"name": "A e s t h e t i k s ✨"
+			"name": "Ä s t h e t i k ✨"
 		}
 	},
 	"gender": {
 		"pAzAxxF4UYr3qN6F4tPYec": {
-			"name": "Sie/Sie"
+			"name": "they/them"
 		},
 		"GJitRtRoYWT6DfVasptK7N": {
-			"definition": "Ein Mann, dessen Geschlechtsidentität mit seinem Geschlecht bei der Geburt zugewiesen entspricht.",
-			"name": "Cis Man",
+			"definition": "Ein Mann, dessen Geschlechtsidentität dem bei der Geburt zugewiesenen Geschlecht entspricht.",
+			"name": "Cis-Mann",
 			"definitionLink": "https://nonbinary.wiki/wiki/Cisgender_men"
 		},
 		"wJdnfUvuvACEWRSV4KBdzS": {
@@ -2715,49 +2715,49 @@
 		},
 		"rGFyY9WbvBBJSUAUpY5iUE": {
 			"name": "Transfeminin",
-			"definition": "Jemand mit einer weiblichen Geschlechtsidentität, der männlich bei der Geburt zugewiesen wurde.",
+			"definition": "Eine Person mit weiblicher Geschlechtsidentität, der bei der Geburt das männliche Geschlecht zugewiesen wurde.",
 			"definitionLink": "https://nonbinary.wiki/wiki/Transfeminine"
 		},
 		"JL8AaDCJMVApbEuAfwG86Y": {
-			"name": "Zwei Geist",
-			"definition": "Ein drittes Geschlecht in in indigenen nordamerikanischen Kulturen.",
+			"name": "Two Spirit",
+			"definition": "Ein drittes Geschlecht in indigenen Kulturen Nordamerikas.",
 			"definitionLink": "https://nonbinary.wiki/wiki/Two-spirit"
 		},
 		"w3t9h2SyNhr2rBWouXim8c": {
-			"name": "Intersex",
-			"definition": "Jemand geboren mit Geschlechtsmerkmalen, die nicht den typischen Definitionen von männlichen oder weiblichen Körpern entsprechen.",
+			"name": "Intergeschlechtlich",
+			"definition": "Eine Person, die mit Geschlechtsmerkmalen geboren wurde, die nicht den typischen Definitionen männlicher oder weiblicher Körper entsprechen.",
 			"definitionLink": "https://nonbinary.wiki/wiki/Intersex"
 		},
 		"tyrdBY4Rbfitznr65hpRPR": {
-			"name": "Transgener",
-			"definition": "Jemand, dessen Geschlechtsidentität nicht mit ihrem bei der Geburt zugewiesenen Geschlecht übereinstimmt.",
+			"name": "Transgender",
+			"definition": "Eine Person, deren Geschlechtsidentität nicht dem bei der Geburt zugewiesenen Geschlecht entspricht.",
 			"definitionLink": "https://nonbinary.wiki/wiki/Transgender"
 		},
 		"XTVsHQMWXiJGEc5xCf7RUb": {
-			"name": "Transen Mann",
-			"definition": "Ein Mann, der bei der Geburt weiblich wurde.",
+			"name": "Trans Mann",
+			"definition": "Ein Mann, dem bei der Geburt das weibliche Geschlecht zugewiesen wurde.",
 			"definitionLink": "https://nonbinary.wiki/wiki/Transgender_men"
 		},
 		"mosDhQUt8JGumiup4yQWbZ": {
-			"name": "Sie/sie"
+			"name": "sie/ihr"
 		},
 		"aKEzfuPY6TaMkmnugQWLUd": {
-			"name": "Geschlechtskrankheiten",
-			"definition": "Jemand, dessen Geschlecht im Laufe der Zeit variiert.",
+			"name": "Genderfluid",
+			"definition": "Eine Person, deren Geschlecht sich im Lauf der Zeit verändert.",
 			"definitionLink": "https://nonbinary.wiki/wiki/Genderfluid"
 		},
 		"zMta3qtGyqW4hFdcDFUHik": {
-			"name": "Geschlechtsverkehr",
-			"definition": "Jemand, dessen Geschlecht außerhalb des traditionellen Geschlechts binär fällt.",
+			"name": "Genderqueer",
+			"definition": "Eine Person, deren Geschlecht außerhalb des traditionellen binären Geschlechtersystems liegt.",
 			"definitionLink": "https://nonbinary.wiki/wiki/Genderqueer"
 		},
 		"fAPzVgy7VyGPgAPhkwSkSU": {
-			"name": "Geschlechtsverkehr",
-			"definition": "Jemand, der die gesellschaftlichen Geschlechterererwartungen oder Normen nicht abonniert.",
+			"name": "Gender-nonkonform",
+			"definition": "Eine Person, die gesellschaftlichen Erwartungen oder Normen an das Geschlecht nicht folgt.",
 			"definitionLink": "https://nonbinary.wiki/wiki/Gender_nonconformity"
 		},
 		"PFEmTKdmxAoPuxttYPwFZb": {
-			"definition": "Jemand, der mit mehreren oder allen Geschlechtern identifiziert.",
+			"definition": "Eine Person, die sich mit mehreren oder allen Geschlechtern identifiziert.",
 			"name": "Pangender",
 			"definitionLink": "https://nonbinary.wiki/wiki/Pangender"
 		},
@@ -2770,45 +2770,45 @@
 			"plural": "Männer"
 		},
 		"879KtanHc548synGhcNE7J": {
-			"definition": "Jemand, der sich nicht mit einem Geschlecht identifiziert oder ein Geschlecht erlebt.",
+			"definition": "Eine Person, die sich mit keinem Geschlecht identifiziert oder keins empfindet.",
 			"name": "Agender",
 			"definitionLink": "https://nonbinary.wiki/wiki/Agender"
 		},
 		"RdMpwqWGydDgk9X2u32BBW": {
-			"definition": "Jemand mit einer Kombination aus maskulinen und femininen Eigenschaften.",
+			"definition": "Eine Person mit einer Mischung aus männlichen und weiblichen Merkmalen.",
 			"name": "Androgyn",
 			"definitionLink": "https://nonbinary.wiki/wiki/Androgyny"
 		},
 		"YBkoUyfKJd6jJGwbekY3HN": {
-			"name": "Großer Gott",
-			"definition": "Jemand, der zwei Geschlechteridentitäten erlebt.",
+			"name": "Bigender",
+			"definition": "Eine Person, die zwei Geschlechtsidentitäten erlebt.",
 			"definitionLink": "https://nonbinary.wiki/wiki/Bigender"
 		},
 		"CHkgoEoKzTSeVaLVByviBZ": {
-			"name": "Transmasculin",
-			"definition": "Jemand mit einer männlichen Geschlechtsidentität, die bei der Geburt weiblich wurde.",
+			"name": "Transmaskulin",
+			"definition": "Eine Person mit männlicher Geschlechtsidentität, der bei der Geburt das weibliche Geschlecht zugewiesen wurde.",
 			"definitionLink": "https://nonbinary.wiki/wiki/Transmasculine"
 		},
 		"hv43aTXJZjMHfXRXvTcYiH": {
-			"name": "Er/Him"
+			"name": "er/ihm"
 		},
 		"2ETbJJJ3shADLphvncUwSL": {
-			"name": "Cis Frau",
-			"definition": "Eine Frau, deren Geschlechtsidentität mit ihrem bei der Geburt zugewiesenen Geschlecht übereinstimmt.",
+			"name": "Cis-Frau",
+			"definition": "Eine Frau, deren Geschlechtsidentität dem bei der Geburt zugewiesenen Geschlecht entspricht.",
 			"definitionLink": "https://nonbinary.wiki/wiki/Cisgender_women"
 		},
 		"QwXvxjisosKeTP97ouczoZ": {
 			"name": "Nichtbinär",
-			"definition": "Jemand, dessen Geschlecht außerhalb des Geschlechts binär fällt.",
+			"definition": "Eine Person, deren Geschlecht außerhalb der Zweigeschlechtlichkeit liegt.",
 			"definitionLink": "https://nonbinary.wiki/wiki/Nonbinary"
 		},
 		"HWte4cB6TUzzXZoJeuxJuf": {
-			"name": "Transen Frau",
-			"definition": "Eine Frau, die männlich bei der Geburt zugewiesen wurde.",
+			"name": "Trans Frau",
+			"definition": "Eine Frau, der bei der Geburt das männliche Geschlecht zugewiesen wurde.",
 			"definitionLink": "https://nonbinary.wiki/wiki/Transgender_women"
 		},
 		"jAL62ePbibxaG4FPu7S8LG": {
-			"name": "Sonstige"
+			"name": "Andere"
 		}
 	},
 	"interest-category": {
@@ -2816,22 +2816,22 @@
 			"name": "Identität"
 		},
 		"iiCe39JvGQAAtsrTqnLddb": {
-			"name": "Beliebtheit"
+			"name": "Beliebt"
 		},
 		"DAweztCvdXBa5cKvhgNsPY": {
 			"name": "Sport"
 		},
 		"9os9Yxxr6zGR4k7kh5BKrB": {
-			"name": "Liebe Sprachen"
+			"name": "Liebessprachen"
 		},
 		"nFiqbX3n6aiEdKe3JbynBL": {
 			"name": "Astrologie"
 		},
 		"43i5J3VsKCvU4HGRJHjehn": {
-			"name": "Personaltypen"
+			"name": "Persönlichkeitstypen"
 		},
 		"TgrEr2C6DAcp69Winej5Q4": {
-			"name": "Allgemeines"
+			"name": "Allgemein"
 		},
 		"59oWHt4bZSdQ6tj8f4CWs9": {
 			"name": "Spiele"
@@ -2840,10 +2840,10 @@
 			"name": "Musik"
 		},
 		"hR3X5w26ba6M98fVB2kVxX": {
-			"name": "Finanzierung"
+			"name": "Gesinnung"
 		},
 		"tmQbiXNw7d9Ys2DG9Ddg28": {
-			"name": "Spiel Genres"
+			"name": "Spielgenres"
 		}
 	},
 	"platform": {
@@ -2851,7 +2851,7 @@
 			"name": "Pico"
 		},
 		"MLWTjDZEuacyr2qwbXEw4K": {
-			"name": "Ganzkörper-Tracking"
+			"name": "Full-Body-Tracking"
 		},
 		"n6sSShVCXahjazwqEraKCG": {
 			"name": "PlayStation VR"
@@ -2860,28 +2860,31 @@
 			"name": "Meta Quest"
 		},
 		"3Kagenz7boB64Ke6vEAKv6": {
-			"name": "PCVR"
+			"name": "PCVR",
+			"example": "(Quest Link, Index, Vive usw.)"
 		},
 		"x5T9enPhP8WpYwnoottGDL": {
-			"name": "Locomotion Laufband"
+			"name": "VR-Laufband"
 		},
 		"aNGgneQH5YX4HyWpNEUpmQ": {
-			"name": "Sonstige VR"
+			"name": "Andere VR-Brille"
 		},
 		"pzkBdEYqgAZiSEBZAcJMPZ": {
-			"name": "Haptikanzug"
+			"name": "Haptik-Anzug"
 		},
 		"N458aYKyg6hweVbyDEMDAR": {
-			"name": "VIVE Standalone"
+			"name": "VIVE Standalone",
+			"example": "(Focus Vision, XR Elite)"
 		},
 		"Qb3Ar9wqh7mAMwdevJCfYS": {
-			"name": "Android XR"
+			"name": "Android XR",
+			"example": "(Galaxy XR)"
 		},
 		"c255sGSiJpMNnm6NTUcvx6": {
 			"name": "Apple Vision"
 		},
 		"m4S2N4Jn2f3WDbJm7bcbgQ": {
-			"name": "Gesichtsverfolgung"
+			"name": "Face-Tracking"
 		},
 		"Ry723pMCrWV4ptp8ywcorG": {
 			"name": "Steam Frame"
@@ -2889,138 +2892,138 @@
 	},
 	"prompt": {
 		"c9ztgC7hXX47zNRLNMZHca": {
-			"name": "Ich will jemanden, der"
+			"name": "Ich wünsche mir jemanden, der"
 		},
 		"g8KyzzfF9ijBSCoPJuvHX2": {
-			"name": "Ich nervte auf"
+			"name": "Ich kann stundenlang nerden über"
 		},
 		"x5XHpp7uDA4Y3aws7v4WGK": {
-			"name": "Ich denke viel über"
+			"name": "Mir geht oft durch den Kopf"
 		},
 		"aqXFM7oU7FsXhFnJ2AaVsg": {
-			"name": "Mein Lieblingsspiel je"
+			"name": "Mein Lieblingsspiel aller Zeiten"
 		},
 		"s5U6p73oVaym6ujZq3doy4": {
-			"name": "Ich werde nicht aufhören"
+			"name": "Ich rede ständig über"
 		},
 		"JyC9xq83f47wfDTVEh77yC": {
-			"name": "Ich suche nach"
+			"name": "Ich suche"
 		},
 		"CxdN69Xv6M9BPsDXJGTCHA": {
-			"name": "Habe ich nie"
+			"name": "Ich hab noch nie"
 		},
 		"NEGzuX2TMdtxqVkb4xrvDm": {
-			"name": "Unbeliebte Meinung, aber"
+			"name": "Unpopuläre Meinung, aber"
 		},
 		"JgCFt5P7ZvSt8Tor9NbkMB": {
-			"name": "Meine Lieblingssache in VR zu tun"
+			"name": "Am liebsten mache ich in VR"
 		},
 		"JLiCKV2g295AG5GYuH5vQM": {
-			"name": "Mein liebster fiktiver Charakter"
+			"name": "Meine liebste fiktive Figur"
 		},
 		"DcowtBMp6ZU5jHPWt3rhNe": {
 			"name": "Mein Lieblingsfilm ist"
 		},
 		"rnQjiqXivKanoxFtGi6RS8": {
-			"name": "Gemeinsam könnten wir"
+			"name": "Zusammen könnten wir"
 		},
 		"HHrtwjS3BUvdGoyQMJeZvh": {
-			"name": "Meine Lieblings VRChat Welt"
+			"name": "Meine Lieblingswelt in VRChat"
 		},
 		"mLL9t4DgPHTNRsa8aVNbsR": {
-			"name": "Wenn ich für den Rest meines Lebens ein Essen essen müsste, wäre es"
+			"name": "Wenn ich für den Rest meines Lebens nur noch ein Gericht essen dürfte, wäre es"
 		},
 		"tEUfrkPqK47zjhcJKoRvhh": {
-			"name": "Das Geheimnis, mich kennen zu lernen, ist"
+			"name": "Das Geheimnis, mich kennenzulernen, ist"
 		},
 		"esvDHHBdB4wow5YofJT9pJ": {
-			"name": "Ich habe dieses Album zu wiederholen"
+			"name": "Dieses Album läuft bei mir in Dauerschleife"
 		},
 		"VW97RnUAmtUQTzEhCJbxC8": {
-			"name": "Ich habe nur gelernt, dass"
+			"name": "Ich habe gerade erfahren, dass"
 		},
 		"WZygBQGJYXzez6K66JYcuE": {
 			"name": "Meine irrationalste Angst"
 		},
 		"VaCimF6SdZQxj2nAUDAiRY": {
-			"name": "Ich wette, du kannst nicht"
+			"name": "Ich wette, du schaffst es nicht"
 		},
 		"Hbemf67DabFCSCxGVMBxzg": {
-			"name": "Ein Lebensziel von mir ist"
+			"name": "Eines meiner Lebensziele ist"
 		}
 	},
 	"sexuality": {
 		"UxY3zSKrwKpts6cfZ3wYjM": {
-			"definition": "Jemand zog andere des gleichen Geschlechts an.",
-			"name": "Homosexuell",
+			"definition": "Person, die sich zu Menschen des gleichen Geschlechts hingezogen fühlt.",
+			"name": "Gay",
 			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Gay"
 		},
 		"vu2pJzRmKRroA3GPZRsLxM": {
 			"name": "Heteroflexibel",
-			"definition": "Jemand, der überwiegend auf das entgegengesetzte Geschlecht angezogen wird, aber manchmal erfährt Attraktion für das gleiche Geschlecht.",
+			"definition": "Person, die sich überwiegend zum anderen Geschlecht hingezogen fühlt, manchmal aber auch zum gleichen Geschlecht.",
 			"definitionLink": "https://www.merriam-webster.com/words-at-play/homoflexible-heteroflexible-meaning-slang-definition"
 		},
 		"rN7DERN6NdNQzNQ99pQUN4": {
-			"name": "Fragen",
-			"definition": "Jemand, der im Prozess der Untersuchung ihrer sexuellen Orientierung ist.",
+			"name": "Questioning",
+			"definition": "Person, die gerade dabei ist, die eigene sexuelle Orientierung herauszufinden.",
 			"definitionLink": "https://en.wikipedia.org/wiki/Questioning_%28sexuality_and_gender%29"
 		},
 		"neMSEFPb9zvFRhoZLUobW9": {
-			"definition": "Jemand, der wenig oder keine sexuelle Attraktion erlebt.",
+			"definition": "Person, die wenig oder keine sexuelle Anziehung empfindet.",
 			"name": "Asexuell",
 			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Asexuality"
 		},
 		"4yJadhjWkDN6WSxbDcp33G": {
-			"definition": "Jemand, der ihre sexuelle Orientierung in VR erkundet oder dessen Sexualität sich in VR und persönlich unterscheidet.",
-			"name": "Experimentieren in VR"
+			"definition": "Person, die die eigene sexuelle Orientierung in VR erkundet oder deren Sexualität sich in VR und im echten Leben unterscheidet.",
+			"name": "Experimentiert in VR"
 		},
 		"gkKfqSoBJ7dUHtaKJ5Cfmk": {
-			"definition": "Jemand zog andere Frauen oder weibliche Menschen an.",
-			"name": "Lesben",
+			"definition": "Person, die sich zu anderen Frauen oder femininen Menschen hingezogen fühlt.",
+			"name": "Lesbisch",
 			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Lesbian"
 		},
 		"wPATvG4t9CJhW2goGmBznU": {
-			"name": "Demonstrativ",
-			"definition": "Jemand, der nur sexuelle Attraktion erfährt, nachdem er eine emotionale Verbindung mit jemandem bildet.",
+			"name": "Demisexuell",
+			"definition": "Person, die sexuelle Anziehung erst empfindet, nachdem eine emotionale Bindung entstanden ist.",
 			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Demisexuality_and_Gray-Asexuality"
 		},
 		"t5hhQahW7HQVKnhQX7xRqn": {
-			"name": "Gerade",
-			"definition": "Jemand zog sich zum anderen Geschlecht an.",
+			"name": "Hetero",
+			"definition": "Person, die sich zum anderen Geschlecht hingezogen fühlt.",
 			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Heterosexuality"
 		},
 		"a29qas632KmMpQ8T6arLxa": {
-			"definition": "Jemand zog mehrere Geschlechter an.",
+			"definition": "Person, die sich zu mehreren Geschlechtern hingezogen fühlt.",
 			"name": "Bisexuell",
 			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Bisexuality"
 		},
 		"NC5wiUcxGavten9E8gw64n": {
-			"definition": "Jemand zog andere an, unabhängig von ihrem Geschlecht.",
+			"definition": "Person, die sich zu anderen unabhängig von deren Geschlecht hingezogen fühlt.",
 			"name": "Pansexuell",
 			"definitionLink": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Pansexuality"
 		},
 		"3cWT9ob4r7Zpikkd9kVPEg": {
-			"name": "Quest",
-			"definition": "Jemand mit einer nicht-normativen sexuellen Orientierung.",
-			"definitionLink": "https://en.wikipedia.org/wiki/Queer"
+			"name": "Queer",
+			"definition": "Person mit einer nicht-normativen sexuellen Orientierung.",
+			"definitionLink": "https://de.wikipedia.org/wiki/Queer"
 		},
 		"ndxSn4BdATmm5droBw6iQG": {
 			"name": "Homoflexibel",
-			"definition": "Jemand, der überwiegend zum gleichen Geschlecht angezogen wird, aber manchmal erfährt Attraktion für das entgegengesetzte Geschlecht.",
+			"definition": "Person, die sich überwiegend zum gleichen Geschlecht hingezogen fühlt, manchmal aber auch zum anderen Geschlecht.",
 			"definitionLink": "https://www.merriam-webster.com/words-at-play/homoflexible-heteroflexible-meaning-slang-definition"
 		}
 	},
 	"kink": {
 		"nEDgGpz9eHcomwcbsCaCZP": {
-			"name": "Eigentümer",
+			"name": "Owner",
 			"definitionLink": "https://bdsmtest.org/info#:~:text=Owner,for%20the%20pet)."
 		},
 		"cKzdEwXmCY3naeYdHuowJ7": {
-			"name": "Haustier",
+			"name": "Pet",
 			"definitionLink": "https://bdsmtest.org/info#:~:text=its%20predator%20(you).-,Pet,play%20(puppy%2C%20kitten%2C%20etc.)%2C%20although%20that%20is%20not%20a%20strict%20necessity.,-Primal%20(Prey)"
 		},
 		"pnebwXNPvGr56PEZwSRbHi": {
-			"name": "Slawen",
+			"name": "Sklave/Sklavin",
 			"definitionLink": "https://bdsmtest.org/info#:~:text=a%20sexual%20context.-,Slave,primary%20focus%20in%20life%20and%20they%20rarely%20have%20limits%20for%20them.,-Submissive"
 		},
 		"2D9uSBJtgiRRfgdwXhyvm5": {
@@ -3040,15 +3043,15 @@
 			"definitionLink": "https://bdsmtest.org/info#:~:text=Brat%20tamer,the%20first%20place)."
 		},
 		"werFoPERXyXK9J6roSzCXG": {
-			"name": "Ich weiß nicht",
+			"name": "Rope Bunny",
 			"definitionLink": "https://bdsmtest.org/info#:~:text=Rope%20bunny,their%20partner(s)."
 		},
 		"7WBnwThpTkEHyQHDZTbw47": {
-			"name": "Prediger",
+			"name": "Prey",
 			"definitionLink": "https://bdsmtest.org/info#:~:text=Primal%20(Prey),from%20its%20predator."
 		},
 		"RE2twp4mgYSXjhya266npP": {
-			"name": "Abbau",
+			"name": "Degradee",
 			"definitionLink": "https://bdsmtest.org/info#:~:text=Degradee,they%20consider%20degrading."
 		},
 		"rGDn478bBZCDajvQRYAkLf": {
@@ -3056,19 +3059,19 @@
 			"definitionLink": "https://bdsmtest.org/info#:~:text=Daddy/Mommy,littles%20into%20obedience."
 		},
 		"yamRiwkspejx4mnzbtMdxN": {
-			"name": "Junge/Girl",
+			"name": "Boy/Girl",
 			"definitionLink": "https://bdsmtest.org/info#:~:text=they%20consider%20degrading.-,Little,can%20go%20a%20lot%20deeper%20and%20sometimes%20rival%20those%20of%20slaves.,-Masochist"
 		},
 		"dXxUHt5t69rNeg2g7EE3bR": {
-			"name": "Meister/Herrin",
+			"name": "Herr/Herrin",
 			"definitionLink": "https://bdsmtest.org/info#:~:text=Master/Mistress,allow%20optimal%20servitude."
 		},
 		"FDiw6WUePpHDckmVG5coKF": {
-			"name": "Experimentalist",
+			"name": "Experimentierfreudig",
 			"definitionLink": "https://bdsmtest.org/info#:~:text=Experimentalist,try%20them%20out."
 		},
 		"ANgPHfEKZqZZUspmgfKjdf": {
-			"name": "Ausstellung",
+			"name": "Exhibitionist",
 			"definitionLink": "https://bdsmtest.org/info#:~:text=Exhibitionist,to%20other%20people."
 		},
 		"Jyy988TnEA8J2FeG5ZSyDh": {
@@ -3080,11 +3083,11 @@
 			"definitionLink": "https://bdsmtest.org/info#:~:text=Primal%20(Hunter),its%20predator%20(you)."
 		},
 		"sNdx2sNbnG5RmNZDtTVNCg": {
-			"name": "Messing",
+			"name": "Brat",
 			"definitionLink": "https://bdsmtest.org/info#:~:text=Brat,change%20this%20behavior."
 		},
 		"9mbQ4hxFEMBL4bHVYomPz3": {
-			"name": "Abbau",
+			"name": "Degrader",
 			"definitionLink": "https://bdsmtest.org/info#:~:text=Degrader,they%20consider%20degrading."
 		}
 	},
@@ -3096,30 +3099,30 @@
 			"name": "Ernsthaftes Dating"
 		},
 		"vr": {
-			"name": "Casual dating"
+			"name": "Lockeres Dating"
 		},
 		"friends": {
-			"name": "Neue Freunde"
+			"name": "Neue Freundschaften"
 		}
 	},
 	"report-reason": {
 		"L6FRU2xjUiZwHUbegAcWTa": {
-			"name": "Werbung oder Aufforderung"
+			"name": "Werbung oder Betteln"
 		},
 		"Ec5fqqgVo5X3s4QCeFUJ6D": {
-			"name": "Verkörpern Sie mich oder jemand anderes"
+			"name": "Nutzt meine oder eine fremde Identität"
 		},
 		"zu6HcxQxmJDDq4rmvJazkf": {
-			"name": "Benutzer unterzeichnen"
+			"name": "Minderjährige Person"
 		},
 		"Ur6iAuTDCktZe3zZQGqtZ2": {
 			"name": "Spam- oder Troll-Konto"
 		},
 		"Wf4t9FT7Lmvnn73KqpZGPG": {
-			"name": "Gewaltige oder störende Inhalte"
+			"name": "Gewalttätige oder verstörende Inhalte"
 		},
 		"ymWd4JdTqpnBLmGSLmJRvY": {
-			"name": "Nude oder NSFW Bilder"
+			"name": "Nacktheit oder explizite sexuelle Inhalte in Bildern"
 		},
 		"MyexHAyY8gzQjBQ6agCSx3": {
 			"name": "Betrug, Schadsoftware oder schädliche Links"
@@ -3128,10 +3131,10 @@
 			"name": "Inhalte über Selbstverletzung"
 		},
 		"9iwmQ8huhkngyY9BgLDE9W": {
-			"name": "Sonstige"
+			"name": "Sonstiges"
 		},
 		"BtJvp62cJ5vm6CeuCPTP5H": {
-			"name": "Rechtswidriger Inhalt"
+			"name": "Rechtswidrige Inhalte"
 		},
 		"wFkctcaaf5B4Ef5i3ggY3G": {
 			"name": "Hasserfüllte Inhalte"
@@ -3142,19 +3145,63 @@
 	},
 	"plans": {
 		"Wt4aFY7jVzvSNFK9qcYAr5": {
-			"name": "Prämie (alle 6 Monate)"
+			"name": "Premium (alle 6 Monate)"
 		},
 		"fBDvWjdgvG6zEZMj6ZfyNG": {
-			"name": "Prämie (alle 3 Monate)"
+			"name": "Premium (alle 3 Monate)"
 		},
 		"Di7Sypboma4ryhy6MUagyS": {
-			"name": "Lebenszeit"
+			"name": "Auf Lebenszeit"
 		},
 		"2nAci9TWPaMaYFzVASVgme": {
 			"name": "Early Premium"
 		},
 		"LVjvu5YE7PjUJxVrkfsnMi": {
-			"name": "Prämie (monatlich)"
+			"name": "Premium (monatlich)"
+		},
+		"Duk5r7zeKUhqXv5L6P3m3Q": {
+			"name": "Promo-Premium"
+		}
+	},
+	"warn-reason": {
+		"V7VcQEiYkiwHr5CHSVx5aS": {
+			"name": "Spam-Bio & -Bilder",
+			"details": "Bitte aktualisieren Sie Ihre Bio und laden Sie eigene Bilder Ihres VR-Avatars hoch, damit Ihr Profil nicht als Spam markiert wird."
+		},
+		"aUurnuPnvjTwU2W3K5Se7X": {
+			"name": "Explizites Bild entfernt",
+			"details": "Bilder mit Nacktheit oder expliziten sexuellen Inhalten wurden aus Ihrem Profil entfernt. Bitte laden Sie nur jugendfreie Bilder hoch."
+		},
+		"MjxDKasduf9iHTctStGzYA": {
+			"name": "Explizite Bio",
+			"details": "Bitte halten Sie explizite sexuelle Inhalte in Ihrer Bio auf ein Minimum und entfernen Sie drastische Beschreibungen oder Kinks. Dafür können Sie in den Einstellungen die Kink-Tags von Flirtual oder eigene Interessen verwenden."
+		},
+		"CnaCPAcsLptyUgVVugubdf": {
+			"name": "Werbung",
+			"details": "Bitte reduzieren Sie Werbung und werbliche Inhalte in Ihrem Profil. Ihr Profil sollte in erster Linie dazu dienen, Dates oder Freunde zu finden."
+		},
+		"f8v44XrBausmXe6XybTVHd": {
+			"name": "Betteln & kommerzielle Angebote",
+			"details": "Bitte entfernen Sie alle Geldanfragen und kommerziellen Angebote aus Ihrem Profil. Bitten um Geld sowie Hinweise auf und Links zu kommerziellen Diensten sind auf Flirtual nicht erlaubt."
+		},
+		"RdHQQqrswesTTwyh4QZqbH": {
+			"details": "Bitte entfernen Sie hasserfüllte Inhalte aus Ihrem Profil, da diese gegen unsere Community-Richtlinien verstoßen.",
+			"name": "Hasserfüllte Inhalte"
+		},
+		"KNJu36SMz87wA5DrJZyc4L": {
+			"name": "Freundlich & respektvoll sein",
+			"details": "Aufgrund aktueller Meldung(en) bitten wir Sie, freundlich und respektvoll mit anderen Mitgliedern umzugehen."
+		},
+		"dC6h3tWeZueVwHGKLhC2sk": {
+			"name": "Inaktives Konto",
+			"details": "Bitte aktualisieren Sie Ihre Bio, wenn Sie zu Flirtual zurückkehren. Wenn Sie eine Pause einlegen oder Flirtual verlassen möchten, können Sie Ihr Konto in den Einstellungen vorübergehend deaktivieren oder dauerhaft löschen."
+		},
+		"AhPZwBpeTm5HMf96bkVszj": {
+			"name": "Beweise hochladen",
+			"details": "Bitte laden Sie weitere Beweise zu Ihrer kürzlichen Meldung hoch. Sie können unter https://hello.flirtu.al oder https://discord.gg/flirtual ein Ticket erstellen."
+		},
+		"pDBkaykWpfYk9w7ZfPzMrb": {
+			"name": "Sonstiges"
 		}
 	}
 }
