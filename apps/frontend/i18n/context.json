@@ -17531,15 +17531,6 @@
 		},
 		"hash": "a818309fd43272fd"
 	},
-	"flirtual:cream": {
-		"group": "branding",
-		"screens": [
-			"/branding"
-		],
-		"element": "label",
-		"description": "Name shown on a brand color swatch for Flirtual's off-white cream color (#FFFAF0).",
-		"hash": "0f7874541f7fbb16"
-	},
 	"flirtual:create_account": {
 		"group": "sign-up",
 		"screens": [
@@ -19618,17 +19609,6 @@
 		},
 		"hash": "fcf688df3218dd91"
 	},
-	"flirtual:flirtual": {
-		"group": "brand",
-		"screens": [
-			"browser page title",
-			"/settings/appearance",
-			"dialog: moderator message"
-		],
-		"element": "other",
-		"description": "The app's brand name. Used as the default browser tab title and social-share title, as alt text for the Flirtual logo, and as the name of the default profile color preset (followed by a gray \"Default\" label). Keep as the brand name; transliterate only if your language requires it.",
-		"hash": "12c74e6163e1dc37"
-	},
 	"flirtual:flirtual_bug_report": {
 		"group": "errors/crash",
 		"screens": [
@@ -19934,8 +19914,26 @@
 			"/branding"
 		],
 		"element": "label",
-		"description": "Name shown on a brand color swatch: the main pink-orange brand gradient. Sibling swatches are \"Dark Mode\", \"Homie Mode\", \"Pink\" and \"Cream\".",
+		"description": "Name shown on a brand color swatch: the main pink-orange brand gradient. Sibling swatches are \"Dark Mode\", \"Homie Mode\", \"Accent\" and \"Background\".",
 		"hash": "b4a6959db8872aa7"
+	},
+	"flirtual:accent": {
+		"group": "branding",
+		"screens": [
+			"/branding"
+		],
+		"element": "label",
+		"description": "Name shown on a brand color swatch: the brand's accent color (Flirtual's pink, #E9658B), used for highlights such as links and buttons. Sibling swatches are \"Gradient\", \"Dark Mode\", \"Homie Mode\" and \"Background\". Use the usual design term for an accent color.",
+		"hash": "808c2df82661c45c"
+	},
+	"flirtual:background": {
+		"group": "branding",
+		"screens": [
+			"/branding"
+		],
+		"element": "label",
+		"description": "Name shown on a brand color swatch: the brand's background color (Flirtual's off-white cream, #FFFAF0) behind pages in light mode. Sibling swatches are \"Gradient\", \"Dark Mode\", \"Homie Mode\" and \"Accent\". Use the usual design term for a background color.",
+		"hash": "7d67b6c9f37716ad"
 	},
 	"flirtual:green_aqua_ibex_value": {
 		"group": "discover/match",
@@ -23039,15 +23037,6 @@
 		"tone": "Legal consent",
 		"lengthNote": "Wraps at about 34 characters per line",
 		"hash": "c1be8d030834f7df"
-	},
-	"flirtual:pink": {
-		"group": "branding",
-		"screens": [
-			"/branding"
-		],
-		"element": "label",
-		"description": "Name shown on a brand color swatch for Flirtual's pink (#E9658B).",
-		"hash": "c22d32e96577651b"
 	},
 	"flirtual:pipe_land_teeny_hypnotic": {
 		"group": "profile/view",
