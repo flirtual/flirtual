@@ -5,6 +5,7 @@ import { useLocation } from "react-router";
 import { clamp } from "remeda";
 
 import type { User } from "~/api/user";
+import { homieMode } from "~/features";
 import { useBackClaimed } from "~/hooks/use-back-button";
 import { useBreakpoint } from "~/hooks/use-breakpoint";
 import { useHasConversations } from "~/hooks/use-conversations";
@@ -185,7 +186,7 @@ export const NativeNavigation: FC<{ user: User }> = ({ user }) => {
 		{ id: "matches", title: t("matches"), icon: "bubble.fill", href: urls.conversations.list(), badge },
 		{ id: "settings", title: t("settings"), icon: "gearshape.fill", href: isDesktop ? urls.settings.matchmaking() : urls.settings.list() },
 		{ id: "profile", title: t("profile"), icon: "person.crop.circle.fill", href: urls.profile(user.slug) }
-	].filter(({ id }) => !split || id !== "matches"), [t, badge, user.slug, isDesktop, split]);
+	].filter(({ id }) => (!split || id !== "matches") && (homieMode || id !== "homies")), [t, badge, user.slug, isDesktop, split]);
 
 	const active: Record<string, boolean> = {
 		dates: !!useMatch({ path: urls.discover("dates") }),

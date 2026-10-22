@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 
 import type { Session } from "~/api/auth";
 import type { User } from "~/api/user";
+import { vrTags } from "~/features";
 import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
 import { useLocale } from "~/i18n";
 import { urls } from "~/urls";
@@ -85,11 +86,13 @@ export const PillCollectionExpansion: FC<PillCollectionExpansionProps> = (
 						href={editable ? urls.settings.info("language") : undefined}
 						user={user}
 					/>
-					<PillAttributeList
-						attributes={user.profile.attributes.platform}
-						href={editable ? urls.settings.info("platform") : undefined}
-						user={user}
-					/>
+					{vrTags && (
+						<PillAttributeList
+							attributes={user.profile.attributes.platform}
+							href={editable ? urls.settings.info("platform") : undefined}
+							user={user}
+						/>
+					)}
 					{user.profile.playlist && (
 						<ProfilePlaylist className="mt-4" playlist={user.profile.playlist} />
 					)}

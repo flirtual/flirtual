@@ -17,14 +17,16 @@ import ImageAe8bdc6b from "virtual:remote/ae8bdc6b-2073-491a-9d09-58fce4223d4e";
 import ImageCff9ca62 from "virtual:remote/cff9ca62-2ec5-4467-8bb1-5ec0972f0a5e";
 import ImageDcfbd0d6 from "virtual:remote/dcfbd0d6-1f35-44b9-9f4e-d9c50a368907";
 
+import * as brand from "~/brand";
 import { appBundleId, siteOrigin } from "~/const";
+import { homieMode } from "~/features";
 import { urls } from "~/urls";
 
 export function loader() {
 	return {
-		id: "flirtual",
-		name: "Flirtual",
-		short_name: "Flirtual",
+		id: brand.name.toLowerCase(),
+		name: brand.name,
+		short_name: brand.name,
 		icons: [
 			{
 				src: Image36caae65,
@@ -51,7 +53,7 @@ export function loader() {
 				purpose: "maskable"
 			}
 		],
-		background_color: "#fffaf0",
+		background_color: brand.backgroundColor,
 		start_url: siteOrigin,
 		display: "standalone",
 		categories: ["lifestyle", "social"],
@@ -71,21 +73,23 @@ export function loader() {
 					}
 				]
 			},
-			{
-				name: "Homies",
-				url: urls.discover("dates"),
-				description: "Find new homies",
-				icons: [
-					{
-						src: Image7275f45b,
-						sizes: "96x96"
-					},
-					{
-						src: Image83e96aea,
-						sizes: "256x256"
-					}
-				]
-			},
+			...(homieMode
+				? [{
+						name: "Homies",
+						url: urls.discover("homies"),
+						description: "Find new homies",
+						icons: [
+							{
+								src: Image7275f45b,
+								sizes: "96x96"
+							},
+							{
+								src: Image83e96aea,
+								sizes: "256x256"
+							}
+						]
+					}]
+				: []),
 			{
 				name: "Matches",
 				url: urls.conversations.list(),
@@ -132,10 +136,9 @@ export function loader() {
 				]
 			}
 		],
-		description:
-			"The first VR dating app. Join thousands for dates in VR apps like VRChat.",
+		...(brand.manifestDescription && { description: brand.manifestDescription }),
 		ovr_package_name: appBundleId,
-		iarc_rating_id: "6e4124cb-ab7a-416e-aeb3-f93a42787fa4",
+		...(brand.iarcRatingId && { iarc_rating_id: brand.iarcRatingId }),
 		screenshots: [
 			{
 				src: Image7b134496,
@@ -156,7 +159,7 @@ export function loader() {
 				sizes: "1440x2560",
 				type: "image/png",
 				platform: "narrow",
-				label: "Match on Flirtual"
+				label: `Match on ${brand.name}`
 			},
 			{
 				src: ImageDcfbd0d6,
@@ -182,10 +185,12 @@ export function loader() {
 				url: urls.apps.google,
 				id: appBundleId
 			},
-			{
-				platform: "windows",
-				url: urls.apps.microsoft,
-			}
+			...(urls.apps.microsoft
+				? [{
+						platform: "windows",
+						url: urls.apps.microsoft,
+					}]
+				: [])
 		],
 		prefer_related_applications: true,
 		edge_side_panel: {}

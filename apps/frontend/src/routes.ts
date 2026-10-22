@@ -7,6 +7,9 @@ import {
 } from "@react-router/dev/routes";
 import type { RouteConfig, RouteConfigEntry } from "@react-router/dev/routes";
 
+import { finishStepDirectory, finishSteps } from "./app/[locale]/(app)/(authenticated)/finish/steps";
+import { homieMode, personality } from "./features";
+
 const filePrefix = "./app/[locale]";
 
 type RouteOptions = Parameters<typeof _route>[2] & Record<string, unknown>;
@@ -54,17 +57,14 @@ export default [
 		]),
 		layout("(app)", [
 			layout("(app)/(authenticated)", [
-				page("finish/1", "(app)/(authenticated)/finish/1"),
-				page("finish/2", "(app)/(authenticated)/finish/2"),
-				page("finish/3", "(app)/(authenticated)/finish/3"),
-				page("finish/4", "(app)/(authenticated)/finish/4"),
-				page("finish/5", "(app)/(authenticated)/finish/5"),
+				...finishSteps.map((step, index) =>
+					page(`finish/${index + 1}`, `(app)/(authenticated)/finish/${finishStepDirectory[step]}`)),
 				page("subscription", "(app)/(authenticated)/subscription"),
 				layout("(app)/(authenticated)/(onboarded)", [
 					page(":slug", "(app)/(authenticated)/(onboarded)/[slug]"),
 					// page("discover/:group", "(app)/(authenticated)/(onboarded)/discover/[group]"),
 					page("dates", "(app)/(authenticated)/(onboarded)/discover", { id: "dates" }),
-					page("homies", "(app)/(authenticated)/(onboarded)/discover", { id: "homies" }),
+					...(homieMode ? [page("homies", "(app)/(authenticated)/(onboarded)/discover", { id: "homies" })] : []),
 					page("likes", "(app)/(authenticated)/(onboarded)/likes"),
 					layout("(app)/(authenticated)/(onboarded)/matches", [
 						page("matches", "(app)/(authenticated)/(onboarded)/matches"),
@@ -90,7 +90,7 @@ export default [
 					page("settings/interests", "(app)/(authenticated)/settings/(profile)/interests"),
 					page("settings/matchmaking", "(app)/(authenticated)/settings/(profile)/matchmaking"),
 					page("settings/nsfw", "(app)/(authenticated)/settings/(profile)/nsfw"),
-					page("settings/personality", "(app)/(authenticated)/settings/(profile)/personality"),
+					...(personality ? [page("settings/personality", "(app)/(authenticated)/settings/(profile)/personality")] : []),
 				]),
 				layout("(app)/(authenticated)/(admin)", [
 					page("attributes", "(app)/(authenticated)/(admin)/attributes"),
@@ -131,6 +131,7 @@ export default [
 	// Keep in sync with react-router.config.ts.
 	file("manifest.json"),
 	file("robots.txt"),
+	file("browserconfig.xml"),
 	file("pico_authentication.json"),
 	file(".well-known/security.txt"),
 	file(".well-known/assetlinks.json"),

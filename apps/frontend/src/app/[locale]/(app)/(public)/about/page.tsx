@@ -10,7 +10,7 @@ import ImageD76791d0 from "virtual:remote/d76791d0-bcdd-4a56-87c0-9b298e14a246";
 
 import { Image } from "~/components/image";
 import { InlineLink } from "~/components/inline-link";
-import { FlirtualLogo } from "~/components/logo";
+import { Logo } from "~/components/logo";
 import { IdeasLink } from "~/components/modals/ideas";
 import { ModelCard } from "~/components/model-card";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
@@ -72,7 +72,7 @@ export default function AboutPage() {
 						group: <div className="flex flex-col items-start" />,
 						contact: <InlineLink href={urls.resources.contact} />,
 						ideas: <IdeasLink />,
-						logo: <FlirtualLogo className="-ml-2.5 w-36" />,
+						logo: <Logo className="-ml-2.5 w-36" />,
 						discord: <InlineLink className="select-text" href={urls.socials.discord} />,
 						"team-list": (
 							<TeamList>

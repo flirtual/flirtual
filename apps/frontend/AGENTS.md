@@ -37,11 +37,11 @@ pnpm cap open ios | open android | run ios | run android
 
 ### Adding a `VITE_*` env var
 
-Update **all three** or the value bakes in as `undefined`:
+Do **all three** or the value bakes in as `undefined`:
 
 1. `.env.example` (documents it for local dev)
-2. `src/const.ts` (read via `import.meta.env.VITE_FOO`, export)
-3. `.github/workflows/frontend.yaml` (add to the `release` job's `env:` as `VITE_FOO: ${{ vars.VITE_FOO }}`; the workflow only forwards listed vars)
+2. `src/const.ts` (read via `import.meta.env.VITE_FOO`, export); brand values go in `src/brand.ts`, flags in `src/features.ts`
+3. Set it as a GitHub variable on the `production` and `preview` environments. `frontend.yaml` forwards every `VITE_*` variable; the mobile workflows don't, and only see repository-level ones.
 
 ## Styling
 
@@ -49,7 +49,7 @@ Tailwind with custom classes and variants.
 
 - **Classes**: `bg-brand-gradient`; shadows `shadow-brand-1`/`shadow-brand-inset`/`text-shadow-brand`; fonts `font-montserrat` (headings), `font-nunito` (body); focus `focused`/`focusable`/`focusable-within`; `touch-callout-default`/`-none` (iOS); `select-children` (children selectable, off by default).
 - **Variants**: `dark:`, `desktop:`, `wide:`, `tall:`, `native:` (iOS/Android app), `vision:` (visionOS), `android:` (native or web), `apple:` (iOS/visionOS/macOS, native or web), `[locale]:` (e.g. `en:`, `ja:`).
-- **Theming**: gradient vars `--theme-1`/`--theme-2`; light/dark pink themes, overridden in Homie Mode (green), by Arc browser theme, or by a Premium user's profile theme (within the profile component).
+- **Theming**: gradient vars `--theme-1`/`--theme-2`; light/dark brand themes (emitted by `tailwind.config.js` from the brand colours), overridden in Homie Mode (green), by Arc browser theme, or by a Premium user's profile theme (within the profile component).
 - **Rich text**: Quill + sanitize-html for the bio editor.
 - **twMerge()**: for conditional styling.
 

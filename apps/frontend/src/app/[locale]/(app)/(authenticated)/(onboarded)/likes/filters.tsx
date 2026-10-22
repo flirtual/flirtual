@@ -4,6 +4,7 @@ import { twMerge } from "tailwind-merge";
 import type { LikesYouGenderFilter, ProspectKind } from "~/api/matchmaking";
 import { HeartIcon } from "~/components/icons/gradient/heart";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
+import { homieMode } from "~/features";
 import { useAttributeTranslation } from "~/hooks/use-attribute";
 
 interface FilterButtonProps {
@@ -71,21 +72,23 @@ export const LikesFilters: FC<LikesFiltersProps> = ({
 
 	return (
 		<div className="grid grid-cols-3 flex-wrap gap-2 desktop:flex">
-			<FilterGroup
-				options={[
-					{ key: "love", label: <HeartIcon className="h-5" gradient={false} /> },
-					{ key: "friend", label: <PeaceIcon className="h-5" gradient={false} /> }
-				]}
-				value={kind}
-				onChange={onKindChange}
-			/>
+			{homieMode && (
+				<FilterGroup
+					options={[
+						{ key: "love", label: <HeartIcon className="h-5" gradient={false} /> },
+						{ key: "friend", label: <PeaceIcon className="h-5" gradient={false} /> }
+					]}
+					value={kind}
+					onChange={onKindChange}
+				/>
+			)}
 			<FilterGroup
 				options={[
 					{ key: "woman", label: tAttribute.tpkW7r8PZ2RUuYGUSYi82N?.plural ?? "Women" },
 					{ key: "man", label: tAttribute.rhw3rcbheU7vc9vcSy6W6V?.plural ?? "Men" },
 					{ key: "other", label: tAttribute.jAL62ePbibxaG4FPu7S8LG?.name ?? "Other" }
 				]}
-				className="col-span-2"
+				className={homieMode ? "col-span-2" : "col-span-3"}
 				value={gender}
 				onChange={onGenderChange}
 			/>

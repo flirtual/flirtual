@@ -16,6 +16,7 @@ import {
 	InputText
 } from "~/components/inputs";
 import { useAttributeTranslation } from "~/hooks/use-attribute";
+import { invalidateQueues } from "~/hooks/use-queue";
 import { useOptionalSession } from "~/hooks/use-session";
 import {
 	biographyCounterThreshold,
@@ -23,8 +24,10 @@ import {
 	contentLength
 } from "~/html";
 import { useNavigate } from "~/i18n";
-import { invalidate, queueKey, sessionKey } from "~/query";
+import { invalidate, sessionKey } from "~/query";
 import { urls } from "~/urls";
+
+import { nextFinishStepUrl } from "../navigation";
 
 export const Finish1Form: FC = () => {
 	const session = useOptionalSession();
@@ -89,10 +92,9 @@ export const Finish1Form: FC = () => {
 
 				await Promise.all([
 					invalidate({ queryKey: sessionKey() }),
-					invalidate({ queryKey: queueKey("love") }),
-					invalidate({ queryKey: queueKey("friend") })
+					invalidateQueues()
 				]);
-				await navigate(urls.finish(2));
+				await navigate(nextFinishStepUrl("bio"));
 			}}
 		>
 			{({ FormField, fields, buttonProps }) => {

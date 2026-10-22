@@ -2,6 +2,7 @@ import { MoveRight } from "lucide-react";
 import type { FC } from "react";
 import { useRef, useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
+import { twMerge } from "tailwind-merge";
 
 import type { Session } from "~/api/auth";
 import { User } from "~/api/user";
@@ -42,6 +43,8 @@ export const SignUpForm: FC = () => {
 				? (["google", "discord"] as const)
 				: (["discord", "google"] as const)
 	);
+
+	const compactConnections = secondaryConnectionTypes.length > 1;
 
 	return (
 		<Form
@@ -227,19 +230,21 @@ export const SignUpForm: FC = () => {
 								tabIndex={9}
 								type={primaryConnectionType}
 							/>
-							<div className="flex gap-2">
-								{secondaryConnectionTypes.map((type, index) => (
-									<LoginConnectionButton
-										key={type}
-										iconOnly
-										signup
-										guard={guardServiceAgreement}
-										notifications={fields.notifications.props.value}
-										tabIndex={10 + index}
-										type={type}
-									/>
-								))}
-							</div>
+							{secondaryConnectionTypes.length > 0 && (
+								<div className={twMerge("flex gap-2", !compactConnections && "flex-col")}>
+									{secondaryConnectionTypes.map((type, index) => (
+										<LoginConnectionButton
+											key={type}
+											signup
+											guard={guardServiceAgreement}
+											iconOnly={compactConnections}
+											notifications={fields.notifications.props.value}
+											tabIndex={10 + index}
+											type={type}
+										/>
+									))}
+								</div>
+							)}
 						</div>
 					</>
 				);

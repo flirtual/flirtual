@@ -2,6 +2,7 @@ import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 
 import type { User } from "~/api/user";
+import { personality, vrTags } from "~/features";
 import {
 	useAttributeOrder,
 	useAttributeTranslation
@@ -45,6 +46,7 @@ export const PillCollection: FC<{ user: User }> = (props) => {
 	function getPersonalityLabels({
 		profile: { openness, conscientiousness, agreeableness }
 	}: User) {
+		if (!personality) return [];
 		if (!openness || !conscientiousness || !agreeableness) return [];
 
 		return [
@@ -125,12 +127,14 @@ export const PillCollection: FC<{ user: User }> = (props) => {
 					</Pill>
 				))}
 			</PillRows>
-			<PillAttributeList
-				attributes={user.profile.attributes.game}
-				getLinks={gameStoreLinks}
-				href={editable ? urls.settings.info("game") : undefined}
-				user={user}
-			/>
+			{vrTags && (
+				<PillAttributeList
+					attributes={user.profile.attributes.game}
+					getLinks={gameStoreLinks}
+					href={editable ? urls.settings.info("game") : undefined}
+					user={user}
+				/>
+			)}
 			{nsfw && user.profile.domsub && (
 				<div className="flex w-full flex-wrap gap-2">
 					<Pill

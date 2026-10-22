@@ -20,6 +20,7 @@ import {
 	AlertDialogTrigger
 } from "~/components/dialog/alert";
 import { DialogFooter } from "~/components/dialog/dialog";
+import { vrchat } from "~/features";
 import { useBreakpoint } from "~/hooks/use-breakpoint";
 import { useDialog } from "~/hooks/use-dialog";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
@@ -138,7 +139,7 @@ export const ImageToolbar: React.FC<{
 						i18nKey="uploaded_date"
 					/>
 				)}
-				{image?.authorId && image.worldId && (
+				{vrchat && image?.authorId && image.worldId && (
 					<>
 						{" "}
 						<Trans
@@ -403,7 +404,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 										className="touch-callout-default !relative mx-auto aspect-auto !size-auto max-h-[80vh] object-cover"
 										image={currentImage}
 									/>
-									{currentImage.worldId && currentImage.worldName && (
+									{vrchat && currentImage.worldId && currentImage.worldName && (
 										<div className="absolute bottom-2 right-[calc(0.5rem+var(--safe-area-inset-right,0rem))] z-20 flex items-center gap-2 rounded-full bg-black-70/80 px-2 pb-[3px] pt-1 text-xs text-white-20 opacity-80 shadow-brand-1 transition-opacity hover:opacity-100 desktop:bottom-4 desktop:right-4 desktop:gap-4 desktop:pb-1.5 desktop:pl-3 desktop:pr-3.5 desktop:pt-2 desktop:text-sm">
 											<InlineLink
 												className="flex items-center gap-1.5 desktop:gap-2"

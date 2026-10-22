@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { User } from "~/api/user";
 import { Button } from "~/components/button";
 import { DialogFooter } from "~/components/dialog/dialog";
-import { invalidateMatch, invalidateQueue } from "~/hooks/use-queue";
+import { invalidateMatch, invalidateQueues } from "~/hooks/use-queue";
 import { useToast } from "~/hooks/use-toast";
 
 import {
@@ -54,8 +54,7 @@ export const BlockDialog: FC<PropsWithChildren<{ user: User }>> = ({
 
 								await Promise.all([
 									invalidateMatch(user.id),
-									invalidateQueue("love"),
-									invalidateQueue("friend")
+									invalidateQueues()
 								]);
 							}}
 						>

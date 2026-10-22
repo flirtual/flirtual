@@ -1,23 +1,25 @@
 import { Trans, useTranslation } from "react-i18next";
 import invariant from "tiny-invariant";
-import FlirtualBackgroundPNG from "virtual:remote/flirtual-background.png?format=png&quality=100";
-import FlirtualBackgroundSVG from "virtual:remote/flirtual-background.svg";
-import FlirtualBlackPNG from "virtual:remote/flirtual-black.png?format=png&quality=100";
-import FlirtualBlackSVG from "virtual:remote/flirtual-black.svg";
-import FlirtualMarkBackgroundPNG from "virtual:remote/flirtual-mark-background.png?format=png&quality=100";
-import FlirtualMarkBackgroundSVG from "virtual:remote/flirtual-mark-background.svg";
-import FlirtualMarkBlackPNG from "virtual:remote/flirtual-mark-black.png?format=png&quality=100";
-import FlirtualMarkBlackSVG from "virtual:remote/flirtual-mark-black.svg";
-import FlirtualMarkWhitePNG from "virtual:remote/flirtual-mark-white.png?format=png&quality=100";
-import FlirtualMarkWhiteSVG from "virtual:remote/flirtual-mark-white.svg";
-import FlirtualMarkPNG from "virtual:remote/flirtual-mark.png?format=png&quality=100";
-import FlirtualMarkSVG from "virtual:remote/flirtual-mark.svg";
-import FlirtualWhitePNG from "virtual:remote/flirtual-white.png?format=png&quality=100";
-import FlirtualWhiteSVG from "virtual:remote/flirtual-white.svg";
+import FlirtualBackgroundPNG from "virtual:remote/brand/background.png?format=png&quality=100";
+import FlirtualBackgroundSVG from "virtual:remote/brand/background.svg";
+import FlirtualBlackPNG from "virtual:remote/brand/black.png?format=png&quality=100";
+import FlirtualBlackSVG from "virtual:remote/brand/black.svg";
+import FlirtualMarkBackgroundPNG from "virtual:remote/brand/mark-background.png?format=png&quality=100";
+import FlirtualMarkBackgroundSVG from "virtual:remote/brand/mark-background.svg";
+import FlirtualMarkBlackPNG from "virtual:remote/brand/mark-black.png?format=png&quality=100";
+import FlirtualMarkBlackSVG from "virtual:remote/brand/mark-black.svg";
+import FlirtualMarkWhitePNG from "virtual:remote/brand/mark-white.png?format=png&quality=100";
+import FlirtualMarkWhiteSVG from "virtual:remote/brand/mark-white.svg";
+import FlirtualMarkPNG from "virtual:remote/brand/mark.png?format=png&quality=100";
+import FlirtualMarkSVG from "virtual:remote/brand/mark.svg";
+import FlirtualWhitePNG from "virtual:remote/brand/white.png?format=png&quality=100";
+import FlirtualWhiteSVG from "virtual:remote/brand/white.svg";
 
+import * as brand from "~/brand";
 import { ButtonLink } from "~/components/button";
 import { InlineLink } from "~/components/inline-link";
 import { ModelCard } from "~/components/model-card";
+import { homieMode } from "~/features";
 import { i18n } from "~/i18n";
 import { isLocale } from "~/i18n/languages";
 import { metaMerge, rootMeta } from "~/meta";
@@ -36,6 +38,8 @@ export const meta: Route.MetaFunction = (options) => {
 		{ title: t("page_title", { name: t("branding") }) }
 	]);
 };
+
+const gradient = ([from, to]: brand.ColorPair) => `linear-gradient(to right, ${from}, ${to})`;
 
 export default function BrandingPage() {
 	const { t } = useTranslation();
@@ -133,21 +137,23 @@ export default function BrandingPage() {
 				<div className="flex flex-wrap gap-2 text-white-20">
 					<ColorBlock
 						name={t("gradient")}
-						value="linear-gradient(to right, #FF8975, #E9658B)"
+						value={gradient(brand.dateColors)}
 					/>
 					<ColorBlock
 						name={t("dark_mode")}
-						value="linear-gradient(to right, #B24592, #E9658B)"
+						value={gradient(brand.dateDarkColors)}
 					/>
+					{homieMode && (
+						<ColorBlock
+							name={t("homie_mode")}
+							value={gradient(brand.homieColors)}
+						/>
+					)}
+					<ColorBlock name={t("accent")} value={brand.accentColor} />
 					<ColorBlock
-						name={t("homie_mode")}
-						value="linear-gradient(to right, #82BF72, #4D8888)"
-					/>
-					<ColorBlock name={t("pink")} value="#E9658B" />
-					<ColorBlock
-						name={t("cream")}
+						name={t("background")}
 						invert
-						value="#FFFAF0"
+						value={brand.backgroundColor}
 					/>
 				</div>
 			</div>

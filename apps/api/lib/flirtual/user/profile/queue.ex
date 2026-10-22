@@ -3,9 +3,11 @@ defmodule Flirtual.User.Profile.Queue do
 
   import Ecto.Query
 
+  alias Flirtual.Features
   alias Flirtual.Repo
   alias Flirtual.User.Profile.Queue
 
+  # Never shrinks, so rows of a disabled kind still load.
   @kinds [:love, :friend]
 
   schema "queues" do
@@ -23,7 +25,16 @@ defmodule Flirtual.User.Profile.Queue do
     field(:reset_at, :utc_datetime)
   end
 
-  def kinds, do: @kinds
+  def kinds do
+    if Features.homie_mode?(),
+      do: @kinds,
+      else: @kinds -- [:friend]
+  end
+
+  # Includes disabled kinds, for cleanup that must reach their rows.
+  def all_kinds, do: @kinds
+
+  def kind?(kind) when is_atom(kind), do: kind in kinds()
 
   def get(profile_id, kind) do
     Queue

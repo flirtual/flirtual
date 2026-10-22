@@ -11,9 +11,9 @@ import { InputLabel, InputSwitch } from "~/components/inputs";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useNavigate } from "~/i18n";
 import { invalidate, personalityKey, sessionKey } from "~/query";
-import { urls } from "~/urls";
 
 import { usePersonality } from "../../settings/(profile)/personality/form";
+import { nextFinishStepUrl, previousFinishStepUrl } from "../navigation";
 
 export const Finish4Form: React.FC = () => {
 	const navigate = useNavigate();
@@ -41,7 +41,7 @@ export const Finish4Form: React.FC = () => {
 					invalidate({ queryKey: personalityKey(user.id) }),
 					invalidate({ queryKey: sessionKey() })
 				]);
-				await navigate(urls.finish(5));
+				await navigate(nextFinishStepUrl("personality"));
 			}}
 		>
 			{({ FormField }) => (
@@ -64,7 +64,7 @@ export const Finish4Form: React.FC = () => {
 					<div className="flex justify-end gap-2">
 						<ButtonLink
 							className="flex w-fit flex-row gap-2 opacity-75"
-							href={urls.finish(3)}
+							href={previousFinishStepUrl("personality")}
 							kind="tertiary"
 							size="sm"
 						>

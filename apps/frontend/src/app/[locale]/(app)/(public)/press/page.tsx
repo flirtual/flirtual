@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import { useParams } from "react-router";
 import invariant from "tiny-invariant";
 
+import * as brand from "~/brand";
 import { ButtonLink } from "~/components/button";
 import { ModelCard } from "~/components/model-card";
 import { i18n } from "~/i18n";
@@ -44,14 +45,16 @@ export default function PressPage() {
 					{t("download")}
 				</ButtonLink>
 			</div>
-			<div className="flex flex-col gap-4">
-				<span className="text-2xl font-semibold">
-					{t("contact_us")}
-				</span>
-				<ButtonLink className="w-fit" href={urls.resources.pressEmail}>
-					{urls.resources.pressEmail.split(":")[1]}
-				</ButtonLink>
-			</div>
+			{urls.resources.pressEmail && (
+				<div className="flex flex-col gap-4">
+					<span className="text-2xl font-semibold">
+						{t("contact_us")}
+					</span>
+					<ButtonLink className="w-fit" href={urls.resources.pressEmail}>
+						{brand.pressEmail}
+					</ButtonLink>
+				</div>
+			)}
 			<div className="flex flex-col gap-4">
 				<span className="text-2xl font-semibold">
 					{t("newsroom")}

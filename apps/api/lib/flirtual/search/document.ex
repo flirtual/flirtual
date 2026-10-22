@@ -5,6 +5,7 @@ defmodule Flirtual.Search.Document do
   import Flirtual.Utilities
 
   alias Flirtual.Attribute
+  alias Flirtual.Features
   alias Flirtual.Search.Tokens
   alias Flirtual.User
 
@@ -97,10 +98,16 @@ defmodule Flirtual.Search.Document do
       if(profile.country, do: [Tokens.country(profile.country)], else: []),
       # Personality poles are only filter tokens; hide them when private
       # (personality scoring factor reads the numeric traits, not these).
-      if(private?(privacy, :personality), do: [], else: personality_tokens(profile))
+      personality_boosts(profile, privacy)
     ]
     |> List.flatten()
     |> Enum.uniq()
+  end
+
+  defp personality_boosts(profile, privacy) do
+    if private?(privacy, :personality) or not Features.personality?(),
+      do: [],
+      else: personality_tokens(profile)
   end
 
   # Big Five poles, so profiles can be filtered by personality trait.

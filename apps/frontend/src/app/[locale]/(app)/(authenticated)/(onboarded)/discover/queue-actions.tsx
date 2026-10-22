@@ -14,6 +14,7 @@ import { Button } from "~/components/button";
 import { HeartIcon } from "~/components/icons/gradient/heart";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
+import { homieMode } from "~/features";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
 import { useTimeout } from "~/hooks/use-interval";
 import { useNativeActions } from "~/hooks/use-native-actions";
@@ -86,7 +87,7 @@ export const QueueActions: FC<{
 		mutating
 	} = useQueue(mode, source);
 
-	const { like: homie } = useQueue(direct ? "friend" : mode, source);
+	const { like: homie } = useQueue(homieMode && direct ? "friend" : mode, source);
 
 	const { data: relationship } = useQueryState<Relationship>(relationshipKey(explicitUserId ?? current!));
 	const blocked = relationship?.blocked ?? false;
@@ -94,7 +95,7 @@ export const QueueActions: FC<{
 	// They're not looking for our gender, so we disable Like and offer to Homie
 	// instead. Only for profiles carried over from Homie Mode or direct profile
 	// links.
-	const genderMismatch = mode === "love" && !!explicitUserId && relationship?.prefersMyGender === false;
+	const genderMismatch = homieMode && mode === "love" && !!explicitUserId && relationship?.prefersMyGender === false;
 	const [homieInstead, setHomieInstead] = useState(false);
 
 	const [didAction, setDidAction] = useState(false);
@@ -109,7 +110,7 @@ export const QueueActions: FC<{
 	const nativeActions = useNativeActions(actionsElement, [
 		{ id: "undo", icon: "arrow.uturn.backward", enabled: !explicitUserId && canUndo && !tooFast },
 		...(mode === "love" ? [{ id: "like", icon: "heart", prominent: true, tint: theme("--theme-2"), enabled: !tooFast && !blocked }] : []),
-		...(direct || mode === "friend" ? [{ id: "homie", icon: "peace", prominent: true, tint: theme("--friend-theme-2"), enabled: !tooFast && !blocked }] : []),
+		...(homieMode && (direct || mode === "friend") ? [{ id: "homie", icon: "peace", prominent: true, tint: theme("--friend-theme-2"), enabled: !tooFast && !blocked }] : []),
 		{ id: "pass", icon: "xmark", enabled: !tooFast }
 	], (id) => {
 		if (id === "undo") void undo();
@@ -142,7 +143,7 @@ export const QueueActions: FC<{
 					else void like(explicitUserId);
 				}
 
-				if (event.key === "k" && direct && mode === "love" && !blocked)
+				if (event.key === "k" && homieMode && direct && mode === "love" && !blocked)
 					void homie(explicitUserId);
 
 				if (event.key === "l") void pass(explicitUserId);
@@ -202,7 +203,7 @@ export const QueueActions: FC<{
 							</TooltipContent>
 						</Tooltip>
 					)}
-					{(direct || mode === "friend") && (
+					{homieMode && (direct || mode === "friend") && (
 						<Tooltip touchable={false}>
 							<TooltipTrigger asChild>
 								<m.button
@@ -250,7 +251,7 @@ export const QueueActions: FC<{
 					</Tooltip>
 				</div>
 			</div>
-			{homieInstead && (
+			{homieMode && homieInstead && (
 				<HomieInstead
 					source={source}
 					userId={(explicitUserId ?? current)!}

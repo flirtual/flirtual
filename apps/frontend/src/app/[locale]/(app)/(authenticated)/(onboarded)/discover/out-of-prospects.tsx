@@ -5,6 +5,7 @@ import type { ProspectKind } from "~/api/matchmaking";
 import { ButtonLink } from "~/components/button";
 import { InlineLink } from "~/components/inline-link";
 import { ModelCard } from "~/components/model-card";
+import { homieMode } from "~/features";
 import { urls } from "~/urls";
 
 export interface OutOfProspectsProps {
@@ -36,22 +37,26 @@ export const OutOfProspects: FC<OutOfProspectsProps> = ({ mode }) => {
 										/>
 									</p>
 									<p>{t("sea_giant_anteater_slurp")}</p>
-									<p>
-										<Trans
-											components={{
-												browseLink: <InlineLink href={urls.discover("homies")} />
-											}}
-											i18nKey="main_large_goat_succeed"
-										/>
-									</p>
+									{homieMode && (
+										<p>
+											<Trans
+												components={{
+													browseLink: <InlineLink href={urls.discover("homies")} />
+												}}
+												i18nKey="main_large_goat_succeed"
+											/>
+										</p>
+									)}
 								</div>
 								<div className="flex gap-4">
 									<ButtonLink href={urls.settings.matchmaking()}>
 										{t("filters")}
 									</ButtonLink>
-									<ButtonLink className="px-0" href={urls.discover("homies")} kind="tertiary">
-										{t("homie_mode")}
-									</ButtonLink>
+									{homieMode && (
+										<ButtonLink className="px-0" href={urls.discover("homies")} kind="tertiary">
+											{t("homie_mode")}
+										</ButtonLink>
+									)}
 								</div>
 							</>
 						),

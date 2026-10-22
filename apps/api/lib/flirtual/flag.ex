@@ -5,6 +5,7 @@ defmodule Flirtual.Flag do
   import Ecto.Query
 
   alias Flirtual.{
+    Brand,
     Connection,
     Countries,
     Discord,
@@ -533,7 +534,9 @@ defmodule Flirtual.Flag do
       Discord.deliver_webhook(:flagged_keyword, user: user, flags: domain_flags)
     end
 
-    if Regex.match?(~r/^(?!.*\+flirtual).*flirtual.*@/i, email) and
+    brand = Brand.name() |> String.downcase() |> Regex.escape()
+
+    if Regex.match?(~r/^(?!.*\+#{brand}).*#{brand}.*@/i, email) and
          not ModerationEvent.repeated?(user_id, :flagged_keyword, %{
            flags: local_flags,
            source: "email_local"

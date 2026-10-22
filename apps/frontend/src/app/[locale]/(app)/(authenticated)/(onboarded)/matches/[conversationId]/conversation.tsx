@@ -8,6 +8,7 @@ import { ButtonLink } from "~/components/button";
 import { InlineLink } from "~/components/inline-link";
 import { ProfileDropdown } from "~/components/profile/dropdown";
 import { UserAvatar } from "~/components/user-avatar";
+import { vrchat } from "~/features";
 import { useBack } from "~/hooks/use-back";
 import { useConversation } from "~/hooks/use-conversations";
 import { useSession } from "~/hooks/use-session";
@@ -89,7 +90,7 @@ export const Conversation = withSuspense<{ id: string }>(({ id: conversationId }
 						? (
 								<LeaveButton conversationId={conversationId} />
 							)
-						: me.tags?.includes("debugger") && (
+						: vrchat && me.tags?.includes("debugger") && (
 							<VRChatButton conversationId={conversationId} user={user} />
 						)}
 				</div>

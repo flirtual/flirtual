@@ -36,12 +36,14 @@ export const IdeasDialog: FC<IdeasDialogProps> = ({ onClose }) => {
 							}}
 							i18nKey="ideas_dialog_description"
 						/>
-						<ButtonLink
-							href={urls.socials.discord}
-							Icon={DiscordIcon}
-						>
-							{t("join_discord")}
-						</ButtonLink>
+						{urls.socials.discord && (
+							<ButtonLink
+								href={urls.socials.discord}
+								Icon={DiscordIcon}
+							>
+								{t("join_discord")}
+							</ButtonLink>
+						)}
 					</div>
 				</DialogBody>
 			</>
@@ -51,6 +53,8 @@ export const IdeasDialog: FC<IdeasDialogProps> = ({ onClose }) => {
 
 export const IdeasLink: FC<PropsWithChildren> = ({ children }) => {
 	const dialogs = useDialog();
+
+	if (!urls.socials.discord) return children;
 
 	return (
 		<button

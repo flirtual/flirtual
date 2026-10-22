@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import type { FC } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router";
+import { twMerge } from "tailwind-merge";
 
 import { Authentication } from "~/api/auth";
 import { isWretchError } from "~/api/common";
@@ -130,6 +131,8 @@ export const LoginForm: FC = () => {
 				: (["discord", "google", "apple"] as const)
 	);
 
+	const compactConnections = secondaryConnectionTypes.length > 1;
+
 	useKylesWebAuthnImplementation();
 
 	if (token && !tokenInvalid) {
@@ -195,7 +198,7 @@ export const LoginForm: FC = () => {
 												<InlineLink
 													className="underline"
 													highlight={false}
-													href="https://hello.flirtu.al/support/solutions/articles/73000539480-reset-your-password"
+													href={urls.resources.resetPasswordHelp}
 												/>
 											),
 											reset: (
@@ -317,16 +320,18 @@ export const LoginForm: FC = () => {
 						<hr className="h-px w-full border-0 bg-white-40 vision:bg-transparent dark:bg-black-60" />
 					</div>
 					<LoginConnectionButton tabIndex={6} type={primaryConnectionType} />
-					<div className="flex gap-2">
-						{secondaryConnectionTypes.map((type, index) => (
-							<LoginConnectionButton
-								key={type}
-								iconOnly
-								tabIndex={7 + index}
-								type={type}
-							/>
-						))}
-					</div>
+					{secondaryConnectionTypes.length > 0 && (
+						<div className={twMerge("flex gap-2", !compactConnections && "flex-col")}>
+							{secondaryConnectionTypes.map((type, index) => (
+								<LoginConnectionButton
+									key={type}
+									iconOnly={compactConnections}
+									tabIndex={7 + index}
+									type={type}
+								/>
+							))}
+						</div>
+					)}
 				</div>
 			</div>
 		</>

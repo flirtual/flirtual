@@ -17,8 +17,11 @@ const discoverGroups = ["dates", "homies"] as const;
 export type DiscoverGroup = (typeof discoverGroups)[number];
 
 export const meta: Route.MetaFunction = (options) => {
-	const { params: { locale }, matches: [,,,,{ id: group }] } = options;
+	const { params: { locale }, matches: [,,,,{ id }] } = options;
 	invariant(isLocale(locale));
+
+	// Widened: without Homie Mode, the generated types only know "dates".
+	const group = id as DiscoverGroup;
 
 	const t = i18n.getFixedT(locale);
 

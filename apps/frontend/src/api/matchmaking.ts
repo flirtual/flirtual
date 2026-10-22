@@ -1,14 +1,20 @@
 import type { WretchOptions } from "wretch";
 
+import { homieMode } from "~/features";
+
 import {
 	api
 
 } from "./common";
 import type { CursorPaginate, Issue } from "./common";
 
+// Never narrow: older matches, likes and conversations still carry "friend".
 export const ProspectKind = ["love", "friend"] as const;
-export const prospectKinds = ProspectKind;
 export type ProspectKind = (typeof ProspectKind)[number];
+
+export const prospectKinds = (homieMode
+	? ProspectKind
+	: ProspectKind.filter((kind) => kind !== "friend")) as ReadonlyArray<ProspectKind>;
 
 export const LikesYouGenderFilter = ["man", "woman", "other"] as const;
 export type LikesYouGenderFilter = (typeof LikesYouGenderFilter)[number];

@@ -24,6 +24,8 @@ env:
   VITE_API_URL: ${{ inputs.channel == 'production' && 'https://api.flirtu.al/v1/' || 'https://beta-api.flirtual.dev/v1/' }}
   VITE_APP_BUNDLE_ID: ${{ inputs.channel == 'production' && 'zone.homie.flirtual.pwa' || 'zone.homie.flirtual.beta' }}
   VITE_APP_STORE_ID: "6450485324"
+  VITE_BRAND_NAME: ${{ vars.VITE_BRAND_NAME }}
+  VITE_BRAND_DATE_COLORS: ${{ vars.VITE_BRAND_DATE_COLORS }}
   FLAVOR: ${{ inputs.channel == 'production' && 'production' || 'beta' }}
 
 jobs:
@@ -62,7 +64,7 @@ jobs:
       - name: Install pnpm and Node.js
         uses: pnpm/setup@a0881977cd8ea73b1ed212236c99ca10dcc80cf4 # v3.1.1
         with:
-          runtime: node@24.20.0
+          runtime: node@24.22.1
           cache: true
 
       - name: Install Java

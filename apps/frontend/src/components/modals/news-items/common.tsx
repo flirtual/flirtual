@@ -10,6 +10,7 @@ import {
 import { Image } from "~/components/image";
 import { InlineLink } from "~/components/inline-link";
 import { IdeasLink } from "~/components/modals/ideas";
+import { homieMode } from "~/features";
 import { urls } from "~/urls";
 
 export const ExpandableImage: FC<ComponentProps<typeof Image>> = (props) => {
@@ -61,7 +62,8 @@ export const commonComponents = {
 	github: <InlineLink href={urls.resources.developers} />,
 	premium: <InlineLink href={urls.subscription.default} />,
 	browse: <InlineLink href={urls.discover("dates")} />,
-	homies: <InlineLink href={urls.discover("homies")} />,
+	// Archived news still uses <homies>.
+	homies: <InlineLink href={urls.discover(homieMode ? "homies" : "dates")} />,
 	matches: <InlineLink href={urls.conversations.list()} />,
 	likes: <InlineLink href={urls.likes} />,
 	events: <InlineLink href={urls.resources.events} />,

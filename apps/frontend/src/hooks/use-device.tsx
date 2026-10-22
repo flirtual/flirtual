@@ -4,6 +4,7 @@ import { Capacitor } from "@capacitor/core";
 import type { DeviceInfo } from "@capacitor/device";
 import { Device } from "@capacitor/device";
 
+import * as brand from "~/brand";
 import {
 	client,
 	development,
@@ -56,7 +57,7 @@ const platform: DevicePlatform = platformOverride || ({
 } as const)[os];
 
 const userAgent = client ? navigator.userAgent : "";
-const vision = userAgent.includes("Flirtual-Vision");
+const vision = userAgent.includes(brand.visionUserAgent);
 
 export const nativeNavigation = client && Capacitor.isPluginAvailable("NativeNavigation");
 

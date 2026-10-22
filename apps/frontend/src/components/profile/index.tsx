@@ -6,6 +6,7 @@ import { withSuspense } from "with-suspense";
 
 import { gradientTextColor } from "~/colors";
 import { Html } from "~/components/html";
+import { vrTags } from "~/features";
 import { usePreferences } from "~/hooks/use-preferences";
 import { useSession } from "~/hooks/use-session";
 import { useRelationship, useUser } from "~/hooks/use-user";
@@ -285,7 +286,7 @@ export const Profile = withSuspense(({
 							)}
 						</div>
 					)}
-					{user.profile.new && !myProfile
+					{vrTags && user.profile.new && !myProfile
 						? (
 								me.profile.new
 									? (

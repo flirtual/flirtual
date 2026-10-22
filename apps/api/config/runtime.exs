@@ -101,6 +101,48 @@ config :flirtual, :buckets, %{
   stats: Env.get!("BUCKET_STATS")
 }
 
+feature_connections =
+  Env.get("FEATURE_CONNECTIONS", default: "discord,vrchat,google,apple,meta")
+  |> String.split(",")
+  |> Enum.map(&String.trim/1)
+  |> Enum.reject(&(&1 == ""))
+
+config :flirtual, :features,
+  homie_mode?: Env.bool("FEATURE_HOMIE_MODE", default: true),
+  personality?: Env.bool("FEATURE_PERSONALITY", default: true),
+  vr_tags?: Env.bool("FEATURE_VR_TAGS", default: true),
+  vrchat?: Env.bool("FEATURE_VRCHAT", default: true),
+  connections: feature_connections
+
+brand_colors = fn name, default ->
+  case Env.get(name) do
+    nil ->
+      default
+
+    value ->
+      case value |> String.split(",") |> Enum.map(&String.trim/1) |> Enum.reject(&(&1 == "")) do
+        [start, stop] -> {start, stop}
+        _ -> default
+      end
+  end
+end
+
+config :flirtual, :brand,
+  name: Env.get("BRAND_NAME", default: "Flirtual"),
+  legal_address: Env.get("BRAND_LEGAL_ADDRESS"),
+  date_colors: brand_colors.("BRAND_DATE_COLORS", {"#ff8975", "#e9658b"}),
+  date_dark_colors: brand_colors.("BRAND_DATE_DARK_COLORS", {"#b24592", "#e9658b"}),
+  background_color: Env.get("BRAND_BACKGROUND_COLOR", default: "#fffaf0"),
+  logo_light_url: Env.get("BRAND_LOGO_LIGHT_URL"),
+  logo_dark_url: Env.get("BRAND_LOGO_DARK_URL"),
+  support_origin: Env.get("BRAND_SUPPORT_ORIGIN"),
+  socials: %{
+    discord: Env.get("BRAND_SOCIAL_DISCORD"),
+    x: Env.get("BRAND_SOCIAL_X"),
+    bluesky: Env.get("BRAND_SOCIAL_BLUESKY"),
+    instagram: Env.get("BRAND_SOCIAL_INSTAGRAM")
+  }
+
 config :flirtual, Flirtual.Mailer,
   domains: %{
     "transactional" =>
@@ -160,7 +202,7 @@ if discord_client_id do
   config :flirtual, Flirtual.Discord,
     client_id: discord_client_id,
     client_secret: Env.get!("DISCORD_CLIENT_SECRET", always?: true),
-    access_token: Env.get!("DISCORD_ACCESS_TOKEN", always?: true)
+    access_token: Env.get("DISCORD_ACCESS_TOKEN")
 end
 
 config :flirtual, Flirtual.Discord,
@@ -176,12 +218,17 @@ config :flirtual, Flirtual.Discord,
 apple_key = Env.get("APPLE_KEY")
 
 if apple_key do
+  # APNS shares the key; the sign-in ids are only needed for Apple sign-in.
+  apple_signin = fn name ->
+    if "apple" in feature_connections, do: Env.get!(name, always?: true), else: Env.get(name)
+  end
+
   config :flirtual, Flirtual.Apple,
     key: apple_key,
     key_id: Env.get!("APPLE_KEY_ID", always?: true),
     team_id: Env.get!("APPLE_TEAM_ID", always?: true),
-    app_id: Env.get!("APPLE_SIGNIN_APP_ID", always?: true),
-    service_id: Env.get!("APPLE_SIGNIN_SERVICE_ID", always?: true)
+    app_id: apple_signin.("APPLE_SIGNIN_APP_ID"),
+    service_id: apple_signin.("APPLE_SIGNIN_SERVICE_ID")
 
   config :flirtual, Flirtual.APNS,
     adapter: Pigeon.APNS,
@@ -243,19 +290,23 @@ config :flirtual, Flirtual.Turnstile,
   # https://developers.cloudflare.com/turnstile/troubleshooting/testing/#test-secret-keys
   access_token: Env.get!("TURNSTILE_ACCESS_TOKEN", default: "1x0000000000000000000000000000000AA")
 
-config :flirtual, Flirtual.Freshdesk,
-  domain: Env.get("FRESHDESK_DOMAIN"),
-  api_key: Env.get("FRESHDESK_API_KEY"),
-  moderation_group_id:
-    Env.get("FRESHDESK_MODERATION_GROUP_ID") |> then(&(&1 && String.to_integer(&1))),
-  # The `cf_` names Freshdesk generated for the appeal ticket fields.
-  appeal_fields: %{
-    profile: Env.get!("FRESHDESK_FLIRTUAL_PROFILE_FIELD"),
-    date: Env.get!("FRESHDESK_BAN_DATE_FIELD"),
-    moderator: Env.get!("FRESHDESK_MODERATOR_FIELD"),
-    reason: Env.get!("FRESHDESK_BAN_REASON_FIELD"),
-    details: Env.get!("FRESHDESK_BAN_DETAILS_FIELD")
-  }
+freshdesk_domain = Env.get("FRESHDESK_DOMAIN")
+
+if freshdesk_domain do
+  config :flirtual, Flirtual.Freshdesk,
+    domain: freshdesk_domain,
+    api_key: Env.get!("FRESHDESK_API_KEY", always?: true),
+    moderation_group_id:
+      Env.get("FRESHDESK_MODERATION_GROUP_ID") |> then(&(&1 && String.to_integer(&1))),
+    # The `cf_` names Freshdesk generated for the appeal ticket fields.
+    appeal_fields: %{
+      profile: Env.get!("FRESHDESK_FLIRTUAL_PROFILE_FIELD"),
+      date: Env.get!("FRESHDESK_BAN_DATE_FIELD"),
+      moderator: Env.get!("FRESHDESK_MODERATOR_FIELD"),
+      reason: Env.get!("FRESHDESK_BAN_REASON_FIELD"),
+      details: Env.get!("FRESHDESK_BAN_DETAILS_FIELD")
+    }
+end
 
 config :flirtual, Flirtual.Yoti,
   sdk_id: Env.get("YOTI_SDK_ID"),

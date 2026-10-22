@@ -9,7 +9,7 @@ import {
 } from "~/components/icons";
 import { Footer } from "~/components/layout/footer";
 import { Link } from "~/components/link";
-import { FlirtualLogo } from "~/components/logo";
+import { Logo } from "~/components/logo";
 import { urls } from "~/urls";
 
 import { Tile, TileAnchor } from ".";
@@ -22,7 +22,7 @@ export function TheEnd({ id }: TileProps) {
 			<div className="-mt-32 flex grow flex-col items-center px-8 pb-8 desktop:mt-0 desktop:px-24">
 				<div className="flex flex-col items-center gap-16 desktop:tall:mt-16">
 					<div className="flex flex-col items-center gap-4">
-						<FlirtualLogo className="w-56" theme="dark" />
+						<Logo className="w-56" theme="dark" />
 						<TileAnchor id={id}>
 							<h1 className="max-w-screen-wide text-balance text-center font-montserrat text-4xl font-bold text-white-10 desktop:text-6xl desktop:tall:text-7xl">
 								<Trans
@@ -61,12 +61,16 @@ export function TheEnd({ id }: TileProps) {
 							<Link className="android:hidden" href={urls.apps.google}>
 								<GooglePlayIcon className="size-6" />
 							</Link>
-							<Link href={urls.apps.microsoft}>
-								<MicrosoftIcon className="size-6" />
-							</Link>
-							<Link href={urls.apps.sideQuest}>
-								<MetaIcon className="size-6" />
-							</Link>
+							{urls.apps.microsoft && (
+								<Link href={urls.apps.microsoft}>
+									<MicrosoftIcon className="size-6" />
+								</Link>
+							)}
+							{urls.apps.sideQuest && (
+								<Link href={urls.apps.sideQuest}>
+									<MetaIcon className="size-6" />
+								</Link>
+							)}
 						</div>
 					</div>
 				</div>

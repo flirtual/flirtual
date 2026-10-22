@@ -1,7 +1,7 @@
 defmodule Flirtual.User.Email do
   use Gettext, backend: Flirtual.Gettext
 
-  alias Flirtual.{Attribute, Entitlement, Jwt, User}
+  alias Flirtual.{Attribute, Brand, Entitlement, Jwt, User}
 
   def deliver(%User{} = user, :suspended, %Attribute{} = reason, message) do
     language = user.preferences.language || "en"
@@ -66,7 +66,7 @@ defmodule Flirtual.User.Email do
           },
           "publisher": {
             "@type": "Organization",
-            "name": "Flirtual",
+            "name": "#{Brand.name()}",
             "url": "#{URI.to_string(Application.fetch_env!(:flirtual, :frontend_origin))}"
           }
         }
@@ -112,7 +112,7 @@ defmodule Flirtual.User.Email do
           },
           "publisher": {
             "@type": "Organization",
-            "name": "Flirtual",
+            "name": "#{Brand.name()}",
             "url": "#{URI.to_string(Application.fetch_env!(:flirtual, :frontend_origin))}"
           }
         }
@@ -204,7 +204,7 @@ defmodule Flirtual.User.Email do
           },
           "publisher": {
             "@type": "Organization",
-            "name": "Flirtual",
+            "name": "#{Brand.name()}",
             "url": "#{URI.to_string(Application.fetch_env!(:flirtual, :frontend_origin))}"
           }
         }
@@ -296,7 +296,7 @@ defmodule Flirtual.User.Email do
           },
           "publisher": {
             "@type": "Organization",
-            "name": "Flirtual",
+            "name": "#{Brand.name()}",
             "url": "#{URI.to_string(Application.fetch_env!(:flirtual, :frontend_origin))}"
           }
         }

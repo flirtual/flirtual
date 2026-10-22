@@ -22,6 +22,9 @@ const iosSchemes: Record<string, string> = {
 	"zone.homie.flirtual.beta": "Flirtual Beta",
 };
 
+const brandDefaults = JSON.parse(readFileSync("src/brand.defaults.json", "utf8")) as { name: string };
+const brandName = process.env.VITE_BRAND_NAME || brandDefaults.name;
+
 const socialLogin = {
 	providers: {
 		google: true,
@@ -57,7 +60,7 @@ function config(): CapacitorConfig {
 
 	return {
 		appId,
-		appName: "Flirtual",
+		appName: brandName,
 		server: {
 			androidScheme: frontendScheme,
 			hostname: frontendUrl.hostname,
@@ -67,13 +70,13 @@ function config(): CapacitorConfig {
 		},
 		android: {
 			flavor: androidFlavors[appId],
-			appendUserAgent: `Flirtual-Native/${androidVersion}`,
+			appendUserAgent: `${brandName}-Native/${androidVersion}`,
 		},
 		ios: {
 			scheme: iosSchemes[appId],
-			appendUserAgent: `Flirtual-Native/${iosVersion}`,
+			appendUserAgent: `${brandName}-Native/${iosVersion}`,
 		},
-		appendUserAgent: "Flirtual-Native",
+		appendUserAgent: `${brandName}-Native`,
 		plugins: {
 			Flirtual: {
 				apiUrl,

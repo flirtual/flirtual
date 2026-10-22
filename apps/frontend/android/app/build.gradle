@@ -1,10 +1,22 @@
 apply plugin: 'com.android.application'
 
+def brandAccentColor = {
+    def colors = (System.getenv("VITE_BRAND_DATE_COLORS") ?: "").split(",")*.trim().findAll { it }
+    colors.size() == 2
+        ? colors[1]
+        : new groovy.json.JsonSlurper().parse(file("../../src/brand.defaults.json")).dateColors[1]
+}()
+
 android {
     namespace "zone.homie.flirtual.pwa"
     compileSdk rootProject.ext.compileSdkVersion
 
+    buildFeatures {
+        resValues true
+    }
+
     defaultConfig {
+        resValue "color", "brand", brandAccentColor
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode System.getenv("CI_VERSION_CODE") ? System.getenv("CI_VERSION_CODE").toInteger() : 1

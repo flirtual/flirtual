@@ -38,6 +38,10 @@
 		36F4ECDF71DA947DAB24C0E0 /* Pods_Flirtual_Beta.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 968F0F266264219FFC1E93EB /* Pods_Flirtual_Beta.framework */; };
 		3E3B48CB588ACB81330E1B2E /* Flirtual Watch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 7B106A6C5A875A6B1136E84B /* Flirtual Watch.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		41C5E99C5EAAA111C660E523 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C981EE55E57DAFEA070B8FD5 /* Theme.swift */; };
+		4624A885354FA6D875ABD057 /* brand.defaults.json in Resources */ = {isa = PBXBuildFile; fileRef = 78D57833C76F7B4CBCE3A168 /* brand.defaults.json */; };
+		A35F616F9EDDE9D5E500BE54 /* brand.defaults.json in Resources */ = {isa = PBXBuildFile; fileRef = 78D57833C76F7B4CBCE3A168 /* brand.defaults.json */; };
+		A5CD91E0F310B444A2C2E3EA /* BuildSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B96FB4FF266EA00B0A85210 /* BuildSettings.swift */; };
+		ACD5763027FA1C7D8A673A51 /* BuildSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B96FB4FF266EA00B0A85210 /* BuildSettings.swift */; };
 		4241D414730106EC40C1631A /* FlirtualApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95E749C94A3BB9B3F0EFC9E7 /* FlirtualApp.swift */; };
 		4A512B420D991E32E6504B69 /* Pods_Flirtual.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA9733435BC1F064FD4CE607 /* Pods_Flirtual.framework */; };
 		4E204295D682DD5AEE82A503 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00DFB61840269DB826C2E9 /* API.swift */; };
@@ -162,6 +166,9 @@
 		AA9733435BC1F064FD4CE607 /* Pods_Flirtual.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Flirtual.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF51FD2D460BCFE21FA515B2 /* Pods-App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App.release.xcconfig"; path = "Pods/Target Support Files/Pods-App/Pods-App.release.xcconfig"; sourceTree = "<group>"; };
 		C981EE55E57DAFEA070B8FD5 /* Theme.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		6B96FB4FF266EA00B0A85210 /* BuildSettings.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BuildSettings.swift; sourceTree = "<group>"; };
+		A98D5A5D0717A7122DF8C915 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		78D57833C76F7B4CBCE3A168 /* brand.defaults.json */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.json; name = brand.defaults.json; path = ../../src/brand.defaults.json; sourceTree = "<group>"; };
 		DC00DFB61840269DB826C2E9 /* API.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		F16B3D52D1E607D145B97334 /* Account.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		F47A99B0670C014DC30D2B5C /* WatchSession.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WatchSession.swift; sourceTree = "<group>"; };
@@ -220,6 +227,8 @@
 				8463BA8005F4E6E2B764AD47 /* Inbox.swift */,
 				7D90D76A172D628A8AD20D9A /* MessagesView.swift */,
 				C981EE55E57DAFEA070B8FD5 /* Theme.swift */,
+				6B96FB4FF266EA00B0A85210 /* BuildSettings.swift */,
+				A98D5A5D0717A7122DF8C915 /* Info.plist */,
 				4C1BD4F20286164CFEB1AFF9 /* Users.swift */,
 				5F29ECB3A7E3ABBBA7D59278 /* Translations.swift */,
 				FF96C077105A9B97C9B311B8 /* Tags.swift */,
@@ -263,6 +272,7 @@
 				27D784942E8E23AC006DD767 /* Beta-Info.plist */,
 				0A5A6261468916311C3A7485 /* Watch */,
 				1525C16BC241D3963F1B07B9 /* messages */,
+				78D57833C76F7B4CBCE3A168 /* brand.defaults.json */,
 			);
 			sourceTree = "<group>";
 		};
@@ -481,6 +491,7 @@
 				D5CC364EA00F10AC86690169 /* AppIcon.icon in Resources */,
 				C11E68242C2034A14F1770E5 /* Assets.xcassets in Resources */,
 				6307C2A1188B15A0462E111F /* messages in Resources */,
+				4624A885354FA6D875ABD057 /* brand.defaults.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -491,6 +502,7 @@
 				3256C7D20AC3E81721F845D8 /* Beta-AppIcon.icon in Resources */,
 				2D2981C89C59B59DCB2EE066 /* Assets.xcassets in Resources */,
 				F36672B8842C3884BB44C313 /* messages in Resources */,
+				A35F616F9EDDE9D5E500BE54 /* brand.defaults.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -608,6 +620,7 @@
 				98F4F2639F5D6569BF2D44B3 /* Inbox.swift in Sources */,
 				E1BE5C466B78F6A4930A8081 /* MessagesView.swift in Sources */,
 				41C5E99C5EAAA111C660E523 /* Theme.swift in Sources */,
+				A5CD91E0F310B444A2C2E3EA /* BuildSettings.swift in Sources */,
 				69CF3E410146318E8115ED98 /* Users.swift in Sources */,
 				18D5696E20F0773A2B2D3F74 /* Translations.swift in Sources */,
 				224BDBA327D22768050E0A00 /* Tags.swift in Sources */,
@@ -629,6 +642,7 @@
 				86EFE4EDF8C28747052DAAD5 /* Inbox.swift in Sources */,
 				6295F7CEB2951BCFDA4031D6 /* MessagesView.swift in Sources */,
 				C4E12343727DFE07DD04E1D3 /* Theme.swift in Sources */,
+				ACD5763027FA1C7D8A673A51 /* BuildSettings.swift in Sources */,
 				C186A25299D348709B9C4E01 /* Users.swift in Sources */,
 				24D336A2830587AF4671B96C /* Translations.swift in Sources */,
 				30E20DA046102454C0F01174 /* Tags.swift in Sources */,
@@ -739,7 +753,8 @@
 				DEVELOPMENT_TEAM = 997W5KLYVR;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = Flirtual;
+				INFOPLIST_FILE = Watch/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "$(VITE_BRAND_NAME:default=Flirtual)";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = zone.homie.flirtual.pwa;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -926,7 +941,8 @@
 				DEVELOPMENT_TEAM = 997W5KLYVR;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "Flirtual Beta";
+				INFOPLIST_FILE = Watch/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "$(VITE_BRAND_NAME:default=Flirtual) Beta";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = zone.homie.flirtual.beta;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -954,7 +970,8 @@
 				DEVELOPMENT_TEAM = 997W5KLYVR;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = Flirtual;
+				INFOPLIST_FILE = Watch/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "$(VITE_BRAND_NAME:default=Flirtual)";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = zone.homie.flirtual.pwa;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -983,7 +1000,8 @@
 				DEVELOPMENT_TEAM = 997W5KLYVR;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "Flirtual Beta";
+				INFOPLIST_FILE = Watch/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "$(VITE_BRAND_NAME:default=Flirtual) Beta";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = zone.homie.flirtual.beta;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

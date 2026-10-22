@@ -56,15 +56,7 @@ html {
 }
 
 body {
-  /* Theme variables */
-  --light-theme-1: #ff8975;
-  --light-theme-2: #e9658b;
-
-  --dark-theme-1: #b24592;
-  --dark-theme-2: #e9658b;
-
-  --friend-theme-1: #82bf72;
-  --friend-theme-2: #4d8888;
+  /* Light, dark, and friend theme variables come from tailwind.config.js. */
 
   --arc-theme-1: var(--arc-background-gradient-color0, var(--arc-background-simple-color));
   --arc-theme-2: var(--arc-background-gradient-color1, var(--arc-background-simple-color));

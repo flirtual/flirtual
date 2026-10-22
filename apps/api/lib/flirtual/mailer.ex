@@ -4,6 +4,8 @@ defmodule Flirtual.Mailer do
 
   import Swoosh.Email
 
+  alias Flirtual.Brand
+
   defp get_origin() do
     Application.fetch_env!(:flirtual, :frontend_origin)
   end
@@ -13,10 +15,6 @@ defmodule Flirtual.Mailer do
 
     %{
       home: URI.to_string(origin),
-      discord: "https://discord.gg/flirtual",
-      x: "https://x.com/getflirtual",
-      bluesky: "https://bsky.app/profile/flirtual.com",
-      instagram: "https://instagram.com/getflirtual",
       unsubscribe:
         origin
         |> URI.merge("/settings/notifications")
@@ -24,11 +22,18 @@ defmodule Flirtual.Mailer do
     }
   end
 
-  @company "Flirtual"
-  @company_address "6d - 7398 Yonge St, #776 | Thornhill, ON | L4J 8J2 | Canada"
+  defp company, do: Brand.name()
+
+  defp social_label(:discord), do: dgettext("notifications", "discord")
+  defp social_label(:x), do: dgettext("notifications", "x")
+  defp social_label(:bluesky), do: dgettext("notifications", "bluesky")
+  defp social_label(:instagram), do: dgettext("notifications", "instagram")
 
   defp format_text_body(body_text) do
     urls = get_urls()
+
+    socials = Enum.map(Brand.socials(), fn {name, url} -> "#{social_label(name)}: #{url}\n" end)
+    address = if Brand.legal_address(), do: "#{Brand.legal_address()}\n", else: ""
 
     """
     #{body_text}
@@ -36,15 +41,39 @@ defmodule Flirtual.Mailer do
     ---
     #{urls.home}
 
-    #{dgettext("notifications", "discord")}: #{urls.discord}
-    #{dgettext("notifications", "x")}: #{urls.x}
-    #{dgettext("notifications", "bluesky")}: #{urls.bluesky}
-    #{dgettext("notifications", "instagram")}: #{urls.instagram}
-    #{dgettext("notifications", "unsubscribe")}: #{urls.unsubscribe}
+    #{socials}#{dgettext("notifications", "unsubscribe")}: #{urls.unsubscribe}
 
-    © #{Date.utc_today().year} #{@company}
-    #{@company_address}
+    © #{Date.utc_today().year} #{company()}
+    #{address}\
     """
+  end
+
+  defp html_logo do
+    case {Brand.logo_dark_url(), Brand.logo_light_url()} do
+      {dark, light} when is_binary(dark) and is_binary(light) ->
+        """
+        <img style="max-height: 48px" class="dark-only" src="#{dark}" alt="#{company()}" />
+        <img style="max-height: 48px" class="light-only" src="#{light}" alt="#{company()}" />
+        """
+
+      {dark, light} when is_binary(dark) or is_binary(light) ->
+        ~s(<img style="max-height: 48px" src="#{dark || light}" alt="#{company()}" />)
+
+      _ ->
+        ~s(<span style="font-family: 'Montserrat', sans-serif; font-size: 32px; font-weight: 700">#{company()}</span>)
+    end
+  end
+
+  defp html_socials do
+    case Brand.socials() do
+      [] ->
+        ""
+
+      socials ->
+        Enum.map_join(socials, "\n", fn {name, url} ->
+          ~s(<a href="#{url}">#{social_label(name)}</a>)
+        end) <> "<br />"
+    end
   end
 
   defp format_html_body(body_html, subject, action_url) do
@@ -54,7 +83,7 @@ defmodule Flirtual.Mailer do
     <!doctype html>
     <html>
       <head>
-        <title>[Flirtual] #{subject}</title>
+        <title>[#{company()}] #{subject}</title>
         <meta http-equiv="Content-Type" content="text/html; charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
         <base target="_blank">
@@ -63,7 +92,7 @@ defmodule Flirtual.Mailer do
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
         <style>
           body {
-            background-color: #fffaf0;
+            background-color: #{Brand.background_color()};
             font-family: "Nunito", 'Helvetica Neue', 'Segoe UI', Helvetica, sans-serif;
             font-size: 16px;
             line-height: 26px;
@@ -153,7 +182,7 @@ defmodule Flirtual.Mailer do
           }
 
           a {
-            color: #e9658b;
+            color: #{Brand.date_color(1)};
             font-weight: bold;
             text-decoration: none;
           }
@@ -165,8 +194,8 @@ defmodule Flirtual.Mailer do
             display: inline-block;
             padding: 8px 24px;
             border-radius: 12px;
-            background-color: #ff8975;
-            background-image: linear-gradient(to right, #ff8975, #e9658b);
+            background-color: #{Brand.date_color(0)};
+            background-image: linear-gradient(to right, #{Brand.date_color(0)}, #{Brand.date_color(1)});
             color: #f5f5f5;
             box-shadow: rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 3px 1px -2px, rgba(0, 0, 0, 0.2) 0px 1px 5px 0px;
           }
@@ -193,7 +222,7 @@ defmodule Flirtual.Mailer do
           }
 
           .ii a[href] {
-            color: #e9658b;
+            color: #{Brand.date_color(1)};
           }
 
           .footer .ii a[href] {
@@ -203,8 +232,8 @@ defmodule Flirtual.Mailer do
           .gradient {
             padding: 24px 32px;
             border-radius: 12px 12px 0 0;
-            background-color: #ff8975;
-            background-image: linear-gradient(to right, #ff8975, #e9658b);
+            background-color: #{Brand.date_color(0)};
+            background-image: linear-gradient(to right, #{Brand.date_color(0)}, #{Brand.date_color(1)});
             color: white;
           }
 
@@ -235,11 +264,11 @@ defmodule Flirtual.Mailer do
             }
 
             a {
-              color: #e9658b;
+              color: #{Brand.date_color(1)};
             }
 
             .ii a[href] {
-              color: #e9658b;
+              color: #{Brand.date_color(1)};
             }
 
             .footer a {
@@ -247,8 +276,8 @@ defmodule Flirtual.Mailer do
             }
 
             .gradient, .btn {
-              background-color: #b24592;
-              background-image: linear-gradient(to right, #b24592, #e9658b);
+              background-color: #{Brand.date_dark_color(0)};
+              background-image: linear-gradient(to right, #{Brand.date_dark_color(0)}, #{Brand.date_dark_color(1)});
             }
           }
         </style>
@@ -259,18 +288,7 @@ defmodule Flirtual.Mailer do
           style="display: block; text-align: center; margin: auto; margin-bottom: 16px"
           href="#{urls.home}"
         >
-          <img
-            style="max-height: 48px"
-            class="dark-only"
-            src="https://static.flirtual.com/flirtual-white.png"
-            alt="Flirtual"
-          />
-          <img
-            style="max-height: 48px"
-            class="light-only"
-            src="https://static.flirtual.com/flirtual-black.png"
-            alt="Flirtual"
-          />
+          #{html_logo()}
         </a>
         <div class="main">
           <div class="gradient">
@@ -285,15 +303,11 @@ defmodule Flirtual.Mailer do
       do: "<p class=\"action-link\">#{dgettext("notifications", "if_the_link_does_not_work")}<br /><a href=\"#{action_url}\">#{action_url}</a></p>",
       else: ""}
           <p>
-            <a href="#{urls.discord}">#{dgettext("notifications", "discord")}</a>
-            <a href="#{urls.x}">#{dgettext("notifications", "x")}</a>
-            <a href="#{urls.bluesky}">#{dgettext("notifications", "bluesky")}</a>
-            <a href="#{urls.instagram}">#{dgettext("notifications", "instagram")}</a><br />
+            #{html_socials()}
             <a href="#{urls.unsubscribe}">#{dgettext("notifications", "unsubscribe")}</a>
           </p>
           <p>
-            &copy; #{Date.utc_today().year} #{@company}<br />
-            #{@company_address}
+            &copy; #{Date.utc_today().year} #{company()}#{if Brand.legal_address(), do: "<br />\n#{Brand.legal_address()}"}
           </p>
         </div>
         <div class="gutter">&nbsp;</div>
@@ -332,7 +346,7 @@ defmodule Flirtual.Mailer do
       email =
         new()
         |> to(recipient)
-        |> from({"Flirtual", from})
+        |> from({company(), from})
         |> put_provider_option(:configuration_set_name, configuration_set)
         |> put_provider_option(
           :tags,

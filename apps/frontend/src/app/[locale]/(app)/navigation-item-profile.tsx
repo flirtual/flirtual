@@ -140,10 +140,12 @@ export const NavigationItemProfile: FC = () => {
 								<Newspaper className="size-6 shrink-0" />
 								<span className="whitespace-nowrap">{t("updates")}</span>
 							</ProfileNavigationItem>
-							<ProfileNavigationItem href={urls.socials.discord}>
-								<DiscordOutlineIcon className="size-6 shrink-0" />
-								<span className="whitespace-nowrap">{t("discord")}</span>
-							</ProfileNavigationItem>
+							{urls.socials.discord && (
+								<ProfileNavigationItem href={urls.socials.discord}>
+									<DiscordOutlineIcon className="size-6 shrink-0" />
+									<span className="whitespace-nowrap">{t("discord")}</span>
+								</ProfileNavigationItem>
+							)}
 							<ProfileNavigationItem
 								className="native:hidden vision:hidden"
 								href={urls.resources.download}

@@ -87,16 +87,18 @@ export const ProfileDropdown: FC<ProfileDropdownProps> = ({ userId }) => {
 							</DropdownMenuSubTrigger>
 						</ProfileDropdownTagsSubmenu>
 						<ImpersonateAction user={user} />
-						<DropdownMenuItem asChild>
-							<Link
-								className="gap-2"
-								href={urls.moderation.helpdeskContact(user.email)}
-								target="_blank"
-							>
-								<Headset className="size-5" />
-								Search helpdesk
-							</Link>
-						</DropdownMenuItem>
+						{urls.moderation.helpdeskContact(user.email) && (
+							<DropdownMenuItem asChild>
+								<Link
+									className="gap-2"
+									href={urls.moderation.helpdeskContact(user.email)}
+									target="_blank"
+								>
+									<Headset className="size-5" />
+									Search helpdesk
+								</Link>
+							</DropdownMenuItem>
+						)}
 						<DropdownMenuSeparator />
 						<PromotionalPremiumAction user={user} />
 						<DropdownMenuItem asChild>
@@ -112,7 +114,7 @@ export const ProfileDropdown: FC<ProfileDropdownProps> = ({ userId }) => {
 						<DropdownMenuItem asChild disabled={!user.chargebeeId}>
 							<Link
 								className="gap-2"
-								href={`https://flirtual.chargebee.com/d/customers/${user.chargebeeId}`}
+								href={urls.moderation.chargebeeCustomer(user.chargebeeId)}
 								target="_blank"
 							>
 								<Gem className="size-5" />
