@@ -498,7 +498,7 @@ importers:
         version: 8.2.0(@capacitor/core@8.5.0)
       core-js:
         specifier: ^3.49.0
-        version: 3.50.0
+        version: 3.51.0
       csstype:
         specifier: ^3.2.3
         version: 3.2.3
@@ -5865,8 +5865,8 @@ packages:
     resolution: {integrity: sha512-XGpFGbMLHwSt74YLTKho7Ib242qi6O8MSX+sRokV4oz7iKXvQWGYZthjIhjRGMxjzVkAubBO512dKGYcefmX3Q==}
     engines: {node: '>=6.4.0'}
 
-  core-js@3.50.0:
-    resolution: {integrity: sha512-BRWgOLKkFeCgRudR6zrs8p9XJZcE14grzKMMssoYrk6krtuEZ7MTKPIY5RzOnqsEKIR9kst7wNzphttraT+Yqw==}
+  core-js@3.51.0:
+    resolution: {integrity: sha512-7bDKx/5jm5MxzsXxc93g6Z2+4ZsuT/MddrfRmTDJNAkWsYWHU8EVNEsBiIEWnMAMCHMmRfUEjkuo3jeNBOIHRw==}
 
   cropperjs@1.6.2:
     resolution: {integrity: sha512-nhymn9GdnV3CqiEHJVai54TULFAE3VshJTXSqSJKa8yXAKyBKDWdhHarnlIPrshJ0WMFTGuFvG02YjLXfPiuOA==}
@@ -14241,7 +14241,7 @@ snapshots:
     dependencies:
       browserslist: 4.28.8
 
-  core-js@3.50.0: {}
+  core-js@3.51.0: {}
 
   cropperjs@1.6.2: {}
 
@@ -17183,7 +17183,7 @@ snapshots:
       '@posthog/browser-common': 0.9.5
       '@posthog/core': 1.59.1
       '@posthog/types': 1.416.0
-      core-js: 3.50.0
+      core-js: 3.51.0
       dompurify: 3.4.16
       fflate: 0.4.9
       preact: 10.29.8
