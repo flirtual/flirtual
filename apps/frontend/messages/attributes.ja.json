@@ -2,59 +2,59 @@
 	"ban-reason": {
 		"tUaxdXYAcyeb3G4Qc7gNLh": {
 			"name": "スパム",
-			"details": "スパムとしてのプロフィール。あなたのプロフィール内容はスパムと判断されました。このメールに返信してバンの異議申し立てを行い、アカウントの復旧を求めることができます。必要に応じて、プロフィールに更なる情報を追加していただく場合があります。"
+			"details": "スパムプロフィール。プロフィールの内容がスパムと判定されました。異議申し立てを行い、アカウント停止の解除を申請する場合は、このメールに返信してください。プロフィールに情報を追加していただくようお願いすることがあります。"
 		},
 		"WSD2yPcs64FB27qpb4AGuT": {
 			"name": "なりすまし",
-			"details": "なりすましとしてのプロフィール。あなたのプロフィールが他人になりすましていると判断されました。誤ってバンされたと思われる場合は、このメールに返信して異議申し立てを行い、アカウントの復旧を求めることができます。"
+			"details": "なりすまし。プロフィールが他の人物になりすましていると判断されました。誤って停止されたと思われる場合は、このメールに返信して異議申し立てを行い、アカウント停止の解除を申請できます。"
 		},
 		"nupwCrjodUd4ZvPizEBc8L": {
-			"name": "金銭の勧誘",
-			"details": "金銭の勧誘。Flirtual上でお金を要求することはできません。このメールに返信してバンの異議申し立てを行い、プロフィールから金銭の勧誘に関する内容を削除していただければアカウントが復旧される場合があります。"
+			"name": "金銭の要求",
+			"details": "金銭の要求。Flirtualで金銭を求めることは禁止されています。このメールに返信して異議申し立てを行い、プロフィールから金銭の要求に関する記載を削除することで、アカウント停止の解除を申請できます。"
 		},
 		"jBVZ29YcQ2dDXbURb6AxXk": {
-			"name": "広告",
-			"details": "広告行為。あなたのプロフィールは外部アカウントやサービスの宣伝を主目的としているようです。プロフィールにSNSや活動について記載すること自体は歓迎しますが、プロフィールの主な目的はデートや友達探しであるべきです。このメールに返信して異議申し立てを行い、プロフィールを修正していただければアカウントが復旧される場合があります。"
+			"name": "広告・宣伝",
+			"details": "広告・宣伝。プロフィールの主な目的が、外部のアカウントやサービスの宣伝になっていると判断されました。SNSやお仕事についてプロフィールに書いていただくのは問題ありませんが、プロフィールの主な目的は恋人や友達を探すことである必要があります。このメールに返信して異議申し立てを行い、プロフィールを修正することで、アカウント停止の解除を申請できます。"
 		},
 		"5H9nMhQacZBD9Zomu7Tbt9": {
 			"name": "重複アカウント",
-			"details": "重複アカウント。Flirtualでは複数のアカウント作成を許可していません。このアカウントは無効化されましたが、他のアカウントは引き続き利用可能です。もし誤ってバンされたと思われる場合や、別のアカウントを無効化してほしい場合は、このメールに返信してください。"
+			"details": "重複アカウント。Flirtualでは、複数のアカウントを作成することはできません。このアカウントは停止されましたが、もう一方のアカウントは引き続きご利用いただけます。誤って停止されたと思われる場合や、このアカウントではなくもう一方のアカウントを停止してほしい場合は、このメールに返信してください。"
 		},
 		"VgQw2st96dZKZotsnYUEaN": {
-			"name": "バン回避",
-			"details": "バン回避。以前のFlirtualでのバンを回避するために新しいアカウントを作成した、または他の手段で制裁を回避した可能性があります。以前のバンについて異議申し立てやアカウントの復旧を希望する場合は、もともとのバン通知メールに返信してください。"
+			"name": "停止措置の回避",
+			"details": "停止措置の回避。過去にFlirtualでアカウントを停止された後、新しいアカウントを作成するなどして停止措置を回避したと判断されました。過去の停止について異議申し立てを行い、アカウント停止の解除を申請する場合は、最初に届いた停止通知のメールに返信してください。"
 		},
 		"muXMqNjneKnwqxT8nqcy4d": {
 			"name": "未成年",
-			"details": "未成年。Flirtualの利用は18歳以上に限られます。誤ってバンされたと思われる場合は、Flirtualにログインして安全に年齢を確認することで、アカウントを復元できます。"
+			"details": "未成年。Flirtualは18歳以上の方のみご利用いただけます。誤って停止されたと思われる場合は、Flirtualにログインして安全な方法で年齢確認を行うことで、アカウントを復旧できます。"
 		},
 		"dWDkcjmXQEQRVoXmNkutAB": {
-			"name": "ハラスメント",
-			"details": "ハラスメント。バンの異議申し立てやアカウントの復旧を希望する場合は、このメールに返信してください。なお、もし通報があった場合でも、その詳細については公開できませんのでご了承ください。"
+			"name": "嫌がらせ",
+			"details": "嫌がらせ。異議申し立てを行い、アカウント停止の解除を申請する場合は、このメールに返信してください。なお、通報があった場合でも、その内容の詳細はお伝えできませんのでご了承ください。"
 		},
 		"hLwvdpKQiofFTCDHox75SY": {
-			"name": "差別的・憎悪表現",
-			"details": "差別的・憎悪表現。差別的なプロフィールやメッセージはFlirtualでは許可されません。誤ってバンされたと思われる場合は、このメールに返信して異議申し立てを行い、アカウントの復旧を希望する旨をお伝えください。"
+			"name": "ヘイト・差別的なコンテンツ",
+			"details": "ヘイト・差別的なコンテンツ。Flirtualでは、プロフィールやメッセージでのヘイト表現や差別的な内容は認められていません。誤って停止されたと思われる場合は、このメールに返信して異議申し立てを行い、アカウント停止の解除を申請できます。"
 		},
 		"EVU7hHnv5u6eQwRBTW8aYU": {
-			"name": "NSFWコンテンツ",
-			"details": "ヌードや過度に猥褻な内容はFlirtualでは許可されていません。このメールに返信してバンの異議申し立てを行い、プロフィールを修正していただければアカウントが復旧される場合があります。"
+			"name": "裸や露骨な性的表現",
+			"details": "裸や露骨な性的表現。Flirtualでは、裸や性的な画像、過度にわいせつな文章は禁止されています。このメールに返信して異議申し立てを行い、プロフィールを修正することで、アカウント停止の解除を申請できます。"
 		},
 		"KfFVwKB4DYMXx7foyqGUZM": {
-			"name": "暴力的・不快なコンテンツ",
-			"details": "暴力的・不快なコンテンツ。プロフィールに暴力的または不快な内容が含まれている可能性があります。バンに対する異議申し立てを希望される場合は、このメールに返信してください。"
+			"name": "暴力的・ショッキングなコンテンツ",
+			"details": "暴力的・ショッキングなコンテンツ。プロフィールに暴力的な内容、またはショッキングな内容が含まれていると判断されました。異議申し立てを行う場合は、このメールに返信してください。"
 		},
 		"YLsXz4iHn9yNLLLmuMHLCT": {
 			"name": "自傷行為に関するコンテンツ",
-			"details": "自傷行為に関するコンテンツ。他のユーザーに不安を与える可能性がある自傷行為の言及が含まれていると判断されました。こちらにいくつかのメンタルヘルス支援リソース（https://flirtu.al/mentalhealth）をご用意していますのでご活用ください。もしバンの異議申し立てを希望される場合は、このメールに返信してください。"
+			"details": "自傷行為に関するコンテンツ。プロフィールや利用状況に、他のユーザーに不安を与えるおそれのある自傷行為に関する内容が含まれていると判断されました。メンタルヘルスに関する相談先を https://flirtu.al/mentalhealth にまとめていますので、よろしければご覧ください。どうかご自身を大切になさってください。異議申し立てを行う場合は、このメールに返信してください。"
 		},
 		"Lfb829DEo36f54Uu3H3ybj": {
-			"name": "詐欺、マルウェア、または有害なリンク",
-			"details": "詐欺やマルウェア、または有害なリンクがプロフィールに含まれていると判断されました。誤ってバンされたと思われる場合は、このメールに返信して異議申し立てを行ってください。"
+			"name": "詐欺・マルウェア・有害なリンク",
+			"details": "詐欺・マルウェア・有害なリンク。プロフィールに悪意のあるリンクや行為が含まれていると判断されました。誤って停止されたと思われる場合は、このメールに返信して異議申し立てを行ってください。"
 		},
 		"HmF9W5yHfH3nLRYnt6F2cc": {
-			"name": "違法コンテンツ",
-			"details": "違法コンテンツ。あなたのプロフィールまたは行為がカナダ法や現地法に違反している可能性があります。誤ってバンされたと思われる場合は、このメールに返信して異議申し立てを行ってください。"
+			"name": "違法なコンテンツ",
+			"details": "違法なコンテンツ。プロフィールや利用状況が、カナダまたはお住まいの地域の法律に違反していると判断されました。誤って停止されたと思われる場合は、このメールに返信して異議申し立てを行ってください。"
 		},
 		"8P2pi5232LTpzGTDWkBprc": {
 			"name": "その他"
@@ -136,7 +136,7 @@
 			"name": "PAYDAY 2"
 		},
 		"HF4tppeRywmq9oWsR2GyMg": {
-			"name": "POPULATION: ONE"
+			"name": "ポピュレーション: ワン"
 		},
 		"GhScLf7QXNJa2GrZjWVk49": {
 			"name": "Bigscreen"
@@ -148,7 +148,7 @@
 			"name": "Horizon Worlds"
 		},
 		"ffrwQHFv2kN4uRRJCLYqVb": {
-			"name": "Contractors"
+			"name": "コントラクターズ"
 		},
 		"ibNMSB3mTjSqA4yVh424BG": {
 			"name": "Drunkn Bar Fight"
@@ -157,7 +157,7 @@
 			"name": "Assetto Corsa"
 		},
 		"zk8azbDyuxAXKmB7n78CC3": {
-			"name": "STAR WARS: Squadrons"
+			"name": "STAR WARS：スコードロン"
 		},
 		"bgxJhCTVuYKkmxMYwx4MSF": {
 			"name": "Ghosts of Tabor"
@@ -181,10 +181,10 @@
 			"name": "Walkabout Mini Golf"
 		},
 		"GeUXPSsyL2sxwjrBfWUaHf": {
-			"name": "Real VR Fishing"
+			"name": "リアルVRフィッシング"
 		},
 		"Uzpbh2WhLAdc7pGGLMNHnU": {
-			"name": "Cook-Out"
+			"name": "クックアウト"
 		},
 		"hDwNqLH89jVE5SeeHKQpXR": {
 			"name": "SCP: Labrat"
@@ -196,7 +196,7 @@
 			"name": "Poker VR"
 		},
 		"p5YpamzGR5NfmvWWESpL6S": {
-			"name": "Demeo"
+			"name": "デメオ"
 		},
 		"bys8eVjiZjsuD3oBGeQ5Bb": {
 			"name": "DEVOUR"
@@ -214,7 +214,7 @@
 			"name": "Wave"
 		},
 		"qVyhnUw74xehwfAtH4Nb2D": {
-			"name": "Synth Riders"
+			"name": "シンセライダーズ"
 		},
 		"rqCACS8o3wrw6Hzu3jJSBU": {
 			"name": "DiRT Rally 2.0"
@@ -235,13 +235,13 @@
 			"name": "Kingspray Graffiti"
 		},
 		"38ziUfShQMNJvnB3sRZZuL": {
-			"name": "Creed: Rise to Glory"
+			"name": "クリード: 栄光への道"
 		},
 		"aMnbvaXq5RgSCxKRsqSSk2": {
 			"name": "FaceTime"
 		},
 		"mqoriULTqL2XcsbVjSrA8k": {
-			"name": "Tetris Effect: Connected"
+			"name": "テトリス エフェクト・コネクテッド"
 		},
 		"7WmVKjbTLEyNAMuGjr5Cj6": {
 			"name": "VAIL"
@@ -268,19 +268,19 @@
 			"name": "Hyper Dash"
 		},
 		"CirbzoyPbRnDS3vjmBf2Pe": {
-			"name": "Legendary Tales"
+			"name": "レジェンダリーテイルズ"
 		},
 		"FzP5g29sSgzrieSCrrXJed": {
 			"name": "STRIDE"
 		},
 		"7v4uz6en93khFT7xFXwc4e": {
-			"name": "Epic Roller Coasters"
+			"name": "エピック ローラーコースター"
 		},
 		"xLssrjTmx5jC3rBwVgpeya": {
 			"name": "Breachers"
 		},
 		"TfaA23SUr8UbigpDBS4iVk": {
-			"name": "Death Horizon: Reloaded"
+			"name": "デスホライズン: リーロード"
 		},
 		"gT8utkQESbYePEJ6yYVAxg": {
 			"name": "Zero Caliber: Reloaded"
@@ -289,7 +289,7 @@
 			"name": "Warplanes: WW1 Fighters"
 		},
 		"B6NFLuwPrxgHFX6TQAB9B6": {
-			"name": "Ironlights"
+			"name": "アイアンライツ"
 		},
 		"NDmNAPeGknzWeSMghLwCHW": {
 			"name": "Sports Scramble"
@@ -334,7 +334,7 @@
 			"name": "Lavender"
 		},
 		"pabRUaoeHixCrf7b3hARUj": {
-			"name": "Premium Bowling"
+			"name": "プレミアム・ボウリング"
 		},
 		"cbi5XAds9KWHcdQMdew9Eo": {
 			"name": "Broken Edge"
@@ -418,7 +418,7 @@
 			"name": "Path of the Warrior"
 		},
 		"V8i2C9REDa48BWhhZWdaEc": {
-			"name": "Cluster"
+			"name": "cluster"
 		},
 		"QEfHerxPBkaLJzBeBZ6od8": {
 			"name": "Racket Fury"
@@ -541,13 +541,13 @@
 			"name": "From Other Suns"
 		},
 		"8LA6Hcw65AShAruPjkGgkF": {
-			"name": "Demeo Battles"
+			"name": "デメオバトル"
 		},
 		"cQUv4XrTKKAcrak34Tvjpc": {
 			"name": "Contractors Showdown"
 		},
 		"hZAgCtLnnR7gjuMDnt2Prh": {
-			"name": "No More Rainbows"
+			"name": "ノー・モア・レインボーズ"
 		},
 		"dprz2Fy5RkZ9xMtv3u7hp5": {
 			"name": "Dragon Fist: VR Kung Fu"
@@ -562,7 +562,7 @@
 			"name": "Game Room"
 		},
 		"mEbg8pTyZ82LZEkJboFJQF": {
-			"name": "Darksword: Battle Eternity"
+			"name": "ダークソード"
 		},
 		"TsoZ2PUcsbVJskcTr9qUjB": {
 			"name": "Puppet Fever"
@@ -595,7 +595,7 @@
 			"name": "Rock Life: The Rock Simulator"
 		},
 		"3vK9d6PQe6Cq7QYWp9b88C": {
-			"name": "Gambit!"
+			"name": "ギャンビット！"
 		},
 		"MpjcJ4U2VEriowWX3v2m2D": {
 			"name": "World of Mechs"
@@ -625,7 +625,7 @@
 			"name": "Barbaria"
 		},
 		"oysKPjuBR4cKeksTJBh5cm": {
-			"name": "PowerWash Simulator VR"
+			"name": "パワーウォッシュシミュレーターVR"
 		},
 		"b6zBfj9k9dAg4XzHRk8r9E": {
 			"name": "Racket: Nx"
@@ -700,7 +700,7 @@
 			"name": "Monkey Doo"
 		},
 		"dCoCvVtwYXyjdR5oxswotL": {
-			"name": "Puzzling Places"
+			"name": "パズリングプレイス"
 		},
 		"NkgQyWU9EznfYKjD7oNkyL": {
 			"name": "TOSS!"
@@ -745,7 +745,7 @@
 			"name": "Drop Dead: The Cabin"
 		},
 		"n4kmKNpxtZa4wZu5CFQ52i": {
-			"name": "SWORDS of GARGANTUA"
+			"name": "ソード・オブ・ガルガンチュア"
 		},
 		"QCi5obHsHQJaLYtdKbDhiP": {
 			"name": "Tennis Esports"
@@ -799,7 +799,7 @@
 			"name": "Overte"
 		},
 		"XDtbVnYqYaUq9DuMdxj5da": {
-			"name": "Mahjong Space"
+			"name": "麻雀スペース"
 		},
 		"xxFBZfrRzWEUSTTXod3iig": {
 			"name": "Stabby"
@@ -826,7 +826,7 @@
 			"name": "Espire 2: Stealth Operatives"
 		},
 		"AWr2CAxhJsY4GoNJZDZarC": {
-			"name": "CleanSheet Soccer"
+			"name": "CleanSheetサッカー"
 		},
 		"3nhLdefwZxD4k5Y6WgWqHf": {
 			"name": "NHL Sense Arena"
@@ -850,7 +850,7 @@
 			"name": "Rampage Agents"
 		},
 		"d8vLzn2pPdm7gwPMQqCkwh": {
-			"name": "Spectral Scream"
+			"name": "スペクトラルスクリーム"
 		},
 		"YLu6CmQXBuVFpmnReyz44g": {
 			"name": "Table Space"
@@ -871,7 +871,7 @@
 			"name": "Clawball"
 		},
 		"cvZu8pfF247zdkenEfXNQn": {
-			"name": "Crowbar Climber"
+			"name": "クローバークライマー"
 		},
 		"m4BH3mk5m6SLYQ8jPy8oMJ": {
 			"name": "Dance Eden"
@@ -895,7 +895,7 @@
 			"name": "Into Black"
 		},
 		"sjhhNq7icXbzin6LWhfDcQ": {
-			"name": "Just Dance VR"
+			"name": "ジャストダンスVR"
 		},
 		"PGtp8UjMRJdKDa3iRYMsX7": {
 			"name": "Mannequin"
@@ -913,7 +913,7 @@
 			"name": "SkyStrikers"
 		},
 		"gnNSNrNaVyLu9VNDkgNeqe": {
-			"name": "Spatial Ops"
+			"name": "スペーシャルオプス"
 		},
 		"xaiLnGEnWeT7WYFeoeJCAM": {
 			"name": "Starship Troopers: Continuum"
@@ -994,7 +994,7 @@
 			"name": "Silent North"
 		},
 		"UZ3RG3FEzmnAsBcnAwKnua": {
-			"name": "Chained Escape"
+			"name": "チェインドエスケープ"
 		},
 		"4ytmLJDHdr8SjShCUAgwTf": {
 			"name": "Devil's Roulette"
@@ -1012,10 +1012,10 @@
 			"name": "Rival Stars Horse Racing"
 		},
 		"WBQuYRsPpGNX3b3GPwb5aX": {
-			"name": "Sid Meier's Civilization VII - VR"
+			"name": "シドマイヤーズ シヴィライゼーション VII - VR"
 		},
 		"3FGiekjjiqHUdyQD2e6Pxa": {
-			"name": "Attack on Titan VR: Unbreakable"
+			"name": "進撃の巨人VR: Unbreakable"
 		},
 		"3ttAqMMQ6fJ7p5x9RdGJvJ": {
 			"name": "Battle Talent"
@@ -1114,7 +1114,7 @@
 			"name": "Deadly Delivery"
 		},
 		"6GVSUyEZHjx4pB86SozBXe": {
-			"name": "Demeo x Dungeons & Dragons: Battlemarked"
+			"name": "デメオ×ダンジョンズ & ドラゴンズ：バトルマークド"
 		},
 		"KmFuVctFYXysnMPp6hMzn8": {
 			"name": "Dread Meridian"
@@ -1158,13 +1158,13 @@
 	},
 	"gender": {
 		"mosDhQUt8JGumiup4yQWbZ": {
-			"name": "彼女 / She/Her"
+			"name": "She/Her"
 		},
 		"hv43aTXJZjMHfXRXvTcYiH": {
-			"name": "彼 / He/Him"
+			"name": "He/Him"
 		},
 		"pAzAxxF4UYr3qN6F4tPYec": {
-			"name": "彼ら / They/Them"
+			"name": "They/Them"
 		},
 		"tpkW7r8PZ2RUuYGUSYi82N": {
 			"name": "女性",
@@ -1175,93 +1175,93 @@
 			"plural": "男性"
 		},
 		"879KtanHc548synGhcNE7J": {
-			"name": "アジェンダ",
-			"definition": "いかなる性別にも当てはまらない、または性別自体を持たない人。",
+			"name": "アジェンダー",
+			"definition": "どの性別にも当てはまらない、または性別を持たないと感じる人。",
 			"definitionLink": "https://nonbinary.wiki/wiki/Agender"
 		},
 		"RdMpwqWGydDgk9X2u32BBW": {
 			"name": "アンドロジナス",
-			"definition": "男性的要素と女性的要素を併せ持つ人。",
+			"definition": "男性的な面と女性的な面をあわせ持つ人。",
 			"definitionLink": "https://nonbinary.wiki/wiki/Androgyny"
 		},
 		"YBkoUyfKJd6jJGwbekY3HN": {
 			"name": "バイジェンダー",
-			"definition": "2つの性別アイデンティティを持つ人。",
+			"definition": "2つの性自認を持つ人。",
 			"definitionLink": "https://nonbinary.wiki/wiki/Bigender"
 		},
 		"2ETbJJJ3shADLphvncUwSL": {
 			"name": "シス女性",
-			"definition": "出生時に割り当てられた性別が女性であり、自身の性自認も女性である人。",
+			"definition": "性自認が出生時に割り当てられた性別と一致する女性。",
 			"definitionLink": "https://nonbinary.wiki/wiki/Cisgender_women"
 		},
 		"GJitRtRoYWT6DfVasptK7N": {
 			"name": "シス男性",
-			"definition": "出生時に割り当てられた性別が男性であり、自身の性自認も男性である人。",
+			"definition": "性自認が出生時に割り当てられた性別と一致する男性。",
 			"definitionLink": "https://nonbinary.wiki/wiki/Cisgender_men"
 		},
 		"aKEzfuPY6TaMkmnugQWLUd": {
 			"name": "ジェンダーフルイド",
-			"definition": "時間の経過とともに性自認が変化する人。",
+			"definition": "性自認が時とともに揺れ動く人。",
 			"definitionLink": "https://nonbinary.wiki/wiki/Genderfluid"
 		},
 		"zMta3qtGyqW4hFdcDFUHik": {
 			"name": "ジェンダークィア",
-			"definition": "伝統的な男女の二元性に当てはまらない人。",
+			"definition": "従来の「男か女か」という枠に収まらない性自認を持つ人。",
 			"definitionLink": "https://nonbinary.wiki/wiki/Genderqueer"
 		},
 		"fAPzVgy7VyGPgAPhkwSkSU": {
 			"name": "ジェンダーノンコンフォーミング",
-			"definition": "社会的に期待される性別の役割や規範に従わない人。",
+			"definition": "社会が求める性別の役割や規範にとらわれない人。",
 			"definitionLink": "https://nonbinary.wiki/wiki/Gender_nonconformity"
 		},
 		"wJdnfUvuvACEWRSV4KBdzS": {
 			"name": "ヒジュラ",
-			"definition": "南アジアの文化における第3の性。",
+			"definition": "南アジアの文化における第三の性。",
 			"definitionLink": "https://nonbinary.wiki/wiki/Hijra"
 		},
 		"w3t9h2SyNhr2rBWouXim8c": {
 			"name": "インターセックス",
-			"definition": "典型的な男性または女性の身体的特徴に当てはまらない性特性を持って生まれた人。",
+			"definition": "典型的な男性・女性の定義に当てはまらない身体的性の特徴を持って生まれた人。",
 			"definitionLink": "https://nonbinary.wiki/wiki/Intersex"
 		},
 		"QwXvxjisosKeTP97ouczoZ": {
 			"name": "ノンバイナリー",
-			"definition": "性自認が男女の二元に当てはまらない人。",
+			"definition": "男女二元論の枠に収まらない性自認を持つ人。",
 			"definitionLink": "https://nonbinary.wiki/wiki/Nonbinary"
 		},
 		"PFEmTKdmxAoPuxttYPwFZb": {
 			"name": "パンジェンダー",
-			"definition": "複数、またはあらゆる性別を自認する人。",
+			"definition": "複数、またはすべての性別を自認する人。",
 			"definitionLink": "https://nonbinary.wiki/wiki/Pangender"
 		},
 		"tyrdBY4Rbfitznr65hpRPR": {
 			"name": "トランスジェンダー",
-			"definition": "出生時に割り当てられた性別と自身の性自認が異なる人。",
+			"definition": "性自認が出生時に割り当てられた性別と異なる人。",
 			"definitionLink": "https://nonbinary.wiki/wiki/Transgender"
 		},
 		"HWte4cB6TUzzXZoJeuxJuf": {
 			"name": "トランス女性",
-			"definition": "出生時に割り当てられた性別が男性であり、女性として自認する人。",
+			"definition": "出生時に男性を割り当てられた女性。",
 			"definitionLink": "https://nonbinary.wiki/wiki/Transgender_women"
 		},
 		"XTVsHQMWXiJGEc5xCf7RUb": {
 			"name": "トランス男性",
-			"definition": "出生時に割り当てられた性別が女性であり、男性として自認する人。",
+			"definition": "出生時に女性を割り当てられた男性。",
 			"definitionLink": "https://nonbinary.wiki/wiki/Transgender_men"
 		},
 		"rGFyY9WbvBBJSUAUpY5iUE": {
 			"name": "トランスフェミニン",
-			"definition": "出生時の性別が男性であり、女性的な性自認を持つ人。",
+			"definition": "出生時に男性を割り当てられ、女性寄りの性自認を持つ人。",
 			"definitionLink": "https://nonbinary.wiki/wiki/Transfeminine"
 		},
 		"CHkgoEoKzTSeVaLVByviBZ": {
 			"name": "トランスマスキュリン",
-			"definition": "出生時の性別が女性であり、男性的な性自認を持つ人。",
+			"definition": "出生時に女性を割り当てられ、男性寄りの性自認を持つ人。",
 			"definitionLink": "https://nonbinary.wiki/wiki/Transmasculine"
 		},
 		"JL8AaDCJMVApbEuAfwG86Y": {
-			"name": "ツースピリット",
-			"definition": "北米先住民族の文化における第3の性。",
+			"name": "トゥースピリット",
+			"definition": "北米先住民の文化における第三の性。",
 			"definitionLink": "https://nonbinary.wiki/wiki/Two-spirit"
 		},
 		"jAL62ePbibxaG4FPu7S8LG": {
@@ -1312,10 +1312,10 @@
 			"name": "ARC Raiders"
 		},
 		"qmthjNQK6U6zxeUHWQWFEY": {
-			"name": "みずがめ座 ♒️"
+			"name": "水瓶座 ♒️"
 		},
 		"3MJtyHPdUjvYhPsbEci58W": {
-			"name": "おひつじ座 ♈️"
+			"name": "牡羊座 ♈️"
 		},
 		"ZNXNaLMr85qQbKmX2TsrGQ": {
 			"name": "アート 🎨"
@@ -1324,10 +1324,10 @@
 			"name": "Avakin Life"
 		},
 		"GfBVjXqiaoeRyr8XHzehGo": {
-			"name": "Baldur's Gate 3"
+			"name": "バルダーズ・ゲート3"
 		},
 		"TU3ZGBcDFWFbSmwMjjnEn9": {
-			"name": "Battlefield"
+			"name": "バトルフィールド"
 		},
 		"yfQMpqdsbfNqCKjzrJT4wR": {
 			"name": "アバタークリエイター 🛠️"
@@ -1357,16 +1357,16 @@
 			"name": "カフェイン中毒 ☕️"
 		},
 		"UXCy3bePW2WMDA6RCv6iZh": {
-			"name": "Call of Duty"
+			"name": "コール オブ デューティ"
 		},
 		"7nnemBz5mR5iHZNjw8E4aB": {
 			"name": "キャンプ 🏕️"
 		},
 		"kYABzgDPzJeaU9TJez4JKc": {
-			"name": "かに座 ♋️"
+			"name": "蟹座 ♋️"
 		},
 		"F96TUKJtBt8UtbHEeDss8M": {
-			"name": "やぎ座 ♑️"
+			"name": "山羊座 ♑️"
 		},
 		"Eu7WzNKBxcQKXhPWgAWAYW": {
 			"name": "車 🚗"
@@ -1378,13 +1378,13 @@
 			"name": "猫 🐈"
 		},
 		"TJeFyc6EQhdBmEoLGqpYDh": {
-			"name": "カオティック・イービル"
+			"name": "混沌にして悪"
 		},
 		"xSLzANhRAqr5h3sXqhoKvT": {
-			"name": "カオティック・グッド"
+			"name": "混沌にして善"
 		},
 		"66TnRrCCPUeUdqjotUgReM": {
-			"name": "カオティック・ニュートラル"
+			"name": "混沌にして中立"
 		},
 		"JTnaqV7ZtSm7ecGmk9JbUN": {
 			"name": "チェス ♟️"
@@ -1474,7 +1474,7 @@
 			"name": "飲み仲間 🍻"
 		},
 		"4THEgH4BLaftoQWAhYaFoM": {
-			"name": "ドライビングシミュレーター 🏎️"
+			"name": "レースシム 🏎️"
 		},
 		"rsdnj8EDHstxBCLX4Z7kEn": {
 			"name": "Dungeons & Dragons 🏰"
@@ -1537,7 +1537,7 @@
 			"name": "格闘ゲーム 🥊"
 		},
 		"xHBPtTXA6S5ptoJ9nH3GB7": {
-			"name": "Final Fantasy XIV"
+			"name": "ファイナルファンタジーXIV"
 		},
 		"BrKGJW7c8TvnQh7zxbJNuQ": {
 			"name": "釣り 🎣"
@@ -1561,7 +1561,7 @@
 			"name": "フォークリフト免許持ち 🦺"
 		},
 		"iH4ixES2RmvvG5F69eQjQe": {
-			"name": "Fortnite"
+			"name": "フォートナイト"
 		},
 		"MTmW4A9pTEqZem2wZvGN3F": {
 			"name": "Furry 🐾"
@@ -1579,7 +1579,7 @@
 			"name": "ガーデニング 🪴"
 		},
 		"MneeWkir8YLxVNH2BxDtKR": {
-			"name": "ふたご座 ♊️"
+			"name": "双子座 ♊️"
 		},
 		"vFjxVagULNzG4SQgncbcGN": {
 			"name": "原神"
@@ -1594,7 +1594,7 @@
 			"name": "ゴス 🕷️"
 		},
 		"Hnr8pBT5G3XxNmYgabRTVU": {
-			"name": "Grand Theft Auto"
+			"name": "グランド・セフト・オート"
 		},
 		"JGwyrqtUfCC7HVNZ2ot8LV": {
 			"name": "ギター 🎸"
@@ -1609,7 +1609,7 @@
 			"name": "Helldivers 2"
 		},
 		"ydnaNfxjyfW8gYSLnosMYN": {
-			"name": "Honkai: Star Rail"
+			"name": "崩壊：スターレイル"
 		},
 		"BJwi9ji9dCqrX6YwqVLb2X": {
 			"name": "ヘッドパット"
@@ -1690,7 +1690,7 @@
 			"name": "かわいい系 💖"
 		},
 		"Ajo23jt7zDTZjJ85ib7uSS": {
-			"name": "Kingdom Hearts"
+			"name": "キングダム ハーツ"
 		},
 		"guNDL9je3iot5XcYqaj9uS": {
 			"name": "LGBTQ+ 🏳️‍🌈"
@@ -1702,22 +1702,22 @@
 			"name": "ラテン 💃"
 		},
 		"JAVpr44XUBC5wkmxtKX4rW": {
-			"name": "ローフル・イービル"
+			"name": "秩序にして悪"
 		},
 		"BTmeninByD4KaKKkQTiYga": {
-			"name": "ローフル・グッド"
+			"name": "秩序にして善"
 		},
 		"QqXRreYsKwxs38WyUPPWwi": {
-			"name": "ローフル・ニュートラル"
+			"name": "秩序にして中立"
 		},
 		"ZA7gUc3YbdSdhSbwpnt8rm": {
-			"name": "League of Legends"
+			"name": "リーグ・オブ・レジェンド"
 		},
 		"fcHJKqULdrBvrAmPF4vuV9": {
-			"name": "しし座 ♌️"
+			"name": "獅子座 ♌️"
 		},
 		"rDDDYYEjrdUWFjgaE4NSDM": {
-			"name": "てんびん座 ♎️"
+			"name": "天秤座 ♎️"
 		},
 		"BMkKqLcXLZ7g77u47mHnza": {
 			"name": "ひたすらにのんびり"
@@ -1741,7 +1741,7 @@
 			"name": "Magic: The Gathering"
 		},
 		"Pg5LjgRVQTuZuXdG9aPPaD": {
-			"name": "Marvel Rivals"
+			"name": "マーベル・ライバルズ"
 		},
 		"KsQnqSKQQKjhTvdHhYX86G": {
 			"name": "マンガ 📚"
@@ -1804,10 +1804,10 @@
 			"name": "オタク 🤓"
 		},
 		"NdtkEKfWtyNqKux7gs5juV": {
-			"name": "ニュートラル・イービル"
+			"name": "中立にして悪"
 		},
 		"2oxVb7fbNxvorrXZk7bgv3": {
-			"name": "ニュートラル・グッド"
+			"name": "中立にして善"
 		},
 		"riLJvHysCVv2wbzjz34kbC": {
 			"name": "任天堂"
@@ -1819,7 +1819,7 @@
 			"name": "オタク系（オタク）"
 		},
 		"LNJB83mjPSFgWnjKuLBSEG": {
-			"name": "Overwatch"
+			"name": "オーバーウォッチ"
 		},
 		"AGGf3KdZzJAqaZNGvNPcvM": {
 			"name": "Path of Exile"
@@ -1834,7 +1834,7 @@
 			"name": "パリピ 🎉"
 		},
 		"A55Aw7nfXg2A75uwNJhwrh": {
-			"name": "Persona"
+			"name": "ペルソナ"
 		},
 		"45Dmuuq5V8xdNTsivEEizE": {
 			"name": "PUBG: Battlegrounds"
@@ -1855,7 +1855,7 @@
 			"name": "ピアノ 🎹"
 		},
 		"qUavCrMx6HrR2v5wf7stFN": {
-			"name": "うお座 ♓️"
+			"name": "魚座 ♓️"
 		},
 		"BBQbPpGQv5QA6tbm6qV8Vg": {
 			"name": "ポケモン"
@@ -1891,7 +1891,7 @@
 			"name": "R&B 🎤"
 		},
 		"wp6pryLafKY7wrW3zjYaqE": {
-			"name": "Rainbow Six Siege"
+			"name": "レインボーシックス シージ"
 		},
 		"8t9ZxQYhZtPZSJM99pHqtB": {
 			"name": "RPG 🧙"
@@ -1906,13 +1906,13 @@
 			"name": "レトロゲーム 👾"
 		},
 		"M9FwNtCEQT3xUNV4EsnQ3d": {
-			"name": "リズムゲーム 🎼"
+			"name": "音ゲー 🎼"
 		},
 		"pET4ZuyMW3ACUXzaYaxd3S": {
 			"name": "ロック 🥁"
 		},
 		"LpaAvRMRqT3yWQskovUta4": {
-			"name": "Rocket League"
+			"name": "ロケットリーグ"
 		},
 		"kK3comfAcSAtJtQunqV6QZ": {
 			"name": "Rust"
@@ -1924,7 +1924,7 @@
 			"name": "ランニング 🏃"
 		},
 		"jEf5ZYAU7SMbteXJbQydZJ": {
-			"name": "いて座 ♐️"
+			"name": "射手座 ♐️"
 		},
 		"JS498WmSAassZnJU3dyvzj": {
 			"name": "SF 👽"
@@ -1933,7 +1933,7 @@
 			"name": "科学 🔬"
 		},
 		"o4MbotEvh3dhz2Symgvtbj": {
-			"name": "さそり座 ♏️"
+			"name": "蠍座 ♏️"
 		},
 		"uiEz3zZDfe7UaJgoodssZE": {
 			"name": "Second Life"
@@ -1978,7 +1978,7 @@
 			"name": "社交的 🦋"
 		},
 		"8ioURqcYyxmHCkcyKFiub2": {
-			"name": "ソーシャルゲーム 💬"
+			"name": "パーティーゲーム 💬"
 		},
 		"AyaSxEYUdjX4maBsTuhxS5": {
 			"name": "人見知り"
@@ -2011,7 +2011,7 @@
 			"name": "学生 🎓"
 		},
 		"VuojdaCuJQEAsPaxq26jmK": {
-			"name": "サバイバルゲーム 🏕️"
+			"name": "サバイバル系ゲーム 🏕️"
 		},
 		"j6ZmBCoKutQZ2ABFjJvZoK": {
 			"name": "甘いもの 🍰"
@@ -2026,16 +2026,16 @@
 			"name": "タトゥー"
 		},
 		"vJsJJUXQXc4c9jaaTyzmBZ": {
-			"name": "おうし座 ♉️"
+			"name": "牡牛座 ♉️"
 		},
 		"3b7sZwdYj6tNAziQQuCKEE": {
 			"name": "Team Fortress 2"
 		},
 		"PKDvhwaZutvjysHXqsiURL": {
-			"name": "Terraria"
+			"name": "テラリア"
 		},
 		"oYpeL2jBcwYoQfjs8gAHCN": {
-			"name": "The Sims"
+			"name": "ザ・シムズ"
 		},
 		"7mfqhCUsniXPWXa6EK7Qqh": {
 			"name": "テクノロジー 💾"
@@ -2050,7 +2050,7 @@
 			"name": "タイムトラベラー ⏳"
 		},
 		"dQdjQyL9M8kCxrL9Si2zqM": {
-			"name": "東方"
+			"name": "東方Project"
 		},
 		"fe2ysuwBXcZfCbbGNhbe3L": {
 			"name": "旅行 🧳"
@@ -2059,7 +2059,7 @@
 			"name": "トゥルークライム 🕵️"
 		},
 		"YjvHypMDZzANaTkadS9apP": {
-			"name": "トゥルーニュートラル"
+			"name": "真なる中立"
 		},
 		"pHU7w3PAb7fhcTDqFQWMKX": {
 			"name": "ツンデレ 💢"
@@ -2089,13 +2089,13 @@
 			"name": "ビデオ撮影 🎥"
 		},
 		"zp25zogqt2XWNG9v2wi4ET": {
-			"name": "おとめ座 ♍️"
+			"name": "乙女座 ♍️"
 		},
 		"Qm4yoeSbfnL9AoDZHwotWX": {
 			"name": "バーチャル放浪者"
 		},
 		"rj3SPLcAwa6bkKSuBxsfsD": {
-			"name": "ビジュアルノベル 📖"
+			"name": "ノベルゲーム 📖"
 		},
 		"V6dXwTJecCTbaUy4nbZip4": {
 			"name": "ボーカロイド"
@@ -2125,7 +2125,7 @@
 			"name": "World of Warcraft"
 		},
 		"FXz9VcUhgQp6eexp25zkBX": {
-			"name": "Wuthering Waves"
+			"name": "鳴潮"
 		},
 		"WTw73CaXZ4AWmbiQpooJiQ": {
 			"name": "執筆 ✍️"
@@ -2175,13 +2175,13 @@
 			"name": "愛の言語"
 		},
 		"nFiqbX3n6aiEdKe3JbynBL": {
-			"name": "占星術"
+			"name": "星座"
 		},
 		"43i5J3VsKCvU4HGRJHjehn": {
-			"name": "パーソナリティタイプ"
+			"name": "性格タイプ"
 		},
 		"hR3X5w26ba6M98fVB2kVxX": {
-			"name": "アライメント"
+			"name": "属性"
 		},
 		"tmQbiXNw7d9Ys2DG9Ddg28": {
 			"name": "ゲームジャンル"
