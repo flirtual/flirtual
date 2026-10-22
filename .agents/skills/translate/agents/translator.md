@@ -40,9 +40,9 @@ Write one JSON file to the output path:
 
 ```json
 {
-  "translations": { "flirtual:key": "…" },
-  "rationale": { "flirtual:key": "One line, only where you made a non-obvious choice." },
-  "notes": { "flirtual:key": "Only for something the maintainer must decide or fix." }
+	"translations": { "flirtual:key": "…" },
+	"rationale": { "flirtual:key": "One line, only where you made a non-obvious choice." },
+	"notes": { "flirtual:key": "Only for something the maintainer must decide or fix." }
 }
 ```
 

@@ -17,7 +17,7 @@ You get a batch file (JSON array) under `apps/frontend/i18n/.staging/context/bat
   (`apps/frontend/messages/attributes.en.json`, profile attribute names by type), `notifications`
   (`apps/api/priv/gettext/en/LC_MESSAGES/notifications.po`, emails and push notifications,
   `%{name}` placeholders).
-- `en`: the English. Gettext plural entries are joined with ` | ` (singular | plural).
+- `en`: the English. Gettext plural entries are joined with " | " (singular | plural).
 - `usage`: code references (file, line, the line's code; `pattern` means it matched a template
   like ``t(`errors.${code}`)``). For attributes, read `attribute-types.json` next to the batch.
 - `watch`: the watchOS app renders it too (plain text, `{name}` placeholders only).
@@ -42,19 +42,19 @@ Write one JSON object to the output path you're given, keyed by `id`:
 
 ```json
 {
-  "flirtual:that_active_seal_nail": {
-    "group": "email/footer",
-    "screens": ["email: all account emails"],
-    "element": "body",
-    "description": "Sign-off at the end of emails from the company, like \"Best, The Flirtual Team\".",
-    "placeholders": { "name": { "meaning": "Other user's display name", "example": "Alex" } },
-    "tags": { "link": "Link to the Privacy Policy page; wraps the link text" },
-    "tone": "Warm, informal",
-    "maxLength": 20,
-    "lengthNote": "Fits a narrow mobile button",
-    "needsScreenshot": true,
-    "needsHuman": "Is this the brand team name or a literal team? Options: …"
-  }
+	"flirtual:that_active_seal_nail": {
+		"group": "email/footer",
+		"screens": ["email: all account emails"],
+		"element": "body",
+		"description": "Sign-off at the end of emails from the company, like \"Best, The Flirtual Team\".",
+		"placeholders": { "name": { "meaning": "Other user's display name", "example": "Alex" } },
+		"tags": { "link": "Link to the Privacy Policy page; wraps the link text" },
+		"tone": "Warm, informal",
+		"maxLength": 20,
+		"lengthNote": "Fits a narrow mobile button",
+		"needsScreenshot": true,
+		"needsHuman": "Is this the brand team name or a literal team? Options: …"
+	}
 }
 ```
 
