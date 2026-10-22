@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-10-16 18:18+0200\n"
-"PO-Revision-Date: 2026-10-22 04:55+0000\n"
+"PO-Revision-Date: 2026-10-22 06:51+0000\n"
 "Last-Translator: Claude <bot-flirtual-claude@bots.noreply.weblate.org>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/flirtual/"
 "notifications/sv/>\n"
@@ -199,7 +199,7 @@ msgstr "Ditt lösenord har ändrats"
 #: lib/flirtual/user/email.ex:199
 #, elixir-autogen, elixir-format, fuzzy
 msgid "message"
-msgstr "Skicka meddelande"
+msgstr "Meddelande"
 
 #: lib/flirtual/user/email.ex:173
 #, elixir-autogen, elixir-format, fuzzy
@@ -221,14 +221,16 @@ msgid "send_them_a_message"
 msgstr "Skicka ett meddelande"
 
 #: lib/flirtual/user/push.ex:14
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "daily_profiles_ready"
-msgstr ""
+msgstr "Dagens profiler är redo!"
 
 #: lib/flirtual/user/push.ex:16
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "daily_profiles_ready_message"
 msgstr ""
+"Vår matchningsmagi har tagit fram en ny omgång profiler, bara för dig. Tryck "
+"och kolla in dem!"
 
 #: lib/flirtual/user/email.ex:171
 #: lib/flirtual/user/email.ex:180
