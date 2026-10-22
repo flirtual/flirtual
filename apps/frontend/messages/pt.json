@@ -53,5 +53,89 @@
 	"premium": "Premium",
 	"homie": "Amizade",
 	"like": "Gosto",
-	"nsfw": "NSFW"
+	"nsfw": "NSFW",
+	"about_us": "Sobre nós",
+	"hard_cause_trick_puzzling": "<section><h1>A nossa história</h1><p>Olá, somos o Kyle e o Tony, os criadores do Flirtual. O Kyle é obcecado por VR desde os primeiros tempos da Oculus, mas a vida dele mudou mesmo quando entrou no VRChat e lá conheceu alguns dos seus amigos mais próximos (incluindo a mulher dele!). Pouco antes de a COVID chegar, o Kyle trouxe o Tony, o seu melhor amigo de infância, para esta aventura, e a VR também lhe mudou a vida. Decidimos ajudar outras pessoas a conhecer gente incrível em todo o mundo, a começar pelo VRLFP (Virtual Reality Looking For Partner).</p><p>A presença imersiva em VR ajuda a criar ligações profundas com pessoas de qualquer parte do mundo. Ao encurtar distâncias e pôr a personalidade em primeiro lugar, a nossa missão é encontrar as melhores pessoas para ti, estejam onde estiverem. E tornar os encontros mais seguros e mais mágicos!</p><p>Em 2022, o VRLFP passou a ser o Flirtual. Reconstruímos tudo de raiz, melhorámos o sistema de matches, acrescentámos etiquetas de personalidade e de interesses e lançámos apps melhores. Quer procures uma relação séria que passe para a vida real, algo mais descontraído em VR ou só novas amizades, estamos prontos para te ajudar a encontrar o teu match perfeito.</p><group><logo/><p>❤ kfarwell, Tony e a equipa do Flirtual</p><discord>Junta-te ao nosso Discord</discord></group><p><italic>P.S. Já percorremos um longo caminho desde os humildes começos do VRLFP, mas continuamos a ser uma pequena equipa com raízes na comunidade VR. <br/><br/>Obrigado pela paciência enquanto trabalhamos para tornar o Flirtual o mais incrível possível. Diz-nos se <contact>encontrares algum erro</contact> ou se <ideas>tiveres sugestões</ideas>!</italic></p></section><section><h1>A equipa</h1><team-list/></section><section><h1>Cronologia</h1><timeline/></section>",
+	"voice_spiritual_polite_entertaining": "Fotografia da equipa do Flirtual no VRChat",
+	"price_listen_wise_communicate": {
+		"0": {
+			"image_alt": "Festa de lançamento do Flirtual com 12 horas de duração no Dia dos Namorados de 2022, com Vanguard"
+		},
+		"1": {
+			"image_alt": "Flirtual Speed Dating no VRChat"
+		},
+		"2": {
+			"image_alt": "Noite de DJ do Flirtual no VRChat"
+		},
+		"3": {
+			"image_alt": "Flirtual na VRCon 2022"
+		},
+		"4": {
+			"image_alt": "Flirtual no Today Show"
+		},
+		"5": {
+			"image_alt": "Flirtual na Vket 2023 Summer"
+		}
+	},
+	"copy_frighten_wobble_futuristic": {
+		"kfarwell": "Líder técnico",
+		"existony": "Parcerias e segurança",
+		"aries": "Desenvolvimento de software",
+		"moderator": "Moderação",
+		"event_host": "Eventos",
+		"social": "Redes sociais",
+		"advisor": "Consultoria",
+		"faxmashine": "Criação de mundos no VRChat",
+		"juice": "Criação de avatares no VRChat"
+	},
+	"outgoing_teeny_tiny_pass_male": {
+		"2018": {
+			"description": "Nasce a primeira app de encontros em VR.",
+			"title": "2018 🐣",
+			"image_alt": "Flirtual em 2018"
+		},
+		"2019": {
+			"title": "🏆 2019",
+			"description": "O VRLFP é eleito a melhor nova tecnologia nos iDate Awards.",
+			"image_alt": "Flirtual em 2019"
+		},
+		"2020": {
+			"title": "2020 🧪",
+			"description": "Umas ideias malucas que acabaram por dar origem ao Flirtual que hoje conheces e adoras. Obrigado pela carta branca.",
+			"image_alt": "Flirtual em 2020"
+		},
+		"2021": {
+			"title": "✌️ 2021",
+			"description": "É lançado o ROVR, uma app social para encontrar amigos e grupos em VR. O seu espírito continua vivo no Modo Amigos.",
+			"image_alt": "Flirtual em 2021"
+		},
+		"2022": {
+			"title": "2022 😻",
+			"description": "O VRLFP passa a chamar-se Flirtual. Talvez agora as pessoas se lembrem de como se escreve o nosso nome.",
+			"image_alt": "Flirtual em 2022"
+		},
+		"2023": {
+			"title": "📱 2023",
+			"image_alt": "Flirtual em 2023",
+			"description": "Reconstruído de raiz, com um design novo, melhor desempenho e, finalmente, apps para telemóvel!"
+		},
+		"2024": {
+			"description": "Mais formas de mostrares quem és, com perguntas no perfil, playlists de música, mais de 200 novos interesses, emojis no chat e muito mais.",
+			"title": "2024 💅",
+			"image_alt": "Flirtual em 2024"
+		},
+		"2025": {
+			"title": "⚡️ 2025",
+			"description": "Muito trabalho nos bastidores para tornar o Flirtual mais rápido, mais estável e mais seguro do que nunca.",
+			"image_alt": "Flirtual em 2025"
+		}
+	},
+	"underage_title": "A sua conta foi suspensa",
+	"underage_description": "É necessário ter pelo menos 18 anos para usar o Flirtual. Consulte o seu e-mail para mais informações.",
+	"age_blocked_title": "Acesso bloqueado por ser menor de idade",
+	"age_blocked_description": "É necessário ter pelo menos 18 anos para usar o Flirtual.",
+	"age_unresolved_title": "Verifica a tua idade para continuar",
+	"age_unresolved_google": "É necessário ter pelo menos 18 anos para usar o Flirtual. Verifica a tua idade no Google Play e tenta novamente.",
+	"age_unresolved_apple": "É necessário ter pelo menos 18 anos para usar o Flirtual. Para continuar, partilha a tua faixa etária em Definições > [o teu nome] > Informação pessoal > Faixa etária para aplicações e tenta novamente.",
+	"open_google_play": "Abrir Google Play"
 }
