@@ -11,7 +11,7 @@ install-tool node 24.22.1
 # renovate: datasource=npm depName=pnpm
 install-tool pnpm 12.6.0
 # renovate: datasource=github-releases depName=containerbase/ruby-prebuild
-install-tool ruby 3.3.12
+install-tool ruby 4.0.9
 # renovate: datasource=rubygems depName=cocoapods
 install-tool cocoapods 1.16.2
 
