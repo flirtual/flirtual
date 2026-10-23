@@ -357,7 +357,7 @@ importers:
         version: 5.3.0
       '@formatjs/intl-datetimeformat':
         specifier: ^7.5.0
-        version: 7.8.1
+        version: 7.8.2
       '@formatjs/intl-displaynames':
         specifier: ^7.3.12
         version: 7.3.15
@@ -2173,8 +2173,8 @@ packages:
   '@formatjs/icu-skeleton-parser@2.1.12':
     resolution: {integrity: sha512-ca7tZMLpfHX3sUD7hP6gE/qr6Iq89EDd3ZLeRhbsB7r0UD55DGJq+tmFLzrGrnx5StahUevQmQQVtbDRHsfDHA==}
 
-  '@formatjs/intl-datetimeformat@7.8.1':
-    resolution: {integrity: sha512-tGVZ3KdbHQwmA8wBn7gEJeOE9zo0InoyrbJWsD4VYdHGJfXykflOpdNC69+QaZShxfEQ6dwUfXjDfNzxe4AO4A==}
+  '@formatjs/intl-datetimeformat@7.8.2':
+    resolution: {integrity: sha512-5iCy2mXr6cpEd4N87HLVbN2zRz71dRLMmI8hMY9IgAVaob5fsVocEah6T4w3pPUVYz/aDO2TFGXErPY3JAEUsQ==}
 
   '@formatjs/intl-displaynames@7.3.15':
     resolution: {integrity: sha512-U26iRwxxnD4aZY+aDiSEV5Ym/7Db5S9OxKQ4c3T+WFFIj+DPKEQLh+tC++dMH1SuEa8CSWvPJkpaADa+WHn3qA==}
@@ -10727,7 +10727,7 @@ snapshots:
 
   '@formatjs/icu-skeleton-parser@2.1.12': {}
 
-  '@formatjs/intl-datetimeformat@7.8.1':
+  '@formatjs/intl-datetimeformat@7.8.2':
     dependencies:
       '@formatjs/bigdecimal': 0.2.7
       '@formatjs/intl-localematcher': 0.9.0
