@@ -57,7 +57,7 @@ export default function AboutPage() {
 			<Image
 				priority
 				alt={t("voice_spiritual_polite_entertaining")}
-				className="max-w-none full-bleed-x"
+				className="max-w-none full-bleed-x desktop:max-w-full"
 				height={618}
 				src={TeamPicture}
 				width={1888}
