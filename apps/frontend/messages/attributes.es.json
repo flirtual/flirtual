@@ -2598,6 +2598,9 @@
 		},
 		"jsl": {
 			"name": "Lengua de señas japonesa"
+		},
+		"hbs": {
+			"name": "Serbocroata"
 		}
 	},
 	"gender": {
