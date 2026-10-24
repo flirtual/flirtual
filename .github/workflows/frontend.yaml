@@ -22,6 +22,7 @@ jobs:
     permissions:
       contents: read
       pull-requests: read
+      actions: read
     outputs:
       frontend: ${{ steps.changes.outputs.changed }}
 

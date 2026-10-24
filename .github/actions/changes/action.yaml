@@ -14,20 +14,31 @@ outputs:
 runs:
   using: composite
   steps:
+    - name: Find last successful run's commit
+      id: base
+      if: github.event_name == 'push'
+      shell: bash
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        sha=$(gh run list --repo "$GITHUB_REPOSITORY" --workflow "$GITHUB_WORKFLOW" --branch "$GITHUB_REF_NAME" \
+          --event push --status success --limit 1 --json headSha --jq '.[0].headSha // empty') || true
+        echo "sha=$sha" >> "$GITHUB_OUTPUT"
+
     - name: Match changed paths
       uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4
       id: filter
       if: github.event_name != 'schedule' && github.event_name != 'workflow_dispatch'
       with:
         filters: ${{ github.action_path }}/filters.yaml
-        base: ${{ github.event_name == 'push' && github.ref || '' }}
+        base: ${{ github.event_name == 'push' && (steps.base.outputs.sha || github.ref) || '' }}
 
     - name: Check Capacitor dependencies
       id: dependencies
       if: (inputs.filter == 'android' || inputs.filter == 'ios') && steps.filter.outputs[inputs.filter] == 'false' && steps.filter.outputs.capacitor == 'true'
       shell: bash
       env:
-        BASE: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha || 'HEAD~1' }}
+        BASE: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha || steps.base.outputs.sha || 'HEAD~1' }}
       run: |
         if git diff -U0 "$BASE" HEAD -- apps/frontend/package.json \
            | grep -qE '^[+-].*"(@capacitor|@capgo|@capawesome|@revenuecat|capacitor-)'; then

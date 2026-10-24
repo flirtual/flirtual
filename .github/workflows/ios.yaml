@@ -40,6 +40,7 @@ jobs:
     permissions:
       contents: read
       pull-requests: read
+      actions: read
     outputs:
       native: ${{ steps.changes.outputs.changed }}
     steps:
