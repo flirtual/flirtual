@@ -157,26 +157,34 @@ async function locales(apply: boolean) {
 
 const contextMarker = "— Context from the code —";
 
+// Weblate renders explanations as Markdown, where a bare tag would be swallowed as HTML.
+function code(text: string) {
+	return text.replaceAll(/(?<!`)<\/?[a-z][\w-]*\s*\/?>(?!`)/gi, "`$&`");
+}
+
 function explanation(entry: ContextEntry) {
-	const lines = [
-		`Where: ${entry.screens.join(", ")} (${entry.element})`,
-		entry.description,
-		...Object.entries(entry.placeholders ?? {}).map(([name, value]) => `{${name}}: ${value.meaning}, e.g. "${value.example}"`),
-		...Object.entries(entry.tags ?? {}).map(([name, value]) => `<${name}>: ${value}`),
-		entry.tone && `Tone: ${entry.tone}`,
-		entry.maxLength && `Keep it within about ${entry.maxLength} characters.`,
-		entry.lengthNote,
-		entry.watch && "Also shown on the Apple Watch: no plural or select formatting.",
-		entry.resolved
+	const notes = [
+		...Object.entries(entry.placeholders ?? {}).map(([name, value]) => `- \`{${name}}\`: ${code(value.meaning)}, e.g. "${code(value.example)}"`),
+		...Object.entries(entry.tags ?? {}).map(([name, value]) => `- \`<${name}>\`: ${code(value)}`)
 	];
-	return lines.filter(Boolean).join("\n");
+	const paragraphs = [
+		`**Where:** ${entry.screens.join(", ")} (${entry.element})`,
+		code(entry.description),
+		notes.join("\n"),
+		entry.tone && `**Tone:** ${entry.tone}`,
+		entry.maxLength && `Keep it within about ${entry.maxLength} characters.`,
+		entry.lengthNote && code(entry.lengthNote),
+		entry.watch && "Also shown on the Apple Watch: no plural or select formatting.",
+		entry.resolved && code(entry.resolved)
+	];
+	return paragraphs.filter(Boolean).join("\n\n");
 }
 
 // A maintainer's own explanation is kept verbatim above the generated part.
 function mergeExplanation(current: string, generated: string) {
 	const index = current.indexOf(contextMarker);
 	const human = (index === -1 ? current : current.slice(0, index)).trim();
-	return human ? `${human}\n\n${contextMarker}\n${generated}` : `${contextMarker}\n${generated}`;
+	return human ? `${human}\n\n${contextMarker}\n\n${generated}` : `${contextMarker}\n\n${generated}`;
 }
 
 function withFlag(flags: string, flag: string) {
@@ -228,7 +236,7 @@ async function context(apply: boolean) {
 
 function glossaryExplanation(entry: GlossaryEntry) {
 	const forbidden = Object.entries(entry.forbidden ?? {}).map(([locale, terms]) => `${locale === "*" ? "all" : locale}: ${terms!.join(", ")}`);
-	return [entry.note, forbidden.length > 0 && `Never use: ${forbidden.join("; ")}`].filter(Boolean).join("\n");
+	return [entry.note && code(entry.note), forbidden.length > 0 && `Never use: ${forbidden.join("; ")}`].filter(Boolean).join("\n\n");
 }
 
 // Terms typed into Weblate's UI can carry non-breaking spaces ("Homie\u00A0Mode").
