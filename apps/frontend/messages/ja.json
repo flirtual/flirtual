@@ -1136,5 +1136,13 @@
 		"reply": "返信",
 		"view_profile": "プロフィールを見る"
 	},
-	"default_": "標準"
+	"default_": "標準",
+	"flirtual_bug_report": "",
+	"snowfall_option_auto": "",
+	"copied": "",
+	"snowfall_option_always": "",
+	"copy_details": "",
+	"web_payment_issue": "",
+	"snowfall_option_never": "",
+	"snowfall": ""
 }
