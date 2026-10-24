@@ -3138,9 +3138,6 @@
 		},
 		"ssp": {
 			"name": "スペイン手話"
-		},
-		"hbs": {
-			"name": ""
 		}
 	},
 	"plans": {
@@ -3158,50 +3155,6 @@
 		},
 		"LVjvu5YE7PjUJxVrkfsnMi": {
 			"name": "プレミアム（月額）"
-		},
-		"Duk5r7zeKUhqXv5L6P3m3Q": {
-			"name": ""
-		}
-	},
-	"warn-reason": {
-		"KNJu36SMz87wA5DrJZyc4L": {
-			"name": "",
-			"details": ""
-		},
-		"RdHQQqrswesTTwyh4QZqbH": {
-			"details": "",
-			"name": ""
-		},
-		"MjxDKasduf9iHTctStGzYA": {
-			"name": "",
-			"details": ""
-		},
-		"f8v44XrBausmXe6XybTVHd": {
-			"details": "",
-			"name": ""
-		},
-		"dC6h3tWeZueVwHGKLhC2sk": {
-			"name": "",
-			"details": ""
-		},
-		"aUurnuPnvjTwU2W3K5Se7X": {
-			"details": "",
-			"name": ""
-		},
-		"CnaCPAcsLptyUgVVugubdf": {
-			"details": "",
-			"name": ""
-		},
-		"V7VcQEiYkiwHr5CHSVx5aS": {
-			"details": "",
-			"name": ""
-		},
-		"pDBkaykWpfYk9w7ZfPzMrb": {
-			"name": ""
-		},
-		"AhPZwBpeTm5HMf96bkVszj": {
-			"name": "",
-			"details": ""
 		}
 	}
 }
