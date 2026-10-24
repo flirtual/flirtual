@@ -187,7 +187,7 @@ function withFlag(flags: string, flag: string) {
 async function context(apply: boolean) {
 	const entries = loadContext();
 	const writes = [];
-	const counts = { explanation: 0, unchanged: 0, readOnly: 0, missing: 0 };
+	const counts = { explanation: 0, unchanged: 0, readOnly: 0, safeHtml: 0, missing: 0 };
 
 	for (const component of componentNames) {
 		// Fresh, so a rerun after a partial failure only writes what's still missing.
@@ -206,6 +206,13 @@ async function context(apply: boolean) {
 				patch.extra_flags = withFlag(source.extraFlags, "read-only");
 				counts.readOnly++;
 			}
+			if (component === "notifications" && key.endsWith("_html")) {
+				const flags = withFlag(patch.extra_flags ?? source.extraFlags, "safe-html");
+				if (flags !== (patch.extra_flags ?? source.extraFlags)) {
+					patch.extra_flags = flags;
+					counts.safeHtml++;
+				}
+			}
 			if (Object.keys(patch).length === 0) {
 				counts.unchanged++;
 				continue;
@@ -214,7 +221,7 @@ async function context(apply: boolean) {
 			writes.push({ label: key, run: () => request("PATCH", `units/${source.unit}/`, patch) });
 		}
 	}
-	console.log(`Source strings: ${counts.explanation} explanations to set, ${counts.readOnly} to mark read-only, ${counts.unchanged} unchanged, ${counts.missing} without context`);
+	console.log(`Source strings: ${counts.explanation} explanations to set, ${counts.readOnly} to mark read-only, ${counts.safeHtml} to flag safe-html, ${counts.unchanged} unchanged, ${counts.missing} without context`);
 	if (apply) await runWrites(writes);
 	else for (const write of writes) console.log(`  ${write.label}`);
 }
