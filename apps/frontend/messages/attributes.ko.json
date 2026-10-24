@@ -2598,6 +2598,9 @@
 		},
 		"ssp": {
 			"name": "스페인어 수화"
+		},
+		"hbs": {
+			"name": ""
 		}
 	},
 	"gender": {
@@ -2923,10 +2926,12 @@
 	},
 	"platform": {
 		"N458aYKyg6hweVbyDEMDAR": {
-			"name": "VIVE Standalone"
+			"name": "VIVE Standalone",
+			"example": ""
 		},
 		"Qb3Ar9wqh7mAMwdevJCfYS": {
-			"name": "Android XR"
+			"name": "Android XR",
+			"example": ""
 		},
 		"c255sGSiJpMNnm6NTUcvx6": {
 			"name": "Apple Vision"
@@ -2944,7 +2949,8 @@
 			"name": "메타 퀘스트"
 		},
 		"3Kagenz7boB64Ke6vEAKv6": {
-			"name": "PCVR"
+			"name": "PCVR",
+			"example": ""
 		},
 		"n6sSShVCXahjazwqEraKCG": {
 			"name": "PlayStation VR"
@@ -3152,6 +3158,50 @@
 		},
 		"LVjvu5YE7PjUJxVrkfsnMi": {
 			"name": "프리미엄(월간)"
+		},
+		"Duk5r7zeKUhqXv5L6P3m3Q": {
+			"name": ""
+		}
+	},
+	"warn-reason": {
+		"KNJu36SMz87wA5DrJZyc4L": {
+			"name": "",
+			"details": ""
+		},
+		"RdHQQqrswesTTwyh4QZqbH": {
+			"details": "",
+			"name": ""
+		},
+		"MjxDKasduf9iHTctStGzYA": {
+			"name": "",
+			"details": ""
+		},
+		"f8v44XrBausmXe6XybTVHd": {
+			"details": "",
+			"name": ""
+		},
+		"dC6h3tWeZueVwHGKLhC2sk": {
+			"name": "",
+			"details": ""
+		},
+		"aUurnuPnvjTwU2W3K5Se7X": {
+			"details": "",
+			"name": ""
+		},
+		"CnaCPAcsLptyUgVVugubdf": {
+			"details": "",
+			"name": ""
+		},
+		"V7VcQEiYkiwHr5CHSVx5aS": {
+			"details": "",
+			"name": ""
+		},
+		"pDBkaykWpfYk9w7ZfPzMrb": {
+			"name": ""
+		},
+		"AhPZwBpeTm5HMf96bkVszj": {
+			"name": "",
+			"details": ""
 		}
 	}
 }
