@@ -507,7 +507,7 @@ importers:
         version: 4.3.1
       exifreader:
         specifier: ^4.41.3
-        version: 4.50.0
+        version: 4.51.0
       fast-fuzzy:
         specifier: ^1.12.0
         version: 1.12.0
@@ -6476,8 +6476,8 @@ packages:
   exifr@7.1.3:
     resolution: {integrity: sha512-g/aje2noHivrRSLbAUtBPWFbxKdKhgj/xr1vATDdUXPOFYJlQ62Ft0oy+72V6XLIpDJfHs6gXLbBLAolqOXYRw==}
 
-  exifreader@4.50.0:
-    resolution: {integrity: sha512-RUtdkMPWJd2BdinNSO0JVw0QkMigxDTsuambp+jMlPM1b5k3xvXa4p9Wat+JhW4iVBOEfpBw66PS6oYHS1yFTg==}
+  exifreader@4.51.0:
+    resolution: {integrity: sha512-fHmQHgHSsAGI7PkGgDKBVqi9UDMk+qzL7fUE5YopjC7yS1FJ1jsW6PRnbDlVj5v5zRZckJUhP4gJSzSD1wM1KQ==}
     hasBin: true
 
   exit-hook@5.1.0:
@@ -15306,7 +15306,7 @@ snapshots:
 
   exifr@7.1.3: {}
 
-  exifreader@4.50.0:
+  exifreader@4.51.0:
     optionalDependencies:
       '@xmldom/xmldom': 0.9.12
 
