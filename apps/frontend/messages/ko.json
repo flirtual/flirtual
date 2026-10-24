@@ -1,1 +1,90 @@
-{}
+{
+	"premium": "프리미엄",
+	"homie": "친구",
+	"like": "좋아요",
+	"nsfw": "19금",
+	"hard_cause_trick_puzzling": "<section><h1>우리의 이야기</h1><p>안녕하세요, Flirtual을 만든 Kyle과 Tony예요. Kyle은 Oculus 초창기부터 VR에 푹 빠져 있었지만, 인생이 정말 달라진 건 VRChat을 시작하고 그곳에서 가장 친한 친구들(그리고 아내까지!)을 만나면서부터였어요. 코로나가 터지기 직전, Kyle은 어릴 적 단짝 친구 Tony를 이 여정에 끌어들였고, Tony의 인생도 VR 덕분에 바뀌었죠. 그래서 저희는 다른 사람들도 전 세계의 멋진 사람들을 만날 수 있도록 돕기로 했고, 그 시작이 VRLFP(Virtual Reality Looking For Partner)였어요.</p><p>VR 특유의 몰입감 덕분에 세계 어디에 있는 사람과도 깊은 관계를 맺을 수 있어요. 저희의 사명은 물리적 거리를 뛰어넘고 성격을 가장 먼저 보면서, 어디에 있든 가장 잘 맞는 사람을 찾아 드리는 거예요. 그리고 데이팅을 더 안전하고 더 마법 같게 만드는 것이기도 하고요!</p><p>2022년, VRLFP는 Flirtual이 되었어요. 처음부터 다시 만들면서 매칭을 개선하고, 성격·관심사 태그를 추가하고, 더 나아진 앱을 출시했어요. 현실로 이어지는 진지한 연애든, VR 안에서의 가벼운 연애든, 아니면 그냥 새로운 친구든, 딱 맞는 상대를 찾도록 도울 준비가 되어 있어요.</p><group><logo/><p>❤ kfarwell, Tony & Flirtual 팀</p><discord>Discord 참여하기</discord></group><p><italic>P.S. 소박하게 시작한 VRLFP 시절에 비하면 먼 길을 왔지만, 저희는 여전히 VR 커뮤니티에 뿌리를 둔 작은 팀이에요. <br/><br/>Flirtual을 최대한 멋지게 만들기 위해 열심히 노력하고 있으니 너그럽게 지켜봐 주시면 감사하겠어요. <contact>버그를 발견하셨거나</contact> <ideas>제안하고 싶은 게 있다면</ideas> 꼭 알려 주세요!</italic></p></section><section><h1>팀 소개</h1><team-list/></section><section><h1>연혁</h1><timeline/></section>",
+	"about_us": "소개",
+	"price_listen_wise_communicate": {
+		"0": {
+			"image_alt": "Vanguard와 함께한 Flirtual의 2022년 밸런타인데이 12시간 론칭 파티"
+		},
+		"2": {
+			"image_alt": "VRChat에서 열린 Flirtual DJ 나이트"
+		},
+		"3": {
+			"image_alt": "VRCon 2022에 참가한 Flirtual"
+		},
+		"1": {
+			"image_alt": "VRChat에서 열린 Flirtual Speed Dating 이벤트"
+		},
+		"4": {
+			"image_alt": "Today Show에 소개된 Flirtual"
+		},
+		"5": {
+			"image_alt": "Vket 2023 Summer에 참가한 Flirtual"
+		}
+	},
+	"voice_spiritual_polite_entertaining": "VRChat에서 찍은 Flirtual 팀 사진",
+	"copy_frighten_wobble_futuristic": {
+		"kfarwell": "리드 개발자",
+		"existony": "파트너십 및 안전",
+		"aries": "소프트웨어 개발자",
+		"moderator": "모더레이터",
+		"event_host": "이벤트 호스트",
+		"social": "소셜 미디어",
+		"advisor": "어드바이저",
+		"faxmashine": "VRChat 월드 제작자",
+		"juice": "VRChat 아바타 제작자"
+	},
+	"outgoing_teeny_tiny_pass_male": {
+		"2018": {
+			"title": "2018 🐣",
+			"description": "최초의 VR 데이팅 앱이 태어났어요.",
+			"image_alt": "2018년의 Flirtual"
+		},
+		"2019": {
+			"title": "🏆 2019",
+			"description": "VRLFP가 iDate Awards에서 최우수 신기술상을 받았어요.",
+			"image_alt": "2019년의 Flirtual"
+		},
+		"2020": {
+			"title": "2020 🧪",
+			"description": "지금 여러분이 사랑하는 Flirtual이 되기까지 거쳐 온 엉뚱한 콘셉트들이에요. 마음껏 저질러 보게 해 주셔서 고마워요.",
+			"image_alt": "2020년의 Flirtual"
+		},
+		"2021": {
+			"title": "✌️ 2021",
+			"description": "VR 친구와 그룹을 찾아 주는 소셜 매칭 앱 ROVR를 출시했어요. 그 정신은 지금 친구 모드에 살아 있어요.",
+			"image_alt": "2021년의 Flirtual"
+		},
+		"2022": {
+			"title": "2022 😻",
+			"description": "VRLFP가 Flirtual이 되었어요. 이제는 다들 이름 철자를 제대로 기억해 주시겠죠?",
+			"image_alt": "2022년의 Flirtual"
+		},
+		"2023": {
+			"title": "📱 2023",
+			"description": "새로운 디자인과 개선된 성능으로 처음부터 다시 만들었고, 드디어 모바일 앱도 나왔어요!",
+			"image_alt": "2023년의 Flirtual"
+		},
+		"2024": {
+			"title": "2024 💅",
+			"description": "프로필 질문, 음악 플레이리스트, 200개 넘는 새 관심사, 채팅 이모지 등 나를 표현할 방법이 더 많아졌어요.",
+			"image_alt": "2024년의 Flirtual"
+		},
+		"2025": {
+			"title": "⚡️ 2025",
+			"description": "Flirtual을 그 어느 때보다 빠르고, 안정적이고, 안전하게 만들기 위해 보이지 않는 곳에서 열심히 일했어요.",
+			"image_alt": "2025년의 Flirtual"
+		}
+	},
+	"underage_title": "계정이 정지되었어요",
+	"underage_description": "Flirtual은 만 18세 이상만 이용할 수 있어요. 자세한 내용은 이메일을 확인해 주세요.",
+	"age_blocked_title": "미성년자로 확인되어 이용이 차단되었어요",
+	"age_blocked_description": "Flirtual은 만 18세 이상만 이용할 수 있어요.",
+	"age_unresolved_google": "Flirtual은 만 18세 이상만 이용할 수 있어요. Google Play에서 연령 인증을 마친 뒤 다시 시도해 주세요.",
+	"age_unresolved_apple": "Flirtual은 만 18세 이상만 이용할 수 있어요. 계속하려면 설정 앱 > [사용자 이름] > 개인정보 > 앱에 연령대 공유하기에서 연령대를 공유한 뒤 다시 시도해 주세요.",
+	"age_unresolved_title": "계속하려면 연령 인증이 필요해요",
+	"open_google_play": "Google Play 열기"
+}
