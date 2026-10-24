@@ -9,7 +9,7 @@
 msgid ""
 msgstr ""
 "PO-Revision-Date: 2026-10-24 03:14+0000\n"
-"Last-Translator: Claude <bot-flirtual-claude@bots.noreply.weblate.org>\n"
+"Last-Translator: Anonymous <anonymous@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/flirtual/"
 "notifications/ja/>\n"
 "Language: ja\n"
@@ -326,7 +326,16 @@ msgstr ""
 #: lib/flirtual/user/email.ex:135
 #, elixir-autogen, elixir-format
 msgid "verification_code.body_text"
-msgstr "不審なログインを検出しました。あなたご自身の場合は、以下の確認コードを入力してください：\n\n%{code}\n\nこのコードは15分後に期限切れになります。\n\nあなたではありませんか？Flirtual設定でパスワードを変更してアカウントを保護してください。"
+msgstr ""
+"不審なログインを検出しました。あなたご自身の場合は、以下の確認コードを入力し"
+"てください：\n"
+"\n"
+"%{code}\n"
+"\n"
+"このコードは15分後に期限切れになります。\n"
+"\n"
+"あなたではありませんか？Flirtual設定でパスワードを変更してアカウントを保護し"
+"てください。"
 
 #: lib/flirtual/user/email.ex:134
 #, elixir-autogen, elixir-format
@@ -423,4 +432,7 @@ msgstr "Instagram"
 #: lib/flirtual/user/email.ex:31
 #, elixir-autogen, elixir-format
 msgid "suspended.reason.underage"
-msgstr "未成年。Flirtualの利用は18歳以上に限られます。誤ってバンされたと思われる場合は、Flirtualにログインして安全に年齢を確認することで、アカウントを復元できます。"
+msgstr ""
+"未成年。Flirtualの利用は18歳以上に限られます。誤ってバンされたと思われる場合"
+"は、Flirtualにログインして安全に年齢を確認することで、アカウントを復元できま"
+"す。"
