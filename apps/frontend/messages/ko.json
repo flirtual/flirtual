@@ -7,22 +7,28 @@
 	"about_us": "소개",
 	"price_listen_wise_communicate": {
 		"0": {
-			"image_alt": "Vanguard와 함께한 Flirtual의 2022년 밸런타인데이 12시간 론칭 파티"
+			"image_alt": "Vanguard와 함께한 Flirtual의 2022년 밸런타인데이 12시간 론칭 파티",
+			"link": ""
 		},
 		"2": {
-			"image_alt": "VRChat에서 열린 Flirtual DJ 나이트"
+			"image_alt": "VRChat에서 열린 Flirtual DJ 나이트",
+			"link": ""
 		},
 		"3": {
-			"image_alt": "VRCon 2022에 참가한 Flirtual"
+			"image_alt": "VRCon 2022에 참가한 Flirtual",
+			"link": ""
 		},
 		"1": {
-			"image_alt": "VRChat에서 열린 Flirtual Speed Dating 이벤트"
+			"image_alt": "VRChat에서 열린 Flirtual Speed Dating 이벤트",
+			"link": ""
 		},
 		"4": {
-			"image_alt": "Today Show에 소개된 Flirtual"
+			"image_alt": "Today Show에 소개된 Flirtual",
+			"link": ""
 		},
 		"5": {
-			"image_alt": "Vket 2023 Summer에 참가한 Flirtual"
+			"image_alt": "Vket 2023 Summer에 참가한 Flirtual",
+			"link": ""
 		}
 	},
 	"voice_spiritual_polite_entertaining": "VRChat에서 찍은 Flirtual 팀 사진",
@@ -1135,5 +1141,8 @@
 	"copyright": "",
 	"even_major_hare_believe": "",
 	"stout_last_kudu_bend": "",
-	"few_grassy_hyena_adapt": ""
+	"few_grassy_hyena_adapt": "",
+	"light_theme_image": "",
+	"system_theme_image": "",
+	"dark_theme_image": ""
 }
