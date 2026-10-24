@@ -2598,6 +2598,9 @@
 		},
 		"inl": {
 			"name": "Indonesische Gebarentaal"
+		},
+		"hbs": {
+			"name": "Servo-Kroatisch"
 		}
 	},
 	"gender": {
