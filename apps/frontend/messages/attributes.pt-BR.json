@@ -13,7 +13,7 @@
 			"name": "Evasão de Ban"
 		},
 		"muXMqNjneKnwqxT8nqcy4d": {
-			"details": "Menor de idade. Você deve ter no mínimo 18 anos para usar o Flirtual. Se você acredita que foi banido por engano, pode entrar no Flirtual e verificar sua idade com segurança para restaurar sua conta.",
+			"details": "Menor de idade. É preciso ter pelo menos 18 anos para usar o Flirtual. Se você acredita que sua conta foi banida por engano, pode entrar no Flirtual e verificar sua idade com segurança para recuperá-la.",
 			"name": "Menor de idade"
 		},
 		"hLwvdpKQiofFTCDHox75SY": {
@@ -658,7 +658,7 @@
 			"name": "IRONSTRIKE"
 		},
 		"RwfdcvqjWW6aK2Upo5wNt3": {
-			"name": "Wands: Alliances"
+			"name": "Aliança das Varinhas"
 		},
 		"EaU8Vg4zaXw4h6BdAxqUCW": {
 			"name": "Block Buster"
@@ -826,7 +826,7 @@
 			"name": "Espire 2: Stealth Operatives"
 		},
 		"AWr2CAxhJsY4GoNJZDZarC": {
-			"name": "CleanSheet Soccer"
+			"name": "CleanSheet Futebol"
 		},
 		"3nhLdefwZxD4k5Y6WgWqHf": {
 			"name": "NHL Sense Arena"
@@ -925,7 +925,7 @@
 			"name": "ToyBoom"
 		},
 		"xLzD3wLfQto7sEivhuMNsG": {
-			"name": "Trivia Crack World"
+			"name": "Perguntados World"
 		},
 		"RKQufM5vt6bcF6Jbaen87o": {
 			"name": "VRFS"
@@ -1229,16 +1229,19 @@
 			"name": "Meta Quest"
 		},
 		"3Kagenz7boB64Ke6vEAKv6": {
-			"name": "PCVR"
+			"name": "PCVR",
+			"example": "(Quest Link, Index, Vive etc.)"
 		},
 		"pzkBdEYqgAZiSEBZAcJMPZ": {
 			"name": "Haptic suit"
 		},
 		"N458aYKyg6hweVbyDEMDAR": {
-			"name": "VIVE Standalone"
+			"name": "VIVE Standalone",
+			"example": "(Focus Vision, XR Elite)"
 		},
 		"Qb3Ar9wqh7mAMwdevJCfYS": {
-			"name": "Android XR"
+			"name": "Android XR",
+			"example": "(Galaxy XR)"
 		},
 		"c255sGSiJpMNnm6NTUcvx6": {
 			"name": "Apple Vision"
@@ -1250,7 +1253,7 @@
 			"name": "Esteira de locomoção"
 		},
 		"m4S2N4Jn2f3WDbJm7bcbgQ": {
-			"name": "Tracking facial"
+			"name": "Face tracking"
 		},
 		"FEX8jjr4P9aeBurRUTLhU7": {
 			"name": "Pico"
@@ -1293,31 +1296,31 @@
 			"definitionLink": "https://bdsmtest.org/info#:~:text=a%20sexual%20context.-,Slave,primary%20focus%20in%20life%20and%20they%20rarely%20have%20limits%20for%20them.,-Submissive"
 		},
 		"sNdx2sNbnG5RmNZDtTVNCg": {
-			"name": "Braçadeira",
+			"name": "Brat",
 			"definitionLink": "https://bdsmtest.org/info#:~:text=Brat,change%20this%20behavior."
 		},
 		"nEDgGpz9eHcomwcbsCaCZP": {
-			"name": "Proprietário",
+			"name": "Dono",
 			"definitionLink": "https://bdsmtest.org/info#:~:text=Owner,for%20the%20pet)."
 		},
 		"rGDn478bBZCDajvQRYAkLf": {
-			"name": "Pai",
+			"name": "Daddy/Mommy",
 			"definitionLink": "https://bdsmtest.org/info#:~:text=Daddy/Mommy,littles%20into%20obedience."
 		},
 		"wZ4AXSmb3hufSDxGVEkoNo": {
-			"name": "Tamer Brat",
+			"name": "Domador de brat",
 			"definitionLink": "https://bdsmtest.org/info#:~:text=Brat%20tamer,the%20first%20place)."
 		},
 		"9mbQ4hxFEMBL4bHVYomPz3": {
-			"name": "Degradecimentos",
+			"name": "Humilhador",
 			"definitionLink": "https://bdsmtest.org/info#:~:text=Degrader,they%20consider%20degrading."
 		},
 		"dXxUHt5t69rNeg2g7EE3bR": {
-			"name": "Mestre / amante",
+			"name": "Senhor/Senhora",
 			"definitionLink": "https://bdsmtest.org/info#:~:text=Master/Mistress,allow%20optimal%20servitude."
 		},
 		"RE2twp4mgYSXjhya266npP": {
-			"name": "Degradee",
+			"name": "Humilhado",
 			"definitionLink": "https://bdsmtest.org/info#:~:text=Degradee,they%20consider%20degrading."
 		},
 		"2D9uSBJtgiRRfgdwXhyvm5": {
@@ -1325,7 +1328,7 @@
 			"definitionLink": "https://bdsmtest.org/info#:~:text=Rigger,at%20their%20mercy."
 		},
 		"werFoPERXyXK9J6roSzCXG": {
-			"name": "Bunny de corda",
+			"name": "Rope bunny",
 			"definitionLink": "https://bdsmtest.org/info#:~:text=Rope%20bunny,their%20partner(s)."
 		},
 		"Jyy988TnEA8J2FeG5ZSyDh": {
@@ -1727,7 +1730,7 @@
 			"name": "Atos de serviço 🤝"
 		},
 		"NZjaoEMBizfYF2ScZbYAuG": {
-			"name": "Amigável à verdinha 🍁"
+			"name": "De boa com a erva 🍁"
 		},
 		"vHGjkMhPppZ5bhh8uded4G": {
 			"name": "E s t é t i c a ✨"
@@ -1790,7 +1793,7 @@
 			"name": "Dança 💃"
 		},
 		"EXYCJJeyc6JP5yKhkt2GoX": {
-			"name": "Piadas de pai"
+			"name": "Piadas de tiozão"
 		},
 		"Hge2bJA39qY7XSnqqrrY9Y": {
 			"name": "Surdo"
@@ -2117,31 +2120,31 @@
 			"name": "Ficção científica 👽"
 		},
 		"MTmW4A9pTEqZem2wZvGN3F": {
-			"name": "Furry"
+			"name": "Furry 🐾"
 		},
 		"aBheDEqVsh7iCgEVmNhsoE": {
 			"name": "Twitch"
 		},
 		"jMDdcShxVDc5cj2uX4ygyX": {
-			"name": "Vaporwave"
+			"name": "Vaporwave 🌊"
 		},
 		"vsfvQqgYfRMqy9GcvYbSTF": {
 			"name": "Airsoft"
 		},
 		"BTGLoHoCuPjvY2NrRKSWpb": {
-			"name": "Animação"
+			"name": "Anime 🌸"
 		},
 		"3MJtyHPdUjvYhPsbEci58W": {
-			"name": "Aries ♈️"
+			"name": "Áries ♈️"
 		},
 		"TJeFyc6EQhdBmEoLGqpYDh": {
-			"name": "Mal caótico"
+			"name": "Caótico e Mau"
 		},
 		"VPhvhASscLY49xNFjw4o8n": {
-			"name": "R&B:"
+			"name": "R&B 🎤"
 		},
 		"oYT4VenxFxNrBshwrsM2WH": {
-			"name": "Snowboarding ing"
+			"name": "Snowboard 🏂"
 		},
 		"jJmDX2sxgQ6YGVXN2CNJFV": {
 			"name": "VTuber"
@@ -2153,7 +2156,7 @@
 			"name": "Emo 🖤"
 		},
 		"VJfGs3Znz75RWK3nmWwaE5": {
-			"name": "Gacha"
+			"name": "Jogos gacha 🎰"
 		},
 		"th2ujgrqPcZifgaLYuv99Y": {
 			"name": "Cyberpunk"
@@ -2162,13 +2165,13 @@
 			"name": "FPS 🔫"
 		},
 		"mh6zGfyseAeUk82fuqu9VT": {
-			"name": "Ficção de fãs"
+			"name": "Fanfic"
 		},
 		"dumoS7nkPSh4vDaVCMNBYc": {
-			"name": "Hip hop 💿"
+			"name": "Hip-hop 💿"
 		},
 		"7xQwxvJ5MDtfjTEHtRcdm9": {
-			"name": "Hippie"
+			"name": "Hippie 🌼"
 		},
 		"D9xPvsU52DEStz6gnJJewe": {
 			"name": "Hóquei 🏒"
@@ -2177,37 +2180,37 @@
 			"name": "Jazz 🎷"
 		},
 		"JAVpr44XUBC5wkmxtKX4rW": {
-			"name": "Mal legítimo"
+			"name": "Leal e Mau"
 		},
 		"KMrisZLkbq6VEeTqiAdSHc": {
-			"name": "Verdadeiro crime 🕵"
+			"name": "True crime 🕵️"
 		},
 		"YjvHypMDZzANaTkadS9apP": {
-			"name": "Verdadeiro neutro"
+			"name": "Neutro"
 		},
 		"rj3SPLcAwa6bkKSuBxsfsD": {
-			"name": "Romances visuais s"
+			"name": "Visual novels 📖"
 		},
 		"V6dXwTJecCTbaUy4nbZip4": {
-			"name": "Vocalóide"
+			"name": "Vocaloid"
 		},
 		"WEnom9DcbnWrCepxx2PNnE": {
-			"name": "Yandere"
+			"name": "Yandere 😍"
 		},
 		"xSLzANhRAqr5h3sXqhoKvT": {
-			"name": "Caótico bom"
+			"name": "Caótico e Bom"
 		},
 		"PuMdJoFBdxvf8xWuSpDmP7": {
-			"name": "Histórias"
+			"name": "Quadrinhos"
 		},
 		"3MbxP4iLYi6MC6FUbeqYbX": {
-			"name": "País 🤠"
+			"name": "Country 🤠"
 		},
 		"Bmkx6cmyU9kbuA3pdwv43o": {
-			"name": "Cuddles"
+			"name": "Chamego 🥰"
 		},
 		"6bNZo7xhhuEXCekE5PyU2Z": {
-			"name": "DIY"
+			"name": "Faça você mesmo 🛠️"
 		},
 		"koZvXYA7RHi7hgPN7b3Vca": {
 			"name": "Disney"
@@ -2219,67 +2222,67 @@
 			"name": "Femboy"
 		},
 		"brqEVFEEsMUdoAE5oabtAh": {
-			"name": "Indie"
+			"name": "Indie 📼"
 		},
 		"ZwP6JmwP2Hk8PMpujmvGDY": {
-			"name": "K-drama"
+			"name": "K-drama 🇰🇷"
 		},
 		"B4vkCyhTZJX5SvkQ7RWoJm": {
 			"name": "Kawaii 💖"
 		},
 		"guNDL9je3iot5XcYqaj9uS": {
-			"name": "LGBTQ+"
+			"name": "LGBTQIA+ 🏳️‍🌈"
 		},
 		"BTmeninByD4KaKKkQTiYga": {
-			"name": "Bem legal"
+			"name": "Leal e Bom"
 		},
 		"QqXRreYsKwxs38WyUPPWwi": {
-			"name": "Legal neutro"
+			"name": "Leal e Neutro"
 		},
 		"GH8sb9A9WRYBoKCurnTqFH": {
-			"name": "MMOs"
+			"name": "MMOs 🌐"
 		},
 		"hJoRPhWDwSDteA7nXarZ5i": {
-			"name": "MOBAS ⚔️"
+			"name": "MOBAs ⚔️"
 		},
 		"uDxAuTWV85Jr7r8YbnDxnd": {
-			"name": "Magia: O Encontro"
+			"name": "Magic: The Gathering"
 		},
 		"KsQnqSKQQKjhTvdHhYX86G": {
-			"name": "Manga 📚"
+			"name": "Mangá 📚"
 		},
 		"wR9dYu4RUTPFwPtoKov2RB": {
-			"name": "Manhwa"
+			"name": "Manhwa 🇰🇷"
 		},
 		"g7SwgV8y7JQNG4UrQUJUCP": {
 			"name": "Marvel"
 		},
 		"JTp3btTZgozbnvZoatpJwR": {
-			"name": "Memelord"
+			"name": "Vive de memes"
 		},
 		"QXAV9E84tkhjZKgKqgRjDA": {
-			"name": "Espelho habitação 🪞"
+			"name": "Vive no espelho 🪞"
 		},
 		"NdtkEKfWtyNqKux7gs5juV": {
-			"name": "Mal neutro"
+			"name": "Neutro e Mau"
 		},
 		"YQSAPjKy33ZRxaSZqbTxCk": {
-			"name": "Pai"
+			"name": "Pop 🌟"
 		},
 		"6UTLvYWp6y4Snv6hexijLD": {
-			"name": "Linda menina rave"
+			"name": "Gatinha da rave"
 		},
 		"dEWG2fauN29LXFiaGSAvK4": {
-			"name": "Punk"
+			"name": "Punk 🧷"
 		},
 		"8t9ZxQYhZtPZSJM99pHqtB": {
-			"name": "RPGs s"
+			"name": "RPGs 🧙"
 		},
 		"pET4ZuyMW3ACUXzaYaxd3S": {
 			"name": "Rock 🥁"
 		},
 		"Z3JAwEM6n7wuc5dAXX36DQ": {
-			"name": "Guerra das Estrelas"
+			"name": "Star Wars"
 		},
 		"pHU7w3PAb7fhcTDqFQWMKX": {
 			"name": "Tsundere 💢"
@@ -2294,34 +2297,34 @@
 			"name": "Golfe ⛳️"
 		},
 		"66TnRrCCPUeUdqjotUgReM": {
-			"name": "Neutro caótico"
+			"name": "Caótico e Neutro"
 		},
 		"WpPJDKVjSHqLB5FhnYa6JQ": {
-			"name": "Chuunião"
+			"name": "Chuunibyou"
 		},
 		"4vTwGjfH9oEk6fLthm4HjX": {
 			"name": "Cosplay 👘"
 		},
 		"RNP3HRDvwVZnCZ28wZcYGf": {
-			"name": "Campo de batalha"
+			"name": "Cottagecore 🌻"
 		},
 		"VviV5H6FZMUUrmvpV8A9N6": {
 			"name": "J-pop 🇯🇵"
 		},
 		"KpHyxBddWuMZzhx8vPHUwj": {
-			"name": "JRPGs"
+			"name": "JRPGs 🎌"
 		},
 		"rY6Mf9bdYcpLbCWpVBnhym": {
 			"name": "K-pop 🇰🇷"
 		},
 		"sYGiQ4XuHJihLvWMZGPApc": {
-			"name": "Latim 💃"
+			"name": "Música latina 💃"
 		},
 		"9LGdoTTRR6eDXjTRqEwrxD": {
 			"name": "Metal 🤘"
 		},
 		"8T5dMoiNwZyQuiD6xJKMVH": {
-			"name": "Nerd"
+			"name": "Nerd 🤓"
 		},
 		"KqYcEh6DTSd62kVJUU2Aim": {
 			"name": "Piano 🎹"
@@ -2469,616 +2472,613 @@
 	},
 	"language": {
 		"ab": {
-			"name": "abcázio"
+			"name": "Abcázio"
 		},
 		"aa": {
-			"name": "afar"
+			"name": "Afar"
 		},
 		"af": {
-			"name": "africâner"
+			"name": "Africâner"
 		},
 		"ak": {
-			"name": "akan"
+			"name": "Akan"
 		},
 		"sq": {
-			"name": "albanês"
+			"name": "Albanês"
 		},
 		"am": {
-			"name": "amárico"
+			"name": "Amárico"
 		},
 		"ar": {
-			"name": "árabe"
+			"name": "Árabe"
 		},
 		"an": {
-			"name": "aragonês"
+			"name": "Aragonês"
 		},
 		"hy": {
-			"name": "armênio"
+			"name": "Armênio"
 		},
 		"as": {
-			"name": "assamês"
+			"name": "Assamês"
 		},
 		"av": {
-			"name": "avárico"
+			"name": "Avárico"
 		},
 		"ae": {
-			"name": "avéstico"
+			"name": "Avéstico"
 		},
 		"ay": {
-			"name": "aimará"
+			"name": "Aimará"
 		},
 		"az": {
-			"name": "azerbaijano"
+			"name": "Azerbaijano"
 		},
 		"bm": {
-			"name": "bambara"
+			"name": "Bambara"
 		},
 		"ba": {
-			"name": "bashkir"
+			"name": "Bashkir"
 		},
 		"eu": {
-			"name": "basco"
+			"name": "Basco"
 		},
 		"be": {
-			"name": "bielorrusso"
+			"name": "Bielorrusso"
 		},
 		"bn": {
-			"name": "bengali"
+			"name": "Bengali"
 		},
 		"bi": {
-			"name": "bislamá"
+			"name": "Bislamá"
 		},
 		"bs": {
-			"name": "bósnio"
+			"name": "Bósnio"
 		},
 		"br": {
-			"name": "bretão"
+			"name": "Bretão"
 		},
 		"bg": {
-			"name": "búlgaro"
+			"name": "Búlgaro"
 		},
 		"my": {
-			"name": "birmanês"
+			"name": "Birmanês"
 		},
 		"ca": {
-			"name": "catalão"
+			"name": "Catalão"
 		},
 		"ch": {
-			"name": "chamorro"
+			"name": "Chamorro"
 		},
 		"ce": {
-			"name": "checheno"
+			"name": "Checheno"
 		},
 		"ny": {
-			"name": "nianja"
+			"name": "Nyanja"
 		},
 		"zh": {
-			"name": "chinês"
+			"name": "Chinês"
 		},
 		"cu": {
-			"name": "eslavo eclesiástico"
+			"name": "Eslavo eclesiástico"
 		},
 		"cv": {
-			"name": "tchuvache"
+			"name": "Tchuvache"
 		},
 		"kw": {
-			"name": "córnico"
+			"name": "Córnico"
 		},
 		"co": {
-			"name": "corso"
+			"name": "Corso"
 		},
 		"cr": {
-			"name": "cree"
+			"name": "Cree"
 		},
 		"hr": {
-			"name": "croata"
+			"name": "Croata"
 		},
 		"cs": {
-			"name": "tcheco"
+			"name": "Tcheco"
 		},
 		"da": {
-			"name": "dinamarquês"
+			"name": "Dinamarquês"
 		},
 		"dv": {
-			"name": "divehi"
+			"name": "Divehi"
 		},
 		"nl": {
-			"name": "holandês"
+			"name": "Holandês"
 		},
 		"dz": {
-			"name": "dzonga"
+			"name": "Dzonga"
 		},
 		"en": {
-			"name": "inglês"
+			"name": "Inglês"
 		},
 		"eo": {
-			"name": "esperanto"
+			"name": "Esperanto"
 		},
 		"et": {
-			"name": "estoniano"
+			"name": "Estoniano"
 		},
 		"ee": {
-			"name": "ewe"
+			"name": "Eve"
 		},
 		"fo": {
-			"name": "feroês"
+			"name": "Feroês"
 		},
 		"fj": {
-			"name": "fijiano"
+			"name": "Fijiano"
 		},
 		"fi": {
-			"name": "finlandês"
+			"name": "Finlandês"
 		},
 		"fr": {
-			"name": "francês"
+			"name": "Francês"
 		},
 		"ff": {
-			"name": "fula"
+			"name": "Fula"
 		},
 		"gd": {
-			"name": "gaélico escocês"
+			"name": "Gaélico escocês"
 		},
 		"gl": {
-			"name": "galego"
+			"name": "Galego"
 		},
 		"lg": {
-			"name": "luganda"
+			"name": "Luganda"
 		},
 		"ka": {
-			"name": "georgiano"
+			"name": "Georgiano"
 		},
 		"de": {
-			"name": "alemão"
+			"name": "Alemão"
 		},
 		"el": {
-			"name": "grego"
+			"name": "Grego"
 		},
 		"gn": {
-			"name": "guarani"
+			"name": "Guarani"
 		},
 		"gu": {
-			"name": "guzerate"
+			"name": "Guzerate"
 		},
 		"ht": {
-			"name": "haitiano"
+			"name": "Crioulo haitiano"
 		},
 		"ha": {
-			"name": "hauçá"
+			"name": "Hauçá"
 		},
 		"he": {
-			"name": "hebraico"
+			"name": "Hebraico"
 		},
 		"hz": {
-			"name": "herero"
+			"name": "Herero"
 		},
 		"hi": {
-			"name": "híndi"
+			"name": "Hindi"
 		},
 		"ho": {
-			"name": "hiri motu"
+			"name": "Hiri motu"
 		},
 		"hu": {
-			"name": "húngaro"
+			"name": "Húngaro"
 		},
 		"is": {
-			"name": "islandês"
+			"name": "Islandês"
 		},
 		"io": {
-			"name": "ido"
+			"name": "Ido"
 		},
 		"ig": {
-			"name": "igbo"
+			"name": "Igbo"
 		},
 		"id": {
-			"name": "indonésio"
+			"name": "Indonésio"
 		},
 		"ia": {
-			"name": "interlíngua"
+			"name": "Interlíngua"
 		},
 		"ie": {
-			"name": "interlingue"
+			"name": "Interlingue"
 		},
 		"iu": {
-			"name": "inuktitut"
+			"name": "Inuktitut"
 		},
 		"ik": {
-			"name": "inupiaque"
+			"name": "Inupiaque"
 		},
 		"ga": {
-			"name": "irlandês"
+			"name": "Irlandês"
 		},
 		"it": {
-			"name": "italiano"
+			"name": "Italiano"
 		},
 		"ja": {
-			"name": "japonês"
+			"name": "Japonês"
 		},
 		"jv": {
-			"name": "javanês"
+			"name": "Javanês"
 		},
 		"kl": {
-			"name": "groenlandês"
+			"name": "Groenlandês"
 		},
 		"kn": {
-			"name": "canarim"
+			"name": "Canarim"
 		},
 		"kr": {
-			"name": "canúri"
+			"name": "Canúri"
 		},
 		"ks": {
-			"name": "caxemira"
+			"name": "Caxemira"
 		},
 		"kk": {
-			"name": "cazaque"
+			"name": "Cazaque"
 		},
 		"km": {
-			"name": "khmer"
+			"name": "Khmer"
 		},
 		"ki": {
-			"name": "quicuio"
+			"name": "Quicuio"
 		},
 		"rw": {
-			"name": "quiniaruanda"
+			"name": "Quiniaruanda"
 		},
 		"rn": {
-			"name": "rundi"
+			"name": "Rundi"
 		},
 		"kv": {
-			"name": "komi"
+			"name": "Komi"
 		},
 		"kg": {
-			"name": "congolês"
+			"name": "Congolês"
 		},
 		"ko": {
-			"name": "coreano"
+			"name": "Coreano"
 		},
 		"ku": {
-			"name": "curdo"
+			"name": "Curdo"
 		},
 		"kj": {
-			"name": "cuanhama"
+			"name": "Cuanhama"
 		},
 		"ky": {
-			"name": "quirguiz"
+			"name": "Quirguiz"
 		},
 		"lo": {
-			"name": "laosiano"
+			"name": "Laosiano"
 		},
 		"la": {
-			"name": "latim"
+			"name": "Latim"
 		},
 		"lv": {
-			"name": "letão"
+			"name": "Letão"
 		},
 		"li": {
-			"name": "limburguês"
+			"name": "Limburguês"
 		},
 		"ln": {
-			"name": "lingala"
+			"name": "Lingala"
 		},
 		"lt": {
-			"name": "lituano"
+			"name": "Lituano"
 		},
 		"lu": {
-			"name": "luba-catanga"
+			"name": "Luba-catanga"
 		},
 		"lb": {
-			"name": "luxemburguês"
+			"name": "Luxemburguês"
 		},
 		"mk": {
-			"name": "macedônio"
+			"name": "Macedônio"
 		},
 		"mg": {
-			"name": "malgaxe"
+			"name": "Malgaxe"
 		},
 		"ms": {
-			"name": "malaio"
+			"name": "Malaio"
 		},
 		"ml": {
-			"name": "malaiala"
+			"name": "Malaiala"
 		},
 		"mt": {
-			"name": "maltês"
+			"name": "Maltês"
 		},
 		"gv": {
-			"name": "manx"
+			"name": "Manx"
 		},
 		"mi": {
-			"name": "maori"
+			"name": "Maori"
 		},
 		"mr": {
-			"name": "marati"
+			"name": "Marati"
 		},
 		"mh": {
-			"name": "marshalês"
+			"name": "Marshalês"
 		},
 		"mn": {
-			"name": "mongol"
+			"name": "Mongol"
 		},
 		"na": {
-			"name": "nauruano"
+			"name": "Nauruano"
 		},
 		"nv": {
-			"name": "navajo"
+			"name": "Navajo"
 		},
 		"ng": {
-			"name": "dongo"
+			"name": "Dongo"
 		},
 		"ne": {
-			"name": "nepalês"
+			"name": "Nepalês"
 		},
 		"nd": {
-			"name": "ndebele do norte"
+			"name": "Ndebele do norte"
 		},
 		"se": {
-			"name": "sami setentrional"
+			"name": "Sámi setentrional"
 		},
 		"nb": {
-			"name": "bokmål norueguês"
+			"name": "Bokmål norueguês"
 		},
 		"nn": {
-			"name": "nynorsk norueguês"
+			"name": "Nynorsk norueguês"
 		},
 		"no": {
-			"name": "norueguês"
+			"name": "Norueguês"
 		},
 		"ii": {
-			"name": "sichuan yi"
+			"name": "Yi de Sichuan"
 		},
 		"oc": {
-			"name": "occitânico"
+			"name": "Occitânico"
 		},
 		"oj": {
-			"name": "ojibwa"
+			"name": "Ojibwa"
 		},
 		"or": {
-			"name": "oriá"
+			"name": "Oriá"
 		},
 		"om": {
-			"name": "oromo"
+			"name": "Oromo"
 		},
 		"os": {
-			"name": "osseto"
+			"name": "Osseto"
 		},
 		"pi": {
-			"name": "páli"
+			"name": "Páli"
 		},
 		"pa": {
-			"name": "panjabi"
+			"name": "Panjabi"
 		},
 		"ps": {
-			"name": "pashto"
+			"name": "Pashto"
 		},
 		"fa": {
-			"name": "persa"
+			"name": "Persa"
 		},
 		"pl": {
-			"name": "polonês"
+			"name": "Polonês"
 		},
 		"pt": {
-			"name": "português"
+			"name": "Português"
 		},
 		"qu": {
-			"name": "quíchua"
+			"name": "Quíchua"
 		},
 		"ro": {
-			"name": "romeno"
+			"name": "Romeno"
 		},
 		"rm": {
-			"name": "romanche"
+			"name": "Romanche"
 		},
 		"ru": {
-			"name": "russo"
+			"name": "Russo"
 		},
 		"sm": {
-			"name": "samoano"
+			"name": "Samoano"
 		},
 		"sg": {
-			"name": "sango"
+			"name": "Sango"
 		},
 		"sa": {
-			"name": "sânscrito"
+			"name": "Sânscrito"
 		},
 		"sc": {
-			"name": "sardo"
+			"name": "Sardo"
 		},
 		"sr": {
-			"name": "sérvio"
+			"name": "Sérvio"
 		},
 		"sn": {
-			"name": "xona"
+			"name": "Xona"
 		},
 		"sd": {
-			"name": "sindi"
+			"name": "Sindi"
 		},
 		"si": {
-			"name": "cingalês"
+			"name": "Cingalês"
 		},
 		"sk": {
-			"name": "eslovaco"
+			"name": "Eslovaco"
 		},
 		"sl": {
-			"name": "esloveno"
+			"name": "Esloveno"
 		},
 		"so": {
-			"name": "somali"
+			"name": "Somali"
 		},
 		"nr": {
-			"name": "ndebele do sul"
+			"name": "Ndebele do sul"
 		},
 		"st": {
-			"name": "soto do sul"
+			"name": "Soto do sul"
 		},
 		"es": {
-			"name": "espanhol"
+			"name": "Espanhol"
 		},
 		"su": {
-			"name": "sundanês"
+			"name": "Sundanês"
 		},
 		"sw": {
-			"name": "suaíli"
+			"name": "Suaíli"
 		},
 		"ss": {
-			"name": "suázi"
+			"name": "Suázi"
 		},
 		"sv": {
-			"name": "sueco"
+			"name": "Sueco"
 		},
 		"tl": {
-			"name": "tagalo"
+			"name": "Tagalo"
 		},
 		"ty": {
-			"name": "taitiano"
+			"name": "Taitiano"
 		},
 		"tg": {
-			"name": "tadjique"
+			"name": "Tadjique"
 		},
 		"ta": {
-			"name": "tâmil"
+			"name": "Tâmil"
 		},
 		"tt": {
-			"name": "tártaro"
+			"name": "Tártaro"
 		},
 		"te": {
-			"name": "télugo"
+			"name": "Télugo"
 		},
 		"th": {
-			"name": "tailandês"
+			"name": "Tailandês"
 		},
 		"bo": {
-			"name": "tibetano"
+			"name": "Tibetano"
 		},
 		"ti": {
-			"name": "tigrínia"
+			"name": "Tigrínia"
 		},
 		"to": {
-			"name": "tonganês"
+			"name": "Tonganês"
 		},
 		"ts": {
-			"name": "tsonga"
+			"name": "Tsonga"
 		},
 		"tn": {
-			"name": "tswana"
+			"name": "Tswana"
 		},
 		"tr": {
-			"name": "turco"
+			"name": "Turco"
 		},
 		"tk": {
-			"name": "turcomeno"
+			"name": "Turcomeno"
 		},
 		"tw": {
-			"name": "axante"
+			"name": "Twi"
 		},
 		"uk": {
-			"name": "ucraniano"
+			"name": "Ucraniano"
 		},
 		"ur": {
-			"name": "urdu"
+			"name": "Urdu"
 		},
 		"ug": {
-			"name": "uigur"
+			"name": "Uigur"
 		},
 		"uz": {
-			"name": "uzbeque"
+			"name": "Uzbeque"
 		},
 		"ve": {
-			"name": "venda"
+			"name": "Venda"
 		},
 		"vi": {
-			"name": "vietnamita"
+			"name": "Vietnamita"
 		},
 		"vo": {
-			"name": "volapuque"
+			"name": "Volapuque"
 		},
 		"wa": {
-			"name": "valão"
+			"name": "Valão"
 		},
 		"cy": {
-			"name": "galês"
+			"name": "Galês"
 		},
 		"fy": {
-			"name": "frísio ocidental"
+			"name": "Frísio ocidental"
 		},
 		"wo": {
-			"name": "uolofe"
+			"name": "Uolofe"
 		},
 		"xh": {
-			"name": "xhosa"
+			"name": "Xhosa"
 		},
 		"yi": {
-			"name": "iídiche"
+			"name": "Iídiche"
 		},
 		"yo": {
-			"name": "iorubá"
+			"name": "Iorubá"
 		},
 		"za": {
-			"name": "zhuang"
+			"name": "Zhuang"
 		},
 		"zu": {
-			"name": "zulu"
+			"name": "Zulu"
 		},
 		"arn": {
-			"name": "mapudungun"
+			"name": "Mapuche"
 		},
 		"ary": {
-			"name": "ary"
+			"name": "Árabe marroquino"
 		},
 		"ckb": {
-			"name": "curdo central"
+			"name": "Curdo central"
 		},
 		"dsb": {
-			"name": "baixo sorábio"
+			"name": "Baixo sorábio"
 		},
 		"fil": {
-			"name": "filipino"
+			"name": "Filipino"
 		},
 		"gil": {
-			"name": "gilbertês"
+			"name": "Gilbertês"
 		},
 		"gsw": {
-			"name": "alemão (Suíça)"
-		},
-		"hrv": {
-			"name": "servo-croata"
+			"name": "Alemão suíço"
 		},
 		"hsb": {
-			"name": "alto sorábio"
+			"name": "Alto sorábio"
 		},
 		"kok": {
-			"name": "concani"
+			"name": "Concani"
 		},
 		"moh": {
-			"name": "moicano"
+			"name": "Mohawk"
 		},
 		"pap": {
-			"name": "papiamento"
+			"name": "Papiamento"
 		},
 		"prs": {
-			"name": "dari"
+			"name": "Dari"
 		},
 		"quc": {
-			"name": "quiché"
+			"name": "Quiché"
 		},
 		"sah": {
-			"name": "sakha"
+			"name": "Iakuto"
 		},
 		"sma": {
-			"name": "sami meridional"
+			"name": "Sami meridional"
 		},
 		"smj": {
-			"name": "sami de Lule"
+			"name": "Sami de Lule"
 		},
 		"smn": {
-			"name": "lapão de Inari"
+			"name": "Sami de Inari"
 		},
 		"sms": {
-			"name": "sami de Skolt"
+			"name": "Sami de Skolt"
 		},
 		"syc": {
-			"name": "siríaco clássico"
+			"name": "Siríaco clássico"
 		},
 		"tzm": {
-			"name": "tamazight do Atlas Central"
+			"name": "Tamazirte do Atlas Central"
 		},
 		"ase": {
 			"name": "Línguagem de sinais Americana"
@@ -3124,6 +3124,9 @@
 		},
 		"jsl": {
 			"name": "Línguagem de sinais Japonesa"
+		},
+		"hbs": {
+			"name": "Servo-croata"
 		}
 	},
 	"relationship": {
@@ -3142,10 +3145,10 @@
 	},
 	"plans": {
 		"Wt4aFY7jVzvSNFK9qcYAr5": {
-			"name": "Premium (todos os 6 meses)"
+			"name": "Premium (semestral)"
 		},
 		"fBDvWjdgvG6zEZMj6ZfyNG": {
-			"name": "Premium (todos os 3 meses)"
+			"name": "Premium (trimestral)"
 		},
 		"2nAci9TWPaMaYFzVASVgme": {
 			"name": "Early Premium"
@@ -3154,7 +3157,51 @@
 			"name": "Premium (mensal)"
 		},
 		"Di7Sypboma4ryhy6MUagyS": {
-			"name": "Vida"
+			"name": "Vitalício"
+		},
+		"Duk5r7zeKUhqXv5L6P3m3Q": {
+			"name": "Premium promocional"
+		}
+	},
+	"warn-reason": {
+		"V7VcQEiYkiwHr5CHSVx5aS": {
+			"details": "Por favor, atualize sua bio e envie fotos originais do seu avatar em RV para que seu perfil não seja marcado como spam.",
+			"name": "Bio e fotos com spam"
+		},
+		"aUurnuPnvjTwU2W3K5Se7X": {
+			"name": "Foto explícita removida",
+			"details": "Removemos do seu perfil imagens com nudez ou conteúdo sexual explícito. Por favor, envie apenas fotos sem esse tipo de conteúdo."
+		},
+		"MjxDKasduf9iHTctStGzYA": {
+			"name": "Bio explícita",
+			"details": "Por favor, reduza ao mínimo a nudez ou conteúdo sexual explícito na sua bio e remova descrições gráficas ou kinks. Você pode usar as tags de kinks do Flirtual ou os interesses personalizados nas Configurações."
+		},
+		"CnaCPAcsLptyUgVVugubdf": {
+			"name": "Publicidade",
+			"details": "Por favor, reduza o conteúdo publicitário ou promocional do seu perfil. O propósito principal do seu perfil deve ser encontrar pares ou fazer amigos."
+		},
+		"f8v44XrBausmXe6XybTVHd": {
+			"name": "Solicitação",
+			"details": "Por favor, remova qualquer solicitação do seu perfil. Não é permitido no Flirtual pedir dinheiro, mencionar serviços comerciais ou incluir links para eles."
+		},
+		"RdHQQqrswesTTwyh4QZqbH": {
+			"name": "Conteúdo odioso",
+			"details": "Por favor, remova o conteúdo odioso do seu perfil, pois ele viola nossas Diretrizes da Comunidade."
+		},
+		"KNJu36SMz87wA5DrJZyc4L": {
+			"name": "Gentileza e respeito",
+			"details": "Devido a denúncias recentes, pedimos que você trate os outros membros com gentileza e respeito."
+		},
+		"dC6h3tWeZueVwHGKLhC2sk": {
+			"name": "Conta inativa",
+			"details": "Por favor, atualize sua bio se estiver voltando ao Flirtual. Se quiser dar um tempo ou sair do Flirtual, você pode desativar sua conta temporariamente ou excluí-la permanentemente nas Configurações."
+		},
+		"AhPZwBpeTm5HMf96bkVszj": {
+			"name": "Enviar provas",
+			"details": "Por favor, envie mais provas sobre sua denúncia recente. Você pode abrir um ticket em https://hello.flirtu.al ou https://discord.gg/flirtual."
+		},
+		"pDBkaykWpfYk9w7ZfPzMrb": {
+			"name": "Outro"
 		}
 	}
 }

@@ -8,16 +8,15 @@
 ### to merge POT files into PO files.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2025-02-18 01:09+0000\n"
-"Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
-"memory@weblate.org>\n"
+"PO-Revision-Date: 2026-10-24 03:14+0000\n"
+"Last-Translator: Anonymous <anonymous@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/flirtual/"
 "notifications/ja/>\n"
 "Language: ja\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.10.1-dev\n"
+"X-Generator: Weblate 2026.11.dev0\n"
 
 #: lib/flirtual/mailer.ex:39
 #: lib/flirtual/mailer.ex:288
@@ -150,8 +149,7 @@ msgstr ""
 "<p>あなたのFirtualアカウントのEメールアドレスは%{user.email}に変更されました"
 "。</p>\n"
 "\n"
-" "
-"<p>このリクエストを行わなかった場合は、すぐにこのEメールに返信し、アカウント"
+" <p>このリクエストを行わなかった場合は、すぐにこのEメールに返信し、アカウント"
 "を確保してください。</p>"
 
 #: lib/flirtual/user/email.ex:371
@@ -173,9 +171,9 @@ msgid "password_changed.body_html"
 msgstr ""
 "<p></p>\n"
 "\n"
-"<p> <a href=\"#{action_url}\""
-">もし、あなたがこのリクエストをしていないのであれば、 "
-"すぐにパスワードをリセットするか、このメールに返信してください。</a></p>"
+"<p> <a href=\"%{action_url}\">もし、あなたがこのリクエストをしていないのであ"
+"れば、 すぐにパスワードをリセットするか、このメールに返信してください。</a></"
+"p>"
 
 #: lib/flirtual/user/email.ex:350
 #, elixir-autogen, elixir-format, fuzzy
@@ -183,9 +181,8 @@ msgid "password_changed.body_text"
 msgstr ""
 "誰かが、できればあなたが、Firtualアカウントのパスワードを変更しました。\n"
 "\n"
-" このリクエストを行わなかった場合、すぐに %{action_url} "
-"でパスワードをリセットするか、サポートが必要な場合はこのメールに返信してくだ"
-"さい。"
+" このリクエストを行わなかった場合、すぐに %{action_url} でパスワードを"
+"リセットするか、サポートが必要な場合はこのメールに返信してください。"
 
 #: lib/flirtual/user/email.ex:348
 #, elixir-autogen, elixir-format, fuzzy
@@ -202,15 +199,15 @@ msgstr "メッセージ"
 #, elixir-autogen, elixir-format, fuzzy
 msgid "new_match.looking_for_date_ideas"
 msgstr ""
-"デートのアイデアをお探しですか？私たちのDiscordサーバーの#date-"
-"worldsチャンネルをチェックしてください： https://discord.gg/flirtual"
+"デートのアイデアをお探しですか？私たちのDiscordサーバーの#date-worlds"
+"チャンネルをチェックしてください： https://discord.gg/flirtual"
 
 #: lib/flirtual/user/email.ex:182
 #, elixir-autogen, elixir-format, fuzzy
 msgid "new_match.looking_for_date_ideas_html"
 msgstr ""
-"<p>デートのアイデアをお探しですか？<a href=\"https://discord.gg/flirtual\""
-">Discord サーバー</a> の #date-worlds チャンネルをチェックしてください。</p>"
+"<p>デートのアイデアをお探しですか？<a href=\"https://discord.gg/flirtual\">"
+"Discord サーバー</a> の #date-worlds チャンネルをチェックしてください。</p>"
 
 #: lib/flirtual/user/email.ex:195
 #, elixir-autogen, elixir-format, fuzzy
@@ -225,7 +222,8 @@ msgstr "あなたの毎日のプロフィールは準備ができています！
 #: lib/flirtual/user/push.ex:16
 #, elixir-autogen, elixir-format, fuzzy
 msgid "daily_profiles_ready_message"
-msgstr "Flirtualはバーチャルリアリティのためのオンラインデートアプリです。タップして"
+msgstr ""
+"Flirtualはバーチャルリアリティのためのオンラインデートアプリです。タップして"
 "ご覧ください！"
 
 #: lib/flirtual/user/email.ex:171
@@ -259,7 +257,7 @@ msgstr "名前}さんがあなたに「いいね!メッセージを送る"
 #, elixir-autogen, elixir-format, fuzzy
 msgid "someone_liked_you"
 msgid_plural "x_people_liked_you"
-msgstr[0] "今週、%{数}人があなたに「いいね！」をしました！"
+msgstr[0] "今週、%{count}人があなたに「いいね！」をしました！"
 
 #: lib/flirtual/user/email.ex:265
 #: lib/flirtual/user/push.ex:76
@@ -281,10 +279,9 @@ msgstr "プロフィールを閲覧する"
 #, elixir-autogen, elixir-format, fuzzy
 msgid "browse_profiles_to_see_if_its_a_match_html"
 msgstr ""
-"<a href=\"%{action_url}\""
-">プロフィールを閲覧</a>して、マッチするかどうかを確認しましょう。</p> "
-"<p>または<a href=\"https://flirtu.al/subscription\""
-">プレミアムにアップグレード</a>して、誰があなたに好意を持っているかをすぐに確"
+"<a href=\"%{action_url}\">プロフィールを閲覧</a>して、マッチするかどうかを確"
+"認しましょう。</p> <p>または<a href=\"https://flirtu.al/subscription\">"
+"プレミアムにアップグレード</a>して、誰があなたに好意を持っているかをすぐに確"
 "認し、他のマッチを見逃すことはありません。"
 
 #: lib/flirtual/user/email.ex:268
@@ -307,19 +304,38 @@ msgstr "いいねした人を見る"
 #, elixir-autogen, elixir-format, fuzzy
 msgid "this_week_1_person_liked_you"
 msgid_plural "this_week_x_people_liked_you"
-msgstr[0] "今週 "
-"%{count}人がFirtualであなたのプロフィールに「いいね！」または「ホメて」くれま"
-"した！"
+msgstr[0] ""
+"今週 %{count}人がFirtualであなたのプロフィールに「いいね！」または「ホメて」"
+"くれました！"
 
 #: lib/flirtual/user/email.ex:136
 #, elixir-autogen, elixir-format
 msgid "verification_code.body_html"
-msgstr "<p>不審なログインを検出しました。あなたご自身の場合は、以下の確認コードを入力してください：</p>\n\n<p style=\"font-size: 24px; font-weight: bold; letter-spacing: 0.2em; margin: 20px 0;\">%{code}</p>\n\n<p>このコードは15分後に期限切れになります。</p>\n\n<p>あなたではありませんか？Flirtual設定でパスワードを変更してアカウントを保護してください。</p>"
+msgstr ""
+"<p>不審なログインを検出しました。あなたご自身の場合は、以下の確認コードを入力"
+"してください：</p>\n"
+"\n"
+"<p style=\"font-size: 24px; font-weight: bold; letter-spacing: 0.2em; "
+"margin: 20px 0;\">%{code}</p>\n"
+"\n"
+"<p>このコードは15分後に期限切れになります。</p>\n"
+"\n"
+"<p>あなたではありませんか？Flirtual設定でパスワードを変更してアカウントを保護"
+"してください。</p>"
 
 #: lib/flirtual/user/email.ex:135
 #, elixir-autogen, elixir-format
 msgid "verification_code.body_text"
-msgstr "不審なログインを検出しました。あなたご自身の場合は、以下の確認コードを入力してください：\n\n%{code}\n\nこのコードは15分後に期限切れになります。\n\nあなたではありませんか？Flirtual設定でパスワードを変更してアカウントを保護してください。"
+msgstr ""
+"不審なログインを検出しました。あなたご自身の場合は、以下の確認コードを入力し"
+"てください：\n"
+"\n"
+"%{code}\n"
+"\n"
+"このコードは15分後に期限切れになります。\n"
+"\n"
+"あなたではありませんか？Flirtual設定でパスワードを変更してアカウントを保護し"
+"てください。"
 
 #: lib/flirtual/user/email.ex:134
 #, elixir-autogen, elixir-format
@@ -416,4 +432,7 @@ msgstr "Instagram"
 #: lib/flirtual/user/email.ex:31
 #, elixir-autogen, elixir-format
 msgid "suspended.reason.underage"
-msgstr "未成年。Flirtualの利用は18歳以上に限られます。誤ってバンされたと思われる場合は、Flirtualにログインして安全に年齢を確認することで、アカウントを復元できます。"
+msgstr ""
+"未成年。Flirtualの利用は18歳以上に限られます。誤ってバンされたと思われる場合"
+"は、Flirtualにログインして安全に年齢を確認することで、アカウントを復元できま"
+"す。"

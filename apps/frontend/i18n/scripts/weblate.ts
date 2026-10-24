@@ -157,26 +157,34 @@ async function locales(apply: boolean) {
 
 const contextMarker = "— Context from the code —";
 
+// Weblate renders explanations as Markdown, where a bare tag would be swallowed as HTML.
+function code(text: string) {
+	return text.replaceAll(/(?<!`)<\/?[a-z][\w-]*\s*\/?>(?!`)/gi, "`$&`");
+}
+
 function explanation(entry: ContextEntry) {
-	const lines = [
-		`Where: ${entry.screens.join(", ")} (${entry.element})`,
-		entry.description,
-		...Object.entries(entry.placeholders ?? {}).map(([name, value]) => `{${name}}: ${value.meaning}, e.g. "${value.example}"`),
-		...Object.entries(entry.tags ?? {}).map(([name, value]) => `<${name}>: ${value}`),
-		entry.tone && `Tone: ${entry.tone}`,
-		entry.maxLength && `Keep it within about ${entry.maxLength} characters.`,
-		entry.lengthNote,
-		entry.watch && "Also shown on the Apple Watch: no plural or select formatting.",
-		entry.resolved
+	const notes = [
+		...Object.entries(entry.placeholders ?? {}).map(([name, value]) => `- \`{${name}}\`: ${code(value.meaning)}, e.g. "${code(value.example)}"`),
+		...Object.entries(entry.tags ?? {}).map(([name, value]) => `- \`<${name}>\`: ${code(value)}`)
 	];
-	return lines.filter(Boolean).join("\n");
+	const paragraphs = [
+		`**Where:** ${entry.screens.join(", ")} (${entry.element})`,
+		code(entry.description),
+		notes.join("\n"),
+		entry.tone && `**Tone:** ${entry.tone}`,
+		entry.maxLength && `Keep it within about ${entry.maxLength} characters.`,
+		entry.lengthNote && code(entry.lengthNote),
+		entry.watch && "Also shown on the Apple Watch: no plural or select formatting.",
+		entry.resolved && code(entry.resolved)
+	];
+	return paragraphs.filter(Boolean).join("\n\n");
 }
 
 // A maintainer's own explanation is kept verbatim above the generated part.
 function mergeExplanation(current: string, generated: string) {
 	const index = current.indexOf(contextMarker);
 	const human = (index === -1 ? current : current.slice(0, index)).trim();
-	return human ? `${human}\n\n${contextMarker}\n${generated}` : `${contextMarker}\n${generated}`;
+	return human ? `${human}\n\n${contextMarker}\n\n${generated}` : `${contextMarker}\n\n${generated}`;
 }
 
 function withFlag(flags: string, flag: string) {
@@ -187,7 +195,7 @@ function withFlag(flags: string, flag: string) {
 async function context(apply: boolean) {
 	const entries = loadContext();
 	const writes = [];
-	const counts = { explanation: 0, unchanged: 0, readOnly: 0, missing: 0 };
+	const counts = { explanation: 0, unchanged: 0, readOnly: 0, safeHtml: 0, missing: 0 };
 
 	for (const component of componentNames) {
 		// Fresh, so a rerun after a partial failure only writes what's still missing.
@@ -206,6 +214,13 @@ async function context(apply: boolean) {
 				patch.extra_flags = withFlag(source.extraFlags, "read-only");
 				counts.readOnly++;
 			}
+			if (component === "notifications" && key.endsWith("_html")) {
+				const flags = withFlag(patch.extra_flags ?? source.extraFlags, "safe-html");
+				if (flags !== (patch.extra_flags ?? source.extraFlags)) {
+					patch.extra_flags = flags;
+					counts.safeHtml++;
+				}
+			}
 			if (Object.keys(patch).length === 0) {
 				counts.unchanged++;
 				continue;
@@ -214,14 +229,14 @@ async function context(apply: boolean) {
 			writes.push({ label: key, run: () => request("PATCH", `units/${source.unit}/`, patch) });
 		}
 	}
-	console.log(`Source strings: ${counts.explanation} explanations to set, ${counts.readOnly} to mark read-only, ${counts.unchanged} unchanged, ${counts.missing} without context`);
+	console.log(`Source strings: ${counts.explanation} explanations to set, ${counts.readOnly} to mark read-only, ${counts.safeHtml} to flag safe-html, ${counts.unchanged} unchanged, ${counts.missing} without context`);
 	if (apply) await runWrites(writes);
 	else for (const write of writes) console.log(`  ${write.label}`);
 }
 
 function glossaryExplanation(entry: GlossaryEntry) {
 	const forbidden = Object.entries(entry.forbidden ?? {}).map(([locale, terms]) => `${locale === "*" ? "all" : locale}: ${terms!.join(", ")}`);
-	return [entry.note, forbidden.length > 0 && `Never use: ${forbidden.join("; ")}`].filter(Boolean).join("\n");
+	return [entry.note && code(entry.note), forbidden.length > 0 && `Never use: ${forbidden.join("; ")}`].filter(Boolean).join("\n\n");
 }
 
 // Terms typed into Weblate's UI can carry non-breaking spaces ("Homie\u00A0Mode").
@@ -310,7 +325,7 @@ async function drafts(name: string, locales: Array<TargetLocale>, apply: boolean
 		const uploadedPath = join(directory, "uploaded.json");
 		const uploaded = readJson<Record<string, string>>(uploadedPath, {});
 		const pulled = loadPulled(locale);
-		const counts = { empty: 0, replaceMachine: 0, suggestion: 0, comment: 0, same: 0, unavailable: 0, done: 0 };
+		const counts = { empty: 0, replaceMachine: 0, suggestion: 0, comment: 0, same: 0, unavailable: 0, readOnly: 0, done: 0 };
 		const writes = [];
 
 		for (const [key, draft] of Object.entries(staged) as Array<[Id, StagedDraft]>) {
@@ -323,6 +338,10 @@ async function drafts(name: string, locales: Array<TargetLocale>, apply: boolean
 			}
 			if (!unit) {
 				counts.unavailable++;
+				continue;
+			}
+			if (unit.state === states.readOnly) {
+				counts.readOnly++;
 				continue;
 			}
 			if (unit.target.join("\u001E") === target.join("\u001E")) {
@@ -362,7 +381,7 @@ async function drafts(name: string, locales: Array<TargetLocale>, apply: boolean
 			} });
 		}
 
-		console.log(`${locale}: ${counts.empty} new (needs editing), ${counts.replaceMachine} replacing machine text (needs editing), ${counts.suggestion} suggestions on human text, ${counts.comment} review comments, ${counts.same} unchanged, ${counts.done} already uploaded, ${counts.unavailable} not in Weblate`);
+		console.log(`${locale}: ${counts.empty} new (needs editing), ${counts.replaceMachine} replacing machine text (needs editing), ${counts.suggestion} suggestions on human text, ${counts.comment} review comments, ${counts.same} unchanged, ${counts.done} already uploaded, ${counts.unavailable} not in Weblate, ${counts.readOnly} read-only`);
 		if (apply) {
 			try {
 				await runWrites(writes);
