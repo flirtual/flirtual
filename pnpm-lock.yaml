@@ -381,7 +381,7 @@ importers:
         version: 2.2.0(react@19.3.1)
       '@marsidev/react-turnstile':
         specifier: ^1.5.3
-        version: 1.6.2(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        version: 1.6.3(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@posthog/react':
         specifier: ^1.10.3
         version: 1.11.3(@types/react@19.3.0)(posthog-js@1.438.13(@types/react@19.3.0)(react@19.3.1))(react@19.3.1)
@@ -2800,8 +2800,8 @@ packages:
     resolution: {integrity: sha512-XGSsWDweP80Fks16lwkAUIr54ICyBs6PsI4mpfTLQaWgEJRtY9xEV+PeyDpJ+sJEGZxqINlpmAwe/6tS1pP8Ng==}
     engines: {node: '>=10.3.0'}
 
-  '@marsidev/react-turnstile@1.6.2':
-    resolution: {integrity: sha512-0CL9hNI/t39C8JfBCHQWj+A7llq2xdf9cjg0bYVbiywQlVS0bi1LTTTnF3S59OaBYgc+tMrxMedSDICJfaAkdg==}
+  '@marsidev/react-turnstile@1.6.3':
+    resolution: {integrity: sha512-JdMMArjEVDMs5jnGMBeXl3y6dkMuIXPG4Tu88Uo2Rkf8ujEw/iJ2Yp/3n4kDF3BjJ+bJB9WC19LPWc5a7/4srA==}
     peerDependencies:
       react: ^17.0.2 || ^18.0.0 || ^19.0
       react-dom: ^17.0.2 || ^18.0.0 || ^19.0
@@ -3895,18 +3895,6 @@ packages:
 
   '@pulumi/postgresql@3.18.2':
     resolution: {integrity: sha512-faBHtgPkSsDSlw+GL5GAYEnfHLJ6pFpMptEK6SD0SP+2DT7hZnALN2/jHk+GZUz0140gMJV6dC3RJGuuVn312g==}
-
-  '@pulumi/pulumi@3.270.0':
-    resolution: {integrity: sha512-k2GSGtoP2yrkIe4r+1YvyKL6k7mM6SYnySv6tSzGrv/oTY7WemEmvNEvn7Qd/JbkCMmYeBhWULDS5qB9qpvgkg==}
-    engines: {node: '>=22'}
-    peerDependencies:
-      ts-node: '>= 7.0.1 < 12'
-      typescript: '>= 3.8.3 < 7'
-    peerDependenciesMeta:
-      ts-node:
-        optional: true
-      typescript:
-        optional: true
 
   '@pulumi/pulumi@3.271.0':
     resolution: {integrity: sha512-5Ol0JIf0vCbiFj1j3r0hvdaCSCbCURhfOxpNvTsE1qhjJS3m665UG1qO3HKrB6T9mD7OzgcD1y4PbL6EGl0gjg==}
@@ -11258,7 +11246,7 @@ snapshots:
 
   '@logdna/tail-file@2.2.0': {}
 
-  '@marsidev/react-turnstile@1.6.2(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
+  '@marsidev/react-turnstile@1.6.3(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
     dependencies:
       react: 19.3.1
       react-dom: 19.3.1(react@19.3.1)
@@ -12000,7 +11988,7 @@ snapshots:
 
   '@pulumi/apple@file:pulumi/sdks/apple(supports-color@10.2.2)':
     dependencies:
-      '@pulumi/pulumi': 3.270.0(supports-color@10.2.2)(typescript@4.9.5)
+      '@pulumi/pulumi': 3.271.0(supports-color@10.2.2)(typescript@4.9.5)
       '@types/node': 20.19.43
       typescript: 4.9.5
     transitivePeerDependencies:
@@ -12034,7 +12022,7 @@ snapshots:
 
   '@pulumi/discord@file:pulumi/sdks/discord(supports-color@10.2.2)':
     dependencies:
-      '@pulumi/pulumi': 3.270.0(supports-color@10.2.2)(typescript@4.9.5)
+      '@pulumi/pulumi': 3.271.0(supports-color@10.2.2)(typescript@4.9.5)
       '@types/node': 20.19.43
       typescript: 4.9.5
     transitivePeerDependencies:
@@ -12043,7 +12031,7 @@ snapshots:
 
   '@pulumi/freshdesk@file:pulumi/sdks/freshdesk(supports-color@10.2.2)':
     dependencies:
-      '@pulumi/pulumi': 3.270.0(supports-color@10.2.2)(typescript@4.9.5)
+      '@pulumi/pulumi': 3.271.0(supports-color@10.2.2)(typescript@4.9.5)
       '@types/node': 20.19.43
       typescript: 4.9.5
     transitivePeerDependencies:
@@ -12067,7 +12055,7 @@ snapshots:
       - ts-node
       - typescript
 
-  '@pulumi/pulumi@3.270.0(supports-color@10.2.2)(typescript@4.9.5)':
+  '@pulumi/pulumi@3.271.0(supports-color@10.2.2)(typescript@4.9.5)':
     dependencies:
       '@grpc/grpc-js': 1.14.5
       '@logdna/tail-file': 2.2.0
@@ -12141,7 +12129,7 @@ snapshots:
 
   '@pulumi/sentry@file:pulumi/sdks/sentry(supports-color@10.2.2)':
     dependencies:
-      '@pulumi/pulumi': 3.270.0(supports-color@10.2.2)(typescript@4.9.5)
+      '@pulumi/pulumi': 3.271.0(supports-color@10.2.2)(typescript@4.9.5)
       '@types/node': 20.19.43
       typescript: 4.9.5
     transitivePeerDependencies:
