@@ -223,7 +223,7 @@ async function shoot(browser: Browser, base: string, apiOrigin: string, name: st
 
 async function capture(base: string, apiOrigin: string, only: Set<string> | null) {
 	const { chromium } = await import("playwright-core");
-	const planned = new Set(readJson<Array<Screen>>(planPath).map((screen) => screen.name).filter((name) => !only || only.has(name)));
+	const planned = only ?? new Set(readJson<Array<Screen>>(planPath).map((screen) => screen.name));
 	for (const name of planned) {
 		if (!scenarios[name]) console.log(`No scenario for "${name}"; add one to i18n/scripts/screens.ts.`);
 	}

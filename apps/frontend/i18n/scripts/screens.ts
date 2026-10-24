@@ -124,6 +124,31 @@ async function profileId(request: APIRequestContext, apiOrigin: string, slug: st
 	return { userId: user.id };
 }
 
+// The team list shows real people; keep one member per role, renamed to sample profiles with
+// initials for avatars. Runs in the page.
+function sampleTeam() {
+	const names = ["Alice Samples", "Placeholder Bob", "Zark Muckerberg", "Carol Tourist", "Dave Limits", "Erin Filler", "Frank Filler", "Grace Filler", "Demo Dumpling"];
+	const members = [...document.querySelectorAll("div.flex.items-center.gap-4")]
+		.filter((member) => member.querySelector(":scope > img") && member.querySelector(":scope > div > .font-montserrat"));
+	const roles = new Set<string>();
+	for (const member of members) {
+		const role = member.querySelector(":scope > div > span:not(.font-montserrat)")!.textContent!.trim();
+		if (roles.has(role)) {
+			member.remove();
+			continue;
+		}
+		roles.add(role);
+		const name = names[roles.size - 1];
+		const label = member.querySelector(".font-montserrat")!;
+		const image = member.querySelector("img")!;
+		image.alt = image.alt.replace(label.textContent!, name);
+		label.textContent = name;
+		const initials = name.split(" ").map((word) => word[0]).join("");
+		image.removeAttribute("srcset");
+		image.src = `data:image/svg+xml,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="g" x2="1" y2="1"><stop stop-color="#ff8975"/><stop offset="1" stop-color="#e9658b"/></linearGradient></defs><rect width="64" height="64" fill="url(#g)"/><text x="32" y="40" font-family="sans-serif" font-size="22" font-weight="700" fill="#fff" text-anchor="middle">${initials}</text></svg>`)}`;
+	}
+}
+
 const watchReason = "watchOS app: needs an iPhone and a paired watch simulator running together, signed in through the iOS app's WatchConnectivity cookie handoff.";
 
 export const scenarios: Record<string, ManualScreen | Scenario> = {
@@ -136,6 +161,43 @@ export const scenarios: Record<string, ManualScreen | Scenario> = {
 			await page.waitForTimeout(1500);
 		}
 	},
+	...Object.fromEntries([0, 1, 2, 3, 4].map((tile): [string, Scenario] => [`/ (tile ${tile + 1})`, {
+		fullPage: false,
+		async run({ page, open }) {
+			await open("/");
+			await page.locator(`[data-tile="${tile}"]`).scrollIntoViewIfNeeded();
+			await page.waitForTimeout(1500);
+		}
+	}])),
+	// Every fifth squeak shows the next of Flitty's lines as a toast; the first is "Meow!".
+	"/ (Flitty)": {
+		fullPage: false,
+		async run({ page, open }) {
+			await open("/");
+			// Flitty peeks out from behind the button on hover.
+			const button = page.locator("[data-tile='0'] .group\\/mark").first();
+			await button.hover();
+			await page.waitForTimeout(500);
+			await button.locator(":scope > svg").click({ force: true });
+			await page.getByText("Meow!").waitFor();
+			await page.waitForTimeout(600);
+		}
+	},
+	// The team list in the middle of the window, with the page around it.
+	"/about": {
+		fullPage: false,
+		async run({ page, open }) {
+			await open("/about");
+			await page.evaluate(sampleTeam);
+			await waitForImages(page);
+			const team = await page.locator("section").filter({ has: page.getByRole("heading", { name: "The team" }) }).boundingBox();
+			const scrolled = await page.evaluate(() => scrollY);
+			await page.evaluate((top) => scrollTo(0, top), scrolled + team!.y + team!.height / 2 - defaultViewport.height / 2);
+			await page.waitForTimeout(800);
+		}
+	},
+	"/events": { run: ({ open }) => open("/events") },
+	"/privacy": { run: ({ open }) => open("/privacy") },
 	"/login": { run: ({ open }) => open("/login") },
 	"/sign-up": { run: ({ open }) => open("/sign-up") },
 	"/download": { run: ({ open }) => open("/download") },
@@ -194,6 +256,8 @@ export const scenarios: Record<string, ManualScreen | Scenario> = {
 	// social links) is the phone layout.
 	"/settings": { account: "viewer", viewport: phoneViewport, fullPage: false, run: ({ open }) => open("/settings") },
 	"/settings/appearance": { account: "viewer", run: ({ open }) => open("/settings/appearance") },
+	"/settings/connections": { account: "viewer", run: ({ open }) => open("/settings/connections") },
+	"/settings/email": { account: "viewer", run: ({ open }) => open("/settings/email") },
 	"/settings/delete": {
 		account: "viewer",
 		fullPage: false,
