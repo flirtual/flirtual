@@ -53,6 +53,30 @@ Cross-app pipeline (frontend Worker + API + image-classification):
 
 R2 layout: originals at `uploads.flirtual.com/[key]`, variants at `[key]/[variant].jpg` (`thumb`, `icon`, `avatar`).
 
+## Branding and feature flags
+
+Flirtual is also the upstream for other apps, so brand values and some features come from env
+vars, read separately by each app:
+
+- **Brand**: `VITE_BRAND_*` → `apps/frontend/src/brand.ts` (defaults in `src/brand.defaults.json`,
+  also read by tailwind, vite, capacitor, gradle and watchOS); `BRAND_*` → `Flirtual.Brand`
+  (defaults in `config/runtime.exs`). Only the name, colours, background and logo prefix have
+  defaults. `VITE_BRAND_ASSET_DOMAIN` and `VITE_BRAND_REPOSITORY_URL` (AGPL) are required; every
+  other value is optional, and whatever links to an unset one must disappear, not break.
+- **Flags**: `VITE_FEATURE_*` → `src/features.ts`; `FEATURE_*` → `Flirtual.Features`. Homie Mode,
+  personality, VR tags (platform + game), VRChat, and the list of connection providers.
+- **The rule**: a flag gates what the UI offers and what new writes may use. It never shrinks a
+  wire type or `Ecto.Enum` (queue kinds, connection types, advanced filter categories), because
+  rows written before a flip must still load. Data in a disabled feature is ignored, not rejected
+  or deleted, so forms that send it back still save; hence paired accessors like `Queue.kinds/0`
+  vs `all_kinds/0`.
+- **Where flags are checked**: in API controllers, never around routes in `router.ex` (runtime
+  config loads after the router compiles). `src/features.ts` stays import-free because `routes.ts`
+  loads it where `~/` doesn't resolve.
+- **Native**: xcodebuild doesn't read shell env vars, so `ios.yaml` passes brand and flag values
+  as build settings (watchOS and visionOS read them from Info.plist); Android takes the brand
+  colour as a gradle `resValue`. Mobile workflows only see repository-level variables.
+
 ## Development workflow
 
 - **Backend**: edit Elixir (hot reload) → `mix check` → test with curl.

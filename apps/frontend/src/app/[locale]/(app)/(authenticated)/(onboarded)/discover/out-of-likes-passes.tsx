@@ -6,6 +6,7 @@ import { ButtonLink } from "~/components/button";
 import { DialogBody, DialogDescription, DialogHeader, DialogTitle } from "~/components/dialog/dialog";
 import { DrawerOrDialog } from "~/components/drawer-or-dialog";
 import { InlineLink } from "~/components/inline-link";
+import { homieMode } from "~/features";
 import { useLocationChanged } from "~/hooks/use-location-changed";
 import { urls } from "~/urls";
 
@@ -49,7 +50,7 @@ export const OutOfLikesPasses: FC<OutOfLikesPassesProps> = ({ mode, resetAt, res
 										i18nKey="cozy_such_jannes_laugh"
 									/>
 								</p>
-								{mode === "love" && (
+								{homieMode && mode === "love" && (
 									<p>
 										<Trans
 											components={{

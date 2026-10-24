@@ -1,0 +1,641 @@
+{
+	"$comment": "Source of truth for terminology, synced to the Weblate glossary by `weblate.ts glossary`. `match` is a regex over the English (flags in `matchFlags`); `terms[locale].term` is required when it matches (validator warning), `forbidden` substrings are validator errors. `status`: decided (maintainer), provisional (maintainer, awaiting a native reviewer), proposed (Claude, unconfirmed).",
+	"entries": [
+		{
+			"id": "flirtual",
+			"en": "Flirtual",
+			"note": "The app's name. Never translate, transliterate or inflect it in a way that changes its spelling.",
+			"untranslatable": true,
+			"match": "\\bFlirtual\\b",
+			"forbidden": {
+				"ja": [
+					"フラーチュアル",
+					"フラーチャル"
+				],
+				"ko": [
+					"플러추얼",
+					"플러티얼"
+				],
+				"ru": [
+					"Флиртуал"
+				]
+			}
+		},
+		{
+			"id": "flitty",
+			"en": "Flitty",
+			"note": "Flirtual's cat mascot (the homepage cat, and the April Fools 2025 dating assistant). A name: keep it in Latin script.",
+			"untranslatable": true,
+			"match": "\\bFlitty\\b"
+		},
+		{
+			"id": "vrchat",
+			"en": "VRChat",
+			"note": "Social VR platform. Platform and product names stay in Latin script everywhere.",
+			"untranslatable": true,
+			"match": "\\bVRChat\\b"
+		},
+		{
+			"id": "meta-quest",
+			"en": "Meta Quest",
+			"note": "VR headset brand. Keep in Latin script.",
+			"untranslatable": true,
+			"match": "\\bMeta Quest\\b"
+		},
+		{
+			"id": "discord",
+			"en": "Discord",
+			"note": "Chat app. Keep in Latin script.",
+			"untranslatable": true,
+			"match": "\\bDiscord\\b"
+		},
+		{
+			"id": "steam",
+			"en": "Steam",
+			"note": "PC game store. Keep in Latin script.",
+			"untranslatable": true,
+			"match": "\\bSteam\\b"
+		},
+		{
+			"id": "early-premium",
+			"en": "Early Premium",
+			"note": "Legacy plan name, only visible to early English-speaking subscribers. Keep exactly as-is in every locale, including ja/ko.",
+			"untranslatable": true,
+			"match": "\\bEarly Premium\\b"
+		},
+		{
+			"id": "premium",
+			"en": "Premium",
+			"note": "Flirtual's paid subscription (\"Flirtual Premium\"). Latin-script locales keep \"Premium\" unchanged (no accents or respelling). ru keeps the Latin product name; lowercase \"премиум\" is fine as an ordinary adjective in running text.",
+			"match": "\\bPremium\\b",
+			"status": "decided",
+			"terms": {
+				"de": {
+					"term": "Premium"
+				},
+				"es": {
+					"term": "Premium",
+					"forbidden": [
+						"Prémium"
+					]
+				},
+				"fr": {
+					"term": "Premium",
+					"forbidden": [
+						"Prémium"
+					]
+				},
+				"nl": {
+					"term": "Premium"
+				},
+				"pt": {
+					"term": "Premium",
+					"forbidden": [
+						"Prémio"
+					]
+				},
+				"pt-BR": {
+					"term": "Premium"
+				},
+				"ru": {
+					"term": "Premium",
+					"alternatives": [
+						"премиум"
+					]
+				},
+				"sv": {
+					"term": "Premium"
+				},
+				"ja": {
+					"term": "プレミアム",
+					"note": "プレミアム会員 where it refers to subscribers",
+					"status": "provisional"
+				},
+				"ko": {
+					"term": "프리미엄",
+					"status": "provisional"
+				}
+			}
+		},
+		{
+			"id": "homie-mode",
+			"en": "Homie Mode",
+			"note": "Flirtual's friend-finding mode (green theme), as opposed to Date Mode. Never keep the English \"Homie\" and never transliterate it. Use the mode name consistently everywhere, including news and help copy.",
+			"match": "\\bHomie Mode\\b",
+			"status": "decided",
+			"terms": {
+				"de": {
+					"term": "Kumpel-Modus"
+				},
+				"es": {
+					"term": "Modo Amigos"
+				},
+				"fr": {
+					"term": "Mode Potes"
+				},
+				"nl": {
+					"term": "Maatjesmodus"
+				},
+				"pt": {
+					"term": "Modo Amigos",
+					"status": "provisional"
+				},
+				"pt-BR": {
+					"term": "Modo Amigos"
+				},
+				"ru": {
+					"term": "Режим друзей",
+					"status": "provisional"
+				},
+				"sv": {
+					"term": "Kompisläge"
+				},
+				"ja": {
+					"term": "友活モード",
+					"status": "provisional"
+				},
+				"ko": {
+					"term": "친구 모드",
+					"status": "provisional"
+				}
+			},
+			"forbidden": {
+				"ja": [
+					"ホーミー",
+					"Homie"
+				],
+				"ko": [
+					"호미",
+					"Homie"
+				],
+				"pt": [
+					"amigar",
+					"amigou",
+					"amigando"
+				],
+				"*": [
+					"Homie"
+				]
+			}
+		},
+		{
+			"id": "homie",
+			"en": "Homie",
+			"note": "The browse action/button that signals friend interest (pairs with Like for romantic interest). Also used as a noun (\"Send a Homie\") and verb (\"homied you\"). Phrase so no gender agreement is needed; fr: no inclusive writing (point médian), rephrase instead (« veut être pote avec toi »).",
+			"match": "\\b[Hh]omie(?:d|s|-ing)?\\b(?! Mode)",
+			"status": "decided",
+			"terms": {
+				"de": {
+					"term": "Kumpel"
+				},
+				"es": {
+					"term": "Amistad",
+					"note": "Button; lists use Amigos. Spain and Latin America.",
+					"status": "provisional"
+				},
+				"fr": {
+					"term": "Pote"
+				},
+				"nl": {
+					"term": "Maatje"
+				},
+				"pt": {
+					"term": "Amizade",
+					"note": "Button; verb phrasing with \"fazer amizade\" (\"quer fazer amizade contigo\"); lists use Amigos",
+					"status": "provisional"
+				},
+				"pt-BR": {
+					"term": "Amigar",
+					"note": "Verb (amigar, amigou); lists use Amigos",
+					"status": "provisional"
+				},
+				"ru": {
+					"term": "Дружить",
+					"note": "Button is the verb; \"хочет дружить с вами\"",
+					"status": "provisional"
+				},
+				"sv": {
+					"term": "Kompis"
+				},
+				"ja": {
+					"term": "友達",
+					"note": "「友達申請を送る」「{name}さんが友達になりたがっています」",
+					"status": "provisional"
+				},
+				"ko": {
+					"term": "친구",
+					"status": "provisional"
+				}
+			},
+			"forbidden": {
+				"ja": [
+					"ホーミー"
+				],
+				"ko": [
+					"호미"
+				],
+				"pt": [
+					"amigar",
+					"amigou",
+					"amigando"
+				]
+			},
+			"acceptAlso": [
+				"homies-tab"
+			]
+		},
+		{
+			"id": "date-mode",
+			"en": "Date Mode",
+			"note": "The dating mode (pink theme). Covers everything from long-term relationships to casual dating; describe it broadly, never as serious-relationships-only or as casual-hookups-only.",
+			"match": "\\bDate Mode\\b",
+			"status": "provisional",
+			"terms": {
+				"de": {
+					"term": "Dating-Modus"
+				},
+				"es": {
+					"term": "Modo Citas"
+				},
+				"fr": {
+					"term": "Mode Rencontres"
+				},
+				"nl": {
+					"term": "Datingmodus"
+				},
+				"pt": {
+					"term": "Modo Encontros"
+				},
+				"pt-BR": {
+					"term": "Modo Encontros"
+				},
+				"ru": {
+					"term": "Режим свиданий"
+				},
+				"sv": {
+					"term": "Dejtingläge"
+				},
+				"ja": {
+					"term": "恋活モード",
+					"status": "provisional"
+				},
+				"ko": {
+					"term": "데이트 모드",
+					"status": "provisional"
+				}
+			},
+			"forbidden": {
+				"ru": [
+					"Режим знакомств"
+				],
+				"ja": [
+					"デートモード"
+				]
+			}
+		},
+		{
+			"id": "homies-tab",
+			"en": "Homies",
+			"note": "Tab and list label for Homie Mode browsing (the native tab bar and the Homies tab). Pairs with the Dates tab.",
+			"match": "^Homies$",
+			"status": "provisional",
+			"terms": {
+				"ja": {
+					"term": "友活",
+					"note": "Short form of 友活モード; pairs with 恋活",
+					"status": "provisional"
+				}
+			}
+		},
+		{
+			"id": "dates-tab",
+			"en": "Dates",
+			"note": "Tab label for Date Mode browsing. Pairs with the Homies tab. Never calendar dates.",
+			"match": "^Dates$",
+			"status": "provisional",
+			"terms": {
+				"ja": {
+					"term": "恋活",
+					"note": "Short form of 恋活モード; pairs with 友活",
+					"status": "provisional"
+				}
+			}
+		},
+		{
+			"id": "pass",
+			"en": "Pass",
+			"note": "The browse action/button that skips a profile without liking it.",
+			"match": "\\bPass(?:ed)?\\b|\\bpassed on\\b",
+			"status": "provisional",
+			"terms": {
+				"ja": {
+					"term": "スキップ",
+					"status": "provisional"
+				}
+			}
+		},
+		{
+			"id": "like",
+			"en": "Like",
+			"note": "The browse action/button that signals romantic interest; if both people Like (or Homie) each other, it's a match. Not the general verb \"to like\". Capitalized in English when it means the action.",
+			"match": "\\bLiked?\\b|\\bLikes You\\b",
+			"matchFlags": "",
+			"status": "provisional",
+			"terms": {
+				"de": {
+					"term": "Like",
+					"status": "provisional"
+				},
+				"es": {
+					"term": "Me gusta",
+					"status": "provisional"
+				},
+				"fr": {
+					"term": "Like",
+					"status": "provisional"
+				},
+				"nl": {
+					"term": "Like",
+					"status": "provisional"
+				},
+				"pt": {
+					"term": "Gosto",
+					"status": "provisional"
+				},
+				"pt-BR": {
+					"term": "Curtir",
+					"alternatives": [
+						"curtida",
+						"curtiu",
+						"curtiram"
+					],
+					"status": "provisional"
+				},
+				"ru": {
+					"term": "Нравится",
+					"status": "provisional"
+				},
+				"sv": {
+					"term": "Gilla",
+					"status": "provisional"
+				},
+				"ja": {
+					"term": "いいね",
+					"status": "provisional"
+				},
+				"ko": {
+					"term": "좋아요",
+					"status": "provisional"
+				}
+			}
+		},
+		{
+			"id": "match",
+			"en": "match",
+			"note": "Two people who both Liked/Homied each other; also the verb (\"you matched\").",
+			"match": "\\bmatch(?:es|ed)?\\b",
+			"status": "provisional",
+			"terms": {
+				"ja": {
+					"term": "マッチング",
+					"note": "「マッチングしました」",
+					"status": "provisional"
+				},
+				"ko": {
+					"term": "매칭",
+					"status": "provisional"
+				}
+			}
+		},
+		{
+			"id": "matchmaking",
+			"en": "matchmaking",
+			"note": "Flirtual's process of suggesting profiles.",
+			"match": "\\bmatchmaking\\b",
+			"status": "provisional",
+			"terms": {
+				"ja": {
+					"term": "マッチング",
+					"status": "provisional"
+				},
+				"ko": {
+					"term": "매칭",
+					"status": "provisional"
+				}
+			},
+			"forbidden": {
+				"ja": [
+					"マッチメイキング"
+				],
+				"ko": [
+					"매치메이킹"
+				]
+			}
+		},
+		{
+			"id": "dating-app",
+			"en": "dating app",
+			"note": "What Flirtual is.",
+			"match": "\\bdating apps?\\b",
+			"status": "provisional",
+			"terms": {
+				"ja": {
+					"term": "マッチングアプリ",
+					"status": "provisional"
+				},
+				"ko": {
+					"term": "데이팅 앱",
+					"status": "provisional"
+				}
+			},
+			"forbidden": {
+				"ja": [
+					"出会い系",
+					"デーティングアプリ"
+				],
+				"ko": [
+					"만남 앱",
+					"랜덤채팅"
+				]
+			}
+		},
+		{
+			"id": "bio",
+			"en": "bio",
+			"note": "The free-text \"about me\" section of a profile.",
+			"match": "\\b[Bb]io(?:graphy)?\\b",
+			"status": "provisional",
+			"terms": {
+				"ja": {
+					"term": "自己紹介",
+					"status": "provisional"
+				},
+				"ko": {
+					"term": "자기소개",
+					"status": "provisional"
+				}
+			},
+			"forbidden": {
+				"ja": [
+					"バイオ"
+				],
+				"ko": [
+					"바이오"
+				]
+			}
+		},
+		{
+			"id": "prompt",
+			"en": "prompt",
+			"note": "Profile prompts: questions users answer on their profile (e.g. \"My ideal date…\").",
+			"match": "\\b[Pp]rompts?\\b",
+			"status": "provisional",
+			"terms": {
+				"ja": {
+					"term": "質問",
+					"alternatives": [
+						"お題"
+					],
+					"status": "provisional"
+				},
+				"ko": {
+					"term": "질문",
+					"status": "provisional"
+				}
+			},
+			"forbidden": {
+				"ja": [
+					"プロンプト"
+				],
+				"ko": [
+					"프롬프트"
+				]
+			}
+		},
+		{
+			"id": "tap",
+			"en": "tap / click",
+			"note": "ja/ko say \"tap\", never \"click\", for pressing buttons.",
+			"match": "\\b(?:[Cc]lick|[Tt]ap)(?:ing|ed|s)?\\b",
+			"status": "provisional",
+			"terms": {
+				"ja": {
+					"term": "タップ",
+					"status": "provisional"
+				},
+				"ko": {
+					"term": "탭",
+					"status": "provisional"
+				}
+			},
+			"forbidden": {
+				"ja": [
+					"クリック"
+				],
+				"ko": [
+					"클릭"
+				]
+			}
+		},
+		{
+			"id": "nsfw",
+			"en": "NSFW",
+			"note": "Sense 1: the opt-in adult feature (kink and dom/sub tags and settings). Keep \"NSFW\"/\"SFW\" in Latin-script locales; ja/ko use a native term. For sense 2 (disallowed content) see nsfw-moderation.",
+			"match": "\\bN?SFW\\b",
+			"acceptAlso": [
+				"nsfw-moderation"
+			],
+			"status": "decided",
+			"terms": {
+				"de": {
+					"term": "NSFW"
+				},
+				"es": {
+					"term": "NSFW"
+				},
+				"fr": {
+					"term": "NSFW"
+				},
+				"nl": {
+					"term": "NSFW"
+				},
+				"pt": {
+					"term": "NSFW"
+				},
+				"pt-BR": {
+					"term": "NSFW"
+				},
+				"ru": {
+					"term": "NSFW"
+				},
+				"sv": {
+					"term": "NSFW"
+				},
+				"ja": {
+					"term": "R-18",
+					"note": "R-18タグ, R-18設定; SFW is 全年齢",
+					"alternatives": [
+						"全年齢"
+					],
+					"status": "provisional"
+				},
+				"ko": {
+					"term": "19금",
+					"note": "19금 태그, 19금 설정; SFW is 전체이용가",
+					"alternatives": [
+						"전체이용가"
+					],
+					"status": "provisional"
+				}
+			}
+		},
+		{
+			"id": "nsfw-moderation",
+			"en": "NSFW content (not allowed)",
+			"note": "Sense 2: explicit sexual content or nudity that the rules forbid (Community Guidelines, profile rules, moderation notices). Use wording a non-internet-savvy reader can't misread; a descriptive phrase is fine. ja never uses R-18 here, ko never uses 19금 here.",
+			"status": "decided",
+			"terms": {
+				"de": {
+					"term": "Nacktheit oder explizite sexuelle Inhalte",
+					"status": "provisional"
+				},
+				"es": {
+					"term": "desnudos o contenido sexual explícito",
+					"status": "provisional"
+				},
+				"fr": {
+					"term": "nudité ou contenu sexuel explicite",
+					"status": "provisional"
+				},
+				"nl": {
+					"term": "naakt of expliciet seksuele inhoud",
+					"status": "provisional"
+				},
+				"pt": {
+					"term": "nudez ou conteúdo sexual explícito",
+					"status": "provisional"
+				},
+				"pt-BR": {
+					"term": "nudez ou conteúdo sexual explícito",
+					"status": "provisional"
+				},
+				"ru": {
+					"term": "обнажённость или откровенный сексуальный контент",
+					"status": "provisional"
+				},
+				"sv": {
+					"term": "nakenhet eller explicit sexuellt innehåll",
+					"status": "provisional"
+				},
+				"ja": {
+					"term": "裸や露骨な性的表現",
+					"status": "provisional"
+				},
+				"ko": {
+					"term": "노출이나 선정적인 콘텐츠",
+					"status": "provisional"
+				}
+			}
+		}
+	]
+}

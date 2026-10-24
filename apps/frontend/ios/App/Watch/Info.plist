@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- Merged into the generated plist. ios.yaml passes these as xcodebuild build settings. -->
+<plist version="1.0">
+<dict>
+	<key>BrandDateColors</key>
+	<string>$(VITE_BRAND_DATE_COLORS)</string>
+	<key>BrandHomieColors</key>
+	<string>$(VITE_BRAND_HOMIE_COLORS)</string>
+	<key>FeatureHomieMode</key>
+	<string>$(VITE_FEATURE_HOMIE_MODE)</string>
+	<key>FeaturePersonality</key>
+	<string>$(VITE_FEATURE_PERSONALITY)</string>
+	<key>FeatureVRTags</key>
+	<string>$(VITE_FEATURE_VR_TAGS)</string>
+</dict>
+</plist>

@@ -18,11 +18,12 @@ import Icon32x32 from "virtual:remote/0d4ca725-5c21-45f6-a08c-63b9e990f0dd?no-in
 import Icon from "virtual:remote/21bbde80-1a5d-4138-addf-6d5ac38356c8.svg?no-inline";
 import Icon16x16 from "virtual:remote/89951afc-3afd-47df-bb6d-5aec235b30c4?no-inline";
 import Favicon from "virtual:remote/b4c0e29e-4055-4924-8ddf-adee9bc505c3?no-inline";
+import MarkBackground from "virtual:remote/brand/mark-background.png?no-inline";
 import AppleIcon from "virtual:remote/e7a99a6d-7299-4754-af73-b2eae55f969c?no-inline";
-import MarkBackground from "virtual:remote/flirtual-mark-background.png?no-inline";
 
 import type { Route } from "./+types/root";
 import { App } from "./app";
+import * as brand from "./brand";
 import { isAppOutdated } from "./capacitor";
 import { HavingIssuesViewport } from "./components/error";
 import { Loading } from "./components/loading";
@@ -39,6 +40,7 @@ import {
 	preview,
 	siteOrigin
 } from "./const";
+import { homieMode } from "./features";
 import { useDeepLinks } from "./hooks/use-deep-links";
 import { device } from "./hooks/use-device";
 import { useKeyboardVisible } from "./hooks/use-keyboard-visible";
@@ -88,21 +90,21 @@ export function meta({
 	return [
 		...document,
 
-		{ title: t("flirtual") },
+		{ title: brand.name },
 		{ name: "description", content: t("knotty_direct_mongoose_bend") },
 
 		{ name: "theme-color", media: "(prefers-color-scheme: light)", content: "#ffffff" },
 		{ name: "theme-color", media: "(prefers-color-scheme: dark)", content: "#111111" },
 
 		{ name: "twitter:card", content: "summary" },
-		{ name: "twitter:site", content: `@${urls.socials.x.split("x.com/")[1]}` },
-		{ name: "twitter:title", content: t("flirtual") },
+		urls.socials.x && { name: "twitter:site", content: `@${urls.socials.x.split("x.com/")[1]}` },
+		{ name: "twitter:title", content: brand.name },
 		{ name: "twitter:description", content: t("green_plain_mongoose_lend") },
 		{ name: "twitter:image:type", content: "image/png" },
 		{ name: "twitter:image:width", content: 1000 },
 		{ name: "twitter:image:height", content: 1000 },
 		{ name: "twitter:image", content: MarkBackground },
-		{ property: "og:title", content: t("flirtual") },
+		{ property: "og:title", content: brand.name },
 		{ property: "og:description", content: t("green_plain_mongoose_lend") },
 		{ property: "og:image:type", content: "image/png" },
 		{ property: "og:image:width", content: 1000 },
@@ -110,14 +112,14 @@ export function meta({
 		{ property: "og:image", content: MarkBackground },
 		{ property: "og:type", content: "website" },
 
-		{ name: "application-name", content: t("flirtual") },
+		{ name: "application-name", content: brand.name },
 		{ name: "category", content: "technology" },
-		{ name: "msapplication-TileColor", content: "#e9658b" },
+		{ name: "msapplication-TileColor", content: brand.accentColor },
 
 		{ name: "mobile-web-app-capable", content: "yes" },
 
 		{ name: "apple-itunes-app", content: `app-id=${appStoreId}` },
-		{ name: "apple-mobile-web-app-title", content: t("flirtual") },
+		{ name: "apple-mobile-web-app-title", content: brand.name },
 		{ name: "apple-mobile-web-app-status-bar-style", content: "default" },
 		{ property: "al:ios:app_store_id", content: appStoreId },
 		{ property: "al:ios:url", content: urls.apps.apple },
@@ -135,7 +137,7 @@ export function meta({
 		{ tagName: "link", rel: "icon", type: "image/png", sizes: "32x32", href: Icon32x32 },
 		{ tagName: "link", rel: "icon", type: "image/png", sizes: "16x16", href: Icon16x16 },
 		{ tagName: "link", rel: "apple-touch-icon", type: "image/png", sizes: "180x180", href: AppleIcon },
-		{ tagName: "link", rel: "mask-icon", color: "#e9658b", href: SafariPinnedTab },
+		{ tagName: "link", rel: "mask-icon", color: brand.accentColor, href: SafariPinnedTab },
 
 		(development || preview) && {
 			tagName: "meta",
@@ -172,12 +174,12 @@ export function meta({
 }
 
 const BeforeRenderScript: FC = memo(() => {
-	const beforeRender = (localePathnameRegex: RegExp, friendsPathname: string) => {
+	const beforeRender = (localePathnameRegex: RegExp, friendsPathname: string | null) => {
 		const localTheme = JSON.parse(localStorage.getItem(".theme") || `"system"`) as LocalTheme;
 		const prefersDark = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 
 		const theme = globalThis.theme = localTheme === "system" ? prefersDark : localTheme;
-		const themeStyle = globalThis.themeStyle = location.pathname.replace(localePathnameRegex, "/") === friendsPathname ? "friend" : "default";
+		const themeStyle = globalThis.themeStyle = friendsPathname !== null && location.pathname.replace(localePathnameRegex, "/") === friendsPathname ? "friend" : "default";
 
 		Object.assign(document.body.dataset, { theme, themeStyle });
 
@@ -191,7 +193,7 @@ const BeforeRenderScript: FC = memo(() => {
 			dangerouslySetInnerHTML={{
 				__html: `(${beforeRender})(${[
 					localePathnameRegex,
-					JSON.stringify(urls.discover("homies"))
+					JSON.stringify(homieMode ? urls.discover("homies") : null)
 				].join(", ")})`
 			}}
 		/>
@@ -218,7 +220,8 @@ export function Layout({ children }: PropsWithChildren) {
 	preload(nunitoNormal, { as: "font", type: "font/woff2", crossOrigin: "anonymous" });
 
 	const [theme] = useTheme();
-	const themeStyle = useMatch(urls.discover("homies")) ? "friend" : "default";
+	const homiesMatch = useMatch(urls.discover("homies"));
+	const themeStyle = homieMode && homiesMatch ? "friend" : "default";
 
 	const [fontSize] = usePreferences<number>("font_size", 16);
 
@@ -229,8 +232,11 @@ export function Layout({ children }: PropsWithChildren) {
 	if (client)
 		logOnce(
 			`\n%c${t("console_message")}`,
-			"padding: 0 0.5rem; background-image: linear-gradient(to right, #ff8975, #e9658b); white-space: pre; display: block; text-align: center; font-weight: bold; border-radius: .5rem",
-			`\n${t("translate")} → ${urls.resources.translate(i18n.language as Locale)}\n${t("source_code")} → ${urls.resources.developers}\n\n`
+			`padding: 0 0.5rem; background-image: linear-gradient(to right, ${brand.dateColors[0]}, ${brand.dateColors[1]}); white-space: pre; display: block; text-align: center; font-weight: bold; border-radius: .5rem`,
+			`\n${[
+				[t("translate"), urls.resources.translate(i18n.language as Locale)],
+				[t("source_code"), urls.resources.developers]
+			].filter(([, url]) => url).map(([label, url]) => `${label} → ${url}\n`).join("")}\n`
 		);
 
 	return (

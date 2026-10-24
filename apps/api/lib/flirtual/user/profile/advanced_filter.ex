@@ -59,7 +59,17 @@ defmodule Flirtual.User.Profile.AdvancedFilter do
     timestamps(updated_at: false)
   end
 
+  # Never shrinks, so existing filters still load.
   def categories, do: @categories
+
+  def enabled_categories do
+    @categories
+    |> reject_disabled(Flirtual.Features.vr_tags?(), [:game, :platform])
+    |> reject_disabled(Flirtual.Features.personality?(), [:personality])
+  end
+
+  defp reject_disabled(categories, true, _disabled), do: categories
+  defp reject_disabled(categories, false, disabled), do: categories -- disabled
   def attribute_categories, do: @attribute_categories
   def max_per_kind, do: @max_per_kind
 

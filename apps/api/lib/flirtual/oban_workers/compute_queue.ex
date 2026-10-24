@@ -10,12 +10,16 @@ defmodule Flirtual.ObanWorkers.ComputeQueue do
   import Ecto.Query
 
   alias Flirtual.{Matchmaking, Repo, User}
+  alias Flirtual.User.Profile.Queue
 
   @impl Oban.Worker
   def perform(%Oban.Job{args: %{"user_id" => user_id, "kind" => kind}}) do
-    case load_user(user_id) do
-      nil -> :ok
-      user -> Matchmaking.compute_queue(user, String.to_existing_atom(kind))
+    kind = String.to_existing_atom(kind)
+
+    cond do
+      not Queue.kind?(kind) -> :ok
+      user = load_user(user_id) -> Matchmaking.compute_queue(user, kind)
+      true -> :ok
     end
   end
 
@@ -28,8 +32,7 @@ defmodule Flirtual.ObanWorkers.ComputeQueue do
           :ok
 
         user ->
-          Matchmaking.compute_queue(user, :love)
-          Matchmaking.compute_queue(user, :friend)
+          Enum.each(Queue.kinds(), &Matchmaking.compute_queue(user, &1))
       end
     end)
   end

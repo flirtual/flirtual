@@ -14,6 +14,7 @@ import { defineConfig, loadEnv } from "vite";
 import { imagetools } from "vite-imagetools";
 import { ViteImageOptimizer as imageOptimize } from "vite-plugin-image-optimizer";
 
+import brandDefaults from "./src/brand.defaults.json" with { type: "json" };
 import { browserslist, targets } from "./src/polyfill.ts";
 import { hush } from "./vite-plugin-hush.ts";
 
@@ -54,6 +55,17 @@ export default defineConfig((config) => {
 
 	if (!env.VITE_ORIGIN) process.env.VITE_ORIGIN = origin;
 	if (!env.VITE_API_URL) process.env.VITE_API_URL = apiUrl;
+
+	// tailwind.config.js reads process.env.
+	for (const [key, value] of Object.entries(env))
+		if (key.startsWith("VITE_BRAND_") && !process.env[key]) process.env[key] = value;
+
+	const assetDomain = env.VITE_BRAND_ASSET_DOMAIN;
+	if (!assetDomain) throw new Error("VITE_BRAND_ASSET_DOMAIN is required: remote assets are downloaded from there at build time");
+	if (!env.VITE_BRAND_REPOSITORY_URL) throw new Error("VITE_BRAND_REPOSITORY_URL is required: you must publish your source code to comply with the AGPL");
+
+	const assetOrigin = `https://static.${assetDomain}`;
+	const logoPrefix = env.VITE_BRAND_LOGO_PREFIX || brandDefaults.logoPrefix;
 
 	return {
 		appType: "mpa",
@@ -120,12 +132,16 @@ export default defineConfig((config) => {
 			remoteAssets({
 				aliases: [
 					{
+						regex: /^brand\/(.+)/,
+						replacement: `${assetOrigin}/${logoPrefix}$1`
+					},
+					{
 						regex: /^(\w+)\/(.+)/,
-						replacement: "https://$1.flirtual.com/$2"
+						replacement: `https://$1.${assetDomain}/$2`
 					},
 					{
 						regex: /^(.+)/,
-						replacement: "https://static.flirtual.com/$1"
+						replacement: `${assetOrigin}/$1`
 					}
 				]
 			}),

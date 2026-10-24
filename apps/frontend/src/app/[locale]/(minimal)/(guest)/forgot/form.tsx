@@ -9,6 +9,7 @@ import { Form, FormInputMessages } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InlineLink } from "~/components/inline-link";
 import { InputLabel, InputText } from "~/components/inputs";
+import { freshworksWidgetId } from "~/const";
 import { useFreshworks } from "~/hooks/use-freshworks";
 import { urls } from "~/urls";
 
@@ -51,15 +52,17 @@ export const ForgotPasswordForm: React.FC = () => {
 								</p>
 								<div className="flex gap-2">
 									<ButtonLink className="min-w-44" href={urls.login()} size="sm">{t("login")}</ButtonLink>
-									<Button
-										className="flex w-fit flex-row gap-2 opacity-75"
-										kind="tertiary"
-										size="sm"
-										onClick={openFreshworks}
-									>
-										<span>{t("support")}</span>
-										<MoveRight className="size-5" />
-									</Button>
+									{freshworksWidgetId && (
+										<Button
+											className="flex w-fit flex-row gap-2 opacity-75"
+											kind="tertiary"
+											size="sm"
+											onClick={openFreshworks}
+										>
+											<span>{t("support")}</span>
+											<MoveRight className="size-5" />
+										</Button>
+									)}
 								</div>
 							</>
 						)

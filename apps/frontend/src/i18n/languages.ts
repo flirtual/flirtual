@@ -3,6 +3,7 @@ import { resolvePath } from "react-router";
 import type { Path, To } from "react-router";
 
 // export const locales = ["en", "de", "es", "fr", "ja", "ko", "nl", "pt", "pt-BR", "ru", "sv"] as const;
+// Keep in sync with enabledLocales in ios/App/Watch/Translations.swift.
 export const locales = ["en"] as const;
 export type Locale = (typeof locales)[number];
 

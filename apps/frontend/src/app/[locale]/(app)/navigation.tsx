@@ -7,6 +7,7 @@ import { HomeIcon } from "~/components/icons/gradient/home";
 import { LoginIcon } from "~/components/icons/gradient/login";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
 import { development } from "~/const";
+import { homieMode } from "~/features";
 import { useDevice } from "~/hooks/use-device";
 import { useHistoryTabs } from "~/hooks/use-history-tabs";
 import { useOptionalSession } from "~/hooks/use-session";
@@ -88,19 +89,21 @@ const NavigationContent: FC = () => {
 	return (
 		<>
 			<NavigationItemProfile />
-			<NavigationalSwitch id="browse-mode-switch">
+			<NavigationalSwitch id={homieMode ? "browse-mode-switch" : undefined}>
 				<NavigationalSwitchItem
 					id="date-mode-switch"
 					href={urls.discover("dates")}
 					Icon={HeartIcon}
 					onClick={onTab("dates")}
 				/>
-				<NavigationalSwitchItem
-					id="homie-mode-switch"
-					href={urls.discover("homies")}
-					Icon={PeaceIcon}
-					onClick={onTab("homies")}
-				/>
+				{homieMode && (
+					<NavigationalSwitchItem
+						id="homie-mode-switch"
+						href={urls.discover("homies")}
+						Icon={PeaceIcon}
+						onClick={onTab("homies")}
+					/>
+				)}
 			</NavigationalSwitch>
 			<NavigationItemMessage onClick={onTab("matches")} />
 		</>

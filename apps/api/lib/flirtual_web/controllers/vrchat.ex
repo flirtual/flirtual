@@ -10,6 +10,19 @@ defmodule FlirtualWeb.VRChatController do
 
   action_fallback FlirtualWeb.FallbackController
 
+  # Not in the router: runtime config loads after it compiles.
+  plug(:require_vrchat)
+
+  defp require_vrchat(conn, _) do
+    if Flirtual.Features.vrchat?() do
+      conn
+    else
+      conn
+      |> FlirtualWeb.FallbackController.call({:error, {:not_found, :feature_disabled}})
+      |> halt()
+    end
+  end
+
   defp transform_worlds(worlds) do
     Enum.map(worlds, &transform_world/1)
   end

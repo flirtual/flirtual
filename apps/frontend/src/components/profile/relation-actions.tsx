@@ -3,7 +3,7 @@ import { useLocation } from "react-router";
 
 import { Matchmaking } from "~/api/matchmaking";
 import { premium } from "~/api/user";
-import { invalidateMatch, invalidateQueue } from "~/hooks/use-queue";
+import { invalidateMatch, invalidateQueues } from "~/hooks/use-queue";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { useRelationship, useUser } from "~/hooks/use-user";
@@ -57,8 +57,7 @@ export const RelationActions: React.FC<{ userId: string; direct: boolean }> = ({
 
 						await Promise.all([
 							invalidateMatch(user.id),
-							invalidateQueue("love"),
-							invalidateQueue("friend")
+							invalidateQueues()
 						]);
 					}}
 				>
@@ -89,8 +88,7 @@ export const RelationActions: React.FC<{ userId: string; direct: boolean }> = ({
 						await Matchmaking.unmatch(user.id).catch(toasts.addError);
 						await Promise.all([
 							invalidateMatch(user.id),
-							invalidateQueue("love"),
-							invalidateQueue("friend")
+							invalidateQueues()
 						]);
 					}}
 				>

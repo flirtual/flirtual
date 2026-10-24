@@ -1,7 +1,7 @@
 defmodule Flirtual.Appeal do
   import Ecto.Query
 
-  alias Flirtual.{Attribute, Freshdesk, ModerationEvent, ObanWorkers, Repo, User}
+  alias Flirtual.{Attribute, Brand, Freshdesk, ModerationEvent, ObanWorkers, Repo, User}
 
   def appealed?(user_id) when is_binary(user_id),
     do: appealed?(user_id, ModerationEvent.active(user_id, :banned))
@@ -39,11 +39,20 @@ defmodule Flirtual.Appeal do
              message: message,
              details: %{ban_id: ban && ban.id}
            }),
-         {:ok, _} <-
-           %{"ticket" => ticket(user, ban, message)}
-           |> ObanWorkers.Freshdesk.new()
-           |> Oban.insert() do
+         :ok <- maybe_create_ticket(user, ban, message) do
       {:ok, event}
+    end
+  end
+
+  defp maybe_create_ticket(user, ban, message) do
+    if Freshdesk.configured?() do
+      with {:ok, _} <-
+             %{"ticket" => ticket(user, ban, message)}
+             |> ObanWorkers.Freshdesk.new()
+             |> Oban.insert(),
+           do: :ok
+    else
+      :ok
     end
   end
 
@@ -52,7 +61,7 @@ defmodule Flirtual.Appeal do
     fields = Freshdesk.config(:appeal_fields)
 
     Freshdesk.ticket(%{
-      subject: "Flirtual ban appeal - #{name}",
+      subject: "#{Brand.name()} ban appeal - #{name}",
       body: message,
       name: name,
       email: user.email,

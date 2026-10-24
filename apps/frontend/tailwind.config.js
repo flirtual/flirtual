@@ -4,13 +4,27 @@
 const plugin = require("tailwindcss/plugin");
 
 const { languageTags } = require("./project.inlang/settings.json");
+const brandDefaults = require("./src/brand.defaults.json");
+
+// Mirrors src/brand.ts. vite.config.ts copies .env's VITE_BRAND_* into process.env.
+function colorPair(name, fallback) {
+	const parts = (process.env[name] || "").split(",").map((part) => part.trim()).filter(Boolean);
+	return parts.length === 2 ? parts : fallback;
+}
+
+const brand = {
+	date: colorPair("VITE_BRAND_DATE_COLORS", brandDefaults.dateColors),
+	dateDark: colorPair("VITE_BRAND_DATE_DARK_COLORS", brandDefaults.dateDarkColors),
+	homie: colorPair("VITE_BRAND_HOMIE_COLORS", brandDefaults.homieColors),
+	background: process.env.VITE_BRAND_BACKGROUND_COLOR || brandDefaults.backgroundColor
+};
 
 const colors = {
 	"theme-overlay": "var(--theme-text, #F5F5F5)",
-	coral: "#FF8975",
-	pink: "#E9658B",
-	purple: "#b24592",
-	cream: "#FFFAF0",
+	coral: brand.date[0],
+	pink: brand.date[1],
+	purple: brand.dateDark[0],
+	cream: brand.background,
 	white: {
 		10: "white",
 		20: "#F5F5F5",
@@ -169,7 +183,18 @@ module.exports = {
 		require("tailwindcss-hocus"),
 		require("tailwindcss-animate"),
 		require("tailwindcss-motion"),
-		plugin(({ addVariant, addComponents, addUtilities, theme }) => {
+		plugin(({ addBase, addVariant, addComponents, addUtilities, theme }) => {
+			addBase({
+				body: {
+					"--light-theme-1": brand.date[0],
+					"--light-theme-2": brand.date[1],
+					"--dark-theme-1": brand.dateDark[0],
+					"--dark-theme-2": brand.dateDark[1],
+					"--friend-theme-1": brand.homie[0],
+					"--friend-theme-2": brand.homie[1]
+				}
+			});
+
 			// Device specific variants
 			addVariant("native", `:is([data-native] &)`);
 			addVariant("vision", `:is([data-vision] &)`);

@@ -41,6 +41,7 @@ export const DownloadButton: React.FC<DownloadButtonProps> = ({
 }) => {
 	const { t } = useTranslation();
 	const { href, Icon } = platforms[platform];
+	if (!href) return null;
 
 	return (
 		<Link

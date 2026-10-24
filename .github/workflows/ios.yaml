@@ -24,6 +24,12 @@ env:
   VITE_API_URL: ${{ inputs.channel == 'production' && 'https://api.flirtu.al/v1/' || 'https://beta-api.flirtual.dev/v1/' }}
   VITE_APP_BUNDLE_ID: ${{ inputs.channel == 'production' && 'zone.homie.flirtual.pwa' || 'zone.homie.flirtual.beta' }}
   VITE_APP_STORE_ID: "6450485324"
+  VITE_BRAND_NAME: ${{ vars.VITE_BRAND_NAME }}
+  VITE_BRAND_DATE_COLORS: ${{ vars.VITE_BRAND_DATE_COLORS }}
+  VITE_BRAND_HOMIE_COLORS: ${{ vars.VITE_BRAND_HOMIE_COLORS }}
+  VITE_FEATURE_HOMIE_MODE: ${{ vars.VITE_FEATURE_HOMIE_MODE }}
+  VITE_FEATURE_PERSONALITY: ${{ vars.VITE_FEATURE_PERSONALITY }}
+  VITE_FEATURE_VR_TAGS: ${{ vars.VITE_FEATURE_VR_TAGS }}
   SCHEME: ${{ inputs.channel == 'production' && 'Flirtual' || 'Flirtual Beta' }}
   DEVELOPER_DIR: /Applications/Xcode_27.1.app/Contents/Developer
 
@@ -34,6 +40,7 @@ jobs:
     permissions:
       contents: read
       pull-requests: read
+      actions: read
     outputs:
       native: ${{ steps.changes.outputs.changed }}
     steps:
@@ -149,7 +156,13 @@ jobs:
             -scheme "$SCHEME" \
             -destination generic/platform=iOS \
             -archivePath "$RUNNER_TEMP/Flirtual.xcarchive" \
-            CURRENT_PROJECT_VERSION=$(( GITHUB_RUN_NUMBER + ${BUILD_NUMBER_OFFSET:-100} ))
+            CURRENT_PROJECT_VERSION=$(( GITHUB_RUN_NUMBER + ${BUILD_NUMBER_OFFSET:-100} )) \
+            VITE_BRAND_NAME="$VITE_BRAND_NAME" \
+            VITE_BRAND_DATE_COLORS="$VITE_BRAND_DATE_COLORS" \
+            VITE_BRAND_HOMIE_COLORS="$VITE_BRAND_HOMIE_COLORS" \
+            VITE_FEATURE_HOMIE_MODE="$VITE_FEATURE_HOMIE_MODE" \
+            VITE_FEATURE_PERSONALITY="$VITE_FEATURE_PERSONALITY" \
+            VITE_FEATURE_VR_TAGS="$VITE_FEATURE_VR_TAGS"
 
       - name: Upload to App Store Connect
         working-directory: apps/frontend/ios/App

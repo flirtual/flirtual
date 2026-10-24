@@ -1,14 +1,15 @@
 import type { ProfileColors } from "~/api/user/profile";
+import * as brand from "~/brand";
 import type { Theme } from "~/hooks/use-theme";
 
 export const defaultProfileColors: Record<Theme, ProfileColors> = {
 	light: {
-		color1: "#ff8975",
-		color2: "#e9658b"
+		color1: brand.dateColors[0],
+		color2: brand.dateColors[1]
 	},
 	dark: {
-		color1: "#b24592",
-		color2: "#e9658b"
+		color1: brand.dateDarkColors[0],
+		color2: brand.dateDarkColors[1]
 	}
 };
 

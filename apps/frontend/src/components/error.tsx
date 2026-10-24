@@ -7,6 +7,7 @@ import type { ComponentProps, FC } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import FlittyHardhat from "virtual:remote/b25d8377-7035-4a23-84f1-faa095fa8104";
 
+import * as brand from "~/brand";
 import { commitId, commitIdShort, commitUrl, development, maintenance, preview, production } from "~/const";
 import { device, useDevice } from "~/hooks/use-device";
 import { useInterval } from "~/hooks/use-interval";
@@ -19,7 +20,7 @@ import { Image } from "./image";
 const translations = {
 	en: {
 		title: maintenance
-			? "Flirtual is temporarily unavailable."
+			? `${brand.name} is temporarily unavailable.`
 			: "It looks like we're having issues",
 		subtitle: maintenance
 			? "But we'll be right back—check back soon!"
@@ -77,14 +78,22 @@ export function HavingIssues({ error }: { error?: unknown }) {
 				<span className="cursor-pointer text-theme-2" onClick={reload}>
 					{t2.reload}
 				</span>
-				{" ⋅ "}
-				<a className="text-theme-2" href={urls.socials.discord}>
-					{t2.discord}
-				</a>
-				{" ⋅ "}
-				<a className="text-theme-2" href={urls.resources.contact}>
-					{t("contact_us")}
-				</a>
+				{urls.socials.discord && (
+					<>
+						{" ⋅ "}
+						<a className="text-theme-2" href={urls.socials.discord}>
+							{t2.discord}
+						</a>
+					</>
+				)}
+				{urls.resources.contact && (
+					<>
+						{" ⋅ "}
+						<a className="text-theme-2" href={urls.resources.contact}>
+							{t("contact_us")}
+						</a>
+					</>
+				)}
 			</div>
 			{!maintenance && (
 				<>
@@ -118,22 +127,23 @@ export function HavingIssues({ error }: { error?: unknown }) {
 								i18nKey="tough_sleek_wasp_reside"
 							/>
 						</li>
-						<li>
-							<Trans
-								components={{
-									contact: (
-										<a
-											className="whitespace-nowrap lowercase underline"
-											href={urls.resources.contact}
-										>
-											<Send className="mr-1 inline-block size-4 shrink-0" />
-										</a>
-									)
-								}}
-								i18nKey="yummy_salty_porpoise_greet"
-							/>
-
-						</li>
+						{urls.resources.contact && (
+							<li>
+								<Trans
+									components={{
+										contact: (
+											<a
+												className="whitespace-nowrap lowercase underline"
+												href={urls.resources.contact}
+											>
+												<Send className="mr-1 inline-block size-4 shrink-0" />
+											</a>
+										)
+									}}
+									i18nKey="yummy_salty_porpoise_greet"
+								/>
+							</li>
+						)}
 					</ul>
 					{(development || squishCount > 2) && error instanceof Error && (
 						<code className="select-children mt-6 flex max-w-sm flex-col font-mono text-xs opacity-50 desktop:max-w-md desktop:text-sm">
@@ -174,7 +184,7 @@ export function HavingIssues({ error }: { error?: unknown }) {
 
 								await Clipboard.write({
 									label: t("flirtual_bug_report"),
-									string: `# Flirtual bug report
+									string: `# ${brand.name} bug report
 
 * At: <t:${Math.floor(Date.now() / 1000)}:F>
 * Event ID: \`${eventId}\`

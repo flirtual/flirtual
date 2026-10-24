@@ -13,6 +13,7 @@ import {
 	InputLabelHint,
 	InputSwitch
 } from "~/components/inputs";
+import { vrTags } from "~/features";
 import {
 	useAttributes,
 	useAttributeTranslation
@@ -63,45 +64,49 @@ export const Onboarding2Form: FC = () => {
 		>
 			{({ FormField }) => (
 				<>
-					<FormField name="new">
-						{(field) => (
-							<>
-								<InputLabel>{t("nimble_hour_bumblebee_savor")}</InputLabel>
-								<InputSwitch {...field.props} />
-							</>
-						)}
-					</FormField>
-					<FormField name="platform">
-						{(field) => (
-							<>
-								<InputLabel>{t("vr_setup")}</InputLabel>
-								<InputAutocomplete
-									{...field.props}
-									options={platforms.map((platform) => {
-										const id = typeof platform === "string" ? platform : platform.id;
-										return {
-											key: id,
-											label: tAttribute[id]?.name || id,
-											example: tAttribute[id]?.example
-										};
-									})}
-									limit={8}
-									placeholder={t("select_the_platforms_you_use")}
-								/>
-							</>
-						)}
-					</FormField>
-					<FormField name="game">
-						{() => (
-							<>
-								<InputLabel hint={t("up_to_number", { number: 5 })}>{t("vr_apps_games")}</InputLabel>
-								<InputLabelHint className="-mt-2">
-									{t("game_hint")}
-								</InputLabelHint>
-								<FormGameAutocomplete />
-							</>
-						)}
-					</FormField>
+					{vrTags && (
+						<>
+							<FormField name="new">
+								{(field) => (
+									<>
+										<InputLabel>{t("nimble_hour_bumblebee_savor")}</InputLabel>
+										<InputSwitch {...field.props} />
+									</>
+								)}
+							</FormField>
+							<FormField name="platform">
+								{(field) => (
+									<>
+										<InputLabel>{t("vr_setup")}</InputLabel>
+										<InputAutocomplete
+											{...field.props}
+											options={platforms.map((platform) => {
+												const id = typeof platform === "string" ? platform : platform.id;
+												return {
+													key: id,
+													label: tAttribute[id]?.name || id,
+													example: tAttribute[id]?.example
+												};
+											})}
+											limit={8}
+											placeholder={t("select_the_platforms_you_use")}
+										/>
+									</>
+								)}
+							</FormField>
+							<FormField name="game">
+								{() => (
+									<>
+										<InputLabel hint={t("up_to_number", { number: 5 })}>{t("vr_apps_games")}</InputLabel>
+										<InputLabelHint className="-mt-2">
+											{t("game_hint")}
+										</InputLabelHint>
+										<FormGameAutocomplete />
+									</>
+								)}
+							</FormField>
+						</>
+					)}
 					<FormField name="interest">
 						{(field) => (
 							<>

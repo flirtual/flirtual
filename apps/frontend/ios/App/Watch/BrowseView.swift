@@ -1,7 +1,12 @@
 import SwiftUI
 
 struct BrowseView: View {
-    @AppStorage("mode") private var mode = Mode.love
+    @AppStorage("mode") private var storedMode = Mode.love
+    // A stored Homie Mode outlives the feature being disabled.
+    private var mode: Mode {
+        get { Features.homieMode ? storedMode : .love }
+        nonmutating set { storedMode = newValue }
+    }
     @State private var stores = [Mode.love: Browse(mode: .love), Mode.friend: Browse(mode: .friend)]
 
     private var browse: Browse { stores[mode]! }
@@ -11,13 +16,15 @@ struct BrowseView: View {
 
         content
             .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button {
-                        mode = mode.other
-                    } label: {
-                        ToolbarIcon(image: Image(mode.other.icon), size: .assetIconSize)
+                if Features.homieMode {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button {
+                            mode = mode.other
+                        } label: {
+                            ToolbarIcon(image: Image(mode.other.icon), size: .assetIconSize)
+                        }
+                        .accessibilityLabel(t(mode == .love ? "watch.switch_to_homie_mode" : "watch.switch_to_date_mode"))
                     }
-                    .accessibilityLabel(t(mode == .love ? "watch.switch_to_homie_mode" : "watch.switch_to_date_mode"))
                 }
                 ToolbarItemGroup(placement: .bottomBar) {
                     if browse.current != nil {

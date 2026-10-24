@@ -1,12 +1,13 @@
 import ms from "ms" with { type: "macro" };
 import type { Dispatch, FC, ReactNode } from "react";
 import { Trans, useTranslation } from "react-i18next";
-import FlirtualBlack from "virtual:remote/static/flirtual-black.svg";
-import FlirtualWhite from "virtual:remote/static/flirtual-white.svg";
+import LogoBlack from "virtual:remote/brand/black.svg";
+import LogoWhite from "virtual:remote/brand/white.svg";
 import { withSuspense } from "with-suspense";
 
 import type { Session } from "~/api/auth";
 import { User } from "~/api/user";
+import * as brand from "~/brand";
 import { Image } from "~/components/image";
 import { useInterruption } from "~/hooks/use-interruption";
 import { useOptionalSession, useSession } from "~/hooks/use-session";
@@ -140,17 +141,17 @@ export const TrustAndSafetyDialog: FC<{
 				<DialogHeader>
 					<DialogTitle className="flex h-full items-center gap-2">
 						<Image
-							alt={t("flirtual")}
+							alt={brand.name}
 							className="hidden h-fit w-24 dark:block desktop:block"
 							height={1000}
-							src={FlirtualWhite}
+							src={LogoWhite}
 							width={3468}
 						/>
 						<Image
-							alt={t("flirtual")}
+							alt={brand.name}
 							className="block h-fit w-24 dark:hidden desktop:hidden"
 							height={1000}
-							src={FlirtualBlack}
+							src={LogoBlack}
 							width={3468}
 						/>
 						<span>{t("trust_and_safety")}</span>
@@ -186,9 +187,11 @@ export const TrustAndSafetyDialog: FC<{
 								<InlineLink href={urls.resources.communityGuidelines}>
 									{t("community_guidelines")}
 								</InlineLink>
-								<InlineLink href={urls.resources.contactDirect}>
-									{t("contact_us")}
-								</InlineLink>
+								{urls.resources.contactDirect && (
+									<InlineLink href={urls.resources.contactDirect}>
+										{t("contact_us")}
+									</InlineLink>
+								)}
 							</span>
 						</div>
 					</div>

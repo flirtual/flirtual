@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import type { MetaFunction } from "react-router";
 import invariant from "tiny-invariant";
 
 import { ModelCard } from "~/components/model-card";
@@ -8,12 +9,13 @@ import { isLocale } from "~/i18n/languages";
 import { metaMerge, rootMeta } from "~/meta";
 import { personalityFetcher, personalityKey, queryClient } from "~/query";
 
-import type { Route } from "./+types/page";
 import { PersonalityForm } from "./form";
 
-export const meta: Route.MetaFunction = (options) => {
-	invariant(isLocale(options.params.locale));
-	const t = i18n.getFixedT(options.params.locale);
+// Not Route.MetaFunction: ./+types/page isn't generated while personality is off.
+export const meta: MetaFunction = (options) => {
+	const { locale } = options.params;
+	invariant(locale && isLocale(locale));
+	const t = i18n.getFixedT(locale);
 
 	return metaMerge([
 		...rootMeta(options),

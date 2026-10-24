@@ -22,12 +22,16 @@ final class Translations {
         return Self.lookup(key, in: messages) ?? Self.lookup(key, in: english)
     }
 
+    // The locales the web app has enabled (src/i18n/languages.ts). Others ship in the bundle as
+    // unreviewed drafts, so anything else falls back to English rather than the device language.
+    private static let enabledLocales: Set<String> = ["en"]
+
     private func load() {
         let preferred = Account.shared.user?.preferences?.language ?? Locale.preferredLanguages.first ?? "en"
         guard preferred != language else { return }
         language = preferred
 
-        let locale = [preferred, String(preferred.prefix(2)), "en"].first { Self.file("attributes.\($0)") != nil } ?? "en"
+        let locale = [preferred, String(preferred.prefix(2))].first { Self.enabledLocales.contains($0) } ?? "en"
         attributes = Self.file("attributes.\(locale)") as? [String: Any] ?? [:]
         messages = Self.file(locale) as? [String: Any] ?? [:]
     }

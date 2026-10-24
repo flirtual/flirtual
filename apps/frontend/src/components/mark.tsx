@@ -2,7 +2,7 @@ import { useId } from "react";
 
 import type { IconComponent } from "./icons";
 
-export const FlirtualMark: IconComponent = (props) => {
+export const Mark: IconComponent = (props) => {
 	const prefix = useId();
 	const id = (name: string) => `${prefix}${name}`;
 	const url = (name: string) => `url(#${id(name)})`;

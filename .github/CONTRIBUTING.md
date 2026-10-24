@@ -21,3 +21,11 @@ Flirtual's back-end API is written in Elixir using the Phoenix framework, and ou
 Development discussion happens on Discord. Join the [Flirtual server](https://discord.gg/flirtual) and visit the [#developers channel](https://discord.com/channels/455219574036496404/1105960009365471313). Let us know what you're working on and we'll be happy to help you get acquainted and answer any questions you might have.
 
 When you're finished, open a [pull request](https://github.com/flirtual/flirtual/compare) with the relevant issue number and a clear explanation of your changes.
+
+## Translations
+
+Translations are managed on [Weblate](https://hosted.weblate.org/engage/flirtual/). Please translate there rather than opening pull requests that edit translation files.
+
+## Contributor License Agreement
+
+Before we can accept your contribution, you'll need to sign our [Contributor License Agreement](CLA.md). You keep the copyright in your work; the CLA gives us a license to use and distribute it. On GitHub, a bot will ask you to sign when you open your first pull request. On Weblate, you'll be asked to agree before you can translate.

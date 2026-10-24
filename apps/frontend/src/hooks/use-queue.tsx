@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useMemo, useSyncExternalStore } from "react";
 
 import { isWretchError } from "~/api/common";
-import type { Queue, QueueActionIssue, QueueIssue, ResponseSource } from "~/api/matchmaking";
-import { Matchmaking, ProspectKind, prospectKinds } from "~/api/matchmaking";
+import type { ProspectKind, Queue, QueueActionIssue, QueueIssue, ResponseSource } from "~/api/matchmaking";
+import { Matchmaking, prospectKinds } from "~/api/matchmaking";
 import { ItsAMatch } from "~/app/[locale]/(app)/(authenticated)/(onboarded)/discover/its-a-match";
 import { OutOfLikesPasses } from "~/app/[locale]/(app)/(authenticated)/(onboarded)/discover/out-of-likes-passes";
 import { preloadProfile } from "~/components/profile";
@@ -28,6 +28,8 @@ import { useSession } from "./use-session";
 import { useUnreadConversations } from "./use-talkjs";
 
 export const invalidateQueue = (mode: ProspectKind = "love") => invalidate({ queryKey: queueKey(mode) });
+
+export const invalidateQueues = () => Promise.all(prospectKinds.map(invalidateQueue));
 
 // Consecutive likes per mode. A module-level store rather than component
 // state, because useQueue() mounts in several components that share one count.
@@ -60,7 +62,7 @@ export function invalidateMatch(userId: string) {
 }
 
 export function useQueue(mode: ProspectKind = "love", source: ResponseSource = mode) {
-	if (!ProspectKind.includes(mode)) mode = "love";
+	if (!prospectKinds.includes(mode)) mode = "love";
 	const { user: { id: meId } } = useSession();
 	const { setUnreadConversations } = useUnreadConversations();
 	const queryKey = useMemo(() => queueKey(mode), [mode]);
@@ -245,7 +247,10 @@ export function useQueue(mode: ProspectKind = "love", source: ResponseSource = m
 				dialogs.add(dialog);
 			}
 		},
-		onSettled: () => invalidateQueue(({ love: "friend", friend: "love" } as const)[mode])
+		onSettled: () => {
+			const other = ({ love: "friend", friend: "love" } as const)[mode];
+			if (prospectKinds.includes(other)) invalidateQueue(other);
+		}
 	});
 
 	return {

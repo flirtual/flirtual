@@ -39,19 +39,25 @@ export default function EventsPage() {
 			<div className="flex flex-col gap-4">
 				<h1 className="text-2xl font-semibold">{t("top_big_tern_twist")}</h1>
 				<p>{t("nimble_equal_loris_foster")}</p>
-				<p>
-					<Trans
-						components={{ discord: <InlineLink href={urls.socials.discord} /> }}
-						i18nKey="flaky_early_shad_nourish"
-					/>
-				</p>
-				<DiscordEmbed />
+				{urls.socials.discord && (
+					<>
+						<p>
+							<Trans
+								components={{ discord: <InlineLink href={urls.socials.discord} /> }}
+								i18nKey="flaky_early_shad_nourish"
+							/>
+						</p>
+						<DiscordEmbed />
+					</>
+				)}
 			</div>
-			<div className="flex flex-col gap-4">
-				<h1 className="text-2xl font-semibold">{t("vrchat_group")}</h1>
-				<p>{t("day_crazy_tortoise_read")}</p>
-				<ButtonLink href={urls.socials.vrchat} target="_blank">{t("join_group")}</ButtonLink>
-			</div>
+			{urls.socials.vrchat && (
+				<div className="flex flex-col gap-4">
+					<h1 className="text-2xl font-semibold">{t("vrchat_group")}</h1>
+					<p>{t("day_crazy_tortoise_read")}</p>
+					<ButtonLink href={urls.socials.vrchat} target="_blank">{t("join_group")}</ButtonLink>
+				</div>
+			)}
 			<div className="flex flex-col gap-4">
 				<h1 className="text-2xl font-semibold">
 					{t("quiet_lazy_marten_amuse")}

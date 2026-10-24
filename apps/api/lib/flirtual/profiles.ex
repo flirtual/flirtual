@@ -5,7 +5,7 @@ defmodule Flirtual.Profiles do
   import Flirtual.Utilities
   import Flirtual.Utilities.Changeset
 
-  alias Flirtual.{Attribute, Flag, ObanWorkers, Repo, User}
+  alias Flirtual.{Attribute, Features, Flag, ObanWorkers, Repo, User}
   alias Flirtual.User.Profile
   alias Flirtual.User.Profile.{Block, Image, Prompt}
 
@@ -40,6 +40,7 @@ defmodule Flirtual.Profiles do
     import Flirtual.Attribute, except: [create: 1]
 
     alias Flirtual.Countries
+    alias Flirtual.Features
     alias Flirtual.Languages
     alias Flirtual.Profiles.Update
     alias Flirtual.User.Profile
@@ -211,8 +212,16 @@ defmodule Flirtual.Profiles do
 
     defp codepoint_length(text), do: text |> String.codepoints() |> length()
 
+    # Ignored rather than rejected: forms still send back the values they loaded.
+    defp ignore_disabled(changeset, true, _fields), do: changeset
+
+    defp ignore_disabled(changeset, false, fields),
+      do: Enum.reduce(fields, changeset, &delete_change(&2, &1))
+
     def changeset(value, _, %{required: required}) do
       value
+      |> ignore_disabled(Features.vr_tags?(), [:game_id, :platform_id])
+      |> ignore_disabled(Features.vrchat?(), [:vrchat])
       |> validate_required(required || [])
       |> validate_length(:display_name, min: 1, max: 32)
       |> validate_html(:biography)
@@ -438,14 +447,30 @@ defmodule Flirtual.Profiles do
   end
 
   @advanced_filter_kinds ["include", "exclude"]
-  @advanced_filter_categories Enum.map(
-                                Flirtual.User.Profile.AdvancedFilter.categories(),
-                                &to_string/1
-                              )
+
+  defp advanced_filter_category(filter), do: to_string(filter["category"] || filter[:category])
 
   def update_advanced_filters(%Profile{user_id: profile_id} = profile, filters)
       when is_list(filters) do
     user = profile.user
+    categories = Enum.map(Profile.AdvancedFilter.categories(), &to_string/1)
+    enabled_categories = Profile.AdvancedFilter.enabled_categories()
+
+    valid_kinds_categories? =
+      Enum.all?(filters, fn filter ->
+        is_map(filter) and
+          to_string(filter["kind"] || filter[:kind]) in @advanced_filter_kinds and
+          advanced_filter_category(filter) in categories
+      end)
+
+    # Disabled categories stay as stored and are ignored here, so a save can
+    # neither reject nor drop filters the user can no longer see.
+    enabled = Enum.map(enabled_categories, &to_string/1)
+
+    filters =
+      if valid_kinds_categories?,
+        do: Enum.filter(filters, &(advanced_filter_category(&1) in enabled)),
+        else: []
 
     attributes =
       filters
@@ -455,13 +480,6 @@ defmodule Flirtual.Profiles do
       |> Map.new(&{&1.id, &1})
 
     context = %{user: user, attributes: attributes}
-
-    valid_kinds_categories? =
-      Enum.all?(filters, fn filter ->
-        is_map(filter) and
-          to_string(filter["kind"] || filter[:kind]) in @advanced_filter_kinds and
-          to_string(filter["category"] || filter[:category]) in @advanced_filter_categories
-      end)
 
     changesets =
       filters
@@ -492,6 +510,7 @@ defmodule Flirtual.Profiles do
           with {_, nil} <-
                  Profile.AdvancedFilter
                  |> where(profile_id: ^profile_id)
+                 |> where([filter], filter.category in ^enabled_categories)
                  |> Repo.delete_all(),
                filters <- Enum.map(changesets, &Repo.insert!/1),
                {:ok, _} <- ObanWorkers.update_user(profile_id, [:search_index]),

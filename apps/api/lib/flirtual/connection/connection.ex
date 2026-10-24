@@ -9,6 +9,7 @@ defmodule Flirtual.Connection do
   import Flirtual.Utilities
 
   alias Flirtual.Connection
+  alias Flirtual.Features
   alias Flirtual.Repo
   alias Flirtual.User
 
@@ -58,25 +59,24 @@ defmodule Flirtual.Connection do
 
   def providers(), do: @providers
 
-  def provider(type) when type in @provider_types, do: {:ok, providers()[type]}
-  def provider(_), do: {:error, :provider_not_found}
+  # Never shrinks, so connections to a disabled provider still load.
+  def types(), do: @provider_types
 
-  def provider_name(type) when type in @provider_types, do: {:ok, @provider_labels[type]}
-  def provider_name(_), do: {:error, :provider_not_found}
+  def type?(type), do: type in @provider_types
 
-  def provider_name!(type) do
-    case provider_name(type) do
-      {:ok, provider_name} -> provider_name
-      {:error, reason} -> raise reason
-    end
-  end
+  def enabled?(type), do: type?(type) and Features.connection?(type)
 
-  def provider!(type) do
-    case provider(type) do
-      {:ok, provider} -> provider
-      {:error, reason} -> raise reason
-    end
-  end
+  def enabled_types(), do: Enum.filter(@provider_types, &enabled?/1)
+
+  def provider(type),
+    do: if(enabled?(type), do: {:ok, @providers[type]}, else: {:error, :provider_not_found})
+
+  # Ignore enabled?/1: serializing existing connections calls these.
+  def provider_name!(type) when type in @provider_types, do: @provider_labels[type]
+  def provider_name!(type), do: raise(ArgumentError, "unknown provider: #{inspect(type)}")
+
+  def provider!(type) when type in @provider_types, do: @providers[type]
+  def provider!(type), do: raise(ArgumentError, "unknown provider: #{inspect(type)}")
 
   def changeset(connection, attrs) do
     connection
@@ -148,10 +148,10 @@ defmodule Flirtual.Connection do
     :ok
   end
 
-  def list_available(%User{connections: []}), do: @provider_types
+  def list_available(%User{connections: []}), do: enabled_types()
 
   def list_available(%User{connections: connections}) do
-    @provider_types
+    enabled_types()
     |> Enum.reject(fn type ->
       Enum.any?(connections, fn connection -> connection.type == type end)
     end)

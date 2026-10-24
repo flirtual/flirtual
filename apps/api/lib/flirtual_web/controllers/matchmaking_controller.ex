@@ -11,11 +11,26 @@ defmodule FlirtualWeb.MatchmakingController do
   alias Flirtual.User.Profile.Image
   alias Flirtual.User.Profile.LikesAndPasses
   alias Flirtual.User.Profile.Prospect
+  alias Flirtual.User.Profile.Queue
 
   action_fallback(FlirtualWeb.FallbackController)
 
+  # to_atom/2 accepts any existing atom, disabled modes included.
+  defp requested_mode(params), do: to_atom(params["mode"] || params["kind"], :love)
+
+  defp mode(params) do
+    kind = requested_mode(params)
+    if Queue.kind?(kind), do: kind, else: :love
+  end
+
+  # Writes refuse a disabled mode rather than falling back to Date Mode.
+  defp write_mode(params) do
+    kind = requested_mode(params)
+    if Queue.kind?(kind), do: {:ok, kind}, else: {:error, {:bad_request, :invalid_mode}}
+  end
+
   def queue_information(conn, params) do
-    mode = to_atom(params["mode"] || params["kind"], :love)
+    mode = mode(params)
 
     with {:ok, queue_information} <-
            Matchmaking.queue_information(conn.assigns[:session].user, mode) do
@@ -26,11 +41,12 @@ defmodule FlirtualWeb.MatchmakingController do
 
   def dismiss_notice(conn, params) do
     user = conn.assigns[:session].user
-    mode = to_atom(params["mode"] || params["kind"], :love)
 
-    :ok = Matchmaking.dismiss_fallback_notice(user.id, mode)
+    with {:ok, mode} <- write_mode(params) do
+      :ok = Matchmaking.dismiss_fallback_notice(user.id, mode)
 
-    conn |> json(%{success: true})
+      conn |> json(%{success: true})
+    end
   end
 
   def reset_likes(conn, _) do
@@ -57,7 +73,7 @@ defmodule FlirtualWeb.MatchmakingController do
     if :debugger not in user.tags and :admin not in user.tags do
       {:error, {:forbidden, :missing_permission}}
     else
-      kind = to_atom(params["mode"] || params["kind"], :love)
+      kind = mode(params)
       fallback = params["fallback"] == "true"
 
       query = Flirtual.Matchmaking.Query.build(user, kind, fallback: fallback)
@@ -88,7 +104,7 @@ defmodule FlirtualWeb.MatchmakingController do
     user = conn.assigns[:session].user
 
     type = to_atom(Map.get(params, "type", "like"), :like)
-    mode = to_atom(Map.get(params, "mode", "love"), :love)
+    mode = requested_mode(params)
     target_id = Map.get(params, "user_id")
 
     source =
@@ -138,9 +154,9 @@ defmodule FlirtualWeb.MatchmakingController do
 
   def undo_response(conn, params) do
     user = conn.assigns[:session].user
-    mode = to_atom(params["mode"] || params["kind"], :love)
 
-    with {:ok, prospect} <- Matchmaking.undo(user, mode),
+    with {:ok, mode} <- write_mode(params),
+         {:ok, prospect} <- Matchmaking.undo(user, mode),
          {:ok, queue} <- Matchmaking.queue_information(user, mode) do
       conn
       |> json(%{

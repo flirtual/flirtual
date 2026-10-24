@@ -2,10 +2,11 @@ import { captureException } from "@sentry/react-router";
 import { AppWindow, RotateCw, Send, Smartphone, WifiOff } from "lucide-react";
 import { m } from "motion/react";
 import type { FC } from "react";
-import { useCallback, useEffect, useMemo } from "react";
+import { Fragment, useCallback, useEffect, useMemo } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import FlittyHardhat from "virtual:remote/b25d8377-7035-4a23-84f1-faa095fa8104";
 
+import * as brand from "~/brand";
 import { Button } from "~/components/button";
 import { CopyClick } from "~/components/copy-click";
 import {
@@ -56,6 +57,28 @@ const ErrorDetails: FC<{ digest?: string; eventId?: string }> = ({ digest, event
 	);
 };
 
+const ErrorLinks: FC = () => {
+	const { t } = useTranslation();
+
+	const links = [
+		{ href: urls.resources.networkStatus, label: t("network_status") },
+		{ href: urls.landing, label: "Home" },
+		{ href: urls.socials.discord, label: t("discord") },
+		{ href: urls.resources.contact, label: t("support") }
+	].filter((link): link is { href: string; label: string } => !!link.href);
+
+	return (
+		<div className="flex gap-2">
+			{links.map(({ href, label }, index) => (
+				<Fragment key={href}>
+					{index > 0 && " • "}
+					<a href={href}>{label}</a>
+				</Fragment>
+			))}
+		</div>
+	);
+};
+
 export type ErrorDialogProps = { userId?: string } & ErrorProps;
 
 const errors = new Map<string, number>();
@@ -73,7 +96,7 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, reset }) => {
 
 	const throwCount = (errors.get(errorKey) || 0) + 1;
 
-	const native = navigator.userAgent.includes("Flirtual-Native") || navigator.userAgent.includes("Flirtual-Vision");
+	const native = navigator.userAgent.includes(brand.nativeUserAgent) || navigator.userAgent.includes(brand.visionUserAgent);
 
 	const tryAgain = useCallback(() => {
 		if (throwCount >= 4) {
@@ -101,7 +124,11 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, reset }) => {
 				? (
 						<>
 							<DialogHeader>
-								<DialogTitle>Flirtual is temporarily unavailable</DialogTitle>
+								<DialogTitle>
+									{brand.name}
+									{" "}
+									is temporarily unavailable
+								</DialogTitle>
 								<DialogDescription className="sr-only" />
 							</DialogHeader>
 							<DialogBody className="flex flex-col">
@@ -126,7 +153,9 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, reset }) => {
 											style={{ clipPath: "polygon(100% 0, 0 60%, 100% 100%)" }}
 										/>
 										<p>
-											Flirtual is temporarily offline for scheduled maintenance. We'll be right back&mdash;check back soon!
+											{brand.name}
+											{" "}
+											is temporarily offline for scheduled maintenance. We&apos;ll be right back&mdash;check back soon!
 										</p>
 									</m.div>
 								</div>
@@ -141,23 +170,7 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, reset }) => {
 									</Button>
 								</div>
 								<div className="mt-auto flex flex-col">
-									<div className="flex gap-2">
-										<a href={urls.resources.networkStatus}>
-											{t("network_status")}
-										</a>
-										{" • "}
-										<a href={urls.landing}>
-											Home
-										</a>
-										{" • "}
-										<a href={urls.socials.discord}>
-											{t("discord")}
-										</a>
-										{" • "}
-										<a href={urls.resources.contact}>
-											{t("support")}
-										</a>
-									</div>
+									<ErrorLinks />
 									<footer>
 										<span>{t("copyright", { year: new Date().getFullYear() })}</span>
 										{" "}
@@ -231,22 +244,23 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, reset }) => {
 											i18nKey="tough_sleek_wasp_reside"
 										/>
 									</li>
-									<li>
-										<Trans
-											components={{
-												contact: (
-													<a
-														className="whitespace-nowrap lowercase underline"
-														href={urls.resources.contact}
-													>
-														<Send className="mr-1 inline-block size-4 shrink-0" />
-													</a>
-												)
-											}}
-											i18nKey="yummy_salty_porpoise_greet"
-										/>
-
-									</li>
+									{urls.resources.contact && (
+										<li>
+											<Trans
+												components={{
+													contact: (
+														<a
+															className="whitespace-nowrap lowercase underline"
+															href={urls.resources.contact}
+														>
+															<Send className="mr-1 inline-block size-4 shrink-0" />
+														</a>
+													)
+												}}
+												i18nKey="yummy_salty_porpoise_greet"
+											/>
+										</li>
+									)}
 								</ul>
 								<div data-vaul-no-drag className="select-children flex max-w-sm flex-col whitespace-pre-wrap font-mono text-xs">
 									<ErrorDetails digest={error.digest} eventId={eventId} />
@@ -262,23 +276,7 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, reset }) => {
 									</Button>
 								</div>
 								<div className="mt-auto flex flex-col">
-									<div className="flex gap-2">
-										<a href={urls.resources.networkStatus}>
-											{t("network_status")}
-										</a>
-										{" • "}
-										<a href={urls.landing}>
-											Home
-										</a>
-										{" • "}
-										<a href={urls.socials.discord}>
-											{t("discord")}
-										</a>
-										{" • "}
-										<a href={urls.resources.contact}>
-											{t("support")}
-										</a>
-									</div>
+									<ErrorLinks />
 									<footer>
 										<span>{t("copyright", { year: new Date().getFullYear() })}</span>
 										{" "}

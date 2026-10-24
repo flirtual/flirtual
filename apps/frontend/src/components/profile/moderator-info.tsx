@@ -93,7 +93,7 @@ function formatAgeVerificationMethod({ method, declaration }: UserAgeVerificatio
 	return value ? `${value} ` : null;
 }
 
-const HelpdeskLink: FC<{ email: string }> = ({ email }) => (
+const HelpdeskLink: FC<{ email: string }> = ({ email }) => urls.moderation.helpdeskContact(email) && (
 	<Link
 		className="ml-1 inline-flex align-middle opacity-75 hover:opacity-100"
 		href={urls.moderation.helpdeskContact(email)}
@@ -548,7 +548,7 @@ export const ProfileModeratorInfo: FC<{
 								<InlineLink
 									className="underline"
 									highlight={false}
-									href={`https://flirtual.chargebee.com/d/customers/${user.chargebeeId}`}
+									href={urls.moderation.chargebeeCustomer(user.chargebeeId)}
 								>
 									{user.chargebeeId}
 								</InlineLink>

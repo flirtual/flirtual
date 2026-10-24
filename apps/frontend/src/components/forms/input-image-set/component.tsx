@@ -23,6 +23,7 @@ import { twMerge } from "tailwind-merge";
 import { isWretchError } from "~/api/common";
 import { Image } from "~/api/images";
 import type { ProfileImageMetadata } from "~/api/user/profile/images";
+import { vrchat } from "~/features";
 import { useDevice } from "~/hooks/use-device";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useTheme } from "~/hooks/use-theme";
@@ -280,8 +281,9 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 						croppedCanvasOptions: {}
 					}
 				})
-				.use(VRChatMetadata, {})
 				.use(StereoMetadata, {});
+
+			if (vrchat) uppyInstance.use(VRChatMetadata, {});
 		}
 
 		uppyInstance

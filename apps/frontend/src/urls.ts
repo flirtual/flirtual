@@ -8,7 +8,8 @@ import type { User } from "./api/user";
 import type { Profile } from "./api/user/profile";
 import type { ProfileImage } from "./api/user/profile/images";
 import type { DiscoverGroup } from "./app/[locale]/(app)/(authenticated)/(onboarded)/discover/page";
-import { apiUrl, appBundleId, appStoreId, bucketContentOrigin, bucketUploadsOrigin, deepLinkOrigins, rcProjectId, shortOrigin, siteOrigin } from "./const";
+import * as brand from "./brand";
+import { apiUrl, appBundleId, appStoreId, bucketContentOrigin, bucketUploadsOrigin, chargebeeNamespace, deepLinkOrigins, rcProjectId, shortOrigin, siteOrigin } from "./const";
 import { defaultLocale } from "./i18n";
 import type { Locale } from "./i18n";
 import { escapeVRChat } from "./vrchat";
@@ -123,7 +124,7 @@ export function hrefWithQuery<T extends Page>(
 	return `${pathname}?${searchParameters.toString()}`;
 }
 
-export type FinishPage = 1 | 2 | 3 | 4 | 5;
+export type FinishPage = number;
 
 export const bucketNames = [
 	"static",
@@ -136,7 +137,7 @@ export type BucketName = typeof bucketNames[number];
 const apiOriginBase = new URL(apiUrl).origin;
 
 export const bucketOriginMap = {
-	static: "https://static.flirtual.com",
+	static: `https://static.${brand.assetDomain}`,
 	content: bucketContentOrigin || `${apiOriginBase}/v1/images/files`,
 	uploads: bucketUploadsOrigin || `${apiOriginBase}/v1/images/files`
 } as const satisfies Record<BucketName, string>;
@@ -157,7 +158,7 @@ export const urls = {
 				? urls.media(image.originalFile, "uploads")
 				: Gradient,
 	arbitraryImage: (urlOrPathname: string, options: ArbitraryImageOptions = { quality: 90 }) =>
-		`https://flirtual.com/cdn-cgi/image/${Object.entries(options).map(([key, value]) =>
+		`https://${brand.assetDomain}/cdn-cgi/image/${Object.entries(options).map(([key, value]) =>
 			`${{
 				width: "w",
 				height: "h",
@@ -246,9 +247,11 @@ export const urls = {
 			url("/mod", options),
 		checkDomain: (domain: string) => `https://verifymail.io/domain/${encodeURIComponent(domain)}`,
 		helpdeskContact: (email?: string) =>
-			`https://hello.flirtu.al/a/search/contacts?term=${encodeURIComponent(email ?? "")}`,
+			brand.supportOrigin && `${brand.supportOrigin}/a/search/contacts?term=${encodeURIComponent(email ?? "")}`,
 		revenuecatCustomer: (revenuecatId?: string) =>
-			`https://app.revenuecat.com/projects/${rcProjectId}/customers/${encodeURIComponent(revenuecatId ?? "")}`
+			`https://app.revenuecat.com/projects/${rcProjectId}/customers/${encodeURIComponent(revenuecatId ?? "")}`,
+		chargebeeCustomer: (chargebeeId?: string) =>
+			`https://${chargebeeNamespace}.chargebee.com/d/customers/${encodeURIComponent(chargebeeId ?? "")}`
 	},
 
 	admin: {
@@ -262,42 +265,37 @@ export const urls = {
 		download: "/download",
 		events: "/events",
 		invite: "/invite",
-		networkStatus: "https://status.flirtual.net",
+		networkStatus: brand.statusUrl,
 		press: "/press",
-		pressEmail: "mailto:press@flirtual.com",
-		privacyEmail: "mailto:privacy@flirtual.com",
+		pressEmail: brand.pressEmail && `mailto:${brand.pressEmail}`,
+		privacyEmail: brand.privacyEmail && `mailto:${brand.privacyEmail}`,
 		branding: "/branding",
-		developers: "https://github.com/flirtual/flirtual",
-		translate: (locale?: Locale) => `https://hosted.weblate.org/projects/flirtual/flirtual${locale && locale !== defaultLocale ? `/${locale}` : ""}`,
+		developers: brand.repositoryUrl,
+		translate: (locale?: Locale) =>
+			brand.weblateUrl && `${brand.weblateUrl}${locale && locale !== defaultLocale ? `/${locale}` : ""}`,
 		about: "/about",
 		communityGuidelines: "/guidelines",
 		termsOfService: "/terms",
 		privacyPolicy: "/privacy",
 		paymentTerms: "/payments",
 		yotiPrivacy: "https://www.yoti.com/privacy/age-verification/",
-		contact: "https://hello.flirtu.al/",
-		contactDirect: "https://hello.flirtu.al/support/tickets/new",
-		vulnerabilityReport:
-			"https://github.com/flirtual/flirtual/security/advisories/new"
+		contact: brand.supportOrigin && `${brand.supportOrigin}/`,
+		contactDirect: brand.supportOrigin && `${brand.supportOrigin}/support/tickets/new`,
+		resetPasswordHelp: brand.supportOrigin && `${brand.supportOrigin}/support/solutions/articles/73000539480-reset-your-password`,
+		vulnerabilityReport: `${brand.repositoryUrl}/security/advisories/new`
 	},
 
 	guides: {
 		mentalHealth: "/guides/mental-health"
 	},
 
-	socials: {
-		bluesky: "https://bsky.app/profile/flirtual.com",
-		discord: "https://discord.gg/flirtual",
-		instagram: "https://instagram.com/getflirtual",
-		vrchat: "https://vrc.group/FLIRT.4525",
-		x: "https://x.com/getflirtual"
-	},
+	socials: brand.socials,
 
 	apps: {
 		apple: `https://apps.apple.com/app/flirtual-vr-dating-app/id${appStoreId}`,
 		google: `https://play.google.com/store/apps/details?id=${appBundleId}`,
-		microsoft: "https://apps.microsoft.com/store/detail/flirtual/9NWCSDGB6CS3",
-		sideQuest: "https://sidequestvr.com/app/9195"
+		microsoft: brand.stores.microsoft,
+		sideQuest: brand.stores.sideQuest
 	},
 
 	manageSubscription: {

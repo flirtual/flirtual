@@ -2,6 +2,7 @@ import type { Dispatch, FC, SetStateAction } from "react";
 import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
+import { lifetimePlanId } from "~/api/plan";
 import { activeEntitlements } from "~/api/user";
 import { usePlans } from "~/hooks/use-plans";
 import { usePurchase } from "~/hooks/use-purchase";
@@ -36,6 +37,7 @@ export const PlanCard: FC<PlanCardProps> = (props) => {
 	} = props;
 	const session = useOptionalSession();
 	const { t } = useTranslation();
+	const lifetime = id === lifetimePlanId;
 
 	const { packages } = usePurchase();
 	const plans = usePlans();
@@ -83,15 +85,15 @@ export const PlanCard: FC<PlanCardProps> = (props) => {
 							containerClassName,
 							"bg-white-25 vision:bg-white-25/70 dark:bg-black-60/50"
 						],
-				duration === "lifetime" && (description ? "gap-4" : "desktop:flex-row")
+				lifetime && (description ? "gap-4" : "desktop:flex-row")
 			)}
 		>
 			<div className="flex flex-col">
 				<span
 					className={twMerge(
 						"font-montserrat text-sm font-semibold text-black-60 line-through dark:text-white-50",
-						duration === "lifetime" && "hidden",
-						duration !== "lifetime"
+						lifetime && "hidden",
+						!lifetime
 						&& price === originalPrice
 						&& "hidden desktop:invisible desktop:block"
 					)}
@@ -103,7 +105,7 @@ export const PlanCard: FC<PlanCardProps> = (props) => {
 				</span>
 				<span className="mt-1 text-xl">{duration}</span>
 			</div>
-			{!!discount && duration !== "lifetime" && (
+			{!!discount && !lifetime && (
 				<div
 					style={{
 						clipPath: "polygon(100% 0, 0 0, 100% 100%)",
@@ -123,7 +125,7 @@ export const PlanCard: FC<PlanCardProps> = (props) => {
 				{...props}
 				active={activePlan}
 				disabled={disabled}
-				lifetime={duration === "lifetime"}
+				lifetime={lifetime}
 			/>
 		</div>
 	);

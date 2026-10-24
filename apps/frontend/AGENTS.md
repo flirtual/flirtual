@@ -37,11 +37,11 @@ pnpm cap open ios | open android | run ios | run android
 
 ### Adding a `VITE_*` env var
 
-Update **all three** or the value bakes in as `undefined`:
+Do **all three** or the value bakes in as `undefined`:
 
 1. `.env.example` (documents it for local dev)
-2. `src/const.ts` (read via `import.meta.env.VITE_FOO`, export)
-3. `.github/workflows/frontend.yaml` (add to the `release` job's `env:` as `VITE_FOO: ${{ vars.VITE_FOO }}`; the workflow only forwards listed vars)
+2. `src/const.ts` (read via `import.meta.env.VITE_FOO`, export); brand values go in `src/brand.ts`, flags in `src/features.ts`
+3. Set it as a GitHub variable on the `production` and `preview` environments. `frontend.yaml` forwards every `VITE_*` variable; the mobile workflows don't, and only see repository-level ones.
 
 ## Styling
 
@@ -49,7 +49,7 @@ Tailwind with custom classes and variants.
 
 - **Classes**: `bg-brand-gradient`; shadows `shadow-brand-1`/`shadow-brand-inset`/`text-shadow-brand`; fonts `font-montserrat` (headings), `font-nunito` (body); focus `focused`/`focusable`/`focusable-within`; `touch-callout-default`/`-none` (iOS); `select-children` (children selectable, off by default).
 - **Variants**: `dark:`, `desktop:`, `wide:`, `tall:`, `native:` (iOS/Android app), `vision:` (visionOS), `android:` (native or web), `apple:` (iOS/visionOS/macOS, native or web), `[locale]:` (e.g. `en:`, `ja:`).
-- **Theming**: gradient vars `--theme-1`/`--theme-2`; light/dark pink themes, overridden in Homie Mode (green), by Arc browser theme, or by a Premium user's profile theme (within the profile component).
+- **Theming**: gradient vars `--theme-1`/`--theme-2`; light/dark brand themes (emitted by `tailwind.config.js` from the brand colours), overridden in Homie Mode (green), by Arc browser theme, or by a Premium user's profile theme (within the profile component).
 - **Rich text**: Quill + sanitize-html for the bio editor.
 - **twMerge()**: for conditional styling.
 
@@ -64,7 +64,31 @@ Tailwind with custom classes and variants.
 
 ### Translations (i18next)
 
-All user-facing text goes through i18next; add ICU keys to `messages/en.json` and `messages/ja.json`.
+All user-facing text goes through i18next; add ICU keys to `messages/en.json` only. Weblate
+(project `flirtual`: components `flirtual`, `attributes`, `notifications`, `glossary`) owns every
+other locale's file, so never hand-edit `messages/<locale>.json`, `attributes.<locale>.json` or
+non-English `.po` files. After adding or changing keys, run `/translate` (incremental mode): it
+writes context for the new keys, drafts translations with the translator agents, and uploads
+them to Weblate as "needs editing" or as suggestions, after you approve.
+
+`apps/frontend/.env.weblate` (git-ignored) holds `WEBLATE_URL`, `WEBLATE_PROJECT` and
+`WEBLATE_TOKEN` (a project-scoped `wlp_` token). Translation tooling lives in `i18n/`:
+`context.json` (per-key context), `style/` (style guide per locale, `glossary.json`),
+`translate.lock.json`, and `scripts/`:
+
+```sh
+cd apps/frontend
+/translate                      # incremental: new or changed keys, all target locales
+/translate incremental ja,ko    # specific locales
+/translate full ja              # every key
+/translate context              # refresh context, ask open questions, sync explanations
+
+node i18n/scripts/validate.ts <drafts.json> --locale ja      # ICU, placeholders, plurals, glossary
+node i18n/scripts/context.ts status                           # context coverage
+node --env-file=.env.weblate i18n/scripts/weblate.ts pull   # Weblate state → i18n/.staging
+```
+
+Writes to Weblate (`weblate.ts`, `screenshots.ts upload`) are dry runs unless given `--apply`.
 
 The watch app bundles `messages/` and reads it at runtime: its own strings live under `watch`, but it also reuses top-level keys and attribute names. Grep `ios/App/Watch/` before renaming or removing a key. Its `t()` only fills `{name}` placeholders and empty `<name/>` tags, so strings it uses can't rely on ICU plurals or `select`.
 

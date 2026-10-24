@@ -7,6 +7,7 @@ import { isLocale } from "~/i18n/languages";
 import { metaMerge, rootMeta } from "~/meta";
 
 import { FinishProgress } from "../progress";
+import { finishStepNumber } from "../steps";
 import type { Route } from "./+types/page";
 import { Finish3Form } from "./form";
 
@@ -22,7 +23,7 @@ export default function Finish3Page() {
 
 	return (
 		<>
-			<FinishProgress page={3} />
+			<FinishProgress page={finishStepNumber("interests")} />
 			<ModelCard
 				className="shrink-0 pb-[max(calc(var(--safe-area-inset-bottom,0rem)+4.5rem),6rem)] native-nav:pb-[calc(var(--safe-area-inset-bottom,0rem)+2.75rem)] desktop:max-w-2xl desktop:pb-0"
 				title={t("interests")}

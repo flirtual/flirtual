@@ -10,6 +10,7 @@ import { premium } from "~/api/user";
 import { PreferenceThemes } from "~/api/user/preferences";
 import { Profile } from "~/api/user/profile";
 import type { ProfileColors } from "~/api/user/profile";
+import * as brand from "~/brand";
 import { NewBadge, PremiumBadge } from "~/components/badge";
 import { InlineLink } from "~/components/inline-link";
 import { InputLabel, InputLabelHint, InputSwitch } from "~/components/inputs";
@@ -180,7 +181,7 @@ const ProfileColorSelect: FC = () => {
 			</div>
 			<div className="grid w-full grid-cols-2 gap-2 wide:grid-cols-4">
 				{[
-					{ name: "flirtual" as const, description: t("default_"), ...defaultColors },
+					{ name: "brand" as const, label: brand.name, description: t("default_"), ...defaultColors },
 					...recommendedThemes
 				].map((theme) => (
 					<button
@@ -208,7 +209,7 @@ const ProfileColorSelect: FC = () => {
 						}}
 					>
 						<div className="flex w-fit items-baseline gap-2">
-							<span className="ja:text-sm">{t(theme.name)}</span>
+							<span className="ja:text-sm">{"label" in theme ? theme.label : t(theme.name)}</span>
 							{"description" in theme && (
 								<span className="text-sm text-black-50 vision:text-white-40 ja:text-xs dark:text-white-40">
 									{theme.description}
@@ -330,7 +331,7 @@ export const AppearanceForm: FC = () => {
 				<div className="flex flex-col gap-2">
 					<InputLabel
 						inline
-						hint={(
+						hint={urls.resources.translate(locale) && (
 							<InputLabelHint>
 								<Trans
 									components={{
