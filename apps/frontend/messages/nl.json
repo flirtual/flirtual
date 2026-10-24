@@ -8,22 +8,28 @@
 	"hard_cause_trick_puzzling": "<section><h1>Ons verhaal</h1><p>Hoi, wij zijn Kyle en Tony, de makers van Flirtual. Kyle is al sinds de begindagen van Oculus geobsedeerd door VR, maar zijn leven veranderde pas echt toen hij op VRChat kwam en daar een paar van zijn beste vrienden ontmoette (en zijn vrouw!). Vlak voordat corona uitbrak, haalde Kyle zijn beste jeugdvriend Tony erbij, en ook diens leven werd door VR op z’n kop gezet. We wilden anderen helpen om ook geweldige mensen over de hele wereld te ontmoeten, en zo begon VRLFP (Virtual Reality Looking For Partner).</p><p>Omdat je in VR echt samen aanwezig bent, bouw je diepe banden op met mensen waar ook ter wereld. Door afstand te overbruggen en persoonlijkheid voorop te zetten, willen we de allerbeste mensen voor je vinden, waar ze ook zijn. En daten veiliger en magischer maken!</p><p>In 2022 werd VRLFP Flirtual. We hebben alles van de grond af opnieuw opgebouwd, de matchmaking verbeterd, persoonlijkheids- en interessetags toegevoegd en betere apps gelanceerd. Of je nu een serieuze relatie zoekt die ook in het echte leven doorgaat, iets luchtigers in VR of gewoon nieuwe maatjes: we helpen je graag je perfecte match te vinden.</p><group><logo/><p>❤ kfarwell, Tony & het Flirtual-team</p><discord>Word lid van onze Discord</discord></group><p><italic>PS: We zijn een heel eind gekomen sinds het bescheiden begin van VRLFP, maar we zijn nog steeds een klein team, geworteld in de VR-community. <br/><br/>Bedankt voor je geduld terwijl we keihard werken om Flirtual zo geweldig mogelijk te maken. Laat het ons vooral weten als je <contact>bugs tegenkomt</contact> of <ideas>suggesties hebt</ideas>!</italic></p></section><section><h1>Het team</h1><team-list/></section><section><h1>Tijdlijn</h1><timeline/></section>",
 	"price_listen_wise_communicate": {
 		"0": {
-			"image_alt": "Het twaalf uur durende lanceringsfeest van Flirtual met Vanguard op Valentijnsdag 2022"
+			"image_alt": "Het twaalf uur durende lanceringsfeest van Flirtual met Vanguard op Valentijnsdag 2022",
+			"link": ""
 		},
 		"1": {
-			"image_alt": "Flirtual Speed Dating in VRChat"
+			"image_alt": "Flirtual Speed Dating in VRChat",
+			"link": ""
 		},
 		"2": {
-			"image_alt": "DJ-avond van Flirtual in VRChat"
+			"image_alt": "DJ-avond van Flirtual in VRChat",
+			"link": ""
 		},
 		"3": {
-			"image_alt": "Flirtual op VRCon 2022"
+			"image_alt": "Flirtual op VRCon 2022",
+			"link": ""
 		},
 		"4": {
-			"image_alt": "Flirtual in de Today Show"
+			"image_alt": "Flirtual in de Today Show",
+			"link": ""
 		},
 		"5": {
-			"image_alt": "Flirtual op Vket 2023 Summer"
+			"image_alt": "Flirtual op Vket 2023 Summer",
+			"link": ""
 		}
 	},
 	"copy_frighten_wobble_futuristic": {
@@ -1135,5 +1141,8 @@
 	"i_am": "Ik ben…",
 	"kinks": "Kinks",
 	"accent": "Accent",
-	"background": "Achtergrond"
+	"background": "Achtergrond",
+	"light_theme_image": "",
+	"system_theme_image": "",
+	"dark_theme_image": ""
 }
