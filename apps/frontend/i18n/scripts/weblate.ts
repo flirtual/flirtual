@@ -310,7 +310,7 @@ async function drafts(name: string, locales: Array<TargetLocale>, apply: boolean
 		const uploadedPath = join(directory, "uploaded.json");
 		const uploaded = readJson<Record<string, string>>(uploadedPath, {});
 		const pulled = loadPulled(locale);
-		const counts = { empty: 0, replaceMachine: 0, suggestion: 0, comment: 0, same: 0, unavailable: 0, done: 0 };
+		const counts = { empty: 0, replaceMachine: 0, suggestion: 0, comment: 0, same: 0, unavailable: 0, readOnly: 0, done: 0 };
 		const writes = [];
 
 		for (const [key, draft] of Object.entries(staged) as Array<[Id, StagedDraft]>) {
@@ -323,6 +323,10 @@ async function drafts(name: string, locales: Array<TargetLocale>, apply: boolean
 			}
 			if (!unit) {
 				counts.unavailable++;
+				continue;
+			}
+			if (unit.state === states.readOnly) {
+				counts.readOnly++;
 				continue;
 			}
 			if (unit.target.join("\u001E") === target.join("\u001E")) {
@@ -362,7 +366,7 @@ async function drafts(name: string, locales: Array<TargetLocale>, apply: boolean
 			} });
 		}
 
-		console.log(`${locale}: ${counts.empty} new (needs editing), ${counts.replaceMachine} replacing machine text (needs editing), ${counts.suggestion} suggestions on human text, ${counts.comment} review comments, ${counts.same} unchanged, ${counts.done} already uploaded, ${counts.unavailable} not in Weblate`);
+		console.log(`${locale}: ${counts.empty} new (needs editing), ${counts.replaceMachine} replacing machine text (needs editing), ${counts.suggestion} suggestions on human text, ${counts.comment} review comments, ${counts.same} unchanged, ${counts.done} already uploaded, ${counts.unavailable} not in Weblate, ${counts.readOnly} read-only`);
 		if (apply) {
 			try {
 				await runWrites(writes);

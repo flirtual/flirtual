@@ -23231,6 +23231,7 @@
 		],
 		"element": "other",
 		"description": "URL the gallery photo links to (a VRChat world page). Not visible text; copy it unchanged.",
+		"readOnly": true,
 		"hash": "3b8efe4c5f61cbb2"
 	},
 	"flirtual:price_listen_wise_communicate.1.image_alt": {
@@ -23249,6 +23250,7 @@
 		],
 		"element": "other",
 		"description": "URL the gallery photo links to (a VRChat world page). Not visible text; copy it unchanged.",
+		"readOnly": true,
 		"hash": "ea98b9fd7cb0d7a4"
 	},
 	"flirtual:price_listen_wise_communicate.2.image_alt": {
@@ -23267,6 +23269,7 @@
 		],
 		"element": "other",
 		"description": "URL the gallery photo links to (a VRChat world page). Not visible text; copy it unchanged.",
+		"readOnly": true,
 		"hash": "40f146dad10c2736"
 	},
 	"flirtual:price_listen_wise_communicate.3.image_alt": {
@@ -23285,6 +23288,7 @@
 		],
 		"element": "other",
 		"description": "URL the gallery photo links to (a VRChat world page). Not visible text; copy it unchanged.",
+		"readOnly": true,
 		"hash": "7976aacff0d4c82b"
 	},
 	"flirtual:price_listen_wise_communicate.4.image_alt": {
@@ -23303,6 +23307,7 @@
 		],
 		"element": "other",
 		"description": "URL the gallery photo links to (a YouTube video). Not visible text; copy it unchanged.",
+		"readOnly": true,
 		"hash": "8e57fd4c5310e9d9"
 	},
 	"flirtual:price_listen_wise_communicate.5.image_alt": {
@@ -23321,6 +23326,7 @@
 		],
 		"element": "other",
 		"description": "URL the gallery photo links to (a VRChat world page). Not visible text; copy it unchanged.",
+		"readOnly": true,
 		"hash": "6aff9aa511bd83d1"
 	},
 	"flirtual:privacy": {
