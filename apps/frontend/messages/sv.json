@@ -8,28 +8,22 @@
 	"voice_spiritual_polite_entertaining": "Bild på Flirtual-teamet i VRChat",
 	"price_listen_wise_communicate": {
 		"0": {
-			"image_alt": "Flirtuals 12 timmar långa lanseringsfest på alla hjärtans dag 2022 tillsammans med Vanguard",
-			"link": ""
+			"image_alt": "Flirtuals 12 timmar långa lanseringsfest på alla hjärtans dag 2022 tillsammans med Vanguard"
 		},
 		"1": {
-			"image_alt": "Flirtual Speed Dating i VRChat",
-			"link": ""
+			"image_alt": "Flirtual Speed Dating i VRChat"
 		},
 		"2": {
-			"image_alt": "Flirtuals DJ-kväll i VRChat",
-			"link": ""
+			"image_alt": "Flirtuals DJ-kväll i VRChat"
 		},
 		"3": {
-			"image_alt": "Flirtual på VRCon 2022",
-			"link": ""
+			"image_alt": "Flirtual på VRCon 2022"
 		},
 		"4": {
-			"image_alt": "Flirtual i Today Show",
-			"link": ""
+			"image_alt": "Flirtual i Today Show"
 		},
 		"5": {
-			"image_alt": "Flirtual på Vket 2023 Summer",
-			"link": ""
+			"image_alt": "Flirtual på Vket 2023 Summer"
 		}
 	},
 	"copy_frighten_wobble_futuristic": {
@@ -1141,8 +1135,5 @@
 	"i_am": "Jag är…",
 	"kinks": "Kinks",
 	"accent": "Accentfärg",
-	"background": "Bakgrund",
-	"light_theme_image": "",
-	"system_theme_image": "",
-	"dark_theme_image": ""
+	"background": "Bakgrund"
 }

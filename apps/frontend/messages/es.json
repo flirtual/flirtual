@@ -98,28 +98,22 @@
 	"hard_cause_trick_puzzling": "<section><h1>Nuestra historia</h1><p>¡Hola! Somos Kyle y Tony, los creadores de Flirtual. Kyle está obsesionado con la realidad virtual desde los primeros tiempos de Oculus, pero su vida cambió de verdad cuando entró en VRChat y conoció allí a algunas de las personas más importantes para él (¡incluida su esposa!). Justo antes de que llegara el COVID, Kyle se trajo a esta aventura a Tony, su mejor amigo de la infancia, y la realidad virtual también le cambió la vida. Nos propusimos ayudar a más gente a conocer a personas increíbles de todo el mundo, y empezamos con VRLFP (Virtual Reality Looking For Partner).</p><p>Sentirte de verdad junto a alguien en VR te ayuda a crear conexiones profundas con personas de cualquier parte del mundo. Acortando distancias y poniendo la personalidad por delante, nuestra misión es encontrar a las mejores personas para ti, estén donde estén. ¡Y hacer que las citas sean más seguras y mágicas!</p><p>En 2022, VRLFP se convirtió en Flirtual. Lo rehicimos todo desde cero: mejoramos el emparejamiento, añadimos etiquetas de personalidad e intereses y lanzamos apps mejoradas. Tanto si buscas una relación seria que dé el salto a la vida real como algo más casual en VR o simplemente nuevas amistades, estamos aquí para ayudarte a encontrar tu match perfecto.</p><group><logo/><p>❤ kfarwell, Tony y el equipo de Flirtual</p><discord>Únete a nuestro Discord</discord></group><p><italic>P. D.: Hemos recorrido un largo camino desde los humildes comienzos de VRLFP, pero seguimos siendo un equipo pequeño con raíces en la comunidad de VR. <br/><br/>Gracias por tu paciencia mientras trabajamos duro para que Flirtual sea lo mejor posible. ¡Avísanos si <contact>encuentras algún error</contact> o <ideas>tienes alguna sugerencia</ideas>!</italic></p></section><section><h1>El equipo</h1><team-list/></section><section><h1>Cronología</h1><timeline/></section>",
 	"price_listen_wise_communicate": {
 		"0": {
-			"image_alt": "Fiesta de lanzamiento de Flirtual de 12 horas con Vanguard, San Valentín de 2022",
-			"link": ""
+			"image_alt": "Fiesta de lanzamiento de Flirtual de 12 horas con Vanguard, San Valentín de 2022"
 		},
 		"1": {
-			"image_alt": "Flirtual Speed Dating en VRChat",
-			"link": ""
+			"image_alt": "Flirtual Speed Dating en VRChat"
 		},
 		"2": {
-			"image_alt": "Noche de DJ de Flirtual en VRChat",
-			"link": ""
+			"image_alt": "Noche de DJ de Flirtual en VRChat"
 		},
 		"3": {
-			"image_alt": "Flirtual en la VRCon 2022",
-			"link": ""
+			"image_alt": "Flirtual en la VRCon 2022"
 		},
 		"4": {
-			"image_alt": "Flirtual en el programa Today",
-			"link": ""
+			"image_alt": "Flirtual en el programa Today"
 		},
 		"5": {
-			"image_alt": "Flirtual en Vket 2023 Summer",
-			"link": ""
+			"image_alt": "Flirtual en Vket 2023 Summer"
 		}
 	},
 	"copy_frighten_wobble_futuristic": {
@@ -1141,8 +1135,5 @@
 	"i_am": "Soy…",
 	"kinks": "Kinks",
 	"accent": "Acento",
-	"background": "Fondo",
-	"light_theme_image": "",
-	"system_theme_image": "",
-	"dark_theme_image": ""
+	"background": "Fondo"
 }
