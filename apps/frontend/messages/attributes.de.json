@@ -714,6 +714,9 @@
 		},
 		"ssp": {
 			"name": "Spanische Gebärdensprache"
+		},
+		"hbs": {
+			"name": "Serbokroatisch"
 		}
 	},
 	"delete-reason": {
