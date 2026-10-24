@@ -8,22 +8,28 @@
 	"voice_spiritual_polite_entertaining": "Фото команды Flirtual в VRChat",
 	"price_listen_wise_communicate": {
 		"0": {
-			"image_alt": "12-часовая вечеринка в честь запуска Flirtual на День святого Валентина 2022 года вместе с Vanguard"
+			"image_alt": "12-часовая вечеринка в честь запуска Flirtual на День святого Валентина 2022 года вместе с Vanguard",
+			"link": ""
 		},
 		"1": {
-			"image_alt": "Flirtual Speed Dating — быстрые свидания в VRChat"
+			"image_alt": "Flirtual Speed Dating — быстрые свидания в VRChat",
+			"link": ""
 		},
 		"2": {
-			"image_alt": "DJ-вечеринка Flirtual в VRChat"
+			"image_alt": "DJ-вечеринка Flirtual в VRChat",
+			"link": ""
 		},
 		"3": {
-			"image_alt": "Flirtual на VRCon 2022"
+			"image_alt": "Flirtual на VRCon 2022",
+			"link": ""
 		},
 		"4": {
-			"image_alt": "Flirtual в телешоу Today"
+			"image_alt": "Flirtual в телешоу Today",
+			"link": ""
 		},
 		"5": {
-			"image_alt": "Flirtual на Vket 2023 Summer"
+			"image_alt": "Flirtual на Vket 2023 Summer",
+			"link": ""
 		}
 	},
 	"copy_frighten_wobble_futuristic": {
@@ -1135,5 +1141,8 @@
 	"kinks": "Кинки",
 	"i_am": "Я…",
 	"accent": "Акцентный",
-	"background": "Фоновый"
+	"background": "Фоновый",
+	"light_theme_image": "",
+	"system_theme_image": "",
+	"dark_theme_image": ""
 }
