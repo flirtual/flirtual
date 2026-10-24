@@ -8,8 +8,8 @@
 ### to merge POT files into PO files.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2026-10-16 16:28+0000\n"
-"Last-Translator: Claude <bot-flirtual-claude@bots.noreply.weblate.org>\n"
+"PO-Revision-Date: 2026-10-24 03:14+0000\n"
+"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/flirtual/"
 "notifications/ja/>\n"
 "Language: ja\n"
@@ -182,9 +182,8 @@ msgid "password_changed.body_text"
 msgstr ""
 "誰かが、できればあなたが、Firtualアカウントのパスワードを変更しました。\n"
 "\n"
-" このリクエストを行わなかった場合、すぐに %{action_url} "
-"でパスワードをリセットするか、サポートが必要な場合はこのメールに返信してくだ"
-"さい。"
+" このリクエストを行わなかった場合、すぐに %{action_url} でパスワードを"
+"リセットするか、サポートが必要な場合はこのメールに返信してください。"
 
 #: lib/flirtual/user/email.ex:348
 #, elixir-autogen, elixir-format, fuzzy
@@ -201,8 +200,8 @@ msgstr "メッセージ"
 #, elixir-autogen, elixir-format, fuzzy
 msgid "new_match.looking_for_date_ideas"
 msgstr ""
-"デートのアイデアをお探しですか？私たちのDiscordサーバーの#date-"
-"worldsチャンネルをチェックしてください： https://discord.gg/flirtual"
+"デートのアイデアをお探しですか？私たちのDiscordサーバーの#date-worlds"
+"チャンネルをチェックしてください： https://discord.gg/flirtual"
 
 #: lib/flirtual/user/email.ex:182
 #, elixir-autogen, elixir-format, fuzzy
@@ -224,7 +223,8 @@ msgstr "あなたの毎日のプロフィールは準備ができています！
 #: lib/flirtual/user/push.ex:16
 #, elixir-autogen, elixir-format, fuzzy
 msgid "daily_profiles_ready_message"
-msgstr "Flirtualはバーチャルリアリティのためのオンラインデートアプリです。タップして"
+msgstr ""
+"Flirtualはバーチャルリアリティのためのオンラインデートアプリです。タップして"
 "ご覧ください！"
 
 #: lib/flirtual/user/email.ex:171
@@ -306,9 +306,9 @@ msgstr "いいねした人を見る"
 #, elixir-autogen, elixir-format, fuzzy
 msgid "this_week_1_person_liked_you"
 msgid_plural "this_week_x_people_liked_you"
-msgstr[0] "今週 "
-"%{count}人がFirtualであなたのプロフィールに「いいね！」または「ホメて」くれま"
-"した！"
+msgstr[0] ""
+"今週 %{count}人がFirtualであなたのプロフィールに「いいね！」または「ホメて」"
+"くれました！"
 
 #: lib/flirtual/user/email.ex:136
 #, elixir-autogen, elixir-format
