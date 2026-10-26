@@ -27,7 +27,7 @@ const mkcertExists = existsSync(mkcertPaths.cert) && existsSync(mkcertPaths.key)
 
 function getManualChunk(moduleId: string) {
 	const [,, language] = /(?:\/@uppy\/locales\/lib\/|\/messages\/(attributes\.)?)([a-z-_]+)\.(?:json|js)$/i.exec(moduleId) || [];
-	if (language) return `languages/${{ en_US: "en", ja_JP: "ja" }[language] || language}`;
+	if (language) return `languages/${language === "pt_BR" ? "pt-BR" : language.split("_")[0]}`;
 
 	if (/node_modules\/@?(?:react|react-dom|react-router|react-error-boundary)\//i.test(moduleId)) return "react";
 	if (/node_modules\/@?(?:capacitor|capawesome|capgo|revenuecat)/i.test(moduleId)) return "native";
