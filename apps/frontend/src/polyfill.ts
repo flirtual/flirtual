@@ -6,21 +6,24 @@ import { shouldPolyfill as needsNumberFormat } from "@formatjs/intl-numberformat
 import { shouldPolyfill as needsPluralRules } from "@formatjs/intl-pluralrules/should-polyfill.js";
 import { shouldPolyfill as needsRelativeTimeFormat } from "@formatjs/intl-relativetimeformat/should-polyfill.js";
 
+import { intlLocale } from "./i18n/languages.ts";
 import type { AnyLocale } from "./i18n/languages.ts";
 
 // Vite can't template-import bare package paths, so glob them; `exhaustive` lets it into node_modules.
 const localeData = import.meta.glob(
-	"/node_modules/@formatjs/intl-{pluralrules,relativetimeformat,displaynames,listformat,numberformat,datetimeformat}/locale-data/{en,de,es,fr,ja,ko,nl,pt,ru,sv}.js",
+	"/node_modules/@formatjs/intl-{pluralrules,relativetimeformat,displaynames,listformat,numberformat,datetimeformat}/locale-data/{en,de,es,fr,ja,ko,nl,pt,pt-PT,ru,sv}.js",
 	{ exhaustive: true }
 );
 
-function loadLocaleData(api: string, locale: AnyLocale) {
-	// The app passes `pt` to Intl, which CLDR reads as Brazilian Portuguese, so both use `pt` data.
+function loadLocaleData(api: string, locale: string) {
+	// formatjs files Brazilian Portuguese as `pt`.
 	const file = locale === "pt-BR" ? "pt" : locale;
 	return localeData[`/node_modules/@formatjs/intl-${api}/locale-data/${file}.js`]!();
 }
 
-export async function polyfillForLanguage(locale: AnyLocale) {
+export async function polyfillForLanguage(appLocale: AnyLocale) {
+	const locale = intlLocale(appLocale);
+
 	await Promise.all([
 		needsLocale() && import("@formatjs/intl-locale/polyfill-force.js"),
 		needsPluralRules(locale) && import("@formatjs/intl-pluralrules/polyfill-force.js")

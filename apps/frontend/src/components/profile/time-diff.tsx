@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { wallClockInTimezone } from "~/date";
 import { useSession } from "~/hooks/use-session";
 import { useLocale } from "~/i18n";
+import { intlLocale } from "~/i18n/languages";
 
 import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
 
@@ -42,7 +43,7 @@ export const TimeDiff: React.FC<TimeDiffProps> = ({ diff, displayName }) => {
 		: t("time_diff_h", { sign: diff < 0 ? "-" : "+", hours });
 
 	const theirTime = new Date(wallClockInTimezone(new Date(), timezone).getTime() + diff * 1000);
-	const formattedTime = theirTime.toLocaleTimeString(locale, {
+	const formattedTime = theirTime.toLocaleTimeString(intlLocale(locale), {
 		hour: "numeric",
 		minute: "numeric",
 		timeZone: "UTC"

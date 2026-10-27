@@ -8,6 +8,7 @@ import type { User } from "~/api/user";
 import { vrTags } from "~/features";
 import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
 import { useLocale } from "~/i18n";
+import { intlLocale } from "~/i18n/languages";
 import { urls } from "~/urls";
 
 import { ProfilePlaylist } from "../playlist";
@@ -39,7 +40,7 @@ export const PillCollectionExpansion: FC<PillCollectionExpansionProps> = (
 
 	const [locale] = useLocale();
 
-	const languageNames = new Intl.DisplayNames(locale, {
+	const languageNames = new Intl.DisplayNames(intlLocale(locale), {
 		type: "language"
 	});
 

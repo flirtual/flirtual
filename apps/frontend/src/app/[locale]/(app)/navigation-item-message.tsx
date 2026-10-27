@@ -4,6 +4,7 @@ import { clamp } from "remeda";
 
 import { useUnreadConversations } from "~/hooks/use-talkjs";
 import { useLocale } from "~/i18n";
+import { intlLocale } from "~/i18n/languages";
 import { urls } from "~/urls";
 
 import { NavigationItem } from "./navigation-item";
@@ -23,7 +24,7 @@ export const NavigationItemMessage: FC<{ onClick?: MouseEventHandler }> = ({ onC
 				{conversationCount !== 0 && (
 					<div className="absolute left-5 top-0 flex h-5 w-fit min-w-5 shrink-0 items-center justify-center rounded-full bg-brand-gradient px-1 opacity-100 ring-[2.5px] ring-white-20 transition-all group-hocus:scale-0 group-hocus:opacity-0">
 						<span className="text-sm font-semibold leading-none text-white-20">
-							{new Intl.NumberFormat(locale).format(conversationCount)}
+							{new Intl.NumberFormat(intlLocale(locale)).format(conversationCount)}
 						</span>
 					</div>
 				)}

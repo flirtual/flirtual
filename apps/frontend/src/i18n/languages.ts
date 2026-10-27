@@ -5,6 +5,11 @@ import type { Path, To } from "react-router";
 export const allLocales = ["en", "de", "es", "fr", "ja", "ko", "nl", "pt", "pt-BR", "ru", "sv"] as const;
 export type AnyLocale = (typeof allLocales)[number];
 
+// Our `pt` is European Portuguese, but CLDR reads `pt` as Brazilian.
+export function intlLocale(locale: string) {
+	return locale === "pt" ? "pt-PT" : locale;
+}
+
 // Keep in sync with enabledLocales in ios/App/Watch/Translations.swift.
 export const locales = ["en"] as const;
 export type Locale = (typeof locales)[number];

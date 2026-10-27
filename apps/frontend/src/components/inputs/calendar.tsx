@@ -10,6 +10,7 @@ import { twMerge } from "tailwind-merge";
 
 import type { IconComponent } from "~/components/icons";
 import { useLocale } from "~/i18n";
+import { intlLocale } from "~/i18n/languages";
 import { suppressNextClick } from "~/utilities";
 
 import {
@@ -223,10 +224,10 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 
 	const [locale] = useLocale();
 
-	const monthNameFormatter = useMemo(() => new Intl.DateTimeFormat(locale, {
+	const monthNameFormatter = useMemo(() => new Intl.DateTimeFormat(intlLocale(locale), {
 		month: "long"
 	}), [locale]);
-	const monthShortNameFormatter = useMemo(() => new Intl.DateTimeFormat(locale, {
+	const monthShortNameFormatter = useMemo(() => new Intl.DateTimeFormat(intlLocale(locale), {
 		month: "short"
 	}), [locale]);
 	const monthNames = useMemo(
@@ -290,7 +291,7 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 			.reverse();
 	}, [now, offset, min, max]);
 
-	const yearNameFormatter = useMemo(() => new Intl.DateTimeFormat(locale, {
+	const yearNameFormatter = useMemo(() => new Intl.DateTimeFormat(intlLocale(locale), {
 		year: "numeric"
 	}), [locale]);
 	const yearNames = useMemo(
@@ -304,7 +305,7 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 		[years, yearNameFormatter]
 	);
 
-	const weakNameFormatter = useMemo(() => new Intl.DateTimeFormat(locale, {
+	const weakNameFormatter = useMemo(() => new Intl.DateTimeFormat(intlLocale(locale), {
 		weekday: "narrow"
 	}), [locale]);
 	const weekNames = useMemo(
@@ -315,7 +316,7 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 		[weakNameFormatter]
 	);
 
-	const dayFormatter = useMemo(() => new Intl.NumberFormat(locale, {
+	const dayFormatter = useMemo(() => new Intl.NumberFormat(intlLocale(locale), {
 		minimumIntegerDigits: 2,
 		useGrouping: false
 	}), [locale]);

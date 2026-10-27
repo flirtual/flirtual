@@ -27,6 +27,7 @@ import { useGlobalEventListener } from "~/hooks/use-event-listener";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { useLocale } from "~/i18n";
+import { intlLocale } from "~/i18n/languages";
 import { invalidate, userKey } from "~/query";
 import { urls } from "~/urls";
 
@@ -123,7 +124,7 @@ export const ImageToolbar: React.FC<{
 		await onDeleted?.();
 	};
 
-	const formattedUploadTime = image && new Intl.RelativeTimeFormat(locale).format(
+	const formattedUploadTime = image && new Intl.RelativeTimeFormat(intlLocale(locale)).format(
 		Math.round((new Date(image.createdAt).getTime() - Date.now()) / (1000 * 60 * 60 * 24)),
 		"day"
 	);

@@ -27,6 +27,7 @@ import { log as _log } from "../log";
 import {
 	defaultLocale,
 	getLocale,
+	intlLocale,
 	localeNames,
 	localePathnameRegex,
 	locales,
@@ -128,6 +129,10 @@ i18n
 
 		ns: [defaultNamespace],
 		defaultNS: defaultNamespace,
+
+		i18nFormat: {
+			parseLngForICU: intlLocale
+		},
 
 		interpolation: {
 			escapeValue: false

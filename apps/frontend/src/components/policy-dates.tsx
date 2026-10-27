@@ -2,6 +2,7 @@ import type { FC } from "react";
 import { Trans } from "react-i18next";
 
 import { useLocale } from "~/i18n";
+import { intlLocale } from "~/i18n/languages";
 
 import { InlineLink } from "./inline-link";
 
@@ -13,14 +14,14 @@ export const PolicyDates: FC<{
 	const [locale] = useLocale();
 
 	const formatDate = (date: Date) => {
-		return new Intl.DateTimeFormat(locale, {
+		return new Intl.DateTimeFormat(intlLocale(locale), {
 			dateStyle: "long",
 			timeZone: "UTC"
 		}).format(date);
 	};
 
 	const formatRange = (start: Date, end: Date) => {
-		return new Intl.DateTimeFormat(locale, {
+		return new Intl.DateTimeFormat(intlLocale(locale), {
 			dateStyle: "long",
 			timeZone: "UTC"
 		}).formatRange(start, end);

@@ -3,6 +3,7 @@ import type { FC } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { useLocale } from "~/i18n";
+import { intlLocale } from "~/i18n/languages";
 
 import { Pill } from "./pill";
 
@@ -20,7 +21,7 @@ export function getCountryImage(countryId: string): string {
 const _countryNames: Record<string, Intl.DisplayNames> = {};
 
 export function getCountryName(locale: string, countryId: string) {
-	_countryNames[locale] ??= new Intl.DisplayNames([locale], { type: "region" });
+	_countryNames[locale] ??= new Intl.DisplayNames([intlLocale(locale)], { type: "region" });
 	return _countryNames[locale].of(countryId.toUpperCase());
 }
 

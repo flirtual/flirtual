@@ -8,6 +8,7 @@ import { useDevice } from "~/hooks/use-device";
 import { useSession } from "~/hooks/use-session";
 import { useUserCount } from "~/hooks/use-user";
 import { useLocale } from "~/i18n";
+import { intlLocale } from "~/i18n/languages";
 import { urls } from "~/urls";
 
 import { PlanList } from "./plan-list";
@@ -218,7 +219,7 @@ export const SubscriptionForm: FC = () => {
 			<div className="flex flex-col gap-4">
 				<p>
 					{t("drab_lucky_lemming_feel", {
-						number: new Intl.NumberFormat(locale).format(userCount)
+						number: new Intl.NumberFormat(intlLocale(locale)).format(userCount)
 					})}
 					{" "}
 					{entitlements.length > 0
