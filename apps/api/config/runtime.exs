@@ -300,7 +300,7 @@ if freshdesk_domain do
       Env.get("FRESHDESK_MODERATION_GROUP_ID") |> then(&(&1 && String.to_integer(&1))),
     # The `cf_` names Freshdesk generated for the appeal ticket fields.
     appeal_fields: %{
-      profile: Env.get!("FRESHDESK_FLIRTUAL_PROFILE_FIELD"),
+      profile: Env.get!("FRESHDESK_PROFILE_FIELD"),
       date: Env.get!("FRESHDESK_BAN_DATE_FIELD"),
       moderator: Env.get!("FRESHDESK_MODERATOR_FIELD"),
       reason: Env.get!("FRESHDESK_BAN_REASON_FIELD"),
