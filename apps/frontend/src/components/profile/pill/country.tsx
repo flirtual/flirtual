@@ -18,11 +18,17 @@ export function getCountryImage(countryId: string): string {
 	return countryFlags[`./${countryId}.svg`] as string;
 }
 
-const _countryNames: Record<string, Intl.DisplayNames> = {};
+const shortFormCountries = new Set(["HK", "MO", "MM", "PS"]);
+
+const _countryNames: Record<string, Record<"long" | "short", Intl.DisplayNames>> = {};
 
 export function getCountryName(locale: string, countryId: string) {
-	_countryNames[locale] ??= new Intl.DisplayNames([intlLocale(locale)], { type: "region" });
-	return _countryNames[locale].of(countryId.toUpperCase());
+	const code = countryId.toUpperCase();
+	_countryNames[locale] ??= {
+		long: new Intl.DisplayNames([intlLocale(locale)], { type: "region" }),
+		short: new Intl.DisplayNames([intlLocale(locale)], { type: "region", style: "short" })
+	};
+	return _countryNames[locale][shortFormCountries.has(code) ? "short" : "long"].of(code);
 }
 
 export interface CountryPillProps {
