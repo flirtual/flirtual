@@ -35,7 +35,7 @@ export const BlockDialog: FC<PropsWithChildren<{ user: User }>> = ({
 						})}
 					</AlertDialogTitle>
 				</AlertDialogHeader>
-				<AlertDialogDescription>{t("barbarous_hypnotic_thank_book")}</AlertDialogDescription>
+				<AlertDialogDescription>{t("block_confirm_description")}</AlertDialogDescription>
 				<DialogFooter>
 					<AlertDialogCancel asChild>
 						<Button kind="tertiary" size="sm">

@@ -32,7 +32,7 @@ export const CopyClick: FC<CopyClickProps> = ({
 				Clipboard.write({ string: value }).then(() => {
 					// Android 13 and later confirm copies themselves, with a preview of what was copied.
 					if (device.native && device.android && (device.androidSDKVersion ?? 0) >= 33) return;
-					toasts.add(t("loose_fancy_marlin_zip"));
+					toasts.add(t("copied_to_clipboard"));
 				})}
 		>
 			{children}

@@ -52,13 +52,13 @@ export const PersonalityForm: FC = () => {
 					invalidate({ queryKey: personalityKey(user.id) }),
 					invalidate({ queryKey: sessionKey() })
 				]);
-				toasts.add(t("wide_stock_skate_radiate"));
+				toasts.add(t("saved_personality"));
 			}}
 		>
 			{({ FormField }) => (
 				<>
 					<InputLabel>
-						{t("quiet_gross_skate_honor")}
+						{t("personality_hint")}
 					</InputLabel>
 					{questions.map((name) => (
 						<FormField key={name} name={name}>

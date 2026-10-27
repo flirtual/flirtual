@@ -119,7 +119,7 @@ export const DiscordSpamDialog: FC = withSuspense(() => {
 				components={{
 					connectLink: <InlineLink href={urls.settings.connections} />,
 				}}
-				i18nKey="tense_active_gibbon_dare"
+				i18nKey="discord_in_bio_warning"
 			/>
 		</TrustAndSafetyDialog>
 	);

@@ -50,7 +50,7 @@ export default function PrivacyPage() {
 					"complaint-uk": <InlineLink href="https://ico.org.uk/" />,
 					"complaint-us-ca": <InlineLink href="https://oag.ca.gov/" />
 				}}
-				i18nKey="sticks_protect_zinc_explain"
+				i18nKey="privacy_policy_body"
 			/>
 		</ModelCard>
 	);

@@ -23,7 +23,7 @@ export const BackgroundVideo: React.FC = () => {
 			<source src={VideoMp4} type="video/mp4" />
 			<Image
 				priority
-				alt={t("mellow_short_shark_propel")}
+				alt={t("landing_dates_alt")}
 				src={PosterImage}
 			/>
 		</video>

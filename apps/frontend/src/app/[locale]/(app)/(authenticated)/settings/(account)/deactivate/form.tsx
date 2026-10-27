@@ -49,14 +49,14 @@ export const DeactivationForm: React.FC = () => {
 				{() => (
 					<>
 						<span>
-							{t("less_drab_larva_assure")}
+							{t("deactivate_description")}
 						</span>
 						<div className="flex flex-col gap-4">
 							<FormButton>
 								{t("deactivate_account")}
 							</FormButton>
 							<FormAlternativeActionLink href={urls.settings.deleteAccount}>
-								{t("low_slow_platypus_taste")}
+								{t("delete_account_instead")}
 							</FormAlternativeActionLink>
 						</div>
 					</>

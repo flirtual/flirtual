@@ -46,7 +46,7 @@ export const ConfirmPasswordResetForm: React.FC<{ token: string }> = ({ token })
 					? (
 							<>
 								<p>
-									{t("formal_dark_camel_hunt")}
+									{t("password_reset_success")}
 								</p>
 								<div className="flex gap-4">
 									<ButtonLink className="w-fit" href={urls.login()} size="sm">

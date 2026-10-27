@@ -32,9 +32,9 @@ export default function ConversationsLayout() {
 				containerProps={{ className: "flex flex-col gap-4" }}
 				title={t("matches")}
 			>
-				<h1 className="text-2xl font-semibold">{t("just_loud_orangutan_dash")}</h1>
-				<p>{t("antsy_great_spider_drum")}</p>
-				<p>{t("born_green_lion_tend")}</p>
+				<h1 className="text-2xl font-semibold">{t("no_matches_title")}</h1>
+				<p>{t("no_matches_likers")}</p>
+				<p>{t("no_matches_description")}</p>
 				<details>
 					<summary className="text-pink opacity-75 transition-opacity hover:cursor-pointer hover:opacity-100">
 						{t("tips")}
@@ -43,7 +43,7 @@ export default function ConversationsLayout() {
 						components={{
 							discordLink: <InlineLink href={urls.socials.discord} />
 						}}
-						i18nKey="heavy_weak_hare_spin"
+						i18nKey="no_matches_boost"
 					/>
 				</details>
 				<div className="flex flex-col gap-2">

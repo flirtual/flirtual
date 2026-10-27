@@ -178,7 +178,7 @@ export const InterestSelectCustomInput: FC<{
 			<InputLabelHint className="-mt-2">
 				<Trans
 					components={{ small: <small /> }}
-					i18nKey={apple ? "wide_shy_loris_gleam" : "born_game_pony_empower"}
+					i18nKey={apple ? "custom_interests_hint_apple" : "custom_interests_hint"}
 				/>
 			</InputLabelHint>
 			<InputAutocomplete
@@ -261,7 +261,7 @@ export const InterestsForm: FC = () => {
 						profile
 					}
 				}));
-				toasts.add(t("bad_tangy_lynx_tend"));
+				toasts.add(t("saved_interests"));
 			}}
 		>
 			{({
@@ -280,7 +280,7 @@ export const InterestsForm: FC = () => {
 
 				return (
 					<>
-						<InputLabel>{t("chunky_weak_tadpole_relish")}</InputLabel>
+						<InputLabel>{t("interests_hint")}</InputLabel>
 						<FormField name="filter">
 							{(field) => (
 								<InputText
@@ -305,7 +305,7 @@ export const InterestsForm: FC = () => {
 										)
 											return toasts.add({
 												type: "warning",
-												value: t("inclusive_silly_ibex_succeed")
+												value: t("interests_limit_reached")
 											});
 
 										onChange(newValues);
@@ -324,7 +324,7 @@ export const InterestsForm: FC = () => {
 										)
 											return toasts.add({
 												type: "warning",
-												value: t("inclusive_silly_ibex_succeed")
+												value: t("interests_limit_reached")
 											});
 
 										onChange(newValues);

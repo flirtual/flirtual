@@ -18,7 +18,7 @@ export function LongerThanUsual() {
 			className="flex w-full max-w-md flex-col gap-4 px-4 pt-8"
 			initial={{ opacity: 0, y: -20 }}
 		>
-			<p className="font-semibold">{t("crisp_lime_raven_arise")}</p>
+			<p className="font-semibold">{t("loading_slow")}</p>
 			<ul className="ml-4 flex list-disc flex-col gap-2">
 				{preview && (
 					<li>
@@ -38,17 +38,17 @@ export function LongerThanUsual() {
 						components={{
 							icon: <WifiOff className="inline-block size-4 shrink-0" />
 						}}
-						i18nKey="tough_sleek_wasp_reside"
+						i18nKey="error_tip_connection"
 					/>
 				</li>
-				<li>{t("game_vexed_goldfish_dash")}</li>
+				<li>{t("error_tip_restart_app")}</li>
 				<li>
 					<Trans
 						components={{
 							"browser-icon": <AppWindow className="inline-block size-4 shrink-0" />,
 							"device-icon": <Smartphone className="inline-block size-4 shrink-0" />
 						}}
-						i18nKey="sweet_strong_poodle_endure"
+						i18nKey="error_tip_update_app"
 					/>
 				</li>
 				<li>
@@ -72,7 +72,7 @@ export function LongerThanUsual() {
 									/>
 								)
 							}}
-							i18nKey="yummy_salty_porpoise_greet"
+							i18nKey="error_tip_contact"
 						/>
 					</li>
 				)}

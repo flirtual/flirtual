@@ -56,7 +56,7 @@ export const ReactivationForm: React.FC = () => {
 								<p>
 									⚠️
 									{" "}
-									{t("trite_awful_marten_lend")}
+									{t("deactivated_premium_notice")}
 								</p>
 								<Button
 									kind="secondary"
@@ -68,14 +68,14 @@ export const ReactivationForm: React.FC = () => {
 							</div>
 						)}
 						<span>
-							{t("smart_bland_husky_scold")}
+							{t("reactivate_description")}
 						</span>
 						<div className="flex flex-col gap-4">
 							<FormButton>
 								{t("reactivate_account")}
 							</FormButton>
 							<FormAlternativeActionLink href={urls.settings.deleteAccount}>
-								{t("low_slow_platypus_taste")}
+								{t("delete_account_instead")}
 							</FormAlternativeActionLink>
 						</div>
 					</>

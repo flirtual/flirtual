@@ -47,7 +47,7 @@ export default function TermsPage() {
 						"delete-account": <InlineLink href={urls.settings.deleteAccount} />,
 						ssltest: <InlineLink href={`https://www.ssllabs.com/ssltest/analyze.html?d=${siteOrigin}&latest`} />
 					}}
-					i18nKey="committee_trucks_welcome_approval"
+					i18nKey="terms_body"
 				/>
 			</div>
 		</ModelCard>

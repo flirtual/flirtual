@@ -66,7 +66,7 @@ export const Finish3Form: FC = () => {
 				return (
 					<>
 						<InputLabel>
-							{t("chunky_weak_tadpole_relish")}
+							{t("interests_hint")}
 						</InputLabel>
 						<FormField name="filter">
 							{(field) => (
@@ -92,7 +92,7 @@ export const Finish3Form: FC = () => {
 										)
 											return toasts.add({
 												type: "warning",
-												value: t("inclusive_silly_ibex_succeed")
+												value: t("interests_limit_reached")
 											});
 
 										onChange(newValues);
@@ -111,7 +111,7 @@ export const Finish3Form: FC = () => {
 										)
 											return toasts.add({
 												type: "warning",
-												value: t("inclusive_silly_ibex_succeed")
+												value: t("interests_limit_reached")
 											});
 
 										onChange(newValues);

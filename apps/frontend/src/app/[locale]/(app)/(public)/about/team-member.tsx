@@ -20,7 +20,7 @@ export const TeamMember: React.FC<TeamMemberProps> = (props) => {
 	return (
 		<div className="flex items-center gap-4 text-inherit">
 			<Image
-				alt={t("extra_moving_jackdaw_twist", { name })}
+				alt={t("avatar_alt", { name })}
 				className="aspect-square w-12 shrink-0 rounded-full bg-black-70 object-cover shadow-brand-1"
 				height="64"
 				src={urls.media(avatar)}

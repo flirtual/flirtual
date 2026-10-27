@@ -29,7 +29,7 @@ export const PrivacyForm: React.FC = () => {
 				const privacy = await Preferences.updatePrivacy(user.id, body);
 				reset(privacy);
 
-				toasts.add(t("blue_lost_quail_support"));
+				toasts.add(t("saved_privacy"));
 
 				await mutate<Session>(
 					sessionKey(),
@@ -102,7 +102,7 @@ export const PrivacyForm: React.FC = () => {
 										</InputLabelHint>
 									)}
 								>
-									{t("tangy_front_anaconda_dash")}
+									{t("analytics_opt_out")}
 								</InputLabel>
 								<InputSwitch {...field.props} value={!field.props.value} onChange={(value) => field.props.onChange(!value)} />
 							</>

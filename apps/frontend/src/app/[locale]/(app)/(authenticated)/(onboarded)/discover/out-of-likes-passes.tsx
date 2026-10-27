@@ -31,7 +31,7 @@ export const OutOfLikesPasses: FC<OutOfLikesPassesProps> = ({ mode, resetAt, res
 		>
 			<>
 				<DialogHeader>
-					<DialogTitle>{t("warm_ago_slug_leap")}</DialogTitle>
+					<DialogTitle>{t("out_of_likes_title")}</DialogTitle>
 					<DialogDescription className="sr-only" />
 				</DialogHeader>
 				<DialogBody>
@@ -47,7 +47,7 @@ export const OutOfLikesPasses: FC<OutOfLikesPassesProps> = ({ mode, resetAt, res
 												/>
 											)
 										}}
-										i18nKey="cozy_such_jannes_laugh"
+										i18nKey="out_of_likes_premium"
 									/>
 								</p>
 								{homieMode && mode === "love" && (
@@ -60,11 +60,11 @@ export const OutOfLikesPasses: FC<OutOfLikesPassesProps> = ({ mode, resetAt, res
 													/>
 												)
 											}}
-											i18nKey="small_drab_rooster_drum"
+											i18nKey="out_of_likes_homie_mode"
 										/>
 									</p>
 								)}
-								<p className="font-semibold">{t("tense_loose_felix_beam")}</p>
+								<p className="font-semibold">{t("out_of_likes_reset")}</p>
 								<Countdown date={resetAt} onComplete={reset} />
 							</div>
 						</div>

@@ -156,7 +156,7 @@ export const ImageToolbar: React.FC<{
 									</InlineLink>
 								)
 							}}
-							i18nKey="lost_sour_moose_tend"
+							i18nKey="photo_taken_by"
 						/>
 					</>
 				)}

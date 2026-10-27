@@ -46,7 +46,7 @@ export const ForgotPasswordForm: React.FC = () => {
 										components={{
 											contact: <InlineLink href={urls.resources.contactDirect} />
 										}}
-										i18nKey="ready_ghost_locket_bubble"
+										i18nKey="forgot_password_sent"
 										values={{ email: fields.email.props.value }}
 									/>
 								</p>
@@ -68,7 +68,7 @@ export const ForgotPasswordForm: React.FC = () => {
 						)
 					: (
 							<>
-								<p>{t("sticks_own_phobic_utopian")}</p>
+								<p>{t("forgot_password_description")}</p>
 								<FormField name="email">
 									{(field) => (
 										<>

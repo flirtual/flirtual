@@ -22,7 +22,7 @@ export const BlockedProfile: React.FC<{ user: User }> = ({ user }) => {
 					components={{
 						highlight: <span className="font-semibold" />
 					}}
-					i18nKey="giant_strong_thrush_startle"
+					i18nKey="blocked_profile_notice"
 					values={{ name: escapeHtml(user.profile.displayName || t("unnamed_user")) }}
 				/>
 			</span>

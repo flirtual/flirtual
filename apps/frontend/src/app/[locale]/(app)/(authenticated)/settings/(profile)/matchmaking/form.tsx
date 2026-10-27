@@ -151,7 +151,7 @@ export const MatchmakingForm: FC = () => {
 				]);
 
 				await invalidate({ queryKey: sessionKey() });
-				toasts.add(t("east_low_niklas_list"));
+				toasts.add(t("saved_matchmaking"));
 			}}
 		>
 			{({ FormField, fields }) => (
@@ -261,7 +261,7 @@ export const MatchmakingForm: FC = () => {
 								<AlertDialogTitle>{t("are_you_sure")}</AlertDialogTitle>
 							</AlertDialogHeader>
 							<AlertDialogDescription>
-								{t("noble_cute_lionfish_thrive")}
+								{t("reset_passes_description")}
 							</AlertDialogDescription>
 							<DialogFooter>
 								<AlertDialogCancel asChild>
@@ -342,10 +342,10 @@ export const MatchmakingForm: FC = () => {
 							<PremiumBadge />
 						</InputLabel>
 						<span>
-							{t("safe_good_rat_bask")}
+							{t("matchmaking_priorities_description")}
 						</span>
 						<span>
-							{t("weird_dizzy_baboon_support")}
+							{t("matchmaking_priorities_example")}
 						</span>
 					</div>
 					{CustomWeightList.map((key) => {

@@ -118,7 +118,7 @@ export const AppBanner: FC = () => {
 							/>
 						)
 					}}
-					i18nKey="nutritious_challenge_blue_end"
+					i18nKey="finish_profile_banner"
 				/>
 			</Banner>
 		);
@@ -131,7 +131,7 @@ export const AppBanner: FC = () => {
 					components={{
 						bannerLink: <BannerLink href={urls.confirmEmail()} />
 					}}
-					i18nKey="exuberant_green_horse_fowl"
+					i18nKey="confirm_email_banner"
 				/>
 			</Banner>
 		);

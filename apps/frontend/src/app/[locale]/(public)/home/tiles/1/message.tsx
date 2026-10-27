@@ -8,15 +8,15 @@ import { useMessages } from "~/i18n";
 
 export const ProfileMessage: FC = () => {
 	const {
-		motionless_absorbed_scintillating_rightful: messages
+		landing_avatar_points: messages
 	} = useMessages();
 
 	const [current, setCurrent] = useState(Object.keys(messages)[0] as keyof typeof messages);
 
 	/*
-	t("motionless_absorbed_scintillating_rightful.0")"
-	t("motionless_absorbed_scintillating_rightful.1")"
-	t("motionless_absorbed_scintillating_rightful.2")"
+	t("landing_avatar_points.0")"
+	t("landing_avatar_points.1")"
+	t("landing_avatar_points.2")"
 	*/
 
 	useInterval(

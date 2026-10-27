@@ -89,7 +89,7 @@ struct ConversationRow: View {
         guard let message = conversation.lastMessage, !message.system, let content = message.content else {
             return t("its_a_match")
         }
-        return message.senderId == Account.shared.user?.id ? t("level_orange_stingray_fulfill", ["message": content]) : content
+        return message.senderId == Account.shared.user?.id ? t("last_message_from_you", ["message": content]) : content
     }
 }
 

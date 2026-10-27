@@ -116,21 +116,21 @@ export const SubscriptionForm: FC = () => {
 									👀
 									{" "}
 									<InlineLink href={urls.likes}>
-										{t("many_direct_chipmunk_sew")}
+										{t("premium_feature_likes")}
 									</InlineLink>
 								</li>
 								<li>
 									♾️
 									{" "}
 									<InlineLink href={urls.discover("dates")}>
-										{t("civil_active_nils_value")}
+										{t("premium_feature_unlimited")}
 									</InlineLink>
 								</li>
 								<li>
 									🎚️
 									{" "}
 									<InlineLink href={urls.settings.matchmaking()}>
-										{t("sharp_calm_stork_cry")}
+										{t("premium_feature_priorities")}
 									</InlineLink>
 								</li>
 								<li>
@@ -144,7 +144,7 @@ export const SubscriptionForm: FC = () => {
 									💃
 									{" "}
 									<InlineLink href={urls.settings.appearance}>
-										{t("many_top_quail_embrace")}
+										{t("premium_feature_colors")}
 									</InlineLink>
 								</li>
 							</ul>
@@ -155,26 +155,26 @@ export const SubscriptionForm: FC = () => {
 									<span className="text-lg font-semibold">
 										👀
 										{" "}
-										{t("many_direct_chipmunk_sew")}
+										{t("premium_feature_likes")}
 									</span>
-									{t("brave_late_dolphin_dart")}
+									{t("premium_likes_description")}
 								</li>
 								<li className="flex flex-col">
 									<span className="text-lg font-semibold">
 										♾️
 										{" "}
-										{t("civil_active_nils_value")}
+										{t("premium_feature_unlimited")}
 									</span>
-									{t("flat_topical_hornet_nourish")}
+									{t("premium_unlimited_description")}
 								</li>
 								<li className="flex flex-col">
 									<span className="text-lg font-semibold">
 										🎚️
 										{" "}
-										{t("sharp_calm_stork_cry")}
+										{t("premium_feature_priorities")}
 									</span>
 									<span>
-										{t("stock_zany_puma_gulp")}
+										{t("premium_priorities_description")}
 										{" "}
 										<InlineLink href={urls.settings.matchmaking()}>
 											{t("check_this_out_for_free")}
@@ -199,10 +199,10 @@ export const SubscriptionForm: FC = () => {
 									<span className="text-lg font-semibold">
 										💃
 										{" "}
-										{t("many_top_quail_embrace")}
+										{t("premium_feature_colors")}
 									</span>
 									<span>
-										{t("late_full_rat_stab")}
+										{t("premium_colors_description")}
 										{" "}
 										<InlineLink href={urls.settings.appearance}>
 											{t("check_this_out_for_free")}
@@ -218,16 +218,16 @@ export const SubscriptionForm: FC = () => {
 			</div>
 			<div className="flex flex-col gap-4">
 				<p>
-					{t("drab_lucky_lemming_feel", {
+					{t("premium_support_us", {
 						number: new Intl.NumberFormat(intlLocale(locale)).format(userCount)
 					})}
 					{" "}
 					{entitlements.length > 0
-						? t("basic_wide_ape_buy")
-						: t("loved_many_raven_pout")}
+						? t("premium_thanks")
+						: t("premium_consider_subscribing")}
 				</p>
 				<p>
-					{t(active.length > 0 ? "lost_spare_millipede_nurture" : "cute_smug_ocelot_flip")}
+					{t(active.length > 0 ? "subscription_manage_hint" : "subscription_manage_hint_return")}
 				</p>
 			</div>
 			<div className="text-center">

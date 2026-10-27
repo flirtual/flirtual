@@ -51,7 +51,7 @@ export const ItsAMatch: FC<ItsAMatchProps> = ({ userId, conversationId, kind, on
 										</InlineLink>
 									)
 								}}
-								i18nKey="green_aqua_ibex_value"
+								i18nKey="match_description"
 							/>
 						</span>
 						<div className="flex items-center justify-center gap-4">

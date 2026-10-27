@@ -109,7 +109,7 @@ export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
 								? (
 										<>
 											{replaceEmojis((lastMessage?.senderId !== userId && !lastMessage.system)
-												? t("level_orange_stingray_fulfill", { message: lastMessage.content })
+												? t("last_message_from_you", { message: lastMessage.content })
 												: lastMessage.content)}
 										</>
 									)

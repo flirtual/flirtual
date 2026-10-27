@@ -24,8 +24,7 @@ You get a batch file (JSON array) under `apps/frontend/i18n/.staging/context/bat
 - `existingExplanation`: a maintainer's note already on Weblate. Trust it and keep its facts.
 - `previous`: an earlier context entry for this key, if the English changed since.
 
-Many keys have meaningless random names (`that_active_seal_nail`); never infer meaning from
-the key name, only from the English and the code.
+Key names are only hints; take meaning from the English and the code.
 
 ## What to do
 
@@ -42,7 +41,7 @@ Write one JSON object to the output path you're given, keyed by `id`:
 
 ```json
 {
-	"flirtual:that_active_seal_nail": {
+	"flirtual:tour_signature": {
 		"group": "email/footer",
 		"screens": ["email: all account emails"],
 		"element": "body",

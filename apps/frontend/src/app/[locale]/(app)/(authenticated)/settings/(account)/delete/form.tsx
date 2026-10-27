@@ -90,7 +90,7 @@ export const DeleteForm: FC = () => {
 							</span>
 						</div>
 					)}
-					<span>{t("antsy_calm_mallard_expand")}</span>
+					<span>{t("delete_account_reason")}</span>
 					<FormField name="reasonId">
 						{(field) => (
 							<>
@@ -121,7 +121,7 @@ export const DeleteForm: FC = () => {
 													components={{
 														deactivateLink: <InlineLink href={urls.settings.deactivateAccount} />
 													}}
-													i18nKey="brave_bald_bison_trim"
+													i18nKey="delete_account_take_break"
 												/>
 												{" "}
 											</p>
@@ -147,8 +147,8 @@ export const DeleteForm: FC = () => {
 									{...field.props}
 									placeholder={
 										fields.reasonId.props.value === "jrAqzBkasZwqfjSPAazNq3"
-											? t("odd_blue_clownfish_gleam")
-											: t("dirty_pink_puffin_flow")
+											? t("delete_account_success_story")
+											: t("delete_account_comment")
 									}
 									maxLength={1000}
 									rows={4}
@@ -172,12 +172,12 @@ export const DeleteForm: FC = () => {
 					)}
 					<div className="flex flex-col gap-4">
 						<span>
-							<Trans i18nKey="teary_cuddly_midge_sew" />
+							<Trans i18nKey="delete_account_confirm" />
 						</span>
 					</div>
 					<FormButton>{t("delete_account")}</FormButton>
 					<FormAlternativeActionLink href={urls.settings.deactivateAccount}>
-						{t("white_tasty_trout_gleam")}
+						{t("deactivate_account_instead")}
 					</FormAlternativeActionLink>
 				</>
 			)}

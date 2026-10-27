@@ -34,12 +34,12 @@ export const PolicyDates: FC<{
 	if (superseded) {
 		if (superseded < now) {
 			// Outdated policy
-			key = "fancy_noisy_grizzly_hint";
+			key = "policy_expired_notice";
 			values = { range: formatRange(introduced, superseded) };
 		}
 		else {
 			// Expiring policy
-			key = "last_large_midge_spur";
+			key = "policy_current_notice";
 			values = { range: formatRange(introduced, superseded) };
 		}
 	}
@@ -51,7 +51,7 @@ export const PolicyDates: FC<{
 		}
 		else {
 			// Upcoming policy
-			key = "suave_same_macaw_affirm";
+			key = "policy_upcoming_notice";
 			values = { date: formatDate(introduced) };
 		}
 	}

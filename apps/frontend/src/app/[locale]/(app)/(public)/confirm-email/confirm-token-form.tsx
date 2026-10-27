@@ -21,14 +21,14 @@ export const ConfirmTokenForm: React.FC<{ token: string }> = ({ token }) => {
 		onError: async () => {
 			toasts.add({
 				type: "error",
-				value: t("dizzy_fair_goat_propel"),
+				value: t("confirm_email_failed"),
 				duration: "short"
 			});
 
 			await navigate(urls.confirmEmail());
 		},
 		onSuccess: async () => {
-			toasts.add(t("royal_home_leopard_tickle"));
+			toasts.add(t("email_confirmed"));
 
 			await invalidate({ queryKey: sessionKey() });
 			await navigate(urls.discover("dates"));

@@ -34,7 +34,7 @@ const ErrorDetails: FC<{ digest?: string; eventId?: string }> = ({ digest, event
 							components={{
 								strong: <strong className="font-bold" />
 							}}
-							i18nKey="zany_watery_zebra_play"
+							i18nKey="error_digest"
 							values={{ value: digest }}
 						/>
 					</span>
@@ -47,7 +47,7 @@ const ErrorDetails: FC<{ digest?: string; eventId?: string }> = ({ digest, event
 							components={{
 								strong: <strong className="font-bold" />
 							}}
-							i18nKey="big_that_insect_slurp"
+							i18nKey="error_event"
 							values={{ value: eventId }}
 						/>
 					</span>
@@ -183,7 +183,7 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, reset }) => {
 				: (
 						<>
 							<DialogHeader>
-								<DialogTitle>{t("each_aloof_parrot_dine")}</DialogTitle>
+								<DialogTitle>{t("error_title")}</DialogTitle>
 								<DialogDescription className="sr-only" />
 							</DialogHeader>
 							<DialogBody className="flex flex-col">
@@ -208,7 +208,7 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, reset }) => {
 											className="absolute -left-5 top-7 size-5 bg-white-10"
 											style={{ clipPath: "polygon(100% 0, 0 60%, 100% 100%)" }}
 										/>
-										<p>{t("quiet_quaint_whale_rest")}</p>
+										<p>{t("error_found")}</p>
 										<pre className="whitespace-pre-wrap text-xs">
 											{error.message}
 										</pre>
@@ -226,14 +226,14 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, reset }) => {
 										</button>
 										.
 									</li>
-									{native && (<li>{t("game_vexed_goldfish_dash")}</li>)}
+									{native && (<li>{t("error_tip_restart_app")}</li>)}
 									<li>
 										<Trans
 											components={{
 												"browser-icon": <AppWindow className="mr-1 inline-block size-4 shrink-0" />,
 												"device-icon": <Smartphone className="mr-0.5 inline-block size-4 shrink-0" />
 											}}
-											i18nKey={native ? "sweet_strong_poodle_endure" : "heroic_pink_gull_breathe"}
+											i18nKey={native ? "error_tip_update_app" : "error_tip_update_browser"}
 										/>
 									</li>
 									<li>
@@ -241,7 +241,7 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, reset }) => {
 											components={{
 												icon: <WifiOff className="mr-1 inline-block size-4 shrink-0" />,
 											}}
-											i18nKey="tough_sleek_wasp_reside"
+											i18nKey="error_tip_connection"
 										/>
 									</li>
 									{urls.resources.contact && (
@@ -257,7 +257,7 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, reset }) => {
 														</a>
 													)
 												}}
-												i18nKey="yummy_salty_porpoise_greet"
+												i18nKey="error_tip_contact"
 											/>
 										</li>
 									)}

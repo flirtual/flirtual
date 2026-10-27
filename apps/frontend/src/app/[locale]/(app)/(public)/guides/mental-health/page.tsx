@@ -96,7 +96,7 @@ export default function MentalHealthPage() {
 						</InlineLink>
 						:
 						{" "}
-						{t("equal_quaint_swallow_dial")}
+						{t("mental_health_chill_and_advice")}
 					</p>
 				</div>
 				<div className="flex flex-col gap-4">
@@ -105,7 +105,7 @@ export default function MentalHealthPage() {
 						<InlineLink href="https://www.inner.world/">Innerworld</InlineLink>
 						:
 						{" "}
-						{t("awake_solid_slug_flop")}
+						{t("mental_health_innerworld")}
 					</p>
 				</div>
 			</div>

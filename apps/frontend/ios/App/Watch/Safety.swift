@@ -51,7 +51,7 @@ struct BlockButton: View {
             }
             Button(t("cancel"), role: .cancel) {}
         } message: {
-            Text(t("barbarous_hypnotic_thank_book"))
+            Text(t("block_confirm_description"))
         }
         .alert(t("watch.something_went_wrong"), isPresented: $failed) {}
     }
@@ -99,7 +99,7 @@ struct ReportView: View {
         if reported {
             ScrollView {
                 VStack(spacing: 10) {
-                    Text(t("day_front_cat_cry"))
+                    Text(t("report_submitted"))
                         .multilineTextAlignment(.center)
                     Button(t("close")) { dismiss() }
                 }

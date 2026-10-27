@@ -45,8 +45,8 @@ const imageSources = [
 export default function AboutPage() {
 	const { t } = useTranslation();
 
-	const teamRole = t("copy_frighten_wobble_futuristic", { returnObjects: true });
-	const images = t("price_listen_wise_communicate", { returnObjects: true });
+	const teamRole = t("about_team_roles", { returnObjects: true });
+	const images = t("about_gallery", { returnObjects: true });
 
 	return (
 		<ModelCard
@@ -56,7 +56,7 @@ export default function AboutPage() {
 		>
 			<Image
 				priority
-				alt={t("voice_spiritual_polite_entertaining")}
+				alt={t("about_team_photo_alt")}
 				className="max-w-none full-bleed-x desktop:max-w-full"
 				height={618}
 				src={TeamPicture}
@@ -184,7 +184,7 @@ export default function AboutPage() {
 							</div>
 						)
 					}}
-					i18nKey="hard_cause_trick_puzzling"
+					i18nKey="about_page_body"
 				/>
 			</div>
 			<div className="grid grid-cols-3 full-bleed-x native-nav:mb-[calc(-1*var(--safe-area-inset-bottom,0rem))] desktop:mb-0">

@@ -23,7 +23,7 @@ export const ProfileColorPreview: FC<ProfileColors> = ({ color1, color2 }) => {
 			className="flex gap-1 rounded-lg desktop:flex-col"
 		>
 			<div className="flex size-full flex-col gap-4 rounded bg-white-20 px-3 py-2 text-black-70">
-				<span>{t("legal_such_sloth_type")}</span>
+				<span>{t("profile_colors_light_preview")}</span>
 				<div className="flex scale-75 flex-wrap gap-2 [transform-origin:top_left]">
 					<Pill active small>
 						{t("preview_tag_1")}
@@ -40,7 +40,7 @@ export const ProfileColorPreview: FC<ProfileColors> = ({ color1, color2 }) => {
 				</div>
 			</div>
 			<div className="flex size-full flex-col gap-4 rounded bg-black-70 px-3 py-2 text-white-20">
-				<span>{t("patchy_warm_mule_play")}</span>
+				<span>{t("profile_colors_dark_preview")}</span>
 				<div className="flex scale-75 flex-wrap gap-2 [transform-origin:top_left]">
 					<Pill active small>
 						{t("preview_tag_1")}

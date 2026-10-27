@@ -73,7 +73,7 @@ export const Finish2Form: FC = () => {
 						<div className="flex gap-4 pb-6 desktop:pb-6">
 							<CheckCircle2 className="mt-1.5 size-7 shrink-0 text-pink" />
 							<span>
-								<Trans i18nKey={user.emailConfirmedAt ? "actual_stock_camel_devour" : "clean_extra_goldfish_pause"} />
+								<Trans i18nKey={user.emailConfirmedAt ? "finish_visible_notice" : "finish_ready_notice"} />
 							</span>
 						</div>
 						<hr className="border-t-2 border-white-30 dark:border-black-60" />

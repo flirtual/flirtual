@@ -69,7 +69,7 @@ export const Onboarding2Form: FC = () => {
 							<FormField name="new">
 								{(field) => (
 									<>
-										<InputLabel>{t("nimble_hour_bumblebee_savor")}</InputLabel>
+										<InputLabel>{t("new_to_vr_question")}</InputLabel>
 										<InputSwitch {...field.props} />
 									</>
 								)}

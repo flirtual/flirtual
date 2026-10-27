@@ -39,7 +39,7 @@ export const DebugInfo: React.FC = () => {
 
 	return (
 		<>
-			<p>{t("bad_jumpy_sheep_gasp")}</p>
+			<p>{t("debug_information_description")}</p>
 			<Button
 				Icon={Copy}
 				onClick={copy}

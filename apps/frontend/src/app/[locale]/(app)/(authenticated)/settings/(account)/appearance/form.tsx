@@ -120,7 +120,7 @@ const ProfileColorSelect: FC = () => {
 			if (!session) return session;
 
 			if ((session.user.profile as unknown as { previewColors: ProfileColors }).previewColors)
-				toast.add(t("ideal_super_skunk_empower"));
+				toast.add(t("profile_colors_premium"));
 
 			return {
 				...session,
