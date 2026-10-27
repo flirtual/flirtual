@@ -16,6 +16,7 @@ import { usePreferences } from "~/hooks/use-preferences";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useUser } from "~/hooks/use-user";
 import { useLocale } from "~/i18n";
+import { intlLocale } from "~/i18n/languages";
 import { urls } from "~/urls";
 
 import { CopyClick } from "../copy-click";
@@ -114,7 +115,7 @@ export const ProfileModeratorInfo: FC<{
 	const [systemLanguage] = useLocale();
 
 	const languageNames = useMemo(
-		() => new Intl.DisplayNames(systemLanguage, { type: "language" }),
+		() => new Intl.DisplayNames(intlLocale(systemLanguage), { type: "language" }),
 		[systemLanguage]
 	);
 

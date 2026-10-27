@@ -50,7 +50,7 @@ export const MadeWithLove: React.FC = () => {
 						/>
 					)
 				}}
-				i18nKey="deft_raw_cod_fond"
+				i18nKey="footer_made_with_love"
 				values={{ heart }}
 			/>
 		</span>

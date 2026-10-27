@@ -15,7 +15,7 @@ export function AvatarProfiles({ id }: TileProps) {
 			<div className="mx-auto -mt-32 flex flex-col items-center justify-center gap-8 desktop:mt-0">
 				<Image
 					priority
-					alt={t("legal_big_finch_kiss")}
+					alt={t("landing_profile_screenshot_alt")}
 					className="w-fit object-contain desktop:h-[50vh] wide:scale-100 tall:scale-125"
 					height={1302}
 					src={Image1}
@@ -24,7 +24,7 @@ export function AvatarProfiles({ id }: TileProps) {
 				<div className="flex h-fit flex-col gap-4 text-center desktop:gap-8">
 					<TileAnchor id={id}>
 						<h1 className="text-balance font-montserrat text-2xl font-bold leading-none desktop:text-4xl">
-							{t("stout_last_kudu_bend")}
+							{t("landing_avatar_heading")}
 						</h1>
 					</TileAnchor>
 					<ProfileMessage />

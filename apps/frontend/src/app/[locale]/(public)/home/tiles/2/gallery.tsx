@@ -15,16 +15,16 @@ import { useMessages } from "~/i18n";
 const images = [Image1e084a7b, ImageA137add7, Image40d6b065, ImageD9a2206c, Image1049fc02, Image99f9bdc0, Image4677372a];
 
 export const CarouselGallery: FC = () => {
-	const { bounce_knot_legs_bell: _tabs } = useMessages();
+	const { landing_date_ideas: _tabs } = useMessages();
 
 	/*
-	t("bounce_knot_legs_bell.0")"
-	t("bounce_knot_legs_bell.1")"
-	t("bounce_knot_legs_bell.2")"
-	t("bounce_knot_legs_bell.3")"
-	t("bounce_knot_legs_bell.4")"
-	t("bounce_knot_legs_bell.5")"
-	t("bounce_knot_legs_bell.6")"
+	t("landing_date_ideas.0")"
+	t("landing_date_ideas.1")"
+	t("landing_date_ideas.2")"
+	t("landing_date_ideas.3")"
+	t("landing_date_ideas.4")"
+	t("landing_date_ideas.5")"
+	t("landing_date_ideas.6")"
 	*/
 
 	const tabs = Object.values(_tabs);

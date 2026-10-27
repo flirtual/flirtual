@@ -27,23 +27,23 @@ export const OutOfProspects: FC<OutOfProspectsProps> = ({ mode }) => {
 						love: (
 							<>
 								<div className="flex flex-col gap-4">
-									<p>{t("full_zesty_finch_exhale")}</p>
+									<p>{t("dates_exhausted")}</p>
 									<p>
 										<Trans
 											components={{
 												settingsLink: <InlineLink href={urls.settings.matchmaking()} />
 											}}
-											i18nKey="round_stout_iguana_stab"
+											i18nKey="dates_exhausted_filters"
 										/>
 									</p>
-									<p>{t("sea_giant_anteater_slurp")}</p>
+									<p>{t("dates_exhausted_later")}</p>
 									{homieMode && (
 										<p>
 											<Trans
 												components={{
 													browseLink: <InlineLink href={urls.discover("homies")} />
 												}}
-												i18nKey="main_large_goat_succeed"
+												i18nKey="dates_exhausted_homie_mode"
 											/>
 										</p>
 									)}
@@ -63,14 +63,14 @@ export const OutOfProspects: FC<OutOfProspectsProps> = ({ mode }) => {
 						friend: (
 							<>
 								<div className="flex flex-col gap-4">
-									<p>{t("pretty_last_shrike_bend")}</p>
+									<p>{t("homies_exhausted")}</p>
 									<p>
-										{t("stout_tired_warbler_inspire")}
+										{t("homies_exhausted_later")}
 									</p>
 								</div>
 								<div className="flex gap-4">
 									<ButtonLink href={urls.discover("dates")}>
-										{t("sharp_gray_sloth_clasp")}
+										{t("leave_homie_mode")}
 									</ButtonLink>
 								</div>
 							</>
@@ -92,7 +92,7 @@ export const FinishProfileError: React.FC = () => {
 			titleProps={{ className: "desktop:text-3xl" }}
 		>
 			<div className="flex flex-col gap-4">
-				<p>{t("silly_petty_meerkat_hug")}</p>
+				<p>{t("hidden_profile_finish")}</p>
 				<div className="flex gap-4">
 					<ButtonLink href={urls.finish(1)}>
 						{t("finish_profile")}
@@ -114,7 +114,7 @@ export const ConfirmEmailError: React.FC = () => {
 		>
 			<div className="flex flex-col gap-4">
 				<p>
-					{t("heroic_big_firefox_enrich")}
+					{t("hidden_profile_confirm_email")}
 				</p>
 				<div className="flex gap-4">
 					<ButtonLink href={urls.confirmEmail()}>

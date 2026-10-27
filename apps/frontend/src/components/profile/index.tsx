@@ -291,12 +291,12 @@ export const Profile = withSuspense(({
 								me.profile.new
 									? (
 											<span className="text-xl italic vision:text-white-20 dark:text-white-20">
-												{t("strong_home_bullock_taste")}
+												{t("both_new_to_vr")}
 											</span>
 										)
 									: (
 											<span className="text-xl italic vision:text-white-20 dark:text-white-20">
-												{t("fuzzy_calm_ant_nudge", {
+												{t("other_new_to_vr", {
 													name: user.profile.displayName || t("unnamed_user")
 												})}
 											</span>
@@ -323,7 +323,7 @@ export const Profile = withSuspense(({
 													<InlineLink href={urls.settings.bio} />
 												)
 											}}
-											i18nKey="early_quiet_giraffe_dine"
+											i18nKey="add_bio_reminder"
 										/>
 									</span>
 								)

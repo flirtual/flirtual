@@ -39,7 +39,7 @@ export default function PaymentsPage() {
 						apple: <InlineLink href="https://getsupport.apple.com/" />,
 						google: <InlineLink href="https://support.google.com/googleplay" />
 					}}
-					i18nKey="trite_alert_ibex_shine"
+					i18nKey="payments_terms_body"
 				/>
 			</div>
 		</ModelCard>

@@ -159,17 +159,17 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 					...uppyLocale,
 					save: t("save"),
 					rotate: t("rotate_90"),
-					dropHereOr: native ? t("cute_male_chipmunk_agree") : t("stock_topical_mouse_inspire"),
+					dropHereOr: native ? t("select_files") : t("report_drop_or_browse"),
 					dropPasteFiles: native
 						? "%{browseFiles}"
-						: t("gross_known_deer_sprout", { browseFiles: "%{browseFiles}" }),
+						: t("upload_drop_or_browse", { browseFiles: "%{browseFiles}" }),
 					dropPasteImportFiles: native
 						? ""
-						: t("kind_tangy_marten_fear", { browseFiles: "%{browseFiles}" }),
+						: t("upload_drop_browse_or_import", { browseFiles: "%{browseFiles}" }),
 					browseFiles: native
 						? type === "report"
-							? t("cute_male_chipmunk_agree")
-							: t("patient_proof_octopus_revive")
+							? t("select_files")
+							: t("select_pictures")
 						: uppyLocale.browse!
 				},
 				pluralize: (n) => n === 1 ? 0 : 1
@@ -225,7 +225,7 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 
 					if (pixels > maxImagePixels) {
 						uppyInstance.removeFile(file.id);
-						uppyInstance.info(t("each_ideal_seahorse_bump"), "error", 5000);
+						uppyInstance.info(t("upload_failed"), "error", 5000);
 					}
 				})
 				.catch(() => void 0);
@@ -369,7 +369,7 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 							}
 						}
 
-						throw new Error(t("each_ideal_seahorse_bump"));
+						throw new Error(t("upload_failed"));
 					}
 				}));
 			}
@@ -414,7 +414,7 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 
 				// tus already retried from the server's offset, so this is terminal.
 				settledFiles.add(file.id);
-				uploadErrors.set(file.id, error.message || t("each_ideal_seahorse_bump"));
+				uploadErrors.set(file.id, error.message || t("upload_failed"));
 
 				if (!error.expected) captureException(error);
 			})

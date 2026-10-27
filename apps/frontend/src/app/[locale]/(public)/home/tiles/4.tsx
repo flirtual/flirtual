@@ -29,7 +29,7 @@ export function TheEnd({ id }: TileProps) {
 									components={{
 										highlight: <span className="bg-brand-gradient bg-clip-text text-transparent" />
 									}}
-									i18nKey="few_grassy_hyena_adapt"
+									i18nKey="landing_hero_heading"
 								/>
 							</h1>
 						</TileAnchor>

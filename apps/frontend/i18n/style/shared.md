@@ -44,8 +44,8 @@ own country.
 ## Strings and context
 
 Every key comes with context notes (`context.json`): where it appears, what kind of UI element
-it is, what placeholders mean, and length limits. Many keys have meaningless random names
-(`that_active_seal_nail`); never infer meaning from the key name.
+it is, what placeholders mean, and length limits. Key names are only hints; go by the English
+and the context.
 
 - **Fragments:** some strings are concatenated or fill a slot in another string. The context
   says so; keep them grammatical in that slot.

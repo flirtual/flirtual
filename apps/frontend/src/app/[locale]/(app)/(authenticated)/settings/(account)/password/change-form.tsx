@@ -9,6 +9,7 @@ import { useLeakedPassword } from "~/hooks/use-leaked-password";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { useLocale } from "~/i18n";
+import { intlLocale } from "~/i18n/languages";
 import { mutate, sessionKey } from "~/query";
 
 export const PasswordChangeForm: React.FC = () => {
@@ -18,7 +19,7 @@ export const PasswordChangeForm: React.FC = () => {
 	const [, forgetLeakedPassword] = useLeakedPassword(session.user.id);
 
 	const [locale] = useLocale();
-	const listFormatter = new Intl.ListFormat(locale, { style: "long", type: "disjunction" });
+	const listFormatter = new Intl.ListFormat(intlLocale(locale), { style: "long", type: "disjunction" });
 
 	const hasPassword = !!session.user.hasPassword;
 	const connectionLabels = (session.user.connections ?? [])

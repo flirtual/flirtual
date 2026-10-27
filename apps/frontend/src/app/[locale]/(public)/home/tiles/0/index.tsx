@@ -25,12 +25,12 @@ export function Hero({ id }: TileProps) {
 							components={{
 								highlight: <span className="overflow-visible bg-brand-gradient bg-clip-text text-transparent wide:block" />
 							}}
-							i18nKey="same_honest_seal_renew"
+							i18nKey="landing_connections_heading"
 						/>
 					</h2>
 				</TileAnchor>
 				<h1 className="mt-2 max-w-4xl text-balance text-center text-lg text-white-10 desktop:mt-4 desktop:text-2xl desktop:tall:text-3xl">
-					{t("calm_calm_alligator_taste")}
+					{t("landing_title")}
 				</h1>
 				<CallToAction className="mt-12 hidden desktop:grid" />
 			</div>

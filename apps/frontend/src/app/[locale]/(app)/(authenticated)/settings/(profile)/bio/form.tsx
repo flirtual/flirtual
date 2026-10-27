@@ -86,7 +86,7 @@ export const BiographyForm: FC = () => {
 					Profile.updatePrompts(user.id, values.prompts)
 				]);
 
-				toasts.add(t("cuddly_few_llama_catch"));
+				toasts.add(t("saved_bio"));
 
 				await invalidate({ queryKey: sessionKey() });
 			}}
@@ -102,7 +102,7 @@ export const BiographyForm: FC = () => {
 								<>
 									<InputLabel
 										inline
-										hint={t("factual_curly_fly_pop")}
+										hint={t("bio_discord_warning")}
 										{...field.labelProps}
 									>
 										{t("display_name")}
@@ -119,12 +119,12 @@ export const BiographyForm: FC = () => {
 										inline
 										hint={(
 											<InputLabelHint>
-												{t("known_antsy_gull_savor", { game: tAttribute[favoriteGameId]!.name })}
+												{t("picture_upload_hint", { game: tAttribute[favoriteGameId]!.name })}
 												<details>
 													<summary className="text-pink opacity-75 transition-opacity hover:cursor-pointer hover:opacity-100">
 														{t("guidelines")}
 													</summary>
-													{t("formal_icy_hound_type")}
+													{t("picture_guidelines")}
 												</details>
 											</InputLabelHint>
 										)}
@@ -142,12 +142,12 @@ export const BiographyForm: FC = () => {
 										inline
 										hint={(
 											<InputLabelHint>
-												{t("proof_east_termite_pave")}
+												{t("bio_hint")}
 												<details>
 													<summary className="text-pink opacity-75 transition-opacity hover:cursor-pointer hover:opacity-100">
 														{t("guidelines")}
 													</summary>
-													{t("tame_weird_termite_zap")}
+													{t("bio_guidelines")}
 												</details>
 											</InputLabelHint>
 										)}

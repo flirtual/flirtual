@@ -54,7 +54,7 @@ export const NotificationsForm: React.FC = () => {
 					await requestNotificationPermission();
 
 				await invalidate({ queryKey: sessionKey() });
-				await toasts.add(t("merry_smart_snake_boil"));
+				await toasts.add(t("saved_notifications"));
 			}}
 		>
 			{({ FormField, fields }) => (

@@ -13,6 +13,7 @@ import { goUp, knownInTab, previousInTab, useUpTarget } from "~/hooks/use-histor
 import { restoreScroll, useTabMemory } from "~/hooks/use-tab-memory";
 import { useUnreadConversations } from "~/hooks/use-talkjs";
 import { replaceLanguage, useLocale, useMatch, useNavigate } from "~/i18n";
+import { intlLocale } from "~/i18n/languages";
 import { NativeNavigationPlugin } from "~/native-navigation";
 import type { Corners, Fold, Layout, NativeNavigationTab, SideBar, TopCorners } from "~/native-navigation";
 import { urls } from "~/urls";
@@ -178,7 +179,7 @@ export const NativeNavigation: FC<{ user: User }> = ({ user }) => {
 	const conversationCount = clamp(unreadConversations.length, { min: 0, max: 99 });
 	const badge = conversationCount === 0
 		? undefined
-		: new Intl.NumberFormat(locale).format(conversationCount);
+		: new Intl.NumberFormat(intlLocale(locale)).format(conversationCount);
 
 	const tabs = useMemo(() => [
 		{ id: "dates", title: t("dates"), icon: "heart", href: urls.discover("dates") },

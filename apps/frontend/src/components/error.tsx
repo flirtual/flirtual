@@ -109,14 +109,14 @@ export function HavingIssues({ error }: { error?: unknown }) {
 							</button>
 							.
 						</li>
-						{native && (<li>{t("game_vexed_goldfish_dash")}</li>)}
+						{native && (<li>{t("error_tip_restart_app")}</li>)}
 						<li>
 							<Trans
 								components={{
 									"browser-icon": <AppWindow className="mr-1 inline-block size-4 shrink-0" />,
 									"device-icon": <Smartphone className="mr-0.5 inline-block size-4 shrink-0" />
 								}}
-								i18nKey={native ? "sweet_strong_poodle_endure" : "heroic_pink_gull_breathe"}
+								i18nKey={native ? "error_tip_update_app" : "error_tip_update_browser"}
 							/>
 						</li>
 						<li>
@@ -124,7 +124,7 @@ export function HavingIssues({ error }: { error?: unknown }) {
 								components={{
 									icon: <WifiOff className="mr-1 inline-block size-4 shrink-0" />,
 								}}
-								i18nKey="tough_sleek_wasp_reside"
+								i18nKey="error_tip_connection"
 							/>
 						</li>
 						{urls.resources.contact && (
@@ -140,7 +140,7 @@ export function HavingIssues({ error }: { error?: unknown }) {
 											</a>
 										)
 									}}
-									i18nKey="yummy_salty_porpoise_greet"
+									i18nKey="error_tip_contact"
 								/>
 							</li>
 						)}

@@ -6,8 +6,10 @@ import { twMerge } from "tailwind-merge";
 
 import { InlineLink } from "~/components/inline-link";
 import type { InlineLinkProps } from "~/components/inline-link";
+import { TranslationPreviewSelect } from "~/components/translation-preview-select";
 import { useLeakedPassword } from "~/hooks/use-leaked-password";
 import { useOptionalSession } from "~/hooks/use-session";
+import { useTranslationPreview } from "~/i18n";
 import { urls } from "~/urls";
 
 export const BannerLink: FC<PropsWithChildren<InlineLinkProps>> = ({
@@ -83,9 +85,21 @@ const LeakedPasswordBanner: FC<{ userId: string }> = ({ userId }) => {
 
 export const AppBanner: FC = () => {
 	const session = useOptionalSession();
+	const preview = useTranslationPreview();
 
 	// load bearing, do not remove.
 	useTranslation();
+
+	if (preview) {
+		return (
+			<Banner icon={null}>
+				<span className="flex items-center gap-4 whitespace-nowrap">
+					Previewing translation
+					<TranslationPreviewSelect className="w-60" />
+				</span>
+			</Banner>
+		);
+	}
 
 	if (!session || session.user.ban) return null;
 
@@ -104,7 +118,7 @@ export const AppBanner: FC = () => {
 							/>
 						)
 					}}
-					i18nKey="nutritious_challenge_blue_end"
+					i18nKey="finish_profile_banner"
 				/>
 			</Banner>
 		);
@@ -117,7 +131,7 @@ export const AppBanner: FC = () => {
 					components={{
 						bannerLink: <BannerLink href={urls.confirmEmail()} />
 					}}
-					i18nKey="exuberant_green_horse_fowl"
+					i18nKey="confirm_email_banner"
 				/>
 			</Banner>
 		);

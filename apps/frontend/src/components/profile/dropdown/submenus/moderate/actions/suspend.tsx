@@ -30,6 +30,7 @@ import { useDialog } from "~/hooks/use-dialog";
 import { useQueue } from "~/hooks/use-queue";
 import { useToast } from "~/hooks/use-toast";
 import { defaultLocale, i18n, useLocale } from "~/i18n";
+import { intlLocale } from "~/i18n/languages";
 import { mutate, userKey } from "~/query";
 
 const SuspendDialog: FC<{ user: User; onClose: () => void }> = withSuspense(({ user, onClose }) => {
@@ -43,7 +44,7 @@ const SuspendDialog: FC<{ user: User; onClose: () => void }> = withSuspense(({ u
 	const [locale] = useLocale();
 
 	const languageNames = useMemo(
-		() => new Intl.DisplayNames(locale, { type: "language" }),
+		() => new Intl.DisplayNames(intlLocale(locale), { type: "language" }),
 		[locale]
 	);
 

@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import type { ComponentProps, FC } from "react";
 
 import { useLocale } from "~/i18n";
+import { intlLocale } from "~/i18n/languages";
 
 interface DateTimeRelativeProps {
 	value: string;
@@ -16,7 +17,7 @@ export const DateTimeRelative: FC<
 
 	return (
 		<span {...props} suppressHydrationWarning>
-			{new Intl.DateTimeFormat(locale, {
+			{new Intl.DateTimeFormat(intlLocale(locale), {
 				dateStyle: "medium",
 				timeStyle: "short",
 				...options

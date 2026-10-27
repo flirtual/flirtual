@@ -17,7 +17,7 @@ export const SuccessMessage: React.FC = () => {
 		<div className="flex flex-col gap-4 rounded-xl bg-brand-gradient p-6 text-white-20 shadow-brand-1">
 			<div className="relative">
 				<h1 className="text-xl font-semibold">
-					{t("homely_living_owe_coach")}
+					{t("order_received")}
 				</h1>
 				<Link
 					className="absolute right-0 top-0"
@@ -37,7 +37,7 @@ export const SuccessMessage: React.FC = () => {
 							/>
 						)
 					}}
-					i18nKey="remark_butterfly_sum_seasonal"
+					i18nKey="order_received_description"
 				/>
 			</p>
 		</div>

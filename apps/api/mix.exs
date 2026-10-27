@@ -85,7 +85,7 @@ defmodule Flirtual.MixProject do
       # https://github.com/open-telemetry/opentelemetry-erlang-contrib/commit/7f48f84
       {:opentelemetry_finch,
        github: "open-telemetry/opentelemetry-erlang-contrib",
-       ref: "9c8bf64daf4694533b7d078b81547fc152515f33",
+       ref: "2cbadbffb153cb75d120c5c726ece3bd60584ff7",
        sparse: "instrumentation/opentelemetry_finch"},
       {:gettext, "~> 1.0.0"},
       {:jason, "~> 1.4"},
@@ -99,7 +99,7 @@ defmodule Flirtual.MixProject do
       {:credo, "== 1.7.19", only: [:dev, :test], runtime: false},
       {:mix_audit, "== 2.1.5", only: [:dev, :test], runtime: false},
       {:sobelow, "== 0.16.0", only: [:dev, :test], runtime: false},
-      {:tidewave, "== 0.9.1", only: :dev},
+      {:tidewave, "== 0.9.2", only: :dev},
       {:kadabra, "~> 0.6.3"},
       {:vrchat, "~> 1.20.0"}
     ]

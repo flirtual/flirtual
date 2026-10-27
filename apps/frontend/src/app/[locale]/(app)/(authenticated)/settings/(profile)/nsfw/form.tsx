@@ -54,7 +54,7 @@ export const NsfwForm: React.FC = () => {
 					})
 				]);
 
-				toasts.add(t("born_sweet_nils_thrive"));
+				toasts.add(t("saved_nsfw"));
 
 				await Promise.all([
 					mutate<Session>(sessionKey(), (session) => ({

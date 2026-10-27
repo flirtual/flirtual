@@ -39,7 +39,7 @@ export function FormCaptcha({ ref, tabIndex }: FormCaptchaProps) {
 								<div className="motion-preset-fade flex items-center gap-2 text-sm">
 									<ShieldCheck className="size-4" />
 									<span>
-										{t("home_wild_marten_wave")}
+										{t("device_verified")}
 									</span>
 								</div>
 							)
@@ -58,8 +58,8 @@ export function FormCaptcha({ ref, tabIndex }: FormCaptchaProps) {
 										<ShieldAlert className="size-4" />
 										<span>
 											{{
-												110500: t("elegant_actual_ray_buzz")
-											}[error] || t("major_vivid_beetle_support")}
+												110500: t("device_unsupported")
+											}[error] || t("device_verification_failed")}
 											{" "}
 											<span className="text-xs opacity-80">
 												{error}
@@ -71,7 +71,7 @@ export function FormCaptcha({ ref, tabIndex }: FormCaptchaProps) {
 							: (
 									<>
 										<span>
-											{t("jolly_this_crow_hug")}
+											{t("checking_device")}
 										</span>
 										<LoaderCircle className="size-4 animate-spin" />
 									</>

@@ -55,7 +55,7 @@ export const components: Record<ComponentName, { format: "gettext" | "icu"; file
 // A gettext plural entry carries one string per plural form.
 export type Message = Array<string> | string;
 
-// Keys are "component:key", e.g. "flirtual:that_active_seal_nail" or "attributes:game.<id>.name".
+// Keys are "component:key", e.g. "flirtual:tour_signature" or "attributes:game.<id>.name".
 export type Id = `${ComponentName}:${string}`;
 
 export function id(component: ComponentName, key: string): Id {

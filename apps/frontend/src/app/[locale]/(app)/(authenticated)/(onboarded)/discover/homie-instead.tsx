@@ -27,12 +27,12 @@ export const HomieInstead: FC<HomieInsteadProps> = ({ userId, source, onPass, on
 		>
 			<>
 				<DialogHeader>
-					<DialogTitle>{t("moving_petty_racoon_intend")}</DialogTitle>
+					<DialogTitle>{t("gender_mismatch_title")}</DialogTitle>
 					<DialogDescription className="sr-only" />
 				</DialogHeader>
 				<DialogBody>
 					<div className="flex flex-col justify-between gap-4 desktop:max-w-sm">
-						<span>{t("major_soft_puffin_offer")}</span>
+						<span>{t("gender_mismatch_send_homie")}</span>
 						<div className="flex gap-2">
 							<Button
 								className="grow basis-0"

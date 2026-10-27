@@ -167,7 +167,7 @@ export const SignUpForm: FC = () => {
 															/>
 														)
 													}}
-													i18nKey="pickle_capricious_cemetery_name"
+													i18nKey="sign_up_agreement"
 												/>
 											</InputLabelHint>
 										)}
@@ -186,11 +186,11 @@ export const SignUpForm: FC = () => {
 										inline
 										hint={(
 											<InputLabelHint className="max-w-[34ch]">
-												<Trans i18nKey="spade_mindless_furry_jeans" />
+												<Trans i18nKey="newsletter_opt_in_description" />
 											</InputLabelHint>
 										)}
 									>
-										{t("acidic_temporary_fill_cracker")}
+										{t("newsletter_opt_in")}
 									</InputLabel>
 								</div>
 							)}

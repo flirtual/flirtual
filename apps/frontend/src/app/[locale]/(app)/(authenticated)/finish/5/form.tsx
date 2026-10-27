@@ -29,8 +29,8 @@ export const Finish5Form: React.FC = () => {
 			<ConnectionError />
 			<div className="flex flex-col gap-4">
 				<div>
-					<span className="flex text-xl">{t("drab_game_myna_yell")}</span>
-					<span className="text-black-50 vision:text-white-50 dark:text-white-50">{t("empty_petty_bullock_drop")}</span>
+					<span className="flex text-xl">{t("connections_heading")}</span>
+					<span className="text-black-50 vision:text-white-50 dark:text-white-50">{t("connections_privacy")}</span>
 				</div>
 				<Form
 					fields={{

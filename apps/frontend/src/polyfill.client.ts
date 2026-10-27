@@ -1,4 +1,4 @@
-// See baseline targets in `./polyfill.ts` — these are used for both polyfilling and Vite's build target.
+// See baseline targets in `./targets.ts` — these are used for both polyfilling and Vite's build target.
 
 // Array.prototype.at — Safari 15.0–15.3 lacks it (added in 15.4).
 import "core-js/actual/array/at";

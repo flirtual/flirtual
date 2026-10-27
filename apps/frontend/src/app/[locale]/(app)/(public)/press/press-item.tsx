@@ -2,6 +2,7 @@ import type React from "react";
 
 import { InlineLink } from "~/components/inline-link";
 import { useLocale } from "~/i18n";
+import { intlLocale } from "~/i18n/languages";
 
 export interface PressItemProps {
 	name: string;
@@ -20,7 +21,7 @@ export const PressItem: React.FC<PressItemProps> = ({ name, href, date, site }) 
 			</InlineLink>
 			<div className="flex items-baseline gap-2">
 				<span>{site}</span>
-				<span className="text-sm">{new Intl.DateTimeFormat(locale, { dateStyle: "medium", timeStyle: "short" }).format(date)}</span>
+				<span className="text-sm">{new Intl.DateTimeFormat(intlLocale(locale), { dateStyle: "medium", timeStyle: "short" }).format(date)}</span>
 			</div>
 		</div>
 	);

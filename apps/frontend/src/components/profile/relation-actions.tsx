@@ -70,7 +70,7 @@ export const RelationActions: React.FC<{ userId: string; direct: boolean }> = ({
 		return (
 			<div className="flex w-full items-center justify-between gap-4 rounded-xl bg-brand-gradient px-4 py-2 shadow-brand-1">
 				<span className="text-xl text-theme-overlay [overflow-wrap:anywhere]">
-					{t(`pipe_land_teeny_hypnotic`, {
+					{t(`you_responded_to_profile`, {
 						status:
 							relationship.type === "like"
 								? relationship.kind === "love"
@@ -104,7 +104,7 @@ export const RelationActions: React.FC<{ userId: string; direct: boolean }> = ({
 			<div className="flex items-center gap-2.5 rounded-xl bg-brand-gradient px-4 py-2 shadow-brand-1">
 				<Icon className="size-6 shrink-0 text-theme-overlay" gradient={false} />
 				<span className="text-xl text-theme-overlay [overflow-wrap:anywhere]">
-					{t(`mint_colossal_kettle_sense`, {
+					{t(`profile_responded_to_you`, {
 						status: relationship.likedMe === "love" ? "liked" : "homied",
 						name: user.profile.displayName || t("unnamed_user")
 					})}

@@ -26,7 +26,7 @@ export const UserAvatar: React.FC<UserAvatarProps> = ({
 	return (
 		<UserImage
 			{...props}
-			alt={t("extra_moving_jackdaw_twist", {
+			alt={t("avatar_alt", {
 				name: user
 					? user.profile.displayName || t("unnamed_user")
 					: t("anonymous")

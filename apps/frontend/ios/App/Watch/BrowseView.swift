@@ -365,7 +365,7 @@ struct MatchView: View {
                 Avatar(url: user.profile.images.first.flatMap { Account.shared.api?.imageURL($0, variant: "icon") }, size: 64)
                 Text("\(t("its_a_match")) \(kind == .love ? "❤️" : "✌️")")
                     .font(.headline)
-                Text(t("green_aqua_ibex_value", ["name": user.name]))
+                Text(t("match_description", ["name": user.name]))
                     .font(.footnote)
                     .multilineTextAlignment(.center)
                     .foregroundStyle(.secondary)

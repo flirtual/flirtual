@@ -51,7 +51,7 @@ export const ThemePreview: React.FC<ThemePreviewProps> = ({ theme }) => {
 			</TooltipTrigger>
 			<TooltipContent>
 				{theme === "system"
-					? t("close_cozy_salmon_praise")
+					? t("theme_system_tooltip")
 					: t(`${theme}_theme`)}
 			</TooltipContent>
 		</Tooltip>

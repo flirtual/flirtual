@@ -69,7 +69,7 @@ export const PasswordPasskeyForm: React.FC = () => {
 					if (reason instanceof Error && reason.name === "InvalidStateError") {
 						return toasts.add({
 							type: "warning",
-							value: t("level_nice_cheetah_drum")
+							value: t("passkey_already_added")
 						});
 					}
 					toasts.addError(reason);
@@ -109,13 +109,13 @@ export const PasswordPasskeyForm: React.FC = () => {
 			<div className="flex flex-col gap-4">
 				<span className="text-2xl font-semibold">{t("passkeys")}</span>
 				<span className="text-black-50 vision:text-white-50 dark:text-white-50">
-					{t("broad_upper_ox_drum")}
+					{t("passkeys_description")}
 				</span>
 				{native && android && (
 					<span className="text-black-50 dark:text-white-50">
 						⚠️
 						{" "}
-						{t("large_simple_penguin_learn")}
+						{t("passkeys_android_unsupported")}
 					</span>
 				)}
 			</div>

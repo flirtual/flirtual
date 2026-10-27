@@ -15,7 +15,7 @@ import { imagetools } from "vite-imagetools";
 import { ViteImageOptimizer as imageOptimize } from "vite-plugin-image-optimizer";
 
 import brandDefaults from "./src/brand.defaults.json" with { type: "json" };
-import { browserslist, targets } from "./src/polyfill.ts";
+import { browserslist, targets } from "./src/targets.ts";
 import { hush } from "./vite-plugin-hush.ts";
 
 const mkcertPaths = {

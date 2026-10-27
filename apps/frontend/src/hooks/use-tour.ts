@@ -273,7 +273,7 @@ export function useDefaultTour(enabled: boolean = true) {
 								id: "introduction",
 								title: t("welcome_to_flirtual"),
 								text: `
-					${t("tidy_known_whale_imagine")}
+					${t("tour_intro")}
 					`,
 								buttons: [
 									{
@@ -285,8 +285,8 @@ export function useDefaultTour(enabled: boolean = true) {
 							},
 							{
 								id: "like",
-								title: t("royal_house_peacock_roar"),
-								text: t("helpful_petty_peacock_hunt"),
+								title: t("tour_like_title"),
+								text: t("tour_like"),
 								attachTo: { element: "#like-button", on: "top" },
 								modalOverlayOpeningRadius: 33,
 								beforeShowPromise: async () => {
@@ -296,24 +296,24 @@ export function useDefaultTour(enabled: boolean = true) {
 							},
 							{
 								id: "pass",
-								title: t("bad_ideal_stingray_amuse"),
-								text: t("away_lime_hound_launch"),
+								title: t("tour_pass_title"),
+								text: t("tour_pass"),
 								attachTo: { element: "#pass-button", on: "top" },
 								modalOverlayOpeningRadius: 26,
 								beforeShowPromise: () => attach([], [{ element: "#pass-button", on: "top" }])
 							},
 							{
 								id: "undo",
-								title: t("mean_such_flamingo_drop"),
-								text: t("aloof_caring_niklas_fade"),
+								title: t("tour_undo_title"),
+								text: t("tour_undo"),
 								attachTo: { element: "#undo-button", on: "top" },
 								modalOverlayOpeningRadius: 26,
 								beforeShowPromise: () => attach([], [{ element: "#undo-button", on: "top" }])
 							},
 							{
 								id: "conversations",
-								title: t("basic_tense_mayfly_devour"),
-								text: t("mushy_sound_nils_fetch"),
+								title: t("tour_matches_title"),
+								text: t("tour_matches"),
 								attachTo: {
 									element: "#conversation-button",
 									on: "top"
@@ -330,19 +330,19 @@ export function useDefaultTour(enabled: boolean = true) {
 								? [
 										{
 											id: "browse-mode",
-											title: t("minor_gaudy_seal_ask"),
+											title: t("tour_modes_title"),
 											beforeShowPromise: async () => {
 												await ensureOnPage(urls.discover("dates"), nativeNavigation ? "#like-button" : "#browse-mode-switch");
 												await attach(["homies"], [{ element: "#browse-mode-switch", on: "top" }]);
 											},
 											text: () => `
-					${t("chunky_zany_leopard_peek", {
+					${t("tour_modes", {
 									heart: modeIcon("heart", HeartIcon),
 									homie: modeIcon("homie", PeaceIcon),
 									interpolation: { escapeValue: false }
 								})}
 					<br/><br/>
-					${t("honest_loud_felix_favor")}`,
+					${t("tour_limits")}`,
 											attachTo: {
 												element: "#browse-mode-switch",
 												on: "top" as const
@@ -351,8 +351,8 @@ export function useDefaultTour(enabled: boolean = true) {
 										},
 										{
 											id: "friend",
-											title: t("royal_house_peacock_roar"),
-											text: t("light_flat_racoon_buzz"),
+											title: t("tour_like_title"),
+											text: t("tour_homie"),
 											attachTo: { element: "#friend-button", on: "top" as const },
 											modalOverlayOpeningRadius: 33,
 											beforeShowPromise: async () => {
@@ -364,8 +364,8 @@ export function useDefaultTour(enabled: boolean = true) {
 								: []),
 							{
 								id: "profile-dropdown",
-								title: t("nice_wise_ibex_accept"),
-								text: t("sad_spare_grizzly_twirl"),
+								title: t("tour_settings_title"),
+								text: t("tour_settings"),
 								attachTo: {
 									element: "#profile-dropdown-button",
 									on: "top"
@@ -379,15 +379,15 @@ export function useDefaultTour(enabled: boolean = true) {
 							},
 							{
 								id: "conclusion",
-								title: t("every_agent_sloth_advise"),
+								title: t("tour_thanks_title"),
 								text: `
-					${t("mealy_lime_mayfly_support")}
+					${t("tour_thanks")}
 					<br/><br/>
-					${t("dry_tame_sloth_yell")}
+					${t("tour_take_breaks")}
 					<br/><br/>
-					${t("chunky_lost_parrot_roam")}
+					${t("tour_heart")}
 					<br/>
-					${t("that_active_seal_nail")}`,
+					${t("tour_signature")}`,
 								modalOverlayOpeningRadius: 20,
 								modalOverlayOpeningPadding: 4,
 								buttons: [

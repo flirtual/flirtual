@@ -7,7 +7,7 @@ import { ModelCard } from "~/components/model-card";
 import { useAttributeTranslation } from "~/hooks/use-attribute";
 import { useOptionalSession, verifyAgeDirect } from "~/hooks/use-session";
 import { i18n, useLocale } from "~/i18n";
-import { isLocale } from "~/i18n/languages";
+import { intlLocale, isLocale } from "~/i18n/languages";
 import { metaMerge, rootMeta } from "~/meta";
 import { throwRedirect } from "~/redirect";
 import { urls } from "~/urls";
@@ -50,7 +50,7 @@ export default function BannedPage() {
 		<ModelCard branded miniFooter title={t("banned_title")}>
 			<div className="flex flex-col gap-6">
 				<p>
-					{new Intl.DateTimeFormat(locale, {
+					{new Intl.DateTimeFormat(intlLocale(locale), {
 						dateStyle: "medium",
 						timeStyle: "short"
 					}).format(new Date(ban.at))}

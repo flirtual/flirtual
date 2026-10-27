@@ -92,7 +92,7 @@ export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 
 							window.scrollTo({ top: 0, behavior: "smooth" });
 
-							toasts.add(t("day_front_cat_cry"));
+							toasts.add(t("report_submitted"));
 							setOpen(false);
 						}}
 					>
@@ -157,7 +157,7 @@ export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 													inline
 													hint={(
 														<InputLabelHint className="vision:text-black-50">
-															{t("ok_gross_ostrich_work")}
+															{t("report_evidence_label")}
 														</InputLabelHint>
 													)}
 

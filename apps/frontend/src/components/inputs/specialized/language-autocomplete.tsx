@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
 import { useLocale } from "~/i18n";
+import { intlLocale } from "~/i18n/languages";
 
 import {
 	InputAutocomplete
@@ -21,7 +22,7 @@ export const InputLanguageAutocomplete: React.FC<
 	const pinnedLanguage = systemLanguage.split("-")[0];
 
 	const languageNames = useMemo(
-		() => new Intl.DisplayNames(systemLanguage, { type: "language" }),
+		() => new Intl.DisplayNames(intlLocale(systemLanguage), { type: "language" }),
 		[systemLanguage]
 	);
 
@@ -42,7 +43,7 @@ export const InputLanguageAutocomplete: React.FC<
 				.sort((a, b) => {
 					if (a.key === pinnedLanguage) return -1;
 					if (b.key === pinnedLanguage) return 1;
-					return a.label.localeCompare(b.label, systemLanguage);
+					return a.label.localeCompare(b.label, intlLocale(systemLanguage));
 				}),
 		[languages, tAttribute, languageNames, pinnedLanguage, systemLanguage]
 	);

@@ -42,7 +42,7 @@ export const PersonalActions: React.FC<{ user: User }> = ({ user }) => {
 			<DrawerOrDialog open={shareVisible} onOpenChange={setShareVisible}>
 				<>
 					<DialogHeader>
-						<DialogTitle>{t("home_watery_koala_stop")}</DialogTitle>
+						<DialogTitle>{t("share_profile_link")}</DialogTitle>
 					</DialogHeader>
 					<DialogBody>
 						<div className="flex min-h-48 flex-col justify-between gap-8 px-2 desktop:max-w-sm">
@@ -61,7 +61,7 @@ export const PersonalActions: React.FC<{ user: User }> = ({ user }) => {
 											await mutate<Session>(sessionKey(), (session) => ({ ...session, user }));
 											navigate(urls.profile(slug));
 
-											return toasts.add(t("odd_mad_dog_nurture"));
+											return toasts.add(t("profile_link_updated"));
 										})
 										.catch(toasts.addError);
 								}}
@@ -100,7 +100,7 @@ export const PersonalActions: React.FC<{ user: User }> = ({ user }) => {
 										size="sm"
 										onClick={async () => {
 											await share({
-												text: t("icy_stock_herring_burn"),
+												text: t("share_profile_message"),
 												url: toShortUrl(urls.profile(profileLink)).toString()
 											}).catch(toasts.addError);
 										}}

@@ -40,7 +40,7 @@ export default function GuidelinesPage() {
 						terms: <InlineLink href={urls.resources.termsOfService} />,
 						privacy: <InlineLink href={urls.resources.privacyPolicy} />
 					}}
-					i18nKey="seemly_sticky_frightening_fetch"
+					i18nKey="guidelines_body"
 				/>
 			</div>
 		</ModelCard>

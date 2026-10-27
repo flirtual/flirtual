@@ -14,7 +14,7 @@ export default function NotFoundPage() {
 			containerProps={{ className: "flex gap-4" }}
 		>
 			<span className="desktop:text-lg">
-				{t("round_crazy_haddock_mix")}
+				{t("not_found_description")}
 			</span>
 			<div className="flex gap-2">
 				<ButtonLink href={urls.discover("dates")} size="sm">

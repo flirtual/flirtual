@@ -5,6 +5,7 @@ import type { ComponentProps, FC } from "react";
 import { useInterval } from "~/hooks/use-interval";
 import { useLocale } from "~/i18n";
 import type { Locale } from "~/i18n";
+import { intlLocale } from "~/i18n/languages";
 
 interface TimeRelativeProps extends Intl.RelativeTimeFormatOptions {
 	elementProps?: ComponentProps<"span">;
@@ -21,7 +22,7 @@ function format(locale: Locale, date: Date, options: Intl.RelativeTimeFormatOpti
 	const unitIndex = unitsInSec.findIndex((cutoff) => cutoff > Math.abs(secondsDiff));
 	const divisor = unitIndex ? unitsInSec[unitIndex - 1] : 1;
 
-	const rtf = new Intl.RelativeTimeFormat(locale, { numeric: "auto", ...options });
+	const rtf = new Intl.RelativeTimeFormat(intlLocale(locale), { numeric: "auto", ...options });
 	return rtf.format(Math.trunc(secondsDiff / divisor), unitStrings[unitIndex]);
 }
 

@@ -27,7 +27,7 @@ export const MachineTranslatedLegal: FC<{
 							/>
 						)
 					}}
-					i18nKey="large_wild_tortoise_sing"
+					i18nKey="policy_machine_translated"
 				/>
 				{" "}
 			</span>
@@ -42,7 +42,7 @@ export const MachineTranslatedLegal: FC<{
 							/>
 						)
 					}}
-					i18nKey="active_frail_antelope_support"
+					i18nKey="policy_contact"
 				/>
 			</span>
 		</div>

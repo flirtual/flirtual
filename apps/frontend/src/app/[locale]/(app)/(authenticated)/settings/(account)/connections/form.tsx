@@ -63,7 +63,7 @@ export const ConnectionsForm: FC = () => {
 						playlist: playlist.trim() || null
 					});
 
-					toasts.add(t("merry_arable_alligator_coax"));
+					toasts.add(t("saved_connections"));
 
 					await mutate<Session>(sessionKey(), (session) => ({
 						...session,
@@ -78,8 +78,8 @@ export const ConnectionsForm: FC = () => {
 					<>
 						<div className="flex flex-col gap-4">
 							<div className="flex flex-col gap-2">
-								<span className="flex text-xl">{t("drab_game_myna_yell")}</span>
-								<span className="text-black-50 vision:text-white-50 dark:text-white-50">{t("empty_petty_bullock_drop")}</span>
+								<span className="flex text-xl">{t("connections_heading")}</span>
+								<span className="text-black-50 vision:text-white-50 dark:text-white-50">{t("connections_privacy")}</span>
 							</div>
 							<div className="grid gap-4 wide:grid-cols-2">
 								<AddConnectionButton type="discord" />
@@ -129,18 +129,18 @@ export const ConnectionsForm: FC = () => {
 							<div className="flex flex-col gap-2">
 								<div className="flex gap-2">
 									<span className="flex text-xl">
-										{t("tough_plain_squirrel_persist")}
+										{t("playlist_heading")}
 									</span>
 								</div>
 								<span className="text-black-50 vision:text-white-50 dark:text-white-50">
-									{t("proof_knotty_cockroach_commend")}
+									{t("playlist_description")}
 								</span>
 							</div>
 							<FormField name="playlist" className="col-span-2 wide:col-span-1">
 								{(field) => (
 									<InputText
 										iconColor="#095d6a"
-										placeholder={t("last_broad_warbler_nail")}
+										placeholder={t("playlist_placeholder")}
 										{...field.props}
 									/>
 								)}
@@ -148,24 +148,24 @@ export const ConnectionsForm: FC = () => {
 							{playlistSubmitted === "deezer.page.link"
 								? (
 										<span className="italic text-red-600">
-											{t("drab_white_lionfish_nurture")}
+											{t("playlist_deezer_unsupported")}
 										</span>
 									)
 								: playlistSubmitted === "youtube"
 									? (
 											<span className="italic text-red-600">
-												{t("trite_alive_orangutan_foster")}
+												{t("playlist_youtube_unsupported")}
 											</span>
 										)
 									: playlistSubmitted === "other"
 										? (
 												<span className="italic text-black-50 vision:text-white-50 dark:text-white-50">
-													<Trans i18nKey="main_civil_jaguar_peel" />
+													<Trans i18nKey="playlist_not_public" />
 												</span>
 											)
 										: null}
 							<span className="italic text-black-50 vision:text-white-50 dark:text-white-50">
-								{t("warm_gray_poodle_reap")}
+								{t("playlist_privacy_warning")}
 							</span>
 							{user.profile.playlist && (
 								<ProfilePlaylist playlist={user.profile.playlist} />

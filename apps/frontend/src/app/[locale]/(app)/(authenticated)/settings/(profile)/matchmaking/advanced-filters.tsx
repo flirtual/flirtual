@@ -11,7 +11,8 @@ import { advancedFilterValueCategories } from "~/api/user/profile";
 import { getCountryName } from "~/components/profile/pill/country";
 import { personality, vrTags } from "~/features";
 import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
-import { useLocale } from "~/i18n";
+import { useDisplayLocale } from "~/i18n";
+import { intlLocale } from "~/i18n/languages";
 
 import type { AdvancedFilterGroup, AdvancedFilterOption } from "./advanced-filter-select";
 
@@ -75,7 +76,7 @@ export function useAdvancedFilterGroups(
 ): Array<AdvancedFilterGroup> {
 	const { t } = useTranslation();
 	const tAttribute = useAttributeTranslation();
-	const [locale] = useLocale();
+	const locale = useDisplayLocale();
 
 	const genders = useAttributes("gender");
 	const sexualities = useAttributes("sexuality");
@@ -87,7 +88,7 @@ export function useAdvancedFilterGroups(
 	const languages = useAttributes("language");
 
 	return useMemo(() => {
-		const languageNames = new Intl.DisplayNames(locale, { type: "language" });
+		const languageNames = new Intl.DisplayNames(intlLocale(locale), { type: "language" });
 
 		const attributeOptions = (
 			category: AdvancedFilterCategory,
@@ -105,7 +106,7 @@ export function useAdvancedFilterGroups(
 
 		// Country/language are static lists with no `order`, so sort by name.
 		const byLabel = (a: AdvancedFilterOption, b: AdvancedFilterOption) =>
-			a.label.localeCompare(b.label, locale);
+			a.label.localeCompare(b.label, intlLocale(locale));
 
 		const groups: Array<AdvancedFilterGroup | null> = [
 			{

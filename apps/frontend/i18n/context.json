@@ -15806,7 +15806,7 @@
 		"description": "Moderator-only toast after removing a warning previously issued to a user's account.",
 		"hash": "e24810c6c0ffb1ad"
 	},
-	"flirtual:acidic_advertisement_request_cough.0": {
+	"flirtual:landing_press_outlets.0": {
 		"group": "homepage/press",
 		"screens": [
 			"/"
@@ -15815,7 +15815,7 @@
 		"description": "Alt text for a media outlet's logo in the \"as featured in\" press row on the homepage. Proper noun: keep the publication's official name.",
 		"hash": "5a230deadc7fa0c0"
 	},
-	"flirtual:acidic_advertisement_request_cough.1": {
+	"flirtual:landing_press_outlets.1": {
 		"group": "homepage/press",
 		"screens": [
 			"/"
@@ -15824,7 +15824,7 @@
 		"description": "Alt text for a media logo in the homepage press row: the US TV morning show \"Today\" (NBC), not the word \"today\". Proper noun: keep the program name.",
 		"hash": "5397d8be1e29249b"
 	},
-	"flirtual:acidic_advertisement_request_cough.2": {
+	"flirtual:landing_press_outlets.2": {
 		"group": "homepage/press",
 		"screens": [
 			"/"
@@ -15833,7 +15833,7 @@
 		"description": "Alt text for a media outlet's logo in the \"as featured in\" press row on the homepage. Proper noun: keep the publication's official name.",
 		"hash": "e68132ef2be9bd9b"
 	},
-	"flirtual:acidic_advertisement_request_cough.3": {
+	"flirtual:landing_press_outlets.3": {
 		"group": "homepage/press",
 		"screens": [
 			"/"
@@ -15842,7 +15842,7 @@
 		"description": "Alt text for a media outlet's logo in the \"as featured in\" press row on the homepage. Proper noun: keep the publication's official name.",
 		"hash": "48b84794cbccf9a9"
 	},
-	"flirtual:acidic_advertisement_request_cough.4": {
+	"flirtual:landing_press_outlets.4": {
 		"group": "homepage/press",
 		"screens": [
 			"/"
@@ -15851,7 +15851,7 @@
 		"description": "Alt text for a media outlet's logo in the homepage press row: Road to VR, a virtual-reality news site. Proper noun: keep the name.",
 		"hash": "fb7c60bf5c8393d8"
 	},
-	"flirtual:acidic_advertisement_request_cough.5": {
+	"flirtual:landing_press_outlets.5": {
 		"group": "homepage/press",
 		"screens": [
 			"/"
@@ -15860,7 +15860,7 @@
 		"description": "Alt text for a media logo in the homepage press row: \"Whatever Next?\", a Samsung-produced media series. Proper noun: keep the name.",
 		"hash": "ac463f2feda270b7"
 	},
-	"flirtual:acidic_advertisement_request_cough.6": {
+	"flirtual:landing_press_outlets.6": {
 		"group": "homepage/press",
 		"screens": [
 			"/"
@@ -15869,7 +15869,7 @@
 		"description": "Alt text for a media logo in the homepage press row: Future of Sex, a website covering sex and technology. Proper noun: keep the name.",
 		"hash": "b2f896d41288d5ad"
 	},
-	"flirtual:acidic_advertisement_request_cough.7": {
+	"flirtual:landing_press_outlets.7": {
 		"group": "homepage/press",
 		"screens": [
 			"/"
@@ -15878,7 +15878,7 @@
 		"description": "Alt text for a media logo in the homepage press row: Dazed, a culture and fashion magazine. Proper noun: keep the name.",
 		"hash": "a24e0ec1cddc6b3c"
 	},
-	"flirtual:acidic_advertisement_request_cough.8": {
+	"flirtual:landing_press_outlets.8": {
 		"group": "homepage/press",
 		"screens": [
 			"/"
@@ -15887,7 +15887,7 @@
 		"description": "Alt text for a media logo in the homepage press row: \"Virtual Week-ality\", the title of a media show/segment (a pun on \"virtual reality\"). Proper noun: keep the name.",
 		"hash": "17fc3faf92cdc0b2"
 	},
-	"flirtual:acidic_advertisement_request_cough.9": {
+	"flirtual:landing_press_outlets.9": {
 		"group": "homepage/press",
 		"screens": [
 			"/"
@@ -15896,17 +15896,17 @@
 		"description": "Alt text for a logo in the homepage press row: Flirtual's iDate Awards win (a dating-industry award) in the \"Best New Technology\" category. Keep \"iDate Awards\"; the category name may be translated.",
 		"hash": "12ac3e5110a8ae0b"
 	},
-	"flirtual:acidic_temporary_fill_cracker": {
+	"flirtual:newsletter_opt_in": {
 		"group": "sign-up",
 		"screens": [
 			"/sign-up"
 		],
 		"element": "label",
-		"description": "Label of the optional checkbox on the sign-up form that subscribes the user to Flirtual's marketing/newsletter emails. The hint text below it (key spade_mindless_furry_jeans) continues the sentence: \"…with new features, changes, and offers\".",
+		"description": "Label of the optional checkbox on the sign-up form that subscribes the user to Flirtual's marketing/newsletter emails. The hint text below it (key newsletter_opt_in_description) continues the sentence: \"…with new features, changes, and offers\".",
 		"needsScreenshot": true,
 		"hash": "493d852829725694"
 	},
-	"flirtual:active_frail_antelope_support": {
+	"flirtual:policy_contact": {
 		"group": "legal/machine-translated",
 		"screens": [
 			"/terms",
@@ -15954,7 +15954,7 @@
 		"lengthNote": "Shares a line with other indicators on the photo; keep short",
 		"hash": "11b752713760bc75"
 	},
-	"flirtual:actual_stock_camel_devour": {
+	"flirtual:finish_visible_notice": {
 		"group": "finish/details",
 		"screens": [
 			"/finish/2"
@@ -16189,7 +16189,7 @@
 		"lengthNote": "Short tooltip",
 		"hash": "378a15e5f57a00b7"
 	},
-	"flirtual:aloof_caring_niklas_fade": {
+	"flirtual:tour_undo": {
 		"group": "tour",
 		"screens": [
 			"/dates"
@@ -16217,7 +16217,7 @@
 		"description": "Fills the name slot of the avatar alt text (\"{name}'s avatar\") when no user is known for the avatar, so it reads \"Anonymous's avatar\".",
 		"hash": "03f7a7c653bdaf7b"
 	},
-	"flirtual:antsy_calm_mallard_expand": {
+	"flirtual:delete_account_reason": {
 		"group": "settings/delete",
 		"screens": [
 			"/settings/delete"
@@ -16227,7 +16227,7 @@
 		"tone": "Warm, apologetic",
 		"hash": "12d1addf4dd01f7c"
 	},
-	"flirtual:antsy_great_spider_drum": {
+	"flirtual:no_matches_likers": {
 		"group": "matches/empty",
 		"screens": [
 			"/matches"
@@ -16331,7 +16331,7 @@
 		"description": "Admin-only link to the page for editing profile attributes (the selectable options like games, interests, genders). Shown with a tags icon.",
 		"hash": "b67e19354a99b8dd"
 	},
-	"flirtual:awake_few_wren_skip": {
+	"flirtual:saved_info": {
 		"group": "settings/info",
 		"screens": [
 			"/settings/info",
@@ -16341,7 +16341,7 @@
 		"description": "Confirmation toast after saving the Basic info settings page.",
 		"hash": "aa02479f9e6c47c7"
 	},
-	"flirtual:awake_solid_slug_flop": {
+	"flirtual:mental_health_innerworld": {
 		"group": "guides/mental-health",
 		"screens": [
 			"/guides/mental-health"
@@ -16350,7 +16350,7 @@
 		"description": "Description following \"Innerworld: \" (the name of a VR peer-support community) under the VR/PC/iOS heading.",
 		"hash": "1b1db2c4c6ffd6e4"
 	},
-	"flirtual:away_lime_hound_launch": {
+	"flirtual:tour_pass": {
 		"group": "tour",
 		"screens": [
 			"/dates"
@@ -16394,7 +16394,7 @@
 		"description": "Button (and the accessible label of the back-arrow in the chat header on mobile) that returns from a chat to the Matches list.",
 		"hash": "4209fb23abd83cb2"
 	},
-	"flirtual:bad_ideal_stingray_amuse": {
+	"flirtual:tour_pass_title": {
 		"group": "tour",
 		"screens": [
 			"/dates"
@@ -16403,7 +16403,7 @@
 		"description": "Title of the onboarding tour step pointing at the Pass (skip) button.",
 		"hash": "2832195bf61b44f1"
 	},
-	"flirtual:bad_jumpy_sheep_gasp": {
+	"flirtual:debug_information_description": {
 		"group": "debugger",
 		"screens": [
 			"/debugger"
@@ -16412,7 +16412,7 @@
 		"description": "Explanation at the top of the debug page, above a Copy button and a block of technical JSON the user can send to support.",
 		"hash": "94ed82e10aec2797"
 	},
-	"flirtual:bad_tangy_lynx_tend": {
+	"flirtual:saved_interests": {
 		"group": "settings/interests",
 		"screens": [
 			"/settings/interests",
@@ -16542,7 +16542,7 @@
 		"tone": "Serious, reassuring",
 		"hash": "1c9dc60eeaa537ed"
 	},
-	"flirtual:barbarous_hypnotic_thank_book": {
+	"flirtual:block_confirm_description": {
 		"group": "profile/block",
 		"screens": [
 			"dialog: Block",
@@ -16564,7 +16564,7 @@
 		"description": "Name of the profile settings page for date of birth, gender, sexuality, country, timezone, languages, VR setup and games: settings menu item, page heading, and browser tab title via \"{name} - Flirtual\".",
 		"hash": "0fedbba730e43834"
 	},
-	"flirtual:basic_tense_mayfly_devour": {
+	"flirtual:tour_matches_title": {
 		"group": "tour",
 		"screens": [
 			"/dates"
@@ -16573,7 +16573,7 @@
 		"description": "Title of the onboarding tour step pointing at the matches/conversations button (or the matches sidebar on wide screens).",
 		"hash": "3daa51b422507090"
 	},
-	"flirtual:basic_wide_ape_buy": {
+	"flirtual:premium_thanks": {
 		"group": "premium",
 		"screens": [
 			"/subscription"
@@ -16583,7 +16583,7 @@
 		"tone": "Warm, grateful",
 		"hash": "324521b580c69bc4"
 	},
-	"flirtual:big_that_insect_slurp": {
+	"flirtual:error_event": {
 		"group": "errors/dialog",
 		"screens": [
 			"dialog: error"
@@ -16670,7 +16670,7 @@
 		},
 		"hash": "a9be3877d2f45dd2"
 	},
-	"flirtual:blue_calm_chipmunk_spark": {
+	"flirtual:events_worlds_description": {
 		"group": "events",
 		"screens": [
 			"/events"
@@ -16679,7 +16679,7 @@
 		"description": "Text under \"VRChat worlds\"; \"them\" are the worlds, which anyone can visit at any time and host their own events in.",
 		"hash": "08522167f41ebac8"
 	},
-	"flirtual:blue_lost_quail_support": {
+	"flirtual:saved_privacy": {
 		"group": "settings/privacy",
 		"screens": [
 			"/settings/privacy",
@@ -16698,7 +16698,7 @@
 		"description": "Link to Flirtual's account on Bluesky, the social network. Brand name; normally left untranslated.",
 		"hash": "fbc322408696142f"
 	},
-	"flirtual:born_game_pony_empower": {
+	"flirtual:custom_interests_hint": {
 		"group": "settings/interests",
 		"screens": [
 			"/settings/interests",
@@ -16711,7 +16711,7 @@
 		},
 		"hash": "16c11fd42a99817f"
 	},
-	"flirtual:born_green_lion_tend": {
+	"flirtual:no_matches_description": {
 		"group": "matches/empty",
 		"screens": [
 			"/matches"
@@ -16720,7 +16720,7 @@
 		"description": "Paragraph on the empty Matches page explaining how matching works: a match happens when two people both Like (dating) or both Homie (friend request) each other, and matches can chat and meet up in VR. \"Like\" and \"Homie\" are the app's two swipe actions and are capitalized as feature names.",
 		"hash": "eba6f2308b930994"
 	},
-	"flirtual:born_sweet_nils_thrive": {
+	"flirtual:saved_nsfw": {
 		"group": "settings/nsfw",
 		"screens": [
 			"/settings/nsfw",
@@ -16730,7 +16730,7 @@
 		"description": "Confirmation toast after the user saves the NSFW settings form (show NSFW tags, dom/sub role, kinks, kink privacy).",
 		"hash": "71030df8324e9392"
 	},
-	"flirtual:bounce_knot_legs_bell.0": {
+	"flirtual:landing_date_ideas.0": {
 		"group": "homepage",
 		"screens": [
 			"/"
@@ -16741,7 +16741,7 @@
 		"lengthNote": "Very large text centered over the photo; keep it short",
 		"hash": "834b007c39307ca4"
 	},
-	"flirtual:bounce_knot_legs_bell.1": {
+	"flirtual:landing_date_ideas.1": {
 		"group": "homepage",
 		"screens": [
 			"/"
@@ -16752,7 +16752,7 @@
 		"lengthNote": "Very large text centered over the photo; keep it short",
 		"hash": "cb4b272ea89c2e06"
 	},
-	"flirtual:bounce_knot_legs_bell.2": {
+	"flirtual:landing_date_ideas.2": {
 		"group": "homepage",
 		"screens": [
 			"/"
@@ -16763,7 +16763,7 @@
 		"lengthNote": "Very large text centered over the photo; keep it short",
 		"hash": "9bbc53ad9a8a0874"
 	},
-	"flirtual:bounce_knot_legs_bell.3": {
+	"flirtual:landing_date_ideas.3": {
 		"group": "homepage",
 		"screens": [
 			"/"
@@ -16774,7 +16774,7 @@
 		"lengthNote": "Very large text centered over the photo; keep it short",
 		"hash": "c707b4d6d6f3ee18"
 	},
-	"flirtual:bounce_knot_legs_bell.4": {
+	"flirtual:landing_date_ideas.4": {
 		"group": "homepage",
 		"screens": [
 			"/"
@@ -16785,7 +16785,7 @@
 		"lengthNote": "Very large text centered over the photo; keep it short",
 		"hash": "02a13a8e42d7bb7a"
 	},
-	"flirtual:bounce_knot_legs_bell.5": {
+	"flirtual:landing_date_ideas.5": {
 		"group": "homepage",
 		"screens": [
 			"/"
@@ -16796,7 +16796,7 @@
 		"lengthNote": "Very large text centered over the photo; keep it short",
 		"hash": "58af7f03c890bb96"
 	},
-	"flirtual:bounce_knot_legs_bell.6": {
+	"flirtual:landing_date_ideas.6": {
 		"group": "homepage",
 		"screens": [
 			"/"
@@ -16818,7 +16818,7 @@
 		"description": "Link to and title of the Branding page, which offers Flirtual's logos and brand assets and their usage rules (a brand/press kit).",
 		"hash": "390b3e190c636392"
 	},
-	"flirtual:brave_bald_bison_trim": {
+	"flirtual:delete_account_take_break": {
 		"group": "settings/delete",
 		"screens": [
 			"/settings/delete"
@@ -16831,7 +16831,7 @@
 		"tone": "Friendly",
 		"hash": "7daa680c6b1bc13b"
 	},
-	"flirtual:brave_late_dolphin_dart": {
+	"flirtual:premium_likes_description": {
 		"group": "premium",
 		"screens": [
 			"/subscription"
@@ -16840,7 +16840,7 @@
 		"description": "Description under the \"See who Likes you before you match\" benefit heading, shown to users without an active subscription. \"Liked\" is the app's Like action (expressing interest in someone's profile).",
 		"hash": "4a9723adad2d6527"
 	},
-	"flirtual:broad_upper_ox_drum": {
+	"flirtual:passkeys_description": {
 		"group": "settings/password",
 		"screens": [
 			"/settings/password"
@@ -16867,7 +16867,7 @@
 		"description": "Button on the empty Matches page that goes to the dating browse screen.",
 		"hash": "a3d567d796e535d9"
 	},
-	"flirtual:calm_calm_alligator_taste": {
+	"flirtual:landing_title": {
 		"group": "homepage",
 		"screens": [
 			"/"
@@ -16905,7 +16905,7 @@
 		},
 		"hash": "005cf115b82a5950"
 	},
-	"flirtual:careful_wise_bumblebee_walk": {
+	"flirtual:events_speed_dating_description": {
 		"group": "events",
 		"screens": [
 			"/events"
@@ -16914,7 +16914,7 @@
 		"description": "Description of the Flirtual Speed Dating VRChat world. \"Rounds\" are timed one-to-one conversations; \"night mode\" is a darker lighting setting in the world; \"interest tags\" are the topics people list on their profiles.",
 		"hash": "c9628a101f94059d"
 	},
-	"flirtual:caring_smug_felix_gleam": {
+	"flirtual:subscription_other_platform_current": {
 		"group": "premium",
 		"screens": [
 			"/subscription"
@@ -17010,7 +17010,7 @@
 		"description": "Link appended after a space to three Premium benefit descriptions (matchmaking priorities, advanced filters, profile colors). It opens the related settings page, where free users can try out or preview the feature. Parentheses are part of the text.",
 		"hash": "f3cdc5bbfe7a2fa6"
 	},
-	"flirtual:chunky_lost_parrot_roam": {
+	"flirtual:tour_heart": {
 		"group": "tour",
 		"screens": [
 			"/dates"
@@ -17020,7 +17020,7 @@
 		"needsScreenshot": true,
 		"hash": "fbfb6b1d8a6cd9ac"
 	},
-	"flirtual:chunky_weak_tadpole_relish": {
+	"flirtual:interests_hint": {
 		"group": "finish/interests",
 		"screens": [
 			"/finish/3",
@@ -17030,7 +17030,7 @@
 		"description": "Instruction above the interest picker: pick at most 10 interests; a field for adding custom (free-text) interests is further down the page.",
 		"hash": "ee06435e77ddbb52"
 	},
-	"flirtual:chunky_zany_leopard_peek": {
+	"flirtual:tour_modes": {
 		"group": "tour",
 		"screens": [
 			"/dates"
@@ -17052,7 +17052,7 @@
 		},
 		"hash": "ea743fd896b2906a"
 	},
-	"flirtual:civil_active_nils_value": {
+	"flirtual:premium_feature_unlimited": {
 		"group": "premium",
 		"screens": [
 			"/subscription"
@@ -17061,7 +17061,7 @@
 		"description": "Premium benefit, prefixed by a ♾️ emoji. For subscribers it links to the browsing (discover) page; for non-subscribers it is a bold heading followed by a description. Free users have a daily limit on profiles they can browse.",
 		"hash": "738f5e72ab6c7f3d"
 	},
-	"flirtual:clean_extra_goldfish_pause": {
+	"flirtual:finish_ready_notice": {
 		"group": "finish/details",
 		"screens": [
 			"/finish/2"
@@ -17109,7 +17109,7 @@
 		"hash": "d7cf5045c01b2eb9",
 		"watch": true
 	},
-	"flirtual:close_cozy_salmon_praise": {
+	"flirtual:theme_system_tooltip": {
 		"group": "settings/appearance",
 		"screens": [
 			"/settings/appearance"
@@ -17136,7 +17136,7 @@
 		"description": "Label of the optional free-text box where the user can explain why they're deleting their account. Noun.",
 		"hash": "af3f2a0025aa014b"
 	},
-	"flirtual:committee_trucks_welcome_approval": {
+	"flirtual:terms_body": {
 		"group": "legal/terms",
 		"screens": [
 			"/terms"
@@ -17374,7 +17374,7 @@
 		"description": "Small text button at the bottom of the crash/error screen that copies a technical bug report (error, URL, version) to the clipboard to send to support.",
 		"hash": "f17f5da3fc923d8a"
 	},
-	"flirtual:copy_frighten_wobble_futuristic.advisor": {
+	"flirtual:about_team_roles.advisor": {
 		"group": "about/team",
 		"screens": [
 			"/about"
@@ -17383,7 +17383,7 @@
 		"description": "Role shown under an outside advisor's name in the team list on the About page.",
 		"hash": "ce5474e8f7e0df74"
 	},
-	"flirtual:copy_frighten_wobble_futuristic.aries": {
+	"flirtual:about_team_roles.aries": {
 		"group": "about/team",
 		"screens": [
 			"/about"
@@ -17392,7 +17392,7 @@
 		"description": "Job title shown under a team member's name and avatar in the team list on the About page.",
 		"hash": "24949ed8aa1e3c9a"
 	},
-	"flirtual:copy_frighten_wobble_futuristic.event_host": {
+	"flirtual:about_team_roles.event_host": {
 		"group": "about/team",
 		"screens": [
 			"/about"
@@ -17401,7 +17401,7 @@
 		"description": "Role shown under team members who host Flirtual's events in VRChat (speed dating, parties) in the team list on the About page.",
 		"hash": "4cc23b5104aa276e"
 	},
-	"flirtual:copy_frighten_wobble_futuristic.existony": {
+	"flirtual:about_team_roles.existony": {
 		"group": "about/team",
 		"screens": [
 			"/about"
@@ -17410,7 +17410,7 @@
 		"description": "Job title shown under a team member's name and avatar in the team list on the About page; this person handles business partnerships and user safety.",
 		"hash": "fa5ba68e0a4cbef4"
 	},
-	"flirtual:copy_frighten_wobble_futuristic.faxmashine": {
+	"flirtual:about_team_roles.faxmashine": {
 		"group": "about/team",
 		"screens": [
 			"/about"
@@ -17419,7 +17419,7 @@
 		"description": "Credit shown under a collaborator's name in the About page team list: an artist who builds VRChat worlds (3D virtual spaces) for Flirtual. Keep \"VRChat\" as is.",
 		"hash": "ef25f6037dc1963d"
 	},
-	"flirtual:copy_frighten_wobble_futuristic.juice": {
+	"flirtual:about_team_roles.juice": {
 		"group": "about/team",
 		"screens": [
 			"/about"
@@ -17428,7 +17428,7 @@
 		"description": "Credit shown under a collaborator's name in the About page team list: an artist who makes VRChat avatars (3D characters) for Flirtual. Keep \"VRChat\" as is.",
 		"hash": "3d0a3cdbb7ae2bc3"
 	},
-	"flirtual:copy_frighten_wobble_futuristic.kfarwell": {
+	"flirtual:about_team_roles.kfarwell": {
 		"group": "about/team",
 		"screens": [
 			"/about"
@@ -17437,7 +17437,7 @@
 		"description": "Job title shown under a team member's name and avatar in the team list on the About page.",
 		"hash": "e66470201cdc4525"
 	},
-	"flirtual:copy_frighten_wobble_futuristic.moderator": {
+	"flirtual:about_team_roles.moderator": {
 		"group": "about/team",
 		"screens": [
 			"/about"
@@ -17446,7 +17446,7 @@
 		"description": "Role shown under each of several community moderators' names in the team list on the About page (volunteer content/safety moderators).",
 		"hash": "ec6eb6357905cea7"
 	},
-	"flirtual:copy_frighten_wobble_futuristic.social": {
+	"flirtual:about_team_roles.social": {
 		"group": "about/team",
 		"screens": [
 			"/about"
@@ -17518,7 +17518,7 @@
 		"description": "Question shown as a hint next to the \"Country privacy\" label, above the who-can-see dropdown.",
 		"hash": "6778e77f18de8ded"
 	},
-	"flirtual:cozy_such_jannes_laugh": {
+	"flirtual:out_of_likes_premium": {
 		"group": "discover/limits",
 		"screens": [
 			"dialog: Out of likes and passes"
@@ -17550,7 +17550,7 @@
 		"description": "Heading above a list of suicide and crisis hotline links and phone numbers (the list items themselves stay in English).",
 		"hash": "3db0934e97e90425"
 	},
-	"flirtual:crisp_lime_raven_arise": {
+	"flirtual:loading_slow": {
 		"group": "loading",
 		"screens": [
 			"loading screen"
@@ -17560,7 +17560,7 @@
 		"tone": "Reassuring",
 		"hash": "95f4bea5e85db2f4"
 	},
-	"flirtual:cuddly_few_llama_catch": {
+	"flirtual:saved_bio": {
 		"group": "settings/bio",
 		"screens": [
 			"/settings/bio",
@@ -17580,7 +17580,7 @@
 		"description": "Label (with a pencil icon) of the free-text field where users type their own interest tags, as opposed to picking from the predefined list.",
 		"hash": "8206fc4e5690d9ec"
 	},
-	"flirtual:cute_male_chipmunk_agree": {
+	"flirtual:select_files": {
 		"group": "profile/images/upload",
 		"screens": [
 			"dialog: report"
@@ -17589,7 +17589,7 @@
 		"description": "In the iOS/Android app, the text on the tile for attaching screenshots to a user report; tapping opens the device's file picker. Replaces the website's \"Drop here or browse\".",
 		"hash": "0eb5cdc9fd7f5d0c"
 	},
-	"flirtual:cute_smug_ocelot_flip": {
+	"flirtual:subscription_manage_hint_return": {
 		"group": "premium",
 		"screens": [
 			"/subscription"
@@ -17680,7 +17680,7 @@
 		"needsScreenshot": true,
 		"hash": "315b76e12e93b526"
 	},
-	"flirtual:day_crazy_tortoise_read": {
+	"flirtual:events_vrchat_group": {
 		"group": "events",
 		"screens": [
 			"/events"
@@ -17689,7 +17689,7 @@
 		"description": "Text under the \"VRChat group\" heading on the Events page, above a \"Join group\" button. A VRChat group is a community feature in VRChat; \"group instances\" are VRChat sessions open only to group members.",
 		"hash": "ac3eae08bfe16552"
 	},
-	"flirtual:day_front_cat_cry": {
+	"flirtual:report_submitted": {
 		"group": "profile/report",
 		"screens": [
 			"toast",
@@ -17740,7 +17740,7 @@
 		"needsScreenshot": true,
 		"hash": "4ca0e0e73229540c"
 	},
-	"flirtual:deft_raw_cod_fond": {
+	"flirtual:footer_made_with_love": {
 		"group": "footer",
 		"screens": [
 			"footer"
@@ -17856,7 +17856,7 @@
 		"hash": "4a58d77261797015",
 		"resolved": "Not rendered by current code; translate plainly as the noun 'device' (hardware). (Possible removal reported to the maintainer.)"
 	},
-	"flirtual:dirty_pink_puffin_flow": {
+	"flirtual:delete_account_comment": {
 		"group": "settings/delete",
 		"screens": [
 			"/settings/delete"
@@ -18029,7 +18029,7 @@
 		},
 		"hash": "652f008d9b8ce030"
 	},
-	"flirtual:dizzy_fair_goat_propel": {
+	"flirtual:confirm_email_failed": {
 		"group": "confirm-email",
 		"screens": [
 			"/confirm-email",
@@ -18104,7 +18104,7 @@
 		"needsScreenshot": true,
 		"hash": "a199157d977229bb"
 	},
-	"flirtual:drab_game_myna_yell": {
+	"flirtual:connections_heading": {
 		"group": "finish/connections",
 		"screens": [
 			"/finish/5",
@@ -18114,7 +18114,7 @@
 		"description": "Heading of the section where users link their Discord, VRChat and Meta accounts to their Flirtual profile.",
 		"hash": "39befb0752aab184"
 	},
-	"flirtual:drab_lucky_lemming_feel": {
+	"flirtual:premium_support_us": {
 		"group": "premium",
 		"screens": [
 			"/subscription"
@@ -18130,7 +18130,7 @@
 		"tone": "Sincere, friendly",
 		"hash": "526682f2126f3bcc"
 	},
-	"flirtual:drab_white_lionfish_nurture": {
+	"flirtual:playlist_deezer_unsupported": {
 		"group": "settings/connections",
 		"screens": [
 			"/settings/connections"
@@ -18140,7 +18140,7 @@
 		"tone": "Apologetic",
 		"hash": "262e3ad636ab4ffd"
 	},
-	"flirtual:dry_inclusive_ox_trust": {
+	"flirtual:events_worlds_credit": {
 		"group": "events",
 		"screens": [
 			"/events"
@@ -18153,7 +18153,7 @@
 		},
 		"hash": "f1520b327f1344da"
 	},
-	"flirtual:dry_tame_sloth_yell": {
+	"flirtual:tour_take_breaks": {
 		"group": "tour",
 		"screens": [
 			"/dates"
@@ -18163,7 +18163,7 @@
 		"tone": "Caring, light",
 		"hash": "c1b84c9f5336b2ef"
 	},
-	"flirtual:dull_steep_tadpole_grin": {
+	"flirtual:subscription_manage_on_ios": {
 		"group": "premium",
 		"screens": [
 			"/subscription"
@@ -18172,7 +18172,7 @@
 		"description": "Banner on the subscription page in the Apple Vision Pro app, for users who already have Premium; subscriptions can't be managed there.",
 		"hash": "fd126208160d06d4"
 	},
-	"flirtual:each_aloof_parrot_dine": {
+	"flirtual:error_title": {
 		"group": "errors/dialog",
 		"screens": [
 			"dialog: error"
@@ -18182,7 +18182,7 @@
 		"tone": "Apologetic, casual",
 		"hash": "095346405884cb5d"
 	},
-	"flirtual:each_ideal_seahorse_bump": {
+	"flirtual:upload_failed": {
 		"group": "profile/images/upload",
 		"screens": [
 			"dialog: upload pictures",
@@ -18194,7 +18194,7 @@
 		"tone": "Apologetic",
 		"hash": "1b55f0703cd58924"
 	},
-	"flirtual:early_quiet_giraffe_dine": {
+	"flirtual:add_bio_reminder": {
 		"group": "profile/view",
 		"screens": [
 			"/me"
@@ -18207,7 +18207,7 @@
 		"tone": "Friendly",
 		"hash": "457c17607fdd46cc"
 	},
-	"flirtual:east_low_niklas_list": {
+	"flirtual:saved_matchmaking": {
 		"group": "settings/matchmaking",
 		"screens": [
 			"/settings/matchmaking",
@@ -18247,7 +18247,7 @@
 		"description": "Title of the prompt dialog when changing an existing prompt on the user's profile. A prompt is a question picked from a list plus the user's written answer.",
 		"hash": "9d241afa3acd739a"
 	},
-	"flirtual:elegant_actual_ray_buzz": {
+	"flirtual:device_unsupported": {
 		"group": "auth/captcha",
 		"screens": [
 			"/login",
@@ -18304,7 +18304,7 @@
 		"needsScreenshot": true,
 		"hash": "27be36dd05bcb093"
 	},
-	"flirtual:empty_petty_bullock_drop": {
+	"flirtual:connections_privacy": {
 		"group": "finish/connections",
 		"screens": [
 			"/finish/5",
@@ -18376,7 +18376,7 @@
 		},
 		"hash": "a1f49781fb7248ab"
 	},
-	"flirtual:equal_quaint_swallow_dial": {
+	"flirtual:mental_health_chill_and_advice": {
 		"group": "guides/mental-health",
 		"screens": [
 			"/guides/mental-health"
@@ -19328,7 +19328,7 @@
 		},
 		"hash": "251ace0eb92e11d7"
 	},
-	"flirtual:even_major_hare_believe": {
+	"flirtual:landing_user_count_heading": {
 		"group": "homepage",
 		"screens": [
 			"/"
@@ -19343,7 +19343,7 @@
 		},
 		"hash": "754195b0bd0a37de"
 	},
-	"flirtual:even_trick_pelican_swim": {
+	"flirtual:confirm_email_change_address": {
 		"group": "confirm-email",
 		"screens": [
 			"/confirm-email"
@@ -19363,7 +19363,7 @@
 		"description": "Link to and title of the Events page, which lists Flirtual's community events (VR meetups, livestreams, the Discord and VRChat group).",
 		"hash": "298dd7c15c671332"
 	},
-	"flirtual:every_agent_sloth_advise": {
+	"flirtual:tour_thanks_title": {
 		"group": "tour",
 		"screens": [
 			"/dates"
@@ -19432,7 +19432,7 @@
 		"lengthNote": "Short label at the end of a label row",
 		"hash": "b43e3a2b4f5d1584"
 	},
-	"flirtual:extra_moving_jackdaw_twist": {
+	"flirtual:avatar_alt": {
 		"group": "profile",
 		"screens": [
 			"/about",
@@ -19459,7 +19459,7 @@
 		"lengthNote": "Short label at the end of a label row",
 		"hash": "633063bc234f690f"
 	},
-	"flirtual:exuberant_green_horse_fowl": {
+	"flirtual:confirm_email_banner": {
 		"group": "banners",
 		"screens": [
 			"banner: all pages"
@@ -19481,7 +19481,7 @@
 		"description": "Placeholder of a text field for the user's FaceTime phone number or contact, shown only in the Apple Vision Pro app to internal testers. FaceTime is Apple's video-call app (brand name).",
 		"hash": "985f66f28c16325d"
 	},
-	"flirtual:factual_curly_fly_pop": {
+	"flirtual:bio_discord_warning": {
 		"group": "finish/bio",
 		"screens": [
 			"/finish/1",
@@ -19491,7 +19491,7 @@
 		"description": "Hint under the \"Display name\" field asking the user not to use their Discord username as their display name, to avoid scammers.",
 		"hash": "8ce37afacd8f436b"
 	},
-	"flirtual:fancy_noisy_grizzly_hint": {
+	"flirtual:policy_expired_notice": {
 		"group": "legal/policy-dates",
 		"screens": [
 			"/terms-20231011",
@@ -19511,7 +19511,7 @@
 		"tone": "Formal",
 		"hash": "7306cfa99724088f"
 	},
-	"flirtual:few_grassy_hyena_adapt": {
+	"flirtual:landing_hero_heading": {
 		"group": "homepage",
 		"screens": [
 			"/"
@@ -19566,7 +19566,7 @@
 		"description": "Moderator-only menu item opening the moderation flags page, where staff manage flagged words, phrases, blocked email domains and countries used to auto-flag accounts. Plural noun (warning flags), not the verb.",
 		"hash": "11d036d6b14cd8b4"
 	},
-	"flirtual:flaky_early_shad_nourish": {
+	"flirtual:events_discord": {
 		"group": "events",
 		"screens": [
 			"/events"
@@ -19578,7 +19578,7 @@
 		},
 		"hash": "cf384341dfb05d32"
 	},
-	"flirtual:flaky_same_grizzly_snap": {
+	"flirtual:branding_logo_rules": {
 		"group": "branding",
 		"screens": [
 			"/branding"
@@ -19588,7 +19588,7 @@
 		"tone": "Firm, formal",
 		"hash": "2299b3b2584a819e"
 	},
-	"flirtual:flat_topical_hornet_nourish": {
+	"flirtual:premium_unlimited_description": {
 		"group": "premium",
 		"screens": [
 			"/subscription"
@@ -19596,18 +19596,6 @@
 		"element": "body",
 		"description": "Description under the \"Browse unlimited profiles\" benefit heading, shown to users without an active subscription. Free users can only browse a limited number of profiles per day.",
 		"hash": "89a48c894d481ee6"
-	},
-	"flirtual:flesh_stitch_realize_bike": {
-		"group": "banner",
-		"screens": [
-			"banner: top of app"
-		],
-		"element": "notice",
-		"description": "Banner across the top of the website when a translator/debug mode is on that shows raw translation keys instead of text. Not referenced in the current code.",
-		"tags": {
-			"bannerLink": "Link that turns the translation-key display mode off"
-		},
-		"hash": "fcf688df3218dd91"
 	},
 	"flirtual:flirtual_bug_report": {
 		"group": "errors/crash",
@@ -19655,7 +19643,7 @@
 		"description": "Small link shown beside the Password field label on the login form; goes to the password reset page.",
 		"hash": "b267e8ca80ae1005"
 	},
-	"flirtual:formal_dark_camel_hunt": {
+	"flirtual:password_reset_success": {
 		"group": "forgot-password",
 		"screens": [
 			"/forgot"
@@ -19664,7 +19652,7 @@
 		"description": "Success message after the user sets a new password via the reset link; a Log in button appears below it.",
 		"hash": "b64a0261b56dc67a"
 	},
-	"flirtual:formal_icy_hound_type": {
+	"flirtual:picture_guidelines": {
 		"group": "finish/bio",
 		"screens": [
 			"/finish/1",
@@ -19712,7 +19700,7 @@
 		"hash": "c443c62653002eb0",
 		"watch": true
 	},
-	"flirtual:full_zesty_finch_exhale": {
+	"flirtual:dates_exhausted": {
 		"group": "discover/out-of-profiles",
 		"screens": [
 			"/dates"
@@ -19732,7 +19720,7 @@
 		"tone": "Playful",
 		"hash": "b9c47f9e73d11a84"
 	},
-	"flirtual:fuzzy_calm_ant_nudge": {
+	"flirtual:other_new_to_vr": {
 		"group": "profile/view",
 		"screens": [
 			"/dates",
@@ -19772,7 +19760,7 @@
 		"description": "Hint under the \"VR apps/games\" label, explaining that the chosen games are not a limit on where matched users can meet in VR.",
 		"hash": "66c37e3236c68235"
 	},
-	"flirtual:game_vexed_goldfish_dash": {
+	"flirtual:error_tip_restart_app": {
 		"group": "errors/troubleshooting",
 		"screens": [
 			"dialog: error",
@@ -19870,7 +19858,7 @@
 		"description": "Main button of the daily-limit dialog; opens the Premium subscription page. \"Premium\" is the name of the paid subscription.",
 		"hash": "9790fc956e1935be"
 	},
-	"flirtual:giant_strong_thrush_startle": {
+	"flirtual:blocked_profile_notice": {
 		"group": "profile/blocked",
 		"screens": [
 			"profile"
@@ -19935,7 +19923,7 @@
 		"description": "Name shown on a brand color swatch: the brand's background color (Flirtual's off-white cream, #FFFAF0) behind pages in light mode. Sibling swatches are \"Gradient\", \"Dark Mode\", \"Homie Mode\" and \"Accent\". Use the usual design term for a background color.",
 		"hash": "7d67b6c9f37716ad"
 	},
-	"flirtual:green_aqua_ibex_value": {
+	"flirtual:match_description": {
 		"group": "discover/match",
 		"screens": [
 			"dialog: It's a match",
@@ -19956,7 +19944,7 @@
 		"hash": "5bded270c99d6488",
 		"watch": true
 	},
-	"flirtual:green_plain_mongoose_lend": {
+	"flirtual:meta_social_description": {
 		"group": "meta",
 		"screens": [
 			"meta: social link preview"
@@ -19967,7 +19955,7 @@
 		"lengthNote": "Previews truncate around 200 characters",
 		"hash": "0c608b594a3d4183"
 	},
-	"flirtual:gross_each_cobra_talk": {
+	"flirtual:subscription_other_platform": {
 		"group": "premium",
 		"screens": [
 			"/subscription"
@@ -19982,7 +19970,7 @@
 		},
 		"hash": "e81c9b97214e3f7a"
 	},
-	"flirtual:gross_known_deer_sprout": {
+	"flirtual:upload_drop_or_browse": {
 		"group": "profile/images/upload",
 		"screens": [
 			"dialog: upload pictures"
@@ -20016,7 +20004,7 @@
 		"description": "Title of the Guides page, which lists informational and tutorial pages (currently only one: mental health resources); also in the browser tab title.",
 		"hash": "892d5dd34372028b"
 	},
-	"flirtual:happy_whole_parrot_intend": {
+	"flirtual:confirm_email_wrong_address": {
 		"group": "confirm-email",
 		"screens": [
 			"/confirm-email"
@@ -20025,7 +20013,7 @@
 		"description": "Heading of the change-email form on the confirm-email page, below the resend section.",
 		"hash": "8a7b130f9f681821"
 	},
-	"flirtual:hard_cause_trick_puzzling": {
+	"flirtual:about_page_body": {
 		"group": "about",
 		"screens": [
 			"/about"
@@ -20059,7 +20047,7 @@
 		"tone": "Playful",
 		"hash": "596ccf74ae6414c5"
 	},
-	"flirtual:heavy_weak_hare_spin": {
+	"flirtual:no_matches_boost": {
 		"group": "matches/empty",
 		"screens": [
 			"/matches"
@@ -20110,7 +20098,7 @@
 		},
 		"hash": "cfac21cffca6f196"
 	},
-	"flirtual:helpful_petty_peacock_hunt": {
+	"flirtual:tour_like": {
 		"group": "tour",
 		"screens": [
 			"/dates"
@@ -20120,7 +20108,7 @@
 		"tone": "Friendly",
 		"hash": "0e70ca8348010305"
 	},
-	"flirtual:heroic_big_firefox_enrich": {
+	"flirtual:hidden_profile_confirm_email": {
 		"group": "discover/blocked",
 		"screens": [
 			"/dates",
@@ -20130,7 +20118,7 @@
 		"description": "Body of the \"Confirm your email\" card shown instead of profiles in the browse screen when the user hasn't confirmed their email; followed by a \"Confirm email\" button. \"Hidden\" means other users can't see the profile.",
 		"hash": "0614b0981688e60d"
 	},
-	"flirtual:heroic_pink_gull_breathe": {
+	"flirtual:error_tip_update_browser": {
 		"group": "errors/troubleshooting",
 		"screens": [
 			"dialog: error",
@@ -20167,7 +20155,7 @@
 		"lengthNote": "Native bottom tab bar label; keep short",
 		"hash": "d2187d527809f532"
 	},
-	"flirtual:home_watery_koala_stop": {
+	"flirtual:share_profile_link": {
 		"group": "profile/share",
 		"screens": [
 			"dialog: Share your profile link"
@@ -20176,7 +20164,7 @@
 		"description": "Title of the dialog opened by the Share button on your own profile, where you can change your custom profile link and share or copy it.",
 		"hash": "288470c058f71ad2"
 	},
-	"flirtual:home_wild_marten_wave": {
+	"flirtual:device_verified": {
 		"group": "auth/captcha",
 		"screens": [
 			"/login",
@@ -20188,7 +20176,7 @@
 		"lengthNote": "Single line inside a fixed 300px-wide box",
 		"hash": "8191d72bdfbaeb42"
 	},
-	"flirtual:homely_living_owe_coach": {
+	"flirtual:order_received": {
 		"group": "premium",
 		"screens": [
 			"/subscription"
@@ -20236,7 +20224,7 @@
 		"needsScreenshot": true,
 		"hash": "506258bcf61e0b6a"
 	},
-	"flirtual:honest_loud_felix_favor": {
+	"flirtual:tour_limits": {
 		"group": "tour",
 		"screens": [
 			"/dates"
@@ -20305,7 +20293,7 @@
 			"/sign-up"
 		],
 		"element": "label",
-		"description": "Label of the required checkbox on the sign-up form. The line below it continues the sentence: \"I agree\" + \"to the Terms of Service & Privacy Policy and I'm at least 18 years of age\" (key pickle_capricious_cemetery_name). Translate both so they read as one sentence.",
+		"description": "Label of the required checkbox on the sign-up form. The line below it continues the sentence: \"I agree\" + \"to the Terms of Service & Privacy Policy and I'm at least 18 years of age\" (key sign_up_agreement). Translate both so they read as one sentence.",
 		"tone": "Legal consent",
 		"needsScreenshot": true,
 		"hash": "1db4287b92243908"
@@ -20319,7 +20307,7 @@
 		"description": "Label above a radio list with the options Dominant, Submissive and Switch (the user's role in the opt-in adult/kink section). The label reads as the start of a sentence the chosen option completes (\"I am… Dominant\"); the options are separate keys. Only shown when NSFW tags are enabled.",
 		"hash": "be6d67839dcafe44"
 	},
-	"flirtual:icy_stock_herring_burn": {
+	"flirtual:share_profile_message": {
 		"group": "profile/share",
 		"screens": [
 			"dialog: Share your profile link"
@@ -20329,7 +20317,7 @@
 		"tone": "Casual",
 		"hash": "72b2a12ee24f9544"
 	},
-	"flirtual:ideal_super_skunk_empower": {
+	"flirtual:profile_colors_premium": {
 		"group": "settings/appearance",
 		"screens": [
 			"/settings/appearance"
@@ -20409,7 +20397,7 @@
 		"description": "Heading of the section on the subscription page showing the user's most recent plan that has ended.",
 		"hash": "14d5c7f8e268554e"
 	},
-	"flirtual:inclusive_silly_ibex_succeed": {
+	"flirtual:interests_limit_reached": {
 		"group": "finish/interests",
 		"screens": [
 			"/finish/3",
@@ -20419,7 +20407,7 @@
 		"description": "Warning toast shown when the user tries to add another interest (predefined or custom) after already having the maximum of 10.",
 		"hash": "cab2291f761dda4b"
 	},
-	"flirtual:inclusive_simple_alligator_zap": {
+	"flirtual:events_club": {
 		"group": "events",
 		"screens": [
 			"/events"
@@ -20523,7 +20511,7 @@
 		"description": "Button that opens Flirtual's VRChat group page in a new tab so the user can join it.",
 		"hash": "e9d1c637e4595d26"
 	},
-	"flirtual:jolly_this_crow_hug": {
+	"flirtual:checking_device": {
 		"group": "auth/captcha",
 		"screens": [
 			"/login",
@@ -20535,7 +20523,7 @@
 		"lengthNote": "Single line inside a fixed 300px-wide box",
 		"hash": "3be50892a115ffaf"
 	},
-	"flirtual:just_loud_orangutan_dash": {
+	"flirtual:no_matches_title": {
 		"group": "matches/empty",
 		"screens": [
 			"/matches"
@@ -20554,7 +20542,7 @@
 		"description": "Visibility option in privacy dropdowns: the profile info is hidden from everyone except the user themselves.",
 		"hash": "ca436f23145d7085"
 	},
-	"flirtual:kind_tangy_marten_fear": {
+	"flirtual:upload_drop_browse_or_import": {
 		"group": "profile/images/upload",
 		"screens": [
 			"dialog: upload pictures"
@@ -20588,7 +20576,7 @@
 		"description": "Label of the kinks picker on the opt-in adult (NSFW) settings page and heading of the kinks advanced filter group. Sexual preferences/fetishes.",
 		"hash": "4252ecdad807f810"
 	},
-	"flirtual:knotty_direct_mongoose_bend": {
+	"flirtual:meta_description": {
 		"group": "meta",
 		"screens": [
 			"meta: search engine description"
@@ -20599,7 +20587,7 @@
 		"lengthNote": "Search engines cut off around 150–160 characters",
 		"hash": "e1089255de9a3f6e"
 	},
-	"flirtual:known_antsy_gull_savor": {
+	"flirtual:picture_upload_hint": {
 		"group": "finish/bio",
 		"screens": [
 			"/finish/1",
@@ -20646,7 +20634,7 @@
 		"lengthNote": "Short label at the end of a label row",
 		"hash": "a6a86f8af52c4641"
 	},
-	"flirtual:large_simple_penguin_learn": {
+	"flirtual:passkeys_android_unsupported": {
 		"group": "settings/password",
 		"screens": [
 			"/settings/password"
@@ -20655,7 +20643,7 @@
 		"description": "Warning shown only inside the Android app, prefixed with a ⚠️ emoji, in the passkeys section.",
 		"hash": "0c30d2ad956b1308"
 	},
-	"flirtual:large_wild_tortoise_sing": {
+	"flirtual:policy_machine_translated": {
 		"group": "legal/machine-translated",
 		"screens": [
 			"/terms",
@@ -20670,7 +20658,7 @@
 		"tone": "Legal, formal",
 		"hash": "4c1ef76012e8d27a"
 	},
-	"flirtual:last_broad_warbler_nail": {
+	"flirtual:playlist_placeholder": {
 		"group": "settings/connections",
 		"screens": [
 			"/settings/connections"
@@ -20679,7 +20667,7 @@
 		"description": "Placeholder in the text field where the user pastes a playlist link. Keep the example URL unchanged.",
 		"hash": "3d761a7fa012dad9"
 	},
-	"flirtual:last_large_midge_spur": {
+	"flirtual:policy_current_notice": {
 		"group": "legal/policy-dates",
 		"screens": [
 			"/terms",
@@ -20715,7 +20703,7 @@
 		},
 		"hash": "114a00c3e1c2ec73"
 	},
-	"flirtual:late_full_rat_stab": {
+	"flirtual:premium_colors_description": {
 		"group": "premium",
 		"screens": [
 			"/subscription"
@@ -20766,7 +20754,7 @@
 		"description": "Category heading in the mobile settings list above links to the Community Guidelines, Terms of Service and Privacy Policy.",
 		"hash": "221ef46b788b7bf8"
 	},
-	"flirtual:legal_big_finch_kiss": {
+	"flirtual:landing_profile_screenshot_alt": {
 		"group": "homepage",
 		"screens": [
 			"/"
@@ -20775,7 +20763,7 @@
 		"description": "Alt text for a screenshot of an example Flirtual profile on the homepage's avatar section.",
 		"hash": "28c1b580708e41da"
 	},
-	"flirtual:legal_such_sloth_type": {
+	"flirtual:profile_colors_light_preview": {
 		"group": "settings/appearance",
 		"screens": [
 			"/settings/appearance"
@@ -20796,7 +20784,7 @@
 		"lengthNote": "Maintainer: keep within ~15 characters so it fits above the swatch",
 		"hash": "0a4778cf72db8fb7"
 	},
-	"flirtual:less_drab_larva_assure": {
+	"flirtual:deactivate_description": {
 		"group": "settings/deactivate",
 		"screens": [
 			"/settings/deactivate"
@@ -20805,7 +20793,7 @@
 		"description": "Explanation above the Deactivate account button describing what deactivation does. \"Matchmaking\" means being shown to others in the browse queue.",
 		"hash": "740b0051de9b3b8f"
 	},
-	"flirtual:level_nice_cheetah_drum": {
+	"flirtual:passkey_already_added": {
 		"group": "settings/password",
 		"screens": [
 			"/settings/password",
@@ -20815,7 +20803,7 @@
 		"description": "Warning toast when the user tries to add a passkey but this device/password manager already holds a passkey for their Flirtual account.",
 		"hash": "691e55b37f66d225"
 	},
-	"flirtual:level_orange_stingray_fulfill": {
+	"flirtual:last_message_from_you": {
 		"group": "matches",
 		"screens": [
 			"/matches",
@@ -20852,7 +20840,7 @@
 		"lengthNote": "Compact dropdown",
 		"hash": "0b46afa96380156b"
 	},
-	"flirtual:light_flat_racoon_buzz": {
+	"flirtual:tour_homie": {
 		"group": "tour",
 		"screens": [
 			"/homies"
@@ -20891,7 +20879,7 @@
 		"description": "Screen-reader alt text for the screenshot showing the app in light theme, on the theme selection button.",
 		"hash": "10710ae613bc43d7"
 	},
-	"flirtual:light_wacky_tadpole_enrich": {
+	"flirtual:subscription_purchase_on_ios": {
 		"group": "premium",
 		"screens": [
 			"/subscription"
@@ -20922,7 +20910,7 @@
 		"description": "Title of the Premium \"Likes You\" page, a list of people who have Liked or Homied the user. A feature/page name: \"people who like you\", not a sentence about one person.",
 		"hash": "37f70bdbb36b746e"
 	},
-	"flirtual:lime_soft_shad_skip": {
+	"flirtual:branding_intro": {
 		"group": "branding",
 		"screens": [
 			"/branding"
@@ -21001,7 +20989,7 @@
 		"description": "Category heading in the advanced filter tag picker, grouping relationship goals: serious dating, casual dating, hookups, new friends (Premium-only category).",
 		"hash": "b443e01e60bb8646"
 	},
-	"flirtual:loose_fancy_marlin_zip": {
+	"flirtual:copied_to_clipboard": {
 		"group": "common",
 		"screens": [
 			"toast"
@@ -21010,7 +20998,7 @@
 		"description": "Confirmation toast after the user taps something that copies text (a username, link, ID) to the clipboard. Not shown on Android 13+, where the system confirms copies itself.",
 		"hash": "42271c7c75e34bb6"
 	},
-	"flirtual:lost_sour_moose_tend": {
+	"flirtual:photo_taken_by": {
 		"group": "moderation/profile",
 		"screens": [
 			"dialog: Expanded profile picture (moderators)",
@@ -21024,7 +21012,7 @@
 		},
 		"hash": "dfdcbdec8c726e65"
 	},
-	"flirtual:lost_spare_millipede_nurture": {
+	"flirtual:subscription_manage_hint": {
 		"group": "premium",
 		"screens": [
 			"/subscription"
@@ -21033,7 +21021,7 @@
 		"description": "Note on the subscription page for users with an active subscription. \"Manage\" in quotes is the label of the button on the same page; it must match the translation of that button (key \"manage\").",
 		"hash": "8fdff52b7ef8c45b"
 	},
-	"flirtual:loved_many_raven_pout": {
+	"flirtual:premium_consider_subscribing": {
 		"group": "premium",
 		"screens": [
 			"/subscription"
@@ -21043,7 +21031,7 @@
 		"tone": "Friendly, gentle",
 		"hash": "a8de1ea2cef1f14c"
 	},
-	"flirtual:low_slow_platypus_taste": {
+	"flirtual:delete_account_instead": {
 		"group": "settings/deactivate",
 		"screens": [
 			"/settings/deactivate",
@@ -21053,7 +21041,7 @@
 		"description": "Secondary link under the Deactivate/Reactivate button that goes to the permanent account deletion page instead.",
 		"hash": "b1ce49f49512de86"
 	},
-	"flirtual:main_civil_jaguar_peel": {
+	"flirtual:playlist_not_public": {
 		"group": "settings/connections",
 		"screens": [
 			"/settings/connections"
@@ -21065,7 +21053,7 @@
 		},
 		"hash": "c2dd8f270d2ba97a"
 	},
-	"flirtual:main_large_goat_succeed": {
+	"flirtual:dates_exhausted_homie_mode": {
 		"group": "discover/out-of-profiles",
 		"screens": [
 			"/dates"
@@ -21077,7 +21065,7 @@
 		},
 		"hash": "632a1061b5aa978f"
 	},
-	"flirtual:major_soft_puffin_offer": {
+	"flirtual:gender_mismatch_send_homie": {
 		"group": "discover/homie-instead",
 		"screens": [
 			"dialog: They're not looking for your gender"
@@ -21086,7 +21074,7 @@
 		"description": "Body text of the same dialog, offering to send a friend request (a \"Homie\") instead of a Like. Followed by two buttons: \"Pass\" and \"Homie\". \"Homie\" here is the friend-request action, as a noun.",
 		"hash": "5e3a25b4aa2e5b90"
 	},
-	"flirtual:major_vivid_beetle_support": {
+	"flirtual:device_verification_failed": {
 		"group": "auth/captcha",
 		"screens": [
 			"/login",
@@ -21117,7 +21105,7 @@
 		"description": "Small secondary button under the Premium renewal warning on the reactivate-account page; opens the subscription management/purchase flow so the user can cancel or change their Premium subscription.",
 		"hash": "39f82554fc1296b2"
 	},
-	"flirtual:many_direct_chipmunk_sew": {
+	"flirtual:premium_feature_likes": {
 		"group": "premium",
 		"screens": [
 			"/subscription"
@@ -21126,7 +21114,7 @@
 		"description": "Premium benefit, prefixed by a 👀 emoji. For subscribers it is a link to the Likes page; for non-subscribers it is a bold heading followed by a longer description. \"Likes\" is capitalized because it is the app's Like action (signalling romantic/friendship interest in a profile), not the general verb.",
 		"hash": "58cdb252c969fbc3"
 	},
-	"flirtual:many_top_quail_embrace": {
+	"flirtual:premium_feature_colors": {
 		"group": "premium",
 		"screens": [
 			"/subscription"
@@ -21153,7 +21141,7 @@
 		"description": "Section heading on the branding page above logo files that contain only the logo symbol (the \"mark\"), without the \"Flirtual\" wordmark text. Use the usual design term for a logo symbol/icon without text.",
 		"hash": "ad38e7c9456a2910"
 	},
-	"flirtual:maroon_polite_butterfly_boil": {
+	"flirtual:confirm_email_check_inbox": {
 		"group": "confirm-email",
 		"screens": [
 			"/confirm-email"
@@ -21233,7 +21221,7 @@
 		"description": "Heading (with a Premium badge) of the section of sliders that set how much weight each factor gets when ranking who the user sees.",
 		"hash": "a156304f590d8def"
 	},
-	"flirtual:mealy_lime_mayfly_support": {
+	"flirtual:tour_thanks": {
 		"group": "tour",
 		"screens": [
 			"/dates"
@@ -21243,7 +21231,7 @@
 		"tone": "Warm",
 		"hash": "33589125fda37fc9"
 	},
-	"flirtual:mean_such_flamingo_drop": {
+	"flirtual:tour_undo_title": {
 		"group": "tour",
 		"screens": [
 			"/dates"
@@ -21252,7 +21240,7 @@
 		"description": "Title of the onboarding tour step pointing at the Undo button.",
 		"hash": "ccca91dde941de44"
 	},
-	"flirtual:mellow_short_shark_propel": {
+	"flirtual:landing_dates_alt": {
 		"group": "homepage",
 		"screens": [
 			"/"
@@ -21280,7 +21268,7 @@
 		"description": "Title of the page listing crisis hotlines and peer-support communities; also the link to it on the Guides page.",
 		"hash": "5f52e2bb366565b8"
 	},
-	"flirtual:merry_arable_alligator_coax": {
+	"flirtual:saved_connections": {
 		"group": "settings/connections",
 		"screens": [
 			"/settings/connections"
@@ -21289,7 +21277,7 @@
 		"description": "Confirmation toast after saving the Connections settings form (linked accounts such as VRChat username, and the music playlist).",
 		"hash": "54288ae270e70bee"
 	},
-	"flirtual:merry_smart_snake_boil": {
+	"flirtual:saved_notifications": {
 		"group": "settings/notifications",
 		"screens": [
 			"/settings/notifications",
@@ -21382,7 +21370,7 @@
 		"description": "Store name on an app download button, under a small uppercase \"Download on\" line. Official store name; use Microsoft's localized name for its store if one exists in your language.",
 		"hash": "89905b0f418ea485"
 	},
-	"flirtual:minor_gaudy_seal_ask": {
+	"flirtual:tour_modes_title": {
 		"group": "tour",
 		"screens": [
 			"/dates"
@@ -21391,7 +21379,7 @@
 		"description": "Title of the onboarding tour step pointing at the switch between Date Mode and Homie Mode.",
 		"hash": "3ed9a8071ebf2b14"
 	},
-	"flirtual:mint_colossal_kettle_sense": {
+	"flirtual:profile_responded_to_you": {
 		"group": "profile/view",
 		"screens": [
 			"/dates",
@@ -21507,7 +21495,7 @@
 		"description": "Expand toggle in the expanded-search banner that reveals a longer explanation below it.",
 		"hash": "fc9c981455fab03c"
 	},
-	"flirtual:motionless_absorbed_scintillating_rightful.0": {
+	"flirtual:landing_avatar_points.0": {
 		"group": "homepage",
 		"screens": [
 			"/"
@@ -21518,7 +21506,7 @@
 		"lengthNote": "Shown in a fixed-height box in large text; keep about the same length as the English",
 		"hash": "e377349dae6881bb"
 	},
-	"flirtual:motionless_absorbed_scintillating_rightful.1": {
+	"flirtual:landing_avatar_points.1": {
 		"group": "homepage",
 		"screens": [
 			"/"
@@ -21529,7 +21517,7 @@
 		"lengthNote": "Shown in a fixed-height box in large text; keep about the same length as the English",
 		"hash": "2701bd5490022c97"
 	},
-	"flirtual:motionless_absorbed_scintillating_rightful.2": {
+	"flirtual:landing_avatar_points.2": {
 		"group": "homepage",
 		"screens": [
 			"/"
@@ -21540,7 +21528,7 @@
 		"lengthNote": "Shown in a fixed-height box in large text; keep about the same length as the English",
 		"hash": "d0950da3ee2eef53"
 	},
-	"flirtual:moving_petty_racoon_intend": {
+	"flirtual:gender_mismatch_title": {
 		"group": "discover/homie-instead",
 		"screens": [
 			"dialog: They're not looking for your gender"
@@ -21549,7 +21537,7 @@
 		"description": "Title of a dialog that opens when the user presses Like on a profile (reached from Homie Mode or a direct profile link) whose owner isn't interested in the user's gender, so Like is disabled. \"They\" is the other user; \"your gender\" is the current user's gender.",
 		"hash": "19b78821eea4a901"
 	},
-	"flirtual:mushy_sound_nils_fetch": {
+	"flirtual:tour_matches": {
 		"group": "tour",
 		"screens": [
 			"/dates"
@@ -22008,7 +21996,7 @@
 		"description": "\"Next\" in the sense of go forward: the button that moves to the next announcement when the news dialog has several, and the accessible label (screen readers only) of the right-hand tap area that shows the next photo on a profile.",
 		"hash": "9a8bb238dc855a1c"
 	},
-	"flirtual:nice_wise_ibex_accept": {
+	"flirtual:tour_settings_title": {
 		"group": "tour",
 		"screens": [
 			"/dates"
@@ -22017,7 +22005,7 @@
 		"description": "Title of the onboarding tour step pointing at the profile/settings menu button.",
 		"hash": "edaa1601f65e7823"
 	},
-	"flirtual:nimble_equal_loris_foster": {
+	"flirtual:events_intro": {
 		"group": "events",
 		"screens": [
 			"/events"
@@ -22027,7 +22015,7 @@
 		"tone": "Friendly, inviting",
 		"hash": "ddaa832e214ebb9f"
 	},
-	"flirtual:nimble_hour_bumblebee_savor": {
+	"flirtual:new_to_vr_question": {
 		"group": "settings/info",
 		"screens": [
 			"/settings/info",
@@ -22107,7 +22095,7 @@
 		"description": "Empty-state message in the \"Photos from world\" dialog when no other user has a profile picture taken in that VRChat world.",
 		"hash": "d399e2840f317074"
 	},
-	"flirtual:noble_cute_lionfish_thrive": {
+	"flirtual:reset_passes_description": {
 		"group": "settings/matchmaking",
 		"screens": [
 			"dialog: reset passes"
@@ -22275,7 +22263,7 @@
 		"lengthNote": "Compact numeric readout",
 		"hash": "304e9290c3c84157"
 	},
-	"flirtual:nutritious_challenge_blue_end": {
+	"flirtual:finish_profile_banner": {
 		"group": "banners",
 		"screens": [
 			"banner: all pages"
@@ -22287,7 +22275,7 @@
 		},
 		"hash": "e35b15d27183074d"
 	},
-	"flirtual:odd_blue_clownfish_gleam": {
+	"flirtual:delete_account_success_story": {
 		"group": "settings/delete",
 		"screens": [
 			"/settings/delete"
@@ -22297,7 +22285,7 @@
 		"tone": "Warm",
 		"hash": "92559d72f42cd532"
 	},
-	"flirtual:odd_mad_dog_nurture": {
+	"flirtual:profile_link_updated": {
 		"group": "profile/share",
 		"screens": [
 			"toast"
@@ -22306,7 +22294,7 @@
 		"description": "Toast confirming you changed your custom profile link (URL) in the share dialog.",
 		"hash": "73ae27857fa77b4e"
 	},
-	"flirtual:ok_gross_ostrich_work": {
+	"flirtual:report_evidence_label": {
 		"group": "profile/report",
 		"screens": [
 			"dialog: Report profile"
@@ -22401,7 +22389,7 @@
 		"lengthNote": "Small button beside the Log in button",
 		"hash": "ba8736d311d2c945"
 	},
-	"flirtual:ornate_upper_guppy_mend": {
+	"flirtual:branding_press_kit": {
 		"group": "branding",
 		"screens": [
 			"/branding"
@@ -22758,7 +22746,7 @@
 		"description": "Toast after a user who signed up with a third-party login (Discord, Google, etc.) and had no password sets one for the first time.",
 		"hash": "ab12f737cb223f38"
 	},
-	"flirtual:patchy_warm_mule_play": {
+	"flirtual:profile_colors_dark_preview": {
 		"group": "settings/appearance",
 		"screens": [
 			"/settings/appearance"
@@ -22767,7 +22755,7 @@
 		"description": "Caption in the dark-background half of the live preview card next to the profile color picker, above sample interest tags drawn in the chosen colors. Addresses the user.",
 		"hash": "f603a02e48a9a3d3"
 	},
-	"flirtual:patient_proof_octopus_revive": {
+	"flirtual:select_pictures": {
 		"group": "profile/images/upload",
 		"screens": [
 			"dialog: upload pictures"
@@ -23023,7 +23011,7 @@
 		},
 		"hash": "917b99f52ca44534"
 	},
-	"flirtual:pickle_capricious_cemetery_name": {
+	"flirtual:sign_up_agreement": {
 		"group": "sign-up",
 		"screens": [
 			"/sign-up"
@@ -23038,7 +23026,7 @@
 		"lengthNote": "Wraps at about 34 characters per line",
 		"hash": "c1be8d030834f7df"
 	},
-	"flirtual:pipe_land_teeny_hypnotic": {
+	"flirtual:you_responded_to_profile": {
 		"group": "profile/view",
 		"screens": [
 			"profile"
@@ -23056,28 +23044,6 @@
 			}
 		},
 		"hash": "c8e978d719c15d89"
-	},
-	"flirtual:pleasant_ugliest_expert_camera": {
-		"group": "banner",
-		"screens": [
-			"banner: top of app"
-		],
-		"element": "notice",
-		"description": "Banner across the top of the website when the site's language differs from the user's browser/preferred language, offering to switch. Was shown in the preferred language rather than the current one. Not referenced in the current code.",
-		"placeholders": {
-			"current": {
-				"meaning": "Name of the language currently shown, in the reader's language",
-				"example": "English"
-			},
-			"preferred": {
-				"meaning": "Name of the user's preferred language, in the reader's language",
-				"example": "Japanese"
-			}
-		},
-		"tags": {
-			"bannerLink": "Link that switches the site to the preferred language"
-		},
-		"hash": "5dc3551cc6720929"
 	},
 	"flirtual:popular_interests": {
 		"group": "settings/matchmaking",
@@ -23155,7 +23121,7 @@
 		"lengthNote": "Maintainer: keep within ~15 characters so it fits above the swatch",
 		"hash": "0bf7b1db52856025"
 	},
-	"flirtual:pretty_last_shrike_bend": {
+	"flirtual:homies_exhausted": {
 		"group": "discover/out-of-profiles",
 		"screens": [
 			"/homies"
@@ -23215,7 +23181,7 @@
 		"description": "Goes back one step: the back button with a left arrow in the multi-page \"What's new\" announcements dialog (pairs with \"Next\"), and the screen-reader label of the left arrow in a profile photo slideshow.",
 		"hash": "2d3a261467ff6b32"
 	},
-	"flirtual:price_listen_wise_communicate.0.image_alt": {
+	"flirtual:about_gallery.0.image_alt": {
 		"group": "about/gallery",
 		"screens": [
 			"/about"
@@ -23224,7 +23190,7 @@
 		"description": "Alt text and hover tooltip for a photo in the event gallery at the bottom of the About page: Flirtual's 12-hour launch party in VRChat on Valentine's Day 2022, co-hosted with Vanguard (a VRChat club/event group; keep the name).",
 		"hash": "5c24e9e2b39d1078"
 	},
-	"flirtual:price_listen_wise_communicate.0.link": {
+	"flirtual:about_gallery.0.link": {
 		"group": "about/gallery",
 		"screens": [
 			"/about"
@@ -23234,7 +23200,7 @@
 		"readOnly": true,
 		"hash": "3b8efe4c5f61cbb2"
 	},
-	"flirtual:price_listen_wise_communicate.1.image_alt": {
+	"flirtual:about_gallery.1.image_alt": {
 		"group": "about/gallery",
 		"screens": [
 			"/about"
@@ -23243,7 +23209,7 @@
 		"description": "Alt text and hover tooltip for a photo in the About page event gallery: a speed dating event Flirtual hosts inside VRChat.",
 		"hash": "d4b0e9453a3f0254"
 	},
-	"flirtual:price_listen_wise_communicate.1.link": {
+	"flirtual:about_gallery.1.link": {
 		"group": "about/gallery",
 		"screens": [
 			"/about"
@@ -23253,7 +23219,7 @@
 		"readOnly": true,
 		"hash": "ea98b9fd7cb0d7a4"
 	},
-	"flirtual:price_listen_wise_communicate.2.image_alt": {
+	"flirtual:about_gallery.2.image_alt": {
 		"group": "about/gallery",
 		"screens": [
 			"/about"
@@ -23262,7 +23228,7 @@
 		"description": "Alt text and hover tooltip for a photo in the About page event gallery: a DJ music night Flirtual hosts inside VRChat.",
 		"hash": "0aa18a02976f80b2"
 	},
-	"flirtual:price_listen_wise_communicate.2.link": {
+	"flirtual:about_gallery.2.link": {
 		"group": "about/gallery",
 		"screens": [
 			"/about"
@@ -23272,7 +23238,7 @@
 		"readOnly": true,
 		"hash": "40f146dad10c2736"
 	},
-	"flirtual:price_listen_wise_communicate.3.image_alt": {
+	"flirtual:about_gallery.3.image_alt": {
 		"group": "about/gallery",
 		"screens": [
 			"/about"
@@ -23281,7 +23247,7 @@
 		"description": "Alt text and hover tooltip for a photo in the About page event gallery: Flirtual's booth at VRCon 2022, a convention held inside VRChat. Keep the event name.",
 		"hash": "8b87af34426155dd"
 	},
-	"flirtual:price_listen_wise_communicate.3.link": {
+	"flirtual:about_gallery.3.link": {
 		"group": "about/gallery",
 		"screens": [
 			"/about"
@@ -23291,7 +23257,7 @@
 		"readOnly": true,
 		"hash": "7976aacff0d4c82b"
 	},
-	"flirtual:price_listen_wise_communicate.4.image_alt": {
+	"flirtual:about_gallery.4.image_alt": {
 		"group": "about/gallery",
 		"screens": [
 			"/about"
@@ -23300,7 +23266,7 @@
 		"description": "Alt text and hover tooltip for a photo in the About page event gallery, linking to a YouTube clip of Flirtual featured on the US TV program \"Today\" (NBC's Today Show). Keep the program name.",
 		"hash": "adaafd74aa789bba"
 	},
-	"flirtual:price_listen_wise_communicate.4.link": {
+	"flirtual:about_gallery.4.link": {
 		"group": "about/gallery",
 		"screens": [
 			"/about"
@@ -23310,7 +23276,7 @@
 		"readOnly": true,
 		"hash": "8e57fd4c5310e9d9"
 	},
-	"flirtual:price_listen_wise_communicate.5.image_alt": {
+	"flirtual:about_gallery.5.image_alt": {
 		"group": "about/gallery",
 		"screens": [
 			"/about"
@@ -23319,7 +23285,7 @@
 		"description": "Alt text and hover tooltip for a photo in the About page event gallery: Flirtual at Virtual Market (Vket) 2023 Summer, a large virtual-reality expo held in VRChat. Keep the event name; use its official localized name if one exists (e.g. Japanese バーチャルマーケット).",
 		"hash": "0058bd2cd896db1f"
 	},
-	"flirtual:price_listen_wise_communicate.5.link": {
+	"flirtual:about_gallery.5.link": {
 		"group": "about/gallery",
 		"screens": [
 			"/about"
@@ -23435,7 +23401,7 @@
 		"description": "Label of the profile section where the user picks question prompts and writes answers shown on their profile (like \"My ideal VR date is…\"), with an \"Add\" button beside it. Noun, not the verb.",
 		"hash": "1e7282414cd2d2db"
 	},
-	"flirtual:proof_east_termite_pave": {
+	"flirtual:bio_hint": {
 		"group": "finish/bio",
 		"screens": [
 			"/finish/1",
@@ -23445,7 +23411,7 @@
 		"description": "Hint under the \"Bio\" field describing what makes a good profile biography.",
 		"hash": "6fa5ef7305efa8ff"
 	},
-	"flirtual:proof_knotty_cockroach_commend": {
+	"flirtual:playlist_description": {
 		"group": "settings/connections",
 		"screens": [
 			"/settings/connections"
@@ -23506,7 +23472,7 @@
 		"tone": "Polite but firm warning",
 		"hash": "72ecdf11f5163316"
 	},
-	"flirtual:quiet_gross_skate_honor": {
+	"flirtual:personality_hint": {
 		"group": "finish/personality",
 		"screens": [
 			"/finish/4",
@@ -23516,7 +23482,7 @@
 		"description": "Intro above the personality questions, explaining they're used for matchmaking and are based on the Big Five personality model. \"Vibe with\" is slang for getting along well.",
 		"hash": "76d77916a4b10a0e"
 	},
-	"flirtual:quiet_lazy_marten_amuse": {
+	"flirtual:events_worlds": {
 		"group": "events",
 		"screens": [
 			"/events"
@@ -23525,7 +23491,7 @@
 		"description": "Section heading on the Events page for Flirtual's VRChat worlds. A \"world\" is VRChat's term for a virtual place users visit; use the term VRChat uses in your language. VRChat is a proper name.",
 		"hash": "c8ade369ce5f64ec"
 	},
-	"flirtual:quiet_quaint_whale_rest": {
+	"flirtual:error_found": {
 		"group": "errors/dialog",
 		"screens": [
 			"dialog: error"
@@ -23566,7 +23532,7 @@
 		"description": "Toast after the user reactivates their previously deactivated account.",
 		"hash": "de2d6cba7763048b"
 	},
-	"flirtual:ready_ghost_locket_bubble": {
+	"flirtual:forgot_password_sent": {
 		"group": "forgot-password",
 		"screens": [
 			"/forgot"
@@ -23595,7 +23561,7 @@
 		"description": "Label of the dropdown where the user picks why they are deleting their account (exit survey).",
 		"hash": "dafc3476fe7d3275"
 	},
-	"flirtual:receptive_fairies_legal_thumb.0": {
+	"flirtual:flitty_reactions.0": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -23605,7 +23571,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "87cdca7d5a0eac1b"
 	},
-	"flirtual:receptive_fairies_legal_thumb.1": {
+	"flirtual:flitty_reactions.1": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -23615,7 +23581,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "cc9b586860e4fa5a"
 	},
-	"flirtual:receptive_fairies_legal_thumb.10": {
+	"flirtual:flitty_reactions.10": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -23625,7 +23591,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "1e14a34a29165e55"
 	},
-	"flirtual:receptive_fairies_legal_thumb.100": {
+	"flirtual:flitty_reactions.100": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -23635,7 +23601,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "4d5441e992b197b0"
 	},
-	"flirtual:receptive_fairies_legal_thumb.11": {
+	"flirtual:flitty_reactions.11": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -23645,7 +23611,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "d10de766c8b70641"
 	},
-	"flirtual:receptive_fairies_legal_thumb.12": {
+	"flirtual:flitty_reactions.12": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -23655,7 +23621,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "617233af5db5e293"
 	},
-	"flirtual:receptive_fairies_legal_thumb.13": {
+	"flirtual:flitty_reactions.13": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -23665,7 +23631,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "abd2b41cf3981425"
 	},
-	"flirtual:receptive_fairies_legal_thumb.14": {
+	"flirtual:flitty_reactions.14": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -23675,7 +23641,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "5723f8a61471e299"
 	},
-	"flirtual:receptive_fairies_legal_thumb.15": {
+	"flirtual:flitty_reactions.15": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -23685,7 +23651,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "7563f49a8f4a2fce"
 	},
-	"flirtual:receptive_fairies_legal_thumb.16": {
+	"flirtual:flitty_reactions.16": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -23695,7 +23661,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "d72318ce9c937fdd"
 	},
-	"flirtual:receptive_fairies_legal_thumb.17": {
+	"flirtual:flitty_reactions.17": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -23705,7 +23671,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "bd3403960abf5f6e"
 	},
-	"flirtual:receptive_fairies_legal_thumb.18": {
+	"flirtual:flitty_reactions.18": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -23715,7 +23681,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "edab39b45c56cd26"
 	},
-	"flirtual:receptive_fairies_legal_thumb.19": {
+	"flirtual:flitty_reactions.19": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -23725,7 +23691,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "390627a0cd25cdb9"
 	},
-	"flirtual:receptive_fairies_legal_thumb.2": {
+	"flirtual:flitty_reactions.2": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -23735,7 +23701,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "b718c19755e0ece2"
 	},
-	"flirtual:receptive_fairies_legal_thumb.20": {
+	"flirtual:flitty_reactions.20": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -23745,7 +23711,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "36b2cc2b2fcadc9e"
 	},
-	"flirtual:receptive_fairies_legal_thumb.21": {
+	"flirtual:flitty_reactions.21": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -23755,7 +23721,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "9819df566258fc28"
 	},
-	"flirtual:receptive_fairies_legal_thumb.22": {
+	"flirtual:flitty_reactions.22": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -23765,7 +23731,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "3ad29ad67bee554d"
 	},
-	"flirtual:receptive_fairies_legal_thumb.23": {
+	"flirtual:flitty_reactions.23": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -23775,7 +23741,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "f0e0414a44589d76"
 	},
-	"flirtual:receptive_fairies_legal_thumb.24": {
+	"flirtual:flitty_reactions.24": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -23785,7 +23751,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "d65a4ee62f620b4c"
 	},
-	"flirtual:receptive_fairies_legal_thumb.25": {
+	"flirtual:flitty_reactions.25": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -23795,7 +23761,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "7c14f5bdc3ccb0d2"
 	},
-	"flirtual:receptive_fairies_legal_thumb.26": {
+	"flirtual:flitty_reactions.26": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -23805,7 +23771,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "518e07db869aa877"
 	},
-	"flirtual:receptive_fairies_legal_thumb.27": {
+	"flirtual:flitty_reactions.27": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -23815,7 +23781,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "d87d3020366755e3"
 	},
-	"flirtual:receptive_fairies_legal_thumb.28": {
+	"flirtual:flitty_reactions.28": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -23825,7 +23791,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "bbcfa94bfc4179b4"
 	},
-	"flirtual:receptive_fairies_legal_thumb.29": {
+	"flirtual:flitty_reactions.29": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -23835,7 +23801,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "1fcb71fc8b8ea459"
 	},
-	"flirtual:receptive_fairies_legal_thumb.3": {
+	"flirtual:flitty_reactions.3": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -23845,7 +23811,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "f47696c1c0603a98"
 	},
-	"flirtual:receptive_fairies_legal_thumb.30": {
+	"flirtual:flitty_reactions.30": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -23855,7 +23821,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "acd7e7b91f3d9a57"
 	},
-	"flirtual:receptive_fairies_legal_thumb.31": {
+	"flirtual:flitty_reactions.31": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -23865,7 +23831,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "f39ae6395f90a161"
 	},
-	"flirtual:receptive_fairies_legal_thumb.32": {
+	"flirtual:flitty_reactions.32": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -23875,7 +23841,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "ea12777842a09dcb"
 	},
-	"flirtual:receptive_fairies_legal_thumb.33": {
+	"flirtual:flitty_reactions.33": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -23885,7 +23851,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "0b51fdb7afbfe183"
 	},
-	"flirtual:receptive_fairies_legal_thumb.34": {
+	"flirtual:flitty_reactions.34": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -23895,7 +23861,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "3ce720b1c92632cb"
 	},
-	"flirtual:receptive_fairies_legal_thumb.35": {
+	"flirtual:flitty_reactions.35": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -23905,7 +23871,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "fbfb6b1d8a6cd9ac"
 	},
-	"flirtual:receptive_fairies_legal_thumb.36": {
+	"flirtual:flitty_reactions.36": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -23915,7 +23881,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "571136cd46fd585b"
 	},
-	"flirtual:receptive_fairies_legal_thumb.37": {
+	"flirtual:flitty_reactions.37": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -23925,7 +23891,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "fd5efa20aca6d428"
 	},
-	"flirtual:receptive_fairies_legal_thumb.38": {
+	"flirtual:flitty_reactions.38": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -23935,7 +23901,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "e52691cdf31744a5"
 	},
-	"flirtual:receptive_fairies_legal_thumb.39": {
+	"flirtual:flitty_reactions.39": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -23945,7 +23911,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "6f8a25fba68ca32d"
 	},
-	"flirtual:receptive_fairies_legal_thumb.4": {
+	"flirtual:flitty_reactions.4": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -23955,7 +23921,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "a2cdc489b06e4171"
 	},
-	"flirtual:receptive_fairies_legal_thumb.40": {
+	"flirtual:flitty_reactions.40": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -23965,7 +23931,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "da84b059b6a85e45"
 	},
-	"flirtual:receptive_fairies_legal_thumb.41": {
+	"flirtual:flitty_reactions.41": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -23975,7 +23941,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "f398bc47b982bc25"
 	},
-	"flirtual:receptive_fairies_legal_thumb.42": {
+	"flirtual:flitty_reactions.42": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -23985,7 +23951,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "3ce38b6e76865fee"
 	},
-	"flirtual:receptive_fairies_legal_thumb.43": {
+	"flirtual:flitty_reactions.43": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -23995,7 +23961,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "39ebdcd971eb072d"
 	},
-	"flirtual:receptive_fairies_legal_thumb.44": {
+	"flirtual:flitty_reactions.44": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24005,7 +23971,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "4f2c9fc51928be9a"
 	},
-	"flirtual:receptive_fairies_legal_thumb.45": {
+	"flirtual:flitty_reactions.45": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24015,7 +23981,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "bebaf1f5aa844426"
 	},
-	"flirtual:receptive_fairies_legal_thumb.46": {
+	"flirtual:flitty_reactions.46": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24025,7 +23991,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "c20ca703ff05b313"
 	},
-	"flirtual:receptive_fairies_legal_thumb.47": {
+	"flirtual:flitty_reactions.47": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24035,7 +24001,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "8622ea82fa5998f3"
 	},
-	"flirtual:receptive_fairies_legal_thumb.48": {
+	"flirtual:flitty_reactions.48": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24045,7 +24011,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "0f4f4785040518c7"
 	},
-	"flirtual:receptive_fairies_legal_thumb.49": {
+	"flirtual:flitty_reactions.49": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24055,7 +24021,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "b1a1bab80292c8a4"
 	},
-	"flirtual:receptive_fairies_legal_thumb.5": {
+	"flirtual:flitty_reactions.5": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24065,7 +24031,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "bb664b40d80de9bb"
 	},
-	"flirtual:receptive_fairies_legal_thumb.50": {
+	"flirtual:flitty_reactions.50": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24075,7 +24041,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "bfe87a9c3306abbc"
 	},
-	"flirtual:receptive_fairies_legal_thumb.51": {
+	"flirtual:flitty_reactions.51": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24085,7 +24051,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "58298d94e75e6bb2"
 	},
-	"flirtual:receptive_fairies_legal_thumb.52": {
+	"flirtual:flitty_reactions.52": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24095,7 +24061,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "9a04538fff660ac4"
 	},
-	"flirtual:receptive_fairies_legal_thumb.53": {
+	"flirtual:flitty_reactions.53": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24105,7 +24071,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "acf179f047859599"
 	},
-	"flirtual:receptive_fairies_legal_thumb.54": {
+	"flirtual:flitty_reactions.54": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24115,7 +24081,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "7add823d81d537b8"
 	},
-	"flirtual:receptive_fairies_legal_thumb.55": {
+	"flirtual:flitty_reactions.55": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24125,7 +24091,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "8f041496e838586e"
 	},
-	"flirtual:receptive_fairies_legal_thumb.56": {
+	"flirtual:flitty_reactions.56": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24135,7 +24101,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "1220d95c9a637a9a"
 	},
-	"flirtual:receptive_fairies_legal_thumb.57": {
+	"flirtual:flitty_reactions.57": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24145,7 +24111,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "79223c08030a776d"
 	},
-	"flirtual:receptive_fairies_legal_thumb.58": {
+	"flirtual:flitty_reactions.58": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24155,7 +24121,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "fb9cd299019b19b6"
 	},
-	"flirtual:receptive_fairies_legal_thumb.59": {
+	"flirtual:flitty_reactions.59": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24165,7 +24131,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "bfe649e2f1a32452"
 	},
-	"flirtual:receptive_fairies_legal_thumb.6": {
+	"flirtual:flitty_reactions.6": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24175,7 +24141,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "5a2785e679bce3cb"
 	},
-	"flirtual:receptive_fairies_legal_thumb.60": {
+	"flirtual:flitty_reactions.60": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24185,7 +24151,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "dd1471ca07eeb997"
 	},
-	"flirtual:receptive_fairies_legal_thumb.61": {
+	"flirtual:flitty_reactions.61": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24195,7 +24161,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "021a60a8a774129f"
 	},
-	"flirtual:receptive_fairies_legal_thumb.62": {
+	"flirtual:flitty_reactions.62": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24205,7 +24171,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "b44fd9f2ebc69c34"
 	},
-	"flirtual:receptive_fairies_legal_thumb.63": {
+	"flirtual:flitty_reactions.63": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24215,7 +24181,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "8e820d7bdb0e776c"
 	},
-	"flirtual:receptive_fairies_legal_thumb.64": {
+	"flirtual:flitty_reactions.64": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24225,7 +24191,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "58b0eb8667807b44"
 	},
-	"flirtual:receptive_fairies_legal_thumb.65": {
+	"flirtual:flitty_reactions.65": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24235,7 +24201,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "cc087eb1dd43882d"
 	},
-	"flirtual:receptive_fairies_legal_thumb.66": {
+	"flirtual:flitty_reactions.66": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24245,7 +24211,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "5a47c7073c3306a8"
 	},
-	"flirtual:receptive_fairies_legal_thumb.67": {
+	"flirtual:flitty_reactions.67": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24255,7 +24221,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "5289e48d107b80fe"
 	},
-	"flirtual:receptive_fairies_legal_thumb.68": {
+	"flirtual:flitty_reactions.68": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24265,7 +24231,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "f2bbd852d9d0684d"
 	},
-	"flirtual:receptive_fairies_legal_thumb.69": {
+	"flirtual:flitty_reactions.69": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24275,7 +24241,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "af1747f28e443a0f"
 	},
-	"flirtual:receptive_fairies_legal_thumb.7": {
+	"flirtual:flitty_reactions.7": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24285,7 +24251,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "462b2dd2204da4c1"
 	},
-	"flirtual:receptive_fairies_legal_thumb.70": {
+	"flirtual:flitty_reactions.70": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24295,7 +24261,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "4eee57727e40a5ae"
 	},
-	"flirtual:receptive_fairies_legal_thumb.71": {
+	"flirtual:flitty_reactions.71": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24305,7 +24271,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "25269a98f430984a"
 	},
-	"flirtual:receptive_fairies_legal_thumb.72": {
+	"flirtual:flitty_reactions.72": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24315,7 +24281,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "89f572cb5e4a73a2"
 	},
-	"flirtual:receptive_fairies_legal_thumb.73": {
+	"flirtual:flitty_reactions.73": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24325,7 +24291,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "69b6882cd505c571"
 	},
-	"flirtual:receptive_fairies_legal_thumb.74": {
+	"flirtual:flitty_reactions.74": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24335,7 +24301,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "34a6dcef6d120048"
 	},
-	"flirtual:receptive_fairies_legal_thumb.75": {
+	"flirtual:flitty_reactions.75": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24345,7 +24311,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "f96306a415e46e5e"
 	},
-	"flirtual:receptive_fairies_legal_thumb.76": {
+	"flirtual:flitty_reactions.76": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24355,7 +24321,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "b707c0cd1bd51328"
 	},
-	"flirtual:receptive_fairies_legal_thumb.77": {
+	"flirtual:flitty_reactions.77": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24365,7 +24331,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "c321b04e384d42e5"
 	},
-	"flirtual:receptive_fairies_legal_thumb.78": {
+	"flirtual:flitty_reactions.78": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24375,7 +24341,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "dd390283a27bc9e4"
 	},
-	"flirtual:receptive_fairies_legal_thumb.79": {
+	"flirtual:flitty_reactions.79": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24385,7 +24351,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "77698bc2a849f0f0"
 	},
-	"flirtual:receptive_fairies_legal_thumb.8": {
+	"flirtual:flitty_reactions.8": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24395,7 +24361,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "821a1639766cfd97"
 	},
-	"flirtual:receptive_fairies_legal_thumb.80": {
+	"flirtual:flitty_reactions.80": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24405,7 +24371,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "aef4ce9b89330376"
 	},
-	"flirtual:receptive_fairies_legal_thumb.81": {
+	"flirtual:flitty_reactions.81": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24415,7 +24381,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "5885113e696b18c3"
 	},
-	"flirtual:receptive_fairies_legal_thumb.82": {
+	"flirtual:flitty_reactions.82": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24425,7 +24391,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "e581954adcb45cee"
 	},
-	"flirtual:receptive_fairies_legal_thumb.83": {
+	"flirtual:flitty_reactions.83": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24435,7 +24401,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "547d31819bf8840b"
 	},
-	"flirtual:receptive_fairies_legal_thumb.84": {
+	"flirtual:flitty_reactions.84": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24445,7 +24411,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "a811686a57f49a2a"
 	},
-	"flirtual:receptive_fairies_legal_thumb.85": {
+	"flirtual:flitty_reactions.85": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24455,7 +24421,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "46fd6b29aed6401e"
 	},
-	"flirtual:receptive_fairies_legal_thumb.86": {
+	"flirtual:flitty_reactions.86": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24465,7 +24431,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "1c4a8823c9e9bfd0"
 	},
-	"flirtual:receptive_fairies_legal_thumb.87": {
+	"flirtual:flitty_reactions.87": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24475,7 +24441,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "7871be0ae650f6ca"
 	},
-	"flirtual:receptive_fairies_legal_thumb.88": {
+	"flirtual:flitty_reactions.88": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24485,7 +24451,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "c11cfb60b4158bd6"
 	},
-	"flirtual:receptive_fairies_legal_thumb.89": {
+	"flirtual:flitty_reactions.89": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24495,7 +24461,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "536cce34509942ed"
 	},
-	"flirtual:receptive_fairies_legal_thumb.9": {
+	"flirtual:flitty_reactions.9": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24505,7 +24471,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "2a0f34bcb6933785"
 	},
-	"flirtual:receptive_fairies_legal_thumb.90": {
+	"flirtual:flitty_reactions.90": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24515,7 +24481,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "6072cc83014f3e25"
 	},
-	"flirtual:receptive_fairies_legal_thumb.91": {
+	"flirtual:flitty_reactions.91": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24525,7 +24491,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "26135ebb99433e99"
 	},
-	"flirtual:receptive_fairies_legal_thumb.92": {
+	"flirtual:flitty_reactions.92": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24535,7 +24501,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "704f59184032000d"
 	},
-	"flirtual:receptive_fairies_legal_thumb.93": {
+	"flirtual:flitty_reactions.93": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24545,7 +24511,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "cc8e157f7ba56508"
 	},
-	"flirtual:receptive_fairies_legal_thumb.94": {
+	"flirtual:flitty_reactions.94": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24555,7 +24521,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "9c3f0f76bd0bf332"
 	},
-	"flirtual:receptive_fairies_legal_thumb.95": {
+	"flirtual:flitty_reactions.95": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24565,7 +24531,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "ab4c85c80f9f7edf"
 	},
-	"flirtual:receptive_fairies_legal_thumb.96": {
+	"flirtual:flitty_reactions.96": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24575,7 +24541,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "5a73344548a6263a"
 	},
-	"flirtual:receptive_fairies_legal_thumb.97": {
+	"flirtual:flitty_reactions.97": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24585,7 +24551,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "3fe015a1a169837f"
 	},
-	"flirtual:receptive_fairies_legal_thumb.98": {
+	"flirtual:flitty_reactions.98": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24595,7 +24561,7 @@
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
 		"hash": "c8d400fc2de0b15c"
 	},
-	"flirtual:receptive_fairies_legal_thumb.99": {
+	"flirtual:flitty_reactions.99": {
 		"group": "homepage/flitty",
 		"screens": [
 			"/"
@@ -24666,7 +24632,7 @@
 		"hash": "a1f438b3a2eebb8f",
 		"watch": true
 	},
-	"flirtual:remark_butterfly_sum_seasonal": {
+	"flirtual:order_received_description": {
 		"group": "premium",
 		"screens": [
 			"/subscription"
@@ -24888,7 +24854,7 @@
 		"lengthNote": "Short tool button/tooltip in the image editor",
 		"hash": "6bd6f5ee572899d9"
 	},
-	"flirtual:round_crazy_haddock_mix": {
+	"flirtual:not_found_description": {
 		"group": "errors/not-found",
 		"screens": [
 			"404 page"
@@ -24898,7 +24864,7 @@
 		"tone": "Friendly, apologetic",
 		"hash": "1a20c27d9c8e7ff6"
 	},
-	"flirtual:round_stout_iguana_stab": {
+	"flirtual:dates_exhausted_filters": {
 		"group": "discover/out-of-profiles",
 		"screens": [
 			"/dates"
@@ -24910,7 +24876,7 @@
 		},
 		"hash": "1d7a4527011a0e80"
 	},
-	"flirtual:royal_home_leopard_tickle": {
+	"flirtual:email_confirmed": {
 		"group": "confirm-email",
 		"screens": [
 			"/confirm-email",
@@ -24920,7 +24886,7 @@
 		"description": "Success toast after the user opens a valid email confirmation link; they are then taken to the browsing page.",
 		"hash": "a45a5947a6e3c261"
 	},
-	"flirtual:royal_house_peacock_roar": {
+	"flirtual:tour_like_title": {
 		"group": "tour",
 		"screens": [
 			"/dates",
@@ -24930,7 +24896,7 @@
 		"description": "Title of two onboarding tour steps: one pointing at the Like button (in Date Mode) and one pointing at the Homie button (in Homie Mode). Means \"interested in this person?\".",
 		"hash": "dea1ec15d438bc7f"
 	},
-	"flirtual:sad_spare_grizzly_twirl": {
+	"flirtual:tour_settings": {
 		"group": "tour",
 		"screens": [
 			"/dates"
@@ -24939,7 +24905,7 @@
 		"description": "Onboarding tour step pointing at the profile/settings menu button. Premium is Flirtual's paid subscription.",
 		"hash": "b65f210964f81820"
 	},
-	"flirtual:safe_good_rat_bask": {
+	"flirtual:matchmaking_priorities_description": {
 		"group": "settings/matchmaking",
 		"screens": [
 			"/settings/matchmaking"
@@ -24948,7 +24914,7 @@
 		"description": "Explanation under \"Matchmaking priorities\": each factor has a slider; non-Premium users can only change the location slider.",
 		"hash": "7f46c01769d6a50e"
 	},
-	"flirtual:salty_novel_octopus_surge": {
+	"flirtual:confirmation_email_resent": {
 		"group": "confirm-email",
 		"screens": [
 			"/confirm-email",
@@ -24958,7 +24924,7 @@
 		"description": "Toast after a new account confirmation email is sent, either by pressing \"Send again\" or after adding an email address.",
 		"hash": "67ba72762653be6c"
 	},
-	"flirtual:same_honest_seal_renew": {
+	"flirtual:landing_connections_heading": {
 		"group": "homepage",
 		"screens": [
 			"/"
@@ -25017,7 +24983,7 @@
 		"description": "Confirmation toast shown after the user saves the form embedded in a news item (location/timezone or relationship tags). Means \"your changes were saved\".",
 		"hash": "4ae0f957614c9f16"
 	},
-	"flirtual:sea_giant_anteater_slurp": {
+	"flirtual:dates_exhausted_later": {
 		"group": "discover/out-of-profiles",
 		"screens": [
 			"/dates"
@@ -25087,7 +25053,7 @@
 		"description": "Button at the top of the Matches list that opens the Likes You page (Premium) or the subscription page for free users. When counts are available it's followed by \"(12❤) (3✌)\" counts of dating likes and friend requests.",
 		"hash": "891aeb6fa1809e4e"
 	},
-	"flirtual:seemly_sticky_frightening_fetch": {
+	"flirtual:guidelines_body": {
 		"group": "legal/guidelines",
 		"screens": [
 			"/guidelines"
@@ -25373,7 +25339,7 @@
 		"description": "Matchmaking priority slider label: weight given to having VR games in common with the other person. A multiplier (e.g. \"1.5x\") is shown on the same line.",
 		"hash": "afb884b294ae8e54"
 	},
-	"flirtual:sharp_calm_stork_cry": {
+	"flirtual:premium_feature_priorities": {
 		"group": "premium",
 		"screens": [
 			"/subscription"
@@ -25382,7 +25348,7 @@
 		"description": "Premium benefit, prefixed by a 🎚️ emoji. For subscribers it links to the matchmaking settings, where they can weight which factors matter most in their matches; for non-subscribers it is a bold heading followed by a description.",
 		"hash": "7d71c52a62ea4b16"
 	},
-	"flirtual:sharp_gray_sloth_clasp": {
+	"flirtual:leave_homie_mode": {
 		"group": "discover/out-of-profiles",
 		"screens": [
 			"/homies"
@@ -25443,7 +25409,7 @@
 		"lengthNote": "Small button taking half the width of a two-button row on mobile",
 		"hash": "725420e3b3dcf287"
 	},
-	"flirtual:silly_petty_meerkat_hug": {
+	"flirtual:hidden_profile_finish": {
 		"group": "discover/blocked",
 		"screens": [
 			"/dates",
@@ -25478,19 +25444,19 @@
 		"lengthNote": "Short label at the end of a label row",
 		"hash": "6cc317dd8d265203"
 	},
-	"flirtual:small_drab_rooster_drum": {
+	"flirtual:out_of_likes_homie_mode": {
 		"group": "discover/limits",
 		"screens": [
 			"dialog: Out of likes and passes"
 		],
 		"element": "dialog",
-		"description": "Paragraph in the daily-limit dialog, shown only in dating mode, suggesting the user switch to Homie Mode (friend-finding) to keep browsing. Same English as main_large_goat_succeed but used in a dialog.",
+		"description": "Paragraph in the daily-limit dialog, shown only in dating mode, suggesting the user switch to Homie Mode (friend-finding) to keep browsing. Same English as dates_exhausted_homie_mode but used in a dialog.",
 		"tags": {
 			"browseLink": "Link to Homie Mode browsing (/homies); wraps the feature name \"Homie Mode\""
 		},
 		"hash": "632a1061b5aa978f"
 	},
-	"flirtual:smart_bland_husky_scold": {
+	"flirtual:reactivate_description": {
 		"group": "settings/reactivate",
 		"screens": [
 			"/settings/reactivate"
@@ -25554,7 +25520,7 @@
 		"description": "Label in the browser's developer console message, followed by \" → \" and the link to Flirtual's GitHub repository. Noun (the program's source code).",
 		"hash": "db512e7012f48dbe"
 	},
-	"flirtual:spade_mindless_furry_jeans": {
+	"flirtual:newsletter_opt_in_description": {
 		"group": "sign-up",
 		"screens": [
 			"/sign-up"
@@ -25568,7 +25534,7 @@
 		"lengthNote": "Wraps at about 34 characters per line",
 		"hash": "ecb2587402f7afc4"
 	},
-	"flirtual:spare_chunky_cougar_honor": {
+	"flirtual:landing_dates_heading": {
 		"group": "homepage",
 		"screens": [
 			"/"
@@ -25608,7 +25574,7 @@
 		"description": "Footer link to Flirtual's service status page (status.flirtual.net), showing whether the servers are up or having problems. Not a profile or relationship status.",
 		"hash": "7eeef5d986492416"
 	},
-	"flirtual:sticks_own_phobic_utopian": {
+	"flirtual:forgot_password_description": {
 		"group": "forgot-password",
 		"screens": [
 			"/forgot"
@@ -25617,7 +25583,7 @@
 		"description": "Instructions above the email field on the password reset request page. The user is logged out; \"a link\" is sent by email.",
 		"hash": "fd7bfdc2164b5a86"
 	},
-	"flirtual:sticks_protect_zinc_explain": {
+	"flirtual:privacy_policy_body": {
 		"group": "legal/privacy",
 		"screens": [
 			"/privacy"
@@ -25642,7 +25608,7 @@
 		"tone": "Legal",
 		"hash": "a230c3f18c6ce962"
 	},
-	"flirtual:stock_topical_mouse_inspire": {
+	"flirtual:report_drop_or_browse": {
 		"group": "profile/images/upload",
 		"screens": [
 			"dialog: report"
@@ -25652,7 +25618,7 @@
 		"lengthNote": "Fits inside a small square tile",
 		"hash": "c4c00ee15e3b6a80"
 	},
-	"flirtual:stock_zany_puma_gulp": {
+	"flirtual:premium_priorities_description": {
 		"group": "premium",
 		"screens": [
 			"/subscription"
@@ -25661,7 +25627,7 @@
 		"description": "Description under the \"Control your matchmaking priorities\" benefit heading, shown to non-subscribers. Followed by a space and the link \"(Check this out for free)\".",
 		"hash": "22cb76a1c1fd4cf1"
 	},
-	"flirtual:stout_last_kudu_bend": {
+	"flirtual:landing_avatar_heading": {
 		"group": "homepage",
 		"screens": [
 			"/"
@@ -25671,7 +25637,7 @@
 		"tone": "Marketing",
 		"hash": "1b5d62dbb89cf901"
 	},
-	"flirtual:stout_tired_warbler_inspire": {
+	"flirtual:homies_exhausted_later": {
 		"group": "discover/out-of-profiles",
 		"screens": [
 			"/homies"
@@ -25693,19 +25659,7 @@
 		"hash": "e5b9fa881873da20",
 		"watch": true
 	},
-	"flirtual:strip_zesty_bushes_idiotic": {
-		"group": "banner",
-		"screens": [
-			"banner: top of app"
-		],
-		"element": "notice",
-		"description": "Dismissable banner across the top of the website prompting the user to install the mobile app. Not referenced in the current code.",
-		"tags": {
-			"bannerLink": "Link to the app download page; the whole banner is clickable"
-		},
-		"hash": "f2300c086e03af81"
-	},
-	"flirtual:strong_home_bullock_taste": {
+	"flirtual:both_new_to_vr": {
 		"group": "profile/view",
 		"screens": [
 			"/dates",
@@ -25717,7 +25671,7 @@
 		"tone": "Warm, encouraging",
 		"hash": "3ac2c96be456fc4b"
 	},
-	"flirtual:suave_same_macaw_affirm": {
+	"flirtual:policy_upcoming_notice": {
 		"group": "legal/policy-dates",
 		"screens": [
 			"/terms",
@@ -25768,7 +25722,7 @@
 		"lengthNote": "Small button; keep it short",
 		"hash": "bbce327a0c77d5eb"
 	},
-	"flirtual:such_pink_jan_spur": {
+	"flirtual:branding_icon_usage": {
 		"group": "branding",
 		"screens": [
 			"/branding"
@@ -25789,7 +25743,7 @@
 		"description": "Link that opens the customer-support contact widget (or the contact page from the error/maintenance screen). Noun meaning customer support/help, not the verb \"to support\". In the settings list it sits under the \"Help\" heading; after a password reset request it is a small button next to \"Login\".",
 		"hash": "7744c89b4e37c0a5"
 	},
-	"flirtual:sweet_mellow_ant_hunt": {
+	"flirtual:events_club_description": {
 		"group": "events",
 		"screens": [
 			"/events"
@@ -25799,7 +25753,7 @@
 		"tone": "Casual, playful",
 		"hash": "becbb64168b55de3"
 	},
-	"flirtual:sweet_strong_poodle_endure": {
+	"flirtual:error_tip_update_app": {
 		"group": "errors/troubleshooting",
 		"screens": [
 			"dialog: error",
@@ -25883,7 +25837,7 @@
 		"tone": "Excited, celebratory",
 		"hash": "358a84a11bc6a131"
 	},
-	"flirtual:tame_weird_termite_zap": {
+	"flirtual:bio_guidelines": {
 		"group": "finish/bio",
 		"screens": [
 			"/finish/1",
@@ -25894,7 +25848,7 @@
 		"tone": "Clear rule",
 		"hash": "44cce777e29890f4"
 	},
-	"flirtual:tangy_front_anaconda_dash": {
+	"flirtual:analytics_opt_out": {
 		"group": "settings/privacy",
 		"screens": [
 			"/settings/privacy"
@@ -25903,7 +25857,7 @@
 		"description": "Label of an on/off switch; switching it on opts the user out of anonymous product usage analytics. A \"Learn more\" link to the Privacy Policy sits beside it. Keep it a yes/no question whose \"on\" answer means opting out.",
 		"hash": "7041ecb93841e999"
 	},
-	"flirtual:teary_cuddly_midge_sew": {
+	"flirtual:delete_account_confirm": {
 		"group": "settings/delete",
 		"screens": [
 			"/settings/delete"
@@ -25916,7 +25870,7 @@
 		"tone": "Serious",
 		"hash": "4f089695d6c727a0"
 	},
-	"flirtual:tense_active_gibbon_dare": {
+	"flirtual:discord_in_bio_warning": {
 		"group": "moderation/messages",
 		"screens": [
 			"dialog: Discord in bio"
@@ -25930,7 +25884,7 @@
 		"tone": "Caring, advisory",
 		"hash": "32656955a9fb5be3"
 	},
-	"flirtual:tense_loose_felix_beam": {
+	"flirtual:out_of_likes_reset": {
 		"group": "discover/limits",
 		"screens": [
 			"dialog: Out of likes and passes"
@@ -25961,7 +25915,7 @@
 		"description": "Heading and tab title of the old, superseded October 2023 Terms of Service page (its body is English-only). \"(outdated)\" marks it as no longer in effect.",
 		"hash": "cf94823c4a962c1b"
 	},
-	"flirtual:that_active_seal_nail": {
+	"flirtual:tour_signature": {
 		"group": "tour",
 		"screens": [
 			"/dates"
@@ -25979,7 +25933,7 @@
 		"description": "Label above the light/dark/system color theme choices on the Appearance settings page.",
 		"hash": "888560be416ca928"
 	},
-	"flirtual:tidy_known_whale_imagine": {
+	"flirtual:tour_intro": {
 		"group": "tour",
 		"screens": [
 			"/dates"
@@ -25989,7 +25943,7 @@
 		"tone": "Playful, welcoming",
 		"hash": "a037f6683aa82343"
 	},
-	"flirtual:tidy_wise_robin_urge": {
+	"flirtual:events_speed_dating": {
 		"group": "events",
 		"screens": [
 			"/events"
@@ -26104,7 +26058,7 @@
 		"lengthNote": "Row label in a fixed-height grid row beside two checkboxes; should fit on one line on a phone",
 		"hash": "96e1060361595c50"
 	},
-	"flirtual:top_big_tern_twist": {
+	"flirtual:events_upcoming": {
 		"group": "events",
 		"screens": [
 			"/events"
@@ -26125,7 +26079,7 @@
 		"lengthNote": "Maintainer: keep within ~15 characters so it fits above the swatch",
 		"hash": "a99a5a20494e4e80"
 	},
-	"flirtual:tough_plain_squirrel_persist": {
+	"flirtual:playlist_heading": {
 		"group": "settings/connections",
 		"screens": [
 			"/settings/connections"
@@ -26134,7 +26088,7 @@
 		"description": "Section heading on the Connections settings page for linking a music playlist that is displayed on the user's public profile.",
 		"hash": "5ab7cb131f3856d1"
 	},
-	"flirtual:tough_sleek_wasp_reside": {
+	"flirtual:error_tip_connection": {
 		"group": "errors/troubleshooting",
 		"screens": [
 			"dialog: error",
@@ -26169,7 +26123,7 @@
 		"lengthNote": "Maintainer: keep within ~15 characters so it fits above the swatch",
 		"hash": "cd5f0e8b21a49124"
 	},
-	"flirtual:trite_alert_ibex_shine": {
+	"flirtual:payments_terms_body": {
 		"group": "legal/payments",
 		"screens": [
 			"/payments"
@@ -26189,7 +26143,7 @@
 		"tone": "Legal",
 		"hash": "c523551d3bf25b2f"
 	},
-	"flirtual:trite_alive_orangutan_foster": {
+	"flirtual:playlist_youtube_unsupported": {
 		"group": "settings/connections",
 		"screens": [
 			"/settings/connections"
@@ -26199,7 +26153,7 @@
 		"tone": "Apologetic",
 		"hash": "3443e12ebec0d99c"
 	},
-	"flirtual:trite_awful_marten_lend": {
+	"flirtual:deactivated_premium_notice": {
 		"group": "settings/reactivate",
 		"screens": [
 			"/settings/reactivate"
@@ -26780,7 +26734,7 @@
 		"description": "Hidden dialog title (read only by screen readers) for the full-screen viewer that opens when a profile picture is clicked.",
 		"hash": "1d22e8f80692691e"
 	},
-	"flirtual:voice_spiritual_polite_entertaining": {
+	"flirtual:about_team_photo_alt": {
 		"group": "about",
 		"screens": [
 			"/about"
@@ -26876,7 +26830,7 @@
 		"description": "Label above checkboxes of genders the user wants to see in matchmaking (e.g. Men, Women, Other genders), completed by those options. Also the heading and tab title of onboarding step 3. The trailing ellipsis signals the sentence continues with the options.",
 		"hash": "193e29cdd6d187f2"
 	},
-	"flirtual:warm_ago_slug_leap": {
+	"flirtual:out_of_likes_title": {
 		"group": "discover/limits",
 		"screens": [
 			"dialog: Out of likes and passes"
@@ -26886,7 +26840,7 @@
 		"tone": "Friendly",
 		"hash": "1e55dd050ffd5751"
 	},
-	"flirtual:warm_gray_poodle_reap": {
+	"flirtual:playlist_privacy_warning": {
 		"group": "settings/connections",
 		"screens": [
 			"/settings/connections"
@@ -27261,7 +27215,7 @@
 		"lengthNote": "Row label in a fixed-height grid row beside two checkboxes; should fit on one line on a phone",
 		"hash": "41eb7d96fbd3a845"
 	},
-	"flirtual:weird_dizzy_baboon_support": {
+	"flirtual:matchmaking_priorities_example": {
 		"group": "settings/matchmaking",
 		"screens": [
 			"/settings/matchmaking"
@@ -27279,7 +27233,7 @@
 		"description": "Title of the first step of the onboarding tour shown to new users on the browse page.",
 		"hash": "76bfd876232cfefa"
 	},
-	"flirtual:white_tasty_trout_gleam": {
+	"flirtual:deactivate_account_instead": {
 		"group": "settings/delete",
 		"screens": [
 			"/settings/delete"
@@ -27288,7 +27242,7 @@
 		"description": "Secondary link below the Delete account button leading to the deactivate-account page as a reversible alternative.",
 		"hash": "4bbbc62c780ab892"
 	},
-	"flirtual:wide_shy_loris_gleam": {
+	"flirtual:custom_interests_hint_apple": {
 		"group": "settings/interests",
 		"screens": [
 			"/settings/interests",
@@ -27301,7 +27255,7 @@
 		},
 		"hash": "b1905efdafc6c435"
 	},
-	"flirtual:wide_stock_skate_radiate": {
+	"flirtual:saved_personality": {
 		"group": "settings/personality",
 		"screens": [
 			"/settings/personality",
@@ -27311,7 +27265,7 @@
 		"description": "Confirmation toast after the user saves their answers to the personality questions (yes/no statements used for matchmaking).",
 		"hash": "979a46f440c0bc0a"
 	},
-	"flirtual:wise_great_crow_foster": {
+	"flirtual:branding_need_more": {
 		"group": "branding",
 		"screens": [
 			"/branding"
@@ -27358,7 +27312,7 @@
 		},
 		"hash": "590b2eda7099bf44"
 	},
-	"flirtual:yummy_salty_porpoise_greet": {
+	"flirtual:error_tip_contact": {
 		"group": "errors/troubleshooting",
 		"screens": [
 			"dialog: error",
@@ -27372,7 +27326,7 @@
 		},
 		"hash": "f04a62c89332dc46"
 	},
-	"flirtual:zany_watery_zebra_play": {
+	"flirtual:error_digest": {
 		"group": "errors/dialog",
 		"screens": [
 			"dialog: error"

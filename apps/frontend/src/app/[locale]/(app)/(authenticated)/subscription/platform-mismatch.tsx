@@ -31,10 +31,10 @@ export const EntitlementMismatch: FC<{ entitlement: Entitlement }> = ({
 			⚠️
 			{" "}
 			{entitlement.store === "chargebee"
-				? t("gross_each_cobra_talk", {
+				? t("subscription_other_platform", {
 						platform: t(osName[platform])
 					})
-				: t("caring_smug_felix_gleam", {
+				: t("subscription_other_platform_current", {
 						currentPlatform: t(osName[platform]),
 						otherPlatform: t(storeName[entitlement.store as keyof typeof storeName])
 					})}
@@ -52,7 +52,7 @@ export const VisionMessage: FC = () => {
 	return (
 		<div className="rounded-lg bg-brand-gradient px-6 py-4">
 			<span className="font-montserrat text-lg text-white-10">
-				{t(premium(session.user) ? "dull_steep_tadpole_grin" : "light_wacky_tadpole_enrich")}
+				{t(premium(session.user) ? "subscription_manage_on_ios" : "subscription_purchase_on_ios")}
 			</span>
 		</div>
 	);

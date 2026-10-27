@@ -27,6 +27,7 @@ import type { AttributeTranslation } from "~/hooks/use-attribute";
 import { useDialog } from "~/hooks/use-dialog";
 import { useToast } from "~/hooks/use-toast";
 import { defaultLocale, i18n, useLocale } from "~/i18n";
+import { intlLocale } from "~/i18n/languages";
 import { invalidate, userKey } from "~/query";
 
 export const WarnDialog: FC<{
@@ -40,7 +41,7 @@ export const WarnDialog: FC<{
 	const [locale] = useLocale();
 
 	const languageNames = useMemo(
-		() => new Intl.DisplayNames(locale, { type: "language" }),
+		() => new Intl.DisplayNames(intlLocale(locale), { type: "language" }),
 		[locale]
 	);
 

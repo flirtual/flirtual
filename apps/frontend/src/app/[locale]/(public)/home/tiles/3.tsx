@@ -65,18 +65,18 @@ const brandImages = [
 const Header = withSuspense(() => {
 	const { t } = useTranslation();
 	const userCount = useUserCount();
-	return t("even_major_hare_believe", { userCount });
+	return t("landing_user_count_heading", { userCount });
 }, {
 	fallback: () => {
 		// eslint-disable-next-line react-hooks/rules-of-hooks
 		const { t } = useTranslation();
-		return t("even_major_hare_believe", { userCount: 100000 }); ;
+		return t("landing_user_count_heading", { userCount: 100000 }); ;
 	}
 });
 
 export function Testimonial({ id }: TileProps) {
 	const {
-		acidic_advertisement_request_cough: brandNames
+		landing_press_outlets: brandNames
 	} = useMessages();
 
 	return (

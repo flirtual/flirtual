@@ -55,14 +55,14 @@ export default function BrandingPage() {
 					components={{
 						contact: <InlineLink href={urls.resources.pressEmail} />
 					}}
-					i18nKey="lime_soft_shad_skip"
+					i18nKey="branding_intro"
 				/>
 			</p>
 			<div className="flex flex-col gap-4">
 				<span className="text-2xl font-semibold">
 					{t("our_logo")}
 				</span>
-				<span>{t("flaky_same_grizzly_snap")}</span>
+				<span>{t("branding_logo_rules")}</span>
 				<ImageList
 					items={[
 						{
@@ -94,7 +94,7 @@ export default function BrandingPage() {
 				<span className="text-2xl font-semibold">
 					{t("mark_only")}
 				</span>
-				<span>{t("such_pink_jan_spur")}</span>
+				<span>{t("branding_icon_usage")}</span>
 				<ImageList
 					items={[
 						{
@@ -159,9 +159,9 @@ export default function BrandingPage() {
 			</div>
 			<div className="flex flex-col gap-4">
 				<span className="text-2xl font-semibold">
-					{t("wise_great_crow_foster")}
+					{t("branding_need_more")}
 				</span>
-				<span>{t("ornate_upper_guppy_mend")}</span>
+				<span>{t("branding_press_kit")}</span>
 				<ButtonLink
 					download
 					className="w-fit"

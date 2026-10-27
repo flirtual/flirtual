@@ -9,13 +9,14 @@ import {
 	getCountryName
 } from "~/components/profile/pill/country";
 import { useAttributes } from "~/hooks/use-attribute";
-import { useLocale } from "~/i18n";
+import { useDisplayLocale } from "~/i18n";
+import { intlLocale } from "~/i18n/languages";
 
 import { InputSelect, SelectItem } from "../select";
 import type { InputSelectProps } from "../select";
 
 const CountrySelectItem: FC<{ value: string }> = ({ value: countryId }) => {
-	const [locale] = useLocale();
+	const locale = useDisplayLocale();
 
 	const [reference, viewed] = useInView({ triggerOnce: true });
 
@@ -49,7 +50,7 @@ export type InputCountrySelectProps = {
 >;
 
 export function InputCountrySelect({ prefer = "us", ...props }: InputCountrySelectProps) {
-	const [locale] = useLocale();
+	const locale = useDisplayLocale();
 
 	const { t } = useTranslation();
 
@@ -68,7 +69,7 @@ export function InputCountrySelect({ prefer = "us", ...props }: InputCountrySele
 					if (a.id === prefer) return -1;
 					if (b.id === prefer) return 1;
 
-					return a.name.localeCompare(b.name, locale);
+					return a.name.localeCompare(b.name, intlLocale(locale));
 				}),
 		[countries, locale, prefer]
 	);

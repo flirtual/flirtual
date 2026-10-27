@@ -103,7 +103,7 @@ export const InfoForm: FC = () => {
 				if (!result) return;
 				const [newUser, newProfile] = result;
 
-				toasts.add(t("awake_few_wren_skip"));
+				toasts.add(t("saved_info"));
 
 				await mutate(sessionKey(), {
 					...session,
@@ -310,7 +310,7 @@ export const InfoForm: FC = () => {
 							<FormField name="new">
 								{(field) => (
 									<>
-										<InputLabel>{t("nimble_hour_bumblebee_savor")}</InputLabel>
+										<InputLabel>{t("new_to_vr_question")}</InputLabel>
 										<InputSwitch {...field.props} />
 									</>
 								)}

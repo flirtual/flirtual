@@ -38,7 +38,6 @@ defmodule Flirtual.User do
     :debugger,
     :verified,
     :legacy_vrlfp,
-    :translating,
     :official,
     :review,
     :dob_locked,

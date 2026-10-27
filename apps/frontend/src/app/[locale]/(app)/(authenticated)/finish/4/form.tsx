@@ -47,7 +47,7 @@ export const Finish4Form: React.FC = () => {
 			{({ FormField }) => (
 				<>
 					<InputLabel>
-						{t("quiet_gross_skate_honor")}
+						{t("personality_hint")}
 					</InputLabel>
 					{questions.map((name) => (
 						<FormField key={name} name={name}>

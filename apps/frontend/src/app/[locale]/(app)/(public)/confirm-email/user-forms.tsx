@@ -27,7 +27,7 @@ export const UserForms: React.FC = () => {
 				requireChange={["email"]}
 				onSubmit={async (body) => {
 					await User.updateEmail(user.id, body);
-					toasts.add(t("salty_novel_octopus_surge"));
+					toasts.add(t("confirmation_email_resent"));
 
 					await invalidate({ queryKey: sessionKey() });
 				}}
@@ -65,7 +65,7 @@ export const UserForms: React.FC = () => {
 				requireChange={false}
 				onSubmit={async () => {
 					await User.resendConfirmEmail();
-					toasts.add(t("salty_novel_octopus_surge"));
+					toasts.add(t("confirmation_email_resent"));
 
 					await invalidate({ queryKey: sessionKey() });
 				}}
@@ -79,7 +79,7 @@ export const UserForms: React.FC = () => {
 							components={{
 								copy: <CopyClick data-mask className="select-all font-semibold" value={user.email} />,
 							}}
-							i18nKey="maroon_polite_butterfly_boil"
+							i18nKey="confirm_email_check_inbox"
 							values={{ email: user.email }}
 						/>
 					</span>
@@ -105,10 +105,10 @@ export const UserForms: React.FC = () => {
 					<div className="flex flex-col gap-4">
 						<div>
 							<h1 className="font-montserrat text-xl font-semibold">
-								{t("happy_whole_parrot_intend")}
+								{t("confirm_email_wrong_address")}
 							</h1>
 							<h2 className="text-lg">
-								{t("even_trick_pelican_swim")}
+								{t("confirm_email_change_address")}
 							</h2>
 						</div>
 						<FormField name="email">
