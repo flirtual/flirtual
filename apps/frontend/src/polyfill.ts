@@ -6,62 +6,37 @@ import { shouldPolyfill as needsNumberFormat } from "@formatjs/intl-numberformat
 import { shouldPolyfill as needsPluralRules } from "@formatjs/intl-pluralrules/should-polyfill.js";
 import { shouldPolyfill as needsRelativeTimeFormat } from "@formatjs/intl-relativetimeformat/should-polyfill.js";
 
-import type { Locale } from "./i18n/languages.ts";
+import type { AnyLocale } from "./i18n/languages.ts";
 
-export const targets = [
-	"chrome106",
-	"edge106",
-	"firefox104",
-	"safari15"
-];
+// Vite can't template-import bare package paths, so glob them; `exhaustive` lets it into node_modules.
+const localeData = import.meta.glob(
+	"/node_modules/@formatjs/intl-{pluralrules,relativetimeformat,displaynames,listformat,numberformat,datetimeformat}/locale-data/{en,de,es,fr,ja,ko,nl,pt,ru,sv}.js",
+	{ exhaustive: true }
+);
 
-export const browserslist = targets.map((target) => target.replace(/(\d+)/, " >= $1"));
+function loadLocaleData(api: string, locale: AnyLocale) {
+	// The app passes `pt` to Intl, which CLDR reads as Brazilian Portuguese, so both use `pt` data.
+	const file = locale === "pt-BR" ? "pt" : locale;
+	return localeData[`/node_modules/@formatjs/intl-${api}/locale-data/${file}.js`]!();
+}
 
-const {
-	PluralRules,
-	DateTimeFormat,
-	DisplayNames,
-	ListFormat,
-	NumberFormat,
-	RelativeTimeFormat
-} = {
-	PluralRules: {
-		en: () => import("@formatjs/intl-pluralrules/locale-data/en.js")
-	},
-	RelativeTimeFormat: {
-		en: () => import("@formatjs/intl-relativetimeformat/locale-data/en.js")
-	},
-	DisplayNames: {
-		en: () => import("@formatjs/intl-displaynames/locale-data/en.js")
-	},
-	ListFormat: {
-		en: () => import("@formatjs/intl-listformat/locale-data/en.js")
-	},
-	NumberFormat: {
-		en: () => import("@formatjs/intl-numberformat/locale-data/en.js")
-	},
-	DateTimeFormat: {
-		en: () => import("@formatjs/intl-datetimeformat/locale-data/en.js")
-	},
-} satisfies Record<string, Record<Locale, () => Promise<unknown>>>;
-
-export async function polyfillForLanguage(locale: Locale) {
+export async function polyfillForLanguage(locale: AnyLocale) {
 	await Promise.all([
 		needsLocale() && import("@formatjs/intl-locale/polyfill-force.js"),
 		needsPluralRules(locale) && import("@formatjs/intl-pluralrules/polyfill-force.js")
-			.then(() => PluralRules[locale]()),
+			.then(() => loadLocaleData("pluralrules", locale)),
 		needsRelativeTimeFormat(locale) && import("@formatjs/intl-relativetimeformat/polyfill-force.js")
-			.then(() => RelativeTimeFormat[locale]()),
+			.then(() => loadLocaleData("relativetimeformat", locale)),
 		needsDisplayNames(locale) && import("@formatjs/intl-displaynames/polyfill-force.js")
-			.then(() => DisplayNames[locale]()),
+			.then(() => loadLocaleData("displaynames", locale)),
 		needsListFormat(locale) && import("@formatjs/intl-listformat/polyfill-force.js")
-			.then(() => ListFormat[locale]()),
+			.then(() => loadLocaleData("listformat", locale)),
 		needsNumberFormat(locale) && import("@formatjs/intl-numberformat/polyfill-force.js")
-			.then(() => NumberFormat[locale]()),
+			.then(() => loadLocaleData("numberformat", locale)),
 		needsDateTimeFormat(locale) && import("@formatjs/intl-datetimeformat/polyfill-force.js")
 			.then(() => Promise.all([
 				import("@formatjs/intl-datetimeformat/add-all-tz.js"),
-				DateTimeFormat[locale]()
+				loadLocaleData("datetimeformat", locale)
 			])),
 	].filter(Boolean));
 }
