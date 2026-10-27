@@ -516,7 +516,7 @@ importers:
         version: 7.6.0
       i18next:
         specifier: ^26.3.6
-        version: 26.5.7(typescript@5.9.3)
+        version: 26.5.8(typescript@5.9.3)
       i18next-icu:
         specifier: ^2.4.4
         version: 2.6.1(intl-messageformat@11.2.13)
@@ -549,7 +549,7 @@ importers:
         version: 6.1.6(@types/react@19.3.0)(react@19.3.1)
       react-i18next:
         specifier: ^17.0.9
-        version: 17.1.5(i18next@26.5.7(typescript@5.9.3))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@5.9.3)
+        version: 17.1.5(i18next@26.5.8(typescript@5.9.3))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@5.9.3)
       react-intersection-observer:
         specifier: ^11.0.0
         version: 11.0.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
@@ -6828,8 +6828,8 @@ packages:
     peerDependencies:
       intl-messageformat: '>=10.3.3 <13.0.0'
 
-  i18next@26.5.7:
-    resolution: {integrity: sha512-mY9cECbKtiOqpcB8d8ijNsiPZQoTFULehBlWXZzzURpTm9aLbE2c3T2FKdGZhdEjlTvXUGd0TvCisL06YafO0Q==}
+  i18next@26.5.8:
+    resolution: {integrity: sha512-EQx2RyhwINMekbykhZpAJQ2ILeJqnYOpRjWEkSVv45pR8yeVbb0thr2zxQ+dOo365OIb7h06BKPtt16WE8Wliw==}
     peerDependencies:
       typescript: ^5 || ^6 || ^7
     peerDependenciesMeta:
@@ -15707,7 +15707,7 @@ snapshots:
     dependencies:
       intl-messageformat: 11.2.13
 
-  i18next@26.5.7(typescript@5.9.3):
+  i18next@26.5.8(typescript@5.9.3):
     optionalDependencies:
       typescript: 5.9.3
 
@@ -17353,11 +17353,11 @@ snapshots:
 
   react-fast-compare@3.2.2: {}
 
-  react-i18next@17.1.5(i18next@26.5.7(typescript@5.9.3))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@5.9.3):
+  react-i18next@17.1.5(i18next@26.5.8(typescript@5.9.3))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@5.9.3):
     dependencies:
       '@babel/runtime': 7.29.7
       html-parse-stringify: 4.0.1
-      i18next: 26.5.7(typescript@5.9.3)
+      i18next: 26.5.8(typescript@5.9.3)
       react: 19.3.1
       use-sync-external-store: 1.6.0(react@19.3.1)
     optionalDependencies:
