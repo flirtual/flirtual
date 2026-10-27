@@ -3,7 +3,7 @@ import deepmerge from "deepmerge";
 import i18n from "i18next";
 import type { BackendModule, ResourceKey } from "i18next";
 import icu from "i18next-icu";
-import { useCallback } from "react";
+import { useCallback, useSyncExternalStore } from "react";
 import { initReactI18next, useTranslation } from "react-i18next";
 import {
 	Navigate as _Navigate,
@@ -25,6 +25,7 @@ import { isInternalHref } from "~/urls";
 
 import { log as _log } from "../log";
 import {
+	allLocales,
 	defaultLocale,
 	getLocale,
 	intlLocale,
@@ -33,7 +34,7 @@ import {
 	locales,
 	replaceLanguage
 } from "./languages";
-import type { Locale } from "./languages";
+import type { AnyLocale, Locale } from "./languages";
 
 const log = _log.extend("i18n");
 
@@ -65,7 +66,7 @@ function flat1<T extends Record<string, Record<string, ResourceKey>>>(value: T) 
 	}, {});
 }
 
-async function load(locale: Locale) {
+async function load(locale: AnyLocale) {
 	// Aries: Keep this in sync with `getManualChunk` from `vite.config.ts`.
 	// For performance, we bundle all translations into a single file per locale.
 	const [default_, attributes, uppy] = await Promise.all([
@@ -103,6 +104,59 @@ async function load(locale: Locale) {
 	};
 }
 
+// Per-device, from /debugger: any locale's text (enabled or not), or every string as its key.
+export type TranslationPreview = "keys" | AnyLocale;
+
+const previewStorageKey = "translation_preview";
+const previewListeners = new Set<() => void>();
+
+function isPreview(value: string | null): value is TranslationPreview {
+	return value === "keys" || allLocales.includes(value as AnyLocale);
+}
+
+let preview: TranslationPreview | null = (() => {
+	try {
+		const value = localStorage.getItem(previewStorageKey);
+		return isPreview(value) ? value : null;
+	}
+	catch {
+		return null;
+	}
+})();
+
+export async function setTranslationPreview(next: TranslationPreview | null) {
+	try {
+		if (next) localStorage.setItem(previewStorageKey, next);
+		else localStorage.removeItem(previewStorageKey);
+	}
+	catch {}
+
+	preview = next;
+	previewListeners.forEach((listener) => listener());
+
+	await i18n.reloadResources();
+	// Re-renders every useTranslation consumer.
+	await i18n.changeLanguage(i18n.language);
+}
+
+export function useTranslationPreview() {
+	return useSyncExternalStore(
+		(listener) => {
+			previewListeners.add(listener);
+			return () => previewListeners.delete(listener);
+		},
+		() => preview,
+		() => null
+	);
+}
+
+// For Intl names (countries, languages): the previewed locale, if any.
+export function useDisplayLocale(): AnyLocale {
+	const [locale] = useLocale();
+	const preview = useTranslationPreview();
+	return preview && preview !== "keys" ? preview : locale;
+}
+
 i18n
 	.use({
 		type: "backend",
@@ -110,10 +164,11 @@ i18n
 		read: async (locale: Locale, namespace, callback) => {
 			if (!locales.includes(locale)) throw new Error(`Unknown locale: ${locale}`);
 
+			const source = preview && preview !== "keys" ? preview : locale;
 			const [defaultResource, resource] = await Promise.all([
 				load(defaultLocale),
-				locale !== defaultLocale
-					? load(locale)
+				source !== defaultLocale
+					? load(source)
 					: {}
 			]);
 
@@ -121,11 +176,20 @@ i18n
 			callback(null, (data && (data as any)[namespace]) || data);
 		}
 	} satisfies BackendModule)
+	.use({
+		type: "postProcessor",
+		name: "translationPreview",
+		process: (value: string, key: Array<string> | string) => {
+			const [first] = [key].flat();
+			return preview === "keys" && first ? first : value;
+		}
+	})
 	.use(icu)
 	.use(initReactI18next)
 	.init({
 		supportedLngs: locales,
 		fallbackLng: defaultLocale,
+		postProcess: ["translationPreview"],
 
 		ns: [defaultNamespace],
 		defaultNS: defaultNamespace,

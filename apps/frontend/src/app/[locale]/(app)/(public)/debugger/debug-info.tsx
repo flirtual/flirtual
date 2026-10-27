@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
 import { Button } from "~/components/button";
+import { TranslationPreviewSelect } from "~/components/translation-preview-select";
 import { commitId, production } from "~/const";
 import { useDevice } from "~/hooks/use-device";
 import { logout, useOptionalSession } from "~/hooks/use-session";
@@ -88,6 +89,8 @@ export const DebugInfo: React.FC = () => {
 				>
 					Invalidate
 				</Button>
+				<span className="col-span-3 mt-2 font-semibold">Translation previews</span>
+				<TranslationPreviewSelect className="col-span-3" />
 			</div>
 		</>
 	);

@@ -2,7 +2,7 @@
 import type { FC } from "react";
 import { twMerge } from "tailwind-merge";
 
-import { useLocale } from "~/i18n";
+import { useDisplayLocale } from "~/i18n";
 import { intlLocale } from "~/i18n/languages";
 
 import { Pill } from "./pill";
@@ -36,7 +36,7 @@ export const CountryPill: FC<CountryPillProps> = ({
 	flagOnly = false,
 	className
 }) => {
-	const [locale] = useLocale();
+	const locale = useDisplayLocale();
 	const countryName = getCountryName(locale, id) ?? id;
 
 	return (

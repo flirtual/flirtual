@@ -11,7 +11,7 @@ import { advancedFilterValueCategories } from "~/api/user/profile";
 import { getCountryName } from "~/components/profile/pill/country";
 import { personality, vrTags } from "~/features";
 import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
-import { useLocale } from "~/i18n";
+import { useDisplayLocale } from "~/i18n";
 import { intlLocale } from "~/i18n/languages";
 
 import type { AdvancedFilterGroup, AdvancedFilterOption } from "./advanced-filter-select";
@@ -76,7 +76,7 @@ export function useAdvancedFilterGroups(
 ): Array<AdvancedFilterGroup> {
 	const { t } = useTranslation();
 	const tAttribute = useAttributeTranslation();
-	const [locale] = useLocale();
+	const locale = useDisplayLocale();
 
 	const genders = useAttributes("gender");
 	const sexualities = useAttributes("sexuality");
