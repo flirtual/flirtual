@@ -1,52 +1,52 @@
 import { useTranslation } from "react-i18next";
-import BrandTheNewYorker from "virtual:remote/18e4a7ad-625a-42f6-b581-d14386ced012";
-import BrandForbes from "virtual:remote/257a7f46-a6c1-4bee-9a3e-5dbdfe9d2a66";
-import BrandRoadToVR from "virtual:remote/29a2f1bc-0b3e-469a-aa11-0de69b75b629";
-import Image2f008d68 from "virtual:remote/2f008d68-81d6-4d16-b467-d248858659fc";
-import Image363c885e from "virtual:remote/363c885e-8a7d-4f26-af41-d2356144ccf4";
-import Image406321aa from "virtual:remote/406321aa-d3f9-4218-895d-a6b407be3658";
-import Image535227ef from "virtual:remote/535227ef-443c-4fef-a1c2-a25daaa568d0";
-import BrandFutureOfSex from "virtual:remote/54ffe640-1c54-4d8f-a754-4c7b7ca82456";
-import Image65dcb388 from "virtual:remote/65dcb388-7d26-4f9c-a8af-e6a11ec37c86";
-import BrandVirtualWeekality from "virtual:remote/7845a7d0-0461-41dd-934c-cb8439e90dc7";
-import Image7edf15b5 from "virtual:remote/7edf15b5-f913-4923-9180-06e3824ffd3d";
-import ImageAb689e7b from "virtual:remote/ab689e7b-6211-419a-9cdd-abf5de43a72f";
-import ImageAd9255b2 from "virtual:remote/ad9255b2-d4c8-4f42-9c96-23584c4456d4";
-import ImageB2dae95f from "virtual:remote/b2dae95f-ec0f-4143-ba1c-14aa4c4dc0ef";
-import BrandDazed from "virtual:remote/b779aa38-8592-48cd-8f9b-88228c5abc21";
-import ImageBdd0738b from "virtual:remote/bdd0738b-d2b6-498c-b889-61cc3e8707f1";
-import ImageC5075e9a from "virtual:remote/c5075e9a-79b1-46a9-a587-90cade6c6182";
-import ImageCc9dfd99 from "virtual:remote/cc9dfd99-ed08-41e7-b4df-22bcda1477ed";
-import BrandToday from "virtual:remote/d34ee25e-31e6-47a7-952f-51820f1e1ce1";
-import BrandSamsung from "virtual:remote/db2eb424-e837-4d64-85e0-e49409ae33a6";
-import BrandNewYorkTimes from "virtual:remote/dc248f6f-aee6-4318-b473-6fe2d6db07ee";
-import ImageE812eb97 from "virtual:remote/e812eb97-03ba-4309-a2e1-42cddadc4497";
-import ImageFa83b674 from "virtual:remote/fa83b674-ccc4-4dce-9573-917fc0a0c090";
-import BrandiDateAwards from "virtual:remote/fd92ab0f-d264-4a69-813f-bea13def2c46";
 import { withSuspense } from "with-suspense";
 
 import { Image } from "~/components/image";
 import { useUserCount } from "~/hooks/use-user";
 import { useMessages } from "~/i18n";
+import AnimePair from "~/static/home/members/anime-pair.jpg";
+import CabinCuddle from "~/static/home/members/cabin-cuddle.jpg";
+import CheekToCheek from "~/static/home/members/cheek-to-cheek.jpg";
+import ClubDance from "~/static/home/members/club-dance.jpg";
+import ClubFriends from "~/static/home/members/club-friends.jpg";
+import CouchTrio from "~/static/home/members/couch-trio.jpg";
+import FlowerField from "~/static/home/members/flower-field.jpg";
+import FurryStack from "~/static/home/members/furry-stack.jpg";
+import LapSit from "~/static/home/members/lap-sit.jpg";
+import NightHug from "~/static/home/members/night-hug.jpg";
+import SkyPeaceSigns from "~/static/home/members/sky-peace-signs.jpg";
+import SnowySelfie from "~/static/home/members/snowy-selfie.jpg";
+import ThanosSelfie from "~/static/home/members/thanos-selfie.jpg";
+import WavingPair from "~/static/home/members/waving-pair.jpg";
+import BrandDazed from "~/static/press/dazed.png";
+import BrandForbes from "~/static/press/forbes.png";
+import BrandFutureOfSex from "~/static/press/future-of-sex.png";
+import BrandiDateAwards from "~/static/press/idate-awards.png";
+import BrandNewYorkTimes from "~/static/press/new-york-times.png";
+import BrandRoadToVR from "~/static/press/road-to-vr.png";
+import BrandSamsung from "~/static/press/samsung.png";
+import BrandTheNewYorker from "~/static/press/the-new-yorker.png";
+import BrandToday from "~/static/press/today.png";
+import BrandVirtualWeekality from "~/static/press/virtual-weekality.png";
 
 import { Tile, TileAnchor } from ".";
 import type { TileProps } from ".";
 
 const images = [
-	Image406321aa,
-	Image65dcb388,
-	Image7edf15b5,
-	Image363c885e,
-	ImageE812eb97,
-	ImageCc9dfd99,
-	ImageFa83b674,
-	Image2f008d68,
-	ImageBdd0738b,
-	ImageAd9255b2,
-	ImageAb689e7b,
-	ImageB2dae95f,
-	Image535227ef,
-	ImageC5075e9a
+	CheekToCheek,
+	CabinCuddle,
+	ClubDance,
+	ClubFriends,
+	NightHug,
+	WavingPair,
+	AnimePair,
+	FlowerField,
+	ThanosSelfie,
+	CouchTrio,
+	SkyPeaceSigns,
+	LapSit,
+	SnowySelfie,
+	FurryStack
 ];
 
 const brandImages = [

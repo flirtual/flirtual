@@ -1,7 +1,6 @@
-import Bimi from "virtual:remote/76eef593-c3fb-498d-a6b6-1b75903a10fc.svg";
-import Favicon from "virtual:remote/b4c0e29e-4055-4924-8ddf-adee9bc505c3";
-
 import { homieMode } from "~/features";
+import Bimi from "~/static/bimi.svg";
+import Favicon from "~/static/mark.svg?w=32&h=32&fit=contain&background=transparent&format=png&no-inline&imagetools";
 import { urls } from "~/urls";
 
 // see: https://developers.cloudflare.com/workers/static-assets/redirects/

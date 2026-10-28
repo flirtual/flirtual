@@ -4,7 +4,6 @@ import { m } from "motion/react";
 import type { FC } from "react";
 import { Fragment, useCallback, useEffect, useMemo } from "react";
 import { Trans, useTranslation } from "react-i18next";
-import FlittyHardhat from "virtual:remote/b25d8377-7035-4a23-84f1-faa095fa8104";
 
 import * as brand from "~/brand";
 import { Button } from "~/components/button";
@@ -18,6 +17,7 @@ import {
 import { DrawerOrDialog } from "~/components/drawer-or-dialog";
 import { Image } from "~/components/image";
 import { commitIdShort, maintenance } from "~/const";
+import FlittyHardhat from "~/static/flitty-hardhat.png";
 import { urls } from "~/urls";
 
 export type ErrorWithDigest = { digest?: string } & Error;

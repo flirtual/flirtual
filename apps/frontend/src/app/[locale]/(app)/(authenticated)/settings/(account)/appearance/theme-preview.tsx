@@ -14,7 +14,15 @@ import {
 } from "~/components/inputs/select";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 import { useTheme } from "~/hooks/use-theme";
-import { urls } from "~/urls";
+import DarkThemeImage from "~/static/themes/dark.png";
+import LightThemeImage from "~/static/themes/light.png";
+import SystemThemeImage from "~/static/themes/system.png";
+
+const themeImages: Record<PreferenceTheme, string> = {
+	light: LightThemeImage,
+	dark: DarkThemeImage,
+	system: SystemThemeImage
+};
 
 export interface ThemePreviewProps {
 	theme: PreferenceTheme;
@@ -41,7 +49,7 @@ export const ThemePreview: React.FC<ThemePreviewProps> = ({ theme }) => {
 						alt={t(`${theme}_theme_preview`)}
 						className="rounded-lg"
 						height={206}
-						src={urls.media(t(`${theme}_theme_image`))}
+						src={themeImages[theme]}
 						width={320}
 					/>
 					{active && (

@@ -14,13 +14,14 @@ import {
 	ScrollRestoration,
 	useParams
 } from "react-router";
-import SafariPinnedTab from "virtual:remote/00d9dab1-3fbe-4dd7-8700-ae21f8425b37.svg?no-inline";
-import Icon32x32 from "virtual:remote/0d4ca725-5c21-45f6-a08c-63b9e990f0dd?no-inline";
-import Icon from "virtual:remote/21bbde80-1a5d-4138-addf-6d5ac38356c8.svg?no-inline";
-import Icon16x16 from "virtual:remote/89951afc-3afd-47df-bb6d-5aec235b30c4?no-inline";
-import Favicon from "virtual:remote/b4c0e29e-4055-4924-8ddf-adee9bc505c3?no-inline";
-import MarkBackground from "virtual:remote/brand/mark-background.png?no-inline";
-import AppleIcon from "virtual:remote/e7a99a6d-7299-4754-af73-b2eae55f969c?no-inline";
+
+import OpenGraphImage from "~/static/mark-on-gradient.svg?w=1000&h=1000&format=png&no-inline&imagetools";
+import TwitterImage from "~/static/mark-on-gradient.svg?w=1000&h=1000&no-inline&imagetools";
+import AppleIcon from "~/static/mark-on-gradient.svg?w=180&h=180&format=png&no-inline&imagetools";
+import Icon from "~/static/mark.svg?no-inline";
+import Icon16x16 from "~/static/mark.svg?w=16&h=16&fit=contain&background=transparent&format=png&no-inline&imagetools";
+import Icon32x32 from "~/static/mark.svg?w=32&h=32&fit=contain&background=transparent&format=png&no-inline&imagetools";
+import SafariPinnedTab from "~/static/safari-pinned-tab.svg?no-inline";
 
 import type { Route } from "./+types/root";
 import { App } from "./app";
@@ -101,21 +102,20 @@ export function meta({
 		urls.socials.x && { name: "twitter:site", content: `@${urls.socials.x.split("x.com/")[1]}` },
 		{ name: "twitter:title", content: brand.name },
 		{ name: "twitter:description", content: t("meta_social_description") },
-		{ name: "twitter:image:type", content: "image/png" },
+		{ name: "twitter:image:type", content: "image/webp" },
 		{ name: "twitter:image:width", content: 1000 },
 		{ name: "twitter:image:height", content: 1000 },
-		{ name: "twitter:image", content: MarkBackground },
+		{ name: "twitter:image", content: TwitterImage },
 		{ property: "og:title", content: brand.name },
 		{ property: "og:description", content: t("meta_social_description") },
 		{ property: "og:image:type", content: "image/png" },
 		{ property: "og:image:width", content: 1000 },
 		{ property: "og:image:height", content: 1000 },
-		{ property: "og:image", content: MarkBackground },
+		{ property: "og:image", content: OpenGraphImage },
 		{ property: "og:type", content: "website" },
 
 		{ name: "application-name", content: brand.name },
 		{ name: "category", content: "technology" },
-		{ name: "msapplication-TileColor", content: brand.accentColor },
 
 		{ name: "mobile-web-app-capable", content: "yes" },
 
@@ -133,7 +133,6 @@ export function meta({
 
 		{ tagName: "link", rel: "manifest", href: href("/manifest.json") },
 
-		{ tagName: "link", rel: "icon", type: "image/x-icon", sizes: "48x48", href: Favicon },
 		{ tagName: "link", rel: "icon", type: "image/svg+xml", sizes: "any", href: Icon },
 		{ tagName: "link", rel: "icon", type: "image/png", sizes: "32x32", href: Icon32x32 },
 		{ tagName: "link", rel: "icon", type: "image/png", sizes: "16x16", href: Icon16x16 },

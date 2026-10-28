@@ -1,18 +1,18 @@
 import ms from "ms" with { type: "macro" };
 import { useCallback, useState } from "react";
 import type { FC } from "react";
-import Image1049fc02 from "virtual:remote/1049fc02-6e6b-4178-b762-b46e56f9fa66";
-import Image1e084a7b from "virtual:remote/1e084a7b-d532-4f82-8bf1-4a51cec55e9e";
-import Image40d6b065 from "virtual:remote/40d6b065-7249-463c-8c31-f74ad922a0e6";
-import Image4677372a from "virtual:remote/4677372a-c0b9-4ad6-870b-aff66ec4ca9d";
-import Image99f9bdc0 from "virtual:remote/99f9bdc0-b55a-462d-9614-d895d14b690e";
-import ImageA137add7 from "virtual:remote/a137add7-ecc1-425a-9313-e6862d43e00c";
-import ImageD9a2206c from "virtual:remote/d9a2206c-7624-4551-bc78-3a9fc15eef74";
 
 import { useInterval } from "~/hooks/use-interval";
 import { useMessages } from "~/i18n";
+import BlackHole from "~/static/home/date-ideas/black-hole.jpg";
+import CozyCafe from "~/static/home/date-ideas/cozy-cafe.jpg";
+import FeedDucks from "~/static/home/date-ideas/feed-ducks.jpg";
+import PaintTogether from "~/static/home/date-ideas/paint-together.jpg";
+import PlayPool from "~/static/home/date-ideas/play-pool.jpg";
+import SwimWithSharks from "~/static/home/date-ideas/swim-with-sharks.jpg";
+import TouchGrass from "~/static/home/date-ideas/touch-grass.jpg";
 
-const images = [Image1e084a7b, ImageA137add7, Image40d6b065, ImageD9a2206c, Image1049fc02, Image99f9bdc0, Image4677372a];
+const images = [FeedDucks, SwimWithSharks, CozyCafe, BlackHole, TouchGrass, PaintTogether, PlayPool];
 
 export const CarouselGallery: FC = () => {
 	const { landing_date_ideas: _tabs } = useMessages();

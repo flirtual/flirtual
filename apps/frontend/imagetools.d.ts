@@ -1,4 +1,4 @@
-declare module "virtual:remote/*?as=metadata" {
+declare module "*?as=metadata" {
 	// eslint-disable-next-line unicorn/prevent-abbreviations
 	export const src: string;
 	export const width: number;
@@ -9,4 +9,9 @@ declare module "virtual:remote/*?as=metadata" {
 		width,
 		height
 	};
+}
+
+declare module "*&imagetools" {
+	const source: string;
+	export default source;
 }

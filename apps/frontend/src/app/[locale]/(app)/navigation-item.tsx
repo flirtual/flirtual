@@ -2,11 +2,11 @@ import { m } from "motion/react";
 import type { ComponentProps, FC, MouseEventHandler } from "react";
 import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
-import RankedImage from "virtual:remote/ranked.jpg";
 
 import { Link } from "~/components/link";
 import { usePreferences } from "~/hooks/use-preferences";
 import { useMatch } from "~/i18n";
+import RankedImage from "~/static/easter-eggs/ranked-mode.jpg";
 
 export interface NavigationalSwitchItemProps {
 	href: string;

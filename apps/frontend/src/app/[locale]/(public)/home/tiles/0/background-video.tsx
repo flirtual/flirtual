@@ -1,9 +1,9 @@
 import { useTranslation } from "react-i18next";
-import PosterImage from "virtual:remote/7d9eca06-b0d6-4d96-bdfc-b64c4edc59b7";
-import VideoMp4 from "virtual:remote/video.mp4";
-import VideoWebm from "virtual:remote/video.webm";
 
 import { Image } from "~/components/image";
+import PosterImage from "~/static/home/hero-poster.png";
+import VideoMp4 from "~/static/home/hero.mp4";
+import VideoWebm from "~/static/home/hero.webm";
 
 export const BackgroundVideo: React.FC = () => {
 	const { t } = useTranslation();

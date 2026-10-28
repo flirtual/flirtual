@@ -1,19 +1,5 @@
 import { Trans, useTranslation } from "react-i18next";
 import invariant from "tiny-invariant";
-import FlirtualBackgroundPNG from "virtual:remote/brand/background.png?format=png&quality=100";
-import FlirtualBackgroundSVG from "virtual:remote/brand/background.svg";
-import FlirtualBlackPNG from "virtual:remote/brand/black.png?format=png&quality=100";
-import FlirtualBlackSVG from "virtual:remote/brand/black.svg";
-import FlirtualMarkBackgroundPNG from "virtual:remote/brand/mark-background.png?format=png&quality=100";
-import FlirtualMarkBackgroundSVG from "virtual:remote/brand/mark-background.svg";
-import FlirtualMarkBlackPNG from "virtual:remote/brand/mark-black.png?format=png&quality=100";
-import FlirtualMarkBlackSVG from "virtual:remote/brand/mark-black.svg";
-import FlirtualMarkWhitePNG from "virtual:remote/brand/mark-white.png?format=png&quality=100";
-import FlirtualMarkWhiteSVG from "virtual:remote/brand/mark-white.svg";
-import FlirtualMarkPNG from "virtual:remote/brand/mark.png?format=png&quality=100";
-import FlirtualMarkSVG from "virtual:remote/brand/mark.svg";
-import FlirtualWhitePNG from "virtual:remote/brand/white.png?format=png&quality=100";
-import FlirtualWhiteSVG from "virtual:remote/brand/white.svg";
 
 import * as brand from "~/brand";
 import { ButtonLink } from "~/components/button";
@@ -23,6 +9,20 @@ import { homieMode } from "~/features";
 import { i18n } from "~/i18n";
 import { isLocale } from "~/i18n/languages";
 import { metaMerge, rootMeta } from "~/meta";
+import LogoOnDarkSVG from "~/static/logo-on-dark.svg";
+import LogoOnDarkPNG from "~/static/logo-on-dark.svg?w=3468&format=png&quality=100&imagetools";
+import LogoOnGradientSVG from "~/static/logo-on-gradient.svg";
+import LogoOnGradientPNG from "~/static/logo-on-gradient.svg?w=3468&format=png&quality=100&imagetools";
+import LogoOnLightSVG from "~/static/logo-on-light.svg";
+import LogoOnLightPNG from "~/static/logo-on-light.svg?w=3468&format=png&quality=100&imagetools";
+import MarkBlackSVG from "~/static/mark-black.svg";
+import MarkBlackPNG from "~/static/mark-black.svg?w=1000&format=png&quality=100&imagetools";
+import MarkOnGradientSVG from "~/static/mark-on-gradient.svg";
+import MarkOnGradientPNG from "~/static/mark-on-gradient.svg?w=1000&format=png&quality=100&imagetools";
+import MarkWhiteSVG from "~/static/mark-white.svg";
+import MarkWhitePNG from "~/static/mark-white.svg?w=1000&format=png&quality=100&imagetools";
+import MarkSVG from "~/static/mark.svg";
+import MarkPNG from "~/static/mark.svg?w=1000&format=png&quality=100&imagetools";
 import { urls } from "~/urls";
 
 import type { Route } from "./+types/page";
@@ -66,25 +66,25 @@ export default function BrandingPage() {
 				<ImageList
 					items={[
 						{
-							name: "background",
+							name: "logo-on-gradient",
 							sources: {
-								png: FlirtualBackgroundPNG,
-								svg: FlirtualBackgroundSVG,
+								png: LogoOnGradientPNG,
+								svg: LogoOnGradientSVG,
 							}
 						},
 						{
-							name: "white",
+							name: "logo-on-dark",
 							dark: true,
 							sources: {
-								png: FlirtualWhitePNG,
-								svg: FlirtualWhiteSVG,
+								png: LogoOnDarkPNG,
+								svg: LogoOnDarkSVG,
 							}
 						},
 						{
-							name: "black",
+							name: "logo-on-light",
 							sources: {
-								png: FlirtualBlackPNG,
-								svg: FlirtualBlackSVG,
+								png: LogoOnLightPNG,
+								svg: LogoOnLightSVG,
 							}
 						},
 					]}
@@ -98,32 +98,32 @@ export default function BrandingPage() {
 				<ImageList
 					items={[
 						{
-							name: "mark-background",
+							name: "mark-on-gradient",
 							sources: {
-								png: FlirtualMarkBackgroundPNG,
-								svg: FlirtualMarkBackgroundSVG,
+								png: MarkOnGradientPNG,
+								svg: MarkOnGradientSVG,
 							}
 						},
 						{
 							name: "mark",
 							sources: {
-								png: FlirtualMarkPNG,
-								svg: FlirtualMarkSVG,
+								png: MarkPNG,
+								svg: MarkSVG,
 							}
 						},
 						{
 							name: "mark-white",
 							dark: true,
 							sources: {
-								png: FlirtualMarkWhitePNG,
-								svg: FlirtualMarkWhiteSVG,
+								png: MarkWhitePNG,
+								svg: MarkWhiteSVG,
 							}
 						},
 						{
 							name: "mark-black",
 							sources: {
-								png: FlirtualMarkBlackPNG,
-								svg: FlirtualMarkBlackSVG,
+								png: MarkBlackPNG,
+								svg: MarkBlackSVG,
 							}
 						}
 					]}

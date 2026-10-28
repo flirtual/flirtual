@@ -420,7 +420,7 @@ importers:
         version: 13.2.3(@capacitor/core@8.5.0)
       '@sentry/react-router':
         specifier: ^10.65.0
-        version: 10.76.2(@opentelemetry/core@2.11.0(@opentelemetry/api@1.9.1))(@react-router/node@8.5.0(react-router@8.5.0(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(typescript@5.9.3))(react-router@8.5.0(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react@19.3.1)(supports-color@10.2.2)
+        version: 10.76.2(@opentelemetry/core@2.11.0(@opentelemetry/api@1.9.1))(@react-router/node@8.5.0(react-router@8.5.0(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(typescript@5.9.3))(react-router@8.5.0(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react@19.3.1)(rollup@4.62.4)(supports-color@10.2.2)
       '@shgysk8zer0/polyfills':
         specifier: 0.8.6
         version: 0.8.6
@@ -594,7 +594,7 @@ importers:
         version: 1.3.3
       unplugin-info:
         specifier: ^1.3.2
-        version: 1.3.2(esbuild@0.28.2)(supports-color@10.2.2)(vite@8.3.5(@types/node@24.19.2)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.106.1)(tsx@4.23.12)(yaml@2.9.1))
+        version: 1.3.2(esbuild@0.28.2)(rollup@4.62.4)(supports-color@10.2.2)(vite@8.3.5(@types/node@24.19.2)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.106.1)(tsx@4.23.12)(yaml@2.9.1))
       use-sound:
         specifier: ^5.0.0
         version: 5.0.0(react@19.3.1)
@@ -703,16 +703,13 @@ importers:
         version: 5.9.3
       unplugin-macros:
         specifier: npm:@ariesclark/unplugin-macros@0.20.3
-        version: '@ariesclark/unplugin-macros@0.20.3(@types/node@24.19.2)(esbuild@0.28.2)(jiti@1.21.7)(rolldown@1.2.4)(sass@1.106.1)(tsx@4.23.12)(yaml@2.9.1)'
-      unplugin-remote-assets:
-        specifier: 0.4.3
-        version: 0.4.3(esbuild@0.28.2)(vite@8.3.5(@types/node@24.19.2)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.106.1)(tsx@4.23.12)(yaml@2.9.1))
+        version: '@ariesclark/unplugin-macros@0.20.3(@types/node@24.19.2)(esbuild@0.28.2)(jiti@1.21.7)(rolldown@1.2.4)(rollup@4.62.4)(sass@1.106.1)(tsx@4.23.12)(yaml@2.9.1)'
       vite:
         specifier: 8.3.5
         version: 8.3.5(@types/node@24.19.2)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.106.1)(tsx@4.23.12)(yaml@2.9.1)
       vite-imagetools:
         specifier: 12.0.1
-        version: 12.0.1(@types/node@24.19.2)(vite@8.3.5(@types/node@24.19.2)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.106.1)(tsx@4.23.12)(yaml@2.9.1))
+        version: 12.0.1(@types/node@24.19.2)(rollup@4.62.4)(vite@8.3.5(@types/node@24.19.2)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.106.1)(tsx@4.23.12)(yaml@2.9.1))
       vite-plugin-checker:
         specifier: 0.14.5
         version: 0.14.5(eslint@9.39.5(jiti@1.21.7)(supports-color@10.2.2))(optionator@0.9.4)(oxlint@1.89.0)(typescript@5.9.3)(vite@8.3.5(@types/node@24.19.2)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.106.1)(tsx@4.23.12)(yaml@2.9.1))
@@ -7486,11 +7483,6 @@ packages:
     engines: {node: '>=4.0.0'}
     hasBin: true
 
-  mime@4.1.0:
-    resolution: {integrity: sha512-X5ju04+cAzsojXKes0B/S4tcYtFAJ6tTMuSPBEn9CPGlrWr8Fiw7qYeLT0XyH80HSoAoqWCaz+MWKh22P7G1cw==}
-    engines: {node: '>=16'}
-    hasBin: true
-
   mimic-fn@2.1.0:
     resolution: {integrity: sha512-OqbOk5oEQeAZ8WXWydlu9HJjz9WVdEIvamMCcXmuqUYjTknH/sqsWvhQ3vgwKFRR1HpjvNBKQ37nbJgYzGqGcg==}
     engines: {node: '>=6'}
@@ -9033,32 +9025,6 @@ packages:
       webpack:
         optional: true
 
-  unplugin-remote-assets@0.4.3:
-    resolution: {integrity: sha512-5Hd7C9Rga16PvtjLP22iRrrOZNXTndzDcwkPef7C6/UdxzQF0KeciqoYxBh0PdvZIV/EuQOr1QVj3+cVnfVLNw==}
-    peerDependencies:
-      '@farmfe/core': '>=1'
-      '@nuxt/kit': ^3
-      '@nuxt/schema': ^3
-      esbuild: '*'
-      rollup: ^3
-      vite: '>=3'
-      webpack: ^4 || ^5
-    peerDependenciesMeta:
-      '@farmfe/core':
-        optional: true
-      '@nuxt/kit':
-        optional: true
-      '@nuxt/schema':
-        optional: true
-      esbuild:
-        optional: true
-      rollup:
-        optional: true
-      vite:
-        optional: true
-      webpack:
-        optional: true
-
   unplugin@2.3.11:
     resolution: {integrity: sha512-5uKD0nqiYVzlmCRs01Fhs2BdkEgBS3SAVP6ndrBsuK42iC2+JHyxM05Rm9G8+5mkmRtzMZGY8Ct5+mliZxU/Ww==}
     engines: {node: '>=18.12.0'}
@@ -9851,13 +9817,13 @@ snapshots:
       - vitest
       - yaml
 
-  '@ariesclark/unplugin-macros@0.20.3(@types/node@24.19.2)(esbuild@0.28.2)(jiti@1.21.7)(rolldown@1.2.4)(sass@1.106.1)(tsx@4.23.12)(yaml@2.9.1)':
+  '@ariesclark/unplugin-macros@0.20.3(@types/node@24.19.2)(esbuild@0.28.2)(jiti@1.21.7)(rolldown@1.2.4)(rollup@4.62.4)(sass@1.106.1)(tsx@4.23.12)(yaml@2.9.1)':
     dependencies:
       '@babel/types': 8.0.4
       ast-kit: 3.0.0
       magic-string-ast: 2.1.1
       rolldown-string: 0.3.1(rolldown@1.2.4)
-      unplugin: 3.3.0(esbuild@0.28.2)(rolldown@1.2.4)(vite@8.3.5(@types/node@24.19.2)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.106.1)(tsx@4.23.12)(yaml@2.9.1))
+      unplugin: 3.3.0(esbuild@0.28.2)(rolldown@1.2.4)(rollup@4.62.4)(vite@8.3.5(@types/node@24.19.2)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.106.1)(tsx@4.23.12)(yaml@2.9.1))
       vite: 8.3.5(@types/node@24.19.2)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.106.1)(tsx@4.23.12)(yaml@2.9.1)
       vite-node: 6.0.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.106.1)(tsx@4.23.12)(yaml@2.9.1)
     transitivePeerDependencies:
@@ -12705,11 +12671,13 @@ snapshots:
 
   '@rolldown/pluginutils@1.0.1': {}
 
-  '@rollup/pluginutils@5.4.0':
+  '@rollup/pluginutils@5.4.0(rollup@4.62.4)':
     dependencies:
       '@types/estree': 1.0.9
       estree-walker: 2.0.2
       picomatch: 4.0.7
+    optionalDependencies:
+      rollup: 4.62.4
 
   '@rollup/rollup-android-arm-eabi@4.62.4':
     optional: true
@@ -12802,7 +12770,7 @@ snapshots:
       '@sentry/replay': 10.76.2
       '@sentry/replay-canvas': 10.76.2
 
-  '@sentry/bundler-plugins@10.76.2(supports-color@10.2.2)':
+  '@sentry/bundler-plugins@10.76.2(rollup@4.62.4)(supports-color@10.2.2)':
     dependencies:
       '@babel/core': 7.29.7(supports-color@10.2.2)
       '@sentry/cli': 2.58.6(supports-color@10.2.2)
@@ -12811,6 +12779,8 @@ snapshots:
       find-up: 5.0.0
       glob: 13.0.6
       magic-string: 0.30.21
+    optionalDependencies:
+      rollup: 4.62.4
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -12905,7 +12875,7 @@ snapshots:
       '@sentry/conventions': 0.16.0
       '@sentry/core': 10.76.2
 
-  '@sentry/react-router@10.76.2(@opentelemetry/core@2.11.0(@opentelemetry/api@1.9.1))(@react-router/node@8.5.0(react-router@8.5.0(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(typescript@5.9.3))(react-router@8.5.0(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react@19.3.1)(supports-color@10.2.2)':
+  '@sentry/react-router@10.76.2(@opentelemetry/core@2.11.0(@opentelemetry/api@1.9.1))(@react-router/node@8.5.0(react-router@8.5.0(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(typescript@5.9.3))(react-router@8.5.0(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react@19.3.1)(rollup@4.62.4)(supports-color@10.2.2)':
     dependencies:
       '@opentelemetry/api': 1.9.1
       '@opentelemetry/instrumentation': 0.220.0(@opentelemetry/api@1.9.1)(supports-color@10.2.2)
@@ -12916,7 +12886,7 @@ snapshots:
       '@sentry/core': 10.76.2
       '@sentry/node': 10.76.2(@opentelemetry/core@2.11.0(@opentelemetry/api@1.9.1))(supports-color@10.2.2)
       '@sentry/react': 10.76.2(react@19.3.1)
-      '@sentry/vite-plugin': 5.4.1(supports-color@10.2.2)
+      '@sentry/vite-plugin': 5.4.1(rollup@4.62.4)(supports-color@10.2.2)
       glob: 13.0.6
       react: 19.3.1
       react-router: 8.5.0(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
@@ -12950,9 +12920,9 @@ snapshots:
       '@sentry/conventions': 0.16.0
       '@sentry/core': 10.76.2
 
-  '@sentry/vite-plugin@5.4.1(supports-color@10.2.2)':
+  '@sentry/vite-plugin@5.4.1(rollup@4.62.4)(supports-color@10.2.2)':
     dependencies:
-      '@sentry/bundler-plugins': 10.76.2(supports-color@10.2.2)
+      '@sentry/bundler-plugins': 10.76.2(rollup@4.62.4)(supports-color@10.2.2)
     transitivePeerDependencies:
       - encoding
       - rollup
@@ -16455,8 +16425,6 @@ snapshots:
 
   mime@2.6.0: {}
 
-  mime@4.1.0: {}
-
   mimic-fn@2.1.0: {}
 
   mini-svg-data-uri@1.4.4: {}
@@ -18330,7 +18298,7 @@ snapshots:
 
   unpipe@1.0.0: {}
 
-  unplugin-info@1.3.2(esbuild@0.28.2)(supports-color@10.2.2)(vite@8.3.5(@types/node@24.19.2)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.106.1)(tsx@4.23.12)(yaml@2.9.1)):
+  unplugin-info@1.3.2(esbuild@0.28.2)(rollup@4.62.4)(supports-color@10.2.2)(vite@8.3.5(@types/node@24.19.2)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.106.1)(tsx@4.23.12)(yaml@2.9.1)):
     dependencies:
       ci-info: 4.4.0
       git-url-parse: 16.1.0
@@ -18338,18 +18306,10 @@ snapshots:
       unplugin: 2.3.11
     optionalDependencies:
       esbuild: 0.28.2
+      rollup: 4.62.4
       vite: 8.3.5(@types/node@24.19.2)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.106.1)(tsx@4.23.12)(yaml@2.9.1)
     transitivePeerDependencies:
       - supports-color
-
-  unplugin-remote-assets@0.4.3(esbuild@0.28.2)(vite@8.3.5(@types/node@24.19.2)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.106.1)(tsx@4.23.12)(yaml@2.9.1)):
-    dependencies:
-      mime: 4.1.0
-      ohash: 2.0.11
-      unplugin: 2.3.11
-    optionalDependencies:
-      esbuild: 0.28.2
-      vite: 8.3.5(@types/node@24.19.2)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.106.1)(tsx@4.23.12)(yaml@2.9.1)
 
   unplugin@2.3.11:
     dependencies:
@@ -18358,7 +18318,7 @@ snapshots:
       picomatch: 4.0.5
       webpack-virtual-modules: 0.6.2
 
-  unplugin@3.3.0(esbuild@0.28.2)(rolldown@1.2.4)(vite@8.3.5(@types/node@24.19.2)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.106.1)(tsx@4.23.12)(yaml@2.9.1)):
+  unplugin@3.3.0(esbuild@0.28.2)(rolldown@1.2.4)(rollup@4.62.4)(vite@8.3.5(@types/node@24.19.2)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.106.1)(tsx@4.23.12)(yaml@2.9.1)):
     dependencies:
       '@jridgewell/remapping': 2.3.5
       picomatch: 4.0.7
@@ -18366,6 +18326,7 @@ snapshots:
     optionalDependencies:
       esbuild: 0.28.2
       rolldown: 1.2.4
+      rollup: 4.62.4
       vite: 8.3.5(@types/node@24.19.2)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.106.1)(tsx@4.23.12)(yaml@2.9.1)
 
   untildify@4.0.0: {}
@@ -18447,9 +18408,9 @@ snapshots:
 
   verkit@0.3.2: {}
 
-  vite-imagetools@12.0.1(@types/node@24.19.2)(vite@8.3.5(@types/node@24.19.2)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.106.1)(tsx@4.23.12)(yaml@2.9.1)):
+  vite-imagetools@12.0.1(@types/node@24.19.2)(rollup@4.62.4)(vite@8.3.5(@types/node@24.19.2)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.106.1)(tsx@4.23.12)(yaml@2.9.1)):
     dependencies:
-      '@rollup/pluginutils': 5.4.0
+      '@rollup/pluginutils': 5.4.0(rollup@4.62.4)
       imagetools-core: 12.0.0
       sharp: 0.35.5(@types/node@24.19.2)
       vite: 8.3.5(@types/node@24.19.2)(esbuild@0.28.2)(jiti@1.21.7)(sass@1.106.1)(tsx@4.23.12)(yaml@2.9.1)

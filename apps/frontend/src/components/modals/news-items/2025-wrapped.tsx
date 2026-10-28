@@ -1,6 +1,7 @@
 import type { FC } from "react";
 import { Trans } from "react-i18next";
-import ImageWrapped2025 from "virtual:remote/static/news/wrapped-2025.png?as=metadata";
+
+import ImageWrapped2025 from "~/static/news/wrapped-2025.png?as=metadata";
 
 import { commonComponents, ExpandableImage } from "./common";
 

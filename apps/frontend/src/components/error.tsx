@@ -5,7 +5,6 @@ import ms from "ms" with { type: "macro" };
 import { useMemo, useState } from "react";
 import type { ComponentProps, FC } from "react";
 import { Trans, useTranslation } from "react-i18next";
-import FlittyHardhat from "virtual:remote/b25d8377-7035-4a23-84f1-faa095fa8104";
 
 import * as brand from "~/brand";
 import { commitId, commitIdShort, commitUrl, development, maintenance, preview, production } from "~/const";
@@ -13,6 +12,7 @@ import { device, useDevice } from "~/hooks/use-device";
 import { useInterval } from "~/hooks/use-interval";
 import { getSession } from "~/hooks/use-session";
 import { useLocale } from "~/i18n";
+import FlittyHardhat from "~/static/flitty-hardhat.png";
 import { urls } from "~/urls";
 
 import { Image } from "./image";

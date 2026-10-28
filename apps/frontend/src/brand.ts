@@ -20,11 +20,9 @@ export const homieColors = colorPair(import.meta.env.VITE_BRAND_HOMIE_COLORS as 
 export const accentColor = dateColors[1];
 export const backgroundColor = import.meta.env.VITE_BRAND_BACKGROUND_COLOR as string || defaults.backgroundColor;
 
-// Remote assets (logos, icons) are fetched from here at build time.
+// urls.media() serves the static bucket from static.<assetDomain>.
 export const assetDomain = import.meta.env.VITE_BRAND_ASSET_DOMAIN as string;
 invariant(assetDomain, "VITE_BRAND_ASSET_DOMAIN is required");
-
-export const logoPrefix = import.meta.env.VITE_BRAND_LOGO_PREFIX as string || defaults.logoPrefix;
 
 // AGPL: every deployment must offer its source.
 export const repositoryUrl = import.meta.env.VITE_BRAND_REPOSITORY_URL as string;

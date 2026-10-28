@@ -2,17 +2,17 @@ import type { ResourceKeys } from "i18next";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
-import Image2023 from "virtual:remote/36446ecb-9103-4b6d-b221-7c657f17323d";
-import Image2021 from "virtual:remote/366e91ce-2e3d-4e00-88e3-42626ec6e42f";
-import Image2025 from "virtual:remote/6c6c5f42-22c4-4238-9470-95a6a61311bb";
-import Image2022 from "virtual:remote/726f31b1-fb07-4dc8-af9f-f10985aee7be";
-import Image2018 from "virtual:remote/88bb9381-87ed-499d-9667-cd61eff96938";
-import Image2019 from "virtual:remote/c373b72d-16a0-479c-b834-ccb7041bc615";
-import Image2024 from "virtual:remote/ce26852c-d7a2-439c-95aa-55543b1c7d23";
-import Image2020 from "virtual:remote/ead58fb3-e858-4e13-8acc-c9a5266a5b86";
 
 import { Image } from "~/components/image";
 import type { DefaultNamespace } from "~/i18n";
+import Image2018 from "~/static/about/timeline/2018.png";
+import Image2019 from "~/static/about/timeline/2019.png";
+import Image2020 from "~/static/about/timeline/2020.png";
+import Image2021 from "~/static/about/timeline/2021.png";
+import Image2022 from "~/static/about/timeline/2022.png";
+import Image2023 from "~/static/about/timeline/2023.png";
+import Image2024 from "~/static/about/timeline/2024.png";
+import Image2025 from "~/static/about/timeline/2025.png";
 
 const images = {
 	2018: Image2018,

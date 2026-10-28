@@ -18,13 +18,15 @@
 		"paths": {
 			"~/*": [
 				"./src/*"
+			],
+			"~/static/*": [
+				"../../static/*"
 			]
 		},
 		"resolveJsonModule": true,
 		"types": [
 			"vite/client",
-			"unplugin-info/client",
-			"unplugin-remote-assets/client"
+			"unplugin-info/client"
 		],
 		"allowImportingTsExtensions": true,
 		"strict": true,

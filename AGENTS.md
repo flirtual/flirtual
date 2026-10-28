@@ -42,6 +42,13 @@ only in the root `package.json`.
 - `apps/image-classification`'s Fly image builds with the repo root as context so the shared
   lockfile is in scope; its ignore rules live in `Dockerfile.dockerignore`.
 
+## Static assets
+
+`static/` holds the frontend's logos, icons and art, imported as `~/static/...` and bundled at
+build time. The static bucket (`static.<asset domain>`) holds copies of many of them, most under
+older UUID names, for everything that links to them by URL: the maintenance pages, emails, the
+README and `urls.media()`.
+
 ## Image uploads
 
 Cross-app pipeline (frontend Worker + API + image-classification):
@@ -59,9 +66,8 @@ Flirtual is also the upstream for other apps, so brand values and some features 
 vars, read separately by each app:
 
 - **Brand**: `VITE_BRAND_*` → `apps/frontend/src/brand.ts` (defaults in `src/brand.defaults.json`,
-  also read by tailwind, vite, capacitor, gradle and watchOS); `BRAND_*` → `Flirtual.Brand`
-  (defaults in `config/runtime.exs`). Only the name, colours, background and logo prefix have
-  defaults. `VITE_BRAND_ASSET_DOMAIN` and `VITE_BRAND_REPOSITORY_URL` (AGPL) are required; every
+  also read by tailwind, capacitor, gradle and watchOS); `BRAND_*` → `Flirtual.Brand`
+  (defaults in `config/runtime.exs`). Only the name, colours and background have defaults. `VITE_BRAND_ASSET_DOMAIN` and `VITE_BRAND_REPOSITORY_URL` (AGPL) are required; every
   other value is optional, and whatever links to an unset one must disappear, not break.
 - **Flags**: `VITE_FEATURE_*` → `src/features.ts`; `FEATURE_*` → `Flirtual.Features`. Homie Mode,
   personality, VR tags (platform + game), VRChat, and the list of connection providers.

@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next";
 
 import { Image } from "~/components/image";
 import { InlineLink } from "~/components/inline-link";
-import { urls } from "~/urls";
 
 export interface TeamMemberProps {
 	name: string;
@@ -23,7 +22,7 @@ export const TeamMember: React.FC<TeamMemberProps> = (props) => {
 				alt={t("avatar_alt", { name })}
 				className="aspect-square w-12 shrink-0 rounded-full bg-black-70 object-cover shadow-brand-1"
 				height="64"
-				src={urls.media(avatar)}
+				src={avatar}
 				width="64"
 			/>
 			<div className="flex flex-col">

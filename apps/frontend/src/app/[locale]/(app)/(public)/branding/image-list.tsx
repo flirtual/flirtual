@@ -1,6 +1,9 @@
+import { toKebabCase } from "remeda";
 import { twMerge } from "tailwind-merge";
 
 import * as brand from "~/brand";
+
+const filenamePrefix = toKebabCase(brand.name);
 
 export interface ImageListItemProps {
 	name: string;
@@ -20,7 +23,7 @@ function ImageListItem({ name, sources, dark }: ImageListItemProps) {
 						: "repeating-conic-gradient(#fff 0% 25%, #eee 0% 50%) 50% / 30px 30px"
 				}}
 				className="flex h-full items-center justify-center overflow-hidden rounded-lg"
-				download={`${brand.logoPrefix}${name}.${defaultKind}`}
+				download={`${filenamePrefix}-${name}.${defaultKind}`}
 				href={sources[defaultKind]}
 			>
 				<img className="w-full object-contain" src={sources[defaultKind]} />
@@ -30,7 +33,7 @@ function ImageListItem({ name, sources, dark }: ImageListItemProps) {
 					<a
 						key={kind}
 						className="uppercase text-theme-2 hocus:underline hocus:outline-none"
-						download={`${brand.logoPrefix}${name}.${kind}`}
+						download={`${filenamePrefix}-${name}.${kind}`}
 						href={source}
 					>
 						{kind}

@@ -1,25 +1,24 @@
-import Image037c3224 from "virtual:remote/037c3224-2390-4dbc-bfdf-09bbbe53ef5d";
-import Image086711c1 from "virtual:remote/086711c1-e359-4a10-bcd5-492ef4687936";
-import Image143f16e8 from "virtual:remote/143f16e8-288c-429c-86d9-5bd1404b42a3";
-import Image21747a8e from "virtual:remote/21747a8e-1863-4534-b184-e6b0940245db";
-import Image36caae65 from "virtual:remote/36caae65-e07f-4ccf-9290-f4d329de66a6";
-import Image4977b687 from "virtual:remote/4977b687-26ae-4da7-b1aa-7fbf6cd2b14e";
-import Image544e3a7a from "virtual:remote/544e3a7a-7604-4415-b132-bf02aa49550d";
-import Image680f5d7b from "virtual:remote/680f5d7b-65dd-4cd2-bcad-15d4b4ae200b";
-import Image6987eb07 from "virtual:remote/6987eb07-6baa-4500-aed0-c09a94a49b19";
-import Image7273fe85 from "virtual:remote/7273fe85-1b60-402b-9d69-5e5b884df74d";
-import Image7275f45b from "virtual:remote/7275f45b-680a-4e19-b793-4554784a8fb1";
-import Image7b134496 from "virtual:remote/7b134496-3a5a-4cc9-acd1-f5e332269b3e";
-import Image83e96aea from "virtual:remote/83e96aea-cd0a-42a6-b178-ebf253c02f50";
-import Image8c2015ab from "virtual:remote/8c2015ab-ee61-4f5e-ad69-d4d03e45a90a";
-import Image9e9b05bf from "virtual:remote/9e9b05bf-56a8-45d2-b593-2b3d05077560";
-import ImageAe8bdc6b from "virtual:remote/ae8bdc6b-2073-491a-9d09-58fce4223d4e";
-import ImageCff9ca62 from "virtual:remote/cff9ca62-2ec5-4467-8bb1-5ec0972f0a5e";
-import ImageDcfbd0d6 from "virtual:remote/dcfbd0d6-1f35-44b9-9f4e-d9c50a368907";
-
 import * as brand from "~/brand";
 import { appBundleId, siteOrigin } from "~/const";
 import { homieMode } from "~/features";
+import ScreenshotInterests from "~/static/manifest/screenshots/interests.png";
+import ScreenshotMatches from "~/static/manifest/screenshots/matches.png";
+import ScreenshotMeetInVr from "~/static/manifest/screenshots/meet-in-vr.png";
+import ScreenshotProfiles from "~/static/manifest/screenshots/profiles.png";
+import ShortcutBrowse256 from "~/static/manifest/shortcuts/browse.png";
+import ShortcutBrowse96 from "~/static/manifest/shortcuts/browse.png?w=96&h=96&imagetools";
+import ShortcutHomies256 from "~/static/manifest/shortcuts/homies.png";
+import ShortcutHomies96 from "~/static/manifest/shortcuts/homies.png?w=96&h=96&imagetools";
+import ShortcutMatches256 from "~/static/manifest/shortcuts/matches.png";
+import ShortcutMatches96 from "~/static/manifest/shortcuts/matches.png?w=96&h=96&imagetools";
+import ShortcutProfile256 from "~/static/manifest/shortcuts/profile.png";
+import ShortcutProfile96 from "~/static/manifest/shortcuts/profile.png?w=96&h=96&imagetools";
+import ShortcutSettings256 from "~/static/manifest/shortcuts/settings.png";
+import ShortcutSettings96 from "~/static/manifest/shortcuts/settings.png?w=96&h=96&imagetools";
+import IconMaskable192 from "~/static/mark-on-gradient.svg?w=192&h=192&format=png&imagetools";
+import IconMaskable512 from "~/static/mark-on-gradient.svg?w=512&h=512&format=png&imagetools";
+import Icon192 from "~/static/mark.svg?w=192&h=192&fit=contain&background=transparent&format=png&imagetools";
+import Icon512 from "~/static/mark.svg?w=512&h=512&fit=contain&background=transparent&format=png&imagetools";
 import { urls } from "~/urls";
 
 export function loader() {
@@ -29,25 +28,25 @@ export function loader() {
 		short_name: brand.name,
 		icons: [
 			{
-				src: Image36caae65,
+				src: Icon192,
 				sizes: "192x192",
 				type: "image/png",
 				purpose: "any"
 			},
 			{
-				src: ImageAe8bdc6b,
+				src: Icon512,
 				sizes: "512x512",
 				type: "image/png",
 				purpose: "any"
 			},
 			{
-				src: Image4977b687,
+				src: IconMaskable192,
 				sizes: "192x192",
 				type: "image/png",
 				purpose: "maskable"
 			},
 			{
-				src: Image680f5d7b,
+				src: IconMaskable512,
 				sizes: "512x512",
 				type: "image/png",
 				purpose: "maskable"
@@ -64,11 +63,11 @@ export function loader() {
 				description: "Find new dates",
 				icons: [
 					{
-						src: Image143f16e8,
+						src: ShortcutBrowse96,
 						sizes: "96x96"
 					},
 					{
-						src: Image8c2015ab,
+						src: ShortcutBrowse256,
 						sizes: "256x256"
 					}
 				]
@@ -80,11 +79,11 @@ export function loader() {
 						description: "Find new homies",
 						icons: [
 							{
-								src: Image7275f45b,
+								src: ShortcutHomies96,
 								sizes: "96x96"
 							},
 							{
-								src: Image83e96aea,
+								src: ShortcutHomies256,
 								sizes: "256x256"
 							}
 						]
@@ -96,11 +95,11 @@ export function loader() {
 				description: "Message your matches",
 				icons: [
 					{
-						src: Image544e3a7a,
+						src: ShortcutMatches96,
 						sizes: "96x96"
 					},
 					{
-						src: Image21747a8e,
+						src: ShortcutMatches256,
 						sizes: "256x256"
 					}
 				]
@@ -111,11 +110,11 @@ export function loader() {
 				description: "View your profile",
 				icons: [
 					{
-						src: Image086711c1,
+						src: ShortcutProfile96,
 						sizes: "96x96"
 					},
 					{
-						src: Image9e9b05bf,
+						src: ShortcutProfile256,
 						sizes: "256x256"
 					}
 				]
@@ -126,11 +125,11 @@ export function loader() {
 				description: "Change settings and edit your profile",
 				icons: [
 					{
-						src: Image037c3224,
+						src: ShortcutSettings96,
 						sizes: "96x96"
 					},
 					{
-						src: Image6987eb07,
+						src: ShortcutSettings256,
 						sizes: "256x256"
 					}
 				]
@@ -141,28 +140,28 @@ export function loader() {
 		...(brand.iarcRatingId && { iarc_rating_id: brand.iarcRatingId }),
 		screenshots: [
 			{
-				src: Image7b134496,
+				src: ScreenshotProfiles,
 				sizes: "1440x2560",
 				type: "image/png",
 				platform: "narrow",
 				label: "Real People, Avatar Profiles"
 			},
 			{
-				src: ImageCff9ca62,
+				src: ScreenshotInterests,
 				sizes: "1440x2560",
 				type: "image/png",
 				platform: "narrow",
 				label: "Share Interests and Personality"
 			},
 			{
-				src: Image7273fe85,
+				src: ScreenshotMatches,
 				sizes: "1440x2560",
 				type: "image/png",
 				platform: "narrow",
 				label: `Match on ${brand.name}`
 			},
 			{
-				src: ImageDcfbd0d6,
+				src: ScreenshotMeetInVr,
 				sizes: "1440x2560",
 				type: "image/png",
 				platform: "narrow",
