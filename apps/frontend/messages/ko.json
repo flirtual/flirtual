@@ -141,8 +141,8 @@
 	"bluesky": "Bluesky",
 	"instagram": "Instagram",
 	"browse_profiles": "프로필 둘러보기",
-	"see_who_likes_you": "받은 좋아요 확인하기",
-	"message": "메시지",
+	"see_who_likes_you": "누가 좋아요를 보냈는지 확인하기",
+	"message": "메시지 보내기",
 	"errors": {
 		"internal_server_error": "죄송해요, 문제가 발생했어요. 잠시 후 다시 시도해 주세요.",
 		"account_deletion_failed": "죄송해요, 계정을 삭제하는 중 오류가 발생했어요. 잠시 후 다시 시도하시거나, 문제가 계속되면 문의해 주세요.",
@@ -1005,7 +1005,6 @@
 	"share_profile_message": "내 Flirtual 프로필 구경하러 와요!",
 	"both_new_to_vr": "두 분 다 VR이 처음이네요. 함께 탐험해 봐요!",
 	"other_new_to_vr": "{name}님은 VR이 처음이에요. 이것저것 알려 주는 건 어때요?",
-	"add_bio_reminder": "<settings-bio>자기소개 작성</settings-bio>도 잊지 마세요!",
 	"you_responded_to_profile": "{status, select, liked {{name}님에게 좋아요를 보냈어요} homied {{name}님에게 친구 신청을 보냈어요} other {{name}님의 프로필을 넘겼어요}}.",
 	"profile_responded_to_you": "{name}님이 {status, select, liked {좋아요를} other {친구 신청을}} 보냈어요.",
 	"order_received": "주문이 접수되었어요.",
@@ -1130,5 +1129,7 @@
 	"matchmaking_priorities_description": "Flirtual에서 어떤 사람을 볼지 직접 조정하세요. 오른쪽으로 밀면 더 중요하게, 왼쪽으로 밀면 덜 중요하게 반영돼요. 프리미엄 구독자는 모든 항목을 조정할 수 있어요.",
 	"matchmaking_priorities_example": "예를 들어 “위치”를 오른쪽으로 밀면 가까운 사람이 더 많이, 왼쪽으로 밀면 멀리 있어도 잘 맞을 것 같은 사람이 더 많이 보여요.",
 	"saved_notifications": "알림 설정을 저장했어요",
-	"saved_nsfw": "19금 설정을 저장했어요"
+	"saved_nsfw": "19금 설정을 저장했어요",
+	"accent": "강조색",
+	"background": "배경색"
 }

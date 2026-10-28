@@ -1027,7 +1027,6 @@
 	"share_profile_message": "Découvre mon profil Flirtual !",
 	"both_new_to_vr": "Vous découvrez la VR en même temps : explorez-la ensemble !",
 	"other_new_to_vr": "{name} découvre la VR. Pourquoi ne pas lui faire visiter ?",
-	"add_bio_reminder": "N’oublie pas d’<settings-bio>ajouter une description</settings-bio> !",
 	"you_responded_to_profile": "{status, select, liked {Tu as liké {name}.} homied {Tu as proposé à {name} d’être pote.} other {Tu as passé {name}.}}",
 	"profile_responded_to_you": "{status, select, liked {{name} t’a liké.} other {{name} veut être pote avec toi.}}",
 	"saved_bio": "Bio et photos enregistrées",

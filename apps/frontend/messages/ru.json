@@ -1027,7 +1027,6 @@
 	"share_profile_message": "Загляни в мой профиль в Flirtual!",
 	"both_new_to_vr": "Вы оба недавно в VR. Осваивайте его вместе!",
 	"other_new_to_vr": "{name} недавно в VR. Почему бы не показать, что здесь к чему?",
-	"add_bio_reminder": "Не забудьте <settings-bio>рассказать о себе</settings-bio>!",
 	"profile_responded_to_you": "{name} {status, select, liked {ставит вам «Нравится»} other {хочет дружить с вами}}.",
 	"you_responded_to_profile": "{name}: {status, select, liked {вы поставили «Нравится»} homied {вы хотите дружить} other {вы пропустили этот профиль}}.",
 	"saved_bio": "Описание и фото сохранены",

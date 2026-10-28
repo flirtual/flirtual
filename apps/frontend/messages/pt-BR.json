@@ -769,8 +769,8 @@
 	"show_nsfw_hint": "Escolha se quer ver as tags NSFW nos perfis de outras pessoas.",
 	"i_am": "Sou…",
 	"kinks": "Kinks",
-	"copied_to_clipboard": "Copiado para área de transferência",
-	"footer_made_with_love": "Feito com <action>{heart}</action> na RV",
+	"copied_to_clipboard": "Copiado para a área de transferência",
+	"footer_made_with_love": "Feito com <action>{heart}</action> no VR",
 	"about_team_photo_alt": "Foto da equipe do Flirtual no VRChat",
 	"about_page_body": "<section><h1>Nossa história</h1><p>Oi, somos o Kyle e o Tony, os criadores do Flirtual. O Kyle é obcecado por RV desde os primórdios do Oculus, mas a vida dele mudou de verdade quando entrou no VRChat e conheceu lá alguns dos seus melhores amigos (incluindo a esposa!). Pouco antes da pandemia de COVID, o Kyle chamou o Tony, seu melhor amigo de infância, para embarcar nessa jornada, e a RV também mudou a vida dele. Decidimos ajudar outras pessoas a conhecer gente incrível pelo mundo todo, começando pelo VRLFP (Virtual Reality Looking For Partner).</p><p>A sensação de presença imersiva da RV ajuda a criar conexões profundas com pessoas de qualquer lugar do mundo. Superando a distância e colocando a personalidade em primeiro lugar, nossa missão é encontrar as melhores pessoas para você, onde quer que elas estejam. E deixar os encontros mais seguros e mágicos!</p><p>Em 2022, o VRLFP virou Flirtual. Reconstruímos tudo do zero, aprimoramos o sistema de match, adicionamos tags de personalidade e de interesses e lançamos aplicativos melhores. Seja um relacionamento sério que chegue à vida real, algo mais casual na RV ou só novos amigos, estamos prontos para ajudar você a encontrar seu match perfeito.</p><group><logo/><p>❤ kfarwell, Tony e a Equipe Flirtual</p><discord>Entre no nosso Discord</discord></group><p><italic>P.S.: Já percorremos um longo caminho desde o começo humilde do VRLFP, mas ainda somos uma equipe pequena, com raízes na comunidade de RV. <br/><br/>Agradecemos a sua paciência enquanto trabalhamos duro para deixar o Flirtual o mais incrível possível. Avise a gente se <contact>encontrar algum bug</contact> ou <ideas>tiver alguma sugestão</ideas>!</italic></p></section><section><h1>A equipe</h1><team-list/></section><section><h1>Linha do tempo</h1><timeline/></section>",
 	"about_gallery": {
@@ -1030,7 +1030,6 @@
 	"other_new_to_vr": "{name} está chegando agora na RV. Que tal servir de guia?",
 	"you_responded_to_profile": "Você {status, select, liked {curtiu} homied {amigou} other {pulou}} {name}.",
 	"profile_responded_to_you": "{name} {status, select, liked {curtiu} other {amigou}} você.",
-	"add_bio_reminder": "Não se esqueça de <settings-bio>adicionar uma bio</settings-bio>!",
 	"saved_connections": "Conexões salvas",
 	"playlist_heading": "Adicione uma playlist ao seu perfil",
 	"saved_bio": "Bio e fotos salvas",
