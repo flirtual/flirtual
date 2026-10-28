@@ -1027,7 +1027,6 @@
 	"share_profile_message": "Kolla in min profil på Flirtual!",
 	"both_new_to_vr": "Ni är båda nya i VR. Utforska det tillsammans!",
 	"other_new_to_vr": "{name} är ny i VR. Varför inte agera guide?",
-	"add_bio_reminder": "Glöm inte att <settings-bio>skriva en bio</settings-bio>!",
 	"you_responded_to_profile": "{status, select, liked {Du har gillat {name}.} homied {Du har lagt till {name} som kompis.} other {Du har hoppat över {name}.}}",
 	"profile_responded_to_you": "{status, select, liked {{name} har gillat dig.} other {{name} har lagt till dig som kompis.}}",
 	"saved_bio": "Bio och bilder sparade",

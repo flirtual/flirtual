@@ -1027,7 +1027,6 @@
 	"share_profile_message": "Vê o meu perfil no Flirtual!",
 	"both_new_to_vr": "É a vossa estreia em VR. Explorem em conjunto!",
 	"other_new_to_vr": "{name} está a começar em VR. Que tal mostrar-lhe como funciona?",
-	"add_bio_reminder": "Não te esqueças de <settings-bio>adicionar uma bio</settings-bio>!",
 	"you_responded_to_profile": "{status, select, liked {Deste Gosto a {name}.} homied {Quiseste fazer amizade com {name}.} other {Deixaste passar {name}.}}",
 	"profile_responded_to_you": "{name} {status, select, liked {deu-te Gosto} other {quer fazer amizade contigo}}.",
 	"saved_bio": "Bio e fotos guardadas",

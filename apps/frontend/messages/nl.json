@@ -1027,7 +1027,6 @@
 	"share_profile_message": "Bekijk mijn Flirtual-profiel!",
 	"both_new_to_vr": "Jullie zijn allebei nieuw in VR. Ontdek het samen!",
 	"other_new_to_vr": "{name} is nieuw in VR. Waarom geef je geen rondleiding?",
-	"add_bio_reminder": "Vergeet niet <settings-bio>een bio toe te voegen</settings-bio>!",
 	"you_responded_to_profile": "Je hebt {name} {status, select, liked {een Like gestuurd} homied {als maatje toegevoegd} other {overgeslagen}}.",
 	"profile_responded_to_you": "{name} heeft je {status, select, liked {een Like gestuurd} other {als maatje toegevoegd}}.",
 	"saved_bio": "Bio & foto's opgeslagen",
