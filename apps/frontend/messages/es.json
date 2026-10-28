@@ -1131,5 +1131,9 @@
 	"matchmaking_priorities_description": "Personaliza a quién ves en Flirtual. Desliza a la derecha para dar más importancia y a la izquierda para dar menos. Con Premium puedes personalizarlo todo.",
 	"matchmaking_priorities_example": "Por ejemplo, desliza «Ubicación» a la derecha para ver a más personas cerca de ti, o a la izquierda para ver a más personas lejanas que creemos que te gustarán.",
 	"saved_notifications": "Preferencias de notificaciones guardadas",
-	"saved_nsfw": "Preferencias NSFW guardadas"
+	"saved_nsfw": "Preferencias NSFW guardadas",
+	"maintenance_description": "{name} está temporalmente fuera de servicio por un mantenimiento programado. ¡Volvemos enseguida, vuelve a intentarlo en un rato!",
+	"maintenance_title": "{name} no está disponible temporalmente",
+	"likes_preview_alt": "Vista previa de los Me gusta recibidos",
+	"official": "Oficial"
 }

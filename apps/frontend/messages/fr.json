@@ -1131,5 +1131,9 @@
 	"profile_colors_premium": "Passe à Premium pour personnaliser les couleurs de ton profil !",
 	"saved_notifications": "Préférences de notification enregistrées",
 	"saved_nsfw": "Préférences NSFW enregistrées",
-	"matchmaking_priorities_example": "Par exemple, fais glisser « Localisation » vers la droite pour voir plus de personnes près de chez toi, ou vers la gauche pour voir plus de personnes éloignées qui pourraient te plaire."
+	"matchmaking_priorities_example": "Par exemple, fais glisser « Localisation » vers la droite pour voir plus de personnes près de chez toi, ou vers la gauche pour voir plus de personnes éloignées qui pourraient te plaire.",
+	"maintenance_description": "{name} est temporairement hors ligne pour une maintenance programmée. On revient très vite, repasse dans un petit moment !",
+	"maintenance_title": "{name} est temporairement indisponible",
+	"likes_preview_alt": "Aperçu des Likes",
+	"official": "Officiel"
 }
