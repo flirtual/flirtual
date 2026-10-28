@@ -1134,5 +1134,9 @@
 	"matchmaking_priorities_description": "Flirtualで表示される相手をカスタマイズできます。スライダーを右に動かすと重要度が上がり、左に動かすと下がります。プレミアム会員ならすべての項目を調整できます。",
 	"matchmaking_priorities_example": "たとえば「位置情報」を右に動かすと近くの人が、左に動かすと遠くにいる相性のよさそうな人がより多く表示されます。",
 	"saved_notifications": "通知設定を保存しました",
-	"saved_nsfw": "R-18設定を保存しました"
+	"saved_nsfw": "R-18設定を保存しました",
+	"maintenance_description": "{name}はただいま定期メンテナンスのため、一時的に停止しています。すぐに再開しますので、少し待ってからまたアクセスしてみてください！",
+	"maintenance_title": "{name}は一時的にご利用いただけません",
+	"likes_preview_alt": "いいねのプレビュー",
+	"official": "公式"
 }

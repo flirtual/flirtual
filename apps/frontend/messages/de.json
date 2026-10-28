@@ -1131,5 +1131,9 @@
 	"matchmaking_priorities_description": "Bestimme, wen du auf Flirtual siehst. Schieb nach rechts, um die Wichtigkeit zu erhöhen, oder nach links, um sie zu verringern. Mit Premium kannst du alles frei anpassen.",
 	"matchmaking_priorities_example": "Schieb zum Beispiel „Standort“ nach rechts, um mehr Leute in deiner Nähe zu sehen, oder nach links, um mehr Leute weiter weg zu sehen, die dir unserer Meinung nach gefallen könnten.",
 	"saved_notifications": "Benachrichtigungseinstellungen gespeichert",
-	"saved_nsfw": "NSFW-Einstellungen gespeichert"
+	"saved_nsfw": "NSFW-Einstellungen gespeichert",
+	"maintenance_title": "{name} ist vorübergehend nicht verfügbar",
+	"likes_preview_alt": "Like-Vorschau",
+	"maintenance_description": "{name} ist gerade wegen geplanter Wartungsarbeiten offline. Wir sind gleich wieder da – schau bald wieder vorbei!",
+	"official": "Offiziell"
 }

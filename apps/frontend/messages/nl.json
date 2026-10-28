@@ -1131,5 +1131,9 @@
 	"matchmaking_priorities_description": "Bepaal wie je op Flirtual ziet. Schuif naar rechts om iets belangrijker te maken, naar links om het minder belangrijk te maken. Met Premium kun je alles aanpassen.",
 	"matchmaking_priorities_example": "Schuif bijvoorbeeld \"Locatie\" naar rechts om meer mensen in de buurt te zien, of naar links om meer mensen verder weg te zien die je volgens ons leuk zult vinden.",
 	"saved_notifications": "Meldingsvoorkeuren opgeslagen",
-	"saved_nsfw": "NSFW-voorkeuren opgeslagen"
+	"saved_nsfw": "NSFW-voorkeuren opgeslagen",
+	"maintenance_description": "{name} is even offline voor gepland onderhoud. We zijn zo terug, kom straks nog eens kijken!",
+	"maintenance_title": "{name} is tijdelijk niet beschikbaar",
+	"official": "Officieel",
+	"likes_preview_alt": "Voorbeeld van je likes"
 }

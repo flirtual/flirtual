@@ -1131,5 +1131,9 @@
 	"matchmaking_priorities_description": "Anpassa vilka du ser på Flirtual. Dra åt höger för att öka betydelsen och åt vänster för att minska den. Med Premium kan du anpassa allt.",
 	"matchmaking_priorities_example": "Dra till exempel ”Plats” åt höger för att se fler personer i närheten, eller åt vänster för att se fler personer längre bort som vi tror passar dig.",
 	"saved_notifications": "Notisinställningarna har sparats",
-	"saved_nsfw": "NSFW-inställningarna har sparats"
+	"saved_nsfw": "NSFW-inställningarna har sparats",
+	"maintenance_description": "{name} är tillfälligt nere för planerat underhåll. Vi är strax tillbaka – kika in igen snart!",
+	"maintenance_title": "{name} är tillfälligt nere",
+	"likes_preview_alt": "Förhandsvisning av personer som gillar dig",
+	"official": "Officiell"
 }
