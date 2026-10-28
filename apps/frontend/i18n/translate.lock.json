@@ -19863,6 +19863,18 @@
 		"sv": "68d1492cb78dcc7d",
 		"ko": "68d1492cb78dcc7d"
 	},
+	"flirtual:likes_preview_alt": {
+		"pt": "a8000cc7f499f395",
+		"nl": "a8000cc7f499f395",
+		"fr": "a8000cc7f499f395",
+		"ru": "a8000cc7f499f395",
+		"sv": "a8000cc7f499f395",
+		"es": "a8000cc7f499f395",
+		"de": "a8000cc7f499f395",
+		"pt-BR": "a8000cc7f499f395",
+		"ja": "a8000cc7f499f395",
+		"ko": "a8000cc7f499f395"
+	},
 	"flirtual:likes_you": {
 		"de": "37f70bdbb36b746e",
 		"es": "37f70bdbb36b746e",
@@ -19970,6 +19982,30 @@
 		"sv": "b443e01e60bb8646",
 		"ja": "b443e01e60bb8646",
 		"ko": "b443e01e60bb8646"
+	},
+	"flirtual:maintenance_description": {
+		"pt": "61f091f1acb9f399",
+		"nl": "61f091f1acb9f399",
+		"fr": "61f091f1acb9f399",
+		"ru": "61f091f1acb9f399",
+		"sv": "61f091f1acb9f399",
+		"es": "61f091f1acb9f399",
+		"de": "61f091f1acb9f399",
+		"pt-BR": "61f091f1acb9f399",
+		"ja": "61f091f1acb9f399",
+		"ko": "61f091f1acb9f399"
+	},
+	"flirtual:maintenance_title": {
+		"pt": "34acb1d3de3e60f3",
+		"nl": "34acb1d3de3e60f3",
+		"fr": "34acb1d3de3e60f3",
+		"ru": "34acb1d3de3e60f3",
+		"sv": "34acb1d3de3e60f3",
+		"es": "34acb1d3de3e60f3",
+		"de": "34acb1d3de3e60f3",
+		"pt-BR": "34acb1d3de3e60f3",
+		"ja": "34acb1d3de3e60f3",
+		"ko": "34acb1d3de3e60f3"
 	},
 	"flirtual:manage": {
 		"de": "b5d526a2f73dbfab",
@@ -21098,6 +21134,18 @@
 		"sv": "304e9290c3c84157",
 		"ja": "304e9290c3c84157",
 		"ko": "304e9290c3c84157"
+	},
+	"flirtual:official": {
+		"pt": "8c7638a847845436",
+		"nl": "8c7638a847845436",
+		"fr": "8c7638a847845436",
+		"ru": "8c7638a847845436",
+		"sv": "8c7638a847845436",
+		"es": "8c7638a847845436",
+		"de": "8c7638a847845436",
+		"pt-BR": "8c7638a847845436",
+		"ja": "8c7638a847845436",
+		"ko": "8c7638a847845436"
 	},
 	"flirtual:onboarding_interests_hint": {
 		"de": "b2352e34eaeead61",
