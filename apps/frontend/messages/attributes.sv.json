@@ -1978,9 +1978,6 @@
 		"av": {
 			"name": "Avariska"
 		},
-		"ae": {
-			"name": "Avestiska"
-		},
 		"ay": {
 			"name": "Aymara"
 		},
@@ -2031,9 +2028,6 @@
 		},
 		"zh": {
 			"name": "Kinesiska"
-		},
-		"cu": {
-			"name": "Kyrkslaviska"
 		},
 		"cv": {
 			"name": "Tjuvasjiska"
@@ -2148,12 +2142,6 @@
 		},
 		"id": {
 			"name": "Indonesiska"
-		},
-		"ia": {
-			"name": "Interlingua"
-		},
-		"ie": {
-			"name": "Interlingue"
 		},
 		"iu": {
 			"name": "Inuktitut"
@@ -2317,9 +2305,6 @@
 		"os": {
 			"name": "Ossetiska"
 		},
-		"pi": {
-			"name": "Pali"
-		},
 		"pa": {
 			"name": "Punjabi"
 		},
@@ -2352,9 +2337,6 @@
 		},
 		"sg": {
 			"name": "Sango"
-		},
-		"sa": {
-			"name": "Sanskrit"
 		},
 		"sc": {
 			"name": "Sardinska"
@@ -2464,9 +2446,6 @@
 		"vi": {
 			"name": "Vietnamesiska"
 		},
-		"vo": {
-			"name": "Volapük"
-		},
 		"wa": {
 			"name": "Vallonska"
 		},
@@ -2547,9 +2526,6 @@
 		},
 		"sms": {
 			"name": "Skoltsamiska"
-		},
-		"syc": {
-			"name": "Klassisk syriska"
 		},
 		"tzm": {
 			"name": "Centralmarockansk tamazight"

@@ -1978,9 +1978,6 @@
 		"av": {
 			"name": "Avar"
 		},
-		"ae": {
-			"name": "Avestique"
-		},
 		"ay": {
 			"name": "Aymara"
 		},
@@ -2031,9 +2028,6 @@
 		},
 		"zh": {
 			"name": "Chinois"
-		},
-		"cu": {
-			"name": "Slavon d’église"
 		},
 		"cv": {
 			"name": "Tchouvache"
@@ -2148,12 +2142,6 @@
 		},
 		"id": {
 			"name": "Indonésien"
-		},
-		"ia": {
-			"name": "Interlingua"
-		},
-		"ie": {
-			"name": "Interlingue"
 		},
 		"iu": {
 			"name": "Inuktitut"
@@ -2317,9 +2305,6 @@
 		"os": {
 			"name": "Ossète"
 		},
-		"pi": {
-			"name": "Pali"
-		},
 		"pa": {
 			"name": "Pendjabi"
 		},
@@ -2352,9 +2337,6 @@
 		},
 		"sg": {
 			"name": "Sango"
-		},
-		"sa": {
-			"name": "Sanskrit"
 		},
 		"sc": {
 			"name": "Sarde"
@@ -2464,9 +2446,6 @@
 		"vi": {
 			"name": "Vietnamien"
 		},
-		"vo": {
-			"name": "Volapük"
-		},
 		"wa": {
 			"name": "Wallon"
 		},
@@ -2547,9 +2526,6 @@
 		},
 		"sms": {
 			"name": "Same skolt"
-		},
-		"syc": {
-			"name": "Syriaque classique"
 		},
 		"tzm": {
 			"name": "Amazighe de l’Atlas central"

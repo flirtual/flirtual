@@ -94,9 +94,6 @@
 		"av": {
 			"name": "Awarisch"
 		},
-		"ae": {
-			"name": "Avestisch"
-		},
 		"ay": {
 			"name": "Aymara"
 		},
@@ -147,9 +144,6 @@
 		},
 		"zh": {
 			"name": "Chinesisch"
-		},
-		"cu": {
-			"name": "Kirchenslawisch"
 		},
 		"cv": {
 			"name": "Tschuwaschisch"
@@ -264,12 +258,6 @@
 		},
 		"id": {
 			"name": "Indonesisch"
-		},
-		"ia": {
-			"name": "Interlingua"
-		},
-		"ie": {
-			"name": "Interlingue"
 		},
 		"iu": {
 			"name": "Inuktitut"
@@ -433,9 +421,6 @@
 		"os": {
 			"name": "Ossetisch"
 		},
-		"pi": {
-			"name": "Pali"
-		},
 		"pa": {
 			"name": "Punjabi"
 		},
@@ -468,9 +453,6 @@
 		},
 		"sg": {
 			"name": "Sango"
-		},
-		"sa": {
-			"name": "Sanskrit"
 		},
 		"sc": {
 			"name": "Sardisch"
@@ -580,9 +562,6 @@
 		"vi": {
 			"name": "Vietnamesisch"
 		},
-		"vo": {
-			"name": "Volapük"
-		},
 		"wa": {
 			"name": "Wallonisch"
 		},
@@ -663,9 +642,6 @@
 		},
 		"sms": {
 			"name": "Skolt-Samisch"
-		},
-		"syc": {
-			"name": "Altsyrisch"
 		},
 		"tzm": {
 			"name": "Zentralatlas-Tamazight"
