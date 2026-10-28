@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-10-16 18:18+0200\n"
-"PO-Revision-Date: 2026-10-26 22:51+0000\n"
+"PO-Revision-Date: 2026-10-28 01:51+0000\n"
 "Last-Translator: Claude <bot-flirtual-claude@bots.noreply.weblate.org>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/flirtual/"
 "notifications/ko/>\n"
@@ -196,7 +196,7 @@ msgstr "비밀번호가 변경되었어요"
 #: lib/flirtual/user/email.ex:199
 #, elixir-autogen, elixir-format, fuzzy
 msgid "message"
-msgstr "메시지"
+msgstr "메시지 보내기"
 
 #: lib/flirtual/user/email.ex:173
 #, elixir-autogen, elixir-format, fuzzy
@@ -282,8 +282,8 @@ msgid "browse_profiles_to_see_if_its_a_match_html"
 msgstr ""
 "<a href=\"%{action_url}\">프로필을 둘러보고</a> 매칭이 되는지 확인해 "
 "보세요.<p></p> <p>또는 <a href=\"https://flirtu.al/subscription\">"
-"프리미엄으로 업그레이드</a>하면 누가 좋아요를 보냈는지 바로 확인하고 더 이상 "
-"매칭을 놓치지 않을 수 있어요.</p>"
+"프리미엄으로 업그레이드</a>해서 누가 좋아요를 보냈는지 바로 확인하고, 매칭을 "
+"놓치지 마세요.</p>"
 
 #: lib/flirtual/user/email.ex:268
 #, elixir-autogen, elixir-format, fuzzy
@@ -297,7 +297,7 @@ msgstr ""
 #: lib/flirtual/user/email.ex:285
 #, elixir-autogen, elixir-format, fuzzy
 msgid "see_who_likes_you"
-msgstr "받은 좋아요 확인하기"
+msgstr "누가 좋아요를 보냈는지 확인하기"
 
 #: lib/flirtual/user/email.ex:261
 #: lib/flirtual/user/email.ex:271

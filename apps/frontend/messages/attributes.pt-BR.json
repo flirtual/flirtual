@@ -2550,10 +2550,10 @@
 			"name": "Checheno"
 		},
 		"ny": {
-			"name": "Nyanja"
+			"name": "Chichewa"
 		},
 		"zh": {
-			"name": "Chinês"
+			"name": "Mandarim"
 		},
 		"cv": {
 			"name": "Tchuvache"
@@ -2820,7 +2820,7 @@
 			"name": "Occitânico"
 		},
 		"oj": {
-			"name": "Ojibwa"
+			"name": "Ojibwe"
 		},
 		"or": {
 			"name": "Oriá"
@@ -3006,7 +3006,7 @@
 			"name": "Árabe marroquino"
 		},
 		"ckb": {
-			"name": "Curdo central"
+			"name": "Curdo central (Sorani)"
 		},
 		"dsb": {
 			"name": "Baixo sorábio"
@@ -3039,7 +3039,7 @@
 			"name": "Quiché"
 		},
 		"sah": {
-			"name": "Iakuto"
+			"name": "Sakha (iacuto)"
 		},
 		"sma": {
 			"name": "Sami meridional"
@@ -3103,6 +3103,33 @@
 		},
 		"hbs": {
 			"name": "Servo-croata"
+		},
+		"yue": {
+			"name": "Cantonês"
+		},
+		"ceb": {
+			"name": "Cebuano"
+		},
+		"haw": {
+			"name": "Havaiano"
+		},
+		"hmn": {
+			"name": "Hmong"
+		},
+		"cnr": {
+			"name": "Montenegrino"
+		},
+		"asf": {
+			"name": "Língua de Sinais Australiana (Auslan)"
+		},
+		"isg": {
+			"name": "Língua de Sinais Irlandesa"
+		},
+		"ise": {
+			"name": "Língua de Sinais Italiana"
+		},
+		"nzs": {
+			"name": "Língua de Sinais Neozelandesa"
 		}
 	},
 	"relationship": {
