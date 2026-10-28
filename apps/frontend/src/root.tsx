@@ -15,13 +15,13 @@ import {
 	useParams
 } from "react-router";
 
+import MarkBlack from "~/static/mark-black.svg?no-inline";
 import OpenGraphImage from "~/static/mark-on-gradient.svg?w=1000&h=1000&format=png&no-inline&imagetools";
 import TwitterImage from "~/static/mark-on-gradient.svg?w=1000&h=1000&no-inline&imagetools";
 import AppleIcon from "~/static/mark-on-gradient.svg?w=180&h=180&format=png&no-inline&imagetools";
 import Icon from "~/static/mark.svg?no-inline";
 import Icon16x16 from "~/static/mark.svg?w=16&h=16&fit=contain&background=transparent&format=png&no-inline&imagetools";
 import Icon32x32 from "~/static/mark.svg?w=32&h=32&fit=contain&background=transparent&format=png&no-inline&imagetools";
-import SafariPinnedTab from "~/static/safari-pinned-tab.svg?no-inline";
 
 import type { Route } from "./+types/root";
 import { App } from "./app";
@@ -137,7 +137,7 @@ export function meta({
 		{ tagName: "link", rel: "icon", type: "image/png", sizes: "32x32", href: Icon32x32 },
 		{ tagName: "link", rel: "icon", type: "image/png", sizes: "16x16", href: Icon16x16 },
 		{ tagName: "link", rel: "apple-touch-icon", type: "image/png", sizes: "180x180", href: AppleIcon },
-		{ tagName: "link", rel: "mask-icon", color: brand.accentColor, href: SafariPinnedTab },
+		{ tagName: "link", rel: "mask-icon", color: brand.accentColor, href: MarkBlack },
 
 		(development || preview) && {
 			tagName: "meta",

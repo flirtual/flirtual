@@ -12,7 +12,7 @@ import { device, useDevice } from "~/hooks/use-device";
 import { useInterval } from "~/hooks/use-interval";
 import { getSession } from "~/hooks/use-session";
 import { useLocale } from "~/i18n";
-import FlittyHardhat from "~/static/flitty-hardhat.png";
+import FlittyHardhat from "~/static/mascot-hardhat.png";
 import { urls } from "~/urls";
 
 import { Image } from "./image";

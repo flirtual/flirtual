@@ -2,9 +2,9 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 
 import { Image } from "~/components/image";
 import { usePreferences } from "~/hooks/use-preferences";
-import CloseButton from "~/static/easter-eggs/flitty/close-button.svg";
-import FlittyImage from "~/static/easter-eggs/flitty/flitty.png";
-import SpeechBubbleTail from "~/static/easter-eggs/flitty/speech-bubble-tail.png";
+import CloseButton from "~/static/easter-eggs/mascot/close-button.svg";
+import FlittyImage from "~/static/easter-eggs/mascot/mascot.png";
+import SpeechBubbleTail from "~/static/easter-eggs/mascot/speech-bubble-tail.png";
 
 const dialogueLines: Array<[string, string]> = [
 	["Hi, I'm Flitty! I'm your dating assistant and my job is to help you find your purr-fect match!", "Okay"],

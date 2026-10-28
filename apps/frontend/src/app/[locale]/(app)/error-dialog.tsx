@@ -17,7 +17,7 @@ import {
 import { DrawerOrDialog } from "~/components/drawer-or-dialog";
 import { Image } from "~/components/image";
 import { commitIdShort, maintenance } from "~/const";
-import FlittyHardhat from "~/static/flitty-hardhat.png";
+import FlittyHardhat from "~/static/mascot-hardhat.png";
 import { urls } from "~/urls";
 
 export type ErrorWithDigest = { digest?: string } & Error;
