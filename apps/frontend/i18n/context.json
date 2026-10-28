@@ -16111,19 +16111,6 @@
 		"description": "Title of the prompt dialog when adding a new prompt (a question picked from a list plus the user's written answer) to the profile.",
 		"hash": "7df5ee04614b1a97"
 	},
-	"flirtual:add_bio_reminder": {
-		"group": "profile/view",
-		"screens": [
-			"/me"
-		],
-		"element": "body",
-		"description": "Reminder shown in italics on your own profile in place of the bio when you haven't written one.",
-		"tags": {
-			"settings-bio": "Link to Bio & Pics Settings (/settings/bio)"
-		},
-		"tone": "Friendly",
-		"hash": "457c17607fdd46cc"
-	},
 	"flirtual:add_confirm_email": {
 		"group": "confirm-email",
 		"screens": [
@@ -16690,7 +16677,7 @@
 			"/settings"
 		],
 		"element": "title",
-		"description": "Name of the profile section with the biography text and profile pictures: step 1 of the profile setup progress bar, the title of the bio settings page, and its entry in the settings menu. \"pics\" = pictures.",
+		"description": "Name of the profile section with the biography text and profile pictures: step 1 of the profile setup progress bar, the title of the bio settings page, and its entry in the settings menu. \"pics\" = pictures. Also the title of the first step of finishing your profile.",
 		"lengthNote": "Progress-bar segment, one of five on desktop",
 		"hash": "591110aac202fd90"
 	},
@@ -17016,10 +17003,11 @@
 		"screens": [
 			"banner: all pages",
 			"dialog: news",
-			"watch: report"
+			"watch: report",
+			"dialog: all dialogs"
 		],
 		"element": "button",
-		"description": "Close action: screen-reader label of the X button that dismisses a banner, the button on the last page of the What's New dialog, and the button that closes the report sheet on the Apple Watch after a report was sent. Imperative verb.",
+		"description": "Close action: screen-reader label of the X button that dismisses a banner, the button on the last page of the What's New dialog, and the button that closes the report sheet on the Apple Watch after a report was sent. Imperative verb. Also the screen-reader label of the X button in the corner of every dialog.",
 		"hash": "d7cf5045c01b2eb9",
 		"watch": true
 	},
@@ -18474,7 +18462,7 @@
 			"toast"
 		],
 		"element": "error",
-		"description": "Error when starting a Premium purchase is refused. Shown to users barred from making payments, so it's deliberately vague; keep it neutral and non-accusatory.",
+		"description": "Error when starting a Premium purchase is refused. Shown to users barred from making payments, so it's deliberately vague; keep it neutral and non-accusatory. Also shown when the payment page fails to load or the device can't buy in-app.",
 		"hash": "6d070ab21045bd56"
 	},
 	"flirtual:errors.connection_email_change_required": {
@@ -18997,7 +18985,7 @@
 			"toast"
 		],
 		"element": "error",
-		"description": "Error when starting a Premium purchase fails because the selected plan isn't available; reassures the user they weren't charged.",
+		"description": "Error when starting a Premium purchase fails because the selected plan isn't available; reassures the user they weren't charged. Also shown when an in-app purchase can't start (plan, store product or account mismatch).",
 		"tone": "Reassuring",
 		"hash": "69271a5e500d6fdc"
 	},
@@ -21872,6 +21860,15 @@
 		"hash": "68d1492cb78dcc7d",
 		"watch": true
 	},
+	"flirtual:likes_preview_alt": {
+		"group": "matches",
+		"screens": [
+			"/matches"
+		],
+		"element": "alt-text",
+		"description": "Screen-reader text for the small round, blurred profile pictures of people who liked you, shown on the Likes You button at the top of the Matches list.",
+		"hash": "a8000cc7f499f395"
+	},
 	"flirtual:likes_you": {
 		"group": "likes",
 		"screens": [
@@ -21957,6 +21954,38 @@
 		"element": "label",
 		"description": "Category heading in the advanced filter tag picker, grouping relationship goals: serious dating, casual dating, hookups, new friends (Premium-only category).",
 		"hash": "b443e01e60bb8646"
+	},
+	"flirtual:maintenance_description": {
+		"group": "errors/maintenance",
+		"screens": [
+			"dialog: maintenance"
+		],
+		"element": "body",
+		"description": "Speech bubble from Flitty, the mascot (in a hard hat), in the maintenance dialog, above a Refresh button. \"We\" is the Flirtual team.",
+		"placeholders": {
+			"name": {
+				"meaning": "The app's brand name; not translated",
+				"example": "Flirtual"
+			}
+		},
+		"tone": "Friendly, light",
+		"hash": "61f091f1acb9f399"
+	},
+	"flirtual:maintenance_title": {
+		"group": "errors/maintenance",
+		"screens": [
+			"dialog: maintenance"
+		],
+		"element": "title",
+		"description": "Title of the full-screen dialog shown while the API is down for scheduled maintenance. Nothing works until it's back.",
+		"placeholders": {
+			"name": {
+				"meaning": "The app's brand name; not translated",
+				"example": "Flirtual"
+			}
+		},
+		"tone": "Calm, reassuring",
+		"hash": "34acb1d3de3e60f3"
 	},
 	"flirtual:manage": {
 		"group": "premium",
@@ -23092,6 +23121,16 @@
 		},
 		"lengthNote": "Compact numeric readout",
 		"hash": "304e9290c3c84157"
+	},
+	"flirtual:official": {
+		"group": "matches",
+		"screens": [
+			"/matches"
+		],
+		"element": "badge",
+		"description": "Small badge with a check mark on a conversation in the Matches list from an official Flirtual account, not a real match.",
+		"lengthNote": "Tiny badge; one short word",
+		"hash": "8c7638a847845436"
 	},
 	"flirtual:onboarding_interests_hint": {
 		"group": "onboarding",
@@ -24652,10 +24691,11 @@
 	"flirtual:refresh": {
 		"group": "update",
 		"screens": [
-			"dialog: update available"
+			"dialog: update available",
+			"dialog: maintenance"
 		],
 		"element": "button",
-		"description": "Primary button in the website's \"new version available\" dialog. It reloads the page to load the new version. The app versions show \"Update\" here instead.",
+		"description": "Primary button in the website's \"new version available\" dialog. It reloads the page to load the new version. The app versions show \"Update\" here instead. Also the button in the maintenance dialog that checks whether the app is back.",
 		"lengthNote": "Shares a row with \"Not now\" in a narrow dialog",
 		"hash": "ec0dd7ff6076fd7a"
 	},
@@ -24723,10 +24763,11 @@
 	"flirtual:remove": {
 		"group": "profile/location",
 		"screens": [
-			"/settings/info"
+			"/settings/info",
+			"/matches/:conversation"
 		],
 		"element": "button",
-		"description": "Button next to \"Update location\" that deletes the user's saved location. The object is the location.",
+		"description": "Button next to \"Update location\" that deletes the user's saved location. The object is the location. Also the screen-reader label of the trash-can button that removes a conversation with an official Flirtual account; there the object is the conversation.",
 		"lengthNote": "Small button",
 		"hash": "9469a102f04ea196"
 	},

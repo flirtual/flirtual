@@ -1,6 +1,7 @@
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { X } from "lucide-react";
 import * as React from "react";
+import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
 import {
@@ -33,6 +34,8 @@ function DialogContent({ ref: reference, className, children, closable = true, b
 	closable?: boolean;
 	border?: boolean;
 } & { ref?: React.Ref<React.ComponentRef<typeof DialogPrimitive.Content> | null> } & React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>) {
+	const { t } = useTranslation();
+
 	let content = (
 		<DialogPrimitive.Content
 			aria-describedby={undefined}
@@ -44,7 +47,7 @@ function DialogContent({ ref: reference, className, children, closable = true, b
 			{closable && (
 				<DialogPrimitive.Close className="absolute right-5 top-4 z-10 rounded-sm text-white-10 opacity-70 outline-none transition-opacity hover:opacity-100 focus-visible:ring-2 focus-visible:ring-white-10 disabled:pointer-events-none dark:text-white-20">
 					<X className="size-5" />
-					<span className="sr-only">Close</span>
+					<span className="sr-only">{t("close")}</span>
 				</DialogPrimitive.Close>
 			)}
 		</DialogPrimitive.Content>

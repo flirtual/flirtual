@@ -124,11 +124,7 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, reset }) => {
 				? (
 						<>
 							<DialogHeader>
-								<DialogTitle>
-									{brand.name}
-									{" "}
-									is temporarily unavailable
-								</DialogTitle>
+								<DialogTitle>{t("maintenance_title", { name: brand.name })}</DialogTitle>
 								<DialogDescription className="sr-only" />
 							</DialogHeader>
 							<DialogBody className="flex flex-col">
@@ -152,11 +148,7 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, reset }) => {
 											className="absolute -left-5 top-7 size-5 bg-white-10"
 											style={{ clipPath: "polygon(100% 0, 0 60%, 100% 100%)" }}
 										/>
-										<p>
-											{brand.name}
-											{" "}
-											is temporarily offline for scheduled maintenance. We&apos;ll be right back&mdash;check back soon!
-										</p>
+										<p>{t("maintenance_description", { name: brand.name })}</p>
 									</m.div>
 								</div>
 								<div className="flex flex-wrap gap-2">
@@ -166,7 +158,7 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, reset }) => {
 										size="sm"
 										onClick={tryAgain}
 									>
-										Refresh
+										{t("refresh")}
 									</Button>
 								</div>
 								<div className="mt-auto flex flex-col">

@@ -1,5 +1,6 @@
 import { Trash2 } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 
 import { Conversation } from "~/api/conversations";
 import { useToast } from "~/hooks/use-toast";
@@ -15,6 +16,7 @@ export const LeaveButton: FC<LeaveButtonProps> = (props) => {
 	const { conversationId } = props;
 	const navigate = useNavigate();
 	const toasts = useToast();
+	const { t } = useTranslation();
 
 	return (
 		<button
@@ -29,7 +31,7 @@ export const LeaveButton: FC<LeaveButtonProps> = (props) => {
 			}}
 		>
 			<Trash2 className="size-[1.625rem]" />
-			<span className="sr-only">Remove</span>
+			<span className="sr-only">{t("remove")}</span>
 		</button>
 	);
 };

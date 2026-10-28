@@ -31,7 +31,7 @@ export const LikesYouButton: FC = withSuspense(() => {
 						{preview.thumbnails?.map((thumbnail) => (
 							<Image
 								key={thumbnail}
-								alt="Like preview"
+								alt={t("likes_preview_alt")}
 								className="aspect-square rounded-full border-2 border-white-10 object-cover shadow-brand-1"
 								draggable={false}
 								height={34}

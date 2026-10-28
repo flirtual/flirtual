@@ -92,7 +92,7 @@ export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
 							? (
 									<Badge className="absolute right-2 top-2 shadow-none">
 										<Check className="inline size-4" />
-										Official
+										{t("official")}
 									</Badge>
 								)
 							: kind === "love"

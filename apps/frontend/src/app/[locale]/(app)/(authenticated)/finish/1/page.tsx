@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import invariant from "tiny-invariant";
 
 import { ModelCard } from "~/components/model-card";
@@ -18,12 +19,14 @@ export const meta: Route.MetaFunction = (options) => {
 };
 
 export default function Finish1Page() {
+	const { t } = useTranslation();
+
 	return (
 		<>
 			<FinishProgress page={finishStepNumber("bio")} />
 			<ModelCard
 				className="shrink-0 pb-[max(calc(var(--safe-area-inset-bottom,0rem)-0.5rem),1rem)] desktop:max-w-2xl desktop:pb-0"
-				title="Bio & pics"
+				title={t("bio_pics")}
 			>
 				<Finish1Form />
 			</ModelCard>
