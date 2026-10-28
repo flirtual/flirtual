@@ -2504,9 +2504,6 @@
 		"av": {
 			"name": "Avárico"
 		},
-		"ae": {
-			"name": "Avéstico"
-		},
 		"ay": {
 			"name": "Aimará"
 		},
@@ -2557,9 +2554,6 @@
 		},
 		"zh": {
 			"name": "Chinês"
-		},
-		"cu": {
-			"name": "Eslavo eclesiástico"
 		},
 		"cv": {
 			"name": "Tchuvache"
@@ -2674,12 +2668,6 @@
 		},
 		"id": {
 			"name": "Indonésio"
-		},
-		"ia": {
-			"name": "Interlíngua"
-		},
-		"ie": {
-			"name": "Interlingue"
 		},
 		"iu": {
 			"name": "Inuktitut"
@@ -2843,9 +2831,6 @@
 		"os": {
 			"name": "Ossético"
 		},
-		"pi": {
-			"name": "Páli"
-		},
 		"pa": {
 			"name": "Panjabi"
 		},
@@ -2878,9 +2863,6 @@
 		},
 		"sg": {
 			"name": "Sango"
-		},
-		"sa": {
-			"name": "Sânscrito"
 		},
 		"sc": {
 			"name": "Sardo"
@@ -2990,9 +2972,6 @@
 		"vi": {
 			"name": "Vietnamita"
 		},
-		"vo": {
-			"name": "Volapuque"
-		},
 		"wa": {
 			"name": "Valão"
 		},
@@ -3073,9 +3052,6 @@
 		},
 		"sms": {
 			"name": "Sami de Skolt"
-		},
-		"syc": {
-			"name": "Siríaco clássico"
 		},
 		"tzm": {
 			"name": "Tamazight do Atlas Central"
