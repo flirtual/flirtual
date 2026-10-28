@@ -97,6 +97,9 @@ Strings are ICU MessageFormat, rendered with i18next.
   use words for actual children.
 - **Game titles:** keep official titles; use a localized title only when the game is sold
   under one in your market.
+- **Language names** prefer the speakers' own name. Where your language only knows an exonym,
+  put the speakers' name first and the familiar name in brackets: "Sacha (Jakutisch)",
+  "Sakha (iakoute)".
 
 ## People and inclusivity
 
