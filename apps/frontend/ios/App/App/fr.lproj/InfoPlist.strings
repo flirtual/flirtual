@@ -1,0 +1,4 @@
+"NSCameraUsageDescription" = "Ton appareil photo sert à prendre et à importer ta photo de profil.";
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "Ta localisation sert à indiquer à quelle distance se trouvent les autres membres. Ta position exacte reste toujours privée.";
+"NSLocationWhenInUseUsageDescription" = "Ta localisation sert à indiquer à quelle distance se trouvent les autres membres. Ta position exacte reste toujours privée.";
+"NSPhotoLibraryAddUsageDescription" = "Flirtual a besoin de ton autorisation pour télécharger des images.";

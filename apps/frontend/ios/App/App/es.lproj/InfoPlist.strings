@@ -1,0 +1,4 @@
+"NSCameraUsageDescription" = "Tu cámara se usa para tomar y subir tu foto de perfil.";
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "Tu ubicación se usa para mostrar a qué distancia están otros miembros. Tu ubicación exacta siempre es privada.";
+"NSLocationWhenInUseUsageDescription" = "Tu ubicación se usa para mostrar a qué distancia están otros miembros. Tu ubicación exacta siempre es privada.";
+"NSPhotoLibraryAddUsageDescription" = "Flirtual necesita permiso para descargar imágenes.";

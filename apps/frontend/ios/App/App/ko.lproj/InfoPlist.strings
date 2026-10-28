@@ -1,0 +1,4 @@
+"NSCameraUsageDescription" = "프로필 사진을 찍고 업로드하는 데 카메라를 사용해요.";
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "다른 회원과의 거리를 보여 주는 데 위치 정보를 사용해요. 정확한 위치는 항상 비공개예요.";
+"NSLocationWhenInUseUsageDescription" = "다른 회원과의 거리를 보여 주는 데 위치 정보를 사용해요. 정확한 위치는 항상 비공개예요.";
+"NSPhotoLibraryAddUsageDescription" = "이미지를 다운로드하려면 Flirtual에 권한이 필요해요.";
