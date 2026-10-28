@@ -570,7 +570,7 @@ importers:
         version: 7.0.2(react@19.3.1)
       remeda:
         specifier: ^2.39.0
-        version: 2.53.0
+        version: 2.54.1
       sanitize-html:
         specifier: ^2.17.6
         version: 2.18.1
@@ -8380,8 +8380,8 @@ packages:
     resolution: {integrity: sha512-cnE+y8bz4NhMjISKbgeVJtqNbtf5QpjZP+Bslo+UqkIt9QPnX9q095eiRRASJG1/tz6dlNr6Z5NsBiWYokp6EQ==}
     hasBin: true
 
-  remeda@2.53.0:
-    resolution: {integrity: sha512-1jeHr8AUMB3r089AOmaiHBPAcGTep27JCbMt8MeXXXquDkO3h2N4CtuK++4Oas8mulCUiOUDeZqN+ssrcatKlw==}
+  remeda@2.54.1:
+    resolution: {integrity: sha512-l3pxw2Hz5V2FG3RaU9C6z121H8dF5VYjj3z6lnHoN3SCRLoxr+pZS2dq8dDe3NA+9kyKm56A1BB2Ejr+DrLlJw==}
     engines: {node: '>=18.0.0'}
 
   require-directory@2.1.1:
@@ -17445,7 +17445,7 @@ snapshots:
     dependencies:
       jsesc: 3.0.2
 
-  remeda@2.53.0: {}
+  remeda@2.54.1: {}
 
   require-directory@2.1.1: {}
 
