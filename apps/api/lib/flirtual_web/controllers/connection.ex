@@ -160,7 +160,7 @@ defmodule FlirtualWeb.ConnectionController do
 
   # Decode and verify the state token from OAuth callback
   defp verify_oauth_state(state) when is_binary(state) do
-    case Jwt.verify(Jwt.config("oauth-state"), state) do
+    case Joken.verify_and_validate(Jwt.config("oauth-state"), state) do
       {:ok, claims} ->
         {:ok,
          %{

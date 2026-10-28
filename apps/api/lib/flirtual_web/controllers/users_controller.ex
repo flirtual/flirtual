@@ -175,7 +175,7 @@ defmodule FlirtualWeb.UsersController do
         else: Users.get(user_id)
       )
 
-    preferences = %User.Preferences{user.preferences | user: user}
+    preferences = if user, do: %{user.preferences | user: user}
 
     if is_nil(user) or Policy.cannot?(conn, :update, user.profile) do
       {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
@@ -193,7 +193,7 @@ defmodule FlirtualWeb.UsersController do
         else: Users.get(user_id)
       )
 
-    preferences = %User.Preferences{user.preferences | user: user}
+    preferences = if user, do: %{user.preferences | user: user}
 
     if is_nil(user) or Policy.cannot?(conn, :update, user.profile) do
       {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
@@ -214,7 +214,7 @@ defmodule FlirtualWeb.UsersController do
         else: Users.get(user_id)
       )
 
-    preferences = %User.Preferences{user.preferences | user: user}
+    preferences = if user, do: %{user.preferences | user: user}
 
     if is_nil(user) or Policy.cannot?(conn, :update, user.profile) do
       {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}

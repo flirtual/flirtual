@@ -741,8 +741,6 @@ defmodule Flirtual.Matchmaking do
              }
            ]) do
       {:ok, conversation}
-    else
-      _ -> {:error, nil}
     end
   end
 end

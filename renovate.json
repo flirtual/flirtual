@@ -222,6 +222,11 @@
 			"groupName": "elixir toolchain"
 		},
 		{
+			"description": "OTP patch releases have four parts (27.3.4.19), which the asdf manager's built-in versioning rejects",
+			"matchPackageNames": ["erlang", "erlang/otp", "containerbase/erlang-prebuild"],
+			"versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)(?:\\.(?<build>\\d+))?$"
+		},
+		{
 			"matchUpdateTypes": ["digest"],
 			"automerge": true
 		},
