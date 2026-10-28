@@ -2024,10 +2024,10 @@
 			"name": "Checheno"
 		},
 		"ny": {
-			"name": "Nyanja"
+			"name": "Chichewa"
 		},
 		"zh": {
-			"name": "Chino"
+			"name": "Mandarín"
 		},
 		"cv": {
 			"name": "Chuvasio"
@@ -2093,7 +2093,7 @@
 			"name": "Gallego"
 		},
 		"lg": {
-			"name": "Ganda"
+			"name": "Luganda"
 		},
 		"ka": {
 			"name": "Georgiano"
@@ -2294,7 +2294,7 @@
 			"name": "Occitano"
 		},
 		"oj": {
-			"name": "Ojibwa"
+			"name": "Ojibwe"
 		},
 		"or": {
 			"name": "Oriya"
@@ -2480,7 +2480,7 @@
 			"name": "Árabe marroquí"
 		},
 		"ckb": {
-			"name": "Kurdo sorani"
+			"name": "Kurdo central (sorani)"
 		},
 		"dsb": {
 			"name": "Bajo sorbio"
@@ -2513,7 +2513,7 @@
 			"name": "Quiché"
 		},
 		"sah": {
-			"name": "Sakha"
+			"name": "Sakha (yakuto)"
 		},
 		"sma": {
 			"name": "Sami meridional"
@@ -2577,6 +2577,33 @@
 		},
 		"hbs": {
 			"name": "Serbocroata"
+		},
+		"yue": {
+			"name": "Cantonés"
+		},
+		"ceb": {
+			"name": "Cebuano"
+		},
+		"haw": {
+			"name": "Hawaiano"
+		},
+		"hmn": {
+			"name": "Hmong"
+		},
+		"cnr": {
+			"name": "Montenegrino"
+		},
+		"asf": {
+			"name": "Lengua de señas australiana (Auslan)"
+		},
+		"isg": {
+			"name": "Lengua de señas irlandesa"
+		},
+		"ise": {
+			"name": "Lengua de señas italiana"
+		},
+		"nzs": {
+			"name": "Lengua de señas neozelandesa"
 		}
 	},
 	"gender": {

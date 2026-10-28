@@ -140,10 +140,10 @@
 			"name": "Tschetschenisch"
 		},
 		"ny": {
-			"name": "Nyanja"
+			"name": "Chichewa"
 		},
 		"zh": {
-			"name": "Chinesisch"
+			"name": "Mandarin"
 		},
 		"cv": {
 			"name": "Tschuwaschisch"
@@ -209,7 +209,7 @@
 			"name": "Galicisch"
 		},
 		"lg": {
-			"name": "Ganda"
+			"name": "Luganda"
 		},
 		"ka": {
 			"name": "Georgisch"
@@ -410,7 +410,7 @@
 			"name": "Okzitanisch"
 		},
 		"oj": {
-			"name": "Ojibwa"
+			"name": "Ojibwe"
 		},
 		"or": {
 			"name": "Oriya"
@@ -596,7 +596,7 @@
 			"name": "Marokkanisches Arabisch"
 		},
 		"ckb": {
-			"name": "Zentralkurdisch"
+			"name": "Zentralkurdisch (Sorani)"
 		},
 		"dsb": {
 			"name": "Niedersorbisch"
@@ -629,7 +629,7 @@
 			"name": "Kʼicheʼ"
 		},
 		"sah": {
-			"name": "Jakutisch"
+			"name": "Sacha (Jakutisch)"
 		},
 		"sma": {
 			"name": "Südsamisch"
@@ -693,6 +693,33 @@
 		},
 		"hbs": {
 			"name": "Serbokroatisch"
+		},
+		"yue": {
+			"name": "Kantonesisch"
+		},
+		"ceb": {
+			"name": "Cebuano"
+		},
+		"haw": {
+			"name": "Hawaiisch"
+		},
+		"hmn": {
+			"name": "Hmong"
+		},
+		"cnr": {
+			"name": "Montenegrinisch"
+		},
+		"asf": {
+			"name": "Australische Gebärdensprache (Auslan)"
+		},
+		"isg": {
+			"name": "Irische Gebärdensprache"
+		},
+		"ise": {
+			"name": "Italienische Gebärdensprache"
+		},
+		"nzs": {
+			"name": "Neuseeländische Gebärdensprache"
 		}
 	},
 	"delete-reason": {

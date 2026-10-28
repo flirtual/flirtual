@@ -2550,10 +2550,10 @@
 			"name": "Checheno"
 		},
 		"ny": {
-			"name": "Nyanja"
+			"name": "Chichewa"
 		},
 		"zh": {
-			"name": "Chinês"
+			"name": "Mandarim"
 		},
 		"cv": {
 			"name": "Tchuvache"
@@ -2820,7 +2820,7 @@
 			"name": "Occitano"
 		},
 		"oj": {
-			"name": "Ojibwa"
+			"name": "Ojibwe"
 		},
 		"or": {
 			"name": "Oriá"
@@ -3006,7 +3006,7 @@
 			"name": "Árabe marroquino"
 		},
 		"ckb": {
-			"name": "Curdo central"
+			"name": "Curdo central (Sorani)"
 		},
 		"dsb": {
 			"name": "Baixo sorábio"
@@ -3039,7 +3039,7 @@
 			"name": "Quiché"
 		},
 		"sah": {
-			"name": "Sakha"
+			"name": "Sakha (iacuto)"
 		},
 		"sma": {
 			"name": "Sami do sul"
@@ -3103,6 +3103,33 @@
 		},
 		"hbs": {
 			"name": "Servo-croata"
+		},
+		"yue": {
+			"name": "Cantonês"
+		},
+		"haw": {
+			"name": "Havaiano"
+		},
+		"ceb": {
+			"name": "Cebuano"
+		},
+		"hmn": {
+			"name": "Hmong"
+		},
+		"cnr": {
+			"name": "Montenegrino"
+		},
+		"asf": {
+			"name": "Língua Gestual Australiana (Auslan)"
+		},
+		"isg": {
+			"name": "Língua Gestual Irlandesa"
+		},
+		"ise": {
+			"name": "Língua Gestual Italiana"
+		},
+		"nzs": {
+			"name": "Língua Gestual Neozelandesa"
 		}
 	},
 	"relationship": {

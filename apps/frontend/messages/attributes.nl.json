@@ -2024,10 +2024,10 @@
 			"name": "Tsjetsjeens"
 		},
 		"ny": {
-			"name": "Nyanja"
+			"name": "Chichewa"
 		},
 		"zh": {
-			"name": "Chinees"
+			"name": "Mandarijn"
 		},
 		"cv": {
 			"name": "Tsjoevasjisch"
@@ -2294,7 +2294,7 @@
 			"name": "Occitaans"
 		},
 		"oj": {
-			"name": "Ojibwa"
+			"name": "Ojibwe"
 		},
 		"or": {
 			"name": "Odia"
@@ -2480,7 +2480,7 @@
 			"name": "Marokkaans Arabisch"
 		},
 		"ckb": {
-			"name": "Centraal-Koerdisch"
+			"name": "Centraal-Koerdisch (Sorani)"
 		},
 		"dsb": {
 			"name": "Nedersorbisch"
@@ -2513,7 +2513,7 @@
 			"name": "Kʼicheʼ"
 		},
 		"sah": {
-			"name": "Jakoets"
+			"name": "Sacha (Jakoets)"
 		},
 		"sma": {
 			"name": "Zuid-Samisch"
@@ -2577,6 +2577,33 @@
 		},
 		"hbs": {
 			"name": "Servo-Kroatisch"
+		},
+		"yue": {
+			"name": "Kantonees"
+		},
+		"ceb": {
+			"name": "Cebuano"
+		},
+		"haw": {
+			"name": "Hawaïaans"
+		},
+		"hmn": {
+			"name": "Hmong"
+		},
+		"cnr": {
+			"name": "Montenegrijns"
+		},
+		"asf": {
+			"name": "Australische Gebarentaal (Auslan)"
+		},
+		"isg": {
+			"name": "Ierse Gebarentaal"
+		},
+		"ise": {
+			"name": "Italiaanse Gebarentaal"
+		},
+		"nzs": {
+			"name": "Nieuw-Zeelandse Gebarentaal"
 		}
 	},
 	"gender": {
