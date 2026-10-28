@@ -9,12 +9,10 @@ import sonda from "sonda/vite";
 import tailwindcss from "tailwindcss";
 import info from "unplugin-info/vite";
 import macros from "unplugin-macros/vite";
-import remoteAssets from "unplugin-remote-assets/vite";
 import { defineConfig, loadEnv } from "vite";
 import { imagetools } from "vite-imagetools";
 import { ViteImageOptimizer as imageOptimize } from "vite-plugin-image-optimizer";
 
-import brandDefaults from "./src/brand.defaults.json" with { type: "json" };
 import { browserslist, targets } from "./src/targets.ts";
 import { hush } from "./vite-plugin-hush.ts";
 
@@ -60,12 +58,8 @@ export default defineConfig((config) => {
 	for (const [key, value] of Object.entries(env))
 		if (key.startsWith("VITE_BRAND_") && !process.env[key]) process.env[key] = value;
 
-	const assetDomain = env.VITE_BRAND_ASSET_DOMAIN;
-	if (!assetDomain) throw new Error("VITE_BRAND_ASSET_DOMAIN is required: remote assets are downloaded from there at build time");
+	if (!env.VITE_BRAND_ASSET_DOMAIN) throw new Error("VITE_BRAND_ASSET_DOMAIN is required: the static bucket is served from there");
 	if (!env.VITE_BRAND_REPOSITORY_URL) throw new Error("VITE_BRAND_REPOSITORY_URL is required: you must publish your source code to comply with the AGPL");
-
-	const assetOrigin = `https://static.${assetDomain}`;
-	const logoPrefix = env.VITE_BRAND_LOGO_PREFIX || brandDefaults.logoPrefix;
 
 	return {
 		appType: "mpa",
@@ -129,22 +123,6 @@ export default defineConfig((config) => {
 			]),
 			macros(),
 			info(),
-			remoteAssets({
-				aliases: [
-					{
-						regex: /^brand\/(.+)/,
-						replacement: `${assetOrigin}/${logoPrefix}$1`
-					},
-					{
-						regex: /^(\w+)\/(.+)/,
-						replacement: `https://$1.${assetDomain}/$2`
-					},
-					{
-						regex: /^(.+)/,
-						replacement: `${assetOrigin}/$1`
-					}
-				]
-			}),
 			mode === "development" && !mkcertExists && basicSsl({
 				name: "flirtual",
 				domains: [hostname],
@@ -161,16 +139,19 @@ export default defineConfig((config) => {
 				exclude: [],
 				// include: /^[^?]+\.(avif|gif|heif|jpeg|jpg|png|tiff|webp)(\?.*)?$/
 				// https://github.com/JonasKruckenberg/imagetools/issues/317
-				include: /^[^?]+\.(avif|heif|jpeg|jpg|png|tiff|webp)(\?.*)?$/,
+				include: [
+					/^[^?]+\.(avif|heif|jpeg|jpg|png|tiff|webp)(\?.*)?$/,
+					// An SVG stays a vector unless the import asks for a raster size or format.
+					/^[^?]+\.svg\?(.*&)?(w|h|format)=/
+				],
 				defaultDirectives: (url) => {
-					if (url.searchParams.has("raw")) return new URLSearchParams();
+					const directives = new URLSearchParams(url.pathname.endsWith(".svg") ? { allowUpscale: "true" } : {});
+					if (url.searchParams.has("raw") || url.searchParams.has("format")) return directives;
 
-					return new URLSearchParams({
-						// lossless: "",
-						quality: "90",
-						effort: "max",
-						format: "webp"
-					});
+					directives.set("quality", "90");
+					directives.set("effort", "max");
+					directives.set("format", "webp");
+					return directives;
 				}
 			}),
 			!!env.ANALYZE && sonda({

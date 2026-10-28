@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import Image1 from "virtual:remote/20f39ddf-1e5d-4aac-b919-4a31b5c8d05d";
-import Image2 from "virtual:remote/709376dd-6f96-4026-8e18-9f29a730c064.svg";
-import FlittyImage from "virtual:remote/flitty.png";
 
 import { Image } from "~/components/image";
 import { usePreferences } from "~/hooks/use-preferences";
+import CloseButton from "~/static/easter-eggs/mascot/close-button.svg";
+import FlittyImage from "~/static/easter-eggs/mascot/mascot.png";
+import SpeechBubbleTail from "~/static/easter-eggs/mascot/speech-bubble-tail.png";
 
 const dialogueLines: Array<[string, string]> = [
 	["Hi, I'm Flitty! I'm your dating assistant and my job is to help you find your purr-fect match!", "Okay"],
@@ -338,7 +338,7 @@ export default function Flitty() {
 					</div>
 					<div
 						style={{
-							backgroundImage: `url(${Image1})`
+							backgroundImage: `url(${SpeechBubbleTail})`
 						}}
 						className="absolute left-full top-full ml-[-50px] mt-0 h-[16px] w-[10px] bg-[10px_0]"
 					/>
@@ -347,7 +347,7 @@ export default function Flitty() {
 
 			<div
 				style={{
-					backgroundImage: `url(${Image2})`,
+					backgroundImage: `url(${CloseButton})`,
 					borderRadius: "4px"
 				}}
 				className="absolute bottom-0 right-0 size-[21px] cursor-pointer"

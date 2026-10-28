@@ -6,13 +6,13 @@ import useSound from "use-sound";
 import { Mark } from "~/components/mark";
 import { useToast } from "~/hooks/use-toast";
 import { useMessages } from "~/i18n";
-import { urls } from "~/urls";
+import Squeak from "~/static/easter-eggs/squeak.mp3";
 
 export const SqueakyFlitty: FC<PropsWithChildren> = ({ children }) => {
 	const { flitty_reactions: flittyMessages } = useMessages();
 	const toasts = useToast();
 
-	const [squeak] = useSound(urls.media("squeak.mp3"));
+	const [squeak] = useSound(Squeak);
 	const [squeakCount, setSqueakCount] = useState(0);
 
 	/*

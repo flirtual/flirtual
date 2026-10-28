@@ -46,7 +46,6 @@ export default {
 
 		"/manifest.json",
 		"/robots.txt",
-		"/browserconfig.xml",
 		"/pico_authentication.json",
 		"/.well-known/security.txt",
 		"/.well-known/assetlinks.json",

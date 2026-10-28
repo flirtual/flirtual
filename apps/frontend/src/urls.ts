@@ -1,8 +1,6 @@
 import { createPath, href } from "react-router";
 import type { Path, To } from "react-router";
 import { entries, fromEntries } from "remeda";
-import FallbackAvatar from "virtual:remote/8d120672-c717-49d2-b9f3-2d4479bbacf6";
-import Gradient from "virtual:remote/e8212f93-af6f-4a2c-ac11-cb328bbc4aa4";
 
 import type { User } from "./api/user";
 import type { Profile } from "./api/user/profile";
@@ -156,7 +154,7 @@ export const urls = {
 			? urls.media(image.externalId, "content", variant)
 			: image.originalFile
 				? urls.media(image.originalFile, "uploads")
-				: Gradient,
+				: undefined,
 	arbitraryImage: (urlOrPathname: string, options: ArbitraryImageOptions = { quality: 90 }) =>
 		`https://${brand.assetDomain}/cdn-cgi/image/${Object.entries(options).map(([key, value]) =>
 			`${{
@@ -167,9 +165,7 @@ export const urls = {
 				"slow-connection-quality": "scq"
 			}[key] || key}=${value}`).join(",")}/${urlOrPathname}`,
 	userAvatar: (user: { profile: Pick<Profile, "images"> } | null, variant?: string) =>
-		user?.profile.images[0]
-			? urls.image(user.profile.images[0], variant)
-			: FallbackAvatar,
+		user?.profile.images[0] && urls.image(user.profile.images[0], variant),
 	vrchatProfile: (userId: string) =>
 		`https://vrchat.com/home/user/${userId}`,
 	vrchatSearch: (name: string) =>

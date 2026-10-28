@@ -131,7 +131,6 @@ export default [
 	// Keep in sync with react-router.config.ts.
 	file("manifest.json"),
 	file("robots.txt"),
-	file("browserconfig.xml"),
 	file("pico_authentication.json"),
 	file(".well-known/security.txt"),
 	file(".well-known/assetlinks.json"),

@@ -1,8 +1,6 @@
 import ms from "ms" with { type: "macro" };
 import type { Dispatch, FC, ReactNode } from "react";
 import { Trans, useTranslation } from "react-i18next";
-import LogoBlack from "virtual:remote/brand/black.svg";
-import LogoWhite from "virtual:remote/brand/white.svg";
 import { withSuspense } from "with-suspense";
 
 import type { Session } from "~/api/auth";
@@ -14,6 +12,8 @@ import { useOptionalSession, useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { useNavigate } from "~/i18n";
 import { mutate, sessionKey } from "~/query";
+import LogoOnDark from "~/static/logo-on-dark.svg";
+import LogoOnLight from "~/static/logo-on-light.svg";
 import { urls } from "~/urls";
 
 import { Button } from "../button";
@@ -144,14 +144,14 @@ export const TrustAndSafetyDialog: FC<{
 							alt={brand.name}
 							className="hidden h-fit w-24 dark:block desktop:block"
 							height={1000}
-							src={LogoWhite}
+							src={LogoOnDark}
 							width={3468}
 						/>
 						<Image
 							alt={brand.name}
 							className="block h-fit w-24 dark:hidden desktop:hidden"
 							height={1000}
-							src={LogoBlack}
+							src={LogoOnLight}
 							width={3468}
 						/>
 						<span>{t("trust_and_safety")}</span>

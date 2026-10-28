@@ -531,11 +531,13 @@ function entryImages(entry: ModerationEntry): Array<EntryImage> {
 
 	const images = ids.flatMap((id): Array<EntryImage> => {
 		const found = related?.images?.find(({ image }) => image.id === id);
-		if (found) {
+		const source = found && urls.image(found.image, "profile");
+		const full = found && urls.image(found.image, "full");
+		if (found && source && full) {
 			return [{
 				key: id,
-				src: urls.image(found.image, "profile"),
-				full: urls.image(found.image, "full"),
+				src: source,
+				full,
 				image: found.image,
 				userId: found.userId
 			}];

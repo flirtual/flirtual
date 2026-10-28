@@ -2,11 +2,11 @@ import { useCallback } from "react";
 import type { ComponentProps, FC } from "react";
 import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
-import LogoBlack from "virtual:remote/brand/black.svg";
-import LogoWhite from "virtual:remote/brand/white.svg";
 
 import type { Theme } from "~/hooks/use-theme";
 import { useNavigate } from "~/i18n";
+import LogoOnDark from "~/static/logo-on-dark.svg";
+import LogoOnLight from "~/static/logo-on-light.svg";
 import { urls } from "~/urls";
 
 export const Logo: FC<{ theme?: Theme } & Omit<ComponentProps<"img">, "src">> = ({ className, theme, ...props }) => {
@@ -27,8 +27,8 @@ export const Logo: FC<{ theme?: Theme } & Omit<ComponentProps<"img">, "src">> = 
 			<img
 				{...elementProps}
 				src={{
-					dark: LogoWhite,
-					light: LogoBlack
+					dark: LogoOnDark,
+					light: LogoOnLight
 				}[theme]}
 				className={className}
 			/>
@@ -39,12 +39,12 @@ export const Logo: FC<{ theme?: Theme } & Omit<ComponentProps<"img">, "src">> = 
 			<img
 				{...elementProps}
 				className={twMerge("dark:hidden", className)}
-				src={LogoBlack}
+				src={LogoOnLight}
 			/>
 			<img
 				{...elementProps}
 				className={twMerge("hidden dark:block", className)}
-				src={LogoWhite}
+				src={LogoOnDark}
 			/>
 		</>
 	);

@@ -7,7 +7,7 @@ import { twMerge } from "tailwind-merge";
 
 import { premium } from "~/api/user";
 import type { User } from "~/api/user";
-import { notFoundImage, ProfileImage } from "~/api/user/profile/images";
+import { ProfileImage } from "~/api/user/profile/images";
 import { Button } from "~/components/button";
 import {
 	AlertDialog,
@@ -124,6 +124,8 @@ export const ImageToolbar: React.FC<{
 		await onDeleted?.();
 	};
 
+	const searchUrl = image ? urls.image(image, "full") : url;
+
 	const formattedUploadTime = image && new Intl.RelativeTimeFormat(intlLocale(locale)).format(
 		Math.round((new Date(image.createdAt).getTime() - Date.now()) / (1000 * 60 * 60 * 24)),
 		"day"
@@ -182,17 +184,19 @@ export const ImageToolbar: React.FC<{
 						</TooltipTrigger>
 						<TooltipContent>{t("search_image_internal")}</TooltipContent>
 					</Tooltip>
-					<Tooltip>
-						<TooltipTrigger asChild>
-							<button
-								type="button"
-								onClick={() => reverseSearch(image ? urls.image(image, "full") : url)}
-							>
-								<Search className="size-5" strokeWidth={2} />
-							</button>
-						</TooltipTrigger>
-						<TooltipContent>{t("search_image_external")}</TooltipContent>
-					</Tooltip>
+					{searchUrl && (
+						<Tooltip>
+							<TooltipTrigger asChild>
+								<button
+									type="button"
+									onClick={() => reverseSearch(searchUrl)}
+								>
+									<Search className="size-5" strokeWidth={2} />
+								</button>
+							</TooltipTrigger>
+							<TooltipContent>{t("search_image_external")}</TooltipContent>
+						</Tooltip>
+					)}
 				</div>
 				{image && (
 					<div className="flex gap-4">
@@ -355,14 +359,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 								/>
 							))
 						)
-					: (
-							<SingleImage
-								key={notFoundImage.id}
-								priority
-								className={twMerge("size-full")}
-								image={notFoundImage}
-							/>
-						)}
+					: <UserImage alt="" className="size-full" />}
 				{currentImage && (
 					<div className="pointer-events-none absolute flex size-full items-center justify-center">
 						<button

@@ -1,8 +1,8 @@
 import type { FC } from "react";
 import { Trans } from "react-i18next";
-import ImageProfileUpdates from "virtual:remote/static/news/profile-updates.png?as=metadata";
 
 import { Image } from "~/components/image";
+import ImageProfileUpdates from "~/static/news/profile-updates.png?as=metadata";
 
 import { commonComponents } from "./common";
 

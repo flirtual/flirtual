@@ -17501,16 +17501,6 @@
 		"description": "Tooltip on the screenshot button that switches the app to its dark color theme.",
 		"hash": "ce9eba71152f20ff"
 	},
-	"flirtual:dark_theme_image": {
-		"group": "settings/appearance",
-		"screens": [
-			"/settings/appearance"
-		],
-		"element": "other",
-		"description": "Not text: the ID of the uploaded screenshot image shown for the Dark theme option. Copy it exactly, unchanged.",
-		"hash": "6cd301865ce570f8",
-		"readOnly": true
-	},
 	"flirtual:dark_theme_preview": {
 		"group": "settings/appearance",
 		"screens": [
@@ -21827,17 +21817,6 @@
 		"description": "Tooltip on the screenshot button that switches the app to its light color theme.",
 		"hash": "9f937182059d36c9"
 	},
-	"flirtual:light_theme_image": {
-		"group": "settings/appearance",
-		"screens": [
-			"/settings/appearance"
-		],
-		"element": "other",
-		"description": "Not text: the ID of the uploaded screenshot image shown for the Light theme option. Copy it exactly, unchanged.",
-		"hash": "6017f9390e2989d4",
-		"resolved": "Media ID, not text: copy unchanged. Read-only in Weblate.",
-		"readOnly": true
-	},
 	"flirtual:light_theme_preview": {
 		"group": "settings/appearance",
 		"screens": [
@@ -25820,16 +25799,6 @@
 		"description": "Theme option that follows the device's system light/dark setting, in the small theme dropdown in the page footer and on login/sign-up cards (with Light and Dark).",
 		"lengthNote": "Compact dropdown",
 		"hash": "88e6c2e1c344b2fc"
-	},
-	"flirtual:system_theme_image": {
-		"group": "settings/appearance",
-		"screens": [
-			"/settings/appearance"
-		],
-		"element": "other",
-		"description": "Not text: the ID of the uploaded screenshot image shown for the System (automatic) theme option. Copy it exactly, unchanged.",
-		"hash": "d51561e5b5fdc56b",
-		"readOnly": true
 	},
 	"flirtual:system_theme_preview": {
 		"group": "settings/appearance",

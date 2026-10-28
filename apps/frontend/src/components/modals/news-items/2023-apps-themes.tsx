@@ -1,8 +1,8 @@
 import type { FC } from "react";
 import { Trans } from "react-i18next";
-import ImageMobileApps from "virtual:remote/static/news/mobile-apps.png?as=metadata";
 
 import { Image } from "~/components/image";
+import ImageMobileApps from "~/static/news/mobile-apps.png?as=metadata";
 
 import { commonComponents } from "./common";
 

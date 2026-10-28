@@ -1,9 +1,9 @@
 import type { FC } from "react";
 import { Trans } from "react-i18next";
-import ImageHomiesDay1 from "virtual:remote/static/news/homies-day-1.png?as=metadata";
-import ImageHomiesDay2 from "virtual:remote/static/news/homies-day-2.png?as=metadata";
 
 import { Image } from "~/components/image";
+import ImageHomiesDay1 from "~/static/news/homies-day-1.png?as=metadata";
+import ImageHomiesDay2 from "~/static/news/homies-day-2.png?as=metadata";
 
 import { commonComponents } from "./common";
 
