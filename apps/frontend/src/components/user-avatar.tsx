@@ -52,18 +52,42 @@ export const UserThumbnail: FC<UserThumbnailProps> = ({ className, ...props }) =
 	);
 };
 
-export type UserImageProps = { src: string; blurHash?: string } & Omit<ImageProps, "src">;
+export type UserImageProps = { src?: string; blurHash?: string } & Omit<ImageProps, "src">;
 
 export const UserImage: React.FC<UserImageProps> = ({ src, blurHash, ...props }) => {
 	const [loaded, setLoaded] = useState(false);
+	const [failed, setFailed] = useState(false);
 
 	// Memoized so it decodes once per hash (not on every render) and frees with
 	// the component. Undefined on the server (no canvas); the resulting mismatch
-	// is harmless on this childless <img>, so it's suppressed below.
+	// is harmless on this childless element, so it's suppressed below.
 	const placeholder = useMemo(
 		() => (blurHash ? blurHashToDataUrl(blurHash) : undefined),
 		[blurHash]
 	);
+
+	if (!src || failed) {
+		return (
+			<svg
+				suppressHydrationWarning
+				className={twMerge(
+					"aspect-square shrink-0 bg-cover bg-center bg-no-repeat",
+					!placeholder && "bg-brand-gradient",
+					props.className
+				)}
+				style={{
+					...(placeholder && { backgroundImage: `url(${placeholder})` }),
+					...props.style
+				}}
+				aria-hidden={props.alt ? undefined : true}
+				aria-label={props.alt || undefined}
+				height={props.height}
+				role={props.alt ? "img" : undefined}
+				width={props.width}
+			/>
+		);
+	}
+
 	const background = loaded ? undefined : placeholder;
 
 	return (
@@ -78,8 +102,11 @@ export const UserImage: React.FC<UserImageProps> = ({ src, blurHash, ...props })
 				backgroundImage: background ? `url(${background})` : "none",
 				...props.style
 			}}
-			placeholder={!!background}
 			src={src}
+			onError={(event) => {
+				setFailed(true);
+				props.onError?.(event);
+			}}
 			onLoad={(event) => {
 				setLoaded(true);
 				props.onLoad?.(event);

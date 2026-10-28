@@ -53,8 +53,8 @@ import "./index.css";
 
 export type ImageSetValue = {
 	id: string;
-	src: string;
-	fullSrc: string;
+	src?: string;
+	fullSrc?: string;
 	blurHash?: string;
 	stereo?: boolean;
 }

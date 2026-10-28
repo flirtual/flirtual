@@ -5,8 +5,8 @@ import { twMerge } from "tailwind-merge";
 import { withSuspense } from "with-suspense";
 
 import type { ProfileImage } from "~/api/user/profile/images";
-import { Image } from "~/components/image";
 import { Link } from "~/components/link";
+import { UserImage } from "~/components/user-avatar";
 import { useUser } from "~/hooks/use-user";
 import { urls } from "~/urls";
 
@@ -39,13 +39,14 @@ export const ProfileImagesCard = withSuspense<{
 			onClick={onNavigate}
 		>
 			{images.map((image, imageIndex) => (
-				<Image
+				<UserImage
 					key={image.id}
 					className={twMerge(
 						"absolute inset-0 size-full object-cover transition-opacity duration-200",
 						imageIndex === index ? "opacity-100" : "opacity-0"
 					)}
 					alt=""
+					blurHash={image.blurHash}
 					height={512}
 					src={urls.image(image, "profile")}
 					width={512}

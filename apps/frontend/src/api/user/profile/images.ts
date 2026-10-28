@@ -1,6 +1,5 @@
 import { api } from "~/api/common";
 import type { DatedModel, UuidModel } from "~/api/common";
-import FallbackProfileImage from "~/static/fallback-profile-image.png";
 
 export interface ProfileImageMetadata {
 	authorId: string;
@@ -17,13 +16,6 @@ export type ProfileImage = {
 }
 & DatedModel
 & Partial<ProfileImageMetadata> & UuidModel;
-
-export const notFoundImage = {
-	id: "not-found",
-	url: FallbackProfileImage,
-	createdAt: new Date("2024-05-01T00:00:00.000Z").toISOString(),
-	updatedAt: new Date("2024-05-01T00:00:00.000Z").toISOString()
-};
 
 export interface WorldProfileItem {
 	userId: string;

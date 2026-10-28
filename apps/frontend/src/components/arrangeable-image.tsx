@@ -7,14 +7,14 @@ import type { ImageProps } from "./image";
 import { UserImage } from "./user-avatar";
 
 export interface ArrangeableImageProps {
-	src: string;
+	src?: string;
 	className?: string;
 	onDelete: () => void;
 	onFullscreen: () => void;
 }
 
 export const ArrangeableImagePreview: React.FC<
-	{ src: string } & Omit<ImageProps, "alt" | "height" | "src" | "width">
+	{ src?: string } & Omit<ImageProps, "alt" | "height" | "src" | "width">
 > = ({ className, ...props }) => {
 	return (
 		<UserImage
