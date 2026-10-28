@@ -1,0 +1,4 @@
+"NSCameraUsageDescription" = "A tua câmara é usada para tirar e carregar a tua foto de perfil.";
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "A tua localização é usada para mostrar a que distância estão os outros membros. A tua localização exata é sempre privada.";
+"NSLocationWhenInUseUsageDescription" = "A tua localização é usada para mostrar a que distância estão os outros membros. A tua localização exata é sempre privada.";
+"NSPhotoLibraryAddUsageDescription" = "O Flirtual precisa da tua permissão para transferir imagens.";

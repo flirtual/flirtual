@@ -1,3 +1,4 @@
+import { Capacitor, SystemBars, SystemBarsStyle } from "@capacitor/core";
 import montserratNormal from "@fontsource-variable/montserrat/files/montserrat-latin-wght-normal.woff2?url";
 import nunitoNormal from "@fontsource-variable/nunito/files/nunito-latin-wght-normal.woff2?url";
 import { LazyMotion } from "motion/react";
@@ -220,6 +221,12 @@ export function Layout({ children }: PropsWithChildren) {
 	preload(nunitoNormal, { as: "font", type: "font/woff2", crossOrigin: "anonymous" });
 
 	const [theme] = useTheme();
+
+	useEffect(() => {
+		if (!device.native || !device.android || !Capacitor.isPluginAvailable("SystemBars")) return;
+		void SystemBars.setStyle({ style: theme === "dark" ? SystemBarsStyle.Dark : SystemBarsStyle.Light });
+	}, [theme]);
+
 	const homiesMatch = useMatch(urls.discover("homies"));
 	const themeStyle = homieMode && homiesMatch ? "friend" : "default";
 

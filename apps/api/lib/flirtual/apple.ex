@@ -288,7 +288,7 @@ defmodule Flirtual.Apple do
           {_, jwk_map} = JOSE.JWK.to_map(jwk)
           {:ok, jwk_map}
 
-        {:error, reason} ->
+        reason ->
           log(:error, [:parse_private_key], reason)
 
           Sentry.capture_message("Apple private key unusable",

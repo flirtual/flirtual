@@ -82,7 +82,7 @@ defmodule Flirtual.Report do
            {:ok, reported} <- User.update_status(reported),
            {:ok, _} <- ObanWorkers.update_user(reported.id, [:search_index, :talkjs]),
            :ok <-
-             Discord.deliver_webhook(:report, %Report{report | user: reporter, target: reported}) do
+             Discord.deliver_webhook(:report, %{report | user: reporter, target: reported}) do
         report
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -134,7 +134,7 @@ defmodule Flirtual.Report do
              do: :ok,
              else:
                Discord.deliver_webhook(:review_report,
-                 report: %Report{report | target: reported},
+                 report: %{report | target: reported},
                  moderator: moderator,
                  was_shadow_banned: was_shadow_banned
                )

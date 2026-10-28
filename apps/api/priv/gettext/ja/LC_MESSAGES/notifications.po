@@ -8,7 +8,7 @@
 ### to merge POT files into PO files.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2026-10-26 22:51+0000\n"
+"PO-Revision-Date: 2026-10-28 01:51+0000\n"
 "Last-Translator: Claude <bot-flirtual-claude@bots.noreply.weblate.org>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/flirtual/"
 "notifications/ja/>\n"
@@ -279,9 +279,9 @@ msgstr "プロフィールを見る"
 msgid "browse_profiles_to_see_if_its_a_match_html"
 msgstr ""
 "<a href=\"%{action_url}\">プロフィールを見て</a>、マッチングするか確かめてみ"
-"ましょう。<p></p> <p>または、<a href=\"https://flirtu.al/subscription\">"
-"プレミアムにアップグレード</a>すると、いいねしてくれた人をすぐに確認でき、"
-"マッチングを逃しません。</p>"
+"ましょう。<p></p> <p>または<a href=\"https://flirtu.al/subscription\">"
+"プレミアムにアップグレード</a>すれば、誰からいいねされたかすぐに分かり、"
+"マッチングを逃す心配もありません。</p>"
 
 #: lib/flirtual/user/email.ex:268
 #, elixir-autogen, elixir-format, fuzzy
@@ -295,7 +295,7 @@ msgstr ""
 #: lib/flirtual/user/email.ex:285
 #, elixir-autogen, elixir-format, fuzzy
 msgid "see_who_likes_you"
-msgstr "いいねをくれた人を見る"
+msgstr "いいねしてくれた人を見る"
 
 #: lib/flirtual/user/email.ex:261
 #: lib/flirtual/user/email.ex:271

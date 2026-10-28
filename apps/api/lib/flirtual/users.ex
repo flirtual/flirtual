@@ -1,5 +1,4 @@
 defmodule Flirtual.Users do
-  require Flirtual.Utilities
   import Flirtual.Utilities
 
   import Ecto.Query

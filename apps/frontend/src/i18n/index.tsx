@@ -124,6 +124,16 @@ let preview: TranslationPreview | null = (() => {
 	}
 })();
 
+// Keeps objects whole so `returnObjects` callers don't break.
+function withKeys(value: unknown, path: string): unknown {
+	if (typeof value === "string") return path;
+	if (Array.isArray(value)) return value.map((item, index) => withKeys(item, `${path}.${index}`));
+	if (value && typeof value === "object") {
+		return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, withKeys(item, `${path}.${key}`)]));
+	}
+	return value;
+}
+
 export async function setTranslationPreview(next: TranslationPreview | null) {
 	try {
 		if (next) localStorage.setItem(previewStorageKey, next);
@@ -179,9 +189,9 @@ i18n
 	.use({
 		type: "postProcessor",
 		name: "translationPreview",
-		process: (value: string, key: Array<string> | string) => {
+		process: (value: unknown, key: Array<string> | string) => {
 			const [first] = [key].flat();
-			return preview === "keys" && first ? first : value;
+			return preview === "keys" && first ? withKeys(value, first) : value;
 		}
 	})
 	.use(icu)

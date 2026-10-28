@@ -314,24 +314,11 @@ export const Profile = withSuspense(({
 									{collapseBlankLines(user.profile.biography)}
 								</Html>
 							)
-						: myProfile
-							? (
-									<span className="text-xl italic dark:text-white-20">
-										<Trans
-											components={{
-												"settings-bio": (
-													<InlineLink href={urls.settings.bio} />
-												)
-											}}
-											i18nKey="add_bio_reminder"
-										/>
-									</span>
-								)
-							: (
-									<p>
-										No biography available.
-									</p>
-								)}
+						: (
+								<p>
+									No biography available.
+								</p>
+							)}
 					<ProfilePrompts prompts={user.profile.prompts} />
 					<PillCollection user={user} />
 				</div>

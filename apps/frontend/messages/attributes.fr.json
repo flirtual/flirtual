@@ -1978,9 +1978,6 @@
 		"av": {
 			"name": "Avar"
 		},
-		"ae": {
-			"name": "Avestique"
-		},
 		"ay": {
 			"name": "Aymara"
 		},
@@ -2027,13 +2024,10 @@
 			"name": "Tchétchène"
 		},
 		"ny": {
-			"name": "Chewa"
+			"name": "Chichewa"
 		},
 		"zh": {
-			"name": "Chinois"
-		},
-		"cu": {
-			"name": "Slavon d’église"
+			"name": "Mandarin"
 		},
 		"cv": {
 			"name": "Tchouvache"
@@ -2099,7 +2093,7 @@
 			"name": "Galicien"
 		},
 		"lg": {
-			"name": "Ganda"
+			"name": "Luganda"
 		},
 		"ka": {
 			"name": "Géorgien"
@@ -2148,12 +2142,6 @@
 		},
 		"id": {
 			"name": "Indonésien"
-		},
-		"ia": {
-			"name": "Interlingua"
-		},
-		"ie": {
-			"name": "Interlingue"
 		},
 		"iu": {
 			"name": "Inuktitut"
@@ -2306,7 +2294,7 @@
 			"name": "Occitan"
 		},
 		"oj": {
-			"name": "Ojibwa"
+			"name": "Ojibwé"
 		},
 		"or": {
 			"name": "Odia"
@@ -2316,9 +2304,6 @@
 		},
 		"os": {
 			"name": "Ossète"
-		},
-		"pi": {
-			"name": "Pali"
 		},
 		"pa": {
 			"name": "Pendjabi"
@@ -2352,9 +2337,6 @@
 		},
 		"sg": {
 			"name": "Sango"
-		},
-		"sa": {
-			"name": "Sanskrit"
 		},
 		"sc": {
 			"name": "Sarde"
@@ -2464,9 +2446,6 @@
 		"vi": {
 			"name": "Vietnamien"
 		},
-		"vo": {
-			"name": "Volapük"
-		},
 		"wa": {
 			"name": "Wallon"
 		},
@@ -2501,7 +2480,7 @@
 			"name": "Arabe marocain"
 		},
 		"ckb": {
-			"name": "Kurde sorani"
+			"name": "Kurde central (sorani)"
 		},
 		"dsb": {
 			"name": "Bas-sorabe"
@@ -2534,7 +2513,7 @@
 			"name": "Kʼicheʼ"
 		},
 		"sah": {
-			"name": "Iakoute"
+			"name": "Sakha (iakoute)"
 		},
 		"sma": {
 			"name": "Same du Sud"
@@ -2547,9 +2526,6 @@
 		},
 		"sms": {
 			"name": "Same skolt"
-		},
-		"syc": {
-			"name": "Syriaque classique"
 		},
 		"tzm": {
 			"name": "Amazighe de l’Atlas central"
@@ -2601,6 +2577,33 @@
 		},
 		"hbs": {
 			"name": "Serbo-croate"
+		},
+		"yue": {
+			"name": "Cantonais"
+		},
+		"ceb": {
+			"name": "Cebuano"
+		},
+		"haw": {
+			"name": "Hawaïen"
+		},
+		"hmn": {
+			"name": "Hmong"
+		},
+		"cnr": {
+			"name": "Monténégrin"
+		},
+		"asf": {
+			"name": "Langue des signes australienne (Auslan)"
+		},
+		"isg": {
+			"name": "Langue des signes irlandaise"
+		},
+		"ise": {
+			"name": "Langue des signes italienne"
+		},
+		"nzs": {
+			"name": "Langue des signes néo-zélandaise"
 		}
 	},
 	"ban-reason": {

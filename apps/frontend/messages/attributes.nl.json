@@ -1978,9 +1978,6 @@
 		"av": {
 			"name": "Avarisch"
 		},
-		"ae": {
-			"name": "Avestisch"
-		},
 		"ay": {
 			"name": "Aymara"
 		},
@@ -2027,13 +2024,10 @@
 			"name": "Tsjetsjeens"
 		},
 		"ny": {
-			"name": "Nyanja"
+			"name": "Chichewa"
 		},
 		"zh": {
-			"name": "Chinees"
-		},
-		"cu": {
-			"name": "Kerkslavisch"
+			"name": "Mandarijn"
 		},
 		"cv": {
 			"name": "Tsjoevasjisch"
@@ -2148,12 +2142,6 @@
 		},
 		"id": {
 			"name": "Indonesisch"
-		},
-		"ia": {
-			"name": "Interlingua"
-		},
-		"ie": {
-			"name": "Interlingue"
 		},
 		"iu": {
 			"name": "Inuktitut"
@@ -2306,7 +2294,7 @@
 			"name": "Occitaans"
 		},
 		"oj": {
-			"name": "Ojibwa"
+			"name": "Ojibwe"
 		},
 		"or": {
 			"name": "Odia"
@@ -2316,9 +2304,6 @@
 		},
 		"os": {
 			"name": "Ossetisch"
-		},
-		"pi": {
-			"name": "Pali"
 		},
 		"pa": {
 			"name": "Punjabi"
@@ -2352,9 +2337,6 @@
 		},
 		"sg": {
 			"name": "Sango"
-		},
-		"sa": {
-			"name": "Sanskriet"
 		},
 		"sc": {
 			"name": "Sardijns"
@@ -2464,9 +2446,6 @@
 		"vi": {
 			"name": "Vietnamees"
 		},
-		"vo": {
-			"name": "Volapük"
-		},
 		"wa": {
 			"name": "Waals"
 		},
@@ -2501,7 +2480,7 @@
 			"name": "Marokkaans Arabisch"
 		},
 		"ckb": {
-			"name": "Centraal-Koerdisch"
+			"name": "Centraal-Koerdisch (Sorani)"
 		},
 		"dsb": {
 			"name": "Nedersorbisch"
@@ -2534,7 +2513,7 @@
 			"name": "Kʼicheʼ"
 		},
 		"sah": {
-			"name": "Jakoets"
+			"name": "Sacha (Jakoets)"
 		},
 		"sma": {
 			"name": "Zuid-Samisch"
@@ -2547,9 +2526,6 @@
 		},
 		"sms": {
 			"name": "Skolt-Samisch"
-		},
-		"syc": {
-			"name": "Klassiek Syrisch"
 		},
 		"tzm": {
 			"name": "Centraal-Atlas-Tamazight"
@@ -2601,6 +2577,33 @@
 		},
 		"hbs": {
 			"name": "Servo-Kroatisch"
+		},
+		"yue": {
+			"name": "Kantonees"
+		},
+		"ceb": {
+			"name": "Cebuano"
+		},
+		"haw": {
+			"name": "Hawaïaans"
+		},
+		"hmn": {
+			"name": "Hmong"
+		},
+		"cnr": {
+			"name": "Montenegrijns"
+		},
+		"asf": {
+			"name": "Australische Gebarentaal (Auslan)"
+		},
+		"isg": {
+			"name": "Ierse Gebarentaal"
+		},
+		"ise": {
+			"name": "Italiaanse Gebarentaal"
+		},
+		"nzs": {
+			"name": "Nieuw-Zeelandse Gebarentaal"
 		}
 	},
 	"gender": {

@@ -2559,9 +2559,6 @@
 		"av": {
 			"name": "Avaric"
 		},
-		"ae": {
-			"name": "Avestan"
-		},
 		"ay": {
 			"name": "Aymara"
 		},
@@ -2608,13 +2605,10 @@
 			"name": "Chechen"
 		},
 		"ny": {
-			"name": "Nyanja"
+			"name": "Chichewa"
 		},
 		"zh": {
-			"name": "Chinese"
-		},
-		"cu": {
-			"name": "Church Slavic"
+			"name": "Mandarin"
 		},
 		"cv": {
 			"name": "Chuvash"
@@ -2680,7 +2674,7 @@
 			"name": "Galician"
 		},
 		"lg": {
-			"name": "Ganda"
+			"name": "Luganda"
 		},
 		"ka": {
 			"name": "Georgian"
@@ -2730,12 +2724,6 @@
 		"id": {
 			"name": "Indonesian"
 		},
-		"ia": {
-			"name": "Interlingua"
-		},
-		"ie": {
-			"name": "Interlingue"
-		},
 		"iu": {
 			"name": "Inuktitut"
 		},
@@ -2755,7 +2743,7 @@
 			"name": "Javanese"
 		},
 		"kl": {
-			"name": "Kalaallisut"
+			"name": "Greenlandic"
 		},
 		"kn": {
 			"name": "Kannada"
@@ -2854,7 +2842,7 @@
 			"name": "Mongolian"
 		},
 		"na": {
-			"name": "Nauru"
+			"name": "Nauruan"
 		},
 		"nv": {
 			"name": "Navajo"
@@ -2887,7 +2875,7 @@
 			"name": "Occitan"
 		},
 		"oj": {
-			"name": "Ojibwa"
+			"name": "Ojibwe"
 		},
 		"or": {
 			"name": "Odia"
@@ -2896,10 +2884,7 @@
 			"name": "Oromo"
 		},
 		"os": {
-			"name": "Ossetic"
-		},
-		"pi": {
-			"name": "Pali"
+			"name": "Ossetian"
 		},
 		"pa": {
 			"name": "Punjabi"
@@ -2933,9 +2918,6 @@
 		},
 		"sg": {
 			"name": "Sango"
-		},
-		"sa": {
-			"name": "Sanskrit"
 		},
 		"sc": {
 			"name": "Sardinian"
@@ -3045,9 +3027,6 @@
 		"vi": {
 			"name": "Vietnamese"
 		},
-		"vo": {
-			"name": "Volapük"
-		},
 		"wa": {
 			"name": "Walloon"
 		},
@@ -3082,7 +3061,7 @@
 			"name": "Moroccan Arabic"
 		},
 		"ckb": {
-			"name": "Central Kurdish"
+			"name": "Central Kurdish (Sorani)"
 		},
 		"dsb": {
 			"name": "Lower Sorbian"
@@ -3118,7 +3097,7 @@
 			"name": "Kʼicheʼ"
 		},
 		"sah": {
-			"name": "Yakut"
+			"name": "Sakha"
 		},
 		"sma": {
 			"name": "Southern Sami"
@@ -3132,14 +3111,29 @@
 		"sms": {
 			"name": "Skolt Sami"
 		},
-		"syc": {
-			"name": "Classical Syriac"
-		},
 		"tzm": {
 			"name": "Central Atlas Tamazight"
 		},
+		"yue": {
+			"name": "Cantonese"
+		},
+		"ceb": {
+			"name": "Cebuano"
+		},
+		"haw": {
+			"name": "Hawaiian"
+		},
+		"hmn": {
+			"name": "Hmong"
+		},
+		"cnr": {
+			"name": "Montenegrin"
+		},
 		"ase": {
 			"name": "American Sign Language"
+		},
+		"asf": {
+			"name": "Australian Sign Language (Auslan)"
 		},
 		"bzs": {
 			"name": "Brazilian Sign Language"
@@ -3165,6 +3159,12 @@
 		"inl": {
 			"name": "Indonesian Sign Language"
 		},
+		"isg": {
+			"name": "Irish Sign Language"
+		},
+		"ise": {
+			"name": "Italian Sign Language"
+		},
 		"jsl": {
 			"name": "Japanese Sign Language"
 		},
@@ -3173,6 +3173,9 @@
 		},
 		"mfs": {
 			"name": "Mexican Sign Language"
+		},
+		"nzs": {
+			"name": "New Zealand Sign Language"
 		},
 		"psr": {
 			"name": "Portuguese Sign Language"

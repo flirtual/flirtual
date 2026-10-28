@@ -22,6 +22,7 @@ Register and terms are **provisional** until a native reviewer confirms them.
 | NSFW (disallowed) | nudez ou conteúdo sexual explícito (provisional) |
 | They/Them | elu/delu |
 | She/Her, He/Him | ela/dela, ele/dele |
+| … Sign Language | Língua de Sinais … (never "Linguagem de sinais"); Brazilian is Língua Brasileira de Sinais (Libras) |
 
 ## Style
 

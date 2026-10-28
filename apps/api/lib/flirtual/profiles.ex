@@ -557,13 +557,13 @@ defmodule Flirtual.Profiles do
   def update_colors(%Profile{} = profile, attrs) do
     Repo.transaction(fn ->
       with {:ok, attrs} <- UpdateColors.apply(attrs),
-           profile
-           |> change(%{color_1: attrs.color_1, color_2: attrs.color_2})
-           |> Repo.update() do
+           {:ok, profile} <-
+             profile
+             |> change(%{color_1: attrs.color_1, color_2: attrs.color_2})
+             |> Repo.update() do
         profile
       else
         {:error, reason} -> Repo.rollback(reason)
-        reason -> Repo.rollback(reason)
       end
     end)
   end

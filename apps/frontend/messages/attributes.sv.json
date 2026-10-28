@@ -1978,9 +1978,6 @@
 		"av": {
 			"name": "Avariska"
 		},
-		"ae": {
-			"name": "Avestiska"
-		},
 		"ay": {
 			"name": "Aymara"
 		},
@@ -2027,13 +2024,10 @@
 			"name": "Tjetjenska"
 		},
 		"ny": {
-			"name": "Nyanja"
+			"name": "Chichewa"
 		},
 		"zh": {
-			"name": "Kinesiska"
-		},
-		"cu": {
-			"name": "Kyrkslaviska"
+			"name": "Mandarin"
 		},
 		"cv": {
 			"name": "Tjuvasjiska"
@@ -2148,12 +2142,6 @@
 		},
 		"id": {
 			"name": "Indonesiska"
-		},
-		"ia": {
-			"name": "Interlingua"
-		},
-		"ie": {
-			"name": "Interlingue"
 		},
 		"iu": {
 			"name": "Inuktitut"
@@ -2306,7 +2294,7 @@
 			"name": "Occitanska"
 		},
 		"oj": {
-			"name": "Odjibwa"
+			"name": "Ojibwe"
 		},
 		"or": {
 			"name": "Oriya"
@@ -2316,9 +2304,6 @@
 		},
 		"os": {
 			"name": "Ossetiska"
-		},
-		"pi": {
-			"name": "Pali"
 		},
 		"pa": {
 			"name": "Punjabi"
@@ -2352,9 +2337,6 @@
 		},
 		"sg": {
 			"name": "Sango"
-		},
-		"sa": {
-			"name": "Sanskrit"
 		},
 		"sc": {
 			"name": "Sardinska"
@@ -2464,9 +2446,6 @@
 		"vi": {
 			"name": "Vietnamesiska"
 		},
-		"vo": {
-			"name": "Volapük"
-		},
 		"wa": {
 			"name": "Vallonska"
 		},
@@ -2501,7 +2480,7 @@
 			"name": "Marockansk arabiska"
 		},
 		"ckb": {
-			"name": "Centralkurdiska"
+			"name": "Centralkurdiska (sorani)"
 		},
 		"dsb": {
 			"name": "Lågsorbiska"
@@ -2534,7 +2513,7 @@
 			"name": "Kʼicheʼ"
 		},
 		"sah": {
-			"name": "Jakutiska"
+			"name": "Sakha (jakutiska)"
 		},
 		"sma": {
 			"name": "Sydsamiska"
@@ -2547,9 +2526,6 @@
 		},
 		"sms": {
 			"name": "Skoltsamiska"
-		},
-		"syc": {
-			"name": "Klassisk syriska"
 		},
 		"tzm": {
 			"name": "Centralmarockansk tamazight"
@@ -2601,6 +2577,33 @@
 		},
 		"hbs": {
 			"name": "Serbokroatiska"
+		},
+		"yue": {
+			"name": "Kantonesiska"
+		},
+		"ceb": {
+			"name": "Cebuano"
+		},
+		"haw": {
+			"name": "Hawaiiska"
+		},
+		"hmn": {
+			"name": "Hmong"
+		},
+		"cnr": {
+			"name": "Montenegrinska"
+		},
+		"asf": {
+			"name": "Australiskt teckenspråk (Auslan)"
+		},
+		"isg": {
+			"name": "Irländskt teckenspråk"
+		},
+		"ise": {
+			"name": "Italienskt teckenspråk"
+		},
+		"nzs": {
+			"name": "Nyzeeländskt teckenspråk"
 		}
 	},
 	"gender": {

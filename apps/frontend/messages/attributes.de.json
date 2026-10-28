@@ -94,9 +94,6 @@
 		"av": {
 			"name": "Awarisch"
 		},
-		"ae": {
-			"name": "Avestisch"
-		},
 		"ay": {
 			"name": "Aymara"
 		},
@@ -143,13 +140,10 @@
 			"name": "Tschetschenisch"
 		},
 		"ny": {
-			"name": "Nyanja"
+			"name": "Chichewa"
 		},
 		"zh": {
-			"name": "Chinesisch"
-		},
-		"cu": {
-			"name": "Kirchenslawisch"
+			"name": "Mandarin"
 		},
 		"cv": {
 			"name": "Tschuwaschisch"
@@ -215,7 +209,7 @@
 			"name": "Galicisch"
 		},
 		"lg": {
-			"name": "Ganda"
+			"name": "Luganda"
 		},
 		"ka": {
 			"name": "Georgisch"
@@ -264,12 +258,6 @@
 		},
 		"id": {
 			"name": "Indonesisch"
-		},
-		"ia": {
-			"name": "Interlingua"
-		},
-		"ie": {
-			"name": "Interlingue"
 		},
 		"iu": {
 			"name": "Inuktitut"
@@ -422,7 +410,7 @@
 			"name": "Okzitanisch"
 		},
 		"oj": {
-			"name": "Ojibwa"
+			"name": "Ojibwe"
 		},
 		"or": {
 			"name": "Oriya"
@@ -432,9 +420,6 @@
 		},
 		"os": {
 			"name": "Ossetisch"
-		},
-		"pi": {
-			"name": "Pali"
 		},
 		"pa": {
 			"name": "Punjabi"
@@ -468,9 +453,6 @@
 		},
 		"sg": {
 			"name": "Sango"
-		},
-		"sa": {
-			"name": "Sanskrit"
 		},
 		"sc": {
 			"name": "Sardisch"
@@ -580,9 +562,6 @@
 		"vi": {
 			"name": "Vietnamesisch"
 		},
-		"vo": {
-			"name": "Volapük"
-		},
 		"wa": {
 			"name": "Wallonisch"
 		},
@@ -617,7 +596,7 @@
 			"name": "Marokkanisches Arabisch"
 		},
 		"ckb": {
-			"name": "Zentralkurdisch"
+			"name": "Zentralkurdisch (Sorani)"
 		},
 		"dsb": {
 			"name": "Niedersorbisch"
@@ -650,7 +629,7 @@
 			"name": "Kʼicheʼ"
 		},
 		"sah": {
-			"name": "Jakutisch"
+			"name": "Sacha (Jakutisch)"
 		},
 		"sma": {
 			"name": "Südsamisch"
@@ -663,9 +642,6 @@
 		},
 		"sms": {
 			"name": "Skolt-Samisch"
-		},
-		"syc": {
-			"name": "Altsyrisch"
 		},
 		"tzm": {
 			"name": "Zentralatlas-Tamazight"
@@ -717,6 +693,33 @@
 		},
 		"hbs": {
 			"name": "Serbokroatisch"
+		},
+		"yue": {
+			"name": "Kantonesisch"
+		},
+		"ceb": {
+			"name": "Cebuano"
+		},
+		"haw": {
+			"name": "Hawaiisch"
+		},
+		"hmn": {
+			"name": "Hmong"
+		},
+		"cnr": {
+			"name": "Montenegrinisch"
+		},
+		"asf": {
+			"name": "Australische Gebärdensprache (Auslan)"
+		},
+		"isg": {
+			"name": "Irische Gebärdensprache"
+		},
+		"ise": {
+			"name": "Italienische Gebärdensprache"
+		},
+		"nzs": {
+			"name": "Neuseeländische Gebärdensprache"
 		}
 	},
 	"delete-reason": {

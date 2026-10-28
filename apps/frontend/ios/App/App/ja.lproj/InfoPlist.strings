@@ -1,0 +1,4 @@
+"NSCameraUsageDescription" = "プロフィール写真の撮影とアップロードにカメラを使用します。";
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "ほかのメンバーとの距離を表示するために位置情報を使用します。正確な位置情報が公開されることはありません。";
+"NSLocationWhenInUseUsageDescription" = "ほかのメンバーとの距離を表示するために位置情報を使用します。正確な位置情報が公開されることはありません。";
+"NSPhotoLibraryAddUsageDescription" = "画像をダウンロードするには、Flirtualへの許可が必要です。";

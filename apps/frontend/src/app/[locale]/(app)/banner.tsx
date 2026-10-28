@@ -94,8 +94,8 @@ export const AppBanner: FC = () => {
 		return (
 			<Banner icon={null}>
 				<span className="flex items-center gap-4 whitespace-nowrap">
-					Previewing translation
-					<TranslationPreviewSelect className="w-60" />
+					<span className="truncate">Previewing translation</span>
+					<TranslationPreviewSelect className="w-60 shrink-0" />
 				</span>
 			</Banner>
 		);

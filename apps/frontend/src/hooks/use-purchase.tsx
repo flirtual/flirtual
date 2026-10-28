@@ -175,8 +175,14 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 
 	const purchase = useCallback(
 		async (planId?: string): Promise<void> => {
+			// Shown to the user; the English cause still reaches Sentry.
+			const fail = (key: "checkout_not_available" | "plan_not_available", cause: unknown) =>
+				new Error(t(`errors.${key}`), { cause });
+
 			if (!native) {
-				const chargebee = await getChargebee();
+				const chargebee = await getChargebee().catch((reason) => {
+					throw fail("checkout_not_available", reason);
+				});
 
 				if (planId) {
 					await new Promise<void>((resolve, reject) => {
@@ -214,8 +220,8 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 				return;
 			}
 
-			if (!revenuecatId) throw new Error("Not logged in");
-			if (platform === "web") throw new Error("Unsupported platform");
+			if (!revenuecatId) throw fail("plan_not_available", new Error("Not logged in"));
+			if (platform === "web") throw fail("checkout_not_available", new Error("Unsupported platform"));
 
 			await ensureConfigured(platform, revenuecatId);
 			await ensureIdentified(revenuecatId);
@@ -223,7 +229,7 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 			const { Purchases } = await getPurchaseModule();
 
 			const { appUserID } = await Purchases.getAppUserID();
-			if (appUserID !== revenuecatId) throw new Error("Identity mismatch");
+			if (appUserID !== revenuecatId) throw fail("plan_not_available", new Error("Identity mismatch"));
 
 			const { customerInfo } = await Purchases.getCustomerInfo();
 
@@ -235,7 +241,7 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 			const plan = plans?.find((plan) => plan.id === planId);
 
 			if (!plan || !plan.googleId || !plan.appleId || !plan.revenuecatId)
-				throw new Error("Plan not available");
+				throw fail("plan_not_available", new Error("Plan not available"));
 
 			const productId = apple ? plan.appleId : plan.googleId;
 
@@ -249,7 +255,7 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 
 			const aPackage = await getPackage(plan.revenuecatId);
 
-			if (!aPackage) throw new Error("Package not available");
+			if (!aPackage) throw fail("plan_not_available", new Error("Package not available"));
 
 			await Purchases.purchasePackage({ aPackage })
 				.then(async () => {

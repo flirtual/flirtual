@@ -12,7 +12,7 @@ defmodule FlirtualWeb.ProfileController do
 
   def update(conn, %{"user_id" => user_id} = params) do
     user = Users.get(user_id)
-    profile = %Profile{user.profile | user: user}
+    profile = if user, do: %{user.profile | user: user}
 
     if is_nil(user) or Policy.cannot?(conn, :update, profile) do
       {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
@@ -40,7 +40,7 @@ defmodule FlirtualWeb.ProfileController do
 
   def update_personality(conn, %{"user_id" => user_id} = params) do
     user = Users.get(user_id)
-    profile = %Profile{user.profile | user: user}
+    profile = if user, do: %{user.profile | user: user}
 
     cond do
       not Features.personality?() ->
@@ -58,7 +58,7 @@ defmodule FlirtualWeb.ProfileController do
 
   def update_preferences(conn, %{"user_id" => user_id} = params) do
     user = Users.get(user_id)
-    profile = %Profile{user.profile | user: user}
+    profile = if user, do: %{user.profile | user: user}
 
     if is_nil(user) or Policy.cannot?(conn, :update, profile) do
       {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
@@ -80,7 +80,7 @@ defmodule FlirtualWeb.ProfileController do
         else: Users.get(user_id)
       )
 
-    profile = %Profile{user.profile | user: user}
+    profile = if user, do: %{user.profile | user: user}
 
     if is_nil(user) or Policy.cannot?(conn, :update, profile) do
       {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
@@ -97,7 +97,7 @@ defmodule FlirtualWeb.ProfileController do
 
   def update_advanced_filters(conn, %{"user_id" => user_id, "_json" => filters}) do
     user = Users.get(user_id)
-    profile = %Profile{user.profile | user: user}
+    profile = if user, do: %{user.profile | user: user}
 
     if is_nil(user) or Policy.cannot?(conn, :update, profile) do
       {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
@@ -126,7 +126,7 @@ defmodule FlirtualWeb.ProfileController do
 
   def create_images(conn, %{"user_id" => user_id, "_json" => files}) do
     user = Users.get(user_id)
-    profile = %Profile{user.profile | user: user}
+    profile = if user, do: %{user.profile | user: user}
 
     if is_nil(user) or Policy.cannot?(conn, :update, profile) do
       {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
@@ -139,7 +139,7 @@ defmodule FlirtualWeb.ProfileController do
 
   def update_images(conn, %{"user_id" => user_id, "_json" => image_ids}) do
     user = Users.get(user_id)
-    profile = %Profile{user.profile | user: user}
+    profile = if user, do: %{user.profile | user: user}
 
     if is_nil(user) or Policy.cannot?(conn, :update, profile) do
       {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
@@ -152,7 +152,7 @@ defmodule FlirtualWeb.ProfileController do
 
   def update_prompts(conn, %{"user_id" => user_id, "_json" => prompts}) do
     user = Users.get(user_id)
-    profile = %Profile{user.profile | user: user}
+    profile = if user, do: %{user.profile | user: user}
 
     if is_nil(user) or Policy.cannot?(conn, :update, profile) do
       {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
@@ -166,7 +166,7 @@ defmodule FlirtualWeb.ProfileController do
 
   def update_geolocation(conn, %{"user_id" => user_id} = params) do
     user = Users.get(user_id)
-    profile = %Profile{user.profile | user: user}
+    profile = if user, do: %{user.profile | user: user}
 
     if is_nil(user) or Policy.cannot?(conn, :update, profile) do
       {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
@@ -192,7 +192,7 @@ defmodule FlirtualWeb.ProfileController do
 
   def delete_geolocation(conn, %{"user_id" => user_id}) do
     user = Users.get(user_id)
-    profile = %Profile{user.profile | user: user}
+    profile = if user, do: %{user.profile | user: user}
 
     if is_nil(user) or Policy.cannot?(conn, :update, profile) do
       {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}

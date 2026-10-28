@@ -18,7 +18,7 @@ defmodule Flirtual.Connection.Provider do
   end
 
   defmacro __before_compile__(_) do
-    quote do
+    quote generated: true do
       def profile_avatar_url(_), do: nil
       def profile_url(_), do: nil
 

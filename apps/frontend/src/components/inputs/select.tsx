@@ -292,7 +292,7 @@ export function InputSelect<K>(props: InputSelectProps<K>) {
 					className={twMerge(
 						"truncate",
 						!activeOption && "text-black-30 dark:text-white-50",
-						optional && props.value && "mr-8"
+						optional && props.value && "mr-11"
 					)}
 				>
 					{activeOption?.name || placeholder}

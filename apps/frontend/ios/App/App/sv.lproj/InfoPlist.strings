@@ -1,0 +1,4 @@
+"NSCameraUsageDescription" = "Din kamera används för att ta och ladda upp din profilbild.";
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "Din plats används för att visa hur nära andra medlemmar är. Din exakta plats är alltid privat.";
+"NSLocationWhenInUseUsageDescription" = "Din plats används för att visa hur nära andra medlemmar är. Din exakta plats är alltid privat.";
+"NSPhotoLibraryAddUsageDescription" = "Flirtual behöver ditt tillstånd för att ladda ned bilder.";

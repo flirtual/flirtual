@@ -2504,9 +2504,6 @@
 		"av": {
 			"name": "Avárico"
 		},
-		"ae": {
-			"name": "Avéstico"
-		},
 		"ay": {
 			"name": "Aimará"
 		},
@@ -2553,13 +2550,10 @@
 			"name": "Checheno"
 		},
 		"ny": {
-			"name": "Nyanja"
+			"name": "Chichewa"
 		},
 		"zh": {
-			"name": "Chinês"
-		},
-		"cu": {
-			"name": "Eslavo eclesiástico"
+			"name": "Mandarim"
 		},
 		"cv": {
 			"name": "Tchuvache"
@@ -2674,12 +2668,6 @@
 		},
 		"id": {
 			"name": "Indonésio"
-		},
-		"ia": {
-			"name": "Interlíngua"
-		},
-		"ie": {
-			"name": "Interlingue"
 		},
 		"iu": {
 			"name": "Inuktitut"
@@ -2832,7 +2820,7 @@
 			"name": "Occitano"
 		},
 		"oj": {
-			"name": "Ojibwa"
+			"name": "Ojibwe"
 		},
 		"or": {
 			"name": "Oriá"
@@ -2842,9 +2830,6 @@
 		},
 		"os": {
 			"name": "Ossético"
-		},
-		"pi": {
-			"name": "Páli"
 		},
 		"pa": {
 			"name": "Panjabi"
@@ -2878,9 +2863,6 @@
 		},
 		"sg": {
 			"name": "Sango"
-		},
-		"sa": {
-			"name": "Sânscrito"
 		},
 		"sc": {
 			"name": "Sardo"
@@ -2990,9 +2972,6 @@
 		"vi": {
 			"name": "Vietnamita"
 		},
-		"vo": {
-			"name": "Volapuque"
-		},
 		"wa": {
 			"name": "Valão"
 		},
@@ -3027,7 +3006,7 @@
 			"name": "Árabe marroquino"
 		},
 		"ckb": {
-			"name": "Curdo central"
+			"name": "Curdo central (Sorani)"
 		},
 		"dsb": {
 			"name": "Baixo sorábio"
@@ -3060,7 +3039,7 @@
 			"name": "Quiché"
 		},
 		"sah": {
-			"name": "Sakha"
+			"name": "Sakha (iacuto)"
 		},
 		"sma": {
 			"name": "Sami do sul"
@@ -3073,9 +3052,6 @@
 		},
 		"sms": {
 			"name": "Sami de Skolt"
-		},
-		"syc": {
-			"name": "Siríaco clássico"
 		},
 		"tzm": {
 			"name": "Tamazight do Atlas Central"
@@ -3127,6 +3103,33 @@
 		},
 		"hbs": {
 			"name": "Servo-croata"
+		},
+		"yue": {
+			"name": "Cantonês"
+		},
+		"haw": {
+			"name": "Havaiano"
+		},
+		"ceb": {
+			"name": "Cebuano"
+		},
+		"hmn": {
+			"name": "Hmong"
+		},
+		"cnr": {
+			"name": "Montenegrino"
+		},
+		"asf": {
+			"name": "Língua Gestual Australiana (Auslan)"
+		},
+		"isg": {
+			"name": "Língua Gestual Irlandesa"
+		},
+		"ise": {
+			"name": "Língua Gestual Italiana"
+		},
+		"nzs": {
+			"name": "Língua Gestual Neozelandesa"
 		}
 	},
 	"relationship": {

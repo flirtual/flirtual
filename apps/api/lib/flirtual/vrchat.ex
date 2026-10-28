@@ -34,7 +34,7 @@ defmodule Flirtual.VRChat do
     end
   end
 
-  def get_worlds_by_category(_, _, params \\ %{})
+  def get_worlds_by_category(_, _, params \\ [])
 
   def get_worlds_by_category(vrchat, "recommended", params) do
     vrchat

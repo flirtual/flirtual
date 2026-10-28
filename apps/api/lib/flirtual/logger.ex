@@ -19,7 +19,7 @@ defmodule Flirtual.Logger do
         logger_name = to_string(unquote(name))
         inspect_options = unquote(@inspect_options)
 
-        quote do
+        quote generated: true do
           list = unquote(list)
           details = unquote(details)
 
