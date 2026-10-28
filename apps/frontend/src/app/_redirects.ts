@@ -1,6 +1,6 @@
 import { homieMode } from "~/features";
 import Bimi from "~/static/bimi.svg";
-import Favicon from "~/static/mark.svg?w=32&h=32&fit=contain&background=transparent&format=png&no-inline&imagetools";
+import Favicon from "~/static/favicon.ico?no-inline";
 import { urls } from "~/urls";
 
 // see: https://developers.cloudflare.com/workers/static-assets/redirects/

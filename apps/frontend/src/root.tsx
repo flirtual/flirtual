@@ -15,6 +15,7 @@ import {
 	useParams
 } from "react-router";
 
+import Favicon from "~/static/favicon.ico?no-inline";
 import MarkBlack from "~/static/mark-black.svg?no-inline";
 import OpenGraphImage from "~/static/mark-on-gradient.svg?w=1000&h=1000&format=png&no-inline&imagetools";
 import TwitterImage from "~/static/mark-on-gradient.svg?w=1000&h=1000&no-inline&imagetools";
@@ -133,6 +134,7 @@ export function meta({
 
 		{ tagName: "link", rel: "manifest", href: href("/manifest.json") },
 
+		{ tagName: "link", rel: "icon", type: "image/x-icon", sizes: "48x48", href: Favicon },
 		{ tagName: "link", rel: "icon", type: "image/svg+xml", sizes: "any", href: Icon },
 		{ tagName: "link", rel: "icon", type: "image/png", sizes: "32x32", href: Icon32x32 },
 		{ tagName: "link", rel: "icon", type: "image/png", sizes: "16x16", href: Icon16x16 },
