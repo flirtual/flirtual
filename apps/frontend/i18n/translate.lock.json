@@ -9214,18 +9214,6 @@
 		"ja": "dac3da53f572ab59",
 		"ko": "dac3da53f572ab59"
 	},
-	"attributes:language.ae.name": {
-		"de": "e399ba04eae76617",
-		"es": "e399ba04eae76617",
-		"fr": "e399ba04eae76617",
-		"nl": "e399ba04eae76617",
-		"pt": "e399ba04eae76617",
-		"pt-BR": "e399ba04eae76617",
-		"ru": "e399ba04eae76617",
-		"sv": "e399ba04eae76617",
-		"ja": "e399ba04eae76617",
-		"ko": "e399ba04eae76617"
-	},
 	"attributes:language.af.name": {
 		"de": "c9988f40e4b47cd0",
 		"es": "c9988f40e4b47cd0",
@@ -9629,18 +9617,6 @@
 		"sv": "de18c2b783b13f43",
 		"ja": "de18c2b783b13f43",
 		"ko": "de18c2b783b13f43"
-	},
-	"attributes:language.cu.name": {
-		"de": "5edbc68590a77182",
-		"es": "5edbc68590a77182",
-		"fr": "5edbc68590a77182",
-		"nl": "5edbc68590a77182",
-		"pt": "5edbc68590a77182",
-		"pt-BR": "5edbc68590a77182",
-		"ru": "5edbc68590a77182",
-		"sv": "5edbc68590a77182",
-		"ja": "5edbc68590a77182",
-		"ko": "5edbc68590a77182"
 	},
 	"attributes:language.cv.name": {
 		"de": "f7f287e14e8c9836",
@@ -10191,18 +10167,6 @@
 		"ja": "97b9ac63041f1435",
 		"ko": "97b9ac63041f1435"
 	},
-	"attributes:language.ia.name": {
-		"de": "11ee332fe0b8d3da",
-		"es": "11ee332fe0b8d3da",
-		"fr": "11ee332fe0b8d3da",
-		"nl": "11ee332fe0b8d3da",
-		"pt": "11ee332fe0b8d3da",
-		"pt-BR": "11ee332fe0b8d3da",
-		"ru": "11ee332fe0b8d3da",
-		"sv": "11ee332fe0b8d3da",
-		"ja": "11ee332fe0b8d3da",
-		"ko": "11ee332fe0b8d3da"
-	},
 	"attributes:language.id.name": {
 		"de": "d8067538e9f12569",
 		"es": "d8067538e9f12569",
@@ -10214,18 +10178,6 @@
 		"sv": "d8067538e9f12569",
 		"ja": "d8067538e9f12569",
 		"ko": "d8067538e9f12569"
-	},
-	"attributes:language.ie.name": {
-		"de": "a688dbcfeb0add51",
-		"es": "a688dbcfeb0add51",
-		"fr": "a688dbcfeb0add51",
-		"nl": "a688dbcfeb0add51",
-		"pt": "a688dbcfeb0add51",
-		"pt-BR": "a688dbcfeb0add51",
-		"ru": "a688dbcfeb0add51",
-		"sv": "a688dbcfeb0add51",
-		"ja": "a688dbcfeb0add51",
-		"ko": "a688dbcfeb0add51"
 	},
 	"attributes:language.ig.name": {
 		"de": "32973a1568f1f386",
@@ -11074,18 +11026,6 @@
 		"ja": "e38dd34b33e6781c",
 		"ko": "e38dd34b33e6781c"
 	},
-	"attributes:language.pi.name": {
-		"de": "52f1090081c3e5a5",
-		"es": "52f1090081c3e5a5",
-		"fr": "52f1090081c3e5a5",
-		"nl": "52f1090081c3e5a5",
-		"pt": "52f1090081c3e5a5",
-		"pt-BR": "52f1090081c3e5a5",
-		"ru": "52f1090081c3e5a5",
-		"sv": "52f1090081c3e5a5",
-		"ja": "52f1090081c3e5a5",
-		"ko": "52f1090081c3e5a5"
-	},
 	"attributes:language.pl.name": {
 		"de": "83bdaad12c663610",
 		"es": "83bdaad12c663610",
@@ -11239,18 +11179,6 @@
 		"sv": "5ba98bf0f690aa18",
 		"ja": "5ba98bf0f690aa18",
 		"ko": "5ba98bf0f690aa18"
-	},
-	"attributes:language.sa.name": {
-		"de": "a16de9020ecb8790",
-		"es": "a16de9020ecb8790",
-		"fr": "a16de9020ecb8790",
-		"nl": "a16de9020ecb8790",
-		"pt": "a16de9020ecb8790",
-		"pt-BR": "a16de9020ecb8790",
-		"ru": "a16de9020ecb8790",
-		"sv": "a16de9020ecb8790",
-		"ja": "a16de9020ecb8790",
-		"ko": "a16de9020ecb8790"
 	},
 	"attributes:language.sah.name": {
 		"de": "6d278d64d5eba0bc",
@@ -11527,18 +11455,6 @@
 		"ja": "1b6344bbf04cddd1",
 		"ko": "1b6344bbf04cddd1"
 	},
-	"attributes:language.syc.name": {
-		"de": "8e69b2fa3eaccf91",
-		"es": "8e69b2fa3eaccf91",
-		"fr": "8e69b2fa3eaccf91",
-		"nl": "8e69b2fa3eaccf91",
-		"pt": "8e69b2fa3eaccf91",
-		"pt-BR": "8e69b2fa3eaccf91",
-		"ru": "8e69b2fa3eaccf91",
-		"sv": "8e69b2fa3eaccf91",
-		"ja": "8e69b2fa3eaccf91",
-		"ko": "8e69b2fa3eaccf91"
-	},
 	"attributes:language.ta.name": {
 		"de": "3c35aec40ce5edab",
 		"es": "3c35aec40ce5edab",
@@ -11790,18 +11706,6 @@
 		"sv": "c1ad9b8ca0699cf8",
 		"ja": "c1ad9b8ca0699cf8",
 		"ko": "c1ad9b8ca0699cf8"
-	},
-	"attributes:language.vo.name": {
-		"de": "668174eef1a5c0dc",
-		"es": "668174eef1a5c0dc",
-		"fr": "668174eef1a5c0dc",
-		"nl": "668174eef1a5c0dc",
-		"pt": "668174eef1a5c0dc",
-		"pt-BR": "668174eef1a5c0dc",
-		"ru": "668174eef1a5c0dc",
-		"sv": "668174eef1a5c0dc",
-		"ja": "668174eef1a5c0dc",
-		"ko": "668174eef1a5c0dc"
 	},
 	"attributes:language.wa.name": {
 		"de": "4abae7feaef4b710",

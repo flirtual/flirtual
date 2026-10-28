@@ -11084,21 +11084,6 @@
 		"hash": "dac3da53f572ab59",
 		"watch": true
 	},
-	"attributes:language.ae.name": {
-		"group": "attributes/language",
-		"screens": [
-			"/settings/info",
-			"/finish/2",
-			"/settings/matchmaking",
-			"profile",
-			"watch: profile"
-		],
-		"element": "attribute",
-		"description": "Name of a language a user says they speak. Shown as an option in the language picker on the profile info/onboarding forms (sorted alphabetically in the viewer's language), as a filter option under Languages in advanced matchmaking filters, and as a pill on profiles (also on the Apple Watch profile tags). The key is the ISO 639 code; if left untranslated the app falls back to the browser/OS's built-in language name (Intl.DisplayNames / Locale), so use the standard name your language normally uses for it (e.g. as in CLDR), not a literal translation. Use the form a language name takes standalone in a list, capitalized as your language capitalizes list items.",
-		"tone": "Plain, standard naming",
-		"hash": "e399ba04eae76617",
-		"watch": true
-	},
 	"attributes:language.af.name": {
 		"group": "attributes/language",
 		"screens": [
@@ -11607,21 +11592,6 @@
 		"description": "Name of a language a user says they speak. Shown as an option in the language picker on the profile info/onboarding forms (sorted alphabetically in the viewer's language), as a filter option under Languages in advanced matchmaking filters, and as a pill on profiles (also on the Apple Watch profile tags). The key is the ISO 639 code; if left untranslated the app falls back to the browser/OS's built-in language name (Intl.DisplayNames / Locale), so use the standard name your language normally uses for it, not a literal translation. Use the form a language name takes standalone in a list, capitalized as your language capitalizes list items.",
 		"tone": "Plain, standard naming",
 		"hash": "de18c2b783b13f43",
-		"watch": true
-	},
-	"attributes:language.cu.name": {
-		"group": "attributes/language",
-		"screens": [
-			"/settings/info",
-			"/finish/2",
-			"/settings/matchmaking",
-			"profile",
-			"watch: profile"
-		],
-		"element": "attribute",
-		"description": "Church Slavic / Old Church Slavonic, the liturgical language (code \"cu\"). Use the standard name in your language.",
-		"tone": "Plain, standard naming",
-		"hash": "5edbc68590a77182",
 		"watch": true
 	},
 	"attributes:language.cv.name": {
@@ -12315,21 +12285,6 @@
 		"hash": "97b9ac63041f1435",
 		"watch": true
 	},
-	"attributes:language.ia.name": {
-		"group": "attributes/language",
-		"screens": [
-			"/settings/info",
-			"/finish/2",
-			"/settings/matchmaking",
-			"profile",
-			"watch: profile"
-		],
-		"element": "attribute",
-		"description": "Name of a language a user says they speak. Shown as an option in the language picker on the profile info/onboarding forms (sorted alphabetically in the viewer's language), as a filter option under Languages in advanced matchmaking filters, and as a pill on profiles (also on the Apple Watch profile tags). The key is the ISO 639 code; if left untranslated the app falls back to the browser/OS's built-in language name (Intl.DisplayNames / Locale), so use the standard name your language normally uses for it (e.g. as in CLDR), not a literal translation. Use the form a language name takes standalone in a list, capitalized as your language capitalizes list items.",
-		"tone": "Plain, standard naming",
-		"hash": "11ee332fe0b8d3da",
-		"watch": true
-	},
 	"attributes:language.id.name": {
 		"group": "attributes/language",
 		"screens": [
@@ -12343,21 +12298,6 @@
 		"description": "Name of a language a user says they speak. Shown as an option in the language picker on the profile info/onboarding forms (sorted alphabetically in the viewer's language), as a filter option under Languages in advanced matchmaking filters, and as a pill on profiles (also on the Apple Watch profile tags). The key is the ISO 639 code; if left untranslated the app falls back to the browser/OS's built-in language name (Intl.DisplayNames / Locale), so use the standard name your language normally uses for it, not a literal translation. Use the form a language name takes standalone in a list, capitalized as your language capitalizes list items.",
 		"tone": "Plain, standard naming",
 		"hash": "d8067538e9f12569",
-		"watch": true
-	},
-	"attributes:language.ie.name": {
-		"group": "attributes/language",
-		"screens": [
-			"/settings/info",
-			"/finish/2",
-			"/settings/matchmaking",
-			"profile",
-			"watch: profile"
-		],
-		"element": "attribute",
-		"description": "Name of a language a user says they speak. Shown as an option in the language picker on the profile info/onboarding forms (sorted alphabetically in the viewer's language), as a filter option under Languages in advanced matchmaking filters, and as a pill on profiles (also on the Apple Watch profile tags). The key is the ISO 639 code; if left untranslated the app falls back to the browser/OS's built-in language name (Intl.DisplayNames / Locale), so use the standard name your language normally uses for it (e.g. as in CLDR), not a literal translation. Use the form a language name takes standalone in a list, capitalized as your language capitalizes list items.",
-		"tone": "Plain, standard naming",
-		"hash": "a688dbcfeb0add51",
 		"watch": true
 	},
 	"attributes:language.ig.name": {
@@ -13425,21 +13365,6 @@
 		"hash": "e38dd34b33e6781c",
 		"watch": true
 	},
-	"attributes:language.pi.name": {
-		"group": "attributes/language",
-		"screens": [
-			"/settings/info",
-			"/finish/2",
-			"/settings/matchmaking",
-			"profile",
-			"watch: profile"
-		],
-		"element": "attribute",
-		"description": "Name of a language a user says they speak. Shown as an option in the language picker on the profile info/onboarding forms (sorted alphabetically in the viewer's language), as a filter option under Languages in advanced matchmaking filters, and as a pill on profiles (also on the Apple Watch profile tags). The key is the ISO 639 code; if left untranslated the app falls back to the browser/OS's built-in language name (Intl.DisplayNames / Locale), so use the standard name your language normally uses for it (e.g. as in CLDR), not a literal translation. Use the form a language name takes standalone in a list, capitalized as your language capitalizes list items.",
-		"tone": "Plain, standard naming",
-		"hash": "52f1090081c3e5a5",
-		"watch": true
-	},
 	"attributes:language.pl.name": {
 		"group": "attributes/language",
 		"screens": [
@@ -13633,21 +13558,6 @@
 		"description": "Name of a language a user says they speak. Shown as an option in the language picker on the profile info/onboarding forms (sorted alphabetically in the viewer's language), as a filter option under Languages in advanced matchmaking filters, and as a pill on profiles (also on the Apple Watch profile tags). The key is the ISO 639 code; if left untranslated the app falls back to the browser/OS's built-in language name (Intl.DisplayNames / Locale), so use the standard name your language normally uses for it, not a literal translation. Use the form a language name takes standalone in a list, capitalized as your language capitalizes list items.",
 		"tone": "Plain, standard naming",
 		"hash": "5ba98bf0f690aa18",
-		"watch": true
-	},
-	"attributes:language.sa.name": {
-		"group": "attributes/language",
-		"screens": [
-			"/settings/info",
-			"/finish/2",
-			"/settings/matchmaking",
-			"profile",
-			"watch: profile"
-		],
-		"element": "attribute",
-		"description": "Name of a language a user says they speak. Shown as an option in the language picker on the profile info/onboarding forms (sorted alphabetically in the viewer's language), as a filter option under Languages in advanced matchmaking filters, and as a pill on profiles (also on the Apple Watch profile tags). The key is the ISO 639 code; if left untranslated the app falls back to the browser/OS's built-in language name (Intl.DisplayNames / Locale), so use the standard name your language normally uses for it (e.g. as in CLDR), not a literal translation. Use the form a language name takes standalone in a list, capitalized as your language capitalizes list items.",
-		"tone": "Plain, standard naming",
-		"hash": "a16de9020ecb8790",
 		"watch": true
 	},
 	"attributes:language.sah.name": {
@@ -13995,21 +13905,6 @@
 		"hash": "1b6344bbf04cddd1",
 		"watch": true
 	},
-	"attributes:language.syc.name": {
-		"group": "attributes/language",
-		"screens": [
-			"/settings/info",
-			"/finish/2",
-			"/settings/matchmaking",
-			"profile",
-			"watch: profile"
-		],
-		"element": "attribute",
-		"description": "Name of a language a user says they speak. Shown as an option in the language picker on the profile info/onboarding forms (sorted alphabetically in the viewer's language), as a filter option under Languages in advanced matchmaking filters, and as a pill on profiles (also on the Apple Watch profile tags). The key is the ISO 639 code; if left untranslated the app falls back to the browser/OS's built-in language name (Intl.DisplayNames / Locale), so use the standard name your language normally uses for it (e.g. as in CLDR), not a literal translation. Use the form a language name takes standalone in a list, capitalized as your language capitalizes list items.",
-		"tone": "Plain, standard naming",
-		"hash": "8e69b2fa3eaccf91",
-		"watch": true
-	},
 	"attributes:language.ta.name": {
 		"group": "attributes/language",
 		"screens": [
@@ -14323,21 +14218,6 @@
 		"description": "Name of a language a user says they speak. Shown as an option in the language picker on the profile info/onboarding forms (sorted alphabetically in the viewer's language), as a filter option under Languages in advanced matchmaking filters, and as a pill on profiles (also on the Apple Watch profile tags). The key is the ISO 639 code; if left untranslated the app falls back to the browser/OS's built-in language name (Intl.DisplayNames / Locale), so use the standard name your language normally uses for it, not a literal translation. Use the form a language name takes standalone in a list, capitalized as your language capitalizes list items.",
 		"tone": "Plain, standard naming",
 		"hash": "c1ad9b8ca0699cf8",
-		"watch": true
-	},
-	"attributes:language.vo.name": {
-		"group": "attributes/language",
-		"screens": [
-			"/settings/info",
-			"/finish/2",
-			"/settings/matchmaking",
-			"profile",
-			"watch: profile"
-		],
-		"element": "attribute",
-		"description": "Name of a language a user says they speak. Shown as an option in the language picker on the profile info/onboarding forms (sorted alphabetically in the viewer's language), as a filter option under Languages in advanced matchmaking filters, and as a pill on profiles (also on the Apple Watch profile tags). The key is the ISO 639 code; if left untranslated the app falls back to the browser/OS's built-in language name (Intl.DisplayNames / Locale), so use the standard name your language normally uses for it (e.g. as in CLDR), not a literal translation. Use the form a language name takes standalone in a list, capitalized as your language capitalizes list items.",
-		"tone": "Plain, standard naming",
-		"hash": "668174eef1a5c0dc",
 		"watch": true
 	},
 	"attributes:language.wa.name": {
