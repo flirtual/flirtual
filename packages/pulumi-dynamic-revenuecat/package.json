@@ -19,7 +19,7 @@
 		"@flirtual/config": "workspace:*",
 		"@pulumi/pulumi": "catalog:pulumi",
 		"@types/node": "catalog:",
-		"marked": "18.1.1",
+		"marked": "18.1.2",
 		"oxfmt": "catalog:",
 		"oxlint": "catalog:",
 		"typed-openapi": "catalog:",
