@@ -199,6 +199,7 @@ final class TabBarController: UITabBarController, UITabBarControllerDelegate {
             let imageView = UIImageView(image: image)
             imageView.tintColor = tint
             imageView.setContentHuggingPriority(.required, for: .horizontal)
+            imageView.setContentCompressionResistancePriority(.required, for: .horizontal)
             stack.insertArrangedSubview(imageView, at: 0)
         }
 
