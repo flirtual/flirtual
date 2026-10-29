@@ -10,9 +10,5 @@ install-tool elixir 1.20.4
 install-tool node 24.22.1
 # renovate: datasource=npm depName=pnpm
 install-tool pnpm 12.6.0
-# renovate: datasource=github-releases depName=containerbase/ruby-prebuild
-install-tool ruby 3.3.12
-# renovate: datasource=rubygems depName=cocoapods
-install-tool cocoapods 1.17.0
 
 runuser -u ubuntu renovate

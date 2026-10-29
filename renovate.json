@@ -254,6 +254,11 @@
 			"automerge": false
 		},
 		{
+			"description": "cap sync writes CapApp-SPM/Package.swift from the npm packages",
+			"matchManagers": ["swift"],
+			"enabled": false
+		},
+		{
 			"matchPackageNames": ["/capacitor/", "@capgo/**"],
 			"groupName": "capacitor",
 			"automerge": false,
@@ -265,8 +270,7 @@
 				"fileFilters": [
 					"apps/frontend/android/capacitor.settings.gradle",
 					"apps/frontend/android/app/capacitor.build.gradle",
-					"apps/frontend/ios/App/Podfile",
-					"apps/frontend/ios/App/Podfile.lock"
+					"apps/frontend/ios/App/CapApp-SPM/Package.swift"
 				],
 				"executionMode": "branch"
 			}
