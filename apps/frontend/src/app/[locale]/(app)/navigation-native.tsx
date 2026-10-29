@@ -72,7 +72,13 @@ let returningScroll: number | undefined;
 
 const withoutLocale = (to: string) => replaceLanguage(to, null).pathname;
 
-function setLayout({ topCorners, fold, sideBar, bottomBar, corners }: Layout) {
+function setLayout({ topCorners: reportedTopCorners, fold, sideBar, bottomBar, corners }: Layout) {
+	// Older builds report iPhone's status bar on iOS 27.2, which spans the whole top edge, as a
+	// corner one.
+	const topCorners = (reportedTopCorners.left ?? 0) + (reportedTopCorners.right ?? 0) >= window.innerWidth
+		? {}
+		: reportedTopCorners;
+
 	setTopCorners(topCorners);
 	setTopClearance(topCorners, sideBar, corners);
 	setFold(fold);
