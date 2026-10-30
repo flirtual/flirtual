@@ -73,6 +73,7 @@ export const ModelCard: React.FC<ModelCardProps> = ({
 			>
 				{title && (
 					<div
+						data-dark-backdrop
 						data-model-card-title
 						{...titleProps}
 						className={twMerge(

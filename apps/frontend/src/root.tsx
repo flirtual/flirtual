@@ -1,4 +1,3 @@
-import { Capacitor, SystemBars, SystemBarsStyle } from "@capacitor/core";
 import montserratNormal from "@fontsource-variable/montserrat/files/montserrat-latin-wght-normal.woff2?url";
 import nunitoNormal from "@fontsource-variable/nunito/files/nunito-latin-wght-normal.woff2?url";
 import { LazyMotion } from "motion/react";
@@ -49,6 +48,7 @@ import { device } from "./hooks/use-device";
 import { useKeyboardVisible } from "./hooks/use-keyboard-visible";
 import { logOnce } from "./hooks/use-log";
 import { usePreferences } from "./hooks/use-preferences";
+import { useSystemBarsTheme } from "./hooks/use-system-bars";
 import { useTheme } from "./hooks/use-theme";
 import type { LocalTheme } from "./hooks/use-theme";
 import {
@@ -223,10 +223,7 @@ export function Layout({ children }: PropsWithChildren) {
 
 	const [theme] = useTheme();
 
-	useEffect(() => {
-		if (!device.native || !device.android || !Capacitor.isPluginAvailable("SystemBars")) return;
-		void SystemBars.setStyle({ style: theme === "dark" ? SystemBarsStyle.Dark : SystemBarsStyle.Light });
-	}, [theme]);
+	useSystemBarsTheme(theme === "dark");
 
 	const homiesMatch = useMatch(urls.discover("homies"));
 	const themeStyle = homieMode && homiesMatch ? "friend" : "default";

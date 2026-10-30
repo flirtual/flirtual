@@ -41,6 +41,7 @@ export function Banner({ children, className, ref, icon = defaultBannerIcon, onD
 	return (
 		<div
 			data-banner
+			data-dark-backdrop
 			className={twMerge(
 				"relative z-30 flex w-full justify-center bg-black-70 text-white-20",
 				className
