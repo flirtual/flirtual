@@ -92,3 +92,35 @@ export const EntitlementButtons: FC<{ entitlement: Entitlement }> = ({
 		</div>
 	);
 };
+
+export const RestorePurchasesButton: FC = () => {
+	const toasts = useToast();
+	const { restore } = usePurchase();
+	const { native, vision } = useDevice();
+	const [pending, setPending] = useState(false);
+	const { t } = useTranslation();
+
+	if (!native || vision) return null;
+
+	return (
+		<Button
+			className="self-center"
+			kind="secondary"
+			pending={pending}
+			size="sm"
+			onClick={async () => {
+				setPending(true);
+				await restore()
+					.then((restored) => toasts.add(
+						restored
+							? t("purchases_restored")
+							: { type: "warning", value: t("no_purchases_to_restore") }
+					))
+					.catch(toasts.addError);
+				setPending(false);
+			}}
+		>
+			{t("restore_purchases")}
+		</Button>
+	);
+};

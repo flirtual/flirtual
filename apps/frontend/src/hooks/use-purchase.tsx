@@ -27,6 +27,7 @@ import { useToast } from "./use-toast";
 
 interface PurchaseContext {
 	purchase: (planId?: string) => Promise<void>;
+	restore: () => Promise<boolean>;
 	packages: Array<PurchasesPackage>;
 }
 
@@ -269,12 +270,32 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 		[native, plans, apple, platform, toasts, navigate, revenuecatId, t]
 	);
 
+	const restore = useCallback(async (): Promise<boolean> => {
+		if (!native || platform === "web" || !revenuecatId)
+			throw new Error(t("errors.checkout_not_available"));
+
+		await ensureConfigured(platform, revenuecatId);
+		await ensureIdentified(revenuecatId);
+
+		const { Purchases } = await getPurchaseModule();
+
+		const { appUserID } = await Purchases.getAppUserID();
+		if (appUserID !== revenuecatId) throw new Error(t("errors.plan_not_available"));
+
+		const { customerInfo } = await Purchases.restorePurchases();
+		await Subscription.reconcile();
+		await invalidate({ queryKey: sessionKey() });
+
+		return !!customerInfo.entitlements.active.premium;
+	}, [native, platform, revenuecatId, t]);
+
 	return (
 		<PurchaseContext
 			value={useMemo(() => ({
 				purchase,
+				restore,
 				packages
-			}), [packages, purchase])}
+			}), [packages, purchase, restore])}
 		>
 			{children}
 		</PurchaseContext>

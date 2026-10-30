@@ -22914,6 +22914,16 @@
 		"description": "Heading on the Matches page when the user has no matches (and therefore no conversations) yet.",
 		"hash": "c0285f6cb3fc0d4b"
 	},
+	"flirtual:no_purchases_to_restore": {
+		"group": "premium",
+		"screens": [
+			"/subscription",
+			"toast"
+		],
+		"element": "toast",
+		"description": "Warning toast after the user taps \"Restore purchases\" in the iOS/Android app and the App Store / Google Play found no active Premium purchase to restore.",
+		"hash": "695090dcb1511708"
+	},
 	"flirtual:no_results": {
 		"group": "moderation/profile",
 		"screens": [
@@ -24576,6 +24586,16 @@
 		"lengthNote": "Small button; keep it short",
 		"hash": "49fc2150c5cee5c9"
 	},
+	"flirtual:purchases_restored": {
+		"group": "premium",
+		"screens": [
+			"/subscription",
+			"toast"
+		],
+		"element": "toast",
+		"description": "Success toast after the user taps \"Restore purchases\" in the iOS/Android app and an active Premium purchase was found and reapplied to their account.",
+		"hash": "88c120f0bbb41ac2"
+	},
 	"flirtual:push_notifications_blocked": {
 		"group": "settings/notifications",
 		"screens": [
@@ -24937,6 +24957,16 @@
 		"element": "title",
 		"description": "Heading (and browser tab title) of the page where a logged-out user requests a password reset email, and where they set the new password after following the email link.",
 		"hash": "f2277d19703c733f"
+	},
+	"flirtual:restore_purchases": {
+		"group": "premium",
+		"screens": [
+			"/subscription"
+		],
+		"element": "button",
+		"description": "Small secondary button on the Premium subscription page, shown only in the iOS/Android app (not web or visionOS). Tapping it asks the App Store / Google Play to restore the user's earlier in-app Premium purchases to this account. Use the standard store wording for \"Restore Purchases\" in your locale.",
+		"lengthNote": "Small button (size sm), centered on its own line",
+		"hash": "542896d5857e7ea1"
 	},
 	"flirtual:resubscribe": {
 		"group": "premium",
