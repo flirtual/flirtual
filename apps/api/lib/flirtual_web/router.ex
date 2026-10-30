@@ -595,8 +595,7 @@ defmodule FlirtualWeb.Router do
 
       plug(:put_secure_browser_headers, %{
         "content-security-policy" =>
-          "default-src 'self'; frame-ancestors 'none'; img-src * data:; " <>
-            "script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'"
+          "default-src 'self'; frame-ancestors 'none'; img-src * data:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'"
       })
     end
 
