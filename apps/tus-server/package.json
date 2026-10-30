@@ -21,6 +21,7 @@
 	"devDependencies": {
 		"@cloudflare/vitest-pool-workers": "catalog:",
 		"@types/node": "catalog:",
+		"@typescript/native": "catalog:",
 		"cf": "catalog:",
 		"jose": "catalog:",
 		"typescript": "catalog:",
