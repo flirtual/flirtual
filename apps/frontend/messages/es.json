@@ -1135,5 +1135,8 @@
 	"maintenance_description": "{name} está temporalmente fuera de servicio por un mantenimiento programado. ¡Volvemos enseguida, vuelve a intentarlo en un rato!",
 	"maintenance_title": "{name} no está disponible temporalmente",
 	"likes_preview_alt": "Vista previa de los Me gusta recibidos",
-	"official": "Oficial"
+	"official": "Oficial",
+	"purchases_restored": "Compras restauradas",
+	"restore_purchases": "Restaurar compras",
+	"no_purchases_to_restore": "No hay compras que restaurar"
 }

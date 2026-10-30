@@ -1135,5 +1135,8 @@
 	"maintenance_description": "{name}はただいま定期メンテナンスのため、一時的に停止しています。すぐに再開しますので、少し待ってからまたアクセスしてみてください！",
 	"maintenance_title": "{name}は一時的にご利用いただけません",
 	"likes_preview_alt": "いいねのプレビュー",
-	"official": "公式"
+	"official": "公式",
+	"purchases_restored": "購入を復元しました",
+	"restore_purchases": "購入を復元",
+	"no_purchases_to_restore": "復元できる購入はありません"
 }

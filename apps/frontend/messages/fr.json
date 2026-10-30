@@ -1135,5 +1135,8 @@
 	"maintenance_description": "{name} est temporairement hors ligne pour une maintenance programmée. On revient très vite, repasse dans un petit moment !",
 	"maintenance_title": "{name} est temporairement indisponible",
 	"likes_preview_alt": "Aperçu des Likes",
-	"official": "Officiel"
+	"official": "Officiel",
+	"purchases_restored": "Achats restaurés",
+	"restore_purchases": "Restaurer les achats",
+	"no_purchases_to_restore": "Aucun achat à restaurer"
 }

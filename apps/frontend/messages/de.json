@@ -1135,5 +1135,8 @@
 	"maintenance_title": "{name} ist vorübergehend nicht verfügbar",
 	"likes_preview_alt": "Like-Vorschau",
 	"maintenance_description": "{name} ist gerade wegen geplanter Wartungsarbeiten offline. Wir sind gleich wieder da – schau bald wieder vorbei!",
-	"official": "Offiziell"
+	"official": "Offiziell",
+	"restore_purchases": "Käufe wiederherstellen",
+	"no_purchases_to_restore": "Keine Käufe zum Wiederherstellen",
+	"purchases_restored": "Käufe wiederhergestellt"
 }
