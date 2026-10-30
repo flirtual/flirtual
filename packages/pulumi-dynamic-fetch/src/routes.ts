@@ -21,7 +21,7 @@ export interface Routes {
 }
 
 // Path templates are flat `{name}` tokens.
-const parameter = /\{([^}]+)\}/gu;
+const parameter = /\{([^{}]+)\}/gu;
 
 const parametersIn = (path: string) => [...path.matchAll(parameter)].map(([, name]) => name!);
 

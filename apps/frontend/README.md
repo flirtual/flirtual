@@ -41,7 +41,7 @@ To trust the CA on Android:
 
 ### iOS app
 
-* Install [Xcode](https://developer.apple.com/xcode/) with iOS platform support, and `brew install cocoapods`.
+* Install [Xcode](https://developer.apple.com/xcode/) with iOS platform support.
 
 * Source the environment: `source .env.local`.
 

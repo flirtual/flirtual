@@ -22,6 +22,7 @@ const DialogPortal = DialogPrimitive.Portal;
 function DialogOverlay({ ref: reference, className, ...props }: { ref?: React.Ref<React.ComponentRef<typeof DialogPrimitive.Overlay> | null> } & React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>) {
 	return (
 		<DialogPrimitive.Overlay
+			data-dark-backdrop
 			className={twMerge(dialogOverlayClassName, className)}
 			ref={reference}
 			{...props}

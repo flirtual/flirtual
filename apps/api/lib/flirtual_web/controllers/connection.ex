@@ -422,17 +422,17 @@ defmodule FlirtualWeb.ConnectionController do
   # Android must be specified in the type instead of a separate query parameter
   # because the plugin embeds the redirect in the authorize URL without encoding
   # and drops extra &params.
-  def grant(conn, %{"type" => "apple_android", "code" => code}) do
+  def grant(conn, %{"type" => "apple_android", "code" => code} = params) do
     if Connection.enabled?(:apple) do
-      apple_android_grant(conn, code)
+      apple_android_grant(conn, code, params["state"])
     else
-      app_grant_redirect(conn, %{success: false})
+      app_grant_redirect(conn, %{success: false, state: params["state"]})
     end
   end
 
   # The user cancelled or Apple returned an error
-  def grant(conn, %{"type" => "apple_android"}) do
-    app_grant_redirect(conn, %{success: false})
+  def grant(conn, %{"type" => "apple_android"} = params) do
+    app_grant_redirect(conn, %{success: false, state: params["state"]})
   end
 
   # OAuth redirect flow - provider returned an error or the user cancelled
@@ -574,19 +574,20 @@ defmodule FlirtualWeb.ConnectionController do
     end
   end
 
-  defp apple_android_grant(conn, code) do
+  defp apple_android_grant(conn, code, state) do
     case Flirtual.Apple.exchange_code(code, platform: :android) do
       {:ok, tokens} ->
         app_grant_redirect(conn, %{
           success: true,
           id_token: tokens.id_token,
           access_token: tokens.access_token,
-          refresh_token: tokens.refresh_token
+          refresh_token: tokens.refresh_token,
+          state: state
         })
 
       {:error, reason} ->
         log(:error, [:grant, :apple_android], reason: reason)
-        app_grant_redirect(conn, %{success: false})
+        app_grant_redirect(conn, %{success: false, state: state})
     end
   end
 

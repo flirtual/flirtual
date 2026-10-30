@@ -24,6 +24,7 @@ const DrawerClose = DrawerPrimitive.Close;
 function DrawerOverlay({ ref: reference, className, ...props }: { ref?: React.Ref<React.ComponentRef<typeof DrawerPrimitive.Overlay> | null> } & React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Overlay>) {
 	return (
 		<DrawerPrimitive.Overlay
+			data-dark-backdrop
 			className={twMerge("fixed inset-0 z-[39] bg-black-80/80", className)}
 			ref={reference}
 			{...props}

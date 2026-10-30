@@ -90,7 +90,7 @@ jobs:
         working-directory: apps/frontend/ios/App
         run: |
           xcodebuild build \
-            -workspace App.xcworkspace \
+            -project App.xcodeproj \
             -scheme Flirtual \
             -destination generic/platform=iOS \
             CODE_SIGNING_ALLOWED=NO
@@ -107,7 +107,7 @@ jobs:
           for file in sarif/*.sarif; do
             jq '.runs[].results |= map(select(
               (.locations[0].physicalLocation.artifactLocation.uri // "")
-                | test("(^|/)(node_modules|Pods)/") | not
+                | test("(^|/)(node_modules|SourcePackages)/") | not
             ))' "$file" > "$file.filtered"
             mv "$file.filtered" "$file"
           done

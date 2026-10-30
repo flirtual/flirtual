@@ -1,12 +1,8 @@
 App/build
-App/Pods
 App/output
 App/App/public
 DerivedData
 xcuserdata
-
-# Duplicate of App.xcworkspace's Package.resolved
-App/App.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved
 
 # Cordova plugins for Capacitor
 capacitor-cordova-ios-plugins

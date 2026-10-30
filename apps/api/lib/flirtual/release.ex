@@ -56,6 +56,7 @@ defmodule Flirtual.Release do
       retrying_disconnects(task, pause, attempt + 1)
   end
 
+  # sobelow_skip ["SQL.Query", "Traversal.FileModule"]
   defp seed!(repo, table) do
     Application.app_dir(@app, "priv/repo/exports/#{table}.sql")
     |> File.read!()

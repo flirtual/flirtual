@@ -20,6 +20,7 @@ const AlertDialogPortal = AlertDialogPrimitive.Portal;
 function AlertDialogOverlay({ ref: reference, className, ...props }: { ref?: React.Ref<React.ComponentRef<typeof AlertDialogPrimitive.Overlay> | null> } & React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Overlay>) {
 	return (
 		<AlertDialogPrimitive.Overlay
+			data-dark-backdrop
 			className={twMerge(dialogOverlayClassName, className)}
 			{...props}
 			ref={reference}

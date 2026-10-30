@@ -47,7 +47,7 @@ export const Conversation = withSuspense<{ id: string }>(({ id: conversationId }
 	if (!conversation || !user) {
 		return (
 			<div className="mt-0 h-fit w-full shrink-0 bg-brand-gradient vision:bg-none desktop:max-w-[38rem] desktop:shrink desktop:rounded-2xl desktop:p-1 desktop:shadow-brand-1">
-				<div className={twMerge(headerClassName, "min-h-16 justify-center")}>
+				<div data-dark-backdrop className={twMerge(headerClassName, "min-h-16 justify-center")}>
 					<span className="text-center font-montserrat text-2xl font-semibold text-white-20 desktop:font-extrabold">
 						{t("chat_unavailable")}
 					</span>
@@ -66,7 +66,7 @@ export const Conversation = withSuspense<{ id: string }>(({ id: conversationId }
 
 	return (
 		<div className="mt-0 h-fit w-full shrink-0 bg-brand-gradient vision:bg-none desktop:max-w-[38rem] desktop:shrink desktop:rounded-2xl desktop:p-1 desktop:shadow-brand-1">
-			<div className={headerClassName}>
+			<div data-dark-backdrop className={headerClassName}>
 				<BackButton />
 				<InlineLink
 					className="flex items-center gap-4 hocus:no-underline"
@@ -101,7 +101,7 @@ export const Conversation = withSuspense<{ id: string }>(({ id: conversationId }
 }, {
 	fallback: (
 		<div className="mt-0 size-full shrink-0 bg-brand-gradient vision:bg-none desktop:max-w-[38rem] desktop:shrink desktop:rounded-2xl desktop:p-1 desktop:shadow-brand-1">
-			<div className={headerClassName}>
+			<div data-dark-backdrop className={headerClassName}>
 				<BackButton />
 				<div className="size-10 animate-pulse rounded-full bg-white-20"></div>
 				<div className="ml-4 h-6 w-32 animate-pulse rounded bg-white-20"></div>

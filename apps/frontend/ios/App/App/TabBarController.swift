@@ -199,6 +199,7 @@ final class TabBarController: UITabBarController, UITabBarControllerDelegate {
             let imageView = UIImageView(image: image)
             imageView.tintColor = tint
             imageView.setContentHuggingPriority(.required, for: .horizontal)
+            imageView.setContentCompressionResistancePriority(.required, for: .horizontal)
             stack.insertArrangedSubview(imageView, at: 0)
         }
 
@@ -406,14 +407,17 @@ final class TabBarController: UITabBarController, UITabBarControllerDelegate {
     // What the system reserves in the top corners, like iPhone Duo's status bar, so content along
     // the top can sit beside it, down to its bottom. The height is only there when it fits in the
     // top safe area, as in inner portrait, leaving the rest of the top edge free. Anything else
-    // along the top edge, like a Dynamic Island, means none of it is.
+    // along the top edge, like a Dynamic Island or iPhone's status bar spanning all of it, means
+    // none of it is.
     private static func topCornerClearance(of view: UIView) -> [String: Double] {
         #if compiler(>=6.4)
         guard #available(iOS 27.1, *) else { return [:] }
 
         var left = 0.0, right = 0.0, height = 0.0
         for region in view.reservedRegions(kind: .occlusion) where region.isActive && region.frame.minY <= 0 {
-            if region.frame.maxX >= view.bounds.maxX {
+            if region.frame.minX <= 0, region.frame.maxX >= view.bounds.maxX {
+                return [:]
+            } else if region.frame.maxX >= view.bounds.maxX {
                 right = max(right, view.bounds.maxX - region.frame.minX)
             } else if region.frame.minX <= 0 {
                 left = max(left, region.frame.maxX)

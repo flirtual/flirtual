@@ -85,7 +85,7 @@ body[data-theme="dark"] {
   --chart-5: #8e6bc8;
 }
 
-body[data-native-navigation] {
+body {
   --content-inset-left: var(--safe-area-inset-left, 0px);
   --content-inset-right: var(--safe-area-inset-right, 0px);
   --top-clearance-left: var(--content-inset-left);
