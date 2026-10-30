@@ -20955,6 +20955,18 @@
 		"ja": "c0285f6cb3fc0d4b",
 		"ko": "c0285f6cb3fc0d4b"
 	},
+	"flirtual:no_purchases_to_restore": {
+		"sv": "695090dcb1511708",
+		"de": "695090dcb1511708",
+		"es": "695090dcb1511708",
+		"fr": "695090dcb1511708",
+		"nl": "695090dcb1511708",
+		"pt": "695090dcb1511708",
+		"ru": "695090dcb1511708",
+		"ja": "695090dcb1511708",
+		"ko": "695090dcb1511708",
+		"pt-BR": "695090dcb1511708"
+	},
 	"flirtual:no_results": {
 		"de": "823c4ec7dc71f07a",
 		"es": "823c4ec7dc71f07a",
@@ -22789,6 +22801,18 @@
 		"ja": "49fc2150c5cee5c9",
 		"ko": "49fc2150c5cee5c9"
 	},
+	"flirtual:purchases_restored": {
+		"sv": "88c120f0bbb41ac2",
+		"de": "88c120f0bbb41ac2",
+		"es": "88c120f0bbb41ac2",
+		"fr": "88c120f0bbb41ac2",
+		"nl": "88c120f0bbb41ac2",
+		"pt": "88c120f0bbb41ac2",
+		"ru": "88c120f0bbb41ac2",
+		"ja": "88c120f0bbb41ac2",
+		"ko": "88c120f0bbb41ac2",
+		"pt-BR": "88c120f0bbb41ac2"
+	},
 	"flirtual:push_notifications_blocked": {
 		"de": "9a9b32a1c62cc1ac",
 		"es": "9a9b32a1c62cc1ac",
@@ -23196,6 +23220,18 @@
 		"sv": "f2277d19703c733f",
 		"ja": "f2277d19703c733f",
 		"ko": "f2277d19703c733f"
+	},
+	"flirtual:restore_purchases": {
+		"sv": "542896d5857e7ea1",
+		"de": "542896d5857e7ea1",
+		"es": "542896d5857e7ea1",
+		"fr": "542896d5857e7ea1",
+		"nl": "542896d5857e7ea1",
+		"pt": "542896d5857e7ea1",
+		"ru": "542896d5857e7ea1",
+		"ja": "542896d5857e7ea1",
+		"ko": "542896d5857e7ea1",
+		"pt-BR": "542896d5857e7ea1"
 	},
 	"flirtual:resubscribe": {
 		"de": "1531870929470b32",
