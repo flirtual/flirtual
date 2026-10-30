@@ -3011,15 +3011,15 @@
 			"name": "Reklam"
 		},
 		"5H9nMhQacZBD9Zomu7Tbt9": {
-			"details": "Dubblettkonto. Det är inte tillåtet att skapa flera konton på Flirtual. Det här kontot har inaktiverats, men du kan fortfarande använda ditt andra konto. Om du anser att avstängningen är ett misstag, eller hellre vill att ditt andra konto inaktiveras i stället för det här, svarar du bara på det här mejlet.",
+			"details": "Dubblettkonto. Det är inte tillåtet att skapa flera konton på {brand_name}. Det här kontot har inaktiverats, men du kan fortfarande använda ditt andra konto. Om du anser att avstängningen är ett misstag, eller hellre vill att ditt andra konto inaktiveras i stället för det här, svarar du bara på det här mejlet.",
 			"name": "Dubblettkonto"
 		},
 		"VgQw2st96dZKZotsnYUEaN": {
-			"details": "Kringgående av avstängning. Det verkar som att du har skapat ett nytt konto eller på annat sätt kringgått en tidigare avstängning från Flirtual. Om du vill överklaga en tidigare avstängning och få ditt konto återaktiverat kan du svara på det ursprungliga mejlet om avstängningen.",
+			"details": "Kringgående av avstängning. Det verkar som att du har skapat ett nytt konto eller på annat sätt kringgått en tidigare avstängning från {brand_name}. Om du vill överklaga en tidigare avstängning och få ditt konto återaktiverat kan du svara på det ursprungliga mejlet om avstängningen.",
 			"name": "Kringgått avstängning"
 		},
 		"muXMqNjneKnwqxT8nqcy4d": {
-			"details": "Minderårig. Du måste vara minst 18 år för att använda Flirtual. Om du anser att avstängningen är ett misstag kan du logga in på Flirtual och verifiera din ålder på ett säkert sätt för att återställa ditt konto.",
+			"details": "Minderårig. Du måste vara minst 18 år för att använda {brand_name}. Om du anser att avstängningen är ett misstag kan du logga in på {brand_name} och verifiera din ålder på ett säkert sätt för att återställa ditt konto.",
 			"name": "Minderårig"
 		},
 		"dWDkcjmXQEQRVoXmNkutAB": {
@@ -3032,7 +3032,7 @@
 		},
 		"hLwvdpKQiofFTCDHox75SY": {
 			"name": "Hatiskt innehåll",
-			"details": "Hatiskt innehåll. Hatiskt innehåll i profiler eller meddelanden är inte välkommet på Flirtual. Om du anser att avstängningen är ett misstag kan du svara på det här mejlet för att överklaga och få ditt konto återaktiverat."
+			"details": "Hatiskt innehåll. Hatiskt innehåll i profiler eller meddelanden är inte välkommet på {brand_name}. Om du anser att avstängningen är ett misstag kan du svara på det här mejlet för att överklaga och få ditt konto återaktiverat."
 		},
 		"tUaxdXYAcyeb3G4Qc7gNLh": {
 			"name": "Spam",
@@ -3040,11 +3040,11 @@
 		},
 		"nupwCrjodUd4ZvPizEBc8L": {
 			"name": "Ber om pengar",
-			"details": "Pengatiggeri. Det är inte tillåtet att be om pengar på Flirtual. Du kan överklaga avstängningen genom att svara på det här mejlet, och få ditt konto återaktiverat genom att ta bort alla förfrågningar om pengar från din profil."
+			"details": "Pengatiggeri. Det är inte tillåtet att be om pengar på {brand_name}. Du kan överklaga avstängningen genom att svara på det här mejlet, och få ditt konto återaktiverat genom att ta bort alla förfrågningar om pengar från din profil."
 		},
 		"EVU7hHnv5u6eQwRBTW8aYU": {
 			"name": "Nakenhet eller explicit sexuellt innehåll",
-			"details": "Nakenhet eller explicit sexuellt innehåll. Sådana bilder och alltför oanständiga texter är inte tillåtna på Flirtual. Du kan överklaga avstängningen genom att svara på det här mejlet, och få ditt konto återaktiverat genom att uppdatera din profil."
+			"details": "Nakenhet eller explicit sexuellt innehåll. Sådana bilder och alltför oanständiga texter är inte tillåtna på {brand_name}. Du kan överklaga avstängningen genom att svara på det här mejlet, och få ditt konto återaktiverat genom att uppdatera din profil."
 		},
 		"KfFVwKB4DYMXx7foyqGUZM": {
 			"name": "Våldsamt/störande innehåll",
@@ -3079,7 +3079,7 @@
 			"name": "Annat"
 		},
 		"jrAqzBkasZwqfjSPAazNq3": {
-			"name": "Jag har träffat någon på Flirtual"
+			"name": "Jag har träffat någon på {brand_name}"
 		},
 		"EkWwgZavkCxJhRgKJF3yRn": {
 			"name": "Föredrar andra appar för IRL-dejting"
@@ -3177,7 +3177,7 @@
 		},
 		"MjxDKasduf9iHTctStGzYA": {
 			"name": "Explicit bio",
-			"details": "Håll sexuellt innehåll i din bio till ett minimum och ta bort grafiska beskrivningar och kinks. Du kan använda Flirtuals kink-taggar eller egna intressen i inställningarna."
+			"details": "Håll sexuellt innehåll i din bio till ett minimum och ta bort grafiska beskrivningar och kinks. Du kan använda {brand_name}s kink-taggar eller egna intressen i inställningarna."
 		},
 		"CnaCPAcsLptyUgVVugubdf": {
 			"name": "Reklam",
@@ -3185,7 +3185,7 @@
 		},
 		"f8v44XrBausmXe6XybTVHd": {
 			"name": "Tiggeri och försäljning",
-			"details": "Ta bort allt från din profil som handlar om att be om pengar eller sälja något. Att be om pengar samt hänvisningar och länkar till kommersiella tjänster är inte tillåtet på Flirtual."
+			"details": "Ta bort allt från din profil som handlar om att be om pengar eller sälja något. Att be om pengar samt hänvisningar och länkar till kommersiella tjänster är inte tillåtet på {brand_name}."
 		},
 		"RdHQQqrswesTTwyh4QZqbH": {
 			"name": "Hatiskt innehåll",
@@ -3197,7 +3197,7 @@
 		},
 		"dC6h3tWeZueVwHGKLhC2sk": {
 			"name": "Inaktivt konto",
-			"details": "Uppdatera din bio om du är tillbaka på Flirtual. Om du tar en paus eller lämnar Flirtual kan du tillfälligt inaktivera eller permanent radera ditt konto i inställningarna."
+			"details": "Uppdatera din bio om du är tillbaka på {brand_name}. Om du tar en paus eller lämnar {brand_name} kan du tillfälligt inaktivera eller permanent radera ditt konto i inställningarna."
 		},
 		"AhPZwBpeTm5HMf96bkVszj": {
 			"name": "Ladda upp bevis",

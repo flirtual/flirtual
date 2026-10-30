@@ -70,9 +70,15 @@ function humanTexts(history: Array<Change>) {
 	return texts;
 }
 
+// People wrote "Flirtual" where the placeholder now stands; 8b06b24a4 moved it outside Weblate.
+const beforeBrandName = (text: string) => text.replaceAll(/%?\{brand_name\}/g, "Flirtual");
+
 function humanAuthor(unit: Unit, texts: Map<string, string> | undefined) {
 	if (!unit.target[0]) return;
-	return texts?.get(unit.target.join("\u001E")) ?? texts?.get(unit.target[0]);
+	for (const target of [unit.target, unit.target.map(beforeBrandName)]) {
+		const author = texts?.get(target.join("\u001E")) ?? texts?.get(target[0]!);
+		if (author) return author;
+	}
 }
 
 async function availableLocales(component: string) {

@@ -110,7 +110,7 @@ msgstr "Solicitud para restablecer la contraseña"
 #, elixir-autogen, elixir-format, fuzzy
 msgid "suspended.body_html"
 msgstr ""
-"<p>Nuestro equipo de moderación ha determinado que su cuenta de Flirtual "
+"<p>Nuestro equipo de moderación ha determinado que su cuenta de %{brand_name} "
 "infringe nuestras normas.</p>\n"
 "\n"
 "<p><strong>Motivo</strong>: %{message}</p>\n"
@@ -121,13 +121,13 @@ msgstr ""
 "a este mensaje en un plazo de 30 días. Revisamos todas las apelaciones y le "
 "notificaremos si la suya es aceptada. Si no recibe noticias nuestras en un "
 "plazo de 30 días, nuestra decisión de moderación quedará confirmada.</p><p>"
-"El equipo de Flirtual</p>"
+"El equipo de %{brand_name}</p>"
 
 #: lib/flirtual/user/email.ex:18
 #, elixir-autogen, elixir-format, fuzzy
 msgid "suspended.body_text"
 msgstr ""
-"Nuestro equipo de moderación ha determinado que su cuenta de Flirtual "
+"Nuestro equipo de moderación ha determinado que su cuenta de %{brand_name} "
 "infringe nuestras normas.\n"
 "\n"
 "Motivo: %{message}\n"
@@ -141,7 +141,7 @@ msgstr ""
 "nuestras en un plazo de 30 días, nuestra decisión de moderación quedará "
 "confirmada.\n"
 "\n"
-"El equipo de Flirtual"
+"El equipo de %{brand_name}"
 
 #: lib/flirtual/user/email.ex:64
 #: lib/flirtual/user/email.ex:109
@@ -154,7 +154,7 @@ msgstr "Continuar"
 #, elixir-autogen, elixir-format, fuzzy
 msgid "email_changed.body_html"
 msgstr ""
-"<p>La dirección de correo electrónico de tu cuenta de Flirtual se ha "
+"<p>La dirección de correo electrónico de tu cuenta de %{brand_name} se ha "
 "cambiado a %{email}.</p>\n"
 "\n"
 " <p>Si no hiciste esta solicitud, responde a este correo de inmediato para "
@@ -164,7 +164,7 @@ msgstr ""
 #, elixir-autogen, elixir-format, fuzzy
 msgid "email_changed.body_text"
 msgstr ""
-"La dirección de correo electrónico de tu cuenta de Flirtual se ha cambiado a "
+"La dirección de correo electrónico de tu cuenta de %{brand_name} se ha cambiado a "
 "%{email}.\n"
 "\n"
 "Si no hiciste esta solicitud, responde a este correo de inmediato para que "
@@ -180,7 +180,7 @@ msgstr "Se cambió tu dirección de correo electrónico"
 msgid "password_changed.body_html"
 msgstr ""
 "<p>Alguien (esperamos que tú) cambió la contraseña de tu cuenta de "
-"Flirtual.</p>\n"
+"%{brand_name}.</p>\n"
 "\n"
 "<p>Si no fuiste tú, <a href=\"%{action_url}\">restablece tu contraseña</a> "
 "de inmediato o responde a este correo si necesitas ayuda.</p>"
@@ -189,7 +189,7 @@ msgstr ""
 #, elixir-autogen, elixir-format, fuzzy
 msgid "password_changed.body_text"
 msgstr ""
-"Alguien (esperamos que tú) cambió la contraseña de tu cuenta de Flirtual.\n"
+"Alguien (esperamos que tú) cambió la contraseña de tu cuenta de %{brand_name}.\n"
 "\n"
 " Si no fuiste tú, restablece tu contraseña de inmediato en %{action_url} o "
 "responde a este correo si necesitas ayuda."
@@ -314,10 +314,10 @@ msgstr "Mira quién te dio Me gusta"
 msgid "this_week_1_person_liked_you"
 msgid_plural "this_week_x_people_liked_you"
 msgstr[0] ""
-"¡Esta semana 1 persona le dio Me gusta o Amistad a tu perfil en Flirtual!"
+"¡Esta semana 1 persona le dio Me gusta o Amistad a tu perfil en %{brand_name}!"
 msgstr[1] ""
 "¡Esta semana %{count} personas le dieron Me gusta o Amistad a tu perfil en "
-"Flirtual!"
+"%{brand_name}!"
 
 #: lib/flirtual/user/email.ex:136
 #, elixir-autogen, elixir-format, fuzzy
@@ -331,7 +331,7 @@ msgstr ""
 "\n"
 "<p>Este código expira en 15 minutos.</p>\n"
 "\n"
-"<p>¿No fuiste tú? Cambia tu contraseña en los Ajustes de Flirtual para "
+"<p>¿No fuiste tú? Cambia tu contraseña en los Ajustes de %{brand_name} para "
 "proteger tu cuenta.</p>"
 
 #: lib/flirtual/user/email.ex:135
@@ -345,19 +345,19 @@ msgstr ""
 "\n"
 "Este código expira en 15 minutos.\n"
 "\n"
-"¿No fuiste tú? Cambia tu contraseña en los Ajustes de Flirtual para proteger "
+"¿No fuiste tú? Cambia tu contraseña en los Ajustes de %{brand_name} para proteger "
 "tu cuenta."
 
 #: lib/flirtual/user/email.ex:134
 #, elixir-autogen, elixir-format, fuzzy
 msgid "verification_code.subject"
-msgstr "Tu código de inicio de sesión de Flirtual es %{code}"
+msgstr "Tu código de inicio de sesión de %{brand_name} es %{code}"
 
 #: lib/flirtual/user/email.ex:383
 #, elixir-autogen, elixir-format, fuzzy
 msgid "deletion_reminder_670.body_html"
 msgstr ""
-"<p>Hace tiempo que no inicias sesión. En los últimos años, Flirtual ha "
+"<p>Hace tiempo que no inicias sesión. En los últimos años, %{brand_name} ha "
 "tenido muchas novedades, como mejoras en nuestro sistema de emparejamiento y "
 "el Modo Amigos (para hacer amistades). ¡Creemos que te encantará volver a "
 "conectar con nuestra comunidad!</p><p>Si inicias sesión en cualquier momento "
@@ -365,14 +365,14 @@ msgstr ""
 "la información de tu perfil.</p><p>Si no inicias sesión en un plazo de 60 "
 "días, tendremos que eliminar tu cuenta y tus datos de acuerdo con nuestra "
 "política de privacidad. ¡Pero esperamos que vuelvas y le des otra "
-"oportunidad a Flirtual!</p><p><a href=\"%{action_url}\" class=\"btn\">"
+"oportunidad a %{brand_name}!</p><p><a href=\"%{action_url}\" class=\"btn\">"
 "Iniciar sesión</a></p>"
 
 #: lib/flirtual/user/email.ex:382
 #, elixir-autogen, elixir-format, fuzzy
 msgid "deletion_reminder_670.body_text"
 msgstr ""
-"Hace tiempo que no inicias sesión. En los últimos años, Flirtual ha tenido "
+"Hace tiempo que no inicias sesión. En los últimos años, %{brand_name} ha tenido "
 "muchas novedades, como mejoras en nuestro sistema de emparejamiento y el "
 "Modo Amigos (para hacer amistades). ¡Creemos que te encantará volver a "
 "conectar con nuestra comunidad!\n"
@@ -382,7 +382,7 @@ msgstr ""
 "\n"
 "Si no inicias sesión en un plazo de 60 días, tendremos que eliminar tu "
 "cuenta y tus datos de acuerdo con nuestra política de privacidad. ¡Pero "
-"esperamos que vuelvas y le des otra oportunidad a Flirtual!\n"
+"esperamos que vuelvas y le des otra oportunidad a %{brand_name}!\n"
 "\n"
 "Inicia sesión cuando quieras para conservar tu cuenta: %{action_url}"
 
@@ -399,13 +399,13 @@ msgstr "¡Te echamos de menos! Vuelve pronto"
 #: lib/flirtual/user/email.ex:381
 #, elixir-autogen, elixir-format, fuzzy
 msgid "deletion_reminder_670.subject"
-msgstr "ACCIÓN REQUERIDA: Tu cuenta de Flirtual se eliminará pronto"
+msgstr "ACCIÓN REQUERIDA: Tu cuenta de %{brand_name} se eliminará pronto"
 
 #: lib/flirtual/user/email.ex:391
 #, elixir-autogen, elixir-format, fuzzy
 msgid "deletion_reminder_700.body_html"
 msgstr ""
-"<p>Para conservar tu cuenta de Flirtual, inicia sesión en cualquier momento "
+"<p>Para conservar tu cuenta de %{brand_name}, inicia sesión en cualquier momento "
 "durante los próximos 30 días: no tienes que hacer nada más.</p><p>Si no "
 "inicias sesión, tu cuenta y tus datos se eliminarán de forma permanente de "
 "acuerdo con nuestra política de privacidad.</p><p><a href=\"%{action_url}\" "
@@ -415,7 +415,7 @@ msgstr ""
 #, elixir-autogen, elixir-format, fuzzy
 msgid "deletion_reminder_700.body_text"
 msgstr ""
-"Para conservar tu cuenta de Flirtual, inicia sesión en cualquier momento "
+"Para conservar tu cuenta de %{brand_name}, inicia sesión en cualquier momento "
 "durante los próximos 30 días: no tienes que hacer nada más.\n"
 "\n"
 "Si no inicias sesión, tu cuenta y tus datos se eliminarán de forma "
@@ -431,18 +431,18 @@ msgstr "Tu cuenta se eliminará en 30 días si no inicias sesión"
 #: lib/flirtual/user/push.ex:111
 #, elixir-autogen, elixir-format, fuzzy
 msgid "deletion_reminder_700.push_title"
-msgstr "¡Vuelve a Flirtual! Quedan 30 días"
+msgstr "¡Vuelve a %{brand_name}! Quedan 30 días"
 
 #: lib/flirtual/user/email.ex:389
 #, elixir-autogen, elixir-format, fuzzy
 msgid "deletion_reminder_700.subject"
-msgstr "ACCIÓN REQUERIDA: Tu cuenta de Flirtual se eliminará en un mes"
+msgstr "ACCIÓN REQUERIDA: Tu cuenta de %{brand_name} se eliminará en un mes"
 
 #: lib/flirtual/user/email.ex:399
 #, elixir-autogen, elixir-format, fuzzy
 msgid "deletion_reminder_723.body_html"
 msgstr ""
-"<p><strong>Este es tu último recordatorio.</strong> Tu cuenta de Flirtual se "
+"<p><strong>Este es tu último recordatorio.</strong> Tu cuenta de %{brand_name} se "
 "eliminará de forma permanente en 7 días.</p><p>Solo tienes que iniciar "
 "sesión una vez en los próximos 7 días para evitar que se elimine tu cuenta: "
 "no hace falta nada más.</p><p>Hemos mejorado nuestro sistema de "
@@ -456,7 +456,7 @@ msgstr ""
 #, elixir-autogen, elixir-format, fuzzy
 msgid "deletion_reminder_723.body_text"
 msgstr ""
-"Este es tu último recordatorio. Tu cuenta de Flirtual se eliminará de forma "
+"Este es tu último recordatorio. Tu cuenta de %{brand_name} se eliminará de forma "
 "permanente en 7 días.\n"
 "\n"
 "Solo tienes que iniciar sesión una vez en los próximos 7 días para evitar "
@@ -478,12 +478,12 @@ msgstr "Tu cuenta se eliminará en 7 días si no inicias sesión"
 #: lib/flirtual/user/push.ex:118
 #, elixir-autogen, elixir-format, fuzzy
 msgid "deletion_reminder_723.push_title"
-msgstr "¡Última oportunidad! Inicia sesión en Flirtual hoy"
+msgstr "¡Última oportunidad! Inicia sesión en %{brand_name} hoy"
 
 #: lib/flirtual/user/email.ex:397
 #, elixir-autogen, elixir-format, fuzzy
 msgid "deletion_reminder_723.subject"
-msgstr "ACCIÓN REQUERIDA: Tu cuenta de Flirtual se eliminará en una semana"
+msgstr "ACCIÓN REQUERIDA: Tu cuenta de %{brand_name} se eliminará en una semana"
 
 #: lib/flirtual/mailer.ex:41
 #: lib/flirtual/mailer.ex:290
@@ -501,6 +501,6 @@ msgstr "Instagram"
 #, elixir-autogen, elixir-format, fuzzy
 msgid "suspended.reason.underage"
 msgstr ""
-"Menor de edad. Para usar Flirtual es necesario tener al menos 18 años. Si "
-"cree que se trata de un error, puede iniciar sesión en Flirtual y verificar "
+"Menor de edad. Para usar %{brand_name} es necesario tener al menos 18 años. Si "
+"cree que se trata de un error, puede iniciar sesión en %{brand_name} y verificar "
 "su edad de forma segura para recuperar su cuenta."
