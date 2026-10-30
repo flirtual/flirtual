@@ -82,3 +82,9 @@ export const client = !server;
 export { commitId, commitIdShort };
 
 export const commitUrl = `${gitUrl}/commit/${commitId}`;
+
+// Like "2026.10.30-beta.1", from the Version resource in the pulumi submodule (src/resources/version.ts).
+const releaseName = import.meta.env.VITE_RELEASE_NAME as string | undefined;
+
+// The commit as SemVer build metadata (item 10): https://semver.org/#semantic-versioning-specification-semver
+export const version = releaseName ? `${releaseName}+${commitIdShort}` : commitIdShort;

@@ -16,7 +16,7 @@ import {
 } from "~/components/dialog/dialog";
 import { DrawerOrDialog } from "~/components/drawer-or-dialog";
 import { Image } from "~/components/image";
-import { commitIdShort, maintenance } from "~/const";
+import { maintenance, version } from "~/const";
 import FlittyHardhat from "~/static/mascot-hardhat.png";
 import { urls } from "~/urls";
 
@@ -166,7 +166,7 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, reset }) => {
 									<footer>
 										<span>{t("copyright", { year: new Date().getFullYear() })}</span>
 										{" "}
-										<span className="text-sm opacity-75">{commitIdShort}</span>
+										<span className="text-sm opacity-75">{version}</span>
 									</footer>
 								</div>
 							</DialogBody>
@@ -272,7 +272,7 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, reset }) => {
 									<footer>
 										<span>{t("copyright", { year: new Date().getFullYear() })}</span>
 										{" "}
-										<span className="text-sm opacity-75">{commitIdShort}</span>
+										<span className="text-sm opacity-75">{version}</span>
 									</footer>
 								</div>
 							</DialogBody>

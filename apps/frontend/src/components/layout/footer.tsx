@@ -9,7 +9,7 @@ import {
 	XIcon
 } from "~/components/icons";
 import type { IconComponent } from "~/components/icons";
-import { commitIdShort, freshworksWidgetId } from "~/const";
+import { freshworksWidgetId, version } from "~/const";
 import { useDialog } from "~/hooks/use-dialog";
 import type { Theme } from "~/hooks/use-theme";
 import { urls } from "~/urls";
@@ -207,7 +207,7 @@ export const Footer: React.FC<FooterProps> = ({
 							highlight={false}
 							href={urls.debugger}
 						>
-							{commitIdShort}
+							{version}
 						</InlineLink>
 					</div>
 				</div>

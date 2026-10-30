@@ -28,7 +28,7 @@ import { twMerge } from "tailwind-merge";
 
 import { InlineLink } from "~/components/inline-link";
 import { IdeasDialog } from "~/components/modals/ideas";
-import { commitIdShort, freshworksWidgetId } from "~/const";
+import { freshworksWidgetId, version } from "~/const";
 import { personality } from "~/features";
 import { useDevice } from "~/hooks/use-device";
 import { useDialog } from "~/hooks/use-dialog";
@@ -256,7 +256,7 @@ export const SettingsNavigation: FC = () => {
 						className="-mt-4 self-center text-black-10 no-underline vision:text-white-20"
 						href={urls.debugger}
 					>
-						{t("version", { version: commitIdShort })}
+						{t("version", { version })}
 					</InlineLink>
 				</nav>
 			</div>
