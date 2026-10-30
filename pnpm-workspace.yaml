@@ -10,6 +10,7 @@ catalog:
   "@cloudflare/vitest-pool-workers": ^0.23.0
   "@total-typescript/ts-reset": 0.6.1
   "@types/node": 24.19.2
+  "@typescript/native": npm:typescript@^7.0.2
   cf: 1.0.0-beta.12
   eslint: ^9.39.1
   execa: ^10.0.1
@@ -18,7 +19,7 @@ catalog:
   oxlint: ^1.83.0
   sharp: 0.35.5
   typed-openapi: 4.1.0
-  typescript: ^7.0.0
+  typescript: npm:@typescript/typescript6@^6.0.2
   vitest: ~4.1.10
   wrangler: ^4.120.1
 

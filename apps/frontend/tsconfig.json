@@ -8,7 +8,6 @@
 			"ES2024",
 			"ESNext.Promise"
 		],
-		"baseUrl": ".",
 		"rootDirs": [
 			".",
 			"./.react-router/types"

@@ -15,6 +15,7 @@
 		"@flirtual/config": "workspace:*",
 		"@pulumi/pulumi": "catalog:pulumi",
 		"@types/node": "catalog:",
+		"@typescript/native": "catalog:",
 		"execa": "catalog:",
 		"json-schema-to-typescript": "15.0.4",
 		"oxfmt": "catalog:",
