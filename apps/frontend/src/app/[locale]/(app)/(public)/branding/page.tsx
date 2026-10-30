@@ -39,7 +39,16 @@ export const meta: Route.MetaFunction = (options) => {
 	]);
 };
 
-const gradient = ([from, to]: brand.ColorPair) => `linear-gradient(to right, ${from}, ${to})`;
+const sameColor = (a: string, b: string) => a.toLowerCase() === b.toLowerCase();
+
+const isSolid = ([from, to]: brand.ColorPair) => sameColor(from, to);
+
+function gradient(pair: brand.ColorPair) {
+	return isSolid(pair) ? pair[0] : `linear-gradient(to right, ${pair[0]}, ${pair[1]})`;
+}
+
+const solidDateColors = isSolid(brand.dateColors);
+const distinctDarkColors = !brand.dateColors.every((color, index) => sameColor(color, brand.dateDarkColors[index]!));
 
 export default function BrandingPage() {
 	const { t } = useTranslation();
@@ -135,21 +144,27 @@ export default function BrandingPage() {
 					{t("colors")}
 				</span>
 				<div className="flex flex-wrap gap-2 text-white-20">
-					<ColorBlock
-						name={t("gradient")}
-						value={gradient(brand.dateColors)}
-					/>
-					<ColorBlock
-						name={t("dark_mode")}
-						value={gradient(brand.dateDarkColors)}
-					/>
+					{solidDateColors
+						? <ColorBlock name={t("accent")} value={brand.accentColor} />
+						: (
+								<ColorBlock
+									name={t("gradient")}
+									value={gradient(brand.dateColors)}
+								/>
+							)}
+					{distinctDarkColors && (
+						<ColorBlock
+							name={t("dark_mode")}
+							value={gradient(brand.dateDarkColors)}
+						/>
+					)}
 					{homieMode && (
 						<ColorBlock
 							name={t("homie_mode")}
 							value={gradient(brand.homieColors)}
 						/>
 					)}
-					<ColorBlock name={t("accent")} value={brand.accentColor} />
+					{!solidDateColors && <ColorBlock name={t("accent")} value={brand.accentColor} />}
 					<ColorBlock
 						name={t("background")}
 						invert

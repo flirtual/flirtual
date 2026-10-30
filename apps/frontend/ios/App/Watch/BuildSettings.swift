@@ -18,6 +18,7 @@ enum Brand {
         return json
     }()
 
+    static let name = setting("BrandName") ?? defaults["name"] as? String ?? ""
     static let dateColors = colorPair("BrandDateColors", default: "dateColors")
     static let homieColors = colorPair("BrandHomieColors", default: "homieColors")
 

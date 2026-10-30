@@ -3,7 +3,7 @@ import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { withSuspense } from "with-suspense";
 
-import { commitIdShort, commitUrl } from "~/const";
+import { commitUrl, version } from "~/const";
 import { useDevice } from "~/hooks/use-device";
 import { lazy } from "~/lazy";
 
@@ -29,7 +29,7 @@ export const BuildInformation: FC = () => {
 
 	return (
 		<button className="absolute bottom-20 right-0 flex max-w-lg flex-col items-end justify-center px-4 py-3 text-right text-xs text-black-90 opacity-75 dark:text-white-10 desktop:bottom-[unset] desktop:top-20" type="button" onClick={() => setHidden(true)}>
-			<Link href={commitUrl}>{t("version", { version: commitIdShort })}</Link>
+			<Link href={commitUrl}>{t("version", { version })}</Link>
 			<DeviceInformation />
 		</button>
 	);

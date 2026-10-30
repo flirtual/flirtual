@@ -19,6 +19,7 @@ import type {
 	To
 } from "react-router";
 
+import * as brand from "~/brand";
 import { server } from "~/const";
 import { polyfillForLanguage } from "~/polyfill";
 import { isInternalHref } from "~/urls";
@@ -37,6 +38,12 @@ import {
 import type { AnyLocale, Locale } from "./languages";
 
 const log = _log.extend("i18n");
+
+// i18next formats the strings inside a `returnObjects` result only when the format plugin sets
+// `handleAsObject` (Translator.translate in i18next), and i18next-icu doesn't.
+class ICU extends icu {
+	public handleAsObject = true;
+}
 
 export {
 	defaultLocale,
@@ -194,7 +201,7 @@ i18n
 			return preview === "keys" && first ? withKeys(value, first) : value;
 		}
 	})
-	.use(icu)
+	.use(ICU)
 	.use(initReactI18next)
 	.init({
 		supportedLngs: locales,
@@ -209,7 +216,8 @@ i18n
 		},
 
 		interpolation: {
-			escapeValue: false
+			escapeValue: false,
+			defaultVariables: { brand_name: brand.name }
 		},
 	});
 

@@ -100,7 +100,7 @@ export default defineConfig((config) => {
 			}
 		},
 		server: {
-			host: "0.0.0.0",
+			host: "::",
 			origin,
 			port: 3000,
 			strictPort: true,

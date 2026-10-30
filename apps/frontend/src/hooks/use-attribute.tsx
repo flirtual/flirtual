@@ -71,13 +71,12 @@ export function useAttributeTranslation<
 // eslint-disable-next-line unused-imports/no-unused-vars
 >(type?: T): Record<string, AttributeTranslation<T>> {
 	const { t } = useTranslation();
-	const translations = t("attributes", { returnObjects: true }) as Record<string, AttributeTranslation<T>>;
 
 	// An attribute may exist before its translation, so an unknown id falls back
 	// to itself instead of throwing.
-	return useMemo(() => new Proxy(translations, {
+	return useMemo(() => new Proxy(t("attributes", { returnObjects: true }) as Record<string, AttributeTranslation<T>>, {
 		get: (target, key) => (typeof key === "string" && !(key in target))
 			? { name: key }
 			: Reflect.get(target, key)
-	}), [translations]);
+	}), [t]);
 }

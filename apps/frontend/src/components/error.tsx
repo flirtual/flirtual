@@ -7,7 +7,7 @@ import type { ComponentProps, FC } from "react";
 import { Trans, useTranslation } from "react-i18next";
 
 import * as brand from "~/brand";
-import { commitId, commitIdShort, commitUrl, development, maintenance, preview, production } from "~/const";
+import { commitId, commitUrl, development, maintenance, preview, production, version } from "~/const";
 import { device, useDevice } from "~/hooks/use-device";
 import { useInterval } from "~/hooks/use-interval";
 import { getSession } from "~/hooks/use-session";
@@ -165,7 +165,7 @@ export function HavingIssues({ error }: { error?: unknown }) {
 							</span>
 						)}
 						<span className="font-mono opacity-50 desktop:text-sm">
-							{t("version", { version: commitIdShort })}
+							{t("version", { version })}
 						</span>
 						<button
 							className="mt-2 text-theme-2"

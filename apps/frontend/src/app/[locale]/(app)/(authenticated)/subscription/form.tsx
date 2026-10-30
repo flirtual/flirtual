@@ -16,7 +16,7 @@ import {
 	MatchSubscriptionPlatform,
 	VisionMessage
 } from "./platform-mismatch";
-import { EntitlementButtons } from "./subscription-buttons";
+import { EntitlementButtons, RestorePurchasesButton } from "./subscription-buttons";
 import { SuccessMessage } from "./success-message";
 
 const EntitlementStatus: FC<{ entitlement: Entitlement }> = ({
@@ -230,6 +230,7 @@ export const SubscriptionForm: FC = () => {
 					{t(active.length > 0 ? "subscription_manage_hint" : "subscription_manage_hint_return")}
 				</p>
 			</div>
+			<RestorePurchasesButton />
 			<div className="text-center">
 				<InlineLink href={urls.resources.paymentTerms}>
 					{t("payment_terms_and_refund_policy")}

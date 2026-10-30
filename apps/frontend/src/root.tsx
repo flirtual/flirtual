@@ -14,7 +14,6 @@ import {
 	useParams
 } from "react-router";
 
-import Favicon from "~/static/favicon.ico?no-inline";
 import MarkBlack from "~/static/mark-black.svg?no-inline";
 import OpenGraphImage from "~/static/mark-on-gradient.svg?w=1000&h=1000&format=png&no-inline&imagetools";
 import TwitterImage from "~/static/mark-on-gradient.svg?w=1000&h=1000&no-inline&imagetools";
@@ -22,6 +21,7 @@ import AppleIcon from "~/static/mark-on-gradient.svg?w=180&h=180&format=png&no-i
 import Icon from "~/static/mark.svg?no-inline";
 import Icon16x16 from "~/static/mark.svg?w=16&h=16&fit=contain&background=transparent&format=png&no-inline&imagetools";
 import Icon32x32 from "~/static/mark.svg?w=32&h=32&fit=contain&background=transparent&format=png&no-inline&imagetools";
+import Icon48x48 from "~/static/mark.svg?w=48&h=48&fit=contain&background=transparent&format=png&no-inline&imagetools";
 
 import type { Route } from "./+types/root";
 import { App } from "./app";
@@ -134,7 +134,7 @@ export function meta({
 
 		{ tagName: "link", rel: "manifest", href: href("/manifest.json") },
 
-		{ tagName: "link", rel: "icon", type: "image/x-icon", sizes: "48x48", href: Favicon },
+		{ tagName: "link", rel: "icon", type: "image/png", sizes: "48x48", href: Icon48x48 },
 		{ tagName: "link", rel: "icon", type: "image/svg+xml", sizes: "any", href: Icon },
 		{ tagName: "link", rel: "icon", type: "image/png", sizes: "32x32", href: Icon32x32 },
 		{ tagName: "link", rel: "icon", type: "image/png", sizes: "16x16", href: Icon16x16 },

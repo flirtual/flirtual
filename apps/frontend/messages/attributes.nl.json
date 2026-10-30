@@ -3000,7 +3000,7 @@
 	},
 	"ban-reason": {
 		"nupwCrjodUd4ZvPizEBc8L": {
-			"details": "Om geld vragen. Het is niet toegestaan om op Flirtual om geld te vragen. U kunt op deze e-mail reageren om bezwaar te maken tegen uw schorsing. Verwijder alle verzoeken om geld uit uw profiel, zodat uw account kan worden hersteld.",
+			"details": "Om geld vragen. Het is niet toegestaan om op {brand_name} om geld te vragen. U kunt op deze e-mail reageren om bezwaar te maken tegen uw schorsing. Verwijder alle verzoeken om geld uit uw profiel, zodat uw account kan worden hersteld.",
 			"name": "Om geld vragen"
 		},
 		"jBVZ29YcQ2dDXbURb6AxXk": {
@@ -3008,12 +3008,12 @@
 			"name": "Reclame"
 		},
 		"5H9nMhQacZBD9Zomu7Tbt9": {
-			"details": "Dubbel account. Het is niet toegestaan om meerdere Flirtual-accounts aan te maken. Dit account is uitgeschakeld, maar u kunt uw andere account gewoon blijven gebruiken. Denkt u dat u onterecht bent geschorst, of wilt u liever dat uw andere account wordt uitgeschakeld in plaats van dit account? Reageer dan op deze e-mail.",
+			"details": "Dubbel account. Het is niet toegestaan om meerdere {brand_name}-accounts aan te maken. Dit account is uitgeschakeld, maar u kunt uw andere account gewoon blijven gebruiken. Denkt u dat u onterecht bent geschorst, of wilt u liever dat uw andere account wordt uitgeschakeld in plaats van dit account? Reageer dan op deze e-mail.",
 			"name": "Dubbel account"
 		},
 		"hLwvdpKQiofFTCDHox75SY": {
 			"name": "Haatdragende inhoud",
-			"details": "Haatdragende inhoud. Haatdragende profielinhoud of berichten zijn niet welkom op Flirtual. Denkt u dat u onterecht bent geschorst? Dan kunt u op deze e-mail reageren om bezwaar te maken en uw account te laten herstellen."
+			"details": "Haatdragende inhoud. Haatdragende profielinhoud of berichten zijn niet welkom op {brand_name}. Denkt u dat u onterecht bent geschorst? Dan kunt u op deze e-mail reageren om bezwaar te maken en uw account te laten herstellen."
 		},
 		"Lfb829DEo36f54Uu3H3ybj": {
 			"name": "Oplichting, malware of schadelijke links",
@@ -3032,11 +3032,11 @@
 		},
 		"VgQw2st96dZKZotsnYUEaN": {
 			"name": "Schorsing omzeilen",
-			"details": "Schorsing omzeilen. Het lijkt erop dat u een nieuw account hebt aangemaakt of op een andere manier een eerdere schorsing op Flirtual hebt omzeild. Wilt u bezwaar maken tegen een eerdere schorsing en uw account laten herstellen? Dan kunt u reageren op de oorspronkelijke e-mail over die schorsing."
+			"details": "Schorsing omzeilen. Het lijkt erop dat u een nieuw account hebt aangemaakt of op een andere manier een eerdere schorsing op {brand_name} hebt omzeild. Wilt u bezwaar maken tegen een eerdere schorsing en uw account laten herstellen? Dan kunt u reageren op de oorspronkelijke e-mail over die schorsing."
 		},
 		"muXMqNjneKnwqxT8nqcy4d": {
 			"name": "Minderjarig",
-			"details": "Minderjarig. U moet minstens 18 jaar oud zijn om Flirtual te gebruiken. Denkt u dat u onterecht bent geschorst? Log dan in op Flirtual en verifieer veilig uw leeftijd om uw account te herstellen."
+			"details": "Minderjarig. U moet minstens 18 jaar oud zijn om {brand_name} te gebruiken. Denkt u dat u onterecht bent geschorst? Log dan in op {brand_name} en verifieer veilig uw leeftijd om uw account te herstellen."
 		},
 		"dWDkcjmXQEQRVoXmNkutAB": {
 			"name": "Intimidatie",
@@ -3044,7 +3044,7 @@
 		},
 		"EVU7hHnv5u6eQwRBTW8aYU": {
 			"name": "Naakt of expliciet seksuele inhoud",
-			"details": "Naakt of expliciet seksuele inhoud. Afbeeldingen met naakt of expliciet seksuele inhoud en overdreven obscene tekst zijn niet toegestaan op Flirtual. U kunt op deze e-mail reageren om bezwaar te maken tegen uw schorsing, en uw profiel aanpassen om uw account te laten herstellen."
+			"details": "Naakt of expliciet seksuele inhoud. Afbeeldingen met naakt of expliciet seksuele inhoud en overdreven obscene tekst zijn niet toegestaan op {brand_name}. U kunt op deze e-mail reageren om bezwaar te maken tegen uw schorsing, en uw profiel aanpassen om uw account te laten herstellen."
 		},
 		"KfFVwKB4DYMXx7foyqGUZM": {
 			"name": "Gewelddadige/schokkende inhoud",
@@ -3061,7 +3061,7 @@
 	},
 	"delete-reason": {
 		"jrAqzBkasZwqfjSPAazNq3": {
-			"name": "Ik heb een relatie gevonden via Flirtual"
+			"name": "Ik heb een relatie gevonden via {brand_name}"
 		},
 		"TaqMV38Taxdz7ZNxEG4oEU": {
 			"name": "Te weinig dates"
@@ -3177,7 +3177,7 @@
 		},
 		"MjxDKasduf9iHTctStGzYA": {
 			"name": "Bio met expliciet seksuele inhoud",
-			"details": "Beperk expliciet seksuele inhoud in uw bio tot een minimum en verwijder gedetailleerde beschrijvingen of kinks. U kunt hiervoor de NSFW-kinktags van Flirtual of eigen interesses gebruiken in de Instellingen."
+			"details": "Beperk expliciet seksuele inhoud in uw bio tot een minimum en verwijder gedetailleerde beschrijvingen of kinks. U kunt hiervoor de NSFW-kinktags van {brand_name} of eigen interesses gebruiken in de Instellingen."
 		},
 		"CnaCPAcsLptyUgVVugubdf": {
 			"name": "Reclame",
@@ -3185,7 +3185,7 @@
 		},
 		"f8v44XrBausmXe6XybTVHd": {
 			"name": "Geld vragen & werving",
-			"details": "Verwijder alle verzoeken om geld en commerciële werving van uw profiel. Om geld vragen en verwijzingen of links naar commerciële diensten zijn niet toegestaan op Flirtual."
+			"details": "Verwijder alle verzoeken om geld en commerciële werving van uw profiel. Om geld vragen en verwijzingen of links naar commerciële diensten zijn niet toegestaan op {brand_name}."
 		},
 		"RdHQQqrswesTTwyh4QZqbH": {
 			"name": "Haatdragende inhoud",
@@ -3197,7 +3197,7 @@
 		},
 		"dC6h3tWeZueVwHGKLhC2sk": {
 			"name": "Inactief account",
-			"details": "Werk uw bio bij als u terugkeert naar Flirtual. Neemt u een pauze of stopt u met Flirtual, dan kunt u uw account in de Instellingen tijdelijk deactiveren of definitief verwijderen."
+			"details": "Werk uw bio bij als u terugkeert naar {brand_name}. Neemt u een pauze of stopt u met {brand_name}, dan kunt u uw account in de Instellingen tijdelijk deactiveren of definitief verwijderen."
 		},
 		"AhPZwBpeTm5HMf96bkVszj": {
 			"name": "Bewijs uploaden",

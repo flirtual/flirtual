@@ -2617,7 +2617,7 @@
 		},
 		"nupwCrjodUd4ZvPizEBc8L": {
 			"name": "Solicitation d'argent",
-			"details": "Solicitation. Il est interdit de solliciter de l'argent sur Flirtual. Vous pouvez répondre à cet e-mail pour contester votre ban et retirer toute sollicitation de votre profil afin de réactiver votre compte."
+			"details": "Solicitation. Il est interdit de solliciter de l'argent sur {brand_name}. Vous pouvez répondre à cet e-mail pour contester votre ban et retirer toute sollicitation de votre profil afin de réactiver votre compte."
 		},
 		"jBVZ29YcQ2dDXbURb6AxXk": {
 			"name": "Publicité",
@@ -2625,15 +2625,15 @@
 		},
 		"5H9nMhQacZBD9Zomu7Tbt9": {
 			"name": "Compte duplique",
-			"details": "Compte duplique. La création de plusieurs comptes Flirtual n'est pas autorisée. Ce compte a été désactivé, mais vous pouvez toujours utiliser votre autre compte. Si vous pensez avoir été banni par erreur, ou si vous souhaitez que votre autre compte soit désactivé à la place de celui-ci, veuillez répondre à cet e-mail."
+			"details": "Compte duplique. La création de plusieurs comptes {brand_name} n'est pas autorisée. Ce compte a été désactivé, mais vous pouvez toujours utiliser votre autre compte. Si vous pensez avoir été banni par erreur, ou si vous souhaitez que votre autre compte soit désactivé à la place de celui-ci, veuillez répondre à cet e-mail."
 		},
 		"VgQw2st96dZKZotsnYUEaN": {
 			"name": "Évasion de ban",
-			"details": "Contournement de ban. Il semble que vous ayez créé un nouveau compte ou trouvé un autre moyen d’échapper à un précédent ban sur Flirtual. Pour contester ce ban et réactiver votre compte, vous pouvez répondre à l’e-mail qui vous l’avait notifié à l’époque."
+			"details": "Contournement de ban. Il semble que vous ayez créé un nouveau compte ou trouvé un autre moyen d’échapper à un précédent ban sur {brand_name}. Pour contester ce ban et réactiver votre compte, vous pouvez répondre à l’e-mail qui vous l’avait notifié à l’époque."
 		},
 		"muXMqNjneKnwqxT8nqcy4d": {
 			"name": "Utilisateur mineur",
-			"details": "Âge insuffisant. Vous devez avoir au moins 18 ans pour utiliser Flirtual. Si vous pensez qu’il s’agit d’une erreur, vous pouvez vous connecter à Flirtual et vérifier votre âge en toute sécurité pour réactiver votre compte."
+			"details": "Âge insuffisant. Vous devez avoir au moins 18 ans pour utiliser {brand_name}. Si vous pensez qu’il s’agit d’une erreur, vous pouvez vous connecter à {brand_name} et vérifier votre âge en toute sécurité pour réactiver votre compte."
 		},
 		"dWDkcjmXQEQRVoXmNkutAB": {
 			"details": "Harcèlement. Pour contester votre ban et réactiver votre compte, répondez à cet e-mail. Notez que nous ne pouvons pas communiquer le détail d’éventuels signalements.",
@@ -2641,7 +2641,7 @@
 		},
 		"EVU7hHnv5u6eQwRBTW8aYU": {
 			"name": "Nudité ou contenu sexuel explicite",
-			"details": "Nudité ou contenu sexuel explicite. Les images de nudité ou à caractère sexuel explicite et les textes trop obscènes ne sont pas autorisés sur Flirtual. Vous pouvez répondre à cet e-mail pour contester votre ban et mettre à jour votre profil afin de réactiver votre compte."
+			"details": "Nudité ou contenu sexuel explicite. Les images de nudité ou à caractère sexuel explicite et les textes trop obscènes ne sont pas autorisés sur {brand_name}. Vous pouvez répondre à cet e-mail pour contester votre ban et mettre à jour votre profil afin de réactiver votre compte."
 		},
 		"YLsXz4iHn9yNLLLmuMHLCT": {
 			"details": "Contenu lié à l’automutilation. Nous avons relevé dans votre profil ou votre activité des références à l’automutilation qui peuvent heurter d’autres membres. Nous proposons quelques ressources en santé mentale sur https://flirtu.al/mentalhealth, qui pourraient vous aider. Prenez soin de vous. Pour contester ce ban, veuillez répondre à cet e-mail.",
@@ -2657,7 +2657,7 @@
 		},
 		"hLwvdpKQiofFTCDHox75SY": {
 			"name": "Contenu haineux",
-			"details": "Contenu haineux. Les profils ou messages au contenu haineux n’ont pas leur place sur Flirtual. Si vous pensez qu’il s’agit d’une erreur, vous pouvez répondre à cet e-mail pour contester votre ban et réactiver votre compte."
+			"details": "Contenu haineux. Les profils ou messages au contenu haineux n’ont pas leur place sur {brand_name}. Si vous pensez qu’il s’agit d’une erreur, vous pouvez répondre à cet e-mail pour contester votre ban et réactiver votre compte."
 		},
 		"KfFVwKB4DYMXx7foyqGUZM": {
 			"name": "Contenu violent ou choquant",
@@ -2825,7 +2825,7 @@
 			"name": "Matchs/profils de faible qualité"
 		},
 		"jrAqzBkasZwqfjSPAazNq3": {
-			"name": "J’ai trouvé quelqu’un sur Flirtual"
+			"name": "J’ai trouvé quelqu’un sur {brand_name}"
 		},
 		"jgc6z6qpeYmTAwHmid6n8X": {
 			"name": "Je préfère d’autres applis de rencontre en VR"
@@ -3177,7 +3177,7 @@
 		},
 		"MjxDKasduf9iHTctStGzYA": {
 			"name": "Description NSFW",
-			"details": "Veuillez garder le contenu NSFW de votre description à un minimum, et retirer des descriptions graphiques ou des phantasmes. Vous pouvez utiliser les tags de fantasmes de Flirtual ou les intérêts personnalisés dans les options."
+			"details": "Veuillez garder le contenu NSFW de votre description à un minimum, et retirer des descriptions graphiques ou des phantasmes. Vous pouvez utiliser les tags de fantasmes de {brand_name} ou les intérêts personnalisés dans les options."
 		},
 		"CnaCPAcsLptyUgVVugubdf": {
 			"name": "Publicité",
@@ -3185,7 +3185,7 @@
 		},
 		"f8v44XrBausmXe6XybTVHd": {
 			"name": "Incitation",
-			"details": "Veuillez retirer toute sollicitation de votre profil. Il est interdit sur Flirtual de demander de l’argent, de mentionner des services commerciaux ou de partager des liens vers ceux-ci."
+			"details": "Veuillez retirer toute sollicitation de votre profil. Il est interdit sur {brand_name} de demander de l’argent, de mentionner des services commerciaux ou de partager des liens vers ceux-ci."
 		},
 		"RdHQQqrswesTTwyh4QZqbH": {
 			"name": "Contenu haineux",
@@ -3197,7 +3197,7 @@
 		},
 		"dC6h3tWeZueVwHGKLhC2sk": {
 			"name": "Compte inactif",
-			"details": "Si vous revenez sur Flirtual, veuillez mettre à jour votre description. Si vous faites une pause ou quittez Flirtual, vous pouvez désactiver temporairement ou supprimer définitivement votre compte dans les Paramètres."
+			"details": "Si vous revenez sur {brand_name}, veuillez mettre à jour votre description. Si vous faites une pause ou quittez {brand_name}, vous pouvez désactiver temporairement ou supprimer définitivement votre compte dans les Paramètres."
 		},
 		"AhPZwBpeTm5HMf96bkVszj": {
 			"name": "Preuves à fournir",

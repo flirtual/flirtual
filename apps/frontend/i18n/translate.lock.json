@@ -1,12 +1,15 @@
 {
 	"attributes:ban-reason.5H9nMhQacZBD9Zomu7Tbt9.details": {
-		"es": "c86174661a26ef14",
-		"nl": "c86174661a26ef14",
-		"pt": "c86174661a26ef14",
-		"ru": "c86174661a26ef14",
-		"sv": "c86174661a26ef14",
-		"ja": "c86174661a26ef14",
-		"ko": "c86174661a26ef14"
+		"es": "49d17b9213b97e16",
+		"nl": "49d17b9213b97e16",
+		"pt": "49d17b9213b97e16",
+		"ru": "49d17b9213b97e16",
+		"sv": "49d17b9213b97e16",
+		"ja": "49d17b9213b97e16",
+		"ko": "49d17b9213b97e16",
+		"de": "49d17b9213b97e16",
+		"fr": "49d17b9213b97e16",
+		"pt-BR": "49d17b9213b97e16"
 	},
 	"attributes:ban-reason.5H9nMhQacZBD9Zomu7Tbt9.name": {
 		"es": "b3953fdedc816450",
@@ -15,7 +18,10 @@
 		"ru": "b3953fdedc816450",
 		"sv": "b3953fdedc816450",
 		"ja": "b3953fdedc816450",
-		"ko": "b3953fdedc816450"
+		"ko": "b3953fdedc816450",
+		"de": "b3953fdedc816450",
+		"fr": "b3953fdedc816450",
+		"pt-BR": "b3953fdedc816450"
 	},
 	"attributes:ban-reason.8P2pi5232LTpzGTDWkBprc.name": {
 		"es": "1f1260ddd48575a9",
@@ -25,7 +31,9 @@
 		"ru": "1f1260ddd48575a9",
 		"sv": "1f1260ddd48575a9",
 		"ja": "1f1260ddd48575a9",
-		"ko": "1f1260ddd48575a9"
+		"ko": "1f1260ddd48575a9",
+		"de": "1f1260ddd48575a9",
+		"pt-BR": "1f1260ddd48575a9"
 	},
 	"attributes:ban-reason.dWDkcjmXQEQRVoXmNkutAB.details": {
 		"es": "9fe582a07d09b589",
@@ -35,7 +43,9 @@
 		"ru": "9fe582a07d09b589",
 		"sv": "9fe582a07d09b589",
 		"ja": "9fe582a07d09b589",
-		"ko": "9fe582a07d09b589"
+		"ko": "9fe582a07d09b589",
+		"de": "9fe582a07d09b589",
+		"pt-BR": "9fe582a07d09b589"
 	},
 	"attributes:ban-reason.dWDkcjmXQEQRVoXmNkutAB.name": {
 		"es": "080a630bd307118f",
@@ -44,18 +54,22 @@
 		"ru": "080a630bd307118f",
 		"sv": "080a630bd307118f",
 		"ja": "080a630bd307118f",
-		"ko": "080a630bd307118f"
+		"ko": "080a630bd307118f",
+		"de": "080a630bd307118f",
+		"fr": "080a630bd307118f",
+		"pt-BR": "080a630bd307118f"
 	},
 	"attributes:ban-reason.EVU7hHnv5u6eQwRBTW8aYU.details": {
-		"de": "d5d700a4198f9b0b",
-		"es": "d5d700a4198f9b0b",
-		"fr": "d5d700a4198f9b0b",
-		"nl": "d5d700a4198f9b0b",
-		"pt": "d5d700a4198f9b0b",
-		"ru": "d5d700a4198f9b0b",
-		"sv": "d5d700a4198f9b0b",
-		"ja": "d5d700a4198f9b0b",
-		"ko": "d5d700a4198f9b0b"
+		"de": "b236d988f57f7e96",
+		"es": "b236d988f57f7e96",
+		"fr": "b236d988f57f7e96",
+		"nl": "b236d988f57f7e96",
+		"pt": "b236d988f57f7e96",
+		"ru": "b236d988f57f7e96",
+		"sv": "b236d988f57f7e96",
+		"ja": "b236d988f57f7e96",
+		"ko": "b236d988f57f7e96",
+		"pt-BR": "b236d988f57f7e96"
 	},
 	"attributes:ban-reason.EVU7hHnv5u6eQwRBTW8aYU.name": {
 		"de": "88ab6cfb9755b2cd",
@@ -66,17 +80,20 @@
 		"ru": "88ab6cfb9755b2cd",
 		"sv": "88ab6cfb9755b2cd",
 		"ja": "88ab6cfb9755b2cd",
-		"ko": "88ab6cfb9755b2cd"
+		"ko": "88ab6cfb9755b2cd",
+		"pt-BR": "88ab6cfb9755b2cd"
 	},
 	"attributes:ban-reason.hLwvdpKQiofFTCDHox75SY.details": {
-		"es": "03e8e20d3b42d1e7",
-		"fr": "03e8e20d3b42d1e7",
-		"nl": "03e8e20d3b42d1e7",
-		"pt": "03e8e20d3b42d1e7",
-		"ru": "03e8e20d3b42d1e7",
-		"sv": "03e8e20d3b42d1e7",
-		"ja": "03e8e20d3b42d1e7",
-		"ko": "03e8e20d3b42d1e7"
+		"es": "e437d02ee3d83bf6",
+		"fr": "e437d02ee3d83bf6",
+		"nl": "e437d02ee3d83bf6",
+		"pt": "e437d02ee3d83bf6",
+		"ru": "e437d02ee3d83bf6",
+		"sv": "e437d02ee3d83bf6",
+		"ja": "e437d02ee3d83bf6",
+		"ko": "e437d02ee3d83bf6",
+		"de": "e437d02ee3d83bf6",
+		"pt-BR": "e437d02ee3d83bf6"
 	},
 	"attributes:ban-reason.hLwvdpKQiofFTCDHox75SY.name": {
 		"es": "2837bf1143074258",
@@ -86,7 +103,9 @@
 		"ru": "2837bf1143074258",
 		"sv": "2837bf1143074258",
 		"ja": "2837bf1143074258",
-		"ko": "2837bf1143074258"
+		"ko": "2837bf1143074258",
+		"de": "2837bf1143074258",
+		"pt-BR": "2837bf1143074258"
 	},
 	"attributes:ban-reason.HmF9W5yHfH3nLRYnt6F2cc.details": {
 		"es": "fe855b00427e26db",
@@ -96,7 +115,9 @@
 		"ru": "fe855b00427e26db",
 		"sv": "fe855b00427e26db",
 		"ja": "fe855b00427e26db",
-		"ko": "fe855b00427e26db"
+		"ko": "fe855b00427e26db",
+		"de": "fe855b00427e26db",
+		"pt-BR": "fe855b00427e26db"
 	},
 	"attributes:ban-reason.HmF9W5yHfH3nLRYnt6F2cc.name": {
 		"es": "b8bbd0dc86ce24df",
@@ -106,7 +127,9 @@
 		"ru": "b8bbd0dc86ce24df",
 		"sv": "b8bbd0dc86ce24df",
 		"ja": "b8bbd0dc86ce24df",
-		"ko": "b8bbd0dc86ce24df"
+		"ko": "b8bbd0dc86ce24df",
+		"de": "b8bbd0dc86ce24df",
+		"pt-BR": "b8bbd0dc86ce24df"
 	},
 	"attributes:ban-reason.jBVZ29YcQ2dDXbURb6AxXk.details": {
 		"es": "6b06c2ad6dc668a4",
@@ -115,7 +138,10 @@
 		"ru": "6b06c2ad6dc668a4",
 		"sv": "6b06c2ad6dc668a4",
 		"ja": "6b06c2ad6dc668a4",
-		"ko": "6b06c2ad6dc668a4"
+		"ko": "6b06c2ad6dc668a4",
+		"de": "6b06c2ad6dc668a4",
+		"fr": "6b06c2ad6dc668a4",
+		"pt-BR": "6b06c2ad6dc668a4"
 	},
 	"attributes:ban-reason.jBVZ29YcQ2dDXbURb6AxXk.name": {
 		"es": "aff5ad7b6b8d498d",
@@ -124,7 +150,10 @@
 		"ru": "aff5ad7b6b8d498d",
 		"sv": "aff5ad7b6b8d498d",
 		"ja": "aff5ad7b6b8d498d",
-		"ko": "aff5ad7b6b8d498d"
+		"ko": "aff5ad7b6b8d498d",
+		"de": "aff5ad7b6b8d498d",
+		"fr": "aff5ad7b6b8d498d",
+		"pt-BR": "aff5ad7b6b8d498d"
 	},
 	"attributes:ban-reason.KfFVwKB4DYMXx7foyqGUZM.details": {
 		"es": "88d557386be284e2",
@@ -134,7 +163,9 @@
 		"ru": "88d557386be284e2",
 		"sv": "88d557386be284e2",
 		"ja": "88d557386be284e2",
-		"ko": "88d557386be284e2"
+		"ko": "88d557386be284e2",
+		"de": "88d557386be284e2",
+		"pt-BR": "88d557386be284e2"
 	},
 	"attributes:ban-reason.KfFVwKB4DYMXx7foyqGUZM.name": {
 		"es": "deb050db2a4f06d0",
@@ -144,7 +175,9 @@
 		"ru": "deb050db2a4f06d0",
 		"sv": "deb050db2a4f06d0",
 		"ja": "deb050db2a4f06d0",
-		"ko": "deb050db2a4f06d0"
+		"ko": "deb050db2a4f06d0",
+		"de": "deb050db2a4f06d0",
+		"pt-BR": "deb050db2a4f06d0"
 	},
 	"attributes:ban-reason.Lfb829DEo36f54Uu3H3ybj.details": {
 		"es": "3b25ffe4fbe54fd2",
@@ -154,7 +187,9 @@
 		"ru": "3b25ffe4fbe54fd2",
 		"sv": "3b25ffe4fbe54fd2",
 		"ja": "3b25ffe4fbe54fd2",
-		"ko": "3b25ffe4fbe54fd2"
+		"ko": "3b25ffe4fbe54fd2",
+		"de": "3b25ffe4fbe54fd2",
+		"pt-BR": "3b25ffe4fbe54fd2"
 	},
 	"attributes:ban-reason.Lfb829DEo36f54Uu3H3ybj.name": {
 		"es": "d11ac0d54e547788",
@@ -164,19 +199,21 @@
 		"ru": "d11ac0d54e547788",
 		"sv": "d11ac0d54e547788",
 		"ja": "d11ac0d54e547788",
-		"ko": "d11ac0d54e547788"
+		"ko": "d11ac0d54e547788",
+		"de": "d11ac0d54e547788",
+		"pt-BR": "d11ac0d54e547788"
 	},
 	"attributes:ban-reason.muXMqNjneKnwqxT8nqcy4d.details": {
-		"de": "92b5b75157cf7aa1",
-		"es": "92b5b75157cf7aa1",
-		"fr": "92b5b75157cf7aa1",
-		"nl": "92b5b75157cf7aa1",
-		"pt": "92b5b75157cf7aa1",
-		"pt-BR": "92b5b75157cf7aa1",
-		"ru": "92b5b75157cf7aa1",
-		"sv": "92b5b75157cf7aa1",
-		"ja": "92b5b75157cf7aa1",
-		"ko": "92b5b75157cf7aa1"
+		"de": "58fb95e13de15865",
+		"es": "58fb95e13de15865",
+		"fr": "58fb95e13de15865",
+		"nl": "58fb95e13de15865",
+		"pt": "58fb95e13de15865",
+		"pt-BR": "58fb95e13de15865",
+		"ru": "58fb95e13de15865",
+		"sv": "58fb95e13de15865",
+		"ja": "58fb95e13de15865",
+		"ko": "58fb95e13de15865"
 	},
 	"attributes:ban-reason.muXMqNjneKnwqxT8nqcy4d.name": {
 		"es": "56ae547867753a49",
@@ -185,16 +222,22 @@
 		"ru": "56ae547867753a49",
 		"sv": "56ae547867753a49",
 		"ja": "56ae547867753a49",
-		"ko": "56ae547867753a49"
+		"ko": "56ae547867753a49",
+		"de": "56ae547867753a49",
+		"fr": "56ae547867753a49",
+		"pt-BR": "56ae547867753a49"
 	},
 	"attributes:ban-reason.nupwCrjodUd4ZvPizEBc8L.details": {
-		"es": "92b0b32319f5b7a6",
-		"nl": "92b0b32319f5b7a6",
-		"pt": "92b0b32319f5b7a6",
-		"ru": "92b0b32319f5b7a6",
-		"sv": "92b0b32319f5b7a6",
-		"ja": "92b0b32319f5b7a6",
-		"ko": "92b0b32319f5b7a6"
+		"es": "490ef26759097dae",
+		"nl": "490ef26759097dae",
+		"pt": "490ef26759097dae",
+		"ru": "490ef26759097dae",
+		"sv": "490ef26759097dae",
+		"ja": "490ef26759097dae",
+		"ko": "490ef26759097dae",
+		"de": "490ef26759097dae",
+		"fr": "490ef26759097dae",
+		"pt-BR": "490ef26759097dae"
 	},
 	"attributes:ban-reason.nupwCrjodUd4ZvPizEBc8L.name": {
 		"es": "20c25340a928b7a0",
@@ -203,7 +246,10 @@
 		"ru": "20c25340a928b7a0",
 		"sv": "20c25340a928b7a0",
 		"ja": "20c25340a928b7a0",
-		"ko": "20c25340a928b7a0"
+		"ko": "20c25340a928b7a0",
+		"de": "20c25340a928b7a0",
+		"fr": "20c25340a928b7a0",
+		"pt-BR": "20c25340a928b7a0"
 	},
 	"attributes:ban-reason.tUaxdXYAcyeb3G4Qc7gNLh.details": {
 		"es": "d5e3fa0e5a907ca8",
@@ -212,7 +258,10 @@
 		"ru": "d5e3fa0e5a907ca8",
 		"sv": "d5e3fa0e5a907ca8",
 		"ja": "d5e3fa0e5a907ca8",
-		"ko": "d5e3fa0e5a907ca8"
+		"ko": "d5e3fa0e5a907ca8",
+		"de": "d5e3fa0e5a907ca8",
+		"fr": "d5e3fa0e5a907ca8",
+		"pt-BR": "d5e3fa0e5a907ca8"
 	},
 	"attributes:ban-reason.tUaxdXYAcyeb3G4Qc7gNLh.name": {
 		"es": "911850ad9c311af6",
@@ -221,17 +270,22 @@
 		"ru": "911850ad9c311af6",
 		"sv": "911850ad9c311af6",
 		"ja": "911850ad9c311af6",
-		"ko": "911850ad9c311af6"
+		"ko": "911850ad9c311af6",
+		"de": "911850ad9c311af6",
+		"fr": "911850ad9c311af6",
+		"pt-BR": "911850ad9c311af6"
 	},
 	"attributes:ban-reason.VgQw2st96dZKZotsnYUEaN.details": {
-		"es": "231f6c3da3e29201",
-		"fr": "231f6c3da3e29201",
-		"nl": "231f6c3da3e29201",
-		"pt": "231f6c3da3e29201",
-		"ru": "231f6c3da3e29201",
-		"sv": "231f6c3da3e29201",
-		"ja": "231f6c3da3e29201",
-		"ko": "231f6c3da3e29201"
+		"es": "589d7b3c7944c142",
+		"fr": "589d7b3c7944c142",
+		"nl": "589d7b3c7944c142",
+		"pt": "589d7b3c7944c142",
+		"ru": "589d7b3c7944c142",
+		"sv": "589d7b3c7944c142",
+		"ja": "589d7b3c7944c142",
+		"ko": "589d7b3c7944c142",
+		"de": "589d7b3c7944c142",
+		"pt-BR": "589d7b3c7944c142"
 	},
 	"attributes:ban-reason.VgQw2st96dZKZotsnYUEaN.name": {
 		"es": "12947cae541c8bb6",
@@ -240,7 +294,10 @@
 		"ru": "12947cae541c8bb6",
 		"sv": "12947cae541c8bb6",
 		"ja": "12947cae541c8bb6",
-		"ko": "12947cae541c8bb6"
+		"ko": "12947cae541c8bb6",
+		"de": "12947cae541c8bb6",
+		"fr": "12947cae541c8bb6",
+		"pt-BR": "12947cae541c8bb6"
 	},
 	"attributes:ban-reason.WSD2yPcs64FB27qpb4AGuT.details": {
 		"es": "332fb07908a77379",
@@ -249,7 +306,10 @@
 		"ru": "332fb07908a77379",
 		"sv": "332fb07908a77379",
 		"ja": "332fb07908a77379",
-		"ko": "332fb07908a77379"
+		"ko": "332fb07908a77379",
+		"de": "332fb07908a77379",
+		"fr": "332fb07908a77379",
+		"pt-BR": "332fb07908a77379"
 	},
 	"attributes:ban-reason.WSD2yPcs64FB27qpb4AGuT.name": {
 		"es": "ca8bec2aeeb5d86b",
@@ -258,7 +318,10 @@
 		"ru": "ca8bec2aeeb5d86b",
 		"sv": "ca8bec2aeeb5d86b",
 		"ja": "ca8bec2aeeb5d86b",
-		"ko": "ca8bec2aeeb5d86b"
+		"ko": "ca8bec2aeeb5d86b",
+		"de": "ca8bec2aeeb5d86b",
+		"fr": "ca8bec2aeeb5d86b",
+		"pt-BR": "ca8bec2aeeb5d86b"
 	},
 	"attributes:ban-reason.YLsXz4iHn9yNLLLmuMHLCT.details": {
 		"es": "468a249f71ebf7d7",
@@ -268,7 +331,9 @@
 		"ru": "468a249f71ebf7d7",
 		"sv": "468a249f71ebf7d7",
 		"ja": "468a249f71ebf7d7",
-		"ko": "468a249f71ebf7d7"
+		"ko": "468a249f71ebf7d7",
+		"de": "468a249f71ebf7d7",
+		"pt-BR": "468a249f71ebf7d7"
 	},
 	"attributes:ban-reason.YLsXz4iHn9yNLLLmuMHLCT.name": {
 		"es": "8b36f8a6d8f0bf0f",
@@ -278,7 +343,9 @@
 		"ru": "8b36f8a6d8f0bf0f",
 		"sv": "8b36f8a6d8f0bf0f",
 		"ja": "8b36f8a6d8f0bf0f",
-		"ko": "8b36f8a6d8f0bf0f"
+		"ko": "8b36f8a6d8f0bf0f",
+		"de": "8b36f8a6d8f0bf0f",
+		"pt-BR": "8b36f8a6d8f0bf0f"
 	},
 	"attributes:delete-reason.3fm9o3onrqPiwKhceexRMZ.name": {
 		"es": "1ab6bde33c4fc3cf",
@@ -288,7 +355,9 @@
 		"ru": "1ab6bde33c4fc3cf",
 		"sv": "1ab6bde33c4fc3cf",
 		"ja": "1ab6bde33c4fc3cf",
-		"ko": "1ab6bde33c4fc3cf"
+		"ko": "1ab6bde33c4fc3cf",
+		"de": "1ab6bde33c4fc3cf",
+		"pt-BR": "1ab6bde33c4fc3cf"
 	},
 	"attributes:delete-reason.6R764W55PvotuTz3BBRHXD.name": {
 		"es": "86a780157ab70bb3",
@@ -298,7 +367,9 @@
 		"ru": "86a780157ab70bb3",
 		"sv": "86a780157ab70bb3",
 		"ja": "86a780157ab70bb3",
-		"ko": "86a780157ab70bb3"
+		"ko": "86a780157ab70bb3",
+		"de": "86a780157ab70bb3",
+		"pt-BR": "86a780157ab70bb3"
 	},
 	"attributes:delete-reason.BMEJteBnvo8vrUrPh7j634.name": {
 		"es": "bde91523310cc1ae",
@@ -308,7 +379,9 @@
 		"ru": "bde91523310cc1ae",
 		"sv": "bde91523310cc1ae",
 		"ja": "bde91523310cc1ae",
-		"ko": "bde91523310cc1ae"
+		"ko": "bde91523310cc1ae",
+		"de": "bde91523310cc1ae",
+		"pt-BR": "bde91523310cc1ae"
 	},
 	"attributes:delete-reason.EkWwgZavkCxJhRgKJF3yRn.name": {
 		"es": "206df76ce33981a2",
@@ -318,7 +391,9 @@
 		"ru": "206df76ce33981a2",
 		"sv": "206df76ce33981a2",
 		"ja": "206df76ce33981a2",
-		"ko": "206df76ce33981a2"
+		"ko": "206df76ce33981a2",
+		"de": "206df76ce33981a2",
+		"pt-BR": "206df76ce33981a2"
 	},
 	"attributes:delete-reason.g4hPG9psXVxzKa4Tr9GjDN.name": {
 		"es": "1f1260ddd48575a9",
@@ -328,7 +403,9 @@
 		"ru": "1f1260ddd48575a9",
 		"sv": "1f1260ddd48575a9",
 		"ja": "1f1260ddd48575a9",
-		"ko": "1f1260ddd48575a9"
+		"ko": "1f1260ddd48575a9",
+		"de": "1f1260ddd48575a9",
+		"pt-BR": "1f1260ddd48575a9"
 	},
 	"attributes:delete-reason.J3vVp9PWZQi5cEuk8G8wij.name": {
 		"es": "06f7be4c3eac9f68",
@@ -338,7 +415,9 @@
 		"ru": "06f7be4c3eac9f68",
 		"sv": "06f7be4c3eac9f68",
 		"ja": "06f7be4c3eac9f68",
-		"ko": "06f7be4c3eac9f68"
+		"ko": "06f7be4c3eac9f68",
+		"de": "06f7be4c3eac9f68",
+		"pt-BR": "06f7be4c3eac9f68"
 	},
 	"attributes:delete-reason.jgc6z6qpeYmTAwHmid6n8X.name": {
 		"es": "ea6c793b384fffbe",
@@ -348,17 +427,21 @@
 		"ru": "ea6c793b384fffbe",
 		"sv": "ea6c793b384fffbe",
 		"ja": "ea6c793b384fffbe",
-		"ko": "ea6c793b384fffbe"
+		"ko": "ea6c793b384fffbe",
+		"de": "ea6c793b384fffbe",
+		"pt-BR": "ea6c793b384fffbe"
 	},
 	"attributes:delete-reason.jrAqzBkasZwqfjSPAazNq3.name": {
-		"es": "04f57e52b1a13317",
-		"fr": "04f57e52b1a13317",
-		"nl": "04f57e52b1a13317",
-		"pt": "04f57e52b1a13317",
-		"ru": "04f57e52b1a13317",
-		"sv": "04f57e52b1a13317",
-		"ja": "04f57e52b1a13317",
-		"ko": "04f57e52b1a13317"
+		"es": "43250130f8b33957",
+		"fr": "43250130f8b33957",
+		"nl": "43250130f8b33957",
+		"pt": "43250130f8b33957",
+		"ru": "43250130f8b33957",
+		"sv": "43250130f8b33957",
+		"ja": "43250130f8b33957",
+		"ko": "43250130f8b33957",
+		"de": "43250130f8b33957",
+		"pt-BR": "43250130f8b33957"
 	},
 	"attributes:delete-reason.kTXr4okVAGLovjKBiwSgnF.name": {
 		"es": "7ed71894f3ad5ac4",
@@ -368,7 +451,9 @@
 		"ru": "7ed71894f3ad5ac4",
 		"sv": "7ed71894f3ad5ac4",
 		"ja": "7ed71894f3ad5ac4",
-		"ko": "7ed71894f3ad5ac4"
+		"ko": "7ed71894f3ad5ac4",
+		"de": "7ed71894f3ad5ac4",
+		"pt-BR": "7ed71894f3ad5ac4"
 	},
 	"attributes:delete-reason.sQcEHRLCffbLfcgM4zAELf.name": {
 		"de": "26db9f4dcd32e115",
@@ -379,7 +464,8 @@
 		"ru": "26db9f4dcd32e115",
 		"sv": "26db9f4dcd32e115",
 		"ja": "26db9f4dcd32e115",
-		"ko": "26db9f4dcd32e115"
+		"ko": "26db9f4dcd32e115",
+		"pt-BR": "26db9f4dcd32e115"
 	},
 	"attributes:delete-reason.TaqMV38Taxdz7ZNxEG4oEU.name": {
 		"es": "bfcdad17d0b4694e",
@@ -389,7 +475,9 @@
 		"ru": "bfcdad17d0b4694e",
 		"sv": "bfcdad17d0b4694e",
 		"ja": "bfcdad17d0b4694e",
-		"ko": "bfcdad17d0b4694e"
+		"ko": "bfcdad17d0b4694e",
+		"de": "bfcdad17d0b4694e",
+		"pt-BR": "bfcdad17d0b4694e"
 	},
 	"attributes:game.282mLZMHmCQfBrLPhHBRkZ.name": {
 		"de": "c3bba4dd71361cb5",
@@ -543,7 +631,9 @@
 		"ru": "c2cae4649c70267e",
 		"sv": "c2cae4649c70267e",
 		"ja": "c2cae4649c70267e",
-		"ko": "c2cae4649c70267e"
+		"ko": "c2cae4649c70267e",
+		"de": "c2cae4649c70267e",
+		"pt-BR": "c2cae4649c70267e"
 	},
 	"attributes:game.3RRbfo9ZSCYgCDhQ2E2JKn.name": {
 		"de": "d30ec7cfeabe1015",
@@ -793,7 +883,9 @@
 		"ru": "dee8c2edbdd38103",
 		"sv": "dee8c2edbdd38103",
 		"ja": "dee8c2edbdd38103",
-		"ko": "dee8c2edbdd38103"
+		"ko": "dee8c2edbdd38103",
+		"de": "dee8c2edbdd38103",
+		"pt-BR": "dee8c2edbdd38103"
 	},
 	"attributes:game.7NjeRRK6XWcQ2VwamJFk4N.name": {
 		"de": "721f9a508e6270bd",
@@ -947,7 +1039,9 @@
 		"ru": "cbf6f5bc10cef590",
 		"sv": "cbf6f5bc10cef590",
 		"ja": "cbf6f5bc10cef590",
-		"ko": "cbf6f5bc10cef590"
+		"ko": "cbf6f5bc10cef590",
+		"de": "cbf6f5bc10cef590",
+		"pt-BR": "cbf6f5bc10cef590"
 	},
 	"attributes:game.aMnbvaXq5RgSCxKRsqSSk2.name": {
 		"de": "9bb73a7b13f5c768",
@@ -1018,7 +1112,8 @@
 		"ru": "fa687efcf0137570",
 		"sv": "fa687efcf0137570",
 		"ja": "fa687efcf0137570",
-		"ko": "fa687efcf0137570"
+		"ko": "fa687efcf0137570",
+		"pt-BR": "fa687efcf0137570"
 	},
 	"attributes:game.aW7HoLx2pA3FvwWFRz3d3M.name": {
 		"de": "cf2d3e9479fb4941",
@@ -1148,7 +1243,9 @@
 		"ru": "5955c88f4e281a02",
 		"sv": "5955c88f4e281a02",
 		"ja": "5955c88f4e281a02",
-		"ko": "5955c88f4e281a02"
+		"ko": "5955c88f4e281a02",
+		"de": "5955c88f4e281a02",
+		"pt-BR": "5955c88f4e281a02"
 	},
 	"attributes:game.bHF6sv68wCUEQ6VNEYEvGQ.name": {
 		"es": "743f6cc720010e39",
@@ -1158,7 +1255,9 @@
 		"ru": "743f6cc720010e39",
 		"sv": "743f6cc720010e39",
 		"ja": "743f6cc720010e39",
-		"ko": "743f6cc720010e39"
+		"ko": "743f6cc720010e39",
+		"de": "743f6cc720010e39",
+		"pt-BR": "743f6cc720010e39"
 	},
 	"attributes:game.BPoQhJvNi32kbECipz4aWa.name": {
 		"de": "458df4a116fa1eac",
@@ -1241,7 +1340,8 @@
 		"ru": "a2f54b2bef2a4b90",
 		"sv": "a2f54b2bef2a4b90",
 		"ja": "a2f54b2bef2a4b90",
-		"ko": "a2f54b2bef2a4b90"
+		"ko": "a2f54b2bef2a4b90",
+		"pt-BR": "a2f54b2bef2a4b90"
 	},
 	"attributes:game.bYsz5BcyuHQtBjKxxEdPiA.name": {
 		"de": "d84bd8403ae34265",
@@ -1395,7 +1495,9 @@
 		"ru": "0a7219d3cf0d3c1c",
 		"sv": "0a7219d3cf0d3c1c",
 		"ja": "0a7219d3cf0d3c1c",
-		"ko": "0a7219d3cf0d3c1c"
+		"ko": "0a7219d3cf0d3c1c",
+		"de": "0a7219d3cf0d3c1c",
+		"pt-BR": "0a7219d3cf0d3c1c"
 	},
 	"attributes:game.d7HmGChgsRKqu39iSkCCBG.name": {
 		"de": "43105e490fcfde64",
@@ -1585,7 +1687,9 @@
 		"ru": "266ec8fe5ec877fb",
 		"sv": "266ec8fe5ec877fb",
 		"ja": "266ec8fe5ec877fb",
-		"ko": "266ec8fe5ec877fb"
+		"ko": "266ec8fe5ec877fb",
+		"de": "266ec8fe5ec877fb",
+		"pt-BR": "266ec8fe5ec877fb"
 	},
 	"attributes:game.eR5qPKfQ8answShFLd5Rj6.name": {
 		"de": "acd7b2ced1fce560",
@@ -1643,7 +1747,9 @@
 		"ru": "d6795890e0713d82",
 		"sv": "d6795890e0713d82",
 		"ja": "d6795890e0713d82",
-		"ko": "d6795890e0713d82"
+		"ko": "d6795890e0713d82",
+		"de": "d6795890e0713d82",
+		"pt-BR": "d6795890e0713d82"
 	},
 	"attributes:game.fQBRpZVN6R2hK9MhYxMqwL.name": {
 		"de": "f552f75490cfa193",
@@ -1737,7 +1843,9 @@
 		"ru": "679eb2793c6228eb",
 		"sv": "679eb2793c6228eb",
 		"ja": "679eb2793c6228eb",
-		"ko": "679eb2793c6228eb"
+		"ko": "679eb2793c6228eb",
+		"de": "679eb2793c6228eb",
+		"pt-BR": "679eb2793c6228eb"
 	},
 	"attributes:game.GeUXPSsyL2sxwjrBfWUaHf.name": {
 		"es": "d4c6dcaca19811d8",
@@ -1747,7 +1855,9 @@
 		"ru": "d4c6dcaca19811d8",
 		"sv": "d4c6dcaca19811d8",
 		"ja": "d4c6dcaca19811d8",
-		"ko": "d4c6dcaca19811d8"
+		"ko": "d4c6dcaca19811d8",
+		"de": "d4c6dcaca19811d8",
+		"pt-BR": "d4c6dcaca19811d8"
 	},
 	"attributes:game.ggxR45ZsJLuv8dpN8qupUD.name": {
 		"de": "12a885eff3a304b0",
@@ -1769,7 +1879,9 @@
 		"ru": "6338f9385c0c5b02",
 		"sv": "6338f9385c0c5b02",
 		"ja": "6338f9385c0c5b02",
-		"ko": "6338f9385c0c5b02"
+		"ko": "6338f9385c0c5b02",
+		"de": "6338f9385c0c5b02",
+		"pt-BR": "6338f9385c0c5b02"
 	},
 	"attributes:game.GKPrtXp4v4kjusPN4Y7sBk.name": {
 		"de": "f810512fe27e5cbe",
@@ -1815,7 +1927,9 @@
 		"ru": "4e3095fdc4bd546c",
 		"sv": "4e3095fdc4bd546c",
 		"ja": "4e3095fdc4bd546c",
-		"ko": "4e3095fdc4bd546c"
+		"ko": "4e3095fdc4bd546c",
+		"de": "4e3095fdc4bd546c",
+		"pt-BR": "4e3095fdc4bd546c"
 	},
 	"attributes:game.gnZzXhApVnhpLH4SAAuxBR.name": {
 		"de": "010f8748a58be1f4",
@@ -1922,7 +2036,8 @@
 		"ru": "49ab73c627e4725d",
 		"sv": "49ab73c627e4725d",
 		"ja": "49ab73c627e4725d",
-		"ko": "49ab73c627e4725d"
+		"ko": "49ab73c627e4725d",
+		"pt-BR": "49ab73c627e4725d"
 	},
 	"attributes:game.hExgYd785XP6SD2snsRSuN.name": {
 		"de": "d569928b447b06da",
@@ -1944,7 +2059,9 @@
 		"ru": "edba50d2c6b91355",
 		"sv": "edba50d2c6b91355",
 		"ja": "edba50d2c6b91355",
-		"ko": "edba50d2c6b91355"
+		"ko": "edba50d2c6b91355",
+		"de": "edba50d2c6b91355",
+		"pt-BR": "edba50d2c6b91355"
 	},
 	"attributes:game.hgA8Uxk4J66NbdVnuUzUxf.name": {
 		"de": "f3739e1b84f8b490",
@@ -2086,7 +2203,9 @@
 		"ru": "941b1f332d551190",
 		"sv": "941b1f332d551190",
 		"ja": "941b1f332d551190",
-		"ko": "941b1f332d551190"
+		"ko": "941b1f332d551190",
+		"de": "941b1f332d551190",
+		"pt-BR": "941b1f332d551190"
 	},
 	"attributes:game.itAqFvzYvyQMDg8FpNwHmG.name": {
 		"de": "8713b840fc6e8271",
@@ -2168,7 +2287,9 @@
 		"ru": "f5d686e466cdee7d",
 		"sv": "f5d686e466cdee7d",
 		"ja": "f5d686e466cdee7d",
-		"ko": "f5d686e466cdee7d"
+		"ko": "f5d686e466cdee7d",
+		"de": "f5d686e466cdee7d",
+		"pt-BR": "f5d686e466cdee7d"
 	},
 	"attributes:game.jTzfNyE4ggw3WRyopj7dnb.name": {
 		"de": "8e6c787e8274b942",
@@ -2310,7 +2431,9 @@
 		"ru": "179a8d1f98724d68",
 		"sv": "179a8d1f98724d68",
 		"ja": "179a8d1f98724d68",
-		"ko": "179a8d1f98724d68"
+		"ko": "179a8d1f98724d68",
+		"de": "179a8d1f98724d68",
+		"pt-BR": "179a8d1f98724d68"
 	},
 	"attributes:game.KxcYipcE3DtjmwFhZuUSAg.name": {
 		"de": "d36c4ed10db9a8b3",
@@ -2440,7 +2563,9 @@
 		"ru": "79e917d4ccca3f02",
 		"sv": "79e917d4ccca3f02",
 		"ja": "79e917d4ccca3f02",
-		"ko": "79e917d4ccca3f02"
+		"ko": "79e917d4ccca3f02",
+		"de": "79e917d4ccca3f02",
+		"pt-BR": "79e917d4ccca3f02"
 	},
 	"attributes:game.MhWAgbFzmusLJyAdtSXfXV.name": {
 		"es": "a2a770550eeef751",
@@ -2450,7 +2575,9 @@
 		"ru": "a2a770550eeef751",
 		"sv": "a2a770550eeef751",
 		"ja": "a2a770550eeef751",
-		"ko": "a2a770550eeef751"
+		"ko": "a2a770550eeef751",
+		"de": "a2a770550eeef751",
+		"pt-BR": "a2a770550eeef751"
 	},
 	"attributes:game.mkyAHUgKDWFiqkZcgZD6pS.name": {
 		"es": "af1a961b25a5b916",
@@ -2460,7 +2587,9 @@
 		"ru": "af1a961b25a5b916",
 		"sv": "af1a961b25a5b916",
 		"ja": "af1a961b25a5b916",
-		"ko": "af1a961b25a5b916"
+		"ko": "af1a961b25a5b916",
+		"de": "af1a961b25a5b916",
+		"pt-BR": "af1a961b25a5b916"
 	},
 	"attributes:game.MnaGzup5TKirJqart6uVyn.name": {
 		"de": "4c34362967fc7486",
@@ -2770,7 +2899,9 @@
 		"ru": "3c6ed1b49d310c63",
 		"sv": "3c6ed1b49d310c63",
 		"ja": "3c6ed1b49d310c63",
-		"ko": "3c6ed1b49d310c63"
+		"ko": "3c6ed1b49d310c63",
+		"de": "3c6ed1b49d310c63",
+		"pt-BR": "3c6ed1b49d310c63"
 	},
 	"attributes:game.oSdX45iK42jPfXVXzrSsQH.name": {
 		"de": "eeb43ec29953e14d",
@@ -2829,7 +2960,8 @@
 		"ru": "17575de762fec38d",
 		"sv": "17575de762fec38d",
 		"ja": "17575de762fec38d",
-		"ko": "17575de762fec38d"
+		"ko": "17575de762fec38d",
+		"pt-BR": "17575de762fec38d"
 	},
 	"attributes:game.p6rKSRtKpA2pQhDrbUXPKo.name": {
 		"de": "47e0527a63b029e5",
@@ -2947,7 +3079,9 @@
 		"ru": "24d7be2f9da41763",
 		"sv": "24d7be2f9da41763",
 		"ja": "24d7be2f9da41763",
-		"ko": "24d7be2f9da41763"
+		"ko": "24d7be2f9da41763",
+		"de": "24d7be2f9da41763",
+		"pt-BR": "24d7be2f9da41763"
 	},
 	"attributes:game.pRfEB2eSFTfwy6qQA9suWL.name": {
 		"de": "2af0e46cf4b60e2e",
@@ -3437,7 +3571,9 @@
 		"ru": "fdd638052fde0816",
 		"sv": "fdd638052fde0816",
 		"ja": "fdd638052fde0816",
-		"ko": "fdd638052fde0816"
+		"ko": "fdd638052fde0816",
+		"de": "fdd638052fde0816",
+		"pt-BR": "fdd638052fde0816"
 	},
 	"attributes:game.TfaA23SUr8UbigpDBS4iVk.name": {
 		"de": "1a4889f0124f0916",
@@ -3771,7 +3907,9 @@
 		"ru": "f6c77d2cac6f1d7d",
 		"sv": "f6c77d2cac6f1d7d",
 		"ja": "f6c77d2cac6f1d7d",
-		"ko": "f6c77d2cac6f1d7d"
+		"ko": "f6c77d2cac6f1d7d",
+		"de": "f6c77d2cac6f1d7d",
+		"pt-BR": "f6c77d2cac6f1d7d"
 	},
 	"attributes:game.Uzpbh2WhLAdc7pGGLMNHnU.name": {
 		"de": "78b4a6a491682c05",
@@ -3782,7 +3920,8 @@
 		"ru": "78b4a6a491682c05",
 		"sv": "78b4a6a491682c05",
 		"ja": "78b4a6a491682c05",
-		"ko": "78b4a6a491682c05"
+		"ko": "78b4a6a491682c05",
+		"pt-BR": "78b4a6a491682c05"
 	},
 	"attributes:game.V3TbT9XQkXCsrHyoQWps73.name": {
 		"de": "c0bfe2575d7e4a82",
@@ -3900,7 +4039,9 @@
 		"ru": "29a4bcffb8bd5dfa",
 		"sv": "29a4bcffb8bd5dfa",
 		"ja": "29a4bcffb8bd5dfa",
-		"ko": "29a4bcffb8bd5dfa"
+		"ko": "29a4bcffb8bd5dfa",
+		"de": "29a4bcffb8bd5dfa",
+		"pt-BR": "29a4bcffb8bd5dfa"
 	},
 	"attributes:game.vrs7Sim89hgFhCFBPYRzY7.name": {
 		"de": "5bba0e215e9497d1",
@@ -4258,7 +4399,9 @@
 		"ru": "eed5048d5c420e40",
 		"sv": "eed5048d5c420e40",
 		"ja": "eed5048d5c420e40",
-		"ko": "eed5048d5c420e40"
+		"ko": "eed5048d5c420e40",
+		"de": "eed5048d5c420e40",
+		"pt-BR": "eed5048d5c420e40"
 	},
 	"attributes:game.ycxBiAbVpXKpHJwZmicB68.name": {
 		"de": "b2581b219a213a4f",
@@ -4280,7 +4423,9 @@
 		"ru": "db1b5fc62a850745",
 		"sv": "db1b5fc62a850745",
 		"ja": "db1b5fc62a850745",
-		"ko": "db1b5fc62a850745"
+		"ko": "db1b5fc62a850745",
+		"de": "db1b5fc62a850745",
+		"pt-BR": "db1b5fc62a850745"
 	},
 	"attributes:game.yftjBC7ZRpf9kPYe4roahc.name": {
 		"de": "a24dc89dd2e522fb",
@@ -4315,7 +4460,8 @@
 		"ru": "79edef2881165980",
 		"sv": "79edef2881165980",
 		"ja": "79edef2881165980",
-		"ko": "79edef2881165980"
+		"ko": "79edef2881165980",
+		"pt-BR": "79edef2881165980"
 	},
 	"attributes:game.YLu6CmQXBuVFpmnReyz44g.name": {
 		"de": "a0e76fd23d822c72",
@@ -4493,7 +4639,9 @@
 		"ru": "4f0c09e2c668b382",
 		"sv": "4f0c09e2c668b382",
 		"ja": "4f0c09e2c668b382",
-		"ko": "4f0c09e2c668b382"
+		"ko": "4f0c09e2c668b382",
+		"de": "4f0c09e2c668b382",
+		"pt-BR": "4f0c09e2c668b382"
 	},
 	"attributes:game.ZmutKTykJx7wuW2ftpY3Qc.name": {
 		"de": "93f50a92348c51fd",
@@ -4576,7 +4724,8 @@
 		"ru": "090f56797c47d455",
 		"sv": "090f56797c47d455",
 		"ja": "090f56797c47d455",
-		"ko": "090f56797c47d455"
+		"ko": "090f56797c47d455",
+		"pt-BR": "090f56797c47d455"
 	},
 	"attributes:gender.2ETbJJJ3shADLphvncUwSL.definitionLink": {
 		"de": "99287457effe3c95",
@@ -4599,7 +4748,8 @@
 		"ru": "58e9993b9b193aee",
 		"sv": "58e9993b9b193aee",
 		"ja": "58e9993b9b193aee",
-		"ko": "58e9993b9b193aee"
+		"ko": "58e9993b9b193aee",
+		"pt-BR": "58e9993b9b193aee"
 	},
 	"attributes:gender.879KtanHc548synGhcNE7J.definition": {
 		"de": "a48455f4b392867d",
@@ -4610,7 +4760,8 @@
 		"ru": "a48455f4b392867d",
 		"sv": "a48455f4b392867d",
 		"ja": "a48455f4b392867d",
-		"ko": "a48455f4b392867d"
+		"ko": "a48455f4b392867d",
+		"pt-BR": "a48455f4b392867d"
 	},
 	"attributes:gender.879KtanHc548synGhcNE7J.definitionLink": {
 		"de": "e81db6823d3adb4d",
@@ -4633,7 +4784,8 @@
 		"ru": "8adcdd96c73746d8",
 		"sv": "8adcdd96c73746d8",
 		"ja": "8adcdd96c73746d8",
-		"ko": "8adcdd96c73746d8"
+		"ko": "8adcdd96c73746d8",
+		"pt-BR": "8adcdd96c73746d8"
 	},
 	"attributes:gender.aKEzfuPY6TaMkmnugQWLUd.definition": {
 		"de": "35b436c83228397e",
@@ -4644,7 +4796,8 @@
 		"ru": "35b436c83228397e",
 		"sv": "35b436c83228397e",
 		"ja": "35b436c83228397e",
-		"ko": "35b436c83228397e"
+		"ko": "35b436c83228397e",
+		"pt-BR": "35b436c83228397e"
 	},
 	"attributes:gender.aKEzfuPY6TaMkmnugQWLUd.definitionLink": {
 		"de": "e5b4f76c634827dc",
@@ -4667,7 +4820,8 @@
 		"ru": "342986ddc3b02ed6",
 		"sv": "342986ddc3b02ed6",
 		"ja": "342986ddc3b02ed6",
-		"ko": "342986ddc3b02ed6"
+		"ko": "342986ddc3b02ed6",
+		"pt-BR": "342986ddc3b02ed6"
 	},
 	"attributes:gender.CHkgoEoKzTSeVaLVByviBZ.definition": {
 		"de": "bba11b5d3fa48983",
@@ -4678,7 +4832,8 @@
 		"ru": "bba11b5d3fa48983",
 		"sv": "bba11b5d3fa48983",
 		"ja": "bba11b5d3fa48983",
-		"ko": "bba11b5d3fa48983"
+		"ko": "bba11b5d3fa48983",
+		"pt-BR": "bba11b5d3fa48983"
 	},
 	"attributes:gender.CHkgoEoKzTSeVaLVByviBZ.definitionLink": {
 		"de": "3dd1044760224a86",
@@ -4701,7 +4856,8 @@
 		"ru": "88cbef6e49d4fb97",
 		"sv": "88cbef6e49d4fb97",
 		"ja": "88cbef6e49d4fb97",
-		"ko": "88cbef6e49d4fb97"
+		"ko": "88cbef6e49d4fb97",
+		"pt-BR": "88cbef6e49d4fb97"
 	},
 	"attributes:gender.fAPzVgy7VyGPgAPhkwSkSU.definition": {
 		"de": "dc06ee70b822aaf8",
@@ -4712,7 +4868,8 @@
 		"ru": "dc06ee70b822aaf8",
 		"sv": "dc06ee70b822aaf8",
 		"ja": "dc06ee70b822aaf8",
-		"ko": "dc06ee70b822aaf8"
+		"ko": "dc06ee70b822aaf8",
+		"pt-BR": "dc06ee70b822aaf8"
 	},
 	"attributes:gender.fAPzVgy7VyGPgAPhkwSkSU.definitionLink": {
 		"de": "fa27f7c86e39134c",
@@ -4735,7 +4892,8 @@
 		"ru": "3db1523065e771bf",
 		"sv": "3db1523065e771bf",
 		"ja": "3db1523065e771bf",
-		"ko": "3db1523065e771bf"
+		"ko": "3db1523065e771bf",
+		"pt-BR": "3db1523065e771bf"
 	},
 	"attributes:gender.GJitRtRoYWT6DfVasptK7N.definition": {
 		"de": "d9aa56df5858ed67",
@@ -4746,7 +4904,8 @@
 		"ru": "d9aa56df5858ed67",
 		"sv": "d9aa56df5858ed67",
 		"ja": "d9aa56df5858ed67",
-		"ko": "d9aa56df5858ed67"
+		"ko": "d9aa56df5858ed67",
+		"pt-BR": "d9aa56df5858ed67"
 	},
 	"attributes:gender.GJitRtRoYWT6DfVasptK7N.definitionLink": {
 		"de": "11199123aee38600",
@@ -4769,7 +4928,8 @@
 		"ru": "8a52334cb1b253c4",
 		"sv": "8a52334cb1b253c4",
 		"ja": "8a52334cb1b253c4",
-		"ko": "8a52334cb1b253c4"
+		"ko": "8a52334cb1b253c4",
+		"pt-BR": "8a52334cb1b253c4"
 	},
 	"attributes:gender.hv43aTXJZjMHfXRXvTcYiH.name": {
 		"de": "dfd5d540db244a9c",
@@ -4780,7 +4940,8 @@
 		"ru": "dfd5d540db244a9c",
 		"sv": "dfd5d540db244a9c",
 		"ja": "dfd5d540db244a9c",
-		"ko": "dfd5d540db244a9c"
+		"ko": "dfd5d540db244a9c",
+		"pt-BR": "dfd5d540db244a9c"
 	},
 	"attributes:gender.HWte4cB6TUzzXZoJeuxJuf.definition": {
 		"de": "0c93470bd4af6c75",
@@ -4791,7 +4952,8 @@
 		"ru": "0c93470bd4af6c75",
 		"sv": "0c93470bd4af6c75",
 		"ja": "0c93470bd4af6c75",
-		"ko": "0c93470bd4af6c75"
+		"ko": "0c93470bd4af6c75",
+		"pt-BR": "0c93470bd4af6c75"
 	},
 	"attributes:gender.HWte4cB6TUzzXZoJeuxJuf.definitionLink": {
 		"de": "76d11b57bc42cf36",
@@ -4814,7 +4976,8 @@
 		"ru": "5fbe694e9549d211",
 		"sv": "5fbe694e9549d211",
 		"ja": "5fbe694e9549d211",
-		"ko": "5fbe694e9549d211"
+		"ko": "5fbe694e9549d211",
+		"pt-BR": "5fbe694e9549d211"
 	},
 	"attributes:gender.jAL62ePbibxaG4FPu7S8LG.name": {
 		"de": "1f1260ddd48575a9",
@@ -4825,7 +4988,8 @@
 		"ru": "1f1260ddd48575a9",
 		"sv": "1f1260ddd48575a9",
 		"ja": "1f1260ddd48575a9",
-		"ko": "1f1260ddd48575a9"
+		"ko": "1f1260ddd48575a9",
+		"pt-BR": "1f1260ddd48575a9"
 	},
 	"attributes:gender.JL8AaDCJMVApbEuAfwG86Y.definition": {
 		"de": "f91b3bec754b20bf",
@@ -4836,7 +5000,8 @@
 		"ru": "f91b3bec754b20bf",
 		"sv": "f91b3bec754b20bf",
 		"ja": "f91b3bec754b20bf",
-		"ko": "f91b3bec754b20bf"
+		"ko": "f91b3bec754b20bf",
+		"pt-BR": "f91b3bec754b20bf"
 	},
 	"attributes:gender.JL8AaDCJMVApbEuAfwG86Y.definitionLink": {
 		"de": "9f4617b1eedc2ac9",
@@ -4859,7 +5024,8 @@
 		"ru": "5214948753c57d36",
 		"sv": "5214948753c57d36",
 		"ja": "5214948753c57d36",
-		"ko": "5214948753c57d36"
+		"ko": "5214948753c57d36",
+		"pt-BR": "5214948753c57d36"
 	},
 	"attributes:gender.mosDhQUt8JGumiup4yQWbZ.name": {
 		"de": "5e4a858c657bfca4",
@@ -4870,7 +5036,8 @@
 		"ru": "5e4a858c657bfca4",
 		"sv": "5e4a858c657bfca4",
 		"ja": "5e4a858c657bfca4",
-		"ko": "5e4a858c657bfca4"
+		"ko": "5e4a858c657bfca4",
+		"pt-BR": "5e4a858c657bfca4"
 	},
 	"attributes:gender.pAzAxxF4UYr3qN6F4tPYec.name": {
 		"de": "30f087913b4d6a5e",
@@ -4881,7 +5048,8 @@
 		"ru": "30f087913b4d6a5e",
 		"sv": "30f087913b4d6a5e",
 		"ja": "30f087913b4d6a5e",
-		"ko": "30f087913b4d6a5e"
+		"ko": "30f087913b4d6a5e",
+		"pt-BR": "30f087913b4d6a5e"
 	},
 	"attributes:gender.PFEmTKdmxAoPuxttYPwFZb.definition": {
 		"de": "3c47d9a1c36aacf9",
@@ -4892,7 +5060,8 @@
 		"ru": "3c47d9a1c36aacf9",
 		"sv": "3c47d9a1c36aacf9",
 		"ja": "3c47d9a1c36aacf9",
-		"ko": "3c47d9a1c36aacf9"
+		"ko": "3c47d9a1c36aacf9",
+		"pt-BR": "3c47d9a1c36aacf9"
 	},
 	"attributes:gender.PFEmTKdmxAoPuxttYPwFZb.definitionLink": {
 		"de": "655b4de3a1588355",
@@ -4915,7 +5084,8 @@
 		"ru": "a9377c4f0d2778a8",
 		"sv": "a9377c4f0d2778a8",
 		"ja": "a9377c4f0d2778a8",
-		"ko": "a9377c4f0d2778a8"
+		"ko": "a9377c4f0d2778a8",
+		"pt-BR": "a9377c4f0d2778a8"
 	},
 	"attributes:gender.QwXvxjisosKeTP97ouczoZ.definition": {
 		"de": "c848d1388a0ede9e",
@@ -4926,7 +5096,8 @@
 		"ru": "c848d1388a0ede9e",
 		"sv": "c848d1388a0ede9e",
 		"ja": "c848d1388a0ede9e",
-		"ko": "c848d1388a0ede9e"
+		"ko": "c848d1388a0ede9e",
+		"pt-BR": "c848d1388a0ede9e"
 	},
 	"attributes:gender.QwXvxjisosKeTP97ouczoZ.definitionLink": {
 		"de": "ea8ae5f728c3465c",
@@ -4949,7 +5120,8 @@
 		"ru": "f5422032db9e63a7",
 		"sv": "f5422032db9e63a7",
 		"ja": "f5422032db9e63a7",
-		"ko": "f5422032db9e63a7"
+		"ko": "f5422032db9e63a7",
+		"pt-BR": "f5422032db9e63a7"
 	},
 	"attributes:gender.RdMpwqWGydDgk9X2u32BBW.definition": {
 		"de": "8d1853b60843bf84",
@@ -4960,7 +5132,8 @@
 		"ru": "8d1853b60843bf84",
 		"sv": "8d1853b60843bf84",
 		"ja": "8d1853b60843bf84",
-		"ko": "8d1853b60843bf84"
+		"ko": "8d1853b60843bf84",
+		"pt-BR": "8d1853b60843bf84"
 	},
 	"attributes:gender.RdMpwqWGydDgk9X2u32BBW.definitionLink": {
 		"de": "dfe13ad983a499e4",
@@ -4983,7 +5156,8 @@
 		"ru": "86f9244fab14d631",
 		"sv": "86f9244fab14d631",
 		"ja": "86f9244fab14d631",
-		"ko": "86f9244fab14d631"
+		"ko": "86f9244fab14d631",
+		"pt-BR": "86f9244fab14d631"
 	},
 	"attributes:gender.rGFyY9WbvBBJSUAUpY5iUE.definition": {
 		"de": "7737c5f8844bdd75",
@@ -4994,7 +5168,8 @@
 		"ru": "7737c5f8844bdd75",
 		"sv": "7737c5f8844bdd75",
 		"ja": "7737c5f8844bdd75",
-		"ko": "7737c5f8844bdd75"
+		"ko": "7737c5f8844bdd75",
+		"pt-BR": "7737c5f8844bdd75"
 	},
 	"attributes:gender.rGFyY9WbvBBJSUAUpY5iUE.definitionLink": {
 		"de": "f0cfbdd759d3e856",
@@ -5017,7 +5192,8 @@
 		"ru": "44035fd7065af76a",
 		"sv": "44035fd7065af76a",
 		"ja": "44035fd7065af76a",
-		"ko": "44035fd7065af76a"
+		"ko": "44035fd7065af76a",
+		"pt-BR": "44035fd7065af76a"
 	},
 	"attributes:gender.rhw3rcbheU7vc9vcSy6W6V.name": {
 		"de": "6a91a3b425c4ae9c",
@@ -5028,7 +5204,8 @@
 		"ru": "6a91a3b425c4ae9c",
 		"sv": "6a91a3b425c4ae9c",
 		"ja": "6a91a3b425c4ae9c",
-		"ko": "6a91a3b425c4ae9c"
+		"ko": "6a91a3b425c4ae9c",
+		"pt-BR": "6a91a3b425c4ae9c"
 	},
 	"attributes:gender.rhw3rcbheU7vc9vcSy6W6V.plural": {
 		"de": "6f2d8966e05ae531",
@@ -5039,7 +5216,8 @@
 		"ru": "6f2d8966e05ae531",
 		"sv": "6f2d8966e05ae531",
 		"ja": "6f2d8966e05ae531",
-		"ko": "6f2d8966e05ae531"
+		"ko": "6f2d8966e05ae531",
+		"pt-BR": "6f2d8966e05ae531"
 	},
 	"attributes:gender.tpkW7r8PZ2RUuYGUSYi82N.name": {
 		"de": "34de8bb853bc29fe",
@@ -5050,7 +5228,8 @@
 		"ru": "34de8bb853bc29fe",
 		"sv": "34de8bb853bc29fe",
 		"ja": "34de8bb853bc29fe",
-		"ko": "34de8bb853bc29fe"
+		"ko": "34de8bb853bc29fe",
+		"pt-BR": "34de8bb853bc29fe"
 	},
 	"attributes:gender.tpkW7r8PZ2RUuYGUSYi82N.plural": {
 		"de": "14661bcef63827aa",
@@ -5061,7 +5240,8 @@
 		"ru": "14661bcef63827aa",
 		"sv": "14661bcef63827aa",
 		"ja": "14661bcef63827aa",
-		"ko": "14661bcef63827aa"
+		"ko": "14661bcef63827aa",
+		"pt-BR": "14661bcef63827aa"
 	},
 	"attributes:gender.tyrdBY4Rbfitznr65hpRPR.definition": {
 		"de": "941aa533376c0452",
@@ -5072,7 +5252,8 @@
 		"ru": "941aa533376c0452",
 		"sv": "941aa533376c0452",
 		"ja": "941aa533376c0452",
-		"ko": "941aa533376c0452"
+		"ko": "941aa533376c0452",
+		"pt-BR": "941aa533376c0452"
 	},
 	"attributes:gender.tyrdBY4Rbfitznr65hpRPR.definitionLink": {
 		"de": "5e1d22ddcb62e490",
@@ -5095,7 +5276,8 @@
 		"ru": "859060c3b7ed9b96",
 		"sv": "859060c3b7ed9b96",
 		"ja": "859060c3b7ed9b96",
-		"ko": "859060c3b7ed9b96"
+		"ko": "859060c3b7ed9b96",
+		"pt-BR": "859060c3b7ed9b96"
 	},
 	"attributes:gender.w3t9h2SyNhr2rBWouXim8c.definition": {
 		"de": "4bcbd96fce9543be",
@@ -5106,7 +5288,8 @@
 		"ru": "4bcbd96fce9543be",
 		"sv": "4bcbd96fce9543be",
 		"ja": "4bcbd96fce9543be",
-		"ko": "4bcbd96fce9543be"
+		"ko": "4bcbd96fce9543be",
+		"pt-BR": "4bcbd96fce9543be"
 	},
 	"attributes:gender.w3t9h2SyNhr2rBWouXim8c.definitionLink": {
 		"de": "82e2e838decf2a63",
@@ -5129,7 +5312,8 @@
 		"ru": "60ffcd570d860479",
 		"sv": "60ffcd570d860479",
 		"ja": "60ffcd570d860479",
-		"ko": "60ffcd570d860479"
+		"ko": "60ffcd570d860479",
+		"pt-BR": "60ffcd570d860479"
 	},
 	"attributes:gender.wJdnfUvuvACEWRSV4KBdzS.definition": {
 		"de": "a65fae2ff01eb012",
@@ -5140,7 +5324,8 @@
 		"ru": "a65fae2ff01eb012",
 		"sv": "a65fae2ff01eb012",
 		"ja": "a65fae2ff01eb012",
-		"ko": "a65fae2ff01eb012"
+		"ko": "a65fae2ff01eb012",
+		"pt-BR": "a65fae2ff01eb012"
 	},
 	"attributes:gender.wJdnfUvuvACEWRSV4KBdzS.definitionLink": {
 		"de": "8a82081e3d399ac7",
@@ -5163,7 +5348,8 @@
 		"ru": "dba164f865a7b32b",
 		"sv": "dba164f865a7b32b",
 		"ja": "dba164f865a7b32b",
-		"ko": "dba164f865a7b32b"
+		"ko": "dba164f865a7b32b",
+		"pt-BR": "dba164f865a7b32b"
 	},
 	"attributes:gender.XTVsHQMWXiJGEc5xCf7RUb.definition": {
 		"de": "6f3e53fbc1dd9886",
@@ -5174,7 +5360,8 @@
 		"ru": "6f3e53fbc1dd9886",
 		"sv": "6f3e53fbc1dd9886",
 		"ja": "6f3e53fbc1dd9886",
-		"ko": "6f3e53fbc1dd9886"
+		"ko": "6f3e53fbc1dd9886",
+		"pt-BR": "6f3e53fbc1dd9886"
 	},
 	"attributes:gender.XTVsHQMWXiJGEc5xCf7RUb.definitionLink": {
 		"de": "580cb4c981d19988",
@@ -5197,7 +5384,8 @@
 		"ru": "0ada449c51d9a07f",
 		"sv": "0ada449c51d9a07f",
 		"ja": "0ada449c51d9a07f",
-		"ko": "0ada449c51d9a07f"
+		"ko": "0ada449c51d9a07f",
+		"pt-BR": "0ada449c51d9a07f"
 	},
 	"attributes:gender.YBkoUyfKJd6jJGwbekY3HN.definition": {
 		"de": "caa1155665b5c78f",
@@ -5208,7 +5396,8 @@
 		"ru": "caa1155665b5c78f",
 		"sv": "caa1155665b5c78f",
 		"ja": "caa1155665b5c78f",
-		"ko": "caa1155665b5c78f"
+		"ko": "caa1155665b5c78f",
+		"pt-BR": "caa1155665b5c78f"
 	},
 	"attributes:gender.YBkoUyfKJd6jJGwbekY3HN.definitionLink": {
 		"de": "22d31e76bb9942e4",
@@ -5231,7 +5420,8 @@
 		"ru": "41c4f7ce599e9d92",
 		"sv": "41c4f7ce599e9d92",
 		"ja": "41c4f7ce599e9d92",
-		"ko": "41c4f7ce599e9d92"
+		"ko": "41c4f7ce599e9d92",
+		"pt-BR": "41c4f7ce599e9d92"
 	},
 	"attributes:gender.zMta3qtGyqW4hFdcDFUHik.definition": {
 		"de": "697e41ea3eb852c1",
@@ -5242,7 +5432,8 @@
 		"ru": "697e41ea3eb852c1",
 		"sv": "697e41ea3eb852c1",
 		"ja": "697e41ea3eb852c1",
-		"ko": "697e41ea3eb852c1"
+		"ko": "697e41ea3eb852c1",
+		"pt-BR": "697e41ea3eb852c1"
 	},
 	"attributes:gender.zMta3qtGyqW4hFdcDFUHik.definitionLink": {
 		"de": "f23bee40ccec1344",
@@ -5265,7 +5456,8 @@
 		"ru": "1aa20352d4b3804b",
 		"sv": "1aa20352d4b3804b",
 		"ja": "1aa20352d4b3804b",
-		"ko": "1aa20352d4b3804b"
+		"ko": "1aa20352d4b3804b",
+		"pt-BR": "1aa20352d4b3804b"
 	},
 	"attributes:interest-category.43i5J3VsKCvU4HGRJHjehn.name": {
 		"de": "f7cbcb10f6f455e9",
@@ -5276,7 +5468,8 @@
 		"ru": "f7cbcb10f6f455e9",
 		"sv": "f7cbcb10f6f455e9",
 		"ja": "f7cbcb10f6f455e9",
-		"ko": "f7cbcb10f6f455e9"
+		"ko": "f7cbcb10f6f455e9",
+		"pt-BR": "f7cbcb10f6f455e9"
 	},
 	"attributes:interest-category.59oWHt4bZSdQ6tj8f4CWs9.name": {
 		"de": "c3be8704e916f83d",
@@ -5287,7 +5480,8 @@
 		"ru": "c3be8704e916f83d",
 		"sv": "c3be8704e916f83d",
 		"ja": "c3be8704e916f83d",
-		"ko": "c3be8704e916f83d"
+		"ko": "c3be8704e916f83d",
+		"pt-BR": "c3be8704e916f83d"
 	},
 	"attributes:interest-category.9os9Yxxr6zGR4k7kh5BKrB.name": {
 		"de": "82235931ff75723b",
@@ -5298,7 +5492,8 @@
 		"ru": "82235931ff75723b",
 		"sv": "82235931ff75723b",
 		"ja": "82235931ff75723b",
-		"ko": "82235931ff75723b"
+		"ko": "82235931ff75723b",
+		"pt-BR": "82235931ff75723b"
 	},
 	"attributes:interest-category.aSCFm5P7awrqNKnknWuChQ.name": {
 		"de": "82d403bffe6e2638",
@@ -5309,7 +5504,8 @@
 		"ru": "82d403bffe6e2638",
 		"sv": "82d403bffe6e2638",
 		"ja": "82d403bffe6e2638",
-		"ko": "82d403bffe6e2638"
+		"ko": "82d403bffe6e2638",
+		"pt-BR": "82d403bffe6e2638"
 	},
 	"attributes:interest-category.DAweztCvdXBa5cKvhgNsPY.name": {
 		"de": "6ff6ec3a5e2395a3",
@@ -5320,7 +5516,8 @@
 		"ru": "6ff6ec3a5e2395a3",
 		"sv": "6ff6ec3a5e2395a3",
 		"ja": "6ff6ec3a5e2395a3",
-		"ko": "6ff6ec3a5e2395a3"
+		"ko": "6ff6ec3a5e2395a3",
+		"pt-BR": "6ff6ec3a5e2395a3"
 	},
 	"attributes:interest-category.fQK3RUCYFW4WeSfLkzVP42.name": {
 		"de": "a42f707c61d4fe89",
@@ -5331,7 +5528,8 @@
 		"ru": "a42f707c61d4fe89",
 		"sv": "a42f707c61d4fe89",
 		"ja": "a42f707c61d4fe89",
-		"ko": "a42f707c61d4fe89"
+		"ko": "a42f707c61d4fe89",
+		"pt-BR": "a42f707c61d4fe89"
 	},
 	"attributes:interest-category.hR3X5w26ba6M98fVB2kVxX.name": {
 		"de": "3bcc542295b4c61e",
@@ -5342,7 +5540,8 @@
 		"ru": "3bcc542295b4c61e",
 		"sv": "3bcc542295b4c61e",
 		"ja": "3bcc542295b4c61e",
-		"ko": "3bcc542295b4c61e"
+		"ko": "3bcc542295b4c61e",
+		"pt-BR": "3bcc542295b4c61e"
 	},
 	"attributes:interest-category.iiCe39JvGQAAtsrTqnLddb.name": {
 		"de": "c3a9ce98a98a5047",
@@ -5365,7 +5564,8 @@
 		"ru": "2809fe4769bec20c",
 		"sv": "2809fe4769bec20c",
 		"ja": "2809fe4769bec20c",
-		"ko": "2809fe4769bec20c"
+		"ko": "2809fe4769bec20c",
+		"pt-BR": "2809fe4769bec20c"
 	},
 	"attributes:interest-category.TgrEr2C6DAcp69Winej5Q4.name": {
 		"de": "468d61a94d9f9d93",
@@ -5376,7 +5576,8 @@
 		"ru": "468d61a94d9f9d93",
 		"sv": "468d61a94d9f9d93",
 		"ja": "468d61a94d9f9d93",
-		"ko": "468d61a94d9f9d93"
+		"ko": "468d61a94d9f9d93",
+		"pt-BR": "468d61a94d9f9d93"
 	},
 	"attributes:interest-category.tmQbiXNw7d9Ys2DG9Ddg28.name": {
 		"de": "b25802406b3b1a2f",
@@ -5387,7 +5588,8 @@
 		"ru": "b25802406b3b1a2f",
 		"sv": "b25802406b3b1a2f",
 		"ja": "b25802406b3b1a2f",
-		"ko": "b25802406b3b1a2f"
+		"ko": "b25802406b3b1a2f",
+		"pt-BR": "b25802406b3b1a2f"
 	},
 	"attributes:interest.2gBkrkuQN6PjTEeexms7nf.name": {
 		"de": "58aa5e94cca965f0",
@@ -5398,7 +5600,8 @@
 		"ru": "58aa5e94cca965f0",
 		"sv": "58aa5e94cca965f0",
 		"ja": "58aa5e94cca965f0",
-		"ko": "58aa5e94cca965f0"
+		"ko": "58aa5e94cca965f0",
+		"pt-BR": "58aa5e94cca965f0"
 	},
 	"attributes:interest.2oxVb7fbNxvorrXZk7bgv3.name": {
 		"de": "c28371997a40b25a",
@@ -5409,7 +5612,8 @@
 		"ru": "c28371997a40b25a",
 		"sv": "c28371997a40b25a",
 		"ja": "c28371997a40b25a",
-		"ko": "c28371997a40b25a"
+		"ko": "c28371997a40b25a",
+		"pt-BR": "c28371997a40b25a"
 	},
 	"attributes:interest.2Wz4xFdHgY8PZf2mkqWpwa.name": {
 		"de": "dfb4f2e030344fa0",
@@ -5420,7 +5624,8 @@
 		"ru": "dfb4f2e030344fa0",
 		"sv": "dfb4f2e030344fa0",
 		"ja": "dfb4f2e030344fa0",
-		"ko": "dfb4f2e030344fa0"
+		"ko": "dfb4f2e030344fa0",
+		"pt-BR": "dfb4f2e030344fa0"
 	},
 	"attributes:interest.3b7sZwdYj6tNAziQQuCKEE.name": {
 		"de": "4a5098be6f7e725a",
@@ -5503,7 +5708,8 @@
 		"ru": "ce1a356bf4728c7f",
 		"sv": "ce1a356bf4728c7f",
 		"ja": "ce1a356bf4728c7f",
-		"ko": "ce1a356bf4728c7f"
+		"ko": "ce1a356bf4728c7f",
+		"pt-BR": "ce1a356bf4728c7f"
 	},
 	"attributes:interest.4CgRETn3q2iwk3h8fzWzSQ.name": {
 		"de": "1d6e9faef067c96f",
@@ -5514,7 +5720,8 @@
 		"ru": "1d6e9faef067c96f",
 		"sv": "1d6e9faef067c96f",
 		"ja": "1d6e9faef067c96f",
-		"ko": "1d6e9faef067c96f"
+		"ko": "1d6e9faef067c96f",
+		"pt-BR": "1d6e9faef067c96f"
 	},
 	"attributes:interest.4q9oopWm8XNXoX7z4RnQE8.name": {
 		"de": "a10c365925b56c5b",
@@ -5525,7 +5732,8 @@
 		"ru": "a10c365925b56c5b",
 		"sv": "a10c365925b56c5b",
 		"ja": "a10c365925b56c5b",
-		"ko": "a10c365925b56c5b"
+		"ko": "a10c365925b56c5b",
+		"pt-BR": "a10c365925b56c5b"
 	},
 	"attributes:interest.4THEgH4BLaftoQWAhYaFoM.name": {
 		"de": "2f5b29988a1c5db6",
@@ -5536,7 +5744,8 @@
 		"ru": "2f5b29988a1c5db6",
 		"sv": "2f5b29988a1c5db6",
 		"ja": "2f5b29988a1c5db6",
-		"ko": "2f5b29988a1c5db6"
+		"ko": "2f5b29988a1c5db6",
+		"pt-BR": "2f5b29988a1c5db6"
 	},
 	"attributes:interest.4UEEGvGvhyBTRWKUjVAMMe.name": {
 		"de": "c657e4a151c1814e",
@@ -5547,7 +5756,8 @@
 		"ru": "c657e4a151c1814e",
 		"sv": "c657e4a151c1814e",
 		"ja": "c657e4a151c1814e",
-		"ko": "c657e4a151c1814e"
+		"ko": "c657e4a151c1814e",
+		"pt-BR": "c657e4a151c1814e"
 	},
 	"attributes:interest.4vTwGjfH9oEk6fLthm4HjX.name": {
 		"de": "16a95a4b3542e07b",
@@ -5570,7 +5780,8 @@
 		"ru": "e3cc6f8f2c5c7561",
 		"sv": "e3cc6f8f2c5c7561",
 		"ja": "e3cc6f8f2c5c7561",
-		"ko": "e3cc6f8f2c5c7561"
+		"ko": "e3cc6f8f2c5c7561",
+		"pt-BR": "e3cc6f8f2c5c7561"
 	},
 	"attributes:interest.5XrzAmQSCM2onKyJBjbr6j.name": {
 		"de": "9adab437af169a7d",
@@ -5581,7 +5792,8 @@
 		"ru": "9adab437af169a7d",
 		"sv": "9adab437af169a7d",
 		"ja": "9adab437af169a7d",
-		"ko": "9adab437af169a7d"
+		"ko": "9adab437af169a7d",
+		"pt-BR": "9adab437af169a7d"
 	},
 	"attributes:interest.658ffCwnSFxaY3hQSDvkGW.name": {
 		"de": "49ca7cad5cb2eec4",
@@ -5592,7 +5804,8 @@
 		"ru": "49ca7cad5cb2eec4",
 		"sv": "49ca7cad5cb2eec4",
 		"ja": "49ca7cad5cb2eec4",
-		"ko": "49ca7cad5cb2eec4"
+		"ko": "49ca7cad5cb2eec4",
+		"pt-BR": "49ca7cad5cb2eec4"
 	},
 	"attributes:interest.66TnRrCCPUeUdqjotUgReM.name": {
 		"de": "990b18a2fcb7c5fa",
@@ -5627,7 +5840,8 @@
 		"ru": "f8cf54ac9a5ff78e",
 		"sv": "f8cf54ac9a5ff78e",
 		"ja": "f8cf54ac9a5ff78e",
-		"ko": "f8cf54ac9a5ff78e"
+		"ko": "f8cf54ac9a5ff78e",
+		"pt-BR": "f8cf54ac9a5ff78e"
 	},
 	"attributes:interest.6UTLvYWp6y4Snv6hexijLD.name": {
 		"de": "2834150a31da675e",
@@ -5650,7 +5864,8 @@
 		"ru": "0e5d30618e1ecf00",
 		"sv": "0e5d30618e1ecf00",
 		"ja": "0e5d30618e1ecf00",
-		"ko": "0e5d30618e1ecf00"
+		"ko": "0e5d30618e1ecf00",
+		"pt-BR": "0e5d30618e1ecf00"
 	},
 	"attributes:interest.7mfqhCUsniXPWXa6EK7Qqh.name": {
 		"de": "7d520c0a506dc075",
@@ -5661,7 +5876,8 @@
 		"ru": "7d520c0a506dc075",
 		"sv": "7d520c0a506dc075",
 		"ja": "7d520c0a506dc075",
-		"ko": "7d520c0a506dc075"
+		"ko": "7d520c0a506dc075",
+		"pt-BR": "7d520c0a506dc075"
 	},
 	"attributes:interest.7MxTQSH57TKECXfFJXjVea.name": {
 		"de": "ae15f77b7d8df0c8",
@@ -5672,7 +5888,8 @@
 		"ru": "ae15f77b7d8df0c8",
 		"sv": "ae15f77b7d8df0c8",
 		"ja": "ae15f77b7d8df0c8",
-		"ko": "ae15f77b7d8df0c8"
+		"ko": "ae15f77b7d8df0c8",
+		"pt-BR": "ae15f77b7d8df0c8"
 	},
 	"attributes:interest.7N7jNvobkTyCBG9PWvcRUm.name": {
 		"de": "7b8f24c7b965edd9",
@@ -5683,7 +5900,8 @@
 		"ru": "7b8f24c7b965edd9",
 		"sv": "7b8f24c7b965edd9",
 		"ja": "7b8f24c7b965edd9",
-		"ko": "7b8f24c7b965edd9"
+		"ko": "7b8f24c7b965edd9",
+		"pt-BR": "7b8f24c7b965edd9"
 	},
 	"attributes:interest.7nnemBz5mR5iHZNjw8E4aB.name": {
 		"de": "5220246b5a4a1dad",
@@ -5694,7 +5912,8 @@
 		"ru": "5220246b5a4a1dad",
 		"sv": "5220246b5a4a1dad",
 		"ja": "5220246b5a4a1dad",
-		"ko": "5220246b5a4a1dad"
+		"ko": "5220246b5a4a1dad",
+		"pt-BR": "5220246b5a4a1dad"
 	},
 	"attributes:interest.7PSViCMY8iKswNUxAjDwiY.name": {
 		"de": "1ddcb46352b9a7f1",
@@ -5705,7 +5924,8 @@
 		"ru": "1ddcb46352b9a7f1",
 		"sv": "1ddcb46352b9a7f1",
 		"ja": "1ddcb46352b9a7f1",
-		"ko": "1ddcb46352b9a7f1"
+		"ko": "1ddcb46352b9a7f1",
+		"pt-BR": "1ddcb46352b9a7f1"
 	},
 	"attributes:interest.7xQwxvJ5MDtfjTEHtRcdm9.name": {
 		"de": "66aea9e9fc3a4e19",
@@ -5728,7 +5948,8 @@
 		"ru": "7c35fdf936514b4b",
 		"sv": "7c35fdf936514b4b",
 		"ja": "7c35fdf936514b4b",
-		"ko": "7c35fdf936514b4b"
+		"ko": "7c35fdf936514b4b",
+		"pt-BR": "7c35fdf936514b4b"
 	},
 	"attributes:interest.8kbF5HwfJBoBC4q324xHJT.name": {
 		"de": "ab4277f10921ba01",
@@ -5739,7 +5960,8 @@
 		"ru": "ab4277f10921ba01",
 		"sv": "ab4277f10921ba01",
 		"ja": "ab4277f10921ba01",
-		"ko": "ab4277f10921ba01"
+		"ko": "ab4277f10921ba01",
+		"pt-BR": "ab4277f10921ba01"
 	},
 	"attributes:interest.8NWGrqWSzC5KQ6QDanNwgf.name": {
 		"de": "4655c8164d0af5a1",
@@ -5750,7 +5972,8 @@
 		"ru": "4655c8164d0af5a1",
 		"sv": "4655c8164d0af5a1",
 		"ja": "4655c8164d0af5a1",
-		"ko": "4655c8164d0af5a1"
+		"ko": "4655c8164d0af5a1",
+		"pt-BR": "4655c8164d0af5a1"
 	},
 	"attributes:interest.8T5dMoiNwZyQuiD6xJKMVH.name": {
 		"de": "0f1bd05813aef90f",
@@ -5785,7 +6008,8 @@
 		"ru": "a5c860081d2cc9f4",
 		"sv": "a5c860081d2cc9f4",
 		"ja": "a5c860081d2cc9f4",
-		"ko": "a5c860081d2cc9f4"
+		"ko": "a5c860081d2cc9f4",
+		"pt-BR": "a5c860081d2cc9f4"
 	},
 	"attributes:interest.9HPT7wgAd7HJajQkAXMbrQ.name": {
 		"de": "8d122dbd3d32507b",
@@ -5796,7 +6020,8 @@
 		"ru": "8d122dbd3d32507b",
 		"sv": "8d122dbd3d32507b",
 		"ja": "8d122dbd3d32507b",
-		"ko": "8d122dbd3d32507b"
+		"ko": "8d122dbd3d32507b",
+		"pt-BR": "8d122dbd3d32507b"
 	},
 	"attributes:interest.9LGdoTTRR6eDXjTRqEwrxD.name": {
 		"de": "2a9b15764c39d42d",
@@ -5819,7 +6044,8 @@
 		"ru": "528aca265ca82c8d",
 		"sv": "528aca265ca82c8d",
 		"ja": "528aca265ca82c8d",
-		"ko": "528aca265ca82c8d"
+		"ko": "528aca265ca82c8d",
+		"pt-BR": "528aca265ca82c8d"
 	},
 	"attributes:interest.A55Aw7nfXg2A75uwNJhwrh.name": {
 		"de": "1a0efc1130d843aa",
@@ -5854,7 +6080,8 @@
 		"ru": "a049b65726f66060",
 		"sv": "a049b65726f66060",
 		"ja": "a049b65726f66060",
-		"ko": "a049b65726f66060"
+		"ko": "a049b65726f66060",
+		"pt-BR": "a049b65726f66060"
 	},
 	"attributes:interest.AGGf3KdZzJAqaZNGvNPcvM.name": {
 		"de": "016f1392199230cb",
@@ -5877,7 +6104,8 @@
 		"ru": "a6c0311382d1aa93",
 		"sv": "a6c0311382d1aa93",
 		"ja": "a6c0311382d1aa93",
-		"ko": "a6c0311382d1aa93"
+		"ko": "a6c0311382d1aa93",
+		"pt-BR": "a6c0311382d1aa93"
 	},
 	"attributes:interest.Ajo23jt7zDTZjJ85ib7uSS.name": {
 		"de": "908873daaf2835fb",
@@ -5900,7 +6128,8 @@
 		"ru": "16f326ceaff605a0",
 		"sv": "16f326ceaff605a0",
 		"ja": "16f326ceaff605a0",
-		"ko": "16f326ceaff605a0"
+		"ko": "16f326ceaff605a0",
+		"pt-BR": "16f326ceaff605a0"
 	},
 	"attributes:interest.ASpc5rzmzRBhGzoW4Dt7A2.name": {
 		"de": "e348c70b024d1b7c",
@@ -5923,7 +6152,8 @@
 		"ru": "0efce9e27f124c6e",
 		"sv": "0efce9e27f124c6e",
 		"ja": "0efce9e27f124c6e",
-		"ko": "0efce9e27f124c6e"
+		"ko": "0efce9e27f124c6e",
+		"pt-BR": "0efce9e27f124c6e"
 	},
 	"attributes:interest.AyaSxEYUdjX4maBsTuhxS5.name": {
 		"de": "0f55543f3826b18c",
@@ -5934,7 +6164,8 @@
 		"ru": "0f55543f3826b18c",
 		"sv": "0f55543f3826b18c",
 		"ja": "0f55543f3826b18c",
-		"ko": "0f55543f3826b18c"
+		"ko": "0f55543f3826b18c",
+		"pt-BR": "0f55543f3826b18c"
 	},
 	"attributes:interest.B4vkCyhTZJX5SvkQ7RWoJm.name": {
 		"de": "679a0356856b3c15",
@@ -5957,7 +6188,8 @@
 		"ru": "a79f7dacc26dec65",
 		"sv": "a79f7dacc26dec65",
 		"ja": "a79f7dacc26dec65",
-		"ko": "a79f7dacc26dec65"
+		"ko": "a79f7dacc26dec65",
+		"pt-BR": "a79f7dacc26dec65"
 	},
 	"attributes:interest.ba58TDSPbjG9jtZixoneUn.name": {
 		"de": "e20ae036c4c7a9cb",
@@ -5968,7 +6200,8 @@
 		"ru": "e20ae036c4c7a9cb",
 		"sv": "e20ae036c4c7a9cb",
 		"ja": "e20ae036c4c7a9cb",
-		"ko": "e20ae036c4c7a9cb"
+		"ko": "e20ae036c4c7a9cb",
+		"pt-BR": "e20ae036c4c7a9cb"
 	},
 	"attributes:interest.BB9qTGoqRiniinjxcy7jzn.name": {
 		"de": "72dbffcca0d734db",
@@ -5979,7 +6212,8 @@
 		"ru": "72dbffcca0d734db",
 		"sv": "72dbffcca0d734db",
 		"ja": "72dbffcca0d734db",
-		"ko": "72dbffcca0d734db"
+		"ko": "72dbffcca0d734db",
+		"pt-BR": "72dbffcca0d734db"
 	},
 	"attributes:interest.BBQbPpGQv5QA6tbm6qV8Vg.name": {
 		"de": "005db8d0c39efece",
@@ -6002,7 +6236,8 @@
 		"ru": "a38d1f148d455f8a",
 		"sv": "a38d1f148d455f8a",
 		"ja": "a38d1f148d455f8a",
-		"ko": "a38d1f148d455f8a"
+		"ko": "a38d1f148d455f8a",
+		"pt-BR": "a38d1f148d455f8a"
 	},
 	"attributes:interest.BkTRV57GEQdMUuYonoo3g4.name": {
 		"de": "f55f12d7b6de2082",
@@ -6013,7 +6248,8 @@
 		"ru": "f55f12d7b6de2082",
 		"sv": "f55f12d7b6de2082",
 		"ja": "f55f12d7b6de2082",
-		"ko": "f55f12d7b6de2082"
+		"ko": "f55f12d7b6de2082",
+		"pt-BR": "f55f12d7b6de2082"
 	},
 	"attributes:interest.BMkKqLcXLZ7g77u47mHnza.name": {
 		"de": "ba2a6e0de34c198c",
@@ -6024,7 +6260,8 @@
 		"ru": "ba2a6e0de34c198c",
 		"sv": "ba2a6e0de34c198c",
 		"ja": "ba2a6e0de34c198c",
-		"ko": "ba2a6e0de34c198c"
+		"ko": "ba2a6e0de34c198c",
+		"pt-BR": "ba2a6e0de34c198c"
 	},
 	"attributes:interest.Bmkx6cmyU9kbuA3pdwv43o.name": {
 		"de": "5cffc1e407ff33da",
@@ -6047,7 +6284,8 @@
 		"ru": "da930fb0dcd1945a",
 		"sv": "da930fb0dcd1945a",
 		"ja": "da930fb0dcd1945a",
-		"ko": "da930fb0dcd1945a"
+		"ko": "da930fb0dcd1945a",
+		"pt-BR": "da930fb0dcd1945a"
 	},
 	"attributes:interest.BnehkvnigVVEAhAu6sPH25.name": {
 		"de": "65e1d743efacc071",
@@ -6070,7 +6308,8 @@
 		"ru": "88d2c726d9f13978",
 		"sv": "88d2c726d9f13978",
 		"ja": "88d2c726d9f13978",
-		"ko": "88d2c726d9f13978"
+		"ko": "88d2c726d9f13978",
+		"pt-BR": "88d2c726d9f13978"
 	},
 	"attributes:interest.BrKGJW7c8TvnQh7zxbJNuQ.name": {
 		"de": "229406c46f69b6d3",
@@ -6081,7 +6320,8 @@
 		"ru": "229406c46f69b6d3",
 		"sv": "229406c46f69b6d3",
 		"ja": "229406c46f69b6d3",
-		"ko": "229406c46f69b6d3"
+		"ko": "229406c46f69b6d3",
+		"pt-BR": "229406c46f69b6d3"
 	},
 	"attributes:interest.brqEVFEEsMUdoAE5oabtAh.name": {
 		"de": "fee88e6d0c7fcb39",
@@ -6104,7 +6344,8 @@
 		"ru": "a39891b068351739",
 		"sv": "a39891b068351739",
 		"ja": "a39891b068351739",
-		"ko": "a39891b068351739"
+		"ko": "a39891b068351739",
+		"pt-BR": "a39891b068351739"
 	},
 	"attributes:interest.bsKcuRDVC99WuWnBUiSEDN.name": {
 		"de": "d7e9e1eda2270da2",
@@ -6115,7 +6356,8 @@
 		"ru": "d7e9e1eda2270da2",
 		"sv": "d7e9e1eda2270da2",
 		"ja": "d7e9e1eda2270da2",
-		"ko": "d7e9e1eda2270da2"
+		"ko": "d7e9e1eda2270da2",
+		"pt-BR": "d7e9e1eda2270da2"
 	},
 	"attributes:interest.BTGLoHoCuPjvY2NrRKSWpb.name": {
 		"de": "834e34a07450e4cb",
@@ -6150,7 +6392,8 @@
 		"ru": "8d6fe151ec00ee44",
 		"sv": "8d6fe151ec00ee44",
 		"ja": "8d6fe151ec00ee44",
-		"ko": "8d6fe151ec00ee44"
+		"ko": "8d6fe151ec00ee44",
+		"pt-BR": "8d6fe151ec00ee44"
 	},
 	"attributes:interest.bz9jVSncDmgYzdBdg98NV3.name": {
 		"de": "b9aa6feb28cbe5b9",
@@ -6161,7 +6404,8 @@
 		"ru": "b9aa6feb28cbe5b9",
 		"sv": "b9aa6feb28cbe5b9",
 		"ja": "b9aa6feb28cbe5b9",
-		"ko": "b9aa6feb28cbe5b9"
+		"ko": "b9aa6feb28cbe5b9",
+		"pt-BR": "b9aa6feb28cbe5b9"
 	},
 	"attributes:interest.cEfjsZtYLiWDSMSeg7q8V5.name": {
 		"de": "e202964c00cf0f92",
@@ -6172,7 +6416,8 @@
 		"ru": "e202964c00cf0f92",
 		"sv": "e202964c00cf0f92",
 		"ja": "e202964c00cf0f92",
-		"ko": "e202964c00cf0f92"
+		"ko": "e202964c00cf0f92",
+		"pt-BR": "e202964c00cf0f92"
 	},
 	"attributes:interest.cqaodBdFdfeegFVzxuA3QB.name": {
 		"de": "be5f64cd3c8110f5",
@@ -6183,7 +6428,8 @@
 		"ru": "be5f64cd3c8110f5",
 		"sv": "be5f64cd3c8110f5",
 		"ja": "be5f64cd3c8110f5",
-		"ko": "be5f64cd3c8110f5"
+		"ko": "be5f64cd3c8110f5",
+		"pt-BR": "be5f64cd3c8110f5"
 	},
 	"attributes:interest.crtnnE8akbJwwA9BdqUFRc.name": {
 		"de": "ceccdc919ee066fb",
@@ -6194,7 +6440,8 @@
 		"ru": "ceccdc919ee066fb",
 		"sv": "ceccdc919ee066fb",
 		"ja": "ceccdc919ee066fb",
-		"ko": "ceccdc919ee066fb"
+		"ko": "ceccdc919ee066fb",
+		"pt-BR": "ceccdc919ee066fb"
 	},
 	"attributes:interest.CrvLT7p3UtXCe3ZmG8dZt7.name": {
 		"de": "a9066b74af8a1488",
@@ -6205,7 +6452,8 @@
 		"ru": "a9066b74af8a1488",
 		"sv": "a9066b74af8a1488",
 		"ja": "a9066b74af8a1488",
-		"ko": "a9066b74af8a1488"
+		"ko": "a9066b74af8a1488",
+		"pt-BR": "a9066b74af8a1488"
 	},
 	"attributes:interest.cU8xQqQfNN6n8xDAHkpdN9.name": {
 		"de": "077f172a7b0fe9c2",
@@ -6240,7 +6488,8 @@
 		"ru": "01fc55597a219da8",
 		"sv": "01fc55597a219da8",
 		"ja": "01fc55597a219da8",
-		"ko": "01fc55597a219da8"
+		"ko": "01fc55597a219da8",
+		"pt-BR": "01fc55597a219da8"
 	},
 	"attributes:interest.dBCYhmt2vTLfw7DNgNmP53.name": {
 		"de": "f97a168a8bf475b3",
@@ -6251,7 +6500,8 @@
 		"ru": "f97a168a8bf475b3",
 		"sv": "f97a168a8bf475b3",
 		"ja": "f97a168a8bf475b3",
-		"ko": "f97a168a8bf475b3"
+		"ko": "f97a168a8bf475b3",
+		"pt-BR": "f97a168a8bf475b3"
 	},
 	"attributes:interest.DBQsu388Xfn2KcE5oW2ae2.name": {
 		"de": "49cda94233477786",
@@ -6286,7 +6536,8 @@
 		"ru": "0f9aa16d90ed1ada",
 		"sv": "0f9aa16d90ed1ada",
 		"ja": "0f9aa16d90ed1ada",
-		"ko": "0f9aa16d90ed1ada"
+		"ko": "0f9aa16d90ed1ada",
+		"pt-BR": "0f9aa16d90ed1ada"
 	},
 	"attributes:interest.dQdjQyL9M8kCxrL9Si2zqM.name": {
 		"de": "eb137c5e77c54def",
@@ -6309,7 +6560,8 @@
 		"ru": "b97261918d7b4736",
 		"sv": "b97261918d7b4736",
 		"ja": "b97261918d7b4736",
-		"ko": "b97261918d7b4736"
+		"ko": "b97261918d7b4736",
+		"pt-BR": "b97261918d7b4736"
 	},
 	"attributes:interest.dumoS7nkPSh4vDaVCMNBYc.name": {
 		"de": "a9fa6e2832138cdc",
@@ -6332,7 +6584,8 @@
 		"ru": "29c1bbfcd1bc1878",
 		"sv": "29c1bbfcd1bc1878",
 		"ja": "29c1bbfcd1bc1878",
-		"ko": "29c1bbfcd1bc1878"
+		"ko": "29c1bbfcd1bc1878",
+		"pt-BR": "29c1bbfcd1bc1878"
 	},
 	"attributes:interest.eGP3EZe6r5NUwfpgFc9Mv6.name": {
 		"de": "64d72d34cf15596e",
@@ -6343,7 +6596,8 @@
 		"ru": "64d72d34cf15596e",
 		"sv": "64d72d34cf15596e",
 		"ja": "64d72d34cf15596e",
-		"ko": "64d72d34cf15596e"
+		"ko": "64d72d34cf15596e",
+		"pt-BR": "64d72d34cf15596e"
 	},
 	"attributes:interest.EkGzXrWW5fEnC9HdJ9okWc.name": {
 		"de": "2efafebc3022ec43",
@@ -6354,7 +6608,8 @@
 		"ru": "2efafebc3022ec43",
 		"sv": "2efafebc3022ec43",
 		"ja": "2efafebc3022ec43",
-		"ko": "2efafebc3022ec43"
+		"ko": "2efafebc3022ec43",
+		"pt-BR": "2efafebc3022ec43"
 	},
 	"attributes:interest.EMiJ5kbdhDp6QtCr3P7pBV.name": {
 		"de": "678b4b5c928e2256",
@@ -6365,7 +6620,8 @@
 		"ru": "678b4b5c928e2256",
 		"sv": "678b4b5c928e2256",
 		"ja": "678b4b5c928e2256",
-		"ko": "678b4b5c928e2256"
+		"ko": "678b4b5c928e2256",
+		"pt-BR": "678b4b5c928e2256"
 	},
 	"attributes:interest.eTSWVwrcAF6tzHDPDLvJAd.name": {
 		"de": "ccd7bf9703af87e6",
@@ -6376,7 +6632,8 @@
 		"ru": "ccd7bf9703af87e6",
 		"sv": "ccd7bf9703af87e6",
 		"ja": "ccd7bf9703af87e6",
-		"ko": "ccd7bf9703af87e6"
+		"ko": "ccd7bf9703af87e6",
+		"pt-BR": "ccd7bf9703af87e6"
 	},
 	"attributes:interest.ETXYWLwrk2BQD3mpvjXaN6.name": {
 		"de": "b5ae00e38439bb9b",
@@ -6387,7 +6644,8 @@
 		"ru": "b5ae00e38439bb9b",
 		"sv": "b5ae00e38439bb9b",
 		"ja": "b5ae00e38439bb9b",
-		"ko": "b5ae00e38439bb9b"
+		"ko": "b5ae00e38439bb9b",
+		"pt-BR": "b5ae00e38439bb9b"
 	},
 	"attributes:interest.Eu7WzNKBxcQKXhPWgAWAYW.name": {
 		"de": "da2b6101ca3eff6f",
@@ -6398,7 +6656,8 @@
 		"ru": "da2b6101ca3eff6f",
 		"sv": "da2b6101ca3eff6f",
 		"ja": "da2b6101ca3eff6f",
-		"ko": "da2b6101ca3eff6f"
+		"ko": "da2b6101ca3eff6f",
+		"pt-BR": "da2b6101ca3eff6f"
 	},
 	"attributes:interest.EXYCJJeyc6JP5yKhkt2GoX.name": {
 		"de": "7bc094280832ccbc",
@@ -6421,7 +6680,8 @@
 		"ru": "18e46c13eec59729",
 		"sv": "18e46c13eec59729",
 		"ja": "18e46c13eec59729",
-		"ko": "18e46c13eec59729"
+		"ko": "18e46c13eec59729",
+		"pt-BR": "18e46c13eec59729"
 	},
 	"attributes:interest.F96TUKJtBt8UtbHEeDss8M.name": {
 		"de": "49a497a8a41aecae",
@@ -6432,7 +6692,8 @@
 		"ru": "49a497a8a41aecae",
 		"sv": "49a497a8a41aecae",
 		"ja": "49a497a8a41aecae",
-		"ko": "49a497a8a41aecae"
+		"ko": "49a497a8a41aecae",
+		"pt-BR": "49a497a8a41aecae"
 	},
 	"attributes:interest.fAgh4qEey9okWzNjooerLG.name": {
 		"de": "7d47156c8d2e4823",
@@ -6443,7 +6704,8 @@
 		"ru": "7d47156c8d2e4823",
 		"sv": "7d47156c8d2e4823",
 		"ja": "7d47156c8d2e4823",
-		"ko": "7d47156c8d2e4823"
+		"ko": "7d47156c8d2e4823",
+		"pt-BR": "7d47156c8d2e4823"
 	},
 	"attributes:interest.fcHJKqULdrBvrAmPF4vuV9.name": {
 		"de": "c48999be2388c076",
@@ -6454,7 +6716,8 @@
 		"ru": "c48999be2388c076",
 		"sv": "c48999be2388c076",
 		"ja": "c48999be2388c076",
-		"ko": "c48999be2388c076"
+		"ko": "c48999be2388c076",
+		"pt-BR": "c48999be2388c076"
 	},
 	"attributes:interest.fe2ysuwBXcZfCbbGNhbe3L.name": {
 		"de": "7b8e118a911fa244",
@@ -6465,7 +6728,8 @@
 		"ru": "7b8e118a911fa244",
 		"sv": "7b8e118a911fa244",
 		"ja": "7b8e118a911fa244",
-		"ko": "7b8e118a911fa244"
+		"ko": "7b8e118a911fa244",
+		"pt-BR": "7b8e118a911fa244"
 	},
 	"attributes:interest.fEnnW4XeNnNbqReCryY58R.name": {
 		"de": "b99054157725f2e5",
@@ -6476,7 +6740,8 @@
 		"ru": "b99054157725f2e5",
 		"sv": "b99054157725f2e5",
 		"ja": "b99054157725f2e5",
-		"ko": "b99054157725f2e5"
+		"ko": "b99054157725f2e5",
+		"pt-BR": "b99054157725f2e5"
 	},
 	"attributes:interest.FjZaJeuY5TD2KhzNB67Y5T.name": {
 		"de": "66ffb1928fbc67ff",
@@ -6487,7 +6752,8 @@
 		"ru": "66ffb1928fbc67ff",
 		"sv": "66ffb1928fbc67ff",
 		"ja": "66ffb1928fbc67ff",
-		"ko": "66ffb1928fbc67ff"
+		"ko": "66ffb1928fbc67ff",
+		"pt-BR": "66ffb1928fbc67ff"
 	},
 	"attributes:interest.fM4o5U2ebgVDFEvsD66hEe.name": {
 		"de": "ef8924b6b93d32fb",
@@ -6498,7 +6764,8 @@
 		"ru": "ef8924b6b93d32fb",
 		"sv": "ef8924b6b93d32fb",
 		"ja": "ef8924b6b93d32fb",
-		"ko": "ef8924b6b93d32fb"
+		"ko": "ef8924b6b93d32fb",
+		"pt-BR": "ef8924b6b93d32fb"
 	},
 	"attributes:interest.ftwVayAr6jTqmUw8A4RWMg.name": {
 		"de": "5e68955b73dcaa73",
@@ -6509,7 +6776,8 @@
 		"ru": "5e68955b73dcaa73",
 		"sv": "5e68955b73dcaa73",
 		"ja": "5e68955b73dcaa73",
-		"ko": "5e68955b73dcaa73"
+		"ko": "5e68955b73dcaa73",
+		"pt-BR": "5e68955b73dcaa73"
 	},
 	"attributes:interest.FXz9VcUhgQp6eexp25zkBX.name": {
 		"de": "d9efafafea6e22fb",
@@ -6532,7 +6800,8 @@
 		"ru": "3e27d4c3f5518faa",
 		"sv": "3e27d4c3f5518faa",
 		"ja": "3e27d4c3f5518faa",
-		"ko": "3e27d4c3f5518faa"
+		"ko": "3e27d4c3f5518faa",
+		"pt-BR": "3e27d4c3f5518faa"
 	},
 	"attributes:interest.g2fAPyAgPKt7WaoVZYxPm2.name": {
 		"de": "e53a7abe2628b663",
@@ -6543,7 +6812,8 @@
 		"ru": "e53a7abe2628b663",
 		"sv": "e53a7abe2628b663",
 		"ja": "e53a7abe2628b663",
-		"ko": "e53a7abe2628b663"
+		"ko": "e53a7abe2628b663",
+		"pt-BR": "e53a7abe2628b663"
 	},
 	"attributes:interest.g4VXtqWN8TKiCTxzBcWeRU.name": {
 		"de": "4be205bb9f5b8dc6",
@@ -6554,7 +6824,8 @@
 		"ru": "4be205bb9f5b8dc6",
 		"sv": "4be205bb9f5b8dc6",
 		"ja": "4be205bb9f5b8dc6",
-		"ko": "4be205bb9f5b8dc6"
+		"ko": "4be205bb9f5b8dc6",
+		"pt-BR": "4be205bb9f5b8dc6"
 	},
 	"attributes:interest.g7SwgV8y7JQNG4UrQUJUCP.name": {
 		"de": "4ac9935e7e5d24a2",
@@ -6577,7 +6848,8 @@
 		"ru": "51e79a20fd3fb1b7",
 		"sv": "51e79a20fd3fb1b7",
 		"ja": "51e79a20fd3fb1b7",
-		"ko": "51e79a20fd3fb1b7"
+		"ko": "51e79a20fd3fb1b7",
+		"pt-BR": "51e79a20fd3fb1b7"
 	},
 	"attributes:interest.gbeLm6w9S7jTuHZ3b6jhCc.name": {
 		"de": "b97f3c97e05dc97f",
@@ -6600,7 +6872,8 @@
 		"ru": "8e8b531e1cb22709",
 		"sv": "8e8b531e1cb22709",
 		"ja": "8e8b531e1cb22709",
-		"ko": "8e8b531e1cb22709"
+		"ko": "8e8b531e1cb22709",
+		"pt-BR": "8e8b531e1cb22709"
 	},
 	"attributes:interest.gD4Tp9YNXnyTctMQwGaijR.name": {
 		"de": "0bcf7907aa35435d",
@@ -6611,7 +6884,8 @@
 		"ru": "0bcf7907aa35435d",
 		"sv": "0bcf7907aa35435d",
 		"ja": "0bcf7907aa35435d",
-		"ko": "0bcf7907aa35435d"
+		"ko": "0bcf7907aa35435d",
+		"pt-BR": "0bcf7907aa35435d"
 	},
 	"attributes:interest.GfBVjXqiaoeRyr8XHzehGo.name": {
 		"de": "db8c59f0b55be850",
@@ -6646,7 +6920,8 @@
 		"ru": "91d5b5efb689f807",
 		"sv": "91d5b5efb689f807",
 		"ja": "91d5b5efb689f807",
-		"ko": "91d5b5efb689f807"
+		"ko": "91d5b5efb689f807",
+		"pt-BR": "91d5b5efb689f807"
 	},
 	"attributes:interest.gjdYnF6jWBxtweAB3YmcLU.name": {
 		"de": "7e7aa113ac1f0fe0",
@@ -6657,7 +6932,8 @@
 		"ru": "7e7aa113ac1f0fe0",
 		"sv": "7e7aa113ac1f0fe0",
 		"ja": "7e7aa113ac1f0fe0",
-		"ko": "7e7aa113ac1f0fe0"
+		"ko": "7e7aa113ac1f0fe0",
+		"pt-BR": "7e7aa113ac1f0fe0"
 	},
 	"attributes:interest.gUm9n5xfnMzCVtxA9rCnLV.name": {
 		"de": "e4bcdff4a14d2b2f",
@@ -6668,7 +6944,8 @@
 		"ru": "e4bcdff4a14d2b2f",
 		"sv": "e4bcdff4a14d2b2f",
 		"ja": "e4bcdff4a14d2b2f",
-		"ko": "e4bcdff4a14d2b2f"
+		"ko": "e4bcdff4a14d2b2f",
+		"pt-BR": "e4bcdff4a14d2b2f"
 	},
 	"attributes:interest.guNDL9je3iot5XcYqaj9uS.name": {
 		"de": "bf2e7c4079da37c2",
@@ -6691,7 +6968,8 @@
 		"ru": "c34df80c51ef3ed9",
 		"sv": "c34df80c51ef3ed9",
 		"ja": "c34df80c51ef3ed9",
-		"ko": "c34df80c51ef3ed9"
+		"ko": "c34df80c51ef3ed9",
+		"pt-BR": "c34df80c51ef3ed9"
 	},
 	"attributes:interest.Hacqj4nYnvzcbCD8vxPniH.name": {
 		"de": "fb480c6ff9ecf180",
@@ -6702,7 +6980,8 @@
 		"ru": "fb480c6ff9ecf180",
 		"sv": "fb480c6ff9ecf180",
 		"ja": "fb480c6ff9ecf180",
-		"ko": "fb480c6ff9ecf180"
+		"ko": "fb480c6ff9ecf180",
+		"pt-BR": "fb480c6ff9ecf180"
 	},
 	"attributes:interest.Hge2bJA39qY7XSnqqrrY9Y.name": {
 		"de": "e46f91c0319ee598",
@@ -6713,7 +6992,8 @@
 		"ru": "e46f91c0319ee598",
 		"sv": "e46f91c0319ee598",
 		"ja": "e46f91c0319ee598",
-		"ko": "e46f91c0319ee598"
+		"ko": "e46f91c0319ee598",
+		"pt-BR": "e46f91c0319ee598"
 	},
 	"attributes:interest.hh5U4kzyVvP2GWVwHUVjWS.name": {
 		"de": "4099af7d9b5babd6",
@@ -6760,7 +7040,8 @@
 		"ru": "51711a50cc0dd104",
 		"sv": "51711a50cc0dd104",
 		"ja": "51711a50cc0dd104",
-		"ko": "51711a50cc0dd104"
+		"ko": "51711a50cc0dd104",
+		"pt-BR": "51711a50cc0dd104"
 	},
 	"attributes:interest.ibrUnfQBwhrzBdFPhxisp2.name": {
 		"de": "3761991d1e2b6bcb",
@@ -6771,7 +7052,8 @@
 		"ru": "3761991d1e2b6bcb",
 		"sv": "3761991d1e2b6bcb",
 		"ja": "3761991d1e2b6bcb",
-		"ko": "3761991d1e2b6bcb"
+		"ko": "3761991d1e2b6bcb",
+		"pt-BR": "3761991d1e2b6bcb"
 	},
 	"attributes:interest.iH4ixES2RmvvG5F69eQjQe.name": {
 		"de": "63915ff66744879b",
@@ -6794,7 +7076,8 @@
 		"ru": "c0a1ffb1cce86d4f",
 		"sv": "c0a1ffb1cce86d4f",
 		"ja": "c0a1ffb1cce86d4f",
-		"ko": "c0a1ffb1cce86d4f"
+		"ko": "c0a1ffb1cce86d4f",
+		"pt-BR": "c0a1ffb1cce86d4f"
 	},
 	"attributes:interest.is5SeEgzo3ZAH6GPTCX7ma.name": {
 		"de": "89cadc04cd5a2d62",
@@ -6805,7 +7088,8 @@
 		"ru": "89cadc04cd5a2d62",
 		"sv": "89cadc04cd5a2d62",
 		"ja": "89cadc04cd5a2d62",
-		"ko": "89cadc04cd5a2d62"
+		"ko": "89cadc04cd5a2d62",
+		"pt-BR": "89cadc04cd5a2d62"
 	},
 	"attributes:interest.iXKfPBmMRxKGzNZA38g3iS.name": {
 		"de": "941c6358677186ea",
@@ -6816,7 +7100,8 @@
 		"ru": "941c6358677186ea",
 		"sv": "941c6358677186ea",
 		"ja": "941c6358677186ea",
-		"ko": "941c6358677186ea"
+		"ko": "941c6358677186ea",
+		"pt-BR": "941c6358677186ea"
 	},
 	"attributes:interest.j6ZmBCoKutQZ2ABFjJvZoK.name": {
 		"de": "75fd030b7ba4c1f6",
@@ -6827,7 +7112,8 @@
 		"ru": "75fd030b7ba4c1f6",
 		"sv": "75fd030b7ba4c1f6",
 		"ja": "75fd030b7ba4c1f6",
-		"ko": "75fd030b7ba4c1f6"
+		"ko": "75fd030b7ba4c1f6",
+		"pt-BR": "75fd030b7ba4c1f6"
 	},
 	"attributes:interest.j7cbohAXG2oFtBJqpxhKmL.name": {
 		"de": "750113fee9e2e60f",
@@ -6850,7 +7136,8 @@
 		"ru": "827c6333aa1458f6",
 		"sv": "827c6333aa1458f6",
 		"ja": "827c6333aa1458f6",
-		"ko": "827c6333aa1458f6"
+		"ko": "827c6333aa1458f6",
+		"pt-BR": "827c6333aa1458f6"
 	},
 	"attributes:interest.jaJkU3XRMqRmxGZia74XB8.name": {
 		"de": "1c6dea567745cf85",
@@ -6861,7 +7148,8 @@
 		"ru": "1c6dea567745cf85",
 		"sv": "1c6dea567745cf85",
 		"ja": "1c6dea567745cf85",
-		"ko": "1c6dea567745cf85"
+		"ko": "1c6dea567745cf85",
+		"pt-BR": "1c6dea567745cf85"
 	},
 	"attributes:interest.JAsmfUmdh2uL6ZLZTWp8dF.name": {
 		"de": "927f64dfb01c6dd0",
@@ -6872,7 +7160,8 @@
 		"ru": "927f64dfb01c6dd0",
 		"sv": "927f64dfb01c6dd0",
 		"ja": "927f64dfb01c6dd0",
-		"ko": "927f64dfb01c6dd0"
+		"ko": "927f64dfb01c6dd0",
+		"pt-BR": "927f64dfb01c6dd0"
 	},
 	"attributes:interest.JAVpr44XUBC5wkmxtKX4rW.name": {
 		"de": "f7ea04504957ec39",
@@ -6907,7 +7196,8 @@
 		"ru": "5c1856e41f013ac6",
 		"sv": "5c1856e41f013ac6",
 		"ja": "5c1856e41f013ac6",
-		"ko": "5c1856e41f013ac6"
+		"ko": "5c1856e41f013ac6",
+		"pt-BR": "5c1856e41f013ac6"
 	},
 	"attributes:interest.JGwyrqtUfCC7HVNZ2ot8LV.name": {
 		"de": "596baaf615066354",
@@ -6918,7 +7208,8 @@
 		"ru": "596baaf615066354",
 		"sv": "596baaf615066354",
 		"ja": "596baaf615066354",
-		"ko": "596baaf615066354"
+		"ko": "596baaf615066354",
+		"pt-BR": "596baaf615066354"
 	},
 	"attributes:interest.jJmDX2sxgQ6YGVXN2CNJFV.name": {
 		"de": "fa04650f7b5b6718",
@@ -6953,7 +7244,8 @@
 		"ru": "1809d363bcbd2332",
 		"sv": "1809d363bcbd2332",
 		"ja": "1809d363bcbd2332",
-		"ko": "1809d363bcbd2332"
+		"ko": "1809d363bcbd2332",
+		"pt-BR": "1809d363bcbd2332"
 	},
 	"attributes:interest.JS498WmSAassZnJU3dyvzj.name": {
 		"de": "7bab8597f5bb81a8",
@@ -6964,7 +7256,8 @@
 		"ru": "7bab8597f5bb81a8",
 		"sv": "7bab8597f5bb81a8",
 		"ja": "7bab8597f5bb81a8",
-		"ko": "7bab8597f5bb81a8"
+		"ko": "7bab8597f5bb81a8",
+		"pt-BR": "7bab8597f5bb81a8"
 	},
 	"attributes:interest.JTnaqV7ZtSm7ecGmk9JbUN.name": {
 		"de": "6a2f0939325b6784",
@@ -6975,7 +7268,8 @@
 		"ru": "6a2f0939325b6784",
 		"sv": "6a2f0939325b6784",
 		"ja": "6a2f0939325b6784",
-		"ko": "6a2f0939325b6784"
+		"ko": "6a2f0939325b6784",
+		"pt-BR": "6a2f0939325b6784"
 	},
 	"attributes:interest.JTp3btTZgozbnvZoatpJwR.name": {
 		"de": "fff9d2957670b650",
@@ -6998,7 +7292,8 @@
 		"ru": "36973211a6c5b7e2",
 		"sv": "36973211a6c5b7e2",
 		"ja": "36973211a6c5b7e2",
-		"ko": "36973211a6c5b7e2"
+		"ko": "36973211a6c5b7e2",
+		"pt-BR": "36973211a6c5b7e2"
 	},
 	"attributes:interest.k53DpziykEgW7M6engXhem.name": {
 		"de": "aa821dca849d05a8",
@@ -7009,7 +7304,8 @@
 		"ru": "aa821dca849d05a8",
 		"sv": "aa821dca849d05a8",
 		"ja": "aa821dca849d05a8",
-		"ko": "aa821dca849d05a8"
+		"ko": "aa821dca849d05a8",
+		"pt-BR": "aa821dca849d05a8"
 	},
 	"attributes:interest.K9MHU3GP3kVfW8yck8ZPdg.name": {
 		"de": "2a49061792ffbc74",
@@ -7020,7 +7316,8 @@
 		"ru": "2a49061792ffbc74",
 		"sv": "2a49061792ffbc74",
 		"ja": "2a49061792ffbc74",
-		"ko": "2a49061792ffbc74"
+		"ko": "2a49061792ffbc74",
+		"pt-BR": "2a49061792ffbc74"
 	},
 	"attributes:interest.K9piJDTQhCoabBZR4k6TzB.name": {
 		"de": "59bc67349808a764",
@@ -7031,7 +7328,8 @@
 		"ru": "59bc67349808a764",
 		"sv": "59bc67349808a764",
 		"ja": "59bc67349808a764",
-		"ko": "59bc67349808a764"
+		"ko": "59bc67349808a764",
+		"pt-BR": "59bc67349808a764"
 	},
 	"attributes:interest.Ka3JLErYVPJWHLLzQBT2WE.name": {
 		"de": "0472879e09011e13",
@@ -7042,7 +7340,8 @@
 		"ru": "0472879e09011e13",
 		"sv": "0472879e09011e13",
 		"ja": "0472879e09011e13",
-		"ko": "0472879e09011e13"
+		"ko": "0472879e09011e13",
+		"pt-BR": "0472879e09011e13"
 	},
 	"attributes:interest.kK3comfAcSAtJtQunqV6QZ.name": {
 		"de": "f8782c5a7e3e674f",
@@ -7137,7 +7436,8 @@
 		"ru": "000ff4daca900f6e",
 		"sv": "000ff4daca900f6e",
 		"ja": "000ff4daca900f6e",
-		"ko": "000ff4daca900f6e"
+		"ko": "000ff4daca900f6e",
+		"pt-BR": "000ff4daca900f6e"
 	},
 	"attributes:interest.La4WBQ9zBc7k6VCLJgEuDD.name": {
 		"de": "2197f38267d389d1",
@@ -7148,7 +7448,8 @@
 		"ru": "2197f38267d389d1",
 		"sv": "2197f38267d389d1",
 		"ja": "2197f38267d389d1",
-		"ko": "2197f38267d389d1"
+		"ko": "2197f38267d389d1",
+		"pt-BR": "2197f38267d389d1"
 	},
 	"attributes:interest.LJ4cdsqKZVJDp5Gy6zBP7W.name": {
 		"de": "6a4950438795a486",
@@ -7195,7 +7496,8 @@
 		"ru": "ffb13b7476e3948a",
 		"sv": "ffb13b7476e3948a",
 		"ja": "ffb13b7476e3948a",
-		"ko": "ffb13b7476e3948a"
+		"ko": "ffb13b7476e3948a",
+		"pt-BR": "ffb13b7476e3948a"
 	},
 	"attributes:interest.m9K2k5wXQrVdehe3KN9ZaY.name": {
 		"de": "a327ed6ca0749e7c",
@@ -7206,7 +7508,8 @@
 		"ru": "a327ed6ca0749e7c",
 		"sv": "a327ed6ca0749e7c",
 		"ja": "a327ed6ca0749e7c",
-		"ko": "a327ed6ca0749e7c"
+		"ko": "a327ed6ca0749e7c",
+		"pt-BR": "a327ed6ca0749e7c"
 	},
 	"attributes:interest.MDRvcQGDrY6VMbaGtPk89m.name": {
 		"de": "a46164472f6f4c01",
@@ -7217,7 +7520,8 @@
 		"ru": "a46164472f6f4c01",
 		"sv": "a46164472f6f4c01",
 		"ja": "a46164472f6f4c01",
-		"ko": "a46164472f6f4c01"
+		"ko": "a46164472f6f4c01",
+		"pt-BR": "a46164472f6f4c01"
 	},
 	"attributes:interest.mh6zGfyseAeUk82fuqu9VT.name": {
 		"de": "f34afd6dce8d1708",
@@ -7240,7 +7544,8 @@
 		"ru": "1f5400a158412c5f",
 		"sv": "1f5400a158412c5f",
 		"ja": "1f5400a158412c5f",
-		"ko": "1f5400a158412c5f"
+		"ko": "1f5400a158412c5f",
+		"pt-BR": "1f5400a158412c5f"
 	},
 	"attributes:interest.MneeWkir8YLxVNH2BxDtKR.name": {
 		"de": "89bf01b611c78acd",
@@ -7251,7 +7556,8 @@
 		"ru": "89bf01b611c78acd",
 		"sv": "89bf01b611c78acd",
 		"ja": "89bf01b611c78acd",
-		"ko": "89bf01b611c78acd"
+		"ko": "89bf01b611c78acd",
+		"pt-BR": "89bf01b611c78acd"
 	},
 	"attributes:interest.mNhUREva2s5sfkMxLfwqk3.name": {
 		"de": "9fc69ff517128c33",
@@ -7274,7 +7580,8 @@
 		"ru": "4cb01f9e9901e70b",
 		"sv": "4cb01f9e9901e70b",
 		"ja": "4cb01f9e9901e70b",
-		"ko": "4cb01f9e9901e70b"
+		"ko": "4cb01f9e9901e70b",
+		"pt-BR": "4cb01f9e9901e70b"
 	},
 	"attributes:interest.MTmW4A9pTEqZem2wZvGN3F.name": {
 		"de": "943fc8447ac09f63",
@@ -7297,7 +7604,8 @@
 		"ru": "77c1086c426cccbe",
 		"sv": "77c1086c426cccbe",
 		"ja": "77c1086c426cccbe",
-		"ko": "77c1086c426cccbe"
+		"ko": "77c1086c426cccbe",
+		"pt-BR": "77c1086c426cccbe"
 	},
 	"attributes:interest.NdtkEKfWtyNqKux7gs5juV.name": {
 		"de": "2360f4803ce5f7ac",
@@ -7332,7 +7640,8 @@
 		"ru": "0591322d182a340e",
 		"sv": "0591322d182a340e",
 		"ja": "0591322d182a340e",
-		"ko": "0591322d182a340e"
+		"ko": "0591322d182a340e",
+		"pt-BR": "0591322d182a340e"
 	},
 	"attributes:interest.NpxR4mSbkKEo2ru79eboyS.name": {
 		"de": "8085f7770295854d",
@@ -7343,7 +7652,8 @@
 		"ru": "8085f7770295854d",
 		"sv": "8085f7770295854d",
 		"ja": "8085f7770295854d",
-		"ko": "8085f7770295854d"
+		"ko": "8085f7770295854d",
+		"pt-BR": "8085f7770295854d"
 	},
 	"attributes:interest.NrsAVMm65UFBPsqEPkWgZT.name": {
 		"de": "8df49272adad0fd7",
@@ -7354,7 +7664,8 @@
 		"ru": "8df49272adad0fd7",
 		"sv": "8df49272adad0fd7",
 		"ja": "8df49272adad0fd7",
-		"ko": "8df49272adad0fd7"
+		"ko": "8df49272adad0fd7",
+		"pt-BR": "8df49272adad0fd7"
 	},
 	"attributes:interest.NxJszSBMm3vkbRaZmPd2gh.name": {
 		"de": "ebbafd9edd4f8135",
@@ -7365,7 +7676,8 @@
 		"ru": "ebbafd9edd4f8135",
 		"sv": "ebbafd9edd4f8135",
 		"ja": "ebbafd9edd4f8135",
-		"ko": "ebbafd9edd4f8135"
+		"ko": "ebbafd9edd4f8135",
+		"pt-BR": "ebbafd9edd4f8135"
 	},
 	"attributes:interest.nZfksPK35VkxjtjBG5De7f.name": {
 		"de": "012763ea839b9c76",
@@ -7376,7 +7688,8 @@
 		"ru": "012763ea839b9c76",
 		"sv": "012763ea839b9c76",
 		"ja": "012763ea839b9c76",
-		"ko": "012763ea839b9c76"
+		"ko": "012763ea839b9c76",
+		"pt-BR": "012763ea839b9c76"
 	},
 	"attributes:interest.NZjaoEMBizfYF2ScZbYAuG.name": {
 		"de": "85da72deea91fe62",
@@ -7399,7 +7712,8 @@
 		"ru": "c35dc84af1483f76",
 		"sv": "c35dc84af1483f76",
 		"ja": "c35dc84af1483f76",
-		"ko": "c35dc84af1483f76"
+		"ko": "c35dc84af1483f76",
+		"pt-BR": "c35dc84af1483f76"
 	},
 	"attributes:interest.o4MbotEvh3dhz2Symgvtbj.name": {
 		"de": "30b425ac3aab98e7",
@@ -7410,7 +7724,8 @@
 		"ru": "30b425ac3aab98e7",
 		"sv": "30b425ac3aab98e7",
 		"ja": "30b425ac3aab98e7",
-		"ko": "30b425ac3aab98e7"
+		"ko": "30b425ac3aab98e7",
+		"pt-BR": "30b425ac3aab98e7"
 	},
 	"attributes:interest.oYpeL2jBcwYoQfjs8gAHCN.name": {
 		"de": "31484861c080d6eb",
@@ -7469,7 +7784,8 @@
 		"ru": "186e6286eb943b4a",
 		"sv": "186e6286eb943b4a",
 		"ja": "186e6286eb943b4a",
-		"ko": "186e6286eb943b4a"
+		"ko": "186e6286eb943b4a",
+		"pt-BR": "186e6286eb943b4a"
 	},
 	"attributes:interest.PAepdb7ewc4GVEnpWDCbcK.name": {
 		"de": "fde79c63093f514c",
@@ -7480,7 +7796,8 @@
 		"ru": "fde79c63093f514c",
 		"sv": "fde79c63093f514c",
 		"ja": "fde79c63093f514c",
-		"ko": "fde79c63093f514c"
+		"ko": "fde79c63093f514c",
+		"pt-BR": "fde79c63093f514c"
 	},
 	"attributes:interest.pET4ZuyMW3ACUXzaYaxd3S.name": {
 		"de": "d761112af9ba0735",
@@ -7527,7 +7844,8 @@
 		"ru": "b8d5e155ab59fd58",
 		"sv": "b8d5e155ab59fd58",
 		"ja": "b8d5e155ab59fd58",
-		"ko": "b8d5e155ab59fd58"
+		"ko": "b8d5e155ab59fd58",
+		"pt-BR": "b8d5e155ab59fd58"
 	},
 	"attributes:interest.PKDvhwaZutvjysHXqsiURL.name": {
 		"de": "1d67393c0189b24f",
@@ -7550,7 +7868,8 @@
 		"ru": "9ee70a53d2486a65",
 		"sv": "9ee70a53d2486a65",
 		"ja": "9ee70a53d2486a65",
-		"ko": "9ee70a53d2486a65"
+		"ko": "9ee70a53d2486a65",
+		"pt-BR": "9ee70a53d2486a65"
 	},
 	"attributes:interest.PPeutfrRpwTs2v2CVNT6TR.name": {
 		"de": "73c6ee1ce6cfd92c",
@@ -7561,7 +7880,8 @@
 		"ru": "73c6ee1ce6cfd92c",
 		"sv": "73c6ee1ce6cfd92c",
 		"ja": "73c6ee1ce6cfd92c",
-		"ko": "73c6ee1ce6cfd92c"
+		"ko": "73c6ee1ce6cfd92c",
+		"pt-BR": "73c6ee1ce6cfd92c"
 	},
 	"attributes:interest.PuMdJoFBdxvf8xWuSpDmP7.name": {
 		"de": "4eca1382a773a6e9",
@@ -7584,7 +7904,8 @@
 		"ru": "06add0b52edecf16",
 		"sv": "06add0b52edecf16",
 		"ja": "06add0b52edecf16",
-		"ko": "06add0b52edecf16"
+		"ko": "06add0b52edecf16",
+		"pt-BR": "06add0b52edecf16"
 	},
 	"attributes:interest.qdRj5abyaGBYsFaeXxaZ9P.name": {
 		"de": "d75caeb1c1ad8eb2",
@@ -7607,7 +7928,8 @@
 		"ru": "934ce114b831d9af",
 		"sv": "934ce114b831d9af",
 		"ja": "934ce114b831d9af",
-		"ko": "934ce114b831d9af"
+		"ko": "934ce114b831d9af",
+		"pt-BR": "934ce114b831d9af"
 	},
 	"attributes:interest.Qec82XHyZh6r2HpREWULv2.name": {
 		"de": "9553870a12e8dc3b",
@@ -7618,7 +7940,8 @@
 		"ru": "9553870a12e8dc3b",
 		"sv": "9553870a12e8dc3b",
 		"ja": "9553870a12e8dc3b",
-		"ko": "9553870a12e8dc3b"
+		"ko": "9553870a12e8dc3b",
+		"pt-BR": "9553870a12e8dc3b"
 	},
 	"attributes:interest.Qf69ZcHcgzrGyW8tVUSvkk.name": {
 		"de": "e4add3593376c650",
@@ -7629,7 +7952,8 @@
 		"ru": "e4add3593376c650",
 		"sv": "e4add3593376c650",
 		"ja": "e4add3593376c650",
-		"ko": "e4add3593376c650"
+		"ko": "e4add3593376c650",
+		"pt-BR": "e4add3593376c650"
 	},
 	"attributes:interest.qjjjMrjxZHuqVMuC9ADyiZ.name": {
 		"de": "88db9f87bbd3d657",
@@ -7640,7 +7964,8 @@
 		"ru": "88db9f87bbd3d657",
 		"sv": "88db9f87bbd3d657",
 		"ja": "88db9f87bbd3d657",
-		"ko": "88db9f87bbd3d657"
+		"ko": "88db9f87bbd3d657",
+		"pt-BR": "88db9f87bbd3d657"
 	},
 	"attributes:interest.Qm4yoeSbfnL9AoDZHwotWX.name": {
 		"de": "bb82abdf78fe2211",
@@ -7651,7 +7976,8 @@
 		"ru": "bb82abdf78fe2211",
 		"sv": "bb82abdf78fe2211",
 		"ja": "bb82abdf78fe2211",
-		"ko": "bb82abdf78fe2211"
+		"ko": "bb82abdf78fe2211",
+		"pt-BR": "bb82abdf78fe2211"
 	},
 	"attributes:interest.qmthjNQK6U6zxeUHWQWFEY.name": {
 		"de": "597f5f2a05cf7f34",
@@ -7662,7 +7988,8 @@
 		"ru": "597f5f2a05cf7f34",
 		"sv": "597f5f2a05cf7f34",
 		"ja": "597f5f2a05cf7f34",
-		"ko": "597f5f2a05cf7f34"
+		"ko": "597f5f2a05cf7f34",
+		"pt-BR": "597f5f2a05cf7f34"
 	},
 	"attributes:interest.QpsRiXnBWQMG5ZYtZd8BoR.name": {
 		"de": "625fe19dc66bcc52",
@@ -7673,7 +8000,8 @@
 		"ru": "625fe19dc66bcc52",
 		"sv": "625fe19dc66bcc52",
 		"ja": "625fe19dc66bcc52",
-		"ko": "625fe19dc66bcc52"
+		"ko": "625fe19dc66bcc52",
+		"pt-BR": "625fe19dc66bcc52"
 	},
 	"attributes:interest.QqXRreYsKwxs38WyUPPWwi.name": {
 		"de": "bab5932aff7c65e0",
@@ -7696,7 +8024,8 @@
 		"ru": "19169a7b770e0e01",
 		"sv": "19169a7b770e0e01",
 		"ja": "19169a7b770e0e01",
-		"ko": "19169a7b770e0e01"
+		"ko": "19169a7b770e0e01",
+		"pt-BR": "19169a7b770e0e01"
 	},
 	"attributes:interest.qUavCrMx6HrR2v5wf7stFN.name": {
 		"de": "a4bb819dacf554aa",
@@ -7707,7 +8036,8 @@
 		"ru": "a4bb819dacf554aa",
 		"sv": "a4bb819dacf554aa",
 		"ja": "a4bb819dacf554aa",
-		"ko": "a4bb819dacf554aa"
+		"ko": "a4bb819dacf554aa",
+		"pt-BR": "a4bb819dacf554aa"
 	},
 	"attributes:interest.QXAV9E84tkhjZKgKqgRjDA.name": {
 		"de": "87b661f7c6d88d87",
@@ -7730,7 +8060,8 @@
 		"ru": "fe52cce4f0831881",
 		"sv": "fe52cce4f0831881",
 		"ja": "fe52cce4f0831881",
-		"ko": "fe52cce4f0831881"
+		"ko": "fe52cce4f0831881",
+		"pt-BR": "fe52cce4f0831881"
 	},
 	"attributes:interest.r9YDRMbRwSsoFybfDo6jdG.name": {
 		"de": "1f3fbd6e3872956e",
@@ -7741,7 +8072,8 @@
 		"ru": "1f3fbd6e3872956e",
 		"sv": "1f3fbd6e3872956e",
 		"ja": "1f3fbd6e3872956e",
-		"ko": "1f3fbd6e3872956e"
+		"ko": "1f3fbd6e3872956e",
+		"pt-BR": "1f3fbd6e3872956e"
 	},
 	"attributes:interest.rD5R2Aqg5yVnK5QfF22R3Z.name": {
 		"de": "e4586845cac3ae15",
@@ -7752,7 +8084,8 @@
 		"ru": "e4586845cac3ae15",
 		"sv": "e4586845cac3ae15",
 		"ja": "e4586845cac3ae15",
-		"ko": "e4586845cac3ae15"
+		"ko": "e4586845cac3ae15",
+		"pt-BR": "e4586845cac3ae15"
 	},
 	"attributes:interest.rDDDYYEjrdUWFjgaE4NSDM.name": {
 		"de": "6426b84ef1015892",
@@ -7763,7 +8096,8 @@
 		"ru": "6426b84ef1015892",
 		"sv": "6426b84ef1015892",
 		"ja": "6426b84ef1015892",
-		"ko": "6426b84ef1015892"
+		"ko": "6426b84ef1015892",
+		"pt-BR": "6426b84ef1015892"
 	},
 	"attributes:interest.rG2FKKUdai8Gsn9U6cQp2T.name": {
 		"de": "baa0a93b5534b310",
@@ -7774,7 +8108,8 @@
 		"ru": "baa0a93b5534b310",
 		"sv": "baa0a93b5534b310",
 		"ja": "baa0a93b5534b310",
-		"ko": "baa0a93b5534b310"
+		"ko": "baa0a93b5534b310",
+		"pt-BR": "baa0a93b5534b310"
 	},
 	"attributes:interest.riLJvHysCVv2wbzjz34kbC.name": {
 		"de": "853ff5bccc0a7269",
@@ -7809,7 +8144,8 @@
 		"ru": "a1240b2d394b839a",
 		"sv": "a1240b2d394b839a",
 		"ja": "a1240b2d394b839a",
-		"ko": "a1240b2d394b839a"
+		"ko": "a1240b2d394b839a",
+		"pt-BR": "a1240b2d394b839a"
 	},
 	"attributes:interest.RNP3HRDvwVZnCZ28wZcYGf.name": {
 		"de": "4fb9108e5fc321f6",
@@ -7856,7 +8192,8 @@
 		"ru": "a6ab04c2e4991c1c",
 		"sv": "a6ab04c2e4991c1c",
 		"ja": "a6ab04c2e4991c1c",
-		"ko": "a6ab04c2e4991c1c"
+		"ko": "a6ab04c2e4991c1c",
+		"pt-BR": "a6ab04c2e4991c1c"
 	},
 	"attributes:interest.svS7TMjzrzjmsh2X3Qe23e.name": {
 		"de": "e19261e2d1cf6a85",
@@ -7867,7 +8204,8 @@
 		"ru": "e19261e2d1cf6a85",
 		"sv": "e19261e2d1cf6a85",
 		"ja": "e19261e2d1cf6a85",
-		"ko": "e19261e2d1cf6a85"
+		"ko": "e19261e2d1cf6a85",
+		"pt-BR": "e19261e2d1cf6a85"
 	},
 	"attributes:interest.sYGiQ4XuHJihLvWMZGPApc.name": {
 		"de": "ce2acdb7500f29a4",
@@ -7902,7 +8240,8 @@
 		"ru": "e18daa5b2f9bf9b3",
 		"sv": "e18daa5b2f9bf9b3",
 		"ja": "e18daa5b2f9bf9b3",
-		"ko": "e18daa5b2f9bf9b3"
+		"ko": "e18daa5b2f9bf9b3",
+		"pt-BR": "e18daa5b2f9bf9b3"
 	},
 	"attributes:interest.th2ujgrqPcZifgaLYuv99Y.name": {
 		"de": "110f9afd95270c60",
@@ -7961,7 +8300,8 @@
 		"ru": "fc38aea60d82e0cf",
 		"sv": "fc38aea60d82e0cf",
 		"ja": "fc38aea60d82e0cf",
-		"ko": "fc38aea60d82e0cf"
+		"ko": "fc38aea60d82e0cf",
+		"pt-BR": "fc38aea60d82e0cf"
 	},
 	"attributes:interest.tYzVk2i9uhMzVXuPXcXe2b.name": {
 		"de": "fcf1abfbe631766f",
@@ -7972,7 +8312,8 @@
 		"ru": "fcf1abfbe631766f",
 		"sv": "fcf1abfbe631766f",
 		"ja": "fcf1abfbe631766f",
-		"ko": "fcf1abfbe631766f"
+		"ko": "fcf1abfbe631766f",
+		"pt-BR": "fcf1abfbe631766f"
 	},
 	"attributes:interest.u8ZKWRf3XK3ipbHo5cuArS.name": {
 		"de": "e38fb2946aa0ffee",
@@ -7995,7 +8336,8 @@
 		"ru": "893f2ed84d10a1dd",
 		"sv": "893f2ed84d10a1dd",
 		"ja": "893f2ed84d10a1dd",
-		"ko": "893f2ed84d10a1dd"
+		"ko": "893f2ed84d10a1dd",
+		"pt-BR": "893f2ed84d10a1dd"
 	},
 	"attributes:interest.uDxAuTWV85Jr7r8YbnDxnd.name": {
 		"de": "9abb56ed97e4c7e2",
@@ -8018,7 +8360,8 @@
 		"ru": "877c7bc9cec359eb",
 		"sv": "877c7bc9cec359eb",
 		"ja": "877c7bc9cec359eb",
-		"ko": "877c7bc9cec359eb"
+		"ko": "877c7bc9cec359eb",
+		"pt-BR": "877c7bc9cec359eb"
 	},
 	"attributes:interest.uiEz3zZDfe7UaJgoodssZE.name": {
 		"de": "f076210f73c3dd53",
@@ -8041,7 +8384,8 @@
 		"ru": "d64e38b28cad7943",
 		"sv": "d64e38b28cad7943",
 		"ja": "d64e38b28cad7943",
-		"ko": "d64e38b28cad7943"
+		"ko": "d64e38b28cad7943",
+		"pt-BR": "d64e38b28cad7943"
 	},
 	"attributes:interest.UkC6H5qf7xGFtpueRQQWxS.name": {
 		"de": "704a449edf4580fc",
@@ -8052,7 +8396,8 @@
 		"ru": "704a449edf4580fc",
 		"sv": "704a449edf4580fc",
 		"ja": "704a449edf4580fc",
-		"ko": "704a449edf4580fc"
+		"ko": "704a449edf4580fc",
+		"pt-BR": "704a449edf4580fc"
 	},
 	"attributes:interest.Upgh5qK8AzorVt6rgiWTR7.name": {
 		"de": "b951425aa71e1383",
@@ -8063,7 +8408,8 @@
 		"ru": "b951425aa71e1383",
 		"sv": "b951425aa71e1383",
 		"ja": "b951425aa71e1383",
-		"ko": "b951425aa71e1383"
+		"ko": "b951425aa71e1383",
+		"pt-BR": "b951425aa71e1383"
 	},
 	"attributes:interest.UPLtrF5xLGLpnfWkfv8WDg.name": {
 		"de": "d472d22f6ee92719",
@@ -8074,7 +8420,8 @@
 		"ru": "d472d22f6ee92719",
 		"sv": "d472d22f6ee92719",
 		"ja": "d472d22f6ee92719",
-		"ko": "d472d22f6ee92719"
+		"ko": "d472d22f6ee92719",
+		"pt-BR": "d472d22f6ee92719"
 	},
 	"attributes:interest.usxHtsoFwppLo787TfBvLF.name": {
 		"de": "28ea49080164e971",
@@ -8085,7 +8432,8 @@
 		"ru": "28ea49080164e971",
 		"sv": "28ea49080164e971",
 		"ja": "28ea49080164e971",
-		"ko": "28ea49080164e971"
+		"ko": "28ea49080164e971",
+		"pt-BR": "28ea49080164e971"
 	},
 	"attributes:interest.Uv5MM3vocd3asfdE2VErQk.name": {
 		"de": "8935873e79e7135d",
@@ -8096,7 +8444,8 @@
 		"ru": "8935873e79e7135d",
 		"sv": "8935873e79e7135d",
 		"ja": "8935873e79e7135d",
-		"ko": "8935873e79e7135d"
+		"ko": "8935873e79e7135d",
+		"pt-BR": "8935873e79e7135d"
 	},
 	"attributes:interest.uwhn9iPM4kntT2Bq2WDXKN.name": {
 		"de": "6db24424313dd9bf",
@@ -8107,7 +8456,8 @@
 		"ru": "6db24424313dd9bf",
 		"sv": "6db24424313dd9bf",
 		"ja": "6db24424313dd9bf",
-		"ko": "6db24424313dd9bf"
+		"ko": "6db24424313dd9bf",
+		"pt-BR": "6db24424313dd9bf"
 	},
 	"attributes:interest.UXCy3bePW2WMDA6RCv6iZh.name": {
 		"de": "6f160780c3259f43",
@@ -8178,7 +8528,8 @@
 		"ru": "64ea8704408b4d3b",
 		"sv": "64ea8704408b4d3b",
 		"ja": "64ea8704408b4d3b",
-		"ko": "64ea8704408b4d3b"
+		"ko": "64ea8704408b4d3b",
+		"pt-BR": "64ea8704408b4d3b"
 	},
 	"attributes:interest.vHWMgQ4fHUwUxY72vi5Sz7.name": {
 		"de": "eb10081ded8f61e1",
@@ -8213,7 +8564,8 @@
 		"ru": "4ae5b57a5bf57e10",
 		"sv": "4ae5b57a5bf57e10",
 		"ja": "4ae5b57a5bf57e10",
-		"ko": "4ae5b57a5bf57e10"
+		"ko": "4ae5b57a5bf57e10",
+		"pt-BR": "4ae5b57a5bf57e10"
 	},
 	"attributes:interest.VPhvhASscLY49xNFjw4o8n.name": {
 		"de": "4efd928028bcb74a",
@@ -8248,7 +8600,8 @@
 		"ru": "2131fcfb10186c35",
 		"sv": "2131fcfb10186c35",
 		"ja": "2131fcfb10186c35",
-		"ko": "2131fcfb10186c35"
+		"ko": "2131fcfb10186c35",
+		"pt-BR": "2131fcfb10186c35"
 	},
 	"attributes:interest.VviV5H6FZMUUrmvpV8A9N6.name": {
 		"de": "60519739e398c7cd",
@@ -8283,7 +8636,8 @@
 		"ru": "2b74d02e6e55e3a0",
 		"sv": "2b74d02e6e55e3a0",
 		"ja": "2b74d02e6e55e3a0",
-		"ko": "2b74d02e6e55e3a0"
+		"ko": "2b74d02e6e55e3a0",
+		"pt-BR": "2b74d02e6e55e3a0"
 	},
 	"attributes:interest.wNLsMkCkrPbHHwpRbPrm7E.name": {
 		"de": "3291cabb0e946f0e",
@@ -8330,7 +8684,8 @@
 		"ru": "4cdddd11d869322c",
 		"sv": "4cdddd11d869322c",
 		"ja": "4cdddd11d869322c",
-		"ko": "4cdddd11d869322c"
+		"ko": "4cdddd11d869322c",
+		"pt-BR": "4cdddd11d869322c"
 	},
 	"attributes:interest.wR9dYu4RUTPFwPtoKov2RB.name": {
 		"de": "de44a93b6cee2116",
@@ -8353,7 +8708,8 @@
 		"ru": "188a2f9dee7b6e97",
 		"sv": "188a2f9dee7b6e97",
 		"ja": "188a2f9dee7b6e97",
-		"ko": "188a2f9dee7b6e97"
+		"ko": "188a2f9dee7b6e97",
+		"pt-BR": "188a2f9dee7b6e97"
 	},
 	"attributes:interest.WTw73CaXZ4AWmbiQpooJiQ.name": {
 		"de": "7a21a1e0a7f5f4c8",
@@ -8364,7 +8720,8 @@
 		"ru": "7a21a1e0a7f5f4c8",
 		"sv": "7a21a1e0a7f5f4c8",
 		"ja": "7a21a1e0a7f5f4c8",
-		"ko": "7a21a1e0a7f5f4c8"
+		"ko": "7a21a1e0a7f5f4c8",
+		"pt-BR": "7a21a1e0a7f5f4c8"
 	},
 	"attributes:interest.wZBbZRUrr68X5CjVXmruKL.name": {
 		"de": "6ff6ec3a5e2395a3",
@@ -8375,7 +8732,8 @@
 		"ru": "6ff6ec3a5e2395a3",
 		"sv": "6ff6ec3a5e2395a3",
 		"ja": "6ff6ec3a5e2395a3",
-		"ko": "6ff6ec3a5e2395a3"
+		"ko": "6ff6ec3a5e2395a3",
+		"pt-BR": "6ff6ec3a5e2395a3"
 	},
 	"attributes:interest.XESzLLYMMdaVqTQ8Tv6Qig.name": {
 		"de": "c36457fd176ca9c6",
@@ -8410,7 +8768,8 @@
 		"ru": "103fa41a5bc626f2",
 		"sv": "103fa41a5bc626f2",
 		"ja": "103fa41a5bc626f2",
-		"ko": "103fa41a5bc626f2"
+		"ko": "103fa41a5bc626f2",
+		"pt-BR": "103fa41a5bc626f2"
 	},
 	"attributes:interest.xLnre8baC2zsrWJog4ypjm.name": {
 		"de": "ae5994876af6cc1e",
@@ -8421,7 +8780,8 @@
 		"ru": "ae5994876af6cc1e",
 		"sv": "ae5994876af6cc1e",
 		"ja": "ae5994876af6cc1e",
-		"ko": "ae5994876af6cc1e"
+		"ko": "ae5994876af6cc1e",
+		"pt-BR": "ae5994876af6cc1e"
 	},
 	"attributes:interest.XRjfs5BAZhgeKnofywDX8d.name": {
 		"de": "e53ef88f2473c94b",
@@ -8432,7 +8792,8 @@
 		"ru": "e53ef88f2473c94b",
 		"sv": "e53ef88f2473c94b",
 		"ja": "e53ef88f2473c94b",
-		"ko": "e53ef88f2473c94b"
+		"ko": "e53ef88f2473c94b",
+		"pt-BR": "e53ef88f2473c94b"
 	},
 	"attributes:interest.xSLzANhRAqr5h3sXqhoKvT.name": {
 		"de": "dbc00827d39c9320",
@@ -8455,7 +8816,8 @@
 		"ru": "819392490471cf6f",
 		"sv": "819392490471cf6f",
 		"ja": "819392490471cf6f",
-		"ko": "819392490471cf6f"
+		"ko": "819392490471cf6f",
+		"pt-BR": "819392490471cf6f"
 	},
 	"attributes:interest.xY4UQxjZP8Qb4ybKTvAka9.name": {
 		"de": "ca8435b68c99c119",
@@ -8466,7 +8828,8 @@
 		"ru": "ca8435b68c99c119",
 		"sv": "ca8435b68c99c119",
 		"ja": "ca8435b68c99c119",
-		"ko": "ca8435b68c99c119"
+		"ko": "ca8435b68c99c119",
+		"pt-BR": "ca8435b68c99c119"
 	},
 	"attributes:interest.XyLtoquzjjLdYyGHtojCo5.name": {
 		"de": "49c34f64b2ae872d",
@@ -8477,7 +8840,8 @@
 		"ru": "49c34f64b2ae872d",
 		"sv": "49c34f64b2ae872d",
 		"ja": "49c34f64b2ae872d",
-		"ko": "49c34f64b2ae872d"
+		"ko": "49c34f64b2ae872d",
+		"pt-BR": "49c34f64b2ae872d"
 	},
 	"attributes:interest.y53Q79KXYjdqCJps7Nzn8e.name": {
 		"de": "e969bbfb66cc7d35",
@@ -8488,7 +8852,8 @@
 		"ru": "e969bbfb66cc7d35",
 		"sv": "e969bbfb66cc7d35",
 		"ja": "e969bbfb66cc7d35",
-		"ko": "e969bbfb66cc7d35"
+		"ko": "e969bbfb66cc7d35",
+		"pt-BR": "e969bbfb66cc7d35"
 	},
 	"attributes:interest.Y65RLPXEzBHsnZphF84Gnc.name": {
 		"de": "350b1dd7ec82a599",
@@ -8499,7 +8864,8 @@
 		"ru": "350b1dd7ec82a599",
 		"sv": "350b1dd7ec82a599",
 		"ja": "350b1dd7ec82a599",
-		"ko": "350b1dd7ec82a599"
+		"ko": "350b1dd7ec82a599",
+		"pt-BR": "350b1dd7ec82a599"
 	},
 	"attributes:interest.y6mH6biHKb5u7DWiAx65t4.name": {
 		"de": "a94c4c8120c4669c",
@@ -8522,7 +8888,8 @@
 		"ru": "dc63703a605a116f",
 		"sv": "dc63703a605a116f",
 		"ja": "dc63703a605a116f",
-		"ko": "dc63703a605a116f"
+		"ko": "dc63703a605a116f",
+		"pt-BR": "dc63703a605a116f"
 	},
 	"attributes:interest.YCg9tPA8V3bfbjDqoM79ei.name": {
 		"de": "43641c4b4ed1d968",
@@ -8557,7 +8924,8 @@
 		"ru": "27a9d2056757df6c",
 		"sv": "27a9d2056757df6c",
 		"ja": "27a9d2056757df6c",
-		"ko": "27a9d2056757df6c"
+		"ko": "27a9d2056757df6c",
+		"pt-BR": "27a9d2056757df6c"
 	},
 	"attributes:interest.ygSknA4rAWip5bDjXwawYd.name": {
 		"de": "5d186caa87f625e7",
@@ -8592,7 +8960,8 @@
 		"ru": "e7dc5288f31ba85f",
 		"sv": "e7dc5288f31ba85f",
 		"ja": "e7dc5288f31ba85f",
-		"ko": "e7dc5288f31ba85f"
+		"ko": "e7dc5288f31ba85f",
+		"pt-BR": "e7dc5288f31ba85f"
 	},
 	"attributes:interest.YQSAPjKy33ZRxaSZqbTxCk.name": {
 		"de": "e18d5eb256092176",
@@ -8627,7 +8996,8 @@
 		"ru": "532df52e585aa17d",
 		"sv": "532df52e585aa17d",
 		"ja": "532df52e585aa17d",
-		"ko": "532df52e585aa17d"
+		"ko": "532df52e585aa17d",
+		"pt-BR": "532df52e585aa17d"
 	},
 	"attributes:interest.Z3JAwEM6n7wuc5dAXX36DQ.name": {
 		"de": "0eca2c1176c397ae",
@@ -8662,7 +9032,8 @@
 		"ru": "8e72b5601c2f313a",
 		"sv": "8e72b5601c2f313a",
 		"ja": "8e72b5601c2f313a",
-		"ko": "8e72b5601c2f313a"
+		"ko": "8e72b5601c2f313a",
+		"pt-BR": "8e72b5601c2f313a"
 	},
 	"attributes:interest.ZH7obevCWQmuLmHGQgaTF7.name": {
 		"de": "baca133075755f53",
@@ -8685,7 +9056,8 @@
 		"ru": "451512d3bcd6afc7",
 		"sv": "451512d3bcd6afc7",
 		"ja": "451512d3bcd6afc7",
-		"ko": "451512d3bcd6afc7"
+		"ko": "451512d3bcd6afc7",
+		"pt-BR": "451512d3bcd6afc7"
 	},
 	"attributes:interest.ZNXNaLMr85qQbKmX2TsrGQ.name": {
 		"de": "371ee9659eaf93a8",
@@ -8696,7 +9068,8 @@
 		"ru": "371ee9659eaf93a8",
 		"sv": "371ee9659eaf93a8",
 		"ja": "371ee9659eaf93a8",
-		"ko": "371ee9659eaf93a8"
+		"ko": "371ee9659eaf93a8",
+		"pt-BR": "371ee9659eaf93a8"
 	},
 	"attributes:interest.zoEgxZ7KoBNRCrgA3XbdDA.name": {
 		"de": "82c72fd2f37c2dc1",
@@ -8707,7 +9080,8 @@
 		"ru": "82c72fd2f37c2dc1",
 		"sv": "82c72fd2f37c2dc1",
 		"ja": "82c72fd2f37c2dc1",
-		"ko": "82c72fd2f37c2dc1"
+		"ko": "82c72fd2f37c2dc1",
+		"pt-BR": "82c72fd2f37c2dc1"
 	},
 	"attributes:interest.zp25zogqt2XWNG9v2wi4ET.name": {
 		"de": "10ebeba685879d2c",
@@ -8718,7 +9092,8 @@
 		"ru": "10ebeba685879d2c",
 		"sv": "10ebeba685879d2c",
 		"ja": "10ebeba685879d2c",
-		"ko": "10ebeba685879d2c"
+		"ko": "10ebeba685879d2c",
+		"pt-BR": "10ebeba685879d2c"
 	},
 	"attributes:interest.zqjTVmpmDLmnWs2PhXYFoG.name": {
 		"de": "d4ac2bb6e17a0d39",
@@ -8729,7 +9104,8 @@
 		"ru": "d4ac2bb6e17a0d39",
 		"sv": "d4ac2bb6e17a0d39",
 		"ja": "d4ac2bb6e17a0d39",
-		"ko": "d4ac2bb6e17a0d39"
+		"ko": "d4ac2bb6e17a0d39",
+		"pt-BR": "d4ac2bb6e17a0d39"
 	},
 	"attributes:interest.ZwP6JmwP2Hk8PMpujmvGDY.name": {
 		"de": "04b206939b8b7c33",
@@ -8788,7 +9164,8 @@
 		"ru": "2637aff6a79f2c52",
 		"sv": "2637aff6a79f2c52",
 		"ja": "2637aff6a79f2c52",
-		"ko": "2637aff6a79f2c52"
+		"ko": "2637aff6a79f2c52",
+		"pt-BR": "2637aff6a79f2c52"
 	},
 	"attributes:kink.9civt22SpMr7z4nuPcuL3V.definitionLink": {
 		"de": "aefadae5d1dfebb2",
@@ -8811,7 +9188,8 @@
 		"ru": "9c1bc7c2510bf49a",
 		"sv": "9c1bc7c2510bf49a",
 		"ja": "9c1bc7c2510bf49a",
-		"ko": "9c1bc7c2510bf49a"
+		"ko": "9c1bc7c2510bf49a",
+		"pt-BR": "9c1bc7c2510bf49a"
 	},
 	"attributes:kink.9mbQ4hxFEMBL4bHVYomPz3.definitionLink": {
 		"de": "b1cb4c05c5b9c0f9",
@@ -8858,7 +9236,8 @@
 		"ru": "7217344b24ced613",
 		"sv": "7217344b24ced613",
 		"ja": "7217344b24ced613",
-		"ko": "7217344b24ced613"
+		"ko": "7217344b24ced613",
+		"pt-BR": "7217344b24ced613"
 	},
 	"attributes:kink.cKzdEwXmCY3naeYdHuowJ7.definitionLink": {
 		"de": "5f67d0481e138390",
@@ -8881,7 +9260,8 @@
 		"ru": "9214dd56d7c57b74",
 		"sv": "9214dd56d7c57b74",
 		"ja": "9214dd56d7c57b74",
-		"ko": "9214dd56d7c57b74"
+		"ko": "9214dd56d7c57b74",
+		"pt-BR": "9214dd56d7c57b74"
 	},
 	"attributes:kink.dXxUHt5t69rNeg2g7EE3bR.definitionLink": {
 		"de": "72a9b0e713f6dbd6",
@@ -8928,7 +9308,8 @@
 		"ru": "1a8790af1886972c",
 		"sv": "1a8790af1886972c",
 		"ja": "1a8790af1886972c",
-		"ko": "1a8790af1886972c"
+		"ko": "1a8790af1886972c",
+		"pt-BR": "1a8790af1886972c"
 	},
 	"attributes:kink.HEPqnrrPsMqx9nQvDk5rHT.definitionLink": {
 		"de": "89ed6e63914d954f",
@@ -8951,7 +9332,8 @@
 		"ru": "19a07ad26327408e",
 		"sv": "19a07ad26327408e",
 		"ja": "19a07ad26327408e",
-		"ko": "19a07ad26327408e"
+		"ko": "19a07ad26327408e",
+		"pt-BR": "19a07ad26327408e"
 	},
 	"attributes:kink.Jyy988TnEA8J2FeG5ZSyDh.definitionLink": {
 		"de": "f6d592fc183b8c57",
@@ -9022,7 +9404,8 @@
 		"ru": "211af6dcdbcb1a24",
 		"sv": "211af6dcdbcb1a24",
 		"ja": "211af6dcdbcb1a24",
-		"ko": "211af6dcdbcb1a24"
+		"ko": "211af6dcdbcb1a24",
+		"pt-BR": "211af6dcdbcb1a24"
 	},
 	"attributes:kink.pnebwXNPvGr56PEZwSRbHi.definitionLink": {
 		"de": "1c6873a3a6b06260",
@@ -9045,7 +9428,8 @@
 		"ru": "058ee68777f44143",
 		"sv": "058ee68777f44143",
 		"ja": "058ee68777f44143",
-		"ko": "058ee68777f44143"
+		"ko": "058ee68777f44143",
+		"pt-BR": "058ee68777f44143"
 	},
 	"attributes:kink.RE2twp4mgYSXjhya266npP.definitionLink": {
 		"de": "0f2d7e9710053f86",
@@ -9188,7 +9572,8 @@
 		"ru": "84a52029e30ad74f",
 		"sv": "84a52029e30ad74f",
 		"ja": "84a52029e30ad74f",
-		"ko": "84a52029e30ad74f"
+		"ko": "84a52029e30ad74f",
+		"pt-BR": "84a52029e30ad74f"
 	},
 	"attributes:language.aa.name": {
 		"de": "a7c506fa048fc0b3",
@@ -9319,7 +9704,8 @@
 		"ru": "3f6f30d7e904c7ae",
 		"sv": "3f6f30d7e904c7ae",
 		"ja": "3f6f30d7e904c7ae",
-		"ko": "3f6f30d7e904c7ae"
+		"ko": "3f6f30d7e904c7ae",
+		"pt-BR": "3f6f30d7e904c7ae"
 	},
 	"attributes:language.asf.name": {
 		"sv": "ea64c790d75a893d",
@@ -9402,7 +9788,8 @@
 		"ru": "e324b1f7f6e046ea",
 		"sv": "e324b1f7f6e046ea",
 		"ja": "e324b1f7f6e046ea",
-		"ko": "e324b1f7f6e046ea"
+		"ko": "e324b1f7f6e046ea",
+		"pt-BR": "e324b1f7f6e046ea"
 	},
 	"attributes:language.bg.name": {
 		"de": "a10b72553c916a8f",
@@ -9497,7 +9884,8 @@
 		"ru": "edd48ffb4225aa99",
 		"sv": "edd48ffb4225aa99",
 		"ja": "edd48ffb4225aa99",
-		"ko": "edd48ffb4225aa99"
+		"ko": "edd48ffb4225aa99",
+		"pt-BR": "edd48ffb4225aa99"
 	},
 	"attributes:language.ca.name": {
 		"de": "2836eca4c21b74f2",
@@ -9616,7 +10004,8 @@
 		"ru": "de18c2b783b13f43",
 		"sv": "de18c2b783b13f43",
 		"ja": "de18c2b783b13f43",
-		"ko": "de18c2b783b13f43"
+		"ko": "de18c2b783b13f43",
+		"pt-BR": "de18c2b783b13f43"
 	},
 	"attributes:language.cv.name": {
 		"de": "f7f287e14e8c9836",
@@ -9687,7 +10076,8 @@
 		"ru": "057c83f5a3c4368e",
 		"sv": "057c83f5a3c4368e",
 		"ja": "057c83f5a3c4368e",
-		"ko": "057c83f5a3c4368e"
+		"ko": "057c83f5a3c4368e",
+		"pt-BR": "057c83f5a3c4368e"
 	},
 	"attributes:language.dv.name": {
 		"de": "b7a7ac180076300d",
@@ -9890,7 +10280,8 @@
 		"ru": "f52973d661e7ee9f",
 		"sv": "f52973d661e7ee9f",
 		"ja": "f52973d661e7ee9f",
-		"ko": "f52973d661e7ee9f"
+		"ko": "f52973d661e7ee9f",
+		"pt-BR": "f52973d661e7ee9f"
 	},
 	"attributes:language.fy.name": {
 		"de": "67faedf3d3aaf62b",
@@ -9973,7 +10364,8 @@
 		"ru": "f56c6f28004f3cb6",
 		"sv": "f56c6f28004f3cb6",
 		"ja": "f56c6f28004f3cb6",
-		"ko": "f56c6f28004f3cb6"
+		"ko": "f56c6f28004f3cb6",
+		"pt-BR": "f56c6f28004f3cb6"
 	},
 	"attributes:language.gsw.name": {
 		"de": "6b9f52fa21685b90",
@@ -10224,7 +10616,8 @@
 		"ru": "f1b6fc45658b0260",
 		"sv": "f1b6fc45658b0260",
 		"ja": "f1b6fc45658b0260",
-		"ko": "f1b6fc45658b0260"
+		"ko": "f1b6fc45658b0260",
+		"pt-BR": "f1b6fc45658b0260"
 	},
 	"attributes:language.ins.name": {
 		"de": "14f099aa160751ec",
@@ -10235,7 +10628,8 @@
 		"ru": "14f099aa160751ec",
 		"sv": "14f099aa160751ec",
 		"ja": "14f099aa160751ec",
-		"ko": "14f099aa160751ec"
+		"ko": "14f099aa160751ec",
+		"pt-BR": "14f099aa160751ec"
 	},
 	"attributes:language.io.name": {
 		"de": "f297d2efa31e6ab0",
@@ -10330,7 +10724,8 @@
 		"ru": "a104ed40b8454ba5",
 		"sv": "a104ed40b8454ba5",
 		"ja": "a104ed40b8454ba5",
-		"ko": "a104ed40b8454ba5"
+		"ko": "a104ed40b8454ba5",
+		"pt-BR": "a104ed40b8454ba5"
 	},
 	"attributes:language.jv.name": {
 		"de": "5e0fa3136c310b11",
@@ -10521,7 +10916,8 @@
 		"ru": "0e42b7e170d7632b",
 		"sv": "0e42b7e170d7632b",
 		"ja": "0e42b7e170d7632b",
-		"ko": "0e42b7e170d7632b"
+		"ko": "0e42b7e170d7632b",
+		"pt-BR": "0e42b7e170d7632b"
 	},
 	"attributes:language.kw.name": {
 		"de": "3e5e41d309b2235d",
@@ -10664,7 +11060,8 @@
 		"ru": "b56c84222edaf17d",
 		"sv": "b56c84222edaf17d",
 		"ja": "b56c84222edaf17d",
-		"ko": "b56c84222edaf17d"
+		"ko": "b56c84222edaf17d",
+		"pt-BR": "b56c84222edaf17d"
 	},
 	"attributes:language.mg.name": {
 		"de": "262e1ffe541930ea",
@@ -11071,7 +11468,8 @@
 		"ru": "b33ffa34fdbdb275",
 		"sv": "b33ffa34fdbdb275",
 		"ja": "b33ffa34fdbdb275",
-		"ko": "b33ffa34fdbdb275"
+		"ko": "b33ffa34fdbdb275",
+		"pt-BR": "b33ffa34fdbdb275"
 	},
 	"attributes:language.pt.name": {
 		"de": "8cb4d400f787a80f",
@@ -11154,7 +11552,8 @@
 		"ru": "1234bd73eeaf5ea9",
 		"sv": "1234bd73eeaf5ea9",
 		"ja": "1234bd73eeaf5ea9",
-		"ko": "1234bd73eeaf5ea9"
+		"ko": "1234bd73eeaf5ea9",
+		"pt-BR": "1234bd73eeaf5ea9"
 	},
 	"attributes:language.ru.name": {
 		"de": "07bb3c3f5a38af2d",
@@ -11405,7 +11804,8 @@
 		"ru": "134d485ec7a08b90",
 		"sv": "134d485ec7a08b90",
 		"ja": "134d485ec7a08b90",
-		"ko": "134d485ec7a08b90"
+		"ko": "134d485ec7a08b90",
+		"pt-BR": "134d485ec7a08b90"
 	},
 	"attributes:language.st.name": {
 		"de": "447ad397c5d6777d",
@@ -11908,7 +12308,8 @@
 		"ru": "db70c49eba5a891f",
 		"sv": "db70c49eba5a891f",
 		"ja": "db70c49eba5a891f",
-		"ko": "db70c49eba5a891f"
+		"ko": "db70c49eba5a891f",
+		"pt-BR": "db70c49eba5a891f"
 	},
 	"attributes:platform.c255sGSiJpMNnm6NTUcvx6.name": {
 		"de": "8d5b10d36df21dee",
@@ -11919,7 +12320,8 @@
 		"ru": "8d5b10d36df21dee",
 		"sv": "8d5b10d36df21dee",
 		"ja": "8d5b10d36df21dee",
-		"ko": "8d5b10d36df21dee"
+		"ko": "8d5b10d36df21dee",
+		"pt-BR": "8d5b10d36df21dee"
 	},
 	"attributes:platform.FEX8jjr4P9aeBurRUTLhU7.name": {
 		"de": "ce574ee60e00cff2",
@@ -11930,7 +12332,8 @@
 		"ru": "ce574ee60e00cff2",
 		"sv": "ce574ee60e00cff2",
 		"ja": "ce574ee60e00cff2",
-		"ko": "ce574ee60e00cff2"
+		"ko": "ce574ee60e00cff2",
+		"pt-BR": "ce574ee60e00cff2"
 	},
 	"attributes:platform.m4S2N4Jn2f3WDbJm7bcbgQ.name": {
 		"de": "b0c054ff85dede77",
@@ -11953,7 +12356,8 @@
 		"ru": "af09c67835e24fe0",
 		"sv": "af09c67835e24fe0",
 		"ja": "af09c67835e24fe0",
-		"ko": "af09c67835e24fe0"
+		"ko": "af09c67835e24fe0",
+		"pt-BR": "af09c67835e24fe0"
 	},
 	"attributes:platform.N458aYKyg6hweVbyDEMDAR.example": {
 		"de": "6c282e6a43e5171f",
@@ -11988,7 +12392,8 @@
 		"ru": "b08101d42d232a71",
 		"sv": "b08101d42d232a71",
 		"ja": "b08101d42d232a71",
-		"ko": "b08101d42d232a71"
+		"ko": "b08101d42d232a71",
+		"pt-BR": "b08101d42d232a71"
 	},
 	"attributes:platform.pzkBdEYqgAZiSEBZAcJMPZ.name": {
 		"de": "6f8560272b97a14b",
@@ -11999,7 +12404,8 @@
 		"ru": "6f8560272b97a14b",
 		"sv": "6f8560272b97a14b",
 		"ja": "6f8560272b97a14b",
-		"ko": "6f8560272b97a14b"
+		"ko": "6f8560272b97a14b",
+		"pt-BR": "6f8560272b97a14b"
 	},
 	"attributes:platform.Qb3Ar9wqh7mAMwdevJCfYS.example": {
 		"de": "810611f8e0893d3a",
@@ -12034,7 +12440,8 @@
 		"ru": "2b46031b9174573e",
 		"sv": "2b46031b9174573e",
 		"ja": "2b46031b9174573e",
-		"ko": "2b46031b9174573e"
+		"ko": "2b46031b9174573e",
+		"pt-BR": "2b46031b9174573e"
 	},
 	"attributes:platform.Ry723pMCrWV4ptp8ywcorG.name": {
 		"de": "74eedf72f5751ac4",
@@ -12069,7 +12476,8 @@
 		"ru": "3c0f05e1de0397d4",
 		"sv": "3c0f05e1de0397d4",
 		"ja": "3c0f05e1de0397d4",
-		"ko": "3c0f05e1de0397d4"
+		"ko": "3c0f05e1de0397d4",
+		"pt-BR": "3c0f05e1de0397d4"
 	},
 	"attributes:prompt.c9ztgC7hXX47zNRLNMZHca.name": {
 		"de": "9aba17a21104c309",
@@ -12080,7 +12488,8 @@
 		"ru": "9aba17a21104c309",
 		"sv": "9aba17a21104c309",
 		"ja": "9aba17a21104c309",
-		"ko": "9aba17a21104c309"
+		"ko": "9aba17a21104c309",
+		"pt-BR": "9aba17a21104c309"
 	},
 	"attributes:prompt.CxdN69Xv6M9BPsDXJGTCHA.name": {
 		"de": "dcb1ea86b6920c99",
@@ -12091,7 +12500,8 @@
 		"ru": "dcb1ea86b6920c99",
 		"sv": "dcb1ea86b6920c99",
 		"ja": "dcb1ea86b6920c99",
-		"ko": "dcb1ea86b6920c99"
+		"ko": "dcb1ea86b6920c99",
+		"pt-BR": "dcb1ea86b6920c99"
 	},
 	"attributes:prompt.DcowtBMp6ZU5jHPWt3rhNe.name": {
 		"de": "c8c937e0501c4525",
@@ -12102,7 +12512,8 @@
 		"ru": "c8c937e0501c4525",
 		"sv": "c8c937e0501c4525",
 		"ja": "c8c937e0501c4525",
-		"ko": "c8c937e0501c4525"
+		"ko": "c8c937e0501c4525",
+		"pt-BR": "c8c937e0501c4525"
 	},
 	"attributes:prompt.esvDHHBdB4wow5YofJT9pJ.name": {
 		"de": "08f081595b2c63e8",
@@ -12113,7 +12524,8 @@
 		"ru": "08f081595b2c63e8",
 		"sv": "08f081595b2c63e8",
 		"ja": "08f081595b2c63e8",
-		"ko": "08f081595b2c63e8"
+		"ko": "08f081595b2c63e8",
+		"pt-BR": "08f081595b2c63e8"
 	},
 	"attributes:prompt.g8KyzzfF9ijBSCoPJuvHX2.name": {
 		"de": "1aa8f5380705def1",
@@ -12124,7 +12536,8 @@
 		"ru": "1aa8f5380705def1",
 		"sv": "1aa8f5380705def1",
 		"ja": "1aa8f5380705def1",
-		"ko": "1aa8f5380705def1"
+		"ko": "1aa8f5380705def1",
+		"pt-BR": "1aa8f5380705def1"
 	},
 	"attributes:prompt.Hbemf67DabFCSCxGVMBxzg.name": {
 		"de": "9069a7606989b7ce",
@@ -12135,7 +12548,8 @@
 		"ru": "9069a7606989b7ce",
 		"sv": "9069a7606989b7ce",
 		"ja": "9069a7606989b7ce",
-		"ko": "9069a7606989b7ce"
+		"ko": "9069a7606989b7ce",
+		"pt-BR": "9069a7606989b7ce"
 	},
 	"attributes:prompt.HHrtwjS3BUvdGoyQMJeZvh.name": {
 		"de": "fb570d92ebbf49ac",
@@ -12146,7 +12560,8 @@
 		"ru": "fb570d92ebbf49ac",
 		"sv": "fb570d92ebbf49ac",
 		"ja": "fb570d92ebbf49ac",
-		"ko": "fb570d92ebbf49ac"
+		"ko": "fb570d92ebbf49ac",
+		"pt-BR": "fb570d92ebbf49ac"
 	},
 	"attributes:prompt.JgCFt5P7ZvSt8Tor9NbkMB.name": {
 		"de": "9cd9f5eb38296852",
@@ -12157,7 +12572,8 @@
 		"ru": "9cd9f5eb38296852",
 		"sv": "9cd9f5eb38296852",
 		"ja": "9cd9f5eb38296852",
-		"ko": "9cd9f5eb38296852"
+		"ko": "9cd9f5eb38296852",
+		"pt-BR": "9cd9f5eb38296852"
 	},
 	"attributes:prompt.JLiCKV2g295AG5GYuH5vQM.name": {
 		"de": "fc890a437bdffca9",
@@ -12168,7 +12584,8 @@
 		"ru": "fc890a437bdffca9",
 		"sv": "fc890a437bdffca9",
 		"ja": "fc890a437bdffca9",
-		"ko": "fc890a437bdffca9"
+		"ko": "fc890a437bdffca9",
+		"pt-BR": "fc890a437bdffca9"
 	},
 	"attributes:prompt.JyC9xq83f47wfDTVEh77yC.name": {
 		"de": "73938501628a5d17",
@@ -12179,7 +12596,8 @@
 		"ru": "73938501628a5d17",
 		"sv": "73938501628a5d17",
 		"ja": "73938501628a5d17",
-		"ko": "73938501628a5d17"
+		"ko": "73938501628a5d17",
+		"pt-BR": "73938501628a5d17"
 	},
 	"attributes:prompt.mLL9t4DgPHTNRsa8aVNbsR.name": {
 		"de": "bfaa6d88282bb683",
@@ -12190,7 +12608,8 @@
 		"ru": "bfaa6d88282bb683",
 		"sv": "bfaa6d88282bb683",
 		"ja": "bfaa6d88282bb683",
-		"ko": "bfaa6d88282bb683"
+		"ko": "bfaa6d88282bb683",
+		"pt-BR": "bfaa6d88282bb683"
 	},
 	"attributes:prompt.NEGzuX2TMdtxqVkb4xrvDm.name": {
 		"de": "6937b6ffa877c176",
@@ -12201,7 +12620,8 @@
 		"ru": "6937b6ffa877c176",
 		"sv": "6937b6ffa877c176",
 		"ja": "6937b6ffa877c176",
-		"ko": "6937b6ffa877c176"
+		"ko": "6937b6ffa877c176",
+		"pt-BR": "6937b6ffa877c176"
 	},
 	"attributes:prompt.rnQjiqXivKanoxFtGi6RS8.name": {
 		"de": "c429df921a92cdbe",
@@ -12212,7 +12632,8 @@
 		"ru": "c429df921a92cdbe",
 		"sv": "c429df921a92cdbe",
 		"ja": "c429df921a92cdbe",
-		"ko": "c429df921a92cdbe"
+		"ko": "c429df921a92cdbe",
+		"pt-BR": "c429df921a92cdbe"
 	},
 	"attributes:prompt.s5U6p73oVaym6ujZq3doy4.name": {
 		"de": "68e12a64fee90df3",
@@ -12223,7 +12644,8 @@
 		"ru": "68e12a64fee90df3",
 		"sv": "68e12a64fee90df3",
 		"ja": "68e12a64fee90df3",
-		"ko": "68e12a64fee90df3"
+		"ko": "68e12a64fee90df3",
+		"pt-BR": "68e12a64fee90df3"
 	},
 	"attributes:prompt.tEUfrkPqK47zjhcJKoRvhh.name": {
 		"de": "2572149108b668b7",
@@ -12234,7 +12656,8 @@
 		"ru": "2572149108b668b7",
 		"sv": "2572149108b668b7",
 		"ja": "2572149108b668b7",
-		"ko": "2572149108b668b7"
+		"ko": "2572149108b668b7",
+		"pt-BR": "2572149108b668b7"
 	},
 	"attributes:prompt.VaCimF6SdZQxj2nAUDAiRY.name": {
 		"de": "9895efa99ff4c441",
@@ -12245,7 +12668,8 @@
 		"ru": "9895efa99ff4c441",
 		"sv": "9895efa99ff4c441",
 		"ja": "9895efa99ff4c441",
-		"ko": "9895efa99ff4c441"
+		"ko": "9895efa99ff4c441",
+		"pt-BR": "9895efa99ff4c441"
 	},
 	"attributes:prompt.VW97RnUAmtUQTzEhCJbxC8.name": {
 		"de": "cab1ea9ec09abde6",
@@ -12256,7 +12680,8 @@
 		"ru": "cab1ea9ec09abde6",
 		"sv": "cab1ea9ec09abde6",
 		"ja": "cab1ea9ec09abde6",
-		"ko": "cab1ea9ec09abde6"
+		"ko": "cab1ea9ec09abde6",
+		"pt-BR": "cab1ea9ec09abde6"
 	},
 	"attributes:prompt.WZygBQGJYXzez6K66JYcuE.name": {
 		"de": "9b2d7ca18c34b11e",
@@ -12267,7 +12692,8 @@
 		"ru": "9b2d7ca18c34b11e",
 		"sv": "9b2d7ca18c34b11e",
 		"ja": "9b2d7ca18c34b11e",
-		"ko": "9b2d7ca18c34b11e"
+		"ko": "9b2d7ca18c34b11e",
+		"pt-BR": "9b2d7ca18c34b11e"
 	},
 	"attributes:prompt.x5XHpp7uDA4Y3aws7v4WGK.name": {
 		"de": "84e3fcf1c3b12a75",
@@ -12278,7 +12704,8 @@
 		"ru": "84e3fcf1c3b12a75",
 		"sv": "84e3fcf1c3b12a75",
 		"ja": "84e3fcf1c3b12a75",
-		"ko": "84e3fcf1c3b12a75"
+		"ko": "84e3fcf1c3b12a75",
+		"pt-BR": "84e3fcf1c3b12a75"
 	},
 	"attributes:relationship.friends.name": {
 		"de": "06b3ba20f6394143",
@@ -12289,7 +12716,8 @@
 		"ru": "06b3ba20f6394143",
 		"sv": "06b3ba20f6394143",
 		"ja": "06b3ba20f6394143",
-		"ko": "06b3ba20f6394143"
+		"ko": "06b3ba20f6394143",
+		"pt-BR": "06b3ba20f6394143"
 	},
 	"attributes:relationship.hookups.name": {
 		"de": "d1fecbb0091b4fac",
@@ -12300,7 +12728,8 @@
 		"ru": "d1fecbb0091b4fac",
 		"sv": "d1fecbb0091b4fac",
 		"ja": "d1fecbb0091b4fac",
-		"ko": "d1fecbb0091b4fac"
+		"ko": "d1fecbb0091b4fac",
+		"pt-BR": "d1fecbb0091b4fac"
 	},
 	"attributes:relationship.serious.name": {
 		"de": "6ce3ba3d81a2cc13",
@@ -12311,7 +12740,8 @@
 		"ru": "6ce3ba3d81a2cc13",
 		"sv": "6ce3ba3d81a2cc13",
 		"ja": "6ce3ba3d81a2cc13",
-		"ko": "6ce3ba3d81a2cc13"
+		"ko": "6ce3ba3d81a2cc13",
+		"pt-BR": "6ce3ba3d81a2cc13"
 	},
 	"attributes:relationship.vr.name": {
 		"de": "93ad42ff86fa5ca9",
@@ -12322,7 +12752,8 @@
 		"ru": "93ad42ff86fa5ca9",
 		"sv": "93ad42ff86fa5ca9",
 		"ja": "93ad42ff86fa5ca9",
-		"ko": "93ad42ff86fa5ca9"
+		"ko": "93ad42ff86fa5ca9",
+		"pt-BR": "93ad42ff86fa5ca9"
 	},
 	"attributes:report-reason.9iwmQ8huhkngyY9BgLDE9W.name": {
 		"de": "1f1260ddd48575a9",
@@ -12333,7 +12764,8 @@
 		"ru": "1f1260ddd48575a9",
 		"sv": "1f1260ddd48575a9",
 		"ja": "1f1260ddd48575a9",
-		"ko": "1f1260ddd48575a9"
+		"ko": "1f1260ddd48575a9",
+		"pt-BR": "1f1260ddd48575a9"
 	},
 	"attributes:report-reason.AFe9ijRg9MYGubm2Efi4Ki.name": {
 		"de": "080a630bd307118f",
@@ -12344,7 +12776,8 @@
 		"ru": "080a630bd307118f",
 		"sv": "080a630bd307118f",
 		"ja": "080a630bd307118f",
-		"ko": "080a630bd307118f"
+		"ko": "080a630bd307118f",
+		"pt-BR": "080a630bd307118f"
 	},
 	"attributes:report-reason.BtJvp62cJ5vm6CeuCPTP5H.name": {
 		"de": "b8bbd0dc86ce24df",
@@ -12355,7 +12788,8 @@
 		"ru": "b8bbd0dc86ce24df",
 		"sv": "b8bbd0dc86ce24df",
 		"ja": "b8bbd0dc86ce24df",
-		"ko": "b8bbd0dc86ce24df"
+		"ko": "b8bbd0dc86ce24df",
+		"pt-BR": "b8bbd0dc86ce24df"
 	},
 	"attributes:report-reason.Ec5fqqgVo5X3s4QCeFUJ6D.name": {
 		"de": "1fac4d04ad978423",
@@ -12366,7 +12800,8 @@
 		"ru": "1fac4d04ad978423",
 		"sv": "1fac4d04ad978423",
 		"ja": "1fac4d04ad978423",
-		"ko": "1fac4d04ad978423"
+		"ko": "1fac4d04ad978423",
+		"pt-BR": "1fac4d04ad978423"
 	},
 	"attributes:report-reason.L6FRU2xjUiZwHUbegAcWTa.name": {
 		"de": "23d8b30c01485973",
@@ -12377,7 +12812,8 @@
 		"ru": "23d8b30c01485973",
 		"sv": "23d8b30c01485973",
 		"ja": "23d8b30c01485973",
-		"ko": "23d8b30c01485973"
+		"ko": "23d8b30c01485973",
+		"pt-BR": "23d8b30c01485973"
 	},
 	"attributes:report-reason.MyexHAyY8gzQjBQ6agCSx3.name": {
 		"de": "d11ac0d54e547788",
@@ -12388,7 +12824,8 @@
 		"ru": "d11ac0d54e547788",
 		"sv": "d11ac0d54e547788",
 		"ja": "d11ac0d54e547788",
-		"ko": "d11ac0d54e547788"
+		"ko": "d11ac0d54e547788",
+		"pt-BR": "d11ac0d54e547788"
 	},
 	"attributes:report-reason.Ur6iAuTDCktZe3zZQGqtZ2.name": {
 		"de": "6ac8d01b22806d22",
@@ -12399,7 +12836,8 @@
 		"ru": "6ac8d01b22806d22",
 		"sv": "6ac8d01b22806d22",
 		"ja": "6ac8d01b22806d22",
-		"ko": "6ac8d01b22806d22"
+		"ko": "6ac8d01b22806d22",
+		"pt-BR": "6ac8d01b22806d22"
 	},
 	"attributes:report-reason.vTzgZw4Eexx7fehzCM9PQY.name": {
 		"de": "8b36f8a6d8f0bf0f",
@@ -12410,7 +12848,8 @@
 		"ru": "8b36f8a6d8f0bf0f",
 		"sv": "8b36f8a6d8f0bf0f",
 		"ja": "8b36f8a6d8f0bf0f",
-		"ko": "8b36f8a6d8f0bf0f"
+		"ko": "8b36f8a6d8f0bf0f",
+		"pt-BR": "8b36f8a6d8f0bf0f"
 	},
 	"attributes:report-reason.Wf4t9FT7Lmvnn73KqpZGPG.name": {
 		"de": "af0f418640a47c9b",
@@ -12421,7 +12860,8 @@
 		"ru": "af0f418640a47c9b",
 		"sv": "af0f418640a47c9b",
 		"ja": "af0f418640a47c9b",
-		"ko": "af0f418640a47c9b"
+		"ko": "af0f418640a47c9b",
+		"pt-BR": "af0f418640a47c9b"
 	},
 	"attributes:report-reason.wFkctcaaf5B4Ef5i3ggY3G.name": {
 		"de": "2837bf1143074258",
@@ -12432,7 +12872,8 @@
 		"ru": "2837bf1143074258",
 		"sv": "2837bf1143074258",
 		"ja": "2837bf1143074258",
-		"ko": "2837bf1143074258"
+		"ko": "2837bf1143074258",
+		"pt-BR": "2837bf1143074258"
 	},
 	"attributes:report-reason.ymWd4JdTqpnBLmGSLmJRvY.name": {
 		"de": "8e879231812c9299",
@@ -12443,7 +12884,8 @@
 		"ru": "8e879231812c9299",
 		"sv": "8e879231812c9299",
 		"ja": "8e879231812c9299",
-		"ko": "8e879231812c9299"
+		"ko": "8e879231812c9299",
+		"pt-BR": "8e879231812c9299"
 	},
 	"attributes:report-reason.zu6HcxQxmJDDq4rmvJazkf.name": {
 		"de": "3c02d4eb9c3bcda1",
@@ -12454,7 +12896,8 @@
 		"ru": "3c02d4eb9c3bcda1",
 		"sv": "3c02d4eb9c3bcda1",
 		"ja": "3c02d4eb9c3bcda1",
-		"ko": "3c02d4eb9c3bcda1"
+		"ko": "3c02d4eb9c3bcda1",
+		"pt-BR": "3c02d4eb9c3bcda1"
 	},
 	"attributes:sexuality.3cWT9ob4r7Zpikkd9kVPEg.definition": {
 		"de": "7682a00a3a783aa0",
@@ -12465,7 +12908,8 @@
 		"ru": "7682a00a3a783aa0",
 		"sv": "7682a00a3a783aa0",
 		"ja": "7682a00a3a783aa0",
-		"ko": "7682a00a3a783aa0"
+		"ko": "7682a00a3a783aa0",
+		"pt-BR": "7682a00a3a783aa0"
 	},
 	"attributes:sexuality.3cWT9ob4r7Zpikkd9kVPEg.definitionLink": {
 		"de": "de83f3bda96f49bf",
@@ -12488,7 +12932,8 @@
 		"ru": "cd134b72158bc101",
 		"sv": "cd134b72158bc101",
 		"ja": "cd134b72158bc101",
-		"ko": "cd134b72158bc101"
+		"ko": "cd134b72158bc101",
+		"pt-BR": "cd134b72158bc101"
 	},
 	"attributes:sexuality.4yJadhjWkDN6WSxbDcp33G.definition": {
 		"de": "33e743e585eecc00",
@@ -12499,7 +12944,8 @@
 		"ru": "33e743e585eecc00",
 		"sv": "33e743e585eecc00",
 		"ja": "33e743e585eecc00",
-		"ko": "33e743e585eecc00"
+		"ko": "33e743e585eecc00",
+		"pt-BR": "33e743e585eecc00"
 	},
 	"attributes:sexuality.4yJadhjWkDN6WSxbDcp33G.name": {
 		"de": "b4e333d018cffdbf",
@@ -12510,7 +12956,8 @@
 		"ru": "b4e333d018cffdbf",
 		"sv": "b4e333d018cffdbf",
 		"ja": "b4e333d018cffdbf",
-		"ko": "b4e333d018cffdbf"
+		"ko": "b4e333d018cffdbf",
+		"pt-BR": "b4e333d018cffdbf"
 	},
 	"attributes:sexuality.a29qas632KmMpQ8T6arLxa.definition": {
 		"de": "9540c00822c34c10",
@@ -12521,7 +12968,8 @@
 		"ru": "9540c00822c34c10",
 		"sv": "9540c00822c34c10",
 		"ja": "9540c00822c34c10",
-		"ko": "9540c00822c34c10"
+		"ko": "9540c00822c34c10",
+		"pt-BR": "9540c00822c34c10"
 	},
 	"attributes:sexuality.a29qas632KmMpQ8T6arLxa.definitionLink": {
 		"de": "b3cc3fade397703d",
@@ -12544,7 +12992,8 @@
 		"ru": "d6fd3903dd20bdcd",
 		"sv": "d6fd3903dd20bdcd",
 		"ja": "d6fd3903dd20bdcd",
-		"ko": "d6fd3903dd20bdcd"
+		"ko": "d6fd3903dd20bdcd",
+		"pt-BR": "d6fd3903dd20bdcd"
 	},
 	"attributes:sexuality.gkKfqSoBJ7dUHtaKJ5Cfmk.definition": {
 		"de": "ea3c12fbd900ee64",
@@ -12555,7 +13004,8 @@
 		"ru": "ea3c12fbd900ee64",
 		"sv": "ea3c12fbd900ee64",
 		"ja": "ea3c12fbd900ee64",
-		"ko": "ea3c12fbd900ee64"
+		"ko": "ea3c12fbd900ee64",
+		"pt-BR": "ea3c12fbd900ee64"
 	},
 	"attributes:sexuality.gkKfqSoBJ7dUHtaKJ5Cfmk.definitionLink": {
 		"de": "12ddde488c741002",
@@ -12578,7 +13028,8 @@
 		"ru": "5852d04cbb60d926",
 		"sv": "5852d04cbb60d926",
 		"ja": "5852d04cbb60d926",
-		"ko": "5852d04cbb60d926"
+		"ko": "5852d04cbb60d926",
+		"pt-BR": "5852d04cbb60d926"
 	},
 	"attributes:sexuality.NC5wiUcxGavten9E8gw64n.definition": {
 		"de": "d53c427a9cddc33a",
@@ -12589,7 +13040,8 @@
 		"ru": "d53c427a9cddc33a",
 		"sv": "d53c427a9cddc33a",
 		"ja": "d53c427a9cddc33a",
-		"ko": "d53c427a9cddc33a"
+		"ko": "d53c427a9cddc33a",
+		"pt-BR": "d53c427a9cddc33a"
 	},
 	"attributes:sexuality.NC5wiUcxGavten9E8gw64n.definitionLink": {
 		"de": "7ba37cc4893a9626",
@@ -12612,7 +13064,8 @@
 		"ru": "ba86217411277d55",
 		"sv": "ba86217411277d55",
 		"ja": "ba86217411277d55",
-		"ko": "ba86217411277d55"
+		"ko": "ba86217411277d55",
+		"pt-BR": "ba86217411277d55"
 	},
 	"attributes:sexuality.ndxSn4BdATmm5droBw6iQG.definition": {
 		"de": "33a1c07baf08ce27",
@@ -12623,7 +13076,8 @@
 		"ru": "33a1c07baf08ce27",
 		"sv": "33a1c07baf08ce27",
 		"ja": "33a1c07baf08ce27",
-		"ko": "33a1c07baf08ce27"
+		"ko": "33a1c07baf08ce27",
+		"pt-BR": "33a1c07baf08ce27"
 	},
 	"attributes:sexuality.ndxSn4BdATmm5droBw6iQG.definitionLink": {
 		"de": "24d9b303c08c132b",
@@ -12646,7 +13100,8 @@
 		"ru": "f002f74272623e68",
 		"sv": "f002f74272623e68",
 		"ja": "f002f74272623e68",
-		"ko": "f002f74272623e68"
+		"ko": "f002f74272623e68",
+		"pt-BR": "f002f74272623e68"
 	},
 	"attributes:sexuality.neMSEFPb9zvFRhoZLUobW9.definition": {
 		"de": "84ab59f90ac38262",
@@ -12657,7 +13112,8 @@
 		"ru": "84ab59f90ac38262",
 		"sv": "84ab59f90ac38262",
 		"ja": "84ab59f90ac38262",
-		"ko": "84ab59f90ac38262"
+		"ko": "84ab59f90ac38262",
+		"pt-BR": "84ab59f90ac38262"
 	},
 	"attributes:sexuality.neMSEFPb9zvFRhoZLUobW9.definitionLink": {
 		"de": "025dc5cac3e21e9f",
@@ -12680,7 +13136,8 @@
 		"ru": "d4fa0193960eb4c7",
 		"sv": "d4fa0193960eb4c7",
 		"ja": "d4fa0193960eb4c7",
-		"ko": "d4fa0193960eb4c7"
+		"ko": "d4fa0193960eb4c7",
+		"pt-BR": "d4fa0193960eb4c7"
 	},
 	"attributes:sexuality.rN7DERN6NdNQzNQ99pQUN4.definition": {
 		"de": "c740f49ce888912a",
@@ -12691,7 +13148,8 @@
 		"ru": "c740f49ce888912a",
 		"sv": "c740f49ce888912a",
 		"ja": "c740f49ce888912a",
-		"ko": "c740f49ce888912a"
+		"ko": "c740f49ce888912a",
+		"pt-BR": "c740f49ce888912a"
 	},
 	"attributes:sexuality.rN7DERN6NdNQzNQ99pQUN4.definitionLink": {
 		"de": "fd283c592461a234",
@@ -12714,7 +13172,8 @@
 		"ru": "7a29109fdf4c76d1",
 		"sv": "7a29109fdf4c76d1",
 		"ja": "7a29109fdf4c76d1",
-		"ko": "7a29109fdf4c76d1"
+		"ko": "7a29109fdf4c76d1",
+		"pt-BR": "7a29109fdf4c76d1"
 	},
 	"attributes:sexuality.t5hhQahW7HQVKnhQX7xRqn.definition": {
 		"de": "dcc32237cc9c46e9",
@@ -12725,7 +13184,8 @@
 		"ru": "dcc32237cc9c46e9",
 		"sv": "dcc32237cc9c46e9",
 		"ja": "dcc32237cc9c46e9",
-		"ko": "dcc32237cc9c46e9"
+		"ko": "dcc32237cc9c46e9",
+		"pt-BR": "dcc32237cc9c46e9"
 	},
 	"attributes:sexuality.t5hhQahW7HQVKnhQX7xRqn.definitionLink": {
 		"de": "1847a3323af4767e",
@@ -12748,7 +13208,8 @@
 		"ru": "4ee35f740730ae87",
 		"sv": "4ee35f740730ae87",
 		"ja": "4ee35f740730ae87",
-		"ko": "4ee35f740730ae87"
+		"ko": "4ee35f740730ae87",
+		"pt-BR": "4ee35f740730ae87"
 	},
 	"attributes:sexuality.UxY3zSKrwKpts6cfZ3wYjM.definition": {
 		"de": "2f25445f421db7f2",
@@ -12759,7 +13220,8 @@
 		"ru": "2f25445f421db7f2",
 		"sv": "2f25445f421db7f2",
 		"ja": "2f25445f421db7f2",
-		"ko": "2f25445f421db7f2"
+		"ko": "2f25445f421db7f2",
+		"pt-BR": "2f25445f421db7f2"
 	},
 	"attributes:sexuality.UxY3zSKrwKpts6cfZ3wYjM.definitionLink": {
 		"de": "bd4448055cde55e0",
@@ -12782,7 +13244,8 @@
 		"ru": "0ce7b2668cd5a8c9",
 		"sv": "0ce7b2668cd5a8c9",
 		"ja": "0ce7b2668cd5a8c9",
-		"ko": "0ce7b2668cd5a8c9"
+		"ko": "0ce7b2668cd5a8c9",
+		"pt-BR": "0ce7b2668cd5a8c9"
 	},
 	"attributes:sexuality.vu2pJzRmKRroA3GPZRsLxM.definition": {
 		"de": "3de8d491f00a21d8",
@@ -12793,7 +13256,8 @@
 		"ru": "3de8d491f00a21d8",
 		"sv": "3de8d491f00a21d8",
 		"ja": "3de8d491f00a21d8",
-		"ko": "3de8d491f00a21d8"
+		"ko": "3de8d491f00a21d8",
+		"pt-BR": "3de8d491f00a21d8"
 	},
 	"attributes:sexuality.vu2pJzRmKRroA3GPZRsLxM.definitionLink": {
 		"de": "24d9b303c08c132b",
@@ -12816,7 +13280,8 @@
 		"ru": "5ecb5181dd2cd8bd",
 		"sv": "5ecb5181dd2cd8bd",
 		"ja": "5ecb5181dd2cd8bd",
-		"ko": "5ecb5181dd2cd8bd"
+		"ko": "5ecb5181dd2cd8bd",
+		"pt-BR": "5ecb5181dd2cd8bd"
 	},
 	"attributes:sexuality.wPATvG4t9CJhW2goGmBznU.definition": {
 		"de": "dddbfec8f67b33a1",
@@ -12827,7 +13292,8 @@
 		"ru": "dddbfec8f67b33a1",
 		"sv": "dddbfec8f67b33a1",
 		"ja": "dddbfec8f67b33a1",
-		"ko": "dddbfec8f67b33a1"
+		"ko": "dddbfec8f67b33a1",
+		"pt-BR": "dddbfec8f67b33a1"
 	},
 	"attributes:sexuality.wPATvG4t9CJhW2goGmBznU.definitionLink": {
 		"de": "b7cd0936263fdb9a",
@@ -12850,7 +13316,8 @@
 		"ru": "e88e57506b4fb110",
 		"sv": "e88e57506b4fb110",
 		"ja": "e88e57506b4fb110",
-		"ko": "e88e57506b4fb110"
+		"ko": "e88e57506b4fb110",
+		"pt-BR": "e88e57506b4fb110"
 	},
 	"attributes:warn-reason.AhPZwBpeTm5HMf96bkVszj.details": {
 		"de": "54ecd0ded78cf585",
@@ -12897,7 +13364,8 @@
 		"ru": "7467c2de48590ad1",
 		"sv": "7467c2de48590ad1",
 		"ja": "7467c2de48590ad1",
-		"ko": "7467c2de48590ad1"
+		"ko": "7467c2de48590ad1",
+		"fr": "7467c2de48590ad1"
 	},
 	"attributes:warn-reason.CnaCPAcsLptyUgVVugubdf.details": {
 		"de": "38481f8fba9546e6",
@@ -12920,19 +13388,20 @@
 		"ru": "aff5ad7b6b8d498d",
 		"sv": "aff5ad7b6b8d498d",
 		"ja": "aff5ad7b6b8d498d",
-		"ko": "aff5ad7b6b8d498d"
+		"ko": "aff5ad7b6b8d498d",
+		"fr": "aff5ad7b6b8d498d"
 	},
 	"attributes:warn-reason.dC6h3tWeZueVwHGKLhC2sk.details": {
-		"de": "06e35861375b27cb",
-		"es": "06e35861375b27cb",
-		"fr": "06e35861375b27cb",
-		"nl": "06e35861375b27cb",
-		"pt": "06e35861375b27cb",
-		"pt-BR": "06e35861375b27cb",
-		"ru": "06e35861375b27cb",
-		"sv": "06e35861375b27cb",
-		"ja": "06e35861375b27cb",
-		"ko": "06e35861375b27cb"
+		"de": "84ff9a33c4eb7d09",
+		"es": "84ff9a33c4eb7d09",
+		"fr": "84ff9a33c4eb7d09",
+		"nl": "84ff9a33c4eb7d09",
+		"pt": "84ff9a33c4eb7d09",
+		"pt-BR": "84ff9a33c4eb7d09",
+		"ru": "84ff9a33c4eb7d09",
+		"sv": "84ff9a33c4eb7d09",
+		"ja": "84ff9a33c4eb7d09",
+		"ko": "84ff9a33c4eb7d09"
 	},
 	"attributes:warn-reason.dC6h3tWeZueVwHGKLhC2sk.name": {
 		"de": "82568d4ea10f5b7b",
@@ -12947,16 +13416,16 @@
 		"ko": "82568d4ea10f5b7b"
 	},
 	"attributes:warn-reason.f8v44XrBausmXe6XybTVHd.details": {
-		"de": "2908225fbdbfc9e4",
-		"es": "2908225fbdbfc9e4",
-		"fr": "2908225fbdbfc9e4",
-		"nl": "2908225fbdbfc9e4",
-		"pt": "2908225fbdbfc9e4",
-		"pt-BR": "2908225fbdbfc9e4",
-		"ru": "2908225fbdbfc9e4",
-		"sv": "2908225fbdbfc9e4",
-		"ja": "2908225fbdbfc9e4",
-		"ko": "2908225fbdbfc9e4"
+		"de": "4b307f405ec7f672",
+		"es": "4b307f405ec7f672",
+		"fr": "4b307f405ec7f672",
+		"nl": "4b307f405ec7f672",
+		"pt": "4b307f405ec7f672",
+		"pt-BR": "4b307f405ec7f672",
+		"ru": "4b307f405ec7f672",
+		"sv": "4b307f405ec7f672",
+		"ja": "4b307f405ec7f672",
+		"ko": "4b307f405ec7f672"
 	},
 	"attributes:warn-reason.f8v44XrBausmXe6XybTVHd.name": {
 		"de": "fd3faea1e9fe07c6",
@@ -12967,7 +13436,8 @@
 		"ru": "fd3faea1e9fe07c6",
 		"sv": "fd3faea1e9fe07c6",
 		"ja": "fd3faea1e9fe07c6",
-		"ko": "fd3faea1e9fe07c6"
+		"ko": "fd3faea1e9fe07c6",
+		"fr": "fd3faea1e9fe07c6"
 	},
 	"attributes:warn-reason.KNJu36SMz87wA5DrJZyc4L.details": {
 		"de": "cd33e84cf0c979be",
@@ -12978,7 +13448,8 @@
 		"ru": "cd33e84cf0c979be",
 		"sv": "cd33e84cf0c979be",
 		"ja": "cd33e84cf0c979be",
-		"ko": "cd33e84cf0c979be"
+		"ko": "cd33e84cf0c979be",
+		"fr": "cd33e84cf0c979be"
 	},
 	"attributes:warn-reason.KNJu36SMz87wA5DrJZyc4L.name": {
 		"de": "9b6234796960a8ea",
@@ -12989,18 +13460,20 @@
 		"ru": "9b6234796960a8ea",
 		"sv": "9b6234796960a8ea",
 		"ja": "9b6234796960a8ea",
-		"ko": "9b6234796960a8ea"
+		"ko": "9b6234796960a8ea",
+		"fr": "9b6234796960a8ea"
 	},
 	"attributes:warn-reason.MjxDKasduf9iHTctStGzYA.details": {
-		"de": "73337c7f25de092b",
-		"es": "73337c7f25de092b",
-		"nl": "73337c7f25de092b",
-		"pt": "73337c7f25de092b",
-		"pt-BR": "73337c7f25de092b",
-		"ru": "73337c7f25de092b",
-		"sv": "73337c7f25de092b",
-		"ja": "73337c7f25de092b",
-		"ko": "73337c7f25de092b"
+		"de": "ac4d666e25ac9f64",
+		"es": "ac4d666e25ac9f64",
+		"nl": "ac4d666e25ac9f64",
+		"pt": "ac4d666e25ac9f64",
+		"pt-BR": "ac4d666e25ac9f64",
+		"ru": "ac4d666e25ac9f64",
+		"sv": "ac4d666e25ac9f64",
+		"ja": "ac4d666e25ac9f64",
+		"ko": "ac4d666e25ac9f64",
+		"fr": "ac4d666e25ac9f64"
 	},
 	"attributes:warn-reason.MjxDKasduf9iHTctStGzYA.name": {
 		"de": "91e95a3374dc8fd5",
@@ -13011,7 +13484,8 @@
 		"ru": "91e95a3374dc8fd5",
 		"sv": "91e95a3374dc8fd5",
 		"ja": "91e95a3374dc8fd5",
-		"ko": "91e95a3374dc8fd5"
+		"ko": "91e95a3374dc8fd5",
+		"fr": "91e95a3374dc8fd5"
 	},
 	"attributes:warn-reason.pDBkaykWpfYk9w7ZfPzMrb.name": {
 		"de": "1f1260ddd48575a9",
@@ -13034,7 +13508,8 @@
 		"ru": "f4f3a761f6d0859d",
 		"sv": "f4f3a761f6d0859d",
 		"ja": "f4f3a761f6d0859d",
-		"ko": "f4f3a761f6d0859d"
+		"ko": "f4f3a761f6d0859d",
+		"fr": "f4f3a761f6d0859d"
 	},
 	"attributes:warn-reason.RdHQQqrswesTTwyh4QZqbH.name": {
 		"de": "2837bf1143074258",
@@ -13045,7 +13520,8 @@
 		"ru": "2837bf1143074258",
 		"sv": "2837bf1143074258",
 		"ja": "2837bf1143074258",
-		"ko": "2837bf1143074258"
+		"ko": "2837bf1143074258",
+		"fr": "2837bf1143074258"
 	},
 	"attributes:warn-reason.V7VcQEiYkiwHr5CHSVx5aS.details": {
 		"de": "55932b777e96c368",
@@ -13068,7 +13544,8 @@
 		"ru": "7c2a24bf30f044cd",
 		"sv": "7c2a24bf30f044cd",
 		"ja": "7c2a24bf30f044cd",
-		"ko": "7c2a24bf30f044cd"
+		"ko": "7c2a24bf30f044cd",
+		"fr": "7c2a24bf30f044cd"
 	},
 	"flirtual:3d_movie": {
 		"de": "f549087b746c69ef",
@@ -13379,7 +13856,8 @@
 		"ru": "1dff4c60a65a7281",
 		"sv": "1dff4c60a65a7281",
 		"ja": "1dff4c60a65a7281",
-		"ko": "1dff4c60a65a7281"
+		"ko": "1dff4c60a65a7281",
+		"de": "1dff4c60a65a7281"
 	},
 	"flirtual:about_you": {
 		"de": "6566fe083d36bc9d",
@@ -13682,16 +14160,16 @@
 		"ko": "a799a9eba2a8975b"
 	},
 	"flirtual:age_blocked_description": {
-		"de": "82e472693cb0fc0d",
-		"es": "82e472693cb0fc0d",
-		"fr": "82e472693cb0fc0d",
-		"nl": "82e472693cb0fc0d",
-		"pt": "82e472693cb0fc0d",
-		"pt-BR": "82e472693cb0fc0d",
-		"ru": "82e472693cb0fc0d",
-		"sv": "82e472693cb0fc0d",
-		"ja": "82e472693cb0fc0d",
-		"ko": "82e472693cb0fc0d"
+		"de": "fbe8798d810d85ce",
+		"es": "fbe8798d810d85ce",
+		"fr": "fbe8798d810d85ce",
+		"nl": "fbe8798d810d85ce",
+		"pt": "fbe8798d810d85ce",
+		"pt-BR": "fbe8798d810d85ce",
+		"ru": "fbe8798d810d85ce",
+		"sv": "fbe8798d810d85ce",
+		"ja": "fbe8798d810d85ce",
+		"ko": "fbe8798d810d85ce"
 	},
 	"flirtual:age_blocked_title": {
 		"de": "95791e43e4bf5ee3",
@@ -13718,28 +14196,28 @@
 		"ko": "408b44284b87a83f"
 	},
 	"flirtual:age_unresolved_apple": {
-		"de": "e9d6bc2f5e4c224c",
-		"es": "e9d6bc2f5e4c224c",
-		"fr": "e9d6bc2f5e4c224c",
-		"nl": "e9d6bc2f5e4c224c",
-		"pt": "e9d6bc2f5e4c224c",
-		"pt-BR": "e9d6bc2f5e4c224c",
-		"ru": "e9d6bc2f5e4c224c",
-		"sv": "e9d6bc2f5e4c224c",
-		"ja": "e9d6bc2f5e4c224c",
-		"ko": "e9d6bc2f5e4c224c"
+		"de": "f9ad3a94c827d932",
+		"es": "f9ad3a94c827d932",
+		"fr": "f9ad3a94c827d932",
+		"nl": "f9ad3a94c827d932",
+		"pt": "f9ad3a94c827d932",
+		"pt-BR": "f9ad3a94c827d932",
+		"ru": "f9ad3a94c827d932",
+		"sv": "f9ad3a94c827d932",
+		"ja": "f9ad3a94c827d932",
+		"ko": "f9ad3a94c827d932"
 	},
 	"flirtual:age_unresolved_google": {
-		"de": "85631edce0ffbba5",
-		"es": "85631edce0ffbba5",
-		"fr": "85631edce0ffbba5",
-		"nl": "85631edce0ffbba5",
-		"pt": "85631edce0ffbba5",
-		"pt-BR": "85631edce0ffbba5",
-		"ru": "85631edce0ffbba5",
-		"sv": "85631edce0ffbba5",
-		"ja": "85631edce0ffbba5",
-		"ko": "85631edce0ffbba5"
+		"de": "36a2d34ad59d8d3f",
+		"es": "36a2d34ad59d8d3f",
+		"fr": "36a2d34ad59d8d3f",
+		"nl": "36a2d34ad59d8d3f",
+		"pt": "36a2d34ad59d8d3f",
+		"pt-BR": "36a2d34ad59d8d3f",
+		"ru": "36a2d34ad59d8d3f",
+		"sv": "36a2d34ad59d8d3f",
+		"ja": "36a2d34ad59d8d3f",
+		"ko": "36a2d34ad59d8d3f"
 	},
 	"flirtual:age_unresolved_title": {
 		"de": "1d2414c6b2fd60d2",
@@ -13802,16 +14280,16 @@
 		"ko": "03f7a7c653bdaf7b"
 	},
 	"flirtual:anyone_on_flirtual": {
-		"de": "ea7de9351c2cf94e",
-		"es": "ea7de9351c2cf94e",
-		"fr": "ea7de9351c2cf94e",
-		"nl": "ea7de9351c2cf94e",
-		"pt": "ea7de9351c2cf94e",
-		"pt-BR": "ea7de9351c2cf94e",
-		"ru": "ea7de9351c2cf94e",
-		"sv": "ea7de9351c2cf94e",
-		"ja": "ea7de9351c2cf94e",
-		"ko": "ea7de9351c2cf94e"
+		"de": "a58e488e292a8ad8",
+		"es": "a58e488e292a8ad8",
+		"fr": "a58e488e292a8ad8",
+		"nl": "a58e488e292a8ad8",
+		"pt": "a58e488e292a8ad8",
+		"pt-BR": "a58e488e292a8ad8",
+		"ru": "a58e488e292a8ad8",
+		"sv": "a58e488e292a8ad8",
+		"ja": "a58e488e292a8ad8",
+		"ko": "a58e488e292a8ad8"
 	},
 	"flirtual:app_store": {
 		"de": "4a29c5da6b29cb27",
@@ -14066,16 +14544,16 @@
 		"ko": "3b957625e335d14c"
 	},
 	"flirtual:banned_underage": {
-		"de": "994ed9e6cbd07fa8",
-		"es": "994ed9e6cbd07fa8",
-		"fr": "994ed9e6cbd07fa8",
-		"nl": "994ed9e6cbd07fa8",
-		"pt": "994ed9e6cbd07fa8",
-		"pt-BR": "994ed9e6cbd07fa8",
-		"ru": "994ed9e6cbd07fa8",
-		"sv": "994ed9e6cbd07fa8",
-		"ja": "994ed9e6cbd07fa8",
-		"ko": "994ed9e6cbd07fa8"
+		"de": "e16cba99277775d2",
+		"es": "e16cba99277775d2",
+		"fr": "e16cba99277775d2",
+		"nl": "e16cba99277775d2",
+		"pt": "e16cba99277775d2",
+		"pt-BR": "e16cba99277775d2",
+		"ru": "e16cba99277775d2",
+		"sv": "e16cba99277775d2",
+		"ja": "e16cba99277775d2",
+		"ko": "e16cba99277775d2"
 	},
 	"flirtual:banned_verify_action": {
 		"de": "4a3bea30c65dfd11",
@@ -14150,16 +14628,16 @@
 		"ko": "44cce777e29890f4"
 	},
 	"flirtual:bio_hint": {
-		"de": "6fa5ef7305efa8ff",
-		"es": "6fa5ef7305efa8ff",
-		"fr": "6fa5ef7305efa8ff",
-		"nl": "6fa5ef7305efa8ff",
-		"pt": "6fa5ef7305efa8ff",
-		"pt-BR": "6fa5ef7305efa8ff",
-		"ru": "6fa5ef7305efa8ff",
-		"sv": "6fa5ef7305efa8ff",
-		"ja": "6fa5ef7305efa8ff",
-		"ko": "6fa5ef7305efa8ff"
+		"de": "485f8b75440bbd4c",
+		"es": "485f8b75440bbd4c",
+		"fr": "485f8b75440bbd4c",
+		"nl": "485f8b75440bbd4c",
+		"pt": "485f8b75440bbd4c",
+		"pt-BR": "485f8b75440bbd4c",
+		"ru": "485f8b75440bbd4c",
+		"sv": "485f8b75440bbd4c",
+		"ja": "485f8b75440bbd4c",
+		"ko": "485f8b75440bbd4c"
 	},
 	"flirtual:bio_pics": {
 		"ja": "591110aac202fd90",
@@ -14270,16 +14748,16 @@
 		"ko": "390b3e190c636392"
 	},
 	"flirtual:branding_icon_usage": {
-		"de": "31b2b9c8b53fe8fc",
-		"es": "31b2b9c8b53fe8fc",
-		"fr": "31b2b9c8b53fe8fc",
-		"nl": "31b2b9c8b53fe8fc",
-		"pt": "31b2b9c8b53fe8fc",
-		"pt-BR": "31b2b9c8b53fe8fc",
-		"ru": "31b2b9c8b53fe8fc",
-		"sv": "31b2b9c8b53fe8fc",
-		"ja": "31b2b9c8b53fe8fc",
-		"ko": "31b2b9c8b53fe8fc"
+		"de": "a7235a9f02b582fc",
+		"es": "a7235a9f02b582fc",
+		"fr": "a7235a9f02b582fc",
+		"nl": "a7235a9f02b582fc",
+		"pt": "a7235a9f02b582fc",
+		"pt-BR": "a7235a9f02b582fc",
+		"ru": "a7235a9f02b582fc",
+		"sv": "a7235a9f02b582fc",
+		"ja": "a7235a9f02b582fc",
+		"ko": "a7235a9f02b582fc"
 	},
 	"flirtual:branding_intro": {
 		"de": "3a012e02f610e1c6",
@@ -14294,16 +14772,16 @@
 		"ko": "3a012e02f610e1c6"
 	},
 	"flirtual:branding_logo_rules": {
-		"de": "2299b3b2584a819e",
-		"es": "2299b3b2584a819e",
-		"fr": "2299b3b2584a819e",
-		"nl": "2299b3b2584a819e",
-		"pt": "2299b3b2584a819e",
-		"pt-BR": "2299b3b2584a819e",
-		"ru": "2299b3b2584a819e",
-		"sv": "2299b3b2584a819e",
-		"ja": "2299b3b2584a819e",
-		"ko": "2299b3b2584a819e"
+		"de": "9165c9610b9dcdf9",
+		"es": "9165c9610b9dcdf9",
+		"fr": "9165c9610b9dcdf9",
+		"nl": "9165c9610b9dcdf9",
+		"pt": "9165c9610b9dcdf9",
+		"pt-BR": "9165c9610b9dcdf9",
+		"ru": "9165c9610b9dcdf9",
+		"sv": "9165c9610b9dcdf9",
+		"ja": "9165c9610b9dcdf9",
+		"ko": "9165c9610b9dcdf9"
 	},
 	"flirtual:branding_need_more": {
 		"de": "1c33fd0ba77aa8fb",
@@ -14774,28 +15252,28 @@
 		"ko": "39befb0752aab184"
 	},
 	"flirtual:connections_privacy": {
-		"de": "93fa750272525344",
-		"es": "93fa750272525344",
-		"fr": "93fa750272525344",
-		"nl": "93fa750272525344",
-		"pt": "93fa750272525344",
-		"pt-BR": "93fa750272525344",
-		"ru": "93fa750272525344",
-		"sv": "93fa750272525344",
-		"ja": "93fa750272525344",
-		"ko": "93fa750272525344"
+		"de": "e1c1a10a4a8b066c",
+		"es": "e1c1a10a4a8b066c",
+		"fr": "e1c1a10a4a8b066c",
+		"nl": "e1c1a10a4a8b066c",
+		"pt": "e1c1a10a4a8b066c",
+		"pt-BR": "e1c1a10a4a8b066c",
+		"ru": "e1c1a10a4a8b066c",
+		"sv": "e1c1a10a4a8b066c",
+		"ja": "e1c1a10a4a8b066c",
+		"ko": "e1c1a10a4a8b066c"
 	},
 	"flirtual:console_message": {
-		"de": "7d3d3267bafa7aad",
-		"es": "7d3d3267bafa7aad",
-		"fr": "7d3d3267bafa7aad",
-		"nl": "7d3d3267bafa7aad",
-		"pt": "7d3d3267bafa7aad",
-		"pt-BR": "7d3d3267bafa7aad",
-		"ru": "7d3d3267bafa7aad",
-		"sv": "7d3d3267bafa7aad",
-		"ja": "7d3d3267bafa7aad",
-		"ko": "7d3d3267bafa7aad"
+		"de": "985453046c265c47",
+		"es": "985453046c265c47",
+		"fr": "985453046c265c47",
+		"nl": "985453046c265c47",
+		"pt": "985453046c265c47",
+		"pt-BR": "985453046c265c47",
+		"ru": "985453046c265c47",
+		"sv": "985453046c265c47",
+		"ja": "985453046c265c47",
+		"ko": "985453046c265c47"
 	},
 	"flirtual:contact_us": {
 		"de": "004d03ef11404325",
@@ -14906,16 +15384,16 @@
 		"ko": "675fe83908d1ea47"
 	},
 	"flirtual:copyright": {
-		"de": "7781a8a11e757ee9",
-		"es": "7781a8a11e757ee9",
-		"fr": "7781a8a11e757ee9",
-		"nl": "7781a8a11e757ee9",
-		"pt": "7781a8a11e757ee9",
-		"pt-BR": "7781a8a11e757ee9",
-		"ru": "7781a8a11e757ee9",
-		"sv": "7781a8a11e757ee9",
-		"ja": "7781a8a11e757ee9",
-		"ko": "7781a8a11e757ee9"
+		"de": "3eeaeb32b3033ba4",
+		"es": "3eeaeb32b3033ba4",
+		"fr": "3eeaeb32b3033ba4",
+		"nl": "3eeaeb32b3033ba4",
+		"pt": "3eeaeb32b3033ba4",
+		"pt-BR": "3eeaeb32b3033ba4",
+		"ru": "3eeaeb32b3033ba4",
+		"sv": "3eeaeb32b3033ba4",
+		"ja": "3eeaeb32b3033ba4",
+		"ko": "3eeaeb32b3033ba4"
 	},
 	"flirtual:countries": {
 		"de": "cce1ced8a6f0716d",
@@ -15146,16 +15624,16 @@
 		"ko": "632a1061b5aa978f"
 	},
 	"flirtual:dates_exhausted_later": {
-		"de": "6543afc5320246d4",
-		"es": "6543afc5320246d4",
-		"fr": "6543afc5320246d4",
-		"nl": "6543afc5320246d4",
-		"pt": "6543afc5320246d4",
-		"pt-BR": "6543afc5320246d4",
-		"ru": "6543afc5320246d4",
-		"sv": "6543afc5320246d4",
-		"ja": "6543afc5320246d4",
-		"ko": "6543afc5320246d4"
+		"de": "1c7377b7a271a8de",
+		"es": "1c7377b7a271a8de",
+		"fr": "1c7377b7a271a8de",
+		"nl": "1c7377b7a271a8de",
+		"pt": "1c7377b7a271a8de",
+		"pt-BR": "1c7377b7a271a8de",
+		"ru": "1c7377b7a271a8de",
+		"sv": "1c7377b7a271a8de",
+		"ja": "1c7377b7a271a8de",
+		"ko": "1c7377b7a271a8de"
 	},
 	"flirtual:deactivate_account": {
 		"de": "1cd254fbcd1e6c7c",
@@ -15914,16 +16392,16 @@
 		"ko": "f04a62c89332dc46"
 	},
 	"flirtual:error_tip_restart_app": {
-		"de": "690d241cbe193dd1",
-		"es": "690d241cbe193dd1",
-		"fr": "690d241cbe193dd1",
-		"nl": "690d241cbe193dd1",
-		"pt": "690d241cbe193dd1",
-		"pt-BR": "690d241cbe193dd1",
-		"ru": "690d241cbe193dd1",
-		"sv": "690d241cbe193dd1",
-		"ja": "690d241cbe193dd1",
-		"ko": "690d241cbe193dd1"
+		"de": "af77838c14fcacf7",
+		"es": "af77838c14fcacf7",
+		"fr": "af77838c14fcacf7",
+		"nl": "af77838c14fcacf7",
+		"pt": "af77838c14fcacf7",
+		"pt-BR": "af77838c14fcacf7",
+		"ru": "af77838c14fcacf7",
+		"sv": "af77838c14fcacf7",
+		"ja": "af77838c14fcacf7",
+		"ko": "af77838c14fcacf7"
 	},
 	"flirtual:error_tip_update_app": {
 		"de": "f817a930509c857e",
@@ -15970,7 +16448,8 @@
 		"ru": "b26ea4d22f6f6c0f",
 		"sv": "b26ea4d22f6f6c0f",
 		"ja": "b26ea4d22f6f6c0f",
-		"ko": "b26ea4d22f6f6c0f"
+		"ko": "b26ea4d22f6f6c0f",
+		"pt-BR": "b26ea4d22f6f6c0f"
 	},
 	"flirtual:errors.account_deletion_failed": {
 		"de": "a3e3c950ff4bd4fe",
@@ -15985,16 +16464,16 @@
 		"ko": "a3e3c950ff4bd4fe"
 	},
 	"flirtual:errors.ambiguous_age": {
-		"de": "82e472693cb0fc0d",
-		"es": "82e472693cb0fc0d",
-		"fr": "82e472693cb0fc0d",
-		"nl": "82e472693cb0fc0d",
-		"pt": "82e472693cb0fc0d",
-		"pt-BR": "82e472693cb0fc0d",
-		"ru": "82e472693cb0fc0d",
-		"sv": "82e472693cb0fc0d",
-		"ja": "82e472693cb0fc0d",
-		"ko": "82e472693cb0fc0d"
+		"de": "fbe8798d810d85ce",
+		"es": "fbe8798d810d85ce",
+		"fr": "fbe8798d810d85ce",
+		"nl": "fbe8798d810d85ce",
+		"pt": "fbe8798d810d85ce",
+		"pt-BR": "fbe8798d810d85ce",
+		"ru": "fbe8798d810d85ce",
+		"sv": "fbe8798d810d85ce",
+		"ja": "fbe8798d810d85ce",
+		"ko": "fbe8798d810d85ce"
 	},
 	"flirtual:errors.are_still_associated_with_this_entry": {
 		"de": "2c5357b40c16feea",
@@ -16005,7 +16484,8 @@
 		"ru": "2c5357b40c16feea",
 		"sv": "2c5357b40c16feea",
 		"ja": "2c5357b40c16feea",
-		"ko": "2c5357b40c16feea"
+		"ko": "2c5357b40c16feea",
+		"pt-BR": "2c5357b40c16feea"
 	},
 	"flirtual:errors.authorize_not_supported": {
 		"de": "6e7c25513c44f01a",
@@ -16016,7 +16496,8 @@
 		"ru": "6e7c25513c44f01a",
 		"sv": "6e7c25513c44f01a",
 		"ja": "6e7c25513c44f01a",
-		"ko": "6e7c25513c44f01a"
+		"ko": "6e7c25513c44f01a",
+		"pt-BR": "6e7c25513c44f01a"
 	},
 	"flirtual:errors.cannot_block_user": {
 		"de": "13f4c2a7ae156fb9",
@@ -16026,7 +16507,9 @@
 		"ru": "13f4c2a7ae156fb9",
 		"sv": "13f4c2a7ae156fb9",
 		"ja": "13f4c2a7ae156fb9",
-		"ko": "13f4c2a7ae156fb9"
+		"ko": "13f4c2a7ae156fb9",
+		"es": "13f4c2a7ae156fb9",
+		"pt-BR": "13f4c2a7ae156fb9"
 	},
 	"flirtual:errors.cannot_unblock_user": {
 		"de": "d4950f48424114ff",
@@ -16036,7 +16519,9 @@
 		"ru": "d4950f48424114ff",
 		"sv": "d4950f48424114ff",
 		"ja": "d4950f48424114ff",
-		"ko": "d4950f48424114ff"
+		"ko": "d4950f48424114ff",
+		"es": "d4950f48424114ff",
+		"pt-BR": "d4950f48424114ff"
 	},
 	"flirtual:errors.cant_be_blank": {
 		"de": "99cf6e4221d780d7",
@@ -16047,7 +16532,8 @@
 		"ru": "99cf6e4221d780d7",
 		"sv": "99cf6e4221d780d7",
 		"ja": "99cf6e4221d780d7",
-		"ko": "99cf6e4221d780d7"
+		"ko": "99cf6e4221d780d7",
+		"pt-BR": "99cf6e4221d780d7"
 	},
 	"flirtual:errors.checkout_not_available": {
 		"de": "6d070ab21045bd56",
@@ -16098,28 +16584,28 @@
 		"ko": "11aa5e9ab6073af5"
 	},
 	"flirtual:errors.connection_in_use": {
-		"de": "4f58f1d335a8438b",
-		"es": "4f58f1d335a8438b",
-		"fr": "4f58f1d335a8438b",
-		"nl": "4f58f1d335a8438b",
-		"pt": "4f58f1d335a8438b",
-		"pt-BR": "4f58f1d335a8438b",
-		"ru": "4f58f1d335a8438b",
-		"sv": "4f58f1d335a8438b",
-		"ja": "4f58f1d335a8438b",
-		"ko": "4f58f1d335a8438b"
+		"de": "5338c102dfd26cb4",
+		"es": "5338c102dfd26cb4",
+		"fr": "5338c102dfd26cb4",
+		"nl": "5338c102dfd26cb4",
+		"pt": "5338c102dfd26cb4",
+		"pt-BR": "5338c102dfd26cb4",
+		"ru": "5338c102dfd26cb4",
+		"sv": "5338c102dfd26cb4",
+		"ja": "5338c102dfd26cb4",
+		"ko": "5338c102dfd26cb4"
 	},
 	"flirtual:errors.connection_no_account": {
-		"de": "c28677c1cd6b2732",
-		"es": "c28677c1cd6b2732",
-		"fr": "c28677c1cd6b2732",
-		"nl": "c28677c1cd6b2732",
-		"pt": "c28677c1cd6b2732",
-		"pt-BR": "c28677c1cd6b2732",
-		"ru": "c28677c1cd6b2732",
-		"sv": "c28677c1cd6b2732",
-		"ja": "c28677c1cd6b2732",
-		"ko": "c28677c1cd6b2732"
+		"de": "d03690578859ee6d",
+		"es": "d03690578859ee6d",
+		"fr": "d03690578859ee6d",
+		"nl": "d03690578859ee6d",
+		"pt": "d03690578859ee6d",
+		"pt-BR": "d03690578859ee6d",
+		"ru": "d03690578859ee6d",
+		"sv": "d03690578859ee6d",
+		"ja": "d03690578859ee6d",
+		"ko": "d03690578859ee6d"
 	},
 	"flirtual:errors.connection_verify_email": {
 		"de": "55e49aab1f9f5089",
@@ -16142,7 +16628,8 @@
 		"ru": "fd9f4008b822255a",
 		"sv": "fd9f4008b822255a",
 		"ja": "fd9f4008b822255a",
-		"ko": "fd9f4008b822255a"
+		"ko": "fd9f4008b822255a",
+		"pt-BR": "fd9f4008b822255a"
 	},
 	"flirtual:errors.does_not_match_confirmation": {
 		"de": "0ad66b24abd10696",
@@ -16153,7 +16640,8 @@
 		"ru": "0ad66b24abd10696",
 		"sv": "0ad66b24abd10696",
 		"ja": "0ad66b24abd10696",
-		"ko": "0ad66b24abd10696"
+		"ko": "0ad66b24abd10696",
+		"pt-BR": "0ad66b24abd10696"
 	},
 	"flirtual:errors.email_domain_blocked": {
 		"de": "793709735a30c8be",
@@ -16188,7 +16676,8 @@
 		"ru": "a3fa4d7305b36719",
 		"sv": "a3fa4d7305b36719",
 		"ja": "a3fa4d7305b36719",
-		"ko": "a3fa4d7305b36719"
+		"ko": "a3fa4d7305b36719",
+		"pt-BR": "a3fa4d7305b36719"
 	},
 	"flirtual:errors.email_required": {
 		"de": "46c724c71d73bdb5",
@@ -16259,7 +16748,8 @@
 		"ru": "412fbc44920519a9",
 		"sv": "412fbc44920519a9",
 		"ja": "412fbc44920519a9",
-		"ko": "412fbc44920519a9"
+		"ko": "412fbc44920519a9",
+		"pt-BR": "412fbc44920519a9"
 	},
 	"flirtual:errors.has_an_invalid_entry": {
 		"de": "e2197fd9b57e9d84",
@@ -16270,7 +16760,8 @@
 		"ru": "e2197fd9b57e9d84",
 		"sv": "e2197fd9b57e9d84",
 		"ja": "e2197fd9b57e9d84",
-		"ko": "e2197fd9b57e9d84"
+		"ko": "e2197fd9b57e9d84",
+		"pt-BR": "e2197fd9b57e9d84"
 	},
 	"flirtual:errors.has_invalid_format": {
 		"de": "918485e8aa403300",
@@ -16281,7 +16772,8 @@
 		"ru": "918485e8aa403300",
 		"sv": "918485e8aa403300",
 		"ja": "918485e8aa403300",
-		"ko": "918485e8aa403300"
+		"ko": "918485e8aa403300",
+		"pt-BR": "918485e8aa403300"
 	},
 	"flirtual:errors.image_not_found": {
 		"de": "8a7775782f392616",
@@ -16304,7 +16796,8 @@
 		"ru": "2d2714f2d398aa32",
 		"sv": "2d2714f2d398aa32",
 		"ja": "2d2714f2d398aa32",
-		"ko": "2d2714f2d398aa32"
+		"ko": "2d2714f2d398aa32",
+		"pt-BR": "2d2714f2d398aa32"
 	},
 	"flirtual:errors.invalid_age": {
 		"de": "8cbb3e5dc21e88b2",
@@ -16327,7 +16820,8 @@
 		"ru": "55f2a32e7dad31ca",
 		"sv": "55f2a32e7dad31ca",
 		"ja": "55f2a32e7dad31ca",
-		"ko": "55f2a32e7dad31ca"
+		"ko": "55f2a32e7dad31ca",
+		"pt-BR": "55f2a32e7dad31ca"
 	},
 	"flirtual:errors.invalid_credentials_complex": {
 		"de": "e2cf76ef35c2a7df",
@@ -16338,7 +16832,8 @@
 		"ru": "e2cf76ef35c2a7df",
 		"sv": "e2cf76ef35c2a7df",
 		"ja": "e2cf76ef35c2a7df",
-		"ko": "e2cf76ef35c2a7df"
+		"ko": "e2cf76ef35c2a7df",
+		"pt-BR": "e2cf76ef35c2a7df"
 	},
 	"flirtual:errors.invalid_gender_selection": {
 		"de": "cd240906e2d1f6ce",
@@ -16361,7 +16856,8 @@
 		"ru": "e089d9cda0c39d08",
 		"sv": "e089d9cda0c39d08",
 		"ja": "e089d9cda0c39d08",
-		"ko": "e089d9cda0c39d08"
+		"ko": "e089d9cda0c39d08",
+		"pt-BR": "e089d9cda0c39d08"
 	},
 	"flirtual:errors.invalid_password": {
 		"de": "a1485efe3b597e96",
@@ -16372,7 +16868,8 @@
 		"ru": "a1485efe3b597e96",
 		"sv": "a1485efe3b597e96",
 		"ja": "a1485efe3b597e96",
-		"ko": "a1485efe3b597e96"
+		"ko": "a1485efe3b597e96",
+		"pt-BR": "a1485efe3b597e96"
 	},
 	"flirtual:errors.invalid_playlist_url": {
 		"de": "88cd3dc67ca95dfc",
@@ -16407,7 +16904,8 @@
 		"ru": "5475a83b9be54962",
 		"sv": "5475a83b9be54962",
 		"ja": "5475a83b9be54962",
-		"ko": "5475a83b9be54962"
+		"ko": "5475a83b9be54962",
+		"pt-BR": "5475a83b9be54962"
 	},
 	"flirtual:errors.is_reserved": {
 		"de": "b851f614382aeafd",
@@ -16418,7 +16916,8 @@
 		"ru": "b851f614382aeafd",
 		"sv": "b851f614382aeafd",
 		"ja": "b851f614382aeafd",
-		"ko": "b851f614382aeafd"
+		"ko": "b851f614382aeafd",
+		"pt-BR": "b851f614382aeafd"
 	},
 	"flirtual:errors.is_still_associated_with_this_entry": {
 		"de": "2c5357b40c16feea",
@@ -16429,7 +16928,8 @@
 		"ru": "2c5357b40c16feea",
 		"sv": "2c5357b40c16feea",
 		"ja": "2c5357b40c16feea",
-		"ko": "2c5357b40c16feea"
+		"ko": "2c5357b40c16feea",
+		"pt-BR": "2c5357b40c16feea"
 	},
 	"flirtual:errors.leaked_password": {
 		"de": "13b73a03bad5907b",
@@ -16464,7 +16964,8 @@
 		"ru": "e6c9e4dcac3f8e22",
 		"sv": "e6c9e4dcac3f8e22",
 		"ja": "e6c9e4dcac3f8e22",
-		"ko": "e6c9e4dcac3f8e22"
+		"ko": "e6c9e4dcac3f8e22",
+		"pt-BR": "e6c9e4dcac3f8e22"
 	},
 	"flirtual:errors.missing_token": {
 		"de": "b1c0c5cbd5458b0f",
@@ -16487,7 +16988,8 @@
 		"ru": "bfdb2503b0f2e951",
 		"sv": "bfdb2503b0f2e951",
 		"ja": "bfdb2503b0f2e951",
-		"ko": "bfdb2503b0f2e951"
+		"ko": "bfdb2503b0f2e951",
+		"pt-BR": "bfdb2503b0f2e951"
 	},
 	"flirtual:errors.must_be_equal_to_{number}": {
 		"de": "5b2d57c30d88a2ef",
@@ -16498,7 +17000,8 @@
 		"ru": "5b2d57c30d88a2ef",
 		"sv": "5b2d57c30d88a2ef",
 		"ja": "5b2d57c30d88a2ef",
-		"ko": "5b2d57c30d88a2ef"
+		"ko": "5b2d57c30d88a2ef",
+		"pt-BR": "5b2d57c30d88a2ef"
 	},
 	"flirtual:errors.must_be_greater_than_{number}": {
 		"de": "43b8f12ad38514ad",
@@ -16509,7 +17012,8 @@
 		"ru": "43b8f12ad38514ad",
 		"sv": "43b8f12ad38514ad",
 		"ja": "43b8f12ad38514ad",
-		"ko": "43b8f12ad38514ad"
+		"ko": "43b8f12ad38514ad",
+		"pt-BR": "43b8f12ad38514ad"
 	},
 	"flirtual:errors.must_be_greater_than_or_equal_to_{number}": {
 		"de": "edf8b33b154ebbc2",
@@ -16520,7 +17024,8 @@
 		"ru": "edf8b33b154ebbc2",
 		"sv": "edf8b33b154ebbc2",
 		"ja": "edf8b33b154ebbc2",
-		"ko": "edf8b33b154ebbc2"
+		"ko": "edf8b33b154ebbc2",
+		"pt-BR": "edf8b33b154ebbc2"
 	},
 	"flirtual:errors.must_be_less_than_{number}": {
 		"de": "00ff1c4028542e17",
@@ -16531,7 +17036,8 @@
 		"ru": "00ff1c4028542e17",
 		"sv": "00ff1c4028542e17",
 		"ja": "00ff1c4028542e17",
-		"ko": "00ff1c4028542e17"
+		"ko": "00ff1c4028542e17",
+		"pt-BR": "00ff1c4028542e17"
 	},
 	"flirtual:errors.must_be_less_than_or_equal_to_{number}": {
 		"de": "c4b8aa214ed56d68",
@@ -16542,7 +17048,8 @@
 		"ru": "c4b8aa214ed56d68",
 		"sv": "c4b8aa214ed56d68",
 		"ja": "c4b8aa214ed56d68",
-		"ko": "c4b8aa214ed56d68"
+		"ko": "c4b8aa214ed56d68",
+		"pt-BR": "c4b8aa214ed56d68"
 	},
 	"flirtual:errors.must_have_the_@_sign_and_no_spaces": {
 		"de": "65f9c6d2e7fc853e",
@@ -16588,7 +17095,9 @@
 		"ru": "48f5b6ca888d8545",
 		"sv": "48f5b6ca888d8545",
 		"ja": "48f5b6ca888d8545",
-		"ko": "48f5b6ca888d8545"
+		"ko": "48f5b6ca888d8545",
+		"es": "48f5b6ca888d8545",
+		"pt-BR": "48f5b6ca888d8545"
 	},
 	"flirtual:errors.passkey_registration_failed": {
 		"de": "f5bdb49df935b065",
@@ -16611,7 +17120,8 @@
 		"ru": "0538b442ac845ce1",
 		"sv": "0538b442ac845ce1",
 		"ja": "0538b442ac845ce1",
-		"ko": "0538b442ac845ce1"
+		"ko": "0538b442ac845ce1",
+		"pt-BR": "0538b442ac845ce1"
 	},
 	"flirtual:errors.password_must_be_different": {
 		"de": "5b71f3dd74361529",
@@ -16645,7 +17155,9 @@
 		"ru": "64f0974c42e7b867",
 		"sv": "64f0974c42e7b867",
 		"ja": "64f0974c42e7b867",
-		"ko": "64f0974c42e7b867"
+		"ko": "64f0974c42e7b867",
+		"es": "64f0974c42e7b867",
+		"pt-BR": "64f0974c42e7b867"
 	},
 	"flirtual:errors.prospect_not_found": {
 		"de": "7bc888f5c6e4c90c",
@@ -16656,7 +17168,8 @@
 		"ru": "7bc888f5c6e4c90c",
 		"sv": "7bc888f5c6e4c90c",
 		"ja": "7bc888f5c6e4c90c",
-		"ko": "7bc888f5c6e4c90c"
+		"ko": "7bc888f5c6e4c90c",
+		"pt-BR": "7bc888f5c6e4c90c"
 	},
 	"flirtual:errors.provider_not_found": {
 		"de": "95e162d36437f6b8",
@@ -16667,7 +17180,8 @@
 		"ru": "95e162d36437f6b8",
 		"sv": "95e162d36437f6b8",
 		"ja": "95e162d36437f6b8",
-		"ko": "95e162d36437f6b8"
+		"ko": "95e162d36437f6b8",
+		"pt-BR": "95e162d36437f6b8"
 	},
 	"flirtual:errors.registration_failed": {
 		"de": "7428890d18a0fa8d",
@@ -16702,7 +17216,8 @@
 		"ru": "849fdb61bbb7a182",
 		"sv": "849fdb61bbb7a182",
 		"ja": "849fdb61bbb7a182",
-		"ko": "849fdb61bbb7a182"
+		"ko": "849fdb61bbb7a182",
+		"pt-BR": "849fdb61bbb7a182"
 	},
 	"flirtual:errors.reset_password_link_invalid": {
 		"de": "7241c5b9b6c0ad94",
@@ -16749,7 +17264,8 @@
 		"ru": "191dd4987c140ca4",
 		"sv": "191dd4987c140ca4",
 		"ja": "191dd4987c140ca4",
-		"ko": "191dd4987c140ca4"
+		"ko": "191dd4987c140ca4",
+		"pt-BR": "191dd4987c140ca4"
 	},
 	"flirtual:errors.should_be_at_least_{count}_character(s)": {
 		"de": "191dd4987c140ca4",
@@ -16832,7 +17348,8 @@
 		"ru": "5259da08dff6e8f0",
 		"sv": "5259da08dff6e8f0",
 		"ja": "5259da08dff6e8f0",
-		"ko": "5259da08dff6e8f0"
+		"ko": "5259da08dff6e8f0",
+		"pt-BR": "5259da08dff6e8f0"
 	},
 	"flirtual:errors.subscription_not_found": {
 		"de": "b0f1ff791f7baf80",
@@ -16843,7 +17360,8 @@
 		"ru": "b0f1ff791f7baf80",
 		"sv": "b0f1ff791f7baf80",
 		"ja": "b0f1ff791f7baf80",
-		"ko": "b0f1ff791f7baf80"
+		"ko": "b0f1ff791f7baf80",
+		"pt-BR": "b0f1ff791f7baf80"
 	},
 	"flirtual:errors.token_expired": {
 		"de": "762001c424c83630",
@@ -16866,7 +17384,8 @@
 		"ru": "8928cba73f0810d7",
 		"sv": "8928cba73f0810d7",
 		"ja": "8928cba73f0810d7",
-		"ko": "8928cba73f0810d7"
+		"ko": "8928cba73f0810d7",
+		"pt-BR": "8928cba73f0810d7"
 	},
 	"flirtual:errors.turnstile_invalid": {
 		"de": "9b4c647358397e5b",
@@ -16877,7 +17396,8 @@
 		"ru": "9b4c647358397e5b",
 		"sv": "9b4c647358397e5b",
 		"ja": "9b4c647358397e5b",
-		"ko": "9b4c647358397e5b"
+		"ko": "9b4c647358397e5b",
+		"pt-BR": "9b4c647358397e5b"
 	},
 	"flirtual:errors.turnstile_required": {
 		"de": "120294dd932dfbd8",
@@ -16888,7 +17408,8 @@
 		"ru": "120294dd932dfbd8",
 		"sv": "120294dd932dfbd8",
 		"ja": "120294dd932dfbd8",
-		"ko": "120294dd932dfbd8"
+		"ko": "120294dd932dfbd8",
+		"pt-BR": "120294dd932dfbd8"
 	},
 	"flirtual:errors.upload_rate_limit": {
 		"de": "df9bdc79d84ffa81",
@@ -16911,7 +17432,8 @@
 		"ru": "9e32a9274726b54e",
 		"sv": "9e32a9274726b54e",
 		"ja": "9e32a9274726b54e",
-		"ko": "9e32a9274726b54e"
+		"ko": "9e32a9274726b54e",
+		"pt-BR": "9e32a9274726b54e"
 	},
 	"flirtual:errors.user_not_found": {
 		"de": "bcea8b8c7ba23202",
@@ -16922,7 +17444,8 @@
 		"ru": "bcea8b8c7ba23202",
 		"sv": "bcea8b8c7ba23202",
 		"ja": "bcea8b8c7ba23202",
-		"ko": "bcea8b8c7ba23202"
+		"ko": "bcea8b8c7ba23202",
+		"pt-BR": "bcea8b8c7ba23202"
 	},
 	"flirtual:errors.verification_email_failed": {
 		"de": "fe17c1a9b4b2bb26",
@@ -17273,40 +17796,40 @@
 		"ko": "11d036d6b14cd8b4"
 	},
 	"flirtual:flirtual_bug_report": {
-		"de": "edfafe46bfa232a5",
-		"es": "edfafe46bfa232a5",
-		"fr": "edfafe46bfa232a5",
-		"nl": "edfafe46bfa232a5",
-		"pt": "edfafe46bfa232a5",
-		"pt-BR": "edfafe46bfa232a5",
-		"ru": "edfafe46bfa232a5",
-		"sv": "edfafe46bfa232a5",
-		"ja": "edfafe46bfa232a5",
-		"ko": "edfafe46bfa232a5"
+		"de": "6389e1fa9f3a435f",
+		"es": "6389e1fa9f3a435f",
+		"fr": "6389e1fa9f3a435f",
+		"nl": "6389e1fa9f3a435f",
+		"pt": "6389e1fa9f3a435f",
+		"pt-BR": "6389e1fa9f3a435f",
+		"ru": "6389e1fa9f3a435f",
+		"sv": "6389e1fa9f3a435f",
+		"ja": "6389e1fa9f3a435f",
+		"ko": "6389e1fa9f3a435f"
 	},
 	"flirtual:flirtual_logo": {
-		"de": "eecd8245bf62848a",
-		"es": "eecd8245bf62848a",
-		"fr": "eecd8245bf62848a",
-		"nl": "eecd8245bf62848a",
-		"pt": "eecd8245bf62848a",
-		"pt-BR": "eecd8245bf62848a",
-		"ru": "eecd8245bf62848a",
-		"sv": "eecd8245bf62848a",
-		"ja": "eecd8245bf62848a",
-		"ko": "eecd8245bf62848a"
+		"de": "46b287bd3f2a5026",
+		"es": "46b287bd3f2a5026",
+		"fr": "46b287bd3f2a5026",
+		"nl": "46b287bd3f2a5026",
+		"pt": "46b287bd3f2a5026",
+		"pt-BR": "46b287bd3f2a5026",
+		"ru": "46b287bd3f2a5026",
+		"sv": "46b287bd3f2a5026",
+		"ja": "46b287bd3f2a5026",
+		"ko": "46b287bd3f2a5026"
 	},
 	"flirtual:flirtual_premium": {
-		"de": "a72eff1802df592b",
-		"es": "a72eff1802df592b",
-		"fr": "a72eff1802df592b",
-		"nl": "a72eff1802df592b",
-		"pt": "a72eff1802df592b",
-		"pt-BR": "a72eff1802df592b",
-		"ru": "a72eff1802df592b",
-		"sv": "a72eff1802df592b",
-		"ja": "a72eff1802df592b",
-		"ko": "a72eff1802df592b"
+		"de": "27ce2cd750498db5",
+		"es": "27ce2cd750498db5",
+		"fr": "27ce2cd750498db5",
+		"nl": "27ce2cd750498db5",
+		"pt": "27ce2cd750498db5",
+		"pt-BR": "27ce2cd750498db5",
+		"ru": "27ce2cd750498db5",
+		"sv": "27ce2cd750498db5",
+		"ja": "27ce2cd750498db5",
+		"ko": "27ce2cd750498db5"
 	},
 	"flirtual:flitty_reactions.0": {
 		"de": "87cdca7d5a0eac1b",
@@ -17345,16 +17868,16 @@
 		"ko": "1e14a34a29165e55"
 	},
 	"flirtual:flitty_reactions.100": {
-		"de": "4d5441e992b197b0",
-		"es": "4d5441e992b197b0",
-		"fr": "4d5441e992b197b0",
-		"nl": "4d5441e992b197b0",
-		"pt": "4d5441e992b197b0",
-		"pt-BR": "4d5441e992b197b0",
-		"ru": "4d5441e992b197b0",
-		"sv": "4d5441e992b197b0",
-		"ja": "4d5441e992b197b0",
-		"ko": "4d5441e992b197b0"
+		"de": "1260cf7a51b4cf85",
+		"es": "1260cf7a51b4cf85",
+		"fr": "1260cf7a51b4cf85",
+		"nl": "1260cf7a51b4cf85",
+		"pt": "1260cf7a51b4cf85",
+		"pt-BR": "1260cf7a51b4cf85",
+		"ru": "1260cf7a51b4cf85",
+		"sv": "1260cf7a51b4cf85",
+		"ja": "1260cf7a51b4cf85",
+		"ko": "1260cf7a51b4cf85"
 	},
 	"flirtual:flitty_reactions.11": {
 		"de": "d10de766c8b70641",
@@ -17393,16 +17916,16 @@
 		"ko": "abd2b41cf3981425"
 	},
 	"flirtual:flitty_reactions.14": {
-		"de": "5723f8a61471e299",
-		"es": "5723f8a61471e299",
-		"fr": "5723f8a61471e299",
-		"nl": "5723f8a61471e299",
-		"pt": "5723f8a61471e299",
-		"pt-BR": "5723f8a61471e299",
-		"ru": "5723f8a61471e299",
-		"sv": "5723f8a61471e299",
-		"ja": "5723f8a61471e299",
-		"ko": "5723f8a61471e299"
+		"de": "959f2516fb71298c",
+		"es": "959f2516fb71298c",
+		"fr": "959f2516fb71298c",
+		"nl": "959f2516fb71298c",
+		"pt": "959f2516fb71298c",
+		"pt-BR": "959f2516fb71298c",
+		"ru": "959f2516fb71298c",
+		"sv": "959f2516fb71298c",
+		"ja": "959f2516fb71298c",
+		"ko": "959f2516fb71298c"
 	},
 	"flirtual:flitty_reactions.15": {
 		"de": "7563f49a8f4a2fce",
@@ -17441,16 +17964,16 @@
 		"ko": "bd3403960abf5f6e"
 	},
 	"flirtual:flitty_reactions.18": {
-		"de": "edab39b45c56cd26",
-		"es": "edab39b45c56cd26",
-		"fr": "edab39b45c56cd26",
-		"nl": "edab39b45c56cd26",
-		"pt": "edab39b45c56cd26",
-		"pt-BR": "edab39b45c56cd26",
-		"ru": "edab39b45c56cd26",
-		"sv": "edab39b45c56cd26",
-		"ja": "edab39b45c56cd26",
-		"ko": "edab39b45c56cd26"
+		"de": "c3dfcccc81539ac3",
+		"es": "c3dfcccc81539ac3",
+		"fr": "c3dfcccc81539ac3",
+		"nl": "c3dfcccc81539ac3",
+		"pt": "c3dfcccc81539ac3",
+		"pt-BR": "c3dfcccc81539ac3",
+		"ru": "c3dfcccc81539ac3",
+		"sv": "c3dfcccc81539ac3",
+		"ja": "c3dfcccc81539ac3",
+		"ko": "c3dfcccc81539ac3"
 	},
 	"flirtual:flitty_reactions.19": {
 		"de": "390627a0cd25cdb9",
@@ -17609,16 +18132,16 @@
 		"ko": "f47696c1c0603a98"
 	},
 	"flirtual:flitty_reactions.30": {
-		"de": "acd7e7b91f3d9a57",
-		"es": "acd7e7b91f3d9a57",
-		"fr": "acd7e7b91f3d9a57",
-		"nl": "acd7e7b91f3d9a57",
-		"pt": "acd7e7b91f3d9a57",
-		"pt-BR": "acd7e7b91f3d9a57",
-		"ru": "acd7e7b91f3d9a57",
-		"sv": "acd7e7b91f3d9a57",
-		"ja": "acd7e7b91f3d9a57",
-		"ko": "acd7e7b91f3d9a57"
+		"de": "46f1dc38cd987b4b",
+		"es": "46f1dc38cd987b4b",
+		"fr": "46f1dc38cd987b4b",
+		"nl": "46f1dc38cd987b4b",
+		"pt": "46f1dc38cd987b4b",
+		"pt-BR": "46f1dc38cd987b4b",
+		"ru": "46f1dc38cd987b4b",
+		"sv": "46f1dc38cd987b4b",
+		"ja": "46f1dc38cd987b4b",
+		"ko": "46f1dc38cd987b4b"
 	},
 	"flirtual:flitty_reactions.31": {
 		"de": "f39ae6395f90a161",
@@ -17717,16 +18240,16 @@
 		"ko": "e52691cdf31744a5"
 	},
 	"flirtual:flitty_reactions.39": {
-		"de": "6f8a25fba68ca32d",
-		"es": "6f8a25fba68ca32d",
-		"fr": "6f8a25fba68ca32d",
-		"nl": "6f8a25fba68ca32d",
-		"pt": "6f8a25fba68ca32d",
-		"pt-BR": "6f8a25fba68ca32d",
-		"ru": "6f8a25fba68ca32d",
-		"sv": "6f8a25fba68ca32d",
-		"ja": "6f8a25fba68ca32d",
-		"ko": "6f8a25fba68ca32d"
+		"de": "bff2794e00b8f936",
+		"es": "bff2794e00b8f936",
+		"fr": "bff2794e00b8f936",
+		"nl": "bff2794e00b8f936",
+		"pt": "bff2794e00b8f936",
+		"pt-BR": "bff2794e00b8f936",
+		"ru": "bff2794e00b8f936",
+		"sv": "bff2794e00b8f936",
+		"ja": "bff2794e00b8f936",
+		"ko": "bff2794e00b8f936"
 	},
 	"flirtual:flitty_reactions.4": {
 		"de": "a2cdc489b06e4171",
@@ -18077,16 +18600,16 @@
 		"ko": "cc087eb1dd43882d"
 	},
 	"flirtual:flitty_reactions.66": {
-		"de": "5a47c7073c3306a8",
-		"es": "5a47c7073c3306a8",
-		"fr": "5a47c7073c3306a8",
-		"nl": "5a47c7073c3306a8",
-		"pt": "5a47c7073c3306a8",
-		"pt-BR": "5a47c7073c3306a8",
-		"ru": "5a47c7073c3306a8",
-		"sv": "5a47c7073c3306a8",
-		"ja": "5a47c7073c3306a8",
-		"ko": "5a47c7073c3306a8"
+		"de": "1d1c7726c3a95682",
+		"es": "1d1c7726c3a95682",
+		"fr": "1d1c7726c3a95682",
+		"nl": "1d1c7726c3a95682",
+		"pt": "1d1c7726c3a95682",
+		"pt-BR": "1d1c7726c3a95682",
+		"ru": "1d1c7726c3a95682",
+		"sv": "1d1c7726c3a95682",
+		"ja": "1d1c7726c3a95682",
+		"ko": "1d1c7726c3a95682"
 	},
 	"flirtual:flitty_reactions.67": {
 		"de": "5289e48d107b80fe",
@@ -18209,40 +18732,40 @@
 		"ko": "f96306a415e46e5e"
 	},
 	"flirtual:flitty_reactions.76": {
-		"de": "b707c0cd1bd51328",
-		"es": "b707c0cd1bd51328",
-		"fr": "b707c0cd1bd51328",
-		"nl": "b707c0cd1bd51328",
-		"pt": "b707c0cd1bd51328",
-		"pt-BR": "b707c0cd1bd51328",
-		"ru": "b707c0cd1bd51328",
-		"sv": "b707c0cd1bd51328",
-		"ja": "b707c0cd1bd51328",
-		"ko": "b707c0cd1bd51328"
+		"de": "12d9fbc322bda648",
+		"es": "12d9fbc322bda648",
+		"fr": "12d9fbc322bda648",
+		"nl": "12d9fbc322bda648",
+		"pt": "12d9fbc322bda648",
+		"pt-BR": "12d9fbc322bda648",
+		"ru": "12d9fbc322bda648",
+		"sv": "12d9fbc322bda648",
+		"ja": "12d9fbc322bda648",
+		"ko": "12d9fbc322bda648"
 	},
 	"flirtual:flitty_reactions.77": {
-		"ja": "c321b04e384d42e5",
-		"de": "c321b04e384d42e5",
-		"es": "c321b04e384d42e5",
-		"fr": "c321b04e384d42e5",
-		"nl": "c321b04e384d42e5",
-		"pt": "c321b04e384d42e5",
-		"pt-BR": "c321b04e384d42e5",
-		"ru": "c321b04e384d42e5",
-		"sv": "c321b04e384d42e5",
-		"ko": "c321b04e384d42e5"
+		"ja": "03c85a30764b0613",
+		"de": "03c85a30764b0613",
+		"es": "03c85a30764b0613",
+		"fr": "03c85a30764b0613",
+		"nl": "03c85a30764b0613",
+		"pt": "03c85a30764b0613",
+		"pt-BR": "03c85a30764b0613",
+		"ru": "03c85a30764b0613",
+		"sv": "03c85a30764b0613",
+		"ko": "03c85a30764b0613"
 	},
 	"flirtual:flitty_reactions.78": {
-		"de": "dd390283a27bc9e4",
-		"es": "dd390283a27bc9e4",
-		"fr": "dd390283a27bc9e4",
-		"nl": "dd390283a27bc9e4",
-		"pt": "dd390283a27bc9e4",
-		"pt-BR": "dd390283a27bc9e4",
-		"ru": "dd390283a27bc9e4",
-		"sv": "dd390283a27bc9e4",
-		"ja": "dd390283a27bc9e4",
-		"ko": "dd390283a27bc9e4"
+		"de": "6a69614e7707777e",
+		"es": "6a69614e7707777e",
+		"fr": "6a69614e7707777e",
+		"nl": "6a69614e7707777e",
+		"pt": "6a69614e7707777e",
+		"pt-BR": "6a69614e7707777e",
+		"ru": "6a69614e7707777e",
+		"sv": "6a69614e7707777e",
+		"ja": "6a69614e7707777e",
+		"ko": "6a69614e7707777e"
 	},
 	"flirtual:flitty_reactions.79": {
 		"de": "77698bc2a849f0f0",
@@ -18353,16 +18876,16 @@
 		"ko": "1c4a8823c9e9bfd0"
 	},
 	"flirtual:flitty_reactions.87": {
-		"de": "7871be0ae650f6ca",
-		"es": "7871be0ae650f6ca",
-		"fr": "7871be0ae650f6ca",
-		"nl": "7871be0ae650f6ca",
-		"pt": "7871be0ae650f6ca",
-		"pt-BR": "7871be0ae650f6ca",
-		"ru": "7871be0ae650f6ca",
-		"sv": "7871be0ae650f6ca",
-		"ja": "7871be0ae650f6ca",
-		"ko": "7871be0ae650f6ca"
+		"de": "10abde12086b3032",
+		"es": "10abde12086b3032",
+		"fr": "10abde12086b3032",
+		"nl": "10abde12086b3032",
+		"pt": "10abde12086b3032",
+		"pt-BR": "10abde12086b3032",
+		"ru": "10abde12086b3032",
+		"sv": "10abde12086b3032",
+		"ja": "10abde12086b3032",
+		"ko": "10abde12086b3032"
 	},
 	"flirtual:flitty_reactions.88": {
 		"de": "c11cfb60b4158bd6",
@@ -18461,16 +18984,16 @@
 		"ko": "9c3f0f76bd0bf332"
 	},
 	"flirtual:flitty_reactions.95": {
-		"de": "ab4c85c80f9f7edf",
-		"es": "ab4c85c80f9f7edf",
-		"fr": "ab4c85c80f9f7edf",
-		"nl": "ab4c85c80f9f7edf",
-		"pt": "ab4c85c80f9f7edf",
-		"pt-BR": "ab4c85c80f9f7edf",
-		"ru": "ab4c85c80f9f7edf",
-		"sv": "ab4c85c80f9f7edf",
-		"ja": "ab4c85c80f9f7edf",
-		"ko": "ab4c85c80f9f7edf"
+		"de": "f669a7ff5660d2ec",
+		"es": "f669a7ff5660d2ec",
+		"fr": "f669a7ff5660d2ec",
+		"nl": "f669a7ff5660d2ec",
+		"pt": "f669a7ff5660d2ec",
+		"pt-BR": "f669a7ff5660d2ec",
+		"ru": "f669a7ff5660d2ec",
+		"sv": "f669a7ff5660d2ec",
+		"ja": "f669a7ff5660d2ec",
+		"ko": "f669a7ff5660d2ec"
 	},
 	"flirtual:flitty_reactions.96": {
 		"de": "5a73344548a6263a",
@@ -18641,16 +19164,16 @@
 		"ko": "99d0219cda5a3b81"
 	},
 	"flirtual:game_hint": {
-		"de": "66c37e3236c68235",
-		"es": "66c37e3236c68235",
-		"fr": "66c37e3236c68235",
-		"nl": "66c37e3236c68235",
-		"pt": "66c37e3236c68235",
-		"pt-BR": "66c37e3236c68235",
-		"ru": "66c37e3236c68235",
-		"sv": "66c37e3236c68235",
-		"ja": "66c37e3236c68235",
-		"ko": "66c37e3236c68235"
+		"de": "27e8baab58636184",
+		"es": "27e8baab58636184",
+		"fr": "27e8baab58636184",
+		"nl": "27e8baab58636184",
+		"pt": "27e8baab58636184",
+		"pt-BR": "27e8baab58636184",
+		"ru": "27e8baab58636184",
+		"sv": "27e8baab58636184",
+		"ja": "27e8baab58636184",
+		"ko": "27e8baab58636184"
 	},
 	"flirtual:gender": {
 		"de": "70fe33f0185468a5",
@@ -18881,40 +19404,40 @@
 		"ko": "4ef51407b02e0ae1"
 	},
 	"flirtual:help_translate": {
-		"de": "bbbc12b5523bf919",
-		"es": "bbbc12b5523bf919",
-		"fr": "bbbc12b5523bf919",
-		"nl": "bbbc12b5523bf919",
-		"pt": "bbbc12b5523bf919",
-		"pt-BR": "bbbc12b5523bf919",
-		"ru": "bbbc12b5523bf919",
-		"sv": "bbbc12b5523bf919",
-		"ja": "bbbc12b5523bf919",
-		"ko": "bbbc12b5523bf919"
+		"de": "199807b03545ec53",
+		"es": "199807b03545ec53",
+		"fr": "199807b03545ec53",
+		"nl": "199807b03545ec53",
+		"pt": "199807b03545ec53",
+		"pt-BR": "199807b03545ec53",
+		"ru": "199807b03545ec53",
+		"sv": "199807b03545ec53",
+		"ja": "199807b03545ec53",
+		"ko": "199807b03545ec53"
 	},
 	"flirtual:help_translate_others": {
-		"de": "cfac21cffca6f196",
-		"es": "cfac21cffca6f196",
-		"fr": "cfac21cffca6f196",
-		"nl": "cfac21cffca6f196",
-		"pt": "cfac21cffca6f196",
-		"pt-BR": "cfac21cffca6f196",
-		"ru": "cfac21cffca6f196",
-		"sv": "cfac21cffca6f196",
-		"ja": "cfac21cffca6f196",
-		"ko": "cfac21cffca6f196"
+		"de": "6eb12dcdbc6ef4b9",
+		"es": "6eb12dcdbc6ef4b9",
+		"fr": "6eb12dcdbc6ef4b9",
+		"nl": "6eb12dcdbc6ef4b9",
+		"pt": "6eb12dcdbc6ef4b9",
+		"pt-BR": "6eb12dcdbc6ef4b9",
+		"ru": "6eb12dcdbc6ef4b9",
+		"sv": "6eb12dcdbc6ef4b9",
+		"ja": "6eb12dcdbc6ef4b9",
+		"ko": "6eb12dcdbc6ef4b9"
 	},
 	"flirtual:hidden_profile_confirm_email": {
-		"de": "0614b0981688e60d",
-		"es": "0614b0981688e60d",
-		"fr": "0614b0981688e60d",
-		"nl": "0614b0981688e60d",
-		"pt": "0614b0981688e60d",
-		"pt-BR": "0614b0981688e60d",
-		"ru": "0614b0981688e60d",
-		"sv": "0614b0981688e60d",
-		"ja": "0614b0981688e60d",
-		"ko": "0614b0981688e60d"
+		"de": "d9374f1778d0e2f3",
+		"es": "d9374f1778d0e2f3",
+		"fr": "d9374f1778d0e2f3",
+		"nl": "d9374f1778d0e2f3",
+		"pt": "d9374f1778d0e2f3",
+		"pt-BR": "d9374f1778d0e2f3",
+		"ru": "d9374f1778d0e2f3",
+		"sv": "d9374f1778d0e2f3",
+		"ja": "d9374f1778d0e2f3",
+		"ko": "d9374f1778d0e2f3"
 	},
 	"flirtual:hidden_profile_finish": {
 		"de": "c6a240bd25c23245",
@@ -19001,16 +19524,16 @@
 		"ko": "a65a340228c8611f"
 	},
 	"flirtual:homies_exhausted_later": {
-		"ja": "4dddf315784043bd",
-		"de": "4dddf315784043bd",
-		"es": "4dddf315784043bd",
-		"fr": "4dddf315784043bd",
-		"nl": "4dddf315784043bd",
-		"pt": "4dddf315784043bd",
-		"pt-BR": "4dddf315784043bd",
-		"ru": "4dddf315784043bd",
-		"sv": "4dddf315784043bd",
-		"ko": "4dddf315784043bd"
+		"ja": "b6d807b6bd96b93f",
+		"de": "b6d807b6bd96b93f",
+		"es": "b6d807b6bd96b93f",
+		"fr": "b6d807b6bd96b93f",
+		"nl": "b6d807b6bd96b93f",
+		"pt": "b6d807b6bd96b93f",
+		"pt-BR": "b6d807b6bd96b93f",
+		"ru": "b6d807b6bd96b93f",
+		"sv": "b6d807b6bd96b93f",
+		"ko": "b6d807b6bd96b93f"
 	},
 	"flirtual:hookups": {
 		"de": "d1fecbb0091b4fac",
@@ -19109,16 +19632,16 @@
 		"ko": "d0b7c063b4775921"
 	},
 	"flirtual:ideas_dialog_description": {
-		"de": "67bf055ce8e05487",
-		"es": "67bf055ce8e05487",
-		"fr": "67bf055ce8e05487",
-		"nl": "67bf055ce8e05487",
-		"pt": "67bf055ce8e05487",
-		"pt-BR": "67bf055ce8e05487",
-		"ru": "67bf055ce8e05487",
-		"sv": "67bf055ce8e05487",
-		"ja": "67bf055ce8e05487",
-		"ko": "67bf055ce8e05487"
+		"de": "5ff0b7f96a52dd3c",
+		"es": "5ff0b7f96a52dd3c",
+		"fr": "5ff0b7f96a52dd3c",
+		"nl": "5ff0b7f96a52dd3c",
+		"pt": "5ff0b7f96a52dd3c",
+		"pt-BR": "5ff0b7f96a52dd3c",
+		"ru": "5ff0b7f96a52dd3c",
+		"sv": "5ff0b7f96a52dd3c",
+		"ja": "5ff0b7f96a52dd3c",
+		"ko": "5ff0b7f96a52dd3c"
 	},
 	"flirtual:ideas_dialog_title": {
 		"de": "d0b7c063b4775921",
@@ -19481,16 +20004,16 @@
 		"ko": "0ace69cb4cb8ab01"
 	},
 	"flirtual:landing_dates_alt": {
-		"de": "34fcf76a38223bc5",
-		"es": "34fcf76a38223bc5",
-		"fr": "34fcf76a38223bc5",
-		"nl": "34fcf76a38223bc5",
-		"pt": "34fcf76a38223bc5",
-		"pt-BR": "34fcf76a38223bc5",
-		"ru": "34fcf76a38223bc5",
-		"sv": "34fcf76a38223bc5",
-		"ja": "34fcf76a38223bc5",
-		"ko": "34fcf76a38223bc5"
+		"de": "167800d3f21be375",
+		"es": "167800d3f21be375",
+		"fr": "167800d3f21be375",
+		"nl": "167800d3f21be375",
+		"pt": "167800d3f21be375",
+		"pt-BR": "167800d3f21be375",
+		"ru": "167800d3f21be375",
+		"sv": "167800d3f21be375",
+		"ja": "167800d3f21be375",
+		"ko": "167800d3f21be375"
 	},
 	"flirtual:landing_dates_heading": {
 		"de": "34e46c7a58ccaaaf",
@@ -19637,16 +20160,16 @@
 		"ko": "12ac3e5110a8ae0b"
 	},
 	"flirtual:landing_profile_screenshot_alt": {
-		"de": "28c1b580708e41da",
-		"es": "28c1b580708e41da",
-		"fr": "28c1b580708e41da",
-		"nl": "28c1b580708e41da",
-		"pt": "28c1b580708e41da",
-		"pt-BR": "28c1b580708e41da",
-		"ru": "28c1b580708e41da",
-		"sv": "28c1b580708e41da",
-		"ja": "28c1b580708e41da",
-		"ko": "28c1b580708e41da"
+		"de": "7ae9fa06c14cd0a9",
+		"es": "7ae9fa06c14cd0a9",
+		"fr": "7ae9fa06c14cd0a9",
+		"nl": "7ae9fa06c14cd0a9",
+		"pt": "7ae9fa06c14cd0a9",
+		"pt-BR": "7ae9fa06c14cd0a9",
+		"ru": "7ae9fa06c14cd0a9",
+		"sv": "7ae9fa06c14cd0a9",
+		"ja": "7ae9fa06c14cd0a9",
+		"ko": "7ae9fa06c14cd0a9"
 	},
 	"flirtual:landing_title": {
 		"de": "d400971cc374e7e8",
@@ -19753,7 +20276,8 @@
 		"ru": "ea5bec5da536ec25",
 		"sv": "ea5bec5da536ec25",
 		"ja": "ea5bec5da536ec25",
-		"ko": "ea5bec5da536ec25"
+		"ko": "ea5bec5da536ec25",
+		"pt-BR": "ea5bec5da536ec25"
 	},
 	"flirtual:leave_homie_mode": {
 		"ja": "1d0be39a9127b1a1",
@@ -20140,16 +20664,16 @@
 		"ko": "a156304f590d8def"
 	},
 	"flirtual:matchmaking_priorities_description": {
-		"de": "7f46c01769d6a50e",
-		"es": "7f46c01769d6a50e",
-		"fr": "7f46c01769d6a50e",
-		"nl": "7f46c01769d6a50e",
-		"pt": "7f46c01769d6a50e",
-		"pt-BR": "7f46c01769d6a50e",
-		"ru": "7f46c01769d6a50e",
-		"sv": "7f46c01769d6a50e",
-		"ja": "7f46c01769d6a50e",
-		"ko": "7f46c01769d6a50e"
+		"de": "b18019af7ffa1abf",
+		"es": "b18019af7ffa1abf",
+		"fr": "b18019af7ffa1abf",
+		"nl": "b18019af7ffa1abf",
+		"pt": "b18019af7ffa1abf",
+		"pt-BR": "b18019af7ffa1abf",
+		"ru": "b18019af7ffa1abf",
+		"sv": "b18019af7ffa1abf",
+		"ja": "b18019af7ffa1abf",
+		"ko": "b18019af7ffa1abf"
 	},
 	"flirtual:matchmaking_priorities_example": {
 		"de": "8182733170aa762b",
@@ -20272,16 +20796,16 @@
 		"ko": "e1089255de9a3f6e"
 	},
 	"flirtual:meta_social_description": {
-		"de": "0c608b594a3d4183",
-		"es": "0c608b594a3d4183",
-		"fr": "0c608b594a3d4183",
-		"nl": "0c608b594a3d4183",
-		"pt": "0c608b594a3d4183",
-		"pt-BR": "0c608b594a3d4183",
-		"ru": "0c608b594a3d4183",
-		"sv": "0c608b594a3d4183",
-		"ja": "0c608b594a3d4183",
-		"ko": "0c608b594a3d4183"
+		"de": "e5192e52fceef2ba",
+		"es": "e5192e52fceef2ba",
+		"fr": "e5192e52fceef2ba",
+		"nl": "e5192e52fceef2ba",
+		"pt": "e5192e52fceef2ba",
+		"pt-BR": "e5192e52fceef2ba",
+		"ru": "e5192e52fceef2ba",
+		"sv": "e5192e52fceef2ba",
+		"ja": "e5192e52fceef2ba",
+		"ko": "e5192e52fceef2ba"
 	},
 	"flirtual:meta_username": {
 		"de": "a701aab66dd14f3d",
@@ -20800,16 +21324,16 @@
 		"ko": "66236d3ad8e6c89d"
 	},
 	"flirtual:newsletter_opt_in": {
-		"de": "493d852829725694",
-		"es": "493d852829725694",
-		"fr": "493d852829725694",
-		"nl": "493d852829725694",
-		"pt": "493d852829725694",
-		"pt-BR": "493d852829725694",
-		"ru": "493d852829725694",
-		"sv": "493d852829725694",
-		"ja": "493d852829725694",
-		"ko": "493d852829725694"
+		"de": "9eb3bf4a2b0ad35f",
+		"es": "9eb3bf4a2b0ad35f",
+		"fr": "9eb3bf4a2b0ad35f",
+		"nl": "9eb3bf4a2b0ad35f",
+		"pt": "9eb3bf4a2b0ad35f",
+		"pt-BR": "9eb3bf4a2b0ad35f",
+		"ru": "9eb3bf4a2b0ad35f",
+		"sv": "9eb3bf4a2b0ad35f",
+		"ja": "9eb3bf4a2b0ad35f",
+		"ko": "9eb3bf4a2b0ad35f"
 	},
 	"flirtual:newsletter_opt_in_description": {
 		"de": "ecb2587402f7afc4",
@@ -20908,16 +21432,16 @@
 		"ko": "9b6e2165338ceb18"
 	},
 	"flirtual:no_matches_boost": {
-		"de": "427e91b00de3c4f9",
-		"es": "427e91b00de3c4f9",
-		"fr": "427e91b00de3c4f9",
-		"nl": "427e91b00de3c4f9",
-		"pt": "427e91b00de3c4f9",
-		"pt-BR": "427e91b00de3c4f9",
-		"ru": "427e91b00de3c4f9",
-		"sv": "427e91b00de3c4f9",
-		"ja": "427e91b00de3c4f9",
-		"ko": "427e91b00de3c4f9"
+		"de": "54c1e9437ac63b1a",
+		"es": "54c1e9437ac63b1a",
+		"fr": "54c1e9437ac63b1a",
+		"nl": "54c1e9437ac63b1a",
+		"pt": "54c1e9437ac63b1a",
+		"pt-BR": "54c1e9437ac63b1a",
+		"ru": "54c1e9437ac63b1a",
+		"sv": "54c1e9437ac63b1a",
+		"ja": "54c1e9437ac63b1a",
+		"ko": "54c1e9437ac63b1a"
 	},
 	"flirtual:no_matches_description": {
 		"de": "eba6f2308b930994",
@@ -20954,6 +21478,18 @@
 		"sv": "c0285f6cb3fc0d4b",
 		"ja": "c0285f6cb3fc0d4b",
 		"ko": "c0285f6cb3fc0d4b"
+	},
+	"flirtual:no_purchases_to_restore": {
+		"sv": "695090dcb1511708",
+		"de": "695090dcb1511708",
+		"es": "695090dcb1511708",
+		"fr": "695090dcb1511708",
+		"nl": "695090dcb1511708",
+		"pt": "695090dcb1511708",
+		"ru": "695090dcb1511708",
+		"ja": "695090dcb1511708",
+		"ko": "695090dcb1511708",
+		"pt-BR": "695090dcb1511708"
 	},
 	"flirtual:no_results": {
 		"de": "823c4ec7dc71f07a",
@@ -21636,7 +22172,8 @@
 		"ru": "10bfdd4952cfc993",
 		"sv": "10bfdd4952cfc993",
 		"ja": "10bfdd4952cfc993",
-		"ko": "10bfdd4952cfc993"
+		"ko": "10bfdd4952cfc993",
+		"de": "10bfdd4952cfc993"
 	},
 	"flirtual:outgoing_teeny_tiny_pass_male.2025.title": {
 		"de": "59405ad37394d2ce",
@@ -21651,15 +22188,16 @@
 		"ko": "59405ad37394d2ce"
 	},
 	"flirtual:page_title": {
-		"es": "108d3eb1f4da8889",
-		"fr": "108d3eb1f4da8889",
-		"nl": "108d3eb1f4da8889",
-		"pt": "108d3eb1f4da8889",
-		"pt-BR": "108d3eb1f4da8889",
-		"ru": "108d3eb1f4da8889",
-		"sv": "108d3eb1f4da8889",
-		"ja": "108d3eb1f4da8889",
-		"ko": "108d3eb1f4da8889"
+		"es": "becd3a380229da54",
+		"fr": "becd3a380229da54",
+		"nl": "becd3a380229da54",
+		"pt": "becd3a380229da54",
+		"pt-BR": "becd3a380229da54",
+		"ru": "becd3a380229da54",
+		"sv": "becd3a380229da54",
+		"ja": "becd3a380229da54",
+		"ko": "becd3a380229da54",
+		"de": "becd3a380229da54"
 	},
 	"flirtual:pass": {
 		"de": "282ef0a4c2c4325a",
@@ -22789,17 +23327,29 @@
 		"ja": "49fc2150c5cee5c9",
 		"ko": "49fc2150c5cee5c9"
 	},
+	"flirtual:purchases_restored": {
+		"sv": "88c120f0bbb41ac2",
+		"de": "88c120f0bbb41ac2",
+		"es": "88c120f0bbb41ac2",
+		"fr": "88c120f0bbb41ac2",
+		"nl": "88c120f0bbb41ac2",
+		"pt": "88c120f0bbb41ac2",
+		"ru": "88c120f0bbb41ac2",
+		"ja": "88c120f0bbb41ac2",
+		"ko": "88c120f0bbb41ac2",
+		"pt-BR": "88c120f0bbb41ac2"
+	},
 	"flirtual:push_notifications_blocked": {
-		"de": "9a9b32a1c62cc1ac",
-		"es": "9a9b32a1c62cc1ac",
-		"fr": "9a9b32a1c62cc1ac",
-		"nl": "9a9b32a1c62cc1ac",
-		"pt": "9a9b32a1c62cc1ac",
-		"pt-BR": "9a9b32a1c62cc1ac",
-		"ru": "9a9b32a1c62cc1ac",
-		"sv": "9a9b32a1c62cc1ac",
-		"ja": "9a9b32a1c62cc1ac",
-		"ko": "9a9b32a1c62cc1ac"
+		"de": "b7a0abc63ff7f5cc",
+		"es": "b7a0abc63ff7f5cc",
+		"fr": "b7a0abc63ff7f5cc",
+		"nl": "b7a0abc63ff7f5cc",
+		"pt": "b7a0abc63ff7f5cc",
+		"pt-BR": "b7a0abc63ff7f5cc",
+		"ru": "b7a0abc63ff7f5cc",
+		"sv": "b7a0abc63ff7f5cc",
+		"ja": "b7a0abc63ff7f5cc",
+		"ko": "b7a0abc63ff7f5cc"
 	},
 	"flirtual:queue_fallback_notice": {
 		"de": "41dea86cbb585e16",
@@ -23126,16 +23676,16 @@
 		"ko": "348520b39b3539c4"
 	},
 	"flirtual:report_submitted": {
-		"de": "311186248af4ed4c",
-		"es": "311186248af4ed4c",
-		"fr": "311186248af4ed4c",
-		"nl": "311186248af4ed4c",
-		"pt": "311186248af4ed4c",
-		"pt-BR": "311186248af4ed4c",
-		"ru": "311186248af4ed4c",
-		"sv": "311186248af4ed4c",
-		"ja": "311186248af4ed4c",
-		"ko": "311186248af4ed4c"
+		"de": "c3fab818cfa71904",
+		"es": "c3fab818cfa71904",
+		"fr": "c3fab818cfa71904",
+		"nl": "c3fab818cfa71904",
+		"pt": "c3fab818cfa71904",
+		"pt-BR": "c3fab818cfa71904",
+		"ru": "c3fab818cfa71904",
+		"sv": "c3fab818cfa71904",
+		"ja": "c3fab818cfa71904",
+		"ko": "c3fab818cfa71904"
 	},
 	"flirtual:resend_code": {
 		"de": "67fc92498e96ca6b",
@@ -23196,6 +23746,18 @@
 		"sv": "f2277d19703c733f",
 		"ja": "f2277d19703c733f",
 		"ko": "f2277d19703c733f"
+	},
+	"flirtual:restore_purchases": {
+		"sv": "542896d5857e7ea1",
+		"de": "542896d5857e7ea1",
+		"es": "542896d5857e7ea1",
+		"fr": "542896d5857e7ea1",
+		"nl": "542896d5857e7ea1",
+		"pt": "542896d5857e7ea1",
+		"ru": "542896d5857e7ea1",
+		"ja": "542896d5857e7ea1",
+		"ko": "542896d5857e7ea1",
+		"pt-BR": "542896d5857e7ea1"
 	},
 	"flirtual:resubscribe": {
 		"de": "1531870929470b32",
@@ -23786,16 +24348,16 @@
 		"ko": "288470c058f71ad2"
 	},
 	"flirtual:share_profile_message": {
-		"de": "72b2a12ee24f9544",
-		"es": "72b2a12ee24f9544",
-		"fr": "72b2a12ee24f9544",
-		"nl": "72b2a12ee24f9544",
-		"pt": "72b2a12ee24f9544",
-		"pt-BR": "72b2a12ee24f9544",
-		"ru": "72b2a12ee24f9544",
-		"sv": "72b2a12ee24f9544",
-		"ja": "72b2a12ee24f9544",
-		"ko": "72b2a12ee24f9544"
+		"de": "621bde5c5257d76b",
+		"es": "621bde5c5257d76b",
+		"fr": "621bde5c5257d76b",
+		"nl": "621bde5c5257d76b",
+		"pt": "621bde5c5257d76b",
+		"pt-BR": "621bde5c5257d76b",
+		"ru": "621bde5c5257d76b",
+		"sv": "621bde5c5257d76b",
+		"ja": "621bde5c5257d76b",
+		"ko": "621bde5c5257d76b"
 	},
 	"flirtual:shared_custom_interests": {
 		"de": "eb8492df1f1738dd",
@@ -24178,7 +24740,8 @@
 		"ru": "7744c89b4e37c0a5",
 		"sv": "7744c89b4e37c0a5",
 		"ja": "7744c89b4e37c0a5",
-		"ko": "7744c89b4e37c0a5"
+		"ko": "7744c89b4e37c0a5",
+		"pt-BR": "7744c89b4e37c0a5"
 	},
 	"flirtual:switch": {
 		"de": "a42e3a8ba6afa6c5",
@@ -24565,16 +25128,16 @@
 		"ko": "edaa1601f65e7823"
 	},
 	"flirtual:tour_signature": {
-		"ja": "6fff55c1c86b61b7",
-		"de": "6fff55c1c86b61b7",
-		"es": "6fff55c1c86b61b7",
-		"fr": "6fff55c1c86b61b7",
-		"nl": "6fff55c1c86b61b7",
-		"pt": "6fff55c1c86b61b7",
-		"pt-BR": "6fff55c1c86b61b7",
-		"ru": "6fff55c1c86b61b7",
-		"sv": "6fff55c1c86b61b7",
-		"ko": "6fff55c1c86b61b7"
+		"ja": "25f10a7c69c20ae6",
+		"de": "25f10a7c69c20ae6",
+		"es": "25f10a7c69c20ae6",
+		"fr": "25f10a7c69c20ae6",
+		"nl": "25f10a7c69c20ae6",
+		"pt": "25f10a7c69c20ae6",
+		"pt-BR": "25f10a7c69c20ae6",
+		"ru": "25f10a7c69c20ae6",
+		"sv": "25f10a7c69c20ae6",
+		"ko": "25f10a7c69c20ae6"
 	},
 	"flirtual:tour_take_breaks": {
 		"ja": "c1b84c9f5336b2ef",
@@ -24721,16 +25284,16 @@
 		"ko": "f41f2f12c3a856c6"
 	},
 	"flirtual:underage_description": {
-		"de": "96ec73485e93e2e5",
-		"es": "96ec73485e93e2e5",
-		"fr": "96ec73485e93e2e5",
-		"nl": "96ec73485e93e2e5",
-		"pt": "96ec73485e93e2e5",
-		"pt-BR": "96ec73485e93e2e5",
-		"ru": "96ec73485e93e2e5",
-		"sv": "96ec73485e93e2e5",
-		"ja": "96ec73485e93e2e5",
-		"ko": "96ec73485e93e2e5"
+		"de": "07bb6ef1307c5491",
+		"es": "07bb6ef1307c5491",
+		"fr": "07bb6ef1307c5491",
+		"nl": "07bb6ef1307c5491",
+		"pt": "07bb6ef1307c5491",
+		"pt-BR": "07bb6ef1307c5491",
+		"ru": "07bb6ef1307c5491",
+		"sv": "07bb6ef1307c5491",
+		"ja": "07bb6ef1307c5491",
+		"ko": "07bb6ef1307c5491"
 	},
 	"flirtual:underage_title": {
 		"de": "72e22a2b6aff3eab",
@@ -24865,64 +25428,64 @@
 		"ko": "71060b462f3d44a6"
 	},
 	"flirtual:update_available": {
-		"de": "252cc3ab72509470",
-		"es": "252cc3ab72509470",
-		"fr": "252cc3ab72509470",
-		"nl": "252cc3ab72509470",
-		"pt": "252cc3ab72509470",
-		"pt-BR": "252cc3ab72509470",
-		"ru": "252cc3ab72509470",
-		"sv": "252cc3ab72509470",
-		"ja": "252cc3ab72509470",
-		"ko": "252cc3ab72509470"
+		"de": "c9232e1458b7d2dc",
+		"es": "c9232e1458b7d2dc",
+		"fr": "c9232e1458b7d2dc",
+		"nl": "c9232e1458b7d2dc",
+		"pt": "c9232e1458b7d2dc",
+		"pt-BR": "c9232e1458b7d2dc",
+		"ru": "c9232e1458b7d2dc",
+		"sv": "c9232e1458b7d2dc",
+		"ja": "c9232e1458b7d2dc",
+		"ko": "c9232e1458b7d2dc"
 	},
 	"flirtual:update_available_description_native": {
-		"de": "4129c8f985c7d745",
-		"es": "4129c8f985c7d745",
-		"fr": "4129c8f985c7d745",
-		"nl": "4129c8f985c7d745",
-		"pt": "4129c8f985c7d745",
-		"pt-BR": "4129c8f985c7d745",
-		"ru": "4129c8f985c7d745",
-		"sv": "4129c8f985c7d745",
-		"ja": "4129c8f985c7d745",
-		"ko": "4129c8f985c7d745"
+		"de": "4e9d4fdeb20e3d8b",
+		"es": "4e9d4fdeb20e3d8b",
+		"fr": "4e9d4fdeb20e3d8b",
+		"nl": "4e9d4fdeb20e3d8b",
+		"pt": "4e9d4fdeb20e3d8b",
+		"pt-BR": "4e9d4fdeb20e3d8b",
+		"ru": "4e9d4fdeb20e3d8b",
+		"sv": "4e9d4fdeb20e3d8b",
+		"ja": "4e9d4fdeb20e3d8b",
+		"ko": "4e9d4fdeb20e3d8b"
 	},
 	"flirtual:update_available_description_native_unsaved": {
-		"de": "2d7b50ad2efd4899",
-		"es": "2d7b50ad2efd4899",
-		"fr": "2d7b50ad2efd4899",
-		"nl": "2d7b50ad2efd4899",
-		"pt": "2d7b50ad2efd4899",
-		"pt-BR": "2d7b50ad2efd4899",
-		"ru": "2d7b50ad2efd4899",
-		"sv": "2d7b50ad2efd4899",
-		"ja": "2d7b50ad2efd4899",
-		"ko": "2d7b50ad2efd4899"
+		"de": "8005c6be3bfb6cb1",
+		"es": "8005c6be3bfb6cb1",
+		"fr": "8005c6be3bfb6cb1",
+		"nl": "8005c6be3bfb6cb1",
+		"pt": "8005c6be3bfb6cb1",
+		"pt-BR": "8005c6be3bfb6cb1",
+		"ru": "8005c6be3bfb6cb1",
+		"sv": "8005c6be3bfb6cb1",
+		"ja": "8005c6be3bfb6cb1",
+		"ko": "8005c6be3bfb6cb1"
 	},
 	"flirtual:update_available_description_web": {
-		"de": "da8ce8e20684a5c0",
-		"es": "da8ce8e20684a5c0",
-		"fr": "da8ce8e20684a5c0",
-		"nl": "da8ce8e20684a5c0",
-		"pt": "da8ce8e20684a5c0",
-		"pt-BR": "da8ce8e20684a5c0",
-		"ru": "da8ce8e20684a5c0",
-		"sv": "da8ce8e20684a5c0",
-		"ja": "da8ce8e20684a5c0",
-		"ko": "da8ce8e20684a5c0"
+		"de": "ff673a3d079bbea2",
+		"es": "ff673a3d079bbea2",
+		"fr": "ff673a3d079bbea2",
+		"nl": "ff673a3d079bbea2",
+		"pt": "ff673a3d079bbea2",
+		"pt-BR": "ff673a3d079bbea2",
+		"ru": "ff673a3d079bbea2",
+		"sv": "ff673a3d079bbea2",
+		"ja": "ff673a3d079bbea2",
+		"ko": "ff673a3d079bbea2"
 	},
 	"flirtual:update_available_description_web_unsaved": {
-		"de": "3edd28058cc66f63",
-		"es": "3edd28058cc66f63",
-		"fr": "3edd28058cc66f63",
-		"nl": "3edd28058cc66f63",
-		"pt": "3edd28058cc66f63",
-		"pt-BR": "3edd28058cc66f63",
-		"ru": "3edd28058cc66f63",
-		"sv": "3edd28058cc66f63",
-		"ja": "3edd28058cc66f63",
-		"ko": "3edd28058cc66f63"
+		"de": "5fadc4c1a841de7b",
+		"es": "5fadc4c1a841de7b",
+		"fr": "5fadc4c1a841de7b",
+		"nl": "5fadc4c1a841de7b",
+		"pt": "5fadc4c1a841de7b",
+		"pt-BR": "5fadc4c1a841de7b",
+		"ru": "5fadc4c1a841de7b",
+		"sv": "5fadc4c1a841de7b",
+		"ja": "5fadc4c1a841de7b",
+		"ko": "5fadc4c1a841de7b"
 	},
 	"flirtual:update_email": {
 		"de": "02b4b54f84df758a",
@@ -24961,28 +25524,28 @@
 		"ko": "0f3e1b3be4cb70d4"
 	},
 	"flirtual:update_required": {
-		"de": "50a9646941ec4d7f",
-		"es": "50a9646941ec4d7f",
-		"fr": "50a9646941ec4d7f",
-		"nl": "50a9646941ec4d7f",
-		"pt": "50a9646941ec4d7f",
-		"pt-BR": "50a9646941ec4d7f",
-		"ru": "50a9646941ec4d7f",
-		"sv": "50a9646941ec4d7f",
-		"ja": "50a9646941ec4d7f",
-		"ko": "50a9646941ec4d7f"
+		"de": "efa0ad74d62c3491",
+		"es": "efa0ad74d62c3491",
+		"fr": "efa0ad74d62c3491",
+		"nl": "efa0ad74d62c3491",
+		"pt": "efa0ad74d62c3491",
+		"pt-BR": "efa0ad74d62c3491",
+		"ru": "efa0ad74d62c3491",
+		"sv": "efa0ad74d62c3491",
+		"ja": "efa0ad74d62c3491",
+		"ko": "efa0ad74d62c3491"
 	},
 	"flirtual:update_required_description": {
-		"de": "9f8addd3915256d8",
-		"es": "9f8addd3915256d8",
-		"fr": "9f8addd3915256d8",
-		"nl": "9f8addd3915256d8",
-		"pt": "9f8addd3915256d8",
-		"pt-BR": "9f8addd3915256d8",
-		"ru": "9f8addd3915256d8",
-		"sv": "9f8addd3915256d8",
-		"ja": "9f8addd3915256d8",
-		"ko": "9f8addd3915256d8"
+		"de": "9843847480630433",
+		"es": "9843847480630433",
+		"fr": "9843847480630433",
+		"nl": "9843847480630433",
+		"pt": "9843847480630433",
+		"pt-BR": "9843847480630433",
+		"ru": "9843847480630433",
+		"sv": "9843847480630433",
+		"ja": "9843847480630433",
+		"ko": "9843847480630433"
 	},
 	"flirtual:updates": {
 		"de": "940bff6368ac60d9",
@@ -25189,16 +25752,16 @@
 		"ko": "2949014722771f15"
 	},
 	"flirtual:verify_age_description": {
-		"de": "934ccd66e648b2b8",
-		"es": "934ccd66e648b2b8",
-		"fr": "934ccd66e648b2b8",
-		"nl": "934ccd66e648b2b8",
-		"pt": "934ccd66e648b2b8",
-		"pt-BR": "934ccd66e648b2b8",
-		"ru": "934ccd66e648b2b8",
-		"sv": "934ccd66e648b2b8",
-		"ja": "934ccd66e648b2b8",
-		"ko": "934ccd66e648b2b8"
+		"de": "a504a2844236e232",
+		"es": "a504a2844236e232",
+		"fr": "a504a2844236e232",
+		"nl": "a504a2844236e232",
+		"pt": "a504a2844236e232",
+		"pt-BR": "a504a2844236e232",
+		"ru": "a504a2844236e232",
+		"sv": "a504a2844236e232",
+		"ja": "a504a2844236e232",
+		"ko": "a504a2844236e232"
 	},
 	"flirtual:verify_age_errored": {
 		"de": "85ee1bfa6f31f2cf",
@@ -25309,16 +25872,16 @@
 		"ko": "022a26c840568188"
 	},
 	"flirtual:version": {
-		"de": "8f968699e851881a",
-		"es": "8f968699e851881a",
-		"fr": "8f968699e851881a",
-		"nl": "8f968699e851881a",
-		"pt": "8f968699e851881a",
-		"pt-BR": "8f968699e851881a",
-		"ru": "8f968699e851881a",
-		"sv": "8f968699e851881a",
-		"ja": "8f968699e851881a",
-		"ko": "8f968699e851881a"
+		"de": "cb407fa643b8ff10",
+		"es": "cb407fa643b8ff10",
+		"fr": "cb407fa643b8ff10",
+		"nl": "cb407fa643b8ff10",
+		"pt": "cb407fa643b8ff10",
+		"pt-BR": "cb407fa643b8ff10",
+		"ru": "cb407fa643b8ff10",
+		"sv": "cb407fa643b8ff10",
+		"ja": "cb407fa643b8ff10",
+		"ko": "cb407fa643b8ff10"
 	},
 	"flirtual:view_image": {
 		"de": "1d22e8f80692691e",
@@ -25429,16 +25992,16 @@
 		"ko": "193e29cdd6d187f2"
 	},
 	"flirtual:watch.account_banned": {
-		"de": "c19047c3b1794f40",
-		"es": "c19047c3b1794f40",
-		"fr": "c19047c3b1794f40",
-		"nl": "c19047c3b1794f40",
-		"pt": "c19047c3b1794f40",
-		"pt-BR": "c19047c3b1794f40",
-		"ru": "c19047c3b1794f40",
-		"sv": "c19047c3b1794f40",
-		"ja": "c19047c3b1794f40",
-		"ko": "c19047c3b1794f40"
+		"de": "1dd89a2c760e4b66",
+		"es": "1dd89a2c760e4b66",
+		"fr": "1dd89a2c760e4b66",
+		"nl": "1dd89a2c760e4b66",
+		"pt": "1dd89a2c760e4b66",
+		"pt-BR": "1dd89a2c760e4b66",
+		"ru": "1dd89a2c760e4b66",
+		"sv": "1dd89a2c760e4b66",
+		"ja": "1dd89a2c760e4b66",
+		"ko": "1dd89a2c760e4b66"
 	},
 	"flirtual:watch.account_deactivated": {
 		"de": "569423db7d40ed4a",
@@ -25693,16 +26256,16 @@
 		"ko": "9d42c16893e38d04"
 	},
 	"flirtual:watch.sign_in_detail": {
-		"de": "2fb63a3ed028d0b3",
-		"es": "2fb63a3ed028d0b3",
-		"fr": "2fb63a3ed028d0b3",
-		"nl": "2fb63a3ed028d0b3",
-		"pt": "2fb63a3ed028d0b3",
-		"pt-BR": "2fb63a3ed028d0b3",
-		"ru": "2fb63a3ed028d0b3",
-		"sv": "2fb63a3ed028d0b3",
-		"ja": "2fb63a3ed028d0b3",
-		"ko": "2fb63a3ed028d0b3"
+		"de": "dfd0bb419f8b7b00",
+		"es": "dfd0bb419f8b7b00",
+		"fr": "dfd0bb419f8b7b00",
+		"nl": "dfd0bb419f8b7b00",
+		"pt": "dfd0bb419f8b7b00",
+		"pt-BR": "dfd0bb419f8b7b00",
+		"ru": "dfd0bb419f8b7b00",
+		"sv": "dfd0bb419f8b7b00",
+		"ja": "dfd0bb419f8b7b00",
+		"ko": "dfd0bb419f8b7b00"
 	},
 	"flirtual:watch.sign_in_title": {
 		"de": "b8d04cfc7b642c91",
@@ -25753,16 +26316,16 @@
 		"ko": "f483932d9c52a37f"
 	},
 	"flirtual:watch.unreachable": {
-		"de": "999f3114b81f4982",
-		"es": "999f3114b81f4982",
-		"fr": "999f3114b81f4982",
-		"nl": "999f3114b81f4982",
-		"pt": "999f3114b81f4982",
-		"pt-BR": "999f3114b81f4982",
-		"ru": "999f3114b81f4982",
-		"sv": "999f3114b81f4982",
-		"ja": "999f3114b81f4982",
-		"ko": "999f3114b81f4982"
+		"de": "6fc951e3ca0df2e4",
+		"es": "6fc951e3ca0df2e4",
+		"fr": "6fc951e3ca0df2e4",
+		"nl": "6fc951e3ca0df2e4",
+		"pt": "6fc951e3ca0df2e4",
+		"pt-BR": "6fc951e3ca0df2e4",
+		"ru": "6fc951e3ca0df2e4",
+		"sv": "6fc951e3ca0df2e4",
+		"ja": "6fc951e3ca0df2e4",
+		"ko": "6fc951e3ca0df2e4"
 	},
 	"flirtual:watch.unreachable_detail": {
 		"de": "52b4a8b3f479e9b6",
@@ -25777,16 +26340,16 @@
 		"ko": "52b4a8b3f479e9b6"
 	},
 	"flirtual:watch.unreachable_title": {
-		"de": "de7c1e228ca259a2",
-		"es": "de7c1e228ca259a2",
-		"fr": "de7c1e228ca259a2",
-		"nl": "de7c1e228ca259a2",
-		"pt": "de7c1e228ca259a2",
-		"pt-BR": "de7c1e228ca259a2",
-		"ru": "de7c1e228ca259a2",
-		"sv": "de7c1e228ca259a2",
-		"ja": "de7c1e228ca259a2",
-		"ko": "de7c1e228ca259a2"
+		"de": "5651e7dcbbbb1589",
+		"es": "5651e7dcbbbb1589",
+		"fr": "5651e7dcbbbb1589",
+		"nl": "5651e7dcbbbb1589",
+		"pt": "5651e7dcbbbb1589",
+		"pt-BR": "5651e7dcbbbb1589",
+		"ru": "5651e7dcbbbb1589",
+		"sv": "5651e7dcbbbb1589",
+		"ja": "5651e7dcbbbb1589",
+		"ko": "5651e7dcbbbb1589"
 	},
 	"flirtual:watch.unread": {
 		"de": "b880e3dbc82e587d",
@@ -25837,16 +26400,16 @@
 		"ko": "41eb7d96fbd3a845"
 	},
 	"flirtual:welcome_to_flirtual": {
-		"de": "76bfd876232cfefa",
-		"es": "76bfd876232cfefa",
-		"fr": "76bfd876232cfefa",
-		"nl": "76bfd876232cfefa",
-		"pt": "76bfd876232cfefa",
-		"pt-BR": "76bfd876232cfefa",
-		"ru": "76bfd876232cfefa",
-		"sv": "76bfd876232cfefa",
-		"ja": "76bfd876232cfefa",
-		"ko": "76bfd876232cfefa"
+		"de": "99b0067c12ac0273",
+		"es": "99b0067c12ac0273",
+		"fr": "99b0067c12ac0273",
+		"nl": "99b0067c12ac0273",
+		"pt": "99b0067c12ac0273",
+		"pt-BR": "99b0067c12ac0273",
+		"ru": "99b0067c12ac0273",
+		"sv": "99b0067c12ac0273",
+		"ja": "99b0067c12ac0273",
+		"ko": "99b0067c12ac0273"
 	},
 	"flirtual:x": {
 		"de": "de9e4020d0fe7c98",
@@ -26017,28 +26580,28 @@
 		"ko": "ed2ab6978b8806bf"
 	},
 	"notifications:deletion_reminder_670.body_html": {
-		"de": "8603e7740fc86239",
-		"es": "8603e7740fc86239",
-		"fr": "8603e7740fc86239",
-		"nl": "8603e7740fc86239",
-		"pt": "8603e7740fc86239",
-		"pt-BR": "8603e7740fc86239",
-		"ru": "8603e7740fc86239",
-		"sv": "8603e7740fc86239",
-		"ja": "8603e7740fc86239",
-		"ko": "8603e7740fc86239"
+		"de": "e4e12d981929a722",
+		"es": "e4e12d981929a722",
+		"fr": "e4e12d981929a722",
+		"nl": "e4e12d981929a722",
+		"pt": "e4e12d981929a722",
+		"pt-BR": "e4e12d981929a722",
+		"ru": "e4e12d981929a722",
+		"sv": "e4e12d981929a722",
+		"ja": "e4e12d981929a722",
+		"ko": "e4e12d981929a722"
 	},
 	"notifications:deletion_reminder_670.body_text": {
-		"de": "e6388951aa817d82",
-		"es": "e6388951aa817d82",
-		"fr": "e6388951aa817d82",
-		"nl": "e6388951aa817d82",
-		"pt": "e6388951aa817d82",
-		"pt-BR": "e6388951aa817d82",
-		"ru": "e6388951aa817d82",
-		"sv": "e6388951aa817d82",
-		"ja": "e6388951aa817d82",
-		"ko": "e6388951aa817d82"
+		"de": "c484f054011ca96e",
+		"es": "c484f054011ca96e",
+		"fr": "c484f054011ca96e",
+		"nl": "c484f054011ca96e",
+		"pt": "c484f054011ca96e",
+		"pt-BR": "c484f054011ca96e",
+		"ru": "c484f054011ca96e",
+		"sv": "c484f054011ca96e",
+		"ja": "c484f054011ca96e",
+		"ko": "c484f054011ca96e"
 	},
 	"notifications:deletion_reminder_670.push_message": {
 		"de": "b1fdce13c41d4cbd",
@@ -26065,40 +26628,40 @@
 		"ko": "d4efc4b98fda0244"
 	},
 	"notifications:deletion_reminder_670.subject": {
-		"de": "fc328a32d0a2fc49",
-		"es": "fc328a32d0a2fc49",
-		"fr": "fc328a32d0a2fc49",
-		"nl": "fc328a32d0a2fc49",
-		"pt": "fc328a32d0a2fc49",
-		"pt-BR": "fc328a32d0a2fc49",
-		"ru": "fc328a32d0a2fc49",
-		"sv": "fc328a32d0a2fc49",
-		"ja": "fc328a32d0a2fc49",
-		"ko": "fc328a32d0a2fc49"
+		"de": "fd91a8bb74e9922d",
+		"es": "fd91a8bb74e9922d",
+		"fr": "fd91a8bb74e9922d",
+		"nl": "fd91a8bb74e9922d",
+		"pt": "fd91a8bb74e9922d",
+		"pt-BR": "fd91a8bb74e9922d",
+		"ru": "fd91a8bb74e9922d",
+		"sv": "fd91a8bb74e9922d",
+		"ja": "fd91a8bb74e9922d",
+		"ko": "fd91a8bb74e9922d"
 	},
 	"notifications:deletion_reminder_700.body_html": {
-		"de": "60ab4ec87dd81eff",
-		"es": "60ab4ec87dd81eff",
-		"fr": "60ab4ec87dd81eff",
-		"nl": "60ab4ec87dd81eff",
-		"pt": "60ab4ec87dd81eff",
-		"pt-BR": "60ab4ec87dd81eff",
-		"ru": "60ab4ec87dd81eff",
-		"sv": "60ab4ec87dd81eff",
-		"ja": "60ab4ec87dd81eff",
-		"ko": "60ab4ec87dd81eff"
+		"de": "649458e0421c206a",
+		"es": "649458e0421c206a",
+		"fr": "649458e0421c206a",
+		"nl": "649458e0421c206a",
+		"pt": "649458e0421c206a",
+		"pt-BR": "649458e0421c206a",
+		"ru": "649458e0421c206a",
+		"sv": "649458e0421c206a",
+		"ja": "649458e0421c206a",
+		"ko": "649458e0421c206a"
 	},
 	"notifications:deletion_reminder_700.body_text": {
-		"de": "6d40684f3c07ebe8",
-		"es": "6d40684f3c07ebe8",
-		"fr": "6d40684f3c07ebe8",
-		"nl": "6d40684f3c07ebe8",
-		"pt": "6d40684f3c07ebe8",
-		"pt-BR": "6d40684f3c07ebe8",
-		"ru": "6d40684f3c07ebe8",
-		"sv": "6d40684f3c07ebe8",
-		"ja": "6d40684f3c07ebe8",
-		"ko": "6d40684f3c07ebe8"
+		"de": "5356c6fd50a492c1",
+		"es": "5356c6fd50a492c1",
+		"fr": "5356c6fd50a492c1",
+		"nl": "5356c6fd50a492c1",
+		"pt": "5356c6fd50a492c1",
+		"pt-BR": "5356c6fd50a492c1",
+		"ru": "5356c6fd50a492c1",
+		"sv": "5356c6fd50a492c1",
+		"ja": "5356c6fd50a492c1",
+		"ko": "5356c6fd50a492c1"
 	},
 	"notifications:deletion_reminder_700.push_message": {
 		"de": "df14de59b8e716d4",
@@ -26113,52 +26676,52 @@
 		"ko": "df14de59b8e716d4"
 	},
 	"notifications:deletion_reminder_700.push_title": {
-		"de": "1623ebed446039e8",
-		"es": "1623ebed446039e8",
-		"fr": "1623ebed446039e8",
-		"nl": "1623ebed446039e8",
-		"pt": "1623ebed446039e8",
-		"pt-BR": "1623ebed446039e8",
-		"ru": "1623ebed446039e8",
-		"sv": "1623ebed446039e8",
-		"ja": "1623ebed446039e8",
-		"ko": "1623ebed446039e8"
+		"de": "05bc3c3a19d29eaa",
+		"es": "05bc3c3a19d29eaa",
+		"fr": "05bc3c3a19d29eaa",
+		"nl": "05bc3c3a19d29eaa",
+		"pt": "05bc3c3a19d29eaa",
+		"pt-BR": "05bc3c3a19d29eaa",
+		"ru": "05bc3c3a19d29eaa",
+		"sv": "05bc3c3a19d29eaa",
+		"ja": "05bc3c3a19d29eaa",
+		"ko": "05bc3c3a19d29eaa"
 	},
 	"notifications:deletion_reminder_700.subject": {
-		"de": "316dbb5fc6f4612e",
-		"es": "316dbb5fc6f4612e",
-		"fr": "316dbb5fc6f4612e",
-		"nl": "316dbb5fc6f4612e",
-		"pt": "316dbb5fc6f4612e",
-		"pt-BR": "316dbb5fc6f4612e",
-		"ru": "316dbb5fc6f4612e",
-		"sv": "316dbb5fc6f4612e",
-		"ja": "316dbb5fc6f4612e",
-		"ko": "316dbb5fc6f4612e"
+		"de": "512e681dd72f5785",
+		"es": "512e681dd72f5785",
+		"fr": "512e681dd72f5785",
+		"nl": "512e681dd72f5785",
+		"pt": "512e681dd72f5785",
+		"pt-BR": "512e681dd72f5785",
+		"ru": "512e681dd72f5785",
+		"sv": "512e681dd72f5785",
+		"ja": "512e681dd72f5785",
+		"ko": "512e681dd72f5785"
 	},
 	"notifications:deletion_reminder_723.body_html": {
-		"de": "7dc141ef18ea46e4",
-		"es": "7dc141ef18ea46e4",
-		"fr": "7dc141ef18ea46e4",
-		"nl": "7dc141ef18ea46e4",
-		"pt": "7dc141ef18ea46e4",
-		"pt-BR": "7dc141ef18ea46e4",
-		"ru": "7dc141ef18ea46e4",
-		"sv": "7dc141ef18ea46e4",
-		"ja": "7dc141ef18ea46e4",
-		"ko": "7dc141ef18ea46e4"
+		"de": "33e865d766694cc0",
+		"es": "33e865d766694cc0",
+		"fr": "33e865d766694cc0",
+		"nl": "33e865d766694cc0",
+		"pt": "33e865d766694cc0",
+		"pt-BR": "33e865d766694cc0",
+		"ru": "33e865d766694cc0",
+		"sv": "33e865d766694cc0",
+		"ja": "33e865d766694cc0",
+		"ko": "33e865d766694cc0"
 	},
 	"notifications:deletion_reminder_723.body_text": {
-		"de": "4ef398b850a73908",
-		"es": "4ef398b850a73908",
-		"fr": "4ef398b850a73908",
-		"nl": "4ef398b850a73908",
-		"pt": "4ef398b850a73908",
-		"pt-BR": "4ef398b850a73908",
-		"ru": "4ef398b850a73908",
-		"sv": "4ef398b850a73908",
-		"ja": "4ef398b850a73908",
-		"ko": "4ef398b850a73908"
+		"de": "f4b863e549679dbe",
+		"es": "f4b863e549679dbe",
+		"fr": "f4b863e549679dbe",
+		"nl": "f4b863e549679dbe",
+		"pt": "f4b863e549679dbe",
+		"pt-BR": "f4b863e549679dbe",
+		"ru": "f4b863e549679dbe",
+		"sv": "f4b863e549679dbe",
+		"ja": "f4b863e549679dbe",
+		"ko": "f4b863e549679dbe"
 	},
 	"notifications:deletion_reminder_723.push_message": {
 		"de": "b773042fccf731ff",
@@ -26173,28 +26736,28 @@
 		"ko": "b773042fccf731ff"
 	},
 	"notifications:deletion_reminder_723.push_title": {
-		"de": "59d88eb766be942e",
-		"es": "59d88eb766be942e",
-		"fr": "59d88eb766be942e",
-		"nl": "59d88eb766be942e",
-		"pt": "59d88eb766be942e",
-		"pt-BR": "59d88eb766be942e",
-		"ru": "59d88eb766be942e",
-		"sv": "59d88eb766be942e",
-		"ja": "59d88eb766be942e",
-		"ko": "59d88eb766be942e"
+		"de": "bd8e414d2f19fe16",
+		"es": "bd8e414d2f19fe16",
+		"fr": "bd8e414d2f19fe16",
+		"nl": "bd8e414d2f19fe16",
+		"pt": "bd8e414d2f19fe16",
+		"pt-BR": "bd8e414d2f19fe16",
+		"ru": "bd8e414d2f19fe16",
+		"sv": "bd8e414d2f19fe16",
+		"ja": "bd8e414d2f19fe16",
+		"ko": "bd8e414d2f19fe16"
 	},
 	"notifications:deletion_reminder_723.subject": {
-		"de": "b2d6bf56754db79c",
-		"es": "b2d6bf56754db79c",
-		"fr": "b2d6bf56754db79c",
-		"nl": "b2d6bf56754db79c",
-		"pt": "b2d6bf56754db79c",
-		"pt-BR": "b2d6bf56754db79c",
-		"ru": "b2d6bf56754db79c",
-		"sv": "b2d6bf56754db79c",
-		"ja": "b2d6bf56754db79c",
-		"ko": "b2d6bf56754db79c"
+		"de": "a63092d3a283b8cd",
+		"es": "a63092d3a283b8cd",
+		"fr": "a63092d3a283b8cd",
+		"nl": "a63092d3a283b8cd",
+		"pt": "a63092d3a283b8cd",
+		"pt-BR": "a63092d3a283b8cd",
+		"ru": "a63092d3a283b8cd",
+		"sv": "a63092d3a283b8cd",
+		"ja": "a63092d3a283b8cd",
+		"ko": "a63092d3a283b8cd"
 	},
 	"notifications:discord": {
 		"de": "20654e0686924093",
@@ -26209,28 +26772,28 @@
 		"ko": "20654e0686924093"
 	},
 	"notifications:email_changed.body_html": {
-		"de": "718d5267ffaf58cd",
-		"es": "718d5267ffaf58cd",
-		"fr": "718d5267ffaf58cd",
-		"nl": "718d5267ffaf58cd",
-		"pt": "718d5267ffaf58cd",
-		"pt-BR": "718d5267ffaf58cd",
-		"ru": "718d5267ffaf58cd",
-		"sv": "718d5267ffaf58cd",
-		"ja": "718d5267ffaf58cd",
-		"ko": "718d5267ffaf58cd"
+		"de": "a8ff80d4624d4eb2",
+		"es": "a8ff80d4624d4eb2",
+		"fr": "a8ff80d4624d4eb2",
+		"nl": "a8ff80d4624d4eb2",
+		"pt": "a8ff80d4624d4eb2",
+		"pt-BR": "a8ff80d4624d4eb2",
+		"ru": "a8ff80d4624d4eb2",
+		"sv": "a8ff80d4624d4eb2",
+		"ja": "a8ff80d4624d4eb2",
+		"ko": "a8ff80d4624d4eb2"
 	},
 	"notifications:email_changed.body_text": {
-		"de": "e5da9f706f8e335d",
-		"es": "e5da9f706f8e335d",
-		"fr": "e5da9f706f8e335d",
-		"nl": "e5da9f706f8e335d",
-		"pt": "e5da9f706f8e335d",
-		"pt-BR": "e5da9f706f8e335d",
-		"ru": "e5da9f706f8e335d",
-		"sv": "e5da9f706f8e335d",
-		"ja": "e5da9f706f8e335d",
-		"ko": "e5da9f706f8e335d"
+		"de": "440b19c62e5354d6",
+		"es": "440b19c62e5354d6",
+		"fr": "440b19c62e5354d6",
+		"nl": "440b19c62e5354d6",
+		"pt": "440b19c62e5354d6",
+		"pt-BR": "440b19c62e5354d6",
+		"ru": "440b19c62e5354d6",
+		"sv": "440b19c62e5354d6",
+		"ja": "440b19c62e5354d6",
+		"ko": "440b19c62e5354d6"
 	},
 	"notifications:email_changed.subject": {
 		"de": "1b0ab0d24f204efd",
@@ -26365,28 +26928,28 @@
 		"ko": "5aa76f99eb5fd5b8"
 	},
 	"notifications:password_changed.body_html": {
-		"de": "075c7b195bbf025f",
-		"es": "075c7b195bbf025f",
-		"fr": "075c7b195bbf025f",
-		"nl": "075c7b195bbf025f",
-		"pt": "075c7b195bbf025f",
-		"pt-BR": "075c7b195bbf025f",
-		"ru": "075c7b195bbf025f",
-		"sv": "075c7b195bbf025f",
-		"ja": "075c7b195bbf025f",
-		"ko": "075c7b195bbf025f"
+		"de": "d62d0ccf997562c1",
+		"es": "d62d0ccf997562c1",
+		"fr": "d62d0ccf997562c1",
+		"nl": "d62d0ccf997562c1",
+		"pt": "d62d0ccf997562c1",
+		"pt-BR": "d62d0ccf997562c1",
+		"ru": "d62d0ccf997562c1",
+		"sv": "d62d0ccf997562c1",
+		"ja": "d62d0ccf997562c1",
+		"ko": "d62d0ccf997562c1"
 	},
 	"notifications:password_changed.body_text": {
-		"de": "87263686c78ee3f8",
-		"es": "87263686c78ee3f8",
-		"fr": "87263686c78ee3f8",
-		"nl": "87263686c78ee3f8",
-		"pt": "87263686c78ee3f8",
-		"pt-BR": "87263686c78ee3f8",
-		"ru": "87263686c78ee3f8",
-		"sv": "87263686c78ee3f8",
-		"ja": "87263686c78ee3f8",
-		"ko": "87263686c78ee3f8"
+		"de": "3146a81bc0a76a97",
+		"es": "3146a81bc0a76a97",
+		"fr": "3146a81bc0a76a97",
+		"nl": "3146a81bc0a76a97",
+		"pt": "3146a81bc0a76a97",
+		"pt-BR": "3146a81bc0a76a97",
+		"ru": "3146a81bc0a76a97",
+		"sv": "3146a81bc0a76a97",
+		"ja": "3146a81bc0a76a97",
+		"ko": "3146a81bc0a76a97"
 	},
 	"notifications:password_changed.subject": {
 		"de": "5aa6b47a36ce0294",
@@ -26485,40 +27048,40 @@
 		"ko": "425887af585974a5"
 	},
 	"notifications:suspended.body_html": {
-		"de": "bd22a97486536f68",
-		"es": "bd22a97486536f68",
-		"fr": "bd22a97486536f68",
-		"nl": "bd22a97486536f68",
-		"pt": "bd22a97486536f68",
-		"pt-BR": "bd22a97486536f68",
-		"ru": "bd22a97486536f68",
-		"sv": "bd22a97486536f68",
-		"ja": "bd22a97486536f68",
-		"ko": "bd22a97486536f68"
+		"de": "d17776670860da37",
+		"es": "d17776670860da37",
+		"fr": "d17776670860da37",
+		"nl": "d17776670860da37",
+		"pt": "d17776670860da37",
+		"pt-BR": "d17776670860da37",
+		"ru": "d17776670860da37",
+		"sv": "d17776670860da37",
+		"ja": "d17776670860da37",
+		"ko": "d17776670860da37"
 	},
 	"notifications:suspended.body_text": {
-		"de": "86af9b062c76c840",
-		"es": "86af9b062c76c840",
-		"fr": "86af9b062c76c840",
-		"nl": "86af9b062c76c840",
-		"pt": "86af9b062c76c840",
-		"pt-BR": "86af9b062c76c840",
-		"ru": "86af9b062c76c840",
-		"sv": "86af9b062c76c840",
-		"ja": "86af9b062c76c840",
-		"ko": "86af9b062c76c840"
+		"de": "ae4c215650e6f089",
+		"es": "ae4c215650e6f089",
+		"fr": "ae4c215650e6f089",
+		"nl": "ae4c215650e6f089",
+		"pt": "ae4c215650e6f089",
+		"pt-BR": "ae4c215650e6f089",
+		"ru": "ae4c215650e6f089",
+		"sv": "ae4c215650e6f089",
+		"ja": "ae4c215650e6f089",
+		"ko": "ae4c215650e6f089"
 	},
 	"notifications:suspended.reason.underage": {
-		"de": "92b5b75157cf7aa1",
-		"es": "92b5b75157cf7aa1",
-		"fr": "92b5b75157cf7aa1",
-		"nl": "92b5b75157cf7aa1",
-		"pt": "92b5b75157cf7aa1",
-		"pt-BR": "92b5b75157cf7aa1",
-		"ru": "92b5b75157cf7aa1",
-		"sv": "92b5b75157cf7aa1",
-		"ja": "92b5b75157cf7aa1",
-		"ko": "92b5b75157cf7aa1"
+		"de": "1fe6a27fa0e729e3",
+		"es": "1fe6a27fa0e729e3",
+		"fr": "1fe6a27fa0e729e3",
+		"nl": "1fe6a27fa0e729e3",
+		"pt": "1fe6a27fa0e729e3",
+		"pt-BR": "1fe6a27fa0e729e3",
+		"ru": "1fe6a27fa0e729e3",
+		"sv": "1fe6a27fa0e729e3",
+		"ja": "1fe6a27fa0e729e3",
+		"ko": "1fe6a27fa0e729e3"
 	},
 	"notifications:suspended.subject": {
 		"de": "2354cb97f23a49dc",
@@ -26533,16 +27096,16 @@
 		"ko": "2354cb97f23a49dc"
 	},
 	"notifications:this_week_1_person_liked_you": {
-		"de": "554e15c966a2a87b",
-		"es": "554e15c966a2a87b",
-		"fr": "554e15c966a2a87b",
-		"nl": "554e15c966a2a87b",
-		"pt": "554e15c966a2a87b",
-		"pt-BR": "554e15c966a2a87b",
-		"ru": "554e15c966a2a87b",
-		"sv": "554e15c966a2a87b",
-		"ja": "554e15c966a2a87b",
-		"ko": "554e15c966a2a87b"
+		"de": "2658f01e136aa94f",
+		"es": "2658f01e136aa94f",
+		"fr": "2658f01e136aa94f",
+		"nl": "2658f01e136aa94f",
+		"pt": "2658f01e136aa94f",
+		"pt-BR": "2658f01e136aa94f",
+		"ru": "2658f01e136aa94f",
+		"sv": "2658f01e136aa94f",
+		"ja": "2658f01e136aa94f",
+		"ko": "2658f01e136aa94f"
 	},
 	"notifications:unsubscribe": {
 		"de": "ed1372ad165aa9bb",
@@ -26557,40 +27120,40 @@
 		"ko": "ed1372ad165aa9bb"
 	},
 	"notifications:verification_code.body_html": {
-		"de": "e24c11fce9f8d9f1",
-		"es": "e24c11fce9f8d9f1",
-		"fr": "e24c11fce9f8d9f1",
-		"nl": "e24c11fce9f8d9f1",
-		"pt": "e24c11fce9f8d9f1",
-		"pt-BR": "e24c11fce9f8d9f1",
-		"ru": "e24c11fce9f8d9f1",
-		"sv": "e24c11fce9f8d9f1",
-		"ja": "e24c11fce9f8d9f1",
-		"ko": "e24c11fce9f8d9f1"
+		"de": "87e685676dda2fbd",
+		"es": "87e685676dda2fbd",
+		"fr": "87e685676dda2fbd",
+		"nl": "87e685676dda2fbd",
+		"pt": "87e685676dda2fbd",
+		"pt-BR": "87e685676dda2fbd",
+		"ru": "87e685676dda2fbd",
+		"sv": "87e685676dda2fbd",
+		"ja": "87e685676dda2fbd",
+		"ko": "87e685676dda2fbd"
 	},
 	"notifications:verification_code.body_text": {
-		"de": "573b0d71b9346c40",
-		"es": "573b0d71b9346c40",
-		"fr": "573b0d71b9346c40",
-		"nl": "573b0d71b9346c40",
-		"pt": "573b0d71b9346c40",
-		"pt-BR": "573b0d71b9346c40",
-		"ru": "573b0d71b9346c40",
-		"sv": "573b0d71b9346c40",
-		"ja": "573b0d71b9346c40",
-		"ko": "573b0d71b9346c40"
+		"de": "d90f462a86daa6d6",
+		"es": "d90f462a86daa6d6",
+		"fr": "d90f462a86daa6d6",
+		"nl": "d90f462a86daa6d6",
+		"pt": "d90f462a86daa6d6",
+		"pt-BR": "d90f462a86daa6d6",
+		"ru": "d90f462a86daa6d6",
+		"sv": "d90f462a86daa6d6",
+		"ja": "d90f462a86daa6d6",
+		"ko": "d90f462a86daa6d6"
 	},
 	"notifications:verification_code.subject": {
-		"de": "002a208fe8f50ea9",
-		"es": "002a208fe8f50ea9",
-		"fr": "002a208fe8f50ea9",
-		"nl": "002a208fe8f50ea9",
-		"pt": "002a208fe8f50ea9",
-		"pt-BR": "002a208fe8f50ea9",
-		"ru": "002a208fe8f50ea9",
-		"sv": "002a208fe8f50ea9",
-		"ja": "002a208fe8f50ea9",
-		"ko": "002a208fe8f50ea9"
+		"de": "a6aa863e46c49353",
+		"es": "a6aa863e46c49353",
+		"fr": "a6aa863e46c49353",
+		"nl": "a6aa863e46c49353",
+		"pt": "a6aa863e46c49353",
+		"pt-BR": "a6aa863e46c49353",
+		"ru": "a6aa863e46c49353",
+		"sv": "a6aa863e46c49353",
+		"ja": "a6aa863e46c49353",
+		"ko": "a6aa863e46c49353"
 	},
 	"notifications:x": {
 		"de": "de9e4020d0fe7c98",

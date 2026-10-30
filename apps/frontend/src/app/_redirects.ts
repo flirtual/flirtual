@@ -1,7 +1,9 @@
 import { homieMode } from "~/features";
-import Bimi from "~/static/bimi.svg";
-import Favicon from "~/static/favicon.ico?no-inline";
+import Favicon from "~/static/mark.svg?w=48&h=48&fit=contain&background=transparent&format=png&no-inline&imagetools";
 import { urls } from "~/urls";
+
+// A brand without a BIMI logo leaves out static/bimi.svg.
+const [bimi] = Object.values(import.meta.glob<string>("~/static/bimi.svg", { eager: true, import: "default" }));
 
 // see: https://developers.cloudflare.com/workers/static-assets/redirects/
 
@@ -108,10 +110,7 @@ export const redirects = [
 		source: "/favicon.ico",
 		destination: Favicon
 	},
-	{
-		source: "/bimi.svg",
-		destination: Bimi
-	},
+	...(bimi ? [{ source: "/bimi.svg", destination: bimi }] : []),
 	{
 		source: "/reports",
 		destination: "/mod"

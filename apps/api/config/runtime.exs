@@ -46,6 +46,8 @@ environment_name =
     true -> config_env()
   end
 
+version = Env.get("VERSION", default: Env.get("GIT_COMMIT_SHA"))
+
 if Env.get("PHX_SERVER") && Env.get("RELEASE_NAME") do
   config :flirtual, FlirtualWeb.Endpoint, server: true
 end
@@ -55,7 +57,7 @@ config :flirtual,
        [
          {"x-flirtual-machine", Env.get("FLY_MACHINE_ID")},
          {"x-flirtual-region", Env.get("FLY_REGION")},
-         {"x-flirtual-version", Env.get("GIT_COMMIT_SHA")}
+         {"x-flirtual-version", version}
        ]
        |> Enum.reject(fn {_name, value} -> value in [nil, ""] end)
 
@@ -473,7 +475,7 @@ if sentry_dsn do
   config :sentry,
     dsn: sentry_dsn,
     environment_name: environment_name,
-    release: Env.get("GIT_COMMIT_SHA"),
+    release: version,
     traces_sample_rate: traces_sample_rate,
     enable_logs: enable_logs?,
     integrations: [
