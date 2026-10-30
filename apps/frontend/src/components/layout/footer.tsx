@@ -10,6 +10,7 @@ import {
 } from "~/components/icons";
 import type { IconComponent } from "~/components/icons";
 import { freshworksWidgetId, version } from "~/const";
+import { events, news, press } from "~/features";
 import { useDialog } from "~/hooks/use-dialog";
 import type { Theme } from "~/hooks/use-theme";
 import { urls } from "~/urls";
@@ -150,7 +151,7 @@ export const Footer: React.FC<FooterProps> = ({
 				</div>
 				<div className="grid max-w-screen-desktop grid-cols-3 gap-x-4 desktop:justify-center">
 					<ul>
-						<FooterListLink href={urls.resources.events} label={t("events")} />
+						{events && <FooterListLink href={urls.resources.events} label={t("events")} />}
 						{freshworksWidgetId && <FooterSupportLink />}
 						{urls.socials.discord && (
 							<FooterListLink
@@ -161,14 +162,16 @@ export const Footer: React.FC<FooterProps> = ({
 								}}
 							/>
 						)}
-						<FooterListLink
-							href={urls.news}
-							label={t("updates")}
-						/>
+						{news && (
+							<FooterListLink
+								href={urls.news}
+								label={t("updates")}
+							/>
+						)}
 					</ul>
 					<ul>
 						<FooterListLink href={urls.resources.about} label={t("about")} />
-						<FooterListLink href={urls.resources.press} label={t("press")} />
+						{press && <FooterListLink href={urls.resources.press} label={t("press")} />}
 						<FooterListLink
 							href={urls.resources.branding}
 							label={t("branding")}

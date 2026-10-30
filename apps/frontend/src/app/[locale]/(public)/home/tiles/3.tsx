@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import { withSuspense } from "with-suspense";
 
 import { Image } from "~/components/image";
+import { press } from "~/features";
 import { useUserCount } from "~/hooks/use-user";
 import { useMessages } from "~/i18n";
 import AnimePair from "~/static/home/members/anime-pair.jpg";
@@ -112,19 +113,21 @@ export function Testimonial({ id }: TileProps) {
 					</div>
 				</div>
 			</div>
-			<div className="relative mx-auto flex max-h-full max-w-screen-wide flex-wrap items-center justify-around gap-8 p-8 before:absolute before:inset-0 before:bg-gradient-to-b before:from-transparent before:to-black-80 desktop:h-full desktop:max-w-none desktop:px-16 desktop:py-8 desktop:tall:max-w-screen-wide desktop:tall:before:bg-none">
-				{Object.values(brandNames).map((name, index) => (
-					<Image
-						key={name}
-						alt={name}
-						className="h-auto w-20 desktop:tall:w-32"
-						height={128}
-						src={brandImages[index]}
-						style={{ transitionDuration: `${index * 10}ms` }}
-						width={128}
-					/>
-				))}
-			</div>
+			{press && (
+				<div className="relative mx-auto flex max-h-full max-w-screen-wide flex-wrap items-center justify-around gap-8 p-8 before:absolute before:inset-0 before:bg-gradient-to-b before:from-transparent before:to-black-80 desktop:h-full desktop:max-w-none desktop:px-16 desktop:py-8 desktop:tall:max-w-screen-wide desktop:tall:before:bg-none">
+					{Object.values(brandNames).map((name, index) => (
+						<Image
+							key={name}
+							alt={name}
+							className="h-auto w-20 desktop:tall:w-32"
+							height={128}
+							src={brandImages[index]}
+							style={{ transitionDuration: `${index * 10}ms` }}
+							width={128}
+						/>
+					))}
+				</div>
+			)}
 		</Tile>
 	);
 }

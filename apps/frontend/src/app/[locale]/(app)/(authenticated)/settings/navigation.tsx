@@ -29,7 +29,7 @@ import { twMerge } from "tailwind-merge";
 import { InlineLink } from "~/components/inline-link";
 import { IdeasDialog } from "~/components/modals/ideas";
 import { freshworksWidgetId, version } from "~/const";
-import { personality } from "~/features";
+import { events, news, personality, press } from "~/features";
 import { useDevice } from "~/hooks/use-device";
 import { useDialog } from "~/hooks/use-dialog";
 import { useFreshworks } from "~/hooks/use-freshworks";
@@ -164,32 +164,37 @@ export const SettingsNavigation: FC = () => {
 						</NavigationLink>
 					</NavigationCategory>
 					<div className="desktop:hidden">
-						<NavigationCategory name={t("social")}>
-							<NavigationLink href={urls.resources.events}>
-								{t("events")}
-							</NavigationLink>
-							{urls.socials.discord && (
-								<NavigationLink href={urls.socials.discord}>
-									{t("discord_server")}
-								</NavigationLink>
-							)}
-							{urls.socials.vrchat && (
-								<NavigationLink href={urls.socials.vrchat}>
-									{t("vrchat_group")}
-								</NavigationLink>
-							)}
-							{urls.socials.x && <NavigationLink href={urls.socials.x}>{t("x")}</NavigationLink>}
-							{urls.socials.bluesky && (
-								<NavigationLink href={urls.socials.bluesky}>
-									{t("bluesky")}
-								</NavigationLink>
-							)}
-							{urls.socials.instagram && (
-								<NavigationLink href={urls.socials.instagram}>
-									{t("instagram")}
-								</NavigationLink>
-							)}
-						</NavigationCategory>
+						{(events || urls.socials.discord || urls.socials.vrchat || urls.socials.x
+							|| urls.socials.bluesky || urls.socials.instagram) && (
+							<NavigationCategory name={t("social")}>
+								{events && (
+									<NavigationLink href={urls.resources.events}>
+										{t("events")}
+									</NavigationLink>
+								)}
+								{urls.socials.discord && (
+									<NavigationLink href={urls.socials.discord}>
+										{t("discord_server")}
+									</NavigationLink>
+								)}
+								{urls.socials.vrchat && (
+									<NavigationLink href={urls.socials.vrchat}>
+										{t("vrchat_group")}
+									</NavigationLink>
+								)}
+								{urls.socials.x && <NavigationLink href={urls.socials.x}>{t("x")}</NavigationLink>}
+								{urls.socials.bluesky && (
+									<NavigationLink href={urls.socials.bluesky}>
+										{t("bluesky")}
+									</NavigationLink>
+								)}
+								{urls.socials.instagram && (
+									<NavigationLink href={urls.socials.instagram}>
+										{t("instagram")}
+									</NavigationLink>
+								)}
+							</NavigationCategory>
+						)}
 					</div>
 					<div className="desktop:hidden">
 						{(freshworksWidgetId || urls.socials.discord || urls.resources.networkStatus) && (
@@ -217,7 +222,7 @@ export const SettingsNavigation: FC = () => {
 					</div>
 					<div className="desktop:hidden">
 						<NavigationCategory name={t("info")}>
-							{nativeNavigation && (
+							{nativeNavigation && news && (
 								<NavigationLink href={urls.news}>
 									{t("updates")}
 								</NavigationLink>
@@ -225,9 +230,11 @@ export const SettingsNavigation: FC = () => {
 							<NavigationLink href={urls.resources.about}>
 								{t("about")}
 							</NavigationLink>
-							<NavigationLink href={urls.resources.press}>
-								{t("press")}
-							</NavigationLink>
+							{press && (
+								<NavigationLink href={urls.resources.press}>
+									{t("press")}
+								</NavigationLink>
+							)}
 							<NavigationLink href={urls.resources.branding}>
 								{t("branding")}
 							</NavigationLink>

@@ -20,6 +20,7 @@ import { twMerge } from "tailwind-merge";
 import { DiscordOutlineIcon } from "~/components/icons";
 import { Link } from "~/components/link";
 import { UserAvatar } from "~/components/user-avatar";
+import { news } from "~/features";
 import { useBreakpoint } from "~/hooks/use-breakpoint";
 import { useClickOutside } from "~/hooks/use-click-outside";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
@@ -136,10 +137,12 @@ export const NavigationItemProfile: FC = () => {
 								<Sparkles className="size-6 shrink-0" />
 								<span className="whitespace-nowrap">{t("premium")}</span>
 							</ProfileNavigationItem>
-							<ProfileNavigationItem href={urls.news}>
-								<Newspaper className="size-6 shrink-0" />
-								<span className="whitespace-nowrap">{t("updates")}</span>
-							</ProfileNavigationItem>
+							{news && (
+								<ProfileNavigationItem href={urls.news}>
+									<Newspaper className="size-6 shrink-0" />
+									<span className="whitespace-nowrap">{t("updates")}</span>
+								</ProfileNavigationItem>
+							)}
 							{urls.socials.discord && (
 								<ProfileNavigationItem href={urls.socials.discord}>
 									<DiscordOutlineIcon className="size-6 shrink-0" />

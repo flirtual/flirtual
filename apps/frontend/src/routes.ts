@@ -8,7 +8,7 @@ import {
 import type { RouteConfig, RouteConfigEntry } from "@react-router/dev/routes";
 
 import { finishStepDirectory, finishSteps } from "./app/[locale]/(app)/(authenticated)/finish/steps";
-import { homieMode, personality } from "./features";
+import { events, homieMode, news, personality, press } from "./features";
 
 const filePrefix = "./app/[locale]";
 
@@ -110,14 +110,14 @@ export default [
 				page("branding", "(app)/(public)/branding"),
 				page("confirm-email", "(app)/(public)/confirm-email"),
 				page("debugger", "(app)/(public)/debugger"),
-				page("news", "(app)/(public)/news"),
+				...(news ? [page("news", "(app)/(public)/news")] : []),
 				page("download", "(app)/(public)/download"),
-				page("events", "(app)/(public)/events"),
+				...(events ? [page("events", "(app)/(public)/events")] : []),
 				page("guidelines", "(app)/(public)/guidelines"),
 				page("guides", "(app)/(public)/guides"),
 				page("guides/mental-health", "(app)/(public)/guides/mental-health"),
 				page("payments", "(app)/(public)/payments"),
-				page("press", "(app)/(public)/press"),
+				...(press ? [page("press", "(app)/(public)/press")] : []),
 				page("privacy", "(app)/(public)/privacy"),
 				page("privacy-20230605", "(app)/(public)/privacy-20230605"),
 				page("terms", "(app)/(public)/terms"),

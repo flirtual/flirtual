@@ -70,7 +70,8 @@ vars, read separately by each app:
   (defaults in `config/runtime.exs`). Only the name, colours and background have defaults. `VITE_BRAND_ASSET_DOMAIN` and `VITE_BRAND_REPOSITORY_URL` (AGPL) are required; every
   other value is optional, and whatever links to an unset one must disappear, not break.
 - **Flags**: `VITE_FEATURE_*` → `src/features.ts`; `FEATURE_*` → `Flirtual.Features`. Homie Mode,
-  personality, VR tags (platform + game), VRChat, and the list of connection providers.
+  personality, VR tags (platform + game), VRChat, the list of connection providers, and (frontend
+  only) the events, news and press pages.
 - **The rule**: a flag gates what the UI offers and what new writes may use. It never shrinks a
   wire type or `Ecto.Enum` (queue kinds, connection types, advanced filter categories), because
   rows written before a flip must still load. Data in a disabled feature is ignored, not rejected

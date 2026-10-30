@@ -1,6 +1,7 @@
 import { Outlet } from "react-router";
 
 import { NewsDialog } from "~/components/modals/news";
+import { news } from "~/features";
 import { useSession } from "~/hooks/use-session";
 import { throwRedirect } from "~/redirect";
 import { urls } from "~/urls";
@@ -16,7 +17,7 @@ export default function OnboardedLayout() {
 	return (
 		<>
 			<Outlet />
-			<NewsDialog />
+			{news && <NewsDialog />}
 		</>
 	);
 }
