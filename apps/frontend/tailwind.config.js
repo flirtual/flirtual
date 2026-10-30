@@ -180,7 +180,18 @@ module.exports = {
 	plugins: [
 		require("@tailwindcss/forms"),
 		require("@tailwindcss/typography"),
-		require("tailwindcss-hocus"),
+		plugin(({ addVariant, matchVariant }) => {
+			// Hover, focus or press. A tap leaves :hover and :focus behind, so hover needs a pointer that
+			// can hover, focus must be visible, and touch comes from data-pressed (src/press.ts).
+			const pressed = ":is([data-pressed], :has([data-pressed]))";
+			for (const [suffix, focus] of [["", ":focus-visible"], ["-within", ":is(:focus-visible, :has(:focus-visible))"]]) {
+				addVariant(`hocus${suffix}`, ["@media (hover: hover) { &:hover }", `&${focus}`, `&${pressed}`]);
+				matchVariant(`group-hocus${suffix}`, (_, { modifier }) => {
+					const group = modifier ? `.group\\/${modifier}` : ".group";
+					return [`@media (hover: hover) { :merge(${group}):hover & }`, `:merge(${group})${focus} &`, `:merge(${group})${pressed} &`];
+				}, { values: { DEFAULT: "" } });
+			}
+		}),
 		require("tailwindcss-animate"),
 		require("tailwindcss-motion"),
 		plugin(({ addBase, addVariant, addComponents, addUtilities, theme }) => {

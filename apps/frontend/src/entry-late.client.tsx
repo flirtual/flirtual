@@ -13,6 +13,7 @@ import { isRedirectError } from "./redirect";
 import { initializeSocialLogin } from "./social-login";
 
 import "./hooks/use-back-button";
+import "./press";
 
 void setupMonitoring();
 void setupAnalytics();

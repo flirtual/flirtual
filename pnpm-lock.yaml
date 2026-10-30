@@ -692,9 +692,6 @@ importers:
       tailwindcss:
         specifier: 3.4.19
         version: 3.4.19(tsx@4.23.12)(yaml@2.9.1)
-      tailwindcss-hocus:
-        specifier: 0.0.7
-        version: 0.0.7(tailwindcss@3.4.19(tsx@4.23.12)(yaml@2.9.1))
       tailwindcss-motion:
         specifier: 1.1.1
         version: 1.1.1(tailwindcss@3.4.19(tsx@4.23.12)(yaml@2.9.1))
@@ -8760,11 +8757,6 @@ packages:
     resolution: {integrity: sha512-bl6mpH3T7I3UFxuvDEXLxy/VuFxBk5bbzplh7tXI68mwMokNYd1t9qPBHlnyTwfa4JGC4zP516I1hYYtQ/vspA==}
     peerDependencies:
       tailwindcss: '>=3.0.0 || insiders'
-
-  tailwindcss-hocus@0.0.7:
-    resolution: {integrity: sha512-KY3jLlppAoPkCLRhDqbe503c1Ryq//G1bLQqFCZz1pnB0JFzHa3VK0bXvjTa8n/dwCxgkhi5uJm1d6gp8OzPhw==}
-    peerDependencies:
-      tailwindcss: ^3.0.0
 
   tailwindcss-motion@1.1.1:
     resolution: {integrity: sha512-CeeQAc5o31BuEPMyWdq/786X7QWNeifa+8khfu74Fs8lGkgEwjNYv6dGv+lRFS8FWXV5dp7F3AU9JjBXjiaQfw==}
@@ -18015,10 +18007,6 @@ snapshots:
   tailwind-merge@3.7.0: {}
 
   tailwindcss-animate@1.0.7(tailwindcss@3.4.19(tsx@4.23.12)(yaml@2.9.1)):
-    dependencies:
-      tailwindcss: 3.4.19(tsx@4.23.12)(yaml@2.9.1)
-
-  tailwindcss-hocus@0.0.7(tailwindcss@3.4.19(tsx@4.23.12)(yaml@2.9.1)):
     dependencies:
       tailwindcss: 3.4.19(tsx@4.23.12)(yaml@2.9.1)
 
