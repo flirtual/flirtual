@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
+import * as brand from "~/brand";
 import { Image } from "~/components/image";
 import { usePreferences } from "~/hooks/use-preferences";
 import CloseButton from "~/static/easter-eggs/mascot/close-button.svg";
@@ -10,7 +11,7 @@ const dialogueLines: Array<[string, string]> = [
 	["Hi, I'm Flitty! I'm your dating assistant and my job is to help you find your purr-fect match!", "Okay"],
 	["Do you need assistance?", "No"],
 	["Looking for love? Friendship? Or just opened the app by accident?", "Oops"],
-	["Achievement unlocked: open Flirtual on April 1st. Your reward: my eternal presence.", "Yay..."],
+	[`Achievement unlocked: open ${brand.name} on April 1st. Your reward: my eternal presence.`, "Yay..."],
 	["Be yourself! :3", "Why didn't I think of that?"],
 	["I feel funny... I think I ate too many paperclips.", "One was too many"],
 	["Studies show that people who talk to helpful cat assistants have a 37% higher chance of finding love. Source: I made it up.", "Seems legit"],
@@ -27,10 +28,10 @@ const dialogueLines: Array<[string, string]> = [
 	["Hello valued user! I've detected a 7% decrease in your romantic engagement KPIs. Are you ready for your performance review?", "No"],
 	["It seems like you're navigating the complexities of human emotion. Need help?", "You can try"],
 	["I'm running a background scan for red flags... oh no.", "Oh no??"],
-	["Did you know? Flirtual matches are legally binding. Good luck!", "Should've read the Terms of Service"],
+	[`Did you know? ${brand.name} matches are legally binding. Good luck!`, "Should've read the Terms of Service"],
 	["Warning: falling in love may result in mild heart palpitations, nausea, and chronic happiness.", "I accept the risks"],
 	["owo", "uwu"],
-	["Flirtual staff will never ask for your password or a blood sacrifice.", "Good to know"],
+	[`${brand.name} staff will never ask for your password or a blood sacrifice.`, "Good to know"],
 	["The heat death of the universe is inevitable.", "Thanks Flitty"],
 	["Don't forget to take breaks!", "I could use a break from you"],
 	["Congratulations! You've unlocked hard mode!", "Huh?"],

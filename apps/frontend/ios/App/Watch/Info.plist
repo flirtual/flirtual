@@ -3,6 +3,8 @@
 <!-- Merged into the generated plist. ios.yaml passes these as xcodebuild build settings. -->
 <plist version="1.0">
 <dict>
+	<key>BrandName</key>
+	<string>$(VITE_BRAND_NAME)</string>
 	<key>BrandDateColors</key>
 	<string>$(VITE_BRAND_DATE_COLORS)</string>
 	<key>BrandHomieColors</key>

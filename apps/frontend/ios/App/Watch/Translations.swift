@@ -51,10 +51,12 @@ final class Translations {
     }
 }
 
-// Like the web's t(), filling {placeholders} and empty <Trans> component tags with plain text.
+// Like the web's t(), filling {placeholders} and empty <Trans> component tags with plain text, and
+// {brand_name} everywhere, as src/i18n/index.tsx does.
 @MainActor
 func t(_ key: String, _ values: [String: String] = [:]) -> String {
-    values.reduce(Translations.shared.message(key) ?? key) { text, value in
+    let values = values.merging(["brand_name": Brand.name]) { value, _ in value }
+    return values.reduce(Translations.shared.message(key) ?? key) { text, value in
         ["{\(value.key)}", "<\(value.key)/>", "<\(value.key)></\(value.key)>"].reduce(text) {
             $0.replacingOccurrences(of: $1, with: value.value)
         }

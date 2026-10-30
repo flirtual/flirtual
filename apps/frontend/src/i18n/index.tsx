@@ -19,6 +19,7 @@ import type {
 	To
 } from "react-router";
 
+import * as brand from "~/brand";
 import { server } from "~/const";
 import { polyfillForLanguage } from "~/polyfill";
 import { isInternalHref } from "~/urls";
@@ -209,7 +210,8 @@ i18n
 		},
 
 		interpolation: {
-			escapeValue: false
+			escapeValue: false,
+			defaultVariables: { brand_name: brand.name }
 		},
 	});
 
