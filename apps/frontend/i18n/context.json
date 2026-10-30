@@ -9,7 +9,13 @@
 		"element": "email-body",
 		"description": "Explanation sent to a banned user. When a moderator bans someone, this text (in the banned user's own language) prefills the ban message, which is inserted after \"Reason:\" in the ban email and on the /banned page shown when the user logs in. It begins with a short restatement of the reason (\"Spam profile.\", \"Impersonation.\") that reads as the label after \"Reason:\", followed by sentences addressed to the banned user. \"Reply to this email\" refers to the ban email, even though the same text also appears on the /banned page.",
 		"tone": "Firm but polite, addressed directly to the banned user",
-		"hash": "c86174661a26ef14"
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
+		"hash": "49d17b9213b97e16"
 	},
 	"attributes:ban-reason.5H9nMhQacZBD9Zomu7Tbt9.name": {
 		"group": "attributes/ban-reason",
@@ -70,7 +76,13 @@
 		"element": "email-body",
 		"description": "Explanation sent to a banned user. When a moderator bans someone, this text (in the banned user's own language) prefills the ban message, which is inserted after \"Reason:\" in the ban email and on the /banned page shown when the user logs in. It begins with a short restatement of the reason (\"Spam profile.\", \"Impersonation.\") that reads as the label after \"Reason:\", followed by sentences addressed to the banned user. \"Reply to this email\" refers to the ban email, even though the same text also appears on the /banned page.",
 		"tone": "Firm but polite, addressed directly to the banned user",
-		"hash": "d5d700a4198f9b0b"
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
+		"hash": "b236d988f57f7e96"
 	},
 	"attributes:ban-reason.EVU7hHnv5u6eQwRBTW8aYU.name": {
 		"group": "attributes/ban-reason",
@@ -94,7 +106,13 @@
 		"element": "email-body",
 		"description": "Explanation sent to a banned user. When a moderator bans someone, this text (in the banned user's own language) prefills the ban message, which is inserted after \"Reason:\" in the ban email and on the /banned page shown when the user logs in. It begins with a short restatement of the reason (\"Spam profile.\", \"Impersonation.\") that reads as the label after \"Reason:\", followed by sentences addressed to the banned user. \"Reply to this email\" refers to the ban email, even though the same text also appears on the /banned page.",
 		"tone": "Firm but polite, addressed directly to the banned user",
-		"hash": "03e8e20d3b42d1e7"
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
+		"hash": "e437d02ee3d83bf6"
 	},
 	"attributes:ban-reason.hLwvdpKQiofFTCDHox75SY.name": {
 		"group": "attributes/ban-reason",
@@ -212,9 +230,15 @@
 			"dialog: Ban profile (moderators)"
 		],
 		"element": "email-body",
-		"description": "Explanation for an under-18 ban, inserted after \"Reason:\" in the ban email and on the /banned page. The same English also exists as the notifications string suspended.reason.underage (used for automatic underage bans); keep the two translations identical. \"Verify your age\" refers to Flirtual's in-app age verification flow.",
+		"description": "Explanation for an under-18 ban, inserted after \"Reason:\" in the ban email and on the /banned page. The same English also exists as the notifications string suspended.reason.underage (used for automatic underage bans); keep the two translations identical (that one writes the placeholder as %{brand_name}). \"Verify your age\" refers to the app's in-app age verification flow.",
 		"tone": "Firm but polite",
-		"hash": "92b5b75157cf7aa1"
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
+		"hash": "58fb95e13de15865"
 	},
 	"attributes:ban-reason.muXMqNjneKnwqxT8nqcy4d.name": {
 		"group": "attributes/ban-reason",
@@ -238,7 +262,13 @@
 		"element": "email-body",
 		"description": "Explanation sent to a banned user. When a moderator bans someone, this text (in the banned user's own language) prefills the ban message, which is inserted after \"Reason:\" in the ban email and on the /banned page shown when the user logs in. It begins with a short restatement of the reason (\"Spam profile.\", \"Impersonation.\") that reads as the label after \"Reason:\", followed by sentences addressed to the banned user. \"Reply to this email\" refers to the ban email, even though the same text also appears on the /banned page.",
 		"tone": "Firm but polite, addressed directly to the banned user",
-		"hash": "92b0b32319f5b7a6"
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
+		"hash": "490ef26759097dae"
 	},
 	"attributes:ban-reason.nupwCrjodUd4ZvPizEBc8L.name": {
 		"group": "attributes/ban-reason",
@@ -286,7 +316,13 @@
 		"element": "email-body",
 		"description": "Explanation sent to a banned user. When a moderator bans someone, this text (in the banned user's own language) prefills the ban message, which is inserted after \"Reason:\" in the ban email and on the /banned page shown when the user logs in. It begins with a short restatement of the reason (\"Spam profile.\", \"Impersonation.\") that reads as the label after \"Reason:\", followed by sentences addressed to the banned user. \"Reply to this email\" refers to the ban email, even though the same text also appears on the /banned page.",
 		"tone": "Firm but polite, addressed directly to the banned user",
-		"hash": "231f6c3da3e29201"
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
+		"hash": "589d7b3c7944c142"
 	},
 	"attributes:ban-reason.VgQw2st96dZKZotsnYUEaN.name": {
 		"group": "attributes/ban-reason",
@@ -425,9 +461,15 @@
 			"/settings/delete"
 		],
 		"element": "option",
-		"description": "Exit survey option: the user is leaving because they met a partner through Flirtual. \"Relationship\" means a romantic relationship. In the native apps, choosing it triggers the store's rate-this-app prompt.",
+		"description": "Exit survey option: the user is leaving because they met a partner through the app. \"Relationship\" means a romantic relationship. In the native apps, choosing it triggers the store's rate-this-app prompt.",
 		"lengthNote": "Single line in a dropdown; keep it short",
-		"hash": "04f57e52b1a13317"
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
+		"hash": "43250130f8b33957"
 	},
 	"attributes:delete-reason.kTXr4okVAGLovjKBiwSgnF.name": {
 		"group": "settings/delete-account",
@@ -15613,7 +15655,13 @@
 		"element": "dialog",
 		"description": "Default warning message a moderator sends to a user; it is delivered in the warned user's language and shown to them in a Trust & Safety dialog they must acknowledge. Addresses the warned user directly and tells them what to change on their profile or behavior.",
 		"tone": "Polite but firm; moderation notice",
-		"hash": "06e35861375b27cb"
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
+		"hash": "84ff9a33c4eb7d09"
 	},
 	"attributes:warn-reason.dC6h3tWeZueVwHGKLhC2sk.name": {
 		"group": "attributes/warn-reason",
@@ -15633,7 +15681,13 @@
 		"element": "dialog",
 		"description": "Warning about soliciting on a profile. \"References\" means mentions of (pointers to) paid/commercial services, not job or character references.",
 		"tone": "Polite but firm; moderation notice",
-		"hash": "2908225fbdbfc9e4"
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
+		"hash": "4b307f405ec7f672"
 	},
 	"attributes:warn-reason.f8v44XrBausmXe6XybTVHd.name": {
 		"group": "attributes/warn-reason",
@@ -15671,9 +15725,15 @@
 			"dialog: Trust & Safety warning"
 		],
 		"element": "dialog",
-		"description": "Warning telling the user to tone down sexual content in their bio. \"Kinks\" refers to sexual fetishes; \"kink tags\" are Flirtual's opt-in NSFW profile tags, and \"custom interests\" are free-form interest tags; both are edited in Settings, so match the names used in Settings.",
+		"description": "Warning telling the user to tone down sexual content in their bio. \"Kinks\" refers to sexual fetishes; \"kink tags\" are the app's opt-in NSFW profile tags, and \"custom interests\" are free-form interest tags; both are edited in Settings, so match the names used in Settings.",
 		"tone": "Polite but firm; moderation notice",
-		"hash": "73337c7f25de092b"
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
+		"hash": "ac4d666e25ac9f64"
 	},
 	"attributes:warn-reason.MjxDKasduf9iHTctStGzYA.name": {
 		"group": "attributes/warn-reason",
@@ -16252,8 +16312,14 @@
 		],
 		"element": "body",
 		"description": "Explanation under the \"blocked as underaged\" title on the full-screen age block card.",
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
 		"tone": "Serious, firm",
-		"hash": "82e472693cb0fc0d"
+		"hash": "fbe8798d810d85ce"
 	},
 	"flirtual:age_blocked_title": {
 		"group": "age-verification",
@@ -16282,7 +16348,13 @@
 		],
 		"element": "body",
 		"description": "Instructions on the age-check card on iPhone/iPad: the user has to share their age range with apps in the iOS Settings app, then tap \"Try again\". The path names real iOS Settings menu items, so match Apple's localized menu names; \"[your name]\" stands for the Apple Account name row at the top of Settings. Check your local version of Apple's docs for the exact navigation text: https://support.apple.com/122770",
-		"hash": "e9d6bc2f5e4c224c"
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
+		"hash": "f9ad3a94c827d932"
 	},
 	"flirtual:age_unresolved_google": {
 		"group": "age-verification",
@@ -16291,7 +16363,13 @@
 		],
 		"element": "body",
 		"description": "Instructions on the age-check card on Android: the user has to complete Google Play's own age verification, then tap \"Try again\". An \"Open Google Play\" button sits below.",
-		"hash": "85631edce0ffbba5"
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
+		"hash": "36a2d34ad59d8d3f"
 	},
 	"flirtual:age_unresolved_title": {
 		"group": "age-verification",
@@ -16349,8 +16427,14 @@
 			"/settings/nsfw"
 		],
 		"element": "option",
-		"description": "Visibility option in privacy dropdowns choosing who can see a piece of profile info (personality, sexuality, country, kinks): every logged-in Flirtual user.",
-		"hash": "ea7de9351c2cf94e"
+		"description": "Visibility option in privacy dropdowns choosing who can see a piece of profile info (personality, sexuality, country, kinks): every logged-in user of the app.",
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
+		"hash": "a58e488e292a8ad8"
 	},
 	"flirtual:app_store": {
 		"group": "download",
@@ -16596,8 +16680,14 @@
 		],
 		"element": "body",
 		"description": "Suspension reason shown on the account-suspended page when the account was suspended for possibly being under 18 and must verify age. Inserted after a bold \"Reason:\" prefix. \"Underaged.\" is a terse reason label followed by the explanation.",
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
 		"tone": "Formal, firm",
-		"hash": "994ed9e6cbd07fa8"
+		"hash": "e16cba99277775d2"
 	},
 	"flirtual:banned_verify_action": {
 		"group": "banned",
@@ -16667,7 +16757,13 @@
 		],
 		"element": "label",
 		"description": "Hint under the \"Bio\" field describing what makes a good profile biography.",
-		"hash": "6fa5ef7305efa8ff"
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
+		"hash": "485f8b75440bbd4c"
 	},
 	"flirtual:bio_pics": {
 		"group": "finish",
@@ -16797,7 +16893,13 @@
 		],
 		"element": "body",
 		"description": "Usage rule under the \"Mark only\" heading; \"these\" are the symbol-only logo files shown below it.",
-		"hash": "31b2b9c8b53fe8fc"
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
+		"hash": "a7235a9f02b582fc"
 	},
 	"flirtual:branding_intro": {
 		"group": "branding",
@@ -16818,8 +16920,14 @@
 		],
 		"element": "body",
 		"description": "Usage rule under the \"Our logo\" heading on the branding page.",
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
 		"tone": "Firm, formal",
-		"hash": "2299b3b2584a819e"
+		"hash": "9165c9610b9dcdf9"
 	},
 	"flirtual:branding_need_more": {
 		"group": "branding",
@@ -17240,7 +17348,13 @@
 		],
 		"element": "body",
 		"description": "Explanation under the accounts heading: linked usernames are shown only to people you've matched with, so you can meet up in VR; some linked accounts can also be used to log in. Discord, VRChat, Meta, Google and Apple are brand names.",
-		"hash": "93fa750272525344"
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
+		"hash": "e1c1a10a4a8b066c"
 	},
 	"flirtual:console_message": {
 		"group": "developer-console",
@@ -17249,8 +17363,14 @@
 		],
 		"element": "other",
 		"description": "Banner logged to the browser's developer console when the web app starts, aimed at developers who open the console. It's followed by the \"Translate\" and \"Source code\" lines with links.",
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
 		"tone": "Friendly, inviting",
-		"hash": "7d3d3267bafa7aad"
+		"hash": "985453046c265c47"
 	},
 	"flirtual:contact_us": {
 		"group": "support",
@@ -17359,14 +17479,18 @@
 			"dialog: error"
 		],
 		"element": "legal",
-		"description": "Copyright notice at the bottom of the settings list, the site footer and the error/maintenance screen. Keep the © symbol and the brand name Flirtual.",
+		"description": "Copyright notice at the bottom of the settings list, the site footer and the error/maintenance screen. Keep the © symbol and the order year then name unless your language's convention differs.",
 		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			},
 			"year": {
 				"meaning": "Current calendar year",
 				"example": "2026"
 			}
 		},
-		"hash": "7781a8a11e757ee9"
+		"hash": "3eeaeb32b3033ba4"
 	},
 	"flirtual:countries": {
 		"group": "settings/matchmaking",
@@ -17573,8 +17697,14 @@
 		],
 		"element": "body",
 		"description": "Paragraph on the dating \"Out of profiles\" card suggesting the user come back later or invite friends to grow the user base. Follows the filters suggestion, hence \"Or\".",
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
 		"tone": "Playful, joking aside (\"Wait…\")",
-		"hash": "6543afc5320246d4"
+		"hash": "1c7377b7a271a8de"
 	},
 	"flirtual:deactivate_account": {
 		"group": "settings/deactivate",
@@ -18322,7 +18452,13 @@
 		],
 		"element": "list-item",
 		"description": "Troubleshooting step in the list on the error dialog/error page (native apps only) and the \"taking longer than usual\" loading tips: fully quit the app and start it again. Imperative.",
-		"hash": "690d241cbe193dd1"
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
+		"hash": "af77838c14fcacf7"
 	},
 	"flirtual:error_tip_update_app": {
 		"group": "errors/troubleshooting",
@@ -18393,8 +18529,14 @@
 		],
 		"element": "error",
 		"description": "Shown under the date of birth field when the date entered makes the user (possibly) younger than 18.",
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
 		"tone": "Firm",
-		"hash": "82e472693cb0fc0d"
+		"hash": "fbe8798d810d85ce"
 	},
 	"flirtual:errors.are_still_associated_with_this_entry": {
 		"group": "errors/validation",
@@ -18492,8 +18634,14 @@
 			"toast"
 		],
 		"element": "error",
-		"description": "Error shown (in a toast, or in red at the top of the login/sign-up page after the redirect back) when logging in, signing up, or linking an account with a third-party provider (Google, Apple, Discord, Meta, VRChat): that external account is already linked to a different Flirtual account. \"Account\" in the first sentence means the external account (e.g. Discord).",
-		"hash": "4f58f1d335a8438b"
+		"description": "Error shown (in a toast, or in red at the top of the login/sign-up page after the redirect back) when logging in, signing up, or linking an account with a third-party provider (Google, Apple, Discord, Meta, VRChat): that external account is already linked to a different account in this app. \"Account\" in the first sentence means the external account (e.g. Discord); \"profile\" and \"account\" after the brand name mean the user's account in this app.",
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
+		"hash": "5338c102dfd26cb4"
 	},
 	"flirtual:errors.connection_no_account": {
 		"group": "errors/connections",
@@ -18501,8 +18649,14 @@
 			"/login"
 		],
 		"element": "error",
-		"description": "Error shown (in a toast, or in red at the top of the login/sign-up page after the redirect back) when logging in, signing up, or linking an account with a third-party provider (Google, Apple, Discord, Meta, VRChat): the user tried to log in with a provider that isn't linked to any Flirtual account.",
-		"hash": "c28677c1cd6b2732"
+		"description": "Error shown (in a toast, or in red at the top of the login/sign-up page after the redirect back) when the user tried to log in with a third-party provider (Google, Apple, Discord, Meta, VRChat) that isn't linked to any account in this app.",
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
+		"hash": "d03690578859ee6d"
 	},
 	"flirtual:errors.connection_verify_email": {
 		"group": "errors/connections",
@@ -19591,7 +19745,13 @@
 		],
 		"element": "other",
 		"description": "Clipboard label attached when the user copies error details from the crash/\"having issues\" screen (some systems show it as the copied item's name). The copied report itself stays in English.",
-		"hash": "edfafe46bfa232a5"
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
+		"hash": "6389e1fa9f3a435f"
 	},
 	"flirtual:flirtual_logo": {
 		"group": "common",
@@ -19600,8 +19760,14 @@
 			"/about"
 		],
 		"element": "alt-text",
-		"description": "Alt text of the Flirtual wordmark logo image wherever it appears.",
-		"hash": "eecd8245bf62848a"
+		"description": "Alt text of the app's wordmark logo image wherever it appears.",
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
+		"hash": "46b287bd3f2a5026"
 	},
 	"flirtual:flirtual_premium": {
 		"group": "premium",
@@ -19609,8 +19775,14 @@
 			"/subscription"
 		],
 		"element": "title",
-		"description": "Title of the subscription page card. \"Flirtual\" is the brand name; \"Premium\" is the name of the paid tier, translated consistently with other \"Premium\" strings.",
-		"hash": "a72eff1802df592b"
+		"description": "Title of the subscription page card: the paid tier's full product name. Translate \"Premium\" consistently with other \"Premium\" strings.",
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
+		"hash": "27ce2cd750498db5"
 	},
 	"flirtual:flitty_reactions.0": {
 		"group": "homepage/flitty",
@@ -19648,9 +19820,15 @@
 			"/"
 		],
 		"element": "toast",
-		"description": "Toast from Flitty, the homepage's cat mascot, shown on every 5th click on Flitty (who peeks above the Sign up / Start matching button). This is message 100 of 0-100, shown on click 501; the messages read as one running monologue. The final message, shown after 500 clicks. Keep 500. \"Win Flirtual\" is a mock prize.",
+		"description": "Toast from Flitty, the homepage's cat mascot, shown on every 5th click on Flitty (who peeks above the Sign up / Start matching button). This is message 100 of 0-100, shown on click 501; the messages read as one running monologue. The final message, shown after 500 clicks. Keep 500. Winning the app itself is a mock prize.",
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
-		"hash": "4d5441e992b197b0"
+		"hash": "1260cf7a51b4cf85"
 	},
 	"flirtual:flitty_reactions.11": {
 		"group": "homepage/flitty",
@@ -19689,8 +19867,14 @@
 		],
 		"element": "toast",
 		"description": "Toast from Flitty, the homepage's cat mascot, shown on every 5th click on Flitty (who peeks above the Sign up / Start matching button). This is message 14 of 0-100, shown on click 71; the messages read as one running monologue. \"Homie-ing\" is the gerund of the Homie action (friendship counterpart of Like).",
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
-		"hash": "5723f8a61471e299"
+		"hash": "959f2516fb71298c"
 	},
 	"flirtual:flitty_reactions.15": {
 		"group": "homepage/flitty",
@@ -19729,8 +19913,14 @@
 		],
 		"element": "toast",
 		"description": "Toast from Flitty, the homepage's cat mascot, shown on every 5th click on Flitty (who peeks above the Sign up / Start matching button). This is message 18 of 0-100, shown on click 91; the messages read as one running monologue. \"Ideas\" must match the translated footer link label (the `ideas` string).",
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
-		"hash": "edab39b45c56cd26"
+		"hash": "c3dfcccc81539ac3"
 	},
 	"flirtual:flitty_reactions.19": {
 		"group": "homepage/flitty",
@@ -19868,9 +20058,15 @@
 			"/"
 		],
 		"element": "toast",
-		"description": "Toast from Flitty, the homepage's cat mascot, shown on every 5th click on Flitty (who peeks above the Sign up / Start matching button). This is message 30 of 0-100, shown on click 151; the messages read as one running monologue. Promotes the Flirtual iOS/Android app.",
+		"description": "Toast from Flitty, the homepage's cat mascot, shown on every 5th click on Flitty (who peeks above the Sign up / Start matching button). This is message 30 of 0-100, shown on click 151; the messages read as one running monologue. Promotes the iOS/Android app.",
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
-		"hash": "acd7e7b91f3d9a57"
+		"hash": "46f1dc38cd987b4b"
 	},
 	"flirtual:flitty_reactions.31": {
 		"group": "homepage/flitty",
@@ -19959,8 +20155,14 @@
 		],
 		"element": "toast",
 		"description": "Toast from Flitty, the homepage's cat mascot, shown on every 5th click on Flitty (who peeks above the Sign up / Start matching button). This is message 39 of 0-100, shown on click 196; the messages read as one running monologue. \"Flashbanged\" is gamer slang for being blinded by a bright (white) screen. \"Dark Mode\" should match the app's `dark_mode` setting name.",
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
-		"hash": "6f8a25fba68ca32d"
+		"hash": "bff2794e00b8f936"
 	},
 	"flirtual:flitty_reactions.4": {
 		"group": "homepage/flitty",
@@ -20259,8 +20461,14 @@
 		],
 		"element": "toast",
 		"description": "Toast from Flitty, the homepage's cat mascot, shown on every 5th click on Flitty (who peeks above the Sign up / Start matching button). This is message 66 of 0-100, shown on click 331; the messages read as one running monologue. Continues the robots-from-the-future joke: Flitty claims to have seen the user's future.",
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
-		"hash": "5a47c7073c3306a8"
+		"hash": "1d1c7726c3a95682"
 	},
 	"flirtual:flitty_reactions.67": {
 		"group": "homepage/flitty",
@@ -20368,9 +20576,15 @@
 			"/"
 		],
 		"element": "toast",
-		"description": "Toast from Flitty, the homepage's cat mascot, shown on every 5th click on Flitty (who peeks above the Sign up / Start matching button). This is message 76 of 0-100, shown on click 381; the messages read as one running monologue. Ironic: the user is already on Flirtual's homepage.",
+		"description": "Toast from Flitty, the homepage's cat mascot, shown on every 5th click on Flitty (who peeks above the Sign up / Start matching button). This is message 76 of 0-100, shown on click 381; the messages read as one running monologue. Ironic: the visitor is already on the app's homepage.",
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
-		"hash": "b707c0cd1bd51328"
+		"hash": "12d9fbc322bda648"
 	},
 	"flirtual:flitty_reactions.77": {
 		"group": "homepage/flitty",
@@ -20379,8 +20593,14 @@
 		],
 		"element": "toast",
 		"description": "Toast from Flitty, the homepage's cat mascot, shown on every 5th click on Flitty (who peeks above the Sign up / Start matching button). This is message 77 of 0-100, shown on click 386; the messages read as one running monologue. Parody of advertising claims like \"9 out of 10 dentists recommend\".",
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
-		"hash": "c321b04e384d42e5"
+		"hash": "03c85a30764b0613"
 	},
 	"flirtual:flitty_reactions.78": {
 		"group": "homepage/flitty",
@@ -20389,8 +20609,14 @@
 		],
 		"element": "toast",
 		"description": "Toast from Flitty, the homepage's cat mascot, shown on every 5th click on Flitty (who peeks above the Sign up / Start matching button). This is message 78 of 0-100, shown on click 391; the messages read as one running monologue. Parody of drug ads (\"Ask your doctor if … is right for you\").",
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
-		"hash": "dd390283a27bc9e4"
+		"hash": "6a69614e7707777e"
 	},
 	"flirtual:flitty_reactions.79": {
 		"group": "homepage/flitty",
@@ -20489,8 +20715,14 @@
 		],
 		"element": "toast",
 		"description": "Toast from Flitty, the homepage's cat mascot, shown on every 5th click on Flitty (who peeks above the Sign up / Start matching button). This is message 87 of 0-100, shown on click 436; the messages read as one running monologue. Asks the user to go use the actual app.",
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
-		"hash": "7871be0ae650f6ca"
+		"hash": "10abde12086b3032"
 	},
 	"flirtual:flitty_reactions.88": {
 		"group": "homepage/flitty",
@@ -20579,8 +20811,14 @@
 		],
 		"element": "toast",
 		"description": "Toast from Flitty, the homepage's cat mascot, shown on every 5th click on Flitty (who peeks above the Sign up / Start matching button). This is message 95 of 0-100, shown on click 476; the messages read as one running monologue.",
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
 		"tone": "Playful, silly cat-mascot voice addressing the visitor",
-		"hash": "ab4c85c80f9f7edf"
+		"hash": "f669a7ff5660d2ec"
 	},
 	"flirtual:flitty_reactions.96": {
 		"group": "homepage/flitty",
@@ -20755,7 +20993,13 @@
 		],
 		"element": "body",
 		"description": "Hint under the \"VR apps/games\" label, explaining that the chosen games are not a limit on where matched users can meet in VR.",
-		"hash": "66c37e3236c68235"
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
+		"hash": "27e8baab58636184"
 	},
 	"flirtual:gender": {
 		"group": "profile/info",
@@ -20960,15 +21204,19 @@
 		"element": "label",
 		"description": "Hint next to the Language selector on the Appearance settings page, shown when the app is in a non-English language, inviting the user to help improve the translation into that language. Currently only visible to staff testers.",
 		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			},
 			"language": {
 				"meaning": "Name of the currently selected app language, already translated into that language",
 				"example": "Japanese"
 			}
 		},
 		"tags": {
-			"translateLink": "Link to this language's page on Flirtual's Weblate translation project; wraps the call-to-action word"
+			"translateLink": "Link to this language's page on the app's Weblate translation project; wraps the call-to-action word"
 		},
-		"hash": "bbbc12b5523bf919"
+		"hash": "199807b03545ec53"
 	},
 	"flirtual:help_translate_others": {
 		"group": "settings/appearance",
@@ -20976,11 +21224,17 @@
 			"/settings/appearance"
 		],
 		"element": "label",
-		"description": "Hint next to the Language selector on the Appearance settings page, shown when the app is in English (the default language), inviting the user to help translate Flirtual into their own language. Currently only visible to staff testers.",
-		"tags": {
-			"translateLink": "Link to Flirtual's translation project on Weblate; wraps the call-to-action word"
+		"description": "Hint next to the Language selector on the Appearance settings page, shown when the app is in English (the default language), inviting the user to help translate the app into their own language. Currently only visible to staff testers.",
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
 		},
-		"hash": "cfac21cffca6f196"
+		"tags": {
+			"translateLink": "Link to the app's translation project on Weblate; wraps the call-to-action word"
+		},
+		"hash": "6eb12dcdbc6ef4b9"
 	},
 	"flirtual:hidden_profile_confirm_email": {
 		"group": "discover/blocked",
@@ -20990,7 +21244,13 @@
 		],
 		"element": "body",
 		"description": "Body of the \"Confirm your email\" card shown instead of profiles in the browse screen when the user hasn't confirmed their email; followed by a \"Confirm email\" button. \"Hidden\" means other users can't see the profile.",
-		"hash": "0614b0981688e60d"
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
+		"hash": "d9374f1778d0e2f3"
 	},
 	"flirtual:hidden_profile_finish": {
 		"group": "discover/blocked",
@@ -21081,8 +21341,14 @@
 		],
 		"element": "body",
 		"description": "Paragraph on the Homie Mode \"Out of profiles\" card suggesting the user come back later or invite friends. \"homies\" means friends (a nod to Homie Mode); \":3\" is a cute emoticon.",
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
 		"tone": "Playful, cute, casual",
-		"hash": "4dddf315784043bd"
+		"hash": "b6d807b6bd96b93f"
 	},
 	"flirtual:hookups": {
 		"group": "settings/matchmaking",
@@ -21175,12 +21441,18 @@
 		],
 		"element": "body",
 		"description": "Two-paragraph body of the Ideas dialog, above a \"Join Discord\" button. \"#ideas\" is the literal name of a Discord channel; keep it unchanged.",
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
 		"tags": {
 			"p": "Paragraph",
 			"strong": "Bold; wraps the Discord channel name"
 		},
 		"tone": "Friendly, humble",
-		"hash": "67bf055ce8e05487"
+		"hash": "5ff0b7f96a52dd3c"
 	},
 	"flirtual:ideas_dialog_title": {
 		"group": "ideas",
@@ -21511,8 +21783,14 @@
 			"/"
 		],
 		"element": "alt-text",
-		"description": "Alt text for the still image behind the homepage's background video, which shows people on dates in VR. \"Dates\" is a noun: dates that happen through Flirtual.",
-		"hash": "34fcf76a38223bc5"
+		"description": "Alt text for the still image behind the homepage's background video, which shows people on dates in VR. \"Dates\" is a noun: dates that happen through the app.",
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
+		"hash": "167800d3f21be375"
 	},
 	"flirtual:landing_dates_heading": {
 		"group": "homepage",
@@ -21633,8 +21911,14 @@
 			"/"
 		],
 		"element": "alt-text",
-		"description": "Alt text for a screenshot of an example Flirtual profile on the homepage's avatar section.",
-		"hash": "28c1b580708e41da"
+		"description": "Alt text for a screenshot of an example profile in the app, in the homepage's avatar section.",
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
+		"hash": "7ae9fa06c14cd0a9"
 	},
 	"flirtual:landing_title": {
 		"group": "homepage",
@@ -22093,7 +22377,13 @@
 		],
 		"element": "body",
 		"description": "Explanation under \"Matchmaking priorities\": each factor has a slider; non-Premium users can only change the location slider.",
-		"hash": "7f46c01769d6a50e"
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
+		"hash": "b18019af7ffa1abf"
 	},
 	"flirtual:matchmaking_priorities_example": {
 		"group": "settings/matchmaking",
@@ -22202,10 +22492,16 @@
 			"meta: social link preview"
 		],
 		"element": "meta",
-		"description": "Site description shown in link previews when a Flirtual link is shared on social media and chat apps (Open Graph/Twitter card). Not visible in the app itself. The trailing ellipsis is intentional.",
+		"description": "Site description shown in link previews when a link to the site is shared on social media and chat apps (Open Graph/Twitter card). Not visible in the app itself. The trailing ellipsis is intentional; VRChat is a product name.",
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
 		"tone": "Marketing, friendly",
 		"lengthNote": "Previews truncate around 200 characters",
-		"hash": "0c608b594a3d4183"
+		"hash": "e5192e52fceef2ba"
 	},
 	"flirtual:meta_username": {
 		"group": "profile/connections",
@@ -22786,9 +23082,15 @@
 			"/sign-up"
 		],
 		"element": "label",
-		"description": "Label of the optional checkbox on the sign-up form that subscribes the user to Flirtual's marketing/newsletter emails. The hint text below it (key newsletter_opt_in_description) continues the sentence: \"…with new features, changes, and offers\".",
+		"description": "Label of the optional checkbox on the sign-up form that subscribes the user to the app's marketing/newsletter emails. The hint text below it (key newsletter_opt_in_description) continues the sentence: \"…with new features, changes, and offers\".",
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
 		"needsScreenshot": true,
-		"hash": "493d852829725694"
+		"hash": "9eb3bf4a2b0ad35f"
 	},
 	"flirtual:newsletter_opt_in_description": {
 		"group": "sign-up",
@@ -22881,11 +23183,17 @@
 			"/matches"
 		],
 		"element": "body",
-		"description": "Tip revealed under \"Tips\" on the empty Matches page: what makes the matchmaking show your profile more often, plus an invitation to the Flirtual Discord server. \"Like\" is the dating swipe action.",
-		"tags": {
-			"discordLink": "Link to Flirtual's Discord community server; wraps the link text"
+		"description": "Tip revealed under \"Tips\" on the empty Matches page: what makes the matchmaking show your profile more often, plus an invitation to the app's Discord server. \"Like\" is the dating swipe action.",
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
 		},
-		"hash": "427e91b00de3c4f9"
+		"tags": {
+			"discordLink": "Link to the app's Discord community server; wraps the link text"
+		},
+		"hash": "54c1e9437ac63b1a"
 	},
 	"flirtual:no_matches_description": {
 		"group": "matches/empty",
@@ -23548,12 +23856,16 @@
 		"element": "meta",
 		"description": "Title shown in the web browser's tab/window, built from the name of the current page and the brand, e.g. \"Matches - Flirtual\". Only change the separator if your language uses a different hyphen/dash character in this context.",
 		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			},
 			"name": {
 				"meaning": "Name of the current page (another translated string)",
 				"example": "Matches"
 			}
 		},
-		"hash": "108d3eb1f4da8889"
+		"hash": "becd3a380229da54"
 	},
 	"flirtual:pass": {
 		"group": "browse/actions",
@@ -24603,10 +24915,16 @@
 		],
 		"element": "notice",
 		"description": "Hint shown in the iOS/Android app only, below the notification grid, when the user selected push notifications but has blocked notifications for the app at the operating-system level.",
-		"tags": {
-			"settings": "Underlined inline button that opens the phone's notification settings for the Flirtual app"
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
 		},
-		"hash": "9a9b32a1c62cc1ac"
+		"tags": {
+			"settings": "Underlined inline button that opens the phone's notification settings for this app"
+		},
+		"hash": "b7a0abc63ff7f5cc"
 	},
 	"flirtual:queue_fallback_notice": {
 		"group": "discover/notices",
@@ -24902,8 +25220,14 @@
 		],
 		"element": "toast",
 		"description": "Confirmation shown after submitting a report about a user (as a toast on web/mobile, as a screen message on the Apple Watch).",
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
 		"tone": "Grateful, reassuring",
-		"hash": "311186248af4ed4c",
+		"hash": "c3fab818cfa71904",
 		"watch": true
 	},
 	"flirtual:resend_code": {
@@ -25466,8 +25790,14 @@
 		],
 		"element": "other",
 		"description": "Message text pre-filled in the device's native share sheet when sharing your own profile link, written from the sharer's point of view; the link is attached separately.",
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
 		"tone": "Casual",
-		"hash": "72b2a12ee24f9544"
+		"hash": "621bde5c5257d76b"
 	},
 	"flirtual:shared_custom_interests": {
 		"group": "settings/matchmaking",
@@ -26195,8 +26525,14 @@
 			"/dates"
 		],
 		"element": "body",
-		"description": "Signature at the end of the final onboarding tour note, after \"<3\", like signing a letter from the company's staff.",
-		"hash": "6fff55c1c86b61b7"
+		"description": "Signature at the end of the final onboarding tour note, after \"<3\", like signing a letter from the company's staff (\"The <app> Team\").",
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
+		"hash": "25f10a7c69c20ae6"
 	},
 	"flirtual:tour_take_breaks": {
 		"group": "tour",
@@ -26333,8 +26669,14 @@
 		],
 		"element": "body",
 		"description": "Body of a former page shown to accounts suspended for being under 18, pointing them to the suspension email. Not referenced in the current code.",
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
 		"tone": "Serious",
-		"hash": "96ec73485e93e2e5"
+		"hash": "07bb6ef1307c5491"
 	},
 	"flirtual:underage_title": {
 		"group": "age-verification",
@@ -26472,8 +26814,14 @@
 		],
 		"element": "title",
 		"description": "Title of the dialog shown when a newer version of the website or app has been released, offering the update.",
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
 		"tone": "Upbeat",
-		"hash": "252cc3ab72509470"
+		"hash": "c9232e1458b7d2dc"
 	},
 	"flirtual:update_available_description_native": {
 		"group": "update",
@@ -26482,7 +26830,13 @@
 		],
 		"element": "body",
 		"description": "Body of the update dialog in the iOS/Android app when a new store version exists and the user is only browsing, so there's no unsaved work. The \"Update\" button opens the App Store or Google Play.",
-		"hash": "4129c8f985c7d745"
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
+		"hash": "4e9d4fdeb20e3d8b"
 	},
 	"flirtual:update_available_description_native_unsaved": {
 		"group": "update",
@@ -26492,12 +26846,16 @@
 		"element": "body",
 		"description": "Body of the update dialog in the iOS/Android app when the user may be in the middle of something (editing settings, a chat), so they're asked to save first and then update from the app store.",
 		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			},
 			"platform": {
 				"meaning": "Device platform; \"apple\" picks the App Store wording, anything else picks Google Play. Translate the store names in both branches; keep the select syntax.",
 				"example": "apple"
 			}
 		},
-		"hash": "2d7b50ad2efd4899"
+		"hash": "8005c6be3bfb6cb1"
 	},
 	"flirtual:update_available_description_web": {
 		"group": "update",
@@ -26506,7 +26864,13 @@
 		],
 		"element": "body",
 		"description": "Body of the update dialog on the website when a new version was deployed and the user is only browsing. The \"Refresh\" button reloads the page.",
-		"hash": "da8ce8e20684a5c0"
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
+		"hash": "ff673a3d079bbea2"
 	},
 	"flirtual:update_available_description_web_unsaved": {
 		"group": "update",
@@ -26515,7 +26879,13 @@
 		],
 		"element": "body",
 		"description": "Body of the update dialog on the website when the user may have unsaved work (editing settings, a chat), asking them to save before reloading the page.",
-		"hash": "3edd28058cc66f63"
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
+		"hash": "5fadc4c1a841de7b"
 	},
 	"flirtual:update_email": {
 		"group": "confirm-email",
@@ -26552,8 +26922,14 @@
 			"dialog: update required"
 		],
 		"element": "title",
-		"description": "Title of the dialog in the iOS/Android app shown when a feature needs a newer app version than the one installed. The imperative is addressed to the user: update the Flirtual app.",
-		"hash": "50a9646941ec4d7f"
+		"description": "Title of the dialog in the iOS/Android app shown when a feature needs a newer app version than the one installed. The imperative is addressed to the user: update the app.",
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
+		"hash": "efa0ad74d62c3491"
 	},
 	"flirtual:update_required_description": {
 		"group": "update",
@@ -26563,12 +26939,16 @@
 		"element": "body",
 		"description": "Body of the \"update required\" dialog in the iOS/Android app, shown when the user tried a feature the installed app version doesn't support.",
 		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			},
 			"platform": {
 				"meaning": "Device platform; \"apple\" picks the App Store wording, anything else picks Google Play. Translate the store names in both branches; keep the select syntax.",
 				"example": "android"
 			}
 		},
-		"hash": "9f8addd3915256d8"
+		"hash": "9843847480630433"
 	},
 	"flirtual:updates": {
 		"group": "navigation",
@@ -26764,8 +27144,14 @@
 		],
 		"element": "body",
 		"description": "First paragraph on the age verification page, shown to accounts blocked as possibly under 18.",
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
 		"tone": "Serious, formal",
-		"hash": "934ccd66e648b2b8"
+		"hash": "a504a2844236e232"
 	},
 	"flirtual:verify_age_errored": {
 		"group": "verify-age",
@@ -26863,14 +27249,18 @@
 			"error page"
 		],
 		"element": "other",
-		"description": "Small app version line at the bottom of the settings list (links to the debug page) and on the crash screen. Keep the brand name Flirtual.",
+		"description": "Small app version line at the bottom of the settings list (links to the debug page), on the crash screen, and in the debug build overlay (links to the source commit).",
 		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			},
 			"version": {
-				"meaning": "Short git commit hash of the running build",
-				"example": "a1b2c3d"
+				"meaning": "Release name of the running build, or its 8-character commit hash when there's no release name; never translated",
+				"example": "2026.10.30-beta.1+656d3d39"
 			}
 		},
-		"hash": "8f968699e851881a"
+		"hash": "cb407fa643b8ff10"
 	},
 	"flirtual:view_image": {
 		"group": "profile/images",
@@ -26976,8 +27366,14 @@
 		],
 		"element": "error",
 		"description": "Message on the Apple Watch app when the user's account has been banned by moderators. Points them to the iPhone app for the reason and next steps.",
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
 		"tone": "Neutral, serious",
-		"hash": "c19047c3b1794f40",
+		"hash": "1dd89a2c760e4b66",
 		"watch": true
 	},
 	"flirtual:watch.account_deactivated": {
@@ -27212,8 +27608,14 @@
 		],
 		"element": "body",
 		"description": "Explanation under the signed-out heading on the Apple Watch app, above a Try again button. Addressed to the user: they must log in on the iPhone app so the watch can pick up the session.",
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
 		"lengthNote": "Small watch screen, footnote-size text",
-		"hash": "2fb63a3ed028d0b3",
+		"hash": "dfd0bb419f8b7b00",
 		"watch": true
 	},
 	"flirtual:watch.sign_in_title": {
@@ -27269,7 +27671,13 @@
 		],
 		"element": "error",
 		"description": "Error message on the Apple Watch app when a request fails without a server error code (usually no network). Shown as the detail under \"Couldn't load profiles\"/\"Couldn't load messages\", in a chat, or in an alert after tapping Like/Pass.",
-		"hash": "999f3114b81f4982",
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
+		"hash": "6fc951e3ca0df2e4",
 		"watch": true
 	},
 	"flirtual:watch.unreachable_detail": {
@@ -27288,9 +27696,15 @@
 			"watch: offline"
 		],
 		"element": "title",
-		"description": "Heading on the Apple Watch app when it can't contact Flirtual's servers to check the account at launch, shown with a no-Wi-Fi icon and a Try again button.",
+		"description": "Heading on the Apple Watch app when it can't contact the app's servers to check the account at launch, shown with a no-Wi-Fi icon and a Try again button.",
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
 		"lengthNote": "Small watch screen; short headline",
-		"hash": "de7c1e228ca259a2",
+		"hash": "5651e7dcbbbb1589",
 		"watch": true
 	},
 	"flirtual:watch.unread": {
@@ -27340,7 +27754,13 @@
 		],
 		"element": "title",
 		"description": "Title of the first step of the onboarding tour shown to new users on the browse page.",
-		"hash": "76bfd876232cfefa"
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
+		"hash": "99b0067c12ac0273"
 	},
 	"flirtual:x": {
 		"group": "settings/navigation",
@@ -27537,6 +27957,10 @@
 			"action_url": {
 				"meaning": "One-click login link; goes in the href only",
 				"example": "https://flirtu.al/login?token=eyJhbGciOi..."
+			},
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep %{brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive %{brand_name}s, a Korean particle %{brand_name}을).",
+				"example": "Flirtual"
 			}
 		},
 		"tags": {
@@ -27544,7 +27968,7 @@
 			"a": "Button-styled link (class=\"btn\") that logs the user in; its text is the button label"
 		},
 		"tone": "Warm, welcoming, with a clear deadline",
-		"hash": "8603e7740fc86239"
+		"hash": "e4e12d981929a722"
 	},
 	"notifications:deletion_reminder_670.body_text": {
 		"group": "email/deletion_reminder",
@@ -27557,10 +27981,14 @@
 			"action_url": {
 				"meaning": "One-click login link, printed as a raw URL",
 				"example": "https://flirtu.al/login?token=eyJhbGciOi..."
+			},
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep %{brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive %{brand_name}s, a Korean particle %{brand_name}을).",
+				"example": "Flirtual"
 			}
 		},
 		"tone": "Warm, welcoming, with a clear deadline",
-		"hash": "e6388951aa817d82"
+		"hash": "c484f054011ca96e"
 	},
 	"notifications:deletion_reminder_670.push_message": {
 		"group": "email/deletion_reminder",
@@ -27590,7 +28018,13 @@
 		"element": "email-subject",
 		"description": "Subject (and email heading) of the first inactivity warning, sent after 670 days without logging in; inactive accounts are deleted at 730 days. \"ACTION REQUIRED\" is deliberately in capitals.",
 		"tone": "Urgent",
-		"hash": "fc328a32d0a2fc49"
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep %{brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive %{brand_name}s, a Korean particle %{brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
+		"hash": "fd91a8bb74e9922d"
 	},
 	"notifications:deletion_reminder_700.body_html": {
 		"group": "email/deletion_reminder",
@@ -27603,6 +28037,10 @@
 			"action_url": {
 				"meaning": "One-click login link; goes in the href only",
 				"example": "https://flirtu.al/login?token=eyJhbGciOi..."
+			},
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep %{brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive %{brand_name}s, a Korean particle %{brand_name}을).",
+				"example": "Flirtual"
 			}
 		},
 		"tags": {
@@ -27610,7 +28048,7 @@
 			"a": "Button-styled link (class=\"btn\") that logs the user in; its text is the button label"
 		},
 		"tone": "Direct, urgent",
-		"hash": "60ab4ec87dd81eff"
+		"hash": "649458e0421c206a"
 	},
 	"notifications:deletion_reminder_700.body_text": {
 		"group": "email/deletion_reminder",
@@ -27623,10 +28061,14 @@
 			"action_url": {
 				"meaning": "One-click login link, printed as a raw URL",
 				"example": "https://flirtu.al/login?token=eyJhbGciOi..."
+			},
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep %{brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive %{brand_name}s, a Korean particle %{brand_name}을).",
+				"example": "Flirtual"
 			}
 		},
 		"tone": "Direct, urgent",
-		"hash": "6d40684f3c07ebe8"
+		"hash": "5356c6fd50a492c1"
 	},
 	"notifications:deletion_reminder_700.push_message": {
 		"group": "email/deletion_reminder",
@@ -27646,7 +28088,13 @@
 		"description": "Title of the push notification sent with the second inactivity warning (30 days before deletion). Tapping opens the app.",
 		"tone": "Warm but urgent",
 		"lengthNote": "Push notification title; keep short",
-		"hash": "1623ebed446039e8"
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep %{brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive %{brand_name}s, a Korean particle %{brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
+		"hash": "05bc3c3a19d29eaa"
 	},
 	"notifications:deletion_reminder_700.subject": {
 		"group": "email/deletion_reminder",
@@ -27656,7 +28104,13 @@
 		"element": "email-subject",
 		"description": "Subject (and email heading) of the second inactivity warning, sent after 700 days without logging in, 30 days before deletion. \"ACTION REQUIRED\" is deliberately in capitals.",
 		"tone": "Urgent",
-		"hash": "316dbb5fc6f4612e"
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep %{brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive %{brand_name}s, a Korean particle %{brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
+		"hash": "512e681dd72f5785"
 	},
 	"notifications:deletion_reminder_723.body_html": {
 		"group": "email/deletion_reminder",
@@ -27669,6 +28123,10 @@
 			"action_url": {
 				"meaning": "One-click login link; goes in the href only",
 				"example": "https://flirtu.al/login?token=eyJhbGciOi..."
+			},
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep %{brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive %{brand_name}s, a Korean particle %{brand_name}을).",
+				"example": "Flirtual"
 			}
 		},
 		"tags": {
@@ -27677,7 +28135,7 @@
 			"a": "Button-styled link (class=\"btn\") that logs the user in; its text is the button label"
 		},
 		"tone": "Urgent, final warning, still friendly",
-		"hash": "7dc141ef18ea46e4"
+		"hash": "33e865d766694cc0"
 	},
 	"notifications:deletion_reminder_723.body_text": {
 		"group": "email/deletion_reminder",
@@ -27690,10 +28148,14 @@
 			"action_url": {
 				"meaning": "One-click login link, printed as a raw URL",
 				"example": "https://flirtu.al/login?token=eyJhbGciOi..."
+			},
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep %{brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive %{brand_name}s, a Korean particle %{brand_name}을).",
+				"example": "Flirtual"
 			}
 		},
 		"tone": "Urgent, final warning, still friendly",
-		"hash": "4ef398b850a73908"
+		"hash": "f4b863e549679dbe"
 	},
 	"notifications:deletion_reminder_723.push_message": {
 		"group": "email/deletion_reminder",
@@ -27713,7 +28175,13 @@
 		"description": "Title of the push notification sent with the final inactivity warning (7 days before deletion). Tapping opens the app.",
 		"tone": "Urgent",
 		"lengthNote": "Push notification title; keep short",
-		"hash": "59d88eb766be942e"
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep %{brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive %{brand_name}s, a Korean particle %{brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
+		"hash": "bd8e414d2f19fe16"
 	},
 	"notifications:deletion_reminder_723.subject": {
 		"group": "email/deletion_reminder",
@@ -27723,7 +28191,13 @@
 		"element": "email-subject",
 		"description": "Subject (and email heading) of the final inactivity warning, sent after 723 days without logging in, 7 days before deletion. \"ACTION REQUIRED\" is deliberately in capitals.",
 		"tone": "Urgent",
-		"hash": "b2d6bf56754db79c"
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep %{brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive %{brand_name}s, a Korean particle %{brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
+		"hash": "a63092d3a283b8cd"
 	},
 	"notifications:discord": {
 		"group": "email/footer",
@@ -27746,13 +28220,17 @@
 			"email": {
 				"meaning": "The new email address now on the account",
 				"example": "alex@example.com"
+			},
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep %{brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive %{brand_name}s, a Korean particle %{brand_name}을).",
+				"example": "Flirtual"
 			}
 		},
 		"tags": {
 			"p": "Paragraph"
 		},
 		"tone": "Calm but urgent, security notice",
-		"hash": "718d5267ffaf58cd"
+		"hash": "a8ff80d4624d4eb2"
 	},
 	"notifications:email_changed.body_text": {
 		"group": "email/email_changed",
@@ -27765,10 +28243,14 @@
 			"email": {
 				"meaning": "The new email address now on the account",
 				"example": "alex@example.com"
+			},
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep %{brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive %{brand_name}s, a Korean particle %{brand_name}을).",
+				"example": "Flirtual"
 			}
 		},
 		"tone": "Calm but urgent, security notice",
-		"hash": "e5da9f706f8e335d"
+		"hash": "440b19c62e5354d6"
 	},
 	"notifications:email_changed.subject": {
 		"group": "email/email_changed",
@@ -27916,13 +28398,17 @@
 			"a": "Inline link to the forgot-password page; wraps the words for resetting the password"
 		},
 		"tone": "Calm but urgent, security notice",
-		"hash": "075c7b195bbf025f",
 		"placeholders": {
 			"action_url": {
 				"meaning": "Link to the forgot-password page",
 				"example": "https://flirtual.com/forgot"
+			},
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep %{brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive %{brand_name}s, a Korean particle %{brand_name}을).",
+				"example": "Flirtual"
 			}
-		}
+		},
+		"hash": "d62d0ccf997562c1"
 	},
 	"notifications:password_changed.body_text": {
 		"group": "email/password_changed",
@@ -27935,10 +28421,14 @@
 			"action_url": {
 				"meaning": "Link to the forgot-password page, printed as a raw URL mid-sentence",
 				"example": "https://flirtu.al/forgot"
+			},
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep %{brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive %{brand_name}s, a Korean particle %{brand_name}을).",
+				"example": "Flirtual"
 			}
 		},
 		"tone": "Calm but urgent, security notice",
-		"hash": "87263686c78ee3f8"
+		"hash": "3146a81bc0a76a97"
 	},
 	"notifications:password_changed.subject": {
 		"group": "email/password_changed",
@@ -28045,11 +28535,15 @@
 			"email: Your account has been disabled"
 		],
 		"element": "email-body",
-		"description": "HTML body of the ban email. Replies go to the moderation team, so \"reply to this message\" is how the user appeals. Keep the HTML tags and their order.",
+		"description": "HTML body of the ban email. Replies go to the moderation team, so \"reply to this message\" is how the user appeals. Keep the HTML tags and their order. %{brand_name} appears in the opening sentence and in the sign-off \"The %{brand_name} Team\" (the company team, not a literal group).",
 		"placeholders": {
 			"message": {
 				"meaning": "The ban reason, either a note a moderator typed (usually in English) or, for underage bans, the translated text of suspended.reason.underage",
 				"example": "Inappropriate profile images."
+			},
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep %{brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive %{brand_name}s, a Korean particle %{brand_name}을).",
+				"example": "Flirtual"
 			}
 		},
 		"tags": {
@@ -28057,7 +28551,7 @@
 			"strong": "Bold label before the reason"
 		},
 		"tone": "Formal, firm, policy-like",
-		"hash": "bd22a97486536f68"
+		"hash": "d17776670860da37"
 	},
 	"notifications:suspended.body_text": {
 		"group": "email/suspended",
@@ -28065,15 +28559,19 @@
 			"email: Your account has been disabled"
 		],
 		"element": "email-body",
-		"description": "Plain-text version of the ban email; should match suspended.body_html. Replies go to the moderation team, so replying is how the user appeals.",
+		"description": "Plain-text version of the ban email; should match suspended.body_html. Replies go to the moderation team, so replying is how the user appeals. %{brand_name} appears in the opening sentence and in the sign-off \"The %{brand_name} Team\".",
 		"placeholders": {
 			"message": {
 				"meaning": "The ban reason, either a note a moderator typed (usually in English) or, for underage bans, the translated text of suspended.reason.underage",
 				"example": "Inappropriate profile images."
+			},
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep %{brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive %{brand_name}s, a Korean particle %{brand_name}을).",
+				"example": "Flirtual"
 			}
 		},
 		"tone": "Formal, firm, policy-like",
-		"hash": "86af9b062c76c840"
+		"hash": "ae4c215650e6f089"
 	},
 	"notifications:suspended.reason.underage": {
 		"group": "email/suspended",
@@ -28083,7 +28581,13 @@
 		"element": "email-body",
 		"description": "Ban reason for accounts banned as under 18. It fills the %{message} slot after \"Reason:\" in the ban email, so it starts with a short label (\"Underaged.\") followed by an explanation. It tells the user they can log in and verify their age to get the account back.",
 		"tone": "Formal, neutral, not accusatory",
-		"hash": "92b5b75157cf7aa1"
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep %{brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive %{brand_name}s, a Korean particle %{brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
+		"hash": "1fe6a27fa0e729e3"
 	},
 	"notifications:suspended.subject": {
 		"group": "email/suspended",
@@ -28106,10 +28610,14 @@
 			"count": {
 				"meaning": "Number of people who liked or homied the user's profile this week and haven't matched with them yet",
 				"example": "5"
+			},
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep %{brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive %{brand_name}s, a Korean particle %{brand_name}을).",
+				"example": "Flirtual"
 			}
 		},
 		"tone": "Exciting, friendly",
-		"hash": "554e15c966a2a87b"
+		"hash": "2658f01e136aa94f"
 	},
 	"notifications:unsubscribe": {
 		"group": "email/footer",
@@ -28131,13 +28639,17 @@
 			"code": {
 				"meaning": "6-digit one-time login code",
 				"example": "482913"
+			},
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep %{brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive %{brand_name}s, a Korean particle %{brand_name}을).",
+				"example": "Flirtual"
 			}
 		},
 		"tags": {
 			"p": "Paragraph; the one with the style attribute displays the code"
 		},
 		"tone": "Security notice",
-		"hash": "e24c11fce9f8d9f1"
+		"hash": "87e685676dda2fbd"
 	},
 	"notifications:verification_code.body_text": {
 		"group": "email/verification_code",
@@ -28145,15 +28657,19 @@
 			"email: Your Flirtual login code is …"
 		],
 		"element": "email-body",
-		"description": "Plain-text version of the suspicious-login code email. The code expires after 15 minutes.",
+		"description": "Plain-text version of the suspicious-login code email. The code expires after 15 minutes. \"Settings\" is the app's Settings area, named with the app name in front.",
 		"placeholders": {
 			"code": {
 				"meaning": "6-digit one-time login code",
 				"example": "482913"
+			},
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep %{brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive %{brand_name}s, a Korean particle %{brand_name}을).",
+				"example": "Flirtual"
 			}
 		},
 		"tone": "Security notice",
-		"hash": "573b0d71b9346c40"
+		"hash": "d90f462a86daa6d6"
 	},
 	"notifications:verification_code.subject": {
 		"group": "email/verification_code",
@@ -28166,9 +28682,13 @@
 			"code": {
 				"meaning": "6-digit one-time login code",
 				"example": "482913"
+			},
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep %{brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive %{brand_name}s, a Korean particle %{brand_name}을).",
+				"example": "Flirtual"
 			}
 		},
-		"hash": "002a208fe8f50ea9"
+		"hash": "a6aa863e46c49353"
 	},
 	"notifications:x": {
 		"group": "email/footer",

@@ -14,7 +14,7 @@
 import { join } from "node:path";
 
 import type { ComponentName, Id, Message, TargetLocale } from "./common.ts";
-import { componentNames, hash, id, isMain, localesFlag, parseArguments, readJson, runDirectory, staging, targetLocales, weblateLanguage, writeJson } from "./common.ts";
+import { componentNames, components, hash, id, isMain, localesFlag, parseArguments, readJson, runDirectory, staging, targetLocales, weblateLanguage, writeJson } from "./common.ts";
 import type { ContextEntry } from "./context.ts";
 import { loadContext } from "./context.ts";
 import type { GlossaryEntry } from "./validate.ts";
@@ -168,9 +168,9 @@ function code(text: string) {
 	return text.replaceAll(/(?<!`)<\/?[a-z][\w-]*\s*\/?>(?!`)/gi, "`$&`");
 }
 
-function explanation(entry: ContextEntry) {
+function explanation(entry: ContextEntry, format: "gettext" | "icu") {
 	const notes = [
-		...Object.entries(entry.placeholders ?? {}).map(([name, value]) => `- \`{${name}}\`: ${code(value.meaning)}, e.g. "${code(value.example)}"`),
+		...Object.entries(entry.placeholders ?? {}).map(([name, value]) => `- \`${format === "gettext" ? "%" : ""}{${name}}\`: ${code(value.meaning)}, e.g. "${code(value.example)}"`),
 		...Object.entries(entry.tags ?? {}).map(([name, value]) => `- \`<${name}>\`: ${code(value)}`)
 	];
 	const paragraphs = [
@@ -214,7 +214,7 @@ async function context(apply: boolean) {
 				continue;
 			}
 			const patch: Record<string, string> = {};
-			const next = mergeExplanation(source.explanation, explanation(entry));
+			const next = mergeExplanation(source.explanation, explanation(entry, components[component].format));
 			if (next !== source.explanation) patch.explanation = next;
 			if (entry.readOnly && withFlag(source.extraFlags, "read-only") !== source.extraFlags) {
 				patch.extra_flags = withFlag(source.extraFlags, "read-only");

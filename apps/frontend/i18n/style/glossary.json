@@ -4,7 +4,7 @@
 		{
 			"id": "flirtual",
 			"en": "Flirtual",
-			"note": "The app's name, in Flirtual's own story and policies (about, news, events, legal). Elsewhere the English names the app with the {brand_name} placeholder, which stays exactly as written. Never translate, transliterate or inflect Flirtual in a way that changes its spelling.",
+			"note": "The app's name, in Flirtual's own story and policies (about, news, events, legal). Elsewhere the English names the app with the {brand_name} placeholder, which stays exactly as written; grammatical endings may follow it directly, as they would follow Flirtual (Swedish genitive {brand_name}s, a Korean particle {brand_name}을). Never translate, transliterate or inflect Flirtual in a way that changes its spelling.",
 			"untranslatable": true,
 			"match": "\\bFlirtual\\b",
 			"forbidden": {
