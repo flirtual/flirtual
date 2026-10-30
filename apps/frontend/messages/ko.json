@@ -1135,5 +1135,8 @@
 	"maintenance_description": "{name} 서비스가 예정된 점검으로 잠시 중단됐어요. 금방 돌아올게요. 조금 뒤에 다시 와 주세요!",
 	"maintenance_title": "{name} 서비스가 잠시 중단됐어요",
 	"likes_preview_alt": "좋아요 미리보기",
-	"official": "공식"
+	"official": "공식",
+	"purchases_restored": "구매 내역을 복원했어요",
+	"restore_purchases": "구매 내역 복원",
+	"no_purchases_to_restore": "복원할 구매 내역이 없어요"
 }

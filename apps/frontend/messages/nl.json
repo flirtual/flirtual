@@ -1135,5 +1135,8 @@
 	"maintenance_description": "{name} is even offline voor gepland onderhoud. We zijn zo terug, kom straks nog eens kijken!",
 	"maintenance_title": "{name} is tijdelijk niet beschikbaar",
 	"official": "Officieel",
-	"likes_preview_alt": "Voorbeeld van je likes"
+	"likes_preview_alt": "Voorbeeld van je likes",
+	"purchases_restored": "Aankopen hersteld",
+	"restore_purchases": "Aankopen herstellen",
+	"no_purchases_to_restore": "Geen aankopen om te herstellen"
 }

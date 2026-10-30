@@ -1135,5 +1135,8 @@
 	"maintenance_description": "{name} är tillfälligt nere för planerat underhåll. Vi är strax tillbaka – kika in igen snart!",
 	"maintenance_title": "{name} är tillfälligt nere",
 	"likes_preview_alt": "Förhandsvisning av personer som gillar dig",
-	"official": "Officiell"
+	"official": "Officiell",
+	"purchases_restored": "Köp återställda",
+	"restore_purchases": "Återställ köp",
+	"no_purchases_to_restore": "Inga köp att återställa"
 }

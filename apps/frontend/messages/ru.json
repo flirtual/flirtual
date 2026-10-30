@@ -1135,5 +1135,8 @@
 	"maintenance_title": "{name} временно не работает",
 	"maintenance_description": "Сейчас в {name} идут плановые технические работы. Мы скоро вернёмся — загляните чуть позже!",
 	"likes_preview_alt": "Кому вы нравитесь",
-	"official": "Официальный"
+	"official": "Официальный",
+	"purchases_restored": "Покупки восстановлены",
+	"restore_purchases": "Восстановить покупки",
+	"no_purchases_to_restore": "Нет покупок для восстановления"
 }

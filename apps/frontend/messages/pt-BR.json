@@ -1135,5 +1135,8 @@
 	"maintenance_description": "{name} está temporariamente fora do ar para uma manutenção programada. Voltamos já, já. Dá uma olhadinha daqui a pouco!",
 	"maintenance_title": "{name} está temporariamente indisponível",
 	"likes_preview_alt": "Prévia de quem curtiu você",
-	"official": "Oficial"
+	"official": "Oficial",
+	"purchases_restored": "Compras restauradas",
+	"restore_purchases": "Restaurar compras",
+	"no_purchases_to_restore": "Nenhuma compra para restaurar"
 }
