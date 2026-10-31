@@ -187,7 +187,7 @@ const ProfileColorSelect: FC = () => {
 				].map((theme) => (
 					<button
 						key={theme.name}
-						className="relative flex flex-col"
+						className="flex flex-col justify-end text-start"
 						type="button"
 						onClick={async () => {
 							if (theme.name === "touch_grass") {
@@ -217,25 +217,27 @@ const ProfileColorSelect: FC = () => {
 								</span>
 							)}
 						</div>
-						<div
-							className={twMerge(
-								"h-8 w-full rounded-md bg-brand-gradient",
-								colors.color1 === theme.color1 && colors.color2 === theme.color2
-								&& "border-2 focused"
+						<div className="relative">
+							<div
+								className={twMerge(
+									"h-8 w-full rounded-md bg-brand-gradient",
+									colors.color1 === theme.color1 && colors.color2 === theme.color2
+									&& "border-2 focused"
+								)}
+								data-profile-colors=""
+								style={profileColors(theme.color1, theme.color2)}
+							/>
+							{theme.name === "touch_grass" && touchingGrass && (
+								<span
+									className="absolute top-1 left-0 -scale-x-100 animate-touch-grass"
+									onAnimationEnd={() => {
+										setTouchingGrass(false);
+									}}
+								>
+									🫳
+								</span>
 							)}
-							data-profile-colors=""
-							style={profileColors(theme.color1, theme.color2)}
-						/>
-						{theme.name === "touch_grass" && touchingGrass && (
-							<span
-								className="absolute top-7 left-0 -scale-x-100 animate-touch-grass"
-								onAnimationEnd={() => {
-									setTouchingGrass(false);
-								}}
-							>
-								🫳
-							</span>
-						)}
+						</div>
 					</button>
 				))}
 			</div>
