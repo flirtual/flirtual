@@ -425,7 +425,7 @@ if sentry_dsn do
     environment_name: environment_name,
     release: Env.get("GIT_COMMIT_SHA"),
     traces_sample_rate: traces_sample_rate,
-    enable_logs: enable_logs?,
+    logs: [level: if(enable_logs?, do: :info)],
     integrations: [
       oban: [
         capture_errors: true,
