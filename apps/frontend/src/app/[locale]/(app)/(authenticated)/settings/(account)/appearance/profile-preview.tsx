@@ -11,7 +11,7 @@ export const ProfileColorPreview: FC<ProfileColors> = ({ color1, color2 }) => {
 
 	return (
 		<ThemedBorder
-			className="flex gap-1 rounded-lg desktop:flex-col"
+			className="flex gap-1 rounded-lg @lg:flex-col"
 			data-profile-colors=""
 			style={profileColors(color1, color2)}
 		>

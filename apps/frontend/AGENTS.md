@@ -49,6 +49,7 @@ Tailwind 4 with custom classes and variants. `src/app/index.css` loads `tailwind
 
 - **Classes**: `bg-brand-gradient`; shadows `shadow-brand-1`/`shadow-brand-inset`/`text-shadow-brand`; fonts `font-montserrat` (headings), `font-nunito` (body); focus `focused`/`focusable`/`focusable-within`; `touch-callout-default`/`-none` (iOS); `select-children` (children selectable, off by default).
 - **Variants**: `dark:`, `desktop:`, `wide:`, `tall:`, `native:` (iOS/Android app), `vision:` (visionOS), `android:` (native or web), `apple:` (iOS/visionOS/macOS, native or web), `[locale]:` (e.g. `en:`, `ja:`).
+- **Split panes**: `desktop:`/`wide:` follow the screen, but in the split layout (iPad, iPhone Duo) a pane is much narrower (settings is 512px). Use them for the desktop look (card frame, shadows, spacing); switch a layout that needs room (side by side, more grid columns) on its own width instead: `@container` on the section and Tailwind's container sizes (`@lg:` is 32rem) inside it.
 - **Theming**: gradient vars `--theme-1`/`--theme-2`; light/dark brand themes (emitted by `tailwind.config.js` from the brand colours), overridden in Homie Mode (green), by Arc browser theme, or by a Premium user's profile theme (within the profile component).
 - **Rich text**: Quill + sanitize-html for the bio editor.
 - **twMerge()**: for conditional styling.

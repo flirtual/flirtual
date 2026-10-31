@@ -138,8 +138,8 @@ const ProfileColorSelect: FC = () => {
 	}, [t, toast]);
 
 	return (
-		<div className="flex w-full flex-col gap-8">
-			<div className="flex w-full flex-col justify-between gap-8 wide:flex-row">
+		<div className="@container flex w-full flex-col gap-8">
+			<div className="flex w-full flex-col justify-between gap-8 @lg:flex-row">
 				<div className="flex shrink-0 flex-col gap-2">
 					<InputLabel className="flex items-center gap-2">
 						<span>{t("profile_colors")}</span>
@@ -180,7 +180,7 @@ const ProfileColorSelect: FC = () => {
 				</div>
 				<ProfileColorPreview {...colors} />
 			</div>
-			<div className="grid w-full grid-cols-2 gap-2 wide:grid-cols-4">
+			<div className="grid w-full grid-cols-2 gap-2 @lg:grid-cols-4">
 				{[
 					{ name: "brand" as const, label: brand.name, description: t("default_"), ...defaultColors },
 					...recommendedThemes

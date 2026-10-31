@@ -76,12 +76,12 @@ export const ConnectionsForm: FC = () => {
 			>
 				{({ FormField }) => (
 					<>
-						<div className="flex flex-col gap-4">
+						<div className="@container flex flex-col gap-4">
 							<div className="flex flex-col gap-2">
 								<span className="flex text-xl">{t("connections_heading")}</span>
 								<span className="text-black-50 dark:text-white-50 vision:text-white-50">{t("connections_privacy")}</span>
 							</div>
-							<div className="grid gap-4 wide:grid-cols-2">
+							<div className="grid gap-4 @lg:grid-cols-2">
 								<AddConnectionButton type="discord" />
 								{connectionProvider("vrchat") && (
 									<FormField name="vrchat">
