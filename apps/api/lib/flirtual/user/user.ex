@@ -28,7 +28,7 @@ defmodule Flirtual.User do
     User
   }
 
-  alias Flirtual.User.Profile.{Block, Image, LikesAndPasses}
+  alias Flirtual.User.Profile.{Block, Image, LikesAndPasses, Prompt}
   alias Flirtual.User.{Login, Profile, Relationship}
 
   @tags [
@@ -531,6 +531,16 @@ defmodule Flirtual.User do
     dynamic([user: user], user.id in subquery(connections))
   end
 
+  defp field_condition({:prompts, key}, _term, pattern) do
+    prompts =
+      from(prompt in Prompt,
+        where: ilike(field(prompt, ^key), ^pattern),
+        select: prompt.profile_id
+      )
+
+    dynamic([user: user], user.id in subquery(prompts))
+  end
+
   defp field_condition(key, term, pattern) when is_atom(key) do
     case User.__schema__(:type, key) do
       Ecto.ShortUUID ->
@@ -605,6 +615,15 @@ defmodule Flirtual.User do
           from(connection in Connection,
             where: connection.user_id == parent_as(:user).id,
             select: max(fragment("similarity(?, ?)", field(connection, ^key), ^value))
+          )
+
+        order_by(query, [], [{^order, subquery(similarity)}])
+
+      {:prompts, key}, query ->
+        similarity =
+          from(prompt in Prompt,
+            where: prompt.profile_id == parent_as(:user).id,
+            select: max(fragment("similarity(?, ?)", field(prompt, ^key), ^value))
           )
 
         order_by(query, [], [{^order, subquery(similarity)}])
@@ -768,7 +787,12 @@ defmodule Flirtual.User do
   ]
 
   @default_search_fields @identifier_fields ++
-                           [{:profile, :biography}, :moderator_message, :moderator_note]
+                           [
+                             {:profile, :biography},
+                             {:prompts, :response},
+                             :moderator_message,
+                             :moderator_note
+                           ]
 
   # IDs of users with an identifier matching the search.
   def identifier_query(value) do
