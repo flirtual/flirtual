@@ -3,17 +3,16 @@ import { hostname as osHostname } from "node:os";
 
 import { reactRouter } from "@react-router/dev/vite";
 import { sentryReactRouter } from "@sentry/react-router";
+import tailwindcss from "@tailwindcss/vite";
 import basicSsl from "@vitejs/plugin-basic-ssl";
-import autoprefixer from "autoprefixer";
 import sonda from "sonda/vite";
-import tailwindcss from "tailwindcss";
 import info from "unplugin-info/vite";
 import macros from "unplugin-macros/vite";
 import { defineConfig, loadEnv } from "vite";
 import { imagetools } from "vite-imagetools";
 import { ViteImageOptimizer as imageOptimize } from "vite-plugin-image-optimizer";
 
-import { browserslist, targets } from "./src/targets.ts";
+import { targets } from "./src/targets.ts";
 import { hush } from "./vite-plugin-hush.ts";
 
 const mkcertPaths = {
@@ -69,21 +68,12 @@ export default defineConfig((config) => {
 		resolve: {
 			tsconfigPaths: true
 		},
-		css: {
-			postcss: {
-				plugins: [
-					tailwindcss(),
-					autoprefixer({ overrideBrowserslist: browserslist })
-				]
-			}
-		},
 		build: {
 			assetsDir: "static",
 			minify: true,
 			sourcemap: true,
 			target: targets,
 			chunkSizeWarningLimit: 100,
-			// cssMinify: "lightningcss",
 			rollupOptions: {
 				// experimentalLogSideEffects: true,
 				treeshake: {
@@ -118,6 +108,7 @@ export default defineConfig((config) => {
 			})
 		},
 		plugins: [
+			tailwindcss(),
 			hush([
 				"Can't resolve original location of error"
 			]),

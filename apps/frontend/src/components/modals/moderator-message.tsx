@@ -160,7 +160,7 @@ export const TrustAndSafetyDialog: FC<{
 				<DialogBody>
 					<div className="flex min-h-64 flex-col justify-between gap-4 px-2 desktop:max-w-lg">
 						<div className="flex flex-col gap-4">
-							<p className="whitespace-pre-wrap font-nunito">
+							<p className="font-nunito whitespace-pre-wrap">
 								{children}
 							</p>
 						</div>

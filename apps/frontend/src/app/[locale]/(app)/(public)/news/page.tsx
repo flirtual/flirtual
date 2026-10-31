@@ -46,7 +46,7 @@ export default function NewsPage() {
 					{publicNews.map((news) => (
 						<button
 							key={news}
-							className="flex flex-col gap-1 rounded-xl bg-white-30 p-4 text-left shadow-brand-1 transition-colors hover:bg-white-40 vision:bg-white-10/50 vision:hover:bg-white-20/50 dark:bg-black-60 dark:hover:bg-black-50"
+							className="flex flex-col gap-1 rounded-xl bg-white-30 p-4 text-left shadow-brand-1 transition-colors hover:bg-white-40 dark:bg-black-60 dark:hover:bg-black-50 vision:bg-white-10/50 hover:vision:bg-white-20/50"
 							type="button"
 							onClick={() => setSelectedNews(news)}
 						>

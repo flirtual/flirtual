@@ -79,7 +79,7 @@ export const ConnectionsForm: FC = () => {
 						<div className="flex flex-col gap-4">
 							<div className="flex flex-col gap-2">
 								<span className="flex text-xl">{t("connections_heading")}</span>
-								<span className="text-black-50 vision:text-white-50 dark:text-white-50">{t("connections_privacy")}</span>
+								<span className="text-black-50 dark:text-white-50 vision:text-white-50">{t("connections_privacy")}</span>
 							</div>
 							<div className="grid gap-4 wide:grid-cols-2">
 								<AddConnectionButton type="discord" />
@@ -88,7 +88,7 @@ export const ConnectionsForm: FC = () => {
 										{(field) => (
 											<InputText
 												Icon={VRChatIcon}
-												iconClassName="size-[1.625rem]"
+												iconClassName="size-6.5"
 												iconColor="#095d6a"
 												placeholder="VRChat"
 												{...field.props}
@@ -132,7 +132,7 @@ export const ConnectionsForm: FC = () => {
 										{t("playlist_heading")}
 									</span>
 								</div>
-								<span className="text-black-50 vision:text-white-50 dark:text-white-50">
+								<span className="text-black-50 dark:text-white-50 vision:text-white-50">
 									{t("playlist_description")}
 								</span>
 							</div>
@@ -147,24 +147,24 @@ export const ConnectionsForm: FC = () => {
 							</FormField>
 							{playlistSubmitted === "deezer.page.link"
 								? (
-										<span className="italic text-red-600">
+										<span className="text-red-600 italic">
 											{t("playlist_deezer_unsupported")}
 										</span>
 									)
 								: playlistSubmitted === "youtube"
 									? (
-											<span className="italic text-red-600">
+											<span className="text-red-600 italic">
 												{t("playlist_youtube_unsupported")}
 											</span>
 										)
 									: playlistSubmitted === "other"
 										? (
-												<span className="italic text-black-50 vision:text-white-50 dark:text-white-50">
+												<span className="text-black-50 italic dark:text-white-50 vision:text-white-50">
 													<Trans i18nKey="playlist_not_public" />
 												</span>
 											)
 										: null}
-							<span className="italic text-black-50 vision:text-white-50 dark:text-white-50">
+							<span className="text-black-50 italic dark:text-white-50 vision:text-white-50">
 								{t("playlist_privacy_warning")}
 							</span>
 							{user.profile.playlist && (

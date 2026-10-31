@@ -40,10 +40,10 @@ export const VRChatButton: FC<VRChatButtonProps> = (props) => {
 			<DropdownMenu>
 				<DropdownMenuTrigger asChild>
 					<button
-						className="-m-3 mr-0 p-4 text-white-20 outline-none transition-opacity hover:opacity-80 focus:opacity-80"
+						className="-m-3 mr-0 p-4 text-white-20 outline-hidden transition-opacity hover:opacity-80 focus:opacity-80"
 						type="button"
 					>
-						<MailPlus className="size-[1.625rem]" />
+						<MailPlus className="size-6.5" />
 						<span className="sr-only">Send meetup invite</span>
 					</button>
 				</DropdownMenuTrigger>

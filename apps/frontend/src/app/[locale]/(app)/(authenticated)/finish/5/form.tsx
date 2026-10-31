@@ -30,7 +30,7 @@ export const Finish5Form: React.FC = () => {
 			<div className="flex flex-col gap-4">
 				<div>
 					<span className="flex text-xl">{t("connections_heading")}</span>
-					<span className="text-black-50 vision:text-white-50 dark:text-white-50">{t("connections_privacy")}</span>
+					<span className="text-black-50 dark:text-white-50 vision:text-white-50">{t("connections_privacy")}</span>
 				</div>
 				<Form
 					fields={{
@@ -69,7 +69,7 @@ export const Finish5Form: React.FC = () => {
 										{(field) => (
 											<InputText
 												Icon={VRChatIcon}
-												iconClassName="size-[1.625rem]"
+												iconClassName="size-6.5"
 												iconColor="#095d6a"
 												placeholder={t("vrchat")}
 												{...field.props}

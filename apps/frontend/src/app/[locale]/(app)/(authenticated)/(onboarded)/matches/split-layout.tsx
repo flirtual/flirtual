@@ -21,9 +21,9 @@ export const SplitLayout: FC<PropsWithChildren<{ activeConversationId?: string }
 				</Suspense>
 			)}
 			asideClassName="desktop:w-96"
-			className="web-nav:desktop:grow-0"
+			className="desktop:web-nav:grow-0"
 			disabled={!(split && hasConversations) && !activeConversationId}
-			mainClassName="desktop:max-w-[38rem]"
+			mainClassName="desktop:max-w-152"
 		>
 			{children}
 		</SplitPanes>

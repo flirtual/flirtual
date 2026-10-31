@@ -35,7 +35,7 @@ export const NavigationalSwitchItem: FC<NavigationalSwitchItemProps> = ({
 		<Link
 			{...props}
 			className={twMerge(
-				"group relative flex shrink-0 items-center gap-2 rounded-full p-2 focus:outline-none",
+				"group relative flex shrink-0 items-center gap-2 rounded-full p-2 focus:outline-hidden",
 				className,
 			)}
 			data-active={active ? "" : undefined}
@@ -67,7 +67,7 @@ export const NavigationalSwitchItem: FC<NavigationalSwitchItemProps> = ({
 			{(rankedMode && (props.id === "date-mode-switch" || props.id === "homie-mode-switch") && (
 				<span className={twMerge(
 					"z-10 pr-2",
-					active ? "text-white-20" : "hidden text-black-70 group-hocus:text-white-20 dark:text-white-20 desktop:block"
+					active ? "text-white-20" : "hidden text-black-70 dark:text-white-20 group-hocus:text-white-20 desktop:block"
 				)}
 				>
 					{t(props.id === "date-mode-switch" ? "ranked" : "casual")}
@@ -86,7 +86,7 @@ export const NavigationItem: FC<
 		<Link
 			{...props}
 			className={twMerge(
-				"group shrink-0 rounded-full p-2 transition-colors focus:outline-none",
+				"group shrink-0 rounded-full p-2 transition-colors focus:outline-hidden",
 				active
 					? "bg-white-20 text-black-70 shadow-brand-1"
 					: "hocus:bg-white-20 hocus:text-black-70 hocus:shadow-brand-1",

@@ -41,9 +41,9 @@ export const ExpandableImage: FC<ComponentProps<typeof Image>> = (props) => {
 
 export const commonComponents = {
 	p: <p className="select-children" />,
-	ul: <ul className="select-children flex list-outside list-disc flex-col gap-1.5 pl-6" />,
+	ul: <ul className="flex list-outside list-disc flex-col gap-1.5 pl-6 select-children" />,
 	li: <li />,
-	h2: <h2 className="select-text font-montserrat text-lg font-semibold" />,
+	h2: <h2 className="font-montserrat text-lg font-semibold select-text" />,
 	footer: (
 		<Trans
 			components={{

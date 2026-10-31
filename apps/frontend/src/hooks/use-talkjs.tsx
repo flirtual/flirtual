@@ -291,7 +291,7 @@ export const ConversationChatbox: React.FC<
 					height
 				} as CSSProperties
 			}
-			className="relative w-full overflow-hidden bg-white-20 vision:bg-transparent native-nav:mb-[calc(-1*min(var(--safe-area-inset-bottom,0rem),0.75rem))] tab-bar-bottom:mb-0 dark:bg-black-70 desktop:mb-0 desktop:max-h-[38rem] desktop:rounded-xl desktop:pt-0 desktop:before:pointer-events-none desktop:before:absolute desktop:before:inset-0 desktop:before:z-10 desktop:before:size-full desktop:before:rounded-xl desktop:before:shadow-brand-inset desktop:before:content-['']"
+			className="relative w-full overflow-hidden bg-white-20 dark:bg-black-70 vision:bg-transparent native-nav:-mb-[min(var(--safe-area-inset-bottom,0rem),0.75rem)] tab-bar-bottom:mb-0 desktop:mb-0 desktop:max-h-152 desktop:rounded-xl desktop:pt-0 desktop:before:pointer-events-none desktop:before:absolute desktop:before:inset-0 desktop:before:z-10 desktop:before:size-full desktop:before:rounded-xl desktop:before:shadow-brand-inset desktop:before:content-['']"
 			{...props}
 			ref={setElement}
 		/>

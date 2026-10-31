@@ -20,7 +20,7 @@ export const LeaveButton: FC<LeaveButtonProps> = (props) => {
 
 	return (
 		<button
-			className="-m-3 mr-0 p-4 text-white-20 outline-none transition-opacity hover:opacity-80 focus:opacity-80"
+			className="-m-3 mr-0 p-4 text-white-20 outline-hidden transition-opacity hover:opacity-80 focus:opacity-80"
 			type="button"
 			onClick={async () => {
 				await Conversation.leave(conversationId)
@@ -30,7 +30,7 @@ export const LeaveButton: FC<LeaveButtonProps> = (props) => {
 				await navigate(urls.conversations.list());
 			}}
 		>
-			<Trash2 className="size-[1.625rem]" />
+			<Trash2 className="size-6.5" />
 			<span className="sr-only">{t("remove")}</span>
 		</button>
 	);

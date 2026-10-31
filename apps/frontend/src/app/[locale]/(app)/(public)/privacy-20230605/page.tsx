@@ -34,7 +34,7 @@ export default function PrivacyPage() {
 
 	return (
 		<ModelCard
-			className="select-children w-full desktop:max-w-2xl"
+			className="w-full select-children desktop:max-w-2xl"
 			containerProps={{ className: "gap-4" }}
 			title={t(titleKey)}
 		>

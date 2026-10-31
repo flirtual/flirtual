@@ -16,7 +16,7 @@ export const BackgroundVideo: React.FC = () => {
 			loop
 			muted
 			playsInline
-			className="absolute left-0 top-0 size-full object-cover brightness-50"
+			className="absolute top-0 left-0 size-full object-cover brightness-50"
 			poster={PosterImage}
 		>
 			<source src={VideoWebm} type="video/webm; codecs=vp9" />

@@ -495,7 +495,7 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 								<>
 									<Button
 										className={twMerge(
-											"focusable flex aspect-square size-full cursor-pointer items-center justify-center rounded-xl bg-brand-gradient",
+											"flex aspect-square size-full cursor-pointer items-center justify-center rounded-xl bg-brand-gradient focusable",
 											dragging && "animate-pulse"
 										)}
 										tabIndex={0}
@@ -534,7 +534,7 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 									<DragDrop
 									// @ts-expect-error: no
 										className={twMerge(
-											"focusable flex aspect-square size-full cursor-pointer items-center justify-center rounded-xl bg-brand-gradient shadow-brand-1",
+											"flex aspect-square size-full cursor-pointer items-center justify-center rounded-xl bg-brand-gradient shadow-brand-1 focusable",
 											dragging && "animate-pulse"
 										)}
 										uppy={uppy}
@@ -560,7 +560,7 @@ const ArrangeableImageDialog: React.FC<{
 				<UserImage
 					alt={t("profile_picture")}
 					blurHash={image.blurHash}
-					className="!relative mx-auto aspect-auto !size-auto max-h-[80vh] rounded-2.5xl object-cover"
+					className="relative! mx-auto aspect-auto size-auto! max-h-[80vh] rounded-2.5xl object-cover"
 					src={image.fullSrc}
 				/>
 			</DialogContent>

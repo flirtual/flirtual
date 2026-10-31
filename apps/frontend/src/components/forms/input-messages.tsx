@@ -61,7 +61,7 @@ export const FormMessage: FC<FormMessageProps> = (props) => {
 	return (
 		<m.div
 			className={twMerge(
-				"motion-preset-rebound select-children flex gap-2 font-nunito motion-duration-200",
+				"flex motion-preset-rebound gap-2 font-nunito select-children motion-duration-200",
 				formMessageStyle[type],
 				formMessageSize[size],
 				className

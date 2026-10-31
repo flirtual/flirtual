@@ -26,7 +26,7 @@ export function Badge({
 	return (
 		<Component
 			className={twMerge(
-				"focusable flex shrink-0 grow-0 items-center justify-center gap-2 rounded-xl font-bold uppercase",
+				"flex shrink-0 grow-0 items-center justify-center gap-2 rounded-xl font-bold uppercase focusable",
 				white
 					? "bg-white-20 text-black-80"
 					: "bg-brand-gradient text-white-10 shadow-brand-1",

@@ -46,7 +46,7 @@ function DialogContent({ ref: reference, className, children, closable = true, b
 		>
 			{children}
 			{closable && (
-				<DialogPrimitive.Close className="absolute right-5 top-4 z-10 rounded-sm text-white-10 opacity-70 outline-none transition-opacity hover:opacity-100 focus-visible:ring-2 focus-visible:ring-white-10 disabled:pointer-events-none dark:text-white-20">
+				<DialogPrimitive.Close className="absolute top-4 right-5 z-10 rounded-xs text-white-10 opacity-70 outline-hidden transition-opacity hover:opacity-100 focus-visible:ring-2 focus-visible:ring-white-10 disabled:pointer-events-none dark:text-white-20">
 					<X className="size-5" />
 					<span className="sr-only">{t("close")}</span>
 				</DialogPrimitive.Close>
@@ -71,7 +71,7 @@ function DialogHeader({
 	return (
 		<div
 			className={twMerge(
-				"flex flex-col gap-2 rounded-t-3xl bg-brand-gradient px-12 pb-3 pt-2 text-center text-white-20 group-data-[drawer]:bg-none group-data-[drawer]:px-0 group-data-[drawer]:py-2 group-data-[drawer]:text-left group-data-[drawer]:text-inherit desktop:pl-6 desktop:text-left",
+				"flex flex-col gap-2 rounded-t-3xl bg-brand-gradient px-12 pt-2 pb-3 text-center text-white-20 group-data-drawer:bg-none group-data-drawer:px-0 group-data-drawer:py-2 group-data-drawer:text-left group-data-drawer:text-inherit desktop:pl-6 desktop:text-left",
 				className
 			)}
 			{...props}
@@ -126,7 +126,7 @@ function DialogBody({
 		<div
 			className={twMerge(
 				dialogContentInnerClassName,
-				"group-data-[drawer]:-m-1 group-data-[drawer]:rounded-none group-data-[drawer]:bg-transparent group-data-[drawer]:p-1 group-data-[drawer]:shadow-none",
+				"group-data-drawer:-m-1 group-data-drawer:rounded-none group-data-drawer:bg-transparent group-data-drawer:p-1 group-data-drawer:shadow-none",
 				className
 			)}
 			{...props}

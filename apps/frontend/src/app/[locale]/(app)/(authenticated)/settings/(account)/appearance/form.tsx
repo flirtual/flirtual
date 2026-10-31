@@ -11,6 +11,7 @@ import { PreferenceThemes } from "~/api/user/preferences";
 import { Profile } from "~/api/user/profile";
 import type { ProfileColors } from "~/api/user/profile";
 import * as brand from "~/brand";
+import { profileColors } from "~/colors";
 import { NewBadge, PremiumBadge } from "~/components/badge";
 import { InlineLink } from "~/components/inline-link";
 import { InputLabel, InputLabelHint, InputSwitch } from "~/components/inputs";
@@ -34,22 +35,22 @@ export const InputColor: FC<{ value: string; onChange: Dispatch<string> }> = ({ 
 	return (
 		<div className="relative flex flex-col gap-4" style={{ "--color": value } as CSSProperties}>
 			<HexColorPicker
-				className="aspect-square rounded-lg shadow-brand-1 desktop:!h-auto desktop:!w-full"
+				className="aspect-square rounded-lg shadow-brand-1 desktop:h-auto! desktop:w-full!"
 				color={value}
 				onChange={onChange}
 			/>
-			<div className="focusable-within flex items-center overflow-hidden rounded-xl bg-white-40 text-black-80 shadow-brand-1 dark:bg-black-60 dark:text-white-20">
-				<div className="flex items-center justify-center bg-[var(--color)] p-2 text-[lch(from_var(--color)_calc((49.44_-_l)_*_infinity)_0_0)]">
+			<div className="flex items-center overflow-hidden rounded-xl bg-white-40 text-black-80 shadow-brand-1 focusable-within dark:bg-black-60 dark:text-white-20">
+				<div className="flex items-center justify-center bg-(--color) p-2 text-[lch(from_var(--color)_calc((49.44-l)*infinity)_0_0)]">
 					<Hash className="size-7" />
 				</div>
 				<HexColorInput
-					className="w-full border-none bg-transparent px-4 py-2 font-mono uppercase caret-theme-2 placeholder:text-black-20 focus:outline-none focus:ring-0 disabled:text-black-20 dark:placeholder:text-white-50 dark:disabled:text-white-50"
+					className="w-full border-none bg-transparent px-4 py-2 font-mono uppercase caret-theme-2 placeholder:text-black-20 focus:ring-0 focus:outline-hidden disabled:text-black-20 dark:placeholder:text-white-50 dark:disabled:text-white-50"
 					color={value}
 					onChange={onChange}
 				/>
 				{value && (
 					<button
-						className="focusable pointer-events-auto absolute right-4 rounded-full brightness-90 hocus:brightness-100"
+						className="pointer-events-auto absolute right-4 rounded-full focusable brightness-90 hocus:brightness-100"
 						tabIndex={0}
 						type="button"
 						onClick={(event) => {
@@ -148,7 +149,7 @@ const ProfileColorSelect: FC = () => {
 						<div className="flex gap-2">
 							<button
 								className={twMerge(
-									"focusable size-8 rounded-md",
+									"size-8 rounded-md focusable",
 									selectedColorIndex === 0 && "focused"
 								)}
 								style={{ backgroundColor: colors.color1 }}
@@ -157,7 +158,7 @@ const ProfileColorSelect: FC = () => {
 							/>
 							<button
 								className={twMerge(
-									"focusable size-8 rounded-md",
+									"size-8 rounded-md focusable",
 									selectedColorIndex === 1 && "focused"
 								)}
 								style={{ backgroundColor: colors.color2 }}
@@ -211,24 +212,23 @@ const ProfileColorSelect: FC = () => {
 						<div className="flex w-fit items-baseline gap-2">
 							<span className="ja:text-sm">{"label" in theme ? theme.label : t(theme.name)}</span>
 							{"description" in theme && (
-								<span className="text-sm text-black-50 vision:text-white-40 ja:text-xs dark:text-white-40">
+								<span className="text-sm text-black-50 dark:text-white-40 vision:text-white-40 ja:text-xs">
 									{theme.description}
 								</span>
 							)}
 						</div>
 						<div
 							className={twMerge(
-								"h-8 w-full rounded-md",
+								"h-8 w-full rounded-md bg-brand-gradient",
 								colors.color1 === theme.color1 && colors.color2 === theme.color2
-								&& "focused border-2"
+								&& "border-2 focused"
 							)}
-							style={{
-								backgroundImage: `linear-gradient(to right, ${theme.color1}, ${theme.color2})`
-							}}
+							data-profile-colors=""
+							style={profileColors(theme.color1, theme.color2)}
 						/>
 						{theme.name === "touch_grass" && touchingGrass && (
 							<span
-								className="absolute left-0 top-7 -scale-x-100 animate-touch-grass"
+								className="absolute top-7 left-0 -scale-x-100 animate-touch-grass"
 								onAnimationEnd={() => {
 									setTouchingGrass(false);
 								}}

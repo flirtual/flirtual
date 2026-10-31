@@ -44,7 +44,7 @@ export const CarouselGallery: FC = () => {
 			{tabs.map((title, index) => (
 				<button
 					key={title}
-					className="pointer-events-none absolute flex h-screen w-screen shrink-0 snap-center snap-always opacity-0 transition-opacity duration-500 data-[active]:pointer-events-auto data-[active]:opacity-100"
+					className="pointer-events-none absolute flex h-screen w-screen shrink-0 snap-center snap-always opacity-0 transition-opacity duration-500 data-active:pointer-events-auto data-active:opacity-100"
 					data-active={activeIndex === index ? "" : undefined}
 					type="button"
 					onClick={() => {

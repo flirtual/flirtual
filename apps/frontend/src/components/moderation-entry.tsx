@@ -251,7 +251,7 @@ const UserDisplayName: FC<{ userId: string; fallback?: string }> = withSuspense(
 		</span>
 	);
 }, {
-	fallback: () => <span className="w-20 shrink-0 animate-pulse rounded bg-black-50/20" />
+	fallback: () => <span className="w-20 shrink-0 animate-pulse rounded-sm bg-black-50/20" />
 });
 
 // The Discord-style **bold** that flag context highlights keywords with.
@@ -305,7 +305,7 @@ function DetailValue({ name, value }: { name: string; value: unknown }): ReactNo
 }
 
 const Field: FC<{ label: string; children: ReactNode }> = ({ label, children }) => (
-	<span className="whitespace-pre-wrap break-words">
+	<span className="wrap-break-word whitespace-pre-wrap">
 		<span className="font-bold">
 			{label}
 			:
@@ -581,7 +581,7 @@ const EntryImages: FC<{ images: Array<EntryImage>; small?: boolean }> = ({ image
 			<Dialog open={!!current} onOpenChange={(open) => !open && setIndex(null)}>
 				<DialogContent
 					border={false}
-					className="max-w-full overflow-hidden rounded-none outline-none desktop:max-w-[95svw] desktop:rounded-xl"
+					className="max-w-full overflow-hidden rounded-none outline-hidden desktop:max-w-[95svw] desktop:rounded-xl"
 					onKeyDown={(event) => {
 						if (event.key === "ArrowLeft") step(-1);
 						if (event.key === "ArrowRight") step(1);
@@ -598,24 +598,24 @@ const EntryImages: FC<{ images: Array<EntryImage>; small?: boolean }> = ({ image
 								{images.length > 1 && (
 									<div className="absolute z-10 flex size-full">
 										<button
-											className="group flex h-full w-1/4 items-center justify-start px-8 pl-[calc(2rem+var(--safe-area-inset-left,0rem))] opacity-70 outline-none transition-opacity hover:opacity-100 desktop:px-8"
+											className="group flex h-full w-1/4 items-center justify-start px-8 pl-[calc(2rem+var(--safe-area-inset-left,0rem))] opacity-70 outline-hidden transition-opacity hover:opacity-100 desktop:px-8"
 											type="button"
 											onClick={() => step(-1)}
 										>
-											<ChevronLeft className="size-10 rounded-md text-white-10 drop-shadow group-focus-visible:ring-2 group-focus-visible:ring-white-10" />
+											<ChevronLeft className="size-10 rounded-md text-white-10 drop-shadow-sm group-focus-visible:ring-2 group-focus-visible:ring-white-10" />
 										</button>
 										<button
-											className="group ml-auto flex h-full w-1/4 items-center justify-end px-8 pr-[calc(2rem+var(--safe-area-inset-right,0rem))] opacity-70 outline-none transition-opacity hover:opacity-100 desktop:px-8"
+											className="group ml-auto flex h-full w-1/4 items-center justify-end px-8 pr-[calc(2rem+var(--safe-area-inset-right,0rem))] opacity-70 outline-hidden transition-opacity hover:opacity-100 desktop:px-8"
 											type="button"
 											onClick={() => step(1)}
 										>
-											<ChevronRight className="size-10 rounded-md text-white-10 drop-shadow group-focus-visible:ring-2 group-focus-visible:ring-white-10" />
+											<ChevronRight className="size-10 rounded-md text-white-10 drop-shadow-sm group-focus-visible:ring-2 group-focus-visible:ring-white-10" />
 										</button>
 									</div>
 								)}
 								<Image
 									alt=""
-									className="touch-callout-default relative mx-auto max-h-[80vh] w-auto object-contain"
+									className="relative mx-auto max-h-[80vh] w-auto object-contain touch-callout-default"
 									src={current.full}
 								/>
 							</div>
@@ -677,7 +677,7 @@ const FlaggedCountry: FC<{ country: string; source: unknown }> = ({ country, sou
 	return (
 		<div className="flex flex-col gap-1">
 			<span className="flex items-center gap-2 font-semibold">
-				<img className="aspect-[4/3] h-5 shrink-0 rounded" src={getCountryImage(country)} />
+				<img className="aspect-4/3 h-5 shrink-0 rounded-sm" src={getCountryImage(country)} />
 				{getCountryName(locale, country) ?? country.toUpperCase()}
 			</span>
 			<span className="text-sm">
@@ -700,8 +700,8 @@ function useEntryBody(entry: ModerationEntry, compact: boolean): { content: Arra
 		: undefined;
 
 	if (country && entry.kind === "event") content.push(<FlaggedCountry key="country" country={country} source={entry.event.details.source} />);
-	else if (summary) content.push(<span key="summary" className="break-words font-semibold"><InlineMarkdown>{summary}</InlineMarkdown></span>);
-	if (message && !exitSurvey) content.push(<p key="message" className="select-text whitespace-pre-wrap break-words">{message}</p>);
+	else if (summary) content.push(<span key="summary" className="font-semibold wrap-break-word"><InlineMarkdown>{summary}</InlineMarkdown></span>);
+	if (message && !exitSurvey) content.push(<p key="message" className="wrap-break-word whitespace-pre-wrap select-text">{message}</p>);
 
 	if (entry.kind === "report") {
 		if (images.length > 0) content.push(<EntryImages key="images" images={images} small={compact} />);
@@ -739,7 +739,7 @@ function useEntryBody(entry: ModerationEntry, compact: boolean): { content: Arra
 
 	for (const [index, line] of context.entries()) {
 		content.push(
-			<p key={`context-${index}`} className="select-text whitespace-pre-wrap break-words">
+			<p key={`context-${index}`} className="wrap-break-word whitespace-pre-wrap select-text">
 				<InlineMarkdown>{line}</InlineMarkdown>
 			</p>
 		);
@@ -747,7 +747,7 @@ function useEntryBody(entry: ModerationEntry, compact: boolean): { content: Arra
 
 	if (classifications) {
 		content.push(
-			<span key="classifications" className="break-words">
+			<span key="classifications" className="wrap-break-word">
 				{classifications}
 			</span>
 		);
@@ -957,7 +957,7 @@ const ModerationEntryDetails: FC<{ entry: ModerationEntry; showUser: boolean }> 
 	const { content, fields } = useEntryBody(entry, true);
 
 	return (
-		<div className="ml-[0.4375rem] flex flex-col gap-1 border-l-2 border-black-50/20 py-1 pl-4 text-sm dark:border-white-50/20">
+		<div className="ml-1.75 flex flex-col gap-1 border-l-2 border-black-50/20 py-1 pl-4 text-sm dark:border-white-50/20">
 			{showUser && (
 				<Field label={entry.kind === "report" ? "Target" : "User"}>
 					{subjectId ? <UserName userId={subjectId} /> : "None"}

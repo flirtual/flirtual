@@ -114,7 +114,7 @@ export function Testimonial({ id }: TileProps) {
 				</div>
 			</div>
 			{press && (
-				<div className="relative mx-auto flex max-h-full max-w-screen-wide flex-wrap items-center justify-around gap-8 p-8 before:absolute before:inset-0 before:bg-gradient-to-b before:from-transparent before:to-black-80 desktop:h-full desktop:max-w-none desktop:px-16 desktop:py-8 desktop:tall:max-w-screen-wide desktop:tall:before:bg-none">
+				<div className="relative mx-auto flex max-h-full max-w-wide flex-wrap items-center justify-around gap-8 p-8 before:absolute before:inset-0 before:bg-linear-to-b before:from-transparent before:to-black-80 desktop:h-full desktop:max-w-none desktop:px-16 desktop:py-8 desktop:tall:max-w-wide desktop:tall:before:bg-none">
 					{Object.values(brandNames).map((name, index) => (
 						<Image
 							key={name}

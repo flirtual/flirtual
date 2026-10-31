@@ -1,10 +1,10 @@
 import { Copy } from "lucide-react";
-import type { ComponentProps, CSSProperties, FC } from "react";
+import type { ComponentProps, FC } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 import { withSuspense } from "with-suspense";
 
-import { gradientTextColor } from "~/colors";
+import { profileColors } from "~/colors";
 import { Html } from "~/components/html";
 import { vrTags } from "~/features";
 import { usePreferences } from "~/hooks/use-preferences";
@@ -71,7 +71,7 @@ const CopyUsername: FC<{ value: string }> = ({ value }) => {
 	return (
 		<CopyClick value={value}>
 			<button
-				className="focusable shrink-0 rounded opacity-60 hocus:opacity-100"
+				className="shrink-0 rounded-sm opacity-60 focusable hocus:opacity-100"
 				type="button"
 			>
 				<Copy className="size-4" />
@@ -121,20 +121,14 @@ export const Profile = withSuspense(({
 			id={id}
 			style={
 				user.profile.color1 && user.profile.color2
-					? ({
-							"--theme-1": user.profile.color1,
-							"--theme-2": user.profile.color2,
-							"--theme-text": gradientTextColor(
-								user.profile.color1,
-								user.profile.color2
-							)
-						} as CSSProperties)
+					? profileColors(user.profile.color1, user.profile.color2)
 					: {}
 			}
+			data-profile-colors={user.profile.color1 && user.profile.color2 ? "" : undefined}
 			{...elementProps}
 			data-mask
 			className={twMerge(
-				"ml-[calc(-1*var(--content-inset-left,0rem))] mr-[calc(-1*var(--content-inset-right,0rem))] flex w-[calc(100%+var(--content-inset-left,0rem)+var(--content-inset-right,0rem))] vision:bg-none desktop:mx-0 desktop:w-full desktop:max-w-lg desktop:rounded-3xl desktop:bg-brand-gradient desktop:p-1 desktop:shadow-brand-1",
+				"-mr-(--content-inset-right,0rem) -ml-(--content-inset-left,0rem) flex w-[calc(100%+var(--content-inset-left,0rem)+var(--content-inset-right,0rem))] vision:bg-none desktop:mx-0 desktop:w-full desktop:max-w-lg desktop:rounded-3xl desktop:bg-brand-gradient desktop:p-1 desktop:shadow-brand-1",
 				className
 			)}
 		>
@@ -143,11 +137,11 @@ export const Profile = withSuspense(({
 					current={id !== "next-profile"}
 					user={user}
 				>
-					<div className="absolute bottom-0 flex w-full flex-col gap-2 p-8 pl-[calc(2rem+var(--content-inset-left,0rem))] pr-[calc(2rem+var(--content-inset-right,0rem))] text-white-10 desktop:px-8">
+					<div className="absolute bottom-0 flex w-full flex-col gap-2 p-8 pr-[calc(2rem+var(--content-inset-right,0rem))] pl-[calc(2rem+var(--content-inset-left,0rem))] text-white-10 desktop:px-8">
 						<div className="pointer-events-auto flex w-fit items-baseline gap-4 font-montserrat">
 							<span
 								className={twMerge(
-									"text-shadow-brand col-span-10 line-clamp-1 shrink break-all text-4xl font-bold",
+									"col-span-10 line-clamp-1 shrink text-4xl font-bold break-all text-shadow-brand",
 									me.tags?.includes("moderator") && "select-text"
 								)}
 							>
@@ -156,7 +150,7 @@ export const Profile = withSuspense(({
 							</span>
 							{user.age && (
 								<div className="col-span-2 flex h-fit shrink-0 items-center gap-2">
-									<span className="text-shadow-brand text-3xl leading-none">
+									<span className="text-3xl leading-none text-shadow-brand">
 										{user.age}
 									</span>
 									{user.tags?.includes("verified") && (
@@ -170,12 +164,12 @@ export const Profile = withSuspense(({
 						<div className="flex flex-wrap items-center gap-2 font-montserrat ">
 							<GenderPills
 								attributes={user.profile.attributes.gender ?? []}
-								className="!bg-opacity-70"
+								className="bg-white-30/70! dark:bg-black-60/70!"
 							/>
 							{user.profile.country && (
 								<CountryPill
 									id={user.profile.country}
-									className="!bg-opacity-70"
+									className="bg-white-30/70! dark:bg-black-60/70!"
 								/>
 							)}
 						</div>
@@ -198,7 +192,7 @@ export const Profile = withSuspense(({
 					</div>
 				</ProfileImageDisplay>
 				<div className="h-1 shrink-0 bg-brand-gradient desktop:hidden" />
-				<div className="flex h-full grow flex-col gap-6 break-words p-8 pl-[calc(2rem+var(--content-inset-left,0rem))] pr-[calc(2rem+var(--content-inset-right,0rem))] desktop:px-8">
+				<div className="flex h-full grow flex-col gap-6 p-8 pr-[calc(2rem+var(--content-inset-right,0rem))] pl-[calc(2rem+var(--content-inset-left,0rem))] wrap-break-word desktop:px-8">
 					{myProfile && <PersonalActions user={user} />}
 					<RelationActions direct={direct} userId={user.id} />
 					{(((me.tags?.includes("admin") || me.tags?.includes("moderator")) && moderatorInfoVisible)
@@ -290,12 +284,12 @@ export const Profile = withSuspense(({
 						? (
 								me.profile.new
 									? (
-											<span className="text-xl italic vision:text-white-20 dark:text-white-20">
+											<span className="text-xl italic dark:text-white-20 vision:text-white-20">
 												{t("both_new_to_vr")}
 											</span>
 										)
 									: (
-											<span className="text-xl italic vision:text-white-20 dark:text-white-20">
+											<span className="text-xl italic dark:text-white-20 vision:text-white-20">
 												{t("other_new_to_vr", {
 													name: user.profile.displayName || t("unnamed_user")
 												})}

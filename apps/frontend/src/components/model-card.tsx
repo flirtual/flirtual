@@ -60,7 +60,7 @@ export const ModelCard: React.FC<ModelCardProps> = ({
 	return (
 		<>
 			{branded && (
-				<BrandedComponent className="motion-preset-bounce mx-auto mb-8 hidden desktop:block" href={urls.landing}>
+				<BrandedComponent className="mx-auto mb-8 hidden motion-preset-bounce desktop:block" href={urls.landing}>
 					<Logo className="h-20" />
 				</BrandedComponent>
 			)}
@@ -77,17 +77,17 @@ export const ModelCard: React.FC<ModelCardProps> = ({
 						data-model-card-title
 						{...titleProps}
 						className={twMerge(
-							"relative w-full bg-brand-gradient px-8 py-7 text-center font-montserrat text-3xl font-extrabold text-white-20 full-bleed-x desktop:w-full desktop:rounded-t-2xl desktop:pb-4 desktop:pt-[1.125rem] desktop:text-2xl android:desktop:pt-[1.125rem]",
+							"relative full-bleed-x w-full bg-brand-gradient px-8 py-7 text-center font-montserrat text-3xl font-extrabold text-white-20 desktop:w-full desktop:rounded-t-2xl desktop:pt-4.5 desktop:pb-4 desktop:text-2xl desktop:android:pt-4.5",
 							(inset || back)
-							&& "pl-[calc(2rem+var(--top-clearance-left,0rem))] pr-[calc(2rem+var(--top-clearance-right,0rem))] pt-[max(calc(var(--status-bar-inset-top,var(--safe-area-inset-top,0rem))+1rem),1.75rem)] desktop:px-8",
-							back && "flex min-h-[max(var(--status-bar-height,0rem),calc(max(calc(var(--status-bar-inset-top,var(--safe-area-inset-top,0rem))+0.25rem),0.75rem)+3.3125rem))] items-center justify-center pb-3 pl-[calc(3rem+var(--top-clearance-left,0rem))] pr-[calc(3rem+var(--top-clearance-right,0rem))] pt-[max(calc(var(--status-bar-inset-top,var(--safe-area-inset-top,0rem))+0.25rem),0.75rem)] text-2xl desktop:block desktop:min-h-0 desktop:px-8",
+							&& "pt-[max(calc(var(--status-bar-inset-top,var(--safe-area-inset-top,0rem))+1rem),1.75rem)] pr-[calc(2rem+var(--top-clearance-right,0rem))] pl-[calc(2rem+var(--top-clearance-left,0rem))] desktop:px-8",
+							back && "flex min-h-[max(var(--status-bar-height,0rem),calc(max(calc(var(--status-bar-inset-top,var(--safe-area-inset-top,0rem))+0.25rem),0.75rem)+3.3125rem))] items-center justify-center pt-[max(calc(var(--status-bar-inset-top,var(--safe-area-inset-top,0rem))+0.25rem),0.75rem)] pr-[calc(3rem+var(--top-clearance-right,0rem))] pb-3 pl-[calc(3rem+var(--top-clearance-left,0rem))] text-2xl desktop:block desktop:min-h-0 desktop:px-8",
 							titleProps.className
 						)}
 					>
 						{back && (
 							<button
 								aria-label={t("back")}
-								className="absolute bottom-3 left-[calc(1rem+var(--top-clearance-left,0rem))] top-[max(calc(var(--status-bar-inset-top,var(--safe-area-inset-top,0rem))+0.25rem),0.75rem)] flex items-center split:hidden desktop:hidden"
+								className="absolute top-[max(calc(var(--status-bar-inset-top,var(--safe-area-inset-top,0rem))+0.25rem),0.75rem)] bottom-3 left-[calc(1rem+var(--top-clearance-left,0rem))] flex items-center split:hidden desktop:hidden"
 								type="button"
 								onClick={back}
 							>
@@ -101,7 +101,7 @@ export const ModelCard: React.FC<ModelCardProps> = ({
 					<div
 						{...containerProps}
 						className={twMerge(
-							"flex size-full flex-col px-[max(2rem,calc((100%-40rem)/2))] py-10 pb-[max(var(--safe-area-inset-bottom,0rem),2.5rem)] vision:bg-transparent vision:text-white-20 native-nav:pb-[max(calc(2.5rem-var(--safe-area-inset-bottom,0rem)),var(--tab-bar-gap,0rem))] dark:bg-transparent dark:text-white-20 desktop:rounded-xl desktop:bg-white-20 desktop:px-16 desktop:pb-10 desktop:shadow-brand-inset dark:desktop:bg-black-70",
+							"flex size-full flex-col px-[max(2rem,calc((100%-40rem)/2))] py-10 pb-[max(var(--safe-area-inset-bottom,0rem),2.5rem)] dark:bg-transparent dark:text-white-20 vision:bg-transparent vision:text-white-20 native-nav:pb-[max(calc(2.5rem-var(--safe-area-inset-bottom,0rem)),var(--tab-bar-gap,0rem))] desktop:rounded-xl desktop:bg-white-20 desktop:px-16 desktop:pb-10 desktop:shadow-brand-inset dark:desktop:bg-black-70",
 							containerProps.className
 						)}
 					>
@@ -112,7 +112,7 @@ export const ModelCard: React.FC<ModelCardProps> = ({
 			{miniFooter && (
 				<footer className={twMerge(
 					// todo language select: "mb-[max(calc(var(--safe-area-inset-bottom,0rem)+1.5rem),2rem)] mt-auto flex grid-cols-3 flex-wrap items-center justify-center gap-x-4 gap-y-2 px-8 desktop:mb-0 desktop:mt-8 desktop:grid",
-					"mb-[max(calc(var(--safe-area-inset-bottom,0rem)+1.5rem),2rem)] mt-auto flex grid-cols-2 flex-wrap items-center justify-center gap-x-4 gap-y-2 px-8 desktop:mb-0 desktop:mt-8 desktop:grid",
+					"mt-auto mb-[max(calc(var(--safe-area-inset-bottom,0rem)+1.5rem),2rem)] flex grid-cols-2 flex-wrap items-center justify-center gap-x-4 gap-y-2 px-8 desktop:mt-8 desktop:mb-0 desktop:grid",
 				)}
 				>
 					<InlineLanguageSelect />

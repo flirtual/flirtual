@@ -32,7 +32,7 @@ export const ProfileMessage: FC = () => {
 	);
 
 	return (
-		<span className="h-[8ch] max-w-4xl text-balance font-nunito text-2xl font-normal leading-snug desktop:h-[5ch] desktop:text-4xl">
+		<span className="h-[8ch] max-w-4xl font-nunito text-2xl leading-snug font-normal text-balance desktop:h-[5ch] desktop:text-4xl">
 			{messages[current]}
 		</span>
 	);

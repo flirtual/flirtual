@@ -15,7 +15,7 @@ export const PressItem: React.FC<PressItemProps> = ({ name, href, date, site }) 
 	const [locale] = useLocale();
 
 	return (
-		<div className="select-children flex flex-col text-xl">
+		<div className="flex flex-col text-xl select-children">
 			<InlineLink className="font-semibold" href={href}>
 				{name}
 			</InlineLink>

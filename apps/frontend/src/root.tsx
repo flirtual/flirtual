@@ -270,7 +270,7 @@ export function Layout({ children }: PropsWithChildren) {
 
 					element.dataset.platform = platformOverride || device.platform;
 				}}
-				className="flex min-h-screen flex-col bg-white-20 font-nunito text-black-80 antialiased data-[theme=dark]:bg-black-70 data-[vision]:bg-transparent data-[theme=dark]:text-white-20 desktop:bg-cream desktop:data-[theme=dark]:bg-black-80"
+				className="flex min-h-screen flex-col bg-white-20 font-nunito text-black-80 antialiased data-vision:bg-transparent data-[theme=dark]:bg-black-70 data-[theme=dark]:text-white-20 desktop:bg-cream desktop:data-[theme=dark]:bg-black-80"
 				data-theme={theme}
 				data-theme-style={themeStyle}
 			>

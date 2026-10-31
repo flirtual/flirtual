@@ -82,7 +82,7 @@ const CountryCell: FC<{ countryId: string }> = ({ countryId }) => {
 
 	return (
 		<span className="flex items-center gap-2">
-			<img className="aspect-[4/3] h-5 shrink-0 rounded" src={getCountryImage(countryId)} />
+			<img className="aspect-4/3 h-5 shrink-0 rounded-sm" src={getCountryImage(countryId)} />
 			{getCountryName(locale, countryId) ?? countryId}
 		</span>
 	);

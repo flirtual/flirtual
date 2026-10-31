@@ -1,3 +1,5 @@
+@reference "../../../app/index.css";
+
 .quill {
   @apply flex flex-col rounded-xl bg-white-40 vision:bg-white-40/70 text-black-80 shadow-brand-1 dark:bg-black-60 dark:text-white-20;
 
@@ -71,14 +73,14 @@
             @apply grid grid-flow-col grid-rows-6 gap-1;
 
             .ql-picker-item {
-              @apply w-4 h-4 shrink-0 rounded-sm;
+              @apply w-4 h-4 shrink-0 rounded-xs;
 
               &:not([data-value]) {
                 @apply bg-transparent flex items-center justify-center;
 
                 &::before {
                   content: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZT0iY3VycmVudENvbG9yIiBjbGFzcz0idy02IGgtNiI+CiAgPHBhdGggc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJNNiAxOEwxOCA2TTYgNmwxMiAxMiIgLz4KPC9zdmc+Cg==);
-                  @apply flex shrink-0 w-4 h-4 aspect-square dark:invert;
+                  @apply flex shrink-0 w-4 h-4 aspect-square;
                 }
               }
             }
@@ -106,7 +108,7 @@
     @apply relative;
 
     .ql-editor {
-      @apply rounded-xl h-96 max-h-[calc(100vh-14.75rem-var(--safe-area-inset-top,0px)-var(--safe-area-inset-bottom,0px))] min-h-48 overflow-y-auto bg-white-40 vision:bg-transparent text-black-80 dark:text-white-20 dark:bg-black-60 p-4 font-nunito outline-none text-base;
+      @apply rounded-xl h-96 max-h-[calc(100vh-14.75rem-var(--safe-area-inset-top,0px)-var(--safe-area-inset-bottom,0px))] min-h-48 overflow-y-auto bg-white-40 vision:bg-transparent text-black-80 dark:text-white-20 dark:bg-black-60 p-4 font-nunito outline-hidden text-base;
 
       tab-size: 4;
       -moz-tab-size: 4;
@@ -398,4 +400,9 @@
 
 .ql-snow a {
   color: #06c;
+}
+
+/* Outside the nesting: `dark:` inside a rule that ends in a pseudo-element compiles to an invalid selector. */
+[data-theme="dark"] .quill .ql-toolbar .ql-formats .ql-picker.ql-color-picker .ql-picker-options .ql-picker-item:not([data-value])::before {
+  @apply invert;
 }

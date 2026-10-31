@@ -313,13 +313,13 @@ export default function Flitty() {
 			style={
 				position || { right: 20, bottom: 20 }
 			}
-			className="fixed z-[999] mb-[calc(42px+var(--safe-area-inset-bottom))] w-[200px] pl-[60px] desktop:mb-0"
+			className="fixed z-999 mb-[calc(42px+var(--safe-area-inset-bottom))] w-50 pl-15 desktop:mb-0"
 			ref={flittyReference}
 			onClick={handleFlittyClick}
 		>
 			{activeSpeech && (
 				<div
-					className="absolute bottom-full right-0 mb-6 mr-4 min-w-[120px] max-w-[200px] rounded-lg border border-black-90 bg-[#ffc] p-1 px-2 font-[Tahoma] text-[13px] text-black-90 [-webkit-font-smoothing:none] [font-smooth:never]"
+					className="absolute right-0 bottom-full mr-4 mb-6 max-w-50 min-w-30 rounded-lg border border-black-90 bg-[#ffc] p-1 px-2 font-[Tahoma] text-[13px] text-black-90 [-webkit-font-smoothing:none] [font-smooth:never]"
 					data-bubble="true"
 				>
 					{activeSpeech}
@@ -341,7 +341,7 @@ export default function Flitty() {
 						style={{
 							backgroundImage: `url(${SpeechBubbleTail})`
 						}}
-						className="absolute left-full top-full ml-[-50px] mt-0 h-[16px] w-[10px] bg-[10px_0]"
+						className="absolute top-full left-full mt-0 ml-[-50px] h-4 w-[10px] bg-[10px_0]"
 					/>
 				</div>
 			)}
@@ -351,7 +351,7 @@ export default function Flitty() {
 					backgroundImage: `url(${CloseButton})`,
 					borderRadius: "4px"
 				}}
-				className="absolute bottom-0 right-0 size-[21px] cursor-pointer"
+				className="absolute right-0 bottom-0 size-[21px] cursor-pointer"
 				data-close="true"
 				onClick={(event) => {
 					event.stopPropagation();

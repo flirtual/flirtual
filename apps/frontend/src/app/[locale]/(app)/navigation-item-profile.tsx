@@ -108,7 +108,7 @@ export const NavigationItemProfile: FC = () => {
 				{visible && (
 					<m.div
 						animate={{ opacity: 1 }}
-						className="absolute -left-2 bottom-[calc(-1*max(var(--safe-area-inset-bottom,0rem),0.75rem))] z-10 flex min-w-44 flex-col-reverse overflow-hidden rounded-t-2xl bg-white-10 p-4 pb-[calc(max(var(--safe-area-inset-bottom,0rem),0.75rem)+0.375rem)] pt-2.5 text-black-80 shadow-brand-1 ja:min-w-48 desktop:bottom-inherit desktop:top-[-0.4rem] desktop:flex-col desktop:rounded-2xl desktop:pb-3 desktop:pt-[0.9375rem]"
+						className="absolute bottom-[calc(-1*max(var(--safe-area-inset-bottom,0rem),0.75rem))] -left-2 z-10 flex min-w-44 flex-col-reverse overflow-hidden rounded-t-2xl bg-white-10 p-4 pt-2.5 pb-[calc(max(var(--safe-area-inset-bottom,0rem),0.75rem)+0.375rem)] text-black-80 shadow-brand-1 ja:min-w-48 desktop:top-[-0.4rem] desktop:bottom-inherit desktop:flex-col desktop:rounded-2xl desktop:pt-3.75 desktop:pb-3"
 						exit={{ opacity: 0 }}
 						initial={{ opacity: 0 }}
 						ref={elementReference}
@@ -118,13 +118,13 @@ export const NavigationItemProfile: FC = () => {
 							href={urls.profile(user)}
 						>
 							<UserAvatar
-								className="mt-1.5 size-8 scale-125 rounded-full transition-transform group-hocus:brightness-90 desktop:mb-2 desktop:mt-0"
+								className="mt-1.5 size-8 scale-125 rounded-full transition-transform group-hocus:brightness-90 desktop:mt-0 desktop:mb-2"
 								height={40}
 								user={user}
 								variant="icon"
 								width={40}
 							/>
-							<span className="whitespace-nowrap pb-1 pl-2 pt-2.5 font-montserrat text-lg font-semibold desktop:pb-2 desktop:pt-1">
+							<span className="pt-2.5 pb-1 pl-2 font-montserrat text-lg font-semibold whitespace-nowrap desktop:pt-1 desktop:pb-2">
 								{t("profile")}
 							</span>
 						</Link>

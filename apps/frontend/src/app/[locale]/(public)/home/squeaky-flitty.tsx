@@ -122,7 +122,7 @@ export const SqueakyFlitty: FC<PropsWithChildren> = ({ children }) => {
 	return (
 		<div className="group/mark relative">
 			<Mark
-				className="absolute right-1 top-0 w-16 origin-[bottom_center] rotate-[14deg] cursor-grab transition-all active:scale-x-110 active:scale-y-90 active:cursor-grabbing group-hocus-within/mark:-top-9"
+				className="absolute top-0 right-1 w-16 origin-[bottom_center] rotate-14 cursor-grab transition-all active:scale-x-110 active:scale-y-90 active:cursor-grabbing group-hocus-within/mark:-top-9"
 				onClick={() => {
 					squeak();
 

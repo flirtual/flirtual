@@ -92,14 +92,14 @@ export const DefaultOptionItem: FC<OptionItemProps<unknown>> = (props) => {
 				"flex items-center",
 				option.active
 					? "bg-brand-gradient text-white-20"
-					: "text-black-70 hocus-within:bg-white-40 dark:text-white-20 dark:hocus-within:bg-black-80/50 dark:hocus-within:text-white-20"
+					: "text-black-70 dark:text-white-20 hocus-within:bg-white-40 dark:hocus-within:bg-black-80/50 dark:hocus-within:text-white-20"
 			)}
 		>
 			<Tooltip touchable={false}>
 				<TooltipTrigger asChild>
 					<button
 						{...elementProps}
-						className="grow px-4 py-2 text-left focus:outline-none hocus:outline-none"
+						className="grow px-4 py-2 text-left focus:outline-hidden hocus:outline-hidden"
 						type="button"
 					>
 						<span className="font-nunito text-lg">
@@ -203,7 +203,7 @@ export function InputOptionWindow(props: InputOptionWindowProps<unknown>) {
 		<div
 			{...elementProps}
 			className={twMerge(
-				"focusable-within relative flex w-fit min-w-full overflow-hidden rounded-xl bg-white-20 shadow-brand-1 dark:bg-black-60",
+				"relative flex w-fit min-w-full overflow-hidden rounded-xl bg-white-20 shadow-brand-1 focusable-within dark:bg-black-60",
 				className
 			)}
 		>
@@ -211,7 +211,7 @@ export function InputOptionWindow(props: InputOptionWindowProps<unknown>) {
 				<ScrollIndicator side="up" target={element} visible={up} />
 			)}
 			<div
-				className="flex max-h-[var(--overlay-max-height,min(28rem,60svh))] w-full overflow-x-hidden overflow-y-scroll"
+				className="flex max-h-(--overlay-max-height,min(28rem,60svh)) w-full overflow-x-hidden overflow-y-scroll"
 				ref={setScrollElement}
 				tabIndex={-1}
 				onFocusCapture={(event) => {

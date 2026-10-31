@@ -132,7 +132,7 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, reset }) => {
 									<Image
 										priority
 										alt=""
-										className="pettable mt-5 h-8 w-fit shrink-0 rotate-[10deg] desktop:mt-1 desktop:h-12"
+										className="mt-5 h-8 w-fit shrink-0 pettable rotate-10 desktop:mt-1 desktop:h-12"
 										draggable={false}
 										height={345}
 										src={FlittyHardhat}
@@ -145,7 +145,7 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, reset }) => {
 										initial={{ scale: 0.8, opacity: 0.5 }}
 									>
 										<div
-											className="absolute -left-5 top-7 size-5 bg-white-10"
+											className="absolute top-7 -left-5 size-5 bg-white-10"
 											style={{ clipPath: "polygon(100% 0, 0 60%, 100% 100%)" }}
 										/>
 										<p>{t("maintenance_description", { name: brand.name })}</p>
@@ -180,11 +180,11 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, reset }) => {
 							</DialogHeader>
 							<DialogBody className="flex flex-col">
 								<CopyClick value={eventId}>{eventId}</CopyClick>
-								<div className="select-children relative flex gap-8 ">
+								<div className="relative flex gap-8 select-children ">
 									<Image
 										priority
 										alt=""
-										className="pettable mt-5 h-8 w-fit shrink-0 rotate-[10deg] desktop:mt-1 desktop:h-12"
+										className="mt-5 h-8 w-fit shrink-0 pettable rotate-10 desktop:mt-1 desktop:h-12"
 										draggable={false}
 										height={345}
 										src={FlittyHardhat}
@@ -197,11 +197,11 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, reset }) => {
 										initial={{ scale: 0.8, opacity: 0.5 }}
 									>
 										<div
-											className="absolute -left-5 top-7 size-5 bg-white-10"
+											className="absolute top-7 -left-5 size-5 bg-white-10"
 											style={{ clipPath: "polygon(100% 0, 0 60%, 100% 100%)" }}
 										/>
 										<p>{t("error_found")}</p>
-										<pre className="whitespace-pre-wrap text-xs">
+										<pre className="text-xs whitespace-pre-wrap">
 											{error.message}
 										</pre>
 									</m.div>
@@ -254,7 +254,7 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, reset }) => {
 										</li>
 									)}
 								</ul>
-								<div data-vaul-no-drag className="select-children flex max-w-sm flex-col whitespace-pre-wrap font-mono text-xs">
+								<div data-vaul-no-drag className="flex max-w-sm flex-col font-mono text-xs whitespace-pre-wrap select-children">
 									<ErrorDetails digest={error.digest} eventId={eventId} />
 								</div>
 								<div className="flex flex-wrap gap-2">

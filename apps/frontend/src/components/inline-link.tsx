@@ -16,7 +16,7 @@ export const InlineLink: React.FC<InlineLinkProps> = ({
 		<Link
 			{...props}
 			className={twMerge(
-				"data-[external]:touch-callout-default focus:outline-none",
+				"focus:outline-hidden data-external:touch-callout-default",
 				href && "hocus:underline",
 				highlight && "text-theme-2",
 				props.className

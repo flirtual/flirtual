@@ -53,7 +53,7 @@ export const ThemePreview: React.FC<ThemePreviewProps> = ({ theme }) => {
 						width={320}
 					/>
 					{active && (
-						<CheckCircleIcon className="absolute right-0.5 top-0.5 size-6 text-white-10" />
+						<CheckCircleIcon className="absolute top-0.5 right-0.5 size-6 text-white-10" />
 					)}
 				</button>
 			</TooltipTrigger>
@@ -78,7 +78,7 @@ export const InlineThemeSelect: React.FC<{ className?: string }> = ({ className 
 
 	return (
 		<Select onValueChange={(theme: PreferenceTheme) => setTheme(theme)}>
-			<RadixSelectTrigger className={twMerge("focusable flex items-center gap-0.5em whitespace-nowrap rounded-lg", className)}>
+			<RadixSelectTrigger className={twMerge("flex items-center gap-0.5em rounded-lg whitespace-nowrap focusable", className)}>
 				<ThemeIcon className="inline-block size-em" />
 				{" "}
 				<span className="grow">{t(theme)}</span>

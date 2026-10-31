@@ -14,7 +14,7 @@ export const Html: React.FC<HtmlProps> = ({ children, ...props }) => (
 	<span
 		data-mask
 		className={twMerge(
-			"prose vision:prose-invert dark:prose-invert",
+			"prose dark:prose-invert vision:prose-invert",
 			props.className
 		)}
 		// "html" is a sanitization function, we explicitly declare

@@ -173,7 +173,7 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 	return (
 		<div
 			className={twMerge(
-				"relative isolate flex h-11 w-full overflow-hidden rounded-xl bg-white-40 text-left shadow-brand-1 focus-within:ring-2 focus-within:ring-coral focus-within:ring-offset-2 focus:outline-none dark:bg-black-60 dark:text-white-20 focus-within:dark:ring-offset-black-50",
+				"relative isolate flex h-11 w-full overflow-hidden rounded-xl bg-white-40 text-left shadow-brand-1 focus-within:ring-2 focus-within:ring-coral focus-within:ring-offset-2 focus:outline-hidden dark:bg-black-60 dark:text-white-20 dark:focus-within:ring-offset-black-50",
 				!connection && "cursor-pointer"
 			)}
 		>
@@ -190,7 +190,7 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 					? <Loader2 className="size-6 animate-spin" />
 					: <Icon className="size-6" />}
 			</button>
-			<div className="pointer-events-none flex flex-col overflow-hidden whitespace-nowrap px-4 py-2 font-nunito leading-none vision:text-black-80">
+			<div className="pointer-events-none flex flex-col overflow-hidden px-4 py-2 font-nunito leading-none whitespace-nowrap vision:text-black-80">
 				<span className="text-sm leading-none opacity-75">{t(type)}</span>
 				<span
 					className={twMerge(
@@ -204,7 +204,7 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 			</div>
 			{connection && (
 				<button
-					className="z-10 ml-auto mr-3 shrink-0 cursor-pointer self-center opacity-50 hover:text-red-400 hover:opacity-100 vision:text-black-80"
+					className="z-10 mr-3 ml-auto shrink-0 cursor-pointer self-center opacity-50 hover:text-red-400 hover:opacity-100 vision:text-black-80"
 					type="button"
 					onClick={async () => {
 						await Connection.delete(type)

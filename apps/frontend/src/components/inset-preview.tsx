@@ -11,7 +11,7 @@ export const InsetPreview: FC = () => {
 				clipPath: "polygon(0% 0%, 0% 100%, var(--left) 100%, var(--left) var(--top), calc(100% - var(--right)) var(--top), calc(100% - var(--right)) calc(100% - var(--bottom)), var(--left) calc(100% - var(--bottom)), var(--left) 100%, 100% 100%, 100% 0%)",
 				backgroundImage: "repeating-linear-gradient(45deg, rgb(48, 48, 48), rgb(48, 48, 48) .5rem, rgb(24, 24, 24) .5rem, rgb(24, 24, 24) 1rem)"
 			} as CSSProperties}
-			className="pointer-events-none fixed z-[999] h-screen w-screen opacity-50"
+			className="pointer-events-none fixed z-999 h-screen w-screen opacity-50"
 		/>
 	);
 };

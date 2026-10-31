@@ -4,7 +4,6 @@
 		"@capacitor-community/safe-area",
 		"@capacitor/dialog",
 		"@eslint-react/eslint-plugin",
-		"@tailwindcss/forms",
 		"eslint-plugin-react-hooks",
 		"eslint-plugin-react-refresh",
 		"flag-icons",

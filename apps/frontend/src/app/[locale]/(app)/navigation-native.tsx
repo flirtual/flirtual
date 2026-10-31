@@ -5,6 +5,7 @@ import { useLocation } from "react-router";
 import { clamp } from "remeda";
 
 import type { User } from "~/api/user";
+import { cssVariableHex } from "~/colors";
 import { homieMode } from "~/features";
 import { useBackClaimed } from "~/hooks/use-back-button";
 import { useBreakpoint } from "~/hooks/use-breakpoint";
@@ -127,7 +128,7 @@ const NativeTabs: FC<{ tabs: Array<Tab>; selected?: string }> = ({ tabs, selecte
 
 	// Homie Mode's theme follows the route, so the selection changing covers it.
 	useEffect(() => {
-		const tint = getComputedStyle(document.body).getPropertyValue("--theme-2").trim();
+		const tint = cssVariableHex("--theme-2");
 		void NativeNavigationPlugin.update({ visible: true, selected, tabs, tint })
 			.then(setLayout);
 	}, [selected, tabs]);
@@ -169,7 +170,7 @@ const NativeTabs: FC<{ tabs: Array<Tab>; selected?: string }> = ({ tabs, selecte
 	// pad for: the tab bar at the bottom on phones, and whatever's above the desktop layout. Not a
 	// scroll anchor, as it comes before the page in the DOM.
 	return (
-		<div className="order-last h-[var(--safe-area-inset-bottom,0rem)] shrink-0 [overflow-anchor:none] split:hidden desktop:order-none desktop:block desktop:h-[var(--safe-area-inset-top,0rem)] [[data-banner]~&]:desktop:hidden" />
+		<div className="order-last h-(--safe-area-inset-bottom,0rem) shrink-0 [overflow-anchor:none] split:hidden desktop:order-0 desktop:block desktop:h-(--safe-area-inset-top,0rem) desktop:[[data-banner]~&]:hidden" />
 	);
 };
 

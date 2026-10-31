@@ -33,7 +33,7 @@ export const InputText: React.FC<InputTextProps> = (props) => {
 
 	return (
 		<div
-			className="focusable-within flex h-11 items-center overflow-hidden rounded-xl bg-white-40 text-black-80 shadow-brand-1 vision:bg-white-40/70 dark:bg-black-60 dark:text-white-20"
+			className="flex h-11 items-center overflow-hidden rounded-xl bg-white-40 text-black-80 shadow-brand-1 focusable-within dark:bg-black-60 dark:text-white-20 vision:bg-white-40/70"
 			onClick={() => inputReference.current?.focus()}
 		>
 			{Icon && (
@@ -59,7 +59,7 @@ export const InputText: React.FC<InputTextProps> = (props) => {
 					"iconColor"
 				])}
 				className={twMerge(
-					"w-full border-none bg-transparent px-4 py-2 font-nunito caret-theme-2 placeholder:text-black-30 focus:outline-none focus:ring-0 disabled:text-black-20 dark:placeholder:text-white-50 dark:disabled:text-black-10",
+					"w-full border-none bg-transparent px-4 py-2 font-nunito caret-theme-2 placeholder:text-black-30 focus:ring-0 focus:outline-hidden disabled:text-black-20 dark:placeholder:text-white-50 dark:disabled:text-black-10",
 					type === "number"
 					&& "[appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none",
 					props.className

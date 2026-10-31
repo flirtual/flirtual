@@ -103,7 +103,7 @@ export const Location2025: FC<{ onSaved?: () => void }> = ({ onSaved }) => {
 													<InputLabelHint
 														className={twMerge(
 															"ml-auto",
-															value === 0 ? "!text-red-500" : ""
+															value === 0 ? "text-red-500!" : ""
 														)}
 													>
 														{t("number_multiplier", { number: value })}

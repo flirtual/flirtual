@@ -45,7 +45,7 @@ export const HomieInstead: FC<HomieInsteadProps> = ({ userId, source, onPass, on
 								{t("pass")}
 							</Button>
 							<Button
-								className="grow basis-0 bg-gradient-to-tr from-theme-friend-1 to-theme-friend-2 text-white-20 shadow-brand-1"
+								className="grow basis-0 bg-linear-to-tr from-theme-friend-1 to-theme-friend-2 text-white-20 shadow-brand-1"
 								kind={false}
 								onClick={() => {
 									void homie(userId);

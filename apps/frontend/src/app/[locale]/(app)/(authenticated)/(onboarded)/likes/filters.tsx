@@ -19,7 +19,7 @@ const FilterButton: FC<FilterButtonProps> = ({ active, onClick, children }) => (
 			"flex size-full items-center justify-center px-3 transition-colors first:pl-4 last:pr-4 desktop:w-auto",
 			active
 				? "bg-brand-gradient text-white-20"
-				: "text-black-70 hocus:bg-white-40 dark:text-white-20 dark:hocus:bg-black-50"
+				: "text-black-70 dark:text-white-20 hocus:bg-white-40 dark:hocus:bg-black-50"
 		)}
 		type="button"
 		onClick={onClick}
@@ -38,7 +38,7 @@ interface FilterGroupProps<T extends string> {
 function FilterGroup<T extends string>({ value, onChange, options, className }: FilterGroupProps<T>) {
 	return (
 		<div className={twMerge(
-			"flex h-11 flex-1 shrink-0 overflow-hidden rounded-xl bg-white-30 shadow-brand-1 vision:bg-white-30/70 dark:bg-black-60 desktop:flex-none",
+			"flex h-11 flex-1 shrink-0 overflow-hidden rounded-xl bg-white-30 shadow-brand-1 dark:bg-black-60 vision:bg-white-30/70 desktop:flex-none",
 			className
 		)}
 		>

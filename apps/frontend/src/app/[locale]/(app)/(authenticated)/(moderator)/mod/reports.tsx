@@ -155,7 +155,7 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 						>
 							<CollapseIcon className="size-6" />
 							<UserDisplayName
-								className="max-w-44 select-text truncate font-montserrat text-xl font-semibold"
+								className="max-w-44 truncate font-montserrat text-xl font-semibold select-text"
 								userId={targetId}
 							/>
 						</button>
@@ -303,7 +303,7 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 												)}
 											</div>
 											{report.message && (
-												<p className="select-text whitespace-pre-wrap">{report.message}</p>
+												<p className="whitespace-pre-wrap select-text">{report.message}</p>
 											)}
 											{report.images && report.images.length > 0 && (
 												<div className="flex flex-wrap gap-2">

@@ -77,7 +77,7 @@ export const UserForms: React.FC = () => {
 					<span className="text-lg">
 						<Trans
 							components={{
-								copy: <CopyClick data-mask className="select-all font-semibold" value={user.email} />,
+								copy: <CopyClick data-mask className="font-semibold select-all" value={user.email} />,
 							}}
 							i18nKey="confirm_email_check_inbox"
 							values={{ email: user.email }}

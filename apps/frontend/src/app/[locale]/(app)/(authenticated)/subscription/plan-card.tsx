@@ -83,7 +83,7 @@ export const PlanCard: FC<PlanCardProps> = (props) => {
 					? "bg-white-10/80 shadow-brand-inset dark:bg-black-70/75"
 					: [
 							containerClassName,
-							"bg-white-25 vision:bg-white-25/70 dark:bg-black-60/50"
+							"bg-white-25 dark:bg-black-60/50 vision:bg-white-25/70"
 						],
 				lifetime && (description ? "gap-4" : "desktop:flex-row")
 			)}
@@ -100,7 +100,7 @@ export const PlanCard: FC<PlanCardProps> = (props) => {
 				>
 					{originalPrice}
 				</span>
-				<span className="break-all font-montserrat text-3xl font-semibold">
+				<span className="font-montserrat text-3xl font-semibold break-all">
 					{displayPrice}
 				</span>
 				<span className="mt-1 text-xl">{duration}</span>
@@ -111,10 +111,10 @@ export const PlanCard: FC<PlanCardProps> = (props) => {
 						clipPath: "polygon(100% 0, 0 0, 100% 100%)",
 						margin: "-1px -1px 0 0"
 					}}
-					className="absolute right-0 top-0 flex aspect-square w-max items-center justify-center rounded-tr-xl bg-brand-gradient p-3 text-white-20"
+					className="absolute top-0 right-0 flex aspect-square w-max items-center justify-center rounded-tr-xl bg-brand-gradient p-3 text-white-20"
 				>
-					<div className="origin-center -translate-y-3 translate-x-3 rotate-45">
-						<span className="whitespace-nowrap font-semibold">
+					<div className="origin-center translate-x-3 -translate-y-3 rotate-45">
+						<span className="font-semibold whitespace-nowrap">
 							{t("save_percent", { number: discount })}
 						</span>
 					</div>

@@ -65,7 +65,7 @@ export function HavingIssues({ error }: { error?: unknown }) {
 			<Image
 				priority
 				alt=""
-				className="pettable mx-auto mb-4 h-14 w-fit shrink-0 rotate-[10deg] desktop:mt-1 desktop:h-16"
+				className="mx-auto mb-4 h-14 w-fit shrink-0 pettable rotate-10 desktop:mt-1 desktop:h-16"
 				draggable={false}
 				height={345}
 				src={FlittyHardhat}
@@ -97,7 +97,7 @@ export function HavingIssues({ error }: { error?: unknown }) {
 			</div>
 			{!maintenance && (
 				<>
-					<ul className="ml-4 mt-6 flex max-w-sm list-disc flex-col gap-2 text-sm desktop:max-w-md desktop:text-base">
+					<ul className="mt-6 ml-4 flex max-w-sm list-disc flex-col gap-2 text-sm desktop:max-w-md desktop:text-base">
 						<li>
 							<button
 								className="underline"
@@ -146,7 +146,7 @@ export function HavingIssues({ error }: { error?: unknown }) {
 						)}
 					</ul>
 					{(development || squishCount > 2) && error instanceof Error && (
-						<code className="select-children mt-6 flex max-w-sm flex-col font-mono text-xs opacity-50 desktop:max-w-md desktop:text-sm">
+						<code className="mt-6 flex max-w-sm flex-col font-mono text-xs opacity-50 select-children desktop:max-w-md desktop:text-sm">
 							<span className="line-clamp-5 font-semibold">{error.message}</span>
 							{error.stack && (
 								<p

@@ -47,7 +47,7 @@ export const DebugInfo: React.FC = () => {
 				{t("copy")}
 			</Button>
 			<code
-				className={twMerge("cursor-pointer select-none overflow-auto whitespace-pre-wrap break-all text-left text-xs opacity-75", !seeMore && "line-clamp-3")}
+				className={twMerge("cursor-pointer overflow-auto text-left text-xs break-all whitespace-pre-wrap opacity-75 select-none", !seeMore && "line-clamp-3")}
 				onClick={() => {
 					setSeeMore(!seeMore);
 					copy();

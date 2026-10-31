@@ -104,7 +104,7 @@
 }
 
 .uppy-StatusBar-actionBtn {
-  background-image: linear-gradient(to right, var(--brand-theme-1), var(--brand-theme-2)) !important;
+  background-image: linear-gradient(to right var(--brand-gradient-space,), var(--brand-theme-1), var(--brand-theme-2)) !important;
   color: rgb(235 235 235) !important;
   border-radius: 12px !important;
   box-shadow: rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 3px 1px -2px, rgba(0, 0, 0, 0.2) 0px 1px 5px 0px !important;
@@ -187,7 +187,7 @@
 }
 
 .uppy-StatusBar-progress {
-  background-image: linear-gradient(to right, var(--brand-theme-1), var(--brand-theme-2)) !important;
+  background-image: linear-gradient(to right var(--brand-gradient-space,), var(--brand-theme-1), var(--brand-theme-2)) !important;
 }
 
 .uppy-StatusBar.is-error .uppy-StatusBar-progress {

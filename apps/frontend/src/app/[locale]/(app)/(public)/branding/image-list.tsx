@@ -32,7 +32,7 @@ function ImageListItem({ name, sources, dark }: ImageListItemProps) {
 				{Object.entries(sources).map(([kind, source]) => (
 					<a
 						key={kind}
-						className="uppercase text-theme-2 hocus:underline hocus:outline-none"
+						className="text-theme-2 uppercase hocus:underline hocus:outline-hidden"
 						download={`${filenamePrefix}-${name}.${kind}`}
 						href={source}
 					>

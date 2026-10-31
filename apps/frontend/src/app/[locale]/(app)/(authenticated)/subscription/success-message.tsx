@@ -20,7 +20,7 @@ export const SuccessMessage: React.FC = () => {
 					{t("order_received")}
 				</h1>
 				<Link
-					className="absolute right-0 top-0"
+					className="absolute top-0 right-0"
 					href={urls.subscription.default}
 				>
 					<X className="size-6" />

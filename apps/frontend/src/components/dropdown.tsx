@@ -23,7 +23,7 @@ function DropdownMenuSubTrigger({ ref: reference, className, inset, children, ..
 	return (
 		<DropdownMenuPrimitive.SubTrigger
 			className={twMerge(
-				"flex cursor-default items-center rounded-md px-3 py-1.5 text-sm outline-none focus:bg-white-30 data-[state=open]:bg-white-30 data-[disabled]:opacity-50 dark:focus:bg-black-50 dark:data-[state=open]:bg-black-50",
+				"flex cursor-default items-center rounded-md px-3 py-1.5 text-sm outline-hidden focus:bg-white-30 data-disabled:opacity-50 data-[state=open]:bg-white-30 dark:focus:bg-black-50 dark:data-[state=open]:bg-black-50",
 				inset && "pl-8",
 				className
 			)}
@@ -42,7 +42,7 @@ function DropdownMenuSubContent({ ref: reference, className, ...props }: { ref?:
 	return (
 		<DropdownMenuPrimitive.SubContent
 			className={twMerge(
-				"z-50 min-w-40 overflow-hidden rounded-lg bg-white-10 p-2 font-nunito text-black-80 shadow-brand-1 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:bg-black-60 dark:text-white-20",
+				"z-50 min-w-40 overflow-hidden rounded-lg bg-white-10 p-2 font-nunito text-black-80 shadow-brand-1 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 dark:bg-black-60 dark:text-white-20",
 				className
 			)}
 			ref={reference}
@@ -60,7 +60,7 @@ function DropdownMenuContent({ ref: reference, className, sideOffset = 3, ...pro
 		<DropdownMenuPrimitive.Portal>
 			<DropdownMenuPrimitive.Content
 				className={twMerge(
-					"z-50 min-w-40 overflow-hidden rounded-lg bg-white-10 p-2 font-nunito text-black-80 shadow-brand-1 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:bg-black-60 dark:text-white-20",
+					"z-50 min-w-40 overflow-hidden rounded-lg bg-white-10 p-2 font-nunito text-black-80 shadow-brand-1 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 dark:bg-black-60 dark:text-white-20",
 					className
 				)}
 				collisionPadding={safeArea}
@@ -79,7 +79,7 @@ function DropdownMenuItem({ ref: reference, className, inset, ...props }: {
 	return (
 		<DropdownMenuPrimitive.Item
 			className={twMerge(
-				"relative flex cursor-pointer items-center rounded-md px-3 py-1.5 text-sm outline-none transition-colors focus:bg-white-30 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-black-50",
+				"relative flex cursor-pointer items-center rounded-md px-3 py-1.5 text-sm outline-hidden transition-colors focus:bg-white-30 data-disabled:pointer-events-none data-disabled:opacity-50 dark:focus:bg-black-50",
 				inset && "pl-8",
 				className
 			)}
@@ -94,7 +94,7 @@ function DropdownMenuCheckboxItem({ ref: reference, className, children, checked
 	return (
 		<DropdownMenuPrimitive.CheckboxItem
 			className={twMerge(
-				"relative flex cursor-pointer items-center rounded-md px-3 py-1.5 pl-8 text-sm outline-none transition-colors focus:bg-white-30 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-black-50",
+				"relative flex cursor-pointer items-center rounded-md px-3 py-1.5 pl-8 text-sm outline-hidden transition-colors focus:bg-white-30 data-disabled:pointer-events-none data-disabled:opacity-50 dark:focus:bg-black-50",
 				className
 			)}
 			checked={checked}
@@ -117,7 +117,7 @@ function DropdownMenuRadioItem({ ref: reference, className, children, ...props }
 	return (
 		<DropdownMenuPrimitive.RadioItem
 			className={twMerge(
-				"relative flex cursor-default items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+				"relative flex cursor-default items-center rounded-xs py-1.5 pr-2 pl-8 text-sm outline-hidden transition-colors data-disabled:pointer-events-none data-disabled:opacity-50",
 				className
 			)}
 			ref={reference}

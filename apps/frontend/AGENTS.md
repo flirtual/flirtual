@@ -45,7 +45,7 @@ Do **all three** or the value bakes in as `undefined`:
 
 ## Styling
 
-Tailwind with custom classes and variants.
+Tailwind 4 with custom classes and variants. `src/app/index.css` loads `tailwind.config.js` with `@config` and defines the breakpoints with `split:`, `tall:` and `narrow:`, in the order they override each other. Another stylesheet that uses `@apply` must be plain `.css` (Tailwind 4 doesn't process Sass) and start with `@reference` to `index.css`. Lightning CSS lowers the output to `src/targets.ts` when Vite minifies it.
 
 - **Classes**: `bg-brand-gradient`; shadows `shadow-brand-1`/`shadow-brand-inset`/`text-shadow-brand`; fonts `font-montserrat` (headings), `font-nunito` (body); focus `focused`/`focusable`/`focusable-within`; `touch-callout-default`/`-none` (iOS); `select-children` (children selectable, off by default).
 - **Variants**: `dark:`, `desktop:`, `wide:`, `tall:`, `native:` (iOS/Android app), `vision:` (visionOS), `android:` (native or web), `apple:` (iOS/visionOS/macOS, native or web), `[locale]:` (e.g. `en:`, `ja:`).

@@ -44,7 +44,7 @@ export function Tile({ className, children, id, ...props }: Omit<React.Component
 		<section
 			{...props}
 			className={twMerge(
-				"group h-screen min-h-screen w-screen min-w-[100vw] snap-start snap-always p-[var(--safe-area-inset-top,0rem)_var(--safe-area-inset-right,0rem)_var(--safe-area-inset-bottom,0rem)_var(--safe-area-inset-left,0rem)]",
+				"group h-screen min-h-screen w-screen min-w-screen snap-start snap-always p-[var(--safe-area-inset-top,0rem)_var(--safe-area-inset-right,0rem)_var(--safe-area-inset-bottom,0rem)_var(--safe-area-inset-left,0rem)]",
 				className
 			)}
 			data-tile={id}
@@ -71,7 +71,7 @@ export const TileGuide: FC<{ tileCount: number }> = ({ tileCount }) => {
 	const { tile } = use(TileContext);
 
 	return (
-		<div className="pointer-events-none fixed inset-x-0 bottom-0 z-10 flex h-36 flex-col items-center justify-center gap-4 pb-[max(calc(var(--safe-area-inset-bottom,0rem)+0.25rem),0.25rem)] pl-[calc(2rem+var(--safe-area-inset-left,0rem))] pr-[calc(2rem+var(--safe-area-inset-right,0rem))] desktop:inset-y-0 desktop:left-0 desktop:right-auto desktop:h-auto desktop:px-16 desktop:py-8">
+		<div className="pointer-events-none fixed inset-x-0 bottom-0 z-10 flex h-36 flex-col items-center justify-center gap-4 pr-[calc(2rem+var(--safe-area-inset-right,0rem))] pb-[max(calc(var(--safe-area-inset-bottom,0rem)+0.25rem),0.25rem)] pl-[calc(2rem+var(--safe-area-inset-left,0rem))] desktop:inset-y-0 desktop:right-auto desktop:left-0 desktop:h-auto desktop:px-16 desktop:py-8">
 			<div className="pointer-events-auto flex w-full flex-col items-center justify-center gap-6 desktop:hidden">
 				<InlineLanguageSelect className={twMerge("transition-all", tile === 0 ? "" : "pointer-events-none opacity-0")} />
 				<CallToAction className="w-full" />
@@ -89,7 +89,7 @@ export const TileGuide: FC<{ tileCount: number }> = ({ tileCount }) => {
 								.querySelector(`[data-tile="${index}"]`)
 								?.scrollIntoView({ behavior: "smooth" })}
 					>
-						<div className="size-2 rounded-full bg-white-10 shadow-md transition-all group-hover:size-3 group-data-[active]:size-4 " />
+						<div className="size-2 rounded-full bg-white-10 shadow-md transition-all group-hover:size-3 group-data-active:size-4 " />
 					</button>
 				))}
 			</div>

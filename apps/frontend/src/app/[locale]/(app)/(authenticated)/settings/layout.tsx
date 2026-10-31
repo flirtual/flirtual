@@ -36,7 +36,7 @@ export default function SettingsLayout({ matches }: Route.ComponentProps) {
 	if (listOnly && (split || desktop)) return <Navigate replace to={urls.settings.matchmaking()} />;
 
 	return (
-		<SplitPanes aside={<SettingsNavigation />} asideClassName="desktop:w-80" className="desktop:gap-8" mainClassName="split:[&_[data-model-card-title]]:min-h-[var(--status-bar-height,0rem)] split:[&_[data-model-card-title]]:py-4 split:[&_[data-model-card-title]]:pt-[max(calc(var(--status-bar-inset-top,var(--safe-area-inset-top,0rem))+0.5rem),1rem)] split:[&_[data-model-card-title]]:text-2xl desktop:max-w-lg desktop:[&_[data-model-card-title]]:pt-[1.125rem]">
+		<SplitPanes aside={<SettingsNavigation />} asideClassName="desktop:w-80" className="desktop:gap-8" mainClassName="**:data-model-card-title:split:min-h-(--status-bar-height,0rem) **:data-model-card-title:split:py-4 **:data-model-card-title:split:pt-[max(calc(var(--status-bar-inset-top,var(--safe-area-inset-top,0rem))+0.5rem),1rem)] **:data-model-card-title:split:text-2xl desktop:max-w-lg desktop:**:data-model-card-title:pt-4.5">
 			{listOnly ? <Outlet /> : <ModelCardBack><Outlet /></ModelCardBack>}
 		</SplitPanes>
 	);

@@ -57,7 +57,7 @@ export const TimeDiff: React.FC<TimeDiffProps> = ({ diff, displayName }) => {
 			<TooltipTrigger asChild>
 				<div className="pointer-events-auto flex items-center gap-2">
 					<ClockIcon className="size-4" />
-					<span className="text-shadow-brand font-montserrat font-semibold">
+					<span className="font-montserrat font-semibold text-shadow-brand">
 						{formattedDiff}
 					</span>
 				</div>

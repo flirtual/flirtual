@@ -31,7 +31,7 @@ export function Loading({
 					<Image
 						priority
 						alt=""
-						className="hidden w-full vision:block dark:block"
+						className="hidden w-full dark:block vision:block"
 						draggable={false}
 						height={1000}
 						src={LogoOnDark}
@@ -41,7 +41,7 @@ export function Loading({
 				<Image
 					priority
 					alt=""
-					className={twMerge("w-full", light !== true && "block vision:hidden dark:hidden")}
+					className={twMerge("w-full", light !== true && "block dark:hidden vision:hidden")}
 					draggable={false}
 					height={1000}
 					src={LogoOnLight}

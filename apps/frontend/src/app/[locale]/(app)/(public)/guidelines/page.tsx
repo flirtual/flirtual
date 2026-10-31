@@ -29,7 +29,7 @@ export default function GuidelinesPage() {
 				<Trans
 					components={{
 						p: <p className="select-text" />,
-						section: <section className="select-children flex flex-col gap-4" />,
+						section: <section className="flex flex-col gap-4 select-children" />,
 						group: <div className="flex flex-col gap-1" />,
 						h1: <h1 className="text-2xl font-semibold" />,
 						h2: <h2 className="text-xl font-semibold" />,

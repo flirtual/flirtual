@@ -199,7 +199,7 @@ export const ToastProvider: React.FC<PropsWithChildren> = ({ children }) => {
 		>
 			{children}
 			{toasts.length > 0 && (
-				<div className="pointer-events-none fixed bottom-16 right-0 z-[999] flex flex-col-reverse gap-2 p-8 px-4 desktop:bottom-[unset] desktop:top-16 desktop:px-8">
+				<div className="pointer-events-none fixed right-0 bottom-16 z-999 flex flex-col-reverse gap-2 p-8 px-4 desktop:top-16 desktop:bottom-[unset] desktop:px-8">
 					{toasts.map((toast) => (
 						<ToastItem {...toast} key={toast.id} />
 					))}

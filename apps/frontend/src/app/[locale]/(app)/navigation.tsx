@@ -71,13 +71,13 @@ const NavigationContent: FC = () => {
 		return (
 			<NavigationalSwitch>
 				<NavigationalSwitchItem
-					className="data-[active]:bg-brand-gradient-pink hocus:bg-brand-gradient-pink"
+					className="data-active:bg-brand-gradient-pink hocus:bg-brand-gradient-pink"
 					href={urls.landing}
 					Icon={HomeIcon}
 					iconClassName="group-hocus:fill-white-20"
 				/>
 				<NavigationalSwitchItem
-					className="data-[active]:bg-brand-gradient-pink hocus:bg-brand-gradient-pink"
+					className="data-active:bg-brand-gradient-pink hocus:bg-brand-gradient-pink"
 					href={urls.login()}
 					Icon={LoginIcon}
 					iconClassName="group-hocus:fill-white-20"
@@ -120,9 +120,9 @@ export function Navigation() {
 			: <GuestNativeNavigation />;
 
 	return (
-		<header data-dark-backdrop className="sticky bottom-0 z-30 order-last flex w-screen flex-col items-center justify-center bg-brand-gradient text-white-20 shadow-brand-1 [overflow-anchor:none] vision:hidden desktop:bottom-auto desktop:top-0 desktop:order-none">
+		<header data-dark-backdrop className="sticky bottom-0 z-30 order-last flex w-screen flex-col items-center justify-center bg-brand-gradient text-white-20 shadow-brand-1 [overflow-anchor:none] vision:hidden desktop:top-0 desktop:bottom-auto desktop:order-0">
 			{development && session?.user.tags?.includes("debugger") && <BuildInformation />}
-			<div className="flex size-full items-center justify-evenly gap-4 pb-[max(calc(var(--safe-area-inset-bottom,0rem)-0.25rem),0.5rem)] pl-[calc(1.25rem+var(--content-inset-left,0rem))] pr-[calc(1.25rem+var(--content-inset-right,0rem))] pt-2 font-nunito text-white-20 desktop:w-auto desktop:pb-2">
+			<div className="flex size-full items-center justify-evenly gap-4 pt-2 pr-[calc(1.25rem+var(--content-inset-right,0rem))] pb-[max(calc(var(--safe-area-inset-bottom,0rem)-0.25rem),0.5rem)] pl-[calc(1.25rem+var(--content-inset-left,0rem))] font-nunito text-white-20 desktop:w-auto desktop:pb-2">
 				<NavigationContent />
 			</div>
 		</header>

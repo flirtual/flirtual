@@ -52,34 +52,34 @@ export const ProfileImagesCard = withSuspense<{
 					width={512}
 				/>
 			))}
-			<div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-black-90/20 to-black-90/70" />
+			<div className="pointer-events-none absolute inset-0 bg-linear-to-b from-transparent via-black-90/20 to-black-90/70" />
 			{images.length > 1 && (
 				<>
 					<button
 						aria-label={t("previous")}
-						className="absolute left-0 top-0 z-10 flex h-full w-1/4 items-center justify-start px-4 text-white-10 opacity-70 transition-opacity hover:opacity-100"
+						className="absolute top-0 left-0 z-10 flex h-full w-1/4 items-center justify-start px-4 text-white-10 opacity-70 transition-opacity hover:opacity-100"
 						type="button"
 						onClick={set(-1)}
 					>
-						<ChevronLeft className="size-8 drop-shadow" />
+						<ChevronLeft className="size-8 drop-shadow-sm" />
 					</button>
 					<button
 						aria-label={t("next")}
-						className="absolute right-0 top-0 z-10 flex h-full w-1/4 items-center justify-end px-4 text-white-10 opacity-70 transition-opacity hover:opacity-100"
+						className="absolute top-0 right-0 z-10 flex h-full w-1/4 items-center justify-end px-4 text-white-10 opacity-70 transition-opacity hover:opacity-100"
 						type="button"
 						onClick={set(1)}
 					>
-						<ChevronRight className="size-8 drop-shadow" />
+						<ChevronRight className="size-8 drop-shadow-sm" />
 					</button>
 				</>
 			)}
 			<div className="pointer-events-none absolute inset-x-0 bottom-0 flex flex-col gap-1.5 p-3 text-white-10">
 				<div className="flex items-baseline gap-2 font-montserrat">
-					<span data-mask className="text-shadow-brand line-clamp-1 break-all text-lg font-bold leading-tight">
+					<span data-mask className="line-clamp-1 text-lg leading-tight font-bold break-all text-shadow-brand">
 						{user.profile.displayName || t("unnamed_user")}
 					</span>
 					{user.age && (
-						<span className="text-shadow-brand shrink-0 text-base leading-none">
+						<span className="shrink-0 text-base leading-none text-shadow-brand">
 							{user.age}
 						</span>
 					)}
@@ -89,13 +89,13 @@ export const ProfileImagesCard = withSuspense<{
 						simple
 						small
 						attributes={user.profile.attributes.gender ?? []}
-						className="!bg-opacity-70"
+						className="bg-white-30/70! dark:bg-black-60/70!"
 					/>
 					{user.profile.country && (
 						<CountryPill
 							id={user.profile.country}
 							flagOnly
-							className="!bg-opacity-70"
+							className="bg-white-30/70! dark:bg-black-60/70!"
 						/>
 					)}
 				</div>

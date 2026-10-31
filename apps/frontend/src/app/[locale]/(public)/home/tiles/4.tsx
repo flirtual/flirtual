@@ -18,13 +18,13 @@ import { CallToAction } from "../call-to-action";
 
 export function TheEnd({ id }: TileProps) {
 	return (
-		<Tile id={id} className="h-auto !min-h-inherit content-center">
+		<Tile id={id} className="h-auto min-h-inherit! content-center">
 			<div className="-mt-32 flex grow flex-col items-center px-8 pb-8 desktop:mt-0 desktop:px-24">
 				<div className="flex flex-col items-center gap-16 desktop:tall:mt-16">
 					<div className="flex flex-col items-center gap-4">
 						<Logo className="w-56" theme="dark" />
 						<TileAnchor id={id}>
-							<h1 className="max-w-screen-wide text-balance text-center font-montserrat text-4xl font-bold text-white-10 desktop:text-6xl desktop:tall:text-7xl">
+							<h1 className="max-w-wide text-center font-montserrat text-4xl font-bold text-balance text-white-10 desktop:text-6xl desktop:tall:text-7xl">
 								<Trans
 									components={{
 										highlight: <span className="bg-brand-gradient bg-clip-text text-transparent" />

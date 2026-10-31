@@ -27,7 +27,7 @@ export const EntitlementMismatch: FC<{ entitlement: Entitlement }> = ({
 		return null;
 
 	return (
-		<span className="text-black-30 vision:text-white-50 dark:text-white-50">
+		<span className="text-black-30 dark:text-white-50 vision:text-white-50">
 			⚠️
 			{" "}
 			{entitlement.store === "chargebee"
