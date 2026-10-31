@@ -29,7 +29,7 @@ let package = Package(
         .package(name: "CapawesomeCapacitorAppUpdate", path: "../../../../../node_modules/.pnpm/@capawesome+capacitor-app-update@8.1.1_@capacitor+core@8.5.3/node_modules/@capawesome/capacitor-app-update"),
         .package(name: "CapgoCapacitorInappbrowser", path: "../../../../../node_modules/.pnpm/@capgo+capacitor-inappbrowser@8.26.2_@capacitor+core@8.5.3/node_modules/@capgo/capacitor-inappbrowser"),
         .package(name: "CapgoCapacitorSocialLogin", path: "../../../../../node_modules/.pnpm/@capgo+capacitor-social-login@8.7.5_@capacitor+core@8.5.3/node_modules/@capgo/capacitor-social-login"),
-        .package(name: "RevenuecatPurchasesCapacitor", path: "../../../../../node_modules/.pnpm/@revenuecat+purchases-capacitor@13.7.6_@capacitor+core@8.5.3/node_modules/@revenuecat/purchases-capacitor"),
+        .package(name: "RevenuecatPurchasesCapacitor", path: "../../../../../node_modules/.pnpm/@revenuecat+purchases-capacitor@14.0.0_@capacitor+core@8.5.3/node_modules/@revenuecat/purchases-capacitor"),
         .package(name: "CapacitorNativeSettings", path: "../../../../../node_modules/.pnpm/capacitor-native-settings@8.2.0_@capacitor+core@8.5.3/node_modules/capacitor-native-settings")
     ],
     targets: [
