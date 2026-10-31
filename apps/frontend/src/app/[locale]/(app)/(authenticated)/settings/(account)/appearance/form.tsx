@@ -11,7 +11,7 @@ import { PreferenceThemes } from "~/api/user/preferences";
 import { Profile } from "~/api/user/profile";
 import type { ProfileColors } from "~/api/user/profile";
 import * as brand from "~/brand";
-import { profileColors } from "~/colors";
+import { gradientTextColor, profileColors } from "~/colors";
 import { NewBadge, PremiumBadge } from "~/components/badge";
 import { InlineLink } from "~/components/inline-link";
 import { InputLabel, InputLabelHint, InputSwitch } from "~/components/inputs";
@@ -40,7 +40,7 @@ export const InputColor: FC<{ value: string; onChange: Dispatch<string> }> = ({ 
 				onChange={onChange}
 			/>
 			<div className="flex items-center overflow-hidden rounded-xl bg-white-40 text-black-80 shadow-brand-1 focusable-within dark:bg-black-60 dark:text-white-20">
-				<div className="flex items-center justify-center bg-(--color) p-2 text-[lch(from_var(--color)_calc((49.44-l)*infinity)_0_0)]">
+				<div className="flex items-center justify-center bg-(--color) p-2" style={value ? { color: gradientTextColor(value, value) } : undefined}>
 					<Hash className="size-7" />
 				</div>
 				<HexColorInput
