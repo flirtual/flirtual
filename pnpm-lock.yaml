@@ -415,8 +415,8 @@ importers:
         specifier: ^8.2.0
         version: 8.5.1(react-router@8.5.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(supports-color@10.2.2)(typescript@5.9.3)
       '@revenuecat/purchases-capacitor':
-        specifier: 13.7.6
-        version: 13.7.6(@capacitor/core@8.5.3)
+        specifier: 14.0.0
+        version: 14.0.0(@capacitor/core@8.5.3)
       '@sentry/react-router':
         specifier: ^10.65.0
         version: 10.78.0(@opentelemetry/core@2.11.0(@opentelemetry/api@1.9.1))(@react-router/node@8.5.1(react-router@8.5.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(typescript@5.9.3))(react-router@8.5.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react@19.3.1)(rollup@4.62.4)(supports-color@10.2.2)
@@ -4346,13 +4346,13 @@ packages:
   '@remix-run/route-pattern@0.22.1':
     resolution: {integrity: sha512-czdGJWh09Lapvcqt7Vb09KlrU2PhRJ8xQaI+AItTuD9aDJ5MAgxnS38lnys6Ll+6RJEqPiaUqTwIQhVLwFvv+w==}
 
-  '@revenuecat/purchases-capacitor@13.7.6':
-    resolution: {integrity: sha512-Ynwsno3yhW1QbfICVlx8jXwmnVV933ADSl+d0kCV56tENxb4kwT7lXLReCc7HmrbVs2cfGaLYLEAVF8zYzREnw==}
+  '@revenuecat/purchases-capacitor@14.0.0':
+    resolution: {integrity: sha512-Thiaix8JZNoh2ka0Mh6K+/K4sz+Yaxf5eArEA/6IZdqZ4xGQNlT3uJClKavqrmm2JB998sqU0YOX1hjPIGClbQ==}
     peerDependencies:
       '@capacitor/core': '>=8.0.0'
 
-  '@revenuecat/purchases-typescript-internal-esm@19.15.0':
-    resolution: {integrity: sha512-OUTgB/sqKKr4Wu/u1MT9dYWjc2mw1FRgwes4y/xyboQb781rDZ3yy7ICb8u+B/6bMDG7s0EzcUPLRLNdRz1bJw==}
+  '@revenuecat/purchases-typescript-internal-esm@20.0.0':
+    resolution: {integrity: sha512-xvAzzvDTzfSt8Td2mTfEzRAtc2eU8/lZIUCXCSiLeRqpVLTQAeE70aVvOYKglkk+uIicWzYr1zyupXTF0AwxrA==}
 
   '@rolldown/binding-android-arm-eabi@1.2.14':
     resolution: {integrity: sha512-aWR+XKH9+rW7m5fWq/5360J3mHycrx/o6xZM2DQFdJnTMdyP7/WzxPjhtLbVWdKo2y612/4U1bWqb3HQhiF7vg==}
@@ -12745,12 +12745,12 @@ snapshots:
 
   '@remix-run/route-pattern@0.22.1': {}
 
-  '@revenuecat/purchases-capacitor@13.7.6(@capacitor/core@8.5.3)':
+  '@revenuecat/purchases-capacitor@14.0.0(@capacitor/core@8.5.3)':
     dependencies:
       '@capacitor/core': 8.5.3
-      '@revenuecat/purchases-typescript-internal-esm': 19.15.0
+      '@revenuecat/purchases-typescript-internal-esm': 20.0.0
 
-  '@revenuecat/purchases-typescript-internal-esm@19.15.0': {}
+  '@revenuecat/purchases-typescript-internal-esm@20.0.0': {}
 
   '@rolldown/binding-android-arm-eabi@1.2.14':
     optional: true
