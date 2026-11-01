@@ -223,8 +223,8 @@ catalogs:
       specifier: 6.23.2
       version: 6.23.2
     '@pulumi/command':
-      specifier: 1.2.1
-      version: 1.2.1
+      specifier: 1.3.0
+      version: 1.3.0
     '@pulumi/gcp':
       specifier: ^10.1.0
       version: 10.2.0
@@ -1108,7 +1108,7 @@ importers:
         version: 6.23.2(supports-color@10.2.2)(typescript@5.9.3)
       '@pulumi/command':
         specifier: catalog:pulumi
-        version: 1.2.1(supports-color@10.2.2)(typescript@5.9.3)
+        version: 1.3.0(supports-color@10.2.2)(typescript@5.9.3)
       '@pulumi/discord':
         specifier: file:sdks/discord
         version: file:pulumi/sdks/discord(supports-color@10.2.2)
@@ -3883,8 +3883,8 @@ packages:
   '@pulumi/cloudflare@6.23.2':
     resolution: {integrity: sha512-0pkVCTydiMJD9vQmRt0V50cMFeWW8AinAaY/PjKPbC7X5aSYKooZ0F30oVVY/Ewi7o5/utBO+5ciqzz1/hYREA==}
 
-  '@pulumi/command@1.2.1':
-    resolution: {integrity: sha512-mutNDIUYP67yCBYOVIidQyxuTwZDY9v/sx9EGbgIv4PXfyfolOKGgGLeoHEbI1lxRwaw2wbTZ3VNIynDnA5VKA==}
+  '@pulumi/command@1.3.0':
+    resolution: {integrity: sha512-KrRVG/CmN9yCYJ1Rqn5mkond5wbeLNbgrclityNNN8hgltjSVZ2xwlxAw84fApNk9Bu3AV1bwN5Q/XD56Kisvg==}
 
   '@pulumi/discord@file:pulumi/sdks/discord':
     resolution: {directory: pulumi/sdks/discord, type: directory}
@@ -12156,7 +12156,7 @@ snapshots:
       - ts-node
       - typescript
 
-  '@pulumi/command@1.2.1(supports-color@10.2.2)(typescript@5.9.3)':
+  '@pulumi/command@1.3.0(supports-color@10.2.2)(typescript@5.9.3)':
     dependencies:
       '@pulumi/pulumi': 3.273.0(supports-color@10.2.2)(typescript@5.9.3)
     transitivePeerDependencies:
