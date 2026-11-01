@@ -193,7 +193,7 @@ catalogs:
       version: 10.2.1
     jose:
       specifier: ^6.2.12
-      version: 6.2.13
+      version: 6.2.14
     oxfmt:
       specifier: ^0.75.0
       version: 0.75.0
@@ -521,7 +521,7 @@ importers:
         version: 2.6.1(intl-messageformat@11.2.13)
       jose:
         specifier: 'catalog:'
-        version: 6.2.13
+        version: 6.2.14
       lucide-react:
         specifier: ^1.24.0
         version: 1.63.0(@types/react@19.3.0)(react@19.3.1)
@@ -827,7 +827,7 @@ importers:
         version: 1.0.0-beta.12(@types/node@24.19.2)
       jose:
         specifier: 'catalog:'
-        version: 6.2.13
+        version: 6.2.14
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
@@ -7089,8 +7089,8 @@ packages:
     resolution: {integrity: sha512-AC/7JofJvZGrrneWNaEnJeOLUx+JlGt7tNa0wZiRPT4MY1wmfKjt2+6O2p2uz2+skll8OZZmJMNqeke7kKbNgQ==}
     hasBin: true
 
-  jose@6.2.13:
-    resolution: {integrity: sha512-7TIg10ZE1x82YediN+lcrPNvGMKge9yFHQD+Qho/b8y2adfugU3AsvvHfxV0fzyFllT6l9xCjf4RWY9g/Z9PJQ==}
+  jose@6.2.14:
+    resolution: {integrity: sha512-3JasLuki1NRLQvY4wCoC37KZk4qxoBx2k2aFqLxT84IezqW0bkJKnNtxnZj/Fu1xsQivoc/lytxaRHJoGLjJ1A==}
 
   joycon@3.1.1:
     resolution: {integrity: sha512-34wB/Y7MW7bzjKRjUKTa46I2Z7eV62Rkhva+KkopW7Qvv/OSWBqvkSY7vusOPrNuZcUG3tApvdVgNB8POj3SPw==}
@@ -14158,7 +14158,7 @@ snapshots:
   attachments@https://codeload.github.com/signalapp/tus-server/tar.gz/5cbbc5c42d1d126bb2c1b4f837b5103d5d8f5407(patch_hash=895f7d358b0f5d158051ba7ffe21299ae0c4bd94a95519f61c8dfe278d6616be):
     dependencies:
       itty-router: 5.0.24
-      jose: 6.2.13
+      jose: 6.2.14
 
   babel-dead-code-elimination@1.0.12(supports-color@10.2.2):
     dependencies:
@@ -16049,7 +16049,7 @@ snapshots:
 
   jiti@2.7.0: {}
 
-  jose@6.2.13: {}
+  jose@6.2.14: {}
 
   joycon@3.1.1: {}
 
