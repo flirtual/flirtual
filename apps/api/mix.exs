@@ -85,7 +85,7 @@ defmodule Flirtual.MixProject do
       # https://github.com/open-telemetry/opentelemetry-erlang-contrib/commit/7f48f84
       {:opentelemetry_finch,
        github: "open-telemetry/opentelemetry-erlang-contrib",
-       ref: "18b2aad273023fedc4a96d41a7a1f321c86b2a77",
+       ref: "f77c378eeb8f87f9410ce3ed1d260fd9263ec43b",
        sparse: "instrumentation/opentelemetry_finch"},
       {:gettext, "~> 1.0.0"},
       {:jason, "~> 1.4"},
