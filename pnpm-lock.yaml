@@ -356,7 +356,7 @@ importers:
         version: 5.3.0
       '@formatjs/intl-datetimeformat':
         specifier: ^7.5.0
-        version: 7.8.2
+        version: 7.9.0
       '@formatjs/intl-displaynames':
         specifier: ^7.3.12
         version: 7.3.15
@@ -2169,8 +2169,8 @@ packages:
   '@formatjs/icu-skeleton-parser@2.1.12':
     resolution: {integrity: sha512-ca7tZMLpfHX3sUD7hP6gE/qr6Iq89EDd3ZLeRhbsB7r0UD55DGJq+tmFLzrGrnx5StahUevQmQQVtbDRHsfDHA==}
 
-  '@formatjs/intl-datetimeformat@7.8.2':
-    resolution: {integrity: sha512-5iCy2mXr6cpEd4N87HLVbN2zRz71dRLMmI8hMY9IgAVaob5fsVocEah6T4w3pPUVYz/aDO2TFGXErPY3JAEUsQ==}
+  '@formatjs/intl-datetimeformat@7.9.0':
+    resolution: {integrity: sha512-C17ilxM6zJO1wAYDwoW4E0Oy8K6krEC7MjcZAArW/wEthBb3Lab0LBTh0G7liLOGEj74iCTWm2TYHtLv+SbtYg==}
 
   '@formatjs/intl-displaynames@7.3.15':
     resolution: {integrity: sha512-U26iRwxxnD4aZY+aDiSEV5Ym/7Db5S9OxKQ4c3T+WFFIj+DPKEQLh+tC++dMH1SuEa8CSWvPJkpaADa+WHn3qA==}
@@ -2183,6 +2183,9 @@ packages:
 
   '@formatjs/intl-locale@5.3.12':
     resolution: {integrity: sha512-bI5CrvuC6A5PMOIiHX+6ETTHXzUofHw1U/fkI59sQJ+BFbkglxIVVncFPxHf4IHmAqAs/Rlp2bdzTEcLaq2tQw==}
+
+  '@formatjs/intl-localematcher@0.10.0':
+    resolution: {integrity: sha512-OvfBelurObm02D1+4BsuHSt3Xkn49RZPo7uJXt/1Z0dNET3EN39kY1rKMV3kG0tn0p4gyGWrcFx9HyeF07cq5g==}
 
   '@formatjs/intl-localematcher@0.9.0':
     resolution: {integrity: sha512-Z7TD3ssNry1Av1dVDoq/mzpxGyxqWwU0ClWEo+BB3k0JQTeQvUGmeK9WZGYvlqStS0UqkaKXk3dfjsb6NaHAxw==}
@@ -10868,10 +10871,10 @@ snapshots:
 
   '@formatjs/icu-skeleton-parser@2.1.12': {}
 
-  '@formatjs/intl-datetimeformat@7.8.2':
+  '@formatjs/intl-datetimeformat@7.9.0':
     dependencies:
       '@formatjs/bigdecimal': 0.2.7
-      '@formatjs/intl-localematcher': 0.9.0
+      '@formatjs/intl-localematcher': 0.10.0
 
   '@formatjs/intl-displaynames@7.3.15':
     dependencies:
@@ -10887,6 +10890,10 @@ snapshots:
     dependencies:
       '@formatjs/intl-getcanonicallocales': 3.2.12
       '@formatjs/intl-supportedvaluesof': 2.3.11
+
+  '@formatjs/intl-localematcher@0.10.0':
+    dependencies:
+      '@formatjs/fast-memoize': 3.1.7
 
   '@formatjs/intl-localematcher@0.9.0':
     dependencies:
