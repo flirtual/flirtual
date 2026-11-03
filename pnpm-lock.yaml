@@ -358,8 +358,8 @@ importers:
         specifier: ^7.5.0
         version: 7.9.0
       '@formatjs/intl-displaynames':
-        specifier: ^7.3.12
-        version: 7.4.0
+        specifier: ^8.0.0
+        version: 8.0.0
       '@formatjs/intl-listformat':
         specifier: ^8.3.12
         version: 8.4.0
@@ -2172,8 +2172,8 @@ packages:
   '@formatjs/intl-datetimeformat@7.9.0':
     resolution: {integrity: sha512-C17ilxM6zJO1wAYDwoW4E0Oy8K6krEC7MjcZAArW/wEthBb3Lab0LBTh0G7liLOGEj74iCTWm2TYHtLv+SbtYg==}
 
-  '@formatjs/intl-displaynames@7.4.0':
-    resolution: {integrity: sha512-D2SZXvkeMadjGeg1vlqcqtNg0hJIKxUL5HiFkSdCt8pmKH5sNMP0DKND+X1cfuOV0EMyKIp04WYRSIHFFVYAfA==}
+  '@formatjs/intl-displaynames@8.0.0':
+    resolution: {integrity: sha512-WWKOJgxHZYQVdTghUxYz4QbVlvBSjM4GB2CoP4kiiLxSPJgg0LBaYZDWvxTRvay/KxT+YN1pSpSEzW1tA1aLOQ==}
 
   '@formatjs/intl-getcanonicallocales@3.3.0':
     resolution: {integrity: sha512-ndj9jw/LHAftSe34D/A6+lj3Y7GHVfPEZ6FZP2wjd8/beYeh3d1sjlSpZSBlzegSKS3U3mUEIzLCpI0+jKNT6w==}
@@ -2186,9 +2186,6 @@ packages:
 
   '@formatjs/intl-localematcher@0.10.0':
     resolution: {integrity: sha512-OvfBelurObm02D1+4BsuHSt3Xkn49RZPo7uJXt/1Z0dNET3EN39kY1rKMV3kG0tn0p4gyGWrcFx9HyeF07cq5g==}
-
-  '@formatjs/intl-localematcher@0.9.0':
-    resolution: {integrity: sha512-Z7TD3ssNry1Av1dVDoq/mzpxGyxqWwU0ClWEo+BB3k0JQTeQvUGmeK9WZGYvlqStS0UqkaKXk3dfjsb6NaHAxw==}
 
   '@formatjs/intl-numberformat@9.5.0':
     resolution: {integrity: sha512-l2kTmIyUEw/peqc01A1Fz3WxJHsb9ntAUIgAe0016svJJa6TBxriGARfTzOOI5WvsDO1dWXHHQ7gkOv4gtHm2w==}
@@ -10882,7 +10879,7 @@ snapshots:
       '@formatjs/bigdecimal': 0.2.7
       '@formatjs/intl-localematcher': 0.10.0
 
-  '@formatjs/intl-displaynames@7.4.0':
+  '@formatjs/intl-displaynames@8.0.0':
     dependencies:
       '@formatjs/intl-localematcher': 0.10.0
 
@@ -10898,10 +10895,6 @@ snapshots:
       '@formatjs/intl-supportedvaluesof': 2.5.0
 
   '@formatjs/intl-localematcher@0.10.0':
-    dependencies:
-      '@formatjs/fast-memoize': 3.1.7
-
-  '@formatjs/intl-localematcher@0.9.0':
     dependencies:
       '@formatjs/fast-memoize': 3.1.7
 
