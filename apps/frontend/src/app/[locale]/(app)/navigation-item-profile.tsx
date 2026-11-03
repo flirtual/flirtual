@@ -26,6 +26,7 @@ import { useClickOutside } from "~/hooks/use-click-outside";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
 import { revokeImpersonate, useSession } from "~/hooks/use-session";
 import { useMatch } from "~/i18n";
+import MarkWhiteSVG from "~/static/mark-white.svg";
 import { urls } from "~/urls";
 
 type ProfileNavigationItemProps = React.PropsWithChildren<
@@ -62,6 +63,7 @@ export const NavigationItemProfile: FC = () => {
 	const location = useLocation();
 
 	const active = !!useMatch({ path: urls.profile(user) });
+	const photoless = !urls.userAvatar(user);
 
 	useClickOutside(elementReference, () => setVisible(false), visible);
 	useGlobalEventListener(
@@ -95,14 +97,31 @@ export const NavigationItemProfile: FC = () => {
 					setVisible(true);
 				}}
 			>
-				<UserAvatar
-					priority
-					className="size-10 rounded-full transition-transform"
-					height={40}
-					user={user}
-					variant="icon"
-					width={40}
-				/>
+				{photoless
+					? (
+							<span
+								className={twMerge(
+									"block size-10 rounded-full p-1 transition-all group-hocus:bg-brand-gradient group-hocus:p-1.5",
+									active && "bg-brand-gradient p-1.5"
+								)}
+							>
+								<img
+									alt={t("avatar_alt", { name: user.profile.displayName || t("unnamed_user") })}
+									className="size-full object-contain"
+									src={MarkWhiteSVG}
+								/>
+							</span>
+						)
+					: (
+							<UserAvatar
+								priority
+								className="size-10 rounded-full transition-transform"
+								height={40}
+								user={user}
+								variant="icon"
+								width={40}
+							/>
+						)}
 			</Link>
 			<AnimatePresence>
 				{visible && (
@@ -118,7 +137,10 @@ export const NavigationItemProfile: FC = () => {
 							href={urls.profile(user)}
 						>
 							<UserAvatar
-								className="mt-1.5 size-8 scale-125 rounded-full transition-transform group-hocus:brightness-90 desktop:mt-0 desktop:mb-2"
+								className={twMerge(
+									"mt-1.5 size-8 scale-125 rounded-full transition-transform desktop:mt-0 desktop:mb-2",
+									!photoless && "group-hocus:brightness-90"
+								)}
 								height={40}
 								user={user}
 								variant="icon"
