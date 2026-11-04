@@ -63,6 +63,7 @@ export const NavigationItemProfile: FC = () => {
 	const location = useLocation();
 
 	const active = !!useMatch({ path: urls.profile(user) });
+	const highlighted = active || visible;
 	const photoless = !urls.userAvatar(user);
 
 	useClickOutside(elementReference, () => setVisible(false), visible);
@@ -85,7 +86,7 @@ export const NavigationItemProfile: FC = () => {
 				id="profile-dropdown-button"
 				className={twMerge(
 					"group block rounded-full p-1 transition-all",
-					active
+					highlighted
 						? "bg-white-20 shadow-brand-1"
 						: "bg-transparent hocus:bg-white-20 hocus:text-black-70 hocus:shadow-brand-1"
 				)}
@@ -102,7 +103,7 @@ export const NavigationItemProfile: FC = () => {
 							<span
 								className={twMerge(
 									"relative block size-10 rounded-full p-1 transition-all before:absolute before:inset-0 before:rounded-full before:bg-brand-gradient before:opacity-0 before:transition-opacity group-hocus:p-1.5 group-hocus:before:opacity-100",
-									active && "p-1.5 before:opacity-100"
+									highlighted && "p-1.5 before:opacity-100"
 								)}
 							>
 								<img
@@ -127,7 +128,7 @@ export const NavigationItemProfile: FC = () => {
 				{visible && (
 					<m.div
 						animate={{ opacity: 1 }}
-						className="absolute bottom-[calc(-1*max(var(--safe-area-inset-bottom,0rem),0.75rem))] -left-2 z-10 flex min-w-44 flex-col-reverse overflow-hidden rounded-t-2xl bg-white-10 p-4 pt-2.5 pb-[calc(max(var(--safe-area-inset-bottom,0rem),0.75rem)+0.375rem)] text-black-80 shadow-brand-1 ja:min-w-48 desktop:top-[-0.4rem] desktop:bottom-inherit desktop:flex-col desktop:rounded-2xl desktop:pt-3.75 desktop:pb-3"
+						className="absolute bottom-[calc(-1*max(var(--safe-area-inset-bottom,0rem),0.75rem))] -left-2 z-10 flex min-w-44 flex-col-reverse overflow-hidden rounded-t-2xl bg-white-10 p-4 pt-2.5 pb-[calc(max(var(--safe-area-inset-bottom,0rem),0.75rem)+0.375rem)] text-black-80 shadow-brand-1 ja:min-w-48 desktop:-top-1.75 desktop:bottom-inherit desktop:flex-col desktop:rounded-2xl desktop:pt-3.75 desktop:pb-3"
 						exit={{ opacity: 0 }}
 						initial={{ opacity: 0 }}
 						ref={elementReference}
