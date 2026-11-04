@@ -101,13 +101,13 @@ export const NavigationItemProfile: FC = () => {
 					? (
 							<span
 								className={twMerge(
-									"block size-10 rounded-full p-1 transition-all group-hocus:bg-brand-gradient group-hocus:p-1.5",
-									active && "bg-brand-gradient p-1.5"
+									"relative block size-10 rounded-full p-1 transition-all before:absolute before:inset-0 before:rounded-full before:bg-brand-gradient before:opacity-0 before:transition-opacity group-hocus:p-1.5 group-hocus:before:opacity-100",
+									active && "p-1.5 before:opacity-100"
 								)}
 							>
 								<img
 									alt={t("avatar_alt", { name: user.profile.displayName || t("unnamed_user") })}
-									className="size-full object-contain"
+									className="relative size-full object-contain"
 									src={MarkWhiteSVG}
 								/>
 							</span>
