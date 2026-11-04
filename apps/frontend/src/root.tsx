@@ -177,7 +177,7 @@ export function meta({
 
 const BeforeRenderScript: FC = memo(() => {
 	const beforeRender = (localePathnameRegex: RegExp, friendsPathname: string | null) => {
-		const localTheme = JSON.parse(localStorage.getItem(".theme") || `"system"`) as LocalTheme;
+		const localTheme = globalThis.localTheme = JSON.parse(localStorage.getItem(".theme") || `"system"`) as LocalTheme;
 		const prefersDark = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 
 		const theme = globalThis.theme = localTheme === "system" ? prefersDark : localTheme;
