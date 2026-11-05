@@ -13,11 +13,11 @@
 			"name": "Nachahmung"
 		},
 		"nupwCrjodUd4ZvPizEBc8L": {
-			"details": "Betteln. Sie dürfen auf Flirtual nicht um Geld bitten. Sie können auf diese E-Mail antworten, um gegen Ihre Sperrung Einspruch einzulegen.",
+			"details": "Betteln. Sie dürfen auf {brand_name} nicht um Geld bitten. Sie können auf diese E-Mail antworten, um gegen Ihre Sperrung Einspruch einzulegen.",
 			"name": "Um Geld betteln"
 		},
 		"VgQw2st96dZKZotsnYUEaN": {
-			"details": "Umgehung von Banns. Sie haben anscheinend ein neues Konto erstellt oder auf andere Weise einen früheren Flirtual-Bann umgangen. Wenn Sie gegen einen früheren Bann Einspruch einlegen und die Sperrung Ihres Kontos aufheben möchten, können Sie auf die ursprüngliche Bann-E-Mail antworten.",
+			"details": "Umgehung von Banns. Sie haben anscheinend ein neues Konto erstellt oder auf andere Weise einen früheren {brand_name}-Bann umgangen. Wenn Sie gegen einen früheren Bann Einspruch einlegen und die Sperrung Ihres Kontos aufheben möchten, können Sie auf die ursprüngliche Bann-E-Mail antworten.",
 			"name": "Umgehung des Banns"
 		},
 		"dWDkcjmXQEQRVoXmNkutAB": {
@@ -25,7 +25,7 @@
 			"name": "Belästigung"
 		},
 		"muXMqNjneKnwqxT8nqcy4d": {
-			"details": "Minderjährig. Sie müssen mindestens 18 Jahre alt sein, um Flirtual zu nutzen. Wenn Sie glauben, dass Sie zu Unrecht gesperrt wurden, können Sie sich bei Flirtual anmelden und Ihr Alter auf sichere Weise bestätigen, um Ihr Konto wiederherzustellen.",
+			"details": "Minderjährig. Sie müssen mindestens 18 Jahre alt sein, um {brand_name} zu nutzen. Wenn Sie glauben, dass Sie zu Unrecht gesperrt wurden, können Sie sich bei {brand_name} anmelden und Ihr Alter auf sichere Weise bestätigen, um Ihr Konto wiederherzustellen.",
 			"name": "Minderjährig"
 		},
 		"KfFVwKB4DYMXx7foyqGUZM": {
@@ -45,19 +45,19 @@
 			"details": "Rechtswidrige Inhalte. Ihr Profil oder Ihre Aktivitäten verstoßen offenbar gegen kanadisches oder örtliches Recht. Wenn Sie glauben, dass Sie zu Unrecht gesperrt wurden, können Sie auf diese E-Mail antworten, um Einspruch einzulegen."
 		},
 		"5H9nMhQacZBD9Zomu7Tbt9": {
-			"details": "Doppeltes Konto. Das Erstellen mehrerer Flirtual-Konten ist nicht erlaubt. Dieses Konto wurde deaktiviert, aber Sie können weiterhin Ihr anderes Konto verwenden. Wenn Sie glauben, dass Sie fälschlicherweise gesperrt wurden, oder wenn Sie möchten, dass Ihr anderes Konto anstelle dieses Kontos deaktiviert wird, antworten Sie bitte auf diese E-Mail.",
+			"details": "Doppeltes Konto. Das Erstellen mehrerer {brand_name}-Konten ist nicht erlaubt. Dieses Konto wurde deaktiviert, aber Sie können weiterhin Ihr anderes Konto verwenden. Wenn Sie glauben, dass Sie fälschlicherweise gesperrt wurden, oder wenn Sie möchten, dass Ihr anderes Konto anstelle dieses Kontos deaktiviert wird, antworten Sie bitte auf diese E-Mail.",
 			"name": "Doppeltes Konto"
 		},
 		"hLwvdpKQiofFTCDHox75SY": {
 			"name": "Hasserfüllte Inhalte",
-			"details": "Hasserfüllte Inhalte. Hasserfüllte Profilinhalte oder Nachrichten sind auf Flirtual nicht willkommen. Wenn Sie glauben, dass Sie zu Unrecht gesperrt wurden, können Sie auf diese E-Mail antworten, um Einspruch einzulegen und die Sperrung Ihres Kontos aufzuheben."
+			"details": "Hasserfüllte Inhalte. Hasserfüllte Profilinhalte oder Nachrichten sind auf {brand_name} nicht willkommen. Wenn Sie glauben, dass Sie zu Unrecht gesperrt wurden, können Sie auf diese E-Mail antworten, um Einspruch einzulegen und die Sperrung Ihres Kontos aufzuheben."
 		},
 		"8P2pi5232LTpzGTDWkBprc": {
 			"name": "Sonstiges"
 		},
 		"EVU7hHnv5u6eQwRBTW8aYU": {
 			"name": "Nacktheit oder explizite sexuelle Inhalte",
-			"details": "Nacktheit oder explizite sexuelle Inhalte. Nacktbilder, sexuell explizite Bilder und übermäßig obszöne Texte sind auf Flirtual nicht erlaubt. Sie können auf diese E-Mail antworten, um gegen Ihre Sperrung Einspruch einzulegen, und Ihr Profil überarbeiten, damit die Sperrung Ihres Kontos aufgehoben wird."
+			"details": "Nacktheit oder explizite sexuelle Inhalte. Nacktbilder, sexuell explizite Bilder und übermäßig obszöne Texte sind auf {brand_name} nicht erlaubt. Sie können auf diese E-Mail antworten, um gegen Ihre Sperrung Einspruch einzulegen, und Ihr Profil überarbeiten, damit die Sperrung Ihres Kontos aufgehoben wird."
 		}
 	},
 	"language": {
@@ -739,7 +739,7 @@
 			"name": "Nicht genug Dates"
 		},
 		"jrAqzBkasZwqfjSPAazNq3": {
-			"name": "Ich habe eine Beziehung auf Flirtual gefunden"
+			"name": "Ich habe eine Beziehung auf {brand_name} gefunden"
 		},
 		"EkWwgZavkCxJhRgKJF3yRn": {
 			"name": "Ich bevorzuge andere Dating-Apps, bei denen man sich persönlich trifft"
@@ -3177,7 +3177,7 @@
 		},
 		"MjxDKasduf9iHTctStGzYA": {
 			"name": "Explizite Bio",
-			"details": "Bitte halten Sie explizite sexuelle Inhalte in Ihrer Bio auf ein Minimum und entfernen Sie drastische Beschreibungen oder Kinks. Dafür können Sie in den Einstellungen die Kink-Tags von Flirtual oder eigene Interessen verwenden."
+			"details": "Bitte halten Sie explizite sexuelle Inhalte in Ihrer Bio auf ein Minimum und entfernen Sie drastische Beschreibungen oder Kinks. Dafür können Sie in den Einstellungen die Kink-Tags von {brand_name} oder eigene Interessen verwenden."
 		},
 		"CnaCPAcsLptyUgVVugubdf": {
 			"name": "Werbung",
@@ -3185,7 +3185,7 @@
 		},
 		"f8v44XrBausmXe6XybTVHd": {
 			"name": "Betteln & kommerzielle Angebote",
-			"details": "Bitte entfernen Sie alle Geldanfragen und kommerziellen Angebote aus Ihrem Profil. Bitten um Geld sowie Hinweise auf und Links zu kommerziellen Diensten sind auf Flirtual nicht erlaubt."
+			"details": "Bitte entfernen Sie alle Geldanfragen und kommerziellen Angebote aus Ihrem Profil. Bitten um Geld sowie Hinweise auf und Links zu kommerziellen Diensten sind auf {brand_name} nicht erlaubt."
 		},
 		"RdHQQqrswesTTwyh4QZqbH": {
 			"details": "Bitte entfernen Sie hasserfüllte Inhalte aus Ihrem Profil, da diese gegen unsere Community-Richtlinien verstoßen.",
@@ -3197,7 +3197,7 @@
 		},
 		"dC6h3tWeZueVwHGKLhC2sk": {
 			"name": "Inaktives Konto",
-			"details": "Bitte aktualisieren Sie Ihre Bio, wenn Sie zu Flirtual zurückkehren. Wenn Sie eine Pause einlegen oder Flirtual verlassen möchten, können Sie Ihr Konto in den Einstellungen vorübergehend deaktivieren oder dauerhaft löschen."
+			"details": "Bitte aktualisieren Sie Ihre Bio, wenn Sie zu {brand_name} zurückkehren. Wenn Sie eine Pause einlegen oder {brand_name} verlassen möchten, können Sie Ihr Konto in den Einstellungen vorübergehend deaktivieren oder dauerhaft löschen."
 		},
 		"AhPZwBpeTm5HMf96bkVszj": {
 			"name": "Beweise hochladen",

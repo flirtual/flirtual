@@ -179,7 +179,7 @@ export const NewsDialog: FC<NewsDialogProps> = (props) => {
 				}}
 			>
 				<DialogContent
-					className="outline-none desktop:max-w-xl"
+					className="outline-hidden desktop:max-w-xl"
 					closable={dismissable}
 					onEscapeKeyDown={preventClose}
 					onInteractOutside={preventClose}
@@ -219,7 +219,7 @@ export const NewsDialog: FC<NewsDialogProps> = (props) => {
 									{news.map((id, index) => (
 										<button
 											key={id}
-											className={`focusable size-2 rounded-full transition-colors ${
+											className={`size-2 rounded-full focusable transition-colors ${
 												index === currentIndex ? "bg-theme-2" : "bg-white-40 dark:bg-black-40"
 											}`}
 											tabIndex={-1}

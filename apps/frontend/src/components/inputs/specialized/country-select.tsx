@@ -26,11 +26,11 @@ const CountrySelectItem: FC<{ value: string }> = ({ value: countryId }) => {
 
 	return (
 		<SelectItem
-			className="flex items-center gap-3 truncate hocus:outline-none"
+			className="flex items-center gap-3 truncate hocus:outline-hidden"
 			ref={reference}
 			value={countryId}
 		>
-			<div className="aspect-[4/3] h-fit w-7 shrink-0 overflow-hidden rounded-md bg-black-70">
+			<div className="aspect-4/3 h-fit w-7 shrink-0 overflow-hidden rounded-md bg-black-70">
 				{viewed && (
 					<img className="size-full" src={getCountryImage(countryId)} />
 				)}

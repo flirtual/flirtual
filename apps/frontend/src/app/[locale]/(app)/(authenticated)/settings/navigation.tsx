@@ -28,8 +28,8 @@ import { twMerge } from "tailwind-merge";
 
 import { InlineLink } from "~/components/inline-link";
 import { IdeasDialog } from "~/components/modals/ideas";
-import { commitIdShort, freshworksWidgetId } from "~/const";
-import { personality } from "~/features";
+import { freshworksWidgetId, version } from "~/const";
+import { events, news, personality, press } from "~/features";
 import { useDevice } from "~/hooks/use-device";
 import { useDialog } from "~/hooks/use-dialog";
 import { useFreshworks } from "~/hooks/use-freshworks";
@@ -57,7 +57,7 @@ export const SettingsNavigation: FC = () => {
 			<div className="vision:bg-none split:flex split:min-h-0 split:flex-1 split:flex-col split:border-r split:border-r-black-90/10 dark:split:border-r-white-10/10 desktop:rounded-2xl desktop:rounded-t-none desktop:border-r-0 desktop:bg-brand-gradient desktop:p-1 desktop:pt-0">
 				<nav
 					className={twMerge(
-						"flex-col gap-8 py-6 vision:bg-transparent split:min-h-0 split:flex-1 split:overflow-y-auto native-nav:split:pb-[var(--safe-area-inset-bottom,0rem)] dark:bg-transparent desktop:rounded-xl desktop:bg-white-20 desktop:pb-4 desktop:pt-6 desktop:shadow-brand-inset android:desktop:pt-6 dark:desktop:bg-black-70",
+						"flex-col gap-8 py-6 dark:bg-transparent vision:bg-transparent split:min-h-0 split:flex-1 split:overflow-y-auto split:native-nav:pb-(--safe-area-inset-bottom,0rem) desktop:rounded-xl desktop:bg-white-20 desktop:pt-6 desktop:pb-4 desktop:shadow-brand-inset dark:desktop:bg-black-70 desktop:android:pt-6",
 						!listOnly ? "hidden split:flex desktop:flex" : "flex"
 					)}
 				>
@@ -164,32 +164,37 @@ export const SettingsNavigation: FC = () => {
 						</NavigationLink>
 					</NavigationCategory>
 					<div className="desktop:hidden">
-						<NavigationCategory name={t("social")}>
-							<NavigationLink href={urls.resources.events}>
-								{t("events")}
-							</NavigationLink>
-							{urls.socials.discord && (
-								<NavigationLink href={urls.socials.discord}>
-									{t("discord_server")}
-								</NavigationLink>
-							)}
-							{urls.socials.vrchat && (
-								<NavigationLink href={urls.socials.vrchat}>
-									{t("vrchat_group")}
-								</NavigationLink>
-							)}
-							{urls.socials.x && <NavigationLink href={urls.socials.x}>{t("x")}</NavigationLink>}
-							{urls.socials.bluesky && (
-								<NavigationLink href={urls.socials.bluesky}>
-									{t("bluesky")}
-								</NavigationLink>
-							)}
-							{urls.socials.instagram && (
-								<NavigationLink href={urls.socials.instagram}>
-									{t("instagram")}
-								</NavigationLink>
-							)}
-						</NavigationCategory>
+						{(events || urls.socials.discord || urls.socials.vrchat || urls.socials.x
+							|| urls.socials.bluesky || urls.socials.instagram) && (
+							<NavigationCategory name={t("social")}>
+								{events && (
+									<NavigationLink href={urls.resources.events}>
+										{t("events")}
+									</NavigationLink>
+								)}
+								{urls.socials.discord && (
+									<NavigationLink href={urls.socials.discord}>
+										{t("discord_server")}
+									</NavigationLink>
+								)}
+								{urls.socials.vrchat && (
+									<NavigationLink href={urls.socials.vrchat}>
+										{t("vrchat_group")}
+									</NavigationLink>
+								)}
+								{urls.socials.x && <NavigationLink href={urls.socials.x}>{t("x")}</NavigationLink>}
+								{urls.socials.bluesky && (
+									<NavigationLink href={urls.socials.bluesky}>
+										{t("bluesky")}
+									</NavigationLink>
+								)}
+								{urls.socials.instagram && (
+									<NavigationLink href={urls.socials.instagram}>
+										{t("instagram")}
+									</NavigationLink>
+								)}
+							</NavigationCategory>
+						)}
 					</div>
 					<div className="desktop:hidden">
 						{(freshworksWidgetId || urls.socials.discord || urls.resources.networkStatus) && (
@@ -217,7 +222,7 @@ export const SettingsNavigation: FC = () => {
 					</div>
 					<div className="desktop:hidden">
 						<NavigationCategory name={t("info")}>
-							{nativeNavigation && (
+							{nativeNavigation && news && (
 								<NavigationLink href={urls.news}>
 									{t("updates")}
 								</NavigationLink>
@@ -225,9 +230,11 @@ export const SettingsNavigation: FC = () => {
 							<NavigationLink href={urls.resources.about}>
 								{t("about")}
 							</NavigationLink>
-							<NavigationLink href={urls.resources.press}>
-								{t("press")}
-							</NavigationLink>
+							{press && (
+								<NavigationLink href={urls.resources.press}>
+									{t("press")}
+								</NavigationLink>
+							)}
 							<NavigationLink href={urls.resources.branding}>
 								{t("branding")}
 							</NavigationLink>
@@ -256,7 +263,7 @@ export const SettingsNavigation: FC = () => {
 						className="-mt-4 self-center text-black-10 no-underline vision:text-white-20"
 						href={urls.debugger}
 					>
-						{t("version", { version: commitIdShort })}
+						{t("version", { version })}
 					</InlineLink>
 				</nav>
 			</div>

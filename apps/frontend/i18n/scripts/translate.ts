@@ -384,6 +384,13 @@ function review(locale: TargetLocale, file: string, human: boolean, name: string
 			collected[key] = { suggestion: valid ? item.suggestion : undefined, comment: `${item.category ? `[${item.category}] ` : ""}${item.comment ?? ""}` };
 		}
 		writeJson(path, collected);
+
+		// Reviewed once per English; `plan` queues them again only when the English changes.
+		const source = loadSource();
+		const lock = loadLock();
+		for (const key of Object.keys(reviews) as Array<Id>) (lock[key] ??= {})[locale] = hash(source.get(key)!);
+		saveLock(lock);
+
 		console.log(`${locale}: ${Object.keys(collected).length} human translations flagged → ${path}`);
 		return;
 	}

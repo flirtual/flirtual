@@ -47,7 +47,7 @@ const CalendarButton: React.FC<CalendarButtonProps> = ({ Icon, ...props }) => (
 	<button
 		{...props}
 		className={twMerge(
-			"focusable flex size-7 shrink-0 items-center justify-center rounded-full p-1 text-black-90 dark:text-white-20",
+			"flex size-7 shrink-0 items-center justify-center rounded-full p-1 text-black-90 focusable dark:text-white-20",
 			props.className
 		)}
 		type="button"
@@ -124,7 +124,7 @@ const LabelSelect: React.FC<LabelSelectProps> = ({ options, children, onOptionAc
 
 	return (
 		<div
-			className="focusable-within relative rounded-xl"
+			className="relative rounded-xl focusable-within"
 			ref={wrapperReference}
 			tabIndex={-1}
 			onBlur={({ currentTarget, relatedTarget }) => {
@@ -136,7 +136,7 @@ const LabelSelect: React.FC<LabelSelectProps> = ({ options, children, onOptionAc
 			}}
 		>
 			<button
-				className="flex items-center gap-2 px-3 font-montserrat text-xl font-semibold focus:outline-none"
+				className="flex items-center gap-2 px-3 font-montserrat text-xl font-semibold focus:outline-hidden"
 				ref={buttonReference}
 				type="button"
 				onClick={(event) => {
@@ -367,7 +367,7 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 		<div
 			{...elementProps}
 			className={twMerge(
-				"focusable-within h-fit origin-top-left rounded-3xl bg-white-20 p-4 font-nunito text-black-70 dark:bg-black-60 dark:text-white-20 [@media(width<800px)]:scale-75",
+				"h-fit origin-top-left rounded-3xl bg-white-20 p-4 font-nunito text-black-70 focusable-within dark:bg-black-60 dark:text-white-20 [@media(width<800px)]:scale-75",
 				elementProps.className
 			)}
 			tabIndex={-1}
@@ -487,7 +487,7 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 																	"size-10 rounded-xl text-center hover:bg-white-40 dark:hover:bg-black-60",
 																	disabled
 																		? ""
-																		: "focusable bg-white-25 dark:bg-black-50",
+																		: "bg-white-25 focusable dark:bg-black-50",
 																	active
 																		? "bg-brand-gradient text-white-20"
 																		: (!currentMonth || disabled)

@@ -104,10 +104,10 @@ const AttributeRowView: FC<{ attribute: AttributeRow }> = ({ attribute }) => {
 
 	return (
 		<TableRow>
-			<TableCell className="select-children align-middle font-mono text-xs">
+			<TableCell className="align-middle font-mono text-xs select-children">
 				{attribute.id}
 			</TableCell>
-			<TableCell className="select-children align-middle">
+			<TableCell className="align-middle select-children">
 				{untranslated
 					? (
 							<span className="flex items-center gap-1 text-yellow-500">
@@ -133,7 +133,7 @@ const AttributeRowView: FC<{ attribute: AttributeRow }> = ({ attribute }) => {
 					onChange={setMetadata}
 				/>
 			</TableCell>
-			<TableCell className="whitespace-nowrap align-middle">
+			<TableCell className="align-middle whitespace-nowrap">
 				<TimeRelative value={attribute.updatedAt} />
 			</TableCell>
 			<TableCell className="align-middle">

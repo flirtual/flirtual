@@ -1,57 +1,129 @@
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+@import 'tailwindcss';
 
-* {
-  min-width: 0;
-  -webkit-tap-highlight-color: transparent;
-  user-drag: none;
+@config '../../tailwind.config.js';
+
+@theme {
+  --breakpoint-*: initial;
+  --container-desktop: 960px;
+  --container-wide: 1024px;
 }
 
-html {
-  overscroll-behavior-y: none;
+/*
+  Variants sort in the order they're defined, so these replace the built-in breakpoints and split:
+  comes first, so desktop: still overrides it. split: is side-by-side panes, on iPhone Duo's inner
+  display in landscape and on iPad, while a page shows them. They rely on the native tab bar, which
+  drops the Matches tab for them.
+*/
+@custom-variant split {
+  @media (min-width: 900px) {
+    :where([data-native-navigation]:has([data-split-panes])) & {
+      @slot;
+    }
+  }
+}
+@custom-variant desktop (@media (min-width: 960px));
+@custom-variant wide (@media (min-width: 1024px));
+@custom-variant tall (@media (min-height: 800px));
+@custom-variant narrow (@media (max-width: 959.98px) and (min-aspect-ratio: 3/4));
+
+/*
+  Run a background out to the screen edge across the layout's side insets (--content-inset-*, set only
+  under the native tab bar). Phone layouts only. This one takes the content along, for headers: their
+  content can sit beneath a vertical bar, which leaves the top of its column free.
+*/
+@utility full-bleed-x {
+  @media not all and (min-width: 960px) {
+    margin-left: calc(-1 * var(--content-inset-left, 0px));
+    margin-right: calc(-1 * var(--content-inset-right, 0px));
+    width: calc(100% + var(--content-inset-left, 0px) + var(--content-inset-right, 0px));
+  }
 }
 
-* {
-  /* @apply ja:not-italic ko:not-italic ru:not-italic; */
-  @apply ja:not-italic;
+/* Keeps the content where it was: the transparent borders take the space the negative margins give back. */
+@utility bleed-x {
+  @media not all and (min-width: 960px) {
+    margin-left: calc(-1 * var(--content-inset-left, 0px));
+    margin-right: calc(-1 * var(--content-inset-right, 0px));
+    width: calc(100% + var(--content-inset-left, 0px) + var(--content-inset-right, 0px));
+    border-left: var(--content-inset-left, 0px) solid transparent;
+    border-right: var(--content-inset-right, 0px) solid transparent;
+    background-origin: border-box;
+  }
 }
 
-*:not(input) {
-  user-select: none;
-}
-
-*:not(.unhide-scrollbar) {
-  scrollbar-width: none;
-}
-
-*:not(.unhide-scrollbar)::-webkit-scrollbar {
-  @apply bg-transparent w-0
-}
-
-*[data-nextjs-scroll-focus-boundary] {
-  display: contents;
-}
-
-[data-radix-popper-content-wrapper]:has(> [data-fullscreen]) {
-  position: fixed !important;
-  inset: 0 !important;
-  min-width: 0 !important;
-  transform: none !important;
-  z-index: 1000 !important;
-}
-
-@layer components {
-  .pettable {
-    cursor: grab;
-    user-select: none;
-    transform-origin: bottom center;
-    @apply transition-transform;
+/* Compatibility with our Tailwind CSS v3 styles. */
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
   }
 
-  .pettable:active {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  /* Brand gradients blend in OKLab where supported; elsewhere this stays empty, leaving sRGB. */
+  @supports (background-image: linear-gradient(in oklab, red, red)) {
+    :root {
+      --brand-gradient-space: in oklab;
+    }
+  }
+}
+
+@utility pettable {
+  cursor: grab;
+  user-select: none;
+  transform-origin: bottom center;
+  @apply transition-transform;
+
+  &:active {
     cursor: grabbing;
     @apply scale-y-90 scale-x-110;
+  }
+}
+
+@layer utilities {
+  * {
+    min-width: 0;
+    -webkit-tap-highlight-color: transparent;
+    user-drag: none;
+  }
+
+  html {
+    overscroll-behavior-y: none;
+  }
+
+  * {
+    /* @apply ja:not-italic ko:not-italic ru:not-italic; */
+    @apply ja:not-italic;
+  }
+
+  *:not(input) {
+    user-select: none;
+  }
+
+  *:not(.unhide-scrollbar) {
+    scrollbar-width: none;
+  }
+
+  *:not(.unhide-scrollbar)::-webkit-scrollbar {
+    @apply bg-transparent w-0;
+  }
+
+  *[data-nextjs-scroll-focus-boundary] {
+    display: contents;
+  }
+
+  [data-radix-popper-content-wrapper]:has(> [data-fullscreen]) {
+    position: fixed !important;
+    inset: 0 !important;
+    min-width: 0 !important;
+    transform: none !important;
+    z-index: 1000 !important;
   }
 }
 
@@ -97,6 +169,21 @@ body {
 body[data-theme-style="friend"] {
   --theme-1: var(--friend-theme-1);
   --theme-2: var(--friend-theme-2);
+}
+
+/* A Premium profile's own colours, from profileColors() in src/colors.ts. */
+[data-profile-colors] {
+  --theme-1: var(--profile-color-1);
+  --theme-2: var(--profile-color-2);
+}
+
+@media (color-gamut: p3) {
+  @supports (color: oklch(0% 0 0)) {
+    [data-profile-colors] {
+      --theme-1: var(--profile-wide-color-1);
+      --theme-2: var(--profile-wide-color-2);
+    }
+  }
 }
 
 iframe {

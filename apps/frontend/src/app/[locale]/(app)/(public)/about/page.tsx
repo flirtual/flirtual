@@ -68,13 +68,13 @@ export default function AboutPage() {
 	return (
 		<ModelCard
 			className="w-full desktop:max-w-2xl"
-			containerProps={{ className: "!p-0 desktop:overflow-hidden" }}
+			containerProps={{ className: "p-0! desktop:overflow-hidden" }}
 			title={t("about_us")}
 		>
 			<Image
 				priority
 				alt={t("about_team_photo_alt")}
-				className="max-w-none full-bleed-x desktop:max-w-full"
+				className="full-bleed-x max-w-none desktop:max-w-full"
 				height={618}
 				src={TeamPicture}
 				width={1888}
@@ -204,7 +204,7 @@ export default function AboutPage() {
 					i18nKey="about_page_body"
 				/>
 			</div>
-			<div className="grid grid-cols-3 full-bleed-x native-nav:mb-[calc(-1*var(--safe-area-inset-bottom,0rem))] desktop:mb-0">
+			<div className="full-bleed-x grid grid-cols-3 native-nav:-mb-(--safe-area-inset-bottom,0rem) desktop:mb-0">
 				{Object.entries(images).map(([index, { image_alt, link }]) => (
 					<Tooltip key={index}>
 						<TooltipTrigger asChild>

@@ -32,11 +32,11 @@ export function FormCaptcha({ ref, tabIndex }: FormCaptchaProps) {
 
 	return (
 		<div className="flex flex-col gap-2">
-			<div className="relative mx-auto flex h-[64px] w-[300px] items-center justify-center overflow-hidden rounded-xl border border-[#e0e0e0] bg-[#fafafa] text-[#232323] shadow-sm transition-all dark:border-[#797979]/5 dark:bg-[#232323] dark:text-white-10">
+			<div className="relative mx-auto flex h-16 w-75 items-center justify-center overflow-hidden rounded-xl border border-[#e0e0e0] bg-[#fafafa] text-[#232323] shadow-xs transition-all dark:border-[#797979]/5 dark:bg-[#232323] dark:text-white-10">
 				<div className="flex items-center gap-2 text-sm">
 					{success
 						? (
-								<div className="motion-preset-fade flex items-center gap-2 text-sm">
+								<div className="flex motion-preset-fade items-center gap-2 text-sm">
 									<ShieldCheck className="size-4" />
 									<span>
 										{t("device_verified")}
@@ -46,7 +46,7 @@ export function FormCaptcha({ ref, tabIndex }: FormCaptchaProps) {
 						: error
 							? (
 									<button
-										className="motion-preset-fade flex items-center gap-2 text-left"
+										className="flex motion-preset-fade items-center gap-2 text-left"
 										type="button"
 										onClick={() => {
 											setError(null);

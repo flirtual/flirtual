@@ -233,18 +233,18 @@ export function InputAutocomplete<K extends string>(
 				className={twMerge(
 					"contents",
 					fullscreen
-					&& "fixed inset-0 z-[1000] flex flex-col bg-white-20 dark:bg-black-60"
+					&& "fixed inset-0 z-1000 flex flex-col bg-white-20 dark:bg-black-60"
 				)}
 			>
 				<Popover open={dropdown && overlayVisible && desktop}>
 					<PopoverAnchor
 						className={twMerge(
-							"focusable-within flex rounded-xl bg-white-40 px-1.5 py-1 text-black-70 shadow-brand-1 vision:bg-white-40/70 dark:bg-black-60 dark:text-white-20",
+							"flex rounded-xl bg-white-40 px-1.5 py-1 text-black-70 shadow-brand-1 focusable-within dark:bg-black-60 dark:text-white-20 vision:bg-white-40/70",
 							// Stays interactive while the page has pointer events disabled. Suppress
 							// touch events that can bypass the scroll lock.
 							dropdown && overlayVisible && desktop && "pointer-events-auto touch-none",
 							fullscreen
-							&& "shrink-0 rounded-none pl-[calc(var(--screen-top-clearance-left,var(--safe-area-inset-left,0rem))+var(--corner-gap-left,0rem)+0.375rem)] pr-[calc(var(--screen-top-clearance-right,var(--safe-area-inset-right,0rem))+var(--corner-gap-right,0rem)+0.375rem)] pt-[calc(var(--safe-area-inset-top,0rem)+0.25rem)] focus-within:ring-0 focus-within:ring-offset-0 dark:bg-black-50"
+							&& "shrink-0 rounded-none pt-[calc(var(--safe-area-inset-top,0rem)+0.25rem)] pr-[calc(var(--screen-top-clearance-right,var(--safe-area-inset-right,0rem))+var(--corner-gap-right,0rem)+0.375rem)] pl-[calc(var(--screen-top-clearance-left,var(--safe-area-inset-left,0rem))+var(--corner-gap-left,0rem)+0.375rem)] focus-within:ring-0 focus-within:ring-offset-0 dark:bg-black-50"
 						)}
 						ref={anchorReference}
 						// Keep focus in the input: the keyboard stays up, and focus never
@@ -279,7 +279,7 @@ export function InputAutocomplete<K extends string>(
 								return (
 									<button
 										key={option.key}
-										className="focusable h-fit translate-x-[-2px] translate-y-[-0.5px] rounded-xl bg-brand-gradient px-3 py-1 text-left shadow-brand-1"
+										className="h-fit translate-x-[-2px] translate-y-[-0.5px] rounded-xl bg-brand-gradient px-3 py-1 text-left shadow-brand-1 focusable"
 										type="button"
 										onClick={() => onChange(values.filter((v) => v !== option.key))}
 									>
@@ -311,7 +311,7 @@ export function InputAutocomplete<K extends string>(
 							})}
 							<input
 								className={twMerge(
-									"grow border-none bg-transparent py-1.5 caret-theme-2 placeholder:text-black-50 focus:ring-transparent placeholder:dark:text-white-50",
+									"grow border-none bg-transparent py-1.5 caret-theme-2 placeholder:text-black-50 focus:ring-transparent dark:placeholder:text-white-50",
 									!caretVisible && "caret-transparent"
 								)}
 								style={{
@@ -399,7 +399,7 @@ export function InputAutocomplete<K extends string>(
 								"min(28rem, var(--radix-popover-content-available-height))"
 						} as CSSProperties}
 						align="start"
-						className="pointer-events-auto z-50 flex w-[var(--radix-popper-anchor-width)]"
+						className="pointer-events-auto z-50 flex w-(--radix-popper-anchor-width)"
 						collisionPadding={safeArea}
 						side="bottom"
 						onCloseAutoFocus={(event) => event.preventDefault()}
@@ -440,7 +440,7 @@ export function InputAutocomplete<K extends string>(
 						</DismissableLayer>
 					</PopoverContent>
 				</Popover>
-				{fullscreen && <div className="relative flex min-h-0 flex-1 flex-col pb-[var(--safe-area-inset-bottom,0rem)] pl-[var(--safe-area-inset-left,0rem)] pr-[var(--safe-area-inset-right,0rem)]">{optionWindow}</div>}
+				{fullscreen && <div className="relative flex min-h-0 flex-1 flex-col pr-(--safe-area-inset-right,0rem) pb-(--safe-area-inset-bottom,0rem) pl-(--safe-area-inset-left,0rem)">{optionWindow}</div>}
 			</div>
 		</div>
 	);

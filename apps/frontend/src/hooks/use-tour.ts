@@ -18,7 +18,7 @@ import { nativeNavigation } from "./use-device";
 import { useDismissed } from "./use-dismissed";
 import { useScrollLock } from "./use-scroll-lock";
 
-import "~/components/shepherd/style.scss";
+import "~/components/shepherd/style.css";
 
 export function useShepherd() {
 	return use(ShepherdContext)!;

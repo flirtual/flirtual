@@ -5,7 +5,7 @@ import { twMerge } from "tailwind-merge";
 import { contentLength, editorColors } from "~/html";
 import { lazy } from "~/lazy";
 
-import "./style.scss";
+import "./style.css";
 
 const ReactQuill = lazy(
 	async () => {
@@ -70,7 +70,7 @@ export const InputEditor: React.FC<InputEditorProps> = ({
 						[{ align: [] }]
 					]
 				}}
-				className="prose max-w-none dark:prose-invert [&_*]:!select-auto"
+				className="prose max-w-none **:select-auto! dark:prose-invert"
 				// Restore the pre-3.7.0 serializer: since 3.7.0 onChange returns
 				// editor.getSemanticHTML() instead of editor.root.innerHTML.
 				// https://github.com/VaguelySerious/react-quill/commit/d905530c1b19339948164673206150adb5435827
@@ -89,7 +89,7 @@ export const InputEditor: React.FC<InputEditorProps> = ({
 					)}
 					<span
 						className={twMerge(
-							"ml-auto tabular-nums text-black-60 dark:text-white-50",
+							"ml-auto text-black-60 tabular-nums dark:text-white-50",
 							tooLong && "text-red-600 dark:text-red-400"
 						)}
 					>

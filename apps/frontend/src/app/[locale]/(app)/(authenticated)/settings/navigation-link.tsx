@@ -33,10 +33,10 @@ export const NavigationLink: React.FC<NavigationLinkProps> = ({
 	return (
 		<Link
 			className={twMerge(
-				"ml-[calc(-1*var(--content-inset-left,0rem))] mr-[calc(-1*var(--content-inset-right,0rem))] flex justify-between gap-4 py-2 pl-[calc(1.5rem+var(--content-inset-left,0rem))] pr-[calc(1.5rem+var(--content-inset-right,0rem))] transition-shadow data-[external]:touch-callout-default focus:outline-none hocus:shadow-brand-inset desktop:mx-0 desktop:px-6",
+				"-mr-(--content-inset-right,0rem) -ml-(--content-inset-left,0rem) flex justify-between gap-4 py-2 pr-[calc(1.5rem+var(--content-inset-right,0rem))] pl-[calc(1.5rem+var(--content-inset-left,0rem))] transition-shadow focus:outline-hidden data-external:touch-callout-default hocus:shadow-brand-inset desktop:mx-0 desktop:px-6",
 				active
 					? "bg-brand-gradient text-white-20 shadow-brand-inset"
-					: "text-black-80 hocus:bg-brand-gradient hocus:text-white-20 vision:text-white-20 dark:text-white-20 desktop:hocus:bg-white-30 desktop:hocus:bg-none desktop:hocus:text-black-80 dark:desktop:hocus:bg-black-60 dark:desktop:hocus:text-white-20",
+					: "text-black-80 dark:text-white-20 hocus:bg-brand-gradient hocus:text-white-20 vision:text-white-20 desktop:hocus:bg-white-30 desktop:hocus:bg-none desktop:hocus:text-black-80 dark:desktop:hocus:bg-black-60 dark:desktop:hocus:text-white-20",
 			)}
 			as="button"
 			href={href}

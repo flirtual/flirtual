@@ -6,6 +6,7 @@ import { twMerge } from "tailwind-merge";
 
 import type { User } from "~/api/user";
 import { blurHashToDataUrl } from "~/blurhash";
+import IconLightSVG from "~/static/icon-light.svg";
 import { urls } from "~/urls";
 
 import { Image } from "./image";
@@ -60,7 +61,7 @@ export const UserImage: React.FC<UserImageProps> = ({ src, blurHash, ...props })
 
 	// Memoized so it decodes once per hash (not on every render) and frees with
 	// the component. Undefined on the server (no canvas); the resulting mismatch
-	// is harmless on this childless element, so it's suppressed below.
+	// is harmless on this element's style, so it's suppressed below.
 	const placeholder = useMemo(
 		() => (blurHash ? blurHashToDataUrl(blurHash) : undefined),
 		[blurHash]
@@ -83,8 +84,11 @@ export const UserImage: React.FC<UserImageProps> = ({ src, blurHash, ...props })
 				aria-label={props.alt || undefined}
 				height={props.height}
 				role={props.alt ? "img" : undefined}
+				viewBox="0 0 1 1"
 				width={props.width}
-			/>
+			>
+				{!placeholder && <image height="0.7" href={IconLightSVG} width="0.7" x="0.15" y="0.15" />}
+			</svg>
 		);
 	}
 

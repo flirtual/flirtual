@@ -14,7 +14,7 @@ export default {
 		headers.set("retry-after", String(hourInSeconds));
 
 		return new Response(response.body, {
-		  status: 503,
+		  status: response.headers.get("content-type")?.startsWith("text/html") ? 503 : response.status,
 			headers
 		});
   }

@@ -42,13 +42,13 @@ export function Slider({
 			{...stepped}
 		>
 			<SliderPrimitive.Track className="relative h-2 w-full grow overflow-hidden rounded-full bg-white-40 shadow-brand-1 dark:bg-black-50">
-				<SliderPrimitive.Range className="absolute h-full bg-brand-gradient data-[disabled]:bg-black-20 data-[disabled]:bg-none" />
+				<SliderPrimitive.Range className="absolute h-full bg-brand-gradient data-disabled:bg-black-20 data-disabled:bg-none" />
 			</SliderPrimitive.Track>
 			{(value || defaultValue)?.map((_, index) => (
 				<SliderPrimitive.Thumb
 					// eslint-disable-next-line react/no-array-index-key
 					key={index}
-					className="block size-5 rounded-full border-2 border-none bg-brand-gradient shadow-brand-1 transition-colors focus:outline-none focus:ring-2 focus:ring-theme-1 focus:ring-offset-2 focus:ring-offset-white-20 disabled:pointer-events-none disabled:bg-black-40 disabled:opacity-50 data-[disabled]:bg-black-20 data-[disabled]:bg-none vision:hover:cursor-pointer dark:ring-offset-black-50"
+					className="block size-5 rounded-full border-2 border-none bg-brand-gradient shadow-brand-1 transition-colors focus:ring-2 focus:ring-theme-1 focus:ring-offset-2 focus:ring-offset-white-20 focus:outline-hidden disabled:pointer-events-none disabled:bg-black-40 disabled:opacity-50 data-disabled:bg-black-20 data-disabled:bg-none dark:ring-offset-black-50 hover:vision:cursor-pointer"
 				/>
 			))}
 		</SliderPrimitive.Root>

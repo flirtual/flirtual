@@ -5,7 +5,7 @@
 			"name": "Spam"
 		},
 		"nupwCrjodUd4ZvPizEBc8L": {
-			"details": "Solicitando. Você não pode solicitar dinheiro no Flirtual. Você pode responder este email para apelar seu banimento e remover qualquer solicitação do seu perfil para desbanir sua conta.",
+			"details": "Solicitando. Você não pode solicitar dinheiro no {brand_name}. Você pode responder este email para apelar seu banimento e remover qualquer solicitação do seu perfil para desbanir sua conta.",
 			"name": "Solicitando dinheiro"
 		},
 		"VgQw2st96dZKZotsnYUEaN": {
@@ -13,15 +13,15 @@
 			"name": "Evasão de Ban"
 		},
 		"muXMqNjneKnwqxT8nqcy4d": {
-			"details": "Menor de idade. É preciso ter pelo menos 18 anos para usar o Flirtual. Se você acredita que sua conta foi banida por engano, pode entrar no Flirtual e verificar sua idade com segurança para recuperá-la.",
+			"details": "Menor de idade. É preciso ter pelo menos 18 anos para usar o {brand_name}. Se você acredita que sua conta foi banida por engano, pode entrar no {brand_name} e verificar sua idade com segurança para recuperá-la.",
 			"name": "Menor de idade"
 		},
 		"hLwvdpKQiofFTCDHox75SY": {
-			"details": "Conteúdo odioso. Mensagens e conteúdo de ódio não são bem-vindos no Flirtual. Se você acredita que este ban foi um erro responda este email para apelar e ter sua conta desbanida.",
+			"details": "Conteúdo odioso. Mensagens e conteúdo de ódio não são bem-vindos no {brand_name}. Se você acredita que este ban foi um erro responda este email para apelar e ter sua conta desbanida.",
 			"name": "Conteúdo Odioso"
 		},
 		"EVU7hHnv5u6eQwRBTW8aYU": {
-			"details": "Nudez ou conteúdo adulto. Imagens de conteúdo adulto ou texto excessivamente obsceno não são permitidos no Flirtual. Você pode responder este email para apelar seu ban e atualizar seu perfil para desbanir sua conta.",
+			"details": "Nudez ou conteúdo adulto. Imagens de conteúdo adulto ou texto excessivamente obsceno não são permitidos no {brand_name}. Você pode responder este email para apelar seu ban e atualizar seu perfil para desbanir sua conta.",
 			"name": "Conteúdo Adulto"
 		},
 		"WSD2yPcs64FB27qpb4AGuT": {
@@ -56,13 +56,13 @@
 			"details": "Anúnciando. Seu perfil aparenta ser focado em promover uma conta ou serviço externo. Você é livre para mencionar suas redes sociais ou trabalho no seu perfil, mas o propósito principal do seu perfil deve ser encontrar amigos ou pares. Você pode responder esse email para apelar seu ban e atualizar seu perfil para desbanir sua conta."
 		},
 		"5H9nMhQacZBD9Zomu7Tbt9": {
-			"details": "Conta duplicada. Criar múltiplas contas no Flirtual não é permitido. Essa conta foi desativada mas você ainda pode usar sua outra conta. Se você acredita ter sido banido por erro, ou gostaria de ter a outra conta desativada ao invés desta, porfavor responda esse email.",
+			"details": "Conta duplicada. Criar múltiplas contas no {brand_name} não é permitido. Essa conta foi desativada mas você ainda pode usar sua outra conta. Se você acredita ter sido banido por erro, ou gostaria de ter a outra conta desativada ao invés desta, porfavor responda esse email.",
 			"name": "Conta duplicada"
 		}
 	},
 	"delete-reason": {
 		"jrAqzBkasZwqfjSPAazNq3": {
-			"name": "Eu encontrei um relacionamento no Flirtual"
+			"name": "Eu encontrei um relacionamento no {brand_name}"
 		},
 		"BMEJteBnvo8vrUrPh7j634": {
 			"name": "Eu encontrei um relacionamento em outro lugar"
@@ -3177,7 +3177,7 @@
 		},
 		"MjxDKasduf9iHTctStGzYA": {
 			"name": "Bio explícita",
-			"details": "Por favor, reduza ao mínimo a nudez ou conteúdo sexual explícito na sua bio e remova descrições gráficas ou kinks. Você pode usar as tags de kinks do Flirtual ou os interesses personalizados nas Configurações."
+			"details": "Por favor, reduza ao mínimo a nudez ou conteúdo sexual explícito na sua bio e remova descrições gráficas ou kinks. Você pode usar as tags de kinks do {brand_name} ou os interesses personalizados nas Configurações."
 		},
 		"CnaCPAcsLptyUgVVugubdf": {
 			"name": "Publicidade",
@@ -3185,7 +3185,7 @@
 		},
 		"f8v44XrBausmXe6XybTVHd": {
 			"name": "Solicitação",
-			"details": "Por favor, remova qualquer solicitação do seu perfil. Não é permitido no Flirtual pedir dinheiro, mencionar serviços comerciais ou incluir links para eles."
+			"details": "Por favor, remova qualquer solicitação do seu perfil. Não é permitido no {brand_name} pedir dinheiro, mencionar serviços comerciais ou incluir links para eles."
 		},
 		"RdHQQqrswesTTwyh4QZqbH": {
 			"name": "Conteúdo odioso",
@@ -3197,7 +3197,7 @@
 		},
 		"dC6h3tWeZueVwHGKLhC2sk": {
 			"name": "Conta inativa",
-			"details": "Por favor, atualize sua bio se estiver voltando ao Flirtual. Se quiser dar um tempo ou sair do Flirtual, você pode desativar sua conta temporariamente ou excluí-la permanentemente nas Configurações."
+			"details": "Por favor, atualize sua bio se estiver voltando ao {brand_name}. Se quiser dar um tempo ou sair do {brand_name}, você pode desativar sua conta temporariamente ou excluí-la permanentemente nas Configurações."
 		},
 		"AhPZwBpeTm5HMf96bkVszj": {
 			"name": "Enviar provas",

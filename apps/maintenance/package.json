@@ -4,9 +4,10 @@
 	"private": true,
 	"license": "AGPL-3.0-or-later",
 	"scripts": {
-		"deploy": "wrangler deploy",
-		"dev": "wrangler dev",
-		"start": "wrangler dev"
+		"assets": "cp ../../static/logo-light.svg ../../static/mascot-hardhat.png public/",
+		"deploy": "pnpm assets && wrangler deploy",
+		"dev": "pnpm assets && wrangler dev",
+		"start": "pnpm dev"
 	},
 	"devDependencies": {
 		"@ariesclark/eslint-config": "catalog:",

@@ -82,7 +82,7 @@ export const UpdateInformationDialog: React.FC<{ native: boolean; onUpdate: () =
 					<DialogTitle>{t("update_available")}</DialogTitle>
 					<DialogDescription className="sr-only" />
 				</DialogHeader>
-				<DialogBody className="group-data-[drawer]:min-h-48">
+				<DialogBody className="group-data-drawer:min-h-48">
 					<p>
 						{native
 							? browsingOnly
@@ -168,7 +168,7 @@ export const UpdateInformation: React.FC = withSuspense(() => {
 				if (nativeUpdateAvailable) {
 					void AppUpdate
 						.openAppStore(device.apple ? { appId: appStoreId } : {})
-						.catch(() => void window.open(device.apple ? urls.apps.apple : urls.apps.google, "_blank"));
+						.catch(() => void window.open((device.apple && urls.apps.apple) || urls.apps.google, "_blank"));
 
 					return;
 				}

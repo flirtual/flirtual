@@ -17,7 +17,7 @@
 		"@types/node": "catalog:",
 		"@typescript/native": "catalog:",
 		"execa": "catalog:",
-		"json-schema-to-typescript": "15.0.4",
+		"json-schema-to-typescript": "16.0.0",
 		"oxfmt": "catalog:",
 		"oxlint": "catalog:",
 		"typescript": "catalog:",

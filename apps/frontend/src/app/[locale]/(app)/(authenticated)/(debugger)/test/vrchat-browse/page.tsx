@@ -54,7 +54,7 @@ const WorldItem: FC<{ world: World; onInvite?: DispatchWithoutAction }> = ({ wor
 					height: 192,
 				})}
 				alt={world.name}
-				className="aspect-[256/192] rounded-xl rounded-b-none object-cover"
+				className="aspect-256/192 rounded-xl rounded-b-none object-cover"
 				height={192}
 				width={256}
 			/>
@@ -92,7 +92,7 @@ const WorldItem: FC<{ world: World; onInvite?: DispatchWithoutAction }> = ({ wor
 										height: 192,
 									})}
 									alt={world.name}
-									className="aspect-[256/192] rounded-xl object-cover"
+									className="aspect-256/192 rounded-xl object-cover"
 									height={192}
 									width={256}
 								/>
@@ -122,11 +122,11 @@ const WorldItem: FC<{ world: World; onInvite?: DispatchWithoutAction }> = ({ wor
 const WorldItemSkeleton: FC<ComponentProps<"div">> = ({ className, ...props }) => {
 	return (
 		<div {...props} className={twMerge("flex w-40 shrink-0 snap-start snap-always flex-col rounded-xl bg-white-10 shadow-brand-1 desktop:w-56", className)}>
-			<div className="aspect-[256/192] animate-pulse rounded-xl rounded-b-none bg-gray-200" />
+			<div className="aspect-256/192 animate-pulse rounded-xl rounded-b-none bg-gray-200" />
 			<div className="flex flex-col gap-3 p-2 desktop:p-4">
 				<div className="flex flex-col gap-1">
-					<span className="h-5 w-full animate-pulse rounded-sm bg-gray-200" />
-					<span className="h-4 w-3/4 animate-pulse rounded-sm bg-gray-200 opacity-75" />
+					<span className="h-5 w-full animate-pulse rounded-xs bg-gray-200" />
+					<span className="h-4 w-3/4 animate-pulse rounded-xs bg-gray-200 opacity-75" />
 				</div>
 				<div className="flex items-center gap-2">
 					<span className="h-8 grow animate-pulse rounded-xl bg-gray-200" />

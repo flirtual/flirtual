@@ -77,7 +77,7 @@ export const GameStoreLinks: FC<{
 					<Link
 						key={store}
 						className={twMerge(
-							"focusable rounded-sm opacity-60 transition-opacity before:absolute hocus:opacity-100",
+							"rounded-xs opacity-60 focusable transition-opacity before:absolute hocus:opacity-100",
 							storeColors[store],
 							overlay && monochromeStores.has(store) && "hocus:text-white-10",
 							// Increased hover area. The first mark's hover area fills the left part
@@ -88,7 +88,7 @@ export const GameStoreLinks: FC<{
 										"relative",
 										stretched ? "before:-inset-y-2" : "before:-inset-y-3.5",
 										first
-											? "before:-left-3.5 before:-right-1"
+											? "before:-right-1 before:-left-3.5"
 											: "before:-inset-x-1",
 										last && "before:-right-4",
 										last && stretched && "before:rounded-r-xl"

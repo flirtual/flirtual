@@ -65,7 +65,7 @@ function TableHead({ ref: reference, className, ...props }: { ref?: React.RefObj
 	return (
 		<th
 			className={twMerge(
-				"h-12 px-4 text-left align-middle font-montserrat font-semibold text-white-20 [&:has([role=checkbox])]:pr-0",
+				"h-12 px-4 text-left align-middle font-montserrat font-semibold text-white-20 has-[[role=checkbox]]:pr-0",
 				className
 			)}
 			ref={reference}
@@ -79,7 +79,7 @@ function TableCell({ ref: reference, className, ...props }: { ref?: React.RefObj
 	return (
 		<td
 			className={twMerge(
-				"w-0 p-4 align-middle [&:has([role=checkbox])]:pr-0",
+				"w-0 p-4 align-middle has-[[role=checkbox]]:pr-0",
 				className
 			)}
 			ref={reference}

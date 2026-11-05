@@ -9,7 +9,7 @@ export const ReferralTicket: React.FC<{ code: string }> = ({ code }) => {
 
 	return (
 		<div className="relative mx-8 my-2 rounded-3xl bg-white-10 bg-brand-gradient p-10 shadow-brand-1 dark:bg-black-60">
-			<Mark className="absolute left-2 top-2 h-32" />
+			<Mark className="absolute top-2 left-2 h-32" />
 			<div className="absolute inset-y-4 left-40 border-l-2 border-dashed dark:border-black-60" />
 			<div className="ml-40 flex flex-col gap-1">
 				<div className="text-center font-montserrat text-4xl font-extrabold text-white-10">

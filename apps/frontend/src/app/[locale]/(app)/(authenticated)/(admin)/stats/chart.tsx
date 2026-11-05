@@ -232,7 +232,7 @@ export const Chart: FC<{
 							<>
 								<svg
 									aria-label={`${title}. ${chart.plotted.length} points. Use the table below for exact figures.`}
-									className="focusable w-full touch-none"
+									className="w-full touch-none focusable"
 									height={height}
 									role="img"
 									tabIndex={0}
@@ -345,7 +345,7 @@ export const Chart: FC<{
 										}}
 										className="pointer-events-none absolute top-0 z-10 rounded-lg bg-white-10 px-3 py-2 shadow-brand-1 dark:bg-black-80"
 									>
-										<div className="font-nunito text-xs tabular-nums text-black-30 dark:text-white-50">
+										<div className="font-nunito text-xs text-black-30 tabular-nums dark:text-white-50">
 											{activePoint[xIndex] as string}
 										</div>
 										{chart.lines.map((line) => {
@@ -391,7 +391,7 @@ export const Chart: FC<{
 					))}
 				</div>
 			)}
-			<details className="select-children mt-1">
+			<details className="mt-1 select-children">
 				<summary className="cursor-pointer text-sm text-black-30 dark:text-white-50">
 					Table view
 				</summary>

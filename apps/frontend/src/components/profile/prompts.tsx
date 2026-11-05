@@ -14,12 +14,12 @@ export const ProfilePrompts: FC<{
 			{prompts.map(({ response, promptId }) => (
 				<div
 					key={promptId}
-					className="gap-2 rounded-xl bg-white-30 p-4 shadow-brand-1 vision:bg-white-30/70 vision:text-black-80 dark:bg-black-60"
+					className="gap-2 rounded-xl bg-white-30 p-4 shadow-brand-1 dark:bg-black-60 vision:bg-white-30/70 vision:text-black-80"
 				>
 					<h2 className="text-base opacity-70">
 						{tAttribute[promptId]?.name || promptId}
 					</h2>
-					<p className="select-children whitespace-pre-wrap text-lg">
+					<p className="text-lg whitespace-pre-wrap select-children">
 						{response}
 					</p>
 				</div>

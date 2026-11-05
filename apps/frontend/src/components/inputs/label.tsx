@@ -15,7 +15,7 @@ export const InputLabelHint: React.FC<{ asChild?: boolean } & React.ComponentPro
 		<Component
 			{...props}
 			className={twMerge(
-				"text-base text-black-50 vision:text-white-50 dark:text-white-50",
+				"text-base text-black-50 dark:text-white-50 vision:text-white-50",
 				className
 			)}
 		/>

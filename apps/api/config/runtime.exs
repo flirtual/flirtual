@@ -46,6 +46,8 @@ environment_name =
     true -> config_env()
   end
 
+version = Env.get("VERSION", default: Env.get("GIT_COMMIT_SHA"))
+
 if Env.get("PHX_SERVER") && Env.get("RELEASE_NAME") do
   config :flirtual, FlirtualWeb.Endpoint, server: true
 end
@@ -55,7 +57,7 @@ config :flirtual,
        [
          {"x-flirtual-machine", Env.get("FLY_MACHINE_ID")},
          {"x-flirtual-region", Env.get("FLY_REGION")},
-         {"x-flirtual-version", Env.get("GIT_COMMIT_SHA")}
+         {"x-flirtual-version", version}
        ]
        |> Enum.reject(fn {_name, value} -> value in [nil, ""] end)
 
@@ -133,8 +135,6 @@ config :flirtual, :brand,
   date_colors: brand_colors.("BRAND_DATE_COLORS", {"#ff8975", "#e9658b"}),
   date_dark_colors: brand_colors.("BRAND_DATE_DARK_COLORS", {"#b24592", "#e9658b"}),
   background_color: Env.get("BRAND_BACKGROUND_COLOR", default: "#fffaf0"),
-  logo_light_url: Env.get("BRAND_LOGO_LIGHT_URL"),
-  logo_dark_url: Env.get("BRAND_LOGO_DARK_URL"),
   support_origin: Env.get("BRAND_SUPPORT_ORIGIN"),
   socials: %{
     discord: Env.get("BRAND_SOCIAL_DISCORD"),
@@ -473,9 +473,9 @@ if sentry_dsn do
   config :sentry,
     dsn: sentry_dsn,
     environment_name: environment_name,
-    release: Env.get("GIT_COMMIT_SHA"),
+    release: version,
     traces_sample_rate: traces_sample_rate,
-    enable_logs: enable_logs?,
+    logs: [level: if(enable_logs?, do: :info)],
     integrations: [
       oban: [
         capture_errors: true,

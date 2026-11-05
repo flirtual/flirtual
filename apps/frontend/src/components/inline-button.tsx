@@ -12,7 +12,7 @@ export const InlineButton: React.FC<InlineButtonProps> = ({
 	<button
 		{...props}
 		className={twMerge(
-			"inline w-fit focus:outline-none hocus:underline",
+			"inline w-fit focus:outline-hidden hocus:underline",
 			highlight && "text-theme-2",
 			props.className
 		)}

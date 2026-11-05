@@ -51,8 +51,8 @@ export function ScrollIndicator({ side, visible, target, itemSelector = "[data-k
 			className={twMerge(
 				"pointer-events-none absolute inset-x-0 z-20 flex h-7 cursor-default items-center justify-center py-1 transition-opacity",
 				side === "up"
-					? "top-0 bg-gradient-to-b from-black-90/5 to-transparent"
-					: "bottom-0 bg-gradient-to-t from-black-90/5 to-transparent",
+					? "top-0 bg-linear-to-b from-black-90/5 to-transparent"
+					: "bottom-0 bg-linear-to-t from-black-90/5 to-transparent",
 				// touch-none prevents a press-hold from being hijacked as a pan;
 				// releasing fires pointerleave which stops the scroll.
 				visible ? "pointer-events-auto touch-none opacity-100" : "opacity-0",

@@ -45,9 +45,18 @@ only in the root `package.json`.
 ## Static assets
 
 `static/` holds the frontend's logos, icons and art, imported as `~/static/...` and bundled at
-build time. The static bucket (`static.<asset domain>`) holds copies of many of them, most under
-older UUID names, for everything that links to them by URL: the maintenance pages, emails, the
-README and `urls.media()`.
+build time under hashed names. Logos and icons are `logo-*.svg` and `icon-*.svg`, named for their
+own colour: `light` is white text (or a white icon) for dark backgrounds, `dark` is black for
+light ones, `color` is the full-colour icon, and `background` sits on the brand gradient.
+
+Anything that needs a stable URL gets an alias in `src/app/_redirects.ts` instead: `/favicon.ico`,
+`/bimi.svg`, and every logo and icon as a PNG at 128, 256, 512 and 1024 pixels wide, as in
+`/logo-dark-512x.png`. The API builds the email header's from `FRONTEND_ORIGIN`. Keep those
+redirects temporary, since the target changes with every build. The maintenance worker copies
+what it shows from `static/` when it deploys.
+
+Flirtual's static bucket (`static.flirtual.com`, the `global` stack's `staticBucket`) is kept only
+for links to it that already exist; nothing new should point at it. Other brands have none.
 
 ## Image uploads
 
@@ -70,7 +79,8 @@ vars, read separately by each app:
   (defaults in `config/runtime.exs`). Only the name, colours and background have defaults. `VITE_BRAND_ASSET_DOMAIN` and `VITE_BRAND_REPOSITORY_URL` (AGPL) are required; every
   other value is optional, and whatever links to an unset one must disappear, not break.
 - **Flags**: `VITE_FEATURE_*` → `src/features.ts`; `FEATURE_*` → `Flirtual.Features`. Homie Mode,
-  personality, VR tags (platform + game), VRChat, and the list of connection providers.
+  personality, VR tags (platform + game), VRChat, the list of connection providers, and (frontend
+  only) the events, news and press pages.
 - **The rule**: a flag gates what the UI offers and what new writes may use. It never shrinks a
   wire type or `Ecto.Enum` (queue kinds, connection types, advanced filter categories), because
   rows written before a flip must still load. Data in a disabled feature is ignored, not rejected

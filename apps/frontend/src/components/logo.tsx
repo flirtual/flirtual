@@ -5,8 +5,8 @@ import { twMerge } from "tailwind-merge";
 
 import type { Theme } from "~/hooks/use-theme";
 import { useNavigate } from "~/i18n";
-import LogoOnDark from "~/static/logo-on-dark.svg";
-import LogoOnLight from "~/static/logo-on-light.svg";
+import LogoDark from "~/static/logo-dark.svg";
+import LogoLight from "~/static/logo-light.svg";
 import { urls } from "~/urls";
 
 export const Logo: FC<{ theme?: Theme } & Omit<ComponentProps<"img">, "src">> = ({ className, theme, ...props }) => {
@@ -27,8 +27,8 @@ export const Logo: FC<{ theme?: Theme } & Omit<ComponentProps<"img">, "src">> = 
 			<img
 				{...elementProps}
 				src={{
-					dark: LogoOnDark,
-					light: LogoOnLight
+					dark: LogoLight,
+					light: LogoDark
 				}[theme]}
 				className={className}
 			/>
@@ -39,12 +39,12 @@ export const Logo: FC<{ theme?: Theme } & Omit<ComponentProps<"img">, "src">> = 
 			<img
 				{...elementProps}
 				className={twMerge("dark:hidden", className)}
-				src={LogoOnLight}
+				src={LogoDark}
 			/>
 			<img
 				{...elementProps}
 				className={twMerge("hidden dark:block", className)}
-				src={LogoOnDark}
+				src={LogoLight}
 			/>
 		</>
 	);

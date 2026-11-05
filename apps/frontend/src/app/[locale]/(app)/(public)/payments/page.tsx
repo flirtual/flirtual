@@ -30,7 +30,7 @@ export default function PaymentsPage() {
 				<MachineTranslatedLegal />
 				<Trans
 					components={{
-						section: <section className="select-children flex flex-col gap-2" />,
+						section: <section className="flex flex-col gap-2 select-children" />,
 						h1: <h1 className="text-2xl font-semibold" />,
 						p: <p className="select-children" />,
 						terms: <InlineLink href={urls.resources.termsOfService} />,

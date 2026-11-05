@@ -27,7 +27,7 @@ export default function TermsPage() {
 	const { t } = useTranslation();
 
 	return (
-		<ModelCard className="select-children w-full desktop:max-w-2xl" title={t("terms_of_service")}>
+		<ModelCard className="w-full select-children desktop:max-w-2xl" title={t("terms_of_service")}>
 			<div className="flex flex-col gap-4">
 				<PolicyDates
 					introduced={new Date("2025-12-04")}

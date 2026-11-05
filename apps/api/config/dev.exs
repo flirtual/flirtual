@@ -29,12 +29,13 @@ config :swoosh, :api_client, false
 # For development, we disable any cache and enable
 # debugging and code reloading.
 config :flirtual, FlirtualWeb.Endpoint,
-  # Binding to loopback ipv4 address prevents access from other machines.
-  # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
+  # Every address, IPv6 and IPv4: a hostname can resolve to IPv6 first, as WSL's mirrored
+  # networking makes it.
   http: [
-    ip: {0, 0, 0, 0}
+    ip: {0, 0, 0, 0, 0, 0, 0, 0}
   ],
   https: [
+    ip: {0, 0, 0, 0, 0, 0, 0, 0},
     otp_app: :flirtual,
     port: 4001,
     cipher_suite: :strong,

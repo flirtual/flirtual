@@ -6,8 +6,8 @@ import { twMerge } from "tailwind-merge";
 
 import { Image } from "~/components/image";
 import { useTimeout } from "~/hooks/use-interval";
-import LogoOnDark from "~/static/logo-on-dark.svg";
-import LogoOnLight from "~/static/logo-on-light.svg";
+import LogoDark from "~/static/logo-dark.svg";
+import LogoLight from "~/static/logo-light.svg";
 
 import { LongerThanUsual } from "./longer-than-usual";
 
@@ -31,20 +31,20 @@ export function Loading({
 					<Image
 						priority
 						alt=""
-						className="hidden w-full vision:block dark:block"
+						className="hidden w-full dark:block vision:block"
 						draggable={false}
 						height={1000}
-						src={LogoOnDark}
+						src={LogoLight}
 						width={3468}
 					/>
 				)}
 				<Image
 					priority
 					alt=""
-					className={twMerge("w-full", light !== true && "block vision:hidden dark:hidden")}
+					className={twMerge("w-full", light !== true && "block dark:hidden vision:hidden")}
 					draggable={false}
 					height={1000}
-					src={LogoOnLight}
+					src={LogoDark}
 					width={3468}
 				/>
 			</div>

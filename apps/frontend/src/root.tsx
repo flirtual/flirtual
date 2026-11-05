@@ -14,14 +14,14 @@ import {
 	useParams
 } from "react-router";
 
-import Favicon from "~/static/favicon.ico?no-inline";
-import MarkBlack from "~/static/mark-black.svg?no-inline";
-import OpenGraphImage from "~/static/mark-on-gradient.svg?w=1000&h=1000&format=png&no-inline&imagetools";
-import TwitterImage from "~/static/mark-on-gradient.svg?w=1000&h=1000&no-inline&imagetools";
-import AppleIcon from "~/static/mark-on-gradient.svg?w=180&h=180&format=png&no-inline&imagetools";
-import Icon from "~/static/mark.svg?no-inline";
-import Icon16x16 from "~/static/mark.svg?w=16&h=16&fit=contain&background=transparent&format=png&no-inline&imagetools";
-import Icon32x32 from "~/static/mark.svg?w=32&h=32&fit=contain&background=transparent&format=png&no-inline&imagetools";
+import OpenGraphImage from "~/static/icon-background.svg?w=1000&h=1000&format=png&no-inline&imagetools";
+import TwitterImage from "~/static/icon-background.svg?w=1000&h=1000&no-inline&imagetools";
+import AppleIcon from "~/static/icon-background.svg?w=180&h=180&format=png&no-inline&imagetools";
+import Icon from "~/static/icon-color.svg?no-inline";
+import Icon16x16 from "~/static/icon-color.svg?w=16&h=16&fit=contain&background=transparent&format=png&no-inline&imagetools";
+import Icon32x32 from "~/static/icon-color.svg?w=32&h=32&fit=contain&background=transparent&format=png&no-inline&imagetools";
+import Icon48x48 from "~/static/icon-color.svg?w=48&h=48&fit=contain&background=transparent&format=png&no-inline&imagetools";
+import IconDark from "~/static/icon-dark.svg?no-inline";
 
 import type { Route } from "./+types/root";
 import { App } from "./app";
@@ -120,11 +120,11 @@ export function meta({
 
 		{ name: "mobile-web-app-capable", content: "yes" },
 
-		{ name: "apple-itunes-app", content: `app-id=${appStoreId}` },
+		appStoreId && { name: "apple-itunes-app", content: `app-id=${appStoreId}` },
 		{ name: "apple-mobile-web-app-title", content: brand.name },
 		{ name: "apple-mobile-web-app-status-bar-style", content: "default" },
-		{ property: "al:ios:app_store_id", content: appStoreId },
-		{ property: "al:ios:url", content: urls.apps.apple },
+		appStoreId && { property: "al:ios:app_store_id", content: appStoreId },
+		urls.apps.apple && { property: "al:ios:url", content: urls.apps.apple },
 		{ property: "al:android:package", content: appBundleId },
 		{ property: "al:android:url", content: urls.apps.google },
 		{ property: "al:web:should_fallback", content: (true).toString() },
@@ -134,12 +134,12 @@ export function meta({
 
 		{ tagName: "link", rel: "manifest", href: href("/manifest.json") },
 
-		{ tagName: "link", rel: "icon", type: "image/x-icon", sizes: "48x48", href: Favicon },
+		{ tagName: "link", rel: "icon", type: "image/png", sizes: "48x48", href: Icon48x48 },
 		{ tagName: "link", rel: "icon", type: "image/svg+xml", sizes: "any", href: Icon },
 		{ tagName: "link", rel: "icon", type: "image/png", sizes: "32x32", href: Icon32x32 },
 		{ tagName: "link", rel: "icon", type: "image/png", sizes: "16x16", href: Icon16x16 },
 		{ tagName: "link", rel: "apple-touch-icon", type: "image/png", sizes: "180x180", href: AppleIcon },
-		{ tagName: "link", rel: "mask-icon", color: brand.accentColor, href: MarkBlack },
+		{ tagName: "link", rel: "mask-icon", color: brand.accentColor, href: IconDark },
 
 		(development || preview) && {
 			tagName: "meta",
@@ -177,7 +177,7 @@ export function meta({
 
 const BeforeRenderScript: FC = memo(() => {
 	const beforeRender = (localePathnameRegex: RegExp, friendsPathname: string | null) => {
-		const localTheme = JSON.parse(localStorage.getItem(".theme") || `"system"`) as LocalTheme;
+		const localTheme = globalThis.localTheme = JSON.parse(localStorage.getItem(".theme") || `"system"`) as LocalTheme;
 		const prefersDark = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 
 		const theme = globalThis.theme = localTheme === "system" ? prefersDark : localTheme;
@@ -270,7 +270,7 @@ export function Layout({ children }: PropsWithChildren) {
 
 					element.dataset.platform = platformOverride || device.platform;
 				}}
-				className="flex min-h-screen flex-col bg-white-20 font-nunito text-black-80 antialiased data-[theme=dark]:bg-black-70 data-[vision]:bg-transparent data-[theme=dark]:text-white-20 desktop:bg-cream desktop:data-[theme=dark]:bg-black-80"
+				className="flex min-h-screen flex-col bg-white-20 font-nunito text-black-80 antialiased data-vision:bg-transparent data-[theme=dark]:bg-black-70 data-[theme=dark]:text-white-20 desktop:bg-cream desktop:data-[theme=dark]:bg-black-80"
 				data-theme={theme}
 				data-theme-style={themeStyle}
 			>
