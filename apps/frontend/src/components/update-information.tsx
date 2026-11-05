@@ -168,7 +168,7 @@ export const UpdateInformation: React.FC = withSuspense(() => {
 				if (nativeUpdateAvailable) {
 					void AppUpdate
 						.openAppStore(device.apple ? { appId: appStoreId } : {})
-						.catch(() => void window.open(device.apple ? urls.apps.apple : urls.apps.google, "_blank"));
+						.catch(() => void window.open((device.apple && urls.apps.apple) || urls.apps.google, "_blank"));
 
 					return;
 				}

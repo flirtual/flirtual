@@ -175,10 +175,12 @@ export function loader() {
 		},
 		orientation: "any",
 		related_applications: [
-			{
-				platform: "itunes",
-				url: urls.apps.apple
-			},
+			...(urls.apps.apple
+				? [{
+						platform: "itunes",
+						url: urls.apps.apple
+					}]
+				: []),
 			{
 				platform: "play",
 				url: urls.apps.google,

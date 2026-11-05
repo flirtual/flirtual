@@ -78,7 +78,7 @@ export const commonComponents = {
 	appearance: <InlineLink href={urls.settings.appearance} />,
 	password: <InlineLink href={urls.settings.password} />,
 	apps: <InlineLink href={urls.resources.download} />,
-	appstore: <InlineLink href={urls.apps.apple} />,
+	appstore: urls.apps.apple ? <InlineLink href={urls.apps.apple} /> : <span />,
 	playstore: <InlineLink href={urls.apps.google} />,
 	sidequest: <InlineLink href={urls.apps.sideQuest} />
 };

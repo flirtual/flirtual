@@ -55,9 +55,11 @@ export function TheEnd({ id }: TileProps) {
 							/>
 						</div>
 						<div className="flex gap-2 desktop:hidden">
-							<Link className="apple:hidden" href={urls.apps.apple}>
-								<AppleIcon className="size-6" />
-							</Link>
+							{urls.apps.apple && (
+								<Link className="apple:hidden" href={urls.apps.apple}>
+									<AppleIcon className="size-6" />
+								</Link>
+							)}
 							<Link className="android:hidden" href={urls.apps.google}>
 								<GooglePlayIcon className="size-6" />
 							</Link>

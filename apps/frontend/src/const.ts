@@ -26,7 +26,7 @@ invariant(apiUrl, "VITE_API_URL is required");
 export const apiOrigin = new URL(apiUrl).origin;
 
 export const appBundleId = import.meta.env.VITE_APP_BUNDLE_ID as string;
-export const appStoreId = import.meta.env.VITE_APP_STORE_ID as string;
+export const appStoreId = import.meta.env.VITE_APP_STORE_ID as string || undefined;
 
 export const preview = import.meta.env.VITE_PREVIEW as string || null;
 export const development = import.meta.env.DEV;

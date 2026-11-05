@@ -129,10 +129,12 @@ const external: Array<Redirect> = [
 		source: "/club",
 		destination: "https://vrchat.com/home/world/wrld_d4f2cc35-83b9-41e9-9b3a-b861691c8df4"
 	},
-	{
-		source: "/ios",
-		destination: urls.apps.apple
-	}
+	...(urls.apps.apple
+		? [{
+				source: "/ios",
+				destination: urls.apps.apple
+			}]
+		: [])
 ];
 
 const assets: Array<Redirect> = [

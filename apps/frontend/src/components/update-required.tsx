@@ -36,7 +36,7 @@ export const UpdateRequiredDialog: FC<{ onDismiss?: () => void }> = ({ onDismiss
 					<div className="flex gap-2">
 						<ButtonLink
 							className="grow"
-							href={apple ? urls.apps.apple : urls.apps.google}
+							href={(apple && urls.apps.apple) || urls.apps.google}
 							size="sm"
 						>
 							{t("update")}
