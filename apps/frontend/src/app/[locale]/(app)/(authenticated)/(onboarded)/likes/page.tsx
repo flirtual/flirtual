@@ -78,7 +78,7 @@ export default function LikesPage() {
 							>
 								{t("matches")}
 							</ButtonLink>
-							<div className="hidden flex-grow desktop:block" />
+							<div className="hidden grow desktop:block" />
 							<LikesFilters
 								gender={filters.gender}
 								kind={filters.kind}

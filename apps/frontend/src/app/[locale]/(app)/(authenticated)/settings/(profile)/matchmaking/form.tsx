@@ -368,7 +368,7 @@ export const MatchmakingForm: FC = () => {
 												<InputLabelHint
 													className={twMerge(
 														"ml-auto",
-														value === 0 ? "!text-red-500" : ""
+														value === 0 ? "text-red-500!" : ""
 													)}
 												>
 													{t("number_multiplier", { number: value })}

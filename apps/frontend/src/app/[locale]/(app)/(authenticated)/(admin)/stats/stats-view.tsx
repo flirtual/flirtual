@@ -111,14 +111,14 @@ const StatsContent: FC = () => {
 					<div
 						key={stat.key}
 						className={twMerge(
-							"focusable-within flex items-center rounded-lg",
+							"flex items-center rounded-lg focusable-within",
 							stat.key === selectedKey
 								? "bg-brand-gradient text-white-20"
 								: "hover:bg-white-30 dark:hover:bg-black-60"
 						)}
 					>
 						<button
-							className="grow rounded-l-lg px-3 py-2 text-left font-nunito outline-none"
+							className="grow rounded-l-lg px-3 py-2 text-left font-nunito outline-hidden"
 							type="button"
 							onClick={() => setSelectedKey(stat.key)}
 						>
@@ -126,7 +126,7 @@ const StatsContent: FC = () => {
 						</button>
 						<button
 							aria-label={`Download ${stat.label} CSV`}
-							className="rounded-r-lg px-3 py-2 opacity-70 outline-none hover:opacity-100"
+							className="rounded-r-lg px-3 py-2 opacity-70 outline-hidden hover:opacity-100"
 							type="button"
 							onClick={() => download(stat)}
 						>
@@ -137,7 +137,7 @@ const StatsContent: FC = () => {
 			</nav>
 			<div className="flex min-w-0 grow flex-col gap-4">
 				<div className={twMerge("transition-opacity", stale && "opacity-60")}>
-					<Suspense fallback={<div className="h-[344px]" />}>
+					<Suspense fallback={<div className="h-86" />}>
 						{deferred && (
 							<StatChart
 								name={deferred.name}

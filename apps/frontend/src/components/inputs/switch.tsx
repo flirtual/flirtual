@@ -58,7 +58,7 @@ export const InputSwitch: React.FC<InputSwitchProps> = (props) => {
 	return (
 		<div
 			className={twMerge(
-				"group focusable-within relative isolate grid size-fit h-11 shrink-0 grow-0 cursor-pointer grid-cols-2 items-center overflow-hidden rounded-xl bg-white-30 shadow-brand-1 vision:bg-white-30/70 dark:bg-black-60",
+				"group relative isolate grid size-fit h-11 shrink-0 grow-0 cursor-pointer grid-cols-2 items-center overflow-hidden rounded-xl bg-white-30 shadow-brand-1 focusable-within dark:bg-black-60 vision:bg-white-30/70",
 				className
 			)}
 			aria-checked={ariaChecked}

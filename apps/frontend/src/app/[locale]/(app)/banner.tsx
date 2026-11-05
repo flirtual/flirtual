@@ -19,7 +19,7 @@ export const BannerLink: FC<PropsWithChildren<InlineLinkProps>> = ({
 }) => (
 	<InlineLink
 		{...props}
-		className="font-semibold before:absolute before:left-0 before:top-0 before:size-full"
+		className="font-semibold before:absolute before:top-0 before:left-0 before:size-full"
 		highlight={false}
 		href={href}
 	>
@@ -48,14 +48,14 @@ export function Banner({ children, className, ref, icon = defaultBannerIcon, onD
 			)}
 			ref={ref}
 		>
-			<div className="relative flex w-full items-center justify-center py-4 pl-[calc(2rem+var(--content-inset-left,0rem))] pr-[calc(2rem+var(--content-inset-right,0rem))] pt-[max(calc(var(--safe-area-inset-top,0rem)+0.5rem),1rem)]">
+			<div className="relative flex w-full items-center justify-center py-4 pt-[max(calc(var(--safe-area-inset-top,0rem)+0.5rem),1rem)] pr-[calc(2rem+var(--content-inset-right,0rem))] pl-[calc(2rem+var(--content-inset-left,0rem))]">
 				<div className="relative flex items-center gap-4 font-montserrat leading-none desktop:text-lg">
 					{icon && <Slot className="mt-[0.15rem] w-6 shrink-0 animate-bounce-x">{icon}</Slot>}
 					<span>{children}</span>
 					{onDismiss && (
 						<button
 							aria-label={t("close")}
-							className="focusable relative shrink-0 rounded-full p-1"
+							className="relative shrink-0 rounded-full p-1 focusable"
 							type="button"
 							onClick={onDismiss}
 						>

@@ -22,11 +22,11 @@ export const SplitPanes: FC<PropsWithChildren<SplitPanesProps>> = ({ aside, clas
 			</div>
 		)
 	: (
-			<div data-split-panes className={twMerge("flex w-full grow flex-col [--split-bottom:calc(4rem+max(calc(var(--safe-area-inset-bottom,0rem)-0.25rem),0.5rem))] [--split-top:var(--safe-area-inset-top,0rem)] native-nav:[--split-bottom:0px] split:flex-row split:items-start desktop:flex-row desktop:justify-center desktop:gap-4 native-nav:desktop:[--split-bottom:calc(2rem+var(--safe-area-inset-bottom,0rem))] native-nav:desktop:[--split-top:calc(2rem+var(--safe-area-inset-top,0rem))]", className)}>
-				<div className={twMerge("contents split:sticky split:top-[var(--split-top)] split:block split:h-[calc(100dvh-var(--split-top)-var(--split-bottom))] split:w-[var(--split-list-width,22rem)] split:shrink-0 split:[--content-inset-right:0px] split:[--top-clearance-right:0px]", asideClassName)}>
+			<div data-split-panes className={twMerge("flex w-full grow flex-col [--split-bottom:calc(4rem+max(calc(var(--safe-area-inset-bottom,0rem)-0.25rem),0.5rem))] [--split-top:var(--safe-area-inset-top,0rem)] native-nav:[--split-bottom:0px] split:flex-row split:items-start desktop:flex-row desktop:justify-center desktop:gap-4 desktop:native-nav:[--split-bottom:calc(2rem+var(--safe-area-inset-bottom,0rem))] desktop:native-nav:[--split-top:calc(2rem+var(--safe-area-inset-top,0rem))]", className)}>
+				<div className={twMerge("contents split:sticky split:top-(--split-top) split:block split:h-[calc(100dvh-var(--split-top)-var(--split-bottom))] split:w-(--split-list-width,22rem) split:shrink-0 split:[--content-inset-right:0px] split:[--top-clearance-right:0px]", asideClassName)}>
 					{aside}
 				</div>
-				<div data-split-main className={twMerge("flex w-full flex-col items-center split:min-w-0 split:grow split:[--content-inset-left:0px] split:[--top-clearance-left:0px] native-nav:split:pb-[var(--safe-area-inset-bottom,0rem)] desktop:pb-0 web-nav:desktop:contents", mainClassName)}>
+				<div data-split-main className={twMerge("flex w-full flex-col items-center split:min-w-0 split:grow split:[--content-inset-left:0px] split:[--top-clearance-left:0px] split:native-nav:pb-(--safe-area-inset-bottom,0rem) desktop:pb-0 desktop:web-nav:contents", mainClassName)}>
 					{children}
 				</div>
 			</div>

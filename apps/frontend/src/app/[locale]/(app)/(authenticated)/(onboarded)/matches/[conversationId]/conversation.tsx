@@ -19,7 +19,7 @@ import { urls } from "~/urls";
 import { LeaveButton } from "./leave-button";
 import { VRChatButton } from "./vrchat-button";
 
-const headerClassName = "flex min-h-[var(--status-bar-height,0rem)] w-full items-center bg-brand-gradient p-3 pl-[calc(0.75rem+var(--top-clearance-left,0rem))] pr-[calc(0.75rem+var(--top-clearance-right,0rem))] pt-[max(calc(var(--status-bar-inset-top,var(--safe-area-inset-top,0rem))+0.25rem),0.75rem)] full-bleed-x vision:bg-none split:h-16 split:pt-3 desktop:mt-0 desktop:rounded-t-xl android:desktop:mt-0";
+const headerClassName = "flex min-h-(--status-bar-height,0rem) w-full items-center bg-brand-gradient p-3 pl-[calc(0.75rem+var(--top-clearance-left,0rem))] pr-[calc(0.75rem+var(--top-clearance-right,0rem))] pt-[max(calc(var(--status-bar-inset-top,var(--safe-area-inset-top,0rem))+0.25rem),0.75rem)] full-bleed-x vision:bg-none split:h-16 split:pt-3 desktop:mt-0 desktop:rounded-t-xl desktop:android:mt-0";
 
 const BackButton: FC = () => {
 	const { t } = useTranslation();
@@ -46,13 +46,13 @@ export const Conversation = withSuspense<{ id: string }>(({ id: conversationId }
 
 	if (!conversation || !user) {
 		return (
-			<div className="mt-0 h-fit w-full shrink-0 bg-brand-gradient vision:bg-none desktop:max-w-[38rem] desktop:shrink desktop:rounded-2xl desktop:p-1 desktop:shadow-brand-1">
+			<div className="mt-0 h-fit w-full shrink-0 bg-brand-gradient vision:bg-none desktop:max-w-152 desktop:shrink desktop:rounded-2xl desktop:p-1 desktop:shadow-brand-1">
 				<div data-dark-backdrop className={twMerge(headerClassName, "min-h-16 justify-center")}>
 					<span className="text-center font-montserrat text-2xl font-semibold text-white-20 desktop:font-extrabold">
 						{t("chat_unavailable")}
 					</span>
 				</div>
-				<div className="flex flex-col gap-8 bg-white-20 p-8 vision:bg-transparent dark:bg-black-70 desktop:rounded-xl desktop:shadow-brand-inset">
+				<div className="flex flex-col gap-8 bg-white-20 p-8 dark:bg-black-70 vision:bg-transparent desktop:rounded-xl desktop:shadow-brand-inset">
 					<span className="font-nunito text-black-70 dark:text-white-20">
 						{t("chat_unavailable_description")}
 					</span>
@@ -65,7 +65,7 @@ export const Conversation = withSuspense<{ id: string }>(({ id: conversationId }
 	}
 
 	return (
-		<div className="mt-0 h-fit w-full shrink-0 bg-brand-gradient vision:bg-none desktop:max-w-[38rem] desktop:shrink desktop:rounded-2xl desktop:p-1 desktop:shadow-brand-1">
+		<div className="mt-0 h-fit w-full shrink-0 bg-brand-gradient vision:bg-none desktop:max-w-152 desktop:shrink desktop:rounded-2xl desktop:p-1 desktop:shadow-brand-1">
 			<div data-dark-backdrop className={headerClassName}>
 				<BackButton />
 				<InlineLink
@@ -74,7 +74,7 @@ export const Conversation = withSuspense<{ id: string }>(({ id: conversationId }
 					state={{ conversationId }}
 				>
 					<UserAvatar
-						className="mb-[0.0625rem] rounded-full"
+						className="mb-0.25 rounded-full"
 						height={40}
 						user={user}
 						variant="icon"
@@ -100,11 +100,11 @@ export const Conversation = withSuspense<{ id: string }>(({ id: conversationId }
 	);
 }, {
 	fallback: (
-		<div className="mt-0 size-full shrink-0 bg-brand-gradient vision:bg-none desktop:max-w-[38rem] desktop:shrink desktop:rounded-2xl desktop:p-1 desktop:shadow-brand-1">
+		<div className="mt-0 size-full shrink-0 bg-brand-gradient vision:bg-none desktop:max-w-152 desktop:shrink desktop:rounded-2xl desktop:p-1 desktop:shadow-brand-1">
 			<div data-dark-backdrop className={headerClassName}>
 				<BackButton />
 				<div className="size-10 animate-pulse rounded-full bg-white-20"></div>
-				<div className="ml-4 h-6 w-32 animate-pulse rounded bg-white-20"></div>
+				<div className="ml-4 h-6 w-32 animate-pulse rounded-sm bg-white-20"></div>
 			</div>
 			<div className="h-full rounded-xl bg-white-20 shadow-brand-inset" />
 		</div>

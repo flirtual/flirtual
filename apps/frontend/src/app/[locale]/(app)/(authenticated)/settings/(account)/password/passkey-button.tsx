@@ -39,7 +39,7 @@ export const PasskeyButton: React.FC<PasskeyButtonProps> = (props) => {
 							<Key className="size-7" />
 						)}
 			</div>
-			<div className="flex flex-col overflow-hidden whitespace-nowrap p-2 text-left font-nunito leading-none vision:text-black-80">
+			<div className="flex flex-col overflow-hidden p-2 text-left font-nunito leading-none whitespace-nowrap vision:text-black-80">
 				{name || t("passkey")}
 				<span className="text-sm leading-none text-black-60 dark:text-white-40">
 					{t("added_date", { date })}

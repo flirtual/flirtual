@@ -28,7 +28,7 @@ export const BuildInformation: FC = () => {
 	if (hidden) return null;
 
 	return (
-		<button className="absolute bottom-20 right-0 flex max-w-lg flex-col items-end justify-center px-4 py-3 text-right text-xs text-black-90 opacity-75 dark:text-white-10 desktop:bottom-[unset] desktop:top-20" type="button" onClick={() => setHidden(true)}>
+		<button className="absolute right-0 bottom-20 flex max-w-lg flex-col items-end justify-center px-4 py-3 text-right text-xs text-black-90 opacity-75 dark:text-white-10 desktop:top-20 desktop:bottom-[unset]" type="button" onClick={() => setHidden(true)}>
 			<Link href={commitUrl}>{t("version", { version })}</Link>
 			<DeviceInformation />
 		</button>

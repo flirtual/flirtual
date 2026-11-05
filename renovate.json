@@ -200,7 +200,7 @@
 			"groupName": "listmonk"
 		},
 		{
-			"matchPackageNames": ["pnpm"],
+			"matchPackageNames": ["pnpm", "ghcr.io/pnpm/pnpm"],
 			"groupName": "pnpm"
 		},
 		{

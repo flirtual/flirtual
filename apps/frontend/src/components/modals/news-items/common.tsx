@@ -10,7 +10,7 @@ import {
 import { Image } from "~/components/image";
 import { InlineLink } from "~/components/inline-link";
 import { IdeasLink } from "~/components/modals/ideas";
-import { homieMode } from "~/features";
+import { events, homieMode } from "~/features";
 import { urls } from "~/urls";
 
 export const ExpandableImage: FC<ComponentProps<typeof Image>> = (props) => {
@@ -41,9 +41,9 @@ export const ExpandableImage: FC<ComponentProps<typeof Image>> = (props) => {
 
 export const commonComponents = {
 	p: <p className="select-children" />,
-	ul: <ul className="select-children flex list-outside list-disc flex-col gap-1.5 pl-6" />,
+	ul: <ul className="flex list-outside list-disc flex-col gap-1.5 pl-6 select-children" />,
 	li: <li />,
-	h2: <h2 className="select-text font-montserrat text-lg font-semibold" />,
+	h2: <h2 className="font-montserrat text-lg font-semibold select-text" />,
 	footer: (
 		<Trans
 			components={{
@@ -66,7 +66,7 @@ export const commonComponents = {
 	homies: <InlineLink href={urls.discover(homieMode ? "homies" : "dates")} />,
 	matches: <InlineLink href={urls.conversations.list()} />,
 	likes: <InlineLink href={urls.likes} />,
-	events: <InlineLink href={urls.resources.events} />,
+	events: events ? <InlineLink href={urls.resources.events} /> : <span />,
 	about: <InlineLink href={urls.resources.about} />,
 	me: <InlineLink href={urls.user.me} />,
 	bio: <InlineLink href={urls.settings.bio} />,
@@ -78,7 +78,7 @@ export const commonComponents = {
 	appearance: <InlineLink href={urls.settings.appearance} />,
 	password: <InlineLink href={urls.settings.password} />,
 	apps: <InlineLink href={urls.resources.download} />,
-	appstore: <InlineLink href={urls.apps.apple} />,
+	appstore: urls.apps.apple ? <InlineLink href={urls.apps.apple} /> : <span />,
 	playstore: <InlineLink href={urls.apps.google} />,
 	sidequest: <InlineLink href={urls.apps.sideQuest} />
 };

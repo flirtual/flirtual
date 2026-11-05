@@ -43,12 +43,12 @@ export function ArrangeableImage({ src, className, onDelete, onFullscreen, ...pr
 				src={src}
 			/>
 			<div
-				className="absolute right-0 top-0 p-2"
+				className="absolute top-0 right-0 p-2"
 				onMouseDown={(event) => event.stopPropagation()}
 				onTouchStart={(event) => event.stopPropagation()}
 			>
-				<div className="flex cursor-default items-center justify-center rounded-md bg-black-70/80 p-1 transition-all group-hover:bg-black-70 group-has-[:focus-visible]:bg-black-70">
-					<div className="flex w-0 items-center justify-center gap-2 opacity-0 transition-all group-hover:w-fit group-hover:pr-2 group-hover:opacity-100 group-has-[:focus-visible]:w-fit group-has-[:focus-visible]:pr-2 group-has-[:focus-visible]:opacity-100">
+				<div className="flex cursor-default items-center justify-center rounded-md bg-black-70/80 p-1 transition-all group-hover:bg-black-70 group-has-focus-visible:bg-black-70">
+					<div className="flex w-0 items-center justify-center gap-2 opacity-0 transition-all group-hover:w-fit group-hover:pr-2 group-hover:opacity-100 group-has-focus-visible:w-fit group-has-focus-visible:pr-2 group-has-focus-visible:opacity-100">
 						<button
 							className="opacity-60 hocus:opacity-100"
 							type="button"

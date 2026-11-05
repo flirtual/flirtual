@@ -25,7 +25,7 @@ function DrawerOverlay({ ref: reference, className, ...props }: { ref?: React.Re
 	return (
 		<DrawerPrimitive.Overlay
 			data-dark-backdrop
-			className={twMerge("fixed inset-0 z-[39] bg-black-80/80", className)}
+			className={twMerge("fixed inset-0 z-39 bg-black-80/80", className)}
 			ref={reference}
 			{...props}
 		/>
@@ -39,13 +39,13 @@ function DrawerContent({ ref: reference, className, children, ...props }: { ref?
 			<DrawerOverlay />
 			<DrawerPrimitive.Content
 				className={twMerge(
-					"fixed bottom-0 left-[var(--safe-area-inset-left,0rem)] right-[var(--safe-area-inset-right,0rem)] z-40 mt-24 flex h-auto max-h-[75vh] flex-col rounded-t-3xl bg-white-30 p-4 pb-[calc(var(--safe-area-inset-bottom,0rem)+1rem)] font-nunito text-black-80 shadow-brand-1 dark:bg-black-70 dark:text-white-20",
+					"fixed right-(--safe-area-inset-right,0rem) bottom-0 left-(--safe-area-inset-left,0rem) z-40 mt-24 flex h-auto max-h-[75vh] flex-col rounded-t-3xl bg-white-30 p-4 pb-[calc(var(--safe-area-inset-bottom,0rem)+1rem)] font-nunito text-black-80 shadow-brand-1 dark:bg-black-70 dark:text-white-20",
 					className
 				)}
 				ref={reference}
 				{...props}
 			>
-				<div className="mx-auto mb-4 h-2 w-[100px] shrink-0 rounded-full bg-white-20 dark:bg-black-60" />
+				<div className="mx-auto mb-4 h-2 w-25 shrink-0 rounded-full bg-white-20 dark:bg-black-60" />
 				{children}
 			</DrawerPrimitive.Content>
 		</DrawerPortal>
@@ -86,7 +86,7 @@ function DrawerTitle({ ref: reference, className, ...props }: { ref?: React.Ref<
 	return (
 		<DrawerPrimitive.Title
 			className={twMerge(
-				"text-lg font-semibold leading-none tracking-tight",
+				"text-lg leading-none font-semibold tracking-tight",
 				className
 			)}
 			ref={reference}

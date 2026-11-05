@@ -69,13 +69,13 @@ export const LikesQueueActions: FC<{
 
 	return (
 		<div className="flex h-20 w-full items-center justify-center">
-			<div className="fixed bottom-[max(calc(var(--safe-area-inset-bottom,0rem)+5.5rem),6rem)] z-20 flex flex-col items-center justify-center gap-2 native-nav:bottom-[max(calc(var(--safe-area-inset-bottom,0rem)+0.5rem),2rem)] desktop:bottom-12 [[data-tour-navigation]_&]:invisible">
+			<div className="fixed bottom-[max(calc(var(--safe-area-inset-bottom,0rem)+5.5rem),6rem)] z-20 flex flex-col items-center justify-center gap-2 in-data-tour-navigation:invisible native-nav:bottom-[max(calc(var(--safe-area-inset-bottom,0rem)+0.5rem),2rem)] desktop:bottom-12">
 				<div className="flex items-center gap-2 text-white-10">
 					<Tooltip touchable={false}>
 						<TooltipTrigger asChild>
 							<m.button
 								id="undo-button"
-								className="flex h-fit items-center rounded-full border border-black-50/25 bg-white-30 p-3 text-black-50 shadow-brand-1 transition-all disabled:!scale-100 disabled:text-black-10 dark:bg-black-50 dark:text-white-10 dark:disabled:text-black-10"
+								className="flex h-fit items-center rounded-full border border-black-50/25 bg-white-30 p-3 text-black-50 shadow-brand-1 transition-all disabled:scale-100! disabled:text-black-10 dark:bg-black-50 dark:text-white-10 dark:disabled:text-black-10"
 								disabled={!previous || tooFast}
 								type="button"
 								whileHover={{ scale: 1.05 }}
@@ -96,8 +96,8 @@ export const LikesQueueActions: FC<{
 								<m.button
 									id="like-button"
 									className={twMerge(
-										"flex items-center justify-center rounded-full border border-black-50/25 bg-brand-gradient p-4 shadow-brand-1 transition-all disabled:brightness-90 dark:disabled:brightness-[80%]",
-										blocked && "grayscale-[0.75]"
+										"flex items-center justify-center rounded-full border border-black-50/25 bg-brand-gradient p-4 shadow-brand-1 transition-all disabled:brightness-90 dark:disabled:brightness-80",
+										blocked && "grayscale-75"
 									)}
 									disabled={tooFast || blocked}
 									type="button"
@@ -106,7 +106,7 @@ export const LikesQueueActions: FC<{
 									onClick={() => like("love")}
 								>
 									<HeartIcon
-										className="w-[2.125rem] shrink-0"
+										className="w-8.5 shrink-0"
 										gradient={false}
 									/>
 								</m.button>
@@ -123,8 +123,8 @@ export const LikesQueueActions: FC<{
 								<m.button
 									id="friend-button"
 									className={twMerge(
-										"flex items-center justify-center rounded-full border border-black-50/25 bg-gradient-to-tr from-theme-friend-1 to-theme-friend-2 p-4 shadow-brand-1 transition-all disabled:brightness-90 dark:disabled:brightness-[80%]",
-										blocked && "grayscale-[0.75]"
+										"flex items-center justify-center rounded-full border border-black-50/25 bg-linear-to-tr from-theme-friend-1 to-theme-friend-2 p-4 shadow-brand-1 transition-all disabled:brightness-90 dark:disabled:brightness-80",
+										blocked && "grayscale-75"
 									)}
 									disabled={tooFast || blocked}
 									type="button"
@@ -133,7 +133,7 @@ export const LikesQueueActions: FC<{
 									onClick={() => like("friend")}
 								>
 									<PeaceIcon
-										className="w-[2.125rem] shrink-0"
+										className="w-8.5 shrink-0"
 										gradient={false}
 									/>
 								</m.button>
@@ -148,7 +148,7 @@ export const LikesQueueActions: FC<{
 						<TooltipTrigger asChild>
 							<m.button
 								id="pass-button"
-								className="flex h-fit items-center rounded-full border border-black-90/25 bg-white-30 p-3 text-black-50 shadow-brand-1 transition-all disabled:!scale-100 disabled:text-black-10 dark:bg-black-50 dark:text-white-10 dark:disabled:text-black-10"
+								className="flex h-fit items-center rounded-full border border-black-90/25 bg-white-30 p-3 text-black-50 shadow-brand-1 transition-all disabled:scale-100! disabled:text-black-10 dark:bg-black-50 dark:text-white-10 dark:disabled:text-black-10"
 								disabled={tooFast}
 								type="button"
 								whileHover={{ scale: 1.05 }}

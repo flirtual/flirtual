@@ -12,8 +12,8 @@ import { useOptionalSession, useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { useNavigate } from "~/i18n";
 import { mutate, sessionKey } from "~/query";
-import LogoOnDark from "~/static/logo-on-dark.svg";
-import LogoOnLight from "~/static/logo-on-light.svg";
+import LogoDark from "~/static/logo-dark.svg";
+import LogoLight from "~/static/logo-light.svg";
 import { urls } from "~/urls";
 
 import { Button } from "../button";
@@ -144,14 +144,14 @@ export const TrustAndSafetyDialog: FC<{
 							alt={brand.name}
 							className="hidden h-fit w-24 dark:block desktop:block"
 							height={1000}
-							src={LogoOnDark}
+							src={LogoLight}
 							width={3468}
 						/>
 						<Image
 							alt={brand.name}
 							className="block h-fit w-24 dark:hidden desktop:hidden"
 							height={1000}
-							src={LogoOnLight}
+							src={LogoDark}
 							width={3468}
 						/>
 						<span>{t("trust_and_safety")}</span>
@@ -160,7 +160,7 @@ export const TrustAndSafetyDialog: FC<{
 				<DialogBody>
 					<div className="flex min-h-64 flex-col justify-between gap-4 px-2 desktop:max-w-lg">
 						<div className="flex flex-col gap-4">
-							<p className="whitespace-pre-wrap font-nunito">
+							<p className="font-nunito whitespace-pre-wrap">
 								{children}
 							</p>
 						</div>

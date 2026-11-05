@@ -19,7 +19,7 @@ export const ColorBlock: React.FC<ColorBlockProps> = ({
 	>
 		<span className="text-lg font-semibold">{name}</span>
 		<CopyClick value={value}>
-			<pre className="select-text [white-space:break-spaces]">{value}</pre>
+			<pre className="whitespace-break-spaces select-text">{value}</pre>
 		</CopyClick>
 	</div>
 );

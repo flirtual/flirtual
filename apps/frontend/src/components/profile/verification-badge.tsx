@@ -15,7 +15,7 @@ export const ProfileVerificationBadge: React.FC<
 		<Tooltip>
 			<TooltipTrigger asChild>
 				<div className="relative size-6">
-					<div className="absolute left-1/4 top-1/4 size-3 bg-theme-overlay" />
+					<div className="absolute top-1/4 left-1/4 size-3 bg-theme-overlay" />
 					<CheckBadgeIcon className="absolute size-full fill-theme-2" />
 				</div>
 			</TooltipTrigger>

@@ -20,11 +20,13 @@ import { twMerge } from "tailwind-merge";
 import { DiscordOutlineIcon } from "~/components/icons";
 import { Link } from "~/components/link";
 import { UserAvatar } from "~/components/user-avatar";
+import { news } from "~/features";
 import { useBreakpoint } from "~/hooks/use-breakpoint";
 import { useClickOutside } from "~/hooks/use-click-outside";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
 import { revokeImpersonate, useSession } from "~/hooks/use-session";
 import { useMatch } from "~/i18n";
+import IconLightSVG from "~/static/icon-light.svg";
 import { urls } from "~/urls";
 
 type ProfileNavigationItemProps = React.PropsWithChildren<
@@ -61,6 +63,8 @@ export const NavigationItemProfile: FC = () => {
 	const location = useLocation();
 
 	const active = !!useMatch({ path: urls.profile(user) });
+	const highlighted = active || visible;
+	const photoless = !urls.userAvatar(user);
 
 	useClickOutside(elementReference, () => setVisible(false), visible);
 	useGlobalEventListener(
@@ -82,7 +86,7 @@ export const NavigationItemProfile: FC = () => {
 				id="profile-dropdown-button"
 				className={twMerge(
 					"group block rounded-full p-1 transition-all",
-					active
+					highlighted
 						? "bg-white-20 shadow-brand-1"
 						: "bg-transparent hocus:bg-white-20 hocus:text-black-70 hocus:shadow-brand-1"
 				)}
@@ -94,20 +98,37 @@ export const NavigationItemProfile: FC = () => {
 					setVisible(true);
 				}}
 			>
-				<UserAvatar
-					priority
-					className="size-10 rounded-full transition-transform"
-					height={40}
-					user={user}
-					variant="icon"
-					width={40}
-				/>
+				{photoless
+					? (
+							<span
+								className={twMerge(
+									"relative block size-10 rounded-full p-1 transition-all before:absolute before:inset-0 before:rounded-full before:bg-brand-gradient before:opacity-0 before:transition-opacity group-hocus:p-1.5 group-hocus:before:opacity-100",
+									highlighted && "p-1.5 before:opacity-100"
+								)}
+							>
+								<img
+									alt={t("avatar_alt", { name: user.profile.displayName || t("unnamed_user") })}
+									className="relative size-full object-contain"
+									src={IconLightSVG}
+								/>
+							</span>
+						)
+					: (
+							<UserAvatar
+								priority
+								className="size-10 rounded-full transition-transform"
+								height={40}
+								user={user}
+								variant="icon"
+								width={40}
+							/>
+						)}
 			</Link>
 			<AnimatePresence>
 				{visible && (
 					<m.div
 						animate={{ opacity: 1 }}
-						className="absolute -left-2 bottom-[calc(-1*max(var(--safe-area-inset-bottom,0rem),0.75rem))] z-10 flex min-w-44 flex-col-reverse overflow-hidden rounded-t-2xl bg-white-10 p-4 pb-[calc(max(var(--safe-area-inset-bottom,0rem),0.75rem)+0.375rem)] pt-2.5 text-black-80 shadow-brand-1 ja:min-w-48 desktop:bottom-inherit desktop:top-[-0.4rem] desktop:flex-col desktop:rounded-2xl desktop:pb-3 desktop:pt-[0.9375rem]"
+						className="absolute bottom-[calc(-1*max(var(--safe-area-inset-bottom,0rem),0.75rem))] -left-2 z-10 flex min-w-44 flex-col-reverse overflow-hidden rounded-t-2xl bg-white-10 p-4 pt-2.5 pb-[calc(max(var(--safe-area-inset-bottom,0rem),0.75rem)+0.375rem)] text-black-80 shadow-brand-1 ja:min-w-48 desktop:-top-1.75 desktop:bottom-inherit desktop:flex-col desktop:rounded-2xl desktop:pt-3.75 desktop:pb-3"
 						exit={{ opacity: 0 }}
 						initial={{ opacity: 0 }}
 						ref={elementReference}
@@ -117,13 +138,16 @@ export const NavigationItemProfile: FC = () => {
 							href={urls.profile(user)}
 						>
 							<UserAvatar
-								className="mt-1.5 size-8 scale-125 rounded-full transition-transform group-hocus:brightness-90 desktop:mb-2 desktop:mt-0"
+								className={twMerge(
+									"mt-1.5 size-8 scale-125 rounded-full transition-transform desktop:mt-0 desktop:mb-2",
+									!photoless && "group-hocus:brightness-90"
+								)}
 								height={40}
 								user={user}
 								variant="icon"
 								width={40}
 							/>
-							<span className="whitespace-nowrap pb-1 pl-2 pt-2.5 font-montserrat text-lg font-semibold desktop:pb-2 desktop:pt-1">
+							<span className="pt-2.5 pb-1 pl-2 font-montserrat text-lg font-semibold whitespace-nowrap desktop:pt-1 desktop:pb-2">
 								{t("profile")}
 							</span>
 						</Link>
@@ -136,10 +160,12 @@ export const NavigationItemProfile: FC = () => {
 								<Sparkles className="size-6 shrink-0" />
 								<span className="whitespace-nowrap">{t("premium")}</span>
 							</ProfileNavigationItem>
-							<ProfileNavigationItem href={urls.news}>
-								<Newspaper className="size-6 shrink-0" />
-								<span className="whitespace-nowrap">{t("updates")}</span>
-							</ProfileNavigationItem>
+							{news && (
+								<ProfileNavigationItem href={urls.news}>
+									<Newspaper className="size-6 shrink-0" />
+									<span className="whitespace-nowrap">{t("updates")}</span>
+								</ProfileNavigationItem>
+							)}
 							{urls.socials.discord && (
 								<ProfileNavigationItem href={urls.socials.discord}>
 									<DiscordOutlineIcon className="size-6 shrink-0" />

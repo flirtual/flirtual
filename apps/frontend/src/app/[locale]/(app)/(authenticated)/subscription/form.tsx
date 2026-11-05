@@ -98,7 +98,7 @@ export const SubscriptionForm: FC = () => {
 										<Sparkles className="inline size-5" />
 										<span>{t(`attributes.${entitlement.plan.id}.name` as any)}</span>
 									</div>
-									<span className="ml-5 pl-2 text-sm text-black-30 vision:text-white-50 dark:text-white-50">
+									<span className="ml-5 pl-2 text-sm text-black-30 dark:text-white-50 vision:text-white-50">
 										<EntitlementStatus entitlement={entitlement} />
 									</span>
 								</div>

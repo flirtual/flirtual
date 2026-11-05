@@ -57,7 +57,7 @@ export const CountryPill: FC<CountryPillProps> = ({
 		>
 			<img
 				className={twMerge(
-					"aspect-[4/3] h-8 w-max shrink-0",
+					"aspect-4/3 h-8 w-max shrink-0",
 					flagOnly ? "" : "-ml-3 rounded-l-xl"
 				)}
 				src={getCountryImage(id)}

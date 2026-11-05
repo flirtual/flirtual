@@ -8,7 +8,7 @@ export default configure({
 			version: 19
 		},
 		tailwindcss: {
-			config: "tailwind.config.js"
+			cssConfigPath: "src/app/index.css"
 		}
 	},
 	ignores: [

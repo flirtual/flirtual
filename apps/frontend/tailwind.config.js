@@ -5,6 +5,7 @@ const plugin = require("tailwindcss/plugin");
 
 const { languageTags } = require("./project.inlang/settings.json");
 const brandDefaults = require("./src/brand.defaults.json");
+const { wideGamut } = require("./src/colors.ts");
 
 // Mirrors src/brand.ts. vite.config.ts copies .env's VITE_BRAND_* into process.env.
 function colorPair(name, fallback) {
@@ -21,6 +22,9 @@ const brand = {
 
 const colors = {
 	"theme-overlay": "var(--theme-text, #F5F5F5)",
+	// @tailwindcss/forms draws the select arrow in this colour inside an SVG, where Lightning CSS can't
+	// add a fallback for v4's oklch(), which Chrome before 111 can't read. This is v3's value.
+	gray: { 500: "#6b7280" },
 	coral: brand.date[0],
 	pink: brand.date[1],
 	purple: brand.dateDark[0],
@@ -68,9 +72,9 @@ module.exports = {
 			},
 			colors,
 			backgroundImage: {
-				"brand-gradient": `linear-gradient(to right, var(--theme-1), var(--theme-2))`,
-				"brand-gradient-pink": `linear-gradient(to right, var(--brand-theme-1), var(--brand-theme-2))`,
-				"brand-gradient-green": `linear-gradient(to right, var(--friend-theme-1), var(--friend-theme-2))`
+				"brand-gradient": `linear-gradient(to right var(--brand-gradient-space,), var(--theme-1), var(--theme-2))`,
+				"brand-gradient-pink": `linear-gradient(to right var(--brand-gradient-space,), var(--brand-theme-1), var(--brand-theme-2))`,
+				"brand-gradient-green": `linear-gradient(to right var(--brand-gradient-space,), var(--friend-theme-1), var(--friend-theme-2))`
 			},
 			borderRadius: {
 				half: "50%",
@@ -169,12 +173,6 @@ module.exports = {
 					}
 				}
 			}
-		},
-		screens: {
-			desktop: "960px",
-			wide: "1024px",
-			tall: { raw: "(min-height: 800px)" },
-			narrow: { raw: "(max-width: 959.98px) and (min-aspect-ratio: 3/4)" }
 		}
 	},
 	plugins: [
@@ -188,13 +186,13 @@ module.exports = {
 				addVariant(`hocus${suffix}`, ["@media (hover: hover) { &:hover }", `&${focus}`, `&${pressed}`]);
 				matchVariant(`group-hocus${suffix}`, (_, { modifier }) => {
 					const group = modifier ? `.group\\/${modifier}` : ".group";
-					return [`@media (hover: hover) { :merge(${group}):hover & }`, `:merge(${group})${focus} &`, `:merge(${group})${pressed} &`];
+					return [`@media (hover: hover) { :where(${group}):hover & }`, `:where(${group})${focus} &`, `:where(${group})${pressed} &`];
 				}, { values: { DEFAULT: "" } });
 			}
 		}),
 		require("tailwindcss-animate"),
 		require("tailwindcss-motion"),
-		plugin(({ addBase, addVariant, addComponents, addUtilities, theme }) => {
+		plugin(({ addBase, addVariant, addComponents }) => {
 			addBase({
 				body: {
 					"--light-theme-1": brand.date[0],
@@ -206,6 +204,21 @@ module.exports = {
 				}
 			});
 
+			const wideThemes = Object.fromEntries(Object.entries({
+				"--light-theme-1": brand.date[0],
+				"--light-theme-2": brand.date[1],
+				"--dark-theme-1": brand.dateDark[0],
+				"--dark-theme-2": brand.dateDark[1],
+				"--friend-theme-1": brand.homie[0],
+				"--friend-theme-2": brand.homie[1]
+			}).map(([property, hex]) => [property, wideGamut(hex)]).filter(([, value]) => value));
+
+			addBase({
+				"@media (color-gamut: p3)": {
+					"@supports (color: oklch(0% 0 0))": { body: wideThemes }
+				}
+			});
+
 			// Device specific variants
 			addVariant("native", `:is([data-native] &)`);
 			addVariant("vision", `:is([data-vision] &)`);
@@ -213,10 +226,6 @@ module.exports = {
 			addVariant("web-nav", `:where(body:not([data-native-navigation])) &`);
 			// The native tab bar runs along the bottom, inside the bottom safe area (iPhone).
 			addVariant("tab-bar-bottom", `:where([data-tab-bar-bottom]) &`);
-			// Side-by-side panes, on iPhone Duo's inner display in landscape and on iPad, while a page shows
-			// them. They rely on the native tab bar, which drops the Matches tab for them. Tailwind orders
-			// this with the screens, so desktop: still overrides it.
-			addVariant("split", `@media (min-width: 900px) { :where([data-native-navigation]:has([data-split-panes])) & }`);
 
 			for (const platform of ["web", "android", "apple"])
 				addVariant(platform, `:is([data-platform="${platform}"] &)`);
@@ -224,32 +233,6 @@ module.exports = {
 			// Language specific variants
 			for (const language of languageTags)
 				addVariant(language, `:is([lang="${language}"] &)`);
-
-			// Run a background out to the screen edge across the layout's side insets (--content-inset-*,
-			// set only under the native tab bar). Phone layouts only.
-			addUtilities({
-				// Takes the content along, for headers: their content can sit beneath a vertical bar,
-				// which leaves the top of its column free.
-				".full-bleed-x": {
-					[`@media not all and (min-width: ${theme("screens.desktop")})`]: {
-						marginLeft: "calc(-1 * var(--content-inset-left, 0px))",
-						marginRight: "calc(-1 * var(--content-inset-right, 0px))",
-						width: "calc(100% + var(--content-inset-left, 0px) + var(--content-inset-right, 0px))"
-					}
-				},
-				// Keeps the content where it was: the transparent borders take the space the negative
-				// margins give back.
-				".bleed-x": {
-					[`@media not all and (min-width: ${theme("screens.desktop")})`]: {
-						marginLeft: "calc(-1 * var(--content-inset-left, 0px))",
-						marginRight: "calc(-1 * var(--content-inset-right, 0px))",
-						width: "calc(100% + var(--content-inset-left, 0px) + var(--content-inset-right, 0px))",
-						borderLeft: "var(--content-inset-left, 0px) solid transparent",
-						borderRight: "var(--content-inset-right, 0px) solid transparent",
-						backgroundOrigin: "border-box"
-					}
-				}
-			});
 
 			addComponents({
 				".focused": {

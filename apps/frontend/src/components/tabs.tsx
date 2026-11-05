@@ -32,7 +32,7 @@ export function Tabs<T extends string>({ tabs, value, onChange }: TabsProps<T>) 
 
 	return (
 		<div
-			className="focusable-within relative isolate grid h-11 w-full shrink-0 cursor-pointer auto-cols-[minmax(max-content,1fr)] grid-flow-col items-center overflow-x-auto rounded-xl bg-white-30 shadow-brand-1 vision:bg-white-30/70 dark:bg-black-60"
+			className="relative isolate grid h-11 w-full shrink-0 cursor-pointer auto-cols-[minmax(max-content,1fr)] grid-flow-col items-center overflow-x-auto rounded-xl bg-white-30 shadow-brand-1 focusable-within dark:bg-black-60 vision:bg-white-30/70"
 			role="tablist"
 			tabIndex={0}
 			onKeyDown={onKeyDown}
@@ -41,7 +41,7 @@ export function Tabs<T extends string>({ tabs, value, onChange }: TabsProps<T>) 
 				<button
 					key={id}
 					aria-selected={id === value}
-					className="relative flex h-full items-center justify-center rounded-xl px-4 focus:outline-none aria-selected:text-white-10 vision:text-black-80"
+					className="relative flex h-full items-center justify-center rounded-xl px-4 focus:outline-hidden aria-selected:text-white-10 vision:text-black-80"
 					data-tab={id}
 					role="tab"
 					tabIndex={-1}

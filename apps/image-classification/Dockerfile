@@ -45,8 +45,8 @@ FROM base AS build
 WORKDIR /repo
 
 ## Install node modules.
-ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
-RUN corepack enable pnpm
+COPY --from=ghcr.io/pnpm/pnpm:12.6.0@sha256:a7181e1d2a2e3ac5dad5a776a7e27360b0e24b59db4de8949569197e4d4036d1 /opt/pnpm /opt/pnpm
+RUN for bin in pnpm pn pnpx pnx; do ln -s "/opt/pnpm/$bin" "/usr/local/bin/$bin"; done
 
 COPY --link package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY --link patches ./patches

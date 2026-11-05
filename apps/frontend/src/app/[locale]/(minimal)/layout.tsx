@@ -12,7 +12,7 @@ export default function MinimalLayout() {
 	}, []);
 
 	return (
-		<div className="flex min-h-screen w-full grow flex-col items-center overflow-x-clip pl-[var(--content-inset-left)] pr-[var(--content-inset-right)] [--content-inset-left:var(--safe-area-inset-left,0px)] [--content-inset-right:var(--safe-area-inset-right,0px)] [--top-clearance-left:var(--content-inset-left)] [--top-clearance-right:var(--content-inset-right)] desktop:flex-col desktop:p-8">
+		<div className="flex min-h-screen w-full grow flex-col items-center overflow-x-clip pr-(--content-inset-right) pl-(--content-inset-left) [--content-inset-left:var(--safe-area-inset-left,0px)] [--content-inset-right:var(--safe-area-inset-right,0px)] [--top-clearance-left:var(--content-inset-left)] [--top-clearance-right:var(--content-inset-right)] desktop:flex-col desktop:p-8">
 			<RedirectBoundary>
 				<Outlet />
 			</RedirectBoundary>

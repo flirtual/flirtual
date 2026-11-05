@@ -122,7 +122,7 @@ export const VerificationForm: FC<VerificationFormProps> = ({ loginId, email, le
 									{Array.from({ length: 6 }, (_, index) => (
 										<OneTimePasswordField.Input
 											key={index}
-											className="focusable h-14 w-12 rounded-xl border-none bg-white-40 text-center font-nunito text-2xl font-bold text-black-80 shadow-brand-1 disabled:cursor-not-allowed disabled:opacity-50 vision:bg-white-40/70 dark:bg-black-60 dark:text-white-20"
+											className="h-14 w-12 rounded-xl border-none bg-white-40 text-center font-nunito text-2xl font-bold text-black-80 shadow-brand-1 focusable disabled:cursor-not-allowed disabled:opacity-50 dark:bg-black-60 dark:text-white-20 vision:bg-white-40/70"
 											ref={index === 0 ? firstInputReference : null}
 										/>
 									))}

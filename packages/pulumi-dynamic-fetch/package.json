@@ -14,6 +14,7 @@
 		"@flirtual/config": "workspace:*",
 		"@pulumi/pulumi": "catalog:pulumi",
 		"@types/node": "catalog:",
+		"@typescript/native": "catalog:",
 		"oxfmt": "catalog:",
 		"oxlint": "catalog:",
 		"typescript": "catalog:",

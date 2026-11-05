@@ -288,7 +288,7 @@ export const urls = {
 	socials: brand.socials,
 
 	apps: {
-		apple: `https://apps.apple.com/app/flirtual-vr-dating-app/id${appStoreId}`,
+		apple: appStoreId && `https://apps.apple.com/app/${appStoreId}`,
 		google: `https://play.google.com/store/apps/details?id=${appBundleId}`,
 		microsoft: brand.stores.microsoft,
 		sideQuest: brand.stores.sideQuest

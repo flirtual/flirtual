@@ -10,6 +10,7 @@ import {
 } from "~/components/icons";
 import type { IconComponent } from "~/components/icons";
 import { freshworksWidgetId, version } from "~/const";
+import { events, news, press } from "~/features";
 import { useDialog } from "~/hooks/use-dialog";
 import type { Theme } from "~/hooks/use-theme";
 import { urls } from "~/urls";
@@ -40,7 +41,7 @@ export const FooterListIconLink: React.FC<FooterListIconLinkProps> = ({
 	...props
 }) => {
 	const icon = (
-		<Icon className={twMerge("h-[1.125rem] w-auto desktop:h-6", className)} />
+		<Icon className={twMerge("h-4.5 w-auto desktop:h-6", className)} />
 	);
 
 	if ("href" in props && !props.href) return null;
@@ -48,7 +49,7 @@ export const FooterListIconLink: React.FC<FooterListIconLinkProps> = ({
 	return "href" in props
 		? (
 				<a
-					className="touch-callout-default cursor-pointer hover:brightness-90"
+					className="cursor-pointer touch-callout-default hover:brightness-90"
 					href={props.href!}
 				>
 					{icon}
@@ -76,7 +77,7 @@ export const FooterListLink: React.FC<FooterListLinkProps> = ({ label, ...props 
 				{"href" in props
 					? (
 							<Link
-								className="hover:underline data-[active]:font-bold hover:data-[active]:no-underline"
+								className="hover:underline data-active:font-bold hover:data-active:no-underline"
 								href={props.href}
 							>
 								{label}
@@ -120,7 +121,7 @@ export const Footer: React.FC<FooterProps> = ({
 				props.className
 			)}
 		>
-			<div className="flex w-full max-w-screen-wide flex-col gap-4 desktop:gap-8">
+			<div className="flex w-full max-w-wide flex-col gap-4 desktop:gap-8">
 				<div className="flex justify-between gap-8">
 					<div className="flex items-center gap-8">
 						<Link href={urls.landing}>
@@ -148,9 +149,9 @@ export const Footer: React.FC<FooterProps> = ({
 						<InlineLanguageSelect />
 					</div>
 				</div>
-				<div className="grid max-w-screen-desktop grid-cols-3 gap-x-4 desktop:justify-center">
+				<div className="grid max-w-desktop grid-cols-3 gap-x-4 desktop:justify-center">
 					<ul>
-						<FooterListLink href={urls.resources.events} label={t("events")} />
+						{events && <FooterListLink href={urls.resources.events} label={t("events")} />}
 						{freshworksWidgetId && <FooterSupportLink />}
 						{urls.socials.discord && (
 							<FooterListLink
@@ -161,14 +162,16 @@ export const Footer: React.FC<FooterProps> = ({
 								}}
 							/>
 						)}
-						<FooterListLink
-							href={urls.news}
-							label={t("updates")}
-						/>
+						{news && (
+							<FooterListLink
+								href={urls.news}
+								label={t("updates")}
+							/>
+						)}
 					</ul>
 					<ul>
 						<FooterListLink href={urls.resources.about} label={t("about")} />
-						<FooterListLink href={urls.resources.press} label={t("press")} />
+						{press && <FooterListLink href={urls.resources.press} label={t("press")} />}
 						<FooterListLink
 							href={urls.resources.branding}
 							label={t("branding")}

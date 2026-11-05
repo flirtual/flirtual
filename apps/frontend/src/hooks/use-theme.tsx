@@ -14,6 +14,8 @@ export type ThemeStyle = "default" | "friend";
 
 declare global {
 	// eslint-disable-next-line vars-on-top
+	var localTheme: LocalTheme | undefined;
+	// eslint-disable-next-line vars-on-top
 	var theme: Theme;
 	// eslint-disable-next-line vars-on-top
 	var themeStyle: ThemeStyle;
@@ -31,7 +33,7 @@ export async function getTheme(): Promise<Theme> {
 }
 
 export function useTheme() {
-	const [localTheme, setLocalTheme] = usePreferences<PreferenceTheme>("theme", "system");
+	const [localTheme, setLocalTheme] = usePreferences<PreferenceTheme>("theme", globalThis.localTheme ?? "system");
 
 	// const session = useOptionalSession();
 	// const sessionTheme = session?.user.preferences?.theme;

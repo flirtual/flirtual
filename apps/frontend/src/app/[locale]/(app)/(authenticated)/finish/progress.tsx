@@ -51,7 +51,7 @@ export const FinishProgress: React.FC<{ page: FinishPage }> = ({ page }) => {
 	};
 
 	return (
-		<div className="fixed bottom-[max(calc(var(--safe-area-inset-bottom,0rem)+4.5rem),5.25rem)] left-[var(--content-inset-left,0rem)] right-[var(--content-inset-right,0rem)] isolate z-10 flex h-7 px-4 vision:bottom-3 vision:mx-4 vision:w-[calc(100%-2rem)] native-nav:bottom-[max(calc(var(--safe-area-inset-bottom,0rem)+0.5rem),0.75rem)] desktop:relative desktop:inset-0 desktop:mb-8 desktop:h-9 desktop:w-full desktop:max-w-2xl">
+		<div className="fixed right-(--content-inset-right,0rem) bottom-[max(calc(var(--safe-area-inset-bottom,0rem)+4.5rem),5.25rem)] left-(--content-inset-left,0rem) isolate z-10 flex h-7 px-4 vision:bottom-3 vision:mx-4 vision:w-[calc(100%-2rem)] native-nav:bottom-[max(calc(var(--safe-area-inset-bottom,0rem)+0.5rem),0.75rem)] desktop:relative desktop:inset-0 desktop:mb-8 desktop:h-9 desktop:w-full desktop:max-w-2xl">
 			<div className="absolute inset-0 -right-4 left-4 desktop:max-w-2xl">
 				<div
 					className={twMerge(
@@ -70,7 +70,7 @@ export const FinishProgress: React.FC<{ page: FinishPage }> = ({ page }) => {
 				</div>
 			</div>
 			<div
-				className="grid h-6 w-full grid-cols-3 items-center justify-center rounded-full bg-white-30 shadow-brand-1 vision:bg-white-30/70 dark:bg-black-60 desktop:h-9 desktop:max-w-2xl desktop:grid-cols-[repeat(var(--finish-steps),minmax(0,1fr))]"
+				className="grid h-6 w-full grid-cols-3 items-center justify-center rounded-full bg-white-30 shadow-brand-1 dark:bg-black-60 vision:bg-white-30/70 desktop:h-9 desktop:max-w-2xl desktop:grid-cols-[repeat(var(--finish-steps),minmax(0,1fr))]"
 				style={{ "--finish-steps": finishStepCount } as CSSProperties}
 			>
 				{finishSteps.map((step, index) => (

@@ -312,12 +312,12 @@ export const LoginForm: FC = () => {
 						</>
 					)}
 				</Form>
-				<div className="order-first flex flex-col gap-2 desktop:order-none">
-					<div className="order-last mb-2 mt-8 inline-flex items-center justify-center desktop:order-first desktop:mb-8 desktop:mt-2">
-						<span className="absolute left-1/2 mb-1 -translate-x-1/2 bg-white-20 px-3 font-montserrat font-semibold text-black-50 vision:bg-transparent vision:text-white-50 dark:bg-black-70 dark:text-white-50">
+				<div className="order-first flex flex-col gap-2 desktop:order-0">
+					<div className="order-last mt-8 mb-2 inline-flex items-center justify-center desktop:order-first desktop:mt-2 desktop:mb-8">
+						<span className="absolute left-1/2 mb-1 -translate-x-1/2 bg-white-20 px-3 font-montserrat font-semibold text-black-50 dark:bg-black-70 dark:text-white-50 vision:bg-transparent vision:text-white-50">
 							{t("or")}
 						</span>
-						<hr className="h-px w-full border-0 bg-white-40 vision:bg-transparent dark:bg-black-60" />
+						<hr className="h-px w-full border-0 bg-white-40 dark:bg-black-60 vision:bg-transparent" />
 					</div>
 					<LoginConnectionButton tabIndex={6} type={primaryConnectionType} />
 					{secondaryConnectionTypes.length > 0 && (

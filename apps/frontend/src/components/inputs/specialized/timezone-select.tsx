@@ -37,7 +37,7 @@ const TimezoneSelectItem: FC<{ value: string }> = ({ value: timezoneId }) => {
 
 	return (
 		<SelectItem
-			className="truncate hocus:outline-none"
+			className="truncate hocus:outline-hidden"
 			value={timezoneId}
 		>
 			<span className="w-24 shrink-0 text-right">

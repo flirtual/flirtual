@@ -24,16 +24,15 @@
 		// "useDefineForClassFields": true,                  /* Emit ECMAScript-standard-compliant class fields. */
 		// "moduleDetection": "auto",                        /* Control what method is used to detect module-format JS files. */
 		/* Modules */
-		"module": "commonjs", /* Specify what module code is generated. */ // "rootDir": "./",                                  /* Specify the root folder within your source files. */
-		"moduleResolution": "node", /* Specify how TypeScript looks up a file from a given module specifier. */
+		"module": "nodenext", /* Specify what module code is generated. */
+		"moduleResolution": "nodenext", /* Specify how TypeScript looks up a file from a given module specifier. */
 		"resolveJsonModule": true,
 		"strict": true, /* Enable all strict type-checking options. */ // "noImplicitAny": true,                            /* Enable error reporting for expressions and declarations with an implied 'any' type. */
-		"downlevelIteration": true, /* Emit more compliant, but verbose and less performant JavaScript for iteration. */
 		// "removeComments": true,                           /* Disable emitting comments. */
 		// "noEmit": true,                                   /* Disable emitting files from a compilation. */
 		"importHelpers": true, /* Allow importing helper functions from tslib once per project, instead of including them per-file. */
-		"importsNotUsedAsValues": "remove", /* Specify emit/checking behavior for imports that are only used for types. */
 		// "outFile": "./",                                  /* Specify a file that bundles all outputs into one JavaScript file. If 'declaration' is true, also designates a file that bundles all .d.ts output. */
+		"rootDir": "./src", /* Specify the root folder within your source files. */
 		"outDir": "./dist", /* Specify an output folder for all emitted files. */
 		// "typeRoots": [],                                  /* Specify multiple folders that act like './node_modules/@types'. */
 		// "types": [],                                      /* Specify type package names to be included without being referenced in a source file. */
