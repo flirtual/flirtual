@@ -15,6 +15,7 @@
 		"test": "vitest run --passWithNoTests"
 	},
 	"devDependencies": {
+		"@typescript/native": "catalog:",
 		"oxfmt": "catalog:",
 		"oxlint": "catalog:",
 		"typescript": "catalog:",

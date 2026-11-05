@@ -145,6 +145,7 @@
 		"@types/react": "19.3.0",
 		"@types/react-dom": "19.3.0",
 		"@types/sanitize-html": "2.16.2",
+		"@typescript/native": "catalog:",
 		"cf": "catalog:",
 		"eslint": "catalog:",
 		"eslint-plugin-react-hooks": "5.2.0",
