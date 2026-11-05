@@ -1,6 +1,10 @@
 import * as brand from "~/brand";
 import { appBundleId, siteOrigin } from "~/const";
 import { homieMode } from "~/features";
+import IconMaskable192 from "~/static/icon-background.svg?w=192&h=192&format=png&imagetools";
+import IconMaskable512 from "~/static/icon-background.svg?w=512&h=512&format=png&imagetools";
+import Icon192 from "~/static/icon-color.svg?w=192&h=192&fit=contain&background=transparent&format=png&imagetools";
+import Icon512 from "~/static/icon-color.svg?w=512&h=512&fit=contain&background=transparent&format=png&imagetools";
 import ScreenshotInterests from "~/static/manifest/screenshots/interests.png";
 import ScreenshotMatches from "~/static/manifest/screenshots/matches.png";
 import ScreenshotMeetInVr from "~/static/manifest/screenshots/meet-in-vr.png";
@@ -15,10 +19,6 @@ import ShortcutProfile256 from "~/static/manifest/shortcuts/profile.png";
 import ShortcutProfile96 from "~/static/manifest/shortcuts/profile.png?w=96&h=96&imagetools";
 import ShortcutSettings256 from "~/static/manifest/shortcuts/settings.png";
 import ShortcutSettings96 from "~/static/manifest/shortcuts/settings.png?w=96&h=96&imagetools";
-import IconMaskable192 from "~/static/mark-on-gradient.svg?w=192&h=192&format=png&imagetools";
-import IconMaskable512 from "~/static/mark-on-gradient.svg?w=512&h=512&format=png&imagetools";
-import Icon192 from "~/static/mark.svg?w=192&h=192&fit=contain&background=transparent&format=png&imagetools";
-import Icon512 from "~/static/mark.svg?w=512&h=512&fit=contain&background=transparent&format=png&imagetools";
 import { urls } from "~/urls";
 
 export function loader() {

@@ -1,9 +1,22 @@
 import { homieMode } from "~/features";
-import Favicon from "~/static/mark.svg?w=48&h=48&fit=contain&background=transparent&format=png&no-inline&imagetools";
+import Favicon from "~/static/icon-color.svg?w=48&h=48&fit=contain&background=transparent&format=png&no-inline&imagetools";
 import { urls } from "~/urls";
 
 // A brand without a BIMI logo leaves out static/bimi.svg.
 const [bimi] = Object.values(import.meta.glob<string>("~/static/bimi.svg", { eager: true, import: "default" }));
+
+const brandImagesByWidth = {
+	128: import.meta.glob<string>("~/static/{logo,icon}-*.svg", { eager: true, import: "default", query: "?w=128&format=png&no-inline&imagetools" }),
+	256: import.meta.glob<string>("~/static/{logo,icon}-*.svg", { eager: true, import: "default", query: "?w=256&format=png&no-inline&imagetools" }),
+	512: import.meta.glob<string>("~/static/{logo,icon}-*.svg", { eager: true, import: "default", query: "?w=512&format=png&no-inline&imagetools" }),
+	1024: import.meta.glob<string>("~/static/{logo,icon}-*.svg", { eager: true, import: "default", query: "?w=1024&format=png&no-inline&imagetools" })
+};
+
+const brandImageRedirects = Object.entries(brandImagesByWidth).flatMap(([width, images]) =>
+	Object.entries(images).map(([path, png]) => ({
+		source: `/${path.slice(path.lastIndexOf("/") + 1, -".svg".length)}-${width}x.png`,
+		destination: png
+	})));
 
 // see: https://developers.cloudflare.com/workers/static-assets/redirects/
 
@@ -111,6 +124,7 @@ export const redirects = [
 		destination: Favicon
 	},
 	...(bimi ? [{ source: "/bimi.svg", destination: bimi }] : []),
+	...brandImageRedirects,
 	{
 		source: "/reports",
 		destination: "/mod"

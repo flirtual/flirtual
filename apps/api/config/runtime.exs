@@ -135,8 +135,6 @@ config :flirtual, :brand,
   date_colors: brand_colors.("BRAND_DATE_COLORS", {"#ff8975", "#e9658b"}),
   date_dark_colors: brand_colors.("BRAND_DATE_DARK_COLORS", {"#b24592", "#e9658b"}),
   background_color: Env.get("BRAND_BACKGROUND_COLOR", default: "#fffaf0"),
-  logo_light_url: Env.get("BRAND_LOGO_LIGHT_URL"),
-  logo_dark_url: Env.get("BRAND_LOGO_DARK_URL"),
   support_origin: Env.get("BRAND_SUPPORT_ORIGIN"),
   socials: %{
     discord: Env.get("BRAND_SOCIAL_DISCORD"),

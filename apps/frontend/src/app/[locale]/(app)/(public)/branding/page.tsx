@@ -9,20 +9,20 @@ import { homieMode } from "~/features";
 import { i18n } from "~/i18n";
 import { isLocale } from "~/i18n/languages";
 import { metaMerge, rootMeta } from "~/meta";
-import LogoOnDarkSVG from "~/static/logo-on-dark.svg";
-import LogoOnDarkPNG from "~/static/logo-on-dark.svg?w=3468&format=png&quality=100&imagetools";
-import LogoOnGradientSVG from "~/static/logo-on-gradient.svg";
-import LogoOnGradientPNG from "~/static/logo-on-gradient.svg?w=3468&format=png&quality=100&imagetools";
-import LogoOnLightSVG from "~/static/logo-on-light.svg";
-import LogoOnLightPNG from "~/static/logo-on-light.svg?w=3468&format=png&quality=100&imagetools";
-import MarkBlackSVG from "~/static/mark-black.svg";
-import MarkBlackPNG from "~/static/mark-black.svg?w=1000&format=png&quality=100&imagetools";
-import MarkOnGradientSVG from "~/static/mark-on-gradient.svg";
-import MarkOnGradientPNG from "~/static/mark-on-gradient.svg?w=1000&format=png&quality=100&imagetools";
-import MarkWhiteSVG from "~/static/mark-white.svg";
-import MarkWhitePNG from "~/static/mark-white.svg?w=1000&format=png&quality=100&imagetools";
-import MarkSVG from "~/static/mark.svg";
-import MarkPNG from "~/static/mark.svg?w=1000&format=png&quality=100&imagetools";
+import IconBackgroundSVG from "~/static/icon-background.svg";
+import IconBackgroundPNG from "~/static/icon-background.svg?w=1000&format=png&quality=100&imagetools";
+import IconColorSVG from "~/static/icon-color.svg";
+import IconColorPNG from "~/static/icon-color.svg?w=1000&format=png&quality=100&imagetools";
+import IconDarkSVG from "~/static/icon-dark.svg";
+import IconDarkPNG from "~/static/icon-dark.svg?w=1000&format=png&quality=100&imagetools";
+import IconLightSVG from "~/static/icon-light.svg";
+import IconLightPNG from "~/static/icon-light.svg?w=1000&format=png&quality=100&imagetools";
+import LogoBackgroundSVG from "~/static/logo-background.svg";
+import LogoBackgroundPNG from "~/static/logo-background.svg?w=3468&format=png&quality=100&imagetools";
+import LogoDarkSVG from "~/static/logo-dark.svg";
+import LogoDarkPNG from "~/static/logo-dark.svg?w=3468&format=png&quality=100&imagetools";
+import LogoLightSVG from "~/static/logo-light.svg";
+import LogoLightPNG from "~/static/logo-light.svg?w=3468&format=png&quality=100&imagetools";
 import { urls } from "~/urls";
 
 import type { Route } from "./+types/page";
@@ -75,25 +75,25 @@ export default function BrandingPage() {
 				<ImageList
 					items={[
 						{
-							name: "logo-on-gradient",
+							name: "logo-background",
 							sources: {
-								png: LogoOnGradientPNG,
-								svg: LogoOnGradientSVG,
+								png: LogoBackgroundPNG,
+								svg: LogoBackgroundSVG,
 							}
 						},
 						{
-							name: "logo-on-dark",
+							name: "logo-light",
 							dark: true,
 							sources: {
-								png: LogoOnDarkPNG,
-								svg: LogoOnDarkSVG,
+								png: LogoLightPNG,
+								svg: LogoLightSVG,
 							}
 						},
 						{
-							name: "logo-on-light",
+							name: "logo-dark",
 							sources: {
-								png: LogoOnLightPNG,
-								svg: LogoOnLightSVG,
+								png: LogoDarkPNG,
+								svg: LogoDarkSVG,
 							}
 						},
 					]}
@@ -107,32 +107,32 @@ export default function BrandingPage() {
 				<ImageList
 					items={[
 						{
-							name: "mark-on-gradient",
+							name: "icon-background",
 							sources: {
-								png: MarkOnGradientPNG,
-								svg: MarkOnGradientSVG,
+								png: IconBackgroundPNG,
+								svg: IconBackgroundSVG,
 							}
 						},
 						{
-							name: "mark",
+							name: "icon-color",
 							sources: {
-								png: MarkPNG,
-								svg: MarkSVG,
+								png: IconColorPNG,
+								svg: IconColorSVG,
 							}
 						},
 						{
-							name: "mark-white",
+							name: "icon-light",
 							dark: true,
 							sources: {
-								png: MarkWhitePNG,
-								svg: MarkWhiteSVG,
+								png: IconLightPNG,
+								svg: IconLightSVG,
 							}
 						},
 						{
-							name: "mark-black",
+							name: "icon-dark",
 							sources: {
-								png: MarkBlackPNG,
-								svg: MarkBlackSVG,
+								png: IconDarkPNG,
+								svg: IconDarkSVG,
 							}
 						}
 					]}

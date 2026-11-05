@@ -26,7 +26,7 @@ import { useClickOutside } from "~/hooks/use-click-outside";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
 import { revokeImpersonate, useSession } from "~/hooks/use-session";
 import { useMatch } from "~/i18n";
-import MarkWhiteSVG from "~/static/mark-white.svg";
+import IconLightSVG from "~/static/icon-light.svg";
 import { urls } from "~/urls";
 
 type ProfileNavigationItemProps = React.PropsWithChildren<
@@ -109,7 +109,7 @@ export const NavigationItemProfile: FC = () => {
 								<img
 									alt={t("avatar_alt", { name: user.profile.displayName || t("unnamed_user") })}
 									className="relative size-full object-contain"
-									src={MarkWhiteSVG}
+									src={IconLightSVG}
 								/>
 							</span>
 						)

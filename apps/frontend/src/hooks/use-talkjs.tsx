@@ -35,7 +35,7 @@ import EmojiRose from "~/static/emoji/rose.png";
 import EmojiThink from "~/static/emoji/think.png";
 import EmojiThumbsup from "~/static/emoji/thumbsup.png";
 import EmojiYonk from "~/static/emoji/yonk.png";
-import EmojiFlirtual from "~/static/mark.svg?w=64&h=64&fit=contain&background=transparent&imagetools";
+import EmojiFlirtual from "~/static/icon-color.svg?w=64&h=64&fit=contain&background=transparent&imagetools";
 import EmojiDeveloper from "~/static/mascot-hardhat.png?w=64&h=64&fit=contain&background=transparent&imagetools";
 import { absoluteUrl } from "~/urls";
 import { emptyArray } from "~/utilities";

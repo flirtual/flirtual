@@ -49,19 +49,10 @@ defmodule Flirtual.Mailer do
   end
 
   defp html_logo do
-    case {Brand.logo_dark_url(), Brand.logo_light_url()} do
-      {dark, light} when is_binary(dark) and is_binary(light) ->
-        """
-        <img style="max-height: 48px" class="dark-only" src="#{dark}" alt="#{company()}" />
-        <img style="max-height: 48px" class="light-only" src="#{light}" alt="#{company()}" />
-        """
-
-      {dark, light} when is_binary(dark) or is_binary(light) ->
-        ~s(<img style="max-height: 48px" src="#{dark || light}" alt="#{company()}" />)
-
-      _ ->
-        ~s(<span style="font-family: 'Montserrat', sans-serif; font-size: 32px; font-weight: 700">#{company()}</span>)
-    end
+    """
+    <img style="max-height: 48px" class="dark-only" src="#{Brand.logo_light_url()}" alt="#{company()}" />
+    <img style="max-height: 48px" class="light-only" src="#{Brand.logo_dark_url()}" alt="#{company()}" />
+    """
   end
 
   defp html_socials do

@@ -6,7 +6,7 @@ import { twMerge } from "tailwind-merge";
 
 import type { User } from "~/api/user";
 import { blurHashToDataUrl } from "~/blurhash";
-import MarkWhiteSVG from "~/static/mark-white.svg";
+import IconLightSVG from "~/static/icon-light.svg";
 import { urls } from "~/urls";
 
 import { Image } from "./image";
@@ -87,7 +87,7 @@ export const UserImage: React.FC<UserImageProps> = ({ src, blurHash, ...props })
 				viewBox="0 0 1 1"
 				width={props.width}
 			>
-				{!placeholder && <image height="0.7" href={MarkWhiteSVG} width="0.7" x="0.15" y="0.15" />}
+				{!placeholder && <image height="0.7" href={IconLightSVG} width="0.7" x="0.15" y="0.15" />}
 			</svg>
 		);
 	}
