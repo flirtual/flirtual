@@ -239,7 +239,7 @@ catalogs:
       version: 3.273.0
     '@pulumi/random':
       specifier: ^4.21.0
-      version: 4.21.4
+      version: 4.21.6
     '@pulumi/tls':
       specifier: ^5.6.1
       version: 5.6.3
@@ -1162,7 +1162,7 @@ importers:
         version: 3.273.0(@typescript/typescript6@6.0.2)(supports-color@10.2.2)
       '@pulumi/random':
         specifier: catalog:pulumi
-        version: 4.21.4(@typescript/typescript6@6.0.2)(supports-color@10.2.2)
+        version: 4.21.6(@typescript/typescript6@6.0.2)(supports-color@10.2.2)
       '@pulumi/sentry':
         specifier: file:sdks/sentry
         version: file:pulumi/sdks/sentry(supports-color@10.2.2)
@@ -4062,8 +4062,8 @@ packages:
       typescript:
         optional: true
 
-  '@pulumi/random@4.21.4':
-    resolution: {integrity: sha512-CKWWZDfIZxdIB8/Xax5IqqGQNyPEdT8TFwJwooK4saU6kU0ozdmrySZ9jt8U1thlYIQTaYitP9EeMBnPbVK+1g==}
+  '@pulumi/random@4.21.6':
+    resolution: {integrity: sha512-HsWUATAcKxceBcvNzPIdkC7sXyWWiGZmd/y4eZKF5nSAwCgpOPReZ+LLFbkl2bvKGHc3nNX5vIM84YU2dpSD1Q==}
 
   '@pulumi/sentry@file:pulumi/sdks/sentry':
     resolution: {directory: pulumi/sdks/sentry, type: directory}
@@ -12294,7 +12294,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@pulumi/random@4.21.4(@typescript/typescript6@6.0.2)(supports-color@10.2.2)':
+  '@pulumi/random@4.21.6(@typescript/typescript6@6.0.2)(supports-color@10.2.2)':
     dependencies:
       '@pulumi/pulumi': 3.273.0(@typescript/typescript6@6.0.2)(supports-color@10.2.2)
     transitivePeerDependencies:
