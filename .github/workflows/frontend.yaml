@@ -50,6 +50,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
+      - name: Remove the uninitialised pulumi submodule directory
+        # pnpm/pnpm#17712: a frozen install rejects a workspace project whose directory is empty.
+        working-directory: .
+        run: rmdir pulumi
+
       - name: Register ESLint annotations
         run: echo "::add-matcher::.github/annotation-eslint.json"
 
@@ -69,6 +74,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: Remove the uninitialised pulumi submodule directory
+        # pnpm/pnpm#17712: a frozen install rejects a workspace project whose directory is empty.
+        run: rmdir pulumi
 
       - name: Install pnpm and Node.js
         uses: pnpm/setup@fa36a5ef7dcdefc3a7cb25655c122e00cf6e636e # v3.1.2
@@ -95,6 +104,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: Remove the uninitialised pulumi submodule directory
+        # pnpm/pnpm#17712: a frozen install rejects a workspace project whose directory is empty.
+        working-directory: .
+        run: rmdir pulumi
 
       - name: Forward VITE_* repository variables
         env:
@@ -143,6 +157,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: Remove the uninitialised pulumi submodule directory
+        # pnpm/pnpm#17712: a frozen install rejects a workspace project whose directory is empty.
+        working-directory: .
+        run: rmdir pulumi
 
       - name: Forward VITE_* repository variables
         env:

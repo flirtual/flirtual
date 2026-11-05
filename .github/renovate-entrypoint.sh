@@ -9,6 +9,6 @@ install-tool elixir 1.20.4
 # renovate: datasource=node-version depName=node
 install-tool node 24.22.1
 # renovate: datasource=npm depName=pnpm
-install-tool pnpm 12.6.0
+install-tool pnpm 12.16.1
 
 runuser -u ubuntu renovate
