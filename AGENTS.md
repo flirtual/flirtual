@@ -34,7 +34,9 @@ only in the root `package.json`.
 
 - `packages/` holds libraries used by other members: `packages/pulumi-fly` and
   `packages/pulumi-listmonk` are the Fly.io and Listmonk dynamic providers behind the `pulumi`
-  submodule. CI doesn't check out the submodule, and a frozen install skips it.
+  submodule. CI doesn't check out the submodule, and a frozen install skips it once its empty
+  directory is removed; every job that installs the whole workspace runs `rmdir pulumi` first
+  until pnpm/pnpm#17712 is fixed.
 
 - Versions shared by more than one app (`typescript`, `eslint`, `wrangler`, `vitest`, …) live in
   the root `catalog:` and are referenced as `"typescript": "catalog:"`. Bump them there, not in the
