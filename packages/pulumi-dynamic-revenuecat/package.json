@@ -20,7 +20,7 @@
 		"@pulumi/pulumi": "catalog:pulumi",
 		"@types/node": "catalog:",
 		"@typescript/native": "catalog:",
-		"marked": "18.1.2",
+		"marked": "18.1.3",
 		"oxfmt": "catalog:",
 		"oxlint": "catalog:",
 		"typed-openapi": "catalog:",
