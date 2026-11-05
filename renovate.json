@@ -1,6 +1,6 @@
 {
 	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
-	"extends": ["config:best-practices"],
+	"extends": ["config:best-practices", "customManagers:dockerfileVersions"],
 	"timezone": "America/New_York",
 	"rebaseWhen": "conflicted",
 	"cloneSubmodules": true,
