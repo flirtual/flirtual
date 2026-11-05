@@ -44,7 +44,6 @@ export const sentryReportTo = import.meta.env.VITE_SENTRY_REPORT_TO as string | 
 export const sentryTraces = Number.parseFloat(
 	import.meta.env.VITE_SENTRY_TRACES as string || (production ? "0.1" : "0")
 );
-export const sentryLogs = (import.meta.env.VITE_SENTRY_LOGS as string || (production ? "1" : "0")) === "1";
 export const sentryProfiles = Number.parseFloat(
 	import.meta.env.VITE_SENTRY_PROFILES as string || (production ? "1" : "0")
 );

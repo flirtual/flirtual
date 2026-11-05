@@ -45,8 +45,10 @@ FROM base AS build
 WORKDIR /repo
 
 ## Install node modules.
+# renovate: datasource=npm depName=corepack
+ARG COREPACK_VERSION=0.36.0
 ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
-RUN corepack enable pnpm
+RUN npm install --global corepack@${COREPACK_VERSION} && corepack enable pnpm
 
 COPY --link package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY --link patches ./patches
