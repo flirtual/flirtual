@@ -1,6 +1,6 @@
 {
 	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
-	"extends": ["config:best-practices", "customManagers:dockerfileVersions"],
+	"extends": ["config:best-practices"],
 	"timezone": "America/New_York",
 	"rebaseWhen": "conflicted",
 	"cloneSubmodules": true,
@@ -200,7 +200,7 @@
 			"groupName": "listmonk"
 		},
 		{
-			"matchPackageNames": ["pnpm"],
+			"matchPackageNames": ["pnpm", "ghcr.io/pnpm/pnpm"],
 			"groupName": "pnpm"
 		},
 		{
