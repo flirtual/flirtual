@@ -2,7 +2,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { hostname as osHostname } from "node:os";
 
 import { reactRouter } from "@react-router/dev/vite";
-import { sentryReactRouter } from "@sentry/react-router";
+import { sentryReactRouter } from "@sentry/react-router/vite";
 import tailwindcss from "@tailwindcss/vite";
 import basicSsl from "@vitejs/plugin-basic-ssl";
 import sonda from "sonda/vite";
@@ -153,7 +153,7 @@ export default defineConfig((config) => {
 				project: sentryProjectId,
 				authToken: sentryAuthToken,
 				telemetry: false,
-				sourceMapsUploadOptions: {
+				sourcemaps: {
 					filesToDeleteAfterUpload: [
 						"**/*.data"
 					]
