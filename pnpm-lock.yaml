@@ -386,7 +386,7 @@ importers:
         version: 1.6.3(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@posthog/react':
         specifier: ^1.10.3
-        version: 1.11.3(@types/react@19.3.0)(posthog-js@1.444.4(@types/react@19.3.0)(react@19.3.1))(react@19.3.1)
+        version: 1.11.3(@types/react@19.3.0)(posthog-js@1.445.0(@types/react@19.3.0)(react@19.3.1))(react@19.3.1)
       '@radix-ui/react-alert-dialog':
         specifier: ^1.1.19
         version: 1.1.23(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
@@ -536,7 +536,7 @@ importers:
         version: 3.0.0
       posthog-js:
         specifier: ^1.413.3
-        version: 1.444.4(@types/react@19.3.0)(react@19.3.1)
+        version: 1.445.0(@types/react@19.3.0)(react@19.3.1)
       react:
         specifier: 19.3.1
         version: 19.3.1
@@ -2147,9 +2147,6 @@ packages:
   '@formatjs/bigdecimal@0.2.10':
     resolution: {integrity: sha512-npIs6UARNOg5amJY5UOVsd6HUQQfzYjet0sa0SWIqzsnVhxLSpaIx2DjoIVrr/vqmjURjvroeW6dItjfy3Uf8A==}
 
-  '@formatjs/bigdecimal@0.2.7':
-    resolution: {integrity: sha512-B4+XY/e4u5v261r3a37Kq2ax91gPZSKGyVpx8X5dygAggLlUz+6MeBpmAhaBFGB8WQ4JB1qD+QtKHk9aJkEb9Q==}
-
   '@formatjs/fast-memoize@3.1.7':
     resolution: {integrity: sha512-zXfhLpvA6T7+efdt9JLbBwZ00tT7NsBMDVnDu8rpHeNNv8KfRZAMo2gkG0k9lK/Nzc//3kJ9pImsfuJxk3KhUA==}
 
@@ -2179,9 +2176,6 @@ packages:
 
   '@formatjs/intl-locale@5.4.2':
     resolution: {integrity: sha512-2upVZtpzktEkLMffAk14T2HB62B7ytqrlppZuVX4StnbOHNc4qx5ovimMMMn8mkqvAwFlPX+UZygetny+quqIQ==}
-
-  '@formatjs/intl-localematcher@0.10.0':
-    resolution: {integrity: sha512-OvfBelurObm02D1+4BsuHSt3Xkn49RZPo7uJXt/1Z0dNET3EN39kY1rKMV3kG0tn0p4gyGWrcFx9HyeF07cq5g==}
 
   '@formatjs/intl-localematcher@0.10.1':
     resolution: {integrity: sha512-gBqglQK9rXuHsLmM8wzTMBy4Xo4d0jamirIVKuEL8F1rwbskWdpMA1kZarSkny+uvr5q/K6GSzE0Rcq1wZLl3g==}
@@ -8033,8 +8027,8 @@ packages:
     resolution: {integrity: sha512-LJlKCCAUFKOuZxipUdYw1NzIITEsPcgyOG9LkvRJvuKj/bRzbuRY0ARXvL0pWGpsZvn8jku+LMep2eU0seHp8g==}
     engines: {node: ^10 || ^12 || >=14}
 
-  posthog-js@1.444.4:
-    resolution: {integrity: sha512-oZgy3ETGhygPewB+UNbdu9htO0u2b3EmTdGSdyc+jCpFyuhOW+Yd+3ZccifkhwouUchMAk1ps9R3vZd1iCB/wA==}
+  posthog-js@1.445.0:
+    resolution: {integrity: sha512-yGROp65trzMLv1EcjEuw79lI1sl94P5/3xpzURbHJyXvh3CHJ/h9j4jjtiJo7depNbnT38HbN8nda21MULmqmw==}
     peerDependencies:
       '@types/react': '>=16.8.0'
       react: '>=16.8.0'
@@ -10492,8 +10486,6 @@ snapshots:
 
   '@formatjs/bigdecimal@0.2.10': {}
 
-  '@formatjs/bigdecimal@0.2.7': {}
-
   '@formatjs/fast-memoize@3.1.7': {}
 
   '@formatjs/icu-messageformat-parser@3.5.16':
@@ -10527,10 +10519,6 @@ snapshots:
     dependencies:
       '@formatjs/intl-getcanonicallocales': 3.3.0
       '@formatjs/intl-supportedvaluesof': 3.0.0
-
-  '@formatjs/intl-localematcher@0.10.0':
-    dependencies:
-      '@formatjs/fast-memoize': 3.1.7
 
   '@formatjs/intl-localematcher@0.10.1':
     dependencies:
@@ -11699,9 +11687,9 @@ snapshots:
     dependencies:
       '@posthog/types': 1.419.0
 
-  '@posthog/react@1.11.3(@types/react@19.3.0)(posthog-js@1.444.4(@types/react@19.3.0)(react@19.3.1))(react@19.3.1)':
+  '@posthog/react@1.11.3(@types/react@19.3.0)(posthog-js@1.445.0(@types/react@19.3.0)(react@19.3.1))(react@19.3.1)':
     dependencies:
-      posthog-js: 1.444.4(@types/react@19.3.0)(react@19.3.1)
+      posthog-js: 1.445.0(@types/react@19.3.0)(react@19.3.1)
       react: 19.3.1
     optionalDependencies:
       '@types/react': 19.3.0
@@ -16704,7 +16692,7 @@ snapshots:
       picocolors: 1.1.1
       source-map-js: 1.2.2
 
-  posthog-js@1.444.4(@types/react@19.3.0)(react@19.3.1):
+  posthog-js@1.445.0(@types/react@19.3.0)(react@19.3.1):
     dependencies:
       '@posthog/browser-common': 0.10.4
       '@posthog/core': 1.62.1
