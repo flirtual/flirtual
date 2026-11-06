@@ -373,8 +373,8 @@ importers:
         specifier: ^9.3.13
         version: 9.5.0
       '@formatjs/intl-pluralrules':
-        specifier: ^6.3.12
-        version: 6.4.0
+        specifier: ^7.0.0
+        version: 7.0.0
       '@formatjs/intl-relativetimeformat':
         specifier: ^12.3.12
         version: 12.4.0
@@ -2187,6 +2187,9 @@ packages:
   '@formatjs/bigdecimal@0.2.7':
     resolution: {integrity: sha512-B4+XY/e4u5v261r3a37Kq2ax91gPZSKGyVpx8X5dygAggLlUz+6MeBpmAhaBFGB8WQ4JB1qD+QtKHk9aJkEb9Q==}
 
+  '@formatjs/bigdecimal@0.2.8':
+    resolution: {integrity: sha512-e/U8n09DJByWetRTG8pjNtNKOeW0T4efkFcceo72y0QAjyiP5egv97N6fSa2wKiTJHVydO8crTkTueF5bKuYjg==}
+
   '@formatjs/fast-memoize@3.1.7':
     resolution: {integrity: sha512-zXfhLpvA6T7+efdt9JLbBwZ00tT7NsBMDVnDu8rpHeNNv8KfRZAMo2gkG0k9lK/Nzc//3kJ9pImsfuJxk3KhUA==}
 
@@ -2223,8 +2226,8 @@ packages:
   '@formatjs/intl-numberformat@9.5.0':
     resolution: {integrity: sha512-l2kTmIyUEw/peqc01A1Fz3WxJHsb9ntAUIgAe0016svJJa6TBxriGARfTzOOI5WvsDO1dWXHHQ7gkOv4gtHm2w==}
 
-  '@formatjs/intl-pluralrules@6.4.0':
-    resolution: {integrity: sha512-dPsgM2WeLIRPzH8wqv9mnq2sdnAeyz7n7gqv/JSK6jFVvJEEZIyZX0XalFZsuuNQ8U2CQQ5RxCy0h9U/nirJIQ==}
+  '@formatjs/intl-pluralrules@7.0.0':
+    resolution: {integrity: sha512-T6LxklnTxJti7S3Bqpl6lrwE4zfP7KIsH7sm0YWC101YjyQMdwbbgtueqK+OIaJ3pSRS7k+AfN+hJ24CtkNupQ==}
 
   '@formatjs/intl-relativetimeformat@12.4.0':
     resolution: {integrity: sha512-sXYW00Zh2rodj2HguxY/IoXSsrru3YAIbvH+JeXPvpQs5ukS2eWwv3zvcPTWZyFzqSiwFiKAuPtdr/6kQn3u6g==}
@@ -10806,6 +10809,8 @@ snapshots:
 
   '@formatjs/bigdecimal@0.2.7': {}
 
+  '@formatjs/bigdecimal@0.2.8': {}
+
   '@formatjs/fast-memoize@3.1.7': {}
 
   '@formatjs/icu-messageformat-parser@3.5.16':
@@ -10849,9 +10854,9 @@ snapshots:
       '@formatjs/bigdecimal': 0.2.7
       '@formatjs/intl-localematcher': 0.10.0
 
-  '@formatjs/intl-pluralrules@6.4.0':
+  '@formatjs/intl-pluralrules@7.0.0':
     dependencies:
-      '@formatjs/bigdecimal': 0.2.7
+      '@formatjs/bigdecimal': 0.2.8
       '@formatjs/intl-localematcher': 0.10.0
 
   '@formatjs/intl-relativetimeformat@12.4.0':
