@@ -44,7 +44,7 @@
 		"@dnd-kit/sortable": "^10.0.0",
 		"@fontsource-variable/montserrat": "^5.2.6",
 		"@fontsource-variable/nunito": "^5.2.6",
-		"@formatjs/intl-datetimeformat": "^7.5.0",
+		"@formatjs/intl-datetimeformat": "^8.0.0",
 		"@formatjs/intl-displaynames": "^8.0.0",
 		"@formatjs/intl-listformat": "^9.0.0",
 		"@formatjs/intl-locale": "^5.3.10",
