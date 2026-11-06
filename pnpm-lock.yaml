@@ -370,8 +370,8 @@ importers:
         specifier: ^5.3.10
         version: 5.4.2
       '@formatjs/intl-numberformat':
-        specifier: ^9.3.13
-        version: 9.5.0
+        specifier: ^10.0.0
+        version: 10.0.2
       '@formatjs/intl-pluralrules':
         specifier: ^7.0.0
         version: 7.0.2
@@ -2186,8 +2186,8 @@ packages:
   '@formatjs/intl-localematcher@0.10.1':
     resolution: {integrity: sha512-gBqglQK9rXuHsLmM8wzTMBy4Xo4d0jamirIVKuEL8F1rwbskWdpMA1kZarSkny+uvr5q/K6GSzE0Rcq1wZLl3g==}
 
-  '@formatjs/intl-numberformat@9.5.0':
-    resolution: {integrity: sha512-l2kTmIyUEw/peqc01A1Fz3WxJHsb9ntAUIgAe0016svJJa6TBxriGARfTzOOI5WvsDO1dWXHHQ7gkOv4gtHm2w==}
+  '@formatjs/intl-numberformat@10.0.2':
+    resolution: {integrity: sha512-iLS3ly1lGZ/a/IVpcSUgC37RjQUZ2wN6zR9+Zbr2uXsxATfMLD+fBqggiXuFudLmZXpbPueCs4Mz3vDsaOVE9A==}
 
   '@formatjs/intl-pluralrules@7.0.2':
     resolution: {integrity: sha512-PJ4+ldlqXlo3csmP02u2HqyXw09TDB/fatYpDCyWryfEQeVWl2EbMzij9SBksPaW2U//+q69lXR3IMnCRQAmrw==}
@@ -10536,10 +10536,10 @@ snapshots:
     dependencies:
       '@formatjs/fast-memoize': 3.1.7
 
-  '@formatjs/intl-numberformat@9.5.0':
+  '@formatjs/intl-numberformat@10.0.2':
     dependencies:
-      '@formatjs/bigdecimal': 0.2.7
-      '@formatjs/intl-localematcher': 0.10.0
+      '@formatjs/bigdecimal': 0.2.10
+      '@formatjs/intl-localematcher': 0.10.1
 
   '@formatjs/intl-pluralrules@7.0.2':
     dependencies:
