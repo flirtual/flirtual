@@ -7,11 +7,12 @@ import type { Session } from "~/api/auth";
 import { User } from "~/api/user";
 import * as brand from "~/brand";
 import { Image } from "~/components/image";
+import { dismissModeratorMessage, useDismissedModeratorMessage, useModeratorMessageReopen } from "~/hooks/use-dismissed-moderator-message";
 import { useInterruption } from "~/hooks/use-interruption";
 import { useOptionalSession, useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { useNavigate } from "~/i18n";
-import { mutate, sessionKey } from "~/query";
+import { invalidate, mutate, sessionKey } from "~/query";
 import LogoDark from "~/static/logo-dark.svg";
 import LogoLight from "~/static/logo-light.svg";
 import { urls } from "~/urls";
@@ -25,16 +26,20 @@ export const ModerationMessageDialog: FC = withSuspense(() => {
 	const session = useOptionalSession();
 	const toasts = useToast();
 	const { t } = useTranslation();
+	const dismissedMessage = useDismissedModeratorMessage();
+	useModeratorMessageReopen(() => invalidate({ queryKey: sessionKey() }));
 
 	const active = useInterruption(
 		"moderator_message",
-		!!session?.user.moderatorMessage
+		!!session?.user.moderatorMessage && session.user.moderatorMessage !== dismissedMessage
 	);
 
 	if (!active || !session?.user.moderatorMessage) return null;
+	const { moderatorMessage, disabledUntilAcknowledged = false } = session.user;
 
 	return (
 		<TrustAndSafetyDialog
+			closable={disabledUntilAcknowledged}
 			onAcknowledge={async (silently = false) => {
 				if (silently) {
 					await mutate<Session>(sessionKey(), (session) => ({ ...session, user: { ...session.user, moderatorMessage: null } }));
@@ -48,8 +53,11 @@ export const ModerationMessageDialog: FC = withSuspense(() => {
 					})
 					.catch(toasts.addError);
 			}}
+			onOpenChange={(open) => {
+				if (!open) dismissModeratorMessage(moderatorMessage);
+			}}
 		>
-			{session.user.moderatorMessage}
+			{moderatorMessage}
 		</TrustAndSafetyDialog>
 	);
 });

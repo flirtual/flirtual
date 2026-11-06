@@ -5,6 +5,7 @@ import QueryAddon from "wretch/addons/queryString";
 import { WretchError } from "wretch/resolver";
 
 import { client, development } from "~/const";
+import { reopenModeratorMessage } from "~/hooks/use-dismissed-moderator-message";
 import { urls } from "~/urls";
 import { newIdempotencyKey, toCamelObject, toSnakeObject } from "~/utilities";
 
@@ -86,6 +87,11 @@ export const api = wretch(urls.api)
 			)
 	)
 	.catcher(403, (error) => {
+		if ((error as WretchIssue).json?.error === "warning_unacknowledged") {
+			reopenModeratorMessage();
+			throw error;
+		}
+
 		if (
 			!client
 			|| (error as WretchIssue).json?.error !== "account_banned"

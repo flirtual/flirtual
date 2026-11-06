@@ -508,7 +508,8 @@ defmodule FlirtualWeb.UsersController do
 
     embedded_schema do
       field(:message, :string)
-      field(:shadowban, :boolean)
+      field(:shadowban, :boolean, default: false)
+      field(:disable, :boolean, default: false)
 
       field(:reason_id, :string)
       field(:reason, :map, virtual: true)
@@ -532,17 +533,27 @@ defmodule FlirtualWeb.UsersController do
       {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
     else
       with {:ok, attrs} <- Warn.apply(attrs),
+           :ok <- authorize_disable(conn, user, attrs.disable),
            {:ok, user} <-
              User.warn(
                user,
                attrs.reason,
                attrs.message,
                attrs.shadowban,
+               attrs.disable,
                conn.assigns[:session].user
              ) do
         conn |> json(Policy.transform(conn, user))
       end
     end
+  end
+
+  defp authorize_disable(_, %User{disabled_until_acknowledged: disable}, disable), do: :ok
+
+  defp authorize_disable(conn, %User{} = user, _) do
+    if Policy.can?(conn, :disable_until_acknowledged, user),
+      do: :ok,
+      else: {:error, {:forbidden, :missing_permission, %{user_id: user.id}}}
   end
 
   def revoke_warn(conn, %{"user_id" => user_id}) do

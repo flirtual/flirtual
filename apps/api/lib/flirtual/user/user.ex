@@ -91,6 +91,7 @@ defmodule Flirtual.User do
     field(:revenuecat_id, Ecto.ShortUUID)
     field(:status, Ecto.Enum, values: @status_atoms, default: :registered)
     field(:moderator_message, :string)
+    field(:disabled_until_acknowledged, :boolean, default: false)
     field(:moderator_note, :string)
     field(:tns_discord_in_biography, :utc_datetime)
     field(:likes_count, :integer, default: 0)
@@ -271,6 +272,7 @@ defmodule Flirtual.User do
       is_nil(user.banned_at) and
       is_nil(user.shadowbanned_at) and
       is_nil(user.indef_shadowbanned_at) and
+      not user.disabled_until_acknowledged and
       is_nil(user.deactivated_at)
   end
 
@@ -1109,6 +1111,7 @@ defmodule Flirtual.User do
         reason,
         message,
         shadowban,
+        disable,
         %User{} = moderator
       ) do
     now = DateTime.utc_now() |> DateTime.truncate(:second)
@@ -1118,7 +1121,8 @@ defmodule Flirtual.User do
              user
              |> change(%{
                moderator_message: message,
-               shadowbanned_at: if(shadowban, do: now, else: user.shadowbanned_at)
+               shadowbanned_at: if(shadowban, do: now, else: user.shadowbanned_at),
+               disabled_until_acknowledged: disable
              })
              |> Repo.update(),
            {:ok, _} <-
@@ -1127,12 +1131,12 @@ defmodule Flirtual.User do
                moderator: moderator,
                reason: reason,
                message: message,
-               details: %{shadowbanned: !!shadowban}
+               details: %{shadowbanned: shadowban, disabled: disable}
              }),
            {_, _} <- ModerationEvent.review_warned(user.id, moderator),
            {:ok, user} <- User.update_status(user),
            {:ok, _} <-
-             ObanWorkers.update_user(if(shadowban, do: user.id, else: []), [
+             ObanWorkers.update_user(if(shadowban or disable, do: user.id, else: []), [
                :search_index,
                :talkjs
              ]),
@@ -1143,6 +1147,7 @@ defmodule Flirtual.User do
                reason: reason,
                message: message,
                shadowbanned: shadowban,
+               disabled: disable,
                at: now
              ) do
         user
@@ -1158,12 +1163,14 @@ defmodule Flirtual.User do
         %User{} = moderator
       ) do
     now = DateTime.utc_now() |> DateTime.truncate(:second)
+    was_disabled = user.disabled_until_acknowledged
 
     Repo.transaction(fn ->
       with {:ok, user} <-
              user
-             |> change(%{moderator_message: nil})
+             |> change(%{moderator_message: nil, disabled_until_acknowledged: false})
              |> Repo.update(),
+           {:ok, _} <- maybe_enable(user, was_disabled),
            {:ok, _} <-
              ModerationEvent.create(:warn_revoked, %{user: user, moderator: moderator}),
            {_, _} <- ModerationEvent.revoke(user.id, [:warned], moderator),
@@ -1187,12 +1194,14 @@ defmodule Flirtual.User do
   def acknowledge_warn(%User{} = user) do
     now = DateTime.utc_now() |> DateTime.truncate(:second)
     message = user.moderator_message
+    was_disabled = user.disabled_until_acknowledged
 
     Repo.transaction(fn ->
       with {:ok, user} <-
              user
-             |> change(%{moderator_message: nil})
+             |> change(%{moderator_message: nil, disabled_until_acknowledged: false})
              |> Repo.update(),
+           {:ok, _} <- maybe_enable(user, was_disabled),
            {:ok, _} <-
              ModerationEvent.create(:warn_acknowledged, %{user: user, message: message}),
            {_, _} <- ModerationEvent.acknowledge(user.id, [:warned]),
@@ -1210,6 +1219,15 @@ defmodule Flirtual.User do
       end
     end)
   end
+
+  defp maybe_enable(%User{} = user, true) do
+    with {:ok, user} <- User.update_status(user),
+         {:ok, _} <- ObanWorkers.update_user(user.id, [:search_index, :talkjs]) do
+      {:ok, user}
+    end
+  end
+
+  defp maybe_enable(%User{} = user, false), do: {:ok, user}
 
   def add_note(
         %User{} = user,
@@ -1588,6 +1606,7 @@ defimpl Jason.Encoder, for: Flirtual.User do
       :blocked_by_count,
       :shadowbanned_at,
       :indef_shadowbanned_at,
+      :disabled_until_acknowledged,
       :payments_banned_at,
       :email_confirmed_at,
       :deactivated_at,

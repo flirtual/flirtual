@@ -132,6 +132,7 @@ const hiddenDetails = new Set([
 	"duplicateBanUrls",
 	"duplicateUserIds",
 	"shadowbanned",
+	"disabled",
 	"banId",
 	"reasonText",
 	"key",
@@ -421,7 +422,9 @@ function useEntry(entry: ModerationEntry) {
 
 	return {
 		Icon,
-		title: type === "warned" && details.shadowbanned ? `${title} + shadowbanned` : title,
+		title: type === "warned"
+			? [title, details.shadowbanned && "shadowbanned", details.disabled && "disabled"].filter(Boolean).join(" + ")
+			: title,
 		color: type === "flagged_duplicate"
 			? (details.type === "IP address"
 					? yellow
@@ -488,7 +491,7 @@ const ResendWarningButton: FC<{ entry: ModerationEntry; onReview: ReviewHandler 
 					onClick={() => {
 						const dialog = (
 							<WarnDialog
-								initial={{ reasonId, message, shadowban: !!details?.shadowbanned }}
+								initial={{ reasonId, message, shadowban: !!details?.shadowbanned, disable: !!details?.disabled }}
 								user={user}
 								onClose={() => dialogs.remove(dialog)}
 								onWarn={() => onReview(entry)}

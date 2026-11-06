@@ -126,6 +126,8 @@ final class Browse {
             return t("watch.account_banned")
         case "account_deactivated":
             return t("watch.account_deactivated")
+        case "warning_unacknowledged":
+            return t("watch.warning_unacknowledged")
         default:
             return t("watch.something_went_wrong")
         }

@@ -25,6 +25,7 @@ import {
 } from "~/hooks/use-attribute";
 import type { AttributeTranslation } from "~/hooks/use-attribute";
 import { useDialog } from "~/hooks/use-dialog";
+import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { defaultLocale, i18n, useLocale } from "~/i18n";
 import { intlLocale } from "~/i18n/languages";
@@ -32,10 +33,11 @@ import { invalidate, userKey } from "~/query";
 
 export const WarnDialog: FC<{
 	user: User;
-	initial?: { reasonId: string; message: string; shadowban: boolean };
+	initial?: { reasonId: string; message: string; shadowban: boolean; disable: boolean };
 	onWarn?: () => unknown;
 	onClose: () => void;
 }> = withSuspense(({ user, initial, onWarn, onClose }) => {
+	const session = useSession();
 	const toasts = useToast();
 	const { t } = useTranslation();
 	const [locale] = useLocale();
@@ -77,11 +79,12 @@ export const WarnDialog: FC<{
 							targetId: user.id,
 							reasonId: initial?.reasonId ?? defaultReason,
 							message: initial?.message ?? (user.moderatorMessage || tAttribute[defaultReason]?.details || ""),
-							shadowban: initial?.shadowban ?? defaultShadowban
+							shadowban: initial?.shadowban ?? defaultShadowban,
+							disable: initial?.disable ?? user.disabledUntilAcknowledged ?? false
 						}}
 						className="flex flex-col gap-8"
 						requireChange={false}
-						onSubmit={async ({ targetId, message, reasonId, shadowban }) => {
+						onSubmit={async ({ targetId, message, reasonId, shadowban, disable }) => {
 							if (!message) {
 								await User.deleteWarn(targetId);
 								await invalidate({ queryKey: userKey(user.id) });
@@ -104,7 +107,7 @@ export const WarnDialog: FC<{
 								message = (attributes[reasonId] as AttributeTranslation<"warn-reason">)?.details || message;
 							}
 
-							await User.warn(targetId, { reasonId, message, shadowban });
+							await User.warn(targetId, { reasonId, message, shadowban, disable });
 							await invalidate({ queryKey: userKey(user.id) });
 							await onWarn?.();
 
@@ -215,6 +218,18 @@ export const WarnDialog: FC<{
 										</div>
 									)}
 								</FormField>
+								{session.user.tags?.includes("admin") && (
+									<FormField name="disable">
+										{(field) => (
+											<div className="flex items-center gap-4">
+												<InputCheckbox {...field.props} />
+												<InputLabel {...field.labelProps}>
+													Disable account until acknowledged
+												</InputLabel>
+											</div>
+										)}
+									</FormField>
+								)}
 								{!!user.moderatorMessage && message.changed && (
 									<FormMessage
 										size="sm"

@@ -471,6 +471,9 @@ export const ProfileModeratorInfo: FC<{
 						<span className={user.moderatorMessage && "text-yellow-600"}>
 							{user.moderatorMessage ?? "None"}
 						</span>
+						{user.disabledUntilAcknowledged && (
+							<span className="text-red-600"> (account disabled until acknowledged)</span>
+						)}
 					</span>
 					{user.matchCount != null && user.blockedByCount != null && (
 						<div className="flex flex-col">
