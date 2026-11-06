@@ -464,7 +464,7 @@ importers:
         version: 3.4.2(@uppy/core@4.5.3)
       '@uppy/locales':
         specifier: ^5.1.1
-        version: 5.3.1
+        version: 5.3.2
       '@uppy/progress-bar':
         specifier: ^4.3.2
         version: 4.3.2(@uppy/core@4.5.3)
@@ -5158,8 +5158,8 @@ packages:
   '@uppy/core@4.5.3':
     resolution: {integrity: sha512-52VLeBUY/j904h48lpPGykuWikkOOS4Lz/qkmalDiBQfNALb6iB1MOZs079IM3o/uMLYxzZRL80C3sKpkBUYcw==}
 
-  '@uppy/core@6.3.0':
-    resolution: {integrity: sha512-D6+iERQrI194UZO9dOIJWrT5GtOtyR9k4Wh6VU7cXThEaRNvMQDqXj1GzHDs2TffnZ5pRxufwB84Os8uH3+bVA==}
+  '@uppy/core@6.3.1':
+    resolution: {integrity: sha512-yIhg41/2RHzyZcxCW0Ta81JyveCGoiBpWozpXRJSjsr4Xip61mzFgPyUEeb0VCLKprK4m8xiJyr2nJqnZwgcww==}
 
   '@uppy/dashboard@4.4.3':
     resolution: {integrity: sha512-IwgDDTbk9p4OoAJvvvx6sQSemKTIJq9IDSryNVgbbC6NiR9HSyRcu0+WdOZLiR9DOhDg2oYcoNgv7DMlrktI6g==}
@@ -5216,8 +5216,8 @@ packages:
     peerDependencies:
       '@uppy/core': ^4.5.2
 
-  '@uppy/locales@5.3.1':
-    resolution: {integrity: sha512-HcIY53cnr2s0TersBQgJbRxEi2fgnu+JXjdV+KRTxjLD+22lz6cWHxzB84k/J1ZYm6hi3HEXqwqg2CStuRrizA==}
+  '@uppy/locales@5.3.2':
+    resolution: {integrity: sha512-DEHclK0QKemrYTKxX5pfNdMxq7UtlBZsoGDqV6d6gGB7RrSqDxfuuW9n5FuNWosO+/xqj8R4RF+Dtn97QgdJog==}
 
   '@uppy/onedrive@4.3.2':
     resolution: {integrity: sha512-dfJAl9qsoQsL1LdIrDPKEKmAj82VNA63BInsJ80nF8bx3tf67AvlMz4O1I9fDW2zctfgOiFlGz47kamz01eSPQ==}
@@ -8679,6 +8679,10 @@ packages:
     resolution: {integrity: sha512-eNRKgb3z66Yp3D2CixVujOUvXLFUTij/zVnV8KRyvFdQwpz7I5DS8UfRkTeLzb64u+dkzDSdelE24izu+zSSUg==}
     engines: {node: ^14.18.0 || >=16.0.0}
 
+  tagged-tag@1.0.0:
+    resolution: {integrity: sha512-yEFYrVhod+hdNyx7g5Bnkkb0G6si8HJurOoOEgC8B/O0uXLHlaey/65KRv6cuWBNhBgHKAROVpc7QyYqE5gFng==}
+    engines: {node: '>=20'}
+
   tailwind-api-utils@1.0.3:
     resolution: {integrity: sha512-KpzUHkH1ug1sq4394SLJX38ZtpeTiqQ1RVyFTTSY2XuHsNSTWUkRo108KmyyrMWdDbQrLYkSHaNKj/a3bmA4sQ==}
     peerDependencies:
@@ -8852,6 +8856,10 @@ packages:
   type-fest@3.13.1:
     resolution: {integrity: sha512-tLq3bSNx+xSpwvAJnzrK0Ep5CLNWjvFTOp71URMaAEWBfRb9nnJiBoUe0tF8bI4ZFO3omgBR6NvnbzVUT3Ly4g==}
     engines: {node: '>=14.16'}
+
+  type-fest@5.10.0:
+    resolution: {integrity: sha512-NoSdpq/WEiAg5sjmBkmV/hfxv6HJH4NqPNrqjtSO5CwRmpsDfaf4begxW34KdJykH/l1yHtwBWQkCRdoXO8mPA==}
+    engines: {node: '>=20'}
 
   type-is@2.1.0:
     resolution: {integrity: sha512-faYHw0anBbc/kWF3zFTEnxSFOAGUX9GFbOBthvDdLsIlEoWOFOtS0zgCiQYwIskL9iGXZL3kAXD8OoZ4GmMATA==}
@@ -13180,7 +13188,7 @@ snapshots:
     transitivePeerDependencies:
       - preact-render-to-string
 
-  '@uppy/core@6.3.0':
+  '@uppy/core@6.3.1':
     dependencies:
       '@transloadit/prettier-bytes': 2.0.0
       classnames: 2.5.1
@@ -13191,6 +13199,7 @@ snapshots:
       p-queue: 9.3.3
       p-retry: 8.0.1
       preact: 10.29.8
+      type-fest: 5.10.0
     transitivePeerDependencies:
       - preact-render-to-string
 
@@ -13299,9 +13308,9 @@ snapshots:
     transitivePeerDependencies:
       - preact-render-to-string
 
-  '@uppy/locales@5.3.1':
+  '@uppy/locales@5.3.2':
     dependencies:
-      '@uppy/core': 6.3.0
+      '@uppy/core': 6.3.1
     transitivePeerDependencies:
       - preact-render-to-string
 
@@ -17422,6 +17431,8 @@ snapshots:
     dependencies:
       '@pkgr/core': 0.3.6
 
+  tagged-tag@1.0.0: {}
+
   tailwind-api-utils@1.0.3(tailwindcss@4.3.4):
     dependencies:
       enhanced-resolve: 5.24.5
@@ -17651,6 +17662,10 @@ snapshots:
       prelude-ls: 1.2.1
 
   type-fest@3.13.1: {}
+
+  type-fest@5.10.0:
+    dependencies:
+      tagged-tag: 1.0.0
 
   type-is@2.1.0:
     dependencies:
