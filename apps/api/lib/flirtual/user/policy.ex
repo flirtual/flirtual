@@ -108,7 +108,8 @@ defmodule Flirtual.User.Policy do
     :update_tags,
     :manage_subscription,
     :sudo,
-    :delete
+    :delete,
+    :disable_until_acknowledged
   ]
 
   def authorize(
@@ -194,6 +195,7 @@ defmodule Flirtual.User.Policy do
 
   @own_property_keys [
     :email,
+    :disabled_until_acknowledged,
     :language,
     :talkjs_signature,
     :apns_tokens,
@@ -251,6 +253,7 @@ defmodule Flirtual.User.Policy do
     :email,
     :moderator_message,
     :moderator_note,
+    :disabled_until_acknowledged,
     :shadowbanned_at,
     :indef_shadowbanned_at,
     :payments_banned_at,

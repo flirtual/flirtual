@@ -109,6 +109,7 @@ export type User = {
 	stripeId?: string;
 	revenuecatId?: string;
 	moderatorMessage?: string;
+	disabledUntilAcknowledged?: boolean;
 	moderatorNote?: string;
 	status: UserStatus;
 	// relationship?: Relationship;
@@ -330,6 +331,7 @@ export const User = {
 			reasonId: string;
 			message: string;
 			shadowban: boolean;
+			disable: boolean;
 		}
 	) {
 		return this.api.url(`/${userId}/warn`).json(options).post().json<User>();

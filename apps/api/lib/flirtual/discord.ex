@@ -633,13 +633,17 @@ defmodule Flirtual.Discord do
         reason: %Attribute{type: "warn-reason"} = reason,
         message: message,
         shadowbanned: shadowbanned,
+        disabled: disabled,
         at: warned_at
       ) do
     webhook(:moderation_actions, %{
       embeds: [
         %{
           author: webhook_author(user),
-          title: "User warned" <> if(shadowbanned, do: " + shadowbanned", else: ""),
+          title:
+            "User warned" <>
+              if(shadowbanned, do: " + shadowbanned", else: "") <>
+              if(disabled, do: " + disabled", else: ""),
           description: truncate(message, @embed_description_limit),
           fields: [
             %{

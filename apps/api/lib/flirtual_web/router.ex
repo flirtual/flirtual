@@ -76,6 +76,16 @@ defmodule FlirtualWeb.Router do
     end
   end
 
+  def require_acknowledged_user(conn, _opts) do
+    if conn.assigns[:session].user.disabled_until_acknowledged do
+      conn
+      |> put_error(:forbidden, :warning_unacknowledged)
+      |> halt()
+    else
+      conn
+    end
+  end
+
   def require_debugger_user(conn, _opts) do
     user = conn.assigns[:session] && conn.assigns[:session].user
 
@@ -441,7 +451,11 @@ defmodule FlirtualWeb.Router do
             delete("/", ConversationController, :leave)
             delete("/unread", ConversationController, :mark_conversation_read)
             get("/messages", ConversationController, :list_messages)
-            post("/messages", ConversationController, :send_message)
+
+            scope "/" do
+              pipe_through(:require_acknowledged_user)
+              post("/messages", ConversationController, :send_message)
+            end
           end
         end
 
@@ -449,11 +463,15 @@ defmodule FlirtualWeb.Router do
           pipe_through([:require_authenticated_user, :require_valid_user])
           get("/", MatchmakingController, :queue_information)
           get("/inspect", MatchmakingController, :inspect_query)
-
-          post("/", MatchmakingController, :response)
-          delete("/", MatchmakingController, :undo_response)
-          delete("/prospect", MatchmakingController, :skip_prospect)
           delete("/notice", MatchmakingController, :dismiss_notice)
+
+          scope "/" do
+            pipe_through(:require_acknowledged_user)
+
+            post("/", MatchmakingController, :response)
+            delete("/", MatchmakingController, :undo_response)
+            delete("/prospect", MatchmakingController, :skip_prospect)
+          end
         end
 
         scope "/matches" do
