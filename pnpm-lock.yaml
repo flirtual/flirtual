@@ -374,7 +374,7 @@ importers:
         version: 9.5.0
       '@formatjs/intl-pluralrules':
         specifier: ^7.0.0
-        version: 7.0.0
+        version: 7.0.2
       '@formatjs/intl-relativetimeformat':
         specifier: ^12.3.12
         version: 12.4.0
@@ -2184,11 +2184,11 @@ packages:
   '@fontsource-variable/nunito@5.3.0':
     resolution: {integrity: sha512-tw0ch7evIDSwoeUy+0XzocYHfbRWLeCRPJy22KgbrLjDLAbNw/fErBiil10Ssrs3Sjr55zaZrr36a975j8cBkQ==}
 
+  '@formatjs/bigdecimal@0.2.10':
+    resolution: {integrity: sha512-npIs6UARNOg5amJY5UOVsd6HUQQfzYjet0sa0SWIqzsnVhxLSpaIx2DjoIVrr/vqmjURjvroeW6dItjfy3Uf8A==}
+
   '@formatjs/bigdecimal@0.2.7':
     resolution: {integrity: sha512-B4+XY/e4u5v261r3a37Kq2ax91gPZSKGyVpx8X5dygAggLlUz+6MeBpmAhaBFGB8WQ4JB1qD+QtKHk9aJkEb9Q==}
-
-  '@formatjs/bigdecimal@0.2.8':
-    resolution: {integrity: sha512-e/U8n09DJByWetRTG8pjNtNKOeW0T4efkFcceo72y0QAjyiP5egv97N6fSa2wKiTJHVydO8crTkTueF5bKuYjg==}
 
   '@formatjs/fast-memoize@3.1.7':
     resolution: {integrity: sha512-zXfhLpvA6T7+efdt9JLbBwZ00tT7NsBMDVnDu8rpHeNNv8KfRZAMo2gkG0k9lK/Nzc//3kJ9pImsfuJxk3KhUA==}
@@ -2223,11 +2223,14 @@ packages:
   '@formatjs/intl-localematcher@0.10.0':
     resolution: {integrity: sha512-OvfBelurObm02D1+4BsuHSt3Xkn49RZPo7uJXt/1Z0dNET3EN39kY1rKMV3kG0tn0p4gyGWrcFx9HyeF07cq5g==}
 
+  '@formatjs/intl-localematcher@0.10.1':
+    resolution: {integrity: sha512-gBqglQK9rXuHsLmM8wzTMBy4Xo4d0jamirIVKuEL8F1rwbskWdpMA1kZarSkny+uvr5q/K6GSzE0Rcq1wZLl3g==}
+
   '@formatjs/intl-numberformat@9.5.0':
     resolution: {integrity: sha512-l2kTmIyUEw/peqc01A1Fz3WxJHsb9ntAUIgAe0016svJJa6TBxriGARfTzOOI5WvsDO1dWXHHQ7gkOv4gtHm2w==}
 
-  '@formatjs/intl-pluralrules@7.0.0':
-    resolution: {integrity: sha512-T6LxklnTxJti7S3Bqpl6lrwE4zfP7KIsH7sm0YWC101YjyQMdwbbgtueqK+OIaJ3pSRS7k+AfN+hJ24CtkNupQ==}
+  '@formatjs/intl-pluralrules@7.0.2':
+    resolution: {integrity: sha512-PJ4+ldlqXlo3csmP02u2HqyXw09TDB/fatYpDCyWryfEQeVWl2EbMzij9SBksPaW2U//+q69lXR3IMnCRQAmrw==}
 
   '@formatjs/intl-relativetimeformat@12.4.0':
     resolution: {integrity: sha512-sXYW00Zh2rodj2HguxY/IoXSsrru3YAIbvH+JeXPvpQs5ukS2eWwv3zvcPTWZyFzqSiwFiKAuPtdr/6kQn3u6g==}
@@ -10807,9 +10810,9 @@ snapshots:
 
   '@fontsource-variable/nunito@5.3.0': {}
 
-  '@formatjs/bigdecimal@0.2.7': {}
+  '@formatjs/bigdecimal@0.2.10': {}
 
-  '@formatjs/bigdecimal@0.2.8': {}
+  '@formatjs/bigdecimal@0.2.7': {}
 
   '@formatjs/fast-memoize@3.1.7': {}
 
@@ -10849,15 +10852,19 @@ snapshots:
     dependencies:
       '@formatjs/fast-memoize': 3.1.7
 
+  '@formatjs/intl-localematcher@0.10.1':
+    dependencies:
+      '@formatjs/fast-memoize': 3.1.7
+
   '@formatjs/intl-numberformat@9.5.0':
     dependencies:
       '@formatjs/bigdecimal': 0.2.7
       '@formatjs/intl-localematcher': 0.10.0
 
-  '@formatjs/intl-pluralrules@7.0.0':
+  '@formatjs/intl-pluralrules@7.0.2':
     dependencies:
-      '@formatjs/bigdecimal': 0.2.8
-      '@formatjs/intl-localematcher': 0.10.0
+      '@formatjs/bigdecimal': 0.2.10
+      '@formatjs/intl-localematcher': 0.10.1
 
   '@formatjs/intl-relativetimeformat@12.4.0':
     dependencies:
