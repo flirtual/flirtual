@@ -235,8 +235,8 @@ catalogs:
       specifier: ^3.18.0
       version: 3.18.3
     '@pulumi/pulumi':
-      specifier: 3.273.0
-      version: 3.273.0
+      specifier: 3.274.0
+      version: 3.274.0
     '@pulumi/random':
       specifier: ^4.21.0
       version: 4.21.6
@@ -891,7 +891,7 @@ importers:
         version: link:../config
       '@pulumi/pulumi':
         specifier: catalog:pulumi
-        version: 3.273.0(@typescript/typescript6@6.0.2)(supports-color@10.2.2)
+        version: 3.274.0(@typescript/typescript6@6.0.2)(supports-color@10.2.2)
       '@types/node':
         specifier: 'catalog:'
         version: 26.6.6
@@ -922,7 +922,7 @@ importers:
         version: link:../config
       '@pulumi/pulumi':
         specifier: catalog:pulumi
-        version: 3.273.0(@typescript/typescript6@6.0.2)(supports-color@10.2.2)
+        version: 3.274.0(@typescript/typescript6@6.0.2)(supports-color@10.2.2)
       '@types/node':
         specifier: 'catalog:'
         version: 26.6.6
@@ -952,7 +952,7 @@ importers:
         version: link:../config
       '@pulumi/pulumi':
         specifier: catalog:pulumi
-        version: 3.273.0(@typescript/typescript6@6.0.2)(supports-color@10.2.2)
+        version: 3.274.0(@typescript/typescript6@6.0.2)(supports-color@10.2.2)
       '@types/node':
         specifier: 'catalog:'
         version: 26.6.6
@@ -983,7 +983,7 @@ importers:
         version: link:../config
       '@pulumi/pulumi':
         specifier: catalog:pulumi
-        version: 3.273.0(@typescript/typescript6@6.0.2)(supports-color@10.2.2)
+        version: 3.274.0(@typescript/typescript6@6.0.2)(supports-color@10.2.2)
       '@types/node':
         specifier: 'catalog:'
         version: 26.6.6
@@ -1017,7 +1017,7 @@ importers:
         version: link:../config
       '@pulumi/pulumi':
         specifier: catalog:pulumi
-        version: 3.273.0(@typescript/typescript6@6.0.2)(supports-color@10.2.2)
+        version: 3.274.0(@typescript/typescript6@6.0.2)(supports-color@10.2.2)
       '@types/node':
         specifier: 'catalog:'
         version: 26.6.6
@@ -1053,7 +1053,7 @@ importers:
         version: link:../config
       '@pulumi/pulumi':
         specifier: catalog:pulumi
-        version: 3.273.0(@typescript/typescript6@6.0.2)(supports-color@10.2.2)
+        version: 3.274.0(@typescript/typescript6@6.0.2)(supports-color@10.2.2)
       '@types/node':
         specifier: 'catalog:'
         version: 26.6.6
@@ -1090,7 +1090,7 @@ importers:
         version: link:../config
       '@pulumi/pulumi':
         specifier: catalog:pulumi
-        version: 3.273.0(@typescript/typescript6@6.0.2)(supports-color@10.2.2)
+        version: 3.274.0(@typescript/typescript6@6.0.2)(supports-color@10.2.2)
       '@types/node':
         specifier: 'catalog:'
         version: 26.6.6
@@ -1159,7 +1159,7 @@ importers:
         version: 3.18.3(@typescript/typescript6@6.0.2)(supports-color@10.2.2)
       '@pulumi/pulumi':
         specifier: catalog:pulumi
-        version: 3.273.0(@typescript/typescript6@6.0.2)(supports-color@10.2.2)
+        version: 3.274.0(@typescript/typescript6@6.0.2)(supports-color@10.2.2)
       '@pulumi/random':
         specifier: catalog:pulumi
         version: 4.21.6(@typescript/typescript6@6.0.2)(supports-color@10.2.2)
@@ -3852,8 +3852,8 @@ packages:
   '@pulumi/postgresql@3.18.3':
     resolution: {integrity: sha512-RJmkzR2MZ6826DuqnVG27WKGi9oUcLfWOnoDuAUnxPIHo6sYTt2/oRN4myjt5byeR4iM7TgkNG6/SpWM5uoWyQ==}
 
-  '@pulumi/pulumi@3.273.0':
-    resolution: {integrity: sha512-Yh2k0Kry4u5LM730KUO5HZFnqHdlW9ypoQ8zgO0Tqam1G6urFXjIUTUaLxvWrdsm6gKCoyVS6CPdeOGcV+Msvg==}
+  '@pulumi/pulumi@3.274.0':
+    resolution: {integrity: sha512-y8R/BryUgfxaE/6jdJV+TO1yq/wFluTJidsTEMSAEli4tLudNmf4QCGNFhj8fQX97G4xBDuFgF/OUDTYi9UMXw==}
     engines: {node: '>=22'}
     peerDependencies:
       ts-node: '>= 7.0.1 < 12'
@@ -11726,7 +11726,7 @@ snapshots:
 
   '@pulumi/apple@file:pulumi/sdks/apple(supports-color@10.2.2)':
     dependencies:
-      '@pulumi/pulumi': 3.273.0(supports-color@10.2.2)(typescript@4.9.5)
+      '@pulumi/pulumi': 3.274.0(supports-color@10.2.2)(typescript@4.9.5)
       '@types/node': 20.19.43
       typescript: 4.9.5
     transitivePeerDependencies:
@@ -11735,7 +11735,7 @@ snapshots:
 
   '@pulumi/aws@7.53.0(@typescript/typescript6@6.0.2)(supports-color@10.2.2)':
     dependencies:
-      '@pulumi/pulumi': 3.273.0(@typescript/typescript6@6.0.2)(supports-color@10.2.2)
+      '@pulumi/pulumi': 3.274.0(@typescript/typescript6@6.0.2)(supports-color@10.2.2)
       mime: 2.6.0
     transitivePeerDependencies:
       - supports-color
@@ -11744,7 +11744,7 @@ snapshots:
 
   '@pulumi/cloudflare@6.23.2(@typescript/typescript6@6.0.2)(supports-color@10.2.2)':
     dependencies:
-      '@pulumi/pulumi': 3.273.0(@typescript/typescript6@6.0.2)(supports-color@10.2.2)
+      '@pulumi/pulumi': 3.274.0(@typescript/typescript6@6.0.2)(supports-color@10.2.2)
     transitivePeerDependencies:
       - supports-color
       - ts-node
@@ -11752,7 +11752,7 @@ snapshots:
 
   '@pulumi/command@1.3.0(@typescript/typescript6@6.0.2)(supports-color@10.2.2)':
     dependencies:
-      '@pulumi/pulumi': 3.273.0(@typescript/typescript6@6.0.2)(supports-color@10.2.2)
+      '@pulumi/pulumi': 3.274.0(@typescript/typescript6@6.0.2)(supports-color@10.2.2)
     transitivePeerDependencies:
       - supports-color
       - ts-node
@@ -11760,7 +11760,7 @@ snapshots:
 
   '@pulumi/discord@file:pulumi/sdks/discord(supports-color@10.2.2)':
     dependencies:
-      '@pulumi/pulumi': 3.273.0(supports-color@10.2.2)(typescript@4.9.5)
+      '@pulumi/pulumi': 3.274.0(supports-color@10.2.2)(typescript@4.9.5)
       '@types/node': 20.19.43
       typescript: 4.9.5
     transitivePeerDependencies:
@@ -11769,7 +11769,7 @@ snapshots:
 
   '@pulumi/freshdesk@file:pulumi/sdks/freshdesk(supports-color@10.2.2)':
     dependencies:
-      '@pulumi/pulumi': 3.273.0(supports-color@10.2.2)(typescript@4.9.5)
+      '@pulumi/pulumi': 3.274.0(supports-color@10.2.2)(typescript@4.9.5)
       '@types/node': 20.19.43
       typescript: 4.9.5
     transitivePeerDependencies:
@@ -11778,7 +11778,7 @@ snapshots:
 
   '@pulumi/gcp@10.2.2(@typescript/typescript6@6.0.2)(supports-color@10.2.2)':
     dependencies:
-      '@pulumi/pulumi': 3.273.0(@typescript/typescript6@6.0.2)(supports-color@10.2.2)
+      '@pulumi/pulumi': 3.274.0(@typescript/typescript6@6.0.2)(supports-color@10.2.2)
       '@types/express': 4.17.25
     transitivePeerDependencies:
       - supports-color
@@ -11787,13 +11787,13 @@ snapshots:
 
   '@pulumi/postgresql@3.18.3(@typescript/typescript6@6.0.2)(supports-color@10.2.2)':
     dependencies:
-      '@pulumi/pulumi': 3.273.0(@typescript/typescript6@6.0.2)(supports-color@10.2.2)
+      '@pulumi/pulumi': 3.274.0(@typescript/typescript6@6.0.2)(supports-color@10.2.2)
     transitivePeerDependencies:
       - supports-color
       - ts-node
       - typescript
 
-  '@pulumi/pulumi@3.273.0(@typescript/typescript6@6.0.2)(supports-color@10.2.2)':
+  '@pulumi/pulumi@3.274.0(@typescript/typescript6@6.0.2)(supports-color@10.2.2)':
     dependencies:
       '@grpc/grpc-js': 1.14.5
       '@logdna/tail-file': 2.2.0
@@ -11825,7 +11825,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@pulumi/pulumi@3.273.0(supports-color@10.2.2)(typescript@4.9.5)':
+  '@pulumi/pulumi@3.274.0(supports-color@10.2.2)(typescript@4.9.5)':
     dependencies:
       '@grpc/grpc-js': 1.14.5
       '@logdna/tail-file': 2.2.0
@@ -11859,7 +11859,7 @@ snapshots:
 
   '@pulumi/random@4.21.6(@typescript/typescript6@6.0.2)(supports-color@10.2.2)':
     dependencies:
-      '@pulumi/pulumi': 3.273.0(@typescript/typescript6@6.0.2)(supports-color@10.2.2)
+      '@pulumi/pulumi': 3.274.0(@typescript/typescript6@6.0.2)(supports-color@10.2.2)
     transitivePeerDependencies:
       - supports-color
       - ts-node
@@ -11867,7 +11867,7 @@ snapshots:
 
   '@pulumi/sentry@file:pulumi/sdks/sentry(supports-color@10.2.2)':
     dependencies:
-      '@pulumi/pulumi': 3.273.0(supports-color@10.2.2)(typescript@4.9.5)
+      '@pulumi/pulumi': 3.274.0(supports-color@10.2.2)(typescript@4.9.5)
       '@types/node': 20.19.43
       typescript: 4.9.5
     transitivePeerDependencies:
@@ -11876,7 +11876,7 @@ snapshots:
 
   '@pulumi/tls@5.6.3(@typescript/typescript6@6.0.2)(supports-color@10.2.2)':
     dependencies:
-      '@pulumi/pulumi': 3.273.0(@typescript/typescript6@6.0.2)(supports-color@10.2.2)
+      '@pulumi/pulumi': 3.274.0(@typescript/typescript6@6.0.2)(supports-color@10.2.2)
     transitivePeerDependencies:
       - supports-color
       - ts-node
@@ -11884,7 +11884,7 @@ snapshots:
 
   '@pulumiverse/time@0.1.1(@typescript/typescript6@6.0.2)(supports-color@10.2.2)':
     dependencies:
-      '@pulumi/pulumi': 3.273.0(@typescript/typescript6@6.0.2)(supports-color@10.2.2)
+      '@pulumi/pulumi': 3.274.0(@typescript/typescript6@6.0.2)(supports-color@10.2.2)
     transitivePeerDependencies:
       - supports-color
       - ts-node
