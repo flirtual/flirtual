@@ -106,7 +106,7 @@ defmodule Flirtual.Faker do
              Users.create(
                %{
                  email: email,
-                 password: "password",
+                 password: :crypto.strong_rand_bytes(24) |> Base.url_encode64(),
                  service_agreement: true,
                  notifications: Enum.random([true, false])
                },
