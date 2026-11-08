@@ -692,7 +692,7 @@ defmodule Flirtual.Users do
              |> User.validate_password()
              |> User.put_password()
              |> Repo.insert(),
-           {:ok, user} <- setup_new_user(user, attrs),
+           {:ok, user} <- setup_new_user(user, attrs, Keyword.take(options, [:email_confirmed])),
            :ok <- Flag.check_honeypot(user.id, attrs[:url]) do
         user
       else
@@ -727,7 +727,7 @@ defmodule Flirtual.Users do
   end
 
   # Shared user setup: generates identifiers, creates preferences/profile, runs checks
-  defp setup_new_user(user, attrs, options \\ []) do
+  defp setup_new_user(user, attrs, options) do
     email_confirmed = Keyword.get(options, :email_confirmed, false)
     notifications = Map.get(attrs, :notifications) == true
 

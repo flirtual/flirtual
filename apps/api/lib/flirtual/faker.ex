@@ -108,15 +108,15 @@ defmodule Flirtual.Faker do
                  email: email,
                  password: :crypto.strong_rand_bytes(24) |> Base.url_encode64(),
                  service_agreement: true,
-                 notifications: Enum.random([true, false])
+                 notifications: false
                },
-               captcha: false
+               captcha: false,
+               email_confirmed: true
              ),
            {:ok, user} <-
              change(user, %{
                slug: slug,
                born_at: born_at,
-               email_confirmed_at: now,
                active_at: now
              })
              |> Repo.update(),
@@ -145,8 +145,7 @@ defmodule Flirtual.Faker do
              Users.update_notification_preferences(
                preferences.email_notifications,
                [:matches, :messages, :likes, :reminders, :newsletter]
-               |> Enum.map(&{&1, Enum.random([true, false])})
-               |> Map.new()
+               |> Map.new(&{&1, false})
              ),
            {:ok, _} <-
              Users.update_notification_preferences(
