@@ -221,7 +221,7 @@ catalogs:
   pulumi:
     '@pulumi/aws':
       specifier: ^7.46.0
-      version: 7.53.0
+      version: 7.54.0
     '@pulumi/cloudflare':
       specifier: 6.23.3
       version: 6.23.3
@@ -1138,7 +1138,7 @@ importers:
         version: file:pulumi/sdks/apple(supports-color@10.2.2)
       '@pulumi/aws':
         specifier: catalog:pulumi
-        version: 7.53.0(@typescript/typescript6@6.0.2)(supports-color@10.2.2)
+        version: 7.54.0(@typescript/typescript6@6.0.2)(supports-color@10.2.2)
       '@pulumi/cloudflare':
         specifier: catalog:pulumi
         version: 6.23.3(@typescript/typescript6@6.0.2)(supports-color@10.2.2)
@@ -3739,8 +3739,8 @@ packages:
   '@pulumi/apple@file:pulumi/sdks/apple':
     resolution: {directory: pulumi/sdks/apple, type: directory}
 
-  '@pulumi/aws@7.53.0':
-    resolution: {integrity: sha512-qHijd0MQTZhGb3Z1WJzmrqfK8Vxz3WkyUkfTXm/7nWTmyWAdLgshyDwzbHxyGEsPbEVjLpgx+3mjPmY9HIGLrw==}
+  '@pulumi/aws@7.54.0':
+    resolution: {integrity: sha512-0asX0tYqnQFztv8k3kylli5ejXXXdttY0aVlVJ5CznEhecnQmE9Nt/XZjs/+4z5MXR7OYIdtomwwjPMt1+J8mw==}
 
   '@pulumi/cloudflare@6.23.3':
     resolution: {integrity: sha512-etEo7csPhmv2K2dbRfyj9lCKcka5vTH9qowVufK9b+iDB2qEta9M/CPo+2QgsaANeEmxRTztqg+pIi+Xtzhjow==}
@@ -11270,7 +11270,7 @@ snapshots:
       - supports-color
       - ts-node
 
-  '@pulumi/aws@7.53.0(@typescript/typescript6@6.0.2)(supports-color@10.2.2)':
+  '@pulumi/aws@7.54.0(@typescript/typescript6@6.0.2)(supports-color@10.2.2)':
     dependencies:
       '@pulumi/pulumi': 3.274.1(@typescript/typescript6@6.0.2)(supports-color@10.2.2)
       mime: 2.6.0
