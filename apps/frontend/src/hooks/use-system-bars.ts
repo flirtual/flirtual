@@ -2,6 +2,7 @@ import { Capacitor, SystemBars, SystemBarsStyle, SystemBarType } from "@capacito
 import { useEffect } from "react";
 
 import { device } from "./use-device";
+import { measureSafeArea } from "./use-safe-area";
 
 const darkAt = (x: number, y: number) => !!document.elementFromPoint(x, y)?.closest("[data-dark-backdrop]");
 
@@ -32,9 +33,7 @@ export function useSystemBarsTheme(dark: boolean) {
 				return;
 			}
 
-			const style = getComputedStyle(document.documentElement);
-			const [top, right, bottom, left] = ["top", "right", "bottom", "left"]
-				.map((side) => Number.parseFloat(style.getPropertyValue(`--safe-area-inset-${side}`)) || 0);
+			const { top, right, bottom, left } = measureSafeArea();
 
 			set(SystemBarType.StatusBar, !!top && darkAt(innerWidth / 2, top / 2));
 
