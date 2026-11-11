@@ -32,8 +32,6 @@ defmodule Env do
   end
 end
 
-hostname = Env.get("HOSTNAME", default: elem(:inet.gethostname(), 1))
-
 prod? = config_env() == :prod
 dev? = not prod?
 canary? = Env.bool("CANARY", default: false)
@@ -78,8 +76,8 @@ config :flirtual,
   stereo2spatial_origin:
     Env.get("STEREO2SPATIAL_ORIGIN", default: "https://stereo2spatial.kfarwell.org")
 
-origin = URI.parse(Env.get!("ORIGIN", default: "https://#{hostname}:4001"))
-frontend_origin = Env.get!("FRONTEND_ORIGIN", default: "https://#{hostname}:3000")
+origin = URI.parse(Env.get!("ORIGIN", default: "https://localhost:4001"))
+frontend_origin = Env.get!("FRONTEND_ORIGIN", default: "https://localhost:3000")
 content_origin = Env.get("BUCKET_CONTENT_ORIGIN")
 uploads_origin = Env.get("BUCKET_UPLOADS_ORIGIN")
 retained_origin = Env.get("BUCKET_RETAINED_ORIGIN")

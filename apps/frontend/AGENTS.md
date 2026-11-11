@@ -29,6 +29,7 @@ pnpm eslint --fix              # lint
 
 # Mobile (Capacitor): set origin + bundle id, then sync/open/run
 export VITE_ORIGIN=https://$(hostname):3000 VITE_APP_BUNDLE_ID=zone.homie.flirtual.beta  # local dev
+# (local dev also needs the API started with FRONTEND_ORIGIN=https://$(hostname):3000)
 # beta:  VITE_ORIGIN=https://beta.flirtual.dev VITE_APP_BUNDLE_ID=zone.homie.flirtual.beta
 # prod:  VITE_ORIGIN=https://flirtu.al VITE_APP_BUNDLE=zone.homie.flirtual.pwa
 pnpm cap sync
