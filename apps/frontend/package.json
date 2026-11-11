@@ -101,7 +101,7 @@
 		"exifreader": "^4.41.3",
 		"fast-fuzzy": "^1.12.0",
 		"flag-icons": "^7.5.0",
-		"i18next": "^26.3.6",
+		"i18next": "^27.0.0",
 		"i18next-icu": "^2.4.4",
 		"jose": "catalog:",
 		"lucide-react": "^1.24.0",
