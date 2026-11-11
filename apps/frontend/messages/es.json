@@ -334,7 +334,7 @@
 	"about": "Acerca de",
 	"press": "Prensa",
 	"branding": "Marca",
-	"copyright": "© {year} {brand_name}",
+	"copyright": "© {year} {legal_name}",
 	"developers": "Desarrolladores",
 	"mod_queue": "Cola de moderación",
 	"version": "{brand_name} {version}",

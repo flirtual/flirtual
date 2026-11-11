@@ -217,7 +217,7 @@ i18n
 
 		interpolation: {
 			escapeValue: false,
-			defaultVariables: { brand_name: brand.name }
+			defaultVariables: { brand_name: brand.name, legal_name: brand.legalName }
 		},
 	});
 

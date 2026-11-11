@@ -335,7 +335,7 @@
 	"press": "Imprensa",
 	"branding": "Marca",
 	"developers": "Programadores",
-	"copyright": "© {year} {brand_name}",
+	"copyright": "© {year} {legal_name}",
 	"version": "{brand_name} {version}",
 	"mod_queue": "Fila de moderação",
 	"search": "Pesquisa",

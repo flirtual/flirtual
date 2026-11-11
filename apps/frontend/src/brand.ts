@@ -12,6 +12,7 @@ function colorPair(value: string | undefined, fallback: Array<string>): ColorPai
 }
 
 export const name = import.meta.env.VITE_BRAND_NAME as string || defaults.name;
+export const legalName = import.meta.env.VITE_BRAND_LEGAL_NAME as string || name;
 
 export const dateColors = colorPair(import.meta.env.VITE_BRAND_DATE_COLORS as string, defaults.dateColors);
 export const dateDarkColors = colorPair(import.meta.env.VITE_BRAND_DATE_DARK_COLORS as string, defaults.dateDarkColors);

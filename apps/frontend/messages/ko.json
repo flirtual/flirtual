@@ -347,7 +347,7 @@
 	"press": "언론 보도",
 	"branding": "브랜드 자료",
 	"developers": "개발자",
-	"copyright": "© {year} {brand_name}",
+	"copyright": "© {year} {legal_name}",
 	"version": "{brand_name} {version}",
 	"open_minded": "개방적인",
 	"free_spirited": "자유로운 영혼",

@@ -43,7 +43,7 @@ defmodule Flirtual.Mailer do
 
     #{socials}#{dgettext("notifications", "unsubscribe")}: #{urls.unsubscribe}
 
-    © #{Date.utc_today().year} #{company()}
+    © #{Date.utc_today().year} #{Brand.legal_name()}
     #{address}\
     """
   end
@@ -298,7 +298,7 @@ defmodule Flirtual.Mailer do
             <a href="#{urls.unsubscribe}">#{dgettext("notifications", "unsubscribe")}</a>
           </p>
           <p>
-            &copy; #{Date.utc_today().year} #{company()}#{if Brand.legal_address(), do: "<br />\n#{Brand.legal_address()}"}
+            &copy; #{Date.utc_today().year} #{Brand.legal_name()}#{if Brand.legal_address(), do: "<br />\n#{Brand.legal_address()}"}
           </p>
         </div>
         <div class="gutter">&nbsp;</div>

@@ -129,6 +129,7 @@ end
 
 config :flirtual, :brand,
   name: Env.get("BRAND_NAME", default: "Flirtual"),
+  legal_name: Env.get("BRAND_LEGAL_NAME"),
   legal_address: Env.get("BRAND_LEGAL_ADDRESS"),
   date_colors: brand_colors.("BRAND_DATE_COLORS", {"#ff8975", "#e9658b"}),
   date_dark_colors: brand_colors.("BRAND_DATE_DARK_COLORS", {"#b24592", "#e9658b"}),

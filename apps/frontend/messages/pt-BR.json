@@ -380,7 +380,7 @@
 	"home": "Início",
 	"network_status": "Status da rede",
 	"ideas": "Ideias",
-	"copyright": "© {year} {brand_name}",
+	"copyright": "© {year} {legal_name}",
 	"version": "{brand_name} {version}",
 	"attributes_admin": "Atributos",
 	"unsudo": "Sair do sudo",

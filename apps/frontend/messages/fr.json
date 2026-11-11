@@ -335,7 +335,7 @@
 	"press": "Presse",
 	"branding": "Identité visuelle",
 	"developers": "Développeurs",
-	"copyright": "© {year} {brand_name}",
+	"copyright": "© {year} {legal_name}",
 	"version": "{brand_name} {version}",
 	"mod_queue": "File de modération",
 	"search": "Recherche",

@@ -353,7 +353,7 @@
 	"press": "Presse",
 	"branding": "Branding",
 	"developers": "Entwickler",
-	"copyright": "© {year} {brand_name}",
+	"copyright": "© {year} {legal_name}",
 	"version": "{brand_name} {version}",
 	"mod_queue": "Mod-Warteschlange",
 	"search": "Suche",

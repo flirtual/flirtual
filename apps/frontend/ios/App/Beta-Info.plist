@@ -31,7 +31,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>Your camera is used to capture and upload your profile picture.</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>© 2026 Flirtual</string>
+	<string>© 2026 $(VITE_BRAND_LEGAL_NAME:default=$(VITE_BRAND_NAME:default=Flirtual))</string>
 	<key>NSLocationDefaultAccuracyReduced</key>
 	<true/>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>

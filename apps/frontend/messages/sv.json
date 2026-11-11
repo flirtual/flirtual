@@ -342,7 +342,7 @@
 	"version": "{brand_name} {version}",
 	"mod_queue": "Modereringskö",
 	"search": "Sök",
-	"copyright": "© {year} {brand_name}",
+	"copyright": "© {year} {legal_name}",
 	"unsudo": "Avsluta sudo",
 	"next": "Nästa",
 	"unsaved_settings": "Osparade inställningar",

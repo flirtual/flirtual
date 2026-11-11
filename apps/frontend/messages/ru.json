@@ -335,7 +335,7 @@
 	"press": "Пресса",
 	"branding": "Фирменный стиль",
 	"developers": "Разработчикам",
-	"copyright": "© {year} {brand_name}",
+	"copyright": "© {year} {legal_name}",
 	"mod_queue": "Очередь модерации",
 	"search": "Поиск",
 	"attributes_admin": "Атрибуты",

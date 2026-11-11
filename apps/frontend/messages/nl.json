@@ -339,7 +339,7 @@
 	"press": "Pers",
 	"branding": "Huisstijl",
 	"developers": "Ontwikkelaars",
-	"copyright": "© {year} {brand_name}",
+	"copyright": "© {year} {legal_name}",
 	"version": "{brand_name} {version}",
 	"mod_queue": "Moderatiewachtrij",
 	"search": "Zoeken",
