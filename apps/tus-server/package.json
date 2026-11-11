@@ -16,7 +16,7 @@
 		"deploy:production": "wrangler deploy --env=production"
 	},
 	"dependencies": {
-		"signal-tus-server": "github:signalapp/tus-server#5cbbc5c42d1d126bb2c1b4f837b5103d5d8f5407"
+		"signal-tus-server": "github:signalapp/tus-server#34f243a7be536679483374d314b556801bc0a2f5"
 	},
 	"devDependencies": {
 		"@cloudflare/vitest-pool-workers": "catalog:",
