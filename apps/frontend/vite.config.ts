@@ -14,6 +14,7 @@ import { ViteImageOptimizer as imageOptimize } from "vite-plugin-image-optimizer
 
 import { targets } from "./src/targets.ts";
 import { hush } from "./vite-plugin-hush.ts";
+import { twemoji } from "./vite-plugin-twemoji.ts";
 
 const mkcertPaths = {
 	cert: "./certificates/localhost.pem",
@@ -120,6 +121,7 @@ export default defineConfig((config) => {
 				certDir: "./certificates",
 			}),
 			reactRouter(),
+			twemoji(),
 			imageOptimize({
 				cache: true,
 				cacheLocation: "./node_modules/.cache/vite-image-optimizer",

@@ -625,6 +625,9 @@ importers:
       '@eslint-react/eslint-plugin':
         specifier: 1.53.1
         version: 1.53.1(@typescript/typescript6@6.0.2)(eslint@9.39.5(jiti@2.7.0)(supports-color@10.2.2))(supports-color@10.2.2)(ts-api-utils@2.5.0(@typescript/typescript6@6.0.2))
+      '@ffaubert/twemoji':
+        specifier: 17.0.3
+        version: 17.0.3
       '@formatjs/icu-messageformat-parser':
         specifier: 3.5.22
         version: 3.5.22
@@ -2092,6 +2095,9 @@ packages:
   '@eslint/plugin-kit@0.4.1':
     resolution: {integrity: sha512-43/qtrDUokr7LJqoF2c3+RInu/t4zfrpYdoSDfYyhg52rwLV6TnOvdG4fXm7IkSB3wErkcmJS9iEhjVtOSEjjA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@ffaubert/twemoji@17.0.3':
+    resolution: {integrity: sha512-dfYBbstjMGQ5SCJPXE4l+WEjLE6FgwvCM9V6efmjU0IYrMGQfhhn+QQ5DWBAtJeUs+Tk8iE5qmMXipijnbgluA==}
 
   '@floating-ui/core@1.8.0':
     resolution: {integrity: sha512-0CIZ5itps/8x7BG8dEIhs53BvCUH2PCoogtakwRTut+Arm58sJooJ0AuZhLw2HJYIR5cMLNPBSS728sPho2khQ==}
@@ -10121,6 +10127,8 @@ snapshots:
     dependencies:
       '@eslint/core': 0.17.0
       levn: 0.4.1
+
+  '@ffaubert/twemoji@17.0.3': {}
 
   '@floating-ui/core@1.8.0':
     dependencies:
