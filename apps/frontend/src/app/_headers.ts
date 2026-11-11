@@ -86,8 +86,8 @@ const data = [
 						"*.freshworks.com",
 						"*.freshdesk.com",
 						// https://developers.google.com/recaptcha/docs/faq (Freshworks captcha)
-						"https://www.google.com/recaptcha/",
-						"https://www.gstatic.com/recaptcha/",
+						"www.google.com/recaptcha/",
+						"www.gstatic.com/recaptcha/",
 						// https://developers.cloudflare.com/turnstile/reference/content-security-policy/
 						"challenges.cloudflare.com",
 						// https://developers.cloudflare.com/web-analytics/
@@ -152,9 +152,9 @@ const data = [
 						"*.freshworks.com",
 						"*.freshdesk.com",
 						// https://developers.google.com/recaptcha/docs/faq (Freshworks captcha)
-						"https://www.google.com/recaptcha/",
+						"www.google.com/recaptcha/",
 						// https://github.com/passkeydeveloper/passkey-authenticator-aaguids
-						"raw.githubusercontent.com/passkeydeveloper/passkey-authenticator-aaguids/main/combined_aaguid.json",
+						"raw.githubusercontent.com/passkeydeveloper/",
 						// https://developers.cloudflare.com/web-analytics/
 						"cloudflareinsights.com",
 						"static.cloudflareinsights.com",
@@ -184,8 +184,8 @@ const data = [
 						// https://developers.cloudflare.com/turnstile/reference/content-security-policy/
 						"challenges.cloudflare.com",
 						// https://developers.google.com/recaptcha/docs/faq (Freshworks captcha)
-						"https://www.google.com/recaptcha/",
-						"https://recaptcha.google.com/recaptcha/",
+						"www.google.com/recaptcha/",
+						"recaptcha.google.com/recaptcha/",
 						// https://www.chargebee.com/docs/billing/2.0/hosted-capabilities/embedded-checkout
 						"chargebee.com",
 						"*.chargebee.com",
@@ -203,7 +203,6 @@ const data = [
 						// https://posthog.com/docs/advanced/content-security-policy
 						"*.posthog.com",
 					],
-					"child-src": ["'self'", "blob:"],
 					"upgrade-insecure-requests": [],
 					...(sentryReportTo
 						? {
@@ -278,6 +277,15 @@ const data = [
 	)
 	.join("\n\n");
 
+// https://developers.cloudflare.com/workers/static-assets/headers/: "Each line in the `_headers`
+// file has a 2,000 character limit." Cloudflare rejects the deploy otherwise, so fail the build.
+const maximumLineLength = 2000;
+
 export function loader() {
+	for (const line of data.split("\n")) {
+		if (line.length > maximumLineLength)
+			throw new Error(`_headers line is ${line.length} characters, over Cloudflare's ${maximumLineLength}: ${line.slice(0, 60)}…`);
+	}
+
 	return data;
 }
