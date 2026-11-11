@@ -7,6 +7,8 @@ def brandAccentColor = {
         : new groovy.json.JsonSlurper().parse(file("../../src/brand.defaults.json")).dateColors[1]
 }()
 
+def bundleId = { String fallback -> System.getenv("VITE_APP_BUNDLE_ID") ?: fallback }
+
 android {
     namespace "zone.homie.flirtual.pwa"
     compileSdk rootProject.ext.compileSdkVersion
@@ -33,11 +35,11 @@ android {
     productFlavors {
         production {
             dimension "environment"
-            applicationId "zone.homie.flirtual.pwa"
+            applicationId bundleId("zone.homie.flirtual.pwa")
         }
         beta {
             dimension "environment"
-            applicationId "zone.homie.flirtual.beta"
+            applicationId bundleId("zone.homie.flirtual.beta")
         }
     }
 

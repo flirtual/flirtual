@@ -12,16 +12,6 @@ function nativeVersion(path: string, pattern: RegExp) {
 	return [...versions][0] as string;
 }
 
-const androidFlavors: Record<string, string> = {
-	"zone.homie.flirtual.pwa": "production",
-	"zone.homie.flirtual.beta": "beta",
-};
-
-const iosSchemes: Record<string, string> = {
-	"zone.homie.flirtual.pwa": "Flirtual",
-	"zone.homie.flirtual.beta": "Flirtual Beta",
-};
-
 const brandDefaults = JSON.parse(readFileSync("src/brand.defaults.json", "utf8")) as { name: string };
 const brandName = process.env.VITE_BRAND_NAME || brandDefaults.name;
 
@@ -49,6 +39,8 @@ function config(): CapacitorConfig {
 	const appId = process.env.VITE_APP_BUNDLE_ID;
 	invariant(appId, "VITE_APP_BUNDLE_ID is not set");
 
+	const beta = appId.endsWith(".beta");
+
 	const apiUrl = process.env.VITE_API_URL;
 	invariant(apiUrl, "VITE_API_URL is not set");
 
@@ -69,11 +61,11 @@ function config(): CapacitorConfig {
 			allowNavigation: ["flirtual.com"], // migration prep
 		},
 		android: {
-			flavor: androidFlavors[appId],
+			flavor: beta ? "beta" : "production",
 			appendUserAgent: `${brandName}-Native/${androidVersion}`,
 		},
 		ios: {
-			scheme: iosSchemes[appId],
+			scheme: beta ? "Flirtual Beta" : "Flirtual",
 			appendUserAgent: `${brandName}-Native/${iosVersion}`,
 		},
 		appendUserAgent: `${brandName}-Native`,

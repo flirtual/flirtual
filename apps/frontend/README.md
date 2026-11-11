@@ -64,4 +64,4 @@ Tip: Windows Subsystem for Linux (WSL) doesn't work nicely with Android Studio, 
 
 * Build and run the app: `pnpm cap run android`.
 
-* You can view the client logs with `adb logcat --pid=$(adb shell pidof -s zone.homie.flirtual.pwa)`.
+* You can view the client logs with `adb logcat --pid=$(adb shell pidof -s $VITE_APP_BUNDLE_ID)`.

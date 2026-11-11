@@ -22,7 +22,8 @@ concurrency:
 env:
   VITE_ORIGIN: ${{ inputs.channel == 'production' && 'https://flirtu.al' || 'https://beta.flirtual.dev' }}
   VITE_API_URL: ${{ inputs.channel == 'production' && 'https://api.flirtu.al/v1/' || 'https://beta-api.flirtual.dev/v1/' }}
-  VITE_APP_BUNDLE_ID: ${{ inputs.channel == 'production' && 'zone.homie.flirtual.pwa' || 'zone.homie.flirtual.beta' }}
+  VITE_APP_BUNDLE_ID: ${{ inputs.channel == 'production' && (vars.APP_BUNDLE_ID_PRODUCTION || 'zone.homie.flirtual.pwa') || (vars.APP_BUNDLE_ID_BETA || 'zone.homie.flirtual.beta') }}
+  APPLE_TEAM_ID: ${{ vars.APPLE_TEAM_ID || '997W5KLYVR' }}
   VITE_APP_STORE_ID: "6450485324"
   VITE_BRAND_NAME: ${{ vars.VITE_BRAND_NAME }}
   VITE_BRAND_LEGAL_NAME: ${{ vars.VITE_BRAND_LEGAL_NAME }}
@@ -243,6 +244,8 @@ jobs:
             -destination generic/platform=iOS \
             -archivePath "$RUNNER_TEMP/Flirtual.xcarchive" \
             CURRENT_PROJECT_VERSION=$(( GITHUB_RUN_NUMBER + ${BUILD_NUMBER_OFFSET:-100} )) \
+            VITE_APP_BUNDLE_ID="$VITE_APP_BUNDLE_ID" \
+            APPLE_TEAM_ID="$APPLE_TEAM_ID" \
             VITE_BRAND_NAME="$VITE_BRAND_NAME" \
             VITE_BRAND_LEGAL_NAME="$VITE_BRAND_LEGAL_NAME" \
             VITE_BRAND_DATE_COLORS="$VITE_BRAND_DATE_COLORS" \
@@ -253,8 +256,10 @@ jobs:
 
       - name: Upload to App Store Connect
         working-directory: apps/frontend/ios/App
+        env:
+          PROFILE_PREFIX: ${{ format('{0}{1}', vars.VITE_BRAND_NAME || 'Flirtual', inputs.channel != 'production' && ' Beta' || '') }}
         run: |
-          cat > "$RUNNER_TEMP/ExportOptions.plist" <<'EOF'
+          cat > "$RUNNER_TEMP/ExportOptions.plist" <<EOF
           <?xml version="1.0" encoding="UTF-8"?>
           <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
           <plist version="1.0">
@@ -269,17 +274,13 @@ jobs:
             <string>Apple Distribution</string>
             <key>provisioningProfiles</key>
             <dict>
-              <key>zone.homie.flirtual.pwa</key>
-              <string>Flirtual App Store</string>
-              <key>zone.homie.flirtual.pwa.watch</key>
-              <string>Flirtual Watch App Store</string>
-              <key>zone.homie.flirtual.beta</key>
-              <string>Flirtual Beta App Store</string>
-              <key>zone.homie.flirtual.beta.watch</key>
-              <string>Flirtual Beta Watch App Store</string>
+              <key>$VITE_APP_BUNDLE_ID</key>
+              <string>$PROFILE_PREFIX App Store</string>
+              <key>$VITE_APP_BUNDLE_ID.watch</key>
+              <string>$PROFILE_PREFIX Watch App Store</string>
             </dict>
             <key>teamID</key>
-            <string>997W5KLYVR</string>
+            <string>$APPLE_TEAM_ID</string>
             <key>manageAppVersionAndBuildNumber</key>
             <true/>
           </dict>

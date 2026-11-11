@@ -14,7 +14,7 @@
 		"preview": "sh -c 'name=${1:-$(whoami)} && pnpm --loglevel silent build:preview $name && wrangler versions upload --env=canary --preview-alias=\"$name\"' --",
 		"canary": "pnpm --loglevel silent build:preview canary && wrangler deploy --env=canary --old-asset-ttl=7776000",
 		"android:build": "cap sync android && cd ./android && ./gradlew build",
-		"android:uninstall": "adb uninstall zone.homie.flirtual.pwa",
+		"android:uninstall": "adb uninstall ${VITE_APP_BUNDLE_ID:-zone.homie.flirtual.pwa}",
 		"android:install": "adb install ./android/app/build/outputs/apk/debug/app-debug.apk",
 		"clean": "rm -rf node_modules dist .react-router .sonda && pnpm install --force",
 		"test": "vitest run"

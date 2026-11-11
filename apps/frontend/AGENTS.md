@@ -31,7 +31,10 @@ pnpm eslint --fix              # lint
 export VITE_ORIGIN=https://$(hostname):3000 VITE_APP_BUNDLE_ID=zone.homie.flirtual.beta  # local dev
 # (local dev also needs the API started with FRONTEND_ORIGIN=https://$(hostname):3000)
 # beta:  VITE_ORIGIN=https://beta.flirtual.dev VITE_APP_BUNDLE_ID=zone.homie.flirtual.beta
-# prod:  VITE_ORIGIN=https://flirtu.al VITE_APP_BUNDLE=zone.homie.flirtual.pwa
+# prod:  VITE_ORIGIN=https://flirtu.al VITE_APP_BUNDLE_ID=zone.homie.flirtual.pwa
+# An ID ending in .beta builds the Beta app.
+# Gradle reads VITE_APP_BUNDLE_ID from the environment; xcodebuild needs it (and APPLE_TEAM_ID) as
+# build settings, e.g. `xcodebuild ... VITE_APP_BUNDLE_ID=$VITE_APP_BUNDLE_ID`.
 pnpm cap sync
 pnpm cap open ios | open android | run ios | run android
 ```
