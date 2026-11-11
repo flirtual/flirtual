@@ -74,7 +74,7 @@ export const Conversation = withSuspense<{ id: string }>(({ id: conversationId }
 					state={{ conversationId }}
 				>
 					<UserAvatar
-						className="mb-0.25 rounded-full"
+						className="mb-0.25 rounded-full data-fallback:bg-none"
 						height={40}
 						user={user}
 						variant="icon"
