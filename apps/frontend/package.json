@@ -67,7 +67,7 @@
 		"@revenuecat/purchases-capacitor": "13.7.6",
 		"@sableclient/twemoji-font": "1.0.4",
 		"@sentry/react-router": "^11.0.0",
-		"@shgysk8zer0/polyfills": "0.8.6",
+		"@shgysk8zer0/polyfills": "0.8.7",
 		"@talkjs/core": "1.12.1",
 		"@talkjs/react-components": "0.3.13",
 		"@tanstack/react-query": "^5.101.2",
