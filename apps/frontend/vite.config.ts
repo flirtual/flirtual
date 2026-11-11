@@ -1,6 +1,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import { hostname as osHostname } from "node:os";
 
+import reactCompiler from "@acusti/vite-plugin-react-compiler";
 import { reactRouter } from "@react-router/dev/vite";
 import { sentryReactRouter } from "@sentry/react-router/vite";
 import tailwindcss from "@tailwindcss/vite";
@@ -121,6 +122,7 @@ export default defineConfig((config) => {
 				certDir: "./certificates",
 			}),
 			reactRouter(),
+			reactCompiler({ compiler: { reportDiagnostics: true } }),
 			twemoji(),
 			imageOptimize({
 				cache: true,
