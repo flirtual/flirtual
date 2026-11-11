@@ -1,11 +1,13 @@
 apply plugin: 'com.android.application'
 
+def brandDefaults = new groovy.json.JsonSlurper().parse(file("../../src/brand.defaults.json"))
+
 def brandAccentColor = {
     def colors = (System.getenv("VITE_BRAND_DATE_COLORS") ?: "").split(",")*.trim().findAll { it }
-    colors.size() == 2
-        ? colors[1]
-        : new groovy.json.JsonSlurper().parse(file("../../src/brand.defaults.json")).dateColors[1]
+    colors.size() == 2 ? colors[1] : brandDefaults.dateColors[1]
 }()
+
+def brandName = System.getenv("VITE_BRAND_NAME") ?: brandDefaults.name
 
 def bundleId = { String fallback -> System.getenv("VITE_APP_BUNDLE_ID") ?: fallback }
 
@@ -19,6 +21,9 @@ android {
 
     defaultConfig {
         resValue "color", "brand", brandAccentColor
+        resValue "string", "brand_name", brandName
+        resValue "string", "app_name", brandName
+        resValue "string", "title_activity_main", brandName
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode System.getenv("CI_VERSION_CODE") ? System.getenv("CI_VERSION_CODE").toInteger() : 1
@@ -40,6 +45,8 @@ android {
         beta {
             dimension "environment"
             applicationId bundleId("zone.homie.flirtual.beta")
+            resValue "string", "app_name", "$brandName Beta"
+            resValue "string", "title_activity_main", "$brandName Beta"
         }
     }
 

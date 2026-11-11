@@ -71,7 +71,7 @@ public class MainActivity extends BridgeActivity {
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(
-                    "flirtual", "Flirtual", NotificationManager.IMPORTANCE_HIGH);
+                    "flirtual", getString(R.string.brand_name), NotificationManager.IMPORTANCE_HIGH);
             NotificationManager manager = getSystemService(NotificationManager.class);
             manager.createNotificationChannel(channel);
         }

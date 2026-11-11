@@ -643,7 +643,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "$(APPLE_TEAM_ID:default=997W5KLYVR)";
 				INFOPLIST_FILE = "Beta-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Flirtual Beta";
+				INFOPLIST_KEY_CFBundleDisplayName = "$(VITE_BRAND_NAME:default=Flirtual) Beta";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -668,7 +668,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "$(APPLE_TEAM_ID:default=997W5KLYVR)";
 				INFOPLIST_FILE = "Beta-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Flirtual Beta";
+				INFOPLIST_KEY_CFBundleDisplayName = "$(VITE_BRAND_NAME:default=Flirtual) Beta";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -828,7 +828,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "$(APPLE_TEAM_ID:default=997W5KLYVR)";
 				INFOPLIST_FILE = App/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Flirtual;
+				INFOPLIST_KEY_CFBundleDisplayName = "$(VITE_BRAND_NAME:default=Flirtual)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -853,7 +853,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "$(APPLE_TEAM_ID:default=997W5KLYVR)";
 				INFOPLIST_FILE = App/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Flirtual;
+				INFOPLIST_KEY_CFBundleDisplayName = "$(VITE_BRAND_NAME:default=Flirtual)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
