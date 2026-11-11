@@ -133,7 +133,7 @@
 		"wretch": "^3.0.9"
 	},
 	"devDependencies": {
-		"@acusti/vite-plugin-react-compiler": "^0.11.0",
+		"@acusti/vite-plugin-react-compiler": "0.11.0",
 		"@ariesclark/eslint-config": "catalog:",
 		"@capacitor/cli": "8.5.3",
 		"@cloudflare/vitest-pool-workers": "catalog:",
