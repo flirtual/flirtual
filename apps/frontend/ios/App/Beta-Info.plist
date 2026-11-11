@@ -39,7 +39,7 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Your location is used to show how close other members are. Your exact location is always private.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Flirtual needs permission to download images.</string>
+	<string>Your photo library is used to save the images you download.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
