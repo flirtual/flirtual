@@ -36,8 +36,8 @@ export default async function handleRequest(
 	});
 }
 
-export function handleError(
-	error: unknown,
-) {
-	throw error;
+// Exporting this "will disable the built-in error logging":
+// https://reactrouter.com/api/framework-conventions/entry.server.tsx
+export function handleError(error: unknown) {
+	console.error(error);
 }
