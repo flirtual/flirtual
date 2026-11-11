@@ -677,8 +677,8 @@ importers:
         specifier: 'catalog:'
         version: 1.0.0-beta.28(@types/node@26.6.6)
       emoji-picker-element:
-        specifier: 1.26.3
-        version: 1.26.3
+        specifier: 1.29.1
+        version: 1.29.1
       eslint:
         specifier: 'catalog:'
         version: 9.39.5(jiti@2.7.0)(supports-color@10.2.2)
@@ -6033,8 +6033,8 @@ packages:
     resolution: {integrity: sha512-wkgGT6kugeQk/P6VZ/f4T+4HB41BVgNBq5CDIZVbQ02nvTVqAiVTbskxxu3eA/X96lMlfYOwnLQpN2v5E1zDEg==}
     engines: {node: '>= 0.4.0'}
 
-  emoji-picker-element@1.26.3:
-    resolution: {integrity: sha512-fOMG44d/3OqTe1pPqlu5H4ZtWg7gK4Le6Bt24JTKtDyce5+EO3Mo8WA95cKHbPSsSsg7ehM12M1x3Y6U6fgvTQ==}
+  emoji-picker-element@1.29.1:
+    resolution: {integrity: sha512-TOiHzu9Dqib3x4MwcAi3wi3RdyT4SoeB4b15AvH1ks4SBwTl7DeebhZ0d3x6dNi4XfNU7IGRZ7NBQllj0RqwrQ==}
 
   emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
@@ -13848,7 +13848,7 @@ snapshots:
     dependencies:
       sax: 1.1.4
 
-  emoji-picker-element@1.26.3: {}
+  emoji-picker-element@1.29.1: {}
 
   emoji-regex@8.0.0: {}
 
