@@ -418,8 +418,8 @@ importers:
         specifier: ^8.2.0
         version: 8.5.1(@typescript/typescript6@6.0.2)(react-router@8.5.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(supports-color@10.2.2)
       '@revenuecat/purchases-capacitor':
-        specifier: 13.7.6
-        version: 13.7.6(@capacitor/core@8.5.3)
+        specifier: 14.1.0
+        version: 14.1.0(@capacitor/core@8.5.3)
       '@sableclient/twemoji-font':
         specifier: 1.0.4
         version: 1.0.4
@@ -4356,13 +4356,13 @@ packages:
   '@remix-run/route-pattern@0.22.1':
     resolution: {integrity: sha512-czdGJWh09Lapvcqt7Vb09KlrU2PhRJ8xQaI+AItTuD9aDJ5MAgxnS38lnys6Ll+6RJEqPiaUqTwIQhVLwFvv+w==}
 
-  '@revenuecat/purchases-capacitor@13.7.6':
-    resolution: {integrity: sha512-Ynwsno3yhW1QbfICVlx8jXwmnVV933ADSl+d0kCV56tENxb4kwT7lXLReCc7HmrbVs2cfGaLYLEAVF8zYzREnw==}
+  '@revenuecat/purchases-capacitor@14.1.0':
+    resolution: {integrity: sha512-TnJF5DZFtg73ILxoyYQj2znq2fOwEmA5GaBCOvrcUwdqWXFL4p6ja3ZOne+i9eY8JAUvfijt2DVEeHL5gosl4A==}
     peerDependencies:
       '@capacitor/core': '>=8.0.0'
 
-  '@revenuecat/purchases-typescript-internal-esm@19.15.0':
-    resolution: {integrity: sha512-OUTgB/sqKKr4Wu/u1MT9dYWjc2mw1FRgwes4y/xyboQb781rDZ3yy7ICb8u+B/6bMDG7s0EzcUPLRLNdRz1bJw==}
+  '@revenuecat/purchases-typescript-internal-esm@20.1.0':
+    resolution: {integrity: sha512-v5m80eNfQ1mnDJJoR12+CwKyyvH/gaUQnd7QbqpCWEt+VsNlfaNvNxACyaaVlYH+5MTz47xmqrsnnOEBqq5z0Q==}
 
   '@rolldown/binding-android-arm-eabi@1.2.16':
     resolution: {integrity: sha512-ia3DwAs0OsMGS7+IConptSiyk9pEXkOx/AbJ2n/lAGxH3QkWQus1t8d7gnAT38FCU2sQu8lUbeR6AiZFv4JxaA==}
@@ -12103,12 +12103,12 @@ snapshots:
 
   '@remix-run/route-pattern@0.22.1': {}
 
-  '@revenuecat/purchases-capacitor@13.7.6(@capacitor/core@8.5.3)':
+  '@revenuecat/purchases-capacitor@14.1.0(@capacitor/core@8.5.3)':
     dependencies:
       '@capacitor/core': 8.5.3
-      '@revenuecat/purchases-typescript-internal-esm': 19.15.0
+      '@revenuecat/purchases-typescript-internal-esm': 20.1.0
 
-  '@revenuecat/purchases-typescript-internal-esm@19.15.0': {}
+  '@revenuecat/purchases-typescript-internal-esm@20.1.0': {}
 
   '@rolldown/binding-android-arm-eabi@1.2.16':
     optional: true
