@@ -1,0 +1,104 @@
+@import "@sableclient/twemoji-font";
+@reference "../../app/index.css";
+
+/*
+ * Styles for markup TalkJS renders itself (the chatbox, message list, editor and suggestion bars).
+ * Our own theme components are styled in their JSX. TalkJS's CSS is unlayered, so these rules
+ * are too, and use the app's tokens through @apply.
+ */
+
+[data-chatbox] .t-chatbox {
+	/* Twemoji after the text font, which keeps digits, # and * (the font has its own glyphs for them). */
+	--t-font-family: "Nunito Variable", Twemoji, sans-serif;
+	--t-line-height-base: 1.37;
+	--t-color-bg: transparent;
+	--t-color-brand-primary: var(--theme-2);
+	--t-color-brand-primary-hover: var(--theme-2);
+	--t-color-brand-primary-active: var(--theme-1);
+	--t-color-focus-ring: var(--theme-2);
+	--t-color-focus-ring-strong: var(--theme-2);
+
+	@apply size-full rounded-none border-0 bg-transparent text-black-80 dark:text-white-20 vision:text-black-80;
+	font-size: var(--t-font-size-base);
+}
+
+/*
+ * A stuck avatar rests 8px below the top. Sticky offsets measure from inside the 10px padding, so
+ * Message's is 8px - 10px.
+ */
+[data-chatbox] .t-message-list {
+	padding: 10px 18px;
+}
+
+[data-chatbox] .t-message-list:has(> .t-message-group:only-child > [data-match]:only-child) {
+	@apply justify-center;
+
+	& [data-match] {
+		@apply mt-0!;
+	}
+}
+
+/* Classic groups messages by sender alone; TalkJS also starts a new group after 60 seconds. */
+[data-chatbox] .t-message-group > .chat-message:last-child {
+	@apply mt-6;
+}
+
+[data-chatbox] .t-message-group > .chat-message:not(:last-child) .chat-avatar,
+[data-chatbox] .t-message-group:is(
+	[t-group-type="other"]:has(+ [t-group-type="other"], + [t-group-type="divider"] + [t-group-type="other"]),
+	[t-group-type="own"]:has(+ [t-group-type="own"], + [t-group-type="divider"] + [t-group-type="own"])
+) > .chat-message:last-child .chat-avatar {
+	@apply invisible;
+}
+
+[data-chatbox] .t-message-group:is(
+	[t-group-type="other"]:has(+ [t-group-type="other"], + [t-group-type="divider"] + [t-group-type="other"]),
+	[t-group-type="own"]:has(+ [t-group-type="own"], + [t-group-type="divider"] + [t-group-type="own"])
+) > .chat-message:last-child {
+	@apply mt-2;
+}
+
+[data-chatbox] .t-emoji-picker emoji-picker {
+	--emoji-font-family: Twemoji;
+}
+
+[data-chatbox] .chat-message .t-reaction-picker {
+	@apply h-[200px] w-[300px] overflow-hidden rounded-lg shadow-brand-1;
+}
+
+/* The avatar spans its message group and stays at the top of it while scrolling (see Message). */
+[data-chatbox] .t-message-group {
+	@apply relative;
+}
+
+[data-chatbox] .chat-editor .t-text-input {
+	@apply block max-h-[9em] overflow-y-auto rounded-lg bg-white-30 py-4 pr-11 pl-4 break-words whitespace-pre-wrap text-black-80 shadow-brand-inset outline-none dark:bg-black-60 dark:text-white-20 vision:bg-white-30/70 vision:text-black-80;
+
+	& p {
+		@apply m-0;
+	}
+}
+
+[data-chatbox] .chat-message-field .t-emoji-suggest-bar {
+	@apply z-1 -mt-[60px] flex h-[60px] w-full shrink-0 items-center overflow-x-auto overflow-y-hidden overscroll-contain bg-white-20 p-2 dark:bg-black-70;
+
+	& button {
+		@apply flex size-[calc(1.375rem+1rem)] cursor-pointer items-center justify-center rounded-lg border-0 bg-transparent px-1 text-[1.375rem];
+	}
+
+	& button[t-focused] {
+		@apply bg-white-30 dark:bg-black-60;
+	}
+}
+
+[data-chatbox] .chat-message-field .t-mention-suggest-list {
+	@apply flex max-h-[150px] max-w-full min-w-[120px] flex-col overflow-x-auto rounded-lg bg-white-20 p-1 shadow-brand-1 dark:bg-black-70;
+
+	& button {
+		@apply flex w-full cursor-pointer items-center rounded-sm border-0 bg-transparent px-1.5 py-2 text-left text-xs whitespace-nowrap;
+	}
+
+	& :is(button:hover, button:focus, button.focused) {
+		@apply bg-white-30 outline-none dark:bg-black-60;
+	}
+}

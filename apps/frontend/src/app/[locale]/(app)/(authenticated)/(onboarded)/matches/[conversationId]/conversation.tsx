@@ -5,6 +5,7 @@ import { twMerge } from "tailwind-merge";
 import { withSuspense } from "with-suspense";
 
 import { ButtonLink } from "~/components/button";
+import { ConversationChatbox } from "~/components/conversation-chatbox";
 import { InlineLink } from "~/components/inline-link";
 import { ProfileDropdown } from "~/components/profile/dropdown";
 import { UserAvatar } from "~/components/user-avatar";
@@ -12,7 +13,6 @@ import { vrchat } from "~/features";
 import { useBack } from "~/hooks/use-back";
 import { useConversation } from "~/hooks/use-conversations";
 import { useSession } from "~/hooks/use-session";
-import { ConversationChatbox } from "~/hooks/use-talkjs";
 import { useUser } from "~/hooks/use-user";
 import { urls } from "~/urls";
 
@@ -95,7 +95,7 @@ export const Conversation = withSuspense<{ id: string }>(({ id: conversationId }
 						)}
 				</div>
 			</div>
-			<ConversationChatbox conversationId={conversationId} />
+			<ConversationChatbox conversationId={conversationId} kind={conversation.kind} participant={user} />
 		</div>
 	);
 }, {

@@ -81,7 +81,7 @@ const data = [
 						"'self'",
 						"'unsafe-inline'",
 						// https://talkjs.com/docs/Features/Security_Settings/Content_Security_Policy/
-						"*.talkjs.com",
+						"cdn.jsdelivr.net",
 						// https://developers.freshdesk.com/widget-api/
 						"*.freshworks.com",
 						"*.freshdesk.com",
@@ -117,6 +117,10 @@ const data = [
 						// https://www.chargebee.com/docs/billing/2.0/hosted-capabilities/embedded-checkout
 						"*.chargebee.com",
 						"cb-invoice-logos-prod.s3.us-east-1.amazonaws.com",
+						// https://talkjs.com/docs/Features/Security_Settings/Content_Security_Policy/
+						"firebasestorage.googleapis.com",
+						"*.tjstatic.net",
+						"maps.googleapis.com",
 						// https://posthog.com/docs/advanced/content-security-policy
 						"*.posthog.com",
 					],
@@ -127,6 +131,8 @@ const data = [
 						...bucketOrigins.map((origin) => new URL(origin).host),
 						// https://talkjs.com/docs/Features/Security_Settings/Content_Security_Policy/
 						"*.talkjs.com",
+						"firebasestorage.googleapis.com",
+						"tjstatic.net",
 						// https://vrcdn.live/
 						"stream.vrcdn.live",
 						// https://posthog.com/docs/advanced/content-security-policy
@@ -140,6 +146,7 @@ const data = [
 						// https://talkjs.com/docs/Features/Security_Settings/Content_Security_Policy/
 						"*.talkjs.com",
 						"wss://*.talkjs.com",
+						"cdn.jsdelivr.net",
 						"capture.trackjs.com",
 						// https://developers.freshdesk.com/widget-api/
 						"*.freshworks.com",
@@ -179,8 +186,6 @@ const data = [
 						// https://developers.google.com/recaptcha/docs/faq (Freshworks captcha)
 						"https://www.google.com/recaptcha/",
 						"https://recaptcha.google.com/recaptcha/",
-						// https://talkjs.com/docs/Features/Security_Settings/Content_Security_Policy/
-						"*.talkjs.com",
 						// https://www.chargebee.com/docs/billing/2.0/hosted-capabilities/embedded-checkout
 						"chargebee.com",
 						"*.chargebee.com",

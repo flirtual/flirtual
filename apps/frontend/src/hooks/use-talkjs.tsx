@@ -1,22 +1,18 @@
 /* eslint-disable react-refresh/only-export-components */
+import { getTalkSession } from "@talkjs/core";
+import type { ConversationSnapshot, TalkSession } from "@talkjs/core";
 import ms from "ms" with { type: "macro" };
 import {
 	createContext,
-
 	use,
 	useEffect,
 	useMemo,
 	useState
 } from "react";
-import type { CSSProperties, Dispatch, FC, PropsWithChildren, SetStateAction } from "react";
-import type React from "react";
-import { useTranslation } from "react-i18next";
+import type { Dispatch, FC, PropsWithChildren, SetStateAction } from "react";
 import { doNothing } from "remeda";
-import Talk from "talkjs";
-import type { ChatboxOptions } from "talkjs/types/talk.types";
 
 import { talkjsAppId } from "~/const";
-import { useLocale } from "~/i18n";
 import { conversationsKey, invalidate, queryClient, sessionFetcher, sessionKey } from "~/query";
 import EmojiBonk from "~/static/emoji/bonk.gif";
 import EmojiChad from "~/static/emoji/chad.png";
@@ -37,20 +33,15 @@ import EmojiThumbsup from "~/static/emoji/thumbsup.png";
 import EmojiYonk from "~/static/emoji/yonk.png";
 import EmojiFlirtual from "~/static/icon-color.svg?w=64&h=64&fit=contain&background=transparent&imagetools";
 import EmojiDeveloper from "~/static/mascot-hardhat.png?w=64&h=64&fit=contain&background=transparent&imagetools";
-import { absoluteUrl } from "~/urls";
 import { emptyArray } from "~/utilities";
 
-import { useBreakpoint } from "./use-breakpoint";
-import { useDevice } from "./use-device";
 import { warnOnce } from "./use-log";
-import { usePreferences } from "./use-preferences";
 import { useOptionalSession } from "./use-session";
-import { useTheme } from "./use-theme";
 
-const TalkjsContext = createContext<Talk.Session | null>(null);
+const TalkjsContext = createContext<TalkSession | null>(null);
 const UnreadConversationContext = createContext<{
-	unreadConversations: Array<Talk.UnreadConversation>;
-	setUnreadConversations: Dispatch<SetStateAction<Array<Talk.UnreadConversation>>>;
+	unreadConversations: Array<ConversationSnapshot>;
+	setUnreadConversations: Dispatch<SetStateAction<Array<ConversationSnapshot>>>;
 }>({ unreadConversations: emptyArray, setUnreadConversations: doNothing });
 
 function expiresAt(token: string) {
@@ -67,9 +58,8 @@ function expiresAt(token: string) {
 let talkjsToken: string | null = null;
 let talkjsTokenExpiresAt = 0;
 
-// Talk.js asks for a token ~1/s and never asks again once we reject, so cache by
-// the token's own expiry and never throw. `mutate(sessionKey(), …)` keeps the
-// query fresh with a stale token.
+// `onNeedToken` must retry on its own: https://talkjs.com/docs/Data_APIs/JavaScript/TalkSession/
+// `mutate(sessionKey(), …)` keeps the query fresh with a stale token, so cache by the token's expiry.
 async function fetchTalkjsToken() {
 	if (talkjsToken && Date.now() < talkjsTokenExpiresAt - ms("30s")) return talkjsToken;
 
@@ -98,46 +88,45 @@ async function fetchTalkjsToken() {
 	}
 }
 
-const TalkjsProvider_: React.FC<React.PropsWithChildren> = ({ children }) => {
-	const [ready, setReady] = useState(false);
+// `getTalkSession` returns one shared session per app and user, so the `<Chatbox>` reuses this
+// one and its token.
+function talkSession(userId: string) {
+	const session = getTalkSession({ appId: talkjsAppId, userId });
+	session.onNeedToken = () => void fetchTalkjsToken().then((token) => session.setToken(token));
+
+	return session;
+}
+
+// The navigation badge stops counting at 99.
+const unreadConversationLimit = 100;
+
+const TalkjsProvider_: FC<PropsWithChildren> = ({ children }) => {
 	const authSession = useOptionalSession();
-
-	const [unreadConversations, setUnreadConversations] = useState<Array<Talk.UnreadConversation>>([]);
-
-	useEffect(() => void Talk.ready.then(() => setReady(true)), []);
-
 	const talkjsUserId = authSession?.user.talkjsId;
 
-	const session = useMemo(() => {
-		if (!talkjsUserId || !ready) return null;
+	const [unreadConversations, setUnreadConversations] = useState<Array<ConversationSnapshot>>([]);
 
-		return new Talk.Session({
-			appId: talkjsAppId,
-			me: new Talk.User(talkjsUserId),
-			tokenFetcher: fetchTalkjsToken
-		});
-	}, [talkjsUserId, ready]);
+	const session = useMemo(() => talkjsUserId ? talkSession(talkjsUserId) : null, [talkjsUserId]);
 
 	useEffect(() => {
 		setUnreadConversations([]);
 		if (!session) return;
 
-		const messageSubscription = session.onMessage(() => invalidate({ queryKey: conversationsKey() }));
+		const conversationSubscription = session.subscribeConversations(() => invalidate({ queryKey: conversationsKey() }));
 
-		const unreadSubscription = session.unreads.onChange((unreadConversations) => {
-			invalidate({ queryKey: conversationsKey() });
-			setUnreadConversations(unreadConversations);
-		});
+		const unreadSubscription = session.subscribeConversations(
+			{ filter: { isUnread: true } },
+			(snapshot, loadedAll) => {
+				setUnreadConversations(snapshot);
+				if (!loadedAll && snapshot.length < unreadConversationLimit) void unreadSubscription.loadMore(30);
+			}
+		);
 
 		return () => {
 			unreadSubscription.unsubscribe();
-			messageSubscription.unsubscribe();
+			conversationSubscription.unsubscribe();
 		};
 	}, [session]);
-
-	// useEffect(() => {
-	// 	return () => session?.destroy();
-	// }, [session]);
 
 	const unreadConversationContext = useMemo(() => ({
 		unreadConversations,
@@ -208,92 +197,10 @@ export const customEmojis = Object.fromEntries(
 	emojis.map(({ name, url, hidden = false }) => [
 		`:${name}:`,
 		{
-			url: absoluteUrl(url).href,
+			url,
 			hidden
 		}
 	])
 );
 
-export const ConversationChatbox: React.FC<
-	{
-		conversationId: string | null;
-	} & React.ComponentProps<"div">
-> = ({ conversationId, ...props }) => {
-	const session = useTalkjs();
-	const [element, setElement] = useState<HTMLDivElement | null>(null);
-
-	const [theme] = useTheme();
-	const { native, vision, nativeNavigation } = useDevice();
-	const split = useBreakpoint("split");
-	const { t } = useTranslation();
-	const [locale] = useLocale();
-	const [fontSize] = usePreferences<number>("font_size", 16);
-
-	const chatbox = useMemo(() => {
-		if (!session) return null;
-
-		return session.createChatbox({
-			theme: {
-				name: vision
-					? "vision"
-					: theme,
-				custom: {
-					language: locale,
-					fontSize: `${fontSize}px`,
-					matchMessage: t("talkjs_match_message"),
-					inputPlaceholder: t("talkjs_input_placeholder")
-				}
-			},
-			messageField: { spellcheck: true, enterSendsMessage: !native },
-			customEmojis
-		} as ChatboxOptions);
-	}, [session, theme, vision, locale, fontSize, t, native]);
-
-	const conversation = useMemo(() => {
-		if (!session || !conversationId) return null;
-		return session.getOrCreateConversation(conversationId);
-	}, [session, conversationId]);
-
-	const height = useMemo(() => {
-		if (!element) return "0px";
-		const unit = CSS.supports("height", "100dvh") ? "dvh" : "vh";
-		if (vision) return `calc(100${unit} - 8.125rem)`;
-
-		const header = split
-			? "calc(var(--safe-area-inset-top, 0rem) + 4rem)"
-			: "max(var(--status-bar-height, 0rem), calc(max(calc(var(--status-bar-inset-top, var(--safe-area-inset-top, 0rem)) + 0.25rem), 0.75rem) + 3.375rem))";
-		// Natively, the composer's own padding sits in the safe area, overlapping the space reserved for
-		// it. Above a tab bar along the bottom, that padding counts towards the gap kept from the bar.
-		const below = nativeNavigation
-			? "max(calc(var(--safe-area-inset-bottom, 0rem) - 0.75rem + var(--tab-bar-gap, 0rem)), 0rem)"
-			: "calc(max(calc(var(--safe-area-inset-bottom, 0rem) - 0.25rem), 0.5rem) + 4rem)";
-
-		return `calc(100${unit} - ${header} - ${below})`;
-	}, [element, vision, nativeNavigation, split]);
-
-	useEffect(() => {
-		if (!chatbox || !conversation) return;
-		void chatbox.select(conversation);
-	}, [chatbox, conversation]);
-
-	useEffect(() => {
-		if (!element) return;
-
-		void chatbox?.mount(element);
-		return () => chatbox?.destroy();
-	}, [chatbox, element]);
-
-	return (
-		<div
-			data-block
-			style={
-				{
-					height
-				} as CSSProperties
-			}
-			className="relative w-full overflow-hidden bg-white-20 dark:bg-black-70 vision:bg-transparent native-nav:-mb-[min(var(--safe-area-inset-bottom,0rem),0.75rem)] tab-bar-bottom:mb-0 desktop:mb-0 desktop:max-h-152 desktop:rounded-xl desktop:pt-0 desktop:before:pointer-events-none desktop:before:absolute desktop:before:inset-0 desktop:before:z-10 desktop:before:size-full desktop:before:rounded-xl desktop:before:shadow-brand-inset desktop:before:content-['']"
-			{...props}
-			ref={setElement}
-		/>
-	);
-};
+export const customEmojiNames: ReadonlySet<string> = new Set(Object.keys(customEmojis));
