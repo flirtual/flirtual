@@ -158,11 +158,11 @@ export function Message({ message, messageStatus, permissions, common }: Message
 
 				<div
 					className={twMerge(
-						"relative flex max-w-[calc(100%-6.5rem)] min-w-0 flex-col",
+						"relative flex max-w-[calc(100%-3.5rem)] min-w-0 flex-col",
 						!distance && "transition-transform",
 						sender === "currentUser" ? "items-end" : "items-start",
 						sender === "system" && "w-full max-w-full",
-						hasThumbnail && "w-[calc(100%-6.5rem)]"
+						hasThumbnail && "w-[calc(100%-3.5rem)]"
 					)}
 					style={distance ? { transform: `translateX(${distance * inward}px)` } : undefined}
 				>
