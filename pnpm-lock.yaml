@@ -386,7 +386,7 @@ importers:
         version: 10.0.2
       '@formatjs/intl-pluralrules':
         specifier: ^7.0.0
-        version: 7.0.2
+        version: 7.0.4
       '@formatjs/intl-relativetimeformat':
         specifier: ^13.0.0
         version: 13.0.1
@@ -2195,8 +2195,8 @@ packages:
   '@formatjs/intl-numberformat@10.0.2':
     resolution: {integrity: sha512-iLS3ly1lGZ/a/IVpcSUgC37RjQUZ2wN6zR9+Zbr2uXsxATfMLD+fBqggiXuFudLmZXpbPueCs4Mz3vDsaOVE9A==}
 
-  '@formatjs/intl-pluralrules@7.0.2':
-    resolution: {integrity: sha512-PJ4+ldlqXlo3csmP02u2HqyXw09TDB/fatYpDCyWryfEQeVWl2EbMzij9SBksPaW2U//+q69lXR3IMnCRQAmrw==}
+  '@formatjs/intl-pluralrules@7.0.4':
+    resolution: {integrity: sha512-EeQ8YUs1QOpYLUiNHkHfR1rsOMtQUBQXEQwR9WmJRWfzvVXeYZ7vBeMARtlb2KuHUgdmfXjoin5oNn68hjyrEQ==}
 
   '@formatjs/intl-relativetimeformat@13.0.1':
     resolution: {integrity: sha512-Gl5dCHb7elEC19tTzxIyllWLHaHnN+HpQYEaA9xxAt9rKgRLwC3vGty1w8bVGG7p2YcGSPIg5c4qn4KdkGcTqg==}
@@ -10410,7 +10410,7 @@ snapshots:
       '@formatjs/bigdecimal': 0.2.10
       '@formatjs/intl-localematcher': 0.10.1
 
-  '@formatjs/intl-pluralrules@7.0.2':
+  '@formatjs/intl-pluralrules@7.0.4':
     dependencies:
       '@formatjs/bigdecimal': 0.2.10
       '@formatjs/intl-localematcher': 0.10.1
