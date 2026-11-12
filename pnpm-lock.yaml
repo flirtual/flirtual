@@ -377,7 +377,7 @@ importers:
         version: 8.0.3
       '@formatjs/intl-listformat':
         specifier: ^9.0.0
-        version: 9.0.1
+        version: 9.0.3
       '@formatjs/intl-locale':
         specifier: ^5.3.10
         version: 5.4.3
@@ -389,7 +389,7 @@ importers:
         version: 7.0.4
       '@formatjs/intl-relativetimeformat':
         specifier: ^13.0.0
-        version: 13.0.1
+        version: 13.0.3
       '@heroicons/react':
         specifier: ^2.2.0
         version: 2.2.0(react@19.3.1)
@@ -653,8 +653,8 @@ importers:
         specifier: 17.0.3
         version: 17.0.3
       '@formatjs/icu-messageformat-parser':
-        specifier: 3.5.22
-        version: 3.5.22
+        specifier: 3.5.23
+        version: 3.5.23
       '@react-router/dev':
         specifier: 8.5.1
         version: 8.5.1(@react-router/serve@8.5.1(@typescript/typescript6@6.0.2)(react-router@8.5.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(supports-color@10.2.2))(@typescript/typescript6@6.0.2)(react-router@8.5.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(supports-color@10.2.2)(vite@8.3.6(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.108.1)(tsx@4.23.12)(yaml@2.9.1))(wrangler@4.158.0(@cloudflare/workers-types@5.20261108.1)(@types/node@26.6.6))
@@ -2165,14 +2165,14 @@ packages:
   '@formatjs/icu-messageformat-parser@3.5.16':
     resolution: {integrity: sha512-kl6b/4D56gjGZi4ZewSmvXbalHwjOUI5ogEHPZqw42goeXTTrL7/yuPzvdrvr0QigDtvaOeb+UeMf62jks43Yg==}
 
-  '@formatjs/icu-messageformat-parser@3.5.22':
-    resolution: {integrity: sha512-YuwN+dDKgssfuYwtOyGQD0CSn7K46g9cv1Fp0VgKpjZDDFvv8b8crzP990IcJhRPWHhKzCGsbUSJVIguyyFA5A==}
+  '@formatjs/icu-messageformat-parser@3.5.23':
+    resolution: {integrity: sha512-iB1fYfhtSGd8uH9A8b1m01Ujcv6QtQnJasefP3jPApmz72L/zNipzf3BdoinTMd1xuviVChjUJWL60iTwjUQ+w==}
 
   '@formatjs/icu-skeleton-parser@2.1.11':
     resolution: {integrity: sha512-j8cUmOJzVgkHuS0QiQ6ga76UIoLOFSAMWhs7aZJztH3aAdCOAE6vpC8KVvFB4cU10ON0y2/5oOVmPJ43s2lTwA==}
 
-  '@formatjs/icu-skeleton-parser@2.1.12':
-    resolution: {integrity: sha512-ca7tZMLpfHX3sUD7hP6gE/qr6Iq89EDd3ZLeRhbsB7r0UD55DGJq+tmFLzrGrnx5StahUevQmQQVtbDRHsfDHA==}
+  '@formatjs/icu-skeleton-parser@2.1.13':
+    resolution: {integrity: sha512-IdAJ9NrHn7AF0zqncD9UpxQozTYyJtbwwrZnJMEKVxTcOOXtVkUb2XYTpNOGTAv58NCsk0rjRB9G+i2SvBmGAQ==}
 
   '@formatjs/intl-datetimeformat@8.0.3':
     resolution: {integrity: sha512-LQed+WhJBlceMJ4Zbe7dDe7Wn15le9t5HXfOFGdJYM/MGDyn56LTHlSzPzFjsJA0rvyp4FjN28jRQiMwtsji6A==}
@@ -2183,8 +2183,8 @@ packages:
   '@formatjs/intl-getcanonicallocales@3.3.1':
     resolution: {integrity: sha512-GkXdVwb/4Y9qJaZ19BguPv2i9Vr+z5MrlmFa/9HR7WK2tMcCWZathuGhn7W/V3sFqUdAVB3uvmGuOxXwc61DJQ==}
 
-  '@formatjs/intl-listformat@9.0.1':
-    resolution: {integrity: sha512-V7kMddXDOLeyXAVCBEp8eBnllmPMBqu39U1GO/82xzlaUyK/Gkc3Qgal+9HJx6n1xfCvUn7XHK5t5dSlF7Y2lA==}
+  '@formatjs/intl-listformat@9.0.3':
+    resolution: {integrity: sha512-XamK+7ie16gbBp51AH+K97NfwCoECk36jEbBO9m7HaInoLbG1F3P8M22enKtkifsi/cH9gjp4igFaYtY23h0uA==}
 
   '@formatjs/intl-locale@5.4.3':
     resolution: {integrity: sha512-YdxSbfDifRIew7mukcwITPlhkomfHCcSzzbjEJqOGbod4wrfdUN7SmiZQU2Lr8zs/q/15ntZsthJ8NsW3P30mA==}
@@ -2198,8 +2198,8 @@ packages:
   '@formatjs/intl-pluralrules@7.0.4':
     resolution: {integrity: sha512-EeQ8YUs1QOpYLUiNHkHfR1rsOMtQUBQXEQwR9WmJRWfzvVXeYZ7vBeMARtlb2KuHUgdmfXjoin5oNn68hjyrEQ==}
 
-  '@formatjs/intl-relativetimeformat@13.0.1':
-    resolution: {integrity: sha512-Gl5dCHb7elEC19tTzxIyllWLHaHnN+HpQYEaA9xxAt9rKgRLwC3vGty1w8bVGG7p2YcGSPIg5c4qn4KdkGcTqg==}
+  '@formatjs/intl-relativetimeformat@13.0.3':
+    resolution: {integrity: sha512-5nyIp4F/59A5hcfU6lZphSslpildVSirqudWfygBENGdGSHmggZVjhoad458XWEgtUd6d0JoiwsiUBFLfbqJ9Q==}
 
   '@formatjs/intl-supportedvaluesof@3.0.1':
     resolution: {integrity: sha512-+9TU+8tqsUqobFzQJEvfQ8Yukt1PYgL5WxYi/yW+hWVNx422wEo/TlVRLvIfdYqlVS048jfyu8piNagfhOV+2A==}
@@ -10373,13 +10373,13 @@ snapshots:
     dependencies:
       '@formatjs/icu-skeleton-parser': 2.1.11
 
-  '@formatjs/icu-messageformat-parser@3.5.22':
+  '@formatjs/icu-messageformat-parser@3.5.23':
     dependencies:
-      '@formatjs/icu-skeleton-parser': 2.1.12
+      '@formatjs/icu-skeleton-parser': 2.1.13
 
   '@formatjs/icu-skeleton-parser@2.1.11': {}
 
-  '@formatjs/icu-skeleton-parser@2.1.12': {}
+  '@formatjs/icu-skeleton-parser@2.1.13': {}
 
   '@formatjs/intl-datetimeformat@8.0.3':
     dependencies:
@@ -10392,7 +10392,7 @@ snapshots:
 
   '@formatjs/intl-getcanonicallocales@3.3.1': {}
 
-  '@formatjs/intl-listformat@9.0.1':
+  '@formatjs/intl-listformat@9.0.3':
     dependencies:
       '@formatjs/intl-localematcher': 0.10.1
 
@@ -10415,7 +10415,7 @@ snapshots:
       '@formatjs/bigdecimal': 0.2.10
       '@formatjs/intl-localematcher': 0.10.1
 
-  '@formatjs/intl-relativetimeformat@13.0.1':
+  '@formatjs/intl-relativetimeformat@13.0.3':
     dependencies:
       '@formatjs/intl-localematcher': 0.10.1
 
