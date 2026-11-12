@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
 import type { Embed } from "~/api/embed";
-import { useEmbed } from "~/api/embed";
+import { isKlipyMedia, useEmbed } from "~/api/embed";
 import { embedOrigin } from "~/const";
 import { useDevice } from "~/hooks/use-device";
 import { useMediaQuery } from "~/hooks/use-media-query";
@@ -21,6 +21,25 @@ const media = "mt-2 block max-h-80 max-w-full rounded-xl object-contain";
 function size(width: number | null | undefined, height: number | null | undefined): CSSProperties | undefined {
 	return width && height ? { aspectRatio: `${width} / ${height}`, width: Math.round(320 * Math.min(width / height, 1.6)), maxWidth: "100%" } : undefined;
 }
+
+export const KlipyGif: FC<{ url: string; width?: string; height?: string }> = ({ url, width, height }) => {
+	const { t } = useTranslation();
+	const w = Number(width);
+	const h = Number(height);
+
+	return (
+		<img
+			alt={t("gif")}
+			className={twMerge(media, "bg-black-90/5 dark:bg-white-10/5")}
+			decoding="async"
+			draggable={false}
+			loading="lazy"
+			referrerPolicy="no-referrer"
+			src={url}
+			style={size(w > 0 && w < 10000 ? w : null, h > 0 && h < 10000 ? h : null)}
+		/>
+	);
+};
 
 const EmbedFrame: FC<{ player: NonNullable<Embed["player"]>; title: string }> = ({ player, title }) => {
 	const reference = useRef<HTMLIFrameElement>(null);
@@ -239,8 +258,10 @@ const LinkEmbed: FC<{ url: string }> = ({ url }) => {
 	return <EmbedCard embed={embed} />;
 };
 
-export const LinkEmbeds: FC<{ links: Array<string> }> = ({ links }) => (
+export const LinkEmbeds: FC<{ links: Array<string>; gifSize?: { width?: string; height?: string } }> = ({ links, gifSize }) => (
 	<>
-		{links.map((link) => <LinkEmbed key={link} url={link} />)}
+		{links.map((link) => isKlipyMedia(link)
+			? <KlipyGif key={link} height={gifSize?.height} url={link} width={gifSize?.width} />
+			: <LinkEmbed key={link} url={link} />)}
 	</>
 );

@@ -3,11 +3,13 @@ import type { CommonChatboxProps, ReferencedMessageProps, ReplyBarProps } from "
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 
+import { isKlipyMedia } from "~/api/embed";
 import { UserAvatar, UserImage } from "~/components/user-avatar";
 import { customEmojiNames } from "~/hooks/use-talkjs";
 
 import { splitEmoji } from "./custom-emoji";
 import { CustomEmoji, Twemoji } from "./emoji";
+import { soleLink } from "./links";
 import type { ThemeCustom } from "./theme";
 
 const emoji = "size-[1.2em]";
@@ -22,6 +24,7 @@ export const ReplyPreview: FC<{
 	const { sender } = message;
 	const person = sender && (common.themeCustom as ThemeCustom).people[sender.id];
 	const [block] = message.content;
+	const gifLink = message.content.length === 1 && block.type === "text" ? soleLink(block.children) : null;
 
 	return (
 		<span className="flex min-w-0 items-center gap-1">
@@ -39,16 +42,18 @@ export const ReplyPreview: FC<{
 					</>
 				)}
 			<span className="min-w-0 truncate">
-				{message.content.length === 1 && block.type === "text"
-					? splitEmoji(block.children, customEmojiNames).map((segment, index) => {
+				{gifLink && isKlipyMedia(gifLink)
+					? t("gif")
+					: message.content.length === 1 && block.type === "text"
+						? splitEmoji(block.children, customEmojiNames).map((segment, index) => {
 							// eslint-disable-next-line react/no-array-index-key
-							if (segment.type === "emoji") return <CustomEmoji key={index} name={segment.name} className={emoji} />;
-							// eslint-disable-next-line react/no-array-index-key
-							if (segment.type === "twemoji") return <Twemoji key={index} className={emoji} codepoints={segment.codepoints} text={segment.text} />;
-							// eslint-disable-next-line react/no-array-index-key
-							return <Text key={index} nonInteractive block={{ type: "text", children: segment.children }} message={message} />;
-						})
-					: <common.theme.CompactMessageContent common={common} message={message} />}
+								if (segment.type === "emoji") return <CustomEmoji key={index} name={segment.name} className={emoji} />;
+								// eslint-disable-next-line react/no-array-index-key
+								if (segment.type === "twemoji") return <Twemoji key={index} className={emoji} codepoints={segment.codepoints} text={segment.text} />;
+								// eslint-disable-next-line react/no-array-index-key
+								return <Text key={index} nonInteractive block={{ type: "text", children: segment.children }} message={message} />;
+							})
+						: <common.theme.CompactMessageContent common={common} message={message} />}
 			</span>
 		</span>
 	);

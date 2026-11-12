@@ -3,16 +3,29 @@
 
 import { Editor, EmojiPicker, EmojiSuggestBar, MentionSuggestList } from "@talkjs/react-components";
 import type { MessageFieldProps } from "@talkjs/react-components";
-import { MapPin, Mic, Paperclip, SendHorizontal, Smile, X } from "lucide-react";
+import { ImagePlay, MapPin, Mic, Paperclip, SendHorizontal, Smile, X } from "lucide-react";
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
+import type { KlipyGif } from "~/api/klipy";
+import { klipyCustomerId, klipyMessageFile, shareKlipyGif } from "~/api/klipy";
 import { Button } from "~/components/button";
+import { klipyAppKey } from "~/const";
+import { useToast } from "~/hooks/use-toast";
+
+import { interestQueries } from "./gif-interests";
+import { GifPicker } from "./gif-picker";
+import type { ThemeCustom } from "./theme";
 
 const iconButton = "flex size-9 shrink-0 items-center justify-center rounded-full p-2 opacity-75 hocus:opacity-100 disabled:opacity-60 [&>svg]:size-5 [&>svg:not(.fill-current)]:fill-none!";
 
 export function MessageField({ common, referencedMessage, editor, voiceRecorder, permissions, editMessageId }: MessageFieldProps) {
-	const { chatbox, conversation, t, theme } = common;
+	const { chatbox, conversation, currentUser, t, theme } = common;
 	const { ReplyBar, VoiceRecorder, RecordingPreview } = theme;
+	const { t: translate } = useTranslation();
+	const toasts = useToast();
+	const [gifsShown, setGifsShown] = useState(false);
 
 	const mode = editMessageId ? "edit" : "send";
 	const canEdit = mode === "edit" && !editor.atTextLimit && editor.characterCount > 0;
@@ -27,12 +40,55 @@ export function MessageField({ common, referencedMessage, editor, voiceRecorder,
 	// Shown even when TalkJS can't detect emoji support (a blocked canvas), as the classic chat did.
 	const showEmojiButton = mode === "send";
 	const showRecordButton = mode === "send" && editor.isEmpty && permissions.canSendVoiceMessage;
+	const showGifButton = mode === "send" && !!klipyAppKey;
+
+	const { people } = common.themeCustom as ThemeCustom;
+	const me = people[currentUser.id];
+	const them = Object.values(people).find((user) => user.talkjsId !== currentUser.id);
+	const mine = new Set(me?.profile.attributes.interest);
+	const theirs = new Set(them?.profile.attributes.interest);
+	const gifQueries = interestQueries
+		.filter(([id]) => mine.has(id) && theirs.has(id))
+		.map(([, query]) => query);
+
+	const toggleGifs = () => {
+		if (!gifsShown && editor.showEmojiPicker) editor.toggleEmojiPicker();
+		setGifsShown(!gifsShown);
+	};
+
+	const toggleEmoji = () => {
+		setGifsShown(false);
+		editor.toggleEmojiPicker();
+	};
+
+	const sendGif = (gif: KlipyGif, query: string) => {
+		const file = klipyMessageFile(gif);
+		if (!file || editor.sendBlocked) return;
+
+		setGifsShown(false);
+		if (referencedMessage) chatbox.setReferencedMessage(null);
+
+		chatbox.sendMessage({
+			text: file.url,
+			referencedMessage: referencedMessage?.id,
+			custom: { gifWidth: String(file.width), gifHeight: String(file.height) }
+		}).then(
+			() => klipyCustomerId(currentUser.id).then((customerId) => shareKlipyGif(gif.slug, query, { customerId })).catch(() => {}),
+			toasts.addError
+		);
+	};
 
 	return (
 		<div className={twMerge("chat-message-field flex flex-col", mode === "send" ? "max-h-[calc(100%-100px)]" : "my-3")}>
 			{editor.showEmojiPicker && (
 				<div className="relative z-1 h-[350px] w-full shrink overflow-hidden border-t border-white-40 shadow-brand-1 dark:border-black-60">
 					<EmojiPicker />
+				</div>
+			)}
+
+			{gifsShown && showGifButton && showEditor && (
+				<div className="h-[350px] w-full shrink overflow-hidden">
+					<GifPicker country={me?.profile.country} queries={gifQueries} userId={currentUser.id} onPick={sendGif} />
 				</div>
 			)}
 
@@ -84,13 +140,26 @@ export function MessageField({ common, referencedMessage, editor, voiceRecorder,
 										</button>
 									)}
 
+									{showGifButton && (
+										<button
+											aria-label={translate("send_gif")}
+											aria-pressed={gifsShown}
+											className={iconButton}
+											title={translate("send_gif")}
+											type="button"
+											onClick={toggleGifs}
+										>
+											{gifsShown ? <X /> : <ImagePlay />}
+										</button>
+									)}
+
 									{showEmojiButton && (
 										<button
 											aria-label={t.ARIA_INSERT_EMOJI}
 											className={iconButton}
 											title={t.ARIA_INSERT_EMOJI}
 											type="button"
-											onClick={() => editor.toggleEmojiPicker()}
+											onClick={toggleEmoji}
 										>
 											{editor.showEmojiPicker ? <X /> : <Smile />}
 										</button>

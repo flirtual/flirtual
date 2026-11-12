@@ -34,12 +34,23 @@ export interface Embed {
 	} | null;
 }
 
+// Klipy's terms require its media to load from Klipy, in the person's own client.
+export function isKlipyMedia(url: string): boolean {
+	try {
+		const { protocol, hostname } = new URL(url);
+		return protocol === "https:" && /^static\d*\.klipy\.com$/.test(hostname);
+	}
+	catch {
+		return false;
+	}
+}
+
 const ownHosts = new Set([siteOrigin, ...deepLinkOrigins].map((origin) => new URL(origin).host));
 
 export function isEmbeddable(url: string): boolean {
 	try {
 		const { protocol, host } = new URL(url);
-		return (protocol === "https:" || protocol === "http:") && !ownHosts.has(host) && !!embedOrigin;
+		return (protocol === "https:" || protocol === "http:") && !ownHosts.has(host) && (!!embedOrigin || isKlipyMedia(url));
 	}
 	catch {
 		return false;
@@ -56,7 +67,7 @@ async function fetchEmbed(url: string, signal: AbortSignal): Promise<Embed | nul
 
 // Doesn't suspend: a message renders its text straight away and its embeds when they arrive.
 export function useEmbed(url: string | null): Embed | null | undefined {
-	const enabled = !!url && !!embedOrigin;
+	const enabled = !!url && !!embedOrigin && !isKlipyMedia(url);
 
 	const { data } = useQuery({
 		queryKey: ["embed", url],

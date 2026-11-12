@@ -2,6 +2,7 @@ import { Text } from "@talkjs/react-components";
 import type { AvatarProps, TextBlockProps, Theme } from "@talkjs/react-components";
 import type { FC } from "react";
 
+import { isKlipyMedia } from "~/api/embed";
 import type { User } from "~/api/user";
 import { UserImage } from "~/components/user-avatar";
 import { customEmojiNames } from "~/hooks/use-talkjs";
@@ -11,7 +12,7 @@ import { jumboEmojiSegments, splitEmoji } from "./custom-emoji";
 import type { EmojiSegment } from "./custom-emoji";
 import { CustomEmoji, Twemoji } from "./emoji";
 import { LinkEmbeds } from "./link-embed";
-import { messageLinks } from "./links";
+import { messageLinks, soleLink } from "./links";
 import type { Match } from "./match-card";
 import { isMatchMessage } from "./match-message";
 import { Message } from "./message";
@@ -48,6 +49,7 @@ const Segment: FC<{ segment: EmojiSegment; message: TextBlockProps["message"] }>
 
 const TextBlock: FC<TextBlockProps> = ({ block, message, common }) => {
 	const links = messageLinks(block.children);
+	const sole = soleLink(block.children);
 
 	if (isMatchMessage(message)) {
 		const { matchMessage } = common.themeCustom as ThemeCustom;
@@ -59,15 +61,19 @@ const TextBlock: FC<TextBlockProps> = ({ block, message, common }) => {
 		);
 	}
 
+	const textShown = !sole || !isKlipyMedia(sole);
+
 	return (
 		<>
-			<div className={textBlock}>
-				{jumboEmojiSegments(splitEmoji(block.children, customEmojiNames)).map((segment, index) => (
-					// eslint-disable-next-line react/no-array-index-key
-					<Segment key={index} message={message} segment={segment} />
-				))}
-			</div>
-			{links.length > 0 && <LinkEmbeds links={links} />}
+			{textShown && (
+				<div className={textBlock}>
+					{jumboEmojiSegments(splitEmoji(block.children, customEmojiNames)).map((segment, index) => (
+						// eslint-disable-next-line react/no-array-index-key
+						<Segment key={index} message={message} segment={segment} />
+					))}
+				</div>
+			)}
+			{links.length > 0 && <LinkEmbeds gifSize={{ width: message.custom.gifWidth, height: message.custom.gifHeight }} links={links} />}
 		</>
 	);
 };

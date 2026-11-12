@@ -37,6 +37,9 @@ Bluesky's public API, and the app draws them itself, without either site's scrip
   navigation, which is only safe on another registrable domain: never serve it from the app's.
 - **Proxying**: preview images and videos go through HMAC-signed `/image` and `/media` URLs
   (`SIGNING_KEY` secret), so a recipient's IP never reaches arbitrary hosts.
+- **Klipy** (the GIF picker, `VITE_KLIPY_APP_KEY`): its terms require API calls and media loads
+  from the person's own client, unproxied and uncached, with results in the order returned. The
+  worker never fetches Klipy URLs; the app renders them itself.
 
 ## Data flow
 

@@ -6,6 +6,7 @@ import {
 	commitId,
 	development,
 	embedOrigin,
+	klipyAppKey,
 	posthogHost,
 	preview,
 	sentryDsn,
@@ -130,6 +131,8 @@ const data = [
 						"*.posthog.com",
 						// Chat embeds' images, proxied: apps/embed.
 						embedHost,
+						// https://docs.klipy.com/network-requirements
+						klipyAppKey && "*.klipy.com",
 					],
 					"media-src": [
 						"'self'",
@@ -175,7 +178,9 @@ const data = [
 						// https://www.chargebee.com/docs/billing/2.0/hosted-capabilities/embedded-checkout
 						"*.chargebee.com",
 						// Chat embeds: apps/embed.
-						embedHost
+						embedHost,
+						// https://docs.klipy.com/network-requirements
+						klipyAppKey && "api.klipy.com"
 					],
 					"font-src": [
 						"'self'",

@@ -61,6 +61,8 @@ export const embedOrigin = import.meta.env.VITE_EMBED_ORIGIN
 // on another origin: framed from ours, they could lift their own sandbox.
 invariant(embedOrigin !== new URL(siteOrigin).origin, "VITE_EMBED_ORIGIN must not be the site's own origin");
 
+export const klipyAppKey = import.meta.env.VITE_KLIPY_APP_KEY as string || undefined;
+
 // Miscellaneous
 export const freshworksWidgetId = import.meta.env.VITE_FRESHWORKS_WIDGET_ID as string;
 

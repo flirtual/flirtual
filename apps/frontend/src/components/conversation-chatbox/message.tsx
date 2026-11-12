@@ -14,12 +14,14 @@ import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
+import { isKlipyMedia } from "~/api/embed";
 import { Link } from "~/components/link";
 import { customEmojiNames } from "~/hooks/use-talkjs";
 import { urls } from "~/urls";
 
 import { isJumboEmoji, splitEmoji } from "./custom-emoji";
 import { Emoji } from "./emoji";
+import { soleLink } from "./links";
 import { MatchCard } from "./match-card";
 import { isMatchMessage } from "./match-message";
 import { replyDistance, useMessageGesture } from "./message-gesture";
@@ -33,8 +35,9 @@ const surface = {
 	system: "bg-white-30 text-black-50! dark:bg-black-60 dark:text-white-20! vision:bg-white-30/70 vision:text-black-50!"
 } satisfies Record<Sender, string>;
 
-// A jumbo emoji message has no bubble, so its timestamp sits on the chat background.
-const jumboSurface = "text-black-80! dark:text-white-20! vision:text-black-80! [&_img]:size-12";
+// A jumbo emoji or GIF message has no bubble, so its timestamp sits on the chat background.
+const bareSurface = "text-black-80! dark:text-white-20! vision:text-black-80!";
+const jumboSurface = twMerge(bareSurface, "[&_img]:size-12");
 
 const hoverButton = "flex size-7 items-center justify-center rounded-full text-black-80! opacity-75 hocus:opacity-100 dark:text-white-20! vision:text-black-80! [&>svg]:size-5 [&>svg]:fill-none!";
 const chip = "flex items-center rounded-2xl px-2 py-1 shadow-brand-1 hocus:bg-brand-gradient hocus:text-white-10!";
@@ -58,6 +61,10 @@ export function Message({ message, messageStatus, permissions, common }: Message
 	const jumbo = message.content.length === 1
 		&& firstBlock.type === "text"
 		&& isJumboEmoji(splitEmoji(firstBlock.children, customEmojiNames));
+
+	const gifLink = message.content.length === 1 && firstBlock.type === "text" ? soleLink(firstBlock.children) : null;
+	const gif = !!gifLink && isKlipyMedia(gifLink);
+	const bare = jumbo || gif;
 
 	const sent = messageStatus !== "sending";
 	const canAddReaction = sent && permissions.canAddReaction && conversation.access === "ReadWrite";
@@ -184,7 +191,7 @@ export function Message({ message, messageStatus, permissions, common }: Message
 						data-bubble
 						className={twMerge(
 							"relative flow-root max-w-full rounded-2xl leading-(--t-line-height-base)! break-words [&_.t-message-content]:contents [&_a]:text-inherit! [&_a]:underline",
-							jumbo ? jumboSurface : twMerge("px-4 py-3 shadow-brand-1", surface[sender]),
+							jumbo ? jumboSurface : gif ? bareSurface : twMerge("px-4 py-3 shadow-brand-1", surface[sender]),
 							sender === "system" && "w-full text-[120%]! italic [&:lang(ja)]:not-italic [&:lang(ko)]:not-italic [&:lang(ru)]:not-italic",
 							hasThumbnail && "w-full"
 						)}
@@ -195,7 +202,7 @@ export function Message({ message, messageStatus, permissions, common }: Message
 							<span className="text-[0.74em]! whitespace-nowrap opacity-75">{` (${t.EDITED_INDICATOR})`}</span>
 						)}
 
-						<span className={twMerge("float-right mt-[0.3rem] -mb-3 ml-6 text-[0.74em]! leading-[2.2em]! opacity-75 select-none", jumbo && "float-none my-0 ml-0 block text-left! group-data-[sender=currentUser]/message:text-right!")}>
+						<span className={twMerge("float-right mt-[0.3rem] -mb-3 ml-6 text-[0.74em]! leading-[2.2em]! opacity-75 select-none", bare && "float-none my-0 ml-0 block text-left! group-data-[sender=currentUser]/message:text-right!")}>
 							<TimeAgo common={common} timestamp={message.createdAt} />
 						</span>
 

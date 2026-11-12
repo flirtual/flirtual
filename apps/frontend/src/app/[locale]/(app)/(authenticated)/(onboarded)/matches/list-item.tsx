@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
 import type { Conversation } from "~/api/conversations";
+import { isKlipyMedia } from "~/api/embed";
 import { Badge } from "~/components/badge";
 import { HeartIcon } from "~/components/icons/gradient/heart";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
@@ -52,6 +53,8 @@ export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
 	const user = useUser(userId);
 	const relationship = useRelationship(userId);
 	if (!user || !relationship?.matched) return null;
+
+	const preview = (content: string) => isKlipyMedia(content.trim()) ? t("gif") : content;
 
 	return (
 		<div
@@ -109,8 +112,8 @@ export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
 								? (
 										<>
 											{replaceEmojis((lastMessage?.senderId !== userId && !lastMessage.system)
-												? t("last_message_from_you", { message: lastMessage.content })
-												: lastMessage.content)}
+												? t("last_message_from_you", { message: preview(lastMessage.content) })
+												: preview(lastMessage.content))}
 										</>
 									)
 								: (

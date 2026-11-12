@@ -20,3 +20,9 @@ export function messageLinks(children: Array<TextNode>): Array<string> {
 	visit(children);
 	return links.slice(0, maximumEmbeds);
 }
+
+export function soleLink(children: Array<TextNode>): string | null {
+	const nodes = children.filter((node) => typeof node !== "string" || node.trim());
+	const [node] = nodes;
+	return nodes.length === 1 && typeof node !== "string" && node.type === "autoLink" && isEmbeddable(node.url) ? node.url : null;
+}
