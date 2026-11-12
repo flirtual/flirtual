@@ -168,7 +168,7 @@
 		"tailwindcss-motion": "1.1.1",
 		"typescript": "catalog:",
 		"unplugin-macros": "npm:@ariesclark/unplugin-macros@0.20.3",
-		"vite": "8.3.6",
+		"vite": "8.3.7",
 		"vite-imagetools": "12.0.1",
 		"vite-plugin-checker": "1.0.0",
 		"vite-plugin-image-optimizer": "2.0.3",
