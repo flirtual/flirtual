@@ -228,10 +228,15 @@ function ReactionButton({ summary, messageId, disabled, common }: {
 	common: MessageProps["common"];
 }) {
 	const { t, chatbox, conversation } = common;
+	const { people } = common.themeCustom as ThemeCustom;
+	const { t: translate } = useTranslation();
 	const { emoji, count, currentUserReacted } = summary;
 
 	const [reactions, subscribe] = useReactions(conversation.id, messageId, emoji);
-	const names = reactions.map(({ user }) => user.name);
+	const names = reactions.map(({ user }) => {
+		const person = people[user.id];
+		return person ? person.profile.displayName || translate("unnamed_user") : user.name;
+	});
 	if (reactions.length > 0 && reactions.length < count) names.push("...");
 
 	return (
