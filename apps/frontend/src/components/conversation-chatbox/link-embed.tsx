@@ -1,6 +1,6 @@
 import { Play } from "lucide-react";
-import type { CSSProperties, FC } from "react";
-import { useEffect, useRef, useState } from "react";
+import type { ComponentProps, CSSProperties, FC } from "react";
+import { useEffect, useEffectEvent, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
@@ -21,6 +21,37 @@ const media = "mt-2 block max-h-80 max-w-full rounded-xl object-contain";
 function size(width: number | null | undefined, height: number | null | undefined): CSSProperties | undefined {
 	return width && height ? { aspectRatio: `${width} / ${height}`, width: Math.round(320 * Math.min(width / height, 1.6)), maxWidth: "100%" } : undefined;
 }
+
+// Calls back as the element scrolls into or out of the chat's view. Nothing goes away behind a
+// fullscreen video, whatever rotating the device does to the layout beneath it.
+function useInView<T extends Element>(onChange: (visible: boolean, element: T) => void) {
+	const reference = useRef<T>(null);
+	const onVisibilityChange = useEffectEvent(onChange);
+
+	useEffect(() => {
+		const element = reference.current;
+		if (!element) return;
+
+		const observer = new IntersectionObserver(([entry]) => {
+			if (!document.fullscreenElement) onVisibilityChange(entry.isIntersecting, element);
+		});
+		observer.observe(element);
+		return () => observer.disconnect();
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	return reference;
+}
+
+// Pauses once it's scrolled out of view; a looping GIF picks up again when it's back.
+const InlineVideo: FC<ComponentProps<"video">> = (props) => {
+	const reference = useInView<HTMLVideoElement>((visible, video) => {
+		if (!visible) video.pause();
+		else if (props.loop && props.autoPlay) void video.play().catch(() => {});
+	});
+
+	return <video {...props} ref={reference} />;
+};
 
 export const KlipyGif: FC<{ url: string; width?: string; height?: string }> = ({ url, width, height }) => {
 	const { t } = useTranslation();
@@ -91,6 +122,15 @@ const EmbedFrame: FC<{ player: NonNullable<Embed["player"]>; title: string }> = 
 const EmbedCard: FC<{ embed: Embed }> = ({ embed }) => {
 	const { t } = useTranslation();
 	const [playing, setPlaying] = useState(false);
+	// Scrolling away pauses a YouTube player, through its API in the frame the embed frame holds.
+	// Other players can't be paused from here, so they unload.
+	const card = useInView<HTMLSpanElement>((visible, element) => {
+		if (visible || !playing) return;
+
+		const youtube = embed.player?.api === "youtube" && element.querySelector("iframe")?.contentWindow?.[0];
+		if (youtube) youtube.postMessage(JSON.stringify({ event: "command", func: "pauseVideo", args: [] }), "https://www.youtube.com");
+		else setPlaying(false);
+	});
 	// A preview image can fail upstream (GitHub rate limits its own): the card closes up without it.
 	const [imageFailed, setImageFailed] = useState(false);
 	const { url, siteName, title, description, player } = embed;
@@ -129,7 +169,7 @@ const EmbedCard: FC<{ embed: Embed }> = ({ embed }) => {
 	const aspectRatio = player.aspectRatio ?? (image?.width && image.height ? image.width / image.height : 16 / 9);
 
 	return (
-		<span className={twMerge(frame, "max-w-full")} style={{ width: maxWidth }}>
+		<span className={twMerge(frame, "max-w-full")} ref={card} style={{ width: maxWidth }}>
 			{playing
 				? <EmbedFrame player={player} title={title ?? siteName} />
 				: (
@@ -168,7 +208,7 @@ const EmbedMedia: FC<{ embed: Embed; media: NonNullable<Embed["media"]> }> = ({ 
 
 	return loop
 		? (
-				<video
+				<InlineVideo
 					disablePictureInPicture
 					disableRemotePlayback
 					loop
@@ -182,7 +222,7 @@ const EmbedMedia: FC<{ embed: Embed; media: NonNullable<Embed["media"]> }> = ({ 
 					style={style}
 				/>
 			)
-		: <video controls playsInline aria-label={label} className={media} preload="metadata" src={url} style={style} />;
+		: <InlineVideo controls playsInline aria-label={label} className={media} preload="metadata" src={url} style={style} />;
 };
 
 type PostMedia = NonNullable<Embed["post"]>["media"][number];
@@ -209,8 +249,8 @@ const PostMediaItem: FC<{ item: PostMedia; href: string; label: string; single: 
 	}
 
 	return type === "gif"
-		? <video disablePictureInPicture disableRemotePlayback loop muted playsInline aria-label={label} autoPlay={!reducedMotion} className={twMerge("block bg-black-90", fit)} controls={reducedMotion} poster={poster ?? undefined} src={url} style={style} />
-		: <video controls playsInline aria-label={label} className={twMerge("block bg-black-90", fit)} poster={poster ?? undefined} preload="none" src={url} style={style} />;
+		? <InlineVideo disablePictureInPicture disableRemotePlayback loop muted playsInline aria-label={label} autoPlay={!reducedMotion} className={twMerge("block bg-black-90", fit)} controls={reducedMotion} poster={poster ?? undefined} src={url} style={style} />
+		: <InlineVideo controls playsInline aria-label={label} className={twMerge("block bg-black-90", fit)} poster={poster ?? undefined} preload="none" src={url} style={style} />;
 };
 
 const EmbedPost: FC<{ embed: Embed; post: NonNullable<Embed["post"]> }> = ({ embed, post: { author, text, createdAt, media } }) => {

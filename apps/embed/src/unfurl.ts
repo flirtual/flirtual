@@ -36,6 +36,8 @@ export interface Embed {
 		maxWidth: number | null;
 		/** The frame reports its content's height, as script widgets grow once they've loaded. */
 		resizes: boolean;
+		/** A postMessage API the app can pause the player through, inside the frame. */
+		api: "youtube" | null;
 	} | null;
 	/** A post drawn from its data rather than the site's widget, its media proxied. */
 	post: {
@@ -298,7 +300,8 @@ export async function unfurl(input: URL, context: UnfurlContext, refreshes = 0):
 				aspectRatio: player.kind === "iframe" ? player.aspectRatio ?? null : null,
 				height: player.height ?? (player.kind === "html" ? 320 : null),
 				maxWidth: player.maxWidth ?? (player.kind === "html" ? 550 : null),
-				resizes: player.kind === "html"
+				resizes: player.kind === "html",
+				api: player.kind === "iframe" ? player.api ?? null : null
 			},
 			post: null
 		},

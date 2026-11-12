@@ -45,19 +45,19 @@ const rules: Array<Rule> = [
 			const short = match[1] === "shorts";
 			const id = short ? match[2] : match[1];
 
-			const src = new URL(`https://www.youtube.com/embed/${id}`);
+			const src = new URL(`https://www.youtube.com/embed/${id}?enablejsapi=1`);
 			const start = seconds(url.searchParams.get("t") ?? url.searchParams.get("start"));
 			if (start) src.searchParams.set("start", String(start));
 
 			return short
-				? { kind: "iframe", src: src.href, aspectRatio: 9 / 16, maxWidth: 320, autoplay: "autoplay=1" }
-				: { kind: "iframe", src: src.href, aspectRatio: 16 / 9, autoplay: "autoplay=1" };
+				? { kind: "iframe", src: src.href, aspectRatio: 9 / 16, maxWidth: 320, autoplay: "autoplay=1", api: "youtube" }
+				: { kind: "iframe", src: src.href, aspectRatio: 16 / 9, autoplay: "autoplay=1", api: "youtube" };
 		}
 	},
 	// youtube.com/youtube.playlist.js
 	{
 		re: [/^https?:\/\/(?:www\.|m\.)?youtube\.com\/playlist\?(?:[^&]+&)*list=([\w-]+)/i],
-		player: (match) => ({ kind: "iframe", src: `https://www.youtube.com/embed/videoseries?list=${match[1]}`, aspectRatio: 16 / 9, autoplay: "autoplay=1" })
+		player: (match) => ({ kind: "iframe", src: `https://www.youtube.com/embed/videoseries?list=${match[1]}&enablejsapi=1`, aspectRatio: 16 / 9, autoplay: "autoplay=1", api: "youtube" })
 	},
 	// twitch.tv/twitch.tv.js, clips.twitch.tv.js: https://dev.twitch.tv/docs/embed/video-and-clips
 	{
