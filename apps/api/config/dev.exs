@@ -8,11 +8,13 @@ config :flirtual, Flirtual.Repo,
   username: "postgres",
   password: "postgres",
   hostname: "localhost",
-  database: "flirtual_dev",
+  database: System.get_env("DEV_DATABASE_NAME", "flirtual_dev"),
   show_sensitive_data_on_connection_error: true,
   pool_size: 20,
   queue_target: 15_000,
   queue_interval: 5000
+
+config :flirtual, Flirtual.Search, table: System.get_env("DEV_SEARCH_TABLE", "profiles")
 
 # Configures the mailer
 #

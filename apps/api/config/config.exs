@@ -35,6 +35,8 @@ config :flirtual, FlirtualWeb.Endpoint,
 
 config :flirtual, Flirtual.Repo, telemetry_prefix: [:flirtual, :repo]
 
+config :flirtual, Flirtual.Search, table: "profiles"
+
 config :flirtual, Oban,
   repo: Flirtual.Repo,
   notifier: Oban.Notifiers.PG,
