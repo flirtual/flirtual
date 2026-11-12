@@ -17481,16 +17481,16 @@
 		"element": "legal",
 		"description": "Copyright notice at the bottom of the settings list, the site footer and the error/maintenance screen. Keep the © symbol and the order year then name unless your language's convention differs.",
 		"placeholders": {
-			"brand_name": {
-				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
-				"example": "Flirtual"
-			},
 			"year": {
 				"meaning": "Current calendar year",
 				"example": "2026"
+			},
+			"legal_name": {
+				"meaning": "The legal name of the company behind the app, as configured per brand; falls back to the app's name. Keep it exactly as written, in its original script, with no endings added.",
+				"example": "Flirtual"
 			}
 		},
-		"hash": "3eeaeb32b3033ba4"
+		"hash": "9feb51ff44efcd36"
 	},
 	"flirtual:countries": {
 		"group": "settings/matchmaking",
@@ -17780,6 +17780,16 @@
 		"lengthNote": "Short label beside other text",
 		"needsScreenshot": true,
 		"hash": "4ca0e0e73229540c"
+	},
+	"flirtual:delete": {
+		"group": "matches/conversation",
+		"screens": [
+			"/matches/<id>"
+		],
+		"element": "tooltip",
+		"description": "Tooltip and screen-reader label of the red trash-can icon button in the small action bar that appears over a chat message on hover or long press. It deletes that message from the conversation. Imperative verb.",
+		"lengthNote": "Icon-only button; the text is only a tooltip",
+		"hash": "b26de372b4b0eaac"
 	},
 	"flirtual:delete_account": {
 		"group": "settings/delete",
@@ -19460,6 +19470,17 @@
 		},
 		"hash": "251ace0eb92e11d7"
 	},
+	"flirtual:errors.warning_unacknowledged": {
+		"group": "errors",
+		"screens": [
+			"toast",
+			"/login"
+		],
+		"element": "error",
+		"description": "Error returned when moderators have sent the user a warning they haven't acknowledged yet; the account is blocked until they confirm it. The app reopens the warning dialog, titled \"Trust & Safety\" (the moderation team), alongside this error; match that translation.",
+		"tone": "Neutral, serious",
+		"hash": "bba1314ee434f9e0"
+	},
 	"flirtual:events": {
 		"group": "navigation",
 		"screens": [
@@ -21106,6 +21127,16 @@
 		"description": "Main button of the daily-limit dialog; opens the Premium subscription page. \"Premium\" is the name of the paid subscription.",
 		"hash": "9790fc956e1935be"
 	},
+	"flirtual:gif": {
+		"group": "matches/conversation",
+		"screens": [
+			"/matches/<id>",
+			"/matches"
+		],
+		"element": "alt-text",
+		"description": "Stands for a GIF someone sent in chat: the screen-reader text of the GIF image in the conversation, and the text shown in its place in a reply's quote of that message and as the last-message preview in the Matches list. Use your language's usual word or abbreviation for an animated GIF.",
+		"hash": "40d8daf8cdd5f267"
+	},
 	"flirtual:google": {
 		"group": "connections",
 		"screens": [
@@ -21166,7 +21197,7 @@
 			"email": "Link to the support ticket form; wraps the link text"
 		},
 		"tone": "Clear, firm, policy",
-		"hash": "22a9c5227ce136e1"
+		"hash": "ea0433421d1d49da"
 	},
 	"flirtual:guides": {
 		"group": "guides",
@@ -25005,6 +25036,17 @@
 		"description": "Label of the dropdown where the user picks why they are deleting their account (exit survey).",
 		"hash": "dafc3476fe7d3275"
 	},
+	"flirtual:recent": {
+		"group": "matches/gif-picker",
+		"screens": [
+			"/matches/<id>"
+		],
+		"element": "label",
+		"description": "Label on a tile (with a history icon) in the GIF picker's start grid that opens the GIFs this person sent recently. While that list is open it also becomes the search box placeholder, as the list's title. Means \"recently used GIFs\", not \"recent news\".",
+		"lengthNote": "Shown over a GIF preview on a half-width tile; keep to one or two short words",
+		"needsScreenshot": true,
+		"hash": "40dffab858cb0dde"
+	},
 	"flirtual:refresh": {
 		"group": "update",
 		"screens": [
@@ -25146,6 +25188,17 @@
 			}
 		},
 		"hash": "53e4ec07d367a929"
+	},
+	"flirtual:reply": {
+		"group": "matches/conversation",
+		"screens": [
+			"/matches/<id>"
+		],
+		"element": "tooltip",
+		"description": "Tooltip and screen-reader label of the reply-arrow icon button in the small action bar that appears over a chat message on hover or long press. It starts a reply quoting that message. Imperative verb (\"reply to this message\"), not the noun.",
+		"lengthNote": "Icon-only button; the text is only a tooltip",
+		"hash": "5601c71a3668000f",
+		"watch": true
 	},
 	"flirtual:report": {
 		"group": "profile/safety",
@@ -25509,6 +25562,16 @@
 		"description": "Placeholder in the search box for filtering the list of interests.",
 		"hash": "89d65d39302c5a98"
 	},
+	"flirtual:search_klipy": {
+		"group": "matches/gif-picker",
+		"screens": [
+			"/matches/<id>"
+		],
+		"element": "placeholder",
+		"description": "Placeholder and screen-reader label of the search box at the top of the GIF picker in chat. KLIPY is the GIF provider's brand name: keep it untranslated, in Latin capitals, with no endings added to it; reword around it if your grammar needs a case ending (e.g. \"Search on KLIPY\").",
+		"lengthNote": "Fits a narrow search field beside a back button in the chat's GIF panel",
+		"hash": "0290413c5e6dda58"
+	},
 	"flirtual:seconds": {
 		"group": "discover/limits",
 		"screens": [
@@ -25669,6 +25732,16 @@
 		"element": "button",
 		"description": "Button that resends the account confirmation email.",
 		"hash": "56c91601c54f7f66"
+	},
+	"flirtual:send_gif": {
+		"group": "matches/conversation",
+		"screens": [
+			"/matches/<id>"
+		],
+		"element": "tooltip",
+		"description": "Tooltip and screen-reader label of the icon button inside the chat message field, next to the emoji button, that opens the GIF picker. Addressed to the user as an action they can take.",
+		"lengthNote": "Icon-only button; the text is only a tooltip",
+		"hash": "5d9aae5cb64f9e18"
 	},
 	"flirtual:serene_silver": {
 		"group": "settings/appearance/themes",
@@ -25847,6 +25920,21 @@
 		"element": "tooltip",
 		"description": "Tooltip on the eye icon in password fields while the password is hidden; clicking reveals the typed characters. Pairs with \"Hide\".",
 		"hash": "827e0c6ac9936b69"
+	},
+	"flirtual:show_embed": {
+		"group": "matches/conversation",
+		"screens": [
+			"/matches/<id>"
+		],
+		"element": "alt-text",
+		"description": "Screen-reader label of the play button on a link preview card in chat, under a link someone sent. Pressing it loads the linked page's embedded player (a video, music player, 3D viewer and so on) in place of the preview image. \"Show\" means load and display it here.",
+		"placeholders": {
+			"name": {
+				"meaning": "Title of the linked page, or the site's name when it has no title; any language, as published",
+				"example": "Lofi hip hop radio - beats to relax/study to"
+			}
+		},
+		"hash": "2097aae212f25cbd"
 	},
 	"flirtual:show_nsfw": {
 		"group": "settings/nsfw",
@@ -26216,7 +26304,7 @@
 			"ssltest": "Link to an external SSL Labs test of the site's encryption"
 		},
 		"tone": "Legal",
-		"hash": "b391ccbf7d6ea138"
+		"hash": "d737f2b3fbd32b6a"
 	},
 	"flirtual:terms_of_service": {
 		"group": "legal",
@@ -26590,6 +26678,17 @@
 		"element": "label",
 		"description": "Label in the browser's developer console message, followed by \" → \" and a link to Flirtual's Weblate project where volunteers can help translate the app. Imperative (help translate), not a button that translates text.",
 		"hash": "548edc03357d04a1"
+	},
+	"flirtual:trending": {
+		"group": "matches/gif-picker",
+		"screens": [
+			"/matches/<id>"
+		],
+		"element": "label",
+		"description": "Label on a tile (with a rising-trend icon) in the GIF picker's start grid that opens the GIFs currently popular on KLIPY, the GIF provider. While that list is open it also becomes the search box placeholder, as the list's title.",
+		"lengthNote": "Shown over a GIF preview on a half-width tile; keep to one or two short words",
+		"needsScreenshot": true,
+		"hash": "0f32075ed33e62c5"
 	},
 	"flirtual:trick_or_treat": {
 		"group": "settings/appearance/themes",
@@ -27725,6 +27824,24 @@
 		"element": "link",
 		"description": "Link at the bottom of an Apple Watch chat that opens the other person's profile.",
 		"hash": "e06b21a2b396f7db",
+		"watch": true
+	},
+	"flirtual:watch.warning_unacknowledged": {
+		"group": "watch/errors",
+		"screens": [
+			"watch: browse",
+			"watch: messages"
+		],
+		"element": "error",
+		"description": "Message on the Apple Watch app when moderators have sent the user a warning that they haven't acknowledged yet; until they do, the account is blocked. Points them to the iPhone app, where the warning dialog titled \"Trust & Safety\" (the moderation team) is shown; match that translation.",
+		"placeholders": {
+			"brand_name": {
+				"meaning": "The app's name (Flirtual). Keep {brand_name} exactly as written; grammatical endings may follow it directly, as you would write them after \"Flirtual\" (e.g. Swedish genitive {brand_name}s, a Korean particle {brand_name}을).",
+				"example": "Flirtual"
+			}
+		},
+		"tone": "Neutral, serious",
+		"hash": "79f7f8e46f05bb44",
 		"watch": true
 	},
 	"flirtual:web_payment_issue": {

@@ -15384,16 +15384,16 @@
 		"ko": "675fe83908d1ea47"
 	},
 	"flirtual:copyright": {
-		"de": "3eeaeb32b3033ba4",
-		"es": "3eeaeb32b3033ba4",
-		"fr": "3eeaeb32b3033ba4",
-		"nl": "3eeaeb32b3033ba4",
-		"pt": "3eeaeb32b3033ba4",
-		"pt-BR": "3eeaeb32b3033ba4",
-		"ru": "3eeaeb32b3033ba4",
-		"sv": "3eeaeb32b3033ba4",
-		"ja": "3eeaeb32b3033ba4",
-		"ko": "3eeaeb32b3033ba4"
+		"de": "9feb51ff44efcd36",
+		"es": "9feb51ff44efcd36",
+		"fr": "9feb51ff44efcd36",
+		"nl": "9feb51ff44efcd36",
+		"pt": "9feb51ff44efcd36",
+		"pt-BR": "9feb51ff44efcd36",
+		"ru": "9feb51ff44efcd36",
+		"sv": "9feb51ff44efcd36",
+		"ja": "9feb51ff44efcd36",
+		"ko": "9feb51ff44efcd36"
 	},
 	"flirtual:countries": {
 		"de": "cce1ced8a6f0716d",
@@ -15730,6 +15730,18 @@
 		"ru": "4ca0e0e73229540c",
 		"sv": "4ca0e0e73229540c",
 		"ko": "4ca0e0e73229540c"
+	},
+	"flirtual:delete": {
+		"nl": "b26de372b4b0eaac",
+		"de": "b26de372b4b0eaac",
+		"es": "b26de372b4b0eaac",
+		"ru": "b26de372b4b0eaac",
+		"sv": "b26de372b4b0eaac",
+		"pt": "b26de372b4b0eaac",
+		"fr": "b26de372b4b0eaac",
+		"pt-BR": "b26de372b4b0eaac",
+		"ja": "b26de372b4b0eaac",
+		"ko": "b26de372b4b0eaac"
 	},
 	"flirtual:delete_account": {
 		"de": "6893fcfe347dbf18",
@@ -17482,6 +17494,18 @@
 		"sv": "251ace0eb92e11d7",
 		"ja": "251ace0eb92e11d7",
 		"ko": "251ace0eb92e11d7"
+	},
+	"flirtual:errors.warning_unacknowledged": {
+		"nl": "bba1314ee434f9e0",
+		"de": "bba1314ee434f9e0",
+		"es": "bba1314ee434f9e0",
+		"ru": "bba1314ee434f9e0",
+		"sv": "bba1314ee434f9e0",
+		"pt": "bba1314ee434f9e0",
+		"fr": "bba1314ee434f9e0",
+		"pt-BR": "bba1314ee434f9e0",
+		"ja": "bba1314ee434f9e0",
+		"ko": "bba1314ee434f9e0"
 	},
 	"flirtual:events": {
 		"de": "298dd7c15c671332",
@@ -19307,6 +19331,18 @@
 		"ja": "9790fc956e1935be",
 		"ko": "9790fc956e1935be"
 	},
+	"flirtual:gif": {
+		"nl": "40d8daf8cdd5f267",
+		"de": "40d8daf8cdd5f267",
+		"es": "40d8daf8cdd5f267",
+		"ru": "40d8daf8cdd5f267",
+		"sv": "40d8daf8cdd5f267",
+		"pt": "40d8daf8cdd5f267",
+		"fr": "40d8daf8cdd5f267",
+		"pt-BR": "40d8daf8cdd5f267",
+		"ja": "40d8daf8cdd5f267",
+		"ko": "40d8daf8cdd5f267"
+	},
 	"flirtual:google": {
 		"de": "a4f2cf81a927c6eb",
 		"es": "a4f2cf81a927c6eb",
@@ -19356,16 +19392,16 @@
 		"ko": "e480aa814f3dc4da"
 	},
 	"flirtual:guidelines_body": {
-		"de": "22a9c5227ce136e1",
-		"es": "22a9c5227ce136e1",
-		"fr": "22a9c5227ce136e1",
-		"nl": "22a9c5227ce136e1",
-		"pt": "22a9c5227ce136e1",
-		"pt-BR": "22a9c5227ce136e1",
-		"ru": "22a9c5227ce136e1",
-		"sv": "22a9c5227ce136e1",
-		"ja": "22a9c5227ce136e1",
-		"ko": "22a9c5227ce136e1"
+		"de": "ea0433421d1d49da",
+		"es": "ea0433421d1d49da",
+		"fr": "ea0433421d1d49da",
+		"nl": "ea0433421d1d49da",
+		"pt": "ea0433421d1d49da",
+		"pt-BR": "ea0433421d1d49da",
+		"ru": "ea0433421d1d49da",
+		"sv": "ea0433421d1d49da",
+		"ja": "ea0433421d1d49da",
+		"ko": "ea0433421d1d49da"
 	},
 	"flirtual:guides": {
 		"de": "892d5dd34372028b",
@@ -23447,6 +23483,18 @@
 		"ja": "dafc3476fe7d3275",
 		"ko": "dafc3476fe7d3275"
 	},
+	"flirtual:recent": {
+		"nl": "40dffab858cb0dde",
+		"de": "40dffab858cb0dde",
+		"es": "40dffab858cb0dde",
+		"ru": "40dffab858cb0dde",
+		"sv": "40dffab858cb0dde",
+		"pt": "40dffab858cb0dde",
+		"fr": "40dffab858cb0dde",
+		"pt-BR": "40dffab858cb0dde",
+		"ja": "40dffab858cb0dde",
+		"ko": "40dffab858cb0dde"
+	},
 	"flirtual:refresh": {
 		"de": "ec0dd7ff6076fd7a",
 		"es": "ec0dd7ff6076fd7a",
@@ -23602,6 +23650,18 @@
 		"ru": "53e4ec07d367a929",
 		"sv": "53e4ec07d367a929",
 		"ko": "53e4ec07d367a929"
+	},
+	"flirtual:reply": {
+		"nl": "5601c71a3668000f",
+		"de": "5601c71a3668000f",
+		"es": "5601c71a3668000f",
+		"ru": "5601c71a3668000f",
+		"sv": "5601c71a3668000f",
+		"pt": "5601c71a3668000f",
+		"fr": "5601c71a3668000f",
+		"pt-BR": "5601c71a3668000f",
+		"ja": "5601c71a3668000f",
+		"ko": "5601c71a3668000f"
 	},
 	"flirtual:report": {
 		"de": "85d640066187108d",
@@ -24011,6 +24071,18 @@
 		"ja": "89d65d39302c5a98",
 		"ko": "89d65d39302c5a98"
 	},
+	"flirtual:search_klipy": {
+		"nl": "0290413c5e6dda58",
+		"de": "0290413c5e6dda58",
+		"es": "0290413c5e6dda58",
+		"ru": "0290413c5e6dda58",
+		"sv": "0290413c5e6dda58",
+		"pt": "0290413c5e6dda58",
+		"fr": "0290413c5e6dda58",
+		"pt-BR": "0290413c5e6dda58",
+		"ja": "0290413c5e6dda58",
+		"ko": "0290413c5e6dda58"
+	},
 	"flirtual:seconds": {
 		"de": "b0896f3cd563e5ec",
 		"es": "b0896f3cd563e5ec",
@@ -24215,6 +24287,18 @@
 		"ja": "56c91601c54f7f66",
 		"ko": "56c91601c54f7f66"
 	},
+	"flirtual:send_gif": {
+		"nl": "5d9aae5cb64f9e18",
+		"de": "5d9aae5cb64f9e18",
+		"es": "5d9aae5cb64f9e18",
+		"ru": "5d9aae5cb64f9e18",
+		"sv": "5d9aae5cb64f9e18",
+		"pt": "5d9aae5cb64f9e18",
+		"fr": "5d9aae5cb64f9e18",
+		"pt-BR": "5d9aae5cb64f9e18",
+		"ja": "5d9aae5cb64f9e18",
+		"ko": "5d9aae5cb64f9e18"
+	},
 	"flirtual:serene_silver": {
 		"de": "11d0933d22185277",
 		"es": "11d0933d22185277",
@@ -24418,6 +24502,18 @@
 		"sv": "827e0c6ac9936b69",
 		"ja": "827e0c6ac9936b69",
 		"ko": "827e0c6ac9936b69"
+	},
+	"flirtual:show_embed": {
+		"nl": "2097aae212f25cbd",
+		"de": "2097aae212f25cbd",
+		"es": "2097aae212f25cbd",
+		"ru": "2097aae212f25cbd",
+		"sv": "2097aae212f25cbd",
+		"pt": "2097aae212f25cbd",
+		"fr": "2097aae212f25cbd",
+		"pt-BR": "2097aae212f25cbd",
+		"ja": "2097aae212f25cbd",
+		"ko": "2097aae212f25cbd"
 	},
 	"flirtual:show_nsfw": {
 		"ja": "64b158ca60d341c8",
@@ -24804,16 +24900,16 @@
 		"ko": "358a84a11bc6a131"
 	},
 	"flirtual:terms_body": {
-		"de": "b391ccbf7d6ea138",
-		"es": "b391ccbf7d6ea138",
-		"fr": "b391ccbf7d6ea138",
-		"nl": "b391ccbf7d6ea138",
-		"pt": "b391ccbf7d6ea138",
-		"pt-BR": "b391ccbf7d6ea138",
-		"ru": "b391ccbf7d6ea138",
-		"sv": "b391ccbf7d6ea138",
-		"ja": "b391ccbf7d6ea138",
-		"ko": "b391ccbf7d6ea138"
+		"de": "d737f2b3fbd32b6a",
+		"es": "d737f2b3fbd32b6a",
+		"fr": "d737f2b3fbd32b6a",
+		"nl": "d737f2b3fbd32b6a",
+		"pt": "d737f2b3fbd32b6a",
+		"pt-BR": "d737f2b3fbd32b6a",
+		"ru": "d737f2b3fbd32b6a",
+		"sv": "d737f2b3fbd32b6a",
+		"ja": "d737f2b3fbd32b6a",
+		"ko": "d737f2b3fbd32b6a"
 	},
 	"flirtual:terms_of_service": {
 		"de": "29e6fa122da88e0e",
@@ -25210,6 +25306,18 @@
 		"sv": "548edc03357d04a1",
 		"ja": "548edc03357d04a1",
 		"ko": "548edc03357d04a1"
+	},
+	"flirtual:trending": {
+		"nl": "0f32075ed33e62c5",
+		"de": "0f32075ed33e62c5",
+		"es": "0f32075ed33e62c5",
+		"ru": "0f32075ed33e62c5",
+		"sv": "0f32075ed33e62c5",
+		"pt": "0f32075ed33e62c5",
+		"fr": "0f32075ed33e62c5",
+		"pt-BR": "0f32075ed33e62c5",
+		"ja": "0f32075ed33e62c5",
+		"ko": "0f32075ed33e62c5"
 	},
 	"flirtual:trick_or_treat": {
 		"de": "cd5f0e8b21a49124",
@@ -26374,6 +26482,18 @@
 		"sv": "e06b21a2b396f7db",
 		"ja": "e06b21a2b396f7db",
 		"ko": "e06b21a2b396f7db"
+	},
+	"flirtual:watch.warning_unacknowledged": {
+		"nl": "79f7f8e46f05bb44",
+		"de": "79f7f8e46f05bb44",
+		"es": "79f7f8e46f05bb44",
+		"ru": "79f7f8e46f05bb44",
+		"sv": "79f7f8e46f05bb44",
+		"pt": "79f7f8e46f05bb44",
+		"fr": "79f7f8e46f05bb44",
+		"pt-BR": "79f7f8e46f05bb44",
+		"ja": "79f7f8e46f05bb44",
+		"ko": "79f7f8e46f05bb44"
 	},
 	"flirtual:web_payment_issue": {
 		"de": "88df242e233250fe",
