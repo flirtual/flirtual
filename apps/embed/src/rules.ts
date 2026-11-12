@@ -172,7 +172,7 @@ const rules: Array<Rule> = [
 	// domains/google.com/docs.google.com.js: a published form embeds at ?embedded=true.
 	{
 		re: [/^https:\/\/docs\.google\.com\/(?:a\/[\w.-]+\/)?forms\/(?:u\/\d\/)?d\/e\/([\w-]+)\/viewform/i],
-		player: (match) => ({ kind: "iframe", src: `https://docs.google.com/forms/d/e/${match[1]}/viewform?embedded=true`, height: 640, maxWidth: 640 })
+		player: (match) => ({ kind: "iframe", src: `https://docs.google.com/forms/d/e/${match[1]}/viewform?embedded=true`, height: 640, maxWidth: 640, forms: true })
 	},
 	// Not in Iframely: Threads posts have an /embed page, its oEmbed needs a Meta app token.
 	{

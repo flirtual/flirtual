@@ -98,6 +98,9 @@ const EmbedFrame: FC<{ player: NonNullable<Embed["player"]>; title: string }> = 
 	source.searchParams.set("autoplay", "1");
 
 	const aspectRatio = player.aspectRatio ?? (height ? null : 16 / 9);
+	// Sandbox flags carry down to the frames inside, so a form (a Google Form) can only submit when
+	// its player asks for it.
+	const sandbox = `allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-presentation${player.forms ? " allow-forms" : ""}`;
 
 	return (
 		<iframe
@@ -110,8 +113,9 @@ const EmbedFrame: FC<{ player: NonNullable<Embed["player"]>; title: string }> = 
 			allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
 			className="block w-full border-0"
 			referrerPolicy="no-referrer"
-			// eslint-disable-next-line react-dom/no-unsafe-iframe-sandbox
-			sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-presentation"
+			// Always set, but it varies with the player, which this rule can't follow.
+			// eslint-disable-next-line react-dom/no-missing-iframe-sandbox
+			sandbox={sandbox}
 			src={source.href}
 			title={title}
 		/>

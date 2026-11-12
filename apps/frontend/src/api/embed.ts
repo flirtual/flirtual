@@ -25,6 +25,7 @@ export interface Embed {
 		maxWidth: number | null;
 		resizes: boolean;
 		api: "youtube" | null;
+		forms: boolean;
 	} | null;
 	post: {
 		author: { name: string; handle: string; avatar: string | null };

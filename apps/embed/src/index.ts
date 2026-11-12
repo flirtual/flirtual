@@ -6,7 +6,7 @@ import type { Unfurled, UnfurlContext } from "./unfurl";
 import { unfurl } from "./unfurl";
 
 // Bump to drop every cached unfurl when its shape or the rules change.
-const cacheVersion = 2;
+const cacheVersion = 3;
 
 const ttl = { found: 86400, missing: 21600, failed: 600 };
 

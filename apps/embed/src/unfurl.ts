@@ -38,6 +38,8 @@ export interface Embed {
 		resizes: boolean;
 		/** A postMessage API the app can pause the player through, inside the frame. */
 		api: "youtube" | null;
+		/** The player is a form to fill in, so the app lets its frame submit one. */
+		forms: boolean;
 	} | null;
 	/** A post drawn from its data rather than the site's widget, its media proxied. */
 	post: {
@@ -301,7 +303,8 @@ export async function unfurl(input: URL, context: UnfurlContext, refreshes = 0):
 				height: player.height ?? (player.kind === "html" ? 320 : null),
 				maxWidth: player.maxWidth ?? (player.kind === "html" ? 550 : null),
 				resizes: player.kind === "html",
-				api: player.kind === "iframe" ? player.api ?? null : null
+				api: player.kind === "iframe" ? player.api ?? null : null,
+				forms: player.kind === "iframe" && !!player.forms
 			},
 			post: null
 		},

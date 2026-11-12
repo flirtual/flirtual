@@ -10,6 +10,8 @@ export interface IframePlayer {
 	autoplay?: string;
 	/** A postMessage API the app can pause the player through. */
 	api?: "youtube";
+	/** The player is a form to fill in, which the app's sandbox otherwise stops submitting. */
+	forms?: true;
 }
 
 export interface HtmlPlayer {
