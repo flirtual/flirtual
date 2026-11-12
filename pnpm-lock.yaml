@@ -374,7 +374,7 @@ importers:
         version: 8.0.2
       '@formatjs/intl-displaynames':
         specifier: ^8.0.0
-        version: 8.0.1
+        version: 8.0.3
       '@formatjs/intl-listformat':
         specifier: ^9.0.0
         version: 9.0.1
@@ -2177,8 +2177,8 @@ packages:
   '@formatjs/intl-datetimeformat@8.0.2':
     resolution: {integrity: sha512-isKDo8jeQ8VoYvrweku92ajF/Z9fJ76DDnw2eCmKBTJTwZa5GeGl4u40RJiFYPbR6ROluvN0CsbNtGtnd2NyIQ==}
 
-  '@formatjs/intl-displaynames@8.0.1':
-    resolution: {integrity: sha512-8RTQvKIGx+SAqI+bvVrrupwzeEZGGzdzJwVbZaK9U5VKuVo34LOFOkn7GX9KfwHuVIKxM7pKv8yYTs6UIkeyTA==}
+  '@formatjs/intl-displaynames@8.0.3':
+    resolution: {integrity: sha512-UhKG1OwrbQzZNKIcmZu+/JR5SOxE25RWmUzxaNfQ04AJ4OwxNkTvAbVX0ojnkm0i8Qs4E8ElIoBdA6F8XTkJXw==}
 
   '@formatjs/intl-getcanonicallocales@3.3.0':
     resolution: {integrity: sha512-ndj9jw/LHAftSe34D/A6+lj3Y7GHVfPEZ6FZP2wjd8/beYeh3d1sjlSpZSBlzegSKS3U3mUEIzLCpI0+jKNT6w==}
@@ -10386,7 +10386,7 @@ snapshots:
       '@formatjs/bigdecimal': 0.2.10
       '@formatjs/intl-localematcher': 0.10.1
 
-  '@formatjs/intl-displaynames@8.0.1':
+  '@formatjs/intl-displaynames@8.0.3':
     dependencies:
       '@formatjs/intl-localematcher': 0.10.1
 
