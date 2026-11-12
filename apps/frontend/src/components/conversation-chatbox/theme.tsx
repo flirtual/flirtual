@@ -10,6 +10,8 @@ import { ImageBlock, LocationBlock } from "./attachment-blocks";
 import { jumboEmojiSegments, splitEmoji } from "./custom-emoji";
 import type { EmojiSegment } from "./custom-emoji";
 import { CustomEmoji, Twemoji } from "./emoji";
+import { LinkEmbeds } from "./link-embed";
+import { messageLinks } from "./links";
 import type { Match } from "./match-card";
 import { isMatchMessage } from "./match-message";
 import { Message } from "./message";
@@ -45,6 +47,8 @@ const Segment: FC<{ segment: EmojiSegment; message: TextBlockProps["message"] }>
 };
 
 const TextBlock: FC<TextBlockProps> = ({ block, message, common }) => {
+	const links = messageLinks(block.children);
+
 	if (isMatchMessage(message)) {
 		const { matchMessage } = common.themeCustom as ThemeCustom;
 
@@ -56,12 +60,15 @@ const TextBlock: FC<TextBlockProps> = ({ block, message, common }) => {
 	}
 
 	return (
-		<div className={textBlock}>
-			{jumboEmojiSegments(splitEmoji(block.children, customEmojiNames)).map((segment, index) => (
-				// eslint-disable-next-line react/no-array-index-key
-				<Segment key={index} message={message} segment={segment} />
-			))}
-		</div>
+		<>
+			<div className={textBlock}>
+				{jumboEmojiSegments(splitEmoji(block.children, customEmojiNames)).map((segment, index) => (
+					// eslint-disable-next-line react/no-array-index-key
+					<Segment key={index} message={message} segment={segment} />
+				))}
+			</div>
+			{links.length > 0 && <LinkEmbeds links={links} />}
+		</>
 	);
 };
 

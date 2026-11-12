@@ -5,12 +5,15 @@ import {
 	apiOrigin,
 	commitId,
 	development,
+	embedOrigin,
 	posthogHost,
 	preview,
 	sentryDsn,
 	sentryReportTo
 } from "~/const";
 import { bucketOrigins } from "~/urls";
+
+const embedHost = embedOrigin && new URL(embedOrigin).host;
 
 const data = [
 	{
@@ -46,10 +49,12 @@ const data = [
 			{
 				key: "permissions-policy",
 				value: Object.entries({
-					autoplay: ["self"],
-					fullscreen: ["self"],
+					// Chat embeds' players: apps/embed delegates these to the frames it hosts.
+					autoplay: ["self", embedOrigin && `"${embedOrigin}"`],
+					fullscreen: ["self", embedOrigin && `"${embedOrigin}"`],
 					"idle-detection": ["self"],
-					"picture-in-picture": ["self"],
+					"picture-in-picture": ["self", embedOrigin && `"${embedOrigin}"`],
+					"encrypted-media": ["self", embedOrigin && `"${embedOrigin}"`],
 					"publickey-credentials-create": ["self"],
 					"publickey-credentials-get": ["self"],
 					"web-share": ["self"],
@@ -65,7 +70,7 @@ const data = [
 								"local-network-access": []
 							})
 				})
-					.map(([key, value]) => `${key}=(${value.join(" ")})`)
+					.map(([key, value]) => `${key}=(${value.filter(Boolean).join(" ")})`)
 					.join(", ")
 			},
 			/**
@@ -123,6 +128,8 @@ const data = [
 						"maps.googleapis.com",
 						// https://posthog.com/docs/advanced/content-security-policy
 						"*.posthog.com",
+						// Chat embeds' images, proxied: apps/embed.
+						embedHost,
 					],
 					"media-src": [
 						"'self'",
@@ -135,6 +142,8 @@ const data = [
 						"tjstatic.net",
 						// https://vrcdn.live/
 						"stream.vrcdn.live",
+						// Chat embeds' videos, proxied: apps/embed.
+						embedHost,
 						// https://posthog.com/docs/advanced/content-security-policy
 						"*.posthog.com",
 					],
@@ -164,7 +173,9 @@ const data = [
 						posthogHost && new URL(posthogHost).host,
 						"*.posthog.com",
 						// https://www.chargebee.com/docs/billing/2.0/hosted-capabilities/embedded-checkout
-						"*.chargebee.com"
+						"*.chargebee.com",
+						// Chat embeds: apps/embed.
+						embedHost
 					],
 					"font-src": [
 						"'self'",
@@ -193,6 +204,9 @@ const data = [
 						"e.widgetbot.io",
 						// Music platforms.
 						...playlistPlatforms.map(({ embed }) => new URL(embed("example", "light", "en")).host),
+						// Chat embeds. Never a third party directly: apps/embed's frames hold each
+						// player to the TalkJS link allowlist with their own frame-src.
+						embedHost,
 					],
 					// https://docs.sentry.io/platforms/javascript/session-replay/#content-security-policy-csp
 					// https://posthog.com/docs/advanced/content-security-policy

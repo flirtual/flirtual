@@ -1,0 +1,43 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "flirtual-embed",
+	"main": "src/index.ts",
+	"compatibility_date": "2026-08-22",
+	"workers_dev": false,
+	"preview_urls": false,
+	"observability": {
+		"enabled": true,
+		"logs": { "invocation_logs": false }
+	},
+	// Its own registrable domain: embeds run third-party scripts here, which must not share
+	// cookies with (or be able to set cookies for) the app's domain.
+	"routes": [{ "pattern": "embed.flirtual.net", "custom_domain": true }],
+	"vars": {
+		// Origins that may frame embeds and call /unfurl, space-separated; "*." wildcards allowed.
+		"ALLOWED_ORIGINS": "https://flirtu.al https://flirtual.com",
+		"USER_AGENT": "Mozilla/5.0 (compatible; FlirtualBot/1.0; +https://flirtu.al) (like TwitterBot)"
+	},
+	"ratelimits": [
+		{
+			"name": "UNFURL_LIMITER",
+			"namespace_id": "1001",
+			"simple": { "limit": 60, "period": 60 }
+		}
+	],
+	"env": {
+		"canary": {
+			"routes": [{ "pattern": "embed-beta.flirtual.net", "custom_domain": true }],
+			"vars": {
+				"ALLOWED_ORIGINS": "https://beta.flirtual.dev https://*.flirtual.dev",
+				"USER_AGENT": "Mozilla/5.0 (compatible; FlirtualBot/1.0; +https://flirtu.al) (like TwitterBot)"
+			},
+			"ratelimits": [
+				{
+					"name": "UNFURL_LIMITER",
+					"namespace_id": "1002",
+					"simple": { "limit": 60, "period": 60 }
+				}
+			]
+		}
+	}
+}

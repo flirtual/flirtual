@@ -183,7 +183,7 @@ export function Message({ message, messageStatus, permissions, common }: Message
 					<div
 						data-bubble
 						className={twMerge(
-							"relative flow-root max-w-full rounded-2xl leading-(--t-line-height-base)! break-words [&_.t-message-content]:contents [&_a]:text-inherit!",
+							"relative flow-root max-w-full rounded-2xl leading-(--t-line-height-base)! break-words [&_.t-message-content]:contents [&_a]:text-inherit! [&_a]:underline",
 							jumbo ? jumboSurface : twMerge("px-4 py-3 shadow-brand-1", surface[sender]),
 							sender === "system" && "w-full text-[120%]! italic [&:lang(ja)]:not-italic [&:lang(ko)]:not-italic [&:lang(ru)]:not-italic",
 							hasThumbnail && "w-full"

@@ -801,6 +801,7 @@
 	"hookups_hint": "Hookups (ERP, FWB)",
 	"talkjs_match_message": "It's a match!",
 	"talkjs_input_placeholder": "Send {name} good vibes…",
+	"show_embed": "Show {name}",
 	"last_message_from_you": "You: {message}",
 	"official": "Official",
 	"active_subscription": "Active subscription",
