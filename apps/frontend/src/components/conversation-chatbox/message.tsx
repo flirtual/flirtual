@@ -168,6 +168,14 @@ export function Message({ message, messageStatus, permissions, common }: Message
 							className="absolute top-1/2 size-6 -translate-y-1/2 fill-none! text-black-80! dark:text-white-20! vision:text-black-80!"
 						/>
 					)}
+					{hasActions && (
+						<div className="pointer-events-none absolute -top-5 right-2 z-1 flex gap-0.5 rounded-full bg-white-20 p-0.5 opacity-0 shadow-brand-1 transition-opacity group-hover/message:pointer-events-auto group-hover/message:opacity-100 group-data-actions/message:pointer-events-auto group-data-actions/message:opacity-100 group-data-reply/message:-top-9 focus-within:pointer-events-auto focus-within:opacity-100 has-[[t-popover-content]]:pointer-events-auto has-[[t-popover-content]]:opacity-100 dark:bg-black-50 vision:bg-white-20">
+							{canAddReaction && message.reactions.length === 0 && addReaction(hoverButton)}
+							{canReply && action(translate("reply"), <Reply />, reply)}
+							{canEdit && action(translate("edit"), <Pencil />, () => common.chatbox.setEditing(message.id))}
+							{canDelete && action(translate("delete"), <Trash2 />, () => void common.chatbox.deleteMessage(message.id), "text-red-500! dark:text-red-500! vision:text-red-500!")}
+						</div>
+					)}
 					{message.referencedMessage && (
 						<ReferencedMessage common={common} referencedMessage={message.referencedMessage} />
 					)}
@@ -191,14 +199,6 @@ export function Message({ message, messageStatus, permissions, common }: Message
 							<TimeAgo common={common} timestamp={message.createdAt} />
 						</span>
 
-						{hasActions && (
-							<div className="pointer-events-none absolute -top-5 right-2 z-1 flex gap-0.5 rounded-full bg-white-20 p-0.5 opacity-0 shadow-brand-1 transition-opacity group-hover/message:pointer-events-auto group-hover/message:opacity-100 group-data-actions/message:pointer-events-auto group-data-actions/message:opacity-100 focus-within:pointer-events-auto focus-within:opacity-100 has-[[t-popover-content]]:pointer-events-auto has-[[t-popover-content]]:opacity-100 dark:bg-black-70 vision:bg-white-20">
-								{canAddReaction && message.reactions.length === 0 && addReaction(hoverButton)}
-								{canReply && action(translate("reply"), <Reply />, reply)}
-								{canEdit && action(translate("edit"), <Pencil />, () => common.chatbox.setEditing(message.id))}
-								{canDelete && action(translate("delete"), <Trash2 />, () => void common.chatbox.deleteMessage(message.id), "text-red-500! dark:text-red-500! vision:text-red-500!")}
-							</div>
-						)}
 					</div>
 
 					{message.reactions.length > 0 && (
