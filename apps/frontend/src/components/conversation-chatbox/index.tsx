@@ -7,7 +7,6 @@ import { twMerge } from "tailwind-merge";
 
 import type { ProspectKind } from "~/api/matchmaking";
 import type { User } from "~/api/user";
-import * as brand from "~/brand";
 import { useDevice } from "~/hooks/use-device";
 import { usePreferences } from "~/hooks/use-preferences";
 import { useOptionalSession } from "~/hooks/use-session";
@@ -16,18 +15,28 @@ import { useTheme } from "~/hooks/use-theme";
 import { lazy } from "~/lazy";
 
 import { customEmojiPickerEntries, pickedCustomEmoji } from "./custom-emoji";
+import emojiPickerStyles from "./emoji-picker.css?inline";
 import { followStickyAvatars } from "./sticky-avatars";
 
 const Chatbox = lazy(() => import("./chatbox").then(({ default: Chatbox }) => Chatbox));
 
-const customEmojiPicker = customEmojiPickerEntries(customEmojis, brand.name);
+const customEmojiPicker = customEmojiPickerEntries(customEmojis);
 
 // TalkJS mounts <emoji-picker> elements (message field, reactions) without a way to pass custom
-// emoji: https://github.com/nolanlawson/emoji-picker-element#custom-emoji
-function followCustomEmojiPickers(element: HTMLElement) {
-	const addCustomEmoji = () => {
-		for (const picker of element.querySelectorAll<Picker>("emoji-picker"))
+// emoji (https://github.com/nolanlawson/emoji-picker-element#custom-emoji) or styles for their
+// shadow roots.
+function followEmojiPickers(element: HTMLElement) {
+	const styles = new CSSStyleSheet();
+	styles.replaceSync(emojiPickerStyles);
+
+	const setUpPickers = () => {
+		for (const picker of element.querySelectorAll<Picker>("emoji-picker")) {
 			if (picker.customEmoji !== customEmojiPicker) picker.customEmoji = customEmojiPicker;
+
+			const root = picker.shadowRoot;
+			if (root && !root.adoptedStyleSheets.includes(styles))
+				root.adoptedStyleSheets = [...root.adoptedStyleSheets, styles];
+		}
 	};
 
 	// Runs before TalkJS's own listener on the message field's picker, which can't insert them.
@@ -42,8 +51,8 @@ function followCustomEmojiPickers(element: HTMLElement) {
 		document.execCommand("insertText", false, shortcode);
 	};
 
-	addCustomEmoji();
-	const observer = new MutationObserver(addCustomEmoji);
+	setUpPickers();
+	const observer = new MutationObserver(setUpPickers);
 	observer.observe(element, { childList: true, subtree: true });
 	element.addEventListener("emoji-click", insertCustomEmoji, { capture: true });
 
@@ -54,7 +63,7 @@ function followCustomEmojiPickers(element: HTMLElement) {
 }
 
 function followChatbox(element: HTMLDivElement) {
-	const stopEmoji = followCustomEmojiPickers(element);
+	const stopEmoji = followEmojiPickers(element);
 	const stopAvatars = followStickyAvatars(element);
 
 	return () => {

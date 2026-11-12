@@ -64,11 +64,13 @@ export function splitEmoji(children: Array<TextNode>, names: ReadonlySet<string>
 	return segments;
 }
 
-// TalkJS inserts a picked custom emoji's name into the message, so the name is its shortcode.
-export function customEmojiPickerEntries(emojis: Record<string, { url: string; hidden: boolean }>, category: string): Array<CustomEmoji> {
+// TalkJS inserts a picked custom emoji's name into the message, so the name is its shortcode. Without a
+// category, the picker shows them under no heading:
+// https://github.com/nolanlawson/emoji-picker-element#custom-emoji
+export function customEmojiPickerEntries(emojis: Record<string, { url: string; hidden: boolean }>): Array<CustomEmoji> {
 	return Object.entries(emojis)
 		.filter(([, { hidden }]) => !hidden)
-		.map(([name, { url }]) => ({ name, shortcodes: [name.slice(1, -1)], url, category }));
+		.map(([name, { url }]) => ({ name, shortcodes: [name.slice(1, -1)], url }));
 }
 
 // TalkJS's editor can't insert custom emoji (it throws "Not implemented"), so we insert the shortcode.

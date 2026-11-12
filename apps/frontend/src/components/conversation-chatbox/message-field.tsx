@@ -31,7 +31,7 @@ export function MessageField({ common, referencedMessage, editor, voiceRecorder,
 	return (
 		<div className={twMerge("chat-message-field flex flex-col", mode === "send" ? "max-h-[calc(100%-100px)]" : "my-3")}>
 			{editor.showEmojiPicker && (
-				<div className="h-[350px] w-full shrink overflow-hidden">
+				<div className="relative z-1 h-[350px] w-full shrink overflow-hidden border-t border-white-40 shadow-brand-1 dark:border-black-60">
 					<EmojiPicker />
 				</div>
 			)}

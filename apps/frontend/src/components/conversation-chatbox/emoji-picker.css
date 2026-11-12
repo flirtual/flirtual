@@ -1,0 +1,15 @@
+@reference "../../app/index.css";
+
+/*
+ * Styles inside <emoji-picker>'s shadow root, for what its CSS variables don't reach:
+ * https://github.com/nolanlawson/emoji-picker-element#styling
+ */
+
+.skintone-list {
+	@apply rounded-b-xl border-b-0 shadow-brand-1;
+}
+
+/* TalkJS's own picker styles nudge the button off the list it opens (`margin: 0 -3px 0 4px`). */
+#skintone-button {
+	@apply mx-0;
+}

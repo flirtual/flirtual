@@ -86,14 +86,14 @@ describe("splitEmoji", () => {
 });
 
 describe("customEmojiPickerEntries", () => {
-	it("lists visible custom emoji under one category, named by shortcode", () => {
+	it("lists visible custom emoji without a category, named by shortcode", () => {
 		expect(customEmojiPickerEntries({
 			":bonk:": { url: "https://example.com/bonk.gif", hidden: false },
 			":secret:": { url: "https://example.com/secret.png", hidden: true },
 			":pat:": { url: "https://example.com/pat.gif", hidden: false }
-		}, "Flirtual")).toEqual([
-			{ name: ":bonk:", shortcodes: ["bonk"], url: "https://example.com/bonk.gif", category: "Flirtual" },
-			{ name: ":pat:", shortcodes: ["pat"], url: "https://example.com/pat.gif", category: "Flirtual" }
+		})).toStrictEqual([
+			{ name: ":bonk:", shortcodes: ["bonk"], url: "https://example.com/bonk.gif" },
+			{ name: ":pat:", shortcodes: ["pat"], url: "https://example.com/pat.gif" }
 		]);
 	});
 });
