@@ -1,5 +1,5 @@
 import type { ComponentProps, FC } from "react";
-import { createElement, use, useCallback, useEffect, useMemo, useRef } from "react";
+import { createElement, use, useCallback, useEffect, useLayoutEffect, useMemo, useRef } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { useTranslation } from "react-i18next";
 import type { PopperPlacement, Step, StepOptions, Tour } from "shepherd.js";
@@ -26,6 +26,13 @@ export function useShepherd() {
 
 // Resolves once the element exists and its layout has settled (same position
 // across two consecutive frames), so steps don't attach mid-transition.
+// The first-run tour is unskippable; re-shows (F1) can be exited.
+function setSkippable(tour: Tour, skippable: boolean) {
+	tour.options.exitOnEsc = skippable;
+	for (const step of tour.steps)
+		step.updateStepOptions({ cancelIcon: { enabled: skippable } });
+}
+
 function waitForElement(selector: string, timeout: number = 4000) {
 	return new Promise<void>((resolve) => {
 		const startedAt = Date.now();
@@ -132,11 +139,7 @@ export function useTour(
 
 			if (onlyIfUncompleted && completed) return;
 
-			// The first-run tour is unskippable; re-shows (F1) can be exited.
-			const skippable = !onlyIfUncompleted;
-			shepherd.options.exitOnEsc = skippable;
-			for (const step of shepherd.steps)
-				step.updateStepOptions({ cancelIcon: { enabled: skippable } });
+			setSkippable(shepherd, !onlyIfUncompleted);
 
 			setScrollLocked(true);
 			shepherd.start();
@@ -213,7 +216,7 @@ export function useDefaultTour(enabled: boolean = true) {
 	// modes itself, which must not rebuild (and cancel) the running tour.
 	const navigate = useNavigate();
 	const navigateReference = useRef(navigate);
-	navigateReference.current = navigate;
+	useLayoutEffect(() => void (navigateReference.current = navigate));
 
 	// Navigate and wait for the step's target; if the tour was cancelled or
 	// restarted while we were waiting, never resolve, so the step can't render

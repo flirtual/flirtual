@@ -109,7 +109,6 @@ const TalkjsProvider_: FC<PropsWithChildren> = ({ children }) => {
 	const session = useMemo(() => talkjsUserId ? talkSession(talkjsUserId) : null, [talkjsUserId]);
 
 	useEffect(() => {
-		setUnreadConversations([]);
 		if (!session) return;
 
 		const conversationSubscription = session.subscribeConversations(() => invalidate({ queryKey: conversationsKey() }));
@@ -125,6 +124,7 @@ const TalkjsProvider_: FC<PropsWithChildren> = ({ children }) => {
 		return () => {
 			unreadSubscription.unsubscribe();
 			conversationSubscription.unsubscribe();
+			setUnreadConversations([]);
 		};
 	}, [session]);
 

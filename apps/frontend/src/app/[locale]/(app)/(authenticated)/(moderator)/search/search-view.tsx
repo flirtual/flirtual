@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import {
 
 	flexRender,
@@ -6,8 +5,8 @@ import {
 	useReactTable
 } from "@tanstack/react-table";
 import type { ColumnDef } from "@tanstack/react-table";
-import { Eye, EyeOff, Gavel, Gem, Images, Loader2, Search, ShieldEllipsis } from "lucide-react";
-import { Suspense, useDeferredValue, useEffect, useRef, useState } from "react";
+import { Eye, EyeOff, Gavel, Gem, Images, Loader2, Search } from "lucide-react";
+import { Suspense, useDeferredValue, useRef, useState } from "react";
 import type { FC } from "react";
 import { useSearchParams } from "react-router";
 import { capitalize } from "remeda";
@@ -69,8 +68,59 @@ const ColumnDisplayName: FC<{ userId: string }> = ({ userId }) => {
 	);
 };
 
-const ColumnStatus: FC<{ userId: string; placeholder?: boolean }> = ({ userId, placeholder }) => {
-	const user = placeholder ? null : useUser(userId);
+const ColumnEmail: FC<{ userId: string }> = ({ userId }) => {
+	const user = useUser(userId);
+	if (!user) return null;
+
+	return (
+		<MinimalTooltip content={user.email}>
+			<div
+				className={twMerge(
+					"w-[12em] truncate",
+					!user.emailConfirmedAt && "text-red-500"
+				)}
+			>
+				{user.email}
+			</div>
+		</MinimalTooltip>
+	);
+};
+
+const ColumnActiveAt: FC<{ userId: string }> = ({ userId }) => {
+	const user = useUser(userId);
+	if (!user || !user.activeAt || !user.createdAt) return null;
+
+	const createdAt = new Date(user.createdAt);
+	const activeAt = new Date(user.activeAt);
+
+	// If the user was created and last active at the same time, then
+	// they have never been active, so we don't show a last active time.
+	if (createdAt.getTime() === activeAt.getTime()) return <span>-</span>;
+
+	return (
+		<MinimalTooltip content={<DateTimeRelative value={user.activeAt} />}>
+			<span className="whitespace-nowrap">
+				<TimeRelative value={user.activeAt} />
+			</span>
+		</MinimalTooltip>
+	);
+};
+
+const ColumnCreatedAt: FC<{ userId: string }> = ({ userId }) => {
+	const user = useUser(userId);
+	if (!user || !user.createdAt) return null;
+
+	return (
+		<MinimalTooltip content={<DateTimeRelative value={user.createdAt} />}>
+			<span className="whitespace-nowrap">
+				<TimeRelative value={user.createdAt} />
+			</span>
+		</MinimalTooltip>
+	);
+};
+
+const ColumnStatus: FC<{ userId: string }> = ({ userId }) => {
+	const user = useUser(userId);
 	const VisibilityIcon = user?.status === "visible" ? Eye : EyeOff;
 
 	return (
@@ -160,9 +210,7 @@ const ColumnStatus: FC<{ userId: string; placeholder?: boolean }> = ({ userId, p
 										)}
 				</TooltipContent>
 			</Tooltip>
-			{placeholder
-				? <ShieldEllipsis className="size-5 opacity-50" />
-				: <ProfileDropdown userId={userId} />}
+			<ProfileDropdown userId={userId} />
 		</div>
 	);
 };
@@ -177,62 +225,17 @@ const columns: Array<ColumnDef<string>> = [
 	{
 		id: "email",
 		header: "Email",
-		cell: ({ row: { original: userId } }) => {
-			const user = useUser(userId);
-			if (!user) return null;
-
-			return (
-				<MinimalTooltip content={user.email}>
-					<div
-						className={twMerge(
-							"w-[12em] truncate",
-							!user.emailConfirmedAt && "text-red-500"
-						)}
-					>
-						{user.email}
-					</div>
-				</MinimalTooltip>
-			);
-		}
+		cell: ({ row: { original: userId } }) => <ColumnEmail userId={userId} />
 	},
 	{
 		id: "activeAt",
 		header: "Active",
-		cell: ({ row: { original: userId } }) => {
-			const user = useUser(userId);
-			if (!user || !user.activeAt || !user.createdAt) return null;
-
-			const createdAt = new Date(user.createdAt);
-			const activeAt = new Date(user.activeAt);
-
-			// If the user was created and last active at the same time, then
-			// they have never been active, so we don't show a last active time.
-			if (createdAt.getTime() === activeAt.getTime()) return <span>-</span>;
-
-			return (
-				<MinimalTooltip content={<DateTimeRelative value={user.activeAt} />}>
-					<span className="whitespace-nowrap">
-						<TimeRelative value={user.activeAt} />
-					</span>
-				</MinimalTooltip>
-			);
-		}
+		cell: ({ row: { original: userId } }) => <ColumnActiveAt userId={userId} />
 	},
 	{
 		id: "createdAt",
 		header: "Created",
-		cell: ({ row: { original: userId } }) => {
-			const user = useUser(userId);
-			if (!user || !user.createdAt) return null;
-
-			return (
-				<MinimalTooltip content={<DateTimeRelative value={user.createdAt} />}>
-					<span className="whitespace-nowrap">
-						<TimeRelative value={user.createdAt} />
-					</span>
-				</MinimalTooltip>
-			);
-		}
+		cell: ({ row: { original: userId } }) => <ColumnCreatedAt userId={userId} />
 	},
 	{
 		id: "status",
@@ -248,6 +251,8 @@ const DataTable: FC<{ data: Array<string>; admin: boolean; limit: number; pendin
 	limit,
 	pending
 }) => {
+	// TanStack Table 8 can't be memoized, so the compiler leaves this component as written.
+	// eslint-disable-next-line react-hooks/incompatible-library
 	const table = useReactTable({
 		data,
 		columns: columns.filter((column) => column.id !== "email" || admin),
@@ -357,7 +362,11 @@ export const SearchView: React.FC = () => {
 	const deferredPage = useDeferredValue(page);
 
 	// Reset page when the search options change.
-	useEffect(() => setPage(1), [deferredOptions]);
+	const [pagedOptions, setPagedOptions] = useState(deferredOptions);
+	if (pagedOptions !== deferredOptions) {
+		setPagedOptions(deferredOptions);
+		setPage(1);
+	}
 
 	const data = useQuery({
 		queryKey: ["users", deferredOptions, { page: deferredPage }],

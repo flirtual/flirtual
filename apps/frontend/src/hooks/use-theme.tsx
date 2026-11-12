@@ -40,7 +40,7 @@ export function useTheme() {
 
 	const prefersDark = useMediaQuery("(prefers-color-scheme: dark)", false);
 
-	const theme = globalThis.theme = localTheme === "system"
+	const theme = localTheme === "system"
 		? prefersDark
 			? "dark"
 			: "light"

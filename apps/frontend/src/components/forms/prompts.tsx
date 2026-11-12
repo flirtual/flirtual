@@ -1,5 +1,5 @@
 import { Pencil, Plus, X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type { Dispatch, FC } from "react";
 import { useTranslation } from "react-i18next";
 import { groupBy, prop, uniqueBy } from "remeda";
@@ -32,7 +32,11 @@ const EditPromptDialog: FC<{
 	excludedPrompts
 }) => {
 	const [value, setValue] = useState(initialValue);
-	useEffect(() => setValue(initialValue), [initialValue]);
+	const [editing, setEditing] = useState(initialValue);
+	if (editing !== initialValue) {
+		setEditing(initialValue);
+		setValue(initialValue);
+	}
 
 	const filteredPrompts = useAttributes("prompt").filter(
 		(promptId) => !excludedPrompts?.includes(promptId)

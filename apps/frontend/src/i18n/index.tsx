@@ -265,7 +265,7 @@ export function useNavigate() {
 			return;
 		}
 
-		locale ??= getLocale(toOrDelta) || defaultLocale;
+		locale = locale ?? (getLocale(toOrDelta) || defaultLocale);
 		return navigate(replaceLanguage(toOrDelta, locale), options);
 	}, [navigate]);
 }

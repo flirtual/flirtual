@@ -16,7 +16,7 @@ import {
 	useSortable
 } from "@dnd-kit/sortable";
 import { Slot } from "@radix-ui/react-slot";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type { Dispatch, FC, PropsWithChildren } from "react";
 
 export const SortableGrid: FC<
@@ -28,7 +28,11 @@ export const SortableGrid: FC<
 > = ({ values, onChange, disabled = false, children }) => {
 	const [currentItem, setCurrentItem] = useState<UniqueIdentifier | null>(null);
 
-	useEffect(() => setCurrentItem(null), [values]);
+	const [sorting, setSorting] = useState(values);
+	if (sorting !== values) {
+		setSorting(values);
+		setCurrentItem(null);
+	}
 
 	const sensors = useSensors(
 		useSensor(MouseSensor, {}),

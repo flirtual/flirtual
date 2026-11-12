@@ -11,7 +11,7 @@ import {
 	VenetianMask
 } from "lucide-react";
 import { AnimatePresence, m } from "motion/react";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router";
@@ -74,9 +74,11 @@ export const NavigationItemProfile: FC = () => {
 		visible
 	);
 
-	useEffect(() => {
+	const [shownAt, setShownAt] = useState(location);
+	if (shownAt !== location) {
+		setShownAt(location);
 		setVisible(false);
-	}, [location]);
+	}
 
 	const isDesktop = useBreakpoint("desktop");
 

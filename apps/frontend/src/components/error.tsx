@@ -42,6 +42,8 @@ const translations = {
 	}
 } as const;
 
+const useIntervalInProduction = production ? useInterval : () => {};
+
 export function HavingIssues({ error }: { error?: unknown }) {
 	const { t } = useTranslation();
 	const [locale] = useLocale();
@@ -57,8 +59,7 @@ export function HavingIssues({ error }: { error?: unknown }) {
 	const reload = () => location.reload();
 
 	// Automatic retry, as eventually, we'll be back online.
-	// eslint-disable-next-line react-hooks/rules-of-hooks
-	if (production) useInterval(reload, ms("30s"));
+	useIntervalInProduction(reload, ms("30s"));
 
 	return (
 		<div className="flex flex-col items-center p-4">

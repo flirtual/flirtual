@@ -1,4 +1,4 @@
-import { useCallback, useRef } from "react";
+import { useRef } from "react";
 import { omit } from "remeda";
 
 import {
@@ -14,7 +14,7 @@ import type { FormCaptchaReference } from "./captcha";
 import { FormInputMessages } from "./input-messages";
 
 export type FormChildrenFunction<T extends FormFieldsDefault> = (
-	form: { Captcha: () => React.ReactNode | null } & UseInputForm<T>
+	form: { captchaWidget: React.ReactNode } & UseInputForm<T>
 ) => React.ReactNode;
 
 export type FormChildren<T extends FormFieldsDefault>
@@ -31,24 +31,17 @@ export type FormProps<T extends FormFieldsDefault> = {
 		"children" | "onSubmit"
 >;
 
-export function Form<T extends { [s: string]: unknown }>(props: FormProps<T>) {
+export function Form<T extends { [s: string]: unknown }>({ formErrorMessages = true, renderCaptcha = true, ...props }: FormProps<T>) {
 	const captchaReference = useRef<FormCaptchaReference>(null);
-
-	props = Object.assign({ formErrorMessages: true, renderCaptcha: true }, props);
 	const form = useInputForm({ ...props, captchaRef: captchaReference });
 
-	const CaptchaWithReference = useCallback(() => {
-		if (!props.withCaptcha) return null;
-
-		return (<FormCaptcha ref={captchaReference} tabIndex={props.captchaTabIndex} />);
-	}, [props.captchaTabIndex, props.withCaptcha]);
+	const captchaWidget = props.withCaptcha
+		? <FormCaptcha ref={captchaReference} tabIndex={props.captchaTabIndex} />
+		: null;
 
 	const children
 		= typeof props.children === "function"
-			? props.children({
-					...form,
-					Captcha: CaptchaWithReference
-				})
+			? props.children({ ...form, captchaWidget })
 			: props.children;
 
 	return (
@@ -57,9 +50,7 @@ export function Form<T extends { [s: string]: unknown }>(props: FormProps<T>) {
 			{...omit(props, [
 				"fields",
 				"onSubmit",
-				"formErrorMessages",
 				"requireChange",
-				"renderCaptcha",
 				"captchaTabIndex",
 				"withCaptcha",
 				"withGlobalId"
@@ -67,12 +58,12 @@ export function Form<T extends { [s: string]: unknown }>(props: FormProps<T>) {
 		>
 			<FormContext value={form}>
 				{children}
-				{props.formErrorMessages && (
+				{formErrorMessages && (
 					<FormInputMessages
 						messages={form.errors.map((value) => ({ type: "error", value }))}
 					/>
 				)}
-				{props.renderCaptcha && <CaptchaWithReference />}
+				{renderCaptcha && captchaWidget}
 			</FormContext>
 		</form>
 	);

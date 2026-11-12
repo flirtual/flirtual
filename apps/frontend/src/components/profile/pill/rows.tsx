@@ -92,7 +92,10 @@ const MeasuredPillRows: FC<PropsWithChildren<{ className?: string }>> = ({
 
 	const grouped: Array<Array<ReactElement>> = [];
 	items.forEach((item, index) => {
-		(grouped[locked.rows[index]] ??= []).push(item);
+		const row = locked.rows[index];
+		const group = grouped[row] ?? [];
+		group.push(item);
+		grouped[row] = group;
 	});
 
 	return (

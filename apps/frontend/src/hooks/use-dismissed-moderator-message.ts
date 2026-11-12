@@ -35,6 +35,5 @@ export function useModeratorMessageReopen(listener: () => void) {
 		const reopenListener = () => onReopen();
 		reopenListeners.add(reopenListener);
 		return () => void reopenListeners.delete(reopenListener);
-	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 }

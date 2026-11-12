@@ -1,6 +1,6 @@
-import { useCallback, useDebugValue, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
-export function useInterval(callback: () => void, every: number) {
+export function useInterval(callback: () => void, every: number, condition = true) {
 	const reference = useRef<ReturnType<typeof setInterval> | null>(null);
 
 	const clear = useCallback(() => {
@@ -17,11 +17,11 @@ export function useInterval(callback: () => void, every: number) {
 	}, [clear, callback, every]);
 
 	useEffect(() => {
+		if (!condition) return;
+
 		reset();
 		return () => clear();
-	}, [reset, clear]);
-
-	useDebugValue(reference.current);
+	}, [reset, clear, condition]);
 
 	return { ref: reference, clear, reset };
 }
@@ -47,8 +47,6 @@ export function useTimeout(callback: () => void, every: number, condition = true
 		reset();
 		return () => clear();
 	}, [reset, clear, condition]);
-
-	useDebugValue(reference.current);
 
 	return { ref: reference, clear, reset };
 }

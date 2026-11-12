@@ -175,6 +175,8 @@ export function meta({
 	].filter(Boolean);
 }
 
+const loadMotionFeatures = async () => (await import("./motion")).default;
+
 const BeforeRenderScript: FC = memo(() => {
 	const beforeRender = (localePathnameRegex: RegExp, friendsPathname: string | null) => {
 		const localTheme = globalThis.localTheme = JSON.parse(localStorage.getItem(".theme") || `"system"`) as LocalTheme;
@@ -279,7 +281,7 @@ export function Layout({ children }: PropsWithChildren) {
 				<RedirectBoundary>
 					<LazyMotion
 						strict
-						features={async () => ((await import("./motion")).default)}
+						features={loadMotionFeatures}
 					>
 						{children}
 					</LazyMotion>

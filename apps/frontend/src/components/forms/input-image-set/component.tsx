@@ -245,12 +245,7 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 					message: uppyLocale.loading as string
 				}));
 
-				try {
-					await process(fileIds);
-				}
-				finally {
-					each((file) => uppyInstance.emit("preprocess-complete", file));
-				}
+				await process(fileIds).finally(() => each((file) => uppyInstance.emit("preprocess-complete", file)));
 			};
 
 		// First, so a late copy can't overwrite Compressor's output.

@@ -46,7 +46,7 @@ export function useSystemBarsTheme(dark: boolean) {
 		};
 
 		const schedule = () => {
-			frame ??= requestAnimationFrame(update);
+			if (frame === undefined) frame = requestAnimationFrame(update);
 		};
 
 		schedule();

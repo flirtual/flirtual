@@ -1,11 +1,11 @@
 import { PushNotifications } from "@capacitor/push-notifications";
 import ms from "ms" with { type: "macro" };
+import { useEffect } from "react";
 import { useSearchParams } from "react-router";
 
 import type { Session } from "~/api/auth";
 import { Authentication } from "~/api/auth";
 import type { UserBan } from "~/api/user";
-import { client } from "~/const";
 import type {
 	MinimalQueryOptions
 } from "~/query";
@@ -61,20 +61,13 @@ export function useOptionalSession(queryOptions: MinimalQueryOptions<Session | n
 		queryFn: sessionFetcher,
 	});
 
-	if (client) {
-		if (!session) {
-			cookieStore.delete("logged_in");
-			return null;
-		}
+	const loggedIn = !!session;
+	useEffect(() => {
+		if (!loggedIn) return void cookieStore.delete("logged_in");
+		void cookieStore.set({ name: "logged_in", value: "", expires: Date.now() + ms("1y") });
+	}, [loggedIn]);
 
-		cookieStore.set({
-			name: "logged_in",
-			value: "",
-			expires: (Date.now() + ms("1y"))
-		});
-	}
-
-	return session;
+	return session ?? null;
 }
 
 export function verifyAgeDirect(ban: UserBan) {
@@ -98,7 +91,7 @@ export function useGuest() {
 
 	if (session) {
 		if (isInternalHref(next)) throwRedirect(next);
-		window.location.href = next;
+		location.assign(next);
 	}
 }
 

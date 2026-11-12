@@ -1,22 +1,10 @@
-import { useCallback, useEffect, useState } from "react";
-import type { RefObject } from "react";
+import { useEffect, useState } from "react";
 
 // Tracks whether a scroll container has more content above/below the viewport.
-// Returns a callback ref to attach to the scrollable element; pass an existing
-// ref object to keep it populated (e.g. when the element is also read directly).
-export function useScrollIndicator<T extends HTMLElement>(
-	externalReference?: RefObject<T | null>
-) {
+// Returns a callback ref to attach to the scrollable element, and the element itself.
+export function useScrollIndicator<T extends HTMLElement>() {
 	const [element, setElement] = useState<T | null>(null);
 	const [state, setState] = useState({ up: false, down: false });
-
-	const reference = useCallback(
-		(node: T | null) => {
-			setElement(node);
-			if (externalReference) externalReference.current = node;
-		},
-		[externalReference]
-	);
 
 	useEffect(() => {
 		if (!element) return;
@@ -51,5 +39,5 @@ export function useScrollIndicator<T extends HTMLElement>(
 		};
 	}, [element]);
 
-	return { ref: reference, up: state.up, down: state.down, element };
+	return { ref: setElement, up: state.up, down: state.down, element };
 }

@@ -5,7 +5,7 @@ import {
 } from "@tanstack/react-table";
 import type { ColumnDef } from "@tanstack/react-table";
 import { Search, Trash2 } from "lucide-react";
-import { Suspense, useDeferredValue, useEffect, useMemo, useState } from "react";
+import { Suspense, useDeferredValue, useMemo, useState } from "react";
 import type { FC } from "react";
 
 import type { Paginate } from "~/api/common";
@@ -126,6 +126,8 @@ const DataTable: FC<{ data: Array<FlagModel>; limit: number; type: FlagType }> =
 	type
 }) => {
 	const columns = useMemo(() => flagColumns(type), [type]);
+	// TanStack Table 8 can't be memoized, so the compiler leaves this component as written.
+	// eslint-disable-next-line react-hooks/incompatible-library
 	const table = useReactTable({
 		data,
 		columns,
@@ -215,7 +217,11 @@ export const FlagsView: React.FC = () => {
 	const deferredPage = useDeferredValue(page);
 
 	// Reset page when the search options or tab change.
-	useEffect(() => setPage(1), [deferredOptions, activeTab]);
+	const [pagedFor, setPagedFor] = useState({ options: deferredOptions, tab: activeTab });
+	if (pagedFor.options !== deferredOptions || pagedFor.tab !== activeTab) {
+		setPagedFor({ options: deferredOptions, tab: activeTab });
+		setPage(1);
+	}
 
 	const data = useQuery({
 		queryKey: flagsKey({

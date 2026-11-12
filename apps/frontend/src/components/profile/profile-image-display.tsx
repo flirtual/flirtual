@@ -1,5 +1,5 @@
 import { ChevronLeft, ChevronRight, Images, ScanSearch, Search, Siren, Trash2 } from "lucide-react";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import type React from "react";
 import { Trans, useTranslation } from "react-i18next";
 import { useSwipeable } from "react-swipeable";
@@ -24,6 +24,7 @@ import { vrchat } from "~/features";
 import { useBreakpoint } from "~/hooks/use-breakpoint";
 import { useDialog } from "~/hooks/use-dialog";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
+import { useMountTime } from "~/hooks/use-mount-time";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { useLocale } from "~/i18n";
@@ -115,6 +116,7 @@ export const ImageToolbar: React.FC<{
 )> = ({ image, url, userId, onDeleted }) => {
 	const { t } = useTranslation();
 	const [locale] = useLocale();
+	const now = useMountTime();
 	const dialogs = useDialog();
 
 	const toasts = useToast();
@@ -127,7 +129,7 @@ export const ImageToolbar: React.FC<{
 	const searchUrl = image ? urls.image(image, "full") : url;
 
 	const formattedUploadTime = image && new Intl.RelativeTimeFormat(intlLocale(locale)).format(
-		Math.round((new Date(image.createdAt).getTime() - Date.now()) / (1000 * 60 * 60 * 24)),
+		Math.round((new Date(image.createdAt).getTime() - now) / (1000 * 60 * 60 * 24)),
 		"day"
 	);
 
@@ -278,15 +280,17 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 	const { t } = useTranslation();
 
 	const [imageId, setImageId] = useState(firstImageId);
-	useEffect(() => setImageId(firstImageId), [firstImageId]);
 
 	const canSearchWorld
 		= !!session?.user?.tags?.includes("moderator")
 			|| (!!session && session.user.id === user.id && premium(session.user));
 
-	useEffect(() => {
+	const [shownImages, setShownImages] = useState(images);
+	if (shownImages !== images) {
+		setShownImages(images);
 		setExpandedImage(false);
-	}, [images]);
+		if (shownImages[0]?.id !== firstImageId) setImageId(firstImageId);
+	}
 
 	const currentImage = useMemo(
 		() => images.find((image) => image.id === imageId) ?? null,

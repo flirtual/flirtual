@@ -248,7 +248,7 @@ export const LoginForm: FC = () => {
 						await mutate(sessionKey(), value);
 					}}
 				>
-					{({ errors, FormField, Captcha }) => (
+					{({ errors, FormField, captchaWidget }) => (
 						<>
 							<FormField name="login">
 								{({ props, labelProps }) => (
@@ -288,7 +288,7 @@ export const LoginForm: FC = () => {
 									</>
 								)}
 							</FormField>
-							<Captcha />
+							{captchaWidget}
 							<div className="flex flex-col gap-4">
 								<div className="flex flex-row-reverse gap-2">
 									<FormButton className="min-w-44" size="sm" tabIndex={4}>

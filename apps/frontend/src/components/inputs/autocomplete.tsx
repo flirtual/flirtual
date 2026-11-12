@@ -101,7 +101,7 @@ export function InputAutocomplete<K extends string>(
 
 	useLayoutEffect(() => {
 		if (fullscreen && !previousFullscreen.current)
-			scrollReference.current ??= window.scrollY;
+			scrollReference.current = scrollReference.current ?? window.scrollY;
 
 		if (!fullscreen && previousFullscreen.current) {
 			if (scrollReference.current !== null)

@@ -72,7 +72,7 @@ export const SignUpForm: FC = () => {
 				await mutate<Session>(sessionKey(), { user, updatedAt: now, createdAt: now });
 			}}
 		>
-			{({ errors, fields, setFieldErrors, Captcha, FormField }) => {
+			{({ errors, fields, setFieldErrors, captchaWidget, FormField }) => {
 				const guardServiceAgreement = () => {
 					if (fields.serviceAgreement.props.value) return true;
 
@@ -195,7 +195,7 @@ export const SignUpForm: FC = () => {
 								</div>
 							)}
 						</FormField>
-						<Captcha />
+						{captchaWidget}
 						<div className="flex flex-col gap-4">
 							<div className="flex flex-row-reverse gap-2">
 								<FormButton className="min-w-44" size="sm" tabIndex={7}>

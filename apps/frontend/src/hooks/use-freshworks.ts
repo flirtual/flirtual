@@ -33,10 +33,9 @@ export function useFreshworks() {
 	useEffect(() => {
 		if (typeof window.FreshworksWidget !== "function") {
 			window.FreshworksWidget = Object.assign(
-				function () {
+				(...parameters: Array<unknown>) => {
 					loadFreshworks();
-					// eslint-disable-next-line prefer-rest-params
-					window.FreshworksWidget.q.push(arguments);
+					window.FreshworksWidget.q.push(parameters);
 				},
 				{ q: [] }
 			);

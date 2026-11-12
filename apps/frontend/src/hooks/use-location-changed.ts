@@ -1,9 +1,12 @@
-import { useRef } from "react";
+import { useEffect, useEffectEvent, useState } from "react";
 import { useLocation } from "react-router";
 
 export function useLocationChanged(onChange: () => void) {
-	const location = useLocation();
-	const initialLocationReference = useRef(location);
+	const { key } = useLocation();
+	const [initialKey] = useState(key);
+	const changed = useEffectEvent(onChange);
 
-	if (location.key !== initialLocationReference.current.key) onChange();
+	useEffect(() => {
+		if (key !== initialKey) changed();
+	}, [key, initialKey]);
 }

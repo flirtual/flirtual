@@ -181,9 +181,8 @@ export const LoginConnectionButton: FC<LoginConnectionButtonProps> = ({
 				: reason instanceof Error ? reason.message : undefined;
 			toasts.add({ type: "error", value: t(`errors.${error}` as any, { defaultValue: t("errors.connection_error_generic") }) });
 		}
-		finally {
-			setIsLoading(false);
-		}
+
+		setIsLoading(false);
 	};
 
 	const label = t("continue_with", { type: name });

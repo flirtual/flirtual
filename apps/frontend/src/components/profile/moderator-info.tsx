@@ -12,6 +12,7 @@ import type { UserAgeVerification } from "~/api/user";
 import { activeEntitlements, premium } from "~/api/user";
 import { useAttributeTranslation } from "~/hooks/use-attribute";
 import { useDialog } from "~/hooks/use-dialog";
+import { useMountTime } from "~/hooks/use-mount-time";
 import { usePreferences } from "~/hooks/use-preferences";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useUser } from "~/hooks/use-user";
@@ -109,6 +110,7 @@ export const ProfileModeratorInfo: FC<{
 	userId: string;
 }> = ({ userId }) => {
 	const session = useOptionalSession();
+	const now = useMountTime();
 	const dialogs = useDialog();
 	const tAttributes = useAttributeTranslation();
 	const user = useUser(userId);
@@ -452,7 +454,7 @@ export const ProfileModeratorInfo: FC<{
 										<CopyClick value={user.tnsDiscordInBiography}>
 											<DateTimeRelative
 												className={
-													new Date(user.tnsDiscordInBiography).getTime() > Date.now()
+													new Date(user.tnsDiscordInBiography).getTime() > now
 														? "text-orange-600"
 														: "text-red-600"
 												}

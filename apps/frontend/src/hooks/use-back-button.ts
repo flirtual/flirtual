@@ -94,6 +94,5 @@ export function useBackButton(active: boolean, onBack: () => void) {
 	useEffect(() => {
 		if (!active) return;
 		return addBackHandler(() => back());
-	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [active]);
 }

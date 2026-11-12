@@ -37,7 +37,6 @@ function useInView<T extends Element>(onChange: (visible: boolean, element: T) =
 		});
 		observer.observe(element);
 		return () => observer.disconnect();
-	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return reference;

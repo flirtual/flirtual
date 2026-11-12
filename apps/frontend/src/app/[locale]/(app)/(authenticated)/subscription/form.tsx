@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import type { Entitlement } from "~/api/subscription";
 import { InlineLink } from "~/components/inline-link";
 import { useDevice } from "~/hooks/use-device";
+import { useMountTime } from "~/hooks/use-mount-time";
 import { useSession } from "~/hooks/use-session";
 import { useUserCount } from "~/hooks/use-user";
 import { useLocale } from "~/i18n";
@@ -23,6 +24,7 @@ const EntitlementStatus: FC<{ entitlement: Entitlement }> = ({
 	entitlement
 }) => {
 	const { t } = useTranslation();
+	const now = useMountTime();
 
 	if (entitlement.renewalPending) return t("renewal_pending");
 
@@ -39,7 +41,7 @@ const EntitlementStatus: FC<{ entitlement: Entitlement }> = ({
 	const days = Math.max(
 		0,
 		Math.ceil(
-			(new Date(entitlement.entitledUntil).getTime() - Date.now()) / 86_400_000
+			(new Date(entitlement.entitledUntil).getTime() - now) / 86_400_000
 		)
 	);
 
