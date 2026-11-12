@@ -17,6 +17,13 @@
 	--t-color-brand-primary-active: var(--theme-1);
 	--t-color-focus-ring: var(--theme-2);
 	--t-color-focus-ring-strong: var(--theme-2);
+	--t-tooltip-bg: --theme(--color-black-70);
+	--t-tooltip-text: --theme(--color-white-20);
+
+	@variant dark {
+		--t-tooltip-bg: --theme(--color-white-20);
+		--t-tooltip-text: --theme(--color-black-80);
+	}
 
 	@apply size-full rounded-none border-0 bg-transparent text-black-80 dark:text-white-20 vision:text-black-80;
 	font-size: var(--t-font-size-base);

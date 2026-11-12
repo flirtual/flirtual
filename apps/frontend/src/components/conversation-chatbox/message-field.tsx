@@ -128,8 +128,8 @@ export function MessageField({ common, referencedMessage, editor, voiceRecorder,
 
 					{mode === "edit" && (
 						<div className="ml-auto flex gap-2">
-							<Button kind="secondary" size="xs" onClick={() => chatbox.setEditing(null)}>{t.CANCEL}</Button>
-							<Button disabled={!canEdit} size="xs" onClick={() => editor.send()}>{t.SAVE}</Button>
+							<Button className="font-montserrat! font-semibold! text-black-80!" kind="secondary" size="xs" onClick={() => chatbox.setEditing(null)}>{t.CANCEL}</Button>
+							<Button className="font-montserrat! font-semibold! text-white-20!" disabled={!canEdit} size="xs" onClick={() => editor.send()}>{t.SAVE}</Button>
 						</div>
 					)}
 				</div>
