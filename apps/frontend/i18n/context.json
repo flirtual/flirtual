@@ -21134,8 +21134,9 @@
 			"/matches"
 		],
 		"element": "alt-text",
-		"description": "Stands for a GIF someone sent in chat: the screen-reader text of the GIF image in the conversation, and the text shown in its place in a reply's quote of that message and as the last-message preview in the Matches list. Use your language's usual word or abbreviation for an animated GIF.",
-		"hash": "40d8daf8cdd5f267"
+		"description": "Stands for a GIF someone sent in chat: the screen-reader text of the GIF image in the conversation, and the text shown in its place in a reply's quote of that message and as the last-message preview in the Matches list. The Apple Watch app uses it the same way, for the GIF's screen-reader text and as the inbox's last-message preview. Use your language's usual word or abbreviation for an animated GIF.",
+		"hash": "40d8daf8cdd5f267",
+		"watch": true
 	},
 	"flirtual:google": {
 		"group": "connections",
