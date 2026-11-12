@@ -1,4 +1,5 @@
 import { configure } from "@ariesclark/eslint-config";
+import reactHooks from "eslint-plugin-react-hooks";
 
 export default configure({
 	next: false,
@@ -22,6 +23,9 @@ export default configure({
 		"**/*.md",
 	],
 	rules: {
+		// The React Compiler's own checks, so lint catches what it would otherwise skip at build time.
+		...reactHooks.configs["recommended-latest"].rules,
+
 		// todo: disable eventually, flags bug-prone code.
 		"react-hooks-extra/no-direct-set-state-in-use-effect": "off",
 

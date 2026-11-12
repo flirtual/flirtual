@@ -154,7 +154,7 @@
 		"cf": "catalog:",
 		"emoji-picker-element": "1.29.1",
 		"eslint": "catalog:",
-		"eslint-plugin-react-hooks": "5.2.0",
+		"eslint-plugin-react-hooks": "7.1.1",
 		"eslint-plugin-react-refresh": "0.5.7",
 		"eslint-plugin-tailwindcss": "4.4.0",
 		"knip": "6.44.2",
