@@ -133,7 +133,8 @@
 }
 
 [data-chatbox] .chat-message-field .t-mention-suggest-list {
-	@apply flex max-h-[150px] max-w-full min-w-[120px] flex-col overflow-x-auto rounded-lg bg-white-20 p-1 shadow-brand-1 dark:bg-black-70;
+	@apply flex max-h-[150px] max-w-full min-w-[120px] flex-col overflow-x-auto bg-white-20 p-1 shadow-brand-1 dark:bg-black-70;
+	border-radius: var(--radius-lg);
 
 	& button {
 		@apply flex w-full cursor-pointer items-center rounded-sm border-0 bg-transparent px-1.5 py-2 text-left text-xs whitespace-nowrap;

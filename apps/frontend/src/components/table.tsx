@@ -3,12 +3,14 @@ import { twMerge } from "tailwind-merge";
 
 function Table({ ref: reference, className, ...props }: { ref?: React.RefObject<HTMLTableElement | null> } & React.HTMLAttributes<HTMLTableElement>) {
 	return (
-		<div className="unhide-scrollbar w-full overflow-x-auto overflow-y-hidden rounded-xl shadow-brand-1">
-			<table
-				className={twMerge("w-full caption-bottom text-sm", className)}
-				ref={reference}
-				{...props}
-			/>
+		<div className="w-full rounded-xl shadow-brand-1">
+			<div className="unhide-scrollbar w-full overflow-x-auto overflow-y-hidden [border-radius:inherit] [corner-shape:inherit]">
+				<table
+					className={twMerge("w-full caption-bottom text-sm", className)}
+					ref={reference}
+					{...props}
+				/>
+			</div>
 		</div>
 	);
 }

@@ -133,7 +133,7 @@ function SelectContent({ ref: reference, ...props }: { ref?: React.Ref<React.Com
 		<SelectPrimitive.Portal>
 			<SelectPrimitive.Content
 				className={twMerge(
-					"relative z-50 overflow-hidden bg-white-20 font-nunito focusable-within dark:bg-black-60",
+					"relative z-50 bg-white-20 font-nunito focusable-within dark:bg-black-60",
 					fullscreen
 						? "flex size-full flex-col"
 						: "max-h-[min(var(--radix-select-content-available-height),28rem)] max-w-[calc(min(var(--radix-popper-anchor-width),var(--radix-popper-available-width)))] rounded-xl shadow-brand-1 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95",
@@ -176,7 +176,7 @@ function SelectContent({ ref: reference, ...props }: { ref?: React.Ref<React.Com
 						<div className="h-0.5 shrink-0 bg-brand-gradient" />
 					</>
 				)}
-				<div className={twMerge("relative flex min-h-0 flex-1 flex-col", fullscreen && "pr-(--safe-area-inset-right,0rem) pb-(--safe-area-inset-bottom,0rem) pl-(--safe-area-inset-left,0rem)")}>
+				<div className={twMerge("relative flex min-h-0 flex-1 flex-col overflow-hidden [border-radius:inherit] [corner-shape:inherit]", fullscreen && "pr-(--safe-area-inset-right,0rem) pb-(--safe-area-inset-bottom,0rem) pl-(--safe-area-inset-left,0rem)")}>
 					<SelectScrollUpButton />
 					<SelectPrimitive.Viewport
 						style={{

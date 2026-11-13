@@ -31,33 +31,35 @@ export function Tabs<T extends string>({ tabs, value, onChange }: TabsProps<T>) 
 	}
 
 	return (
-		<div
-			className="relative isolate grid h-11 w-full shrink-0 cursor-pointer auto-cols-[minmax(max-content,1fr)] grid-flow-col items-center overflow-x-auto rounded-xl bg-white-30 shadow-brand-1 focusable-within dark:bg-black-60 vision:bg-white-30/70"
-			role="tablist"
-			tabIndex={0}
-			onKeyDown={onKeyDown}
-		>
-			{tabs.map(({ id, label }) => (
-				<button
-					key={id}
-					aria-selected={id === value}
-					className="relative flex h-full items-center justify-center rounded-xl px-4 focus:outline-hidden aria-selected:text-white-10 vision:text-black-80"
-					data-tab={id}
-					role="tab"
-					tabIndex={-1}
-					type="button"
-					onClick={() => onChange(id)}
-				>
-					{id === value && (
-						<m.div
-							className="absolute inset-0 -z-10 rounded-xl bg-brand-gradient"
-							layoutId={layoutId}
-							transition={{ type: "spring", duration: 0.3, bounce: 0.25 }}
-						/>
-					)}
-					{label}
-				</button>
-			))}
+		<div className="h-11 w-full shrink-0 rounded-xl shadow-brand-1 focusable-within">
+			<div
+				className="relative isolate grid size-full cursor-pointer auto-cols-[minmax(max-content,1fr)] grid-flow-col items-center overflow-x-auto [border-radius:inherit] bg-white-30 [corner-shape:inherit] focus:outline-hidden dark:bg-black-60 vision:bg-white-30/70"
+				role="tablist"
+				tabIndex={0}
+				onKeyDown={onKeyDown}
+			>
+				{tabs.map(({ id, label }) => (
+					<button
+						key={id}
+						aria-selected={id === value}
+						className="relative flex h-full items-center justify-center rounded-xl px-4 focus:outline-hidden aria-selected:text-white-10 vision:text-black-80"
+						data-tab={id}
+						role="tab"
+						tabIndex={-1}
+						type="button"
+						onClick={() => onChange(id)}
+					>
+						{id === value && (
+							<m.div
+								className="absolute inset-0 -z-10 rounded-xl bg-brand-gradient"
+								layoutId={layoutId}
+								transition={{ type: "spring", duration: 0.3, bounce: 0.25 }}
+							/>
+						)}
+						{label}
+					</button>
+				))}
+			</div>
 		</div>
 	);
 }
