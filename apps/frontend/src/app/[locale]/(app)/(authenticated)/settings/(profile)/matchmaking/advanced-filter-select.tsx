@@ -300,8 +300,8 @@ export const AdvancedFilterSelect: FC<{
 			<RemoveScroll allowPinchZoom as={Slot}>
 				<div
 					className={twMerge(
-						"flex max-h-(--overlay-max-height,min(28rem,60svh)) w-full flex-col overflow-y-auto overscroll-contain rounded-xl bg-white-30 shadow-brand-1 focus:outline-hidden dark:bg-black-60 vision:bg-white-30/80",
-						fullscreen && "max-h-none min-h-0 flex-1 rounded-none shadow-none"
+						"flex max-h-(--overlay-max-height,min(28rem,60svh)) w-full flex-col overflow-y-auto overscroll-contain rounded-xl bg-white-30 focus:outline-hidden dark:bg-black-60 vision:bg-white-30/80",
+						fullscreen && "max-h-none min-h-0 flex-1 rounded-none"
 					)}
 					ref={attachList}
 					tabIndex={-1}
@@ -532,7 +532,7 @@ export const AdvancedFilterSelect: FC<{
 							close();
 						}}
 					>
-						<DismissableLayer disableOutsidePointerEvents className="relative flex w-full">
+						<DismissableLayer disableOutsidePointerEvents className="relative flex w-full rounded-xl shadow-brand-1">
 							{optionList}
 						</DismissableLayer>
 					</PopoverContent>

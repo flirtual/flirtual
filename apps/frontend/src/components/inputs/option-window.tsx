@@ -203,80 +203,82 @@ export function InputOptionWindow(props: InputOptionWindowProps<unknown>) {
 		<div
 			{...elementProps}
 			className={twMerge(
-				"relative flex w-fit min-w-full overflow-hidden rounded-xl bg-white-20 shadow-brand-1 focusable-within dark:bg-black-60",
+				"relative flex w-fit min-w-full rounded-xl bg-white-20 shadow-brand-1 focusable-within dark:bg-black-60",
 				className
 			)}
 		>
-			{scrollIndicators && (
-				<ScrollIndicator side="up" target={element} visible={up} />
-			)}
-			<div
-				className="flex max-h-(--overlay-max-height,min(28rem,60svh)) w-full overflow-x-hidden overflow-y-scroll"
-				ref={setScrollElement}
-				tabIndex={-1}
-				onFocusCapture={(event) => {
-					onFocusCapture?.(event);
+			<div className="relative flex w-full overflow-hidden [border-radius:inherit] [corner-shape:inherit]">
+				{scrollIndicators && (
+					<ScrollIndicator side="up" target={element} visible={up} />
+				)}
+				<div
+					className="flex max-h-(--overlay-max-height,min(28rem,60svh)) w-full overflow-x-hidden overflow-y-scroll"
+					ref={setScrollElement}
+					tabIndex={-1}
+					onFocusCapture={(event) => {
+						onFocusCapture?.(event);
 
-					if (event.currentTarget !== event.target) return;
-					if (pointerReference.current) {
-						pointerReference.current = false;
-						return;
-					}
-
-					focusOption(0);
-				}}
-				onKeyDown={(event) => {
-					onKeyDown?.(event);
-					focusElementByKeydown(event);
-
-					switch (event.key) {
-						case "ArrowUp": {
-							event.preventDefault();
-							focusOption(-1);
+						if (event.currentTarget !== event.target) return;
+						if (pointerReference.current) {
+							pointerReference.current = false;
 							return;
 						}
-						case "ArrowDown": {
-							event.preventDefault();
-							focusOption(1);
-						}
-					}
-				}}
-				onPointerCancel={() => {
-					pointerReference.current = false;
-				}}
-				onPointerDownCapture={() => {
-					pointerReference.current = true;
-				}}
-				onPointerUpCapture={() => {
-					pointerReference.current = false;
-				}}
-			>
-				<div className="flex w-full flex-col" ref={optionsReference}>
-					{options.map((option) => {
-						if (!option.key) return null;
 
-						return (
-							<OptionItem
-								key={option.key as any}
-								elementProps={{
-									"data-active": option.active ?? false,
-									"data-key": option.key,
-									"data-name": option.label,
-									onClick: (event) =>
-										onOptionClick?.(Object.assign(event, { option })),
-									onFocus: (event) =>
-										onOptionFocus?.(Object.assign(event, { option })),
-									onMouseDown: (event) => event.preventDefault() // macOS Safari fix
-								}}
-								option={option}
-							/>
-						);
-					})}
+						focusOption(0);
+					}}
+					onKeyDown={(event) => {
+						onKeyDown?.(event);
+						focusElementByKeydown(event);
+
+						switch (event.key) {
+							case "ArrowUp": {
+								event.preventDefault();
+								focusOption(-1);
+								return;
+							}
+							case "ArrowDown": {
+								event.preventDefault();
+								focusOption(1);
+							}
+						}
+					}}
+					onPointerCancel={() => {
+						pointerReference.current = false;
+					}}
+					onPointerDownCapture={() => {
+						pointerReference.current = true;
+					}}
+					onPointerUpCapture={() => {
+						pointerReference.current = false;
+					}}
+				>
+					<div className="flex w-full flex-col" ref={optionsReference}>
+						{options.map((option) => {
+							if (!option.key) return null;
+
+							return (
+								<OptionItem
+									key={option.key as any}
+									elementProps={{
+										"data-active": option.active ?? false,
+										"data-key": option.key,
+										"data-name": option.label,
+										onClick: (event) =>
+											onOptionClick?.(Object.assign(event, { option })),
+										onFocus: (event) =>
+											onOptionFocus?.(Object.assign(event, { option })),
+										onMouseDown: (event) => event.preventDefault() // macOS Safari fix
+									}}
+									option={option}
+								/>
+							);
+						})}
+					</div>
 				</div>
+				{scrollIndicators && (
+					<ScrollIndicator side="down" target={element} visible={down} />
+				)}
 			</div>
-			{scrollIndicators && (
-				<ScrollIndicator side="down" target={element} visible={down} />
-			)}
 		</div>
 	);
 }
