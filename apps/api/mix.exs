@@ -43,7 +43,7 @@ defmodule Flirtual.MixProject do
       {:phoenix_ecto, "~> 4.4"},
       {:cors_plug, "~> 3.0"},
       {:shortuuid, "~> 2.0"},
-      {:ecto_shortuuid, "~> 0.4.0"},
+      {:ecto_shortuuid, "~> 1.0.0"},
       {:ecto_network, "~> 1.6"},
       {:ecto_sql, "~> 3.10"},
       {:postgrex, ">= 0.0.0"},
