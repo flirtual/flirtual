@@ -25,9 +25,18 @@ defmodule Flirtual.Timezones do
     raise "no links under #{inspect(@zone_tab_heading)} in #{@backward}"
   end
 
+  # Legacy System V zones.
+  @backward_zones backward
+                  |> Enum.flat_map(fn line ->
+                    case String.split(line) do
+                      ["Zone", name | _] -> [name]
+                      _ -> []
+                    end
+                  end)
+
   # Ignore Etc/* offsets.
   @timezones TzExtra.time_zone_ids()
-             |> Enum.reject(&String.starts_with?(&1, "Etc/"))
+             |> Enum.reject(&(String.starts_with?(&1, "Etc/") or &1 in @backward_zones))
              |> Kernel.++(@zone_tab_only)
              |> Enum.sort()
 
