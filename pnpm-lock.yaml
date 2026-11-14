@@ -445,8 +445,8 @@ importers:
         specifier: 1.12.1
         version: 1.12.1
       '@talkjs/react-components':
-        specifier: 0.3.13
-        version: 0.3.13(@talkjs/core@1.12.1)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        specifier: 0.3.14
+        version: 0.3.14(@talkjs/core@1.12.1)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@tanstack/react-query':
         specifier: ^5.101.2
         version: 5.101.4(react@19.3.1)
@@ -4873,8 +4873,8 @@ packages:
   '@talkjs/core@1.12.1':
     resolution: {integrity: sha512-pBMIXz+7O217O4jiunLR/duLhjUvZHm+nLmQ1vjM5/K3r7+uDqM+KSR8yn9xkB+0R3d5ntvxiNWOMCS98tH/ag==}
 
-  '@talkjs/react-components@0.3.13':
-    resolution: {integrity: sha512-+GdxAx4sBWC1AqKSFmtrAzl5Cj8s8vpcM3I1KxRZmKi/h5Q2EhCvLU0kmXqxcyM9WSWlqUKAwR59+ux2D442rA==}
+  '@talkjs/react-components@0.3.14':
+    resolution: {integrity: sha512-o+b6wrK2+/7qhEgQyjXi2ldMJIcHpNjOce/TTctkfWEN7oZRBnatOz0DeDbgciHwxOIi14+vr1BQ/8Q/sMqklw==}
     peerDependencies:
       '@talkjs/core': ^1.11.1
       react: '>=17.0.0 <20.0.0'
@@ -12554,7 +12554,7 @@ snapshots:
 
   '@talkjs/core@1.12.1': {}
 
-  '@talkjs/react-components@0.3.13(@talkjs/core@1.12.1)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
+  '@talkjs/react-components@0.3.14(@talkjs/core@1.12.1)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
     dependencies:
       '@talkjs/core': 1.12.1
       react: 19.3.1
