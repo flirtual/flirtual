@@ -134,8 +134,8 @@ export const ImageToolbar: React.FC<{
 	);
 
 	return (
-		<div className="flex w-full items-center justify-between gap-4 bg-brand-gradient p-4 pr-[calc(1rem+var(--safe-area-inset-right,0rem))] pl-[calc(1rem+var(--safe-area-inset-left,0rem))] text-white-20 desktop:px-4">
-			<div className="select-children">
+		<div className="flex w-full shrink-0 items-center justify-between gap-4 bg-brand-gradient p-4 pr-[calc(1rem+var(--safe-area-inset-right,0rem))] pl-[calc(1rem+var(--safe-area-inset-left,0rem))] text-white-20 desktop:px-4">
+			<div className="min-w-0 break-words select-children">
 				{formattedUploadTime && (
 					<Trans
 						values={{
@@ -165,7 +165,7 @@ export const ImageToolbar: React.FC<{
 					</>
 				)}
 			</div>
-			<div className="flex gap-8 text-white-20">
+			<div className="flex shrink-0 gap-8 text-white-20">
 				<div className="flex gap-4">
 					<Tooltip>
 						<TooltipTrigger asChild>
@@ -374,14 +374,14 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 						<Dialog open={expandedImage} onOpenChange={setExpandedImage}>
 							<DialogContent
 								border={false}
-								className="max-w-full overflow-hidden rounded-none outline-hidden desktop:max-w-[95svw] desktop:rounded-xl"
+								className="flex max-w-full flex-col overflow-hidden rounded-none outline-hidden desktop:max-w-[95svw] desktop:rounded-xl"
 								onOpenAutoFocus={(event) => {
 									event.preventDefault();
 									(event.currentTarget as HTMLElement | null)?.focus();
 								}}
 							>
 								<DialogTitle className="sr-only">{t("view_image")}</DialogTitle>
-								<div className="relative max-h-[80vh] w-full bg-black-90">
+								<div className="relative flex max-h-[80vh] min-h-0 w-full flex-col items-center bg-black-90">
 									{images.length > 1 && (
 										<div className="absolute z-10 flex size-full">
 											<button
@@ -403,7 +403,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 									<SingleImage
 										large
 										priority
-										className="relative! mx-auto aspect-auto size-auto! max-h-[80vh] object-cover touch-callout-default"
+										className="relative! aspect-auto size-auto! max-h-[80vh] min-h-0 shrink object-cover touch-callout-default"
 										image={currentImage}
 									/>
 									{vrchat && currentImage.worldId && currentImage.worldName && (
