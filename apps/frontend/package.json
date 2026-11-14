@@ -157,7 +157,7 @@
 		"eslint-plugin-react-hooks": "7.1.1",
 		"eslint-plugin-react-refresh": "0.5.7",
 		"eslint-plugin-tailwindcss": "4.4.0",
-		"knip": "6.45.0",
+		"knip": "6.45.1",
 		"ms": "2.1.3",
 		"playwright-core": "1.65.0",
 		"postcss": "8.5.32",
