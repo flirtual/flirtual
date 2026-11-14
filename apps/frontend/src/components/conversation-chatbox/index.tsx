@@ -1,3 +1,4 @@
+import { twemoji } from "@sableclient/twemoji-font/package.json";
 import type Picker from "emoji-picker-element/picker";
 import type { EmojiClickEvent } from "emoji-picker-element/shared";
 import type { FC } from "react";
@@ -15,12 +16,17 @@ import { useTheme } from "~/hooks/use-theme";
 import { lazy } from "~/lazy";
 
 import { customEmojiPickerEntries, pickedCustomEmoji } from "./custom-emoji";
+import { followEditors, insertCustomEmoji } from "./custom-emoji-editor";
 import emojiPickerStyles from "./emoji-picker.css?inline";
+import { followReactionPickers } from "./reaction-picker";
+import { followMessageListResizes } from "./scroll-anchor";
 import { followStickyAvatars } from "./sticky-avatars";
 
 const Chatbox = lazy(() => import("./chatbox").then(({ default: Chatbox }) => Chatbox));
 
 const customEmojiPicker = customEmojiPickerEntries(customEmojis);
+
+const emojiVersion = twemoji.version;
 
 // TalkJS mounts <emoji-picker> elements (message field, reactions) without a way to pass custom
 // emoji (https://github.com/nolanlawson/emoji-picker-element#custom-emoji) or styles for their
@@ -32,6 +38,7 @@ function followEmojiPickers(element: HTMLElement) {
 	const setUpPickers = () => {
 		for (const picker of element.querySelectorAll<Picker>("emoji-picker")) {
 			if (picker.customEmoji !== customEmojiPicker) picker.customEmoji = customEmojiPicker;
+			if (picker.getAttribute("emoji-version") !== emojiVersion) picker.setAttribute("emoji-version", emojiVersion);
 
 			const root = picker.shadowRoot;
 			if (root && !root.adoptedStyleSheets.includes(styles))
@@ -40,35 +47,43 @@ function followEmojiPickers(element: HTMLElement) {
 	};
 
 	// Runs before TalkJS's own listener on the message field's picker, which can't insert them.
-	const insertCustomEmoji = (event: Event) => {
+	const onEmojiClick = (event: Event) => {
 		const { target, detail } = event as EmojiClickEvent;
 		const shortcode = pickedCustomEmoji(detail);
-		const editor = element.querySelector<HTMLElement>(".chat-editor [contenteditable]");
-		if (!shortcode || !editor || !(target instanceof Element) || !target.closest(".chat-message-field")) return;
+		const editor = target instanceof Element ? target.closest(".chat-message-field")?.querySelector(".chat-editor") : null;
+		const input = editor?.querySelector<HTMLElement>("[contenteditable]");
+		if (!shortcode || !editor || !input) return;
 
 		event.stopPropagation();
-		editor.focus();
+		if (insertCustomEmoji(editor, shortcode)) return;
+		input.focus();
 		document.execCommand("insertText", false, shortcode);
 	};
 
 	setUpPickers();
 	const observer = new MutationObserver(setUpPickers);
 	observer.observe(element, { childList: true, subtree: true });
-	element.addEventListener("emoji-click", insertCustomEmoji, { capture: true });
+	element.addEventListener("emoji-click", onEmojiClick, { capture: true });
 
 	return () => {
 		observer.disconnect();
-		element.removeEventListener("emoji-click", insertCustomEmoji, { capture: true });
+		element.removeEventListener("emoji-click", onEmojiClick, { capture: true });
 	};
 }
 
 function followChatbox(element: HTMLDivElement) {
 	const stopEmoji = followEmojiPickers(element);
 	const stopAvatars = followStickyAvatars(element);
+	const stopReactionPickers = followReactionPickers(element);
+	const stopResizes = followMessageListResizes(element);
+	const stopEditors = followEditors(element);
 
 	return () => {
 		stopEmoji();
 		stopAvatars();
+		stopReactionPickers();
+		stopResizes();
+		stopEditors();
 	};
 }
 

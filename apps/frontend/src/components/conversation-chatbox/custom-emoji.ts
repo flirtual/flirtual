@@ -73,7 +73,7 @@ export function customEmojiPickerEntries(emojis: Record<string, { url: string; h
 		.map(([name, { url }]) => ({ name, shortcodes: [name.slice(1, -1)], url }));
 }
 
-// TalkJS's editor can't insert custom emoji (it throws "Not implemented"), so we insert the shortcode.
+// TalkJS's editor throws on custom emoji ("Not implemented"), so we insert them ourselves.
 export function pickedCustomEmoji({ emoji }: EmojiClickEventDetail): string | null {
 	return "url" in emoji ? emoji.name : null;
 }
