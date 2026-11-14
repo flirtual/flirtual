@@ -5,13 +5,13 @@ packages:
 
 catalog:
   "@ariesclark/eslint-config": 3.2.1-canary.1
-  "@cloudflare/build-output-utils": 0.9.10
-  "@cloudflare/config": 0.30.2
+  "@cloudflare/build-output-utils": 0.9.14
+  "@cloudflare/config": 0.32.1
   "@cloudflare/vitest-pool-workers": ^0.23.0
   "@total-typescript/ts-reset": 0.6.1
   "@types/node": 26.6.6
   "@typescript/native": npm:typescript@^7.0.2
-  cf: 1.0.0-beta.28
+  cf: 1.0.0-beta.32
   eslint: ^9.39.1
   execa: ^10.0.1
   jose: ^6.2.12
