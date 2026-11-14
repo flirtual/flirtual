@@ -16,6 +16,7 @@ import { twMerge } from "tailwind-merge";
 
 import { isKlipyMedia } from "~/api/embed";
 import { Link } from "~/components/link";
+import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 import { customEmojiNames } from "~/hooks/use-talkjs";
 import { urls } from "~/urls";
 
@@ -176,9 +177,9 @@ export function Message({ message, messageStatus, permissions, common }: Message
 						/>
 					)}
 					{hasActions && (
-						<div className="pointer-events-none absolute -top-5 right-2 z-1 flex gap-0.5 rounded-full bg-white-20 p-0.5 opacity-0 shadow-brand-1 transition-opacity group-hover/message:pointer-events-auto group-hover/message:opacity-100 group-data-actions/message:pointer-events-auto group-data-actions/message:opacity-100 group-data-reply/message:-top-9 focus-within:pointer-events-auto focus-within:opacity-100 has-[[t-popover-content]]:pointer-events-auto has-[[t-popover-content]]:opacity-100 dark:bg-black-50 vision:bg-white-20">
-							{canAddReaction && message.reactions.length === 0 && addReaction(hoverButton)}
+						<div className={twMerge("pointer-events-none absolute -top-5 z-1 flex gap-0.5 rounded-full bg-white-20 p-0.5 opacity-0 shadow-brand-1 transition-opacity group-hover/message:pointer-events-auto group-hover/message:opacity-100 group-data-actions/message:pointer-events-auto group-data-actions/message:opacity-100 group-data-reply/message:-top-9 group-data-reply/message:after:absolute group-data-reply/message:after:inset-x-0 group-data-reply/message:after:top-full group-data-reply/message:after:h-2 focus-within:pointer-events-auto focus-within:opacity-100 has-[[t-popover-content]]:pointer-events-auto has-[[t-popover-content]]:opacity-100 dark:bg-black-50 vision:bg-white-20", sender === "currentUser" ? "right-2" : "left-2")}>
 							{canReply && action(translate("reply"), <Reply />, reply)}
+							{canAddReaction && message.reactions.length === 0 && addReaction(hoverButton)}
 							{canEdit && action(translate("edit"), <Pencil />, () => common.chatbox.setEditing(message.id))}
 							{canDelete && action(translate("delete"), <Trash2 />, () => void common.chatbox.deleteMessage(message.id), "text-red-500! dark:text-red-500! vision:text-red-500!")}
 						</div>
@@ -209,7 +210,7 @@ export function Message({ message, messageStatus, permissions, common }: Message
 					</div>
 
 					{message.reactions.length > 0 && (
-						<div className="mt-2 flex flex-wrap gap-1">
+						<div className={twMerge("mt-2 flex flex-wrap gap-1", bare && "mt-0")}>
 							{message.reactions.map((summary) => (
 								<ReactionButton
 									key={summary.emoji}
@@ -246,20 +247,45 @@ function ReactionButton({ summary, messageId, disabled, common }: {
 	});
 	if (reactions.length > 0 && reactions.length < count) names.push("...");
 
+	const [tooltipOpen, setTooltipOpen] = useState(false);
+	const longPress = useRef<number>(undefined);
+	const longPressed = useRef(false);
+	const cancelLongPress = () => window.clearTimeout(longPress.current);
+	useEffect(() => cancelLongPress, []);
+
 	return (
-		<button
-			aria-label={t.ARIA_REACTION_COUNT(count, emoji)}
-			aria-pressed={currentUserReacted}
-			className={twMerge(chip, currentUserReacted ? surface.currentUser : surface.other)}
-			disabled={disabled}
-			t-tooltip-text={names.join(", ")}
-			type="button"
-			onClick={() => chatbox.toggleReaction(messageId, emoji)}
-			onMouseOver={subscribe}
-			onTouchStart={subscribe}
-		>
-			<Emoji className="size-5" text={emoji} />
-			{count > 1 && <span className="p-1 text-[0.85rem]!">{count}</span>}
-		</button>
+		<Tooltip open={tooltipOpen && names.length > 0} touchable={false} onOpenChange={setTooltipOpen}>
+			<TooltipTrigger asChild>
+				<button
+					aria-label={t.ARIA_REACTION_COUNT(count, emoji)}
+					aria-pressed={currentUserReacted}
+					className={twMerge(chip, currentUserReacted ? surface.currentUser : surface.other)}
+					disabled={disabled}
+					type="button"
+					onClick={() => {
+						if (longPressed.current) longPressed.current = false;
+						else chatbox.toggleReaction(messageId, emoji);
+					}}
+					onMouseOver={subscribe}
+					onPointerCancel={cancelLongPress}
+					onPointerDown={(event) => {
+						longPressed.current = false;
+						if (event.pointerType !== "touch") return;
+
+						cancelLongPress();
+						longPress.current = window.setTimeout(() => {
+							longPressed.current = true;
+							setTooltipOpen(true);
+						}, 300);
+					}}
+					onPointerUp={cancelLongPress}
+					onTouchStart={subscribe}
+				>
+					<Emoji className="size-5" text={emoji} />
+					{count > 1 && <span className="p-1 text-[0.85rem]!">{count}</span>}
+				</button>
+			</TooltipTrigger>
+			<TooltipContent className="max-w-60 text-sm">{names.join(", ")}</TooltipContent>
+		</Tooltip>
 	);
 }

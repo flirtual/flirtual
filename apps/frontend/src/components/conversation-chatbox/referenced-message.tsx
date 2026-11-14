@@ -10,7 +10,7 @@ import { ReplyPreview } from "./reply-preview";
 export function ReferencedMessage({ referencedMessage, common }: ReferencedMessageProps) {
 	return (
 		<button
-			className="mb-1 flex w-0 min-w-full cursor-pointer items-center gap-1 pl-4 text-[0.85em]! text-black-80! opacity-75 dark:text-white-20! hocus:opacity-100 vision:text-black-80!"
+			className="mb-1 flex max-w-full cursor-pointer items-center gap-1 pl-4 text-[0.85em]! text-black-80! opacity-75 dark:text-white-20! hocus:opacity-100 vision:text-black-80!"
 			type="button"
 			onClick={() => common.chatbox.focusMessage(referencedMessage.id)}
 		>
