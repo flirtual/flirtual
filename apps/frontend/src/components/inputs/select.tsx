@@ -207,7 +207,9 @@ function SelectContent({ ref: reference, ...props }: { ref?: React.Ref<React.Com
 					>
 						{children}
 					</SelectPrimitive.Viewport>
-					<SelectScrollDownButton />
+					<SelectScrollDownButton
+						className={fullscreen ? "h-[calc(1.75rem+var(--safe-area-inset-bottom,0rem)+var(--tab-bar-gap,0rem))] pb-[calc(0.25rem+var(--safe-area-inset-bottom,0rem)+var(--tab-bar-gap,0rem))]" : undefined}
+					/>
 				</div>
 			</SelectPrimitive.Content>
 		</SelectPrimitive.Portal>
