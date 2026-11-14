@@ -156,7 +156,7 @@ export const ImageToolbar: React.FC<{
 								),
 								world: (
 									<InlineLink className="text-white-10 underline" href={urls.vrchatWorld(image.worldId)}>
-										{image.worldName || image.worldId}
+										{image.worldName || "_"}
 									</InlineLink>
 								)
 							}}
@@ -406,7 +406,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 										className="relative! aspect-auto size-auto! max-h-[80vh] min-h-0 shrink object-cover touch-callout-default"
 										image={currentImage}
 									/>
-									{vrchat && currentImage.worldId && currentImage.worldName && (
+									{vrchat && currentImage.worldId && (
 										<div className="absolute right-[calc(0.5rem+var(--safe-area-inset-right,0rem))] bottom-2 z-20 flex items-center gap-2 rounded-full bg-black-70/80 px-2 pt-1 pb-[3px] text-xs text-white-20 opacity-80 shadow-brand-1 transition-opacity hover:opacity-100 desktop:right-4 desktop:bottom-4 desktop:gap-4 desktop:pt-2 desktop:pr-3.5 desktop:pb-1.5 desktop:pl-3 desktop:text-sm">
 											<InlineLink
 												className="flex items-center gap-1.5 desktop:gap-2"
@@ -414,7 +414,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 												href={urls.vrchatWorld(currentImage.worldId)}
 											>
 												<VRChatIcon className="size-3.5 desktop:size-4" />
-												<span className="max-w-56 truncate desktop:max-w-80 desktop:pb-0">{currentImage.worldName}</span>
+												<span className="max-w-56 truncate desktop:max-w-80 desktop:pb-0">{currentImage.worldName || "_"}</span>
 											</InlineLink>
 											{canSearchWorld && (
 												<button
