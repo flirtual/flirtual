@@ -574,8 +574,8 @@ importers:
         specifier: ^6.1.2
         version: 6.1.6(@types/react@19.3.0)(react@19.3.1)
       react-i18next:
-        specifier: ^17.0.9
-        version: 17.1.13(@typescript/typescript6@6.0.2)(i18next@26.7.2(@typescript/typescript6@6.0.2))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        specifier: ^18.0.0
+        version: 18.0.1(@types/react@19.3.0)(@typescript/typescript6@6.0.2)(i18next@26.7.2(@typescript/typescript6@6.0.2))(react@19.3.1)
       react-intersection-observer:
         specifier: ^11.0.0
         version: 11.0.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
@@ -1427,10 +1427,6 @@ packages:
     resolution: {integrity: sha512-srpptsAkEbbNIC/q8nT7o+m6CQe8CJUTV/t7MYc9NnWlgYVtHOb7JH6SorxMhN0kuRJjVqXbKClG6xSbPtzz+g==}
     engines: {node: ^22.18.0 || >=24.11.0}
     hasBin: true
-
-  '@babel/runtime@7.29.7':
-    resolution: {integrity: sha512-Nq8OhGWiZIZGV6hLHoyAKLLcJihP/xFeBMGJoUrxTX2psI8dCifzLhZISFb+VWS3wFMRDmCGw5R+dOySCqPLhw==}
-    engines: {node: '>=6.9.0'}
 
   '@babel/template@7.29.7':
     resolution: {integrity: sha512-puq+Gf35oI24FeN11LkoUQFqv9uwNeWpxXZi/Ji3rRIoKAzKnxRaZ+Gkj0vKS9ZCiTESfng1N9LyOyXvo+m+Gg==}
@@ -8140,18 +8136,16 @@ packages:
   react-fast-compare@3.2.2:
     resolution: {integrity: sha512-nsO+KSNgo1SbJqJEYRE9ERzo7YtYbou/OqjSQKxV7jcKox7+usiUVZOAC+XnDOABXggQTno0Y1CpVnuWEc1boQ==}
 
-  react-i18next@17.1.13:
-    resolution: {integrity: sha512-ZxhOSlyKSKPtbUNPLwYMmE3w3bhoc0jaZJZ6bc7wGOT6cLbrbs//6m01HxCLtFdSjHvFpwFwoPhxxzIlHSs9cw==}
+  react-i18next@18.0.1:
+    resolution: {integrity: sha512-kPWXI0E/lrPj3+/umcKNzYZVnWmEedLiamMzDIHfbs+5ANf6yzvlZsjKou8f7kaGkfMMDLIZBejV+4aSN1CyBw==}
+    engines: {node: '>=22'}
     peerDependencies:
-      i18next: '>= 26.2.0'
-      react: '>= 16.8.0'
-      react-dom: '*'
-      react-native: '*'
+      '@types/react': '*'
+      i18next: '>= 27.0.1'
+      react: '>= 18.0.0'
       typescript: ^5 || ^6 || ^7
     peerDependenciesMeta:
-      react-dom:
-        optional: true
-      react-native:
+      '@types/react':
         optional: true
       typescript:
         optional: true
@@ -9745,8 +9739,6 @@ snapshots:
   '@babel/parser@8.0.4':
     dependencies:
       '@babel/types': 8.0.4
-
-  '@babel/runtime@7.29.7': {}
 
   '@babel/template@7.29.7':
     dependencies:
@@ -16526,15 +16518,13 @@ snapshots:
 
   react-fast-compare@3.2.2: {}
 
-  react-i18next@17.1.13(@typescript/typescript6@6.0.2)(i18next@26.7.2(@typescript/typescript6@6.0.2))(react-dom@19.3.1(react@19.3.1))(react@19.3.1):
+  react-i18next@18.0.1(@types/react@19.3.0)(@typescript/typescript6@6.0.2)(i18next@26.7.2(@typescript/typescript6@6.0.2))(react@19.3.1):
     dependencies:
-      '@babel/runtime': 7.29.7
       html-parse-stringify: 4.0.1
       i18next: 26.7.2(@typescript/typescript6@6.0.2)
       react: 19.3.1
-      use-sync-external-store: 1.6.0(react@19.3.1)
     optionalDependencies:
-      react-dom: 19.3.1(react@19.3.1)
+      '@types/react': 19.3.0
       typescript: '@typescript/typescript6@6.0.2'
 
   react-intersection-observer@11.0.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1):
