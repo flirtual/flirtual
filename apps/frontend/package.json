@@ -169,7 +169,7 @@
 		"typescript": "catalog:",
 		"unplugin-macros": "npm:@ariesclark/unplugin-macros@0.20.3",
 		"vite": "8.3.7",
-		"vite-imagetools": "12.0.1",
+		"vite-imagetools": "12.0.2",
 		"vite-plugin-checker": "1.0.0",
 		"vite-plugin-image-optimizer": "2.0.3",
 		"vitest": "catalog:",
