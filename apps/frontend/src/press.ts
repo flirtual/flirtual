@@ -23,6 +23,9 @@ function release() {
 document.addEventListener("pointerdown", (event) => {
 	release();
 	if (event.pointerType === "mouse" || !(event.target instanceof Element)) return;
+	// ProseMirror redraws a node when we mark it pressed, which on iOS can stop
+	// the tap from focusing the editor and opening the keyboard.
+	if (event.target.closest("[contenteditable='true']")) return;
 
 	touched = event.target;
 	timeout = setTimeout(press, pressDelay);

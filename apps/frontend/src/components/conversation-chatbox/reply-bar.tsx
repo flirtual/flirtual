@@ -25,6 +25,8 @@ export function ReplyBar({ common, referencedMessage }: ReplyBarProps) {
 				title={t.REPLY_MODE_LEAVE_ARIA_LABEL}
 				type="button"
 				onClick={() => chatbox.setReferencedMessage(null)}
+				// Keeps the focus in the message field.
+				onMouseDown={(event) => event.preventDefault()}
 			>
 				<X className="size-4 fill-none!" />
 			</button>
