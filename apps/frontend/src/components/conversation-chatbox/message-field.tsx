@@ -4,7 +4,8 @@
 import { Editor, EmojiPicker, EmojiSuggestBar, MentionSuggestList } from "@talkjs/react-components";
 import type { MessageFieldProps } from "@talkjs/react-components";
 import { ImagePlay, MapPin, Mic, Paperclip, SendHorizontal, Smile, X } from "lucide-react";
-import { useState } from "react";
+import type { CSSProperties } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
@@ -17,6 +18,9 @@ import { useToast } from "~/hooks/use-toast";
 import { interestQueries } from "./gif-interests";
 import { GifPicker } from "./gif-picker";
 import type { ThemeCustom } from "./theme";
+
+// Shadow above only; clipping 1px inside keeps a fractional pixel from showing below.
+const picker = "relative z-1 h-[350px] w-full shrink overflow-hidden shadow-brand-1 [clip-path:inset(-1rem_0_1px)]";
 
 const iconButton = "flex size-9 shrink-0 items-center justify-center rounded-full p-2 opacity-75 hocus:opacity-100 disabled:opacity-60 [&>svg]:size-5 [&>svg:not(.fill-current)]:fill-none!";
 
@@ -41,6 +45,7 @@ export function MessageField({ common, referencedMessage, editor, voiceRecorder,
 	const showEmojiButton = mode === "send";
 	const showRecordButton = mode === "send" && editor.isEmpty && permissions.canSendVoiceMessage;
 	const showGifButton = mode === "send" && !!klipyAppKey;
+	const editorButtons = [showLocationButton, showGifButton, showEmojiButton].filter(Boolean).length;
 
 	const { people } = common.themeCustom as ThemeCustom;
 	const me = people[currentUser.id];
@@ -51,14 +56,43 @@ export function MessageField({ common, referencedMessage, editor, voiceRecorder,
 		.filter(([id]) => mine.has(id) && theirs.has(id))
 		.map(([, query]) => query);
 
+	const gifPicker = useRef<HTMLDivElement>(null);
+	const gifButton = useRef<HTMLButtonElement>(null);
+	const emojiButton = useRef<HTMLButtonElement>(null);
+	useEffect(() => {
+		if (!gifsShown) return;
+
+		const onMouseDown = ({ target }: MouseEvent) => {
+			if (!(target instanceof Node) || [gifPicker, gifButton, emojiButton].some(({ current }) => current?.contains(target))) return;
+			setGifsShown(false);
+		};
+
+		document.addEventListener("mousedown", onMouseDown);
+		return () => document.removeEventListener("mousedown", onMouseDown);
+	}, [gifsShown]);
+
+	useEffect(() => {
+		if (!editor.showEmojiPicker) return;
+
+		const onMouseDown = (event: MouseEvent) => {
+			if (event.target instanceof Node && gifButton.current?.contains(event.target)) event.stopPropagation();
+		};
+
+		window.addEventListener("mousedown", onMouseDown, true);
+		return () => window.removeEventListener("mousedown", onMouseDown, true);
+	}, [editor.showEmojiPicker]);
+
 	const toggleGifs = () => {
 		if (!gifsShown && editor.showEmojiPicker) editor.toggleEmojiPicker();
 		setGifsShown(!gifsShown);
 	};
 
+	const pickerOpenAtPress = useRef<boolean>(undefined);
 	const toggleEmoji = () => {
+		const wasOpen = pickerOpenAtPress.current ?? editor.showEmojiPicker;
+		pickerOpenAtPress.current = undefined;
 		setGifsShown(false);
-		editor.toggleEmojiPicker();
+		if (wasOpen === editor.showEmojiPicker) editor.toggleEmojiPicker();
 	};
 
 	const sendGif = (gif: KlipyGif, query: string) => {
@@ -81,13 +115,13 @@ export function MessageField({ common, referencedMessage, editor, voiceRecorder,
 	return (
 		<div className={twMerge("chat-message-field flex flex-col", mode === "send" ? "max-h-[calc(100%-100px)]" : "my-3")}>
 			{editor.showEmojiPicker && (
-				<div className="relative z-1 h-[350px] w-full shrink overflow-hidden border-t border-white-40 shadow-brand-1 dark:border-black-60">
+				<div className={picker}>
 					<EmojiPicker />
 				</div>
 			)}
 
 			{gifsShown && showGifButton && showEditor && (
-				<div className="h-[350px] w-full shrink overflow-hidden">
+				<div className={picker} ref={gifPicker}>
 					<GifPicker country={me?.profile.country} queries={gifQueries} userId={currentUser.id} onPick={sendGif} />
 				</div>
 			)}
@@ -124,7 +158,7 @@ export function MessageField({ common, referencedMessage, editor, voiceRecorder,
 								</button>
 							)}
 
-							<div className="relative w-full grow">
+							<div className="relative w-full grow" style={{ "--editor-buttons": editorButtons } as CSSProperties}>
 								<Editor className="chat-editor" placeholder={t.ENTRYBOX_PLACEHOLDER} />
 
 								<div className="absolute inset-y-0 right-2 flex items-center">
@@ -145,6 +179,7 @@ export function MessageField({ common, referencedMessage, editor, voiceRecorder,
 											aria-label={translate("send_gif")}
 											aria-pressed={gifsShown}
 											className={iconButton}
+											ref={gifButton}
 											title={translate("send_gif")}
 											type="button"
 											onClick={toggleGifs}
@@ -157,9 +192,11 @@ export function MessageField({ common, referencedMessage, editor, voiceRecorder,
 										<button
 											aria-label={t.ARIA_INSERT_EMOJI}
 											className={iconButton}
+											ref={emojiButton}
 											title={t.ARIA_INSERT_EMOJI}
 											type="button"
 											onClick={toggleEmoji}
+											onPointerDown={() => (pickerOpenAtPress.current = editor.showEmojiPicker)}
 										>
 											{editor.showEmojiPicker ? <X /> : <Smile />}
 										</button>
@@ -197,8 +234,8 @@ export function MessageField({ common, referencedMessage, editor, voiceRecorder,
 
 					{mode === "edit" && (
 						<div className="ml-auto flex gap-2">
-							<Button className="font-montserrat! font-semibold! text-black-80!" kind="secondary" size="xs" onClick={() => chatbox.setEditing(null)}>{t.CANCEL}</Button>
-							<Button className="font-montserrat! font-semibold! text-white-20!" disabled={!canEdit} size="xs" onClick={() => editor.send()}>{t.SAVE}</Button>
+							<Button className="font-montserrat! text-xs! font-semibold! text-black-80!" kind="secondary" size="xs" onClick={() => chatbox.setEditing(null)}>{t.CANCEL}</Button>
+							<Button className="font-montserrat! text-xs! font-semibold! text-white-20!" disabled={!canEdit} size="xs" onClick={() => editor.send()}>{t.SAVE}</Button>
 						</div>
 					)}
 				</div>

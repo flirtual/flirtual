@@ -14,6 +14,9 @@ import { queryClient } from "~/query";
 const columnWidth = 160;
 const pinnedQueries = ["vrchat", "cats"];
 
+// Inner ring, or else the scroll area clips it.
+const tile = "relative overflow-hidden rounded-lg outline-none after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:ring-theme-1 after:ring-inset focus-visible:after:ring-2";
+
 type Browse = "home" | "recent" | "trending";
 
 interface Klipy {
@@ -50,7 +53,7 @@ const Tile: FC<{
 	onClick: () => void;
 }> = ({ label, preview, ref, onClick }) => (
 	<button
-		className="relative h-24 overflow-hidden rounded-lg bg-black-90/10 focusable dark:bg-white-10/10"
+		className={`${tile} h-24 bg-black-90/10 dark:bg-white-10/10`}
 		ref={ref}
 		type="button"
 		onClick={onClick}
@@ -231,7 +234,7 @@ const GifResults: FC<{
 							<button
 								key={gif.id}
 								aria-label={gif.title}
-								className="relative w-full overflow-hidden rounded-lg bg-black-90/5 focusable dark:bg-white-10/5"
+								className={`${tile} w-full bg-black-90/5 dark:bg-white-10/5`}
 								style={{ aspectRatio: `1 / ${ratio}` }}
 								title={gif.title}
 								type="button"
@@ -308,7 +311,7 @@ export const GifPicker: FC<{
 	};
 
 	return (
-		<div className="flex size-full flex-col gap-2 p-2.5 pb-0">
+		<div className="flex size-full flex-col gap-3 p-2.5 pb-0">
 			<div className="flex h-10 shrink-0 items-center gap-1">
 				{source && (
 					<button
@@ -337,9 +340,8 @@ export const GifPicker: FC<{
 				</label>
 			</div>
 
-			{/* Room for the focus ring, which the scroll area would clip at its edges. */}
 			<div
-				className="-mx-1 -mt-1 min-h-0 grow overflow-y-auto overscroll-contain px-1 pt-1 pb-2.5"
+				className="min-h-0 grow overflow-y-auto overscroll-contain pb-2.5"
 				ref={scroller}
 				onScroll={(event) => {
 					if (!source) homeScroll.current = event.currentTarget.scrollTop;

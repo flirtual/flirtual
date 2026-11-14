@@ -3,13 +3,102 @@
 /*
  * Styles inside <emoji-picker>'s shadow root, for what its CSS variables don't reach:
  * https://github.com/nolanlawson/emoji-picker-element#styling
+ * Variants like dark: can't reach in here, so colours come from variables set in theme.css.
  */
 
-.skintone-list {
-	@apply rounded-b-xl border-b-0 shadow-brand-1;
+.search-wrapper {
+	@apply flex h-(--total-emoji-size) items-center gap-2 rounded-xl px-3 shadow-brand-1;
+	background: var(--input-background);
+	color: var(--input-font-color);
+
+	&::before {
+		@apply size-5 shrink-0 bg-current opacity-75;
+		content: "";
+		mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m21 21-4.34-4.34'/%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3C/svg%3E") center / contain no-repeat;
+	}
+
+	&:focus-within {
+		@apply ring-2 ring-theme-1 ring-offset-2;
+		--tw-ring-offset-color: var(--background);
+	}
+}
+
+input.search,
+input.search:focus {
+	@apply rounded-none border-0 bg-transparent p-0 outline-0;
+}
+
+.skintone-button-wrapper {
+	@apply relative;
+	margin-inline-start: var(--emoji-padding);
+
+	/* Hides the skin tone list sliding in above the button. */
+	&::before {
+		@apply absolute inset-x-0 bottom-full h-2.5;
+		content: "";
+		background: var(--background);
+	}
 }
 
 /* TalkJS's own picker styles nudge the button off the list it opens (`margin: 0 -3px 0 4px`). */
 #skintone-button {
 	@apply mx-0;
+}
+
+.search-row {
+	@apply p-2.5;
+}
+
+.pad-top {
+	@apply hidden;
+}
+
+.skintone-list {
+	@apply end-2.5 top-2.5 rounded-xl border-0 shadow-brand-1;
+}
+
+.skintone-button-wrapper:not(.expanded) ~ .skintone-list {
+	@apply shadow-none;
+}
+
+.nav-button {
+	@apply w-full rounded-lg;
+}
+
+.nav-button[aria-selected="true"] {
+	@apply rounded-b-none;
+}
+
+[data-has-mouse] .nav-button:hover {
+	background: var(--button-hover-background);
+}
+
+.nav-button:active {
+	background: var(--button-active-background);
+}
+
+[data-has-mouse] .nav-emoji:hover,
+.nav-emoji:active {
+	background: none;
+}
+
+.favorites {
+	padding-bottom: var(--favorites-padding-bottom, var(--emoji-padding));
+}
+
+.onscreen .custom-emoji::after {
+	@apply size-[calc(var(--emoji-size)+var(--emoji-padding))];
+}
+
+/* Larger custom emoji. */
+.emoji-menu:not(.favorites, :has(> :not(.custom-emoji))) {
+	@apply grid-cols-[repeat(auto-fill,minmax(3.5rem,1fr))];
+
+	& .custom-emoji {
+		@apply aspect-square h-auto w-full rounded-xl;
+	}
+
+	&.onscreen .custom-emoji::after {
+		@apply size-[calc(100%-var(--emoji-padding)*2)];
+	}
 }
