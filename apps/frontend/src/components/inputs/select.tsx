@@ -152,6 +152,14 @@ function SelectContent({ ref: reference, ...props }: { ref?: React.Ref<React.Com
 					touchDismissReference.current = false;
 					event.preventDefault();
 				}}
+				onPointerDown={(event) => {
+					elementProps.onPointerDown?.(event);
+
+					// Scroll buttons scroll the focused item into view when they mount.
+					const content = event.currentTarget;
+					if (event.pointerType !== "mouse" && document.activeElement !== content && content.contains(document.activeElement))
+						content.focus({ preventScroll: true });
+				}}
 				onPointerDownOutside={(event) => {
 					if (event.detail.originalEvent.pointerType === "touch")
 						touchDismissReference.current = true;
