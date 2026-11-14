@@ -75,6 +75,7 @@ SelectTrigger.displayName = SelectPrimitive.Trigger.displayName;
 function SelectScrollUpButton({ ref: reference, className, ...props }: { ref?: React.Ref<React.ComponentRef<typeof SelectPrimitive.ScrollUpButton> | null> } & React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollUpButton>) {
 	return (
 		<SelectPrimitive.ScrollUpButton
+			data-scroll-button
 			className={twMerge(
 				"absolute inset-x-0 top-0 z-10 flex h-7 cursor-default items-center justify-center bg-linear-to-b from-black-90/5 to-transparent py-1",
 				className
@@ -91,6 +92,7 @@ SelectScrollUpButton.displayName = SelectPrimitive.ScrollUpButton.displayName;
 function SelectScrollDownButton({ ref: reference, className, ...props }: { ref?: React.Ref<React.ComponentRef<typeof SelectPrimitive.ScrollDownButton> | null> } & React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollDownButton>) {
 	return (
 		<SelectPrimitive.ScrollDownButton
+			data-scroll-button
 			className={twMerge(
 				"absolute inset-x-0 bottom-0 z-10 flex h-7 cursor-default items-center justify-center bg-linear-to-t from-black-90/5 to-transparent py-1",
 				className
@@ -128,6 +130,7 @@ function SelectContent({ ref: reference, ...props }: { ref?: React.Ref<React.Com
 
 	// Tapping outside dismisses without restoring focus to the trigger.
 	const touchDismissReference = React.useRef(false);
+	const scrollButtonPressReference = React.useRef(false);
 
 	return (
 		<SelectPrimitive.Portal>
@@ -146,6 +149,15 @@ function SelectContent({ ref: reference, ...props }: { ref?: React.Ref<React.Com
 				ref={reference}
 				sideOffset={sideOffset}
 				{...elementProps}
+				onClickCapture={(event) => {
+					elementProps.onClickCapture?.(event);
+					if (!scrollButtonPressReference.current) return;
+
+					// Releasing a scroll button can click an item instead.
+					scrollButtonPressReference.current = false;
+					event.preventDefault();
+					event.stopPropagation();
+				}}
 				onCloseAutoFocus={(event) => {
 					if (!touchDismissReference.current) return;
 
@@ -154,6 +166,7 @@ function SelectContent({ ref: reference, ...props }: { ref?: React.Ref<React.Com
 				}}
 				onPointerDown={(event) => {
 					elementProps.onPointerDown?.(event);
+					scrollButtonPressReference.current = (event.target as Element).closest("[data-scroll-button]") !== null;
 
 					// Scroll buttons scroll the focused item into view when they mount.
 					const content = event.currentTarget;
