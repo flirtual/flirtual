@@ -78,4 +78,7 @@ const TextBlock: FC<TextBlockProps> = ({ block, message, common }) => {
 	);
 };
 
-export const theme: Partial<Theme> = { Avatar, ImageBlock, LocationBlock, Message, MessageDivider, MessageField, ReferencedMessage, ReplyBar, TextBlock };
+// Hides the typing indicator.
+const AfterMessages: FC = () => null;
+
+export const theme: Partial<Theme> = { AfterMessages, Avatar, ImageBlock, LocationBlock, Message, MessageDivider, MessageField, ReferencedMessage, ReplyBar, TextBlock };
