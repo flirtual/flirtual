@@ -329,8 +329,8 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 		useCallback(
 			(event) => {
 				if (
-					(document.querySelector("[role=\"dialog\"][data-state=\"open\"], [role=\"alertdialog\"][data-state=\"open\"], [role=\"menu\"][data-state=\"open\"], [role=\"listbox\"][data-state=\"open\"]")
-						&& !expandedImage)
+					event.defaultPrevented
+					|| document.querySelectorAll("[role=\"dialog\"][data-state=\"open\"], [role=\"alertdialog\"][data-state=\"open\"], [role=\"menu\"][data-state=\"open\"], [role=\"listbox\"][data-state=\"open\"]").length > (expandedImage ? 1 : 0)
 					|| event.ctrlKey
 					|| event.metaKey
 				)
