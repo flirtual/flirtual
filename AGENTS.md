@@ -126,5 +126,8 @@ vars, read separately by each app:
 
 - **Backend**: edit Elixir (hot reload) → `mix check` → test with curl.
 - **Frontend**: edit TS/React (hot reload) → `pnpm tsc` → test manually.
+- **portless**: `pnpm dev:portless` in `apps/frontend` and `./dev.sh --portless` in `apps/api`
+  serve both on `.localhost` names from `shims/portless`: one pair per checkout and
+  worktree, so forks never collide. See `apps/frontend/README.md`.
 - **Database**: `mix ecto.gen.migration` → edit → `mix ecto.migrate` (no rollbacks).
 - **API contract**: update the controller and frontend client together, plus `Watch/API.swift` if watchOS uses the endpoint.

@@ -41,8 +41,13 @@ export default defineConfig((config) => {
 	const env = loadEnv(mode, process.cwd(), "");
 
 	const defaultHost = osHostname().toLowerCase();
-	const origin = env.VITE_ORIGIN || `https://${defaultHost}:3000`;
-	const apiUrl = env.VITE_API_URL || `https://${defaultHost}:4001/v1/`;
+	// Until portless passes apps each other's URLs: https://github.com/vercel-labs/portless/issues/408
+	const portlessUrl = env.PORTLESS_URL ? new URL(env.PORTLESS_URL) : undefined;
+	const origin = env.VITE_ORIGIN || portlessUrl?.origin || `https://${defaultHost}:3000`;
+	const apiUrl = env.VITE_API_URL || (portlessUrl
+		? `${portlessUrl.protocol}//api.${portlessUrl.host}/v1/`
+		: `https://${defaultHost}:4001/v1/`);
+	const servesHttps = mode === "development" && !portlessUrl;
 
 	const sentryOrganization = env.VITE_SENTRY_ORGANIZATION;
 	const sentryProjectId = env.VITE_SENTRY_PROJECT_ID;
@@ -103,7 +108,7 @@ export default defineConfig((config) => {
 					"visionos/**"
 				]
 			},
-			...(mode === "development" && {
+			...(servesHttps && {
 				https: mkcertExists
 					? { cert: readFileSync(mkcertPaths.cert), key: readFileSync(mkcertPaths.key) }
 					: undefined
@@ -116,7 +121,7 @@ export default defineConfig((config) => {
 			]),
 			macros(),
 			info(),
-			mode === "development" && !mkcertExists && basicSsl({
+			servesHttps && !mkcertExists && basicSsl({
 				name: "flirtual",
 				domains: [hostname],
 				certDir: "./certificates",

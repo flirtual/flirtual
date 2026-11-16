@@ -38,17 +38,25 @@ config :flirtual, FlirtualWeb.Endpoint,
   http: [
     ip: {0, 0, 0, 0, 0, 0, 0, 0}
   ],
-  https: [
-    ip: {0, 0, 0, 0, 0, 0, 0, 0},
-    otp_app: :flirtual,
-    port: 4001,
-    cipher_suite: :strong,
-    certfile: "priv/cert/selfsigned.pem",
-    keyfile: "priv/cert/selfsigned_key.pem"
-  ],
   check_origin: false,
   code_reloader: true,
   watchers: []
+
+# portless (https://portless.sh) terminates TLS itself and assigns the port.
+if System.get_env("PORTLESS_URL") do
+  config :flirtual, FlirtualWeb.Endpoint,
+    http: [port: System.fetch_env!("PORT") |> String.to_integer()]
+else
+  config :flirtual, FlirtualWeb.Endpoint,
+    https: [
+      ip: {0, 0, 0, 0, 0, 0, 0, 0},
+      otp_app: :flirtual,
+      port: 4001,
+      cipher_suite: :strong,
+      certfile: "priv/cert/selfsigned.pem",
+      keyfile: "priv/cert/selfsigned_key.pem"
+    ]
+end
 
 config :phoenix,
   # Set a higher stacktrace during development. Avoid configuring such

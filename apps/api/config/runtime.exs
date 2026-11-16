@@ -76,8 +76,24 @@ config :flirtual,
   stereo2spatial_origin:
     Env.get("STEREO2SPATIAL_ORIGIN", default: "https://stereo2spatial.kfarwell.org")
 
-origin = URI.parse(Env.get!("ORIGIN", default: "https://localhost:4001"))
-frontend_origin = Env.get!("FRONTEND_ORIGIN", default: "https://localhost:3000")
+# Until portless passes apps each other's URLs: https://github.com/vercel-labs/portless/issues/408
+{default_origin, default_frontend_origin} =
+  case Env.get("PORTLESS_URL") do
+    nil ->
+      {"https://localhost:4001", "https://localhost:3000"}
+
+    portless_url ->
+      case URI.parse(portless_url) do
+        %URI{host: "api." <> frontend_host} = portless_origin ->
+          {portless_url, URI.to_string(%{portless_origin | host: frontend_host})}
+
+        _ ->
+          raise "PORTLESS_URL must be the frontend's hostname with an api. label, got #{portless_url}"
+      end
+  end
+
+origin = URI.parse(Env.get!("ORIGIN", default: default_origin))
+frontend_origin = Env.get!("FRONTEND_ORIGIN", default: default_frontend_origin)
 content_origin = Env.get("BUCKET_CONTENT_ORIGIN")
 uploads_origin = Env.get("BUCKET_UPLOADS_ORIGIN")
 retained_origin = Env.get("BUCKET_RETAINED_ORIGIN")

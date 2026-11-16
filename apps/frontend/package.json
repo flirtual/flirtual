@@ -5,6 +5,7 @@
 	"license": "AGPL-3.0-or-later",
 	"scripts": {
 		"dev": "react-router dev",
+		"dev:portless": "../../shims/portless run react-router dev",
 		"typegen": "wrangler types --include-runtime false && react-router typegen",
 		"typecheck:worker": "tsc -p src/worker/tsconfig.json",
 		"build": "rm -rf .sonda && pnpm typegen && react-router build",
