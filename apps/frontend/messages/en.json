@@ -3,19 +3,97 @@
 	"meta_description": "The first VR dating app. Join over 100,000 people for dates in VR apps like VRChat.",
 	"meta_social_description": "Meet new people in Virtual Reality ❤️ {brand_name} helps you go on dates in VR and VRChat…",
 	"about_us": "About us",
-	"about_page_body": "<section><h1>Our story</h1><p>Hey, we're Kyle and Tony, the creators of Flirtual. Kyle has been obsessed with VR since the early days of Oculus, but it really changed his life when he joined VRChat and met some of his closest friends (including his wife!) there. Right before COVID hit, Kyle brought his childhood best friend Tony along for the journey, and VR also changed his life. We set out to help others meet awesome people around the world too, starting with VRLFP (Virtual Reality Looking For Partner).</p><p>Immersive presence in VR helps you form deep connections with people anywhere in the world. By bridging geographic distance and putting personality first, our mission is to find the very best people for you, wherever they are. And to make dating safer and more magical!</p><p>In 2022, VRLFP became Flirtual. Rebuilt from the ground up, we've enhanced matchmaking, added personality & interest tags, and launched improved apps. Whether you're looking for a serious relationship that transitions into real life, something more casual in VR, or just new homies, we're ready to help find your perfect match.</p><group><logo/><p>❤ kfarwell, Tony & The Flirtual Team</p><discord>Join our Discord</discord></group><p><italic>P.S. We've come a long way from VRLFP's humble beginnings, but we're still a small team rooted in the VR community. <br/><br/>We appreciate your patience as we work hard to make Flirtual as awesome as it can be. Please let us know if you <contact>find any bugs</contact> or <ideas>have any suggestions</ideas>!</italic></p></section><section><h1>The team</h1><team-list/></section><section><h1>Timeline</h1><timeline/></section>",
+	"about_page_body": "<team-photo/><section><h1>Our story</h1><p>Hey, we're Kyle and Tony, the creators of Flirtual. Kyle has been obsessed with VR since the early days of Oculus, but it really changed his life when he joined VRChat and met some of his closest friends (including his wife!) there. Right before COVID hit, Kyle brought his childhood best friend Tony along for the journey, and VR also changed his life. We set out to help others meet awesome people around the world too, starting with VRLFP (Virtual Reality Looking For Partner).</p><p>Immersive presence in VR helps you form deep connections with people anywhere in the world. By bridging geographic distance and putting personality first, our mission is to find the very best people for you, wherever they are. And to make dating safer and more magical!</p><p>In 2022, VRLFP became Flirtual. Rebuilt from the ground up, we've enhanced matchmaking, added personality & interest tags, and launched improved apps. Whether you're looking for a serious relationship that transitions into real life, something more casual in VR, or just new homies, we're ready to help find your perfect match.</p><group><logo/><p>❤ kfarwell, Tony & The Flirtual Team</p><discord>Join our Discord</discord></group><p><italic>P.S. We've come a long way from VRLFP's humble beginnings, but we're still a small team rooted in the VR community. <br/><br/>We appreciate your patience as we work hard to make Flirtual as awesome as it can be. Please let us know if you <contact>find any bugs</contact> or <ideas>have any suggestions</ideas>!</italic></p></section><section><h1>The team</h1><team-list/></section><section><h1>Timeline</h1><timeline/></section><gallery/>",
 	"avatar_alt": "{name}'s avatar",
 	"about_team_photo_alt": "Picture of the Flirtual Team in VRChat",
-	"about_team_roles": {
-		"kfarwell": "Lead Developer",
-		"existony": "Partnerships & Safety",
-		"aries": "Software Developer",
-		"moderator": "Moderator",
-		"event_host": "Event Host",
-		"social": "Socials",
-		"advisor": "Advisor",
-		"faxmashine": "VRChat World Creator",
-		"juice": "VRChat Avatar Creator"
+	"about_team": {
+		"kfarwell": {
+			"name": "kfarwell",
+			"role": "Lead Developer",
+			"avatar": "kfarwell.png"
+		},
+		"tony": {
+			"name": "Tony",
+			"role": "Partnerships & Safety",
+			"avatar": "tony.png"
+		},
+		"aries": {
+			"name": "Aries",
+			"role": "Software Developer",
+			"avatar": "aries.jpg"
+		},
+		"buramie": {
+			"name": "Buramie",
+			"role": "Moderator",
+			"avatar": "buramie.jpg"
+		},
+		"damned_united": {
+			"name": "Damned_United",
+			"role": "Moderator",
+			"avatar": "damned-united.jpg"
+		},
+		"ferry": {
+			"name": "Ferry",
+			"role": "Moderator",
+			"avatar": "ferry.png"
+		},
+		"reploidsham": {
+			"name": "Reploidsham",
+			"role": "Moderator",
+			"avatar": "reploidsham.jpg"
+		},
+		"samantha": {
+			"name": "Samantha",
+			"role": "Moderator",
+			"avatar": "samantha.jpg"
+		},
+		"simon3373": {
+			"name": "Simon3373",
+			"role": "Moderator",
+			"avatar": "simon3373.jpg"
+		},
+		"starh": {
+			"name": "Starh",
+			"role": "Moderator",
+			"avatar": "starh.png"
+		},
+		"the_blarg": {
+			"name": "The_Blarg",
+			"role": "Moderator",
+			"avatar": "the-blarg.jpg"
+		},
+		"zyp": {
+			"name": "Zyp",
+			"role": "Moderator",
+			"avatar": "zyp.jpg"
+		},
+		"michiyo": {
+			"name": "Michiyo",
+			"role": "Event Host",
+			"avatar": "michiyo.jpg"
+		},
+		"nickykitty": {
+			"name": "NickyKitty",
+			"role": "Event Host",
+			"avatar": "nickykitty.jpg"
+		},
+		"syrmor": {
+			"name": "Syrmor",
+			"role": "Advisor",
+			"avatar": "syrmor.jpg"
+		},
+		"faxmashine": {
+			"name": "Faxmashine",
+			"role": "VRChat World Creator",
+			"avatar": "faxmashine.png",
+			"url": "https://www.faxmashine.com/"
+		},
+		"juice": {
+			"name": "Juice",
+			"role": "VRChat Avatar Creator",
+			"avatar": "juice.jpg",
+			"url": "https://info.mdcr.tv/"
+		}
 	},
 	"outgoing_teeny_tiny_pass_male": {
 		"2018": {
