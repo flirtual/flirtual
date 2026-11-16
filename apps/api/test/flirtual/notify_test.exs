@@ -60,6 +60,19 @@ defmodule Flirtual.NotifyTest do
     assert Notify.send_code("+447400123456", "482913") == {:error, :sms_unavailable}
   end
 
+  test "in development, logs the code instead of texting it" do
+    Application.put_env(:flirtual, Notify, log_codes: true)
+
+    assert Notify.configured?()
+
+    log =
+      ExUnit.CaptureLog.capture_log(fn ->
+        assert Notify.send_code("+447400123456", "482913") == {:ok, nil}
+      end)
+
+    assert log =~ "SMS code for +447400123456: 482913"
+  end
+
   test "is configured with an id and credentials" do
     assert Notify.configured?()
   end

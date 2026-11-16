@@ -5,10 +5,23 @@ defmodule Flirtual.Notify do
   def config(key), do: Application.get_env(:flirtual, Flirtual.Notify, [])[key]
 
   def configured?,
-    do: config(:configuration_id) != nil and config(:access_key) != nil and config(:secret) != nil
+    do:
+      config(:log_codes) == true or
+        (config(:configuration_id) != nil and config(:access_key) != nil and
+           config(:secret) != nil)
 
   def send_code(phone_number, code) do
-    if configured?(), do: send_text(phone_number, code), else: {:error, :sms_unavailable}
+    cond do
+      config(:log_codes) == true ->
+        Logger.warning("SMS code for #{phone_number}: #{code} (logged, not sent)")
+        {:ok, nil}
+
+      configured?() ->
+        send_text(phone_number, code)
+
+      true ->
+        {:error, :sms_unavailable}
+    end
   end
 
   defp send_text(phone_number, code) do

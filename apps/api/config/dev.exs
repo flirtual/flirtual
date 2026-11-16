@@ -25,6 +25,8 @@ config :flirtual, Flirtual.Search, table: System.get_env("DEV_SEARCH_TABLE", "pr
 # at the `config/runtime.exs`.
 config :flirtual, Flirtual.Mailer, adapter: Swoosh.Adapters.Local
 
+config :flirtual, Flirtual.Notify, log_codes: true
+
 # Swoosh API client is needed for adapters other than SMTP.
 config :swoosh, :api_client, false
 
