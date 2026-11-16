@@ -593,6 +593,7 @@
 	"url": "URL",
 	"i_agree": "I agree",
 	"sign_up_agreement": "to the <terms>Terms of Service</terms> & <privacy>Privacy Policy</privacy> and I'm at least 18 years of age",
+	"welcome_agreement": "By tapping “{create_account}” or “{log_in}”, you agree to our <terms>Terms of Service</terms> and confirm you're at least 18. Learn how we process your data in our <privacy>Privacy Policy</privacy>.",
 	"newsletter_opt_in": "Get {brand_name} updates",
 	"newsletter_opt_in_description": "with new features, changes, and offers <br></br>(we won't spam you)",
 	"reset_password": "Reset password",

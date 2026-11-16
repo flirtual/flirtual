@@ -110,8 +110,10 @@ vars, read separately by each app:
   other value is optional, and whatever links to an unset one must disappear, not break.
 - **Flags**: `VITE_FEATURE_*` → `src/features.ts`; `FEATURE_*` → `Flirtual.Features`. Homie Mode,
   personality, VR tags (platform + game), VRChat, the list of connection providers, and (frontend
-  only) the events, news and press pages and the APK download link. Login methods are API-only (`FEATURE_LOGIN`): the
-  frontend renders what `/v1/config`'s `login_providers` lists, minus any method not configured.
+  only) the events, news and press pages, the APK download link, and the landing page, without
+  which `/` is a welcome screen with sign-up and login. Login methods are API-only
+  (`FEATURE_LOGIN`): the frontend renders what `/v1/config`'s `login_providers` lists, minus any
+  method not configured.
 - **The rule**: a flag gates what the UI offers and what new writes may use. It never shrinks a
   wire type or `Ecto.Enum` (queue kinds, connection types, advanced filter categories), because
   rows written before a flip must still load. Data in a disabled feature is ignored, not rejected

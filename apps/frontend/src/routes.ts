@@ -8,7 +8,7 @@ import {
 import type { RouteConfig, RouteConfigEntry } from "@react-router/dev/routes";
 
 import { finishStepDirectory, finishSteps } from "./app/[locale]/(app)/(authenticated)/finish/steps";
-import { events, homieMode, news, personality, press } from "./features";
+import { events, homieMode, landing, news, personality, press } from "./features";
 
 const filePrefix = "./app/[locale]";
 
@@ -37,7 +37,7 @@ function page(path: string, file?: string, options?: RouteOptions, children?: Ar
 export default [
 	...prefix(":locale", [
 		layout("(public)", [
-			index("(public)/home"),
+			index(landing ? "(public)/home" : "(public)/welcome"),
 		// page("/home", "(public)/home"),
 		// route("/", "(public)/route"),
 		]),

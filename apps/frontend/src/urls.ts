@@ -179,6 +179,7 @@ export const urls = {
 	default: "/",
 	landing: "/",
 	register: "/sign-up",
+	registerAgreed: "/sign-up?agreed",
 	login: (next?: string) => url("/login", { next }),
 	forgotPassword: "/forgot",
 	banned: "/banned",
