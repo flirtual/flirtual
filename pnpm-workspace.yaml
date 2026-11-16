@@ -55,6 +55,8 @@ auditConfig:
     # calls v4 with no buf and pins uuid ^7.
     - GHSA-w5hq-g745-h8pq
 
+frozenLockfile: true
+
 verifyDepsBeforeRun: install
 
 minimumReleaseAge: 4320

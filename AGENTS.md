@@ -58,6 +58,11 @@ only in the root `package.json`.
   submodule. CI doesn't check out the submodule, and a frozen install skips it once its empty
   directory is removed; every job that installs the whole workspace runs `rmdir pulumi` first
   until pnpm/pnpm#17712 is fixed.
+- `frozenLockfile` is on, so `pnpm install` never rewrites `pnpm-lock.yaml`: a resolving install
+  silently drops the `pulumi` importer whenever the submodule isn't checked out, as in a fresh
+  worktree. After editing a `package.json` by hand, run `pnpm install --no-frozen-lockfile`.
+  `pnpm add` ignores the setting, so run `git submodule update --init pulumi` before adding a
+  dependency in a fresh worktree.
 
 - Versions shared by more than one app (`typescript`, `eslint`, `wrangler`, `vitest`, …) live in
   the root `catalog:` and are referenced as `"typescript": "catalog:"`. Bump them there, not in the
