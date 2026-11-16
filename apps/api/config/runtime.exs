@@ -247,6 +247,12 @@ config :flirtual, Flirtual.Google,
   web_client_secret: Env.get("GOOGLE_CLIENT_SECRET"),
   ios_client_id: Env.get("GOOGLE_IOS_CLIENT_ID")
 
+config :flirtual, Flirtual.Notify,
+  configuration_id: Env.get("NOTIFY_CONFIGURATION_ID"),
+  region: Env.get("NOTIFY_REGION", default: "us-east-1"),
+  access_key: Env.get("NOTIFY_ACCESS_KEY"),
+  secret: Env.get("NOTIFY_SECRET")
+
 config :flirtual, Flirtual.Meta,
   app_id: Env.get("META_APP_ID"),
   app_secret: Env.get("META_APP_SECRET"),

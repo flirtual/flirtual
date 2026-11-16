@@ -72,6 +72,7 @@ defmodule Flirtual.User do
   schema "users" do
     field(:email, :string)
     field(:previous_email, :string)
+    field(:phone_number, :string)
     field(:username, :string)
     field(:slug, :string)
     field(:password_hash, :string, redact: true)
@@ -115,6 +116,7 @@ defmodule Flirtual.User do
 
     field(:born_at, :date)
     field(:email_confirmed_at, :utc_datetime)
+    field(:phone_confirmed_at, :utc_datetime)
     field(:deactivated_at, :utc_datetime)
     field(:banned_at, :utc_datetime)
     field(:shadowbanned_at, :utc_datetime)
@@ -266,9 +268,12 @@ defmodule Flirtual.User do
       not Enum.empty?(profile.images)
   end
 
+  def contact_confirmed?(%User{} = user),
+    do: not is_nil(user.email_confirmed_at) or not is_nil(user.phone_confirmed_at)
+
   def visible?(%User{} = user) do
     finished_profile?(user) and
-      not is_nil(user.email_confirmed_at) and
+      contact_confirmed?(user) and
       is_nil(user.banned_at) and
       is_nil(user.shadowbanned_at) and
       is_nil(user.indef_shadowbanned_at) and
@@ -1579,6 +1584,8 @@ defimpl Jason.Encoder, for: Flirtual.User do
       :id,
       :email,
       :previous_email,
+      :phone_number,
+      :phone_confirmed_at,
       :slug,
       :age,
       :born_at,

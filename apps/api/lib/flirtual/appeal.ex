@@ -65,6 +65,7 @@ defmodule Flirtual.Appeal do
       body: message,
       name: name,
       email: user.email,
+      phone: user.phone_number,
       group_id: Freshdesk.config(:moderation_group_id),
       custom_fields: %{
         fields.profile => User.url(user, :id) |> URI.to_string(),

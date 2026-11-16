@@ -14,11 +14,12 @@ defmodule Flirtual.Freshdesk do
       subject: attrs.subject,
       description: html_body(attrs.body),
       name: attrs.name,
-      email: attrs.email,
       status: @open,
       priority: @low,
       custom_fields: attrs.custom_fields
     }
+    |> maybe_put(:email, attrs[:email])
+    |> maybe_put(:phone, attrs[:phone])
     |> maybe_put(:group_id, attrs[:group_id])
   end
 

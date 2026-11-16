@@ -5,14 +5,15 @@ defmodule Flirtual.User.Login do
   import Ecto.Query
   import FlirtualWeb.Utilities
 
-  alias Flirtual.{Connection, Features, Flag, Hash, Repo, User}
+  alias Flirtual.{Connection, Features, Flag, Hash, Notify, Repo, User}
   alias Flirtual.User.{Login, Session}
 
-  @methods [:email, :apple, :discord, :google]
+  @methods [:email, :phone, :apple, :discord, :google]
 
   def providers, do: Enum.filter(@methods, &(Features.login?(&1) and configured?(&1)))
 
   defp configured?(:email), do: true
+  defp configured?(:phone), do: Notify.configured?()
 
   defp configured?(type),
     do: Connection.enabled?(type) and Connection.provider!(type).configured?()

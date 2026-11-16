@@ -234,6 +234,8 @@ defmodule FlirtualWeb.Router do
       scope "/v1/" do
         scope "/session" do
           post("/", SessionController, :login)
+          post("/phone", PhoneLoginController, :send_code)
+          post("/phone/verify", PhoneLoginController, :verify)
 
           scope "/transfer" do
             get("/:token", SessionTransferController, :consume)

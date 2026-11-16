@@ -51,7 +51,7 @@ defmodule Flirtual.Matchmaking do
   def reduce_kind(_, _), do: :love
 
   defp trial_user?(%User{} = user) do
-    user.status in [:registered, :onboarded] || is_nil(user.email_confirmed_at)
+    user.status in [:registered, :onboarded] || not User.contact_confirmed?(user)
   end
 
   defp trial_exhausted?(%User{} = user) do

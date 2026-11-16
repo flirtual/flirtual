@@ -195,6 +195,8 @@ defmodule Flirtual.User.Policy do
 
   @own_property_keys [
     :email,
+    :phone_number,
+    :phone_confirmed_at,
     :disabled_until_acknowledged,
     :language,
     :talkjs_signature,
@@ -251,6 +253,8 @@ defmodule Flirtual.User.Policy do
 
   @moderator_property_keys [
     :email,
+    :phone_number,
+    :phone_confirmed_at,
     :moderator_message,
     :moderator_note,
     :disabled_until_acknowledged,

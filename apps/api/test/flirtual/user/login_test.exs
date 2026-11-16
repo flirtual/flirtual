@@ -59,6 +59,23 @@ defmodule Flirtual.User.LoginTest do
     assert Login.providers() == [:google]
   end
 
+  test "lists phone only once Notify is configured" do
+    saved = Application.get_env(:flirtual, Flirtual.Notify)
+    on_exit(fn -> Application.put_env(:flirtual, Flirtual.Notify, saved || []) end)
+
+    features(~w(phone google))
+    Application.put_env(:flirtual, Flirtual.Notify, [])
+    assert Login.providers() == [:google]
+
+    Application.put_env(:flirtual, Flirtual.Notify,
+      configuration_id: "nc-1234",
+      access_key: "AKIAEXAMPLE",
+      secret: "secret"
+    )
+
+    assert Login.providers() == [:phone, :google]
+  end
+
   test "ignores methods that can't log in" do
     features(~w(meta vrchat unknown))
     assert Login.providers() == []
