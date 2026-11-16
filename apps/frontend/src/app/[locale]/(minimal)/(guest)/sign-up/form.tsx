@@ -22,8 +22,9 @@ import { useOptimisticRoute } from "~/preload";
 import { mutate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
-import { useEmailLogin, useLoginConnectionTypes } from "../login/last-connection";
+import { useEmailLogin, useLoginConnectionTypes, usePhoneLogin } from "../login/last-connection";
 import { LoginConnectionButton } from "../login/login-connection-button";
+import { PhoneLogin, PhoneLoginButton } from "../login/phone-login";
 
 export const SignUpForm: FC = () => {
 	const { t } = useTranslation();
@@ -35,9 +36,20 @@ export const SignUpForm: FC = () => {
 	useOptimisticRoute(urls.onboarding(1));
 
 	const emailLogin = useEmailLogin();
+	const phoneLogin = usePhoneLogin();
+	const [enteringPhone, setEnteringPhone] = useState(false);
 	const [primaryConnectionType, ...secondaryConnectionTypes] = useLoginConnectionTypes();
 
 	const compactConnections = secondaryConnectionTypes.length > 1;
+
+	if (enteringPhone) {
+		return (
+			<>
+				<ConnectionError />
+				<PhoneLogin signup onBack={() => setEnteringPhone(false)} />
+			</>
+		);
+	}
 
 	return (
 		<Form
@@ -215,7 +227,7 @@ export const SignUpForm: FC = () => {
 								messages={errors.map((value) => ({ type: "error", value }))}
 							/>
 						</div>
-						{primaryConnectionType && (
+						{(primaryConnectionType || phoneLogin) && (
 							<div className="order-first flex flex-col gap-2 desktop:order-0">
 								{emailLogin && (
 									<div className="order-last mt-8 mb-2 inline-flex items-center justify-center desktop:order-first desktop:mt-2 desktop:mb-8">
@@ -225,13 +237,15 @@ export const SignUpForm: FC = () => {
 										<hr className="h-px w-full border-0 bg-white-40 dark:bg-black-60 vision:bg-transparent" />
 									</div>
 								)}
-								<LoginConnectionButton
-									signup
-									guard={guardServiceAgreement}
-									notifications={fields.notifications.props.value}
-									tabIndex={9}
-									type={primaryConnectionType}
-								/>
+								{primaryConnectionType && (
+									<LoginConnectionButton
+										signup
+										guard={guardServiceAgreement}
+										notifications={fields.notifications.props.value}
+										tabIndex={9}
+										type={primaryConnectionType}
+									/>
+								)}
 								{secondaryConnectionTypes.length > 0 && (
 									<div className={twMerge("flex gap-2", !compactConnections && "flex-col")}>
 										{secondaryConnectionTypes.map((type, index) => (
@@ -246,6 +260,14 @@ export const SignUpForm: FC = () => {
 											/>
 										))}
 									</div>
+								)}
+								{phoneLogin && (
+									<PhoneLoginButton
+										tabIndex={13}
+										onClick={() => {
+											if (guardServiceAgreement()) setEnteringPhone(true);
+										}}
+									/>
 								)}
 							</div>
 						)}

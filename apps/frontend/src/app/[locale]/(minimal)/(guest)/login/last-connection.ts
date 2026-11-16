@@ -20,6 +20,10 @@ export function useEmailLogin(): boolean {
 	return useConfig().loginProviders.includes("email");
 }
 
+export function usePhoneLogin(): boolean {
+	return useConfig().loginProviders.includes("phone");
+}
+
 // Pins the last successful login connection to the top of the list.
 export function useLoginConnectionTypes(): ReadonlyArray<ConnectionType> {
 	const { loginProviders } = useConfig();

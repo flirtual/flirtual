@@ -22,9 +22,10 @@ import { useNavigate } from "~/i18n";
 import { invalidate, mutate, sessionKey } from "~/query";
 import { isInternalHref, urls } from "~/urls";
 
-import { useEmailLogin, useLoginConnectionTypes } from "./last-connection";
+import { useEmailLogin, useLoginConnectionTypes, usePhoneLogin } from "./last-connection";
 import { LoginConnectionButton } from "./login-connection-button";
 import { MagicLogin } from "./magic-login";
+import { PhoneLogin, PhoneLoginButton } from "./phone-login";
 import { VerificationForm } from "./verification";
 
 export function next() {
@@ -124,6 +125,8 @@ export const LoginForm: FC = () => {
 	const token = searchParameters.get("token");
 
 	const emailLogin = useEmailLogin();
+	const phoneLogin = usePhoneLogin();
+	const [enteringPhone, setEnteringPhone] = useState(false);
 	const [primaryConnectionType, ...secondaryConnectionTypes] = useLoginConnectionTypes();
 
 	const compactConnections = secondaryConnectionTypes.length > 1;
@@ -144,6 +147,15 @@ export const LoginForm: FC = () => {
 						}, { replace: true });
 					}}
 				/>
+			</>
+		);
+	}
+
+	if (enteringPhone) {
+		return (
+			<>
+				<ConnectionError />
+				<PhoneLogin signup={false} onBack={() => setEnteringPhone(false)} />
 			</>
 		);
 	}
@@ -309,7 +321,7 @@ export const LoginForm: FC = () => {
 						)}
 					</Form>
 				)}
-				{primaryConnectionType && (
+				{(primaryConnectionType || phoneLogin) && (
 					<div className="order-first flex flex-col gap-2 desktop:order-0">
 						{emailLogin && (
 							<div className="order-last mt-8 mb-2 inline-flex items-center justify-center desktop:order-first desktop:mt-2 desktop:mb-8">
@@ -319,7 +331,7 @@ export const LoginForm: FC = () => {
 								<hr className="h-px w-full border-0 bg-white-40 dark:bg-black-60 vision:bg-transparent" />
 							</div>
 						)}
-						<LoginConnectionButton tabIndex={6} type={primaryConnectionType} />
+						{primaryConnectionType && <LoginConnectionButton tabIndex={6} type={primaryConnectionType} />}
 						{secondaryConnectionTypes.length > 0 && (
 							<div className={twMerge("flex gap-2", !compactConnections && "flex-col")}>
 								{secondaryConnectionTypes.map((type, index) => (
@@ -332,6 +344,7 @@ export const LoginForm: FC = () => {
 								))}
 							</div>
 						)}
+						{phoneLogin && <PhoneLoginButton tabIndex={10} onClick={() => setEnteringPhone(true)} />}
 					</div>
 				)}
 				{!emailLogin && (
