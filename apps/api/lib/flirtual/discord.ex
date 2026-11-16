@@ -30,6 +30,8 @@ defmodule Flirtual.Discord do
     Application.get_env(:flirtual, Flirtual.Discord)[key]
   end
 
+  def configured?, do: config(:client_id) != nil and config(:client_secret) != nil
+
   def url(pathname) do
     "https://discord.com/api/" <> pathname
   end

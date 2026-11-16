@@ -15,6 +15,8 @@ defmodule Flirtual.Apple do
     Application.get_env(:flirtual, Flirtual.Apple)[key]
   end
 
+  def configured?, do: config(:key) != nil and config(:service_id) != nil
+
   def authorize_url(_conn, %{} = options) do
     client_id = config(:service_id)
 

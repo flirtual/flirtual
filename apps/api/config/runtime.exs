@@ -101,17 +101,21 @@ config :flirtual, :buckets, %{
   stats: Env.get!("BUCKET_STATS")
 }
 
-feature_connections =
-  Env.get("FEATURE_CONNECTIONS", default: "discord,vrchat,google,apple,meta")
+feature_list = fn name, default ->
+  Env.get(name, default: default)
   |> String.split(",")
   |> Enum.map(&String.trim/1)
   |> Enum.reject(&(&1 == ""))
+end
+
+feature_connections = feature_list.("FEATURE_CONNECTIONS", "discord,vrchat,google,apple,meta")
 
 config :flirtual, :features,
   homie_mode?: Env.bool("FEATURE_HOMIE_MODE", default: true),
   personality?: Env.bool("FEATURE_PERSONALITY", default: true),
   vr_tags?: Env.bool("FEATURE_VR_TAGS", default: true),
   vrchat?: Env.bool("FEATURE_VRCHAT", default: true),
+  login: feature_list.("FEATURE_LOGIN", "email,discord,google,apple"),
   connections: feature_connections
 
 brand_colors = fn name, default ->

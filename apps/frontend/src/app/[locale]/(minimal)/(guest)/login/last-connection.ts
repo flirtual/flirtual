@@ -1,5 +1,6 @@
 import type { ConnectionType } from "~/api/connections";
-import { connectionProvider } from "~/features";
+import { useConfig } from "~/hooks/use-config";
+import { useDevice } from "~/hooks/use-device";
 import { usePreferences } from "~/hooks/use-preferences";
 import { getPreferences, setPreferences } from "~/preferences";
 import { mutate, preferencesKey } from "~/query";
@@ -7,12 +8,24 @@ import { mutate, preferencesKey } from "~/query";
 const lastKey = "login_connection";
 const attemptKey = "login_connection_attempt";
 
+function deviceOrder(device: ReturnType<typeof useDevice>): ReadonlyArray<ConnectionType> {
+	return device.apple
+		? ["apple", "google", "discord"]
+		: device.android
+			? ["google", "apple", "discord"]
+			: ["discord", "google", "apple"];
+}
+
+export function useEmailLogin(): boolean {
+	return useConfig().loginProviders.includes("email");
+}
+
 // Pins the last successful login connection to the top of the list.
-export function useLoginConnectionTypes<T extends ConnectionType>(callerTypes: ReadonlyArray<T>): ReadonlyArray<T> {
+export function useLoginConnectionTypes(): ReadonlyArray<ConnectionType> {
+	const { loginProviders } = useConfig();
 	const [last] = usePreferences<ConnectionType | null>(lastKey, null);
 
-	// Filters disabled providers for both login and sign-up.
-	const types = callerTypes.filter((type) => connectionProvider(type));
+	const types = deviceOrder(useDevice()).filter((type) => loginProviders.includes(type));
 
 	const [remembered] = types.filter((type) => type === last);
 	if (!remembered) return types;

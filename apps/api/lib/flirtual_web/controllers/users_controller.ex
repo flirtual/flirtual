@@ -16,6 +16,7 @@ defmodule FlirtualWeb.UsersController do
     AgeVerification,
     Discord,
     Entitlement,
+    Features,
     IpAddress,
     ModerationEvent,
     ObanWorkers,
@@ -34,6 +35,12 @@ defmodule FlirtualWeb.UsersController do
   action_fallback(FlirtualWeb.FallbackController)
 
   def create(conn, params) do
+    if Features.login?(:email),
+      do: create_with_password(conn, params),
+      else: {:error, {:forbidden, :email_login_disabled}}
+  end
+
+  defp create_with_password(conn, params) do
     bucket = "create_user:#{IpAddress.normalize(get_conn_ip(conn))}"
 
     {_, remaining, _, _, _} = ExRated.inspect_bucket(bucket, @one_hour, 3)

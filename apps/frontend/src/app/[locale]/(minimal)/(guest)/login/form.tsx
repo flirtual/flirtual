@@ -22,7 +22,7 @@ import { useNavigate } from "~/i18n";
 import { invalidate, mutate, sessionKey } from "~/query";
 import { isInternalHref, urls } from "~/urls";
 
-import { useLoginConnectionTypes } from "./last-connection";
+import { useEmailLogin, useLoginConnectionTypes } from "./last-connection";
 import { LoginConnectionButton } from "./login-connection-button";
 import { MagicLogin } from "./magic-login";
 import { VerificationForm } from "./verification";
@@ -123,13 +123,8 @@ export const LoginForm: FC = () => {
 
 	const token = searchParameters.get("token");
 
-	const [primaryConnectionType, ...secondaryConnectionTypes] = useLoginConnectionTypes(
-		device.apple
-			? (["apple", "google", "discord"] as const)
-			: device.android
-				? (["google", "apple", "discord"] as const)
-				: (["discord", "google", "apple"] as const)
-	);
+	const emailLogin = useEmailLogin();
+	const [primaryConnectionType, ...secondaryConnectionTypes] = useLoginConnectionTypes();
 
 	const compactConnections = secondaryConnectionTypes.length > 1;
 
@@ -171,168 +166,185 @@ export const LoginForm: FC = () => {
 		<>
 			<ConnectionError />
 			<div className="flex flex-col gap-8">
-				<Form
-					withCaptcha
-					fields={{
-						login: "",
-						password: ""
-					}}
-					captchaTabIndex={7}
-					className="flex flex-col gap-8"
-					formErrorMessages={false}
-					renderCaptcha={false}
-					onSubmit={async (body, { captcha }) => {
-						const value = await Authentication.login({
-							...body,
-							captcha,
-							deviceId: device.id
-						});
-
-						if ("error" in value) {
-							if (value.error === "invalid_credentials")
-								throw [
-									<Trans
-										key=""
-										components={{
-											help: (
-												<InlineLink
-													className="underline"
-													highlight={false}
-													href={urls.resources.resetPasswordHelp}
-												/>
-											),
-											reset: (
-												<InlineLink
-													className="underline"
-													highlight={false}
-													href={urls.forgotPassword}
-												/>
-											)
-										}}
-										i18nKey="errors.invalid_credentials_complex"
-									/>
-								];
-
-							if (value.error === "login_rate_limit" || value.error === "verification_rate_limit")
-								throw [
-									<Trans
-										key=""
-										components={{
-											reset: (
-												<InlineLink
-													className="underline"
-													highlight={false}
-													href={urls.forgotPassword}
-												/>
-											)
-										}}
-										i18nKey={`errors.${value.error}`}
-									/>
-								];
-
-							throw [t(`errors.${value.error}` as any)];
-						}
-
-						if ("loginId" in value) {
-							setVerification({
-								loginId: value.loginId,
-								email: value.email,
-								leakedPassword: value.leakedPassword
+				{emailLogin && (
+					<Form
+						withCaptcha
+						fields={{
+							login: "",
+							password: ""
+						}}
+						captchaTabIndex={7}
+						className="flex flex-col gap-8"
+						formErrorMessages={false}
+						renderCaptcha={false}
+						onSubmit={async (body, { captcha }) => {
+							const value = await Authentication.login({
+								...body,
+								captcha,
+								deviceId: device.id
 							});
-							return;
-						}
 
-						await rememberLeakedPassword(value.user.id, value.leakedPassword);
-
-						await invalidate({ refetchType: "none" });
-						await mutate(sessionKey(), value);
-					}}
-				>
-					{({ errors, FormField, captchaWidget }) => (
-						<>
-							<FormField name="login">
-								{({ props, labelProps }) => (
-									<>
-										<InputLabel {...labelProps}>{t("email_address")}</InputLabel>
-										<InputText
-											{...props}
-											autoCapitalize="none"
-											autoComplete="username webauthn"
-											autoCorrect="off"
-											spellCheck="false"
-											tabIndex={1}
-											type="text"
+							if ("error" in value) {
+								if (value.error === "invalid_credentials")
+									throw [
+										<Trans
+											key=""
+											components={{
+												help: (
+													<InlineLink
+														className="underline"
+														highlight={false}
+														href={urls.resources.resetPasswordHelp}
+													/>
+												),
+												reset: (
+													<InlineLink
+														className="underline"
+														highlight={false}
+														href={urls.forgotPassword}
+													/>
+												)
+											}}
+											i18nKey="errors.invalid_credentials_complex"
 										/>
-									</>
-								)}
-							</FormField>
-							<FormField name="password">
-								{({ props, labelProps }) => (
-									<>
-										<InputLabel
-											{...labelProps}
-											hint={(
-												<InputLabelHint>
-													<InlineLink href={urls.forgotPassword} tabIndex={3}>{t("forgot_your_password")}</InlineLink>
-												</InputLabelHint>
-											)}
+									];
+
+								if (value.error === "login_rate_limit" || value.error === "verification_rate_limit")
+									throw [
+										<Trans
+											key=""
+											components={{
+												reset: (
+													<InlineLink
+														className="underline"
+														highlight={false}
+														href={urls.forgotPassword}
+													/>
+												)
+											}}
+											i18nKey={`errors.${value.error}`}
+										/>
+									];
+
+								throw [t(`errors.${value.error}` as any)];
+							}
+
+							if ("loginId" in value) {
+								setVerification({
+									loginId: value.loginId,
+									email: value.email,
+									leakedPassword: value.leakedPassword
+								});
+								return;
+							}
+
+							await rememberLeakedPassword(value.user.id, value.leakedPassword);
+
+							await invalidate({ refetchType: "none" });
+							await mutate(sessionKey(), value);
+						}}
+					>
+						{({ errors, FormField, captchaWidget }) => (
+							<>
+								<FormField name="login">
+									{({ props, labelProps }) => (
+										<>
+											<InputLabel {...labelProps}>{t("email_address")}</InputLabel>
+											<InputText
+												{...props}
+												autoCapitalize="none"
+												autoComplete="username webauthn"
+												autoCorrect="off"
+												spellCheck="false"
+												tabIndex={1}
+												type="text"
+											/>
+										</>
+									)}
+								</FormField>
+								<FormField name="password">
+									{({ props, labelProps }) => (
+										<>
+											<InputLabel
+												{...labelProps}
+												hint={(
+													<InputLabelHint>
+														<InlineLink href={urls.forgotPassword} tabIndex={3}>{t("forgot_your_password")}</InlineLink>
+													</InputLabelHint>
+												)}
+											>
+												{t("password")}
+											</InputLabel>
+											<InputText
+												{...props}
+												autoComplete="current-password"
+												tabIndex={2}
+												type="password"
+											/>
+										</>
+									)}
+								</FormField>
+								{captchaWidget}
+								<div className="flex flex-col gap-4">
+									<div className="flex flex-row-reverse gap-2">
+										<FormButton className="min-w-44" size="sm" tabIndex={4}>
+											{t("log_in")}
+										</FormButton>
+										<ButtonLink
+											className="flex w-fit flex-row-reverse gap-2 opacity-75"
+											href={urls.register}
+											kind="tertiary"
+											size="sm"
+											tabIndex={5}
 										>
-											{t("password")}
-										</InputLabel>
-										<InputText
-											{...props}
-											autoComplete="current-password"
-											tabIndex={2}
-											type="password"
-										/>
-									</>
-								)}
-							</FormField>
-							{captchaWidget}
-							<div className="flex flex-col gap-4">
-								<div className="flex flex-row-reverse gap-2">
-									<FormButton className="min-w-44" size="sm" tabIndex={4}>
-										{t("log_in")}
-									</FormButton>
-									<ButtonLink
-										className="flex w-fit flex-row-reverse gap-2 opacity-75"
-										href={urls.register}
-										kind="tertiary"
-										size="sm"
-										tabIndex={5}
-									>
-										<span>{t("or_sign_up")}</span>
-										<MoveRight className="size-5 rotate-180" />
-									</ButtonLink>
+											<span>{t("or_sign_up")}</span>
+											<MoveRight className="size-5 rotate-180" />
+										</ButtonLink>
+									</div>
+									<FormInputMessages
+										messages={errors.map((value) => ({ type: "error", value }))}
+									/>
 								</div>
-								<FormInputMessages
-									messages={errors.map((value) => ({ type: "error", value }))}
-								/>
+							</>
+						)}
+					</Form>
+				)}
+				{primaryConnectionType && (
+					<div className="order-first flex flex-col gap-2 desktop:order-0">
+						{emailLogin && (
+							<div className="order-last mt-8 mb-2 inline-flex items-center justify-center desktop:order-first desktop:mt-2 desktop:mb-8">
+								<span className="absolute left-1/2 mb-1 -translate-x-1/2 bg-white-20 px-3 font-montserrat font-semibold text-black-50 dark:bg-black-70 dark:text-white-50 vision:bg-transparent vision:text-white-50">
+									{t("or")}
+								</span>
+								<hr className="h-px w-full border-0 bg-white-40 dark:bg-black-60 vision:bg-transparent" />
 							</div>
-						</>
-					)}
-				</Form>
-				<div className="order-first flex flex-col gap-2 desktop:order-0">
-					<div className="order-last mt-8 mb-2 inline-flex items-center justify-center desktop:order-first desktop:mt-2 desktop:mb-8">
-						<span className="absolute left-1/2 mb-1 -translate-x-1/2 bg-white-20 px-3 font-montserrat font-semibold text-black-50 dark:bg-black-70 dark:text-white-50 vision:bg-transparent vision:text-white-50">
-							{t("or")}
-						</span>
-						<hr className="h-px w-full border-0 bg-white-40 dark:bg-black-60 vision:bg-transparent" />
+						)}
+						<LoginConnectionButton tabIndex={6} type={primaryConnectionType} />
+						{secondaryConnectionTypes.length > 0 && (
+							<div className={twMerge("flex gap-2", !compactConnections && "flex-col")}>
+								{secondaryConnectionTypes.map((type, index) => (
+									<LoginConnectionButton
+										key={type}
+										iconOnly={compactConnections}
+										tabIndex={7 + index}
+										type={type}
+									/>
+								))}
+							</div>
+						)}
 					</div>
-					<LoginConnectionButton tabIndex={6} type={primaryConnectionType} />
-					{secondaryConnectionTypes.length > 0 && (
-						<div className={twMerge("flex gap-2", !compactConnections && "flex-col")}>
-							{secondaryConnectionTypes.map((type, index) => (
-								<LoginConnectionButton
-									key={type}
-									iconOnly={compactConnections}
-									tabIndex={7 + index}
-									type={type}
-								/>
-							))}
-						</div>
-					)}
-				</div>
+				)}
+				{!emailLogin && (
+					<ButtonLink
+						className="flex w-fit flex-row-reverse gap-2 self-end opacity-75"
+						href={urls.register}
+						kind="tertiary"
+						size="sm"
+					>
+						<span>{t("or_sign_up")}</span>
+						<MoveRight className="size-5 rotate-180" />
+					</ButtonLink>
+				)}
 			</div>
 		</>
 	);

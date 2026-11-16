@@ -17,38 +17,30 @@ import {
 	InputLabelHint,
 	InputText
 } from "~/components/inputs";
-import { useDevice } from "~/hooks/use-device";
 import { useLocale } from "~/i18n";
 import { useOptimisticRoute } from "~/preload";
 import { mutate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
-import { useLoginConnectionTypes } from "../login/last-connection";
+import { useEmailLogin, useLoginConnectionTypes } from "../login/last-connection";
 import { LoginConnectionButton } from "../login/login-connection-button";
 
 export const SignUpForm: FC = () => {
 	const { t } = useTranslation();
 	const [locale] = useLocale();
-	const device = useDevice();
 
 	const agreementDenials = useRef(0);
 	const [agreementShake, setAgreementShake] = useState(0);
 
 	useOptimisticRoute(urls.onboarding(1));
 
-	const [primaryConnectionType, ...secondaryConnectionTypes] = useLoginConnectionTypes(
-		device.apple
-			? (["apple", "google", "discord"] as const)
-			: device.android
-				? (["google", "discord"] as const)
-				: (["discord", "google"] as const)
-	);
+	const emailLogin = useEmailLogin();
+	const [primaryConnectionType, ...secondaryConnectionTypes] = useLoginConnectionTypes();
 
 	const compactConnections = secondaryConnectionTypes.length > 1;
 
 	return (
 		<Form
-			withCaptcha
 			fields={{
 				email: "",
 				password: "",
@@ -61,6 +53,7 @@ export const SignUpForm: FC = () => {
 			formErrorMessages={false}
 			renderCaptcha={false}
 			requireChange={false}
+			withCaptcha={emailLogin}
 			onSubmit={async ({ ...values }, { captcha }) => {
 				const now = new Date().toISOString();
 				const user = await User.create({
@@ -91,39 +84,43 @@ export const SignUpForm: FC = () => {
 				return (
 					<>
 						<ConnectionError />
-						<FormField name="email">
-							{({ props, labelProps }) => (
-								<>
-									<InputLabel {...labelProps}>{t("email_address")}</InputLabel>
-									<InputText {...props} autoComplete="email" tabIndex={1} type="email" />
-								</>
-							)}
-						</FormField>
-						<FormField name="password">
-							{({ props, labelProps }) => (
-								<>
-									<InputLabel {...labelProps}>{t("password")}</InputLabel>
-									<InputText
-										tabIndex={2}
-										{...props}
-										autoComplete="new-password"
-										type="password"
-									/>
-								</>
-							)}
-						</FormField>
-						<FormField
-							name="url"
-							aria-hidden="true"
-							className="absolute left-[-9999px]"
-						>
-							{({ props, labelProps }) => (
-								<>
-									<InputLabel {...labelProps}>{t("url")}</InputLabel>
-									<InputText {...props} autoComplete="nope" tabIndex={-1} />
-								</>
-							)}
-						</FormField>
+						{emailLogin && (
+							<>
+								<FormField name="email">
+									{({ props, labelProps }) => (
+										<>
+											<InputLabel {...labelProps}>{t("email_address")}</InputLabel>
+											<InputText {...props} autoComplete="email" tabIndex={1} type="email" />
+										</>
+									)}
+								</FormField>
+								<FormField name="password">
+									{({ props, labelProps }) => (
+										<>
+											<InputLabel {...labelProps}>{t("password")}</InputLabel>
+											<InputText
+												tabIndex={2}
+												{...props}
+												autoComplete="new-password"
+												type="password"
+											/>
+										</>
+									)}
+								</FormField>
+								<FormField
+									name="url"
+									aria-hidden="true"
+									className="absolute left-[-9999px]"
+								>
+									{({ props, labelProps }) => (
+										<>
+											<InputLabel {...labelProps}>{t("url")}</InputLabel>
+											<InputText {...props} autoComplete="nope" tabIndex={-1} />
+										</>
+									)}
+								</FormField>
+							</>
+						)}
 						<FormField
 							key={agreementShake}
 							name="serviceAgreement"
@@ -195,12 +192,14 @@ export const SignUpForm: FC = () => {
 								</div>
 							)}
 						</FormField>
-						{captchaWidget}
+						{emailLogin && captchaWidget}
 						<div className="flex flex-col gap-4">
 							<div className="flex flex-row-reverse gap-2">
-								<FormButton className="min-w-44" size="sm" tabIndex={7}>
-									{t("create_account")}
-								</FormButton>
+								{emailLogin && (
+									<FormButton className="min-w-44" size="sm" tabIndex={7}>
+										{t("create_account")}
+									</FormButton>
+								)}
 								<ButtonLink
 									className="flex w-fit flex-row-reverse gap-2 opacity-75"
 									href={urls.login()}
@@ -216,36 +215,40 @@ export const SignUpForm: FC = () => {
 								messages={errors.map((value) => ({ type: "error", value }))}
 							/>
 						</div>
-						<div className="order-first flex flex-col gap-2 desktop:order-0">
-							<div className="order-last mt-8 mb-2 inline-flex items-center justify-center desktop:order-first desktop:mt-2 desktop:mb-8">
-								<span className="absolute left-1/2 mb-1 -translate-x-1/2 bg-white-20 px-3 font-montserrat font-semibold text-black-50 dark:bg-black-70 dark:text-white-50 vision:bg-transparent vision:text-white-50">
-									{t("or")}
-								</span>
-								<hr className="h-px w-full border-0 bg-white-40 dark:bg-black-60 vision:bg-transparent" />
+						{primaryConnectionType && (
+							<div className="order-first flex flex-col gap-2 desktop:order-0">
+								{emailLogin && (
+									<div className="order-last mt-8 mb-2 inline-flex items-center justify-center desktop:order-first desktop:mt-2 desktop:mb-8">
+										<span className="absolute left-1/2 mb-1 -translate-x-1/2 bg-white-20 px-3 font-montserrat font-semibold text-black-50 dark:bg-black-70 dark:text-white-50 vision:bg-transparent vision:text-white-50">
+											{t("or")}
+										</span>
+										<hr className="h-px w-full border-0 bg-white-40 dark:bg-black-60 vision:bg-transparent" />
+									</div>
+								)}
+								<LoginConnectionButton
+									signup
+									guard={guardServiceAgreement}
+									notifications={fields.notifications.props.value}
+									tabIndex={9}
+									type={primaryConnectionType}
+								/>
+								{secondaryConnectionTypes.length > 0 && (
+									<div className={twMerge("flex gap-2", !compactConnections && "flex-col")}>
+										{secondaryConnectionTypes.map((type, index) => (
+											<LoginConnectionButton
+												key={type}
+												signup
+												guard={guardServiceAgreement}
+												iconOnly={compactConnections}
+												notifications={fields.notifications.props.value}
+												tabIndex={10 + index}
+												type={type}
+											/>
+										))}
+									</div>
+								)}
 							</div>
-							<LoginConnectionButton
-								signup
-								guard={guardServiceAgreement}
-								notifications={fields.notifications.props.value}
-								tabIndex={9}
-								type={primaryConnectionType}
-							/>
-							{secondaryConnectionTypes.length > 0 && (
-								<div className={twMerge("flex gap-2", !compactConnections && "flex-col")}>
-									{secondaryConnectionTypes.map((type, index) => (
-										<LoginConnectionButton
-											key={type}
-											signup
-											guard={guardServiceAgreement}
-											iconOnly={compactConnections}
-											notifications={fields.notifications.props.value}
-											tabIndex={10 + index}
-											type={type}
-										/>
-									))}
-								</div>
-							)}
-						</div>
+						)}
 					</>
 				);
 			}}

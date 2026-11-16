@@ -8,7 +8,7 @@ defmodule FlirtualWeb.SessionController do
   import FlirtualWeb.Utilities
   import Flirtual.Utilities.Changeset
 
-  alias Flirtual.{IpAddress, Jwt, Policy, Turnstile, User, Users}
+  alias Flirtual.{Features, IpAddress, Jwt, Policy, Turnstile, User, Users}
   alias Flirtual.User.{Login, Session, Verification}
 
   action_fallback(FlirtualWeb.FallbackController)
@@ -22,6 +22,12 @@ defmodule FlirtualWeb.SessionController do
   @fifteen_minutes 900_000
 
   def login(%Plug.Conn{} = conn, params) do
+    if Features.login?(:email),
+      do: password_login(conn, params),
+      else: {:error, {:forbidden, :email_login_disabled}}
+  end
+
+  defp password_login(conn, params) do
     ip = get_conn_ip(conn)
 
     case ExRated.check_rate("login:#{IpAddress.normalize(ip)}", @fifteen_minutes, 5) do
