@@ -6,6 +6,8 @@ defmodule Flirtual.ObanWorkers.Email do
 
   alias Flirtual.{Mailer, User}
 
+  defp send_email(%User{email: nil}, _), do: {:cancel, :no_email}
+
   defp send_email(recipient, options) do
     with {:ok, _} <-
            ExRated.check_rate(
