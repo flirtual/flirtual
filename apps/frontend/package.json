@@ -107,7 +107,7 @@
 		"jose": "catalog:",
 		"libphonenumber-js": "^1.13.16",
 		"lucide-react": "^1.24.0",
-		"motion": "14.13.0",
+		"motion": "14.14.0",
 		"obug": "^3.0.0",
 		"posthog-js": "^1.413.3",
 		"react": "19.3.1",
