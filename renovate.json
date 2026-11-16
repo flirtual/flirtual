@@ -203,7 +203,13 @@
 		},
 		{
 			"matchPackageNames": ["pnpm", "ghcr.io/pnpm/pnpm"],
-			"groupName": "pnpm"
+			"groupName": "pnpm",
+			"semanticCommitScope": "repo"
+		},
+		{
+			"matchPackageNames": ["pnpm", "ghcr.io/pnpm/pnpm"],
+			"matchUpdateTypes": ["minor", "patch"],
+			"automerge": true
 		},
 		{
 			"matchPackageNames": ["postgres"],
