@@ -288,8 +288,18 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 	const [shownImages, setShownImages] = useState(images);
 	if (shownImages !== images) {
 		setShownImages(images);
-		setExpandedImage(false);
-		if (shownImages[0]?.id !== firstImageId) setImageId(firstImageId);
+
+		const remaining = new Set(images.map(({ id }) => id));
+		if (!imageId || !remaining.has(imageId)) {
+			const index = shownImages.findIndex(({ id }) => id === imageId);
+			const neighbour = index === -1
+				? undefined
+				: (shownImages.slice(index + 1).find(({ id }) => remaining.has(id))
+					?? shownImages.slice(0, index).findLast(({ id }) => remaining.has(id)));
+
+			setImageId(neighbour?.id ?? firstImageId);
+			if (!neighbour) setExpandedImage(false);
+		}
 	}
 
 	const currentImage = useMemo(
