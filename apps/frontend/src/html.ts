@@ -1,11 +1,8 @@
-import type { PropertiesHyphen, Property } from "csstype";
+import type { PropertiesHyphen } from "csstype";
+import createDOMPurify from "dompurify";
 import { entries } from "remeda";
-import sanitizeHtml from "sanitize-html";
-import type { Attributes } from "sanitize-html";
 
 import { rgb } from "./colors";
-import { siteOrigin } from "./const";
-import { isInternalHref, toAbsoluteUrl } from "./urls";
 
 export function toStyleProperties(
 	style: PropertiesHyphen,
@@ -134,77 +131,67 @@ export function contentLength(value: string): number {
 	return [...(body.textContent ?? "")].length + lines;
 }
 
-const colorHexRegex = new RegExp(editorColors.join("|"), "i");
+const paletteColors = new Set(editorColors.filter((color) => color !== false));
+const textAlignments = ["left", "center", "right", "justify"] as const;
+
 const colorRgbRegex
 	= /^rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)$/;
+const alignmentClassRegex = /(?:^|\s)ql-align-(\w+)/;
 
-const allowedOrigins = new Set([siteOrigin, "https://vrchat.com"]);
+function paletteColor(value: string) {
+	const match = value.match(colorRgbRegex);
+	const color = match
+		? rgb.toHex(
+				Number.parseInt(match[1]!),
+				Number.parseInt(match[2]!),
+				Number.parseInt(match[3]!)
+			)
+		: value.toLowerCase();
+
+	return paletteColors.has(color) ? color : undefined;
+}
+
+function allowedStyle(element: Element): PropertiesHyphen {
+	const { style } = element as HTMLElement;
+	if (!style) return {};
+
+	const color = paletteColor(style.getPropertyValue("color"));
+	const backgroundColor = paletteColor(style.getPropertyValue("background-color"));
+	const requestedTextAlign = element.getAttribute("class")?.match(alignmentClassRegex)?.[1]
+		?? style.getPropertyValue("text-align");
+	const textAlign = textAlignments.find((alignment) => alignment === requestedTextAlign);
+
+	return {
+		...(color && { color }),
+		...(backgroundColor && { "background-color": backgroundColor }),
+		...(textAlign && { "text-align": textAlign })
+	};
+}
+
+const purify = createDOMPurify();
+
+// Without a DOM, DOMPurify has no methods and would return its input unchanged.
+// https://github.com/cure53/DOMPurify#what-is-supported
+if (purify.isSupported) {
+	purify.addHook("beforeSanitizeAttributes", (element) => {
+		if (element.nodeType !== element.ELEMENT_NODE) return;
+
+		const style = toStyleProperties(allowedStyle(element));
+
+		if (style) element.setAttribute("style", style);
+		else element.removeAttribute("style");
+	});
+}
 
 export function html(value: string) {
-	return sanitizeHtml(
-		value /* .replaceAll(/<p>(((\s)|(<br>))+)<\/p>|<h\d>(((\s)|(<br>))+)<\/h\d>/gi, "") */,
-		{
-			allowedTags,
-			allowedAttributes: {
-				"*": ["style"]
-			},
-			allowedStyles: {
-				"*": {
-					color: [colorHexRegex],
-					"background-color": [colorHexRegex],
-					"text-align": [/\w+/]
-				}
-			},
-			allowedSchemes: ["http", "https"],
-			transformTags: {
-				"*": (tagName: string, attribs: Attributes) => {
-					let style = fromStyleProperties(attribs.style ?? "");
+	if (!purify.isSupported) return "";
 
-					const alignMatch = attribs.class?.match(/ql-align-(\w+)/);
-					if (attribs.class && alignMatch) {
-						attribs.class = attribs.class.replace(alignMatch[0], "");
-						style = {
-							...style,
-							"text-align": alignMatch[1] as Property.TextAlign
-						};
-					}
-
-					for (const key of ["color", "background-color"] as const) {
-						const match = style[key]?.match(colorRgbRegex);
-						if (match) {
-							style = {
-								...style,
-								[key]: rgb.toHex(
-									Number.parseInt(match[1]!),
-									Number.parseInt(match[2]!),
-									Number.parseInt(match[3]!)
-								)
-							};
-						}
-					}
-
-					attribs.style = toStyleProperties(style);
-
-					return {
-						tagName,
-						attribs
-					};
-				},
-				a: (tagName, attribs) => {
-					const url = toAbsoluteUrl(attribs.href ?? "/");
-
-					if (isInternalHref(url)) return { tagName, attribs };
-					if (!allowedOrigins.has(url.origin))
-						return { tagName: "span", attribs };
-
-					return {
-						tagName,
-						attribs: { ...attribs, target: "_blank", rel: "noopener" }
-					};
-				}
-			}
-		}
-	);
+	return purify.sanitize(value, {
+		ALLOWED_TAGS: allowedTags,
+		ALLOWED_ATTR: ["style"],
+		ALLOW_ARIA_ATTR: false,
+		ALLOW_DATA_ATTR: false
+	});
 }
 
 // Add a class to bio elements whose color or background is low-contrast on one
