@@ -69,7 +69,7 @@ export default defineConfig((config) => {
 	return {
 		appType: "mpa",
 		ssr: {
-			noExternal: ["posthog-js", "@posthog/react"]
+			noExternal: ["posthog-js"]
 		},
 		resolve: {
 			tsconfigPaths: true

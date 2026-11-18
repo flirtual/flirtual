@@ -54,7 +54,6 @@
 		"@formatjs/intl-relativetimeformat": "^13.0.0",
 		"@heroicons/react": "^2.2.0",
 		"@marsidev/react-turnstile": "^1.5.3",
-		"@posthog/react": "^1.10.3",
 		"@radix-ui/react-alert-dialog": "^1.1.19",
 		"@radix-ui/react-dialog": "^1.1.19",
 		"@radix-ui/react-dismissable-layer": "^1.1.17",

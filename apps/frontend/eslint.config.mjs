@@ -61,12 +61,8 @@ export default configure({
 						message: "Import from \"~/i18n\" instead."
 					},
 					{
-						name: "@posthog/react",
-						message: "Import from \"@posthog/react/slim\" instead."
-					},
-					{
 						name: "posthog-js",
-						message: "Import from \"~/analytics\" instead."
+						message: "Import from \"~/analytics-posthog\" instead."
 					},
 					{
 						name: "react-dom/server",

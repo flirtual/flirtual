@@ -408,9 +408,6 @@ importers:
       '@marsidev/react-turnstile':
         specifier: ^1.5.3
         version: 1.6.3(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
-      '@posthog/react':
-        specifier: ^1.10.3
-        version: 1.11.3(@types/react@19.3.0)(posthog-js@1.449.2(@types/react@19.3.0)(react@19.3.1))(react@19.3.1)
       '@radix-ui/react-alert-dialog':
         specifier: ^1.1.19
         version: 1.1.23(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
@@ -3548,16 +3545,6 @@ packages:
 
   '@posthog/core@1.67.3':
     resolution: {integrity: sha512-BAVJB+ADAjFNBVZKCRbMi5+WMJaSFHHIEId0/ebvAwhOVIMmK4mVrktGGjx9zJBHLe82JdQVVRhpaOwLgoBMgA==}
-
-  '@posthog/react@1.11.3':
-    resolution: {integrity: sha512-YqvZb2y9jh/yW0ojUtAns0l4yHWqpu+5UeIBxZlXpyGuWlh8M4siXRMtqhEh1BKfqp6Sq2usdsQCuoUzx1QFWQ==}
-    peerDependencies:
-      '@types/react': '>=16.8.0'
-      posthog-js: '>=1.257.2'
-      react: '>=16.8.0'
-    peerDependenciesMeta:
-      '@types/react':
-        optional: true
 
   '@posthog/types@1.425.1':
     resolution: {integrity: sha512-mh7jyQ5lN+XCeOnMdYkBEFtO/G0TxeLOKTWNH6E6OZjxS4nVM0Tb2xQt+FG5DCFM9qzL2HmuX6A793TwlJVDvw==}
@@ -10973,13 +10960,6 @@ snapshots:
   '@posthog/core@1.67.3':
     dependencies:
       '@posthog/types': 1.425.1
-
-  '@posthog/react@1.11.3(@types/react@19.3.0)(posthog-js@1.449.2(@types/react@19.3.0)(react@19.3.1))(react@19.3.1)':
-    dependencies:
-      posthog-js: 1.449.2(@types/react@19.3.0)(react@19.3.1)
-      react: 19.3.1
-    optionalDependencies:
-      '@types/react': 19.3.0
 
   '@posthog/types@1.425.1': {}
 
