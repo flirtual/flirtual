@@ -7,7 +7,7 @@ catalog:
   "@ariesclark/eslint-config": 3.2.1-canary.1
   "@cloudflare/build-output-utils": 0.9.10
   "@cloudflare/config": 0.30.2
-  "@cloudflare/vitest-pool-workers": ^0.23.0
+  "@cloudflare/vitest-plugin": ^1.8.2
   "@total-typescript/ts-reset": 0.6.1
   "@types/node": 26.6.6
   "@typescript/native": npm:typescript@^7.0.2

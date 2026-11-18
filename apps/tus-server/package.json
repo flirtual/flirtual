@@ -19,7 +19,7 @@
 		"signal-tus-server": "github:signalapp/tus-server#5cbbc5c42d1d126bb2c1b4f837b5103d5d8f5407"
 	},
 	"devDependencies": {
-		"@cloudflare/vitest-pool-workers": "catalog:",
+		"@cloudflare/vitest-plugin": "catalog:",
 		"@types/node": "catalog:",
 		"@typescript/native": "catalog:",
 		"cf": "catalog:",

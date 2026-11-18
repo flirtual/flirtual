@@ -8,11 +8,11 @@
     "module": "es2022",
     "moduleResolution": "bundler",
     "types": [
-      "@cloudflare/vitest-pool-workers"
+      "@cloudflare/vitest-plugin"
     ],
     "paths": {
       "cloudflare:test": [
-        "./node_modules/@cloudflare/vitest-pool-workers/types/cloudflare-test.d.ts"
+        "./node_modules/@cloudflare/vitest-plugin/types/cloudflare-test.d.ts"
       ]
     },
     "resolveJsonModule": true,
