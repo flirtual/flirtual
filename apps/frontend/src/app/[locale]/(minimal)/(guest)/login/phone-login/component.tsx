@@ -2,7 +2,7 @@
 import * as OneTimePasswordField from "@radix-ui/react-one-time-password-field";
 import { parsePhoneNumberFromString } from "libphonenumber-js";
 import type { CountryCode } from "libphonenumber-js";
-import { MoveLeft, Smartphone } from "lucide-react";
+import { MoveLeft } from "lucide-react";
 import { useState } from "react";
 import type { FC } from "react";
 import { Trans, useTranslation } from "react-i18next";
@@ -20,20 +20,7 @@ import { useNavigate } from "~/i18n";
 import { invalidate, mutate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
-import { next } from "./form";
-
-export const PhoneLoginButton: FC<{ tabIndex?: number; onClick: () => void }> = ({ tabIndex, onClick }) => {
-	const { t } = useTranslation();
-
-	return (
-		<Button className="gap-4" kind="secondary" size="sm" tabIndex={tabIndex} type="button" onClick={onClick}>
-			<Smartphone className="size-6" />
-			<span className="font-montserrat text-lg font-semibold">
-				{t("continue_with", { type: t("phone") })}
-			</span>
-		</Button>
-	);
-};
+import { next } from "../form";
 
 export interface PhoneLoginProps {
 	signup: boolean;
