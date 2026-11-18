@@ -1,4 +1,4 @@
-import { PostHogProvider } from "@posthog/react";
+import { PostHogProvider } from "@posthog/react/slim";
 import {
 	AnalyticsExtensions,
 	ExperimentsExtensions,
