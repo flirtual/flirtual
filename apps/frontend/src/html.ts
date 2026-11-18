@@ -3,6 +3,7 @@ import createDOMPurify from "dompurify";
 import { entries } from "remeda";
 
 import { rgb } from "./colors";
+import type { Theme } from "./hooks/use-theme";
 
 export function toStyleProperties(
 	style: PropertiesHyphen,
@@ -15,19 +16,6 @@ export function toStyleProperties(
 				: previous,
 		initial
 	);
-}
-
-export function fromStyleProperties(value: string): PropertiesHyphen {
-	return Object.fromEntries(
-		value
-			.split(";")
-			.map((v) => v.trim())
-			.filter((v) => !!v)
-			.map((v) => {
-				const a = v.split(/:\s?/);
-				return [a.shift(), a.join(":")];
-			})
-	) as PropertiesHyphen;
 }
 
 export const allowedTags: Array<keyof React.JSX.IntrinsicElements> = [
@@ -168,25 +156,43 @@ function allowedStyle(element: Element): PropertiesHyphen {
 	};
 }
 
-const purify = createDOMPurify();
+// A palette color that is low-contrast on the theme gets an opposite background
+// or color. Elements with both a color and background are left alone (maybe the
+// author wanted them to be illegible).
+function contrastStyle({ color, "background-color": background }: PropertiesHyphen, theme: Theme): PropertiesHyphen {
+	if (color && background) return {};
 
-// Without a DOM, DOMPurify has no methods and would return its input unchanged.
-// https://github.com/cure53/DOMPurify#what-is-supported
-if (purify.isSupported) {
+	const lowContrastColors = { light: lightPaletteColors, dark: darkPaletteColors }[theme];
+	const contrastColor = { light: "#000000", dark: "#ffffff" }[theme];
+
+	if (color && lowContrastColors.has(color)) return { "background-color": contrastColor };
+
+	const lowContrastBackgrounds = { light: darkPaletteColors, dark: lightPaletteColors }[theme];
+	const contrastText = { light: "#ffffff", dark: "#000000" }[theme];
+
+	if (background && lowContrastBackgrounds.has(background)) return { color: contrastText };
+
+	return {};
+}
+
+function createSanitizer(theme?: Theme) {
+	const purify = createDOMPurify();
+
+	// Without a DOM, DOMPurify has no methods and would return its input unchanged.
+	// https://github.com/cure53/DOMPurify#what-is-supported
+	if (!purify.isSupported) return () => "";
+
 	purify.addHook("beforeSanitizeAttributes", (element) => {
 		if (element.nodeType !== element.ELEMENT_NODE) return;
 
-		const style = toStyleProperties(allowedStyle(element));
+		const allowed = allowedStyle(element);
+		const style = toStyleProperties({ ...allowed, ...(theme && contrastStyle(allowed, theme)) });
 
 		if (style) element.setAttribute("style", style);
 		else element.removeAttribute("style");
 	});
-}
 
-export function html(value: string) {
-	if (!purify.isSupported) return "";
-
-	return purify.sanitize(value, {
+	return (value: string) => purify.sanitize(value, {
 		ALLOWED_TAGS: allowedTags,
 		ALLOWED_ATTR: ["style"],
 		ALLOW_ARIA_ATTR: false,
@@ -194,28 +200,12 @@ export function html(value: string) {
 	});
 }
 
-// Add a class to bio elements whose color or background is low-contrast on one
-// theme; html.scss gives them an opposite background or color respectively.
-// Elements with both a color and background are ignored (maybe the author wanted
-// them to be illegible).
-export function markLowContrastColors(value: string): string {
-	const { body } = new DOMParser().parseFromString(value, "text/html");
+const sanitize = createSanitizer();
+const sanitizeForTheme = {
+	light: createSanitizer("light"),
+	dark: createSanitizer("dark")
+};
 
-	for (const element of body.querySelectorAll<HTMLElement>("[style]")) {
-		const style = fromStyleProperties(element.getAttribute("style") ?? "");
-
-		const color = style.color?.toLowerCase();
-		const background = style["background-color"]?.toLowerCase();
-		if (color && background) continue;
-
-		const className
-			= (color && lightPaletteColors.has(color) && "bio-color-light")
-				|| (color && darkPaletteColors.has(color) && "bio-color-dark")
-				|| (background && lightPaletteColors.has(background) && "bio-background-light")
-				|| (background && darkPaletteColors.has(background) && "bio-background-dark");
-
-		if (className) element.classList.add(className);
-	}
-
-	return body.innerHTML;
+export function html(value: string, { theme }: { theme?: Theme } = {}) {
+	return theme ? sanitizeForTheme[theme](value) : sanitize(value);
 }

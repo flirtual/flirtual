@@ -64,4 +64,62 @@ describe("html", () => {
 	it("removes alignments the editor cannot produce", () => {
 		expect(html("<p style=\"text-align: -webkit-center;\">a</p>")).toBe("<p>a</p>");
 	});
+
+	it("adds no contrast colours without a theme", () => {
+		expect(html("<span style=\"color: #ffffff;\">a</span>")).toBe("<span style=\"color:#ffffff\">a</span>");
+	});
+});
+
+describe("html with a theme", () => {
+	it("backs light text on the light theme only", () => {
+		const value = "<span style=\"color: #ffffff;\">a</span>";
+
+		expect(html(value, { theme: "light" })).toBe("<span style=\"color:#ffffff;background-color:#000000\">a</span>");
+		expect(html(value, { theme: "dark" })).toBe("<span style=\"color:#ffffff\">a</span>");
+	});
+
+	it("backs dark text on the dark theme only", () => {
+		const value = "<span style=\"color: #250e49;\">a</span>";
+
+		expect(html(value, { theme: "dark" })).toBe("<span style=\"color:#250e49;background-color:#ffffff\">a</span>");
+		expect(html(value, { theme: "light" })).toBe("<span style=\"color:#250e49\">a</span>");
+	});
+
+	it("colours text on a light background on the dark theme only", () => {
+		const value = "<span style=\"background-color: #f5c6d2;\">a</span>";
+
+		expect(html(value, { theme: "dark" })).toBe("<span style=\"background-color:#f5c6d2;color:#000000\">a</span>");
+		expect(html(value, { theme: "light" })).toBe("<span style=\"background-color:#f5c6d2\">a</span>");
+	});
+
+	it("colours text on a dark background on the light theme only", () => {
+		const value = "<span style=\"background-color: #444444;\">a</span>";
+
+		expect(html(value, { theme: "light" })).toBe("<span style=\"background-color:#444444;color:#ffffff\">a</span>");
+		expect(html(value, { theme: "dark" })).toBe("<span style=\"background-color:#444444\">a</span>");
+	});
+
+	it("leaves a colour with good contrast alone", () => {
+		const value = "<span style=\"color: #dd426a;\">a</span>";
+
+		expect(html(value, { theme: "light" })).toBe("<span style=\"color:#dd426a\">a</span>");
+		expect(html(value, { theme: "dark" })).toBe("<span style=\"color:#dd426a\">a</span>");
+	});
+
+	it("leaves an element with both a colour and a background alone", () => {
+		const value = "<span style=\"color: #ffffff; background-color: #444444;\">a</span>";
+
+		expect(html(value, { theme: "light" })).toBe("<span style=\"color:#ffffff;background-color:#444444\">a</span>");
+		expect(html(value, { theme: "dark" })).toBe("<span style=\"color:#ffffff;background-color:#444444\">a</span>");
+	});
+
+	it("removes the contrast colours when the bio supplies them", () => {
+		expect(html("<span style=\"color: #dd426a; background-color: #000000;\">a</span>", { theme: "light" }))
+			.toBe("<span style=\"color:#dd426a\">a</span>");
+	});
+
+	it("sanitises like html without one", () => {
+		expect(html("<p onclick=\"alert(1)\" id=\"a\" class=\"b\">c</p><script>alert(1)</script><img src=\"x\" onerror=\"alert(1)\">", { theme: "dark" }))
+			.toBe("<p>c</p>");
+	});
 });
