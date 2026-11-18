@@ -1,8 +1,8 @@
 import type { ResolvedOutputWorkerConfig } from "@cloudflare/build-output-utils";
-import type { ParsedOutputWorkerConfig } from "@cloudflare/config";
+import type { ParsedBuildOutputWorkerConfig } from "@cloudflare/config";
 import type { DeepInput } from "@flirtual/pulumi-utils";
 
-type Binding = NonNullable<ParsedOutputWorkerConfig["env"]>[string];
+type Binding = NonNullable<ParsedBuildOutputWorkerConfig["env"]>[string];
 
 /** A binding as Cloudflare's schema defines it, except that a secret carries its value. */
 export type DeployedBinding =
@@ -15,7 +15,7 @@ type DeployedBindingInput = DeployedBinding extends infer B
 		: never
 	: never;
 
-type Fields = Omit<ParsedOutputWorkerConfig, "env">;
+type Fields = Omit<ParsedBuildOutputWorkerConfig, "env">;
 
 /** The config to deploy: every field may be a Pulumi input, but each binding's `type` is plain so it can be checked before deploying. */
 export type DeployedConfig = { [K in keyof Fields]: DeepInput<Fields[K]> } & {

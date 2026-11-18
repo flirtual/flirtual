@@ -1,10 +1,10 @@
-import { cpSync, existsSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdtempSync, readFileSync, renameSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { BuildOutputError } from "@cloudflare/build-output-utils";
-import type { ParsedOutputWorkerConfig } from "@cloudflare/config";
+import type { ParsedBuildOutputWorkerConfig } from "@cloudflare/config";
 import * as pulumi from "@pulumi/pulumi";
 import { beforeEach, expect, it, vi } from "vitest";
 
@@ -19,10 +19,10 @@ vi.mock("./client.ts", async (original) => ({
 }));
 
 const project = join(dirname(fileURLToPath(import.meta.url)), "..", "fixtures", "project");
-const workerConfig = (root: string, directory = "default"): ParsedOutputWorkerConfig =>
+const workerConfig = (root: string, directory = "default"): ParsedBuildOutputWorkerConfig =>
 	JSON.parse(
 		readFileSync(
-			join(root, `.cloudflare/output/v0/workers/${directory}/worker.config.json`),
+			join(root, `.cloudflare/output/v1/workers/${directory}/worker.config.json`),
 			"utf8",
 		),
 	);
@@ -30,7 +30,7 @@ const built = workerConfig(project);
 
 const record = await recordBuild(project);
 
-const deployed: ParsedOutputWorkerConfig = {
+const deployed: ParsedBuildOutputWorkerConfig = {
 	...built,
 	name: "example-production",
 	domains: ["example.com"],
@@ -80,9 +80,9 @@ beforeEach(() => {
 			accountId,
 			config: workerConfig(cwd!),
 			otherConfig: workerConfig(cwd!, "other"),
-			rootConfig: JSON.parse(readFileSync(join(cwd!, ".cloudflare/output/v0/config.json"), "utf8")),
+			rootConfig: JSON.parse(readFileSync(join(cwd!, ".cloudflare/output/v1/config.json"), "utf8")),
 			index: readFileSync(
-				join(cwd!, ".cloudflare/output/v0/workers/default/assets/index.html"),
+				join(cwd!, ".cloudflare/output/v1/workers/default/assets/index.html"),
 				"utf8",
 			),
 			secrets: JSON.parse(readFileSync(secretsFile, "utf8")),
@@ -108,6 +108,11 @@ it("deploys a copy of the project's build carrying the given config, leaving the
 	]);
 	expect(deploys[0]!.accountId).toBe("account");
 	expect(deploys[0]!.config).toStrictEqual(deployed);
+	expect(deploys[0]!.rootConfig).toStrictEqual({
+		producer: { name: "wrangler", version: "4.163.0" },
+		settings: { accountId: "account" },
+		buildContext: { isPreview: false, mode: "development" },
+	});
 	expect(deploys[0]!.secrets).toStrictEqual({ TOKEN: "token" });
 	expect(workerConfig(project)).toStrictEqual(built);
 });
@@ -140,12 +145,12 @@ it("rebuilds a checkout that has no Build Output, then deploys it", async () => 
 it("rebuilds a Build Output that differs from the recorded one, deploying the new bytes", async () => {
 	const root = mkdtempSync(join(tmpdir(), "checkout-"));
 	cpSync(project, root, { recursive: true });
-	writeFileSync(join(root, ".cloudflare/output/v0/workers/default/assets/index.html"), "stale\n");
+	writeFileSync(join(root, ".cloudflare/output/v1/workers/default/assets/index.html"), "stale\n");
 
 	await create(
 		rebuildInputs(
 			root,
-			`fs.writeFileSync(".cloudflare/output/v0/workers/default/assets/index.html", "rebuilt\\n");`,
+			`fs.writeFileSync(".cloudflare/output/v1/workers/default/assets/index.html", "rebuilt\\n");`,
 		),
 	);
 
@@ -156,7 +161,7 @@ it("rebuilds a Build Output that differs from the recorded one, deploying the ne
 
 it("refuses a rebuild that changes the Worker's config, since the deployed config came from the record", async () => {
 	const root = mkdtempSync(join(tmpdir(), "checkout-"));
-	const changeDate = `const file = ".cloudflare/output/v0/workers/default/worker.config.json";
+	const changeDate = `const file = ".cloudflare/output/v1/workers/default/worker.config.json";
 		fs.writeFileSync(file, JSON.stringify({ ...JSON.parse(fs.readFileSync(file, "utf8")), compatibilityDate: "2026-01-01" }));`;
 
 	await expect(create(rebuildInputs(root, changeDate))).rejects.toThrow(
@@ -179,10 +184,10 @@ it("deploys to its own account, overriding one the project's settings name", asy
 	const root = mkdtempSync(join(tmpdir(), "checkout-"));
 	cpSync(project, root, { recursive: true });
 	writeFileSync(
-		join(root, ".cloudflare/output/v0/config.json"),
+		join(root, ".cloudflare/output/v1/config.json"),
 		JSON.stringify({
-			accountId: "development-account",
-			complianceRegion: "public",
+			producer: { name: "wrangler", version: "4.163.0" },
+			settings: { accountId: "development-account", complianceRegion: "public" },
 			buildContext: { isPreview: false, mode: "development" },
 		}),
 	);
@@ -190,10 +195,37 @@ it("deploys to its own account, overriding one the project's settings name", asy
 	await create({ ...inputs, project: root, record: JSON.stringify(await recordBuild(root)) });
 
 	expect(deploys[0]!.rootConfig).toStrictEqual({
-		accountId: "account",
-		complianceRegion: "public",
+		producer: { name: "wrangler", version: "4.163.0" },
+		settings: { accountId: "account", complianceRegion: "public" },
 		buildContext: { isPreview: false, mode: "development" },
 	});
+});
+
+it("refuses a rebuild that writes Build Output v0, as an older Wrangler does, without deploying", async () => {
+	const root = mkdtempSync(join(tmpdir(), "checkout-"));
+	const writeOlderVersion = `fs.renameSync(".cloudflare/output/v1", ".cloudflare/output/v0");
+		fs.writeFileSync(".cloudflare/output/v0/config.json", JSON.stringify({ accountId: "development-account", buildContext: { isPreview: false, mode: "development" } }));`;
+	const deployment = create(rebuildInputs(root, writeOlderVersion));
+
+	await expect(deployment).rejects.toThrow(BuildOutputError);
+	await expect(deployment).rejects.toMatchObject({
+		code: "older-version",
+		foundVersions: ["v0"],
+		supportedVersions: ["v1"],
+	});
+	expect(calls).not.toHaveBeenCalled();
+});
+
+it("rebuilds a checkout whose Build Output is v0, deploying the v1 the build writes", async () => {
+	const root = mkdtempSync(join(tmpdir(), "checkout-"));
+	cpSync(project, root, { recursive: true });
+	renameSync(join(root, ".cloudflare/output/v1"), join(root, ".cloudflare/output/v0"));
+
+	await create(rebuildInputs(root));
+
+	expect(readFileSync(join(root, "rebuilt-with"), "utf8")).toBe("from-pulumi");
+	expect(deploys).toHaveLength(1);
+	expect(deploys[0]!.config).toStrictEqual(deployed);
 });
 
 it("deploys another Worker in the Build Output by the name it's deployed under", async () => {

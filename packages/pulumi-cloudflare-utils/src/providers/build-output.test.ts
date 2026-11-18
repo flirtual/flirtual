@@ -1,4 +1,4 @@
-import { cpSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { cpSync, mkdtempSync, readFileSync, renameSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -12,13 +12,13 @@ import { create, diff, recordBuild } from "./build-output.ts";
 import type { BuildInputs } from "./build-output.ts";
 
 const project = join(dirname(fileURLToPath(import.meta.url)), "..", "fixtures", "project");
-const output = join(project, ".cloudflare/output/v0");
+const output = join(project, ".cloudflare/output/v1");
 
 const config = (directory: string) =>
 	JSON.parse(readFileSync(join(output, "workers", directory, "worker.config.json"), "utf8"));
 const digest = (directory: string) =>
 	hashFiles(
-		[".cloudflare/output/v0/config.json", `.cloudflare/output/v0/workers/${directory}/**`],
+		[".cloudflare/output/v1/config.json", `.cloudflare/output/v1/workers/${directory}/**`],
 		{ cwd: project, dot: true, gitignore: false },
 	);
 
@@ -58,7 +58,7 @@ it("refuses a Worker name the Build Output doesn't contain", async () => {
 
 it("refuses a Worker name the Build Output contains more than once, as cf deploy does", async () => {
 	const root = copy();
-	const configFile = join(root, ".cloudflare/output/v0/workers/other/worker.config.json");
+	const configFile = join(root, ".cloudflare/output/v1/workers/other/worker.config.json");
 	writeFileSync(
 		configFile,
 		JSON.stringify({ ...JSON.parse(readFileSync(configFile, "utf8")), name: "example" }),
@@ -72,16 +72,37 @@ it("refuses a Worker name the Build Output contains more than once, as cf deploy
 it("refuses a Build Output whose Worker config doesn't match the schema", async () => {
 	const root = copy();
 	writeFileSync(
-		join(root, ".cloudflare/output/v0/workers/default/worker.config.json"),
+		join(root, ".cloudflare/output/v1/workers/default/worker.config.json"),
 		JSON.stringify({ name: 1 }),
 	);
 
 	await expect(recordBuild(root)).rejects.toThrow(BuildOutputError);
 });
 
+it("refuses a Build Output in the v0 format, which cf deploy rejects too", async () => {
+	const root = copy();
+	renameSync(join(root, ".cloudflare/output/v1"), join(root, ".cloudflare/output/v0"));
+	writeFileSync(
+		join(root, ".cloudflare/output/v0/config.json"),
+		JSON.stringify({
+			accountId: "development-account",
+			buildContext: { isPreview: false, mode: "development" },
+		}),
+	);
+
+	const recording = recordBuild(root);
+
+	await expect(recording).rejects.toThrow(BuildOutputError);
+	await expect(recording).rejects.toMatchObject({
+		code: "older-version",
+		foundVersions: ["v0"],
+		supportedVersions: ["v1"],
+	});
+});
+
 it("leaves a Worker's digest alone when only another Worker changes", async () => {
 	const root = copy();
-	writeFileSync(join(root, ".cloudflare/output/v0/workers/other/bundle/index.js"), "changed\n");
+	writeFileSync(join(root, ".cloudflare/output/v1/workers/other/bundle/index.js"), "changed\n");
 
 	expect((await recordBuild(root)).digest).toBe((await recordBuild(project)).digest);
 	expect((await recordBuild(root, { worker: "other" })).digest).not.toBe(
@@ -92,7 +113,7 @@ it("leaves a Worker's digest alone when only another Worker changes", async () =
 it("digests dotfiles too, since assets such as .well-known/ ship with the Worker", async () => {
 	const root = copy();
 	writeFileSync(
-		join(root, ".cloudflare/output/v0/workers/default/assets/.well-known/security.txt"),
+		join(root, ".cloudflare/output/v1/workers/default/assets/.well-known/security.txt"),
 		"changed\n",
 	);
 
@@ -105,7 +126,7 @@ const script = (source: string) => `node -e ${JSON.stringify(source.replaceAll(/
 const buildCommand = script(
 	`const fs = require("node:fs");
 	fs.cpSync(${JSON.stringify(join(project, ".cloudflare"))}, ".cloudflare", { recursive: true });
-	fs.writeFileSync(".cloudflare/output/v0/workers/default/assets/marker.txt", process.env.MARKER);`,
+	fs.writeFileSync(".cloudflare/output/v1/workers/default/assets/marker.txt", process.env.MARKER);`,
 );
 
 const buildInputs = (root: string): BuildInputs => ({
@@ -120,7 +141,7 @@ it("builds the project with its environment, then records what the build produce
 	const { id, outs } = await create(buildInputs(root));
 
 	expect(
-		readFileSync(join(root, ".cloudflare/output/v0/workers/default/assets/marker.txt"), "utf8"),
+		readFileSync(join(root, ".cloudflare/output/v1/workers/default/assets/marker.txt"), "utf8"),
 	).toBe("from-pulumi");
 	expect(id).toBe(root);
 	expect(outs).toStrictEqual({

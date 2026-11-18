@@ -5,13 +5,13 @@ packages:
 
 catalog:
   "@ariesclark/eslint-config": 3.2.1-canary.1
-  "@cloudflare/build-output-utils": 0.9.10
-  "@cloudflare/config": 0.30.2
+  "@cloudflare/build-output-utils": 1.0.0-rc.1
+  "@cloudflare/config": 1.0.0-rc.1
   "@cloudflare/vitest-plugin": ^1.8.2
   "@total-typescript/ts-reset": 0.6.1
   "@types/node": 26.6.6
   "@typescript/native": npm:typescript@^7.0.2
-  cf: 1.0.0-beta.28
+  cf: 1.0.0-rc.1
   eslint: ^9.39.1
   execa: ^10.0.1
   jose: ^6.2.12
@@ -21,7 +21,7 @@ catalog:
   typed-openapi: 4.1.0
   typescript: npm:@typescript/typescript6@^6.0.2
   vitest: ~5.1.0
-  wrangler: ^4.120.1
+  wrangler: ^4.163.0
 
 catalogs:
   pulumi:
@@ -86,7 +86,7 @@ minimumReleaseAgeExclude:
   - svgo@4.1.0
   # Renovate security update: sharp@0.35.4
   - sharp@0.35.4
-  # cf is in beta and ships fixes daily; a 3-day delay pins it to stale betas.
+  # cf is in prerelease and ships fixes daily; a 3-day delay pins it to stale ones.
   # Its exact-pinned dependencies release with it, including the runtime
   # Wrangler shares.
   - cf

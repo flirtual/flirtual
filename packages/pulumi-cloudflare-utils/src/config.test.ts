@@ -11,7 +11,7 @@ const built: ResolvedOutputWorkerConfig = JSON.parse(
 	readFileSync(
 		join(
 			dirname(fileURLToPath(import.meta.url)),
-			"fixtures/project/.cloudflare/output/v0/workers/default/worker.config.json",
+			"fixtures/project/.cloudflare/output/v1/workers/default/worker.config.json",
 		),
 		"utf8",
 	),
