@@ -1,6 +1,7 @@
 import type { ComponentProps, FC } from "react";
 import { createElement, use, useCallback, useEffect, useLayoutEffect, useMemo, useRef } from "react";
-import { renderToStaticMarkup } from "react-dom/server";
+import { flushSync } from "react-dom";
+import { createRoot } from "react-dom/client";
 import { useTranslation } from "react-i18next";
 import type { PopperPlacement, Step, StepOptions, Tour } from "shepherd.js";
 
@@ -203,8 +204,19 @@ export function useTour(
 }
 
 // Shepherd step text is an HTML string, not React.
+// https://react.dev/reference/react-dom/server/renderToString#removing-rendertostring-from-the-client-code
 function modeIcon(name: string, Icon: FC<ComponentProps<"svg">>) {
-	return `<span class="inline-flex align-middle [&>svg]:h-[1.2em] [&>svg]:w-auto">${renderToStaticMarkup(createElement(Icon), { identifierPrefix: `${name}-` })}</span>`;
+	const container = document.createElement("span");
+	container.className = "inline-flex align-middle [&>svg]:h-[1.2em] [&>svg]:w-auto";
+
+	const root = createRoot(container, { identifierPrefix: `${name}-` });
+	// eslint-disable-next-line react-dom/no-flush-sync
+	flushSync(() => root.render(createElement(Icon)));
+
+	const html = container.outerHTML;
+	root.unmount();
+
+	return html;
 }
 
 export function useDefaultTour(enabled: boolean = true) {
