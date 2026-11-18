@@ -45,7 +45,7 @@ FROM base AS build
 WORKDIR /repo
 
 ## Install node modules.
-COPY --from=ghcr.io/pnpm/pnpm:12.21.0@sha256:168feba88e6a1684c99a62cbf4fe361d4e683e2a6c920d3b0acde7e15a28b62d /opt/pnpm /opt/pnpm
+COPY --from=ghcr.io/pnpm/pnpm:12.22.0@sha256:81346f048d668195928d441b80efc0df300474ed8bf81789e4554ec0079079d0 /opt/pnpm /opt/pnpm
 RUN for bin in pnpm pn pnpx pnx; do ln -s "/opt/pnpm/$bin" "/usr/local/bin/$bin"; done
 
 COPY --link package.json pnpm-lock.yaml pnpm-workspace.yaml ./
