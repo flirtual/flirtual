@@ -7,6 +7,15 @@
  * are too, and use the app's tokens through @apply.
  */
 
+/*
+ * https://unpkg.com/@talkjs/react-components@0.3.14/default.css resets every descendant with
+ * `all: revert`, which discards every layered style, Tailwind's included. This has the same
+ * specificity and comes later.
+ */
+html:is(html):is(html):is(html):is(html):is(html) :where([data-chatbox] .t-chatbox *:not(svg, svg *, .ProseMirror)) {
+	all: revert-layer;
+}
+
 [data-chatbox] .t-chatbox {
 	/* Twemoji after the text font, which keeps digits, # and * (the font has its own glyphs for them). */
 	--t-font-family: "Nunito Variable", Twemoji, sans-serif;
