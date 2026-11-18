@@ -273,7 +273,7 @@ overrides:
   shepherd.js>deepmerge-ts: '>=8.0.0'
 
 patchedDependencies:
-  attachments@0.15.0: 895f7d358b0f5d158051ba7ffe21299ae0c4bd94a95519f61c8dfe278d6616be
+  attachments: 895f7d358b0f5d158051ba7ffe21299ae0c4bd94a95519f61c8dfe278d6616be
 
 importers:
 
@@ -867,8 +867,8 @@ importers:
   apps/tus-server:
     dependencies:
       signal-tus-server:
-        specifier: github:signalapp/tus-server#5cbbc5c42d1d126bb2c1b4f837b5103d5d8f5407
-        version: attachments@https://codeload.github.com/signalapp/tus-server/tar.gz/5cbbc5c42d1d126bb2c1b4f837b5103d5d8f5407(patch_hash=895f7d358b0f5d158051ba7ffe21299ae0c4bd94a95519f61c8dfe278d6616be)
+        specifier: github:signalapp/tus-server#34f243a7be536679483374d314b556801bc0a2f5
+        version: attachments@https://codeload.github.com/signalapp/tus-server/tar.gz/34f243a7be536679483374d314b556801bc0a2f5(patch_hash=895f7d358b0f5d158051ba7ffe21299ae0c4bd94a95519f61c8dfe278d6616be)
     devDependencies:
       '@cloudflare/vitest-plugin':
         specifier: 'catalog:'
@@ -5225,9 +5225,9 @@ packages:
     resolution: {integrity: sha512-kNOjDqAh7px0XWNI+4QbzoiR/nTkHAWNud2uvnJquD1/x5a7EQZMJT0AczqK0Qn67oY/TTQ1LbUKajZpp3I9tQ==}
     engines: {node: '>=8.0.0'}
 
-  attachments@https://codeload.github.com/signalapp/tus-server/tar.gz/5cbbc5c42d1d126bb2c1b4f837b5103d5d8f5407:
-    resolution: {gitHosted: true, integrity: sha512-dAWw1baRf+Du7cGHFUEYwQLecMprdwoLtsGEYxHHTMgitv2G8oll7BO9kIcfI4JNfMM/j0PbGCCWdsI2s/XyjQ==, tarball: https://codeload.github.com/signalapp/tus-server/tar.gz/5cbbc5c42d1d126bb2c1b4f837b5103d5d8f5407}
-    version: 0.15.0
+  attachments@https://codeload.github.com/signalapp/tus-server/tar.gz/34f243a7be536679483374d314b556801bc0a2f5:
+    resolution: {gitHosted: true, integrity: sha512-Q01kFfMa7iXo9CeV3WWdpO0VUT6uMdk6IuGAzsMYyIcIUWirtdqUHC5jv+KaHgxz75xOBbO9d1XeAfBtqeDgzw==, tarball: https://codeload.github.com/signalapp/tus-server/tar.gz/34f243a7be536679483374d314b556801bc0a2f5}
+    version: 0.17.0
 
   babel-dead-code-elimination@1.0.12:
     resolution: {integrity: sha512-GERT7L2TiYcYDtYk1IpD+ASAYXjKbLTDPhBtYj7X1NuRMDTMtAx9kyBenub1Ev41lo91OHCKdmP+egTDmfQ7Ig==}
@@ -12898,7 +12898,7 @@ snapshots:
 
   atomic-sleep@1.0.0: {}
 
-  attachments@https://codeload.github.com/signalapp/tus-server/tar.gz/5cbbc5c42d1d126bb2c1b4f837b5103d5d8f5407(patch_hash=895f7d358b0f5d158051ba7ffe21299ae0c4bd94a95519f61c8dfe278d6616be):
+  attachments@https://codeload.github.com/signalapp/tus-server/tar.gz/34f243a7be536679483374d314b556801bc0a2f5(patch_hash=895f7d358b0f5d158051ba7ffe21299ae0c4bd94a95519f61c8dfe278d6616be):
     dependencies:
       itty-router: 5.0.24
       jose: 6.2.17

@@ -98,4 +98,4 @@ minimumReleaseAgeExclude:
   - miniflare
   - workerd
 patchedDependencies:
-  attachments@0.15.0: patches/signal-tus-server.patch
+  attachments: patches/signal-tus-server.patch
