@@ -1,8 +1,8 @@
 import {
 
 	flexRender,
-	getCoreRowModel,
-	useReactTable
+	tableFeatures,
+	useTable
 } from "@tanstack/react-table";
 import type { ColumnDef } from "@tanstack/react-table";
 import { Eye, EyeOff, Gavel, Gem, Images, Loader2, Search } from "lucide-react";
@@ -215,33 +215,33 @@ const ColumnStatus: FC<{ userId: string }> = ({ userId }) => {
 	);
 };
 
-const columns: Array<ColumnDef<string>> = [
+const features = tableFeatures({});
+
+const columns: Array<ColumnDef<typeof features, { userId: string }>> = [
 	{
 		id: "displayName",
-		enableHiding: false,
 		header: "Display Name",
-		cell: ({ row: { original: userId } }) => <ColumnDisplayName userId={userId} />
+		cell: ({ row: { original: { userId } } }) => <ColumnDisplayName userId={userId} />
 	},
 	{
 		id: "email",
 		header: "Email",
-		cell: ({ row: { original: userId } }) => <ColumnEmail userId={userId} />
+		cell: ({ row: { original: { userId } } }) => <ColumnEmail userId={userId} />
 	},
 	{
 		id: "activeAt",
 		header: "Active",
-		cell: ({ row: { original: userId } }) => <ColumnActiveAt userId={userId} />
+		cell: ({ row: { original: { userId } } }) => <ColumnActiveAt userId={userId} />
 	},
 	{
 		id: "createdAt",
 		header: "Created",
-		cell: ({ row: { original: userId } }) => <ColumnCreatedAt userId={userId} />
+		cell: ({ row: { original: { userId } } }) => <ColumnCreatedAt userId={userId} />
 	},
 	{
 		id: "status",
 		header: "Status",
-		enableHiding: false,
-		cell: ({ row: { original: userId } }) => <ColumnStatus userId={userId} />
+		cell: ({ row: { original: { userId } } }) => <ColumnStatus userId={userId} />
 	}
 ];
 
@@ -251,12 +251,10 @@ const DataTable: FC<{ data: Array<string>; admin: boolean; limit: number; pendin
 	limit,
 	pending
 }) => {
-	// TanStack Table 8 can't be memoized, so the compiler leaves this component as written.
-	// eslint-disable-next-line react-hooks/incompatible-library
-	const table = useReactTable({
-		data,
-		columns: columns.filter((column) => column.id !== "email" || admin),
-		getCoreRowModel: getCoreRowModel()
+	const table = useTable({
+		features,
+		data: data.map((userId) => ({ userId })),
+		columns: columns.filter((column) => column.id !== "email" || admin)
 	});
 
 	return (
@@ -285,17 +283,16 @@ const DataTable: FC<{ data: Array<string>; admin: boolean; limit: number; pendin
 									<TableRow
 										key={row.id}
 										className="h-20"
-										data-state={row.getIsSelected() && "selected"}
 									>
 										<Suspense fallback={(
-											<TableCell colSpan={row.getVisibleCells().length}>
+											<TableCell colSpan={row.getAllCells().length}>
 												<span className="truncate text-xs brightness-75">
-													{row.original}
+													{row.original.userId}
 												</span>
 											</TableCell>
 										)}
 										>
-											{row.getVisibleCells().map((cell) => (
+											{row.getAllCells().map((cell) => (
 												<TableCell key={cell.id} className="select-children">
 													{flexRender(cell.column.columnDef.cell, cell.getContext())}
 												</TableCell>
