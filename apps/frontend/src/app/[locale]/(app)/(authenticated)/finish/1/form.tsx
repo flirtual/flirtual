@@ -58,7 +58,7 @@ export const Finish1Form: FC = () => {
 					worldId: image.worldId,
 					worldName: image.worldName
 				})),
-				biography: user.profile.biography || "",
+				biography: html(user.profile.biography || ""),
 				prompts: user.profile.prompts
 			}}
 			className="flex flex-col gap-8"
