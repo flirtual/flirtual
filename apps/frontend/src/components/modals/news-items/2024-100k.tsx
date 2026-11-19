@@ -11,7 +11,7 @@ export const HundredK2024: FC<{ onSaved?: () => void }> = () => (
 		components={{
 			...commonComponents,
 			"image-profile-updates": (
-				<Image className="w-full rounded-lg" height={ImageProfileUpdates.height} src={ImageProfileUpdates.src} width={ImageProfileUpdates.width} />
+				<Image className="w-full rounded-lg" src={ImageProfileUpdates} />
 			)
 		}}
 		i18nKey="news.2024_100k.body"

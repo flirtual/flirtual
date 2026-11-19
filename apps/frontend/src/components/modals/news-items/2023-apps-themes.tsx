@@ -11,7 +11,7 @@ export const AppsThemes2023: FC<{ onSaved?: () => void }> = () => (
 		components={{
 			...commonComponents,
 			"image-mobile-apps": (
-				<Image className="w-full" height={ImageMobileApps.height} src={ImageMobileApps.src} width={ImageMobileApps.width} />
+				<Image className="w-full" src={ImageMobileApps} />
 			)
 		}}
 		i18nKey="news.2023_apps_themes.body"

@@ -10,7 +10,7 @@ export const Wrapped2025: FC<{ onSaved?: () => void }> = () => (
 		components={{
 			...commonComponents,
 			"image-wrapped": (
-				<ExpandableImage className="w-full rounded-lg" height={ImageWrapped2025.height} src={ImageWrapped2025.src} width={ImageWrapped2025.width} />
+				<ExpandableImage className="w-full rounded-lg" src={ImageWrapped2025} />
 			)
 		}}
 		i18nKey="news.2025_wrapped.body"

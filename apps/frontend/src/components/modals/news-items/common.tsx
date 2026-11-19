@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import type { ComponentProps, FC } from "react";
+import type { FC } from "react";
 import { useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
 
@@ -8,12 +8,13 @@ import {
 	DialogContent
 } from "~/components/dialog/dialog";
 import { Image } from "~/components/image";
+import type { ImageMetadata, ImageProps } from "~/components/image";
 import { InlineLink } from "~/components/inline-link";
 import { IdeasLink } from "~/components/modals/ideas";
 import { events, homieMode } from "~/features";
 import { urls } from "~/urls";
 
-export const ExpandableImage: FC<ComponentProps<typeof Image>> = (props) => {
+export const ExpandableImage: FC<{ src: ImageMetadata } & Omit<ImageProps, "src">> = ({ src: image, ...props }) => {
 	const [open, setOpen] = useState(false);
 	const { t } = useTranslation();
 
@@ -24,14 +25,14 @@ export const ExpandableImage: FC<ComponentProps<typeof Image>> = (props) => {
 				type="button"
 				onClick={() => setOpen(true)}
 			>
-				<Image {...props} />
+				<Image {...props} src={image} />
 			</button>
 			<Dialog open={open} onOpenChange={setOpen}>
 				<DialogContent border={false} className="pointer-events-none w-fit bg-transparent p-0 shadow-none desktop:max-w-fit">
 					<img
 						alt={props.alt ?? t("profile_picture")}
 						className="mx-auto max-h-[95svh] max-w-[95svw] rounded-2.5xl object-contain shadow-brand-1 ring-4 ring-theme-1"
-						src={props.src}
+						src={image.src}
 					/>
 				</DialogContent>
 			</Dialog>
