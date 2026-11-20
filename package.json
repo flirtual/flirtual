@@ -10,7 +10,7 @@
 	"devDependencies": {
 		"@flirtual/config": "workspace:*",
 		"oxfmt": "catalog:",
-		"portless": "0.17.0"
+		"portless": "0.18.0"
 	},
 	"packageManager": "pnpm@12.21.0"
 }
