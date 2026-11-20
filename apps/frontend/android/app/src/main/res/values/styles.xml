@@ -16,16 +16,18 @@
         <item name="colorPrimary">@color/brand</item>
     </style>
 
-    <!-- The date picker plugin's own dialog themes, which would otherwise keep their teal accent, and
-         stretch the dialog past the picker's fixed width. -->
+    <!-- The date picker plugin's own dialog themes, which would otherwise keep their teal accent,
+         stretch past the picker's fixed width, and inherit AppTheme's filled-button text colour. -->
     <style name="MaterialLightTheme" parent="android:Theme.Material.Light.Dialog.Alert">
         <item name="android:colorAccent">@color/brand</item>
+        <item name="materialButtonStyle">@style/Widget.Material3.Button.TextButton.Dialog</item>
         <item name="android:windowMinWidthMajor">0dp</item>
         <item name="android:windowMinWidthMinor">0dp</item>
     </style>
 
     <style name="MaterialDarkTheme" parent="android:Theme.Material.Dialog.Alert">
         <item name="android:colorAccent">@color/brand</item>
+        <item name="materialButtonStyle">@style/Widget.Material3.Button.TextButton.Dialog</item>
         <item name="android:windowMinWidthMajor">0dp</item>
         <item name="android:windowMinWidthMinor">0dp</item>
     </style>
