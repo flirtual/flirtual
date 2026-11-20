@@ -86,6 +86,10 @@ input.search:focus {
 	padding-bottom: var(--favorites-padding-bottom, var(--emoji-padding));
 }
 
+:host([data-without-favorites]) .favorites {
+	@apply hidden;
+}
+
 .onscreen .custom-emoji::after {
 	@apply size-[calc(var(--emoji-size)+var(--emoji-padding))];
 }

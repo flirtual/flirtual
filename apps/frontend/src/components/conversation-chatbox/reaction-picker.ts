@@ -1,24 +1,33 @@
 const padding = 8;
+const gap = 4;
+export const minPickerHeight = 280;
 
 export function followReactionPickers(container: HTMLElement): () => void {
-	const shifts = new Map<HTMLElement, number>();
+	const followed = new Map<HTMLElement, () => void>();
 
 	const fit = (popover: HTMLElement) => {
 		const boundary = popover.parentElement?.closest("[t-menu-boundary]");
-		if (!boundary) return;
+		const anchor = popover.parentElement?.getBoundingClientRect();
+		if (!boundary || !anchor) return;
 
 		const bounds = boundary.getBoundingClientRect();
+		const above = anchor.top - gap - (bounds.top + padding);
+		const below = bounds.bottom - padding - (anchor.bottom + gap);
 		popover.style.setProperty("--reaction-picker-max-width", `${bounds.width - padding * 2}px`);
-		popover.style.setProperty("--reaction-picker-max-height", `${bounds.height - padding * 2}px`);
+		popover.style.setProperty("--reaction-picker-max-height", `${Math.max(above, below, minPickerHeight)}px`);
 
-		const shift = shifts.get(popover) ?? 0;
 		const { top: shiftedTop, height } = popover.getBoundingClientRect();
+		const shift = Number.parseFloat(popover.style.translate.split(" ")[1] ?? "") || 0;
 		const top = shiftedTop - shift;
-		const fitted = Math.max(Math.min(top, bounds.bottom - padding - height), bounds.top + padding);
-		const next = Math.round(fitted - top);
+		const placedBelow = top >= anchor.top;
+		const fitsBelow = below >= height;
+		const fitsAbove = above >= height;
+		const useBelow = fitsBelow && fitsAbove ? placedBelow : fitsBelow || (!fitsAbove && below >= above);
 
+		const placed = useBelow ? anchor.bottom + gap : anchor.top - gap - height;
+		const fitted = Math.max(Math.min(placed, bounds.bottom - padding - height), bounds.top + padding);
+		const next = Math.round(fitted - top);
 		if (next === shift) return;
-		shifts.set(popover, next);
 		popover.style.translate = next ? `0 ${next}px` : "";
 	};
 
@@ -31,15 +40,38 @@ export function followReactionPickers(container: HTMLElement): () => void {
 	});
 
 	const follow = () => {
-		for (const popover of shifts.keys()) {
+		for (const [popover, stop] of followed) {
 			if (popover.isConnected) continue;
-			shifts.delete(popover);
+			stop();
+			followed.delete(popover);
 			resize.unobserve(popover);
 		}
 
-		for (const popover of container.querySelectorAll<HTMLElement>("[t-popover-content]:has(.t-reaction-picker)")) {
-			if (shifts.has(popover)) continue;
-			shifts.set(popover, 0);
+		for (const popover of container.querySelectorAll<HTMLElement>(".t-message-list [t-popover-content]:has(.t-reaction-picker)")) {
+			if (followed.has(popover)) continue;
+			const list = popover.closest<HTMLElement>(".t-message-list")!;
+
+			// TalkJS focusing its search on desktop scrolls the chat; fit() already brings it into view.
+			const scrollTop = list.scrollTop;
+			const opened = performance.now();
+			popover.addEventListener("focusin", () => {
+				if (performance.now() - opened < 500) list.scrollTop = scrollTop;
+			}, { once: true });
+
+			// TalkJS closes it on a click outside, but not a scroll.
+			const stop = () => {
+				list.removeEventListener("touchmove", close);
+				list.removeEventListener("wheel", close);
+			};
+			const close = ({ target }: Event) => {
+				if (target instanceof Node && popover.contains(target)) return;
+				stop();
+				if (popover.previousElementSibling instanceof HTMLElement) popover.previousElementSibling.click();
+			};
+			list.addEventListener("touchmove", close, { passive: true });
+			list.addEventListener("wheel", close, { passive: true });
+			followed.set(popover, stop);
+
 			moves.observe(popover, { attributes: true, attributeFilter: ["style"] });
 			resize.observe(popover);
 			fit(popover);
@@ -54,5 +86,6 @@ export function followReactionPickers(container: HTMLElement): () => void {
 		added.disconnect();
 		moves.disconnect();
 		resize.disconnect();
+		for (const stop of followed.values()) stop();
 	};
 }

@@ -17,6 +17,7 @@ import { lazy } from "~/lazy";
 
 import { customEmojiPickerEntries, pickedCustomEmoji } from "./custom-emoji";
 import { followEditors, insertCustomEmoji } from "./custom-emoji-editor";
+import { reactionEmojiVersion } from "./emoji-favorites";
 import emojiPickerStyles from "./emoji-picker.css?inline";
 import { followReactionPickers } from "./reaction-picker";
 import { followMessageListResizes } from "./scroll-anchor";
@@ -27,6 +28,7 @@ const Chatbox = lazy(() => import("./chatbox").then(({ default: Chatbox }) => Ch
 const customEmojiPicker = customEmojiPickerEntries(customEmojis);
 
 const emojiVersion = twemoji.version;
+const reactionPickerEmojiVersion = String(Math.min(Number.parseFloat(emojiVersion), reactionEmojiVersion));
 
 // TalkJS mounts <emoji-picker> elements (message field, reactions) without a way to pass custom
 // emoji (https://github.com/nolanlawson/emoji-picker-element#custom-emoji) or styles for their
@@ -38,7 +40,9 @@ function followEmojiPickers(element: HTMLElement) {
 	const setUpPickers = () => {
 		for (const picker of element.querySelectorAll<Picker>("emoji-picker")) {
 			if (picker.customEmoji !== customEmojiPicker) picker.customEmoji = customEmojiPicker;
-			if (picker.getAttribute("emoji-version") !== emojiVersion) picker.setAttribute("emoji-version", emojiVersion);
+			const version = picker.closest(".t-reaction-picker") ? reactionPickerEmojiVersion : emojiVersion;
+			if (picker.getAttribute("emoji-version") !== version) picker.setAttribute("emoji-version", version);
+			picker.toggleAttribute("data-without-favorites", !!picker.closest("[data-message-menu]"));
 
 			const root = picker.shadowRoot;
 			if (root && !root.adoptedStyleSheets.includes(styles))

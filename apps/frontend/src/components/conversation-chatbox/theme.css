@@ -108,7 +108,7 @@ html:is(html):is(html):is(html):is(html):is(html) :where([data-chatbox] .t-chatb
 	--favorites-padding-bottom: 0;
 }
 
-[data-chatbox] .chat-message .t-reaction-picker {
+[data-chatbox] :is(.chat-message, [data-message-menu]) .t-reaction-picker {
 	@apply h-[min(320px,var(--reaction-picker-max-height,320px))] w-[min(352px,var(--reaction-picker-max-width,352px))] overflow-hidden rounded-2xl shadow-brand-1;
 
 	& emoji-picker {
@@ -116,9 +116,19 @@ html:is(html):is(html):is(html):is(html):is(html) :where([data-chatbox] .t-chatb
 	}
 }
 
+/* TalkJS hides the picker when its button scrolls out of view, which blurs its search. */
+[data-chatbox] .t-message-list [t-popover-content]:has(.t-reaction-picker) {
+	visibility: visible !important;
+}
+
 /* The avatar spans its message group and stays at the top of it while scrolling (see Message). */
 [data-chatbox] .t-message-group {
 	@apply relative;
+}
+
+/* Changing the editor's own placeholder can close the keyboard on iOS. */
+[data-chatbox] [data-replying] .chat-editor .t-text-input .empty-node:first-child::before {
+	content: var(--reply-placeholder);
 }
 
 [data-chatbox] .chat-editor .t-text-input {

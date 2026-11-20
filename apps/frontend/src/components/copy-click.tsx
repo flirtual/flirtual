@@ -1,12 +1,9 @@
-import { Clipboard } from "@capacitor/clipboard";
 import { Slot } from "@radix-ui/react-slot";
 import { isValidElement } from "react";
 import type { ComponentProps, FC } from "react";
-import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
-import { device } from "~/hooks/use-device";
-import { useToast } from "~/hooks/use-toast";
+import { useCopy } from "~/hooks/use-copy";
 
 export type CopyClickProps = { value: string | null; asChild?: boolean } & ComponentProps<"span">;
 
@@ -17,8 +14,7 @@ export const CopyClick: FC<CopyClickProps> = ({
 	className,
 	...props
 }) => {
-	const { t } = useTranslation();
-	const toasts = useToast();
+	const copy = useCopy();
 
 	const Component = asChild && isValidElement(children) ? Slot : "span";
 	if (value === null) return children;
@@ -28,12 +24,7 @@ export const CopyClick: FC<CopyClickProps> = ({
 			{...props}
 			data-copy-click
 			className={twMerge("cursor-pointer", className)}
-			onClick={() =>
-				Clipboard.write({ string: value }).then(() => {
-					// Android 13 and later confirm copies themselves, with a preview of what was copied.
-					if (device.native && device.android && (device.androidSDKVersion ?? 0) >= 33) return;
-					toasts.add(t("copied_to_clipboard"));
-				})}
+			onClick={() => copy(value)}
 		>
 			{children}
 		</Component>

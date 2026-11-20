@@ -158,7 +158,11 @@ export function MessageField({ common, referencedMessage, editor, voiceRecorder,
 								</button>
 							)}
 
-							<div className="relative w-full grow" style={{ "--editor-buttons": editorButtons } as CSSProperties}>
+							<div
+								className="relative w-full grow"
+								data-replying={referencedMessage ? "" : undefined}
+								style={{ "--editor-buttons": editorButtons, "--reply-placeholder": JSON.stringify(translate("reply")) } as CSSProperties}
+							>
 								<Editor className="chat-editor" placeholder={t.ENTRYBOX_PLACEHOLDER} />
 
 								<div className="absolute inset-y-0 right-2 flex items-center">

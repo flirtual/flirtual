@@ -5,9 +5,11 @@ import type { ReplyBarProps } from "@talkjs/react-components";
 import { Reply, X } from "lucide-react";
 
 import { ReplyPreview } from "./reply-preview";
+import { useReplyingTo } from "./replying";
 
 export function ReplyBar({ common, referencedMessage }: ReplyBarProps) {
 	const { chatbox, t } = common;
+	useReplyingTo(referencedMessage.id);
 
 	return (
 		<div className="flex items-center gap-2 px-3 pt-2 text-sm! text-black-80! dark:text-white-20! vision:text-black-80!">

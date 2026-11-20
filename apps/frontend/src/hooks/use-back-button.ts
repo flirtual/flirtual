@@ -53,9 +53,24 @@ export function addBackHandler(handler: () => void) {
 	};
 }
 
-// Whether back would close something or be ignored.
+let swipeClaims = 0;
+
+export function claimSwipes() {
+	swipeClaims++;
+	notify();
+
+	let released = false;
+	return () => {
+		if (released) return;
+		released = true;
+		swipeClaims--;
+		notify();
+	};
+}
+
+// Whether back would close something or be ignored, or a swipe is taken.
 function claimed() {
-	return handlers.length > 0 || !!document.querySelector(openOverlays) || thirdPartyOverlays.some(visible);
+	return swipeClaims > 0 || handlers.length > 0 || !!document.querySelector(openOverlays) || thirdPartyOverlays.some(visible);
 }
 
 // Third-party overlays show and hide by restyling their containers.
