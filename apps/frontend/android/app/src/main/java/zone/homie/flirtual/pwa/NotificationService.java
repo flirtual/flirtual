@@ -1,6 +1,10 @@
 package zone.homie.flirtual.pwa;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import org.json.JSONObject;
 import org.json.JSONException;
 import android.app.Notification;
@@ -15,7 +19,6 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.net.Uri;
-import android.os.AsyncTask;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.app.Person;
@@ -53,10 +56,64 @@ public class NotificationService extends FirebaseMessagingService {
       String conversationId = messageObject.getString("conversationId");
       String url = "flirtual://matches/" + conversationId;
 
-      new DownloadImageTask().execute(name, message, photoUrl, url, conversationId);
+      Bitmap downloaded = downloadImage(photoUrl);
+      Bitmap circularImage = getCircleBitmap(downloaded != null ? downloaded : getDefaultProfileBitmap());
+      Person sender = new Person.Builder()
+          .setName(name)
+          .setIcon(IconCompat.createWithBitmap(circularImage))
+          .build();
+      sendNotification(name, message, sender, url, conversationId, circularImage);
     } catch (JSONException e) {
       e.printStackTrace();
     }
+  }
+
+  // onMessageReceived already runs off the main thread, and the service may be
+  // stopped once it returns, so the download has to finish before then
+  private Bitmap downloadImage(String photoUrl) {
+    if (photoUrl == null || photoUrl.isEmpty()) return null;
+
+    HttpURLConnection connection = null;
+    try {
+      connection = (HttpURLConnection) new URL(photoUrl).openConnection();
+      connection.setConnectTimeout(5000);
+      connection.setReadTimeout(5000);
+      if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) return null;
+
+      byte[] data;
+      try (InputStream in = connection.getInputStream()) {
+        data = readAll(in);
+      }
+
+      BitmapFactory.Options options = new BitmapFactory.Options();
+      options.inJustDecodeBounds = true;
+      BitmapFactory.decodeByteArray(data, 0, data.length, options);
+
+      int target = getResources().getDimensionPixelSize(android.R.dimen.notification_large_icon_width);
+      int sampleSize = 1;
+      while (Math.min(options.outWidth, options.outHeight) / (sampleSize * 2) >= target) {
+        sampleSize *= 2;
+      }
+
+      options.inJustDecodeBounds = false;
+      options.inSampleSize = sampleSize;
+      return BitmapFactory.decodeByteArray(data, 0, data.length, options);
+    } catch (Exception e) {
+      e.printStackTrace();
+      return null;
+    } finally {
+      if (connection != null) connection.disconnect();
+    }
+  }
+
+  private static byte[] readAll(InputStream in) throws IOException {
+    ByteArrayOutputStream out = new ByteArrayOutputStream();
+    byte[] buffer = new byte[8192];
+    int read;
+    while ((read = in.read(buffer)) != -1) {
+      out.write(buffer, 0, read);
+    }
+    return out.toByteArray();
   }
 
   private Bitmap getCircleBitmap(Bitmap bitmap) {
@@ -74,37 +131,6 @@ public class NotificationService extends FirebaseMessagingService {
     paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
     canvas.drawBitmap(bitmap, rect, rect, paint);
     return output;
-  }
-
-  private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-    String name, message, url, conversationId;
-
-    protected Bitmap doInBackground(String... args) {
-      name = args[0];
-      message = args[1];
-      String photoUrl = args[2];
-      url = args[3];
-      conversationId = args[4];
-      Bitmap image = null;
-
-      try {
-        InputStream in = new java.net.URL(photoUrl).openStream();
-        image = BitmapFactory.decodeStream(in);
-      } catch (Exception e) {
-        e.printStackTrace();
-      }
-      return image;
-    }
-
-    protected void onPostExecute(Bitmap result) {
-      Bitmap profileImage = result != null ? result : getDefaultProfileBitmap();
-      Bitmap circularImage = getCircleBitmap(profileImage);
-      Person sender = new Person.Builder()
-          .setName(name)
-          .setIcon(IconCompat.createWithBitmap(circularImage))
-          .build();
-      sendNotification(name, message, sender, url, conversationId, circularImage);
-    }
   }
 
   private Bitmap getDefaultProfileBitmap() {
