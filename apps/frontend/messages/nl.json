@@ -211,7 +211,7 @@
 		"should_be_{count}_character(s)": "Moet {count, plural, =0 {leeg zijn} =1 {één teken lang zijn} one {# teken lang zijn} other {# tekens lang zijn}}.",
 		"should_be_at_least_{count}_character(s)": "{count, plural, =0 {Verplicht} =1 {Verplicht} one {Verplicht} other {Moet minstens # tekens lang zijn}}.",
 		"should_be_at_least_{count}_byte(s)": "{count, plural, =0 {Verplicht} =1 {Verplicht} one {Verplicht} other {Moet minstens # tekens lang zijn}}.",
-		"must_have_the_@_sign_and_no_spaces": "Vul een geldig e-mailadres in.",
+		"must_be_a_valid_email_address": "Vul een geldig e-mailadres in.",
 		"should_be_at_most_{count}_byte(s)": "{count, plural, one {Mag niet langer zijn dan # teken} other {Mag niet langer zijn dan # tekens}}.",
 		"should_have_at_least_{count}_item(s)": "{count, plural, =0 {Verplicht} =1 {Verplicht} one {Verplicht} other {Selecteer minstens # items}}.",
 		"should_be_at_most_{count}_character(s)": "{count, plural, =0 {Moet leeg zijn} =1 {Mag niet langer zijn dan 1 teken} one {Mag niet langer zijn dan # teken} other {Mag niet langer zijn dan # tekens}}.",

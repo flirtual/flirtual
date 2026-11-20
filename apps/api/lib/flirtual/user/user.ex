@@ -1425,17 +1425,25 @@ defmodule Flirtual.User do
     |> Flag.validate_allowed_slug(:slug)
   end
 
+  @invalid_email "must be a valid email address"
+
   def validate_email(changeset) do
-    changeset
-    |> validate_required([:email])
-    |> validate_format(:email, ~r/^[^\s]+@[^\s]+$/, message: "must have the @ sign and no spaces")
-    |> validate_length(:email, max: 254)
-    |> validate_change(:email, fn :email, email ->
-      case validate_idn(email) do
-        :ok -> []
-        {:error, _} -> [email: "is invalid"]
-      end
-    end)
+    changeset =
+      changeset
+      |> validate_required([:email])
+      |> validate_format(:email, ~r/^[^\s]+@[^\s]+$/, message: @invalid_email)
+      |> validate_length(:email, max: 254, count: :codepoints, message: @invalid_email)
+
+    if Keyword.has_key?(changeset.errors, :email),
+      do: changeset,
+      else: validate_change(changeset, :email, &validate_email_idn/2)
+  end
+
+  defp validate_email_idn(:email, email) do
+    case validate_idn(email) do
+      :ok -> []
+      {:error, _} -> [email: @invalid_email]
+    end
   end
 
   def validate_idn(address) when is_binary(address) do

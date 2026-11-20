@@ -208,7 +208,7 @@
 		"should_be_at_least_{count}_character(s)": "{count, plural, =0 {必須です} =1 {必須です} other {#文字以上で入力してください}}。",
 		"should_be_at_least_{count}_byte(s)": "{count, plural, =0 {必須です} =1 {必須です} other {#文字以上で入力してください}}。",
 		"should_be_at_most_{count}_byte(s)": "{count, plural, other {#文字以内で入力してください}}。",
-		"must_have_the_@_sign_and_no_spaces": "有効なメールアドレスを入力してください。",
+		"must_be_a_valid_email_address": "有効なメールアドレスを入力してください。",
 		"should_have_at_least_{count}_item(s)": "{count, plural, =0 {必須です} =1 {必須です} other {#個以上選択してください}}。",
 		"should_be_at_most_{count}_character(s)": "{count, plural, =0 {空にしてください} =1 {1文字以内で入力してください} other {#文字以内で入力してください}}。",
 		"should_have_at_most_{count}_item(s)": "{count, plural, =0 {何も選択しないでください} =1 {選択できるのは1個までです} other {選択できるのは#個までです}}。",

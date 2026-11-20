@@ -212,7 +212,7 @@
 		"should_be_at_least_{count}_character(s)": "{count, plural, =0 {Obligatoriskt} =1 {Obligatoriskt} one {Obligatoriskt} other {Måste vara minst # tecken långt}}.",
 		"should_be_at_least_{count}_byte(s)": "{count, plural, =0 {Obligatoriskt} =1 {Obligatoriskt} one {Obligatoriskt} other {Måste vara minst # tecken långt}}.",
 		"should_be_at_most_{count}_byte(s)": "{count, plural, one {Får inte vara längre än # tecken} other {Får inte vara längre än # tecken}}.",
-		"must_have_the_@_sign_and_no_spaces": "Ange en giltig e-postadress.",
+		"must_be_a_valid_email_address": "Ange en giltig e-postadress.",
 		"should_have_at_least_{count}_item(s)": "{count, plural, =0 {Obligatoriskt} =1 {Obligatoriskt} one {Obligatoriskt} other {Välj minst # alternativ}}.",
 		"should_be_at_most_{count}_character(s)": "{count, plural, =0 {Måste vara tomt} =1 {Får inte vara längre än 1 tecken} one {Får inte vara längre än # tecken} other {Får inte vara längre än # tecken}}.",
 		"should_have_at_most_{count}_item(s)": "{count, plural, =0 {Måste vara tomt} =1 {Du kan välja högst 1 alternativ} one {Du kan välja högst # alternativ} other {Du kan välja högst # alternativ}}.",

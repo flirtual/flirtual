@@ -213,7 +213,7 @@
 		"should_be_at_least_{count}_character(s)": "{count, plural, =0 {Pflichtfeld} =1 {Pflichtfeld} one {Muss mindestens # Zeichen lang sein} other {Muss mindestens # Zeichen lang sein}}.",
 		"should_be_at_least_{count}_byte(s)": "{count, plural, =0 {Pflichtfeld} =1 {Pflichtfeld} one {Muss mindestens # Zeichen lang sein} other {Muss mindestens # Zeichen lang sein}}.",
 		"should_be_at_most_{count}_byte(s)": "{count, plural, one {Darf nicht länger als # Zeichen sein} other {Darf nicht länger als # Zeichen sein}}.",
-		"must_have_the_@_sign_and_no_spaces": "Bitte gib eine gültige E-Mail-Adresse ein.",
+		"must_be_a_valid_email_address": "Bitte gib eine gültige E-Mail-Adresse ein.",
 		"should_have_at_least_{count}_item(s)": "{count, plural, =0 {Pflichtfeld} =1 {Pflichtfeld} one {Bitte wähle mindestens # Option aus} other {Bitte wähle mindestens # Optionen aus}}.",
 		"should_be_at_most_{count}_character(s)": "{count, plural, =0 {Muss leer sein} =1 {Darf nicht länger als 1 Zeichen sein} one {Darf nicht länger als # Zeichen sein} other {Darf nicht länger als # Zeichen sein}}.",
 		"should_have_at_most_{count}_item(s)": "{count, plural, =0 {Muss leer sein} =1 {Bitte wähle höchstens eine Option aus} one {Bitte wähle höchstens # Option aus} other {Bitte wähle höchstens # Optionen aus}}.",

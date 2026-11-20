@@ -230,7 +230,7 @@
 		"password_must_be_different": "새 비밀번호는 기존 비밀번호와 같을 수 없어요.",
 		"invalid_playlist_url": "올바르지 않은 플레이리스트 URL이에요.",
 		"reset_password_link_invalid": "비밀번호 재설정 링크가 잘못되었거나 만료되었어요. <forgot>새 링크 요청하기</forgot>.",
-		"must_have_the_@_sign_and_no_spaces": "올바른 이메일 주소를 입력해 주세요.",
+		"must_be_a_valid_email_address": "올바른 이메일 주소를 입력해 주세요.",
 		"warning_unacknowledged": "신뢰 및 안전팀이 보낸 메시지를 확인할 때까지 계정을 사용할 수 없어요."
 	},
 	"flirtual_bug_report": "{brand_name} 버그 리포트",

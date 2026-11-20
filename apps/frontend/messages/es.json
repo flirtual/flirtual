@@ -68,7 +68,7 @@
 		"should_be_at_least_{count}_character(s)": "{count, plural, =0 {Obligatorio} =1 {Obligatorio} one {Debe tener al menos # carácter} other {Debe tener al menos # caracteres}}.",
 		"should_be_at_least_{count}_byte(s)": "{count, plural, =0 {Obligatorio} =1 {Obligatorio} one {Debe tener al menos # carácter} other {Debe tener al menos # caracteres}}.",
 		"should_be_at_most_{count}_byte(s)": "{count, plural, one {No puede tener más de # carácter} other {No puede tener más de # caracteres}}.",
-		"must_have_the_@_sign_and_no_spaces": "Escribe una dirección de correo electrónico válida.",
+		"must_be_a_valid_email_address": "Escribe una dirección de correo electrónico válida.",
 		"should_have_at_least_{count}_item(s)": "{count, plural, =0 {Obligatorio} =1 {Obligatorio} one {Selecciona al menos # opción} other {Selecciona al menos # opciones}}.",
 		"should_be_at_most_{count}_character(s)": "{count, plural, =0 {Debe estar vacío} =1 {No puede tener más de 1 carácter} one {No puede tener más de # carácter} other {No puede tener más de # caracteres}}.",
 		"should_have_at_most_{count}_item(s)": "{count, plural, =0 {Debe estar vacío} =1 {No puede tener más de 1 opción} one {No puede tener más de # opción} other {No puede tener más de # opciones}}.",

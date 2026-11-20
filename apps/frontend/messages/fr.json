@@ -206,7 +206,7 @@
 		"should_be_at_least_{count}_character(s)": "{count, plural, =0 {Obligatoire} =1 {Obligatoire} one {Obligatoire} other {Doit contenir au moins # caractères}}.",
 		"should_be_at_least_{count}_byte(s)": "{count, plural, =0 {Obligatoire} =1 {Obligatoire} one {Obligatoire} other {Doit contenir au moins # caractères}}.",
 		"should_be_at_most_{count}_byte(s)": "{count, plural, one {Ne peut pas dépasser # caractère} other {Ne peut pas dépasser # caractères}}.",
-		"must_have_the_@_sign_and_no_spaces": "Saisis une adresse e-mail valide.",
+		"must_be_a_valid_email_address": "Saisis une adresse e-mail valide.",
 		"should_have_at_least_{count}_item(s)": "{count, plural, =0 {Obligatoire} =1 {Obligatoire} one {Obligatoire} other {Sélectionne au moins # éléments}}.",
 		"should_be_at_most_{count}_character(s)": "{count, plural, =0 {Doit être vide} =1 {Ne peut pas dépasser 1 caractère} one {Ne peut pas dépasser # caractère} other {Ne peut pas dépasser # caractères}}.",
 		"should_have_at_most_{count}_item(s)": "{count, plural, =0 {Doit être vide} =1 {Ne peut pas contenir plus d’un élément} one {Ne peut pas contenir plus de # élément} other {Ne peut pas contenir plus de # éléments}}.",

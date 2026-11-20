@@ -17063,7 +17063,7 @@
 		"ko": "c4b8aa214ed56d68",
 		"pt-BR": "c4b8aa214ed56d68"
 	},
-	"flirtual:errors.must_have_the_@_sign_and_no_spaces": {
+	"flirtual:errors.must_be_a_valid_email_address": {
 		"de": "65f9c6d2e7fc853e",
 		"es": "65f9c6d2e7fc853e",
 		"fr": "65f9c6d2e7fc853e",

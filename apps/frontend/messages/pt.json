@@ -80,7 +80,7 @@
 		"leaked_password": "Esta palavra-passe foi exposta numa fuga de dados de outra app ou site. Para tua segurança, escolhe uma palavra-passe nova que não tenhas usado em mais lado nenhum.",
 		"should_be_at_most_{count}_byte(s)": "{count, plural, one {Não pode ter mais de # carácter} other {Não pode ter mais de # caracteres}}.",
 		"should_be_at_least_{count}_byte(s)": "{count, plural, =0 {Campo obrigatório} =1 {Campo obrigatório} one {Tem de ter pelo menos # carácter} other {Tem de ter pelo menos # caracteres}}.",
-		"must_have_the_@_sign_and_no_spaces": "Introduz um endereço de email válido.",
+		"must_be_a_valid_email_address": "Introduz um endereço de email válido.",
 		"must_include_a_non_pronoun_gender": "Seleciona um género além dos teus pronomes.",
 		"invalid_gender_selection": "Seleção de género inválida.",
 		"email_domain_blocked": "Lamentamos, mas o teu serviço de email foi bloqueado devido a abusos.",

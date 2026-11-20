@@ -19063,7 +19063,7 @@
 		},
 		"hash": "c4b8aa214ed56d68"
 	},
-	"flirtual:errors.must_have_the_@_sign_and_no_spaces": {
+	"flirtual:errors.must_be_a_valid_email_address": {
 		"group": "errors/validation",
 		"screens": [
 			"/sign-up",
