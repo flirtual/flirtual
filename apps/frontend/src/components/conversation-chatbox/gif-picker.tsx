@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 
 import type { KlipyFile, KlipyGif, KlipyOptions, KlipySource } from "~/api/klipy";
 import { klipyCategories, klipyCustomerId, klipyGifs, klipyPreviewFile } from "~/api/klipy";
+import { useBackButton } from "~/hooks/use-back-button";
 import { useDevice } from "~/hooks/use-device";
 import { useLocale } from "~/i18n";
 import { queryClient } from "~/query";
@@ -309,6 +310,7 @@ export const GifPicker: FC<{
 		search("");
 		setBrowse("home");
 	};
+	useBackButton(!!source, home);
 
 	return (
 		<div className="flex size-full flex-col gap-3 p-2.5 pb-0">

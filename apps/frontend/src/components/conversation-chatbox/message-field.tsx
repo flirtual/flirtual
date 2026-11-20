@@ -13,6 +13,7 @@ import type { KlipyGif } from "~/api/klipy";
 import { klipyCustomerId, klipyMessageFile, shareKlipyGif } from "~/api/klipy";
 import { Button } from "~/components/button";
 import { klipyAppKey } from "~/const";
+import { useBackButton } from "~/hooks/use-back-button";
 import { useToast } from "~/hooks/use-toast";
 
 import { interestQueries } from "./gif-interests";
@@ -81,6 +82,14 @@ export function MessageField({ common, referencedMessage, editor, voiceRecorder,
 		window.addEventListener("mousedown", onMouseDown, true);
 		return () => window.removeEventListener("mousedown", onMouseDown, true);
 	}, [editor.showEmojiPicker]);
+
+	useBackButton(gifsShown, () => setGifsShown(false));
+	// Closing the picker focuses the editor, which would open the keyboard.
+	useBackButton(editor.showEmojiPicker, () => {
+		const focused = document.activeElement;
+		editor.toggleEmojiPicker();
+		if (document.activeElement !== focused && document.activeElement instanceof HTMLElement) document.activeElement.blur();
+	});
 
 	const toggleGifs = () => {
 		if (!gifsShown && editor.showEmojiPicker) editor.toggleEmojiPicker();

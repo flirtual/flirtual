@@ -5,6 +5,7 @@ import { useEffect, useEffectEvent, useLayoutEffect, useReducer, useRef, useStat
 import { createPortal } from "react-dom";
 import { twMerge } from "tailwind-merge";
 
+import { useBackButton } from "~/hooks/use-back-button";
 import { useSafeArea } from "~/hooks/use-safe-area";
 
 import { Emoji } from "./emoji";
@@ -87,6 +88,7 @@ export const MessageMenu: FC<{
 	const [moved, setMoved] = useState(false);
 	const [measurement, remeasure] = useReducer((count: number) => count + 1, 0);
 	const close = useEffectEvent(onClose);
+	useBackButton(true, onClose);
 
 	useLayoutEffect(() => {
 		if (!bubble.current) return;
