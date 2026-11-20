@@ -482,12 +482,17 @@ private final class TabContentViewController: UIViewController {
             self.trailing = trailing
             view.setNeedsLayout()
 
-            // Until the page paints a background, WebKit reports plain white, so the page's colour
-            // only replaces the loading screen's once it changes.
-            view.backgroundColor = Self.pageBackground
-            backgroundObservation = content.observe(\.underPageBackgroundColor, options: [.new]) { [weak self] webView, _ in
+            // When the keyboard hides, the web view grows before the page does.
+            let paint = { [weak self] (color: UIColor) in
+                self?.view.backgroundColor = color
+                content.backgroundColor = color
+                content.scrollView.backgroundColor = color
+            }
+            // WebKit reports white until the page paints a background.
+            paint(Self.pageBackground)
+            backgroundObservation = content.observe(\.underPageBackgroundColor, options: [.new]) { webView, _ in
                 Self.pageBackground = webView.underPageBackgroundColor
-                self?.view.backgroundColor = webView.underPageBackgroundColor
+                paint(webView.underPageBackgroundColor)
             }
         }
     }
