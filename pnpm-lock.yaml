@@ -392,7 +392,7 @@ importers:
         version: 8.0.3
       '@formatjs/intl-listformat':
         specifier: ^9.0.0
-        version: 9.0.3
+        version: 9.1.0
       '@formatjs/intl-locale':
         specifier: ^5.3.10
         version: 5.4.3
@@ -2044,8 +2044,8 @@ packages:
   '@formatjs/intl-getcanonicallocales@3.3.1':
     resolution: {integrity: sha512-GkXdVwb/4Y9qJaZ19BguPv2i9Vr+z5MrlmFa/9HR7WK2tMcCWZathuGhn7W/V3sFqUdAVB3uvmGuOxXwc61DJQ==}
 
-  '@formatjs/intl-listformat@9.0.3':
-    resolution: {integrity: sha512-XamK+7ie16gbBp51AH+K97NfwCoECk36jEbBO9m7HaInoLbG1F3P8M22enKtkifsi/cH9gjp4igFaYtY23h0uA==}
+  '@formatjs/intl-listformat@9.1.0':
+    resolution: {integrity: sha512-Hh2kjuXQAsoadfb8ZR7+NRu6txiPJ7qo+3c87C/Ii55CO2lVPFjMp7uxsWUQECCfnuhD6D1HBVdUhmBv66MOwA==}
 
   '@formatjs/intl-locale@5.4.3':
     resolution: {integrity: sha512-YdxSbfDifRIew7mukcwITPlhkomfHCcSzzbjEJqOGbod4wrfdUN7SmiZQU2Lr8zs/q/15ntZsthJ8NsW3P30mA==}
@@ -10031,7 +10031,7 @@ snapshots:
 
   '@formatjs/intl-getcanonicallocales@3.3.1': {}
 
-  '@formatjs/intl-listformat@9.0.3':
+  '@formatjs/intl-listformat@9.1.0':
     dependencies:
       '@formatjs/intl-localematcher': 0.10.1
 
