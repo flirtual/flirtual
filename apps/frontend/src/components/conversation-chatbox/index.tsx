@@ -19,6 +19,7 @@ import { customEmojiPickerEntries, pickedCustomEmoji } from "./custom-emoji";
 import { followEditors, insertCustomEmoji } from "./custom-emoji-editor";
 import { reactionEmojiVersion } from "./emoji-favorites";
 import emojiPickerStyles from "./emoji-picker.css?inline";
+import { followTabSwipes } from "./emoji-tab-swipes";
 import { followReactionPickers } from "./reaction-picker";
 import { followMessageListResizes } from "./scroll-anchor";
 import { followStickyAvatars } from "./sticky-avatars";
@@ -29,6 +30,8 @@ const customEmojiPicker = customEmojiPickerEntries(customEmojis);
 
 const emojiVersion = twemoji.version;
 const reactionPickerEmojiVersion = String(Math.min(Number.parseFloat(emojiVersion), reactionEmojiVersion));
+
+const swipeable = new WeakSet<Picker>();
 
 // TalkJS mounts <emoji-picker> elements (message field, reactions) without a way to pass custom
 // emoji (https://github.com/nolanlawson/emoji-picker-element#custom-emoji) or styles for their
@@ -43,6 +46,10 @@ function followEmojiPickers(element: HTMLElement) {
 			const version = picker.closest(".t-reaction-picker") ? reactionPickerEmojiVersion : emojiVersion;
 			if (picker.getAttribute("emoji-version") !== version) picker.setAttribute("emoji-version", version);
 			picker.toggleAttribute("data-without-favorites", !!picker.closest("[data-message-menu]"));
+			if (!swipeable.has(picker)) {
+				swipeable.add(picker);
+				followTabSwipes(picker);
+			}
 
 			const root = picker.shadowRoot;
 			if (root && !root.adoptedStyleSheets.includes(styles))
