@@ -1,3 +1,5 @@
+const momentumIdle = 150;
+
 interface Position {
 	height: number;
 	scrollTop: number;
@@ -9,13 +11,18 @@ interface Position {
 export function followMessageListResizes(container: HTMLElement): () => void {
 	const positions = new Map<HTMLElement, Position>();
 
+	// Restoring the position mid-scroll would make the list jump under the finger.
+	let dragging = false;
+	let momentumUntil = 0;
+	const scrolling = () => dragging || performance.now() < momentumUntil;
+
 	const resize = new ResizeObserver((entries) => {
 		for (const { target } of entries) {
 			const list = target as HTMLElement;
 			const position = positions.get(list);
 			if (!position) continue;
 
-			if (list.clientHeight !== position.height) list.scrollTop = position.scrollTop;
+			if (list.clientHeight !== position.height && !scrolling()) list.scrollTop = position.scrollTop;
 			position.height = list.clientHeight;
 			position.scrollTop = list.scrollTop;
 		}
@@ -23,6 +30,7 @@ export function followMessageListResizes(container: HTMLElement): () => void {
 
 	// A scroll caused by a resize arrives before the observer does.
 	const onScroll = (event: Event) => {
+		if (performance.now() < momentumUntil) momentumUntil = performance.now() + momentumIdle;
 		const list = event.target as HTMLElement;
 		const position = positions.get(list);
 		if (!position || list.clientHeight !== position.height) return;
@@ -45,12 +53,30 @@ export function followMessageListResizes(container: HTMLElement): () => void {
 
 	const added = new MutationObserver(follow);
 	added.observe(container, { childList: true, subtree: true });
-	container.addEventListener("scroll", onScroll, { capture: true, passive: true });
+	const onTouchStart = () => (dragging = false);
+	const onTouchMove = ({ target }: TouchEvent) => {
+		if (target instanceof Element && target.closest(".t-message-list")) dragging = true;
+	};
+	const onTouchEnd = () => {
+		if (dragging) momentumUntil = performance.now() + momentumIdle;
+		dragging = false;
+	};
+
+	const options = { capture: true, passive: true };
+	container.addEventListener("scroll", onScroll, options);
+	container.addEventListener("touchstart", onTouchStart, options);
+	container.addEventListener("touchmove", onTouchMove, options);
+	container.addEventListener("touchend", onTouchEnd, options);
+	container.addEventListener("touchcancel", onTouchEnd, options);
 	follow();
 
 	return () => {
 		added.disconnect();
 		resize.disconnect();
-		container.removeEventListener("scroll", onScroll, { capture: true });
+		container.removeEventListener("scroll", onScroll, options);
+		container.removeEventListener("touchstart", onTouchStart, options);
+		container.removeEventListener("touchmove", onTouchMove, options);
+		container.removeEventListener("touchend", onTouchEnd, options);
+		container.removeEventListener("touchcancel", onTouchEnd, options);
 	};
 }

@@ -20,6 +20,7 @@ import { followEditors, insertCustomEmoji } from "./custom-emoji-editor";
 import { reactionEmojiVersion } from "./emoji-favorites";
 import emojiPickerStyles from "./emoji-picker.css?inline";
 import { followTabSwipes } from "./emoji-tab-swipes";
+import { hideKeyboardOnScroll } from "./keyboard";
 import { followReactionPickers } from "./reaction-picker";
 import { followMessageListResizes } from "./scroll-anchor";
 import { followStickyAvatars } from "./sticky-avatars";
@@ -88,6 +89,7 @@ function followChatbox(element: HTMLDivElement) {
 	const stopReactionPickers = followReactionPickers(element);
 	const stopResizes = followMessageListResizes(element);
 	const stopEditors = followEditors(element);
+	const stopKeyboard = hideKeyboardOnScroll(element);
 
 	return () => {
 		stopEmoji();
@@ -95,6 +97,7 @@ function followChatbox(element: HTMLDivElement) {
 		stopReactionPickers();
 		stopResizes();
 		stopEditors();
+		stopKeyboard();
 	};
 }
 
@@ -108,7 +111,7 @@ const height = [
 	"native-nav:[--chatbox-below:max(calc(var(--safe-area-inset-bottom,0rem)_-_0.75rem_+_var(--tab-bar-gap,0rem)),0rem)]",
 	// The layout pulls the page up under a banner, into the top safe area the banner already pads.
 	"[--chatbox-banner:max(0rem,calc(var(--banner-height,0rem)_+_min(0rem,calc(0.5rem_-_var(--safe-area-inset-top,0rem)))))]",
-	"h-[calc(100dvh_-_var(--chatbox-banner)_-_var(--chatbox-header)_-_var(--chatbox-below))]",
+	"h-[calc(var(--viewport-height,100dvh)_-_var(--chatbox-banner)_-_var(--chatbox-header)_-_var(--chatbox-below))]",
 	"vision:h-[calc(100dvh_-_8.125rem)]"
 ].join(" ");
 
