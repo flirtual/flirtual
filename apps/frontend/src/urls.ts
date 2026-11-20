@@ -290,6 +290,7 @@ export const urls = {
 	apps: {
 		apple: appStoreId && `https://apps.apple.com/app/${appStoreId}`,
 		google: `https://play.google.com/store/apps/details?id=${appBundleId}`,
+		apk: `${bucketOriginMap.static}/android.apk`,
 		microsoft: brand.stores.microsoft,
 		sideQuest: brand.stores.sideQuest
 	},

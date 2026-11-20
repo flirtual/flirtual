@@ -83,8 +83,10 @@ Anything that needs a stable URL gets an alias in `src/app/_redirects.ts` instea
 redirects temporary, since the target changes with every build. The maintenance worker copies
 what it shows from `static/` when it deploys.
 
-Flirtual's static bucket (`static.flirtual.com`, the `global` stack's `staticBucket`) is kept only
-for links to it that already exist; nothing new should point at it. Other brands have none.
+Flirtual's static bucket (`static.flirtual.com`, the `global` stack's `staticBucket`) holds public
+files that live outside the repo: images the Discord bot and its posts link to, and the Android APK
+that `android-apk.yaml` publishes. The frontend's own art comes from `static/`, never the bucket.
+Other brands have none, so anything a brand needs from it must be optional.
 
 ## Image uploads
 
@@ -108,7 +110,7 @@ vars, read separately by each app:
   other value is optional, and whatever links to an unset one must disappear, not break.
 - **Flags**: `VITE_FEATURE_*` → `src/features.ts`; `FEATURE_*` → `Flirtual.Features`. Homie Mode,
   personality, VR tags (platform + game), VRChat, the list of connection providers, and (frontend
-  only) the events, news and press pages. Login methods are API-only (`FEATURE_LOGIN`): the
+  only) the events, news and press pages and the APK download link. Login methods are API-only (`FEATURE_LOGIN`): the
   frontend renders what `/v1/config`'s `login_providers` lists, minus any method not configured.
 - **The rule**: a flag gates what the UI offers and what new writes may use. It never shrinks a
   wire type or `Ecto.Enum` (queue kinds, connection types, advanced filter categories), because
