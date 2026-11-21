@@ -17,18 +17,21 @@ async function accessToken() {
 		scope: "https://www.googleapis.com/auth/androidpublisher",
 		aud: account.token_uri,
 		iat: now,
-		exp: now + 600
+		exp: now + 600,
 	})}`;
-	const signature = createSign("RSA-SHA256").update(unsigned).sign(account.private_key, "base64url");
+	const signature = createSign("RSA-SHA256")
+		.update(unsigned)
+		.sign(account.private_key, "base64url");
 
 	const response = await fetch(account.token_uri, {
 		method: "POST",
 		body: new URLSearchParams({
 			grant_type: "urn:ietf:params:oauth:grant-type:jwt-bearer",
-			assertion: `${unsigned}.${signature}`
-		})
+			assertion: `${unsigned}.${signature}`,
+		}),
 	});
-	if (!response.ok) throw new Error(`Token exchange failed: ${response.status} ${await response.text()}`);
+	if (!response.ok)
+		throw new Error(`Token exchange failed: ${response.status} ${await response.text()}`);
 	return (await response.json()).access_token;
 }
 
@@ -40,10 +43,11 @@ async function play(path, { method = "GET" } = {}) {
 		{
 			method,
 			headers: { authorization: `Bearer ${token}`, "content-type": "application/json" },
-			body: method === "POST" ? "{}" : undefined
-		}
+			body: method === "POST" ? "{}" : undefined,
+		},
 	);
-	if (!response.ok) throw new Error(`${method} ${path}: ${response.status} ${await response.text()}`);
+	if (!response.ok)
+		throw new Error(`${method} ${path}: ${response.status} ${await response.text()}`);
 	return response;
 }
 
@@ -57,8 +61,7 @@ async function productionVersionCode() {
 			.flatMap(({ versionCodes = [] }) => versionCodes.map(Number));
 		if (versionCodes.length === 0) throw new Error("No completed release on the production track");
 		return Math.max(...versionCodes);
-	}
-	finally {
+	} finally {
 		await play(`edits/${id}`, { method: "DELETE" });
 	}
 }
@@ -69,8 +72,15 @@ async function download(versionCode, file) {
 	if (universal.length !== 1)
 		throw new Error(`Expected one universal APK for ${versionCode}, found ${universal.length}`);
 
-	const [{ certificateSha256Hash, generatedUniversalApk: { downloadId } }] = universal;
-	const response = await play(`generatedApks/${versionCode}/downloads/${encodeURIComponent(downloadId)}:download?alt=media`);
+	const [
+		{
+			certificateSha256Hash,
+			generatedUniversalApk: { downloadId },
+		},
+	] = universal;
+	const response = await play(
+		`generatedApks/${versionCode}/downloads/${encodeURIComponent(downloadId)}:download?alt=media`,
+	);
 	await pipeline(Readable.fromWeb(response.body), createWriteStream(file));
 	console.log(`Downloaded ${versionCode}, signed by ${certificateSha256Hash}`);
 }
@@ -79,8 +89,7 @@ const [versionCode, file] = process.argv.slice(2);
 
 if (versionCode) {
 	await download(versionCode, file);
-}
-else {
+} else {
 	const latest = await productionVersionCode();
 	console.log(`Production track is at ${latest}`);
 	await appendFile(GITHUB_OUTPUT, `version_code=${latest}\n`);
