@@ -74,7 +74,7 @@ const contentSecurityPolicy: Record<string, Sources> = {
 		// Chat embeds' images, proxied: apps/embed.
 		embedHost,
 		// https://docs.klipy.com/network-requirements
-		klipyAppKey && "*.klipy.com",
+		"*.klipy.com",
 	],
 	"media-src": [
 		"'self'",
