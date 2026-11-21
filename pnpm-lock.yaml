@@ -445,8 +445,8 @@ importers:
         specifier: 13.7.6
         version: 13.7.6(@capacitor/core@8.5.3)
       '@sableclient/twemoji-font':
-        specifier: 1.0.4
-        version: 1.0.4
+        specifier: 1.1.1
+        version: 1.1.1
       '@sentry/react-router':
         specifier: ^11.0.0
         version: 11.13.0(@react-router/node@8.5.1(@typescript/typescript6@6.0.2)(react-router@8.5.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)))(react-router@8.5.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react@19.3.1)(rollup@4.62.4)
@@ -4292,8 +4292,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@sableclient/twemoji-font@1.0.4':
-    resolution: {integrity: sha512-LzvQB/VZtv5KEq1VYq2azr7v7cYT8oklOVRGkAN2RNwa3sF0XcnqM3lBHSYRFXQleGLSUgs3gA0slbwkD2+sJw==}
+  '@sableclient/twemoji-font@1.1.1':
+    resolution: {integrity: sha512-uUwyVnpWBpzm38/hf6ZWILp5DHRZaCSZFi0L+sPM05hsILNYpojqvI8QiltsGUWSLqM+N+W5uifnP7tau+Po3g==}
 
   '@sec-ant/readable-stream@0.4.1':
     resolution: {integrity: sha512-831qok9r2t8AlxLko40y2ebgSDhenenCatLVeW/uBtnHPyhHOvG0C7TvfgecV+wHzIm5KUICgzmVpWS+IMEAeg==}
@@ -11758,7 +11758,7 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.62.4':
     optional: true
 
-  '@sableclient/twemoji-font@1.0.4': {}
+  '@sableclient/twemoji-font@1.1.1': {}
 
   '@sec-ant/readable-stream@0.4.1': {}
 
