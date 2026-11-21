@@ -180,7 +180,7 @@ export function useQueue(mode: ProspectKind = "love", source: ResponseSource = m
 				if (action === "undo")
 					// HACK: Talk.js doesn't send us an update event when we manually delete a conversation on un-match.
 					setUnreadConversations((unreadConversations) => {
-						return unreadConversations.filter(({ conversation }) => conversation.id !== conversationId);
+						return unreadConversations.filter(({ id }) => id !== conversationId);
 					});
 
 				if (match) {

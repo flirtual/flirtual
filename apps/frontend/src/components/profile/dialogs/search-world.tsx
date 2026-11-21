@@ -1,3 +1,4 @@
+import { Loader2 } from "lucide-react";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { withSuspense } from "with-suspense";
@@ -46,6 +47,12 @@ const SearchWorldList: FC<{ worldId: string; onNavigate: () => void }> = withSus
 			))}
 		</div>
 	);
+}, {
+	fallback: (
+		<div className="flex justify-center py-8">
+			<Loader2 className="size-6 animate-spin opacity-75" />
+		</div>
+	)
 });
 
 export const SearchWorldDialog: FC<SearchWorldDialogProps> = ({

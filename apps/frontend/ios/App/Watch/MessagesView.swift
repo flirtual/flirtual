@@ -89,7 +89,8 @@ struct ConversationRow: View {
         guard let message = conversation.lastMessage, !message.system, let content = message.content else {
             return t("its_a_match")
         }
-        return message.senderId == Account.shared.user?.id ? t("last_message_from_you", ["message": content]) : content
+        let text = klipyMedia(content) == nil ? content : t("gif")
+        return message.senderId == Account.shared.user?.id ? t("last_message_from_you", ["message": text]) : text
     }
 }
 
@@ -187,6 +188,15 @@ struct MessageBubble: View {
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: .infinity)
+        } else if let gif = klipyMedia(message.content) {
+            let mine = message.senderId == Account.shared.user?.id
+            AnimatedRemoteImage(url: gif, size: 160)
+                .frame(maxWidth: 120, maxHeight: 160)
+                .clipShape(RoundedRectangle(cornerRadius: 14))
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel(t("gif"))
+                .frame(maxWidth: .infinity, alignment: mine ? .trailing : .leading)
+                .padding(mine ? .leading : .trailing, 16)
         } else {
             Bubble(text: message.content ?? "", mine: message.senderId == Account.shared.user?.id)
         }

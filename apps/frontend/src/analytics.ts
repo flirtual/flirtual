@@ -1,11 +1,3 @@
-import { PostHogProvider } from "@posthog/react";
-import {
-	AnalyticsExtensions,
-	ExperimentsExtensions,
-	FeatureFlagsExtensions
-} from "posthog-js/dist/extension-bundles";
-import { posthog } from "posthog-js/dist/module.slim.no-external";
-import type { PropsWithChildren } from "react";
 import { toKebabCase } from "remeda";
 
 import {
@@ -21,9 +13,6 @@ import {
 	sessionFetcher,
 	sessionKey
 } from "./query";
-
-// eslint-disable-next-line react-refresh/only-export-components
-export { posthog };
 
 const log = _log.extend("analytics");
 
@@ -59,7 +48,6 @@ function patchPosthogLogger() {
 	}
 }
 
-// eslint-disable-next-line react-refresh/only-export-components
 export async function setupAnalytics() {
 	if (!posthogKey) return;
 	patchPosthogLogger();
@@ -67,6 +55,13 @@ export async function setupAnalytics() {
 	// Wait for session (and analytical preferences) to be available.
 	await queryClient.prefetchQuery({ queryKey: sessionKey(), queryFn: sessionFetcher });
 	await queryClient.ensureQueryData({ queryKey: sessionKey() });
+
+	const {
+		posthog,
+		AnalyticsExtensions,
+		ExperimentsExtensions,
+		FeatureFlagsExtensions
+	} = await import("./analytics-posthog");
 
 	posthog.init(posthogKey, {
 		disable_external_dependency_loading: true,
@@ -100,13 +95,4 @@ export async function setupAnalytics() {
 			return event;
 		},
 	});
-}
-
-export function AnalyticsProvider({ children }: PropsWithChildren) {
-	return (
-		// @ts-expect-error - @posthog/react does not support slim bundles, apparently.
-		<PostHogProvider client={posthog}>
-			{children}
-		</PostHogProvider>
-	);
 }

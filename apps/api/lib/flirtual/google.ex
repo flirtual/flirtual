@@ -16,6 +16,8 @@ defmodule Flirtual.Google do
     Application.get_env(:flirtual, Flirtual.Google)[key]
   end
 
+  def configured?, do: config(:web_client_id) != nil and config(:web_client_secret) != nil
+
   def authorize_url(_conn, %{} = options) do
     state =
       case options do

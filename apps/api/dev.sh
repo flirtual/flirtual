@@ -48,4 +48,9 @@ fi
 
 # . .env.local
 mix ecto.migrate
+
+if [ "${1-}" = "--portless" ]; then
+  exec ../../shims/portless run --name api iex -S mix phx.server
+fi
+
 iex -S mix phx.server

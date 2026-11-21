@@ -14,7 +14,6 @@ defmodule Flirtual.Search do
   alias Flirtual.User
   alias Flirtual.User.Profile.LikesAndPasses
 
-  @table "profiles"
   @columns "(id, uid, dob, active_at, agemin, agemax, openness, conscientiousness, agreeableness, attributes, attributes_lf, country, languages, boosts, nsfw, hidden_from_nonvisible, tz_norm, has_geo, lat, lon, like_multiplier)"
 
   # Timezone sentinel: the tz factor is zeroed at or above this, so a missing
@@ -46,7 +45,7 @@ defmodule Flirtual.Search do
   # A connected-but-empty index (new/wiped volume) rebuilds itself.
   # Uniqueness prevents a cluster from queuing multiple reindexes.
   defp maybe_enqueue_reindex do
-    with {:ok, [%{"c" => 0}]} <- query_rows("SELECT COUNT(*) c FROM #{@table}") do
+    with {:ok, [%{"c" => 0}]} <- query_rows("SELECT COUNT(*) c FROM #{table()}") do
       {:ok, _} =
         %{"reindex" => true}
         |> ObanWorkers.SearchIndex.new(unique: [period: 300, states: :incomplete])
@@ -61,7 +60,7 @@ defmodule Flirtual.Search do
   def healthy? do
     match?(
       {:ok, %{rows: [_ | _]}},
-      Ecto.Adapters.SQL.query(Search.Repo, "SELECT id FROM #{@table} LIMIT 1", [],
+      Ecto.Adapters.SQL.query(Search.Repo, "SELECT id FROM #{table()} LIMIT 1", [],
         query_type: :text
       )
     )
@@ -99,7 +98,7 @@ defmodule Flirtual.Search do
     # value (personality poles, normalized timezone) must be a signed `bigint`
     # or the scoring expressions see a wrapped 32-bit value.
     exec("""
-    CREATE TABLE IF NOT EXISTS #{@table} (
+    CREATE TABLE IF NOT EXISTS #{table()} (
       uid string,
       dob bigint, active_at bigint,
       agemin bigint, agemax bigint,
@@ -119,7 +118,7 @@ defmodule Flirtual.Search do
   # Refresh a user's pickiness weight (see LikesAndPasses.like_multiplier/1).
   def update_like_multiplier(user_id) do
     exec(
-      "UPDATE #{@table} SET like_multiplier = #{fl(LikesAndPasses.like_multiplier(user_id))} " <>
+      "UPDATE #{table()} SET like_multiplier = #{fl(LikesAndPasses.like_multiplier(user_id))} " <>
         "WHERE id = #{h(user_id)}"
     )
   end
@@ -128,13 +127,13 @@ defmodule Flirtual.Search do
 
   def bulk_index(docs) do
     values = docs |> Enum.map(&to_row/1) |> Enum.map_join(",", &row_values/1)
-    exec("REPLACE INTO #{@table} #{@columns} VALUES #{values}")
+    exec("REPLACE INTO #{table()} #{@columns} VALUES #{values}")
   end
 
   def bulk_delete([]), do: :ok
 
   def bulk_delete(user_ids) do
-    exec("DELETE FROM #{@table} WHERE id IN (#{Enum.map_join(user_ids, ",", &h/1)})")
+    exec("DELETE FROM #{table()} WHERE id IN (#{Enum.map_join(user_ids, ",", &h/1)})")
   end
 
   defp to_row(doc) do
@@ -179,7 +178,7 @@ defmodule Flirtual.Search do
   end
 
   def compile(%Query{} = query) do
-    "SELECT uid, (#{compile_weight(query)}) AS wscore FROM #{@table} " <>
+    "SELECT uid, (#{compile_weight(query)}) AS wscore FROM #{table()} " <>
       "WHERE #{compile_where(query)} " <>
       "ORDER BY wscore DESC LIMIT #{query.size} OPTION max_matches=#{max(query.size, 1000)}"
   end
@@ -300,6 +299,8 @@ defmodule Flirtual.Search do
     do: naive |> DateTime.from_naive!("Etc/UTC") |> DateTime.to_unix()
 
   defp now, do: System.os_time(:second)
+
+  defp table, do: Application.fetch_env!(:flirtual, Flirtual.Search)[:table]
 
   defp fl(value) when is_integer(value), do: "#{value}.0"
   defp fl(value), do: to_string(value)

@@ -9,6 +9,9 @@ defmodule Flirtual.Features do
   # Strings: to_existing_atom drops providers whose modules haven't loaded yet.
   def connections, do: get(:connections)
 
+  def login, do: get(:login)
+  def login?(method) when is_atom(method), do: to_string(method) in login()
+
   def connection?(:vrchat), do: vrchat?() and "vrchat" in connections()
   def connection?(type) when is_atom(type), do: to_string(type) in connections()
 end

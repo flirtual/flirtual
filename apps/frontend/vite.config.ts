@@ -1,6 +1,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import { hostname as osHostname } from "node:os";
 
+import reactCompiler from "@acusti/vite-plugin-react-compiler";
 import { reactRouter } from "@react-router/dev/vite";
 import { sentryReactRouter } from "@sentry/react-router/vite";
 import tailwindcss from "@tailwindcss/vite";
@@ -14,6 +15,7 @@ import { ViteImageOptimizer as imageOptimize } from "vite-plugin-image-optimizer
 
 import { targets } from "./src/targets.ts";
 import { hush } from "./vite-plugin-hush.ts";
+import { twemoji } from "./vite-plugin-twemoji.ts";
 
 const mkcertPaths = {
 	cert: "./certificates/localhost.pem",
@@ -27,7 +29,6 @@ function getManualChunk(moduleId: string) {
 	if (language) return `languages/${language === "pt_BR" ? "pt-BR" : language.split("_")[0]}`;
 
 	if (/node_modules\/@?(?:react|react-dom|react-router|react-error-boundary)\//i.test(moduleId)) return "react";
-	if (/node_modules\/@?(?:capacitor|capawesome|capgo|revenuecat)/i.test(moduleId)) return "native";
 
 	return null;
 }
@@ -39,8 +40,13 @@ export default defineConfig((config) => {
 	const env = loadEnv(mode, process.cwd(), "");
 
 	const defaultHost = osHostname().toLowerCase();
-	const origin = env.VITE_ORIGIN || `https://${defaultHost}:3000`;
-	const apiUrl = env.VITE_API_URL || `https://${defaultHost}:4001/v1/`;
+	// Until portless passes apps each other's URLs: https://github.com/vercel-labs/portless/issues/408
+	const portlessUrl = env.PORTLESS_URL ? new URL(env.PORTLESS_URL) : undefined;
+	const origin = env.VITE_ORIGIN || portlessUrl?.origin || `https://${defaultHost}:3000`;
+	const apiUrl = env.VITE_API_URL || (portlessUrl
+		? `${portlessUrl.protocol}//api.${portlessUrl.host}/v1/`
+		: `https://${defaultHost}:4001/v1/`);
+	const servesHttps = mode === "development" && !portlessUrl;
 
 	const sentryOrganization = env.VITE_SENTRY_ORGANIZATION;
 	const sentryProjectId = env.VITE_SENTRY_PROJECT_ID;
@@ -63,7 +69,7 @@ export default defineConfig((config) => {
 	return {
 		appType: "mpa",
 		ssr: {
-			noExternal: ["posthog-js", "@posthog/react"]
+			noExternal: ["posthog-js"]
 		},
 		resolve: {
 			tsconfigPaths: true
@@ -101,7 +107,7 @@ export default defineConfig((config) => {
 					"visionos/**"
 				]
 			},
-			...(mode === "development" && {
+			...(servesHttps && {
 				https: mkcertExists
 					? { cert: readFileSync(mkcertPaths.cert), key: readFileSync(mkcertPaths.key) }
 					: undefined
@@ -114,12 +120,14 @@ export default defineConfig((config) => {
 			]),
 			macros(),
 			info(),
-			mode === "development" && !mkcertExists && basicSsl({
+			servesHttps && !mkcertExists && basicSsl({
 				name: "flirtual",
 				domains: [hostname],
 				certDir: "./certificates",
 			}),
 			reactRouter(),
+			reactCompiler({ compiler: { reportDiagnostics: true } }),
+			twemoji(),
 			imageOptimize({
 				cache: true,
 				cacheLocation: "./node_modules/.cache/vite-image-optimizer",

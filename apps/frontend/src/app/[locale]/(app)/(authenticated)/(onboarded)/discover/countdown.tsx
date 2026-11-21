@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { useInterval } from "~/hooks/use-interval";
@@ -21,19 +21,20 @@ function timeTill(date: Date) {
 
 function useCountdown(date: string, onComplete: () => void) {
 	const [value, setValue] = useState(() => timeTill(new Date(date)));
+	const [completed, setCompleted] = useState(false);
 
-	const { clear } = useInterval(
-		useCallback(() => {
+	useInterval(
+		() => {
 			const value = timeTill(new Date(date));
 			setValue(value);
 
 			if (value.hours === 0 && value.minutes === 0 && value.seconds === 0) {
 				onComplete();
-				clear();
+				setCompleted(true);
 			}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		}, [date, onComplete]),
-		500
+		},
+		500,
+		!completed
 	);
 
 	return value;

@@ -32,7 +32,7 @@ export function FormCaptcha({ ref, tabIndex }: FormCaptchaProps) {
 
 	return (
 		<div className="flex flex-col gap-2">
-			<div className="relative mx-auto flex h-16 w-75 items-center justify-center overflow-hidden rounded-xl border border-[#e0e0e0] bg-[#fafafa] text-[#232323] shadow-xs transition-all dark:border-[#797979]/5 dark:bg-[#232323] dark:text-white-10">
+			<div className="relative mx-auto flex min-h-16 w-75 items-center justify-center overflow-hidden rounded-xl border border-[#e0e0e0] bg-[#fafafa] text-[#232323] shadow-xs transition-all dark:border-[#797979]/5 dark:bg-[#232323] dark:text-white-10">
 				<div className="flex items-center gap-2 text-sm">
 					{success
 						? (
@@ -46,7 +46,7 @@ export function FormCaptcha({ ref, tabIndex }: FormCaptchaProps) {
 						: error
 							? (
 									<button
-										className="flex motion-preset-fade items-center gap-2 text-left"
+										className="flex motion-preset-fade items-start gap-2 px-4 py-3 text-left"
 										type="button"
 										onClick={() => {
 											setError(null);
@@ -55,14 +55,15 @@ export function FormCaptcha({ ref, tabIndex }: FormCaptchaProps) {
 											if (ref && "current" in ref) ref.current?.reset();
 										}}
 									>
-										<ShieldAlert className="size-4" />
-										<span>
-											{{
-												110500: t("device_unsupported")
-											}[error] || t("device_verification_failed")}
-											{" "}
-											<span className="text-xs opacity-80">
-												{error}
+										<ShieldAlert className="mt-0.5 size-4 shrink-0" />
+										<span className="flex min-w-0 flex-col">
+											<span>
+												{{
+													110500: t("device_unsupported")
+												}[error] || t("device_verification_failed")}
+											</span>
+											<span className="text-xs break-words opacity-80">
+												{error.replace("[Cloudflare Turnstile] ", "")}
 											</span>
 										</span>
 

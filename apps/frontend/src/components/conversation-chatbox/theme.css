@@ -1,0 +1,169 @@
+@import "@sableclient/twemoji-font";
+@reference "../../app/index.css";
+
+/*
+ * Styles for markup TalkJS renders itself (the chatbox, message list, editor and suggestion bars).
+ * Our own theme components are styled in their JSX. TalkJS's CSS is unlayered, so these rules
+ * are too, and use the app's tokens through @apply.
+ */
+
+/*
+ * https://unpkg.com/@talkjs/react-components@0.3.14/default.css resets every descendant with
+ * `all: revert`, which discards every layered style, Tailwind's included. This has the same
+ * specificity and comes later.
+ */
+html:is(html):is(html):is(html):is(html):is(html) :where([data-chatbox] .t-chatbox *:not(svg, svg *, .ProseMirror)) {
+	all: revert-layer;
+}
+
+[data-chatbox] .t-chatbox {
+	/* Twemoji after the text font, which keeps digits, # and * (the font has its own glyphs for them). */
+	--t-font-family: "Nunito Variable", Twemoji, sans-serif;
+	--t-line-height-base: 1.37;
+	--t-color-bg: transparent;
+	--t-color-brand-primary: var(--theme-2);
+	--t-color-brand-primary-hover: var(--theme-2);
+	--t-color-brand-primary-active: var(--theme-1);
+	--t-color-focus-ring: var(--theme-2);
+	--t-color-focus-ring-strong: var(--theme-2);
+	--t-tooltip-bg: --theme(--color-black-70);
+	--t-tooltip-text: --theme(--color-white-20);
+
+	@variant dark {
+		--t-tooltip-bg: --theme(--color-white-20);
+		--t-tooltip-text: --theme(--color-black-80);
+	}
+
+	@apply size-full rounded-none border-0 bg-transparent text-black-80 dark:text-white-20 vision:text-black-80;
+	font-size: var(--t-font-size-base);
+}
+
+/*
+ * A stuck avatar rests 8px below the top. Sticky offsets measure from inside the 10px padding, so
+ * Message's is 8px - 10px.
+ */
+[data-chatbox] .t-message-list {
+	padding: 10px 18px;
+}
+
+[data-chatbox] .t-message-list:has(> .t-message-group > [data-match]:only-child):not(:has(> .t-message-group ~ .t-message-group)) {
+	@apply justify-center;
+
+	& [data-match] {
+		@apply mt-0!;
+	}
+}
+
+/* Classic groups messages by sender alone; TalkJS also starts a new group after 60 seconds. */
+[data-chatbox] .t-message-group > .chat-message:last-child {
+	@apply mt-6;
+}
+
+[data-chatbox] .t-message-group > .chat-message:not(:last-child) .chat-avatar,
+[data-chatbox] .t-message-group:is(
+	[t-group-type="other"]:has(+ [t-group-type="other"], + [t-group-type="divider"] + [t-group-type="other"]),
+	[t-group-type="own"]:has(+ [t-group-type="own"], + [t-group-type="divider"] + [t-group-type="own"])
+) > .chat-message:last-child .chat-avatar {
+	@apply invisible;
+}
+
+[data-chatbox] .t-message-group:is(
+	[t-group-type="other"]:has(+ [t-group-type="other"], + [t-group-type="divider"] + [t-group-type="other"]),
+	[t-group-type="own"]:has(+ [t-group-type="own"], + [t-group-type="divider"] + [t-group-type="own"])
+) > .chat-message:last-child {
+	@apply mt-2;
+}
+
+/* https://github.com/nolanlawson/emoji-picker-element#css-variables */
+[data-chatbox] .t-emoji-picker emoji-picker {
+	--emoji-font-family: Twemoji;
+	--emoji-size: 1.625rem;
+	--emoji-padding: 0.375rem;
+	--category-emoji-size: 1.25rem;
+	--indicator-color: var(--theme-2);
+	--indicator-height: 3px;
+	--outline-color: var(--theme-2);
+	--input-background: --theme(--color-white-40);
+	--background: --theme(--color-white-20);
+	--border-color: --theme(--color-white-40);
+	--button-hover-background: --theme(--color-white-30);
+	--button-active-background: --theme(--color-white-40);
+	--input-font-color: --theme(--color-black-80);
+	--input-placeholder-color: --theme(--color-black-30);
+	--category-font-color: --theme(--color-black-80);
+
+	@variant dark {
+		--input-background: --theme(--color-black-60);
+		--background: --theme(--color-black-70);
+		--border-color: --theme(--color-black-60);
+		--button-hover-background: --theme(--color-black-60);
+		--button-active-background: --theme(--color-black-50);
+		--input-font-color: --theme(--color-white-20);
+		--input-placeholder-color: --theme(--color-white-50);
+		--category-font-color: --theme(--color-white-20);
+	}
+}
+
+[data-chatbox] .chat-message-field emoji-picker {
+	--favorites-padding-bottom: 0;
+}
+
+[data-chatbox] :is(.chat-message, [data-message-menu]) .t-reaction-picker {
+	@apply h-[min(320px,var(--reaction-picker-max-height,320px))] w-[min(352px,var(--reaction-picker-max-width,352px))] overflow-hidden rounded-2xl shadow-brand-1;
+
+	& emoji-picker {
+		--num-columns: 8;
+	}
+}
+
+/* TalkJS hides the picker when its button scrolls out of view, which blurs its search. */
+[data-chatbox] .t-message-list [t-popover-content]:has(.t-reaction-picker) {
+	visibility: visible !important;
+}
+
+/* The avatar spans its message group and stays at the top of it while scrolling (see Message). */
+[data-chatbox] .t-message-group {
+	@apply relative;
+}
+
+/* Changing the editor's own placeholder can close the keyboard on iOS. */
+[data-chatbox] [data-replying] .chat-editor .t-text-input .empty-node:first-child::before {
+	content: var(--reply-placeholder);
+}
+
+[data-chatbox] .chat-editor .t-text-input {
+	@apply block max-h-[9em] overflow-y-auto rounded-lg bg-white-30 py-4 pr-[max(1rem,var(--editor-buttons,0)*2.25rem+0.5rem)] pl-4 break-words whitespace-pre-wrap text-black-80 shadow-brand-inset outline-none dark:bg-black-60 dark:text-white-20 vision:bg-white-30/70 vision:text-black-80;
+
+	& p {
+		@apply m-0;
+	}
+
+	& img[data-custom-emoji] {
+		@apply inline-block size-[1.5em] object-contain align-bottom;
+	}
+}
+
+[data-chatbox] .chat-message-field .t-emoji-suggest-bar {
+	@apply z-1 -mt-[60px] flex h-[60px] w-full shrink-0 items-center overflow-x-auto overflow-y-hidden overscroll-contain bg-white-20 p-2 dark:bg-black-70;
+
+	& button {
+		@apply flex size-[calc(1.375rem+1rem)] shrink-0 cursor-pointer items-center justify-center rounded-lg border-0 bg-transparent px-1 text-[1.375rem];
+	}
+
+	& button[t-focused] {
+		@apply bg-white-30 dark:bg-black-60;
+	}
+}
+
+[data-chatbox] .chat-message-field .t-mention-suggest-list {
+	@apply flex max-h-[150px] max-w-full min-w-[120px] flex-col overflow-x-auto bg-white-20 p-1 shadow-brand-1 dark:bg-black-70;
+	border-radius: var(--radius-lg);
+
+	& button {
+		@apply flex w-full cursor-pointer items-center rounded-sm border-0 bg-transparent px-1.5 py-2 text-left text-xs whitespace-nowrap;
+	}
+
+	& :is(button:hover, button:focus, button.focused) {
+		@apply bg-white-30 outline-none dark:bg-black-60;
+	}
+}

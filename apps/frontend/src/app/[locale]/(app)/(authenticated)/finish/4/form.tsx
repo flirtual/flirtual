@@ -1,5 +1,5 @@
 import { MoveLeft } from "lucide-react";
-import { useMemo } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { keys, shuffle } from "remeda";
 
@@ -22,9 +22,7 @@ export const Finish4Form: React.FC = () => {
 	const session = useOptionalSession();
 	const personality = usePersonality();
 
-	// shuffle once
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	const questions = useMemo(() => shuffle(keys(personality)), []);
+	const [questions] = useState(() => shuffle(keys(personality)));
 
 	if (!session || !personality) return null;
 	const { user } = session;

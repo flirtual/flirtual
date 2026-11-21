@@ -98,7 +98,6 @@ export function useNativeActions(
 
 		const listener = NativeNavigationPlugin.addListener("action", ({ id }) => select(id));
 		return () => void listener.then((handle) => handle.remove());
-	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return native;

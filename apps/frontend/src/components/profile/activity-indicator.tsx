@@ -1,5 +1,7 @@
 import { useTranslation } from "react-i18next";
 
+import { useMountTime } from "~/hooks/use-mount-time";
+
 export interface ActivityIndicatorProps {
 	lastActiveAt: Date;
 }
@@ -11,8 +13,9 @@ export const ActivityIndicator: React.FC<ActivityIndicatorProps> = ({
 	lastActiveAt
 }) => {
 	const { t } = useTranslation();
+	const now = useMountTime();
 
-	const timeSince = Date.now() - lastActiveAt.getTime();
+	const timeSince = now - lastActiveAt.getTime();
 	if (timeSince > twoWeeksInMilliseconds) return null;
 
 	return (

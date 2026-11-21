@@ -11,7 +11,10 @@ import {
 	readBuildOutput,
 	writeWorkerConfig,
 } from "@cloudflare/build-output-utils";
-import type { ParsedOutputRootConfig, ParsedOutputWorkerConfig } from "@cloudflare/config";
+import type {
+	ParsedBuildOutputRootConfig,
+	ParsedBuildOutputWorkerConfig,
+} from "@cloudflare/config";
 import * as pulumi from "@pulumi/pulumi";
 
 import { digestWorker } from "./build-output.ts";
@@ -59,7 +62,7 @@ async function deploy(
 		const { rootConfig } = await readBuildOutput(directory);
 		const { buildContext } = rootConfig;
 
-		const worker: ParsedOutputWorkerConfig = JSON.parse(inputs.config);
+		const worker: ParsedBuildOutputWorkerConfig = JSON.parse(inputs.config);
 		const { manifest, ...config } = worker;
 
 		await writeWorkerConfig({ root: directory, config, manifest, directoryName: record.directory });
@@ -67,8 +70,8 @@ async function deploy(
 			getRootConfigPath(directory),
 			JSON.stringify({
 				...rootConfig,
-				accountId: inputs.accountId,
-			} satisfies ParsedOutputRootConfig),
+				settings: { ...rootConfig.settings, accountId: inputs.accountId },
+			} satisfies ParsedBuildOutputRootConfig),
 		);
 		await readBuildOutput(directory);
 

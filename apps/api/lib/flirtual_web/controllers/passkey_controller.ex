@@ -48,7 +48,7 @@ defmodule FlirtualWeb.PasskeyController do
         },
         user: %{
           id: Base.encode64(user.id),
-          name: user.email,
+          name: user.email || user.phone_number || user.slug,
           displayName: User.display_name(user)
         },
         pubKeyCredParams: [

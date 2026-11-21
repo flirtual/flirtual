@@ -217,7 +217,7 @@ i18n
 
 		interpolation: {
 			escapeValue: false,
-			defaultVariables: { brand_name: brand.name }
+			defaultVariables: { brand_name: brand.name, legal_name: brand.legalName }
 		},
 	});
 
@@ -265,7 +265,7 @@ export function useNavigate() {
 			return;
 		}
 
-		locale ??= getLocale(toOrDelta) || defaultLocale;
+		locale = locale ?? (getLocale(toOrDelta) || defaultLocale);
 		return navigate(replaceLanguage(toOrDelta, locale), options);
 	}, [navigate]);
 }

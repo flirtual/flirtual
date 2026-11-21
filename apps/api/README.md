@@ -49,6 +49,13 @@
 
 * The API is now listening on port 4000 (http) and 4001 (https).
 
+### portless
+
+Start the API with `./dev.sh --portless` instead to serve it at
+`https://api.<checkout>.localhost` beside the frontend; see the frontend's README. portless
+terminates TLS, so this needs no certificate, and leave `ORIGIN`, `FRONTEND_ORIGIN` and
+`ROOT_ORIGIN` unset.
+
 ### mkcert
 
 As an alternative to `mix phx.gen.cert`, you can use [mkcert](https://github.com/FiloSottile/mkcert) to generate a certificate with a trusted local CA.

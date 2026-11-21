@@ -1,11 +1,9 @@
-import type { PropertiesHyphen, Property } from "csstype";
+import type { PropertiesHyphen } from "csstype";
+import createDOMPurify from "dompurify";
 import { entries } from "remeda";
-import sanitizeHtml from "sanitize-html";
-import type { Attributes } from "sanitize-html";
 
 import { rgb } from "./colors";
-import { siteOrigin } from "./const";
-import { isInternalHref, toAbsoluteUrl } from "./urls";
+import type { Theme } from "./hooks/use-theme";
 
 export function toStyleProperties(
 	style: PropertiesHyphen,
@@ -18,19 +16,6 @@ export function toStyleProperties(
 				: previous,
 		initial
 	);
-}
-
-export function fromStyleProperties(value: string): PropertiesHyphen {
-	return Object.fromEntries(
-		value
-			.split(";")
-			.map((v) => v.trim())
-			.filter((v) => !!v)
-			.map((v) => {
-				const a = v.split(/:\s?/);
-				return [a.shift(), a.join(":")];
-			})
-	) as PropertiesHyphen;
 }
 
 export const allowedTags: Array<keyof React.JSX.IntrinsicElements> = [
@@ -134,101 +119,93 @@ export function contentLength(value: string): number {
 	return [...(body.textContent ?? "")].length + lines;
 }
 
-const colorHexRegex = new RegExp(editorColors.join("|"), "i");
+const paletteColors = new Set(editorColors.filter((color) => color !== false));
+const textAlignments = ["left", "center", "right", "justify"] as const;
+
 const colorRgbRegex
 	= /^rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)$/;
+const alignmentClassRegex = /(?:^|\s)ql-align-(\w+)/;
 
-const allowedOrigins = new Set([siteOrigin, "https://vrchat.com"]);
+function paletteColor(value: string) {
+	const match = value.match(colorRgbRegex);
+	const color = match
+		? rgb.toHex(
+				Number.parseInt(match[1]!),
+				Number.parseInt(match[2]!),
+				Number.parseInt(match[3]!)
+			)
+		: value.toLowerCase();
 
-export function html(value: string) {
-	return sanitizeHtml(
-		value /* .replaceAll(/<p>(((\s)|(<br>))+)<\/p>|<h\d>(((\s)|(<br>))+)<\/h\d>/gi, "") */,
-		{
-			allowedTags,
-			allowedAttributes: {
-				"*": ["style"]
-			},
-			allowedStyles: {
-				"*": {
-					color: [colorHexRegex],
-					"background-color": [colorHexRegex],
-					"text-align": [/\w+/]
-				}
-			},
-			allowedSchemes: ["http", "https"],
-			transformTags: {
-				"*": (tagName: string, attribs: Attributes) => {
-					let style = fromStyleProperties(attribs.style ?? "");
-
-					const alignMatch = attribs.class?.match(/ql-align-(\w+)/);
-					if (attribs.class && alignMatch) {
-						attribs.class = attribs.class.replace(alignMatch[0], "");
-						style = {
-							...style,
-							"text-align": alignMatch[1] as Property.TextAlign
-						};
-					}
-
-					for (const key of ["color", "background-color"] as const) {
-						const match = style[key]?.match(colorRgbRegex);
-						if (match) {
-							style = {
-								...style,
-								[key]: rgb.toHex(
-									Number.parseInt(match[1]!),
-									Number.parseInt(match[2]!),
-									Number.parseInt(match[3]!)
-								)
-							};
-						}
-					}
-
-					attribs.style = toStyleProperties(style);
-
-					return {
-						tagName,
-						attribs
-					};
-				},
-				a: (tagName, attribs) => {
-					const url = toAbsoluteUrl(attribs.href ?? "/");
-
-					if (isInternalHref(url)) return { tagName, attribs };
-					if (!allowedOrigins.has(url.origin))
-						return { tagName: "span", attribs };
-
-					return {
-						tagName,
-						attribs: { ...attribs, target: "_blank", rel: "noopener" }
-					};
-				}
-			}
-		}
-	);
+	return paletteColors.has(color) ? color : undefined;
 }
 
-// Add a class to bio elements whose color or background is low-contrast on one
-// theme; html.scss gives them an opposite background or color respectively.
-// Elements with both a color and background are ignored (maybe the author wanted
-// them to be illegible).
-export function markLowContrastColors(value: string): string {
-	const { body } = new DOMParser().parseFromString(value, "text/html");
+function allowedStyle(element: Element): PropertiesHyphen {
+	const { style } = element as HTMLElement;
+	if (!style) return {};
 
-	for (const element of body.querySelectorAll<HTMLElement>("[style]")) {
-		const style = fromStyleProperties(element.getAttribute("style") ?? "");
+	const color = paletteColor(style.getPropertyValue("color"));
+	const backgroundColor = paletteColor(style.getPropertyValue("background-color"));
+	const requestedTextAlign = element.getAttribute("class")?.match(alignmentClassRegex)?.[1]
+		?? style.getPropertyValue("text-align");
+	const textAlign = textAlignments.find((alignment) => alignment === requestedTextAlign);
 
-		const color = style.color?.toLowerCase();
-		const background = style["background-color"]?.toLowerCase();
-		if (color && background) continue;
+	return {
+		...(color && { color }),
+		...(backgroundColor && { "background-color": backgroundColor }),
+		...(textAlign && { "text-align": textAlign })
+	};
+}
 
-		const className
-			= (color && lightPaletteColors.has(color) && "bio-color-light")
-				|| (color && darkPaletteColors.has(color) && "bio-color-dark")
-				|| (background && lightPaletteColors.has(background) && "bio-background-light")
-				|| (background && darkPaletteColors.has(background) && "bio-background-dark");
+// A palette color that is low-contrast on the theme gets an opposite background
+// or color. Elements with both a color and background are left alone (maybe the
+// author wanted them to be illegible).
+function contrastStyle({ color, "background-color": background }: PropertiesHyphen, theme: Theme): PropertiesHyphen {
+	if (color && background) return {};
 
-		if (className) element.classList.add(className);
-	}
+	const lowContrastColors = { light: lightPaletteColors, dark: darkPaletteColors }[theme];
+	const contrastColor = { light: "#000000", dark: "#ffffff" }[theme];
 
-	return body.innerHTML;
+	if (color && lowContrastColors.has(color)) return { "background-color": contrastColor };
+
+	const lowContrastBackgrounds = { light: darkPaletteColors, dark: lightPaletteColors }[theme];
+	const contrastText = { light: "#ffffff", dark: "#000000" }[theme];
+
+	if (background && lowContrastBackgrounds.has(background)) return { color: contrastText };
+
+	return {};
+}
+
+function createSanitizer(theme?: Theme) {
+	const purify = createDOMPurify();
+
+	// Without a DOM, DOMPurify has no methods and would return its input unchanged.
+	// https://github.com/cure53/DOMPurify#what-is-supported
+	if (!purify.isSupported) return () => "";
+
+	purify.addHook("beforeSanitizeAttributes", (element) => {
+		if (element.nodeType !== element.ELEMENT_NODE) return;
+
+		const allowed = allowedStyle(element);
+		const style = toStyleProperties({ ...allowed, ...(theme && contrastStyle(allowed, theme)) });
+
+		if (style) element.setAttribute("style", style);
+		else element.removeAttribute("style");
+	});
+
+	return (value: string) => purify.sanitize(value, {
+		ALLOWED_TAGS: allowedTags,
+		ALLOWED_ATTR: ["style"],
+		ALLOW_ARIA_ATTR: false,
+		ALLOW_DATA_ATTR: false
+	});
+}
+
+const sanitize = createSanitizer();
+const sanitizeForTheme = {
+	light: createSanitizer("light"),
+	dark: createSanitizer("dark")
+};
+
+export function html(value: string, { theme }: { theme?: Theme } = {}) {
+	return theme ? sanitizeForTheme[theme](value) : sanitize(value);
 }

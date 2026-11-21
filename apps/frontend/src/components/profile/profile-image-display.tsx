@@ -1,5 +1,5 @@
 import { ChevronLeft, ChevronRight, Images, ScanSearch, Search, Siren, Trash2 } from "lucide-react";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import type React from "react";
 import { Trans, useTranslation } from "react-i18next";
 import { useSwipeable } from "react-swipeable";
@@ -24,6 +24,7 @@ import { vrchat } from "~/features";
 import { useBreakpoint } from "~/hooks/use-breakpoint";
 import { useDialog } from "~/hooks/use-dialog";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
+import { useMountTime } from "~/hooks/use-mount-time";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { useLocale } from "~/i18n";
@@ -115,6 +116,7 @@ export const ImageToolbar: React.FC<{
 )> = ({ image, url, userId, onDeleted }) => {
 	const { t } = useTranslation();
 	const [locale] = useLocale();
+	const now = useMountTime();
 	const dialogs = useDialog();
 
 	const toasts = useToast();
@@ -127,13 +129,13 @@ export const ImageToolbar: React.FC<{
 	const searchUrl = image ? urls.image(image, "full") : url;
 
 	const formattedUploadTime = image && new Intl.RelativeTimeFormat(intlLocale(locale)).format(
-		Math.round((new Date(image.createdAt).getTime() - Date.now()) / (1000 * 60 * 60 * 24)),
+		Math.round((new Date(image.createdAt).getTime() - now) / (1000 * 60 * 60 * 24)),
 		"day"
 	);
 
 	return (
-		<div className="flex w-full items-center justify-between gap-4 bg-brand-gradient p-4 pr-[calc(1rem+var(--safe-area-inset-right,0rem))] pl-[calc(1rem+var(--safe-area-inset-left,0rem))] text-white-20 desktop:px-4">
-			<div className="select-children">
+		<div className="flex w-full shrink-0 items-center justify-between gap-4 bg-brand-gradient p-4 pr-[calc(1rem+var(--safe-area-inset-right,0rem))] pl-[calc(1rem+var(--safe-area-inset-left,0rem))] text-white-20 desktop:px-4">
+			<div className="min-w-0 break-words select-children">
 				{formattedUploadTime && (
 					<Trans
 						values={{
@@ -154,7 +156,7 @@ export const ImageToolbar: React.FC<{
 								),
 								world: (
 									<InlineLink className="text-white-10 underline" href={urls.vrchatWorld(image.worldId)}>
-										{image.worldName || image.worldId}
+										{image.worldName || "_"}
 									</InlineLink>
 								)
 							}}
@@ -163,7 +165,7 @@ export const ImageToolbar: React.FC<{
 					</>
 				)}
 			</div>
-			<div className="flex gap-8 text-white-20">
+			<div className="flex shrink-0 gap-8 text-white-20">
 				<div className="flex gap-4">
 					<Tooltip>
 						<TooltipTrigger asChild>
@@ -278,15 +280,27 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 	const { t } = useTranslation();
 
 	const [imageId, setImageId] = useState(firstImageId);
-	useEffect(() => setImageId(firstImageId), [firstImageId]);
 
 	const canSearchWorld
 		= !!session?.user?.tags?.includes("moderator")
 			|| (!!session && session.user.id === user.id && premium(session.user));
 
-	useEffect(() => {
-		setExpandedImage(false);
-	}, [images]);
+	const [shownImages, setShownImages] = useState(images);
+	if (shownImages !== images) {
+		setShownImages(images);
+
+		const remaining = new Set(images.map(({ id }) => id));
+		if (!imageId || !remaining.has(imageId)) {
+			const index = shownImages.findIndex(({ id }) => id === imageId);
+			const neighbour = index === -1
+				? undefined
+				: (shownImages.slice(index + 1).find(({ id }) => remaining.has(id))
+					?? shownImages.slice(0, index).findLast(({ id }) => remaining.has(id)));
+
+			setImageId(neighbour?.id ?? firstImageId);
+			if (!neighbour) setExpandedImage(false);
+		}
+	}
 
 	const currentImage = useMemo(
 		() => images.find((image) => image.id === imageId) ?? null,
@@ -325,8 +339,8 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 		useCallback(
 			(event) => {
 				if (
-					(document.querySelector("[role=\"dialog\"][data-state=\"open\"], [role=\"alertdialog\"][data-state=\"open\"], [role=\"menu\"][data-state=\"open\"], [role=\"listbox\"][data-state=\"open\"]")
-						&& !expandedImage)
+					event.defaultPrevented
+					|| document.querySelectorAll("[role=\"dialog\"][data-state=\"open\"], [role=\"alertdialog\"][data-state=\"open\"], [role=\"menu\"][data-state=\"open\"], [role=\"listbox\"][data-state=\"open\"]").length > (expandedImage ? 1 : 0)
 					|| event.ctrlKey
 					|| event.metaKey
 				)
@@ -370,14 +384,14 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 						<Dialog open={expandedImage} onOpenChange={setExpandedImage}>
 							<DialogContent
 								border={false}
-								className="max-w-full overflow-hidden rounded-none outline-hidden desktop:max-w-[95svw] desktop:rounded-xl"
+								className="flex max-w-full flex-col overflow-hidden rounded-none outline-hidden desktop:max-w-[95svw] desktop:rounded-xl"
 								onOpenAutoFocus={(event) => {
 									event.preventDefault();
 									(event.currentTarget as HTMLElement | null)?.focus();
 								}}
 							>
 								<DialogTitle className="sr-only">{t("view_image")}</DialogTitle>
-								<div className="relative max-h-[80vh] w-full bg-black-90">
+								<div className="relative flex max-h-[80vh] min-h-0 w-full flex-col items-center bg-black-90">
 									{images.length > 1 && (
 										<div className="absolute z-10 flex size-full">
 											<button
@@ -399,10 +413,10 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 									<SingleImage
 										large
 										priority
-										className="relative! mx-auto aspect-auto size-auto! max-h-[80vh] object-cover touch-callout-default"
+										className="relative! aspect-auto size-auto! max-h-[80vh] min-h-0 shrink object-cover touch-callout-default"
 										image={currentImage}
 									/>
-									{vrchat && currentImage.worldId && currentImage.worldName && (
+									{vrchat && currentImage.worldId && (
 										<div className="absolute right-[calc(0.5rem+var(--safe-area-inset-right,0rem))] bottom-2 z-20 flex items-center gap-2 rounded-full bg-black-70/80 px-2 pt-1 pb-[3px] text-xs text-white-20 opacity-80 shadow-brand-1 transition-opacity hover:opacity-100 desktop:right-4 desktop:bottom-4 desktop:gap-4 desktop:pt-2 desktop:pr-3.5 desktop:pb-1.5 desktop:pl-3 desktop:text-sm">
 											<InlineLink
 												className="flex items-center gap-1.5 desktop:gap-2"
@@ -410,7 +424,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 												href={urls.vrchatWorld(currentImage.worldId)}
 											>
 												<VRChatIcon className="size-3.5 desktop:size-4" />
-												<span className="max-w-56 truncate desktop:max-w-80 desktop:pb-0">{currentImage.worldName}</span>
+												<span className="max-w-56 truncate desktop:max-w-80 desktop:pb-0">{currentImage.worldName || "_"}</span>
 											</InlineLink>
 											{canSearchWorld && (
 												<button

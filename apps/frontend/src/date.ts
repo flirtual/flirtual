@@ -58,3 +58,12 @@ export function wallClockInTimezone(date: Date, timezone?: string): Date {
 		Number(parts.second)
 	));
 }
+
+export function createOffsetTimeFormatter(locales?: Intl.LocalesArgument) {
+	const format = new Intl.DateTimeFormat(locales, { hour: "numeric", minute: "2-digit", timeZone: "UTC" });
+	return (instant: number, offsetSeconds: number) => format.format(instant + offsetSeconds * 1000);
+}
+
+export function millisecondsUntilNextMinute(instant: number): number {
+	return 60_000 - (instant % 60_000);
+}

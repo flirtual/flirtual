@@ -69,6 +69,13 @@ defmodule Flirtual.Users do
     if User.valid_password?(user, password), do: user
   end
 
+  def get_by_phone(phone_number) when is_binary(phone_number) do
+    User
+    |> where([user], user.phone_number == ^phone_number)
+    |> preload(^User.default_assoc())
+    |> Repo.one()
+  end
+
   def get_by_unsubscribe_token(token)
       when is_binary(token) do
     User
@@ -692,7 +699,7 @@ defmodule Flirtual.Users do
              |> User.validate_password()
              |> User.put_password()
              |> Repo.insert(),
-           {:ok, user} <- setup_new_user(user, attrs),
+           {:ok, user} <- setup_new_user(user, attrs, Keyword.take(options, [:email_confirmed])),
            :ok <- Flag.check_honeypot(user.id, attrs[:url]) do
         user
       else
@@ -726,9 +733,26 @@ defmodule Flirtual.Users do
     end)
   end
 
+  def create_from_phone(phone_number) when is_binary(phone_number) do
+    Repo.transaction(fn ->
+      with {:ok, user} <-
+             %User{}
+             |> cast(%{phone_number: phone_number}, [:phone_number])
+             |> unique_constraint(:phone_number)
+             |> Repo.insert(),
+           {:ok, user} <- setup_new_user(user, %{}, phone_confirmed: true) do
+        user
+      else
+        {:error, reason} -> Repo.rollback(reason)
+        reason -> Repo.rollback(reason)
+      end
+    end)
+  end
+
   # Shared user setup: generates identifiers, creates preferences/profile, runs checks
-  defp setup_new_user(user, attrs, options \\ []) do
+  defp setup_new_user(user, attrs, options) do
     email_confirmed = Keyword.get(options, :email_confirmed, false)
+    phone_confirmed = Keyword.get(options, :phone_confirmed, false)
     notifications = Map.get(attrs, :notifications) == true
 
     with {:ok, user} <-
@@ -739,6 +763,11 @@ defmodule Flirtual.Users do
              unsubscribe_token: UUID.generate(),
              email_confirmed_at:
                if(email_confirmed,
+                 do: DateTime.utc_now() |> DateTime.truncate(:second),
+                 else: nil
+               ),
+             phone_confirmed_at:
+               if(phone_confirmed,
                  do: DateTime.utc_now() |> DateTime.truncate(:second),
                  else: nil
                )

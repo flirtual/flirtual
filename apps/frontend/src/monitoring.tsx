@@ -1,9 +1,9 @@
 import {
+	addIntegration,
 	browserProfilingIntegration,
 	getGlobalScope,
 	init,
 	reactRouterTracingIntegration,
-	replayIntegration,
 	spanStreamingIntegration
 } from "@sentry/react-router";
 import { hashKey } from "@tanstack/react-query";
@@ -75,23 +75,12 @@ export function setupMonitoring() {
 		integrations: [
 			spanStreamingIntegration(),
 			reactRouterTracingIntegration(),
-			browserProfilingIntegration(),
-			replayIntegration({
-				mask: ["[data-mask]"],
-				unmask: ["[data-unmask]"],
-				block: ["[data-block]"],
-				unblock: ["[data-unblock]"],
-				ignore: ["[data-ignore]"],
-				maskAttributes: [
-					"title",
-					"placeholder",
-					"aria-label",
-					"alt",
-					"href"
-				]
-			})
+			browserProfilingIntegration()
 		]
 	});
+
+	// https://docs.sentry.io/platforms/javascript/session-replay/#lazy-loading-replay
+	void import("./monitoring-replay").then(({ replay }) => addIntegration(replay));
 
 	const { native, vision, build, version } = device;
 

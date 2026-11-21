@@ -1,0 +1,4 @@
+{
+	"producer": { "name": "wrangler", "version": "4.163.0" },
+	"buildContext": { "isPreview": false, "mode": "development" }
+}

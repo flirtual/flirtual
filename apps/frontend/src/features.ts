@@ -7,6 +7,7 @@ export const vrchat = import.meta.env.VITE_FEATURE_VRCHAT !== "0";
 export const events = import.meta.env.VITE_FEATURE_EVENTS !== "0";
 export const news = import.meta.env.VITE_FEATURE_NEWS !== "0";
 export const press = import.meta.env.VITE_FEATURE_PRESS !== "0";
+export const apk = import.meta.env.VITE_FEATURE_APK !== "0";
 
 export const connectionProviders = (
 	import.meta.env.VITE_FEATURE_CONNECTIONS as string || "discord,vrchat,google,apple,meta"

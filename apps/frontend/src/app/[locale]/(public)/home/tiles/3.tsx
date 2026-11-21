@@ -5,20 +5,20 @@ import { Image } from "~/components/image";
 import { press } from "~/features";
 import { useUserCount } from "~/hooks/use-user";
 import { useMessages } from "~/i18n";
-import AnimePair from "~/static/home/members/anime-pair.jpg";
-import CabinCuddle from "~/static/home/members/cabin-cuddle.jpg";
-import CheekToCheek from "~/static/home/members/cheek-to-cheek.jpg";
-import ClubDance from "~/static/home/members/club-dance.jpg";
-import ClubFriends from "~/static/home/members/club-friends.jpg";
-import CouchTrio from "~/static/home/members/couch-trio.jpg";
-import FlowerField from "~/static/home/members/flower-field.jpg";
-import FurryStack from "~/static/home/members/furry-stack.jpg";
-import LapSit from "~/static/home/members/lap-sit.jpg";
-import NightHug from "~/static/home/members/night-hug.jpg";
-import SkyPeaceSigns from "~/static/home/members/sky-peace-signs.jpg";
-import SnowySelfie from "~/static/home/members/snowy-selfie.jpg";
-import ThanosSelfie from "~/static/home/members/thanos-selfie.jpg";
-import WavingPair from "~/static/home/members/waving-pair.jpg";
+import AnimePair from "~/static/home/members/anime-pair.jpg?as=metadata";
+import CabinCuddle from "~/static/home/members/cabin-cuddle.jpg?as=metadata";
+import CheekToCheek from "~/static/home/members/cheek-to-cheek.jpg?as=metadata";
+import ClubDance from "~/static/home/members/club-dance.jpg?as=metadata";
+import ClubFriends from "~/static/home/members/club-friends.jpg?as=metadata";
+import CouchTrio from "~/static/home/members/couch-trio.jpg?as=metadata";
+import FlowerField from "~/static/home/members/flower-field.jpg?as=metadata";
+import FurryStack from "~/static/home/members/furry-stack.jpg?as=metadata";
+import LapSit from "~/static/home/members/lap-sit.jpg?as=metadata";
+import NightHug from "~/static/home/members/night-hug.jpg?as=metadata";
+import SkyPeaceSigns from "~/static/home/members/sky-peace-signs.jpg?as=metadata";
+import SnowySelfie from "~/static/home/members/snowy-selfie.jpg?as=metadata";
+import ThanosSelfie from "~/static/home/members/thanos-selfie.jpg?as=metadata";
+import WavingPair from "~/static/home/members/waving-pair.jpg?as=metadata";
 import BrandDazed from "~/static/press/dazed.png";
 import BrandForbes from "~/static/press/forbes.png";
 import BrandFutureOfSex from "~/static/press/future-of-sex.png";
@@ -92,22 +92,20 @@ export function Testimonial({ id }: TileProps) {
 			<div className="flex h-[40vh] shrink-0 overflow-x-hidden desktop:tall:h-[50vh]">
 				<div className="grid min-w-max grid-cols-2 overflow-y-hidden">
 					<div className="flex h-[40vh] animate-scroll-x-screen desktop:tall:h-[50vh]">
-						{images.map((source) => (
-							<img
-								// fetchPriority={index === 0 ? "high" : "low"}
-								key={source}
-								className="h-full object-cover"
-								src={source}
+						{images.map((image) => (
+							<Image
+								key={image.src}
+								className="h-full w-auto object-cover"
+								src={image}
 							/>
 						))}
 					</div>
 					<div className="flex h-[40vh] animate-scroll-x-screen desktop:tall:h-[50vh]">
-						{images.map((source) => (
-							<img
-								// fetchPriority={index === 0 ? "high" : "low"}
-								key={source}
-								className="h-full object-cover"
-								src={source}
+						{images.map((image) => (
+							<Image
+								key={image.src}
+								className="h-full w-auto object-cover"
+								src={image}
 							/>
 						))}
 					</div>

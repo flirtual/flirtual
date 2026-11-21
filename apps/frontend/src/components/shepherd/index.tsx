@@ -41,7 +41,7 @@ export const ShepherdProvider: FC<PropsWithChildren> = ({ children }) => {
 			dataset.tour = "";
 			delete dataset.tourNavigation;
 			centerInTourArea();
-			removeBackHandler ??= addBackHandler(back);
+			removeBackHandler = removeBackHandler ?? addBackHandler(back);
 		};
 		const end = () => {
 			delete dataset.tour;

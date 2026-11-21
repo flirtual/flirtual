@@ -9,6 +9,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 import type { IconComponent } from "~/components/icons";
+import { useMountTime } from "~/hooks/use-mount-time";
 import { useLocale } from "~/i18n";
 import { intlLocale } from "~/i18n/languages";
 import { suppressNextClick } from "~/utilities";
@@ -240,20 +241,21 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 		[monthNameFormatter]
 	);
 
-	const now = useMemo(() => new Date(), []);
+	const mountTime = useMountTime();
+	const now = useMemo(() => new Date(mountTime), [mountTime]);
 
 	const min = useMemo(
 		() =>
 			(minDate === "now" ? now : minDate)
-			|| new Date(Date.now() - offset * yearInMilliseconds),
-		[now, minDate, offset]
+			|| new Date(mountTime - offset * yearInMilliseconds),
+		[now, minDate, offset, mountTime]
 	);
 
 	const max = useMemo(
 		() =>
 			(maxDate === "now" ? now : maxDate)
-			|| new Date(Date.now() + offset * yearInMilliseconds),
-		[now, maxDate, offset]
+			|| new Date(mountTime + offset * yearInMilliseconds),
+		[now, maxDate, offset, mountTime]
 	);
 
 	const compare = useCallback(
@@ -326,7 +328,11 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 		[onChange, clamp]
 	);
 
-	useEffect(() => setDisplayDate(clamp(value)), [value, clamp]);
+	const [displayedFor, setDisplayedFor] = useState<{ value: Date; clamp: typeof clamp } | null>(null);
+	if (displayedFor?.value !== value || displayedFor.clamp !== clamp) {
+		setDisplayedFor({ value, clamp });
+		setDisplayDate(clamp(value));
+	}
 
 	const progressMonth = useCallback(
 		(direction: -1 | 1) => {

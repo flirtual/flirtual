@@ -2,6 +2,7 @@ defmodule Flirtual.Brand do
   def get(key) when is_atom(key), do: Application.fetch_env!(:flirtual, :brand)[key]
 
   def name, do: get(:name)
+  def legal_name, do: get(:legal_name) || name()
   def legal_address, do: get(:legal_address)
   def background_color, do: get(:background_color)
   def logo_light_url, do: frontend_url("/logo-light-512x.png")

@@ -37,15 +37,15 @@ export const PillAttributeList: FC<PillAttributeListProps> = ({
 	const tAttributes = useAttributeTranslation();
 
 	if (!attributes?.length) return null;
-	if (!activeIds)
-		activeIds = Object.values(session?.user.profile.attributes || {})
+	const highlightedIds = activeIds
+		?? Object.values(session?.user.profile.attributes || {})
 			.flat()
 			.filter(Boolean);
 
 	const highlighted = (attribute: MinimalAttribute<AttributeType>) =>
 		!!session
 		&& session.user.id !== user.id
-		&& activeIds.includes(attributeId(attribute));
+		&& highlightedIds.includes(attributeId(attribute));
 
 	const linksFor = (id: string) => (href ? [] : getLinks?.(id) ?? []);
 

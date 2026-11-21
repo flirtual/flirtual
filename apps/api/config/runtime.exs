@@ -32,8 +32,6 @@ defmodule Env do
   end
 end
 
-hostname = Env.get("HOSTNAME", default: elem(:inet.gethostname(), 1))
-
 prod? = config_env() == :prod
 dev? = not prod?
 canary? = Env.bool("CANARY", default: false)
@@ -78,8 +76,24 @@ config :flirtual,
   stereo2spatial_origin:
     Env.get("STEREO2SPATIAL_ORIGIN", default: "https://stereo2spatial.kfarwell.org")
 
-origin = URI.parse(Env.get!("ORIGIN", default: "https://#{hostname}:4001"))
-frontend_origin = Env.get!("FRONTEND_ORIGIN", default: "https://#{hostname}:3000")
+# Until portless passes apps each other's URLs: https://github.com/vercel-labs/portless/issues/408
+{default_origin, default_frontend_origin} =
+  case Env.get("PORTLESS_URL") do
+    nil ->
+      {"https://localhost:4001", "https://localhost:3000"}
+
+    portless_url ->
+      case URI.parse(portless_url) do
+        %URI{host: "api." <> frontend_host} = portless_origin ->
+          {portless_url, URI.to_string(%{portless_origin | host: frontend_host})}
+
+        _ ->
+          raise "PORTLESS_URL must be the frontend's hostname with an api. label, got #{portless_url}"
+      end
+  end
+
+origin = URI.parse(Env.get!("ORIGIN", default: default_origin))
+frontend_origin = Env.get!("FRONTEND_ORIGIN", default: default_frontend_origin)
 content_origin = Env.get("BUCKET_CONTENT_ORIGIN")
 uploads_origin = Env.get("BUCKET_UPLOADS_ORIGIN")
 retained_origin = Env.get("BUCKET_RETAINED_ORIGIN")
@@ -103,17 +117,21 @@ config :flirtual, :buckets, %{
   stats: Env.get!("BUCKET_STATS")
 }
 
-feature_connections =
-  Env.get("FEATURE_CONNECTIONS", default: "discord,vrchat,google,apple,meta")
+feature_list = fn name, default ->
+  Env.get(name, default: default)
   |> String.split(",")
   |> Enum.map(&String.trim/1)
   |> Enum.reject(&(&1 == ""))
+end
+
+feature_connections = feature_list.("FEATURE_CONNECTIONS", "discord,vrchat,google,apple,meta")
 
 config :flirtual, :features,
   homie_mode?: Env.bool("FEATURE_HOMIE_MODE", default: true),
   personality?: Env.bool("FEATURE_PERSONALITY", default: true),
   vr_tags?: Env.bool("FEATURE_VR_TAGS", default: true),
   vrchat?: Env.bool("FEATURE_VRCHAT", default: true),
+  login: feature_list.("FEATURE_LOGIN", "email,discord,google,apple"),
   connections: feature_connections
 
 brand_colors = fn name, default ->
@@ -131,6 +149,7 @@ end
 
 config :flirtual, :brand,
   name: Env.get("BRAND_NAME", default: "Flirtual"),
+  legal_name: Env.get("BRAND_LEGAL_NAME"),
   legal_address: Env.get("BRAND_LEGAL_ADDRESS"),
   date_colors: brand_colors.("BRAND_DATE_COLORS", {"#ff8975", "#e9658b"}),
   date_dark_colors: brand_colors.("BRAND_DATE_DARK_COLORS", {"#b24592", "#e9658b"}),
@@ -243,6 +262,12 @@ config :flirtual, Flirtual.Google,
   web_client_id: Env.get("GOOGLE_CLIENT_ID"),
   web_client_secret: Env.get("GOOGLE_CLIENT_SECRET"),
   ios_client_id: Env.get("GOOGLE_IOS_CLIENT_ID")
+
+config :flirtual, Flirtual.Notify,
+  configuration_id: Env.get("NOTIFY_CONFIGURATION_ID"),
+  region: Env.get("NOTIFY_REGION", default: "us-east-1"),
+  access_key: Env.get("NOTIFY_ACCESS_KEY"),
+  secret: Env.get("NOTIFY_SECRET")
 
 config :flirtual, Flirtual.Meta,
   app_id: Env.get("META_APP_ID"),

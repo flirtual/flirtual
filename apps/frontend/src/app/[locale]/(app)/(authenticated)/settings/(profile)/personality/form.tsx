@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useState } from "react";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { keys, shuffle } from "remeda";
@@ -38,9 +38,7 @@ export const PersonalityForm: FC = () => {
 	const toasts = useToast();
 	const { t } = useTranslation();
 
-	// shuffle once
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	const questions = useMemo(() => shuffle(keys(personality)), []);
+	const [questions] = useState(() => shuffle(keys(personality)));
 
 	return (
 		<Form

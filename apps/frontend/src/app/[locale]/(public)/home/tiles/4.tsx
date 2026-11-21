@@ -1,4 +1,4 @@
-import { Trans } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 
 import { DownloadButton } from "~/components/download-button";
 import {
@@ -7,9 +7,11 @@ import {
 	MetaIcon,
 	MicrosoftIcon
 } from "~/components/icons";
+import { InlineLink } from "~/components/inline-link";
 import { Footer } from "~/components/layout/footer";
 import { Link } from "~/components/link";
 import { Logo } from "~/components/logo";
+import { apk } from "~/features";
 import { urls } from "~/urls";
 
 import { Tile, TileAnchor } from ".";
@@ -17,6 +19,8 @@ import type { TileProps } from ".";
 import { CallToAction } from "../call-to-action";
 
 export function TheEnd({ id }: TileProps) {
+	const { t } = useTranslation();
+
 	return (
 		<Tile id={id} className="h-auto min-h-inherit! content-center">
 			<div className="-mt-32 flex grow flex-col items-center px-8 pb-8 desktop:mt-0 desktop:px-24">
@@ -36,15 +40,23 @@ export function TheEnd({ id }: TileProps) {
 					</div>
 					<CallToAction className="hidden desktop:grid" />
 					<div className="flex flex-col items-center gap-4 native:hidden vision:hidden">
-						<div className="flex w-fit flex-wrap justify-center gap-4 gap-y-2 desktop:grid desktop:grid-cols-2">
+						<div className="flex w-fit flex-wrap items-start justify-center gap-4 gap-y-2 desktop:grid desktop:grid-cols-2">
 							<DownloadButton
 								className="hidden apple:flex desktop:flex"
 								platform="app_store"
 							/>
-							<DownloadButton
-								className="hidden android:flex desktop:flex"
-								platform="google_play"
-							/>
+							<div className="hidden flex-col gap-1 android:flex desktop:flex">
+								<DownloadButton platform="google_play" />
+								{apk && (
+									<InlineLink
+										className="self-center text-sm text-white-10"
+										highlight={false}
+										href={urls.apps.apk}
+									>
+										{t("download_apk")}
+									</InlineLink>
+								)}
+							</div>
 							<DownloadButton
 								className="hidden desktop:flex"
 								platform="microsoft_store"

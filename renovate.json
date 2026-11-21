@@ -7,7 +7,9 @@
 	"semanticCommits": "enabled",
 	"semanticCommitScope": "{{#if parentDir}}{{parentDir}}{{else}}repo{{/if}}",
 	"osvVulnerabilityAlerts": true,
-	"dependencyDashboardOSVVulnerabilitySummary": "unresolved",
+	"dependencyDashboard": {
+		"osvVulnerabilitySummary": "unresolved"
+	},
 	"prConcurrentLimit": 0,
 	"prHourlyLimit": 0,
 	"labels": ["dependencies"],
@@ -191,6 +193,12 @@
 			"groupName": "eslint"
 		},
 		{
+			"description": "@ariesclark/eslint-config peers on eslint ^9, and oxlint and oxfmt are replacing ESLint, so its majors are throwaway work",
+			"matchPackageNames": ["eslint", "@eslint/**", "eslint-**", "@ariesclark/eslint-config"],
+			"matchUpdateTypes": ["major"],
+			"enabled": false
+		},
+		{
 			"matchPackageNames": ["manticoresearch/manticore"],
 			"groupName": "manticore"
 		},
@@ -201,7 +209,13 @@
 		},
 		{
 			"matchPackageNames": ["pnpm", "ghcr.io/pnpm/pnpm"],
-			"groupName": "pnpm"
+			"groupName": "pnpm",
+			"semanticCommitScope": "repo"
+		},
+		{
+			"matchPackageNames": ["pnpm", "ghcr.io/pnpm/pnpm"],
+			"matchUpdateTypes": ["minor", "patch"],
+			"automerge": true
 		},
 		{
 			"matchPackageNames": ["postgres"],
@@ -212,6 +226,12 @@
 			"matchPackageNames": ["shortuuid"],
 			"matchDatasources": ["hex"],
 			"allowedVersions": "<3"
+		},
+		{
+			"description": "v1 requires shortuuid ~> 4.3, which encodes in reverse, so the IDs already in URLs, API responses and TalkJS would decode to the wrong UUID: https://github.com/gpedic/ex_shortuuid/blob/master/CHANGELOG.md",
+			"matchPackageNames": ["ecto_shortuuid"],
+			"matchDatasources": ["hex"],
+			"allowedVersions": "<1"
 		},
 		{
 			"matchPackageNames": ["flyio/postgres-flex"],
@@ -282,7 +302,7 @@
 			}
 		},
 		{
-			"description": "A spec change regenerates the package's types, which no CI check builds",
+			"description": "A spec change regenerates the package's types, which CI compiles only within the package; the pulumi submodule that consumes them is not checked out",
 			"matchDepNames": ["chargebee/openapi", "knadh/listmonk"],
 			"matchManagers": ["custom.regex"],
 			"automerge": false

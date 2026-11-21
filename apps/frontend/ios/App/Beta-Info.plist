@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>Flirtual Beta</string>
+	<string>$(VITE_BRAND_NAME:default=Flirtual) Beta</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -31,7 +31,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>Your camera is used to capture and upload your profile picture.</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>© 2026 Flirtual</string>
+	<string>© 2026 $(VITE_BRAND_LEGAL_NAME:default=$(VITE_BRAND_NAME:default=Flirtual))</string>
 	<key>NSLocationDefaultAccuracyReduced</key>
 	<true/>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
@@ -39,7 +39,7 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Your location is used to show how close other members are. Your exact location is always private.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Flirtual needs permission to download images.</string>
+	<string>Your photo library is used to save the images you download.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

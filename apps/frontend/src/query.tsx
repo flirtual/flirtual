@@ -3,7 +3,7 @@ import type { QueryFunctionContext, QueryKey, QueryState, UseMutationOptions, Us
 import { useMutation as _useMutation, useQuery as _useQuery, hashKey, MutationCache, QueryCache, QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ms from "ms" with { type: "macro" };
 import type { Dispatch, PropsWithChildren } from "react";
-import { use, useCallback, useDebugValue, useSyncExternalStore } from "react";
+import { use, useDebugValue, useSyncExternalStore } from "react";
 
 import { getAgeRange } from "./age-range";
 import { AgeVerification } from "./api/age-verification";
@@ -175,8 +175,6 @@ export async function evictQueries() {
 	await queryClient.resetQueries();
 }
 
-let usedQuery = false;
-
 export function useQuery<
 	T = unknown,
 	Key extends QueryKey = ReadonlyArray<unknown>
@@ -198,27 +196,20 @@ export function useQuery<
 }: UseQueryOptions<T, Error, T, Key>): unknown {
 	useDebugValue(queryKey);
 
-	if (!usedQuery) {
-		log("used useQuery() for the first time.");
-		usedQuery = true;
-	}
-
-	if (server) {
-		if (placeholderData !== undefined)
-			return placeholderData as T;
-	}
-
 	if (!enabled && placeholderData === undefined)
 		throw new Error(`useQuery(${queryKey}) called without placeholderData while disabled. This will permanently suspend the component.`);
+
+	const prerenderPlaceholder = server && placeholderData !== undefined;
 
 	const { promise } = _useQuery({
 		queryKey,
 		queryFn,
 		placeholderData,
-		enabled,
+		enabled: enabled && !prerenderPlaceholder,
 		...options
 	}, queryClient);
 
+	if (prerenderPlaceholder) return placeholderData as T;
 	return use(promise);
 }
 
@@ -230,9 +221,9 @@ export function useQueryState<T>(queryKey: QueryKey): Partial<QueryState<T>> {
 	// Read through the cache on every render, so a changed key doesn't keep
 	// serving the previous query's state until the new one happens to emit.
 	return useSyncExternalStore(
-		useCallback((onChange) => queryCache.subscribe(({ query }) => {
+		(onChange) => queryCache.subscribe(({ query }) => {
 			if (query.queryHash === queryHash) onChange();
-		}), [queryHash]),
+		}),
 		() => queryCache.get<T>(queryHash)?.state
 	) || emptyQueryState;
 }

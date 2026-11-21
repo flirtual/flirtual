@@ -1,0 +1,19 @@
+{
+	"name": "embed",
+	"version": "0.0.0",
+	"private": true,
+	"license": "AGPL-3.0-or-later",
+	"type": "module",
+	"scripts": {
+		"dev": "wrangler dev --port 8787 --local-protocol https --https-key-path ../frontend/certificates/localhost-key.pem --https-cert-path ../frontend/certificates/localhost.pem",
+		"release": "wrangler deploy",
+		"canary": "wrangler deploy --env canary",
+		"tsc": "tsc",
+		"cf-typegen": "wrangler types --env-file .env.example"
+	},
+	"devDependencies": {
+		"@types/node": "catalog:",
+		"typescript": "catalog:",
+		"wrangler": "catalog:"
+	}
+}

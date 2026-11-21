@@ -1,24 +1,23 @@
 import { SelectItemText } from "@radix-ui/react-select";
-import ms from "ms" with { type: "macro" };
-import { createContext, use, useCallback, useMemo } from "react";
+import { createContext, use, useCallback, useMemo, useState } from "react";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 
+import { createOffsetTimeFormatter, millisecondsUntilNextMinute } from "~/date";
 import { useAttributes } from "~/hooks/use-attribute";
-import { useIntervalValue } from "~/hooks/use-interval";
+import { useTimeout } from "~/hooks/use-interval";
 import { useBrowserTimezone } from "~/hooks/use-timezone";
 
 import { InputSelect, SelectItem } from "../select";
 import type { InputSelectProps } from "../select";
 
-function formatTime(offsetSeconds: number): string {
-	const now = new Date();
-	const utcTime = now.getTime() + now.getTimezoneOffset() * 60000;
-	const tzTime = new Date(utcTime + offsetSeconds * 1000);
-	return tzTime.toLocaleTimeString(undefined, {
-		hour: "numeric",
-		minute: "2-digit"
-	});
+const formatTimeAtOffset = createOffsetTimeFormatter();
+
+function useCurrentMinute(): number {
+	const [now, setNow] = useState(Date.now);
+	useTimeout(useCallback(() => setNow(Date.now()), []), millisecondsUntilNextMinute(now));
+
+	return now;
 }
 
 function getCityName(timezoneId: string): string {
@@ -26,14 +25,13 @@ function getCityName(timezoneId: string): string {
 	return parts[parts.length - 1].replace(/_/g, " ");
 }
 
-const OffsetMapContext = createContext<Map<string, number>>(new Map());
+const TimesContext = createContext<Map<string, string>>(new Map());
 
 const TimezoneSelectItem: FC<{ value: string }> = ({ value: timezoneId }) => {
-	const offsetMap = use(OffsetMapContext);
-	const offset = offsetMap.get(timezoneId);
+	const times = use(TimesContext);
 
 	const city = getCityName(timezoneId);
-	const time = offset !== undefined ? formatTime(offset) : "";
+	const time = times.get(timezoneId) ?? "";
 
 	return (
 		<SelectItem
@@ -62,32 +60,26 @@ export function InputTimezoneSelect({ prefer, ...props }: InputTimezoneSelectPro
 	const browserTimezone = useBrowserTimezone();
 	const preferredTimezone = prefer ?? browserTimezone;
 
-	const offsetMap = useMemo(
-		() => new Map(timezones.map((tz) => [tz.id, tz.offset])),
-		[timezones]
+	const now = useCurrentMinute();
+
+	const times = useMemo(
+		() => new Map(timezones.map((tz) => [tz.id, formatTimeAtOffset(now, tz.offset)])),
+		[now, timezones]
 	);
 
-	const options = useIntervalValue(useCallback(() => {
-		return timezones
-			.map((tz) => {
-				const city = getCityName(tz.id);
-				const time = formatTime(tz.offset);
-
-				return {
-					id: tz.id,
-					name: `${city} time (${time})`,
-					offset: tz.offset
-				};
-			})
-			.sort((a, b) => {
-				if (a.id === preferredTimezone) return -1;
-				if (b.id === preferredTimezone) return 1;
-				return 0;
-			});
-	}, [preferredTimezone, timezones]), ms("5s"));
+	const options = useMemo(() => timezones
+		.map((tz) => ({
+			id: tz.id,
+			name: `${getCityName(tz.id)} time (${times.get(tz.id)})`
+		}))
+		.sort((a, b) => {
+			if (a.id === preferredTimezone) return -1;
+			if (b.id === preferredTimezone) return 1;
+			return 0;
+		}), [preferredTimezone, times, timezones]);
 
 	return (
-		<OffsetMapContext value={offsetMap}>
+		<TimesContext value={times}>
 			<InputSelect
 				{...props}
 				optional
@@ -95,6 +87,6 @@ export function InputTimezoneSelect({ prefer, ...props }: InputTimezoneSelectPro
 				options={options}
 				placeholder={t("select_timezone")}
 			/>
-		</OffsetMapContext>
+		</TimesContext>
 	);
 }

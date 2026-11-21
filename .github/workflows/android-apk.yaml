@@ -1,0 +1,78 @@
+name: Android APK
+on:
+  schedule:
+    - cron: "36 10 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}
+
+jobs:
+  publish:
+    name: Publish
+    if: (vars.VITE_FEATURE_APK || '1') != '0'
+    runs-on: ubuntu-latest
+    env:
+      PACKAGE_NAME: ${{ vars.APP_BUNDLE_ID_PRODUCTION || 'zone.homie.flirtual.pwa' }}
+      PLAY_SERVICE_ACCOUNT_JSON: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+      BRAND_NAME: ${{ vars.VITE_BRAND_NAME || 'Flirtual' }}
+      # The static bucket, served at static.<VITE_BRAND_ASSET_DOMAIN>; must match urls.apps.apk.
+      APK_BUCKET: files
+      APK_KEY: android.apk
+      ASSET_DOMAIN: ${{ vars.VITE_BRAND_ASSET_DOMAIN || 'flirtual.com' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: Install pnpm and Node.js
+        uses: pnpm/setup@731dfb6463bbd11c11fd0ee11fe00ed0e36d48a1 # v3.2.0
+        with:
+          runtime: node@26.13.1
+          cache: true
+          install: false
+
+      - name: Find the production release
+        id: play
+        run: node .github/play-apk.mjs
+
+      - name: Compare with the published APK
+        id: published
+        env:
+          VERSION_CODE: ${{ steps.play.outputs.version_code }}
+        run: |
+          filename="$BRAND_NAME-$VERSION_CODE.apk"
+          echo "filename=$filename" >> "$GITHUB_OUTPUT"
+          # The query string skips the edge cache, which can still hold the previous version.
+          if curl -fsSI "https://static.$ASSET_DOMAIN/$APK_KEY?v=$VERSION_CODE" | grep -qiF "filename=\"$filename\""; then
+            echo "$filename is already published"
+            echo "current=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Download the universal APK
+        if: steps.published.outputs.current != 'true'
+        env:
+          VERSION_CODE: ${{ steps.play.outputs.version_code }}
+        run: node .github/play-apk.mjs "$VERSION_CODE" "$RUNNER_TEMP/app.apk"
+
+      - name: Install Wrangler
+        if: steps.published.outputs.current != 'true'
+        # app-redirect depends on nothing but wrangler.
+        run: pnpm install --frozen-lockfile --filter app-redirect
+
+      - name: Upload to R2
+        if: steps.published.outputs.current != 'true'
+        working-directory: apps/app-redirect
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          FILENAME: ${{ steps.published.outputs.filename }}
+        run: |
+          pnpm exec wrangler r2 object put "$APK_BUCKET/$APK_KEY" \
+            --file "$RUNNER_TEMP/app.apk" \
+            --remote \
+            --content-type application/vnd.android.package-archive \
+            --content-disposition "attachment; filename=\"$FILENAME\"" \
+            --cache-control "public, max-age=300"

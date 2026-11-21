@@ -3,19 +3,97 @@
 	"meta_description": "The first VR dating app. Join over 100,000 people for dates in VR apps like VRChat.",
 	"meta_social_description": "Meet new people in Virtual Reality ❤️ {brand_name} helps you go on dates in VR and VRChat…",
 	"about_us": "About us",
-	"about_page_body": "<section><h1>Our story</h1><p>Hey, we're Kyle and Tony, the creators of Flirtual. Kyle has been obsessed with VR since the early days of Oculus, but it really changed his life when he joined VRChat and met some of his closest friends (including his wife!) there. Right before COVID hit, Kyle brought his childhood best friend Tony along for the journey, and VR also changed his life. We set out to help others meet awesome people around the world too, starting with VRLFP (Virtual Reality Looking For Partner).</p><p>Immersive presence in VR helps you form deep connections with people anywhere in the world. By bridging geographic distance and putting personality first, our mission is to find the very best people for you, wherever they are. And to make dating safer and more magical!</p><p>In 2022, VRLFP became Flirtual. Rebuilt from the ground up, we've enhanced matchmaking, added personality & interest tags, and launched improved apps. Whether you're looking for a serious relationship that transitions into real life, something more casual in VR, or just new homies, we're ready to help find your perfect match.</p><group><logo/><p>❤ kfarwell, Tony & The Flirtual Team</p><discord>Join our Discord</discord></group><p><italic>P.S. We've come a long way from VRLFP's humble beginnings, but we're still a small team rooted in the VR community. <br/><br/>We appreciate your patience as we work hard to make Flirtual as awesome as it can be. Please let us know if you <contact>find any bugs</contact> or <ideas>have any suggestions</ideas>!</italic></p></section><section><h1>The team</h1><team-list/></section><section><h1>Timeline</h1><timeline/></section>",
+	"about_page_body": "<team-photo/><section><h1>Our story</h1><p>Hey, we're Kyle and Tony, the creators of Flirtual. Kyle has been obsessed with VR since the early days of Oculus, but it really changed his life when he joined VRChat and met some of his closest friends (including his wife!) there. Right before COVID hit, Kyle brought his childhood best friend Tony along for the journey, and VR also changed his life. We set out to help others meet awesome people around the world too, starting with VRLFP (Virtual Reality Looking For Partner).</p><p>Immersive presence in VR helps you form deep connections with people anywhere in the world. By bridging geographic distance and putting personality first, our mission is to find the very best people for you, wherever they are. And to make dating safer and more magical!</p><p>In 2022, VRLFP became Flirtual. Rebuilt from the ground up, we've enhanced matchmaking, added personality & interest tags, and launched improved apps. Whether you're looking for a serious relationship that transitions into real life, something more casual in VR, or just new homies, we're ready to help find your perfect match.</p><group><logo/><p>❤ kfarwell, Tony & The Flirtual Team</p><discord>Join our Discord</discord></group><p><italic>P.S. We've come a long way from VRLFP's humble beginnings, but we're still a small team rooted in the VR community. <br/><br/>We appreciate your patience as we work hard to make Flirtual as awesome as it can be. Please let us know if you <contact>find any bugs</contact> or <ideas>have any suggestions</ideas>!</italic></p></section><section><h1>The team</h1><team-list/></section><section><h1>Timeline</h1><timeline/></section><gallery/>",
 	"avatar_alt": "{name}'s avatar",
 	"about_team_photo_alt": "Picture of the Flirtual Team in VRChat",
-	"about_team_roles": {
-		"kfarwell": "Lead Developer",
-		"existony": "Partnerships & Safety",
-		"aries": "Software Developer",
-		"moderator": "Moderator",
-		"event_host": "Event Host",
-		"social": "Socials",
-		"advisor": "Advisor",
-		"faxmashine": "VRChat World Creator",
-		"juice": "VRChat Avatar Creator"
+	"about_team": {
+		"kfarwell": {
+			"name": "kfarwell",
+			"role": "Lead Developer",
+			"avatar": "kfarwell.png"
+		},
+		"tony": {
+			"name": "Tony",
+			"role": "Partnerships & Safety",
+			"avatar": "tony.png"
+		},
+		"aries": {
+			"name": "Aries",
+			"role": "Software Developer",
+			"avatar": "aries.jpg"
+		},
+		"buramie": {
+			"name": "Buramie",
+			"role": "Moderator",
+			"avatar": "buramie.jpg"
+		},
+		"damned_united": {
+			"name": "Damned_United",
+			"role": "Moderator",
+			"avatar": "damned-united.jpg"
+		},
+		"ferry": {
+			"name": "Ferry",
+			"role": "Moderator",
+			"avatar": "ferry.png"
+		},
+		"reploidsham": {
+			"name": "Reploidsham",
+			"role": "Moderator",
+			"avatar": "reploidsham.jpg"
+		},
+		"samantha": {
+			"name": "Samantha",
+			"role": "Moderator",
+			"avatar": "samantha.jpg"
+		},
+		"simon3373": {
+			"name": "Simon3373",
+			"role": "Moderator",
+			"avatar": "simon3373.jpg"
+		},
+		"starh": {
+			"name": "Starh",
+			"role": "Moderator",
+			"avatar": "starh.png"
+		},
+		"the_blarg": {
+			"name": "The_Blarg",
+			"role": "Moderator",
+			"avatar": "the-blarg.jpg"
+		},
+		"zyp": {
+			"name": "Zyp",
+			"role": "Moderator",
+			"avatar": "zyp.jpg"
+		},
+		"michiyo": {
+			"name": "Michiyo",
+			"role": "Event Host",
+			"avatar": "michiyo.jpg"
+		},
+		"nickykitty": {
+			"name": "NickyKitty",
+			"role": "Event Host",
+			"avatar": "nickykitty.jpg"
+		},
+		"syrmor": {
+			"name": "Syrmor",
+			"role": "Advisor",
+			"avatar": "syrmor.jpg"
+		},
+		"faxmashine": {
+			"name": "Faxmashine",
+			"role": "VRChat World Creator",
+			"avatar": "faxmashine.png",
+			"url": "https://www.faxmashine.com/"
+		},
+		"juice": {
+			"name": "Juice",
+			"role": "VRChat Avatar Creator",
+			"avatar": "juice.jpg",
+			"url": "https://info.mdcr.tv/"
+		}
 	},
 	"outgoing_teeny_tiny_pass_male": {
 		"2018": {
@@ -136,6 +214,7 @@
 	"download_on": "Download on",
 	"app_store": "App Store",
 	"google_play": "Google Play",
+	"download_apk": "Download APK",
 	"microsoft_store": "Microsoft Store",
 	"sidequest": "SideQuest",
 	"events_upcoming": "Upcoming events",
@@ -318,6 +397,9 @@
 	"search_image_internal": "Search image (internal)",
 	"matching_images": "Matching images",
 	"edit": "Edit",
+	"reply": "Reply",
+	"delete": "Delete",
+	"select_text": "Select",
 	"share_profile_link": "Share your profile link",
 	"profile_link_updated": "Updated profile link",
 	"update": "Update",
@@ -419,7 +501,7 @@
 		"should_be_at_least_{count}_character(s)": "{count, plural, =0 {Required} =1 {Required} other {Must be at least # characters long}}.",
 		"should_be_at_least_{count}_byte(s)": "{count, plural, =0 {Required} =1 {Required} other {Must be at least # characters long}}.",
 		"should_be_at_most_{count}_byte(s)": "{count, plural, other {Can't be longer than # characters}}.",
-		"must_have_the_@_sign_and_no_spaces": "Please enter a valid email address.",
+		"must_be_a_valid_email_address": "Please enter a valid email address.",
 		"should_have_at_least_{count}_item(s)": "{count, plural, =0 {Required} =1 {Required} other {Please select at least # items}}.",
 		"should_be_at_most_{count}_character(s)": "{count, plural, =0 {Must be empty} =1 {Cannot be more than 1 character long} other {Cannot be more than # characters long}}.",
 		"should_have_at_most_{count}_item(s)": "{count, plural, =0 {Must be empty} =1 {Cannot have more than 1 item} other {Cannot have more than # items}}.",
@@ -479,13 +561,26 @@
 		"geolocation_permission_denied": "Location permission denied.",
 		"geolocation_not_supported": "Geolocation is not supported by your device.",
 		"plan_not_available": "There was an error initiating the purchase, please refresh the page and try again. You have not been charged.",
-		"checkout_not_available": "Sorry, purchases are currently unavailable."
+		"checkout_not_available": "Sorry, purchases are currently unavailable.",
+		"phone_invalid": "That doesn't look like a valid phone number. Check the country and number.",
+		"phone_not_mobile": "That number can't receive texts. Use a mobile number.",
+		"phone_not_registered": "There's no account with that number. <signup>Create one</signup> instead?",
+		"phone_rate_limit": "Too many codes for now. Try again in an hour.",
+		"sms_failed": "We couldn't text that number. Check it and try again.",
+		"sms_unavailable": "Phone login isn't available right now.",
+		"phone_login_disabled": "Phone login isn't available."
 	},
 	"support": "Support",
 	"forgot_your_password": "Forgot your password?",
 	"or_sign_up": "or sign up",
 	"or": "or",
 	"continue_with": "Continue with {type}",
+	"phone": "Phone",
+	"phone_number": "Phone number",
+	"send_code": "Send code",
+	"sms_consent": "We'll text you a code to confirm your number. Message and data rates may apply. Message frequency varies. Reply HELP for help. Reply STOP to cancel.",
+	"enter_phone_code_description": "Enter the code we texted to {phoneNumber}.",
+	"send_a_new_code": "Send a new code",
 	"device_verified": "Device verified.",
 	"checking_device": "Checking your device…",
 	"create_account": "Create account",
@@ -614,7 +709,7 @@
 	"terms_of_service": "Terms of Service",
 	"privacy_policy": "Privacy Policy",
 	"developers": "Developers",
-	"copyright": "© {year} {brand_name}",
+	"copyright": "© {year} {legal_name}",
 	"privacy": "Privacy",
 	"branding_intro": "Looking to use our art for something? Here it is. Please keep it tasteful and <contact>contact us</contact> for approval.",
 	"our_logo": "Our logo",
@@ -799,6 +894,12 @@
 	"hookups_hint": "Hookups (ERP, FWB)",
 	"talkjs_match_message": "It's a match!",
 	"talkjs_input_placeholder": "Send {name} good vibes…",
+	"gif": "GIF",
+	"send_gif": "Send a GIF",
+	"search_klipy": "Search KLIPY",
+	"recent": "Recent",
+	"trending": "Trending",
+	"show_embed": "Show {name}",
 	"last_message_from_you": "You: {message}",
 	"official": "Official",
 	"active_subscription": "Active subscription",

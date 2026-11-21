@@ -2,6 +2,7 @@ import ms from "ms" with { type: "macro" };
 import { useCallback, useState } from "react";
 import type { FC } from "react";
 
+import { Image } from "~/components/image";
 import { useInterval } from "~/hooks/use-interval";
 import { useMessages } from "~/i18n";
 import BlackHole from "~/static/home/date-ideas/black-hole.jpg";
@@ -57,7 +58,7 @@ export const CarouselGallery: FC = () => {
 							{title}
 						</span>
 					</div>
-					<img
+					<Image
 						className="size-full shrink-0 object-cover brightness-75"
 						src={images[index]}
 					/>

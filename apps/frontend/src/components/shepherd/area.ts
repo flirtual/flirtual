@@ -1,14 +1,12 @@
 import type { StepOptions } from "shepherd.js";
 
+import { measureSafeAreaBounds } from "~/hooks/use-safe-area";
+
 type Middleware = Exclude<NonNullable<NonNullable<StepOptions["floatingUIOptions"]>["middleware"]>[number], false | null | undefined>;
 
 // The safe area, narrowed to the split layout's main pane if asked.
 export function tourArea({ pane: withinPane = false } = {}) {
-	const probe = document.createElement("div");
-	probe.style.cssText = "position: fixed; visibility: hidden; pointer-events: none; inset: var(--safe-area-inset-top, 0px) var(--safe-area-inset-right, 0px) var(--safe-area-inset-bottom, 0px) var(--safe-area-inset-left, 0px);";
-	document.body.append(probe);
-	let { left, top, right, bottom } = probe.getBoundingClientRect();
-	probe.remove();
+	let { left, top, right, bottom } = measureSafeAreaBounds();
 
 	const pane = withinPane ? document.querySelector("[data-split-main]")?.getBoundingClientRect() : null;
 	if (pane && pane.width > 0) {

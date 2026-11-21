@@ -19,6 +19,27 @@ Other services, all under `apps/`:
 - **maintenance/**: Worker serving a 503 maintenance page; a `flirtual-maintenance` cookie matching `TOKEN` passes through. Also holds the static legal pages and `.well-known/` files.
 - **posthog-proxy/**: Worker proxying PostHog ingest and caching its static assets.
 - **preview-router/**: Worker routing preview hostnames (PR number or commit SHA) to the matching preview deployment.
+- **embed/**: Worker behind chat link embeds (`embed.flirtual.net`, `embed-beta.flirtual.net` for canary); see below.
+
+## Chat link embeds
+
+`apps/embed` unfurls links in chat messages for the TalkJS theme (`conversation-chatbox/link-embed.tsx`):
+domain rules adapted from Iframely, then oEmbed, then `twitter:player`/`og:video`, then an OpenGraph card.
+X and Bluesky posts skip all of that: `src/posts.ts` reads them from X's syndication endpoint and
+Bluesky's public API, and the app draws them itself, without either site's scripts.
+
+- **Allowlist**: `src/allowed-hosts.json` mirrors the TalkJS role's "Allowed hostnames" under link
+  suppression, and `src/allowed-matches.json` its "Suppression exceptions"; keep them in step. Hosts
+  are checked on the link and again where its redirects end; an exception covers its own redirects.
+- **Isolation**: players run in `/frame` on the embed origin, whose own CSP holds `frame-src` and
+  `script-src` to the allowlist and `frame-ancestors` to `ALLOWED_ORIGINS`. The app's CSP only ever
+  names the embed origin. The app frames it with `allow-scripts allow-same-origin` and no top
+  navigation, which is only safe on another registrable domain: never serve it from the app's.
+- **Proxying**: preview images and videos go through HMAC-signed `/image` and `/media` URLs
+  (`SIGNING_KEY` secret), so a recipient's IP never reaches arbitrary hosts.
+- **Klipy** (the GIF picker, `VITE_KLIPY_APP_KEY`): its terms require API calls and media loads
+  from the person's own client, unproxied and uncached, with results in the order returned. The
+  worker never fetches Klipy URLs; the app renders them itself.
 
 ## Data flow
 
@@ -37,6 +58,11 @@ only in the root `package.json`.
   submodule. CI doesn't check out the submodule, and a frozen install skips it once its empty
   directory is removed; every job that installs the whole workspace runs `rmdir pulumi` first
   until pnpm/pnpm#17712 is fixed.
+- `frozenLockfile` is on, so `pnpm install` never rewrites `pnpm-lock.yaml`: a resolving install
+  silently drops the `pulumi` importer whenever the submodule isn't checked out, as in a fresh
+  worktree. After editing a `package.json` by hand, run `pnpm install --no-frozen-lockfile`.
+  `pnpm add` ignores the setting, so run `git submodule update --init pulumi` before adding a
+  dependency in a fresh worktree.
 
 - Versions shared by more than one app (`typescript`, `eslint`, `wrangler`, `vitest`, …) live in
   the root `catalog:` and are referenced as `"typescript": "catalog:"`. Bump them there, not in the
@@ -57,8 +83,10 @@ Anything that needs a stable URL gets an alias in `src/app/_redirects.ts` instea
 redirects temporary, since the target changes with every build. The maintenance worker copies
 what it shows from `static/` when it deploys.
 
-Flirtual's static bucket (`static.flirtual.com`, the `global` stack's `staticBucket`) is kept only
-for links to it that already exist; nothing new should point at it. Other brands have none.
+Flirtual's static bucket (`static.flirtual.com`, the `global` stack's `staticBucket`) holds public
+files that live outside the repo: images the Discord bot and its posts link to, and the Android APK
+that `android-apk.yaml` publishes. The frontend's own art comes from `static/`, never the bucket.
+Other brands have none, so anything a brand needs from it must be optional.
 
 ## Image uploads
 
@@ -82,7 +110,8 @@ vars, read separately by each app:
   other value is optional, and whatever links to an unset one must disappear, not break.
 - **Flags**: `VITE_FEATURE_*` → `src/features.ts`; `FEATURE_*` → `Flirtual.Features`. Homie Mode,
   personality, VR tags (platform + game), VRChat, the list of connection providers, and (frontend
-  only) the events, news and press pages.
+  only) the events, news and press pages and the APK download link. Login methods are API-only (`FEATURE_LOGIN`): the
+  frontend renders what `/v1/config`'s `login_providers` lists, minus any method not configured.
 - **The rule**: a flag gates what the UI offers and what new writes may use. It never shrinks a
   wire type or `Ecto.Enum` (queue kinds, connection types, advanced filter categories), because
   rows written before a flip must still load. Data in a disabled feature is ignored, not rejected
@@ -99,5 +128,8 @@ vars, read separately by each app:
 
 - **Backend**: edit Elixir (hot reload) → `mix check` → test with curl.
 - **Frontend**: edit TS/React (hot reload) → `pnpm tsc` → test manually.
+- **portless**: `pnpm dev:portless` in `apps/frontend` and `./dev.sh --portless` in `apps/api`
+  serve both on `.localhost` names from `shims/portless`: one pair per checkout and
+  worktree, so forks never collide. See `apps/frontend/README.md`.
 - **Database**: `mix ecto.gen.migration` → edit → `mix ecto.migrate` (no rollbacks).
 - **API contract**: update the controller and frontend client together, plus `Watch/API.swift` if watchOS uses the endpoint.

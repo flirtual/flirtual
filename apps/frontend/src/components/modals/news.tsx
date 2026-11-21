@@ -76,14 +76,11 @@ export const NewsDialog: FC<NewsDialogProps> = (props) => {
 	const closing = useRef(false);
 	const confirmReference = useRef<HTMLButtonElement>(null);
 
-	const news = useMemo(() => {
-		if (props.news) return props.news.filter((id) => newsItems[id]);
-
-		if (!session?.user.news?.length) return [];
-		if (!tourCompleted) return [];
-
-		return session.user.news.filter((id) => newsItems[id]).toReversed();
-	}, [props.news, session?.user.news, tourCompleted]);
+	const news = props.news
+		? props.news.filter((id) => newsItems[id])
+		: session?.user.news?.length && tourCompleted
+			? session.user.news.filter((id) => newsItems[id]).toReversed()
+			: [];
 
 	const active = useInterruption("news", !props.news && news.length > 0);
 
@@ -143,16 +140,15 @@ export const NewsDialog: FC<NewsDialogProps> = (props) => {
 		if (closing.current) return;
 		closing.current = true;
 
-		try {
+		const removeNews = async () => {
 			if (!props.news && session) {
 				const updatedUser = await User.removeNews(session.user.id, news);
 				await mutate<Session>(sessionKey(), (session) => session && { ...session, user: updatedUser });
 			}
 			props.onClose?.();
-		}
-		finally {
-			closing.current = false;
-		}
+		};
+
+		await removeNews().finally(() => void (closing.current = false));
 	};
 
 	const performAction = async (action: NewsAction) => {

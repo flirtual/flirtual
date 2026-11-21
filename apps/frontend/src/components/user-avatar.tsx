@@ -70,6 +70,7 @@ export const UserImage: React.FC<UserImageProps> = ({ src, blurHash, ...props })
 	if (!src || failed) {
 		return (
 			<svg
+				data-fallback
 				suppressHydrationWarning
 				className={twMerge(
 					"aspect-square shrink-0 bg-cover bg-center bg-no-repeat",

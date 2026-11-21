@@ -1,0 +1,27 @@
+#!/bin/sh
+# Names apps after the checkout's repository, with `run --name api` giving api.<checkout>, until
+# portless can place the worktree label inside a name: https://github.com/vercel-labs/portless/issues/372
+set -eu
+
+common_dir=$(git rev-parse --path-format=absolute --git-common-dir)
+repository=$(basename "$(dirname "$common_dir")")
+if [ "$(git rev-parse --path-format=absolute --git-dir)" = "$common_dir" ]; then
+	checkout=$repository
+else
+	branch=$(git branch --show-current)
+	checkout="${branch##*/}.$repository"
+fi
+
+case "${1-} ${2-}" in
+	"run --name")
+		name="$3.$checkout"
+		shift 3
+		;;
+	"run "*)
+		name=$checkout
+		shift
+		;;
+	*) exec pnpm exec portless "$@" ;;
+esac
+
+exec pnpm exec portless run --prefix '' --name "$name" "$@"

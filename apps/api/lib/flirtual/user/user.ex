@@ -72,6 +72,7 @@ defmodule Flirtual.User do
   schema "users" do
     field(:email, :string)
     field(:previous_email, :string)
+    field(:phone_number, :string)
     field(:username, :string)
     field(:slug, :string)
     field(:password_hash, :string, redact: true)
@@ -115,6 +116,7 @@ defmodule Flirtual.User do
 
     field(:born_at, :date)
     field(:email_confirmed_at, :utc_datetime)
+    field(:phone_confirmed_at, :utc_datetime)
     field(:deactivated_at, :utc_datetime)
     field(:banned_at, :utc_datetime)
     field(:shadowbanned_at, :utc_datetime)
@@ -266,9 +268,12 @@ defmodule Flirtual.User do
       not Enum.empty?(profile.images)
   end
 
+  def contact_confirmed?(%User{} = user),
+    do: not is_nil(user.email_confirmed_at) or not is_nil(user.phone_confirmed_at)
+
   def visible?(%User{} = user) do
     finished_profile?(user) and
-      not is_nil(user.email_confirmed_at) and
+      contact_confirmed?(user) and
       is_nil(user.banned_at) and
       is_nil(user.shadowbanned_at) and
       is_nil(user.indef_shadowbanned_at) and
@@ -1420,17 +1425,25 @@ defmodule Flirtual.User do
     |> Flag.validate_allowed_slug(:slug)
   end
 
+  @invalid_email "must be a valid email address"
+
   def validate_email(changeset) do
-    changeset
-    |> validate_required([:email])
-    |> validate_format(:email, ~r/^[^\s]+@[^\s]+$/, message: "must have the @ sign and no spaces")
-    |> validate_length(:email, max: 254)
-    |> validate_change(:email, fn :email, email ->
-      case validate_idn(email) do
-        :ok -> []
-        {:error, _} -> [email: "is invalid"]
-      end
-    end)
+    changeset =
+      changeset
+      |> validate_required([:email])
+      |> validate_format(:email, ~r/^[^\s]+@[^\s]+$/, message: @invalid_email)
+      |> validate_length(:email, max: 254, count: :codepoints, message: @invalid_email)
+
+    if Keyword.has_key?(changeset.errors, :email),
+      do: changeset,
+      else: validate_change(changeset, :email, &validate_email_idn/2)
+  end
+
+  defp validate_email_idn(:email, email) do
+    case validate_idn(email) do
+      :ok -> []
+      {:error, _} -> [email: @invalid_email]
+    end
   end
 
   def validate_idn(address) when is_binary(address) do
@@ -1579,6 +1592,8 @@ defimpl Jason.Encoder, for: Flirtual.User do
       :id,
       :email,
       :previous_email,
+      :phone_number,
+      :phone_confirmed_at,
       :slug,
       :age,
       :born_at,

@@ -102,7 +102,7 @@
     @apply ja:not-italic;
   }
 
-  *:not(input) {
+  *:not(:where(input, textarea, [contenteditable="true"], [contenteditable="true"] *)) {
     user-select: none;
   }
 

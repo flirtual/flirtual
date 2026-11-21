@@ -8,11 +8,13 @@ config :flirtual, Flirtual.Repo,
   username: "postgres",
   password: "postgres",
   hostname: "localhost",
-  database: "flirtual_dev",
+  database: System.get_env("DEV_DATABASE_NAME", "flirtual_dev"),
   show_sensitive_data_on_connection_error: true,
   pool_size: 20,
   queue_target: 15_000,
   queue_interval: 5000
+
+config :flirtual, Flirtual.Search, table: System.get_env("DEV_SEARCH_TABLE", "profiles")
 
 # Configures the mailer
 #
@@ -22,6 +24,8 @@ config :flirtual, Flirtual.Repo,
 # For production it's recommended to configure a different adapter
 # at the `config/runtime.exs`.
 config :flirtual, Flirtual.Mailer, adapter: Swoosh.Adapters.Local
+
+config :flirtual, Flirtual.Notify, log_codes: true
 
 # Swoosh API client is needed for adapters other than SMTP.
 config :swoosh, :api_client, false
@@ -34,17 +38,25 @@ config :flirtual, FlirtualWeb.Endpoint,
   http: [
     ip: {0, 0, 0, 0, 0, 0, 0, 0}
   ],
-  https: [
-    ip: {0, 0, 0, 0, 0, 0, 0, 0},
-    otp_app: :flirtual,
-    port: 4001,
-    cipher_suite: :strong,
-    certfile: "priv/cert/selfsigned.pem",
-    keyfile: "priv/cert/selfsigned_key.pem"
-  ],
   check_origin: false,
   code_reloader: true,
   watchers: []
+
+# portless (https://portless.sh) terminates TLS itself and assigns the port.
+if System.get_env("PORTLESS_URL") do
+  config :flirtual, FlirtualWeb.Endpoint,
+    http: [port: System.fetch_env!("PORT") |> String.to_integer()]
+else
+  config :flirtual, FlirtualWeb.Endpoint,
+    https: [
+      ip: {0, 0, 0, 0, 0, 0, 0, 0},
+      otp_app: :flirtual,
+      port: 4001,
+      cipher_suite: :strong,
+      certfile: "priv/cert/selfsigned.pem",
+      keyfile: "priv/cert/selfsigned_key.pem"
+    ]
+end
 
 config :phoenix,
   # Set a higher stacktrace during development. Avoid configuring such

@@ -21,7 +21,8 @@ import { useOptionalSession } from "~/hooks/use-session";
 import {
 	biographyCounterThreshold,
 	biographyMaxLength,
-	contentLength
+	contentLength,
+	html
 } from "~/html";
 import { useNavigate } from "~/i18n";
 import { invalidate, sessionKey } from "~/query";
@@ -57,7 +58,7 @@ export const Finish1Form: FC = () => {
 					worldId: image.worldId,
 					worldName: image.worldName
 				})),
-				biography: user.profile.biography || "",
+				biography: html(user.profile.biography || ""),
 				prompts: user.profile.prompts
 			}}
 			className="flex flex-col gap-8"
@@ -65,7 +66,7 @@ export const Finish1Form: FC = () => {
 			onSubmit={async (values) => {
 				await Promise.all([
 					Profile.update(user.id, {
-						biography: values.biography,
+						biography: html(values.biography),
 						displayName: values.displayName,
 						required: ["biography", "displayName"]
 					}),

@@ -45,7 +45,7 @@ import {
 import { homieMode } from "./features";
 import { useDeepLinks } from "./hooks/use-deep-links";
 import { device } from "./hooks/use-device";
-import { useKeyboardVisible } from "./hooks/use-keyboard-visible";
+import { useKeyboardViewport } from "./hooks/use-keyboard-viewport";
 import { logOnce } from "./hooks/use-log";
 import { usePreferences } from "./hooks/use-preferences";
 import { useSystemBarsTheme } from "./hooks/use-system-bars";
@@ -175,6 +175,8 @@ export function meta({
 	].filter(Boolean);
 }
 
+const loadMotionFeatures = async () => (await import("./motion")).default;
+
 const BeforeRenderScript: FC = memo(() => {
 	const beforeRender = (localePathnameRegex: RegExp, friendsPathname: string | null) => {
 		const localTheme = globalThis.localTheme = JSON.parse(localStorage.getItem(".theme") || `"system"`) as LocalTheme;
@@ -230,7 +232,7 @@ export function Layout({ children }: PropsWithChildren) {
 
 	const [fontSize] = usePreferences<number>("font_size", 16);
 
-	const keyboardVisible = useKeyboardVisible();
+	useKeyboardViewport();
 
 	const { t } = useTranslation();
 
@@ -251,7 +253,7 @@ export function Layout({ children }: PropsWithChildren) {
 				"--safe-area-inset-top": "env(safe-area-inset-top, 0px)",
 				"--safe-area-inset-left": "env(safe-area-inset-left, 0px)",
 				"--safe-area-inset-right": "env(safe-area-inset-right, 0px)",
-				"--safe-area-inset-bottom": keyboardVisible ? "0px" : "env(safe-area-inset-bottom, 0px)",
+				"--safe-area-inset-bottom": "var(--keyboard-safe-area-inset-bottom, env(safe-area-inset-bottom, 0px))",
 				fontSize: `${fontSize || 16}px`
 			} as React.CSSProperties}
 			lang={locale}
@@ -279,7 +281,7 @@ export function Layout({ children }: PropsWithChildren) {
 				<RedirectBoundary>
 					<LazyMotion
 						strict
-						features={async () => ((await import("./motion")).default)}
+						features={loadMotionFeatures}
 					>
 						{children}
 					</LazyMotion>

@@ -12,10 +12,10 @@ export const HomiesDay2024: FC<{ onSaved?: () => void }> = () => (
 		components={{
 			...commonComponents,
 			"image-homies-day-1": (
-				<Image className="w-full" height={ImageHomiesDay1.height} src={ImageHomiesDay1.src} width={ImageHomiesDay1.width} />
+				<Image className="w-full" src={ImageHomiesDay1} />
 			),
 			"image-homies-day-2": (
-				<Image className="w-full" height={ImageHomiesDay2.height} src={ImageHomiesDay2.src} width={ImageHomiesDay2.width} />
+				<Image className="w-full" src={ImageHomiesDay2} />
 			)
 		}}
 		i18nKey="news.2024_homies_day.body"

@@ -32,6 +32,26 @@ export interface VerifyOptions {
 	code: string;
 }
 
+export interface SendPhoneCodeOptions {
+	phoneNumber: string;
+	captcha: string;
+}
+
+export interface VerifyPhoneCodeOptions {
+	phoneNumber: string;
+	code: string;
+	signup: boolean;
+	deviceId?: string;
+}
+
+type PhoneCodeIssue = Issue<"phone_invalid"> | Issue<"phone_login_disabled"> | Issue<"phone_not_mobile"> | Issue<"phone_rate_limit"> | Issue<"sms_failed"> | Issue<"sms_unavailable"> | Issue<"turnstile_invalid">;
+type PhoneVerifyIssue = Issue<"phone_invalid"> | Issue<"phone_login_disabled"> | Issue<"phone_not_mobile"> | Issue<"phone_not_registered"> | Issue<"verification_invalid_code"> | Issue<"verification_rate_limit">;
+
+function issueOrThrow(reason: unknown) {
+	if (isWretchError(reason)) return reason.json;
+	throw reason;
+}
+
 export interface ConfirmResetPasswordOptions {
 	email: string;
 	password: string;
@@ -141,6 +161,24 @@ export const Authentication = {
 				throw reason;
 			})
 			.json<Issue<"account_banned"> | Issue<"invalid_credentials"> | Issue<"login_rate_limit"> | Issue<"verification_email_failed"> | Issue<"verification_rate_limit"> | Session | VerificationResponse>();
+	},
+	phone: {
+		sendCode(options: SendPhoneCodeOptions) {
+			return api
+				.url("session/phone")
+				.json(options)
+				.catcherFallback(issueOrThrow)
+				.post()
+				.json<{ phoneNumber: string } | PhoneCodeIssue>();
+		},
+		verify(options: VerifyPhoneCodeOptions) {
+			return api
+				.url("session/phone/verify")
+				.json(options)
+				.catcherFallback(issueOrThrow)
+				.post()
+				.json<PhoneVerifyIssue | Session>();
+		}
 	},
 	magicLogin(token: string) {
 		return this.api

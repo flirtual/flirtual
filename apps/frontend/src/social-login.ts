@@ -1,5 +1,5 @@
 import { App } from "@capacitor/app";
-import { SocialLogin } from "@capgo/capacitor-social-login";
+import type { SocialLoginPlugin } from "@capgo/capacitor-social-login";
 
 import { apiUrl, appleSigninServiceId, googleClientId, googleIosClientId } from "./const";
 import { device } from "./hooks/use-device";
@@ -7,11 +7,17 @@ import { log } from "./log";
 
 const cancelGraceMs = 1500;
 
+async function loadSocialLogin() {
+	const { SocialLogin } = await import("@capgo/capacitor-social-login");
+	return SocialLogin;
+}
+
 export async function initializeSocialLogin(): Promise<void> {
 	if (!device.native) return;
 	if (!appleSigninServiceId && !googleClientId) return;
 
 	try {
+		const SocialLogin = await loadSocialLogin();
 		await SocialLogin.initialize({
 			...(appleSigninServiceId && {
 				apple: {
@@ -51,8 +57,10 @@ function cancelError() {
 // the foreground with the login still pending as a cancellation, and
 // re-initialize to rebuild the AppleProvider.
 export async function nativeSocialLogin(
-	options: Parameters<typeof SocialLogin.login>[0]
-): Promise<Awaited<ReturnType<typeof SocialLogin.login>>> {
+	options: Parameters<SocialLoginPlugin["login"]>[0]
+): Promise<Awaited<ReturnType<SocialLoginPlugin["login"]>>> {
+	const SocialLogin = await loadSocialLogin();
+
 	if (!(device.android && options.provider === "apple"))
 		return SocialLogin.login(options);
 

@@ -106,7 +106,7 @@ defmodule Flirtual.ObanWorkers.Daily do
           where: user.active_at <= ^DateTime.add(now, -days, :day),
           where: user.active_at > ^DateTime.add(now, -730, :day),
           where: is_nil(user.banned_at),
-          where: not is_nil(user.email_confirmed_at),
+          where: not is_nil(user.email_confirmed_at) or not is_nil(user.phone_confirmed_at),
           where: not fragment("? && ?::citext[]", user.tags, ^tags_gte),
           where: not fragment("? && ?::citext[]", user.tags, ^@never_prune_tags),
           select: user.id

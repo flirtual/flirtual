@@ -5,7 +5,7 @@
 	"type": "module",
 	"exports": "./src/index.ts",
 	"scripts": {
-		"generate:api": "typed-openapi https://raw.githubusercontent.com/chargebee/openapi/06f6ff8a4dd98577961acb29bf1d2d0c41684748/spec/chargebee_api_v2_pc_v2_spec.json --no-include-client -o src/generated/index.ts",
+		"generate:api": "typed-openapi https://raw.githubusercontent.com/chargebee/openapi/345a57f5a179bfafd2e186d8c2d02f7c133ac4a8/spec/chargebee_api_v2_pc_v2_spec.json --no-include-client -o src/generated/index.ts",
 		"postinstall": "pnpm generate:api",
 		"test": "vitest run",
 		"build": "tsc",

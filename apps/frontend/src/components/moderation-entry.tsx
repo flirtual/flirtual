@@ -924,7 +924,7 @@ export const ModerationEntryRow: FC<{
 
 	const ExpandIcon = expanded ? ChevronDown : ChevronRight;
 	const preview = summary ?? reasonName ?? message;
-	showUser &&= !anonymous;
+	const showSubject = showUser && !anonymous;
 
 	return (
 		<div className={twMerge("flex flex-col", status && "opacity-60")}>
@@ -937,7 +937,7 @@ export const ModerationEntryRow: FC<{
 					<ExpandIcon className="size-4 shrink-0" />
 					<Icon className={twMerge("size-4 shrink-0", color.icon)} />
 					<span className="shrink-0 font-bold">{title}</span>
-					{showUser && (subjectId
+					{showSubject && (subjectId
 						? <UserDisplayName fallback={username} userId={subjectId} />
 						: username && <span className="max-w-40 shrink-0 truncate font-semibold italic">{username}</span>)}
 					{status && <span className="shrink-0">{`(${status})`}</span>}
@@ -950,7 +950,7 @@ export const ModerationEntryRow: FC<{
 					</span>
 				)}
 			</div>
-			{expanded && <ModerationEntryDetails entry={entry} showUser={showUser} />}
+			{expanded && <ModerationEntryDetails entry={entry} showUser={showSubject} />}
 		</div>
 	);
 };

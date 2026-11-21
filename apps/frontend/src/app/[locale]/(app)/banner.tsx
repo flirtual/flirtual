@@ -35,6 +35,19 @@ export type BannerProps = PropsWithChildren<{
 
 const defaultBannerIcon = <MoveRight />;
 
+// Pages sized to the viewport, like a conversation's chatbox, leave room for the banner by this.
+function publishBannerHeight(element: HTMLDivElement) {
+	const root = document.documentElement;
+	const observer = new ResizeObserver(([entry]) =>
+		root.style.setProperty("--banner-height", `${entry.borderBoxSize[0].blockSize}px`));
+
+	observer.observe(element);
+	return () => {
+		observer.disconnect();
+		root.style.removeProperty("--banner-height");
+	};
+}
+
 export function Banner({ children, className, ref, icon = defaultBannerIcon, onDismiss }: BannerProps) {
 	const { t } = useTranslation();
 
@@ -48,7 +61,7 @@ export function Banner({ children, className, ref, icon = defaultBannerIcon, onD
 			)}
 			ref={ref}
 		>
-			<div className="relative flex w-full items-center justify-center py-4 pt-[max(calc(var(--safe-area-inset-top,0rem)+0.5rem),1rem)] pr-[calc(2rem+var(--content-inset-right,0rem))] pl-[calc(2rem+var(--content-inset-left,0rem))]">
+			<div className="relative flex w-full items-center justify-center py-4 pt-[max(calc(var(--safe-area-inset-top,0rem)+0.5rem),1rem)] pr-[calc(2rem+var(--content-inset-right,0rem))] pl-[calc(2rem+var(--content-inset-left,0rem))]" ref={publishBannerHeight}>
 				<div className="relative flex items-center gap-4 font-montserrat leading-none desktop:text-lg">
 					{icon && <Slot className="mt-[0.15rem] w-6 shrink-0 animate-bounce-x">{icon}</Slot>}
 					<span>{children}</span>

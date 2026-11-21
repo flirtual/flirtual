@@ -11,7 +11,7 @@ import {
 	VenetianMask
 } from "lucide-react";
 import { AnimatePresence, m } from "motion/react";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router";
@@ -21,6 +21,7 @@ import { DiscordOutlineIcon } from "~/components/icons";
 import { Link } from "~/components/link";
 import { UserAvatar } from "~/components/user-avatar";
 import { news } from "~/features";
+import { useBackButton } from "~/hooks/use-back-button";
 import { useBreakpoint } from "~/hooks/use-breakpoint";
 import { useClickOutside } from "~/hooks/use-click-outside";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
@@ -67,6 +68,7 @@ export const NavigationItemProfile: FC = () => {
 	const photoless = !urls.userAvatar(user);
 
 	useClickOutside(elementReference, () => setVisible(false), visible);
+	useBackButton(visible, () => setVisible(false));
 	useGlobalEventListener(
 		"document",
 		"scroll",
@@ -74,9 +76,11 @@ export const NavigationItemProfile: FC = () => {
 		visible
 	);
 
-	useEffect(() => {
+	const [shownAt, setShownAt] = useState(location);
+	if (shownAt !== location) {
+		setShownAt(location);
 		setVisible(false);
-	}, [location]);
+	}
 
 	const isDesktop = useBreakpoint("desktop");
 

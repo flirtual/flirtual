@@ -1,11 +1,11 @@
 import {
 	flexRender,
-	getCoreRowModel,
-	useReactTable
+	tableFeatures,
+	useTable
 } from "@tanstack/react-table";
 import type { ColumnDef } from "@tanstack/react-table";
 import { Search, Trash2 } from "lucide-react";
-import { Suspense, useDeferredValue, useEffect, useMemo, useState } from "react";
+import { Suspense, useDeferredValue, useMemo, useState } from "react";
 import type { FC } from "react";
 
 import type { Paginate } from "~/api/common";
@@ -88,7 +88,9 @@ const CountryCell: FC<{ countryId: string }> = ({ countryId }) => {
 	);
 };
 
-function flagColumns(type: FlagType): Array<ColumnDef<FlagModel>> {
+const features = tableFeatures({});
+
+function flagColumns(type: FlagType): Array<ColumnDef<typeof features, FlagModel>> {
 	return [
 		{
 			id: "flag",
@@ -126,10 +128,10 @@ const DataTable: FC<{ data: Array<FlagModel>; limit: number; type: FlagType }> =
 	type
 }) => {
 	const columns = useMemo(() => flagColumns(type), [type]);
-	const table = useReactTable({
+	const table = useTable({
+		features,
 		data,
-		columns,
-		getCoreRowModel: getCoreRowModel()
+		columns
 	});
 
 	return (
@@ -159,14 +161,14 @@ const DataTable: FC<{ data: Array<FlagModel>; limit: number; type: FlagType }> =
 										key={row.id}
 									>
 										<Suspense fallback={(
-											<TableCell colSpan={row.getVisibleCells().length}>
+											<TableCell colSpan={row.getAllCells().length}>
 												<span className="truncate text-xs brightness-75">
 													Loading...
 												</span>
 											</TableCell>
 										)}
 										>
-											{row.getVisibleCells().map((cell) => (
+											{row.getAllCells().map((cell) => (
 												<TableCell key={cell.id} className="select-children">
 													{flexRender(cell.column.columnDef.cell, cell.getContext())}
 												</TableCell>
@@ -215,7 +217,11 @@ export const FlagsView: React.FC = () => {
 	const deferredPage = useDeferredValue(page);
 
 	// Reset page when the search options or tab change.
-	useEffect(() => setPage(1), [deferredOptions, activeTab]);
+	const [pagedFor, setPagedFor] = useState({ options: deferredOptions, tab: activeTab });
+	if (pagedFor.options !== deferredOptions || pagedFor.tab !== activeTab) {
+		setPagedFor({ options: deferredOptions, tab: activeTab });
+		setPage(1);
+	}
 
 	const data = useQuery({
 		queryKey: flagsKey({

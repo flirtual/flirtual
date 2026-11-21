@@ -124,7 +124,14 @@ defmodule Flirtual.Flag do
   end
 
   def validate_allowed_email(changeset, field) do
-    domain = get_field(changeset, field) |> String.split("@") |> List.last()
+    case get_field(changeset, field) do
+      email when is_binary(email) -> validate_allowed_email_domain(changeset, field, email)
+      _ -> changeset
+    end
+  end
+
+  defp validate_allowed_email_domain(changeset, field, email) do
+    domain = email |> String.split("@") |> List.last()
 
     cond do
       Disposable.disposable?(domain) ->

@@ -1,4 +1,4 @@
-// import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 
 export interface SafeArea {
 	top: number;
@@ -7,48 +7,98 @@ export interface SafeArea {
 	left: number;
 }
 
-export function useSafeArea(): SafeArea {
-	// Temporary @capacitor-community/safe-area implementation
-	if (typeof document === "undefined") {
-		return { top: 0, right: 0, bottom: 0, left: 0 };
-	}
+const noSafeArea: SafeArea = { top: 0, right: 0, bottom: 0, left: 0 };
 
-	const element = document.createElement("div");
-	element.style.cssText = "position:absolute;visibility:hidden;top:var(--safe-area-inset-top,0);right:var(--safe-area-inset-right,0);bottom:var(--safe-area-inset-bottom,0);left:var(--safe-area-inset-left,0)";
-	document.body.appendChild(element);
-	const style = getComputedStyle(element);
-	const safeArea = {
-		top: Number.parseFloat(style.top) || 0,
-		right: Number.parseFloat(style.right) || 0,
-		bottom: Number.parseFloat(style.bottom) || 0,
-		left: Number.parseFloat(style.left) || 0
+function sameInsets(a: SafeArea, b: SafeArea) {
+	return a.top === b.top && a.right === b.right && a.bottom === b.bottom && a.left === b.left;
+}
+
+export function createSafeAreaStore(
+	measure: () => SafeArea,
+	listenForChanges: (onChange: () => void) => void
+) {
+	let snapshot = noSafeArea;
+	let listening = false;
+	const subscribers = new Set<() => void>();
+
+	const remeasureAndNotify = () => {
+		const measured = measure();
+		if (sameInsets(snapshot, measured)) return;
+
+		snapshot = measured;
+		for (const notify of subscribers) notify();
 	};
-	document.body.removeChild(element);
-	return safeArea;
 
-	// TODO: Waiting on ionic-team/capacitor#8180
-	// const [safeArea, setSafeArea] = useState<SafeArea>({
-	// 	top: 0,
-	// 	right: 0,
-	// 	bottom: 0,
-	// 	left: 0
-	// });
-	//
-	// useEffect(() => {
-	// 	const updateSafeArea = () => {
-	// 		const style = getComputedStyle(document.documentElement);
-	// 		setSafeArea({
-	// 			top: Number.parseFloat(style.getPropertyValue("--safe-area-inset-top")) || 0,
-	// 			right: Number.parseFloat(style.getPropertyValue("--safe-area-inset-right")) || 0,
-	// 			bottom: Number.parseFloat(style.getPropertyValue("--safe-area-inset-bottom")) || 0,
-	// 			left: Number.parseFloat(style.getPropertyValue("--safe-area-inset-left")) || 0
-	// 		});
-	// 	};
-	//
-	// 	updateSafeArea();
-	// 	window.addEventListener("safeAreaChanged", updateSafeArea);
-	// 	return () => window.removeEventListener("safeAreaChanged", updateSafeArea);
-	// }, []);
-	//
-	// return safeArea;
+	return {
+		getSnapshot: () => snapshot,
+		subscribe(subscriber: () => void) {
+			subscribers.add(subscriber);
+			if (!listening) {
+				listening = true;
+				listenForChanges(remeasureAndNotify);
+				remeasureAndNotify();
+			}
+
+			return () => subscribers.delete(subscriber);
+		}
+	};
+}
+
+function createInsetProbe(corner: string, widthInset: string, heightInset: string) {
+	const probe = document.createElement("div");
+	probe.ariaHidden = "true";
+	probe.style.cssText = `position:fixed;${corner};visibility:hidden;pointer-events:none;width:var(${widthInset},0px);height:var(${heightInset},0px)`;
+	document.body.append(probe);
+	return probe;
+}
+
+let insetProbes: { topLeft: HTMLElement; bottomRight: HTMLElement } | undefined;
+let insetProbeObserver: ResizeObserver | undefined;
+
+function getInsetProbes() {
+	if (!insetProbes?.topLeft.isConnected || !insetProbes.bottomRight.isConnected) {
+		insetProbes?.topLeft.remove();
+		insetProbes?.bottomRight.remove();
+		insetProbeObserver?.disconnect();
+		insetProbes = {
+			topLeft: createInsetProbe("top:0;left:0", "--safe-area-inset-left", "--safe-area-inset-top"),
+			bottomRight: createInsetProbe("bottom:0;right:0", "--safe-area-inset-right", "--safe-area-inset-bottom")
+		};
+		insetProbeObserver?.observe(insetProbes.topLeft);
+		insetProbeObserver?.observe(insetProbes.bottomRight);
+	}
+	return insetProbes;
+}
+
+function measureInsetProbes() {
+	const { topLeft, bottomRight } = getInsetProbes();
+	return { topLeft: topLeft.getBoundingClientRect(), bottomRight: bottomRight.getBoundingClientRect() };
+}
+
+export function measureSafeArea(): SafeArea {
+	const { topLeft, bottomRight } = measureInsetProbes();
+	return {
+		top: topLeft.height,
+		right: bottomRight.width,
+		bottom: bottomRight.height,
+		left: topLeft.width
+	};
+}
+
+export function measureSafeAreaBounds() {
+	const { topLeft, bottomRight } = measureInsetProbes();
+	return { left: topLeft.right, top: topLeft.bottom, right: bottomRight.left, bottom: bottomRight.top };
+}
+
+function listenForSafeAreaChanges(onChange: () => void) {
+	const { topLeft, bottomRight } = getInsetProbes();
+	insetProbeObserver = new ResizeObserver(onChange);
+	insetProbeObserver.observe(topLeft);
+	insetProbeObserver.observe(bottomRight);
+}
+
+const safeAreaStore = createSafeAreaStore(measureSafeArea, listenForSafeAreaChanges);
+
+export function useSafeArea(): SafeArea {
+	return useSyncExternalStore(safeAreaStore.subscribe, safeAreaStore.getSnapshot, () => noSafeArea);
 }

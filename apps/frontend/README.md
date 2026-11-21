@@ -15,6 +15,24 @@
 
 * The frontend is now being served on port 3000.
 
+### portless
+
+[portless](https://portless.sh) serves the frontend at `https://<checkout>.localhost` and the API
+at `https://api.<checkout>.localhost`, with no ports and no certificates to make.
+`shims/portless` names them after the repository's directory, so a fork's checkout gets
+its own names, and in a git worktree adds the branch as a label, as in
+`https://fix-ui.flirtual.localhost`, so several worktrees run side by side.
+
+* Start the frontend with `pnpm dev:portless`.
+
+* Start the API from `apps/api` with `./dev.sh --portless`.
+
+* Leave `VITE_ORIGIN` and `VITE_API_URL` unset: the frontend reads its own URL from portless and
+  puts the API one `api.` label below it.
+
+The proxy binds port 443, and its first start adds portless's certificate authority to the
+system trust store (under WSL, Windows's too), so starting it asks for `sudo`.
+
 ### mkcert
 
 You can use [mkcert](https://github.com/FiloSottile/mkcert) to generate a certificate with a trusted local CA.
@@ -64,4 +82,4 @@ Tip: Windows Subsystem for Linux (WSL) doesn't work nicely with Android Studio, 
 
 * Build and run the app: `pnpm cap run android`.
 
-* You can view the client logs with `adb logcat --pid=$(adb shell pidof -s zone.homie.flirtual.pwa)`.
+* You can view the client logs with `adb logcat --pid=$(adb shell pidof -s $VITE_APP_BUNDLE_ID)`.

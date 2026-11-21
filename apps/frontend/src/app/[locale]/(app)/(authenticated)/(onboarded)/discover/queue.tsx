@@ -1,7 +1,7 @@
 import { useIsFetching, useIsMutating } from "@tanstack/react-query";
 import { X } from "lucide-react";
 import { AnimatePresence, m } from "motion/react";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { withSuspense } from "with-suspense";
@@ -141,10 +141,7 @@ const StreakNotice: FC<{ streak: number }> = ({ streak }) => {
 	const { t } = useTranslation();
 	const [hidden, hide] = useDismissed("liking_streak_notice");
 	const [dismissed, setDismissed] = useState(false);
-
-	useEffect(() => {
-		if (streak < likeStreakThreshold) setDismissed(false);
-	}, [streak]);
+	if (dismissed && streak < likeStreakThreshold) setDismissed(false);
 
 	if (hidden || dismissed || streak < likeStreakThreshold) return null;
 
@@ -175,38 +172,24 @@ export const Queue: FC<{ kind: ProspectKind }> = ({ kind }) => {
 	const queueingAnyMode = useIsMutating({ mutationKey: ["queue"] }) > 0;
 	const fetchingQueue = useIsFetching({ queryKey: queueKey(kind) }) > 0;
 
-	// The profile currently on screen, carried over when switching modes so you
-	// can Homie someone you found in Date Mode and vice versa.
-	const displayedProfile = useRef<{ userId: string; mode: ProspectKind } | null>(null);
-
 	// A profile carried over from the other mode, shown here even if it isn't
-	// part of this queue. Switching modes reuses this component, so we derive
-	// the guest whenever the kind changes. Nothing carries over from a mode whose
-	// limits are spent.
+	// part of this queue, so you can Homie someone you found in Date Mode and
+	// vice versa. Switching modes reuses this component, so the guest is derived
+	// from what the previous mode last showed. Nothing carries over from a mode
+	// whose limits are spent.
 	const [guest, setGuest] = useState<string | null>(null);
+	const [shown, setShown] = useState<{ kind: ProspectKind; profile: string | null }>({ kind, profile: null });
 
-	const renderedKind = useRef(kind);
-	if (renderedKind.current !== kind) {
-		renderedKind.current = kind;
-
-		const previous = displayedProfile.current;
-		setGuest(
-			previous && previous.mode !== kind && !limitsReached(previous.mode)
-				? previous.userId
-				: null
-		);
+	if (shown.kind !== kind) {
+		setGuest(shown.profile && !limitsReached(shown.kind) ? shown.profile : null);
+		setShown({ kind, profile: shown.profile });
 	}
 
 	// Once a guest profile is acted on, fall back to this mode's own queue.
-	useEffect(() => {
-		if (guest && queueingAnyMode) setGuest(null);
-	}, [guest, queueingAnyMode]);
+	if (guest && queueingAnyMode) setGuest(null);
 
 	const displayed = (guest !== current ? guest : null) ?? current;
-
-	useEffect(() => {
-		displayedProfile.current = displayed ? { userId: displayed, mode: kind } : null;
-	}, [displayed, kind]);
+	if (shown.kind === kind && shown.profile !== displayed) setShown({ kind, profile: displayed });
 
 	if (error === "finish_profile")
 		return <FinishProfileError />;

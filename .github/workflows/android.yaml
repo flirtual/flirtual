@@ -22,7 +22,7 @@ concurrency:
 env:
   VITE_ORIGIN: ${{ inputs.channel == 'production' && 'https://flirtu.al' || 'https://beta.flirtual.dev' }}
   VITE_API_URL: ${{ inputs.channel == 'production' && 'https://api.flirtu.al/v1/' || 'https://beta-api.flirtual.dev/v1/' }}
-  VITE_APP_BUNDLE_ID: ${{ inputs.channel == 'production' && 'zone.homie.flirtual.pwa' || 'zone.homie.flirtual.beta' }}
+  VITE_APP_BUNDLE_ID: ${{ inputs.channel == 'production' && (vars.APP_BUNDLE_ID_PRODUCTION || 'zone.homie.flirtual.pwa') || (vars.APP_BUNDLE_ID_BETA || 'zone.homie.flirtual.beta') }}
   VITE_APP_STORE_ID: "6450485324"
   VITE_BRAND_NAME: ${{ vars.VITE_BRAND_NAME }}
   VITE_BRAND_DATE_COLORS: ${{ vars.VITE_BRAND_DATE_COLORS }}
@@ -68,16 +68,16 @@ jobs:
         run: rmdir pulumi
 
       - name: Install pnpm and Node.js
-        uses: pnpm/setup@fa36a5ef7dcdefc3a7cb25655c122e00cf6e636e # v3.1.2
+        uses: pnpm/setup@731dfb6463bbd11c11fd0ee11fe00ed0e36d48a1 # v3.2.0
         with:
-          runtime: node@26.13.0
+          runtime: node@26.13.1
           cache: true
 
       - name: Install Java
-        uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6
+        uses: actions/setup-java@d1374f8ac74474200d16ef8ecee22c7ae7a51880 # v6
         with:
           distribution: temurin
-          java-version: 21
+          java-version: 25
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@8da46b539cd8fe6ab27ca75128919a18d757604c # v6
@@ -115,10 +115,10 @@ jobs:
           path: ${{ runner.temp }}/bundle
 
       - name: Install Java
-        uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6
+        uses: actions/setup-java@d1374f8ac74474200d16ef8ecee22c7ae7a51880 # v6
         with:
           distribution: temurin
-          java-version: 21
+          java-version: 25
 
       - name: Sign app bundle
         env:

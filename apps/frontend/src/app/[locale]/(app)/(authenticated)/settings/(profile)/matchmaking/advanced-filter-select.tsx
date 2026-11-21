@@ -55,9 +55,8 @@ export const AdvancedFilterSelect: FC<{
 	const rootReference = useRef<HTMLDivElement>(null);
 	const anchorReference = useRef<HTMLDivElement>(null);
 	const inputReference = useRef<HTMLInputElement>(null);
-	const listReference = useRef<HTMLDivElement>(null);
 	const { ref: attachList, down: canScrollDown, element: listElement }
-		= useScrollIndicator(listReference);
+		= useScrollIndicator<HTMLDivElement>();
 
 	const fullscreen = overlayVisible && !desktop;
 
@@ -68,7 +67,7 @@ export const AdvancedFilterSelect: FC<{
 
 	useLayoutEffect(() => {
 		if (fullscreen && !previousFullscreen.current)
-			scrollReference.current ??= window.scrollY;
+			scrollReference.current = scrollReference.current ?? window.scrollY;
 
 		if (!fullscreen && previousFullscreen.current) {
 			if (scrollReference.current !== null)
@@ -185,7 +184,7 @@ export const AdvancedFilterSelect: FC<{
 		}
 
 		if (key === "ArrowDown") {
-			const first = listReference.current?.querySelector<HTMLButtonElement>(
+			const first = listElement?.querySelector<HTMLButtonElement>(
 				"button[data-option]:not(:disabled)"
 			);
 
@@ -205,7 +204,7 @@ export const AdvancedFilterSelect: FC<{
 		event.preventDefault();
 
 		const buttons = [
-			...(listReference.current?.querySelectorAll<HTMLButtonElement>(
+			...(listElement?.querySelectorAll<HTMLButtonElement>(
 				"button[data-option]:not(:disabled)"
 			) ?? [])
 		];
@@ -226,22 +225,21 @@ export const AdvancedFilterSelect: FC<{
 	const [active, setActive] = useState({ index: 0, scrolledIn: false });
 
 	const groupElements = () =>
-		[...(listReference.current?.querySelectorAll<HTMLElement>("[data-group-heading]") ?? [])]
+		[...(listElement?.querySelectorAll<HTMLElement>("[data-group-heading]") ?? [])]
 			.map((heading) => heading.parentElement)
 			.filter((group): group is HTMLElement => !!group);
 
 	// Scroll the given category to the top of the (scroll-clipped) list.
 	const jumpToGroup = (index: number) => {
-		const container = listReference.current;
+		const container = listElement;
 		const group = groupElements()[index];
 		if (!container || !group) return;
 
-		container.scrollTop += group.getBoundingClientRect().top
-			- container.getBoundingClientRect().top;
+		container.scrollBy(0, group.getBoundingClientRect().top - container.getBoundingClientRect().top);
 	};
 
 	const onListScroll = useCallback(() => {
-		const container = listReference.current;
+		const container = listElement;
 		if (!container) return;
 
 		const containerTop = container.getBoundingClientRect().top;
@@ -262,7 +260,7 @@ export const AdvancedFilterSelect: FC<{
 			current.index === index && current.scrolledIn === scrolledIn
 				? current
 				: { index, scrolledIn });
-	}, []);
+	}, [listElement]);
 
 	const placeholder = selectedOptions.length > 0 ? "" : _placeholder;
 
@@ -382,7 +380,7 @@ export const AdvancedFilterSelect: FC<{
 
 				if (
 					currentTarget.contains(relatedTarget)
-					|| listReference.current?.contains(relatedTarget)
+					|| listElement?.contains(relatedTarget)
 				)
 					return;
 

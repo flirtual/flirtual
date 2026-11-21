@@ -28,7 +28,7 @@ export default function GuidelinesPage() {
 			<div className="flex flex-col gap-8">
 				<Trans
 					components={{
-						p: <p className="select-text" />,
+						p: <p className="select-text [p+&]:mt-2" />,
 						section: <section className="flex flex-col gap-4 select-children" />,
 						group: <div className="flex flex-col gap-1" />,
 						h1: <h1 className="text-2xl font-semibold" />,
@@ -37,6 +37,7 @@ export default function GuidelinesPage() {
 						vulnerability: <InlineLink href={urls.resources.vulnerabilityReport} />,
 						email: <InlineLink href={urls.resources.contactDirect} />,
 						"mental-health": <InlineLink href={urls.guides.mentalHealth} />,
+						nsfw: <InlineLink href={urls.settings.nsfw} />,
 						terms: <InlineLink href={urls.resources.termsOfService} />,
 						privacy: <InlineLink href={urls.resources.privacyPolicy} />
 					}}

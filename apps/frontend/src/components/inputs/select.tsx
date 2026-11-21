@@ -75,6 +75,7 @@ SelectTrigger.displayName = SelectPrimitive.Trigger.displayName;
 function SelectScrollUpButton({ ref: reference, className, ...props }: { ref?: React.Ref<React.ComponentRef<typeof SelectPrimitive.ScrollUpButton> | null> } & React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollUpButton>) {
 	return (
 		<SelectPrimitive.ScrollUpButton
+			data-scroll-button
 			className={twMerge(
 				"absolute inset-x-0 top-0 z-10 flex h-7 cursor-default items-center justify-center bg-linear-to-b from-black-90/5 to-transparent py-1",
 				className
@@ -91,6 +92,7 @@ SelectScrollUpButton.displayName = SelectPrimitive.ScrollUpButton.displayName;
 function SelectScrollDownButton({ ref: reference, className, ...props }: { ref?: React.Ref<React.ComponentRef<typeof SelectPrimitive.ScrollDownButton> | null> } & React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollDownButton>) {
 	return (
 		<SelectPrimitive.ScrollDownButton
+			data-scroll-button
 			className={twMerge(
 				"absolute inset-x-0 bottom-0 z-10 flex h-7 cursor-default items-center justify-center bg-linear-to-t from-black-90/5 to-transparent py-1",
 				className
@@ -128,6 +130,7 @@ function SelectContent({ ref: reference, ...props }: { ref?: React.Ref<React.Com
 
 	// Tapping outside dismisses without restoring focus to the trigger.
 	const touchDismissReference = React.useRef(false);
+	const scrollButtonPressReference = React.useRef(false);
 
 	return (
 		<SelectPrimitive.Portal>
@@ -146,11 +149,29 @@ function SelectContent({ ref: reference, ...props }: { ref?: React.Ref<React.Com
 				ref={reference}
 				sideOffset={sideOffset}
 				{...elementProps}
+				onClickCapture={(event) => {
+					elementProps.onClickCapture?.(event);
+					if (!scrollButtonPressReference.current) return;
+
+					// Releasing a scroll button can click an item instead.
+					scrollButtonPressReference.current = false;
+					event.preventDefault();
+					event.stopPropagation();
+				}}
 				onCloseAutoFocus={(event) => {
 					if (!touchDismissReference.current) return;
 
 					touchDismissReference.current = false;
 					event.preventDefault();
+				}}
+				onPointerDown={(event) => {
+					elementProps.onPointerDown?.(event);
+					scrollButtonPressReference.current = (event.target as Element).closest("[data-scroll-button]") !== null;
+
+					// Scroll buttons scroll the focused item into view when they mount.
+					const content = event.currentTarget;
+					if (event.pointerType !== "mouse" && document.activeElement !== content && content.contains(document.activeElement))
+						content.focus({ preventScroll: true });
 				}}
 				onPointerDownOutside={(event) => {
 					if (event.detail.originalEvent.pointerType === "touch")
@@ -186,7 +207,9 @@ function SelectContent({ ref: reference, ...props }: { ref?: React.Ref<React.Com
 					>
 						{children}
 					</SelectPrimitive.Viewport>
-					<SelectScrollDownButton />
+					<SelectScrollDownButton
+						className={fullscreen ? "h-[calc(1.75rem+var(--safe-area-inset-bottom,0rem)+var(--tab-bar-gap,0rem))] pb-[calc(0.25rem+var(--safe-area-inset-bottom,0rem)+var(--tab-bar-gap,0rem))]" : undefined}
+					/>
 				</div>
 			</SelectPrimitive.Content>
 		</SelectPrimitive.Portal>

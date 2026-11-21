@@ -61,7 +61,7 @@ jobs:
     env:
       VITE_ORIGIN: https://flirtu.al
       VITE_API_URL: https://api.flirtu.al/v1/
-      VITE_APP_BUNDLE_ID: zone.homie.flirtual.pwa
+      VITE_APP_BUNDLE_ID: ${{ vars.APP_BUNDLE_ID_PRODUCTION || 'zone.homie.flirtual.pwa' }}
       VITE_APP_STORE_ID: "6450485324"
     steps:
       - name: Checkout
@@ -72,10 +72,10 @@ jobs:
         run: rmdir pulumi
 
       - name: Install pnpm and Node.js
-        uses: pnpm/setup@fa36a5ef7dcdefc3a7cb25655c122e00cf6e636e # v3.1.2
+        uses: pnpm/setup@731dfb6463bbd11c11fd0ee11fe00ed0e36d48a1 # v3.2.0
         if: matrix.platform
         with:
-          runtime: node@26.13.0
+          runtime: node@26.13.1
           cache: true
 
       - name: Sync native project
@@ -84,7 +84,7 @@ jobs:
         run: pnpm cap sync ${{ matrix.platform }}
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@33d7b85da1a04171e211befe2c739303b9a4c066 # v4
+        uses: github/codeql-action/init@1bd86f2fdb4b86187fa4059f16f31a3202acc9ea # v4
         with:
           languages: ${{ matrix.language }}
           build-mode: ${{ matrix.build-mode }}
@@ -100,7 +100,7 @@ jobs:
             CODE_SIGNING_ALLOWED=NO
 
       - name: Perform CodeQL analysis
-        uses: github/codeql-action/analyze@33d7b85da1a04171e211befe2c739303b9a4c066 # v4
+        uses: github/codeql-action/analyze@1bd86f2fdb4b86187fa4059f16f31a3202acc9ea # v4
         with:
           category: /language:${{ matrix.language }}
           output: sarif
@@ -117,7 +117,7 @@ jobs:
           done
 
       - name: Upload results
-        uses: github/codeql-action/upload-sarif@33d7b85da1a04171e211befe2c739303b9a4c066 # v4
+        uses: github/codeql-action/upload-sarif@1bd86f2fdb4b86187fa4059f16f31a3202acc9ea # v4
         with:
           sarif_file: sarif
           category: /language:${{ matrix.language }}

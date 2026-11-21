@@ -1,7 +1,6 @@
 import { lazy, Suspense } from "react";
 import { Outlet } from "react-router";
 
-import { AnalyticsProvider } from "./analytics";
 import { AgeGate } from "./components/age-gate";
 import { DebugTools } from "./components/debug-tools";
 import { Loading } from "./components/loading";
@@ -19,23 +18,21 @@ export function App() {
 		<>
 			<QueryProvider>
 				<DebugTools />
-				<AnalyticsProvider>
-					<Suspense fallback={null}>
-						{!server && <ConfigSubscriber />}
-					</Suspense>
-					<InterruptionProvider>
-						<UpdateInformation />
-						<ToastProvider>
-							<DialogProvider>
-								<Suspense fallback={<Loading />}>
-									<AgeGate>
-										<Outlet />
-									</AgeGate>
-								</Suspense>
-							</DialogProvider>
-						</ToastProvider>
-					</InterruptionProvider>
-				</AnalyticsProvider>
+				<Suspense fallback={null}>
+					{!server && <ConfigSubscriber />}
+				</Suspense>
+				<InterruptionProvider>
+					<UpdateInformation />
+					<ToastProvider>
+						<DialogProvider>
+							<Suspense fallback={<Loading />}>
+								<AgeGate>
+									<Outlet />
+								</AgeGate>
+							</Suspense>
+						</DialogProvider>
+					</ToastProvider>
+				</InterruptionProvider>
 			</QueryProvider>
 		</>
 	);

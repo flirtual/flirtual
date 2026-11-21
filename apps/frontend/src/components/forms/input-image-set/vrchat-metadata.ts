@@ -14,13 +14,13 @@ class CleanDOMParser {
 
 interface VRCXData {
 	application: string;
-	author: {
-		id: string;
-		displayName: string;
+	author?: {
+		id?: string;
+		displayName?: string;
 	};
-	world: {
-		id: string;
-		name: string;
+	world?: {
+		id?: string;
+		name?: string;
 	};
 }
 
@@ -35,7 +35,7 @@ export default class VRChatMetadata<M extends Meta, B extends Body> extends Base
 		this.type = "modifier";
 	}
 
-	private async extractMetadata(blob: Blob): Promise<ProfileImageMetadata | null> {
+	private async extractMetadata(blob: Blob): Promise<Partial<ProfileImageMetadata> | null> {
 		try {
 			const buffer = await blob.arrayBuffer();
 			const tags = ExifReader.load(buffer, {
@@ -43,39 +43,29 @@ export default class VRChatMetadata<M extends Meta, B extends Body> extends Base
 				domParser: new CleanDOMParser()
 			});
 
-			// Standard format
-			if (tags.xmp?.Author && tags.xmp?.AuthorID && tags.xmp?.WorldID && tags.xmp?.WorldDisplayName) {
-				return {
-					authorId: tags.xmp.AuthorID.description,
-					authorName: tags.xmp.Author.description,
-					worldId: tags.xmp.WorldID.description,
-					worldName: tags.xmp.WorldDisplayName.description
-				};
+			const xmp = (name: string) => tags.xmp?.[name]?.description?.trim() || undefined;
+
+			let vrcx: VRCXData | undefined;
+			try {
+				const data = JSON.parse(tags.pngText?.Description?.description ?? "") as VRCXData;
+				if (data.application === "VRCX") vrcx = data;
+			}
+			catch {
+				// Not a VRCX description.
 			}
 
-			// VRCX format
-			if (tags.pngText?.Description) {
-				const vrcxData = JSON.parse(tags.pngText.Description.description) as VRCXData;
+			// Each field takes the first non-empty value from VRChat's XMP, VRCX's
+			// description, then the legacy XMP format (IDs in Author and World).
+			const author = xmp("Author");
+			const world = xmp("World");
+			const metadata = {
+				authorId: xmp("AuthorID") || vrcx?.author?.id || (author?.startsWith("usr_") ? author : undefined),
+				authorName: (author?.startsWith("usr_") ? undefined : author) || vrcx?.author?.displayName,
+				worldId: xmp("WorldID") || vrcx?.world?.id || (world?.startsWith("wrld_") ? world : undefined),
+				worldName: xmp("WorldDisplayName") || vrcx?.world?.name
+			};
 
-				if (vrcxData.application === "VRCX" && vrcxData.author && vrcxData.world) {
-					return {
-						authorId: vrcxData.author.id,
-						authorName: vrcxData.author.displayName,
-						worldId: vrcxData.world.id,
-						worldName: vrcxData.world.name
-					};
-				}
-			}
-
-			// Legacy format
-			if (tags.xmp?.Author && tags.xmp?.World) {
-				return {
-					authorId: tags.xmp.Author.description,
-					worldId: tags.xmp.World.description
-				};
-			}
-
-			return null;
+			return metadata.authorId || metadata.worldId ? metadata : null;
 		}
 		catch (reason: any) {
 			const error = new Error("Failed to extract metadata", {

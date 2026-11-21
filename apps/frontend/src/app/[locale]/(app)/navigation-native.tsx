@@ -146,24 +146,25 @@ const NativeTabs: FC<{ tabs: Array<Tab>; selected?: string }> = ({ tabs, selecte
 
 	const select = useTabMemory(tabs, selected);
 	const onSelect = useEffectEvent(({ id }: { id: string }) => select(id));
+	const onUpStart = useEffectEvent((to: string) => {
+		leavingScroll = window.scrollY;
+		goUp(to);
+	});
+	const onUpCancel = useEffectEvent(() => {
+		if (leavingScroll === undefined) return;
+		returningScroll = leavingScroll;
+		leavingScroll = undefined;
+		void navigate(1);
+	});
 
 	useEffect(() => {
 		const listeners = [
 			NativeNavigationPlugin.addListener("select", (event) => onSelect(event)),
 			NativeNavigationPlugin.addListener("layout", setLayout),
-			NativeNavigationPlugin.addListener("upStart", ({ to }) => {
-				leavingScroll = window.scrollY;
-				goUp(to);
-			}),
-			NativeNavigationPlugin.addListener("upCancel", () => {
-				if (leavingScroll === undefined) return;
-				returningScroll = leavingScroll;
-				leavingScroll = undefined;
-				void navigate(1);
-			})
+			NativeNavigationPlugin.addListener("upStart", ({ to }) => onUpStart(to)),
+			NativeNavigationPlugin.addListener("upCancel", () => onUpCancel())
 		];
 		return () => void Promise.all(listeners.map((listener) => listener.then((handle) => handle.remove())));
-	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	// Takes the web navigation's place in the layout, reserving the inset that pages don't already
