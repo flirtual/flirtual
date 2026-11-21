@@ -146,10 +146,15 @@ struct ChatView: View {
 
                     if let user {
                         NavigationLink {
-                            ProfileView(user: user, mode: kind, clearsBottomBar: false, onReport: {}) {
-                                Router.shared.path.removeAll()
-                                await Inbox.shared.load()
-                            }
+                            RespondingProfileView(
+                                user: user,
+                                mode: kind,
+                                offersResponses: Users.shared.relationships[user.id]?.matched == false,
+                                onUnmatch: { await Inbox.shared.load() },
+                                onReport: {},
+                                onBlock: leave,
+                                onResponded: leave
+                            )
                         } label: {
                             Label(t("watch.view_profile"), systemImage: "person.crop.circle")
                         }
@@ -165,9 +170,13 @@ struct ChatView: View {
         }
         .navigationTitle(user?.name ?? "")
         .task {
-            if let userId = route.userId ?? Inbox.shared.conversations?.first(where: { $0.id == route.id })?.userId {
-                user = try? await Users.shared.get(userId)
-            }
+            guard let userId = route.userId ?? Inbox.shared.conversations?.first(where: { $0.id == route.id })?.userId else { return }
+            user = Users.shared.users[userId]
+
+            // A copy cached from before the match has no connections.
+            async let relationship: Void = Users.shared.loadRelationship(userId, refresh: true)
+            if let refreshed = try? await Users.shared.get(userId, refresh: true) { user = refreshed }
+            await relationship
         }
         .task {
             while !Task.isCancelled {
@@ -175,6 +184,11 @@ struct ChatView: View {
                 try? await Task.sleep(for: .seconds(5))
             }
         }
+    }
+
+    private func leave() async {
+        Router.shared.path.removeAll()
+        await Inbox.shared.load()
     }
 }
 

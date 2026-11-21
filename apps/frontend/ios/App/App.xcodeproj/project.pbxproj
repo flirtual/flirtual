@@ -55,6 +55,7 @@
 		662EC3CF382E820523C8D7D6 /* libwebp in Frameworks */ = {isa = PBXBuildFile; productRef = 90B1A32E7BAD5445F13B537E /* libwebp */; };
 		69554D378E05F9822264AE79 /* WatchSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47A99B0670C014DC30D2B5C /* WatchSession.swift */; };
 		69CF3E410146318E8115ED98 /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1BD4F20286164CFEB1AFF9 /* Users.swift */; };
+		7E9CA9344FB584C05CA61536 /* RelationActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BF20E2A3C22C1B531966AB /* RelationActions.swift */; };
 		6B13F90BFD3D4F5FF1EEC026 /* BrowseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EA95AF713E26EDAD869C7D /* BrowseView.swift */; };
 		7BA0FF9A757AC3403CF5AFB8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F5EF26315D080C97E77D5DE5 /* InfoPlist.strings */; };
 		83D2EEDA7EF8890D79A3B253 /* libwebp in Frameworks */ = {isa = PBXBuildFile; productRef = 9DEE9583DA3A47009E71556D /* libwebp */; };
@@ -72,6 +73,7 @@
 		B953DC4FBD431883D1906703 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16B3D52D1E607D145B97334 /* Account.swift */; };
 		C11E68242C2034A14F1770E5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 504EC30E1FED79650016851F /* Assets.xcassets */; };
 		C186A25299D348709B9C4E01 /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1BD4F20286164CFEB1AFF9 /* Users.swift */; };
+		3137A7BEADA8C67F11795066 /* RelationActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BF20E2A3C22C1B531966AB /* RelationActions.swift */; };
 		C4E12343727DFE07DD04E1D3 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C981EE55E57DAFEA070B8FD5 /* Theme.swift */; };
 		D5CC364EA00F10AC86690169 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 27F9569A2E8B4D33009ED19C /* AppIcon.icon */; };
 		DEC0D82BBAE4FC4D2F0C9507 /* WatchSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47A99B0670C014DC30D2B5C /* WatchSession.swift */; };
@@ -142,6 +144,7 @@
 		27F9569A2E8B4D33009ED19C /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 		2FAD9762203C412B000D30F8 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = config.xml; sourceTree = "<group>"; };
 		4C1BD4F20286164CFEB1AFF9 /* Users.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Users.swift; sourceTree = "<group>"; };
+		19BF20E2A3C22C1B531966AB /* RelationActions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RelationActions.swift; sourceTree = "<group>"; };
 		4EA68EF4F50A69167C140A3F /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		50379B222058CBB4000EE86E /* capacitor.config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = capacitor.config.json; sourceTree = "<group>"; };
 		504EC3041FED79650016851F /* Flirtual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flirtual.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -230,6 +233,7 @@
 				6B96FB4FF266EA00B0A85210 /* BuildSettings.swift */,
 				A98D5A5D0717A7122DF8C915 /* Info.plist */,
 				4C1BD4F20286164CFEB1AFF9 /* Users.swift */,
+				19BF20E2A3C22C1B531966AB /* RelationActions.swift */,
 				5F29ECB3A7E3ABBBA7D59278 /* Translations.swift */,
 				FF96C077105A9B97C9B311B8 /* Tags.swift */,
 				86BEDDE444877670A80F5930 /* RemoteImage.swift */,
@@ -549,6 +553,7 @@
 				41C5E99C5EAAA111C660E523 /* Theme.swift in Sources */,
 				A5CD91E0F310B444A2C2E3EA /* BuildSettings.swift in Sources */,
 				69CF3E410146318E8115ED98 /* Users.swift in Sources */,
+				7E9CA9344FB584C05CA61536 /* RelationActions.swift in Sources */,
 				18D5696E20F0773A2B2D3F74 /* Translations.swift in Sources */,
 				224BDBA327D22768050E0A00 /* Tags.swift in Sources */,
 				326832089C1F449F339E6A6C /* RemoteImage.swift in Sources */,
@@ -571,6 +576,7 @@
 				C4E12343727DFE07DD04E1D3 /* Theme.swift in Sources */,
 				ACD5763027FA1C7D8A673A51 /* BuildSettings.swift in Sources */,
 				C186A25299D348709B9C4E01 /* Users.swift in Sources */,
+				3137A7BEADA8C67F11795066 /* RelationActions.swift in Sources */,
 				24D336A2830587AF4671B96C /* Translations.swift in Sources */,
 				30E20DA046102454C0F01174 /* Tags.swift in Sources */,
 				09D5822F4C3EE225AA365269 /* RemoteImage.swift in Sources */,

@@ -100,16 +100,28 @@ struct ProfileView: View {
     let user: User
     let mode: Mode
     var clearsBottomBar = true
+    var onUnmatch: (() async -> Void)?
     let onReport: () async -> Void
     let onBlock: () async -> Void
 
     var body: some View {
+        let relationship = Users.shared.relationships[user.id]
+        let matched = relationship?.matched == true
+
         ScrollView {
             VStack(alignment: .leading, spacing: 14) {
                 PhotoCarousel(user: user)
                     .containerRelativeFrame(.vertical)
 
                 VStack(alignment: .leading, spacing: 14) {
+                    if !matched, let likedMe = relationship?.likedMe, Account.shared.user?.premium == true {
+                        LikedYouBanner(user: user, kind: likedMe)
+                    }
+
+                    if matched {
+                        ConnectionList(user: user)
+                    }
+
                     if let biography = user.profile.biography, !biography.isEmpty {
                         RichText(html: biography)
                     }
@@ -139,8 +151,13 @@ struct ProfileView: View {
                         }
                     }
 
-                    SafetyButtons(user: user, onReport: onReport, onBlock: onBlock)
-                        .padding(.top, 8)
+                    VStack(spacing: 8) {
+                        if matched, let onUnmatch {
+                            UnmatchButton(user: user, onUnmatch: onUnmatch)
+                        }
+                        SafetyButtons(user: user, onReport: onReport, onBlock: onBlock)
+                    }
+                    .padding(.top, 8)
                 }
                 .padding(.horizontal, .margin)
                 .padding(.bottom, (clearsBottomBar ? .buttonClearance : 0) + 16)
