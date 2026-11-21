@@ -220,11 +220,19 @@ struct PhotoCarousel: View {
             .padding(.bottom, 10)
         }
         .clipped()
-        .contentShape(Rectangle())
-        .onTapGesture(perform: next)
+        .overlay {
+            GeometryReader { geometry in
+                Color.clear
+                    .contentShape(Rectangle())
+                    .onTapGesture(coordinateSpace: .local) { location in
+                        if location.x < geometry.size.width / 3 { previous() } else { next() }
+                    }
+            }
+        }
         .task(id: index) { await preloadNext() }
         .accessibilityElement(children: .combine)
-        .accessibilityAction(named: t("watch.next_photo"), next)
+        .accessibilityAction(named: t("next"), next)
+        .accessibilityAction(named: t("previous"), previous)
     }
 
     @ViewBuilder
@@ -308,6 +316,12 @@ struct PhotoCarousel: View {
         let count = user.profile.images.count
         guard count > 1 else { return }
         index = (index + 1) % count
+    }
+
+    private func previous() {
+        let count = user.profile.images.count
+        guard count > 1 else { return }
+        index = (index + count - 1) % count
     }
 
     private func preloadNext() async {
