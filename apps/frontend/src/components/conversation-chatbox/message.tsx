@@ -32,7 +32,8 @@ import { isMatchMessage } from "./match-message";
 import { nearSelection, replyDistance, useMessageGesture } from "./message-gesture";
 import type { MessageMenuItem } from "./message-menu";
 import { MessageMenu } from "./message-menu";
-import { useBeingRepliedTo } from "./replying";
+import { useBeingRepliedTo, useHighlighted } from "./replying";
+import { revealOffset } from "./scroll-anchor";
 import type { ThemeCustom } from "./theme";
 
 type Sender = "currentUser" | "other" | "system";
@@ -72,6 +73,7 @@ export function Message({ message, messageStatus, permissions, common }: Message
 	const pressedLink = useRef<string | null>(null);
 	const [selecting, setSelecting] = useState(false);
 	const repliedTo = useBeingRepliedTo(message.id);
+	const highlighted = useHighlighted(message.id);
 
 	const sender: Sender = !message.sender
 		? "system"
@@ -122,10 +124,7 @@ export function Message({ message, messageStatus, permissions, common }: Message
 		if (!repliedTo || !list || !element) return;
 
 		const reveal = () => {
-			const view = list.getBoundingClientRect();
-			const { top, bottom, height } = element.getBoundingClientRect();
-			if (top < view.top + revealMargin || height > view.height - revealMargin * 2) list.scrollTop += top - view.top - revealMargin;
-			else if (bottom > view.bottom - revealMargin) list.scrollTop += bottom - view.bottom + revealMargin;
+			list.scrollTop += revealOffset(list, element, revealMargin);
 		};
 
 		const resizes = new ResizeObserver(reveal);
@@ -292,9 +291,9 @@ export function Message({ message, messageStatus, permissions, common }: Message
 						<div
 							data-bubble
 							className={twMerge(
-								"relative flow-root max-w-full rounded-2xl leading-(--t-line-height-base)! break-words transition-[translate] [&_.t-message-content]:contents [&_a]:text-inherit! [&_a]:underline",
+								"relative flow-root max-w-full rounded-2xl leading-(--t-line-height-base)! break-words transition-[translate,box-shadow] [&_.t-message-content]:contents [&_a]:text-inherit! [&_a]:underline",
 								selecting && "[&_.t-message-content]:select-text [&_.t-message-content_*]:select-text",
-								repliedTo && "focused",
+								(repliedTo || highlighted) && "focused",
 								jumbo ? jumboSurface : gif ? bareSurface : twMerge("px-4 py-3 shadow-brand-1", surface[sender]),
 								sender === "system" && "w-full text-[120%]! italic [&:lang(ja)]:not-italic [&:lang(ko)]:not-italic [&:lang(ru)]:not-italic",
 								hasThumbnail && "w-full",

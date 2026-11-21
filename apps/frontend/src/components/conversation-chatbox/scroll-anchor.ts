@@ -106,3 +106,11 @@ export function anchorMessageLists(container: HTMLElement): () => void {
 		container.removeEventListener("touchcancel", onTouchEnd, options);
 	};
 }
+
+export function revealOffset(list: Element, element: Element, margin: number) {
+	const view = list.getBoundingClientRect();
+	const { top, bottom, height } = element.getBoundingClientRect();
+	if (top < view.top + margin || height > view.height - margin * 2) return top - view.top - margin;
+	if (bottom > view.bottom - margin) return bottom - view.bottom + margin;
+	return 0;
+}
