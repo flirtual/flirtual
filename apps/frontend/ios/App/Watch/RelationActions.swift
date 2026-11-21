@@ -116,6 +116,8 @@ struct RespondingProfileView: View {
         .toolbar {
             ToolbarItemGroup(placement: .bottomBar) {
                 if offersResponses {
+                    Spacer()
+
                     Button {
                         Task { await respond("pass", .love) }
                     } label: {
@@ -125,7 +127,7 @@ struct RespondingProfileView: View {
                     .buttonBorderShape(.circle)
                     .accessibilityLabel(t("pass"))
 
-                    Spacer()
+                    Spacer().frame(width: .buttonGap)
 
                     Button {
                         Task { await respond("like", .love) }
@@ -137,7 +139,7 @@ struct RespondingProfileView: View {
                     .accessibilityLabel(t("like"))
 
                     if Features.homieMode {
-                        Spacer()
+                        Spacer().frame(width: .buttonGap)
 
                         Button {
                             Task { await respond("like", .friend) }
@@ -148,6 +150,8 @@ struct RespondingProfileView: View {
                         .buttonBorderShape(.circle)
                         .accessibilityLabel(t("homie"))
                     }
+
+                    Spacer()
                 }
             }
         }

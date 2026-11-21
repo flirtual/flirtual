@@ -28,6 +28,8 @@ struct BrowseView: View {
                 }
                 ToolbarItemGroup(placement: .bottomBar) {
                     if browse.current != nil {
+                        Spacer()
+
                         Button {
                             Task { await browse.respond("pass") }
                         } label: {
@@ -37,7 +39,7 @@ struct BrowseView: View {
                         .buttonBorderShape(.circle)
                         .accessibilityLabel(t("pass"))
 
-                        Spacer()
+                        Spacer().frame(width: .buttonGap)
 
                         Button {
                             Task { await browse.respond("like") }
@@ -47,6 +49,8 @@ struct BrowseView: View {
                         .tint(mode.tint)
                         .buttonBorderShape(.circle)
                         .accessibilityLabel(t(mode == .love ? "like" : "homie"))
+
+                        Spacer()
                     }
                 }
             }
