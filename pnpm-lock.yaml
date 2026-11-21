@@ -641,7 +641,7 @@ importers:
         version: 1.1.2(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       with-suspense:
         specifier: ^1.0.5
-        version: 1.0.5(react@19.3.1)
+        version: 1.0.6(@types/react@19.3.0)(react@19.3.1)
       wretch:
         specifier: ^3.0.9
         version: 3.0.9
@@ -8856,10 +8856,14 @@ packages:
   wildcard@1.1.2:
     resolution: {integrity: sha512-DXukZJxpHA8LuotRwL0pP1+rS6CS7FF2qStDDE1C7DDg2rLud2PXRMuEDYIPhgEezwnlHNL4c+N6MfMTjCGTng==}
 
-  with-suspense@1.0.5:
-    resolution: {integrity: sha512-14MNJ01390zEOBV7tRs8bCDsDZgSMuWpJ08z4SJgfOTOy5ypM+e9AakVBb1HJUwSoGk+NsPOATOXG4L+txiD9g==}
+  with-suspense@1.0.6:
+    resolution: {integrity: sha512-L4WX1L6meNr3BpuTr+Q04EIC2z0KuNDihrWz7Z2eyoU3HuEulUinkdfafNgcQ0XEQa+73mn0scI/kfUX+/QavA==}
     peerDependencies:
-      react: ^16.6.0
+      '@types/react': '>=16.6.0'
+      react: '>=16.6.0'
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
 
   word-wrap@1.2.5:
     resolution: {integrity: sha512-BN22B5eaMMI9UMtjrGd5g5eCYPpCPDUy0FJXbYsaT5zYxjFOckS53SQDE3pWkVoWpHXVb3BrYcEN4Twa55B5cA==}
@@ -17014,9 +17018,11 @@ snapshots:
 
   wildcard@1.1.2: {}
 
-  with-suspense@1.0.5(react@19.3.1):
+  with-suspense@1.0.6(@types/react@19.3.0)(react@19.3.1):
     dependencies:
       react: 19.3.1
+    optionalDependencies:
+      '@types/react': 19.3.0
 
   word-wrap@1.2.5: {}
 
