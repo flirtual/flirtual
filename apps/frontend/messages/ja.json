@@ -268,7 +268,14 @@
 		"geolocation_not_supported": "お使いのデバイスは位置情報に対応していません。",
 		"plan_not_available": "購入手続きの開始中にエラーが発生しました。ページを再読み込みして、もう一度お試しください。料金は請求されていません。",
 		"checkout_not_available": "申し訳ありません、現在購入はご利用いただけません。",
-		"warning_unacknowledged": "トラスト＆セーフティからのメッセージをご確認いただくまで、アカウントはご利用いただけません。"
+		"warning_unacknowledged": "トラスト＆セーフティからのメッセージをご確認いただくまで、アカウントはご利用いただけません。",
+		"phone_invalid": "電話番号が正しくないようです。国と番号をご確認ください。",
+		"phone_not_registered": "この番号のアカウントが見つかりません。<signup>アカウントを作成</signup>しますか？",
+		"phone_rate_limit": "コードの送信回数が上限に達しました。1時間後にもう一度お試しください。",
+		"phone_not_mobile": "この番号ではSMSを受信できません。携帯電話の番号を入力してください。",
+		"sms_unavailable": "現在、電話番号でのログインはご利用いただけません。",
+		"phone_login_disabled": "電話番号でのログインはご利用いただけません。",
+		"sms_failed": "この番号にSMSを送信できませんでした。番号を確認して、もう一度お試しください。"
 	},
 	"support": "サポート",
 	"forgot_your_password": "パスワードをお忘れですか？",
@@ -771,7 +778,7 @@
 	"snowfall_option_auto": "自動",
 	"snowfall_option_always": "常に表示",
 	"snowfall_option_never": "表示しない",
-	"about_page_body": "<section><h1>Flirtualのストーリー</h1><p>こんにちは、Flirtualを作ったKyleとTonyです。KyleはOculusの初期からVRに夢中でしたが、人生が本当に変わったのはVRChatを始めてから。そこで親友と呼べる仲間たち（そして今の奥さん！）に出会いました。コロナ禍の直前、Kyleは幼なじみの親友Tonyをこの旅に誘い、Tonyの人生もまたVRによって変わりました。「世界中の素敵な人と出会える体験を、もっと多くの人に届けたい」。そんな思いから生まれたのが、Flirtualの前身となるVRLFP（Virtual Reality Looking For Partner）です。</p><p>VRの没入感がもたらす「一緒にそこにいる」感覚は、世界のどこにいる人とも深いつながりを育んでくれます。距離の壁を越え、人柄を何よりも大切にしながら、相手がどこにいようと一人ひとりに最高の出会いを届けること。それが私たちの使命です。そして、デートをもっと安全で、もっと魔法みたいな体験にすることです！</p><p>2022年、VRLFPはFlirtualに生まれ変わりました。ゼロから作り直し、マッチングを強化し、性格や興味のタグを追加し、使いやすくなったアプリをリリースしました。現実でも続く真剣な恋愛を探している人も、VRの中で気軽な関係を楽しみたい人も、ただ新しい友達がほしい人も、ぴったりの相手探しを私たちがお手伝いします。</p><group><logo/><p>❤ kfarwell、Tony、Flirtualチーム一同</p><discord>Discordに参加する</discord></group><p><italic>追伸：VRLFPの小さなスタートから、ずいぶん遠くまで来ました。それでも私たちは今も、VRコミュニティに根ざした小さなチームです。<br/><br/>Flirtualを最高のアプリにするために日々がんばっていますので、温かく見守っていただけるとうれしいです。<contact>バグを見つけた</contact>ときや、<ideas>ご意見・ご提案がある</ideas>ときは、ぜひ教えてください！</italic></p></section><section><h1>チーム</h1><team-list/></section><section><h1>これまでの歩み</h1><timeline/></section>",
+	"about_page_body": "<team-photo/><section><h1>私たちのストーリー</h1><p>こんにちは、Flirtualを作ったKyleとTonyです。KyleはOculusの初期からVRに夢中でしたが、人生が大きく変わったのはVRChatを始めてから。そこで今でも特に仲のいい友達に（なんと妻にも！）出会ったのです。コロナ禍が始まる直前、Kyleは幼なじみの親友TonyをVRの世界に誘い、TonyもまたVRで人生が変わりました。ほかの人にも、世界中の素敵な人たちと出会ってほしい。そう考えた私たちが最初に立ち上げたのが、VRLFP（Virtual Reality Looking For Partner）です。</p><p>VRならではの「同じ場所にいる」感覚は、世界のどこにいる人とも深いつながりを育んでくれます。距離の壁を越え、人柄を何より大切にすることで、相手がどこにいても、一人ひとりにぴったりの人を見つけること。そして、出会いをもっと安全に、もっと魔法のような体験にすること。それが私たちの使命です。</p><p>2022年、VRLFPはFlirtualに生まれ変わりました。ゼロから作り直してマッチングを強化し、性格や興味のタグを追加し、新しくなったアプリも公開しました。いずれは現実でも会いたい真剣な交際も、VRで気軽に楽しむ関係も、新しい友達探しも。ぴったりの相手との出会いをお手伝いします。</p><group><logo/><p>❤ kfarwell、Tony、Flirtualチーム一同</p><discord>Discordに参加する</discord></group><p><italic>P.S. VRLFPのささやかな始まりから、ずいぶん遠くまで来ました。それでも私たちは今も、VRコミュニティに根ざした小さなチームです。<br/><br/>Flirtualを最高のサービスにできるよう全力で取り組んでいますので、気長に見守っていただけるとうれしいです。<contact>バグを見つけた</contact>ときや、<ideas>アイデアや要望がある</ideas>ときは、ぜひ教えてください！</italic></p></section><section><h1>チーム紹介</h1><team-list/></section><section><h1>これまでの歩み</h1><timeline/></section><gallery/>",
 	"about_gallery": {
 		"0": {
 			"image_alt": "2022年のバレンタインにVanguardと共催した、Flirtualの12時間ローンチパーティー"
@@ -1137,5 +1144,102 @@
 	"show_embed": "「{name}」を表示",
 	"search_klipy": "KLIPYで検索",
 	"recent": "最近使ったGIF",
-	"trending": "トレンド"
+	"trending": "トレンド",
+	"about_team": {
+		"kfarwell": {
+			"name": "kfarwell",
+			"role": "リードエンジニア",
+			"avatar": "kfarwell.png"
+		},
+		"tony": {
+			"name": "Tony",
+			"avatar": "tony.png",
+			"role": "パートナーシップ・安全対策"
+		},
+		"aries": {
+			"role": "ソフトウェアエンジニア",
+			"name": "Aries",
+			"avatar": "aries.jpg"
+		},
+		"buramie": {
+			"name": "Buramie",
+			"role": "モデレーター",
+			"avatar": "buramie.jpg"
+		},
+		"damned_united": {
+			"name": "Damned_United",
+			"role": "モデレーター",
+			"avatar": "damned-united.jpg"
+		},
+		"ferry": {
+			"name": "Ferry",
+			"role": "モデレーター",
+			"avatar": "ferry.png"
+		},
+		"reploidsham": {
+			"name": "Reploidsham",
+			"role": "モデレーター",
+			"avatar": "reploidsham.jpg"
+		},
+		"samantha": {
+			"name": "Samantha",
+			"role": "モデレーター",
+			"avatar": "samantha.jpg"
+		},
+		"simon3373": {
+			"name": "Simon3373",
+			"role": "モデレーター",
+			"avatar": "simon3373.jpg"
+		},
+		"starh": {
+			"name": "Starh",
+			"role": "モデレーター",
+			"avatar": "starh.png"
+		},
+		"the_blarg": {
+			"name": "The_Blarg",
+			"role": "モデレーター",
+			"avatar": "the-blarg.jpg"
+		},
+		"zyp": {
+			"name": "Zyp",
+			"role": "モデレーター",
+			"avatar": "zyp.jpg"
+		},
+		"michiyo": {
+			"name": "Michiyo",
+			"role": "イベントホスト",
+			"avatar": "michiyo.jpg"
+		},
+		"nickykitty": {
+			"name": "NickyKitty",
+			"role": "イベントホスト",
+			"avatar": "nickykitty.jpg"
+		},
+		"syrmor": {
+			"role": "アドバイザー",
+			"avatar": "syrmor.jpg",
+			"name": "Syrmor"
+		},
+		"faxmashine": {
+			"name": "Faxmashine",
+			"role": "VRChatワールドクリエイター",
+			"avatar": "faxmashine.png",
+			"url": "https://www.faxmashine.com/"
+		},
+		"juice": {
+			"name": "Juice",
+			"role": "VRChatアバタークリエイター",
+			"avatar": "juice.jpg",
+			"url": "https://info.mdcr.tv/"
+		}
+	},
+	"download_apk": "APKをダウンロード",
+	"phone": "電話番号",
+	"phone_number": "電話番号",
+	"send_code": "コードを送信",
+	"sms_consent": "電話番号の確認用コードをSMSでお送りします。メッセージ料金やデータ通信料がかかる場合があります。メッセージの送信頻度は利用状況によって異なります。ヘルプが必要な場合は「HELP」、配信を停止する場合は「STOP」と返信してください。",
+	"send_a_new_code": "新しいコードを送信",
+	"enter_phone_code_description": "{phoneNumber}にSMSで送信したコードを入力してください。",
+	"select_text": "選択"
 }

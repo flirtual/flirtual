@@ -231,7 +231,14 @@
 		"invalid_playlist_url": "Ogiltig länk till spellista.",
 		"password_must_be_different": "Det nya lösenordet får inte vara samma som det gamla.",
 		"reset_password_link_invalid": "Länken för att återställa lösenordet är ogiltig eller har gått ut. <forgot>Begär en ny</forgot>.",
-		"warning_unacknowledged": "Ditt konto är spärrat tills du har bekräftat meddelandet från Trygghet & säkerhet."
+		"warning_unacknowledged": "Ditt konto är spärrat tills du har bekräftat meddelandet från Trygghet & säkerhet.",
+		"phone_invalid": "Det ser inte ut som ett giltigt telefonnummer. Kontrollera land och nummer.",
+		"phone_not_mobile": "Numret kan inte ta emot sms. Använd ett mobilnummer.",
+		"phone_not_registered": "Det finns inget konto med det numret. Vill du <signup>skapa ett</signup> i stället?",
+		"phone_rate_limit": "För många koder just nu. Försök igen om en timme.",
+		"sms_failed": "Vi kunde inte skicka sms till numret. Kontrollera det och försök igen.",
+		"sms_unavailable": "Inloggning med telefon är inte tillgänglig just nu.",
+		"phone_login_disabled": "Inloggning med telefon är inte tillgänglig."
 	},
 	"flirtual_bug_report": "Felrapport från {brand_name}",
 	"copied": "Kopierat",
@@ -771,7 +778,7 @@
 	"kinks": "Kinks",
 	"accent": "Accentfärg",
 	"background": "Bakgrund",
-	"about_page_body": "<section><h1>Vår historia</h1><p>Hej, vi är Kyle och Tony, och vi har skapat Flirtual. Kyle har varit besatt av VR ända sedan Oculus första tid, men det var när han började med VRChat och träffade några av sina närmaste vänner där (inklusive sin fru!) som hans liv verkligen förändrades. Strax innan covid slog till tog Kyle med sig sin bästa barndomsvän Tony på resan, och även Tonys liv förändrades av VR. Vi ville hjälpa fler att träffa grymma människor världen över, och det började med VRLFP (Virtual Reality Looking For Partner).</p><p>Känslan av att verkligen vara på plats i VR gör att du kan knyta djupa band med människor var som helst i världen. Vi överbryggar geografiska avstånd och sätter personligheten först, och vårt uppdrag är att hitta de allra bästa människorna för dig, var de än finns. Och att göra dejting tryggare och mer magiskt!</p><p>2022 blev VRLFP Flirtual. Vi byggde om allt från grunden, förbättrade matchningen, lade till taggar för personlighet och intressen och lanserade bättre appar. Oavsett om du letar efter ett seriöst förhållande som fortsätter i verkliga livet, något mer avslappnat i VR eller bara nya kompisar, hjälper vi dig att hitta din perfekta match.</p><group><logo/><p>❤ kfarwell, Tony och Flirtual-teamet</p><discord>Gå med i vår Discord</discord></group><p><italic>PS. Vi har kommit långt sedan VRLFP:s blygsamma början, men vi är fortfarande ett litet team med rötterna i VR-communityn. <br/><br/>Tack för ditt tålamod medan vi jobbar hårt för att göra Flirtual så grymt som det bara går. Hör av dig om du <contact>hittar buggar</contact> eller <ideas>har förslag</ideas>!</italic></p></section><section><h1>Teamet</h1><team-list/></section><section><h1>Tidslinje</h1><timeline/></section>",
+	"about_page_body": "<team-photo/><section><h1>Vår historia</h1><p>Hej, vi är Kyle och Tony, skaparna av Flirtual. Kyle har varit besatt av VR ända sedan Oculus tidiga dagar, men det var när han upptäckte VRChat som hans liv verkligen förändrades. Där träffade han några av sina närmaste vänner (och sin fru!). Precis innan covid slog till tog Kyle med sig sin barndomsbästis Tony på resan, och VR förändrade hans liv också. Vi bestämde oss för att hjälpa fler att träffa fantastiska människor runt om i världen, och allt började med VRLFP (Virtual Reality Looking For Partner).</p><p>Känslan av att verkligen vara på plats i VR gör att du kan knyta djupa band med människor var som helst i världen. Vi vill överbrygga geografiska avstånd och sätta personligheten först. Vårt uppdrag är att hitta de allra bästa personerna för dig, var de än befinner sig. Och att göra dejtandet tryggare och mer magiskt!</p><p>År 2022 blev VRLFP till Flirtual. Vi har byggt om allt från grunden, förbättrat matchningen, lagt till taggar för personlighet och intressen och lanserat bättre appar. Oavsett om du letar efter ett seriöst förhållande som fortsätter i verkliga livet, något mer avslappnat i VR eller bara nya kompisar, hjälper vi dig gärna att hitta din perfekta match.</p><group><logo/><p>❤ kfarwell, Tony & Flirtual-teamet</p><discord>Gå med i vår Discord</discord></group><p><italic>PS. Vi har kommit långt sedan VRLFP:s blygsamma början, men vi är fortfarande ett litet team med rötterna i VR-communityn. <br/><br/>Tack för ditt tålamod medan vi jobbar hårt för att göra Flirtual så grymt som möjligt. Hör gärna av dig om du <contact>hittar några buggar</contact> eller <ideas>har förslag</ideas>!</italic></p></section><section><h1>Teamet</h1><team-list/></section><section><h1>Tidslinje</h1><timeline/></section><gallery/>",
 	"about_team_photo_alt": "Bild på Flirtual-teamet i VRChat",
 	"about_gallery": {
 		"0": {
@@ -1137,5 +1144,102 @@
 	"show_embed": "Visa {name}",
 	"search_klipy": "Sök på KLIPY",
 	"recent": "Senaste",
-	"trending": "Trendar"
+	"trending": "Trendar",
+	"about_team": {
+		"kfarwell": {
+			"name": "kfarwell",
+			"role": "Huvudutvecklare",
+			"avatar": "kfarwell.png"
+		},
+		"tony": {
+			"name": "Tony",
+			"role": "Partnerskap & säkerhet",
+			"avatar": "tony.png"
+		},
+		"aries": {
+			"role": "Mjukvaruutvecklare",
+			"name": "Aries",
+			"avatar": "aries.jpg"
+		},
+		"buramie": {
+			"name": "Buramie",
+			"role": "Moderator",
+			"avatar": "buramie.jpg"
+		},
+		"damned_united": {
+			"name": "Damned_United",
+			"role": "Moderator",
+			"avatar": "damned-united.jpg"
+		},
+		"ferry": {
+			"name": "Ferry",
+			"role": "Moderator",
+			"avatar": "ferry.png"
+		},
+		"reploidsham": {
+			"name": "Reploidsham",
+			"avatar": "reploidsham.jpg",
+			"role": "Moderator"
+		},
+		"samantha": {
+			"name": "Samantha",
+			"role": "Moderator",
+			"avatar": "samantha.jpg"
+		},
+		"simon3373": {
+			"name": "Simon3373",
+			"role": "Moderator",
+			"avatar": "simon3373.jpg"
+		},
+		"starh": {
+			"name": "Starh",
+			"role": "Moderator",
+			"avatar": "starh.png"
+		},
+		"the_blarg": {
+			"name": "The_Blarg",
+			"role": "Moderator",
+			"avatar": "the-blarg.jpg"
+		},
+		"zyp": {
+			"name": "Zyp",
+			"role": "Moderator",
+			"avatar": "zyp.jpg"
+		},
+		"michiyo": {
+			"name": "Michiyo",
+			"role": "Eventvärd",
+			"avatar": "michiyo.jpg"
+		},
+		"nickykitty": {
+			"name": "NickyKitty",
+			"role": "Eventvärd",
+			"avatar": "nickykitty.jpg"
+		},
+		"syrmor": {
+			"name": "Syrmor",
+			"role": "Rådgivare",
+			"avatar": "syrmor.jpg"
+		},
+		"faxmashine": {
+			"name": "Faxmashine",
+			"role": "Skapare av VRChat-världar",
+			"avatar": "faxmashine.png",
+			"url": "https://www.faxmashine.com/"
+		},
+		"juice": {
+			"name": "Juice",
+			"role": "Skapare av VRChat-avatarer",
+			"avatar": "juice.jpg",
+			"url": "https://info.mdcr.tv/"
+		}
+	},
+	"download_apk": "Ladda ner APK",
+	"phone_number": "Telefonnummer",
+	"phone": "telefon",
+	"send_code": "Skicka kod",
+	"sms_consent": "Vi skickar en kod via sms för att bekräfta ditt nummer. Avgifter för meddelanden och data kan tillkomma. Antalet meddelanden varierar. Svara HELP för hjälp. Svara STOP för att avsluta.",
+	"enter_phone_code_description": "Ange koden vi skickade via sms till {phoneNumber}.",
+	"send_a_new_code": "Skicka en ny kod",
+	"select_text": "Markera"
 }

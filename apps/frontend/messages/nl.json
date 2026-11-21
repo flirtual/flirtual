@@ -231,7 +231,14 @@
 		"password_must_be_different": "Het nieuwe wachtwoord mag niet hetzelfde zijn als het oude.",
 		"invalid_playlist_url": "Ongeldige playlistlink.",
 		"reset_password_link_invalid": "Je link om je wachtwoord te resetten is ongeldig of verlopen. <forgot>Vraag een nieuwe aan</forgot>.",
-		"warning_unacknowledged": "Uw account is uitgeschakeld totdat u het bericht van Vertrouwen & veiligheid hebt bevestigd."
+		"warning_unacknowledged": "Uw account is uitgeschakeld totdat u het bericht van Vertrouwen & veiligheid hebt bevestigd.",
+		"phone_not_mobile": "Dit nummer kan geen sms ontvangen. Gebruik een mobiel nummer.",
+		"phone_invalid": "Dat lijkt geen geldig telefoonnummer. Controleer het land en het nummer.",
+		"phone_rate_limit": "Te veel codes aangevraagd. Probeer het over een uur opnieuw.",
+		"phone_not_registered": "Er is geen account met dit nummer. Wil je er <signup>een aanmaken</signup>?",
+		"sms_failed": "We konden geen sms naar dit nummer sturen. Controleer het en probeer het opnieuw.",
+		"phone_login_disabled": "Inloggen via telefoon is niet beschikbaar.",
+		"sms_unavailable": "Inloggen via telefoon is op dit moment niet beschikbaar."
 	},
 	"flirtual_bug_report": "{brand_name}-foutrapport",
 	"copied": "Gekopieerd",
@@ -772,7 +779,7 @@
 	"accent": "Accent",
 	"background": "Achtergrond",
 	"about_team_photo_alt": "Foto van het Flirtual-team in VRChat",
-	"about_page_body": "<section><h1>Ons verhaal</h1><p>Hoi, wij zijn Kyle en Tony, de makers van Flirtual. Kyle is al sinds de begindagen van Oculus geobsedeerd door VR, maar zijn leven veranderde pas echt toen hij op VRChat kwam en daar een paar van zijn beste vrienden ontmoette (en zijn vrouw!). Vlak voordat corona uitbrak, haalde Kyle zijn beste jeugdvriend Tony erbij, en ook diens leven werd door VR op z’n kop gezet. We wilden anderen helpen om ook geweldige mensen over de hele wereld te ontmoeten, en zo begon VRLFP (Virtual Reality Looking For Partner).</p><p>Omdat je in VR echt samen aanwezig bent, bouw je diepe banden op met mensen waar ook ter wereld. Door afstand te overbruggen en persoonlijkheid voorop te zetten, willen we de allerbeste mensen voor je vinden, waar ze ook zijn. En daten veiliger en magischer maken!</p><p>In 2022 werd VRLFP Flirtual. We hebben alles van de grond af opnieuw opgebouwd, de matchmaking verbeterd, persoonlijkheids- en interessetags toegevoegd en betere apps gelanceerd. Of je nu een serieuze relatie zoekt die ook in het echte leven doorgaat, iets luchtigers in VR of gewoon nieuwe maatjes: we helpen je graag je perfecte match te vinden.</p><group><logo/><p>❤ kfarwell, Tony & het Flirtual-team</p><discord>Word lid van onze Discord</discord></group><p><italic>PS: We zijn een heel eind gekomen sinds het bescheiden begin van VRLFP, maar we zijn nog steeds een klein team, geworteld in de VR-community. <br/><br/>Bedankt voor je geduld terwijl we keihard werken om Flirtual zo geweldig mogelijk te maken. Laat het ons vooral weten als je <contact>bugs tegenkomt</contact> of <ideas>suggesties hebt</ideas>!</italic></p></section><section><h1>Het team</h1><team-list/></section><section><h1>Tijdlijn</h1><timeline/></section>",
+	"about_page_body": "<team-photo/><section><h1>Ons verhaal</h1><p>Hoi, wij zijn Kyle en Tony, de makers van Flirtual. Kyle is al sinds de begindagen van Oculus bezeten van VR, maar zijn leven veranderde pas echt toen hij op VRChat belandde en daar een paar van zijn beste vrienden leerde kennen (inclusief zijn vrouw!). Vlak voordat corona toesloeg, nam Kyle zijn beste jeugdvriend Tony mee op dit avontuur, en ook voor hem veranderde VR alles. We wilden anderen helpen om ook geweldige mensen over de hele wereld te ontmoeten, en begonnen met VRLFP (Virtual Reality Looking For Partner).</p><p>Doordat je in VR echt het gevoel hebt dat je samen bent, bouw je diepe banden op met mensen waar ook ter wereld. Door afstand te overbruggen en persoonlijkheid voorop te zetten, willen we de allerbeste mensen voor je vinden, waar ze ook zijn. En daten veiliger en magischer maken!</p><p>In 2022 werd VRLFP Flirtual. We hebben alles van de grond af opnieuw opgebouwd, de matchmaking verbeterd, persoonlijkheids- en interessetags toegevoegd en betere apps gelanceerd. Of je nu een serieuze relatie zoekt die ook in het echte leven doorgaat, iets luchtigers in VR of gewoon nieuwe maatjes: we helpen je graag je perfecte match te vinden.</p><group><logo/><p>❤ kfarwell, Tony & het Flirtual-team</p><discord>Word lid van onze Discord</discord></group><p><italic>PS: We hebben een lange weg afgelegd sinds het bescheiden begin van VRLFP, maar we zijn nog steeds een klein team, geworteld in de VR-community. <br/><br/>Bedankt voor je geduld terwijl we hard werken om Flirtual zo geweldig mogelijk te maken. Laat het ons weten als je <contact>bugs tegenkomt</contact> of <ideas>ideeën hebt</ideas>!</italic></p></section><section><h1>Het team</h1><team-list/></section><section><h1>Tijdlijn</h1><timeline/></section><gallery/>",
 	"about_gallery": {
 		"0": {
 			"image_alt": "Het twaalf uur durende lanceringsfeest van Flirtual met Vanguard op Valentijnsdag 2022"
@@ -1137,5 +1144,102 @@
 	"show_embed": "{name} tonen",
 	"search_klipy": "Zoeken in KLIPY",
 	"recent": "Recent",
-	"trending": "Populair"
+	"trending": "Populair",
+	"about_team": {
+		"kfarwell": {
+			"name": "kfarwell",
+			"role": "Hoofdontwikkelaar",
+			"avatar": "kfarwell.png"
+		},
+		"tony": {
+			"name": "Tony",
+			"role": "Partnerships & veiligheid",
+			"avatar": "tony.png"
+		},
+		"aries": {
+			"role": "Softwareontwikkelaar",
+			"name": "Aries",
+			"avatar": "aries.jpg"
+		},
+		"buramie": {
+			"name": "Buramie",
+			"role": "Moderator",
+			"avatar": "buramie.jpg"
+		},
+		"damned_united": {
+			"name": "Damned_United",
+			"role": "Moderator",
+			"avatar": "damned-united.jpg"
+		},
+		"ferry": {
+			"name": "Ferry",
+			"role": "Moderator",
+			"avatar": "ferry.png"
+		},
+		"reploidsham": {
+			"name": "Reploidsham",
+			"role": "Moderator",
+			"avatar": "reploidsham.jpg"
+		},
+		"samantha": {
+			"name": "Samantha",
+			"role": "Moderator",
+			"avatar": "samantha.jpg"
+		},
+		"simon3373": {
+			"name": "Simon3373",
+			"role": "Moderator",
+			"avatar": "simon3373.jpg"
+		},
+		"starh": {
+			"name": "Starh",
+			"role": "Moderator",
+			"avatar": "starh.png"
+		},
+		"the_blarg": {
+			"name": "The_Blarg",
+			"role": "Moderator",
+			"avatar": "the-blarg.jpg"
+		},
+		"zyp": {
+			"name": "Zyp",
+			"role": "Moderator",
+			"avatar": "zyp.jpg"
+		},
+		"michiyo": {
+			"name": "Michiyo",
+			"role": "Eventhost",
+			"avatar": "michiyo.jpg"
+		},
+		"nickykitty": {
+			"name": "NickyKitty",
+			"role": "Eventhost",
+			"avatar": "nickykitty.jpg"
+		},
+		"syrmor": {
+			"name": "Syrmor",
+			"role": "Adviseur",
+			"avatar": "syrmor.jpg"
+		},
+		"faxmashine": {
+			"name": "Faxmashine",
+			"role": "Maker van VRChat-werelden",
+			"avatar": "faxmashine.png",
+			"url": "https://www.faxmashine.com/"
+		},
+		"juice": {
+			"name": "Juice",
+			"avatar": "juice.jpg",
+			"role": "Maker van VRChat-avatars",
+			"url": "https://info.mdcr.tv/"
+		}
+	},
+	"download_apk": "APK downloaden",
+	"phone": "telefoon",
+	"send_code": "Code versturen",
+	"sms_consent": "We sturen je een sms met een code om je nummer te bevestigen. Er kunnen kosten voor berichten en dataverbruik in rekening worden gebracht. Het aantal berichten kan variëren. Antwoord HELP voor hulp. Antwoord STOP om je af te melden.",
+	"enter_phone_code_description": "Voer de code in die we per sms naar {phoneNumber} hebben gestuurd.",
+	"phone_number": "Telefoonnummer",
+	"send_a_new_code": "Nieuwe code sturen",
+	"select_text": "Selecteren"
 }

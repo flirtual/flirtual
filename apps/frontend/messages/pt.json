@@ -88,7 +88,14 @@
 		"password_must_be_different": "A nova palavra-passe tem de ser diferente da atual.",
 		"invalid_playlist_url": "URL da playlist inválido.",
 		"reset_password_link_invalid": "O link para repor a palavra-passe é inválido ou expirou. <forgot>Pede um novo</forgot>.",
-		"warning_unacknowledged": "A conta está desativada até ser confirmada a leitura da mensagem de Confiança e Segurança."
+		"warning_unacknowledged": "A conta está desativada até ser confirmada a leitura da mensagem de Confiança e Segurança.",
+		"phone_invalid": "Esse número de telefone não parece válido. Verifica o país e o número.",
+		"phone_not_mobile": "Esse número não pode receber SMS. Usa um número de telemóvel.",
+		"phone_not_registered": "Não existe nenhuma conta com esse número. Queres <signup>criar uma</signup>?",
+		"phone_rate_limit": "Foram pedidos demasiados códigos. Tenta novamente daqui a uma hora.",
+		"sms_failed": "Não conseguimos enviar SMS para esse número. Verifica-o e tenta novamente.",
+		"sms_unavailable": "O início de sessão por telemóvel não está disponível de momento.",
+		"phone_login_disabled": "O início de sessão por telemóvel não está disponível."
 	},
 	"premium": "Premium",
 	"homie": "Amizade",
@@ -771,7 +778,7 @@
 	"kinks": "Kinks",
 	"background": "Fundo",
 	"accent": "Destaque",
-	"about_page_body": "<section><h1>A nossa história</h1><p>Olá, somos o Kyle e o Tony, os criadores do Flirtual. O Kyle é obcecado por VR desde os primeiros tempos da Oculus, mas a vida dele mudou mesmo quando entrou no VRChat e lá conheceu alguns dos seus amigos mais próximos (incluindo a mulher dele!). Pouco antes de a COVID chegar, o Kyle trouxe o Tony, o seu melhor amigo de infância, para esta aventura, e a VR também lhe mudou a vida. Decidimos ajudar outras pessoas a conhecer gente incrível em todo o mundo, a começar pelo VRLFP (Virtual Reality Looking For Partner).</p><p>A presença imersiva em VR ajuda a criar ligações profundas com pessoas de qualquer parte do mundo. Ao encurtar distâncias e pôr a personalidade em primeiro lugar, a nossa missão é encontrar as melhores pessoas para ti, estejam onde estiverem. E tornar os encontros mais seguros e mais mágicos!</p><p>Em 2022, o VRLFP passou a ser o Flirtual. Reconstruímos tudo de raiz, melhorámos o sistema de matches, acrescentámos etiquetas de personalidade e de interesses e lançámos apps melhores. Quer procures uma relação séria que passe para a vida real, algo mais descontraído em VR ou só novas amizades, estamos prontos para te ajudar a encontrar o teu match perfeito.</p><group><logo/><p>❤ kfarwell, Tony e a equipa do Flirtual</p><discord>Junta-te ao nosso Discord</discord></group><p><italic>P.S. Já percorremos um longo caminho desde os humildes começos do VRLFP, mas continuamos a ser uma pequena equipa com raízes na comunidade VR. <br/><br/>Obrigado pela paciência enquanto trabalhamos para tornar o Flirtual o mais incrível possível. Diz-nos se <contact>encontrares algum erro</contact> ou se <ideas>tiveres sugestões</ideas>!</italic></p></section><section><h1>A equipa</h1><team-list/></section><section><h1>Cronologia</h1><timeline/></section>",
+	"about_page_body": "<team-photo/><section><h1>A nossa história</h1><p>Olá, somos o Kyle e o Tony, os criadores do Flirtual. O Kyle é obcecado por realidade virtual desde os primórdios da Oculus, mas a vida dele mudou mesmo quando entrou no VRChat e lá conheceu alguns dos seus amigos mais próximos (incluindo a mulher!). Pouco antes da COVID, o Kyle trouxe o Tony, o seu melhor amigo de infância, para esta aventura, e a RV também lhe mudou a vida. Decidimos ajudar outras pessoas a conhecer gente incrível em todo o mundo, a começar pelo VRLFP (Virtual Reality Looking For Partner).</p><p>A presença imersiva da RV ajuda-te a criar ligações profundas com pessoas em qualquer parte do mundo. Ao encurtar distâncias e pôr a personalidade em primeiro lugar, a nossa missão é encontrar as melhores pessoas para ti, estejam onde estiverem. E tornar os encontros mais seguros e mágicos!</p><p>Em 2022, o VRLFP passou a chamar-se Flirtual. Reconstruímos tudo de raiz, melhorámos o sistema de matches, adicionámos etiquetas de personalidade e de interesses e lançámos apps melhoradas. Quer procures uma relação séria que passe para a vida real, algo mais casual em RV ou só novas amizades, estamos aqui para te ajudar a encontrar o match perfeito.</p><group><logo/><p>❤ kfarwell, Tony e a equipa do Flirtual</p><discord>Junta-te ao nosso Discord</discord></group><p><italic>P.S. Já percorremos um longo caminho desde os humildes começos do VRLFP, mas continuamos a ser uma equipa pequena, com raízes na comunidade de RV. <br/><br/>Obrigado pela paciência enquanto trabalhamos para tornar o Flirtual o mais incrível possível. Avisa-nos se <contact>encontrares algum erro</contact> ou <ideas>tiveres sugestões</ideas>!</italic></p></section><section><h1>A equipa</h1><team-list/></section><section><h1>Cronologia</h1><timeline/></section><gallery/>",
 	"about_team_photo_alt": "Fotografia da equipa do Flirtual no VRChat",
 	"about_gallery": {
 		"0": {
@@ -1137,5 +1144,102 @@
 	"show_embed": "Mostrar {name}",
 	"recent": "Recentes",
 	"search_klipy": "Pesquisar no KLIPY",
-	"trending": "Tendências"
+	"trending": "Tendências",
+	"about_team": {
+		"kfarwell": {
+			"name": "kfarwell",
+			"role": "Programador principal",
+			"avatar": "kfarwell.png"
+		},
+		"tony": {
+			"name": "Tony",
+			"role": "Parcerias e Segurança",
+			"avatar": "tony.png"
+		},
+		"aries": {
+			"name": "Aries",
+			"role": "Desenvolvimento de software",
+			"avatar": "aries.jpg"
+		},
+		"buramie": {
+			"role": "Moderação",
+			"name": "Buramie",
+			"avatar": "buramie.jpg"
+		},
+		"damned_united": {
+			"name": "Damned_United",
+			"role": "Moderação",
+			"avatar": "damned-united.jpg"
+		},
+		"ferry": {
+			"name": "Ferry",
+			"role": "Moderação",
+			"avatar": "ferry.png"
+		},
+		"reploidsham": {
+			"name": "Reploidsham",
+			"role": "Moderação",
+			"avatar": "reploidsham.jpg"
+		},
+		"samantha": {
+			"name": "Samantha",
+			"role": "Moderação",
+			"avatar": "samantha.jpg"
+		},
+		"simon3373": {
+			"name": "Simon3373",
+			"role": "Moderação",
+			"avatar": "simon3373.jpg"
+		},
+		"starh": {
+			"name": "Starh",
+			"role": "Moderação",
+			"avatar": "starh.png"
+		},
+		"the_blarg": {
+			"name": "The_Blarg",
+			"role": "Moderação",
+			"avatar": "the-blarg.jpg"
+		},
+		"zyp": {
+			"name": "Zyp",
+			"role": "Moderação",
+			"avatar": "zyp.jpg"
+		},
+		"michiyo": {
+			"name": "Michiyo",
+			"role": "Eventos",
+			"avatar": "michiyo.jpg"
+		},
+		"nickykitty": {
+			"name": "NickyKitty",
+			"role": "Eventos",
+			"avatar": "nickykitty.jpg"
+		},
+		"syrmor": {
+			"name": "Syrmor",
+			"avatar": "syrmor.jpg",
+			"role": "Consultor"
+		},
+		"faxmashine": {
+			"role": "Criação de mundos no VRChat",
+			"name": "Faxmashine",
+			"avatar": "faxmashine.png",
+			"url": "https://www.faxmashine.com/"
+		},
+		"juice": {
+			"name": "Juice",
+			"role": "Criação de avatares no VRChat",
+			"avatar": "juice.jpg",
+			"url": "https://info.mdcr.tv/"
+		}
+	},
+	"download_apk": "Transferir APK",
+	"phone": "telemóvel",
+	"phone_number": "Telemóvel",
+	"sms_consent": "Vamos enviar-te um código por SMS para confirmares o teu número. Poderão ser cobradas tarifas de mensagens e dados. A frequência das mensagens varia. Responde HELP para obter ajuda. Responde STOP para cancelar.",
+	"enter_phone_code_description": "Introduz o código que enviámos por SMS para {phoneNumber}.",
+	"send_code": "Enviar código",
+	"send_a_new_code": "Enviar novo código",
+	"select_text": "Selecionar"
 }
