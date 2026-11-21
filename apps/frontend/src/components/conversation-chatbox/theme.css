@@ -46,7 +46,7 @@ html:is(html):is(html):is(html):is(html):is(html) :where([data-chatbox] .t-chatb
 	padding: 10px 18px;
 }
 
-[data-chatbox] .t-message-list:has(> .t-message-group:only-child > [data-match]:only-child) {
+[data-chatbox] .t-message-list:has(> .t-message-group > [data-match]:only-child):not(:has(> .t-message-group ~ .t-message-group)) {
 	@apply justify-center;
 
 	& [data-match] {
