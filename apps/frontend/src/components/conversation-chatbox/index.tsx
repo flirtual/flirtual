@@ -22,7 +22,7 @@ import emojiPickerStyles from "./emoji-picker.css?inline";
 import { followTabSwipes } from "./emoji-tab-swipes";
 import { hideKeyboardOnScroll } from "./keyboard";
 import { followReactionPickers } from "./reaction-picker";
-import { followMessageListResizes } from "./scroll-anchor";
+import { followMessageListResizes, followNewMessages } from "./scroll-anchor";
 import { followStickyAvatars } from "./sticky-avatars";
 
 const Chatbox = lazy(() => import("./chatbox").then(({ default: Chatbox }) => Chatbox));
@@ -88,6 +88,7 @@ function followChatbox(element: HTMLDivElement) {
 	const stopAvatars = followStickyAvatars(element);
 	const stopReactionPickers = followReactionPickers(element);
 	const stopResizes = followMessageListResizes(element);
+	const stopNewMessages = followNewMessages(element);
 	const stopEditors = followEditors(element);
 	const stopKeyboard = hideKeyboardOnScroll(element);
 
@@ -96,6 +97,7 @@ function followChatbox(element: HTMLDivElement) {
 		stopAvatars();
 		stopReactionPickers();
 		stopResizes();
+		stopNewMessages();
 		stopEditors();
 		stopKeyboard();
 	};

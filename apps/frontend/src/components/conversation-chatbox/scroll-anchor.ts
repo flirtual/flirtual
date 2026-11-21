@@ -80,3 +80,25 @@ export function followMessageListResizes(container: HTMLElement): () => void {
 		container.removeEventListener("touchcancel", onTouchEnd, options);
 	};
 }
+
+export function followNewMessages(container: HTMLElement): () => void {
+	const newest = new WeakMap<HTMLElement, Element>();
+
+	const follow = () => {
+		for (const list of container.querySelectorAll<HTMLElement>(".t-message-list")) {
+			const message = list.querySelector(".chat-message");
+			const last = newest.get(list);
+			if (!message || message === last) continue;
+			newest.set(list, message);
+
+			if (last?.isConnected && message.compareDocumentPosition(last) & Node.DOCUMENT_POSITION_FOLLOWING)
+				list.scrollTo({ top: 0, behavior: "smooth" });
+		}
+	};
+
+	const observer = new MutationObserver(follow);
+	observer.observe(container, { childList: true, subtree: true });
+	follow();
+
+	return () => observer.disconnect();
+}
