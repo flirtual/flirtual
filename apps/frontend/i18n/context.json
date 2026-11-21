@@ -15937,8 +15937,9 @@
 			"/about"
 		],
 		"element": "body",
-		"description": "Entire body of the About page: the founders' story, a signature, a P.S., then \"The team\" and \"Timeline\" sections whose contents come from other keys. Keep all tags and their nesting. VRLFP, VRChat, Oculus, kfarwell and Tony are proper names; \"homies\" is slang for friends and echoes the app's friend-finding Homie Mode.",
+		"description": "Entire body of the About page: a team photo, the founders' story, a signature, a P.S., then \"The team\" and \"Timeline\" sections whose contents come from other keys, and a photo gallery at the end. Keep all tags and their nesting. VRLFP, VRChat, Oculus, kfarwell and Tony are proper names; \"homies\" is slang for friends and echoes the app's friend-finding Homie Mode.",
 		"tags": {
+			"team-photo": "Self-closing; renders the wide photo of the Flirtual team in VRChat at the top. Keep as <team-photo/>",
 			"section": "A page section block",
 			"h1": "Section heading",
 			"p": "Paragraph",
@@ -15950,10 +15951,11 @@
 			"ideas": "Opens the feature-suggestion dialog; wraps the link text",
 			"br": "Line break; keep as <br/>",
 			"team-list": "Self-closing; renders the list of team members. Keep as <team-list/>",
-			"timeline": "Self-closing; renders the year-by-year timeline. Keep as <timeline/>"
+			"timeline": "Self-closing; renders the year-by-year timeline. Keep as <timeline/>",
+			"gallery": "Self-closing; renders a grid of photos from past Flirtual events at the bottom of the page. Keep as <gallery/>"
 		},
 		"tone": "Warm, personal, first-person plural from the founders",
-		"hash": "40832ddaeb78119b"
+		"hash": "d086c87c85257331"
 	},
 	"flirtual:about_team_photo_alt": {
 		"group": "about",
@@ -16044,6 +16046,500 @@
 		"element": "label",
 		"description": "Team role meaning the person runs Flirtual's social media accounts. Not assigned to anyone in the current About page team list.",
 		"hash": "d25d62267fae51ff"
+	},
+	"flirtual:about_team.aries.avatar": {
+		"group": "about/team",
+		"screens": [
+			"/about"
+		],
+		"element": "other",
+		"description": "File name of this team member's avatar image (looked up in static/about/team/). Not visible text: copy it unchanged, character for character. Any change breaks the About page.",
+		"hash": "408d4af51d8c2371"
+	},
+	"flirtual:about_team.aries.name": {
+		"group": "about/team",
+		"screens": [
+			"/about"
+		],
+		"element": "label",
+		"description": "A team member's name or VR username, shown in bold beside their round avatar in \"The team\" list on the About page; also fills the avatar's alt text (\"{name}'s avatar\"). It's a personal name/handle: keep it exactly as written, in Latin script, matching the signature in the About page body. Each name must stay unique.",
+		"hash": "5a5e14d554a88917"
+	},
+	"flirtual:about_team.aries.role": {
+		"group": "about/team",
+		"screens": [
+			"/about"
+		],
+		"element": "label",
+		"description": "Job title shown under a developer's name and avatar in \"The team\" list on the About page.",
+		"lengthNote": "One short line under the name in a two-column list",
+		"hash": "24949ed8aa1e3c9a"
+	},
+	"flirtual:about_team.buramie.avatar": {
+		"group": "about/team",
+		"screens": [
+			"/about"
+		],
+		"element": "other",
+		"description": "File name of this team member's avatar image (looked up in static/about/team/). Not visible text: copy it unchanged, character for character. Any change breaks the About page.",
+		"hash": "3cfd441f8b83a153"
+	},
+	"flirtual:about_team.buramie.name": {
+		"group": "about/team",
+		"screens": [
+			"/about"
+		],
+		"element": "label",
+		"description": "A team member's name or VR username, shown in bold beside their round avatar in \"The team\" list on the About page; also fills the avatar's alt text (\"{name}'s avatar\"). It's a personal name/handle: keep it exactly as written, in Latin script, matching the signature in the About page body. Each name must stay unique.",
+		"hash": "bf88e47118f0a7f3"
+	},
+	"flirtual:about_team.buramie.role": {
+		"group": "about/team",
+		"screens": [
+			"/about"
+		],
+		"element": "label",
+		"description": "Role shown under each of several community moderators in \"The team\" list on the About page: volunteers who review reports and moderate profiles and content. Use the same translation for every moderator entry.",
+		"lengthNote": "One short line under the name in a two-column list",
+		"hash": "ec6eb6357905cea7"
+	},
+	"flirtual:about_team.damned_united.avatar": {
+		"group": "about/team",
+		"screens": [
+			"/about"
+		],
+		"element": "other",
+		"description": "File name of this team member's avatar image (looked up in static/about/team/). Not visible text: copy it unchanged, character for character. Any change breaks the About page.",
+		"hash": "4ac2f200b54b9f4e"
+	},
+	"flirtual:about_team.damned_united.name": {
+		"group": "about/team",
+		"screens": [
+			"/about"
+		],
+		"element": "label",
+		"description": "A team member's name or VR username, shown in bold beside their round avatar in \"The team\" list on the About page; also fills the avatar's alt text (\"{name}'s avatar\"). It's a personal name/handle: keep it exactly as written, in Latin script, matching the signature in the About page body. Each name must stay unique.",
+		"hash": "d23f9d7429e71057"
+	},
+	"flirtual:about_team.damned_united.role": {
+		"group": "about/team",
+		"screens": [
+			"/about"
+		],
+		"element": "label",
+		"description": "Role shown under each of several community moderators in \"The team\" list on the About page: volunteers who review reports and moderate profiles and content. Use the same translation for every moderator entry.",
+		"lengthNote": "One short line under the name in a two-column list",
+		"hash": "ec6eb6357905cea7"
+	},
+	"flirtual:about_team.faxmashine.avatar": {
+		"group": "about/team",
+		"screens": [
+			"/about"
+		],
+		"element": "other",
+		"description": "File name of this team member's avatar image (looked up in static/about/team/). Not visible text: copy it unchanged, character for character. Any change breaks the About page.",
+		"hash": "b29c8dabb9ef6d05"
+	},
+	"flirtual:about_team.faxmashine.name": {
+		"group": "about/team",
+		"screens": [
+			"/about"
+		],
+		"element": "label",
+		"description": "A team member's name or VR username, shown in bold beside their round avatar in \"The team\" list on the About page; also fills the avatar's alt text (\"{name}'s avatar\"). It's a personal name/handle: keep it exactly as written, in Latin script, matching the signature in the About page body. Each name must stay unique.",
+		"hash": "8e0f93e3ddfe4def"
+	},
+	"flirtual:about_team.faxmashine.role": {
+		"group": "about/team",
+		"screens": [
+			"/about"
+		],
+		"element": "label",
+		"description": "Credit shown under a collaborator's name in the About page team list, followed by a small external-link icon to their website: an artist who builds VRChat worlds (3D virtual spaces) for Flirtual. Keep \"VRChat\" as is.",
+		"lengthNote": "One short line under the name in a two-column list",
+		"hash": "ef25f6037dc1963d"
+	},
+	"flirtual:about_team.faxmashine.url": {
+		"group": "about/team",
+		"screens": [
+			"/about"
+		],
+		"element": "link",
+		"description": "URL of this collaborator's own website, opened by the small external-link icon after their role in the About page team list. Not visible text: copy it unchanged unless the site has its own version in your language.",
+		"hash": "c12135b40bf65876"
+	},
+	"flirtual:about_team.ferry.avatar": {
+		"group": "about/team",
+		"screens": [
+			"/about"
+		],
+		"element": "other",
+		"description": "File name of this team member's avatar image (looked up in static/about/team/). Not visible text: copy it unchanged, character for character. Any change breaks the About page.",
+		"hash": "bc989c6fed0c8f05"
+	},
+	"flirtual:about_team.ferry.name": {
+		"group": "about/team",
+		"screens": [
+			"/about"
+		],
+		"element": "label",
+		"description": "A team member's name or VR username, shown in bold beside their round avatar in \"The team\" list on the About page; also fills the avatar's alt text (\"{name}'s avatar\"). It's a personal name/handle: keep it exactly as written, in Latin script, matching the signature in the About page body. Each name must stay unique.",
+		"hash": "5f09800438ae04ba"
+	},
+	"flirtual:about_team.ferry.role": {
+		"group": "about/team",
+		"screens": [
+			"/about"
+		],
+		"element": "label",
+		"description": "Role shown under each of several community moderators in \"The team\" list on the About page: volunteers who review reports and moderate profiles and content. Use the same translation for every moderator entry.",
+		"lengthNote": "One short line under the name in a two-column list",
+		"hash": "ec6eb6357905cea7"
+	},
+	"flirtual:about_team.juice.avatar": {
+		"group": "about/team",
+		"screens": [
+			"/about"
+		],
+		"element": "other",
+		"description": "File name of this team member's avatar image (looked up in static/about/team/). Not visible text: copy it unchanged, character for character. Any change breaks the About page.",
+		"hash": "ac7848868a8ec4df"
+	},
+	"flirtual:about_team.juice.name": {
+		"group": "about/team",
+		"screens": [
+			"/about"
+		],
+		"element": "label",
+		"description": "A team member's name or VR username, shown in bold beside their round avatar in \"The team\" list on the About page; also fills the avatar's alt text (\"{name}'s avatar\"). It's a personal name/handle: keep it exactly as written, in Latin script, matching the signature in the About page body. Each name must stay unique.",
+		"hash": "ab939decd9a35dca"
+	},
+	"flirtual:about_team.juice.role": {
+		"group": "about/team",
+		"screens": [
+			"/about"
+		],
+		"element": "label",
+		"description": "Credit shown under a collaborator's name in the About page team list, followed by a small external-link icon to their website: an artist who makes VRChat avatars (3D characters) for Flirtual. Keep \"VRChat\" as is.",
+		"lengthNote": "One short line under the name in a two-column list",
+		"hash": "3d0a3cdbb7ae2bc3"
+	},
+	"flirtual:about_team.juice.url": {
+		"group": "about/team",
+		"screens": [
+			"/about"
+		],
+		"element": "link",
+		"description": "URL of this collaborator's own website, opened by the small external-link icon after their role in the About page team list. Not visible text: copy it unchanged unless the site has its own version in your language.",
+		"hash": "9c96cd6d65164eb6"
+	},
+	"flirtual:about_team.kfarwell.avatar": {
+		"group": "about/team",
+		"screens": [
+			"/about"
+		],
+		"element": "other",
+		"description": "File name of this team member's avatar image (looked up in static/about/team/). Not visible text: copy it unchanged, character for character. Any change breaks the About page.",
+		"hash": "074f7f69619bf9f6"
+	},
+	"flirtual:about_team.kfarwell.name": {
+		"group": "about/team",
+		"screens": [
+			"/about"
+		],
+		"element": "label",
+		"description": "A team member's name or VR username, shown in bold beside their round avatar in \"The team\" list on the About page; also fills the avatar's alt text (\"{name}'s avatar\"). It's a personal name/handle: keep it exactly as written, in Latin script, matching the signature in the About page body. Each name must stay unique.",
+		"hash": "0765ae76aa0e3fe4"
+	},
+	"flirtual:about_team.kfarwell.role": {
+		"group": "about/team",
+		"screens": [
+			"/about"
+		],
+		"element": "label",
+		"description": "Job title of co-founder kfarwell (Kyle), shown under his name and avatar in \"The team\" list on the About page: he leads software development.",
+		"lengthNote": "One short line under the name in a two-column list",
+		"hash": "e66470201cdc4525"
+	},
+	"flirtual:about_team.michiyo.avatar": {
+		"group": "about/team",
+		"screens": [
+			"/about"
+		],
+		"element": "other",
+		"description": "File name of this team member's avatar image (looked up in static/about/team/). Not visible text: copy it unchanged, character for character. Any change breaks the About page.",
+		"hash": "9c663779bb150c67"
+	},
+	"flirtual:about_team.michiyo.name": {
+		"group": "about/team",
+		"screens": [
+			"/about"
+		],
+		"element": "label",
+		"description": "A team member's name or VR username, shown in bold beside their round avatar in \"The team\" list on the About page; also fills the avatar's alt text (\"{name}'s avatar\"). It's a personal name/handle: keep it exactly as written, in Latin script, matching the signature in the About page body. Each name must stay unique.",
+		"hash": "36a71b10b8733df6"
+	},
+	"flirtual:about_team.michiyo.role": {
+		"group": "about/team",
+		"screens": [
+			"/about"
+		],
+		"element": "label",
+		"description": "Role shown under team members who host Flirtual's community events in VRChat (speed dating, parties) in \"The team\" list on the About page. Use the same translation for both event hosts.",
+		"lengthNote": "One short line under the name in a two-column list",
+		"hash": "4cc23b5104aa276e"
+	},
+	"flirtual:about_team.nickykitty.avatar": {
+		"group": "about/team",
+		"screens": [
+			"/about"
+		],
+		"element": "other",
+		"description": "File name of this team member's avatar image (looked up in static/about/team/). Not visible text: copy it unchanged, character for character. Any change breaks the About page.",
+		"hash": "f05f0b1dfee3da4d"
+	},
+	"flirtual:about_team.nickykitty.name": {
+		"group": "about/team",
+		"screens": [
+			"/about"
+		],
+		"element": "label",
+		"description": "A team member's name or VR username, shown in bold beside their round avatar in \"The team\" list on the About page; also fills the avatar's alt text (\"{name}'s avatar\"). It's a personal name/handle: keep it exactly as written, in Latin script, matching the signature in the About page body. Each name must stay unique.",
+		"hash": "012ec1a53ba3047e"
+	},
+	"flirtual:about_team.nickykitty.role": {
+		"group": "about/team",
+		"screens": [
+			"/about"
+		],
+		"element": "label",
+		"description": "Role shown under team members who host Flirtual's community events in VRChat (speed dating, parties) in \"The team\" list on the About page. Use the same translation for both event hosts.",
+		"lengthNote": "One short line under the name in a two-column list",
+		"hash": "4cc23b5104aa276e"
+	},
+	"flirtual:about_team.reploidsham.avatar": {
+		"group": "about/team",
+		"screens": [
+			"/about"
+		],
+		"element": "other",
+		"description": "File name of this team member's avatar image (looked up in static/about/team/). Not visible text: copy it unchanged, character for character. Any change breaks the About page.",
+		"hash": "2341036d7455d53e"
+	},
+	"flirtual:about_team.reploidsham.name": {
+		"group": "about/team",
+		"screens": [
+			"/about"
+		],
+		"element": "label",
+		"description": "A team member's name or VR username, shown in bold beside their round avatar in \"The team\" list on the About page; also fills the avatar's alt text (\"{name}'s avatar\"). It's a personal name/handle: keep it exactly as written, in Latin script, matching the signature in the About page body. Each name must stay unique.",
+		"hash": "ac52f1f33e52991d"
+	},
+	"flirtual:about_team.reploidsham.role": {
+		"group": "about/team",
+		"screens": [
+			"/about"
+		],
+		"element": "label",
+		"description": "Role shown under each of several community moderators in \"The team\" list on the About page: volunteers who review reports and moderate profiles and content. Use the same translation for every moderator entry.",
+		"lengthNote": "One short line under the name in a two-column list",
+		"hash": "ec6eb6357905cea7"
+	},
+	"flirtual:about_team.samantha.avatar": {
+		"group": "about/team",
+		"screens": [
+			"/about"
+		],
+		"element": "other",
+		"description": "File name of this team member's avatar image (looked up in static/about/team/). Not visible text: copy it unchanged, character for character. Any change breaks the About page.",
+		"hash": "12675ab571b5ad5b"
+	},
+	"flirtual:about_team.samantha.name": {
+		"group": "about/team",
+		"screens": [
+			"/about"
+		],
+		"element": "label",
+		"description": "A team member's name or VR username, shown in bold beside their round avatar in \"The team\" list on the About page; also fills the avatar's alt text (\"{name}'s avatar\"). It's a personal name/handle: keep it exactly as written, in Latin script, matching the signature in the About page body. Each name must stay unique.",
+		"hash": "c95f686bf7142feb"
+	},
+	"flirtual:about_team.samantha.role": {
+		"group": "about/team",
+		"screens": [
+			"/about"
+		],
+		"element": "label",
+		"description": "Role shown under each of several community moderators in \"The team\" list on the About page: volunteers who review reports and moderate profiles and content. Use the same translation for every moderator entry.",
+		"lengthNote": "One short line under the name in a two-column list",
+		"hash": "ec6eb6357905cea7"
+	},
+	"flirtual:about_team.simon3373.avatar": {
+		"group": "about/team",
+		"screens": [
+			"/about"
+		],
+		"element": "other",
+		"description": "File name of this team member's avatar image (looked up in static/about/team/). Not visible text: copy it unchanged, character for character. Any change breaks the About page.",
+		"hash": "544c23229ececcc1"
+	},
+	"flirtual:about_team.simon3373.name": {
+		"group": "about/team",
+		"screens": [
+			"/about"
+		],
+		"element": "label",
+		"description": "A team member's name or VR username, shown in bold beside their round avatar in \"The team\" list on the About page; also fills the avatar's alt text (\"{name}'s avatar\"). It's a personal name/handle: keep it exactly as written, in Latin script, matching the signature in the About page body. Each name must stay unique.",
+		"hash": "ef75552101d4661e"
+	},
+	"flirtual:about_team.simon3373.role": {
+		"group": "about/team",
+		"screens": [
+			"/about"
+		],
+		"element": "label",
+		"description": "Role shown under each of several community moderators in \"The team\" list on the About page: volunteers who review reports and moderate profiles and content. Use the same translation for every moderator entry.",
+		"lengthNote": "One short line under the name in a two-column list",
+		"hash": "ec6eb6357905cea7"
+	},
+	"flirtual:about_team.starh.avatar": {
+		"group": "about/team",
+		"screens": [
+			"/about"
+		],
+		"element": "other",
+		"description": "File name of this team member's avatar image (looked up in static/about/team/). Not visible text: copy it unchanged, character for character. Any change breaks the About page.",
+		"hash": "17297e3b9db45069"
+	},
+	"flirtual:about_team.starh.name": {
+		"group": "about/team",
+		"screens": [
+			"/about"
+		],
+		"element": "label",
+		"description": "A team member's name or VR username, shown in bold beside their round avatar in \"The team\" list on the About page; also fills the avatar's alt text (\"{name}'s avatar\"). It's a personal name/handle: keep it exactly as written, in Latin script, matching the signature in the About page body. Each name must stay unique.",
+		"hash": "5acf921de7b7c947"
+	},
+	"flirtual:about_team.starh.role": {
+		"group": "about/team",
+		"screens": [
+			"/about"
+		],
+		"element": "label",
+		"description": "Role shown under each of several community moderators in \"The team\" list on the About page: volunteers who review reports and moderate profiles and content. Use the same translation for every moderator entry.",
+		"lengthNote": "One short line under the name in a two-column list",
+		"hash": "ec6eb6357905cea7"
+	},
+	"flirtual:about_team.syrmor.avatar": {
+		"group": "about/team",
+		"screens": [
+			"/about"
+		],
+		"element": "other",
+		"description": "File name of this team member's avatar image (looked up in static/about/team/). Not visible text: copy it unchanged, character for character. Any change breaks the About page.",
+		"hash": "64a1ddbf9e8c543f"
+	},
+	"flirtual:about_team.syrmor.name": {
+		"group": "about/team",
+		"screens": [
+			"/about"
+		],
+		"element": "label",
+		"description": "A team member's name or VR username, shown in bold beside their round avatar in \"The team\" list on the About page; also fills the avatar's alt text (\"{name}'s avatar\"). It's a personal name/handle: keep it exactly as written, in Latin script, matching the signature in the About page body. Each name must stay unique.",
+		"hash": "ab1f3fb1dd26c7a5"
+	},
+	"flirtual:about_team.syrmor.role": {
+		"group": "about/team",
+		"screens": [
+			"/about"
+		],
+		"element": "label",
+		"description": "Role shown under an outside advisor's name (Syrmor, a VRChat YouTuber) in \"The team\" list on the About page: someone who gives the company advice, not an employee.",
+		"lengthNote": "One short line under the name in a two-column list",
+		"hash": "ce5474e8f7e0df74"
+	},
+	"flirtual:about_team.the_blarg.avatar": {
+		"group": "about/team",
+		"screens": [
+			"/about"
+		],
+		"element": "other",
+		"description": "File name of this team member's avatar image (looked up in static/about/team/). Not visible text: copy it unchanged, character for character. Any change breaks the About page.",
+		"hash": "c7c40cf03830e8f8"
+	},
+	"flirtual:about_team.the_blarg.name": {
+		"group": "about/team",
+		"screens": [
+			"/about"
+		],
+		"element": "label",
+		"description": "A team member's name or VR username, shown in bold beside their round avatar in \"The team\" list on the About page; also fills the avatar's alt text (\"{name}'s avatar\"). It's a personal name/handle: keep it exactly as written, in Latin script, matching the signature in the About page body. Each name must stay unique.",
+		"hash": "f1b20c8fe54e47a2"
+	},
+	"flirtual:about_team.the_blarg.role": {
+		"group": "about/team",
+		"screens": [
+			"/about"
+		],
+		"element": "label",
+		"description": "Role shown under each of several community moderators in \"The team\" list on the About page: volunteers who review reports and moderate profiles and content. Use the same translation for every moderator entry.",
+		"lengthNote": "One short line under the name in a two-column list",
+		"hash": "ec6eb6357905cea7"
+	},
+	"flirtual:about_team.tony.avatar": {
+		"group": "about/team",
+		"screens": [
+			"/about"
+		],
+		"element": "other",
+		"description": "File name of this team member's avatar image (looked up in static/about/team/). Not visible text: copy it unchanged, character for character. Any change breaks the About page.",
+		"hash": "1b66a95726f2a35a"
+	},
+	"flirtual:about_team.tony.name": {
+		"group": "about/team",
+		"screens": [
+			"/about"
+		],
+		"element": "label",
+		"description": "A team member's name or VR username, shown in bold beside their round avatar in \"The team\" list on the About page; also fills the avatar's alt text (\"{name}'s avatar\"). It's a personal name/handle: keep it exactly as written, in Latin script, matching the signature in the About page body. Each name must stay unique.",
+		"hash": "f162b7fbfece6cfd"
+	},
+	"flirtual:about_team.tony.role": {
+		"group": "about/team",
+		"screens": [
+			"/about"
+		],
+		"element": "label",
+		"description": "Job title of co-founder Tony, shown under his name and avatar in \"The team\" list on the About page: he handles business partnerships and user safety (trust & safety).",
+		"lengthNote": "One short line under the name in a two-column list",
+		"hash": "fa5ba68e0a4cbef4"
+	},
+	"flirtual:about_team.zyp.avatar": {
+		"group": "about/team",
+		"screens": [
+			"/about"
+		],
+		"element": "other",
+		"description": "File name of this team member's avatar image (looked up in static/about/team/). Not visible text: copy it unchanged, character for character. Any change breaks the About page.",
+		"hash": "d7244bca5e717072"
+	},
+	"flirtual:about_team.zyp.name": {
+		"group": "about/team",
+		"screens": [
+			"/about"
+		],
+		"element": "label",
+		"description": "A team member's name or VR username, shown in bold beside their round avatar in \"The team\" list on the About page; also fills the avatar's alt text (\"{name}'s avatar\"). It's a personal name/handle: keep it exactly as written, in Latin script, matching the signature in the About page body. Each name must stay unique.",
+		"hash": "e2f2b45ea309d171"
+	},
+	"flirtual:about_team.zyp.role": {
+		"group": "about/team",
+		"screens": [
+			"/about"
+		],
+		"element": "label",
+		"description": "Role shown under each of several community moderators in \"The team\" list on the About page: volunteers who review reports and moderate profiles and content. Use the same translation for every moderator entry.",
+		"lengthNote": "One short line under the name in a two-column list",
+		"hash": "ec6eb6357905cea7"
 	},
 	"flirtual:about_us": {
 		"group": "about",
@@ -18219,6 +18715,17 @@
 		"description": "Used both as a button that downloads the press kit ZIP (branding and press pages) and as the title of the Download page, which lists app-store buttons for getting the app; also in the browser tab title (\"Download - Flirtual\"). Needs to work as a short button verb and as a page title.",
 		"hash": "41533734a5a7b89d"
 	},
+	"flirtual:download_apk": {
+		"group": "download",
+		"screens": [
+			"/download",
+			"homepage"
+		],
+		"element": "link",
+		"description": "Small text link under the Google Play download button, on the Download page and the landing page's final section. It downloads the Android app as an installable APK file directly, for people who can't or don't want to use Google Play. Hidden inside the native apps. \"APK\" is the Android package file format; keep it as is.",
+		"lengthNote": "Short link centred under a store badge",
+		"hash": "f2120160930a4750"
+	},
 	"flirtual:download_on": {
 		"group": "download",
 		"screens": [
@@ -18354,6 +18861,22 @@
 		"element": "label",
 		"description": "Label of a switch that turns on the April Fools 2024 joke \"ranked mode\", which relabels the dating and friends mode switches as \"Ranked\" and \"Casual\", like competitive video game modes.",
 		"hash": "e5c85c0eaf258a13"
+	},
+	"flirtual:enter_phone_code_description": {
+		"group": "login/phone",
+		"screens": [
+			"/login",
+			"/sign-up"
+		],
+		"element": "body",
+		"description": "Instruction under the \"Enter verification code\" heading, above six boxes for the code digits, after a code was sent by SMS during phone login or sign-up. \"Texted\" means sent by SMS.",
+		"placeholders": {
+			"phoneNumber": {
+				"meaning": "The phone number the code was sent to, in international format",
+				"example": "+1 415 555 0123"
+			}
+		},
+		"hash": "f27bff6834698ee2"
 	},
 	"flirtual:enter_verification_code": {
 		"group": "login/verification",
@@ -18978,6 +19501,16 @@
 		"description": "Error when an Apple/Google sign-in on the mobile app returns without the expected login token. \"(missing token)\" is a technical hint for support.",
 		"hash": "b1c0c5cbd5458b0f"
 	},
+	"flirtual:errors.must_be_a_valid_email_address": {
+		"group": "errors/validation",
+		"screens": [
+			"/sign-up",
+			"/settings/email"
+		],
+		"element": "error",
+		"description": "Shown in red under an email address field when the value isn't a valid email address.",
+		"hash": "65f9c6d2e7fc853e"
+	},
 	"flirtual:errors.must_be_accepted": {
 		"group": "errors",
 		"screens": [
@@ -19063,16 +19596,6 @@
 		},
 		"hash": "c4b8aa214ed56d68"
 	},
-	"flirtual:errors.must_be_a_valid_email_address": {
-		"group": "errors/validation",
-		"screens": [
-			"/sign-up",
-			"/settings/email"
-		],
-		"element": "error",
-		"description": "Shown in red under an email address field when the value isn't a valid email address.",
-		"hash": "65f9c6d2e7fc853e"
-	},
 	"flirtual:errors.must_include_a_non_pronoun_gender": {
 		"group": "errors/validation",
 		"screens": [
@@ -19131,6 +19654,58 @@
 		"element": "error",
 		"description": "Shown under the new password field when it's identical to the current password.",
 		"hash": "5b71f3dd74361529"
+	},
+	"flirtual:errors.phone_invalid": {
+		"group": "errors/login",
+		"screens": [
+			"/login",
+			"/sign-up"
+		],
+		"element": "error",
+		"description": "Error under the phone login form after tapping \"Send code\", when the number entered isn't a valid phone number for the selected country. The form has a Country dropdown above the Phone number field, which is what \"the country\" refers to.",
+		"hash": "201add5d8e4feac2"
+	},
+	"flirtual:errors.phone_login_disabled": {
+		"group": "errors/login",
+		"screens": [
+			"/login",
+			"/sign-up"
+		],
+		"element": "error",
+		"description": "Error under the phone login form when signing in or signing up with a phone number is switched off on the server. Unlike errors.sms_unavailable (\"isn't available right now\"), this has no time limit: the option is off.",
+		"hash": "5d16494f56f1ddb5"
+	},
+	"flirtual:errors.phone_not_mobile": {
+		"group": "errors/login",
+		"screens": [
+			"/login",
+			"/sign-up"
+		],
+		"element": "error",
+		"description": "Error under the phone login form after tapping \"Send code\", when the number entered is valid but isn't a mobile number (a landline, VoIP or similar), so it can't receive the SMS code.",
+		"hash": "6526fe14efa29b16"
+	},
+	"flirtual:errors.phone_not_registered": {
+		"group": "errors/login",
+		"screens": [
+			"/login"
+		],
+		"element": "error",
+		"description": "Error under the code entry on the login page after the user enters the SMS code, when no Flirtual account uses that phone number. Suggests signing up instead.",
+		"tags": {
+			"signup": "Link to the sign-up page; wraps the link text"
+		},
+		"hash": "5804b1d4cbab283f"
+	},
+	"flirtual:errors.phone_rate_limit": {
+		"group": "errors/login",
+		"screens": [
+			"/login",
+			"/sign-up"
+		],
+		"element": "error",
+		"description": "Error under the phone login form after tapping \"Send code\", when too many SMS codes were requested in the last hour (the limit is 5 per hour, per number and per network). \"Codes\" are the one-time login codes sent by text message.",
+		"hash": "30e2a27f5bd20669"
 	},
 	"flirtual:errors.plan_not_available": {
 		"group": "errors/premium",
@@ -19344,6 +19919,26 @@
 			}
 		},
 		"hash": "124a7593b8c9e413"
+	},
+	"flirtual:errors.sms_failed": {
+		"group": "errors/login",
+		"screens": [
+			"/login",
+			"/sign-up"
+		],
+		"element": "error",
+		"description": "Error under the phone login form after tapping \"Send code\", when the text-message provider refused or failed to send the SMS code to the number entered. \"Text\" is the verb \"send an SMS\".",
+		"hash": "21355f39eb90835c"
+	},
+	"flirtual:errors.sms_unavailable": {
+		"group": "errors/login",
+		"screens": [
+			"/login",
+			"/sign-up"
+		],
+		"element": "error",
+		"description": "Error under the phone login form after tapping \"Send code\", when the server can't send text messages at the moment (SMS sending not set up). Implies a temporary problem; other login methods still work.",
+		"hash": "b0e86f926dccd7c9"
 	},
 	"flirtual:errors.state_mismatch": {
 		"group": "errors/connections",
@@ -24273,6 +24868,27 @@
 		"description": "Tag option under the Personality category of the advanced filters: people whose personality quiz shows low agreeableness (direct, blunt). Same trait as the \"Straightforward\" profile pill; translate consistently. Describes other people of any gender.",
 		"hash": "e5b9fa881873da20"
 	},
+	"flirtual:phone": {
+		"group": "login",
+		"screens": [
+			"/login",
+			"/sign-up"
+		],
+		"element": "button",
+		"description": "Fills {type} in \"Continue with {type}\" on the login and sign-up button (with a smartphone icon) that starts signing in with a phone number and an SMS code. The other values of {type} are brand names (Google, Apple, Discord). Means the phone/phone number as a sign-in method, not a phone call; choose the form that fits grammatically after \"Continue with\" in your language.",
+		"needsScreenshot": true,
+		"hash": "f56ae98ab9a48542"
+	},
+	"flirtual:phone_number": {
+		"group": "login/phone",
+		"screens": [
+			"/login",
+			"/sign-up"
+		],
+		"element": "label",
+		"description": "Label of the phone number text field in the phone login and sign-up form, under the Country dropdown. The SMS consent text (sms_consent) follows it as grey hint text.",
+		"hash": "7012b7b439a2bda6"
+	},
 	"flirtual:photo_taken_by": {
 		"group": "moderation/profile",
 		"screens": [
@@ -25687,6 +26303,17 @@
 		"description": "In the iOS/Android app, the only text in the profile picture upload dialog's drop area; tapping opens the photo picker. Replaces the website's drag-or-browse instruction.",
 		"hash": "52674a31b12d04eb"
 	},
+	"flirtual:select_text": {
+		"group": "matches/chat",
+		"screens": [
+			"/matches/[conversationId]",
+			"menu: chat message"
+		],
+		"element": "menu-item",
+		"description": "Item in the menu that opens on long-press or right-click of a chat message, next to Reply, Copy, Copy link, Edit and Delete. Turns on text selection in that message so the user can highlight part of its text (e.g. to copy a portion). Verb, imperative; \"select\" means highlight text. Not shown on Android.",
+		"lengthNote": "Short menu item next to an icon",
+		"hash": "a4395168488bb476"
+	},
 	"flirtual:select_the_platforms_you_use": {
 		"group": "settings/info",
 		"screens": [
@@ -25725,6 +26352,17 @@
 		"description": "Main button in the \"It's a match!\" dialog that opens the chat with the new match.",
 		"hash": "21351e7fc71303e1"
 	},
+	"flirtual:send_a_new_code": {
+		"group": "login/phone",
+		"screens": [
+			"/login",
+			"/sign-up"
+		],
+		"element": "button",
+		"description": "Small text button under the code entry boxes in phone login and sign-up, for when the SMS code didn't arrive. It goes back to the phone number form, where the user can request another code.",
+		"lengthNote": "Small text button",
+		"hash": "f942cead1b22d15e"
+	},
 	"flirtual:send_again": {
 		"group": "confirm-email",
 		"screens": [
@@ -25733,6 +26371,17 @@
 		"element": "button",
 		"description": "Button that resends the account confirmation email.",
 		"hash": "56c91601c54f7f66"
+	},
+	"flirtual:send_code": {
+		"group": "login/phone",
+		"screens": [
+			"/login",
+			"/sign-up"
+		],
+		"element": "button",
+		"description": "Submit button of the phone login and sign-up form: sends a one-time verification code to the entered number by text message (SMS). Next to a \"Back\" button.",
+		"lengthNote": "Small button, about 11rem wide",
+		"hash": "cd8082c520ac7fcd"
 	},
 	"flirtual:send_gif": {
 		"group": "matches/conversation",
@@ -26015,6 +26664,18 @@
 		"description": "Name of the 3rd of seven text-size steps (just below default) on the Font size slider, shown beside the label while selected. Order: Tiny, Extra small, Small, Default, Large, Extra large, Huge.",
 		"lengthNote": "Short label at the end of a label row",
 		"hash": "6cc317dd8d265203"
+	},
+	"flirtual:sms_consent": {
+		"group": "login/phone",
+		"screens": [
+			"/login",
+			"/sign-up"
+		],
+		"element": "legal",
+		"description": "Grey hint text attached to the Phone number field label in the phone login and sign-up form. It's the SMS disclosure that phone carriers require before sending text messages: a one-time code to confirm the number, possible carrier charges, and the HELP/STOP reply keywords. Keep every clause.",
+		"tone": "Legal/compliance, plain",
+		"hash": "3edf8e53e51a5f45",
+		"resolved": "Keep HELP and STOP as the literal English keywords in capitals in every locale; translate the rest of the sentence."
 	},
 	"flirtual:snowfall": {
 		"group": "settings/fun",

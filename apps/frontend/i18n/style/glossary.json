@@ -29,6 +29,22 @@
 			"match": "\\bFlitty\\b"
 		},
 		{
+			"id": "sms-help",
+			"en": "HELP",
+			"note": "SMS reply keyword the text provider recognises. Keep it in English capitals in every locale; translate the sentence around it.",
+			"untranslatable": true,
+			"match": "\\bHELP\\b",
+			"status": "decided"
+		},
+		{
+			"id": "sms-stop",
+			"en": "STOP",
+			"note": "SMS reply keyword the text provider recognises. Keep it in English capitals in every locale; translate the sentence around it.",
+			"untranslatable": true,
+			"match": "\\bSTOP\\b",
+			"status": "decided"
+		},
+		{
 			"id": "vrchat",
 			"en": "VRChat",
 			"note": "Social VR platform. Platform and product names stay in Latin script everywhere.",
