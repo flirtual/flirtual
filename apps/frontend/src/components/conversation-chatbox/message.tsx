@@ -23,6 +23,7 @@ import { useDevice } from "~/hooks/use-device";
 import { customEmojiNames } from "~/hooks/use-talkjs";
 import { urls } from "~/urls";
 
+import { textContent } from "./content";
 import { isJumboEmoji, splitEmoji } from "./custom-emoji";
 import { Emoji } from "./emoji";
 import { countEmojiUse, frequentReactions } from "./emoji-favorites";
@@ -79,15 +80,11 @@ export function Message({ message, messageStatus, permissions, common }: Message
 		? "system"
 		: message.sender.id === currentUser.id ? "currentUser" : "other";
 
-	const hasThumbnail = message.content.some((block) =>
-		block.type === "location" || (block.type === "file" && block.subtype === "image"));
+	const content = textContent(message.content);
+	const [firstBlock] = content;
+	const jumbo = content.length === 1 && isJumboEmoji(splitEmoji(firstBlock.children, customEmojiNames));
 
-	const [firstBlock] = message.content;
-	const jumbo = message.content.length === 1
-		&& firstBlock.type === "text"
-		&& isJumboEmoji(splitEmoji(firstBlock.children, customEmojiNames));
-
-	const gifLink = message.content.length === 1 && firstBlock.type === "text" ? soleLink(firstBlock.children) : null;
+	const gifLink = content.length === 1 ? soleLink(firstBlock.children) : null;
 	const gif = !!gifLink && isKlipyMedia(gifLink);
 	const bare = jumbo || gif;
 
@@ -97,7 +94,7 @@ export function Message({ message, messageStatus, permissions, common }: Message
 	const canEdit = sent && permissions.canEditMessage;
 	const canDelete = sent && permissions.canDeleteMessage;
 	const hasActions = canAddReaction || canReply || canEdit || canDelete;
-	const hasText = message.content.some((block) => block.type === "text");
+	const hasText = content.length > 0;
 
 	const reply = () => {
 		common.chatbox.setReferencedMessage(message.id);
@@ -224,6 +221,9 @@ export function Message({ message, messageStatus, permissions, common }: Message
 	);
 
 	if (match && isMatchMessage(message)) return <MatchCard match={match} message={message} />;
+	if (!hasText) return null;
+
+	const referenced = message.referencedMessage && textContent(message.referencedMessage.content).length > 0;
 
 	return (
 		<>
@@ -232,7 +232,7 @@ export function Message({ message, messageStatus, permissions, common }: Message
 				ref={root}
 				{...handlers}
 				data-focused={common.focusedMessage?.id === message.id ? "" : undefined}
-				data-reply={message.referencedMessage ? "" : undefined}
+				data-reply={referenced ? "" : undefined}
 				data-sender={sender}
 				t-message-id={message.id}
 				onPointerDownCapture={({ target }) => {
@@ -262,8 +262,7 @@ export function Message({ message, messageStatus, permissions, common }: Message
 							"relative flex max-w-[calc(100%-3.5rem)] min-w-0 flex-col",
 							!distance && "transition-transform",
 							sender === "currentUser" ? "items-end" : "items-start",
-							sender === "system" && "w-full max-w-full",
-							hasThumbnail && "w-[calc(100%-3.5rem)]"
+							sender === "system" && "w-full max-w-full"
 						)}
 						style={distance ? { transform: `translateX(${distance}px)` } : undefined}
 					>
@@ -284,7 +283,7 @@ export function Message({ message, messageStatus, permissions, common }: Message
 								{canDelete && action(translate("delete"), <Trash2 />, () => void common.chatbox.deleteMessage(message.id), "text-red-500! dark:text-red-500! vision:text-red-500!")}
 							</div>
 						)}
-						{message.referencedMessage && (
+						{referenced && message.referencedMessage && (
 							<ReferencedMessage common={common} referencedMessage={message.referencedMessage} />
 						)}
 
@@ -296,12 +295,11 @@ export function Message({ message, messageStatus, permissions, common }: Message
 								(repliedTo || highlighted) && "focused",
 								jumbo ? jumboSurface : gif ? bareSurface : twMerge("px-4 py-3 shadow-brand-1", surface[sender]),
 								sender === "system" && "w-full text-[120%]! italic [&:lang(ja)]:not-italic [&:lang(ko)]:not-italic [&:lang(ru)]:not-italic",
-								hasThumbnail && "w-full",
 								menu && bare && twMerge("before:absolute before:-inset-x-2 before:-top-2 before:-bottom-0.5 before:-z-1 before:rounded-2xl before:shadow-brand-1", highlightedBare[sender])
 							)}
 							ref={bubble}
 						>
-							<MessageContent common={common} message={message} messageStatus={messageStatus} />
+							<MessageContent common={common} message={{ ...message, content }} messageStatus={messageStatus} />
 
 							{message.editedAt !== null && (
 								<span className="text-[0.74em]! whitespace-nowrap opacity-75">{` (${t.EDITED_INDICATOR})`}</span>
