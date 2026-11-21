@@ -3,12 +3,14 @@ const momentumIdle = 150;
 interface Position {
 	height: number;
 	scrollTop: number;
+	newest: Element | null;
+	following: boolean;
 }
 
 // The message list scrolls in reverse, so its scrollTop is the distance from the newest message. Once
 // it has been scrolled, WebKit keeps the distance from the top when it resizes instead, so opening the
 // keyboard scrolls the newest messages out of view.
-export function followMessageListResizes(container: HTMLElement): () => void {
+export function anchorMessageLists(container: HTMLElement): () => void {
 	const positions = new Map<HTMLElement, Position>();
 
 	// Restoring the position mid-scroll would make the list jump under the finger.
@@ -22,9 +24,12 @@ export function followMessageListResizes(container: HTMLElement): () => void {
 			const position = positions.get(list);
 			if (!position) continue;
 
-			if (list.clientHeight !== position.height && !scrolling()) list.scrollTop = position.scrollTop;
+			if (list.clientHeight !== position.height && !scrolling()) {
+				if (position.following) list.scrollTo({ top: 0, behavior: "smooth" });
+				else list.scrollTop = position.scrollTop;
+			}
 			position.height = list.clientHeight;
-			position.scrollTop = list.scrollTop;
+			if (!position.following) position.scrollTop = list.scrollTop;
 		}
 	});
 
@@ -33,8 +38,13 @@ export function followMessageListResizes(container: HTMLElement): () => void {
 		if (performance.now() < momentumUntil) momentumUntil = performance.now() + momentumIdle;
 		const list = event.target as HTMLElement;
 		const position = positions.get(list);
-		if (!position || list.clientHeight !== position.height) return;
-		position.scrollTop = list.scrollTop;
+		if (!position) return;
+
+		if (position.following) {
+			if (Math.abs(list.scrollTop) < 1) position.following = false;
+			return;
+		}
+		if (list.clientHeight === position.height) position.scrollTop = list.scrollTop;
 	};
 
 	const follow = () => {
@@ -45,15 +55,31 @@ export function followMessageListResizes(container: HTMLElement): () => void {
 		}
 
 		for (const list of container.querySelectorAll<HTMLElement>(".t-message-list")) {
-			if (positions.has(list)) continue;
-			positions.set(list, { height: list.clientHeight, scrollTop: list.scrollTop });
-			resize.observe(list);
+			const newest = list.querySelector(".chat-message");
+			const position = positions.get(list);
+			if (!position) {
+				positions.set(list, { height: list.clientHeight, scrollTop: list.scrollTop, newest, following: false });
+				resize.observe(list);
+				continue;
+			}
+
+			const last = position.newest;
+			if (!newest || newest === last) continue;
+			position.newest = newest;
+			if (!last?.isConnected || !(newest.compareDocumentPosition(last) & Node.DOCUMENT_POSITION_FOLLOWING)) continue;
+
+			position.scrollTop = 0;
+			position.following = Math.abs(list.scrollTop) >= 1;
+			list.scrollTo({ top: 0, behavior: "smooth" });
 		}
 	};
 
 	const added = new MutationObserver(follow);
 	added.observe(container, { childList: true, subtree: true });
-	const onTouchStart = () => (dragging = false);
+	const onTouchStart = () => {
+		dragging = false;
+		for (const position of positions.values()) position.following = false;
+	};
 	const onTouchMove = ({ target }: TouchEvent) => {
 		if (target instanceof Element && target.closest(".t-message-list")) dragging = true;
 	};
@@ -79,26 +105,4 @@ export function followMessageListResizes(container: HTMLElement): () => void {
 		container.removeEventListener("touchend", onTouchEnd, options);
 		container.removeEventListener("touchcancel", onTouchEnd, options);
 	};
-}
-
-export function followNewMessages(container: HTMLElement): () => void {
-	const newest = new WeakMap<HTMLElement, Element>();
-
-	const follow = () => {
-		for (const list of container.querySelectorAll<HTMLElement>(".t-message-list")) {
-			const message = list.querySelector(".chat-message");
-			const last = newest.get(list);
-			if (!message || message === last) continue;
-			newest.set(list, message);
-
-			if (last?.isConnected && message.compareDocumentPosition(last) & Node.DOCUMENT_POSITION_FOLLOWING)
-				list.scrollTo({ top: 0, behavior: "smooth" });
-		}
-	};
-
-	const observer = new MutationObserver(follow);
-	observer.observe(container, { childList: true, subtree: true });
-	follow();
-
-	return () => observer.disconnect();
 }
