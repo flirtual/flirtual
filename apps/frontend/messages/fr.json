@@ -535,7 +535,6 @@
 		"queue_empty_title": "C’est tout pour le moment",
 		"queue_empty_detail": "Reviens plus tard pour voir d’autres profils.",
 		"profiles_failed": "Impossible de charger les profils",
-		"next_photo": "Photo suivante",
 		"active": "Activité récente",
 		"unreachable": "Impossible de joindre {brand_name}. Vérifie ta connexion et réessaie.",
 		"out_of_likes": "Tu as utilisé tous tes Likes du jour.",
