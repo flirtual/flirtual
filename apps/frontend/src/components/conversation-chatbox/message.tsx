@@ -235,6 +235,7 @@ export function Message({ message, messageStatus, permissions, common }: Message
 				data-focused={common.focusedMessage?.id === message.id ? "" : undefined}
 				data-reply={message.referencedMessage ? "" : undefined}
 				data-sender={sender}
+				t-message-id={message.id}
 				onPointerDownCapture={({ target }) => {
 					pressedLink.current = target instanceof Element ? target.closest<HTMLAnchorElement>("a[href]")?.href ?? null : null;
 				}}
