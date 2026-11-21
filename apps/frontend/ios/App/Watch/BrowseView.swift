@@ -326,7 +326,7 @@ struct PhotoCarousel: View {
         _ = await ImageLoader.shared.image(url, size: photoSize)
     }
 
-    private static func flag(_ country: String) -> String? {
+    static func flag(_ country: String) -> String? {
         let letters = country.uppercased().unicodeScalars
         guard letters.count == 2, letters.allSatisfy({ ("A"..."Z").contains($0) }) else { return nil }
         return String(String.UnicodeScalarView(letters.compactMap { Unicode.Scalar(0x1F1E6 + $0.value - 65) }))

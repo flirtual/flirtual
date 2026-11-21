@@ -208,6 +208,22 @@ struct Conversation: Decodable, Identifiable, Sendable {
     let createdAt: Date
 }
 
+struct Like: Decodable, Identifiable, Sendable {
+    let profileId: String
+    let kind: Mode
+
+    var id: String { profileId }
+}
+
+struct LikeList: Decodable, Sendable {
+    struct Metadata: Decodable, Sendable {
+        let next: String?
+    }
+
+    let data: [Like]
+    let metadata: Metadata
+}
+
 struct ConversationList: Decodable, Sendable {
     struct Metadata: Decodable, Sendable {
         let next: String?
@@ -230,17 +246,21 @@ struct API: Sendable {
         try await request("queue", query: ["mode": mode.rawValue])
     }
 
-    func respond(_ type: String, to userId: String, mode: Mode) async throws -> Response {
+    func respond(_ type: String, to userId: String, mode: Mode, source: String? = nil) async throws -> Response {
         try await request("queue", method: "POST", body: [
             "type": type,
             "mode": mode.rawValue,
             "user_id": userId,
-            "source": mode.rawValue
+            "source": source ?? mode.rawValue
         ])
     }
 
     func unmatch(_ userId: String) async throws {
         let _: Empty = try await request("matches", method: "DELETE", query: ["user_id": userId])
+    }
+
+    func likes(cursor: String? = nil) async throws -> LikeList {
+        try await request("likes", query: cursor.map { ["cursor": $0] } ?? [:])
     }
 
     func user(_ id: String) async throws -> User {

@@ -93,6 +93,7 @@ struct UnmatchButton: View {
 struct RespondingProfileView: View {
     let user: User
     let mode: Mode
+    var source: String?
     var offersResponses = true
     var onUnmatch: (() async -> Void)?
     let onReport: () async -> Void
@@ -166,7 +167,7 @@ struct RespondingProfileView: View {
         defer { busy = false }
 
         do {
-            let response = try await api.respond(type, to: user.id, mode: kind)
+            let response = try await api.respond(type, to: user.id, mode: kind, source: source)
             if response.match {
                 match = Match(user: user, kind: response.matchKind ?? kind)
                 Task { await Inbox.shared.load() }

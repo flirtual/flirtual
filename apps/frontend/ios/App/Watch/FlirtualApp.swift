@@ -19,6 +19,7 @@ final class Router {
     enum Tab {
         case browse
         case messages
+        case likes
     }
 
     static let shared = Router()
@@ -56,11 +57,14 @@ struct RootView: View {
             ) {
                 Task { await account.refresh() }
             }
-        case .signedIn:
+        case let .signedIn(user):
             NavigationStack(path: $router.path) {
                 TabView(selection: $router.tab) {
                     BrowseView().tag(Router.Tab.browse)
                     MessagesView().tag(Router.Tab.messages)
+                    if user.premium {
+                        LikesView().tag(Router.Tab.likes)
+                    }
                 }
                 .tabViewStyle(.page)
                 .navigationDestination(for: ConversationRoute.self) { route in
