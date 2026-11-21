@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import ms from "ms" with { type: "macro" };
 
-import { deepLinkOrigins, embedOrigin, siteOrigin } from "~/const";
+import { deepLinkOrigins, embedOrigin, klipyAppKey, siteOrigin } from "~/const";
 import { queryClient } from "~/query";
 
 export interface EmbedImage {
@@ -36,11 +36,12 @@ export interface Embed {
 	} | null;
 }
 
-// Klipy's terms require its media to load from Klipy, in the person's own client.
+// Klipy's terms require its media to load from Klipy, in the person's own client. Without a key,
+// the CSP blocks it, so its links stay links.
 export function isKlipyMedia(url: string): boolean {
 	try {
 		const { protocol, hostname } = new URL(url);
-		return protocol === "https:" && /^static\d*\.klipy\.com$/.test(hostname);
+		return !!klipyAppKey && protocol === "https:" && /^static\d*\.klipy\.com$/.test(hostname);
 	}
 	catch {
 		return false;
