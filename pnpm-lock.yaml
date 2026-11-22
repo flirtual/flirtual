@@ -205,7 +205,7 @@ catalogs:
       version: 10.2.1
     jose:
       specifier: ^6.2.12
-      version: 6.2.17
+      version: 6.2.18
     oxfmt:
       specifier: ^0.79.0
       version: 0.79.0
@@ -563,7 +563,7 @@ importers:
         version: 2.7.0(intl-messageformat@11.2.13)
       jose:
         specifier: 'catalog:'
-        version: 6.2.17
+        version: 6.2.18
       libphonenumber-js:
         specifier: ^1.13.16
         version: 1.13.16
@@ -884,7 +884,7 @@ importers:
         version: 1.0.0-rc.1(@types/node@26.6.6)
       jose:
         specifier: 'catalog:'
-        version: 6.2.17
+        version: 6.2.18
       typescript:
         specifier: 'catalog:'
         version: '@typescript/typescript6@6.0.2'
@@ -6634,8 +6634,8 @@ packages:
     resolution: {integrity: sha512-AC/7JofJvZGrrneWNaEnJeOLUx+JlGt7tNa0wZiRPT4MY1wmfKjt2+6O2p2uz2+skll8OZZmJMNqeke7kKbNgQ==}
     hasBin: true
 
-  jose@6.2.17:
-    resolution: {integrity: sha512-wOuK9V1yujQFH5S0ZWmLcDZN7+IKh9bUCC2ZPCf2HDlol3WWHy+PPyNjEI75FXRLMp3vDKQcupP59xhVU95hcg==}
+  jose@6.2.18:
+    resolution: {integrity: sha512-doV4thUwgkrycJH4yLeqwTGIIZphHl+pk7CPReuMIhYhncmgzdko85MaCG4YQFTxqMFr1/oEH32tZuKKovcDEg==}
 
   joycon@3.1.1:
     resolution: {integrity: sha512-34wB/Y7MW7bzjKRjUKTa46I2Z7eV62Rkhva+KkopW7Qvv/OSWBqvkSY7vusOPrNuZcUG3tApvdVgNB8POj3SPw==}
@@ -12894,7 +12894,7 @@ snapshots:
   attachments@https://codeload.github.com/signalapp/tus-server/tar.gz/34f243a7be536679483374d314b556801bc0a2f5(patch_hash=895f7d358b0f5d158051ba7ffe21299ae0c4bd94a95519f61c8dfe278d6616be):
     dependencies:
       itty-router: 5.0.24
-      jose: 6.2.17
+      jose: 6.2.18
 
   babel-dead-code-elimination@1.0.12(supports-color@10.2.2):
     dependencies:
@@ -14506,7 +14506,7 @@ snapshots:
 
   jiti@2.7.0: {}
 
-  jose@6.2.17: {}
+  jose@6.2.18: {}
 
   joycon@3.1.1: {}
 
