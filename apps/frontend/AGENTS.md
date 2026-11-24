@@ -95,7 +95,7 @@ node --env-file=.env.weblate i18n/scripts/weblate.ts pull   # Weblate state → 
 
 Writes to Weblate (`weblate.ts`, `screenshots.ts upload`) are dry runs unless given `--apply`.
 
-The watch app bundles `messages/` and reads it at runtime: its own strings live under `watch`, but it also reuses top-level keys and attribute names. Grep `ios/App/Watch/` before renaming or removing a key. Its `t()` only fills `{name}` placeholders and empty `<name/>` tags, so strings it uses can't rely on ICU plurals or `select`.
+The watch app bundles `messages/` and reads it at runtime: its own strings live under `watch`, but it also reuses top-level keys and attribute names. Grep `ios/App/Watch/` before renaming or removing a key. Its `t()` fills `{name}` placeholders, ICU `select` and empty `<name/>` tags, and drops other tags but keeps their contents, so strings it uses can't rely on ICU plurals.
 
 ```tsx
 const { t } = useTranslation();

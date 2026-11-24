@@ -263,8 +263,8 @@ export function ownFilterKeys(user: User): Set<string> {
 	const attribute = (category: AdvancedFilterCategory, ids: Array<string> | undefined) =>
 		(ids ?? []).map((id) => `${category}:${id}`);
 
-	const pole = (value: number | undefined, positive: string, negative: string) =>
-		value === undefined || value === 0
+	const pole = (value: number | null | undefined, positive: string, negative: string) =>
+		!value
 			? []
 			: [`personality:${value > 0 ? positive : negative}`];
 

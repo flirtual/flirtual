@@ -2,6 +2,7 @@ import { MoveRight } from "lucide-react";
 import type { FC } from "react";
 import { useRef, useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
+import { useSearchParams } from "react-router";
 import { twMerge } from "tailwind-merge";
 
 import type { Session } from "~/api/auth";
@@ -30,6 +31,9 @@ export const SignUpForm: FC = () => {
 	const { t } = useTranslation();
 	const [locale] = useLocale();
 
+	const [searchParameters] = useSearchParams();
+	const agreedOnWelcome = searchParameters.has("agreed");
+
 	const agreementDenials = useRef(0);
 	const [agreementShake, setAgreementShake] = useState(0);
 
@@ -57,7 +61,7 @@ export const SignUpForm: FC = () => {
 				email: "",
 				password: "",
 				url: "",
-				serviceAgreement: false,
+				serviceAgreement: agreedOnWelcome,
 				notifications: false
 			}}
 			captchaTabIndex={12}
@@ -133,59 +137,61 @@ export const SignUpForm: FC = () => {
 								</FormField>
 							</>
 						)}
-						<FormField
-							key={agreementShake}
-							name="serviceAgreement"
-							className={agreementShake > 0 ? "motion-preset-shake" : undefined}
-						>
-							{({ props, labelProps }) => (
-								<div className="flex items-center gap-4">
-									<InputCheckbox
-										{...props}
-										tabIndex={3}
-										onChange={(value) => {
-											props.onChange(value);
-											if (value)
-												setFieldErrors((fieldErrors) => ({
-													...fieldErrors,
-													serviceAgreement: []
-												}));
-										}}
-									/>
-									<InputLabel
-										{...labelProps}
-										inline
-										hint={(
-											<InputLabelHint className="max-w-[34ch]">
-												<Trans
-													components={{
-														terms: (
-															<InlineLink
-																className="underline"
-																highlight={false}
-																href={urls.resources.termsOfService}
-																tabIndex={4}
-															/>
-														),
-														privacy: (
-															<InlineLink
-																className="underline"
-																highlight={false}
-																href={urls.resources.privacyPolicy}
-																tabIndex={5}
-															/>
-														)
-													}}
-													i18nKey="sign_up_agreement"
-												/>
-											</InputLabelHint>
-										)}
-									>
-										{t("i_agree")}
-									</InputLabel>
-								</div>
-							)}
-						</FormField>
+						{!agreedOnWelcome && (
+							<FormField
+								key={agreementShake}
+								name="serviceAgreement"
+								className={agreementShake > 0 ? "motion-preset-shake" : undefined}
+							>
+								{({ props, labelProps }) => (
+									<div className="flex items-center gap-4">
+										<InputCheckbox
+											{...props}
+											tabIndex={3}
+											onChange={(value) => {
+												props.onChange(value);
+												if (value)
+													setFieldErrors((fieldErrors) => ({
+														...fieldErrors,
+														serviceAgreement: []
+													}));
+											}}
+										/>
+										<InputLabel
+											{...labelProps}
+											inline
+											hint={(
+												<InputLabelHint className="max-w-[34ch]">
+													<Trans
+														components={{
+															terms: (
+																<InlineLink
+																	className="underline"
+																	highlight={false}
+																	href={urls.resources.termsOfService}
+																	tabIndex={4}
+																/>
+															),
+															privacy: (
+																<InlineLink
+																	className="underline"
+																	highlight={false}
+																	href={urls.resources.privacyPolicy}
+																	tabIndex={5}
+																/>
+															)
+														}}
+														i18nKey="sign_up_agreement"
+													/>
+												</InputLabelHint>
+											)}
+										>
+											{t("i_agree")}
+										</InputLabel>
+									</div>
+								)}
+							</FormField>
+						)}
 						<FormField name="notifications">
 							{({ props, labelProps }) => (
 								<div className="flex items-center gap-4">

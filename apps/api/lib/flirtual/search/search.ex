@@ -236,8 +236,15 @@ defmodule Flirtual.Search do
   defp compile_factor({:liked_me, weight}, %Query{liked_me_ids: ids}),
     do: "#{fl(weight)}*IN(id,#{hash_list(ids)})*like_multiplier"
 
-  defp compile_factor({:none_of_boost, tokens, weight}, _query),
-    do: "#{fl(weight)}*IF(IN(boosts,#{hash_list(tokens)})=0,1,0)"
+  defp compile_factor({:in_field, field, values, weight}, _query),
+    do: "#{fl(weight)}*IN(#{field},#{hash_list(values)})"
+
+  defp compile_factor({:none_in_fields, fields, weight}, _query) do
+    matches =
+      Enum.map_join(fields, "+", fn {field, values} -> "IN(#{field},#{hash_list(values)})" end)
+
+    "#{fl(weight)}*IF(#{matches}=0,1,0)"
+  end
 
   defp compile_factor({:personality, origins, weight}, _query) do
     origins

@@ -33,8 +33,9 @@ extension Mode {
 
 extension CGFloat {
     static let margin: CGFloat = 6
-    // Keeps content clear of the Pass and Like buttons in the bottom corners.
+    // Keeps content clear of the Pass and Like buttons in the bottom bar.
     static let buttonClearance: CGFloat = 50
+    static let buttonGap: CGFloat = 4
     // The heart and peace artwork is inset within its canvas, so it needs a larger frame to match
     // the SF Symbols beside it.
     static let assetIconSize: CGFloat = 22

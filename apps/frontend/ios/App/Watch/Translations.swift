@@ -51,14 +51,66 @@ final class Translations {
     }
 }
 
-// Like the web's t(), filling {placeholders} and empty <Trans> component tags with plain text, and
-// {brand_name} everywhere, as src/i18n/index.tsx does.
+// Like the web's t(), filling {placeholders}, ICU selects and empty <Trans> component tags with
+// plain text, and {brand_name} everywhere, as src/i18n/index.tsx does. Other <Trans> tags are
+// dropped, keeping what they wrap.
 @MainActor
 func t(_ key: String, _ values: [String: String] = [:]) -> String {
     let values = values.merging(["brand_name": Brand.name]) { value, _ in value }
-    return values.reduce(Translations.shared.message(key) ?? key) { text, value in
+    let text = values.reduce(resolveSelects(Translations.shared.message(key) ?? key, values)) { text, value in
         ["{\(value.key)}", "<\(value.key)/>", "<\(value.key)></\(value.key)>"].reduce(text) {
             $0.replacingOccurrences(of: $1, with: value.value)
         }
     }
+    return text.replacingOccurrences(of: "</?[A-Za-z_][\\w-]*>", with: "", options: .regularExpression)
+}
+
+// "{status, select, liked {liked} other {homied}}" becomes the branch named by values["status"].
+private func resolveSelects(_ text: String, _ values: [String: String]) -> String {
+    var result = ""
+    var index = text.startIndex
+
+    while let open = text[index...].firstIndex(of: "{") {
+        result += text[index..<open]
+        guard let close = matchingBrace(in: text, from: open) else { break }
+
+        let parts = text[text.index(after: open)..<close].split(separator: ",", maxSplits: 2)
+        if parts.count == 3, parts[1].trimmingCharacters(in: .whitespaces) == "select" {
+            let options = selectOptions(parts[2])
+            let name = parts[0].trimmingCharacters(in: .whitespaces)
+            result += resolveSelects(values[name].flatMap { options[$0] } ?? options["other"] ?? "", values)
+        } else {
+            result += text[open...close]
+        }
+        index = text.index(after: close)
+    }
+
+    return result + text[index...]
+}
+
+private func selectOptions(_ text: Substring) -> [String: String] {
+    var options: [String: String] = [:]
+    var index = text.startIndex
+
+    while let open = text[index...].firstIndex(of: "{"), let close = matchingBrace(in: text, from: open) {
+        let name = text[index..<open].trimmingCharacters(in: .whitespacesAndNewlines)
+        options[name] = String(text[text.index(after: open)..<close])
+        index = text.index(after: close)
+    }
+
+    return options
+}
+
+private func matchingBrace<S: StringProtocol>(in text: S, from open: S.Index) -> S.Index? {
+    var depth = 0
+    for index in text[open...].indices {
+        switch text[index] {
+        case "{": depth += 1
+        case "}":
+            depth -= 1
+            if depth == 0 { return index }
+        default: break
+        }
+    }
+    return nil
 }

@@ -21,8 +21,8 @@ defmodule Flirtual.Search.Document do
     privacy = user.preferences.privacy
 
     attributes =
-      profile.attributes
-      |> Attribute.normalize_aliases()
+      (profile.attributes ++ Attribute.normalize_aliases(profile.attributes))
+      |> Enum.uniq_by(& &1.id)
       |> then(&if(nsfw, do: &1, else: exclude_by(&1, :type, "kink")))
 
     attributes_lf =

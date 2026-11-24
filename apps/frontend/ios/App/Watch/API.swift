@@ -42,13 +42,38 @@ struct User: Decodable, Identifiable, Sendable {
         let nsfw: Bool?
     }
 
+    struct Entitlement: Decodable, Sendable {
+        struct Plan: Decodable, Sendable {
+            let product: String?
+        }
+
+        let active: Bool?
+        let plan: Plan?
+    }
+
+    struct Connection: Decodable, Sendable {
+        let type: String
+        let displayName: String?
+    }
+
     let id: String
     let age: Int?
     let activeAt: Date?
     let preferences: Preferences?
+    let entitlements: [Entitlement]?
+    let connections: [Connection]?
     let profile: Profile
 
     var name: String { profile.displayName ?? "" }
+
+    // Mirrors premium() in src/api/user/index.ts.
+    var premium: Bool {
+        entitlements?.contains { $0.active == true && $0.plan?.product == "premium" } ?? false
+    }
+
+    func connection(_ type: String) -> Connection? {
+        connections?.first { $0.type == type }
+    }
 }
 
 struct Profile: Decodable, Sendable {
@@ -68,13 +93,16 @@ struct Profile: Decodable, Sendable {
     let monopoly: String?
     let domsub: String?
     let country: String?
+    let discord: String?
+    let vrchat: String?
+    let vrchatName: String?
     let openness: Int?
     let conscientiousness: Int?
     let agreeableness: Int?
 
     private enum CodingKeys: String, CodingKey {
         case displayName, biography, images, attributes, customInterests, prompts, relationships, languages
-        case monopoly, domsub, country, openness, conscientiousness, agreeableness
+        case monopoly, domsub, country, discord, vrchat, vrchatName, openness, conscientiousness, agreeableness
     }
 
     init(from decoder: Decoder) throws {
@@ -90,6 +118,9 @@ struct Profile: Decodable, Sendable {
         monopoly = try container.decodeIfPresent(String.self, forKey: .monopoly)
         domsub = try container.decodeIfPresent(String.self, forKey: .domsub)
         country = try container.decodeIfPresent(String.self, forKey: .country)
+        discord = try? container.decodeIfPresent(String.self, forKey: .discord)
+        vrchat = try? container.decodeIfPresent(String.self, forKey: .vrchat)
+        vrchatName = try? container.decodeIfPresent(String.self, forKey: .vrchatName)
         openness = try? container.decodeIfPresent(Int.self, forKey: .openness)
         conscientiousness = try? container.decodeIfPresent(Int.self, forKey: .conscientiousness)
         agreeableness = try? container.decodeIfPresent(Int.self, forKey: .agreeableness)
@@ -101,6 +132,8 @@ struct Profile: Decodable, Sendable {
 }
 
 struct Relationship: Decodable, Sendable {
+    let matched: Bool?
+    let likedMe: Mode?
     let timeDiff: Int?
     let distance: String?
 }
@@ -175,6 +208,22 @@ struct Conversation: Decodable, Identifiable, Sendable {
     let createdAt: Date
 }
 
+struct Like: Decodable, Identifiable, Sendable {
+    let profileId: String
+    let kind: Mode
+
+    var id: String { profileId }
+}
+
+struct LikeList: Decodable, Sendable {
+    struct Metadata: Decodable, Sendable {
+        let next: String?
+    }
+
+    let data: [Like]
+    let metadata: Metadata
+}
+
 struct ConversationList: Decodable, Sendable {
     struct Metadata: Decodable, Sendable {
         let next: String?
@@ -197,13 +246,21 @@ struct API: Sendable {
         try await request("queue", query: ["mode": mode.rawValue])
     }
 
-    func respond(_ type: String, to userId: String, mode: Mode) async throws -> Response {
+    func respond(_ type: String, to userId: String, mode: Mode, source: String? = nil) async throws -> Response {
         try await request("queue", method: "POST", body: [
             "type": type,
             "mode": mode.rawValue,
             "user_id": userId,
-            "source": mode.rawValue
+            "source": source ?? mode.rawValue
         ])
+    }
+
+    func unmatch(_ userId: String) async throws {
+        let _: Empty = try await request("matches", method: "DELETE", query: ["user_id": userId])
+    }
+
+    func likes(cursor: String? = nil) async throws -> LikeList {
+        try await request("likes", query: cursor.map { ["cursor": $0] } ?? [:])
     }
 
     func user(_ id: String) async throws -> User {

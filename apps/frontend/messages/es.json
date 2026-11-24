@@ -536,7 +536,6 @@
 		"queue_empty_title": "No hay nadie más por ahora",
 		"queue_empty_detail": "Vuelve más tarde para ver más perfiles.",
 		"profiles_failed": "No se pudieron cargar los perfiles",
-		"next_photo": "Siguiente foto",
 		"active": "Activo",
 		"unreachable": "No se pudo conectar con {brand_name}. Revisa tu conexión y vuelve a intentarlo.",
 		"out_of_likes": "Ya no te quedan Me gusta por hoy.",

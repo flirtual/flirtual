@@ -90,6 +90,7 @@ export interface Change {
 	action: number;
 	action_name: string;
 	target: string;
+	old: string;
 }
 
 export const states = {
@@ -112,6 +113,8 @@ export const contentActions = new Set([
 	9, // Translation uploaded
 	27 // Translation replaced (search and replace)
 ]);
+
+export const markedForEdit = 37;
 
 export function username(userUrl: string | null) {
 	return userUrl?.replace(/\/$/, "").split("/").pop() ?? null;

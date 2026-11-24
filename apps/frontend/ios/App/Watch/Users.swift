@@ -10,8 +10,9 @@ final class Users {
     private(set) var relationships: [String: Relationship] = [:]
     private var genders: [AttributeMetadata]?
 
-    func get(_ id: String) async throws -> User {
-        if let user = users[id] { return user }
+    // Matching reveals more of a profile (connections, country), so refresh after one.
+    func get(_ id: String, refresh: Bool = false) async throws -> User {
+        if !refresh, let user = users[id] { return user }
         guard let api = Account.shared.api else { throw CancellationError() }
 
         async let user = api.user(id)
@@ -22,8 +23,8 @@ final class Users {
         return loaded
     }
 
-    func loadRelationship(_ id: String) async {
-        guard relationships[id] == nil, let api = Account.shared.api else { return }
+    func loadRelationship(_ id: String, refresh: Bool = false) async {
+        guard refresh || relationships[id] == nil, let api = Account.shared.api else { return }
         if let relationship = try? await api.relationship(id) {
             relationships[id] = relationship
         }

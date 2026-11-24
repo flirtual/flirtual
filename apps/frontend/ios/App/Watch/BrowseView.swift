@@ -28,6 +28,8 @@ struct BrowseView: View {
                 }
                 ToolbarItemGroup(placement: .bottomBar) {
                     if browse.current != nil {
+                        Spacer()
+
                         Button {
                             Task { await browse.respond("pass") }
                         } label: {
@@ -37,7 +39,7 @@ struct BrowseView: View {
                         .buttonBorderShape(.circle)
                         .accessibilityLabel(t("pass"))
 
-                        Spacer()
+                        Spacer().frame(width: .buttonGap)
 
                         Button {
                             Task { await browse.respond("like") }
@@ -47,6 +49,8 @@ struct BrowseView: View {
                         .tint(mode.tint)
                         .buttonBorderShape(.circle)
                         .accessibilityLabel(t(mode == .love ? "like" : "homie"))
+
+                        Spacer()
                     }
                 }
             }
@@ -100,16 +104,28 @@ struct ProfileView: View {
     let user: User
     let mode: Mode
     var clearsBottomBar = true
+    var onUnmatch: (() async -> Void)?
     let onReport: () async -> Void
     let onBlock: () async -> Void
 
     var body: some View {
+        let relationship = Users.shared.relationships[user.id]
+        let matched = relationship?.matched == true
+
         ScrollView {
             VStack(alignment: .leading, spacing: 14) {
                 PhotoCarousel(user: user)
                     .containerRelativeFrame(.vertical)
 
                 VStack(alignment: .leading, spacing: 14) {
+                    if !matched, let likedMe = relationship?.likedMe, Account.shared.user?.premium == true {
+                        LikedYouBanner(user: user, kind: likedMe)
+                    }
+
+                    if matched {
+                        ConnectionList(user: user)
+                    }
+
                     if let biography = user.profile.biography, !biography.isEmpty {
                         RichText(html: biography)
                     }
@@ -139,8 +155,13 @@ struct ProfileView: View {
                         }
                     }
 
-                    SafetyButtons(user: user, onReport: onReport, onBlock: onBlock)
-                        .padding(.top, 8)
+                    VStack(spacing: 8) {
+                        if matched, let onUnmatch {
+                            UnmatchButton(user: user, onUnmatch: onUnmatch)
+                        }
+                        SafetyButtons(user: user, onReport: onReport, onBlock: onBlock)
+                    }
+                    .padding(.top, 8)
                 }
                 .padding(.horizontal, .margin)
                 .padding(.bottom, (clearsBottomBar ? .buttonClearance : 0) + 16)
@@ -203,11 +224,19 @@ struct PhotoCarousel: View {
             .padding(.bottom, 10)
         }
         .clipped()
-        .contentShape(Rectangle())
-        .onTapGesture(perform: next)
+        .overlay {
+            GeometryReader { geometry in
+                Color.clear
+                    .contentShape(Rectangle())
+                    .onTapGesture(coordinateSpace: .local) { location in
+                        if location.x < geometry.size.width / 3 { previous() } else { next() }
+                    }
+            }
+        }
         .task(id: index) { await preloadNext() }
         .accessibilityElement(children: .combine)
-        .accessibilityAction(named: t("watch.next_photo"), next)
+        .accessibilityAction(named: t("next"), next)
+        .accessibilityAction(named: t("previous"), previous)
     }
 
     @ViewBuilder
@@ -293,6 +322,12 @@ struct PhotoCarousel: View {
         index = (index + 1) % count
     }
 
+    private func previous() {
+        let count = user.profile.images.count
+        guard count > 1 else { return }
+        index = (index + count - 1) % count
+    }
+
     private func preloadNext() async {
         let images = user.profile.images
         guard images.count > 1, images.indices.contains(index) else { return }
@@ -309,7 +344,7 @@ struct PhotoCarousel: View {
         _ = await ImageLoader.shared.image(url, size: photoSize)
     }
 
-    private static func flag(_ country: String) -> String? {
+    static func flag(_ country: String) -> String? {
         let letters = country.uppercased().unicodeScalars
         guard letters.count == 2, letters.allSatisfy({ ("A"..."Z").contains($0) }) else { return nil }
         return String(String.UnicodeScalarView(letters.compactMap { Unicode.Scalar(0x1F1E6 + $0.value - 65) }))
