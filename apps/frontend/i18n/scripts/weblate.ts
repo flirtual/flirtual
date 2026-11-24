@@ -20,7 +20,7 @@ import { loadContext } from "./context.ts";
 import type { GlossaryEntry } from "./validate.ts";
 import { loadGlossary } from "./validate.ts";
 import type { Change, Unit } from "./weblate-api.ts";
-import { AgreementError, contentActions, isHuman, list, project, request, states, username } from "./weblate-api.ts";
+import { AgreementError, contentActions, isHuman, list, markedForEdit, project, request, states, username } from "./weblate-api.ts";
 
 const weblateDirectory = join(staging, "weblate");
 
@@ -59,7 +59,8 @@ async function changes(component: string) {
 function humanTexts(history: Array<Change>) {
 	const texts = new Map<string, Map<string, string>>();
 	for (const change of history) {
-		if (!change.unit || !contentActions.has(change.action)) continue;
+		if (!change.unit) continue;
+		if (!contentActions.has(change.action) && !(change.action === markedForEdit && change.old !== change.target)) continue;
 		// An accepted suggestion belongs to whoever suggested it.
 		const author = username(change.action === 7 ? change.author ?? change.user : change.user);
 		if (!isHuman(author)) continue;
