@@ -44,25 +44,8 @@ const UnreadConversationContext = createContext<{
 	setUnreadConversations: Dispatch<SetStateAction<Array<ConversationSnapshot>>>;
 }>({ unreadConversations: emptyArray, setUnreadConversations: doNothing });
 
-function expiresAt(token: string) {
-	try {
-		const [, payload] = token.split(".");
-		const { exp } = JSON.parse(atob(payload.replaceAll("-", "+").replaceAll("_", "/"))) as { exp: number };
-		return exp * 1000;
-	}
-	catch {
-		return 0;
-	}
-}
-
-let talkjsToken: string | null = null;
-let talkjsTokenExpiresAt = 0;
-
 // `onNeedToken` must retry on its own: https://talkjs.com/docs/Data_APIs/JavaScript/TalkSession/
-// `mutate(sessionKey(), …)` keeps the query fresh with a stale token, so cache by the token's expiry.
 async function fetchTalkjsToken() {
-	if (talkjsToken && Date.now() < talkjsTokenExpiresAt - ms("30s")) return talkjsToken;
-
 	for (let attempt = 0; ; attempt++) {
 		try {
 			const session = await queryClient.fetchQuery({
@@ -72,13 +55,7 @@ async function fetchTalkjsToken() {
 			});
 
 			const token = session?.user.talkjsToken;
-
-			if (token) {
-				talkjsToken = token;
-				talkjsTokenExpiresAt = expiresAt(token);
-
-				return token;
-			}
+			if (token) return token;
 		}
 		catch {
 			// 4xx rejects immediately; `queryClient` retries the rest.
