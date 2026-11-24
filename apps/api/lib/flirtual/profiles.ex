@@ -223,6 +223,7 @@ defmodule Flirtual.Profiles do
       |> ignore_disabled(Features.vr_tags?(), [:game_id, :platform_id])
       |> ignore_disabled(Features.vrchat?(), [:vrchat])
       |> ignore_disabled(Features.playlists?(), [:playlist])
+      |> ignore_disabled(Features.timezones?(), [:timezone])
       |> validate_required(required || [])
       |> validate_length(:display_name, min: 1, max: 32)
       |> validate_html(:biography)

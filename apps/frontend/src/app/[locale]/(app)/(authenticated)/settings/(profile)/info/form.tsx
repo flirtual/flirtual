@@ -23,7 +23,7 @@ import {
 	InputTimezoneSelect
 } from "~/components/inputs/specialized";
 import { endOfYear, toLocalDateString } from "~/date";
-import { vrTags } from "~/features";
+import { timezones, vrTags } from "~/features";
 import {
 	useAttributes,
 	useAttributeTranslation
@@ -241,17 +241,19 @@ export const InfoForm: FC = () => {
 							</>
 						)}
 					</FormField>
-					<FormField name="timezone">
-						{(field) => (
-							<>
-								<InputLabel>{t("timezone")}</InputLabel>
-								<InputLabelHint className="-mt-2">
-									{t("timezone_hint")}
-								</InputLabelHint>
-								<InputTimezoneSelect {...field.props} />
-							</>
-						)}
-					</FormField>
+					{timezones && (
+						<FormField name="timezone">
+							{(field) => (
+								<>
+									<InputLabel>{t("timezone")}</InputLabel>
+									<InputLabelHint className="-mt-2">
+										{t("timezone_hint")}
+									</InputLabelHint>
+									<InputTimezoneSelect {...field.props} />
+								</>
+							)}
+						</FormField>
+					)}
 					<div className="flex flex-col gap-2">
 						<InputLabel>{t("geolocation")}</InputLabel>
 						<InputLabelHint className="-mt-2">

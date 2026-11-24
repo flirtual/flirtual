@@ -6,7 +6,7 @@ import { withSuspense } from "with-suspense";
 
 import { profileColors } from "~/colors";
 import { Html } from "~/components/html";
-import { vrTags } from "~/features";
+import { timezones, vrTags } from "~/features";
 import { usePreferences } from "~/hooks/use-preferences";
 import { useSession } from "~/hooks/use-session";
 import { useRelationship, useUser } from "~/hooks/use-user";
@@ -181,7 +181,7 @@ export const Profile = withSuspense(({
 								{relationship?.distance !== undefined && (
 									<Distance distance={relationship.distance} />
 								)}
-								{relationship?.timeDiff !== undefined && (
+								{timezones && relationship?.timeDiff !== undefined && (
 									<TimeDiff
 										diff={relationship.timeDiff}
 										displayName={user.profile.displayName || t("unnamed_user")}

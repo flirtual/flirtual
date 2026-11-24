@@ -18,6 +18,7 @@ import { InputCountrySelect } from "~/components/inputs/specialized";
 import { useApplyGeolocation } from "~/components/inputs/specialized/geolocation-input";
 import { InputTimezoneSelect } from "~/components/inputs/specialized/timezone-select";
 import { endOfYear, toLocalDateString } from "~/date";
+import { timezones } from "~/features";
 import {
 	useAttributes,
 	useAttributeTranslation
@@ -189,17 +190,19 @@ export const Onboarding1Form: FC = () => {
 							</>
 						)}
 					</FormField>
-					<FormField name="timezone">
-						{(field) => (
-							<>
-								<InputLabel hint={t("optional")}>{t("timezone")}</InputLabel>
-								<InputLabelHint className="-mt-2">
-									{t("timezone_hint")}
-								</InputLabelHint>
-								<InputTimezoneSelect {...field.props} />
-							</>
-						)}
-					</FormField>
+					{timezones && (
+						<FormField name="timezone">
+							{(field) => (
+								<>
+									<InputLabel hint={t("optional")}>{t("timezone")}</InputLabel>
+									<InputLabelHint className="-mt-2">
+										{t("timezone_hint")}
+									</InputLabelHint>
+									<InputTimezoneSelect {...field.props} />
+								</>
+							)}
+						</FormField>
+					)}
 					<FormField name="geolocation">
 						{(field) => (
 							<>
