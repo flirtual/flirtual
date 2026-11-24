@@ -18,6 +18,8 @@ defmodule Flirtual.Matchmaking.Query do
 
   @default_size 31
 
+  @nsfw_categories [:kink, :domsub]
+
   defstruct user_id: nil,
             kind: :love,
             fallback: false,
@@ -35,6 +37,11 @@ defmodule Flirtual.Matchmaking.Query do
   def build(%User{} = user, kind, opts \\ []) do
     fallback = Keyword.get(opts, :fallback, false)
     enabled_categories = AdvancedFilter.enabled_categories()
+
+    enabled_categories =
+      if user.preferences.nsfw,
+        do: enabled_categories,
+        else: enabled_categories -- @nsfw_categories
 
     advanced_filters =
       AdvancedFilter.list(profile_id: user.id)
