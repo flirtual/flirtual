@@ -131,6 +131,9 @@ config :flirtual, :features,
   personality?: Env.bool("FEATURE_PERSONALITY", default: true),
   vr_tags?: Env.bool("FEATURE_VR_TAGS", default: true),
   vrchat?: Env.bool("FEATURE_VRCHAT", default: true),
+  playlists?: Env.bool("FEATURE_PLAYLISTS", default: true),
+  timezones?: Env.bool("FEATURE_TIMEZONES", default: true),
+  advanced_filters?: Env.bool("FEATURE_ADVANCED_FILTERS", default: true),
   login: feature_list.("FEATURE_LOGIN", "email,discord,google,apple"),
   connections: feature_connections
 

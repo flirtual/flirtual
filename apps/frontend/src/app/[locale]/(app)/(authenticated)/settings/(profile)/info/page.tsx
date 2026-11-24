@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import invariant from "tiny-invariant";
 
 import { ModelCard } from "~/components/model-card";
+import { timezones } from "~/features";
 import { i18n } from "~/i18n";
 import { isLocale } from "~/i18n/languages";
 import { metaMerge, rootMeta } from "~/meta";
@@ -29,7 +30,7 @@ export const handle = {
 			"gender",
 			"country",
 			"language",
-			"timezone"
+			...(timezones ? ["timezone" as const] : [])
 		] as const).map((type) => queryClient.prefetchQuery({
 			queryKey: attributeKey(type),
 			queryFn: attributeFetcher

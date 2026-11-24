@@ -18,6 +18,7 @@ import { InputLabel, InputLabelHint, InputSwitch } from "~/components/inputs";
 import { Slider } from "~/components/inputs/slider";
 import { InputLanguageSelect } from "~/components/inputs/specialized/language-select";
 import { useSnowfall } from "~/components/snowfall";
+import { fun } from "~/features";
 import { useAttributeTranslation } from "~/hooks/use-attribute";
 import { usePreferences } from "~/hooks/use-preferences";
 import { useSession } from "~/hooks/use-session";
@@ -193,7 +194,7 @@ const ProfileColorSelect: FC = () => {
 							if (theme.name === "touch_grass") {
 								if (!touchingGrass) {
 									setTouchingGrass(true);
-									if (grassTouched >= 4) {
+									if (grassTouched >= 4 && fun.length > 0) {
 										await new Promise((resolve) => {
 											setTimeout(resolve, 800);
 										});

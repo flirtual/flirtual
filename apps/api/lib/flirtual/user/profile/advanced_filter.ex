@@ -63,7 +63,7 @@ defmodule Flirtual.User.Profile.AdvancedFilter do
   def categories, do: @categories
 
   def enabled_categories do
-    @categories
+    if(Flirtual.Features.advanced_filters?(), do: @categories, else: [])
     |> reject_disabled(Flirtual.Features.vr_tags?(), [:game, :platform])
     |> reject_disabled(Flirtual.Features.personality?(), [:personality])
   end

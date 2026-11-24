@@ -11,6 +11,7 @@ defmodule Flirtual.Search.Tokens do
   def relationship(value), do: "rel:#{value}"
   def monopoly(value), do: "monopoly:#{value}"
   def domsub(value), do: "domsub:#{value}"
+  def public_domsub(value), do: "public-domsub:#{value}"
   def personality(value), do: "personality:#{value}"
 
   def normalize_custom_interest(value) do

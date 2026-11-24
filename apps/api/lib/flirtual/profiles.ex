@@ -222,6 +222,8 @@ defmodule Flirtual.Profiles do
       value
       |> ignore_disabled(Features.vr_tags?(), [:game_id, :platform_id])
       |> ignore_disabled(Features.vrchat?(), [:vrchat])
+      |> ignore_disabled(Features.playlists?(), [:playlist])
+      |> ignore_disabled(Features.timezones?(), [:timezone])
       |> validate_required(required || [])
       |> validate_length(:display_name, min: 1, max: 32)
       |> validate_html(:biography)
@@ -600,6 +602,8 @@ defmodule Flirtual.Profiles do
   end
 
   defp attach_file(%Profile{} = profile, file, order, now, retry? \\ true) do
+    if not upload_key?(file["id"]), do: Repo.rollback({:bad_request, :invalid_image_id})
+
     existing_images =
       Image
       |> where(original_file: ^file["id"])
@@ -609,6 +613,9 @@ defmodule Flirtual.Profiles do
     # Retained hash rows must stay frozen, never attach to a profile.
     if Enum.any?(existing_images, &(not is_nil(&1.suspended_url))),
       do: Repo.rollback({:unprocessable_entity, :image_retained})
+
+    if Enum.any?(existing_images, &(&1.profile_id not in [nil, profile.user_id])),
+      do: Repo.rollback({:forbidden, :missing_permission})
 
     attrs = %{
       profile_id: profile.user_id,
@@ -649,6 +656,9 @@ defmodule Flirtual.Profiles do
           else: error
     end
   end
+
+  defp upload_key?(key) when is_binary(key), do: Ecto.UUID.cast(key) == {:ok, key}
+  defp upload_key?(_), do: false
 
   def update_images(%Profile{} = profile, image_ids) do
     Repo.transaction(fn repo ->

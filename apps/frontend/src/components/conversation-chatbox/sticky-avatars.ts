@@ -59,3 +59,25 @@ export function followStickyAvatars(container: HTMLElement): () => void {
 		resize.disconnect();
 	};
 }
+
+// The avatar beside a message, which may be stickied there from an earlier message by the same sender.
+export function avatarBeside(message: HTMLElement): HTMLElement | null {
+	const container = message.closest(".t-message-list");
+	if (!container) return null;
+
+	const messages = [...container.querySelectorAll<HTMLElement>(".chat-message")].reverse();
+	const bubble = (message.querySelector("[data-bubble]") ?? message).getBoundingClientRect();
+
+	for (let index = messages.indexOf(message); index >= 0 && messages[index].dataset.sender === message.dataset.sender; index--) {
+		const avatar = messages[index].querySelector<HTMLElement>(".chat-avatar");
+		if (!avatar || getComputedStyle(avatar).visibility !== "visible") continue;
+
+		const sticky = avatar.querySelector<HTMLElement>(":scope > div > div");
+		if (!sticky) return null;
+
+		const { top, bottom } = sticky.getBoundingClientRect();
+		return top < bubble.bottom && bottom > bubble.top ? sticky : null;
+	}
+
+	return null;
+}

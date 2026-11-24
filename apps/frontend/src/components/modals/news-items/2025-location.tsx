@@ -15,6 +15,7 @@ import {
 	InputTimezoneSelect,
 	useApplyGeolocation
 } from "~/components/inputs/specialized";
+import { timezones } from "~/features";
 import { useSession } from "~/hooks/use-session";
 import { useBrowserTimezone } from "~/hooks/use-timezone";
 import { useToast } from "~/hooks/use-toast";
@@ -83,17 +84,19 @@ export const Location2025: FC<{ onSaved?: () => void }> = ({ onSaved }) => {
 										</>
 									)}
 								</FormField>
-								<FormField name="timezone">
-									{(field) => (
-										<>
-											<InputLabel>{t("timezone")}</InputLabel>
-											<InputLabelHint className="-mt-2">
-												{t("timezone_hint")}
-											</InputLabelHint>
-											<InputTimezoneSelect {...field.props} />
-										</>
-									)}
-								</FormField>
+								{timezones && (
+									<FormField name="timezone">
+										{(field) => (
+											<>
+												<InputLabel>{t("timezone")}</InputLabel>
+												<InputLabelHint className="-mt-2">
+													{t("timezone_hint")}
+												</InputLabelHint>
+												<InputTimezoneSelect {...field.props} />
+											</>
+										)}
+									</FormField>
+								)}
 								<FormField name="weightLocation">
 									{({ labelProps, props: { value, onChange, ...props } }) => (
 										<>

@@ -11,6 +11,7 @@ import type { ProspectKind, Queue as QueueData, QueueResponse } from "~/api/matc
 import { ButtonLink } from "~/components/button";
 import { Profile } from "~/components/profile";
 import { ProfileSkeleton } from "~/components/profile/skeleton";
+import { advancedFilters } from "~/features";
 import { useDevice } from "~/hooks/use-device";
 import { useDismissed } from "~/hooks/use-dismissed";
 import { useInterruption } from "~/hooks/use-interruption";
@@ -123,7 +124,7 @@ const FallbackNotice: FC<{ mode: ProspectKind }> = ({ mode }) => {
 					<summary className="text-pink opacity-75 transition-opacity hover:cursor-pointer hover:opacity-100">
 						{t("more_info")}
 					</summary>
-					{t("queue_fallback_notice_details")}
+					{t(advancedFilters ? "queue_fallback_notice_details" : "queue_fallback_notice_details_age_only")}
 				</details>
 				<ButtonLink className="ml-auto" href={urls.settings.matchmaking()} size="sm">
 					{t("update_filters")}

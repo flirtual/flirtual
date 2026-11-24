@@ -109,9 +109,10 @@ vars, read separately by each app:
   (defaults in `config/runtime.exs`). Only the name, colours and background have defaults. `VITE_BRAND_ASSET_DOMAIN` and `VITE_BRAND_REPOSITORY_URL` (AGPL) are required; every
   other value is optional, and whatever links to an unset one must disappear, not break.
 - **Flags**: `VITE_FEATURE_*` → `src/features.ts`; `FEATURE_*` → `Flirtual.Features`. Homie Mode,
-  personality, VR tags (platform + game), VRChat, the list of connection providers, and (frontend
-  only) the events, news and press pages, the APK download link, and the landing page, without
-  which `/` is a welcome screen with sign-up and login. Login methods are API-only
+  personality, VR tags (platform + game), VRChat, playlists, timezones, advanced filters, the list of connection providers, and (frontend
+  only) the events, news and press pages, the APK download link, the landing page, without
+  which `/` is a welcome screen with sign-up and login, and the list of fun features
+  (`VITE_FEATURE_FUN`: snowfall, assistant, ranked; empty removes the fun settings page). Login methods are API-only
   (`FEATURE_LOGIN`): the frontend renders what `/v1/config`'s `login_providers` lists, minus any
   method not configured.
 - **The rule**: a flag gates what the UI offers and what new writes may use. It never shrinks a

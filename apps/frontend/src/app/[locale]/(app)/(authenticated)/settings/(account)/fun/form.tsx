@@ -8,6 +8,7 @@ import {
 	InputSwitch
 } from "~/components/inputs";
 import { snowfallOptions, useSnowfall } from "~/components/snowfall";
+import { fun } from "~/features";
 import { usePreferences } from "~/hooks/use-preferences";
 import { useToast } from "~/hooks/use-toast";
 
@@ -72,50 +73,56 @@ export const FunForm: React.FC = () => {
 		>
 			{({ FormField }) => (
 				<>
-					<FormField name="snowfall">
-						{(field) => (
-							<>
-								<InputLabel
-									{...field.labelProps}
-									inline
-								>
-									{t("snowfall")}
-								</InputLabel>
-								<InputSelect
-									{...field.props}
-									options={snowfallOptions.map((id) => ({ id, name: t(`snowfall_option_${id}`) }))}
-								/>
-							</>
-						)}
-					</FormField>
-					<FormField name="assistant">
-						{(field) => (
-							<>
-								<InputLabel
-									{...field.labelProps}
-									inline
-									hint={t("april_fools_year", { year: 2025 })}
-								>
-									{t("enable_assistant")}
-								</InputLabel>
-								<InputSwitch {...field.props} />
-							</>
-						)}
-					</FormField>
-					<FormField name="ranked">
-						{(field) => (
-							<>
-								<InputLabel
-									{...field.labelProps}
-									inline
-									hint={t("april_fools_year", { year: 2024 })}
-								>
-									{t("enable_ranked_mode")}
-								</InputLabel>
-								<InputSwitch {...field.props} />
-							</>
-						)}
-					</FormField>
+					{fun.includes("snowfall") && (
+						<FormField name="snowfall">
+							{(field) => (
+								<>
+									<InputLabel
+										{...field.labelProps}
+										inline
+									>
+										{t("snowfall")}
+									</InputLabel>
+									<InputSelect
+										{...field.props}
+										options={snowfallOptions.map((id) => ({ id, name: t(`snowfall_option_${id}`) }))}
+									/>
+								</>
+							)}
+						</FormField>
+					)}
+					{fun.includes("assistant") && (
+						<FormField name="assistant">
+							{(field) => (
+								<>
+									<InputLabel
+										{...field.labelProps}
+										inline
+										hint={t("april_fools_year", { year: 2025 })}
+									>
+										{t("enable_assistant")}
+									</InputLabel>
+									<InputSwitch {...field.props} />
+								</>
+							)}
+						</FormField>
+					)}
+					{fun.includes("ranked") && (
+						<FormField name="ranked">
+							{(field) => (
+								<>
+									<InputLabel
+										{...field.labelProps}
+										inline
+										hint={t("april_fools_year", { year: 2024 })}
+									>
+										{t("enable_ranked_mode")}
+									</InputLabel>
+									<InputSwitch {...field.props} />
+								</>
+							)}
+						</FormField>
+					)}
 					<FormButton>{t("update")}</FormButton>
 				</>
 			)}

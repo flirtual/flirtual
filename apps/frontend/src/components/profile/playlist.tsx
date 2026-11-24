@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useInView } from "react-intersection-observer";
 import { twMerge } from "tailwind-merge";
 
 import { useTheme } from "~/hooks/use-theme";
@@ -84,6 +85,7 @@ export const ProfilePlaylist: FC<{
 }> = ({ playlist, className }) => {
 	const [theme] = useTheme();
 	const [locale] = useLocale();
+	const [reference, inView] = useInView({ triggerOnce: true, rootMargin: "200px" });
 
 	const matchedPlatform = playlistPlatforms.find(({ pattern }) => pattern.test(playlist));
 	const match = matchedPlatform?.pattern.exec(playlist);
@@ -92,14 +94,21 @@ export const ProfilePlaylist: FC<{
 	if (!matchedPlatform || !playlistId) return;
 
 	return (
-		<iframe
-			allow="autoplay *; encrypted-media *; fullscreen *; picture-in-picture; clipboard-write"
-			className={twMerge("w-full rounded-xl shadow-brand-1", className)}
-			frameBorder="0"
-			height={matchedPlatform.name === "Mixcloud" ? 180 : 450}
-			// eslint-disable-next-line react-dom/no-unsafe-iframe-sandbox
-			sandbox="allow-forms allow-popups allow-same-origin allow-scripts"
-			src={matchedPlatform.embed(playlistId, theme, locale)}
-		/>
+		<div
+			className={twMerge("w-full overflow-hidden rounded-xl bg-white-40 shadow-brand-1 dark:bg-black-60 vision:bg-white-30/70", className)}
+			ref={reference}
+			style={{ height: matchedPlatform.name === "Mixcloud" ? 180 : 450 }}
+		>
+			{inView && (
+				<iframe
+					allow="autoplay *; encrypted-media *; fullscreen *; picture-in-picture; clipboard-write"
+					className="size-full"
+					frameBorder="0"
+					// eslint-disable-next-line react-dom/no-unsafe-iframe-sandbox
+					sandbox="allow-forms allow-popups allow-same-origin allow-scripts"
+					src={matchedPlatform.embed(playlistId, theme, locale)}
+				/>
+			)}
+		</div>
 	);
 };

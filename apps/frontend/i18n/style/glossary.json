@@ -652,6 +652,23 @@
 					"status": "provisional"
 				}
 			}
+		},
+		{
+			"id": "terms-of-service",
+			"en": "Terms of Service",
+			"note": "The legal document's name, as a link label and inside the legal pages.",
+			"match": "\\bTerms of Service\\b",
+			"terms": {
+				"nl": {
+					"term": "Gebruiksvoorwaarden",
+					"status": "decided"
+				}
+			},
+			"forbidden": {
+				"nl": [
+					"Servicevoorwaarden"
+				]
+			}
 		}
 	]
 }

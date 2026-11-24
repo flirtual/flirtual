@@ -3,6 +3,8 @@ import { createPath, useLocation } from "react-router";
 
 import { replaceLanguage, useNavigate } from "~/i18n";
 
+import { selectTab } from "./use-history-tabs";
+
 export interface MemoryTab {
 	id: string;
 	href: string;
@@ -46,6 +48,7 @@ export function useTabMemory(tabs: Array<MemoryTab>, selected?: string) {
 		if (id !== selected) {
 			if (selected) lastScrolls.set(selected, window.scrollY);
 			const top = lastScrolls.get(id) ?? 0;
+			selectTab();
 			void Promise.resolve(navigate(lastPages.get(id) ?? tab.href, { preventScrollReset: true }))
 				.then(() => restoreScroll(top));
 			return;

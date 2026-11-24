@@ -110,15 +110,11 @@ export const ModelCard: React.FC<ModelCardProps> = ({
 				</div>
 			</div>
 			{miniFooter && (
-				<footer className={twMerge(
-					// todo language select: "mb-[max(calc(var(--safe-area-inset-bottom,0rem)+1.5rem),2rem)] mt-auto flex grid-cols-3 flex-wrap items-center justify-center gap-x-4 gap-y-2 px-8 desktop:mb-0 desktop:mt-8 desktop:grid",
-					"mt-auto mb-[max(calc(var(--safe-area-inset-bottom,0rem)+1.5rem),2rem)] flex grid-cols-2 flex-wrap items-center justify-center gap-x-4 gap-y-2 px-8 desktop:mt-8 desktop:mb-0 desktop:grid",
-				)}
-				>
+				<footer className="mt-auto mb-[max(calc(var(--safe-area-inset-bottom,0rem)+1.5rem),2rem)] flex flex-wrap items-center justify-center gap-x-4 gap-y-2 px-8 desktop:mt-8 desktop:mb-0">
 					<InlineLanguageSelect />
 					<InlineThemeSelect />
 					{freshworksWidgetId && (
-						<SupportButton className="col-span-2 flex items-center gap-0.5em whitespace-nowrap desktop:col-span-1">
+						<SupportButton className="flex items-center gap-0.5em whitespace-nowrap">
 							<Info className="inline-block size-em" />
 							{" "}
 							{t("need_help")}

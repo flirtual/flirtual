@@ -1,10 +1,13 @@
 package zone.homie.flirtual.pwa;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.regex.Pattern;
 import org.json.JSONObject;
 import org.json.JSONException;
 import android.app.Notification;
@@ -23,6 +26,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.app.Person;
 import androidx.core.app.RemoteInput;
+import androidx.core.content.FileProvider;
 import androidx.core.content.pm.ShortcutInfoCompat;
 import androidx.core.content.pm.ShortcutManagerCompat;
 import androidx.core.graphics.drawable.IconCompat;
@@ -30,6 +34,20 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 public class NotificationService extends FirebaseMessagingService {
+  private static final Pattern KLIPY_MEDIA = Pattern.compile("^https://static\\d*\\.klipy\\.com/\\S+$");
+  private static final int MAX_MEDIA_BYTES = 8 * 1024 * 1024;
+  private static final long MEDIA_LIFETIME = 24 * 60 * 60 * 1000;
+
+  private static class Media {
+    final Uri uri;
+    final String type;
+
+    Media(Uri uri, String type) {
+      this.uri = uri;
+      this.type = type;
+    }
+  }
+
   @Override
   public void onMessageReceived(RemoteMessage remoteMessage) {
     super.onMessageReceived(remoteMessage);
@@ -56,13 +74,19 @@ public class NotificationService extends FirebaseMessagingService {
       String conversationId = messageObject.getString("conversationId");
       String url = "flirtual://matches/" + conversationId;
 
+      Media media = null;
+      if (KLIPY_MEDIA.matcher(message.trim()).matches()) {
+        media = downloadMedia(message.trim());
+        message = "GIF";
+      }
+
       Bitmap downloaded = downloadImage(photoUrl);
       Bitmap circularImage = getCircleBitmap(downloaded != null ? downloaded : getDefaultProfileBitmap());
       Person sender = new Person.Builder()
           .setName(name)
           .setIcon(IconCompat.createWithBitmap(circularImage))
           .build();
-      sendNotification(name, message, sender, url, conversationId, circularImage);
+      sendNotification(name, message, media, sender, url, conversationId, circularImage);
     } catch (JSONException e) {
       e.printStackTrace();
     }
@@ -82,8 +106,9 @@ public class NotificationService extends FirebaseMessagingService {
 
       byte[] data;
       try (InputStream in = connection.getInputStream()) {
-        data = readAll(in);
+        data = readAll(in, Integer.MAX_VALUE);
       }
+      if (data == null) return null;
 
       BitmapFactory.Options options = new BitmapFactory.Options();
       options.inJustDecodeBounds = true;
@@ -106,11 +131,60 @@ public class NotificationService extends FirebaseMessagingService {
     }
   }
 
-  private static byte[] readAll(InputStream in) throws IOException {
+  private Media downloadMedia(String mediaUrl) {
+    HttpURLConnection connection = null;
+    try {
+      connection = (HttpURLConnection) new URL(mediaUrl).openConnection();
+      connection.setConnectTimeout(5000);
+      connection.setReadTimeout(5000);
+      if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) return null;
+
+      String type = connection.getContentType();
+      if (type == null || !type.startsWith("image/")) return null;
+      type = type.split(";")[0].trim();
+
+      byte[] data;
+      try (InputStream in = connection.getInputStream()) {
+        data = readAll(in, MAX_MEDIA_BYTES);
+      }
+      if (data == null) return null;
+
+      File directory = new File(getCacheDir(), "notification-media");
+      if (!directory.isDirectory() && !directory.mkdirs()) return null;
+      pruneMedia(directory);
+
+      File file = new File(directory, Integer.toHexString(mediaUrl.hashCode()));
+      try (FileOutputStream out = new FileOutputStream(file)) {
+        out.write(data);
+      }
+
+      Uri uri = FileProvider.getUriForFile(this, getPackageName() + ".fileprovider", file);
+      grantUriPermission("com.android.systemui", uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+      return new Media(uri, type);
+    } catch (Exception e) {
+      e.printStackTrace();
+      return null;
+    } finally {
+      if (connection != null) connection.disconnect();
+    }
+  }
+
+  private static void pruneMedia(File directory) {
+    File[] files = directory.listFiles();
+    if (files == null) return;
+
+    long cutoff = System.currentTimeMillis() - MEDIA_LIFETIME;
+    for (File file : files) {
+      if (file.lastModified() < cutoff) file.delete();
+    }
+  }
+
+  private static byte[] readAll(InputStream in, int limit) throws IOException {
     ByteArrayOutputStream out = new ByteArrayOutputStream();
     byte[] buffer = new byte[8192];
     int read;
     while ((read = in.read(buffer)) != -1) {
+      if (out.size() + read > limit) return null;
       out.write(buffer, 0, read);
     }
     return out.toByteArray();
@@ -137,7 +211,7 @@ public class NotificationService extends FirebaseMessagingService {
     return BitmapFactory.decodeResource(getResources(), R.drawable.ic_stat_notification);
   }
 
-  private void sendNotification(String title, String message, Person sender, String url, String conversationId, Bitmap profileImage) {
+  private void sendNotification(String title, String message, Media media, Person sender, String url, String conversationId, Bitmap profileImage) {
     int notificationId = conversationId != null ? conversationId.hashCode() : 0;
 
     if (conversationId != null && sender != null) {
@@ -150,14 +224,12 @@ public class NotificationService extends FirebaseMessagingService {
     if (previousNotification != null && sender != null) {
       style = NotificationCompat.MessagingStyle.extractMessagingStyleFromNotification(previousNotification);
       if (style != null) {
-        NotificationCompat.MessagingStyle.Message notificationMessage =
-            new NotificationCompat.MessagingStyle.Message(message, System.currentTimeMillis(), sender);
-        style.addMessage(notificationMessage);
+        style.addMessage(createMessage(sender, message, media));
       } else {
-        style = createMessagingStyle(sender, message);
+        style = createMessagingStyle(sender, message, media);
       }
     } else if (sender != null) {
-      style = createMessagingStyle(sender, message);
+      style = createMessagingStyle(sender, message, media);
     } else {
       style = null;
     }
@@ -221,12 +293,17 @@ public class NotificationService extends FirebaseMessagingService {
         .build();
   }
 
-  private NotificationCompat.MessagingStyle createMessagingStyle(Person sender, String message) {
+  private NotificationCompat.MessagingStyle createMessagingStyle(Person sender, String message, Media media) {
     NotificationCompat.MessagingStyle style = new NotificationCompat.MessagingStyle(sender);
+    style.addMessage(createMessage(sender, message, media));
+    return style;
+  }
+
+  private NotificationCompat.MessagingStyle.Message createMessage(Person sender, String message, Media media) {
     NotificationCompat.MessagingStyle.Message notificationMessage =
         new NotificationCompat.MessagingStyle.Message(message, System.currentTimeMillis(), sender);
-    style.addMessage(notificationMessage);
-    return style;
+    if (media != null) notificationMessage.setData(media.type, media.uri);
+    return notificationMessage;
   }
 
   private Notification getPreviousNotification(int notificationId) {
@@ -264,6 +341,6 @@ public class NotificationService extends FirebaseMessagingService {
   }
 
   private void sendNotification(String title, String message, Person sender, String url) {
-    sendNotification(title, message, sender, url, null, null);
+    sendNotification(title, message, null, sender, url, null, null);
   }
 }

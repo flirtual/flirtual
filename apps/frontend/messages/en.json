@@ -1192,6 +1192,7 @@
 	"advanced_filters_placeholder": "Search tags...",
 	"queue_fallback_notice": "You've seen everyone matching your filters, so we've expanded your search.",
 	"queue_fallback_notice_details": "You're now seeing profiles outside your age range and advanced filters. You'll still see the most relevant profiles first.",
+	"queue_fallback_notice_details_age_only": "You're now seeing profiles outside your age range. You'll still see profiles closest to your preference first.",
 	"queue_liking_streak_notice": "Please be more selective in who you like, or your profile visibility may be reduced.",
 	"dont_show_again": "Don't show again",
 	"more_info": "More info",

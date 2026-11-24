@@ -11,7 +11,7 @@ import {
 } from "@talkjs/react-components";
 import type { MessageProps, ReactionsSummarySnapshot } from "@talkjs/react-components";
 import { Copy, Link2, Pencil, Reply, SmilePlus, TextSelect, Trash2 } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
@@ -35,6 +35,7 @@ import type { MessageMenuItem } from "./message-menu";
 import { MessageMenu } from "./message-menu";
 import { useBeingRepliedTo, useHighlighted } from "./replying";
 import { revealOffset } from "./scroll-anchor";
+import { avatarBeside } from "./sticky-avatars";
 import type { ThemeCustom } from "./theme";
 
 type Sender = "currentUser" | "other" | "system";
@@ -54,6 +55,7 @@ const highlightedBare = {
 // A jumbo emoji or GIF message has no bubble, so its timestamp sits on the chat background.
 const bareSurface = "text-black-80! dark:text-white-20! vision:text-black-80!";
 const jumboSurface = twMerge(bareSurface, "[&_img]:size-12");
+const gifSurface = twMerge(bareSurface, "[&_img]:mt-0");
 
 const hoverButton = "flex size-7 items-center justify-center rounded-full text-black-80! opacity-75 hocus:opacity-100 dark:text-white-20! vision:text-black-80! [&>svg]:size-5 [&>svg]:fill-none!";
 const chip = "flex items-center rounded-2xl px-2 py-1 shadow-brand-1 hocus:bg-brand-gradient hocus:text-white-10!";
@@ -113,6 +115,30 @@ export function Message({ message, messageStatus, permissions, common }: Message
 			: undefined,
 		onReply: canReply && !selecting ? reply : undefined
 	});
+
+	const slidingAvatar = useRef<HTMLElement>(null);
+	useLayoutEffect(() => {
+		if (distance && sender === "currentUser" && !slidingAvatar.current && root.current)
+			slidingAvatar.current = avatarBeside(root.current);
+
+		const avatar = slidingAvatar.current;
+		if (!avatar) return;
+
+		if (distance) {
+			avatar.style.transition = "none";
+			avatar.style.transform = `translateX(${distance}px)`;
+		}
+		else {
+			avatar.style.removeProperty("transition");
+			avatar.style.removeProperty("transform");
+			slidingAvatar.current = null;
+		}
+	}, [distance, sender]);
+
+	useEffect(() => () => {
+		slidingAvatar.current?.style.removeProperty("transition");
+		slidingAvatar.current?.style.removeProperty("transform");
+	}, []);
 
 	// Keeps the replied-to message in view as the reply bar and keyboard shrink the chat.
 	useEffect(() => {
@@ -244,7 +270,7 @@ export function Message({ message, messageStatus, permissions, common }: Message
 					{message.sender && (
 						<div className="chat-avatar size-10 shrink-0 group-data-reply/message:mt-[calc(0.85em*var(--t-line-height-base)+0.25rem)]">
 							<div className="absolute">
-								<div className="sticky top-[-2px]">
+								<div className="sticky top-[-2px] transition-transform">
 									{author
 										? (
 												<Link className="block rounded-full focusable" href={urls.profile(author)} state={{ conversationId: conversation.id }}>
@@ -293,7 +319,7 @@ export function Message({ message, messageStatus, permissions, common }: Message
 								"relative flow-root max-w-full rounded-2xl leading-(--t-line-height-base)! break-words transition-[translate,box-shadow] [&_.t-message-content]:contents [&_a]:text-inherit! [&_a]:underline",
 								selecting && "[&_.t-message-content]:select-text [&_.t-message-content_*]:select-text",
 								(repliedTo || highlighted) && "focused",
-								jumbo ? jumboSurface : gif ? bareSurface : twMerge("px-4 py-3 shadow-brand-1", surface[sender]),
+								jumbo ? jumboSurface : gif ? gifSurface : twMerge("px-4 py-3 shadow-brand-1", surface[sender]),
 								sender === "system" && "w-full text-[120%]! italic [&:lang(ja)]:not-italic [&:lang(ko)]:not-italic [&:lang(ru)]:not-italic",
 								menu && bare && twMerge("before:absolute before:-inset-x-2 before:-top-2 before:-bottom-0.5 before:-z-1 before:rounded-2xl before:shadow-brand-1", highlightedBare[sender])
 							)}

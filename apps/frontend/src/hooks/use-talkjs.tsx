@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import { getTalkSession } from "@talkjs/core";
-import type { ConversationSnapshot, TalkSession } from "@talkjs/core";
+import type { ConversationRef, ConversationSnapshot, TalkSession } from "@talkjs/core";
 import ms from "ms" with { type: "macro" };
 import {
 	createContext,
@@ -44,25 +44,8 @@ const UnreadConversationContext = createContext<{
 	setUnreadConversations: Dispatch<SetStateAction<Array<ConversationSnapshot>>>;
 }>({ unreadConversations: emptyArray, setUnreadConversations: doNothing });
 
-function expiresAt(token: string) {
-	try {
-		const [, payload] = token.split(".");
-		const { exp } = JSON.parse(atob(payload.replaceAll("-", "+").replaceAll("_", "/"))) as { exp: number };
-		return exp * 1000;
-	}
-	catch {
-		return 0;
-	}
-}
-
-let talkjsToken: string | null = null;
-let talkjsTokenExpiresAt = 0;
-
 // `onNeedToken` must retry on its own: https://talkjs.com/docs/Data_APIs/JavaScript/TalkSession/
-// `mutate(sessionKey(), …)` keeps the query fresh with a stale token, so cache by the token's expiry.
 async function fetchTalkjsToken() {
-	if (talkjsToken && Date.now() < talkjsTokenExpiresAt - ms("30s")) return talkjsToken;
-
 	for (let attempt = 0; ; attempt++) {
 		try {
 			const session = await queryClient.fetchQuery({
@@ -72,13 +55,7 @@ async function fetchTalkjsToken() {
 			});
 
 			const token = session?.user.talkjsToken;
-
-			if (token) {
-				talkjsToken = token;
-				talkjsTokenExpiresAt = expiresAt(token);
-
-				return token;
-			}
+			if (token) return token;
 		}
 		catch {
 			// 4xx rejects immediately; `queryClient` retries the rest.
@@ -93,6 +70,12 @@ async function fetchTalkjsToken() {
 function talkSession(userId: string) {
 	const session = getTalkSession({ appId: talkjsAppId, userId });
 	session.onNeedToken = () => void fetchTalkjsToken().then((token) => session.setToken(token));
+
+	// The chatbox's editor marks the user as typing on every change, whatever the role's
+	// `showTypingIndicators` says, and offers no option to stop it. `ConversationRef`s are frozen,
+	// so this replaces the method on their shared prototype.
+	const conversationPrototype: ConversationRef = Object.getPrototypeOf(session.conversation("typing"));
+	conversationPrototype.markAsTyping = async () => {};
 
 	return session;
 }

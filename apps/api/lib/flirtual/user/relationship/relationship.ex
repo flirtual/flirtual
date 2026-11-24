@@ -2,6 +2,7 @@ defmodule Flirtual.User.Relationship do
   use Flirtual.Schema, primary_key: :id
   use Flirtual.Policy.Target, policy: __MODULE__.Policy
 
+  alias Flirtual.Features
   alias Flirtual.Matchmaking
   alias Flirtual.Talkjs
   alias Flirtual.User.Profile.LikesAndPasses
@@ -48,7 +49,7 @@ defmodule Flirtual.User.Relationship do
           do: Talkjs.new_conversation_id(user_id, target_id),
           else: nil
         ),
-      time_diff: User.time_diff(user_id, target_id),
+      time_diff: if(Features.timezones?(), do: User.time_diff(user_id, target_id)),
       distance: User.distance(user_id, target_id)
     }
   end
@@ -72,7 +73,7 @@ defmodule Flirtual.User.Relationship do
       liked_me: liked_me(opposite_lap),
       prefers_my_gender: Matchmaking.Query.prefers_my_gender?(user.id, target.id),
       conversation_id: if(matched, do: Talkjs.new_conversation_id(user, target), else: nil),
-      time_diff: User.time_diff(user, target),
+      time_diff: if(Features.timezones?(), do: User.time_diff(user, target)),
       distance: User.distance(user, target)
     }
   end

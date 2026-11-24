@@ -269,7 +269,7 @@ defmodule Flirtual.Matchmaking.Query do
     do: Search.Tokens.monopoly(value)
 
   defp boost_token(%AdvancedFilter{category: :domsub, value: value}),
-    do: Search.Tokens.domsub(value)
+    do: Search.Tokens.public_domsub(value)
 
   defp boost_token(%AdvancedFilter{category: :personality, value: value}),
     do: Search.Tokens.personality(value)
