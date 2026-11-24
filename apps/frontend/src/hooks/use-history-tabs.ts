@@ -10,6 +10,9 @@ import { useOptionalSession } from "./use-session";
 // Each history entry's tab, by history index. Pages without one inherit the previous entry's.
 const entryTabs = new Map<number, string | undefined>();
 
+const tabStarts = new Set<number>();
+let selectingTab = false;
+
 // Back arrow fallbacks of mounted pages, innermost last.
 const upTargets: Array<string> = [];
 
@@ -35,7 +38,7 @@ const otherTabRoots = () => [urls.conversations.list(), "/settings", ownProfile]
 // Unknown entries, as after a reload, count as the same tab.
 export function previousInTab() {
 	const index = historyIndex();
-	if (index === 0) return false;
+	if (index === 0 || tabStarts.has(index)) return false;
 	if (!entryTabs.has(index) || !entryTabs.has(index - 1)) return true;
 	return entryTabs.get(index - 1) === entryTabs.get(index);
 }
@@ -43,11 +46,16 @@ export function previousInTab() {
 // Unknown entries count as another tab.
 export function knownInTab(offset: number) {
 	const index = historyIndex();
+	if (tabStarts.has(Math.max(index, index + offset))) return false;
 	return entryTabs.has(index) && entryTabs.has(index + offset) && entryTabs.get(index + offset) === entryTabs.get(index);
 }
 
 const upSubscribers = new Set<() => void>();
 const notifyUp = () => upSubscribers.forEach((subscriber) => subscriber());
+
+export function selectTab() {
+	selectingTab = true;
+}
 
 export function addUpTarget(to: string) {
 	upTargets.push(to);
@@ -70,6 +78,11 @@ export function useUpTarget() {
 	);
 }
 
+function forgetAfter(index: number) {
+	for (const key of entryTabs.keys()) if (key > index) entryTabs.delete(key);
+	for (const key of tabStarts) if (key > index) tabStarts.delete(key);
+}
+
 // Replaces the entry with `to` followed by the current page, then goes back, so forward returns to
 // the page.
 export function goUp(to: string) {
@@ -80,7 +93,7 @@ export function goUp(to: string) {
 	history.replaceState({ usr: null, key: Math.random().toString(36).slice(2, 10), idx: index }, "", parent);
 	history.pushState({ ...page.state, idx: index + 1 }, "", page.path);
 
-	for (const key of entryTabs.keys()) if (key > index) entryTabs.delete(key);
+	forgetAfter(index);
 	entryTabs.set(index + 1, entryTabs.get(index));
 	history.back();
 }
@@ -127,8 +140,10 @@ export function useHistoryTabs() {
 	useLayoutEffect(() => {
 		const index = historyIndex();
 		if (navigationType === "PUSH") {
-			for (const key of entryTabs.keys()) if (key > index) entryTabs.delete(key);
+			forgetAfter(index);
+			if (selectingTab) tabStarts.add(index);
 		}
+		selectingTab = false;
 
 		const path = replaceLanguage(location, null).pathname;
 		if (startPages.includes(path)) lastStartPage = path;
