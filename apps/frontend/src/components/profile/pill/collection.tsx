@@ -2,17 +2,20 @@ import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 
 import type { User } from "~/api/user";
-import { personality, vrTags } from "~/features";
+import { personality, playlists, vrTags } from "~/features";
 import {
 	useAttributeOrder,
+	useAttributes,
 	useAttributeTranslation
 } from "~/hooks/use-attribute";
 import { useGameStoreLinks, useSessionGameStores } from "~/hooks/use-game-stores";
 import { useOptionalSession } from "~/hooks/use-session";
+import { useLocale } from "~/i18n";
+import { intlLocale } from "~/i18n/languages";
 import { urls } from "~/urls";
 
+import { ProfilePlaylist } from "../playlist";
 import { PillAttributeList } from "./attribute-list";
-import { PillCollectionExpansion } from "./expansion";
 import { Pill } from "./pill";
 import { PillRows } from "./rows";
 
@@ -37,11 +40,21 @@ export const PillCollection: FC<{ user: User }> = (props) => {
 	const tAttributes = useAttributeTranslation();
 	const relationshipOrder = useAttributeOrder("relationship");
 	const gameStoreLinks = useGameStoreLinks(useSessionGameStores());
+	const kinks = useAttributes("kink");
+	const [locale] = useLocale();
 
 	if (!session) return null;
 
 	const editable = session.user.id === user.id;
 	const nsfw = session.user.preferences?.nsfw ?? false;
+	const kinkIds = nsfw ? user.profile.attributes.kink : undefined;
+	const activeKinkIds = (session.user.profile.attributes.kink || [])
+		.map((id) => kinks.find((kink) => kink.id === id)?.pair)
+		.filter(Boolean);
+
+	const languageNames = new Intl.DisplayNames(intlLocale(locale), {
+		type: "language"
+	});
 
 	function getPersonalityLabels({
 		profile: { openness, conscientiousness, agreeableness }
@@ -148,11 +161,43 @@ export const PillCollection: FC<{ user: User }> = (props) => {
 					</Pill>
 				</div>
 			)}
-			<PillCollectionExpansion
-				editable={editable}
-				session={session}
+			{user.profile.monopoly && (
+				<div className="flex w-full flex-wrap gap-2">
+					<Pill
+						active={
+							session.user.id !== user.id
+							&& session.user.profile.monopoly === user.profile.monopoly
+						}
+						className="vision:bg-white-30/70"
+						href={editable ? urls.settings.matchmaking() : undefined}
+					>
+						{t(user.profile.monopoly)}
+					</Pill>
+				</div>
+			)}
+			<PillAttributeList
+				activeIds={activeKinkIds}
+				attributes={kinkIds}
+				href={editable ? urls.settings.nsfw : undefined}
 				user={user}
 			/>
+			<PillAttributeList
+				activeIds={session.user.profile.languages}
+				attributes={user.profile.languages}
+				getName={(id) => tAttributes[id]?.name ?? languageNames.of(id) ?? id}
+				href={editable ? urls.settings.info("language") : undefined}
+				user={user}
+			/>
+			{vrTags && (
+				<PillAttributeList
+					attributes={user.profile.attributes.platform}
+					href={editable ? urls.settings.info("platform") : undefined}
+					user={user}
+				/>
+			)}
+			{playlists && user.profile.playlist && (
+				<ProfilePlaylist className="mt-4" playlist={user.profile.playlist} />
+			)}
 		</div>
 	);
 };
