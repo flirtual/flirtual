@@ -6,6 +6,7 @@ import {
 	ModerationMessageDialog
 } from "~/components/modals/moderator-message";
 import { ShepherdProvider } from "~/components/shepherd";
+import { fun } from "~/features";
 import { NotificationProvider } from "~/hooks/use-notifications";
 import { PurchaseProvider } from "~/hooks/use-purchase";
 import { useSession } from "~/hooks/use-session";
@@ -23,7 +24,7 @@ export default function AuthenticatedLayout() {
 					</RedirectBoundary>
 					<ModerationMessageDialog />
 					<DiscordSpamDialog />
-					<Flitty />
+					{fun.includes("assistant") && <Flitty />}
 				</NotificationProvider>
 			</ShepherdProvider>
 		</PurchaseProvider>

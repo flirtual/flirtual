@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
 import { Link } from "~/components/link";
+import { fun } from "~/features";
 import { usePreferences } from "~/hooks/use-preferences";
 import { useMatch } from "~/i18n";
 import RankedImage from "~/static/easter-eggs/ranked-mode.jpg";
@@ -28,7 +29,8 @@ export const NavigationalSwitchItem: FC<NavigationalSwitchItemProps> = ({
 }) => {
 	const active = useMatch({ path: href });
 
-	const [rankedMode] = usePreferences("ranked_mode", false);
+	const [rankedPreference] = usePreferences("ranked_mode", false);
+	const rankedMode = rankedPreference && fun.includes("ranked");
 	const { t } = useTranslation();
 
 	return (

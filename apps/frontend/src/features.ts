@@ -14,6 +14,10 @@ export const connectionProviders = (
 	import.meta.env.VITE_FEATURE_CONNECTIONS as string || "discord,vrchat,google,apple,meta"
 ).split(",").map((type) => type.trim()).filter(Boolean);
 
+export const fun = (
+	import.meta.env.VITE_FEATURE_FUN as string | undefined ?? "snowfall,assistant,ranked"
+).split(",").map((name) => name.trim()).filter(Boolean);
+
 export function connectionProvider(type: string) {
 	return connectionProviders.includes(type) && (type !== "vrchat" || vrchat);
 }

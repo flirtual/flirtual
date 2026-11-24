@@ -2,6 +2,7 @@
 import { lazy } from "react";
 import { withSuspense } from "with-suspense";
 
+import { fun } from "~/features";
 import { usePreferences } from "~/hooks/use-preferences";
 
 export const snowfallOptions = ["always", "auto", "never"] as const;
@@ -19,8 +20,9 @@ function isCheerful() {
 export function useSnowfall() {
 	const [snowfall, setSnowfall] = usePreferences<SnowfallOption>("snowfall", "auto");
 
-	const autoOn = isCheerful();
-	const on = snowfall === "always" || (snowfall === "auto" && autoOn);
+	const enabled = fun.includes("snowfall");
+	const autoOn = enabled && isCheerful();
+	const on = enabled && (snowfall === "always" || (snowfall === "auto" && autoOn));
 
 	return {
 		on,
