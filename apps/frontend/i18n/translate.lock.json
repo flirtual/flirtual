@@ -24179,6 +24179,18 @@
 		"ja": "56adfbec705712be",
 		"ko": "56adfbec705712be"
 	},
+	"flirtual:queue_fallback_notice_details_age_only": {
+		"ja": "ca6528bf9ec6057b",
+		"ko": "ca6528bf9ec6057b",
+		"pt-BR": "ca6528bf9ec6057b",
+		"fr": "ca6528bf9ec6057b",
+		"nl": "ca6528bf9ec6057b",
+		"es": "ca6528bf9ec6057b",
+		"pt": "ca6528bf9ec6057b",
+		"de": "ca6528bf9ec6057b",
+		"sv": "ca6528bf9ec6057b",
+		"ru": "ca6528bf9ec6057b"
+	},
 	"flirtual:queue_liking_streak_notice": {
 		"de": "72ecdf11f5163316",
 		"es": "72ecdf11f5163316",
@@ -27334,6 +27346,18 @@
 		"sv": "41eb7d96fbd3a845",
 		"ja": "41eb7d96fbd3a845",
 		"ko": "41eb7d96fbd3a845"
+	},
+	"flirtual:welcome_agreement": {
+		"ja": "ab5c61e652f96609",
+		"ko": "ab5c61e652f96609",
+		"pt-BR": "ab5c61e652f96609",
+		"fr": "ab5c61e652f96609",
+		"nl": "ab5c61e652f96609",
+		"es": "ab5c61e652f96609",
+		"pt": "ab5c61e652f96609",
+		"de": "ab5c61e652f96609",
+		"sv": "ab5c61e652f96609",
+		"ru": "ab5c61e652f96609"
 	},
 	"flirtual:welcome_to_flirtual": {
 		"de": "99b0067c12ac0273",

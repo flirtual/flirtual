@@ -25594,6 +25594,16 @@
 		"description": "Expandable explanation revealed by \"More info\" in the expanded-search banner: which filters are now relaxed (age range and Premium advanced filters) and that the best matches still come first.",
 		"hash": "56adfbec705712be"
 	},
+	"flirtual:queue_fallback_notice_details_age_only": {
+		"group": "discover/notices",
+		"screens": [
+			"/dates",
+			"/homies"
+		],
+		"element": "notice",
+		"description": "Expandable explanation revealed by \"More info\" in the dismissible expanded-search banner above the browse cards, after the user has run out of profiles matching their filters. Used instead of queue_fallback_notice_details in builds without advanced filters, so it mentions only the age range: profiles outside it now appear, ordered so those nearest the user's preferred ages come first. Don't mention other filters.",
+		"hash": "ca6528bf9ec6057b"
+	},
 	"flirtual:queue_liking_streak_notice": {
 		"group": "discover/notices",
 		"screens": [
@@ -28525,6 +28535,30 @@
 		"description": "Row label in the notification settings grid, followed by an email checkbox and a push checkbox. Controls a weekly digest of how many people liked the user's profile. \"Likes\" here means likes received from other users.",
 		"lengthNote": "Row label in a fixed-height grid row beside two checkboxes; should fit on one line on a phone",
 		"hash": "41eb7d96fbd3a845"
+	},
+	"flirtual:welcome_agreement": {
+		"group": "welcome",
+		"screens": [
+			"/"
+		],
+		"element": "legal",
+		"description": "Small centred consent text on the welcome screen (shown at / in builds without the marketing homepage), directly above the \"Create account\" and \"Log in\" buttons. Tapping either button counts as accepting the Terms and confirming the user is 18 or older; addressed to a new or returning visitor.",
+		"placeholders": {
+			"create_account": {
+				"meaning": "The translated label of the Create account button below (key create_account); keep the quotation marks around it, using your locale's quote style",
+				"example": "Create account"
+			},
+			"log_in": {
+				"meaning": "The translated label of the Log in button below (key log_in); keep the quotation marks around it, using your locale's quote style",
+				"example": "Log in"
+			}
+		},
+		"tags": {
+			"terms": "Bold underlined link to the Terms of Service page; wraps the link text",
+			"privacy": "Bold underlined link to the Privacy Policy page; wraps the link text"
+		},
+		"tone": "Legal consent",
+		"hash": "ab5c61e652f96609"
 	},
 	"flirtual:welcome_to_flirtual": {
 		"group": "tour",
