@@ -57,6 +57,11 @@ auditConfig:
 
 frozenLockfile: true
 
+# Several React libraries (@uppy/react, react-quill, @dnd-kit/core, @widgetbot/react-embed,
+# @talkjs/react-components) import React's types without declaring @types/react, so from the
+# global virtual store their components type as any.
+enableGlobalVirtualStore: false
+
 verifyDepsBeforeRun: install
 
 minimumReleaseAge: 4320
