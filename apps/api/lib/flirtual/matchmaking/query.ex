@@ -455,7 +455,6 @@ defmodule Flirtual.Matchmaking.Query do
 
   defp kinks(_user, _cw), do: nil
 
-  # Traits default to non-nil, so the nil guard below never disables this.
   defp personality(%User{profile: profile}, cw) do
     if Features.personality?(), do: personality_factor(profile, cw)
   end

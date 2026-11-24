@@ -81,9 +81,9 @@ defmodule Flirtual.User.Profile do
     field(:domsub, Ecto.Enum, values: @domsub_values)
     field(:monopoly, Ecto.Enum, values: @monopoly_values)
     field(:country, Ecto.Enum, values: Countries.list(:iso_3166_1))
-    field(:openness, :integer, default: 1)
-    field(:conscientiousness, :integer, default: 0)
-    field(:agreeableness, :integer, default: 1)
+    field(:openness, :integer)
+    field(:conscientiousness, :integer)
+    field(:agreeableness, :integer)
     Enum.map(@personality_questions, &field(&1, :boolean))
     field(:relationships, {:array, :string})
     field(:new, :boolean)
@@ -150,44 +150,31 @@ defmodule Flirtual.User.Profile do
     ]
   end
 
+  @trait_questions [
+    openness: [question0: :add, question1: :add, question2: :sub],
+    conscientiousness: [question3: :add, question4: :add, question5: :sub],
+    agreeableness: [question6: :add, question7: :add, question8: :sub]
+  ]
+
   def update_personality_changeset(changeset, attrs) do
-    changeset
-    |> cast(
-      attrs,
-      [:openness, :conscientiousness, :agreeableness] ++
-        Profile.get_personality_questions()
-    )
-    |> change(%{openness: 0, conscientiousness: 0, agreeableness: 0})
-    |> compute_personality_changeset(:question0, :openness, :add)
-    |> compute_personality_changeset(:question1, :openness, :add)
-    |> compute_personality_changeset(:question2, :openness, :sub)
-    |> compute_personality_changeset(:question3, :conscientiousness, :add)
-    |> compute_personality_changeset(:question4, :conscientiousness, :add)
-    |> compute_personality_changeset(:question5, :conscientiousness, :sub)
-    |> compute_personality_changeset(:question6, :agreeableness, :add)
-    |> compute_personality_changeset(:question7, :agreeableness, :add)
-    |> compute_personality_changeset(:question8, :agreeableness, :sub)
+    changeset = cast(changeset, attrs, Profile.get_personality_questions())
+
+    Enum.reduce(@trait_questions, changeset, fn {trait, questions}, changeset ->
+      put_change(changeset, trait, trait_score(changeset, questions))
+    end)
   end
 
-  defp compute_personality_changeset(changeset, key, trait, action) do
-    answer = get_field(changeset, key)
-
-    if(answer !== nil) do
-      trait_value = get_field(changeset, trait)
-
-      new_trait_value =
-        if(answer) do
-          # if they answered yes, apply the increase to the relevant trait.
-          if(action === :add, do: trait_value + 1, else: trait_value - 1)
-        else
-          # if the answered no, apply the inverse.
-          if(action === :sub, do: trait_value + 1, else: trait_value - 1)
-        end
-
-      changeset
-      |> put_change(trait, new_trait_value)
-    else
-      changeset
+  defp trait_score(changeset, questions) do
+    questions
+    |> Enum.flat_map(fn {question, action} ->
+      case get_field(changeset, question) do
+        nil -> []
+        answer -> [if(answer == (action == :add), do: 1, else: -1)]
+      end
+    end)
+    |> case do
+      [] -> nil
+      scores -> Enum.sum(scores)
     end
   end
 end
