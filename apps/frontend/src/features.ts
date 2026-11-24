@@ -9,6 +9,7 @@ export const news = import.meta.env.VITE_FEATURE_NEWS !== "0";
 export const press = import.meta.env.VITE_FEATURE_PRESS !== "0";
 export const apk = import.meta.env.VITE_FEATURE_APK !== "0";
 export const landing = import.meta.env.VITE_FEATURE_LANDING !== "0";
+export const playlists = import.meta.env.VITE_FEATURE_PLAYLISTS !== "0";
 
 export const connectionProviders = (
 	import.meta.env.VITE_FEATURE_CONNECTIONS as string || "discord,vrchat,google,apple,meta"

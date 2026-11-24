@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 
 import type { Session } from "~/api/auth";
 import type { User } from "~/api/user";
-import { vrTags } from "~/features";
+import { playlists, vrTags } from "~/features";
 import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
 import { useLocale } from "~/i18n";
 import { intlLocale } from "~/i18n/languages";
@@ -52,7 +52,7 @@ export const PillCollectionExpansion: FC<PillCollectionExpansionProps> = (
 		&& !kinkIds
 		&& !user.profile.attributes.language
 		&& !user.profile.attributes.platform
-		&& !user.profile.playlist
+		&& !(playlists && user.profile.playlist)
 	) {
 		return null;
 	}
@@ -94,7 +94,7 @@ export const PillCollectionExpansion: FC<PillCollectionExpansionProps> = (
 							user={user}
 						/>
 					)}
-					{user.profile.playlist && (
+					{playlists && user.profile.playlist && (
 						<ProfilePlaylist className="mt-4" playlist={user.profile.playlist} />
 					)}
 					<div />

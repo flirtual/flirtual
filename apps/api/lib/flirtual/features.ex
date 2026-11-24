@@ -5,6 +5,7 @@ defmodule Flirtual.Features do
   def personality?, do: get(:personality?)
   def vr_tags?, do: get(:vr_tags?)
   def vrchat?, do: get(:vrchat?)
+  def playlists?, do: get(:playlists?)
 
   # Strings: to_existing_atom drops providers whose modules haven't loaded yet.
   def connections, do: get(:connections)

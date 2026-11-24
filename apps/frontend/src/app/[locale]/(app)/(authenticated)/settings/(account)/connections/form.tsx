@@ -11,7 +11,7 @@ import { FaceTimeIcon, VRChatIcon } from "~/components/icons";
 import { InputText } from "~/components/inputs";
 import { ModelCard } from "~/components/model-card";
 import { ProfilePlaylist } from "~/components/profile/playlist";
-import { connectionProvider } from "~/features";
+import { connectionProvider, playlists } from "~/features";
 import { useDevice } from "~/hooks/use-device";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
@@ -125,52 +125,54 @@ export const ConnectionsForm: FC = () => {
 										)}
 							</div>
 						</div>
-						<div className="flex flex-col gap-4">
-							<div className="flex flex-col gap-2">
-								<div className="flex gap-2">
-									<span className="flex text-xl">
-										{t("playlist_heading")}
+						{playlists && (
+							<div className="flex flex-col gap-4">
+								<div className="flex flex-col gap-2">
+									<div className="flex gap-2">
+										<span className="flex text-xl">
+											{t("playlist_heading")}
+										</span>
+									</div>
+									<span className="text-black-50 dark:text-white-50 vision:text-white-50">
+										{t("playlist_description")}
 									</span>
 								</div>
-								<span className="text-black-50 dark:text-white-50 vision:text-white-50">
-									{t("playlist_description")}
-								</span>
-							</div>
-							<FormField name="playlist" className="col-span-2 wide:col-span-1">
-								{(field) => (
-									<InputText
-										iconColor="#095d6a"
-										placeholder={t("playlist_placeholder")}
-										{...field.props}
-									/>
-								)}
-							</FormField>
-							{playlistSubmitted === "deezer.page.link"
-								? (
-										<span className="text-red-600 italic">
-											{t("playlist_deezer_unsupported")}
-										</span>
-									)
-								: playlistSubmitted === "youtube"
+								<FormField name="playlist" className="col-span-2 wide:col-span-1">
+									{(field) => (
+										<InputText
+											iconColor="#095d6a"
+											placeholder={t("playlist_placeholder")}
+											{...field.props}
+										/>
+									)}
+								</FormField>
+								{playlistSubmitted === "deezer.page.link"
 									? (
 											<span className="text-red-600 italic">
-												{t("playlist_youtube_unsupported")}
+												{t("playlist_deezer_unsupported")}
 											</span>
 										)
-									: playlistSubmitted === "other"
+									: playlistSubmitted === "youtube"
 										? (
-												<span className="text-black-50 italic dark:text-white-50 vision:text-white-50">
-													<Trans i18nKey="playlist_not_public" />
+												<span className="text-red-600 italic">
+													{t("playlist_youtube_unsupported")}
 												</span>
 											)
-										: null}
-							<span className="text-black-50 italic dark:text-white-50 vision:text-white-50">
-								{t("playlist_privacy_warning")}
-							</span>
-							{user.profile.playlist && (
-								<ProfilePlaylist playlist={user.profile.playlist} />
-							)}
-						</div>
+										: playlistSubmitted === "other"
+											? (
+													<span className="text-black-50 italic dark:text-white-50 vision:text-white-50">
+														<Trans i18nKey="playlist_not_public" />
+													</span>
+												)
+											: null}
+								<span className="text-black-50 italic dark:text-white-50 vision:text-white-50">
+									{t("playlist_privacy_warning")}
+								</span>
+								{user.profile.playlist && (
+									<ProfilePlaylist playlist={user.profile.playlist} />
+								)}
+							</div>
+						)}
 						<FormButton className="col-span-2 mt-4">{t("update")}</FormButton>
 					</>
 				)}

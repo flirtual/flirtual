@@ -12,6 +12,7 @@ import {
 	sentryDsn,
 	sentryReportTo
 } from "~/const";
+import { playlists } from "~/features";
 import { bucketOrigins } from "~/urls";
 
 const embedHost = embedOrigin && new URL(embedOrigin).host;
@@ -150,7 +151,7 @@ const contentSecurityPolicy: Record<string, Sources> = {
 		// https://docs.widgetbot.io/
 		"e.widgetbot.io",
 		// Music platforms.
-		...playlistPlatforms.map(({ embed }) => new URL(embed("example", "light", "en")).host),
+		...(playlists ? playlistPlatforms.map(({ embed }) => new URL(embed("example", "light", "en")).host) : []),
 		// Chat embeds. Never a third party directly: apps/embed's frames hold each
 		// player to the TalkJS link allowlist with their own frame-src.
 		embedHost,
