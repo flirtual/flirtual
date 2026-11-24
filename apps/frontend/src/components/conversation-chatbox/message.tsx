@@ -206,7 +206,7 @@ export function Message({ message, messageStatus, permissions, common }: Message
 	);
 
 	const author = message.sender && people[message.sender.id];
-	const avatar = sender === "other" && message.sender && <Avatar common={common} photoUrl={getPhotoUrlWithFallback(message.sender)} />;
+	const avatar = message.sender && <Avatar common={common} photoUrl={getPhotoUrlWithFallback(message.sender)} />;
 
 	const addReaction = (className: string) => (
 		<PopoverButton
@@ -242,7 +242,7 @@ export function Message({ message, messageStatus, permissions, common }: Message
 			>
 				<div className={twMerge("flex w-full items-start gap-4", sender === "currentUser" && "flex-row-reverse")}>
 
-					{sender === "other" && (
+					{message.sender && (
 						<div className="chat-avatar size-10 shrink-0 group-data-reply/message:mt-[calc(0.85em*var(--t-line-height-base)+0.25rem)]">
 							<div className="absolute">
 								<div className="sticky top-[-2px]">

@@ -60,7 +60,10 @@ html:is(html):is(html):is(html):is(html):is(html) :where([data-chatbox] .t-chatb
 }
 
 [data-chatbox] .t-message-group > .chat-message:not(:last-child) .chat-avatar,
-[data-chatbox] .t-message-group[t-group-type="other"]:has(+ [t-group-type="other"], + [t-group-type="divider"] + [t-group-type="other"]) > .chat-message:last-child .chat-avatar {
+[data-chatbox] .t-message-group:is(
+	[t-group-type="other"]:has(+ [t-group-type="other"], + [t-group-type="divider"] + [t-group-type="other"]),
+	[t-group-type="own"]:has(+ [t-group-type="own"], + [t-group-type="divider"] + [t-group-type="own"])
+) > .chat-message:last-child .chat-avatar {
 	@apply invisible;
 }
 
