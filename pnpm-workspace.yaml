@@ -26,6 +26,7 @@ catalog:
 catalogs:
   pulumi:
     "@pulumi/aws": ^7.46.0
+    "@pulumi/aws-native": ^1.85.0
     "@pulumi/cloudflare": 6.24.0
     "@pulumi/command": 1.3.0
     "@pulumi/gcp": ^10.1.0
@@ -71,6 +72,7 @@ strictPeerDependencies: false
 allowBuilds:
   "@parcel/watcher": true
   "@pulumi/apple@file:pulumi/sdks/apple": true
+  "@pulumi/aws-native": true
   "@pulumi/command": true
   "@pulumi/discord@file:pulumi/sdks/discord": true
   "@pulumi/freshdesk@file:pulumi/sdks/freshdesk": true
