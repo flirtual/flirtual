@@ -11,6 +11,7 @@ export const apk = import.meta.env.VITE_FEATURE_APK !== "0";
 export const landing = import.meta.env.VITE_FEATURE_LANDING !== "0";
 export const playlists = import.meta.env.VITE_FEATURE_PLAYLISTS !== "0";
 export const timezones = import.meta.env.VITE_FEATURE_TIMEZONES !== "0";
+export const advancedFilters = import.meta.env.VITE_FEATURE_ADVANCED_FILTERS !== "0";
 
 export const connectionProviders = (
 	import.meta.env.VITE_FEATURE_CONNECTIONS as string || "discord,vrchat,google,apple,meta"

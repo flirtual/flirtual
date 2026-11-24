@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 
 import type { Entitlement } from "~/api/subscription";
 import { InlineLink } from "~/components/inline-link";
+import { advancedFilters } from "~/features";
 import { useDevice } from "~/hooks/use-device";
 import { useMountTime } from "~/hooks/use-mount-time";
 import { useSession } from "~/hooks/use-session";
@@ -135,13 +136,15 @@ export const SubscriptionForm: FC = () => {
 										{t("premium_feature_priorities")}
 									</InlineLink>
 								</li>
-								<li>
-									🏷️
-									{" "}
-									<InlineLink href={urls.settings.matchmaking()}>
-										{t("advanced_filters")}
-									</InlineLink>
-								</li>
+								{advancedFilters && (
+									<li>
+										🏷️
+										{" "}
+										<InlineLink href={urls.settings.matchmaking()}>
+											{t("advanced_filters")}
+										</InlineLink>
+									</li>
+								)}
 								<li>
 									💃
 									{" "}
@@ -183,20 +186,22 @@ export const SubscriptionForm: FC = () => {
 										</InlineLink>
 									</span>
 								</li>
-								<li className="flex flex-col">
-									<span className="text-lg font-semibold">
-										🏷️
-										{" "}
-										{t("advanced_filters")}
-									</span>
-									<span>
-										{t("premium_advanced_filters_description")}
-										{" "}
-										<InlineLink href={urls.settings.matchmaking()}>
-											{t("check_this_out_for_free")}
-										</InlineLink>
-									</span>
-								</li>
+								{advancedFilters && (
+									<li className="flex flex-col">
+										<span className="text-lg font-semibold">
+											🏷️
+											{" "}
+											{t("advanced_filters")}
+										</span>
+										<span>
+											{t("premium_advanced_filters_description")}
+											{" "}
+											<InlineLink href={urls.settings.matchmaking()}>
+												{t("check_this_out_for_free")}
+											</InlineLink>
+										</span>
+									</li>
+								)}
 								<li className="flex flex-col">
 									<span className="text-lg font-semibold">
 										💃

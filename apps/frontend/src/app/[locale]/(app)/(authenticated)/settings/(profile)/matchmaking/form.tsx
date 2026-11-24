@@ -33,7 +33,7 @@ import { FormButton } from "~/components/forms/button";
 import { InputLabel, InputLabelHint, InputSelect } from "~/components/inputs";
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
 import { Slider } from "~/components/inputs/slider";
-import { personality, vrTags } from "~/features";
+import { advancedFilters, personality, vrTags } from "~/features";
 import {
 
 	useAttributes,
@@ -57,6 +57,8 @@ import {
 const absMinAge = 18;
 const absMaxAge = 60;
 
+const useFilterGroups = advancedFilters ? useAdvancedFilterGroups : () => [];
+
 export const MatchmakingForm: FC = () => {
 	const session = useSession();
 	const toasts = useToast();
@@ -75,7 +77,7 @@ export const MatchmakingForm: FC = () => {
 
 	const premium = activeEntitlements(user).length > 0;
 
-	const advancedFilterGroups = useAdvancedFilterGroups({
+	const advancedFilterGroups = useFilterGroups({
 		nsfw: !!user.preferences?.nsfw
 	});
 
@@ -144,7 +146,7 @@ export const MatchmakingForm: FC = () => {
 						languages: values.weightLanguages,
 						personality: values.weightPersonality
 					}),
-					Profile.updateAdvancedFilters(
+					advancedFilters && Profile.updateAdvancedFilters(
 						user.id,
 						selectionsToAdvancedFilters(values.advancedIncludes, values.advancedExcludes)
 					)
@@ -290,52 +292,54 @@ export const MatchmakingForm: FC = () => {
 							</DialogFooter>
 						</AlertDialogContent>
 					</AlertDialog>
-					<div className="flex flex-col gap-4">
-						<InputLabel className="flex items-center gap-2 text-2xl font-semibold">
-							<span>{t("advanced_filters")}</span>
-							<PremiumBadge />
-						</InputLabel>
-						<span>{t("advanced_filters_description")}</span>
-						<span>{t("advanced_filters_warning")}</span>
-						<FormField name="advancedIncludes">
-							{(field) => (
-								<>
-									<InputLabel {...field.labelProps}>
-										{t("advanced_filters_include")}
-									</InputLabel>
-									<InputLabelHint className="-mt-2">
-										{t("advanced_filters_include_hint")}
-									</InputLabelHint>
-									<AdvancedFilterSelect
-										{...field.props}
-										groups={includeFilterGroups}
-										limit={maximumAdvancedFilters}
-										placeholder={t("advanced_filters_placeholder")}
-										premium={premium}
-									/>
-								</>
-							)}
-						</FormField>
-						<FormField name="advancedExcludes">
-							{(field) => (
-								<>
-									<InputLabel {...field.labelProps}>
-										{t("advanced_filters_exclude")}
-									</InputLabel>
-									<InputLabelHint className="-mt-2">
-										{t("advanced_filters_exclude_hint")}
-									</InputLabelHint>
-									<AdvancedFilterSelect
-										{...field.props}
-										groups={advancedFilterGroups}
-										limit={maximumAdvancedFilters}
-										placeholder={t("advanced_filters_placeholder")}
-										premium={premium}
-									/>
-								</>
-							)}
-						</FormField>
-					</div>
+					{advancedFilters && (
+						<div className="flex flex-col gap-4">
+							<InputLabel className="flex items-center gap-2 text-2xl font-semibold">
+								<span>{t("advanced_filters")}</span>
+								<PremiumBadge />
+							</InputLabel>
+							<span>{t("advanced_filters_description")}</span>
+							<span>{t("advanced_filters_warning")}</span>
+							<FormField name="advancedIncludes">
+								{(field) => (
+									<>
+										<InputLabel {...field.labelProps}>
+											{t("advanced_filters_include")}
+										</InputLabel>
+										<InputLabelHint className="-mt-2">
+											{t("advanced_filters_include_hint")}
+										</InputLabelHint>
+										<AdvancedFilterSelect
+											{...field.props}
+											groups={includeFilterGroups}
+											limit={maximumAdvancedFilters}
+											placeholder={t("advanced_filters_placeholder")}
+											premium={premium}
+										/>
+									</>
+								)}
+							</FormField>
+							<FormField name="advancedExcludes">
+								{(field) => (
+									<>
+										<InputLabel {...field.labelProps}>
+											{t("advanced_filters_exclude")}
+										</InputLabel>
+										<InputLabelHint className="-mt-2">
+											{t("advanced_filters_exclude_hint")}
+										</InputLabelHint>
+										<AdvancedFilterSelect
+											{...field.props}
+											groups={advancedFilterGroups}
+											limit={maximumAdvancedFilters}
+											placeholder={t("advanced_filters_placeholder")}
+											premium={premium}
+										/>
+									</>
+								)}
+							</FormField>
+						</div>
+					)}
 					<div className="flex flex-col gap-4">
 						<InputLabel className="flex items-center gap-2 text-2xl font-semibold">
 							<span>{t("matchmaking_priorities")}</span>
