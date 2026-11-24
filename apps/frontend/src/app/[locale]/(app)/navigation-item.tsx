@@ -67,7 +67,7 @@ export const NavigationalSwitchItem: FC<NavigationalSwitchItemProps> = ({
 			{(rankedMode && (props.id === "date-mode-switch" || props.id === "homie-mode-switch") && (
 				<span className={twMerge(
 					"z-10 pr-2",
-					active ? "text-white-20" : "hidden text-black-70 dark:text-white-20 group-hocus:text-white-20 desktop:block"
+					active ? "text-white-20" : "hidden text-black-70 dark:text-white-20 desktop:block"
 				)}
 				>
 					{t(props.id === "date-mode-switch" ? "ranked" : "casual")}
