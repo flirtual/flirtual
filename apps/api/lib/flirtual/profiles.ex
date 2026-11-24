@@ -612,6 +612,9 @@ defmodule Flirtual.Profiles do
     if Enum.any?(existing_images, &(not is_nil(&1.suspended_url))),
       do: Repo.rollback({:unprocessable_entity, :image_retained})
 
+    if Enum.any?(existing_images, &(&1.profile_id not in [nil, profile.user_id])),
+      do: Repo.rollback({:forbidden, :missing_permission})
+
     attrs = %{
       profile_id: profile.user_id,
       order: order,
