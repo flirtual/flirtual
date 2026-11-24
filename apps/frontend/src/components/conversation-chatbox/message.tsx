@@ -54,6 +54,7 @@ const highlightedBare = {
 // A jumbo emoji or GIF message has no bubble, so its timestamp sits on the chat background.
 const bareSurface = "text-black-80! dark:text-white-20! vision:text-black-80!";
 const jumboSurface = twMerge(bareSurface, "[&_img]:size-12");
+const gifSurface = twMerge(bareSurface, "[&_img]:mt-0");
 
 const hoverButton = "flex size-7 items-center justify-center rounded-full text-black-80! opacity-75 hocus:opacity-100 dark:text-white-20! vision:text-black-80! [&>svg]:size-5 [&>svg]:fill-none!";
 const chip = "flex items-center rounded-2xl px-2 py-1 shadow-brand-1 hocus:bg-brand-gradient hocus:text-white-10!";
@@ -293,7 +294,7 @@ export function Message({ message, messageStatus, permissions, common }: Message
 								"relative flow-root max-w-full rounded-2xl leading-(--t-line-height-base)! break-words transition-[translate,box-shadow] [&_.t-message-content]:contents [&_a]:text-inherit! [&_a]:underline",
 								selecting && "[&_.t-message-content]:select-text [&_.t-message-content_*]:select-text",
 								(repliedTo || highlighted) && "focused",
-								jumbo ? jumboSurface : gif ? bareSurface : twMerge("px-4 py-3 shadow-brand-1", surface[sender]),
+								jumbo ? jumboSurface : gif ? gifSurface : twMerge("px-4 py-3 shadow-brand-1", surface[sender]),
 								sender === "system" && "w-full text-[120%]! italic [&:lang(ja)]:not-italic [&:lang(ko)]:not-italic [&:lang(ru)]:not-italic",
 								menu && bare && twMerge("before:absolute before:-inset-x-2 before:-top-2 before:-bottom-0.5 before:-z-1 before:rounded-2xl before:shadow-brand-1", highlightedBare[sender])
 							)}
