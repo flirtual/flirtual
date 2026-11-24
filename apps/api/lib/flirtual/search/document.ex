@@ -95,6 +95,10 @@ defmodule Flirtual.Search.Document do
       Enum.map(profile.relationships || [], &Tokens.relationship/1),
       if(profile.monopoly, do: [Tokens.monopoly(profile.monopoly)], else: []),
       if(nsfw && profile.domsub, do: [Tokens.domsub(profile.domsub)], else: []),
+      if(nsfw && profile.domsub && not private?(privacy, :kinks),
+        do: [Tokens.public_domsub(profile.domsub)],
+        else: []
+      ),
       if(profile.country, do: [Tokens.country(profile.country)], else: []),
       # Personality poles are only filter tokens; hide them when private
       # (personality scoring factor reads the numeric traits, not these).
