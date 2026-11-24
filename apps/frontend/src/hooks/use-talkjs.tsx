@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import { getTalkSession } from "@talkjs/core";
-import type { ConversationSnapshot, TalkSession } from "@talkjs/core";
+import type { ConversationRef, ConversationSnapshot, TalkSession } from "@talkjs/core";
 import ms from "ms" with { type: "macro" };
 import {
 	createContext,
@@ -93,6 +93,12 @@ async function fetchTalkjsToken() {
 function talkSession(userId: string) {
 	const session = getTalkSession({ appId: talkjsAppId, userId });
 	session.onNeedToken = () => void fetchTalkjsToken().then((token) => session.setToken(token));
+
+	// The chatbox's editor marks the user as typing on every change, whatever the role's
+	// `showTypingIndicators` says, and offers no option to stop it. `ConversationRef`s are frozen,
+	// so this replaces the method on their shared prototype.
+	const conversationPrototype: ConversationRef = Object.getPrototypeOf(session.conversation("typing"));
+	conversationPrototype.markAsTyping = async () => {};
 
 	return session;
 }
