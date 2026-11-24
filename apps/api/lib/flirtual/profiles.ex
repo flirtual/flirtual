@@ -600,6 +600,8 @@ defmodule Flirtual.Profiles do
   end
 
   defp attach_file(%Profile{} = profile, file, order, now, retry? \\ true) do
+    if not upload_key?(file["id"]), do: Repo.rollback({:bad_request, :invalid_image_id})
+
     existing_images =
       Image
       |> where(original_file: ^file["id"])
@@ -649,6 +651,9 @@ defmodule Flirtual.Profiles do
           else: error
     end
   end
+
+  defp upload_key?(key) when is_binary(key), do: Ecto.UUID.cast(key) == {:ok, key}
+  defp upload_key?(_), do: false
 
   def update_images(%Profile{} = profile, image_ids) do
     Repo.transaction(fn repo ->
