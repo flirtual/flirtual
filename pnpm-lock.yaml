@@ -640,7 +640,7 @@ importers:
         specifier: ^1.1.2
         version: 1.1.2(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       with-suspense:
-        specifier: ^1.0.5
+        specifier: ^1.0.6
         version: 1.0.6(@types/react@19.3.0)(react@19.3.1)
       wretch:
         specifier: ^3.0.9
