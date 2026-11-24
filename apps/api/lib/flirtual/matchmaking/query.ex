@@ -512,27 +512,25 @@ defmodule Flirtual.Matchmaking.Query do
       Map.merge(%{include: [], exclude: []}, Enum.group_by(advanced_filters, & &1.kind))
 
     include_factors =
-      Enum.map(includes, &{:token, entry_token(&1), @fallback_advanced_weight})
+      Enum.map(
+        includes,
+        &{:in_field, category_field(&1.category), [entry_value(&1)], @fallback_advanced_weight}
+      )
 
     exclude_factors =
       case excludes do
-        [] -> []
-        _ -> [{:none_of_boost, Enum.map(excludes, &entry_token/1), @fallback_advanced_weight}]
+        [] ->
+          []
+
+        _ ->
+          fields =
+            excludes
+            |> Enum.group_by(&category_field(&1.category), &entry_value/1)
+            |> Enum.to_list()
+
+          [{:none_in_fields, fields, @fallback_advanced_weight}]
       end
 
     include_factors ++ exclude_factors
   end
-
-  defp entry_token(%AdvancedFilter{category: :country, value: value}),
-    do: Search.Tokens.country(value)
-
-  defp entry_token(%AdvancedFilter{category: :language, value: value}),
-    do: Search.Tokens.language(value)
-
-  defp entry_token(%AdvancedFilter{category: category} = entry)
-       when category in @boost_categories,
-       do: boost_token(entry)
-
-  defp entry_token(%AdvancedFilter{attribute_id: attribute_id}),
-    do: Search.Tokens.attribute(attribute_id)
 end
