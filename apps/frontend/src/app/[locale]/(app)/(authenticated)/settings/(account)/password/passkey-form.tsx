@@ -32,7 +32,7 @@ function useAaguid() {
 	});
 }
 
-export const PasswordPasskeyForm: React.FC = () => {
+export const PasswordPasskeyForm: React.FC<{ heading: boolean }> = ({ heading }) => {
 	const session = useSession();
 	const { native, android } = useDevice();
 	const toasts = useToast();
@@ -107,7 +107,7 @@ export const PasswordPasskeyForm: React.FC = () => {
 	return (
 		<>
 			<div className="flex flex-col gap-4">
-				<span className="text-2xl font-semibold">{t("passkeys")}</span>
+				{heading && <span className="text-2xl font-semibold">{t("passkeys")}</span>}
 				<span className="text-black-50 dark:text-white-50 vision:text-white-50">
 					{t("passkeys_description")}
 				</span>

@@ -26,6 +26,7 @@ import { useTranslation } from "react-i18next";
 import { useMatches } from "react-router";
 import { twMerge } from "tailwind-merge";
 
+import { useEmailLogin } from "~/app/[locale]/(minimal)/(guest)/login/last-connection";
 import { InlineLink } from "~/components/inline-link";
 import { IdeasDialog } from "~/components/modals/ideas";
 import { freshworksWidgetId, version } from "~/const";
@@ -50,6 +51,7 @@ export const SettingsNavigation: FC = () => {
 	const { openFreshworks } = useFreshworks();
 	const { t } = useTranslation();
 	const dialogs = useDialog();
+	const emailLogin = useEmailLogin();
 
 	return (
 		<div className={twMerge("sticky top-0 z-10 flex w-full shrink-0 grow-0 flex-col self-baseline split:h-full desktop:relative desktop:h-auto desktop:max-h-full desktop:w-80 desktop:rounded-2xl desktop:bg-brand-gradient desktop:text-white-20 desktop:shadow-brand-1", !listOnly && "hidden split:flex desktop:flex")}>
@@ -154,7 +156,7 @@ export const SettingsNavigation: FC = () => {
 							{t("email")}
 						</NavigationLink>
 						<NavigationLink href={urls.settings.password} Icon={KeyRound}>
-							{t("password_passkeys")}
+							{t(emailLogin ? "password_passkeys" : "passkeys")}
 						</NavigationLink>
 						<NavigationLink href={urls.settings.deactivateAccount} Icon={X}>
 							{t("deactivate_account")}
