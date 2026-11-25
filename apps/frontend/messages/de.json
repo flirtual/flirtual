@@ -866,7 +866,8 @@
 	"finish_visible_notice": "Dein Profil ist jetzt sichtbar! Die nächsten Schritte sind <strong>optional</strong>, aber sehr empfehlenswert. Du kannst die Angaben jederzeit später in den Einstellungen ergänzen. Um jetzt Profile anzusehen, tippe auf das Herz-Symbol neben deinem Profilbild.",
 	"finish_ready_notice": "Dein Profil ist startklar! Die nächsten Schritte sind <strong>optional</strong>, aber sehr empfehlenswert. Du kannst die Angaben jederzeit später in den Einstellungen ergänzen. Um jetzt Profile anzusehen, tippe auf das Herz-Symbol neben deinem Profilbild.",
 	"interests_limit_reached": "Du hast das Maximum von 10 Interessen erreicht",
-	"interests_hint": "Wähle bis zu 10 Interessen. Eigene Interessen kannst du unten auf der Seite hinzufügen.",
+	"interests_hint": "Wähle bis zu 10 Interessen.",
+	"interests_hint_custom_interests": "Eigene Interessen kannst du unten auf der Seite hinzufügen.",
 	"personality_hint": "Diese Fragen basieren auf dem Big-Five-Persönlichkeitsmodell und helfen uns, dich mit Leuten zusammenzubringen, die auf deiner Wellenlänge sind.",
 	"flitty_reactions": {
 		"0": "Miau!",

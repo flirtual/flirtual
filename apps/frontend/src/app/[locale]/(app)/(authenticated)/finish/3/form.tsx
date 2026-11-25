@@ -67,7 +67,14 @@ export const Finish3Form: FC = () => {
 				return (
 					<>
 						<InputLabel>
-							{t("interests_hint")}
+							<span>
+								{t("interests_hint")}
+								{customInterestsEnabled && (
+									<span className="before:content-['_'] [&:lang(ja)]:before:content-none">
+										{t("interests_hint_custom_interests")}
+									</span>
+								)}
+							</span>
 						</InputLabel>
 						<FormField name="filter">
 							{(field) => (
