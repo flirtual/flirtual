@@ -14,9 +14,8 @@ import { useDevice } from "~/hooks/use-device";
 import { useSession } from "~/hooks/use-session";
 import { useNavigate } from "~/i18n";
 import { mutate, sessionKey } from "~/query";
-import { urls } from "~/urls";
 
-import { previousFinishStepUrl } from "../navigation";
+import { nextFinishStepUrl, previousFinishStepUrl } from "../navigation";
 
 export const Finish5Form: React.FC = () => {
 	const { vision } = useDevice();
@@ -53,11 +52,7 @@ export const Finish5Form: React.FC = () => {
 							}
 						}));
 
-						navigate(
-							user.emailConfirmedAt
-								? urls.discover("dates")
-								: urls.confirmEmail()
-						);
+						navigate(nextFinishStepUrl("connections", user));
 					}}
 				>
 					{({ FormField }) => (

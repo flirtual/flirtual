@@ -95,7 +95,7 @@ export const Finish1Form: FC = () => {
 					invalidate({ queryKey: sessionKey() }),
 					invalidateQueues()
 				]);
-				await navigate(nextFinishStepUrl("bio"));
+				await navigate(nextFinishStepUrl("bio", user));
 			}}
 		>
 			{({ FormField, fields, buttonProps }) => {

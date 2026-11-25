@@ -1,15 +1,22 @@
+import type { User } from "~/api/user";
 import { urls } from "~/urls";
 
-import { finishStepNumber, finishSteps } from "./steps";
+import { finishStepCount, finishStepNumber, finishSteps } from "./steps";
 import type { FinishStep } from "./steps";
 
 function adjacentFinishStep(step: FinishStep, offset: -1 | 1) {
 	return finishSteps[finishStepNumber(step) - 1 + offset] ?? null;
 }
 
-export function nextFinishStepUrl(step: FinishStep) {
+export function isLastFinishStep(step: FinishStep) {
+	return finishStepNumber(step) === finishStepCount;
+}
+
+export function nextFinishStepUrl(step: FinishStep, user: User) {
 	const next = adjacentFinishStep(step, 1);
-	return next ? urls.finish(finishStepNumber(next)) : urls.discover("dates");
+	if (next) return urls.finish(finishStepNumber(next));
+
+	return user.emailConfirmedAt ? urls.discover("dates") : urls.confirmEmail();
 }
 
 export function previousFinishStepUrl(step: FinishStep) {
