@@ -16,10 +16,7 @@ export const FunForm: React.FC = () => {
 	const toasts = useToast();
 	const { t } = useTranslation();
 
-	const [assistantVisible, setAssistantVisible] = usePreferences(
-		"assistant_visible",
-		false
-	);
+	const [assistantVisible, setAssistantVisible] = usePreferences<boolean>("assistant_visible");
 	const [, setAssistantPosition] = usePreferences(
 		"assistant_position",
 		{
@@ -39,10 +36,7 @@ export const FunForm: React.FC = () => {
 		0
 	);
 
-	const [rankedMode, setRankedMode] = usePreferences(
-		"ranked_mode",
-		false
-	);
+	const [rankedMode, setRankedMode] = usePreferences<boolean>("ranked_mode");
 
 	const { snowfall, setSnowfall } = useSnowfall();
 
