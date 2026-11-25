@@ -2,7 +2,6 @@ import { useEffect, useEffectEvent, useMemo } from "react";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router";
-import { clamp } from "remeda";
 
 import type { User } from "~/api/user";
 import { cssVariableHex } from "~/colors";
@@ -183,11 +182,11 @@ export const NativeNavigation: FC<{ user: User }> = ({ user }) => {
 	const hasConversations = useHasConversations({ enabled: !user.deactivatedAt });
 	const split = wide && hasConversations;
 
-	const { unreadConversations } = useUnreadConversations();
-	const conversationCount = clamp(unreadConversations.length, { min: 0, max: 99 });
+	const { unreadConversations, loadedAllUnreadConversations } = useUnreadConversations();
+	const conversationCount = unreadConversations.length;
 	const badge = conversationCount === 0
 		? undefined
-		: new Intl.NumberFormat(intlLocale(locale)).format(conversationCount);
+		: `${new Intl.NumberFormat(intlLocale(locale)).format(conversationCount)}${loadedAllUnreadConversations ? "" : "+"}`;
 
 	const tabs = useMemo(() => [
 		{ id: "dates", title: t("dates"), icon: "heart", href: urls.discover("dates") },

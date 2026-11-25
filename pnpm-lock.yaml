@@ -276,6 +276,7 @@ overrides:
   shepherd.js>deepmerge-ts: '>=8.0.0'
 
 patchedDependencies:
+  '@talkjs/core': d9c76303db0ee3171d1528c04136aca429d94370b4df84b3889187bd571bac95
   attachments: 895f7d358b0f5d158051ba7ffe21299ae0c4bd94a95519f61c8dfe278d6616be
 
 importers:
@@ -458,10 +459,10 @@ importers:
         version: 0.8.7
       '@talkjs/core':
         specifier: 1.12.1
-        version: 1.12.1
+        version: 1.12.1(patch_hash=d9c76303db0ee3171d1528c04136aca429d94370b4df84b3889187bd571bac95)
       '@talkjs/react-components':
         specifier: 0.3.14
-        version: 0.3.14(@talkjs/core@1.12.1)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        version: 0.3.14(@talkjs/core@1.12.1(patch_hash=d9c76303db0ee3171d1528c04136aca429d94370b4df84b3889187bd571bac95))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@tanstack/react-query':
         specifier: ^5.101.2
         version: 5.101.4(react@19.3.1)
@@ -12175,11 +12176,11 @@ snapshots:
       tailwindcss: 4.3.5
       vite: 8.3.8(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.108.2)(tsx@4.23.12)(yaml@2.9.1)
 
-  '@talkjs/core@1.12.1': {}
+  '@talkjs/core@1.12.1(patch_hash=d9c76303db0ee3171d1528c04136aca429d94370b4df84b3889187bd571bac95)': {}
 
-  '@talkjs/react-components@0.3.14(@talkjs/core@1.12.1)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
+  '@talkjs/react-components@0.3.14(@talkjs/core@1.12.1(patch_hash=d9c76303db0ee3171d1528c04136aca429d94370b4df84b3889187bd571bac95))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
     dependencies:
-      '@talkjs/core': 1.12.1
+      '@talkjs/core': 1.12.1(patch_hash=d9c76303db0ee3171d1528c04136aca429d94370b4df84b3889187bd571bac95)
       react: 19.3.1
       react-dom: 19.3.1(react@19.3.1)
 
