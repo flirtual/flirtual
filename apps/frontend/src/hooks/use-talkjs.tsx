@@ -41,8 +41,9 @@ import { useOptionalSession } from "./use-session";
 const TalkjsContext = createContext<TalkSession | null>(null);
 const UnreadConversationContext = createContext<{
 	unreadConversations: Array<ConversationSnapshot>;
+	loadedAllUnreadConversations: boolean;
 	setUnreadConversations: Dispatch<SetStateAction<Array<ConversationSnapshot>>>;
-}>({ unreadConversations: emptyArray, setUnreadConversations: doNothing });
+}>({ unreadConversations: emptyArray, loadedAllUnreadConversations: true, setUnreadConversations: doNothing });
 
 // `onNeedToken` must retry on its own: https://talkjs.com/docs/Data_APIs/JavaScript/TalkSession/
 async function fetchTalkjsToken() {
@@ -80,41 +81,42 @@ function talkSession(userId: string) {
 	return session;
 }
 
-// The navigation badge stops counting at 99.
-const unreadConversationLimit = 100;
-
 const TalkjsProvider_: FC<PropsWithChildren> = ({ children }) => {
 	const authSession = useOptionalSession();
 	const talkjsUserId = authSession?.user.talkjsId;
 
 	const [unreadConversations, setUnreadConversations] = useState<Array<ConversationSnapshot>>([]);
+	const [loadedAllUnreadConversations, setLoadedAllUnreadConversations] = useState(true);
 
 	const session = useMemo(() => talkjsUserId ? talkSession(talkjsUserId) : null, [talkjsUserId]);
 
 	useEffect(() => {
 		if (!session) return;
 
-		const conversationSubscription = session.subscribeConversations(() => invalidate({ queryKey: conversationsKey() }));
-
+		// One page of unread conversations serves the badge and the list's refetch. TalkJS keeps a live
+		// last-message subscription for every conversation it lists, and replays each one after a
+		// reconnect, so loading more delays the conversation being opened.
 		const unreadSubscription = session.subscribeConversations(
 			{ filter: { isUnread: true } },
 			(snapshot, loadedAll) => {
 				setUnreadConversations(snapshot);
-				if (!loadedAll && snapshot.length < unreadConversationLimit) void unreadSubscription.loadMore(30);
+				setLoadedAllUnreadConversations(loadedAll);
+				void invalidate({ queryKey: conversationsKey() });
 			}
 		);
 
 		return () => {
 			unreadSubscription.unsubscribe();
-			conversationSubscription.unsubscribe();
 			setUnreadConversations([]);
+			setLoadedAllUnreadConversations(true);
 		};
 	}, [session]);
 
 	const unreadConversationContext = useMemo(() => ({
 		unreadConversations,
+		loadedAllUnreadConversations,
 		setUnreadConversations
-	}), [unreadConversations]);
+	}), [unreadConversations, loadedAllUnreadConversations]);
 
 	return (
 		<TalkjsContext value={session}>
@@ -129,7 +131,7 @@ if (!talkjsAppId)
 	warnOnce("Talk.js is not configured properly, conversations & related features are disabled. To enable them, set \"VITE_TALKJS_APP_ID\" in your environment.");
 
 const FallbackProvider: FC<PropsWithChildren> = ({ children }) => {
-	const value = useMemo(() => ({ unreadConversations: emptyArray, setUnreadConversations: doNothing }), []);
+	const value = useMemo(() => ({ unreadConversations: emptyArray, loadedAllUnreadConversations: true, setUnreadConversations: doNothing }), []);
 
 	return (
 		<TalkjsContext value={null}>
