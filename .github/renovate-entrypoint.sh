@@ -3,7 +3,7 @@
 set -e
 
 # renovate: datasource=github-releases depName=containerbase/erlang-prebuild
-install-tool erlang 29.1.2.0
+install-tool erlang 29.1.3.0
 # renovate: datasource=github-releases depName=elixir-lang/elixir extractVersion=^v(?<version>.*)$
 install-tool elixir 1.20.5
 # renovate: datasource=node-version depName=node
