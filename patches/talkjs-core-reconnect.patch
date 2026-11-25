@@ -1,0 +1,32 @@
+diff --git a/dist/talkSession.js b/dist/talkSession.js
+index 7b80aa3..7fa0656 100644
+--- a/dist/talkSession.js
++++ b/dist/talkSession.js
+@@ -1672,9 +1672,16 @@ class _e {
+       const t3 = this.socket;
+       this.socket = null, t3 == null ? void 0 : t3.close(1e3);
+     } }, destroy: { from: "ANY", to: "TERMINATED", afterTransition: () => {
++      "undefined" != typeof document && document.removeEventListener("visibilitychange", this.reconnectWhenVisible);
+       const e3 = this.socket;
+       this.socket = null, e3 == null ? void 0 : e3.close(1e3);
+     } } });
++    // Flirtual: after a disconnect, TalkJS waits 5-15s to reconnect,
++    // even once the app is back. Reconnect as soon as the page is visible.
++    this.reconnectWhenVisible = () => {
++      "visible" === document.visibilityState && "DISCONNECTED" === this.stateMachine.state && this.stateMachine.transition("startWs");
++    };
++    "undefined" != typeof document && document.addEventListener("visibilitychange", this.reconnectWhenVisible);
+   }
+   stopWs() {
+     this.stateMachine.transition("stopWs");
+@@ -2024,7 +2031,9 @@ class We {
+         if (!t2) return void this.stateMachine.transition("ready");
+         this.connection.call(t2.params).then((e3) => {
+           t2.deferred.resolve(e3);
+-        }), e2 > 50 && (yield new Promise((e3) => setTimeout(e3, 100)));
++          // Flirtual: TalkJS paused 100ms after every call past the first 50.
++          // Keep the pause, but only after every 50th call, so replays are fast.
++        }), e2 % 50 === 0 && (yield new Promise((e3) => setTimeout(e3, 100)));
+       }
+     });
+   }

@@ -105,5 +105,5 @@ minimumReleaseAgeExclude:
   - miniflare
   - workerd
 patchedDependencies:
-  "@talkjs/core": patches/talkjs-core-batched-replay.patch
+  "@talkjs/core": patches/talkjs-core-reconnect.patch
   attachments: patches/signal-tus-server.patch
