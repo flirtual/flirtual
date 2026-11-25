@@ -64,7 +64,7 @@ export const Finish2Form: FC = () => {
 					}
 				});
 
-				navigate(nextFinishStepUrl("details"));
+				navigate(nextFinishStepUrl("details", user));
 			}}
 		>
 			{({ FormField }) => (

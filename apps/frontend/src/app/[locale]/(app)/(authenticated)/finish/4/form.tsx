@@ -13,7 +13,7 @@ import { useNavigate } from "~/i18n";
 import { invalidate, personalityKey, sessionKey } from "~/query";
 
 import { usePersonality } from "../../settings/(profile)/personality/form";
-import { nextFinishStepUrl, previousFinishStepUrl } from "../navigation";
+import { isLastFinishStep, nextFinishStepUrl, previousFinishStepUrl } from "../navigation";
 
 export const Finish4Form: React.FC = () => {
 	const navigate = useNavigate();
@@ -39,7 +39,7 @@ export const Finish4Form: React.FC = () => {
 					invalidate({ queryKey: personalityKey(user.id) }),
 					invalidate({ queryKey: sessionKey() })
 				]);
-				await navigate(nextFinishStepUrl("personality"));
+				await navigate(nextFinishStepUrl("personality", user));
 			}}
 		>
 			{({ FormField }) => (
@@ -69,7 +69,9 @@ export const Finish4Form: React.FC = () => {
 							<MoveLeft className="size-5" />
 							<span>{t("back")}</span>
 						</ButtonLink>
-						<FormButton className="min-w-36" size="sm" />
+						<FormButton className="min-w-36" size="sm">
+							{isLastFinishStep("personality") ? t("finish") : undefined}
+						</FormButton>
 					</div>
 				</>
 			)}

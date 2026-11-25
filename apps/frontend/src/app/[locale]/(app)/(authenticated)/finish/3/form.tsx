@@ -17,7 +17,7 @@ import {
 	InterestSelectList,
 	maximumInterests
 } from "../../settings/(profile)/interests/form";
-import { nextFinishStepUrl, previousFinishStepUrl } from "../navigation";
+import { isLastFinishStep, nextFinishStepUrl, previousFinishStepUrl } from "../navigation";
 
 export const Finish3Form: FC = () => {
 	const session = useOptionalSession();
@@ -44,7 +44,7 @@ export const Finish3Form: FC = () => {
 					interestId: defaultInterests
 				})
 					.then(() => {
-						return navigate(nextFinishStepUrl("interests"));
+						return navigate(nextFinishStepUrl("interests", user));
 					})
 					.catch(toasts.addError);
 			}}
@@ -129,7 +129,9 @@ export const Finish3Form: FC = () => {
 								<MoveLeft className="size-5" />
 								<span>{t("back")}</span>
 							</ButtonLink>
-							<FormButton className="min-w-36" size="sm" />
+							<FormButton className="min-w-36" size="sm">
+								{isLastFinishStep("interests") ? t("finish") : undefined}
+							</FormButton>
 						</div>
 						<InterestSelectCount
 							className="mb-11 desktop:mb-0"
