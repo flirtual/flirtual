@@ -1,0 +1,15 @@
+diff --git a/dist/talkSession.js b/dist/talkSession.js
+index 7b80aa31455da8d738ee52be657c6a903f6fcbb0..df348a278d1c9f457a0abfec12e0fd4494ba4928 100644
+--- a/dist/talkSession.js
++++ b/dist/talkSession.js
+@@ -2024,7 +2024,9 @@ class We {
+         if (!t2) return void this.stateMachine.transition("ready");
+         this.connection.call(t2.params).then((e3) => {
+           t2.deferred.resolve(e3);
+-        }), e2 > 50 && (yield new Promise((e3) => setTimeout(e3, 100)));
++          // Flirtual: TalkJS paused 100ms after every call past the first 50.
++          // Keep the pause, but only after every 50th call, so replays are fast.
++        }), e2 % 50 === 0 && (yield new Promise((e3) => setTimeout(e3, 100)));
+       }
+     });
+   }
