@@ -180,10 +180,11 @@ export const SubscriptionForm: FC = () => {
 									</span>
 									<span>
 										{t("premium_priorities_description")}
-										{" "}
-										<InlineLink href={urls.settings.matchmaking()}>
-											{t("check_this_out_for_free")}
-										</InlineLink>
+										<span className="sentence-space">
+											<InlineLink href={urls.settings.matchmaking()}>
+												{t("check_this_out_for_free")}
+											</InlineLink>
+										</span>
 									</span>
 								</li>
 								{advancedFilters && (
@@ -195,10 +196,11 @@ export const SubscriptionForm: FC = () => {
 										</span>
 										<span>
 											{t("premium_advanced_filters_description")}
-											{" "}
-											<InlineLink href={urls.settings.matchmaking()}>
-												{t("check_this_out_for_free")}
-											</InlineLink>
+											<span className="sentence-space">
+												<InlineLink href={urls.settings.matchmaking()}>
+													{t("check_this_out_for_free")}
+												</InlineLink>
+											</span>
 										</span>
 									</li>
 								)}
@@ -210,10 +212,11 @@ export const SubscriptionForm: FC = () => {
 									</span>
 									<span>
 										{t("premium_colors_description")}
-										{" "}
-										<InlineLink href={urls.settings.appearance}>
-											{t("check_this_out_for_free")}
-										</InlineLink>
+										<span className="sentence-space">
+											<InlineLink href={urls.settings.appearance}>
+												{t("check_this_out_for_free")}
+											</InlineLink>
+										</span>
 									</span>
 								</li>
 							</ul>

@@ -21,6 +21,8 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 import { useCopy } from "~/hooks/use-copy";
 import { useDevice } from "~/hooks/use-device";
 import { customEmojiNames } from "~/hooks/use-talkjs";
+import { useLocale } from "~/i18n";
+import { intlLocale } from "~/i18n/languages";
 import { urls } from "~/urls";
 
 import { textContent } from "./content";
@@ -393,6 +395,7 @@ function ReactionButton({ summary, messageId, disabled, common }: {
 	const { t, chatbox, conversation } = common;
 	const { people } = common.themeCustom as ThemeCustom;
 	const { t: translate } = useTranslation();
+	const [locale] = useLocale();
 	const { emoji, count, currentUserReacted } = summary;
 
 	const [reactions, subscribe] = useReactions(conversation.id, messageId, emoji);
@@ -401,6 +404,7 @@ function ReactionButton({ summary, messageId, disabled, common }: {
 		return person ? person.profile.displayName || translate("unnamed_user") : user.name;
 	});
 	if (reactions.length > 0 && reactions.length < count) names.push("...");
+	const nameList = new Intl.ListFormat(intlLocale(locale), { style: "long", type: "conjunction" }).format(names);
 
 	const [tooltipOpen, setTooltipOpen] = useState(false);
 	const longPress = useRef<number>(undefined);
@@ -440,7 +444,7 @@ function ReactionButton({ summary, messageId, disabled, common }: {
 					{count > 1 && <span className="p-1 text-[0.85rem]!">{count}</span>}
 				</button>
 			</TooltipTrigger>
-			<TooltipContent className="max-w-60 text-sm">{names.join(", ")}</TooltipContent>
+			<TooltipContent className="max-w-60 text-sm">{nameList}</TooltipContent>
 		</Tooltip>
 	);
 }

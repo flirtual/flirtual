@@ -74,6 +74,16 @@
   }
 }
 
+@utility sentence-space {
+  &::before {
+    content: " ";
+  }
+
+  &:lang(ja)::before {
+    content: none;
+  }
+}
+
 @utility pettable {
   cursor: grab;
   user-select: none;

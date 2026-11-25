@@ -140,10 +140,14 @@ export const PasswordPasskeyForm: React.FC<{ heading: boolean }> = ({ heading })
 				type="button"
 				onClick={() => mutate()}
 			>
-				{t("add_passkey")}
-				{" "}
-				{!passkeysAvailable
-					&& (native ? t("unsupported_device") : t("unsupported_browser"))}
+				<span>
+					{t("add_passkey")}
+					{!passkeysAvailable && (
+						<span className="sentence-space">
+							{native ? t("unsupported_device") : t("unsupported_browser")}
+						</span>
+					)}
+				</span>
 			</Button>
 		</>
 	);

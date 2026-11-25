@@ -285,7 +285,7 @@ export const InterestsForm: FC = () => {
 							<span>
 								{t("interests_hint")}
 								{customInterestsEnabled && (
-									<span className="before:content-['_'] [&:lang(ja)]:before:content-none">
+									<span className="sentence-space">
 										{t("interests_hint_custom_interests")}
 									</span>
 								)}

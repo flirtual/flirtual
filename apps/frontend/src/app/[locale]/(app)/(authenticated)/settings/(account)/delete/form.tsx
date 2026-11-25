@@ -130,9 +130,9 @@ export const DeleteForm: FC = () => {
 										? (
 												<p>
 													{t("need_help")}
-													{" "}
-													<SupportButton />
-													.
+													<span className="sentence-space">
+														<SupportButton />
+													</span>
 												</p>
 											)
 										: null}
