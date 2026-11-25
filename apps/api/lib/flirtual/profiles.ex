@@ -224,6 +224,7 @@ defmodule Flirtual.Profiles do
       |> ignore_disabled(Features.vrchat?(), [:vrchat])
       |> ignore_disabled(Features.playlists?(), [:playlist])
       |> ignore_disabled(Features.timezones?(), [:timezone])
+      |> ignore_disabled(Features.custom_interests?(), [:custom_interests])
       |> validate_required(required || [])
       |> validate_length(:display_name, min: 1, max: 32)
       |> validate_html(:biography)
@@ -248,7 +249,10 @@ defmodule Flirtual.Profiles do
         else
           interests =
             (get_field(changeset, :interest) || []) ++
-              (get_field(changeset, :custom_interests) || [])
+              if(Features.custom_interests?(),
+                do: get_field(changeset, :custom_interests) || [],
+                else: []
+              )
 
           changeset
           |> put_change(:interest, interests)
@@ -367,7 +371,7 @@ defmodule Flirtual.Profiles do
         languages: transform_value(attrs.languages, profile.languages),
         timezone: transform_value(attrs.timezone, profile.timezone),
         custom_interests:
-          if not is_nil(attrs.interest) do
+          if Features.custom_interests?() and not is_nil(attrs.interest) do
             attrs.interest
             |> Enum.filter(&is_binary(&1))
           else

@@ -28,6 +28,7 @@ import {
 	InputText
 } from "~/components/inputs";
 import { Pill } from "~/components/profile/pill/pill";
+import { customInterests as customInterestsEnabled } from "~/features";
 import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
 import { useDevice } from "~/hooks/use-device";
 import { useSession } from "~/hooks/use-session";
@@ -245,7 +246,7 @@ export const InterestsForm: FC = () => {
 			fields={{
 				filter: "",
 				defaultInterests: profile.attributes.interest || [],
-				customInterests: profile.customInterests
+				customInterests: customInterestsEnabled ? profile.customInterests : []
 			}}
 			className="flex flex-col gap-8"
 			onSubmit={async ({ defaultInterests, customInterests }) => {
@@ -313,25 +314,27 @@ export const InterestsForm: FC = () => {
 								/>
 							)}
 						</FormField>
-						<FormField name="customInterests">
-							{({ props: { value, onChange } }) => (
-								<InterestSelectCustomInput
-									value={value}
-									onChange={(newValues) => {
-										if (
-											totalInterests >= maximumInterests
-											&& newValues.length >= value.length
-										)
-											return toasts.add({
-												type: "warning",
-												value: t("interests_limit_reached")
-											});
+						{customInterestsEnabled && (
+							<FormField name="customInterests">
+								{({ props: { value, onChange } }) => (
+									<InterestSelectCustomInput
+										value={value}
+										onChange={(newValues) => {
+											if (
+												totalInterests >= maximumInterests
+												&& newValues.length >= value.length
+											)
+												return toasts.add({
+													type: "warning",
+													value: t("interests_limit_reached")
+												});
 
-										onChange(newValues);
-									}}
-								/>
-							)}
-						</FormField>
+											onChange(newValues);
+										}}
+									/>
+								)}
+							</FormField>
+						)}
 						<FormButton>{t("update")}</FormButton>
 						<InterestSelectCount
 							current={totalInterests}

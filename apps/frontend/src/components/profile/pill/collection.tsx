@@ -2,7 +2,7 @@ import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 
 import type { User } from "~/api/user";
-import { personality, playlists, vrTags } from "~/features";
+import { customInterests, personality, playlists, vrTags } from "~/features";
 import {
 	useAttributeOrder,
 	useAttributes,
@@ -86,7 +86,7 @@ export const PillCollection: FC<{ user: User }> = (props) => {
 					&& !!session.user.profile.attributes.interest?.includes(id)
 			}))
 			.sort((a, b) => a.name.localeCompare(b.name)),
-		...user.profile.customInterests.map((customInterest) => ({
+		...(customInterests ? user.profile.customInterests : []).map((customInterest) => ({
 			key: customInterest,
 			name: customInterest,
 			active:

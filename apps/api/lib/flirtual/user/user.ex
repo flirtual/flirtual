@@ -254,7 +254,8 @@ defmodule Flirtual.User do
       (not Flirtual.Features.vr_tags?() or
          not Enum.empty?(filter_by(profile.attributes, :type, "game"))) and
       not Enum.empty?(
-        filter_by(profile.attributes, :type, "interest") ++ profile.custom_interests
+        filter_by(profile.attributes, :type, "interest") ++
+          if(Flirtual.Features.custom_interests?(), do: profile.custom_interests, else: [])
       ) and
       not Enum.empty?(filter_by(profile.preferences.attributes, :type, "gender"))
   end

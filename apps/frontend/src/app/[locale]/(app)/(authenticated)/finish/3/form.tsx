@@ -7,6 +7,7 @@ import { ButtonLink } from "~/components/button";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputLabel, InputText } from "~/components/inputs";
+import { customInterests as customInterestsEnabled } from "~/features";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { useNavigate } from "~/i18n";
@@ -34,7 +35,7 @@ export const Finish3Form: FC = () => {
 			fields={{
 				filter: "",
 				defaultInterests: profile.attributes.interest || [],
-				customInterests: profile.customInterests
+				customInterests: customInterestsEnabled ? profile.customInterests : []
 			}}
 			className="flex flex-col gap-8"
 			requireChange={false}
@@ -100,25 +101,27 @@ export const Finish3Form: FC = () => {
 								/>
 							)}
 						</FormField>
-						<FormField name="customInterests">
-							{({ props: { value, onChange } }) => (
-								<InterestSelectCustomInput
-									value={value}
-									onChange={(newValues) => {
-										if (
-											totalInterests >= maximumInterests
-											&& newValues.length >= value.length
-										)
-											return toasts.add({
-												type: "warning",
-												value: t("interests_limit_reached")
-											});
+						{customInterestsEnabled && (
+							<FormField name="customInterests">
+								{({ props: { value, onChange } }) => (
+									<InterestSelectCustomInput
+										value={value}
+										onChange={(newValues) => {
+											if (
+												totalInterests >= maximumInterests
+												&& newValues.length >= value.length
+											)
+												return toasts.add({
+													type: "warning",
+													value: t("interests_limit_reached")
+												});
 
-										onChange(newValues);
-									}}
-								/>
-							)}
-						</FormField>
+											onChange(newValues);
+										}}
+									/>
+								)}
+							</FormField>
+						)}
 						<div className="flex justify-end gap-2">
 							<ButtonLink
 								className="flex w-fit flex-row gap-2 opacity-75"

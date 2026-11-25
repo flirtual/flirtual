@@ -348,10 +348,12 @@ defmodule Flirtual.Matchmaking.Query do
   end
 
   defp custom_interests(%User{profile: profile}, cw) do
-    Enum.map(
-      profile.custom_interests || [],
-      &{:token, Search.Tokens.custom_interest(&1), 25 * weight(cw, :custom_interests)}
-    )
+    if Features.custom_interests?() do
+      Enum.map(
+        profile.custom_interests || [],
+        &{:token, Search.Tokens.custom_interest(&1), 25 * weight(cw, :custom_interests)}
+      )
+    end
   end
 
   defp games(%User{profile: profile}, cw) do
