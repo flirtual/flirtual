@@ -403,7 +403,7 @@ importers:
         version: 8.2.0
       '@formatjs/intl-displaynames':
         specifier: ^8.0.0
-        version: 8.0.3
+        version: 8.0.4
       '@formatjs/intl-listformat':
         specifier: ^9.0.0
         version: 9.1.0
@@ -2060,6 +2060,9 @@ packages:
   '@formatjs/fast-memoize@3.1.7':
     resolution: {integrity: sha512-zXfhLpvA6T7+efdt9JLbBwZ00tT7NsBMDVnDu8rpHeNNv8KfRZAMo2gkG0k9lK/Nzc//3kJ9pImsfuJxk3KhUA==}
 
+  '@formatjs/fast-memoize@3.1.8':
+    resolution: {integrity: sha512-Y9YFFfeBDkAWmLWD3LVNHbHlyELsP2lYRNoY6+QhtPh1/ujCiX5QYBzAqe0cWdkCxKVezHLt0qjWz1veEUV7UA==}
+
   '@formatjs/icu-messageformat-parser@3.5.16':
     resolution: {integrity: sha512-kl6b/4D56gjGZi4ZewSmvXbalHwjOUI5ogEHPZqw42goeXTTrL7/yuPzvdrvr0QigDtvaOeb+UeMf62jks43Yg==}
 
@@ -2075,8 +2078,8 @@ packages:
   '@formatjs/intl-datetimeformat@8.2.0':
     resolution: {integrity: sha512-lwxgpDDm3AG2JKAgN1sj6bOZdM1fVDE1xIyGYqmTxlloI4NuT2ccWMx8FKQGARvUCwKG+5MUtwt+e4VVj4P03Q==}
 
-  '@formatjs/intl-displaynames@8.0.3':
-    resolution: {integrity: sha512-UhKG1OwrbQzZNKIcmZu+/JR5SOxE25RWmUzxaNfQ04AJ4OwxNkTvAbVX0ojnkm0i8Qs4E8ElIoBdA6F8XTkJXw==}
+  '@formatjs/intl-displaynames@8.0.4':
+    resolution: {integrity: sha512-9vH/ViaY4+8yh81yNHns9SPAi02kKcdlSfNcZdUlLNpjyNobr0wW41nYkHGo+QFwTHNCK6URQk63vd1iKjG9tQ==}
 
   '@formatjs/intl-getcanonicallocales@3.4.0':
     resolution: {integrity: sha512-7VfxOKr+ZUL4r5XO+LWiabp+m5595LacC+upPqSYf5RXxY5NDWEs/DJfHrjv59SWXt6UicKZbtNuHcAUZ45AEw==}
@@ -2089,6 +2092,9 @@ packages:
 
   '@formatjs/intl-localematcher@0.10.1':
     resolution: {integrity: sha512-gBqglQK9rXuHsLmM8wzTMBy4Xo4d0jamirIVKuEL8F1rwbskWdpMA1kZarSkny+uvr5q/K6GSzE0Rcq1wZLl3g==}
+
+  '@formatjs/intl-localematcher@0.10.2':
+    resolution: {integrity: sha512-KvXcVOPLYRQ5s6O0MrHePLIIhkSUm5bZbsEHGmKI3xXoy7hvGxUoagaobAIi8/hc9YabgHvLDFeeqbrjPNIKwg==}
 
   '@formatjs/intl-numberformat@10.1.0':
     resolution: {integrity: sha512-/uAIUEKpVleUU6MMIOHVcA4EetRsEZeMkOeKbQUvWLsDYlVCXl25jDFIbcCjG8uGrBD4fT5p6j3JDXgNYnqodQ==}
@@ -10167,6 +10173,8 @@ snapshots:
 
   '@formatjs/fast-memoize@3.1.7': {}
 
+  '@formatjs/fast-memoize@3.1.8': {}
+
   '@formatjs/icu-messageformat-parser@3.5.16':
     dependencies:
       '@formatjs/icu-skeleton-parser': 2.1.11
@@ -10184,9 +10192,9 @@ snapshots:
       '@formatjs/bigdecimal': 0.2.10
       '@formatjs/intl-localematcher': 0.10.1
 
-  '@formatjs/intl-displaynames@8.0.3':
+  '@formatjs/intl-displaynames@8.0.4':
     dependencies:
-      '@formatjs/intl-localematcher': 0.10.1
+      '@formatjs/intl-localematcher': 0.10.2
 
   '@formatjs/intl-getcanonicallocales@3.4.0': {}
 
@@ -10202,6 +10210,10 @@ snapshots:
   '@formatjs/intl-localematcher@0.10.1':
     dependencies:
       '@formatjs/fast-memoize': 3.1.7
+
+  '@formatjs/intl-localematcher@0.10.2':
+    dependencies:
+      '@formatjs/fast-memoize': 3.1.8
 
   '@formatjs/intl-numberformat@10.1.0':
     dependencies:
