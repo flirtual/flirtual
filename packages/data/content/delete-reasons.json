@@ -1,0 +1,68 @@
+{
+	"bad_matches": {
+		"internal": {
+			"curated": 7,
+			"legacy_id": "3fm9o3onrqPiwKhceexRMZ"
+		}
+	},
+	"low_quality": {
+		"internal": {
+			"curated": 8,
+			"legacy_id": "6R764W55PvotuTz3BBRHXD"
+		}
+	},
+	"not_enough_dates": {
+		"internal": {
+			"curated": 6,
+			"legacy_id": "TaqMV38Taxdz7ZNxEG4oEU"
+		}
+	},
+	"not_enough_matches": {
+		"internal": {
+			"curated": 5,
+			"legacy_id": "kTXr4okVAGLovjKBiwSgnF"
+		}
+	},
+	"other": {
+		"internal": {
+			"curated": 11,
+			"legacy_id": "g4hPG9psXVxzKa4Tr9GjDN"
+		}
+	},
+	"prefer_in_person_apps": {
+		"internal": {
+			"curated": 3,
+			"legacy_id": "EkWwgZavkCxJhRgKJF3yRn"
+		}
+	},
+	"prefer_vr_apps": {
+		"internal": {
+			"curated": 4,
+			"legacy_id": "jgc6z6qpeYmTAwHmid6n8X"
+		}
+	},
+	"relationship_elsewhere": {
+		"internal": {
+			"curated": 2,
+			"legacy_id": "BMEJteBnvo8vrUrPh7j634"
+		}
+	},
+	"relationship_here": {
+		"internal": {
+			"curated": 1,
+			"legacy_id": "jrAqzBkasZwqfjSPAazNq3"
+		}
+	},
+	"taking_a_break": {
+		"internal": {
+			"curated": 10,
+			"legacy_id": "sQcEHRLCffbLfcgM4zAELf"
+		}
+	},
+	"technical_issues": {
+		"internal": {
+			"curated": 9,
+			"legacy_id": "J3vVp9PWZQi5cEuk8G8wij"
+		}
+	}
+}

@@ -1,0 +1,68 @@
+{
+	"alignment": {
+		"internal": {
+			"curated": 10,
+			"legacy_id": "hR3X5w26ba6M98fVB2kVxX"
+		}
+	},
+	"astrology": {
+		"internal": {
+			"curated": 8,
+			"legacy_id": "nFiqbX3n6aiEdKe3JbynBL"
+		}
+	},
+	"game_genres": {
+		"internal": {
+			"curated": 11,
+			"legacy_id": "tmQbiXNw7d9Ys2DG9Ddg28"
+		}
+	},
+	"games": {
+		"internal": {
+			"curated": 4,
+			"legacy_id": "59oWHt4bZSdQ6tj8f4CWs9"
+		}
+	},
+	"general": {
+		"internal": {
+			"curated": 2,
+			"legacy_id": "TgrEr2C6DAcp69Winej5Q4"
+		}
+	},
+	"identity": {
+		"internal": {
+			"curated": 3,
+			"legacy_id": "aSCFm5P7awrqNKnknWuChQ"
+		}
+	},
+	"love_languages": {
+		"internal": {
+			"curated": 7,
+			"legacy_id": "9os9Yxxr6zGR4k7kh5BKrB"
+		}
+	},
+	"music": {
+		"internal": {
+			"curated": 5,
+			"legacy_id": "fQK3RUCYFW4WeSfLkzVP42"
+		}
+	},
+	"personality_types": {
+		"internal": {
+			"curated": 9,
+			"legacy_id": "43i5J3VsKCvU4HGRJHjehn"
+		}
+	},
+	"popular": {
+		"internal": {
+			"curated": 1,
+			"legacy_id": "iiCe39JvGQAAtsrTqnLddb"
+		}
+	},
+	"sports": {
+		"internal": {
+			"curated": 6,
+			"legacy_id": "DAweztCvdXBa5cKvhgNsPY"
+		}
+	}
+}

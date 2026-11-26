@@ -1,0 +1,38 @@
+{
+	"advertising": {
+		"name": "Reclame of om geld vragen"
+	},
+	"harassment": {
+		"name": "Intimidatie"
+	},
+	"hateful_content": {
+		"name": "Haatdragende inhoud"
+	},
+	"illegal_content": {
+		"name": "Illegale inhoud"
+	},
+	"impersonation": {
+		"name": "Doet zich voor als mij of iemand anders"
+	},
+	"nsfw_pictures": {
+		"name": "Naakt of expliciet seksuele foto's"
+	},
+	"other": {
+		"name": "Anders"
+	},
+	"scam": {
+		"name": "Oplichting, malware of schadelijke links"
+	},
+	"self_harm": {
+		"name": "Inhoud over zelfbeschadiging"
+	},
+	"spam": {
+		"name": "Spam- of trollaccount"
+	},
+	"underage": {
+		"name": "Minderjarige gebruiker"
+	},
+	"violent_content": {
+		"name": "Gewelddadige of schokkende inhoud"
+	}
+}

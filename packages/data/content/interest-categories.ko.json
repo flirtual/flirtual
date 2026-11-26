@@ -1,0 +1,35 @@
+{
+	"alignment": {
+		"name": "성향"
+	},
+	"astrology": {
+		"name": "별자리"
+	},
+	"game_genres": {
+		"name": "게임 장르"
+	},
+	"games": {
+		"name": "게임"
+	},
+	"general": {
+		"name": "일반"
+	},
+	"identity": {
+		"name": "정체성"
+	},
+	"love_languages": {
+		"name": "사랑의 언어"
+	},
+	"music": {
+		"name": "음악"
+	},
+	"personality_types": {
+		"name": "성격 유형"
+	},
+	"popular": {
+		"name": "인기"
+	},
+	"sports": {
+		"name": "스포츠"
+	}
+}

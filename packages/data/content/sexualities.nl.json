@@ -1,0 +1,61 @@
+{
+	"asexual": {
+		"definition": "Iemand die weinig of geen seksuele aantrekking ervaart.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Asexuality",
+		"name": "Aseksueel"
+	},
+	"bisexual": {
+		"definition": "Iemand die zich aangetrokken voelt tot meerdere genders.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Bisexuality",
+		"name": "Biseksueel"
+	},
+	"demisexual": {
+		"definition": "Iemand die pas seksuele aantrekking ervaart nadat er een emotionele band met iemand is ontstaan.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Demisexuality_and_Gray-Asexuality",
+		"name": "Demiseksueel"
+	},
+	"experimenting_in_vr": {
+		"definition": "Iemand die de eigen seksuele oriëntatie in VR verkent, of bij wie de seksualiteit in VR anders is dan in het echte leven.",
+		"name": "Experimenteert in VR"
+	},
+	"gay": {
+		"definition": "Iemand die zich aangetrokken voelt tot mensen van hetzelfde gender.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Gay",
+		"name": "Homo"
+	},
+	"heteroflexible": {
+		"definition": "Iemand die zich vooral aangetrokken voelt tot het andere gender, maar soms ook tot hetzelfde gender.",
+		"definition_link": "https://www.merriam-webster.com/words-at-play/homoflexible-heteroflexible-meaning-slang-definition",
+		"name": "Heteroflexibel"
+	},
+	"homoflexible": {
+		"definition": "Iemand die zich vooral aangetrokken voelt tot hetzelfde gender, maar soms ook tot het andere gender.",
+		"definition_link": "https://www.merriam-webster.com/words-at-play/homoflexible-heteroflexible-meaning-slang-definition",
+		"name": "Homoflexibel"
+	},
+	"lesbian": {
+		"definition": "Iemand die zich aangetrokken voelt tot andere vrouwen of vrouwelijke personen.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Lesbian",
+		"name": "Lesbisch"
+	},
+	"pansexual": {
+		"definition": "Iemand die zich aangetrokken voelt tot anderen, ongeacht hun gender.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Pansexuality",
+		"name": "Panseksueel"
+	},
+	"queer": {
+		"definition": "Iemand met een niet-normatieve seksuele oriëntatie.",
+		"definition_link": "https://en.wikipedia.org/wiki/Queer",
+		"name": "Queer"
+	},
+	"questioning": {
+		"definition": "Iemand die de eigen seksuele oriëntatie nog aan het ontdekken is.",
+		"definition_link": "https://en.wikipedia.org/wiki/Questioning_%28sexuality_and_gender%29",
+		"name": "Zoekende"
+	},
+	"straight": {
+		"definition": "Iemand die zich aangetrokken voelt tot het andere gender.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Heterosexuality",
+		"name": "Hetero"
+	}
+}

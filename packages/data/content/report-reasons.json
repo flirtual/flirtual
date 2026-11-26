@@ -1,0 +1,75 @@
+{
+	"advertising": {
+		"internal": {
+			"curated": 8,
+			"legacy_id": "L6FRU2xjUiZwHUbegAcWTa"
+		}
+	},
+	"harassment": {
+		"internal": {
+			"curated": 5,
+			"legacy_id": "AFe9ijRg9MYGubm2Efi4Ki"
+		}
+	},
+	"hateful_content": {
+		"internal": {
+			"curated": 2,
+			"legacy_id": "wFkctcaaf5B4Ef5i3ggY3G"
+		}
+	},
+	"illegal_content": {
+		"internal": {
+			"curated": 10,
+			"legacy_id": "BtJvp62cJ5vm6CeuCPTP5H"
+		}
+	},
+	"impersonation": {
+		"internal": {
+			"curated": 6,
+			"legacy_id": "Ec5fqqgVo5X3s4QCeFUJ6D"
+		}
+	},
+	"nsfw_pictures": {
+		"internal": {
+			"curated": 4,
+			"legacy_id": "ymWd4JdTqpnBLmGSLmJRvY"
+		}
+	},
+	"other": {
+		"default": true,
+		"internal": {
+			"curated": 12,
+			"legacy_id": "9iwmQ8huhkngyY9BgLDE9W"
+		}
+	},
+	"scam": {
+		"internal": {
+			"curated": 7,
+			"legacy_id": "MyexHAyY8gzQjBQ6agCSx3"
+		}
+	},
+	"self_harm": {
+		"internal": {
+			"curated": 11,
+			"legacy_id": "vTzgZw4Eexx7fehzCM9PQY"
+		}
+	},
+	"spam": {
+		"internal": {
+			"curated": 1,
+			"legacy_id": "Ur6iAuTDCktZe3zZQGqtZ2"
+		}
+	},
+	"underage": {
+		"internal": {
+			"curated": 9,
+			"legacy_id": "zu6HcxQxmJDDq4rmvJazkf"
+		}
+	},
+	"violent_content": {
+		"internal": {
+			"curated": 3,
+			"legacy_id": "Wf4t9FT7Lmvnn73KqpZGPG"
+		}
+	}
+}

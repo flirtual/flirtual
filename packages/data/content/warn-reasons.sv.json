@@ -1,0 +1,41 @@
+{
+	"advertising": {
+		"details": "Minska mängden reklam och marknadsföring i din profil. Profilen ska i första hand handla om att hitta dejter eller vänner.",
+		"name": "Reklam"
+	},
+	"be_kind": {
+		"details": "Med anledning av en eller flera nyligen inkomna anmälningar ber vi dig att vara snäll och respektfull mot andra medlemmar.",
+		"name": "Var snäll och respektfull"
+	},
+	"hateful_content": {
+		"details": "Ta bort hatiskt innehåll från din profil, eftersom det bryter mot våra communityriktlinjer.",
+		"name": "Hatiskt innehåll"
+	},
+	"inactive": {
+		"details": "Uppdatera din bio om du är tillbaka på {brand_name}. Om du tar en paus eller lämnar {brand_name} kan du tillfälligt inaktivera eller permanent radera ditt konto i inställningarna.",
+		"name": "Inaktivt konto"
+	},
+	"nsfw_bio": {
+		"details": "Håll sexuellt innehåll i din bio till ett minimum och ta bort grafiska beskrivningar och kinks. Du kan använda {brand_name}s kink-taggar eller egna intressen i inställningarna.",
+		"name": "Explicit bio"
+	},
+	"nsfw_picture": {
+		"details": "En eller flera bilder med nakenhet eller explicit sexuellt innehåll har tagits bort från din profil. Ladda bara upp bilder som passar för alla.",
+		"name": "Explicit bild borttagen"
+	},
+	"other": {
+		"name": "Annat"
+	},
+	"soliciting": {
+		"details": "Ta bort allt från din profil som handlar om att be om pengar eller sälja något. Att be om pengar samt hänvisningar och länkar till kommersiella tjänster är inte tillåtet på {brand_name}.",
+		"name": "Tiggeri och försäljning"
+	},
+	"spam": {
+		"details": "Uppdatera din bio och ladda upp egna bilder på din VR-avatar så att profilen inte flaggas som spam.",
+		"name": "Spam i bio och bilder"
+	},
+	"upload_evidence": {
+		"details": "Ladda upp fler bevis för din senaste anmälan. Du kan skapa ett ärende på https://hello.flirtu.al eller https://discord.gg/flirtual.",
+		"name": "Ladda upp bevis"
+	}
+}

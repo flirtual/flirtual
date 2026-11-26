@@ -1,0 +1,662 @@
+{
+	"aa": {
+		"name": "Afar"
+	},
+	"ab": {
+		"name": "Abcázio"
+	},
+	"af": {
+		"name": "Africânder"
+	},
+	"ak": {
+		"name": "Akan"
+	},
+	"am": {
+		"name": "Amárico"
+	},
+	"an": {
+		"name": "Aragonês"
+	},
+	"ar": {
+		"name": "Árabe"
+	},
+	"arn": {
+		"name": "Mapuche"
+	},
+	"ary": {
+		"name": "Árabe marroquino"
+	},
+	"as": {
+		"name": "Assamês"
+	},
+	"ase": {
+		"name": "Língua Gestual Americana"
+	},
+	"asf": {
+		"name": "Língua Gestual Australiana (Auslan)"
+	},
+	"av": {
+		"name": "Avárico"
+	},
+	"ay": {
+		"name": "Aimará"
+	},
+	"az": {
+		"name": "Azerbaijano"
+	},
+	"ba": {
+		"name": "Bashkir"
+	},
+	"be": {
+		"name": "Bielorrusso"
+	},
+	"bfi": {
+		"name": "Língua Gestual Britânica"
+	},
+	"bg": {
+		"name": "Búlgaro"
+	},
+	"bi": {
+		"name": "Bislamá"
+	},
+	"bm": {
+		"name": "Bambara"
+	},
+	"bn": {
+		"name": "Bengali"
+	},
+	"bo": {
+		"name": "Tibetano"
+	},
+	"br": {
+		"name": "Bretão"
+	},
+	"bs": {
+		"name": "Bósnio"
+	},
+	"bzs": {
+		"name": "Língua Gestual Brasileira"
+	},
+	"ca": {
+		"name": "Catalão"
+	},
+	"ce": {
+		"name": "Checheno"
+	},
+	"ceb": {
+		"name": "Cebuano"
+	},
+	"ch": {
+		"name": "Chamorro"
+	},
+	"ckb": {
+		"name": "Curdo central (Sorani)"
+	},
+	"cnr": {
+		"name": "Montenegrino"
+	},
+	"co": {
+		"name": "Corso"
+	},
+	"cr": {
+		"name": "Cree"
+	},
+	"cs": {
+		"name": "Checo"
+	},
+	"csl": {
+		"name": "Língua Gestual Chinesa"
+	},
+	"cv": {
+		"name": "Tchuvache"
+	},
+	"cy": {
+		"name": "Galês"
+	},
+	"da": {
+		"name": "Dinamarquês"
+	},
+	"de": {
+		"name": "Alemão"
+	},
+	"dsb": {
+		"name": "Baixo sorábio"
+	},
+	"dse": {
+		"name": "Língua Gestual Neerlandesa"
+	},
+	"dv": {
+		"name": "Divehi"
+	},
+	"dz": {
+		"name": "Dzonga"
+	},
+	"ee": {
+		"name": "Ewe"
+	},
+	"el": {
+		"name": "Grego"
+	},
+	"en": {
+		"name": "Inglês"
+	},
+	"eo": {
+		"name": "Esperanto"
+	},
+	"es": {
+		"name": "Espanhol"
+	},
+	"et": {
+		"name": "Estónio"
+	},
+	"eu": {
+		"name": "Basco"
+	},
+	"fa": {
+		"name": "Persa"
+	},
+	"ff": {
+		"name": "Fula"
+	},
+	"fi": {
+		"name": "Finlandês"
+	},
+	"fil": {
+		"name": "Filipino"
+	},
+	"fj": {
+		"name": "Fijiano"
+	},
+	"fo": {
+		"name": "Feroês"
+	},
+	"fr": {
+		"name": "Francês"
+	},
+	"fsl": {
+		"name": "Língua Gestual Francesa"
+	},
+	"fy": {
+		"name": "Frísico ocidental"
+	},
+	"ga": {
+		"name": "Irlandês"
+	},
+	"gd": {
+		"name": "Gaélico escocês"
+	},
+	"gil": {
+		"name": "Gilbertês"
+	},
+	"gl": {
+		"name": "Galego"
+	},
+	"gn": {
+		"name": "Guarani"
+	},
+	"gsg": {
+		"name": "Língua Gestual Alemã"
+	},
+	"gsw": {
+		"name": "Alemão suíço"
+	},
+	"gu": {
+		"name": "Guzerate"
+	},
+	"gv": {
+		"name": "Manês"
+	},
+	"ha": {
+		"name": "Haúça"
+	},
+	"haw": {
+		"name": "Havaiano"
+	},
+	"hbs": {
+		"name": "Servo-croata"
+	},
+	"he": {
+		"name": "Hebraico"
+	},
+	"hi": {
+		"name": "Hindi"
+	},
+	"hmn": {
+		"name": "Hmong"
+	},
+	"ho": {
+		"name": "Hiri motu"
+	},
+	"hr": {
+		"name": "Croata"
+	},
+	"hsb": {
+		"name": "Alto sorábio"
+	},
+	"ht": {
+		"name": "Crioulo haitiano"
+	},
+	"hu": {
+		"name": "Húngaro"
+	},
+	"hy": {
+		"name": "Arménio"
+	},
+	"hz": {
+		"name": "Herero"
+	},
+	"id": {
+		"name": "Indonésio"
+	},
+	"ig": {
+		"name": "Igbo"
+	},
+	"ii": {
+		"name": "Yi de Sichuan"
+	},
+	"ik": {
+		"name": "Inupiaque"
+	},
+	"inl": {
+		"name": "Língua Gestual Indonésia"
+	},
+	"ins": {
+		"name": "Língua Gestual Indo-Paquistanesa"
+	},
+	"io": {
+		"name": "Ido"
+	},
+	"is": {
+		"name": "Islandês"
+	},
+	"ise": {
+		"name": "Língua Gestual Italiana"
+	},
+	"isg": {
+		"name": "Língua Gestual Irlandesa"
+	},
+	"it": {
+		"name": "Italiano"
+	},
+	"iu": {
+		"name": "Inuktitut"
+	},
+	"ja": {
+		"name": "Japonês"
+	},
+	"jsl": {
+		"name": "Língua Gestual Japonesa"
+	},
+	"jv": {
+		"name": "Javanês"
+	},
+	"ka": {
+		"name": "Georgiano"
+	},
+	"kg": {
+		"name": "Congolês"
+	},
+	"ki": {
+		"name": "Quicuio"
+	},
+	"kj": {
+		"name": "Cuanhama"
+	},
+	"kk": {
+		"name": "Cazaque"
+	},
+	"kl": {
+		"name": "Gronelandês"
+	},
+	"km": {
+		"name": "Khmer"
+	},
+	"kn": {
+		"name": "Canarim"
+	},
+	"ko": {
+		"name": "Coreano"
+	},
+	"kok": {
+		"name": "Concani"
+	},
+	"kr": {
+		"name": "Canúri"
+	},
+	"ks": {
+		"name": "Caxemira"
+	},
+	"ku": {
+		"name": "Curdo"
+	},
+	"kv": {
+		"name": "Komi"
+	},
+	"kvk": {
+		"name": "Língua Gestual Coreana"
+	},
+	"kw": {
+		"name": "Córnico"
+	},
+	"ky": {
+		"name": "Quirguiz"
+	},
+	"la": {
+		"name": "Latim"
+	},
+	"lb": {
+		"name": "Luxemburguês"
+	},
+	"lg": {
+		"name": "Luganda"
+	},
+	"li": {
+		"name": "Limburguês"
+	},
+	"ln": {
+		"name": "Lingala"
+	},
+	"lo": {
+		"name": "Laosiano"
+	},
+	"lt": {
+		"name": "Lituano"
+	},
+	"lu": {
+		"name": "Luba-Catanga"
+	},
+	"lv": {
+		"name": "Letão"
+	},
+	"mfs": {
+		"name": "Língua Gestual Mexicana"
+	},
+	"mg": {
+		"name": "Malgaxe"
+	},
+	"mh": {
+		"name": "Marshalês"
+	},
+	"mi": {
+		"name": "Maori"
+	},
+	"mk": {
+		"name": "Macedónio"
+	},
+	"ml": {
+		"name": "Malaiala"
+	},
+	"mn": {
+		"name": "Mongol"
+	},
+	"moh": {
+		"name": "Mohawk"
+	},
+	"mr": {
+		"name": "Marati"
+	},
+	"ms": {
+		"name": "Malaio"
+	},
+	"mt": {
+		"name": "Maltês"
+	},
+	"my": {
+		"name": "Birmanês"
+	},
+	"na": {
+		"name": "Nauruano"
+	},
+	"nb": {
+		"name": "Norueguês bokmål"
+	},
+	"nd": {
+		"name": "Ndebele do Norte"
+	},
+	"ne": {
+		"name": "Nepalês"
+	},
+	"ng": {
+		"name": "Dongo"
+	},
+	"nl": {
+		"name": "Neerlandês"
+	},
+	"nn": {
+		"name": "Norueguês nynorsk"
+	},
+	"no": {
+		"name": "Norueguês"
+	},
+	"nr": {
+		"name": "Ndebele do Sul"
+	},
+	"nv": {
+		"name": "Navajo"
+	},
+	"ny": {
+		"name": "Chichewa"
+	},
+	"nzs": {
+		"name": "Língua Gestual Neozelandesa"
+	},
+	"oc": {
+		"name": "Occitano"
+	},
+	"oj": {
+		"name": "Ojibwe"
+	},
+	"om": {
+		"name": "Oromo"
+	},
+	"or": {
+		"name": "Oriá"
+	},
+	"os": {
+		"name": "Ossético"
+	},
+	"pa": {
+		"name": "Panjabi"
+	},
+	"pap": {
+		"name": "Papiamento"
+	},
+	"pl": {
+		"name": "Polaco"
+	},
+	"prs": {
+		"name": "Dari"
+	},
+	"ps": {
+		"name": "Pastó"
+	},
+	"psr": {
+		"name": "Língua Gestual Portuguesa"
+	},
+	"pt": {
+		"name": "Português"
+	},
+	"qu": {
+		"name": "Quíchua"
+	},
+	"quc": {
+		"name": "Quiché"
+	},
+	"rm": {
+		"name": "Romanche"
+	},
+	"rn": {
+		"name": "Rundi"
+	},
+	"ro": {
+		"name": "Romeno"
+	},
+	"rsl": {
+		"name": "Língua Gestual Russa"
+	},
+	"ru": {
+		"name": "Russo"
+	},
+	"rw": {
+		"name": "Kinyarwanda"
+	},
+	"sah": {
+		"name": "Sakha (iacuto)"
+	},
+	"sc": {
+		"name": "Sardo"
+	},
+	"sd": {
+		"name": "Sindi"
+	},
+	"se": {
+		"name": "Sami do Norte"
+	},
+	"sg": {
+		"name": "Sango"
+	},
+	"si": {
+		"name": "Cingalês"
+	},
+	"sk": {
+		"name": "Eslovaco"
+	},
+	"sl": {
+		"name": "Esloveno"
+	},
+	"sm": {
+		"name": "Samoano"
+	},
+	"sma": {
+		"name": "Sami do sul"
+	},
+	"smj": {
+		"name": "Sami de Lule"
+	},
+	"smn": {
+		"name": "Sami de Inari"
+	},
+	"sms": {
+		"name": "Sami de Skolt"
+	},
+	"sn": {
+		"name": "Shona"
+	},
+	"so": {
+		"name": "Somali"
+	},
+	"sq": {
+		"name": "Albanês"
+	},
+	"sr": {
+		"name": "Sérvio"
+	},
+	"ss": {
+		"name": "Suázi"
+	},
+	"ssp": {
+		"name": "Língua Gestual Espanhola"
+	},
+	"st": {
+		"name": "Sesoto"
+	},
+	"su": {
+		"name": "Sundanês"
+	},
+	"sv": {
+		"name": "Sueco"
+	},
+	"sw": {
+		"name": "Suaíli"
+	},
+	"ta": {
+		"name": "Tâmil"
+	},
+	"te": {
+		"name": "Telugu"
+	},
+	"tg": {
+		"name": "Tajique"
+	},
+	"th": {
+		"name": "Tailandês"
+	},
+	"ti": {
+		"name": "Tigrínia"
+	},
+	"tk": {
+		"name": "Turcomano"
+	},
+	"tl": {
+		"name": "Tagalo"
+	},
+	"tn": {
+		"name": "Tswana"
+	},
+	"to": {
+		"name": "Tonga"
+	},
+	"tr": {
+		"name": "Turco"
+	},
+	"ts": {
+		"name": "Tsonga"
+	},
+	"tt": {
+		"name": "Tatar"
+	},
+	"tw": {
+		"name": "Twi"
+	},
+	"ty": {
+		"name": "Taitiano"
+	},
+	"tzm": {
+		"name": "Tamazight do Atlas Central"
+	},
+	"ug": {
+		"name": "Uigur"
+	},
+	"uk": {
+		"name": "Ucraniano"
+	},
+	"ur": {
+		"name": "Urdu"
+	},
+	"uz": {
+		"name": "Usbeque"
+	},
+	"ve": {
+		"name": "Venda"
+	},
+	"vi": {
+		"name": "Vietnamita"
+	},
+	"wa": {
+		"name": "Valão"
+	},
+	"wo": {
+		"name": "Uólofe"
+	},
+	"xh": {
+		"name": "Xosa"
+	},
+	"yi": {
+		"name": "Iídiche"
+	},
+	"yo": {
+		"name": "Ioruba"
+	},
+	"yue": {
+		"name": "Cantonês"
+	},
+	"za": {
+		"name": "Zhuang"
+	},
+	"zh": {
+		"name": "Mandarim"
+	},
+	"zu": {
+		"name": "Zulu"
+	}
+}

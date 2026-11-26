@@ -1,0 +1,61 @@
+{
+	"asexual": {
+		"definition": "성적 끌림을 거의 또는 전혀 느끼지 않는 사람.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Asexuality",
+		"name": "무성애자"
+	},
+	"bisexual": {
+		"definition": "여러 성별에게 끌리는 사람.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Bisexuality",
+		"name": "양성애자"
+	},
+	"demisexual": {
+		"definition": "정서적 유대가 생긴 뒤에만 성적 끌림을 느끼는 사람.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Demisexuality_and_Gray-Asexuality",
+		"name": "반성애자"
+	},
+	"experimenting_in_vr": {
+		"definition": "VR에서 자신의 성적 지향을 탐색하고 있거나, VR에서와 현실에서의 성적 지향이 다른 사람.",
+		"name": "VR에서 탐색 중"
+	},
+	"gay": {
+		"definition": "같은 성별의 사람에게 끌리는 사람.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Gay",
+		"name": "게이"
+	},
+	"heteroflexible": {
+		"definition": "주로 다른 성별에게 끌리지만 때때로 같은 성별에게도 끌림을 느끼는 사람.",
+		"definition_link": "https://www.merriam-webster.com/words-at-play/homoflexible-heteroflexible-meaning-slang-definition",
+		"name": "헤테로플렉시블"
+	},
+	"homoflexible": {
+		"definition": "주로 같은 성별에게 끌리지만 때때로 다른 성별에게도 끌림을 느끼는 사람.",
+		"definition_link": "https://www.merriam-webster.com/words-at-play/homoflexible-heteroflexible-meaning-slang-definition",
+		"name": "호모플렉시블"
+	},
+	"lesbian": {
+		"definition": "다른 여성이나 여성적인 사람에게 끌리는 사람.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Lesbian",
+		"name": "레즈비언"
+	},
+	"pansexual": {
+		"definition": "성별과 상관없이 끌림을 느끼는 사람.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Pansexuality",
+		"name": "범성애자"
+	},
+	"queer": {
+		"definition": "규범적이지 않은 성적 지향을 지닌 사람.",
+		"definition_link": "https://ko.wikipedia.org/wiki/%ED%80%B4%EC%96%B4",
+		"name": "퀴어"
+	},
+	"questioning": {
+		"definition": "자신의 성적 지향을 탐색하는 중인 사람.",
+		"definition_link": "https://en.wikipedia.org/wiki/Questioning_%28sexuality_and_gender%29",
+		"name": "퀘스처닝"
+	},
+	"straight": {
+		"definition": "다른 성별에게 끌리는 사람.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Heterosexuality",
+		"name": "이성애자"
+	}
+}

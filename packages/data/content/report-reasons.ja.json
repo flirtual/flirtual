@@ -1,0 +1,38 @@
+{
+	"advertising": {
+		"name": "広告・宣伝や金銭の要求"
+	},
+	"harassment": {
+		"name": "嫌がらせ"
+	},
+	"hateful_content": {
+		"name": "ヘイト・差別的なコンテンツ"
+	},
+	"illegal_content": {
+		"name": "違法なコンテンツ"
+	},
+	"impersonation": {
+		"name": "私や他の人へのなりすまし"
+	},
+	"nsfw_pictures": {
+		"name": "裸や露骨な性的表現を含む画像"
+	},
+	"other": {
+		"name": "その他"
+	},
+	"scam": {
+		"name": "詐欺・マルウェア・有害なリンク"
+	},
+	"self_harm": {
+		"name": "自傷行為に関するコンテンツ"
+	},
+	"spam": {
+		"name": "スパム・荒らしアカウント"
+	},
+	"underage": {
+		"name": "未成年のユーザー"
+	},
+	"violent_content": {
+		"name": "暴力的・ショッキングなコンテンツ"
+	}
+}

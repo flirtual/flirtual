@@ -1,0 +1,112 @@
+{
+	"agender": {
+		"definition": "どの性別にも当てはまらない、または性別を持たないと感じる人。",
+		"definition_link": "https://nonbinary.wiki/wiki/Agender",
+		"name": "アジェンダー"
+	},
+	"androgynous": {
+		"definition": "男性的な面と女性的な面をあわせ持つ人。",
+		"definition_link": "https://nonbinary.wiki/wiki/Androgyny",
+		"name": "アンドロジナス"
+	},
+	"bigender": {
+		"definition": "2つの性自認を持つ人。",
+		"definition_link": "https://nonbinary.wiki/wiki/Bigender",
+		"name": "バイジェンダー"
+	},
+	"cis_man": {
+		"definition": "性自認が出生時に割り当てられた性別と一致する男性。",
+		"definition_link": "https://nonbinary.wiki/wiki/Cisgender_men",
+		"name": "シス男性"
+	},
+	"cis_woman": {
+		"definition": "性自認が出生時に割り当てられた性別と一致する女性。",
+		"definition_link": "https://nonbinary.wiki/wiki/Cisgender_women",
+		"name": "シス女性"
+	},
+	"gender_nonconforming": {
+		"definition": "社会が求める性別の役割や規範にとらわれない人。",
+		"definition_link": "https://nonbinary.wiki/wiki/Gender_nonconformity",
+		"name": "ジェンダーノンコンフォーミング"
+	},
+	"genderfluid": {
+		"definition": "性自認が時とともに揺れ動く人。",
+		"definition_link": "https://nonbinary.wiki/wiki/Genderfluid",
+		"name": "ジェンダーフルイド"
+	},
+	"genderqueer": {
+		"definition": "従来の「男か女か」という枠に収まらない性自認を持つ人。",
+		"definition_link": "https://nonbinary.wiki/wiki/Genderqueer",
+		"name": "ジェンダークィア"
+	},
+	"he_him": {
+		"name": "He/Him"
+	},
+	"hijra": {
+		"definition": "南アジアの文化における第三の性。",
+		"definition_link": "https://nonbinary.wiki/wiki/Hijra",
+		"name": "ヒジュラ"
+	},
+	"intersex": {
+		"definition": "典型的な男性・女性の定義に当てはまらない身体的性の特徴を持って生まれた人。",
+		"definition_link": "https://nonbinary.wiki/wiki/Intersex",
+		"name": "インターセックス"
+	},
+	"man": {
+		"name": "男性",
+		"plural": "男性"
+	},
+	"nonbinary": {
+		"definition": "男女二元論の枠に収まらない性自認を持つ人。",
+		"definition_link": "https://nonbinary.wiki/wiki/Nonbinary",
+		"name": "ノンバイナリー"
+	},
+	"other": {
+		"name": "その他"
+	},
+	"pangender": {
+		"definition": "複数、またはすべての性別を自認する人。",
+		"definition_link": "https://nonbinary.wiki/wiki/Pangender",
+		"name": "パンジェンダー"
+	},
+	"she_her": {
+		"name": "She/Her"
+	},
+	"they_them": {
+		"name": "They/Them"
+	},
+	"trans_man": {
+		"definition": "出生時に女性を割り当てられた男性。",
+		"definition_link": "https://nonbinary.wiki/wiki/Transgender_men",
+		"name": "トランス男性"
+	},
+	"trans_woman": {
+		"definition": "出生時に男性を割り当てられた女性。",
+		"definition_link": "https://nonbinary.wiki/wiki/Transgender_women",
+		"name": "トランス女性"
+	},
+	"transfeminine": {
+		"definition": "出生時に男性を割り当てられ、女性寄りの性自認を持つ人。",
+		"definition_link": "https://nonbinary.wiki/wiki/Transfeminine",
+		"name": "トランスフェミニン"
+	},
+	"transgender": {
+		"definition": "性自認が出生時に割り当てられた性別と異なる人。",
+		"definition_link": "https://nonbinary.wiki/wiki/Transgender",
+		"name": "トランスジェンダー"
+	},
+	"transmasculine": {
+		"definition": "出生時に女性を割り当てられ、男性寄りの性自認を持つ人。",
+		"definition_link": "https://nonbinary.wiki/wiki/Transmasculine",
+		"name": "トランスマスキュリン"
+	},
+	"two_spirit": {
+		"definition": "北米先住民の文化における第三の性。",
+		"definition_link": "https://nonbinary.wiki/wiki/Two-spirit",
+		"name": "トゥースピリット"
+	},
+	"woman": {
+		"name": "女性",
+		"plural": "女性"
+	}
+}

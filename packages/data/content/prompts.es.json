@@ -1,0 +1,62 @@
+{
+	"album_on_repeat": {
+		"name": "Tengo en bucle este álbum"
+	},
+	"bet_you_cant": {
+		"name": "Te apuesto a que no puedes"
+	},
+	"favorite_character": {
+		"name": "Mi personaje de ficción favorito"
+	},
+	"favorite_game": {
+		"name": "Mi juego favorito de todos los tiempos"
+	},
+	"favorite_in_vr": {
+		"name": "Lo que más me gusta hacer en VR"
+	},
+	"favorite_movie": {
+		"name": "Mi película favorita es"
+	},
+	"favorite_vrchat_world": {
+		"name": "Mi mundo favorito de VRChat"
+	},
+	"getting_to_know_me": {
+		"name": "El secreto para conocerme es"
+	},
+	"irrational_fear": {
+		"name": "Mi miedo más irracional"
+	},
+	"just_learned": {
+		"name": "Acabo de descubrir que"
+	},
+	"life_goal": {
+		"name": "Una de mis metas en la vida es"
+	},
+	"looking_for": {
+		"name": "Busco"
+	},
+	"nerd_out_on": {
+		"name": "Me obsesiono con"
+	},
+	"never_have_i_ever": {
+		"name": "Yo nunca nunca"
+	},
+	"one_food": {
+		"name": "Si tuviera que comer una sola cosa el resto de mi vida, sería"
+	},
+	"think_about": {
+		"name": "Pienso mucho en"
+	},
+	"together_we_could": {
+		"name": "Tú y yo podríamos"
+	},
+	"unpopular_opinion": {
+		"name": "Opinión impopular, pero"
+	},
+	"want_someone_who": {
+		"name": "Quiero a alguien que"
+	},
+	"wont_shut_up_about": {
+		"name": "No paro de hablar de"
+	}
+}

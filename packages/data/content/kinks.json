@@ -1,0 +1,151 @@
+{
+	"boy_girl": {
+		"internal": {
+			"curated": 6,
+			"legacy_id": "yamRiwkspejx4mnzbtMdxN"
+		},
+		"kind": "submissive",
+		"pair": "daddy_mommy"
+	},
+	"brat": {
+		"internal": {
+			"curated": 2,
+			"legacy_id": "sNdx2sNbnG5RmNZDtTVNCg"
+		},
+		"kind": "submissive",
+		"pair": "brat_tamer"
+	},
+	"brat_tamer": {
+		"internal": {
+			"curated": 1,
+			"legacy_id": "wZ4AXSmb3hufSDxGVEkoNo"
+		},
+		"kind": "dominant",
+		"pair": "brat"
+	},
+	"daddy_mommy": {
+		"internal": {
+			"curated": 5,
+			"legacy_id": "rGDn478bBZCDajvQRYAkLf"
+		},
+		"kind": "dominant",
+		"pair": "boy_girl"
+	},
+	"degradee": {
+		"internal": {
+			"curated": 18,
+			"legacy_id": "RE2twp4mgYSXjhya266npP"
+		},
+		"kind": "submissive",
+		"pair": "degrader"
+	},
+	"degrader": {
+		"internal": {
+			"curated": 17,
+			"legacy_id": "9mbQ4hxFEMBL4bHVYomPz3"
+		},
+		"kind": "dominant",
+		"pair": "degradee"
+	},
+	"exhibitionist": {
+		"internal": {
+			"curated": 13,
+			"legacy_id": "ANgPHfEKZqZZUspmgfKjdf"
+		},
+		"pair": "voyeur"
+	},
+	"experimentalist": {
+		"internal": {
+			"curated": 19,
+			"legacy_id": "FDiw6WUePpHDckmVG5coKF"
+		},
+		"pair": "experimentalist"
+	},
+	"hunter": {
+		"internal": {
+			"curated": 15,
+			"legacy_id": "nSPurHtFp8dpHKvW4Ux9Q9"
+		},
+		"kind": "dominant",
+		"pair": "prey"
+	},
+	"masochist": {
+		"internal": {
+			"curated": 12,
+			"legacy_id": "HEPqnrrPsMqx9nQvDk5rHT"
+		},
+		"kind": "submissive",
+		"pair": "sadist"
+	},
+	"master_mistress": {
+		"internal": {
+			"curated": 7,
+			"legacy_id": "dXxUHt5t69rNeg2g7EE3bR"
+		},
+		"kind": "dominant",
+		"pair": "slave"
+	},
+	"owner": {
+		"internal": {
+			"curated": 3,
+			"legacy_id": "nEDgGpz9eHcomwcbsCaCZP"
+		},
+		"kind": "dominant",
+		"pair": "pet"
+	},
+	"pet": {
+		"internal": {
+			"curated": 4,
+			"legacy_id": "cKzdEwXmCY3naeYdHuowJ7"
+		},
+		"kind": "submissive",
+		"pair": "owner"
+	},
+	"prey": {
+		"internal": {
+			"curated": 16,
+			"legacy_id": "7WBnwThpTkEHyQHDZTbw47"
+		},
+		"kind": "submissive",
+		"pair": "hunter"
+	},
+	"rigger": {
+		"internal": {
+			"curated": 9,
+			"legacy_id": "2D9uSBJtgiRRfgdwXhyvm5"
+		},
+		"kind": "dominant",
+		"pair": "rope_bunny"
+	},
+	"rope_bunny": {
+		"internal": {
+			"curated": 10,
+			"legacy_id": "werFoPERXyXK9J6roSzCXG"
+		},
+		"kind": "submissive",
+		"pair": "rigger"
+	},
+	"sadist": {
+		"internal": {
+			"curated": 11,
+			"legacy_id": "9civt22SpMr7z4nuPcuL3V"
+		},
+		"kind": "dominant",
+		"pair": "masochist"
+	},
+	"slave": {
+		"internal": {
+			"curated": 8,
+			"legacy_id": "pnebwXNPvGr56PEZwSRbHi"
+		},
+		"kind": "submissive",
+		"pair": "master_mistress"
+	},
+	"voyeur": {
+		"internal": {
+			"curated": 14,
+			"legacy_id": "Jyy988TnEA8J2FeG5ZSyDh"
+		},
+		"pair": "exhibitionist"
+	}
+}

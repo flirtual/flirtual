@@ -1,0 +1,61 @@
+{
+	"advertising": {
+		"details": "Publicidade. O perfil parece servir sobretudo para promover uma conta ou um serviço externo. Pode mencionar as suas redes sociais ou o seu trabalho no perfil, mas o objetivo principal do perfil deve ser procurar encontros ou amizades. Para reativar a conta, pode responder a este e-mail para recorrer do banimento e atualizar o perfil.",
+		"name": "Publicidade"
+	},
+	"ban_evasion": {
+		"details": "Evasão de banimento. Ao que parece, foi criada uma nova conta ou foi contornado de outra forma um banimento anterior no {brand_name}. Para recorrer de um banimento anterior e reativar a conta, pode responder ao e-mail original do banimento.",
+		"name": "Evasão de banimento"
+	},
+	"duplicate_account": {
+		"details": "Conta duplicada. Não é permitido criar várias contas no {brand_name}. Esta conta foi desativada, mas pode continuar a usar a outra. Caso considere que a conta foi banida por engano, ou prefira que seja desativada a outra conta em vez desta, responda a este e-mail.",
+		"name": "Conta duplicada"
+	},
+	"harassment": {
+		"details": "Assédio. Para recorrer do banimento e reativar a conta, responda a este e-mail. Informamos que não podemos partilhar detalhes de denúncias à moderação, caso existam.",
+		"name": "Assédio"
+	},
+	"hateful_content": {
+		"details": "Conteúdo de ódio. Conteúdo de ódio em perfis ou mensagens não tem lugar no {brand_name}. Caso considere que a conta foi banida por engano, pode responder a este e-mail para recorrer e reativar a conta.",
+		"name": "Conteúdo de ódio"
+	},
+	"illegal_content": {
+		"details": "Conteúdo ilegal. O perfil ou a atividade na conta parecem violar a lei canadiana ou local. Caso considere que a conta foi banida por engano, pode responder a este e-mail para recorrer.",
+		"name": "Conteúdo ilegal"
+	},
+	"impersonation": {
+		"details": "Usurpação de identidade. O perfil parece estar a fazer-se passar por outra pessoa. Caso considere que a conta foi banida por engano, pode responder a este e-mail para recorrer e reativar a conta.",
+		"name": "Usurpação de identidade"
+	},
+	"nsfw_content": {
+		"details": "Nudez ou conteúdo sexual explícito. Não são permitidas no {brand_name} imagens de nudez ou de conteúdo sexual explícito, nem texto excessivamente obsceno. Para reativar a conta, pode responder a este e-mail para recorrer do banimento e atualizar o perfil.",
+		"name": "Nudez ou conteúdo sexual explícito"
+	},
+	"other": {
+		"name": "Outro motivo"
+	},
+	"scam": {
+		"details": "Burla, malware ou links maliciosos. O perfil parece conter links ou atividade maliciosos. Caso considere que a conta foi banida por engano, pode responder a este e-mail para recorrer.",
+		"name": "Burla, malware ou links maliciosos"
+	},
+	"self_harm": {
+		"details": "Conteúdo de automutilação. O perfil ou a atividade na conta foram assinalados por conterem referências a automutilação que podem ser perturbadoras para outras pessoas. Temos alguns recursos de saúde mental em https://flirtu.al/mentalhealth que podem ajudar. Cuide de si. Para recorrer deste banimento, responda a este e-mail.",
+		"name": "Conteúdo de automutilação"
+	},
+	"soliciting_money": {
+		"details": "Pedido de dinheiro. Não é permitido pedir dinheiro no {brand_name}. Para reativar a conta, pode responder a este e-mail para recorrer do banimento e retirar do perfil qualquer pedido de dinheiro.",
+		"name": "Pedido de dinheiro"
+	},
+	"spam": {
+		"details": "Perfil de spam. O conteúdo do perfil foi assinalado como spam. Para reativar a conta, pode responder a este e-mail e recorrer do banimento. Poderemos pedir que acrescente mais informações ao perfil.",
+		"name": "Spam"
+	},
+	"underage": {
+		"details": "Menor de idade. É necessário ter pelo menos 18 anos para usar o {brand_name}. Caso considere que a conta foi banida por engano, pode iniciar sessão no {brand_name} e verificar a sua idade de forma segura para recuperar a conta.",
+		"name": "Menor de idade"
+	},
+	"violent_content": {
+		"details": "Conteúdo violento/perturbador. O perfil parece conter conteúdo violento ou perturbador. Para recorrer deste banimento, responda a este e-mail.",
+		"name": "Conteúdo violento/perturbador"
+	}
+}

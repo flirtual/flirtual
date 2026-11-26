@@ -1,0 +1,884 @@
+{
+	"3d_modeling": {
+		"name": "3Dモデリング"
+	},
+	"3d_printing": {
+		"name": "3Dプリント 🖨️"
+	},
+	"420_friendly": {
+		"name": "420フレンドリー 🍁"
+	},
+	"acts_of_service": {
+		"name": "サービス行為 🤝"
+	},
+	"adventurer": {
+		"name": "冒険好き"
+	},
+	"aesthetics": {
+		"name": "美 学 ✨"
+	},
+	"airsoft": {
+		"name": "サバゲー"
+	},
+	"alternative": {
+		"name": "オルタナティブ 🎸"
+	},
+	"always_in_dark_mode": {
+		"name": "常にダークモード 🌚"
+	},
+	"among_us": {
+		"name": "Among Us"
+	},
+	"animals": {
+		"name": "動物"
+	},
+	"anime": {
+		"name": "アニメ 🌸"
+	},
+	"apex_legends": {
+		"name": "Apex Legends"
+	},
+	"aquarius": {
+		"name": "水瓶座 ♒️"
+	},
+	"arc_raiders": {
+		"name": "ARC Raiders"
+	},
+	"aries": {
+		"name": "牡羊座 ♈️"
+	},
+	"art": {
+		"name": "アート 🎨"
+	},
+	"avakin_life": {
+		"name": "Avakin Life"
+	},
+	"avatar_creator": {
+		"name": "アバター制作 🛠️"
+	},
+	"aviation": {
+		"name": "飛行機 ✈️"
+	},
+	"bad_at_directions": {
+		"name": "方向音痴 🧭"
+	},
+	"baldurs_gate_3": {
+		"name": "バルダーズ・ゲート3"
+	},
+	"baseball": {
+		"name": "野球 ⚾️"
+	},
+	"basketball": {
+		"name": "バスケ 🏀"
+	},
+	"battlefield": {
+		"name": "バトルフィールド"
+	},
+	"biking": {
+		"name": "サイクリング 🚲"
+	},
+	"board_games": {
+		"name": "ボードゲーム 🎲"
+	},
+	"booth_avatars": {
+		"name": "BOOTHアバター"
+	},
+	"caffeinated": {
+		"name": "カフェイン中毒 ☕️"
+	},
+	"call_of_duty": {
+		"name": "コール オブ デューティ"
+	},
+	"camping": {
+		"name": "キャンプ 🏕️"
+	},
+	"cancer": {
+		"name": "蟹座 ♋️"
+	},
+	"capricorn": {
+		"name": "山羊座 ♑️"
+	},
+	"cars": {
+		"name": "車 🚗"
+	},
+	"cartoons": {
+		"name": "カートゥーン"
+	},
+	"cats": {
+		"name": "猫 🐈"
+	},
+	"chaotic_evil": {
+		"name": "混沌にして悪"
+	},
+	"chaotic_good": {
+		"name": "混沌にして善"
+	},
+	"chaotic_neutral": {
+		"name": "混沌にして中立"
+	},
+	"chess": {
+		"name": "チェス ♟️"
+	},
+	"chillin_like_a_villain": {
+		"name": "のんびりまったり 😎"
+	},
+	"chuunibyou": {
+		"name": "中二病"
+	},
+	"classical": {
+		"name": "クラシック 🎻"
+	},
+	"clubbing": {
+		"name": "クラブ遊び 🪩"
+	},
+	"comedy": {
+		"name": "お笑い"
+	},
+	"comics": {
+		"name": "アメコミ"
+	},
+	"concerts": {
+		"name": "ライブ"
+	},
+	"content_creator": {
+		"name": "コンテンツクリエイター"
+	},
+	"cooking": {
+		"name": "料理 🍳"
+	},
+	"cosplay": {
+		"name": "コスプレ 👘"
+	},
+	"cottagecore": {
+		"name": "コテージコア 🌻"
+	},
+	"counter_strike": {
+		"name": "Counter Strike"
+	},
+	"country": {
+		"name": "カントリー 🤠"
+	},
+	"cuddles": {
+		"name": "ハグ 🥰"
+	},
+	"cyberpunk": {
+		"name": "サイバーパンク"
+	},
+	"dad_jokester": {
+		"name": "おやじギャグ担当"
+	},
+	"dancing": {
+		"name": "ダンス 💃"
+	},
+	"dead_by_daylight": {
+		"name": "Dead by Daylight"
+	},
+	"deaf": {
+		"name": "ろう者"
+	},
+	"destiny_2": {
+		"name": "Destiny 2"
+	},
+	"disney": {
+		"name": "ディズニー"
+	},
+	"diy": {
+		"name": "DIY 🛠️"
+	},
+	"djing": {
+		"name": "DJ 🎧"
+	},
+	"documentaries": {
+		"name": "ドキュメンタリー"
+	},
+	"dogs": {
+		"name": "犬 🐶"
+	},
+	"dota_2": {
+		"name": "Dota 2"
+	},
+	"drawing": {
+		"name": "お絵描き 🖋️"
+	},
+	"drinking_buddies": {
+		"name": "飲み友達 🍻"
+	},
+	"driving_sims": {
+		"name": "レースシム 🏎️"
+	},
+	"dungeons_and_dragons": {
+		"name": "ダンジョンズ＆ドラゴンズ 🏰"
+	},
+	"elden_ring": {
+		"name": "Elden Ring"
+	},
+	"electronic": {
+		"name": "エレクトロニック 🎛️"
+	},
+	"emo": {
+		"name": "エモ 🖤"
+	},
+	"emotional_support_homie": {
+		"name": "癒やし担当の友達"
+	},
+	"enfj": {
+		"name": "ENFJ（主人公）"
+	},
+	"enfp": {
+		"name": "ENFP（運動家）"
+	},
+	"entj": {
+		"name": "ENTJ（指揮官）"
+	},
+	"entp": {
+		"name": "ENTP（討論者）"
+	},
+	"esfj": {
+		"name": "ESFJ（領事）"
+	},
+	"esfp": {
+		"name": "ESFP（エンターテイナー）"
+	},
+	"esports": {
+		"name": "eスポーツ"
+	},
+	"estj": {
+		"name": "ESTJ（幹部）"
+	},
+	"estp": {
+		"name": "ESTP（起業家）"
+	},
+	"exploring_worlds": {
+		"name": "ワールド巡り 🗺️"
+	},
+	"fan_fiction": {
+		"name": "二次創作"
+	},
+	"fantasy": {
+		"name": "ファンタジー 🐉"
+	},
+	"fashion": {
+		"name": "ファッション"
+	},
+	"femboy": {
+		"name": "男の娘"
+	},
+	"fighting_games": {
+		"name": "格闘ゲーム 🥊"
+	},
+	"final_fantasy_xiv": {
+		"name": "ファイナルファンタジーXIV"
+	},
+	"fishing": {
+		"name": "釣り 🎣"
+	},
+	"fitness": {
+		"name": "筋トレ 💪"
+	},
+	"five_nights_at_freddys": {
+		"name": "Five Nights at Freddy's"
+	},
+	"flight_sims": {
+		"name": "フライトシム ✈️"
+	},
+	"food": {
+		"name": "グルメ 🍕"
+	},
+	"football": {
+		"name": "アメフト 🏈"
+	},
+	"forklift_certified": {
+		"name": "フォークリフト免許持ち 🦺"
+	},
+	"fortnite": {
+		"name": "フォートナイト"
+	},
+	"fps": {
+		"name": "FPS 🔫"
+	},
+	"furry": {
+		"name": "ケモノ 🐾"
+	},
+	"gacha": {
+		"name": "ソシャゲ 🎰"
+	},
+	"game_dev": {
+		"name": "ゲーム開発"
+	},
+	"gaming": {
+		"name": "ゲーム 🎮"
+	},
+	"gardening": {
+		"name": "ガーデニング 🪴"
+	},
+	"gemini": {
+		"name": "双子座 ♊️"
+	},
+	"genshin_impact": {
+		"name": "原神"
+	},
+	"gifts": {
+		"name": "贈り物 🎁"
+	},
+	"golf": {
+		"name": "ゴルフ ⛳️"
+	},
+	"goth": {
+		"name": "ゴス 🕷️"
+	},
+	"grand_theft_auto": {
+		"name": "グランド・セフト・オート"
+	},
+	"guitar": {
+		"name": "ギター 🎸"
+	},
+	"guns": {
+		"name": "銃"
+	},
+	"halo": {
+		"name": "Halo"
+	},
+	"headpats": {
+		"name": "なでなで"
+	},
+	"helldivers_2": {
+		"name": "Helldivers 2"
+	},
+	"hiking": {
+		"name": "ハイキング 🥾"
+	},
+	"hip_hop": {
+		"name": "ヒップホップ 💿"
+	},
+	"hippie": {
+		"name": "ヒッピー 🌼"
+	},
+	"history": {
+		"name": "歴史 📜"
+	},
+	"hockey": {
+		"name": "アイスホッケー 🏒"
+	},
+	"honkai_star_rail": {
+		"name": "崩壊：スターレイル"
+	},
+	"horror": {
+		"name": "ホラー 👻"
+	},
+	"hunting": {
+		"name": "狩猟 🦌"
+	},
+	"imvu": {
+		"name": "IMVU"
+	},
+	"indie": {
+		"name": "インディーズ 📼"
+	},
+	"indie_games": {
+		"name": "インディーゲーム 🕹️"
+	},
+	"infj": {
+		"name": "INFJ（提唱者）"
+	},
+	"infp": {
+		"name": "INFP（仲介者）"
+	},
+	"intj": {
+		"name": "INTJ（建築家）"
+	},
+	"intp": {
+		"name": "INTP（論理学者）"
+	},
+	"isfj": {
+		"name": "ISFJ（擁護者）"
+	},
+	"isfp": {
+		"name": "ISFP（冒険家）"
+	},
+	"istj": {
+		"name": "ISTJ（管理者）"
+	},
+	"istp": {
+		"name": "ISTP（巨匠）"
+	},
+	"jazz": {
+		"name": "ジャズ 🎷"
+	},
+	"jpop": {
+		"name": "J-POP 🇯🇵"
+	},
+	"jrpgs": {
+		"name": "JRPG 🎌"
+	},
+	"karaoke": {
+		"name": "カラオケ 🎤"
+	},
+	"kawaii": {
+		"name": "かわいい 💖"
+	},
+	"kdrama": {
+		"name": "韓国ドラマ 🇰🇷"
+	},
+	"kingdom_hearts": {
+		"name": "キングダム ハーツ"
+	},
+	"kpop": {
+		"name": "K-POP 🇰🇷"
+	},
+	"language_learning": {
+		"name": "語学"
+	},
+	"latin": {
+		"name": "ラテン 💃"
+	},
+	"lawful_evil": {
+		"name": "秩序にして悪"
+	},
+	"lawful_good": {
+		"name": "秩序にして善"
+	},
+	"lawful_neutral": {
+		"name": "秩序にして中立"
+	},
+	"league_of_legends": {
+		"name": "リーグ・オブ・レジェンド"
+	},
+	"leo": {
+		"name": "獅子座 ♌️"
+	},
+	"lgbtq": {
+		"name": "LGBTQ+ 🏳️‍🌈"
+	},
+	"libra": {
+		"name": "天秤座 ♎️"
+	},
+	"literally_just_vibing": {
+		"name": "ただチルってるだけ"
+	},
+	"lives_in_vr": {
+		"name": "VR住人 🥽"
+	},
+	"long_walks_on_the_beach": {
+		"name": "海辺をのんびり散歩 🏖️"
+	},
+	"looking_for_group": {
+		"name": "ゲーム仲間募集 🎮"
+	},
+	"magic_the_gathering": {
+		"name": "マジック：ザ・ギャザリング"
+	},
+	"manga": {
+		"name": "漫画 📚"
+	},
+	"manhwa": {
+		"name": "韓国漫画 🇰🇷"
+	},
+	"martial_arts": {
+		"name": "格闘技 🥋"
+	},
+	"marvel": {
+		"name": "マーベル"
+	},
+	"marvel_rivals": {
+		"name": "マーベル・ライバルズ"
+	},
+	"mech_pilot": {
+		"name": "ロボ乗り 🤖"
+	},
+	"meditation": {
+		"name": "瞑想 🧘"
+	},
+	"memelord": {
+		"name": "ミーム職人"
+	},
+	"metal": {
+		"name": "メタル 🤘"
+	},
+	"military": {
+		"name": "ミリタリー"
+	},
+	"mind_explorer": {
+		"name": "意識の探検家 🧠"
+	},
+	"mirror_dweller": {
+		"name": "鏡の住人 🪞"
+	},
+	"mmos": {
+		"name": "MMO 🌐"
+	},
+	"mobas": {
+		"name": "MOBA ⚔️"
+	},
+	"monster_hunter": {
+		"name": "モンスターハンター"
+	},
+	"motorcycles": {
+		"name": "バイク 🏍️"
+	},
+	"movies": {
+		"name": "映画 🍿"
+	},
+	"music": {
+		"name": "音楽 🎵"
+	},
+	"music_production": {
+		"name": "音楽制作 🎧"
+	},
+	"mute": {
+		"name": "無言勢"
+	},
+	"mystery": {
+		"name": "ミステリー 🔎"
+	},
+	"nature": {
+		"name": "自然 🌲"
+	},
+	"nerd": {
+		"name": "ギーク 🤓"
+	},
+	"neutral_evil": {
+		"name": "中立にして悪"
+	},
+	"neutral_good": {
+		"name": "中立にして善"
+	},
+	"nintendo": {
+		"name": "任天堂"
+	},
+	"old_soul": {
+		"name": "渋好み"
+	},
+	"osu": {
+		"name": "osu!"
+	},
+	"otaku": {
+		"name": "オタク"
+	},
+	"overwatch": {
+		"name": "オーバーウォッチ"
+	},
+	"paranormal_investigator": {
+		"name": "心霊調査員 👻"
+	},
+	"partner_in_crime": {
+		"name": "相棒募集"
+	},
+	"party_animal": {
+		"name": "パリピ 🎉"
+	},
+	"path_of_exile": {
+		"name": "Path of Exile"
+	},
+	"persona": {
+		"name": "ペルソナ"
+	},
+	"phantom_sense": {
+		"name": "ファントムセンス"
+	},
+	"philosophy": {
+		"name": "哲学"
+	},
+	"photography": {
+		"name": "写真 📸"
+	},
+	"physical_touch": {
+		"name": "スキンシップ 🫂"
+	},
+	"piano": {
+		"name": "ピアノ 🎹"
+	},
+	"pisces": {
+		"name": "魚座 ♓️"
+	},
+	"pokemon": {
+		"name": "ポケモン"
+	},
+	"politics": {
+		"name": "政治"
+	},
+	"pool": {
+		"name": "ビリヤード 🎱"
+	},
+	"pop": {
+		"name": "ポップス 🌟"
+	},
+	"pretty_rave_girl": {
+		"name": "レイブ女子"
+	},
+	"programming": {
+		"name": "プログラミング ⌨️"
+	},
+	"psychology": {
+		"name": "心理学"
+	},
+	"pubg": {
+		"name": "PUBG: Battlegrounds"
+	},
+	"punk": {
+		"name": "パンク 🧷"
+	},
+	"puzzles": {
+		"name": "パズル 🧩"
+	},
+	"quality_time": {
+		"name": "クオリティ・タイム ⏳"
+	},
+	"rainbow_six_siege": {
+		"name": "レインボーシックス シージ"
+	},
+	"reading": {
+		"name": "読書 📖"
+	},
+	"religious": {
+		"name": "信仰あり"
+	},
+	"retro_games": {
+		"name": "レトロゲーム 👾"
+	},
+	"rhythm_games": {
+		"name": "音ゲー 🎼"
+	},
+	"rnb": {
+		"name": "R&B 🎤"
+	},
+	"rock": {
+		"name": "ロック 🥁"
+	},
+	"rocket_league": {
+		"name": "ロケットリーグ"
+	},
+	"roleplaying": {
+		"name": "ロールプレイ 🎭"
+	},
+	"rpgs": {
+		"name": "RPG 🧙"
+	},
+	"running": {
+		"name": "ランニング 🏃"
+	},
+	"rust": {
+		"name": "Rust"
+	},
+	"sagittarius": {
+		"name": "射手座 ♐️"
+	},
+	"science": {
+		"name": "科学 🔬"
+	},
+	"scifi": {
+		"name": "SF 👽"
+	},
+	"scorpio": {
+		"name": "蠍座 ♏️"
+	},
+	"second_life": {
+		"name": "Second Life"
+	},
+	"seeking_a_third": {
+		"name": "3人目募集"
+	},
+	"shy": {
+		"name": "人見知り 🙈"
+	},
+	"sign_language": {
+		"name": "手話"
+	},
+	"singing": {
+		"name": "歌 🎤"
+	},
+	"skateboarding": {
+		"name": "スケボー 🛹"
+	},
+	"skating": {
+		"name": "スケート ⛸️"
+	},
+	"sleep_calls": {
+		"name": "寝落ち通話"
+	},
+	"sleeps_in_vr": {
+		"name": "VR睡眠"
+	},
+	"sneakers": {
+		"name": "スニーカー 👟"
+	},
+	"snowboarding": {
+		"name": "スノボ 🏂"
+	},
+	"soccer": {
+		"name": "サッカー ⚽️"
+	},
+	"social_butterfly": {
+		"name": "コミュ力おばけ 🦋"
+	},
+	"social_games": {
+		"name": "パーティーゲーム 💬"
+	},
+	"socially_awkward": {
+		"name": "コミュ障"
+	},
+	"space": {
+		"name": "宇宙 🪐"
+	},
+	"speedrunning": {
+		"name": "RTA"
+	},
+	"spiritual": {
+		"name": "スピリチュアル"
+	},
+	"sports": {
+		"name": "スポーツ"
+	},
+	"sports_games": {
+		"name": "スポーツゲーム ⚽️"
+	},
+	"star_wars": {
+		"name": "スター・ウォーズ"
+	},
+	"stardew_valley": {
+		"name": "Stardew Valley"
+	},
+	"strategy_games": {
+		"name": "ストラテジーゲーム ♟️"
+	},
+	"streaming": {
+		"name": "配信 🎥"
+	},
+	"student": {
+		"name": "学生 🎓"
+	},
+	"survival_games": {
+		"name": "サバイバル系ゲーム 🏕️"
+	},
+	"sweets": {
+		"name": "スイーツ 🍰"
+	},
+	"swimming": {
+		"name": "水泳 🏊"
+	},
+	"tattoos": {
+		"name": "タトゥー"
+	},
+	"taurus": {
+		"name": "牡牛座 ♉️"
+	},
+	"team_fortress_2": {
+		"name": "Team Fortress 2"
+	},
+	"technology": {
+		"name": "テクノロジー 💾"
+	},
+	"tennis": {
+		"name": "テニス 🎾"
+	},
+	"terraria": {
+		"name": "テラリア"
+	},
+	"the_sims": {
+		"name": "ザ・シムズ"
+	},
+	"theater": {
+		"name": "演劇 🎭"
+	},
+	"time_traveler": {
+		"name": "タイムトラベラー ⏳"
+	},
+	"touhou": {
+		"name": "東方Project"
+	},
+	"travel": {
+		"name": "旅行 🧳"
+	},
+	"true_crime": {
+		"name": "トゥルークライム 🕵️"
+	},
+	"true_neutral": {
+		"name": "真なる中立"
+	},
+	"tsundere": {
+		"name": "ツンデレ 💢"
+	},
+	"tv": {
+		"name": "テレビ 📺"
+	},
+	"twitch": {
+		"name": "Twitch"
+	},
+	"undertale": {
+		"name": "Undertale"
+	},
+	"valorant": {
+		"name": "Valorant"
+	},
+	"vaporwave": {
+		"name": "ヴェイパーウェイヴ 🌊"
+	},
+	"vegan": {
+		"name": "ヴィーガン 🌱"
+	},
+	"videography": {
+		"name": "動画制作 🎥"
+	},
+	"virgo": {
+		"name": "乙女座 ♍️"
+	},
+	"virtual_nomad": {
+		"name": "VR放浪者"
+	},
+	"visual_novels": {
+		"name": "ノベルゲーム 📖"
+	},
+	"vocaloid": {
+		"name": "ボーカロイド"
+	},
+	"voice_acting": {
+		"name": "声劇・アフレコ 🎙️"
+	},
+	"volleyball": {
+		"name": "バレーボール 🏐"
+	},
+	"volunteering": {
+		"name": "ボランティア 🤝"
+	},
+	"vtuber": {
+		"name": "VTuber"
+	},
+	"warframe": {
+		"name": "Warframe"
+	},
+	"warhammer": {
+		"name": "ウォーハンマー"
+	},
+	"witchcraft": {
+		"name": "魔術・オカルト 🧙‍♀️"
+	},
+	"words_of_affirmation": {
+		"name": "肯定的な言葉 💬"
+	},
+	"world_creator": {
+		"name": "ワールド制作 🛠️"
+	},
+	"world_of_warcraft": {
+		"name": "World of Warcraft"
+	},
+	"writing": {
+		"name": "小説・文章を書く ✍️"
+	},
+	"wuthering_waves": {
+		"name": "鳴潮"
+	},
+	"yandere": {
+		"name": "ヤンデレ 😍"
+	},
+	"yoga": {
+		"name": "ヨガ 🧘"
+	},
+	"youtube": {
+		"name": "YouTube"
+	},
+	"zen_as_heck": {
+		"name": "悟りの境地 🪷"
+	},
+	"zepeto": {
+		"name": "Zepeto"
+	}
+}

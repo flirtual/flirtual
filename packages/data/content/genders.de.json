@@ -1,0 +1,112 @@
+{
+	"agender": {
+		"definition": "Eine Person, die sich mit keinem Geschlecht identifiziert oder keins empfindet.",
+		"definition_link": "https://nonbinary.wiki/wiki/Agender",
+		"name": "Agender"
+	},
+	"androgynous": {
+		"definition": "Eine Person mit einer Mischung aus männlichen und weiblichen Merkmalen.",
+		"definition_link": "https://nonbinary.wiki/wiki/Androgyny",
+		"name": "Androgyn"
+	},
+	"bigender": {
+		"definition": "Eine Person, die zwei Geschlechtsidentitäten erlebt.",
+		"definition_link": "https://nonbinary.wiki/wiki/Bigender",
+		"name": "Bigender"
+	},
+	"cis_man": {
+		"definition": "Ein Mann, dessen Geschlechtsidentität dem bei der Geburt zugewiesenen Geschlecht entspricht.",
+		"definition_link": "https://nonbinary.wiki/wiki/Cisgender_men",
+		"name": "Cis-Mann"
+	},
+	"cis_woman": {
+		"definition": "Eine Frau, deren Geschlechtsidentität dem bei der Geburt zugewiesenen Geschlecht entspricht.",
+		"definition_link": "https://nonbinary.wiki/wiki/Cisgender_women",
+		"name": "Cis-Frau"
+	},
+	"gender_nonconforming": {
+		"definition": "Eine Person, die gesellschaftlichen Erwartungen oder Normen an das Geschlecht nicht folgt.",
+		"definition_link": "https://nonbinary.wiki/wiki/Gender_nonconformity",
+		"name": "Gender-nonkonform"
+	},
+	"genderfluid": {
+		"definition": "Eine Person, deren Geschlecht sich im Lauf der Zeit verändert.",
+		"definition_link": "https://nonbinary.wiki/wiki/Genderfluid",
+		"name": "Genderfluid"
+	},
+	"genderqueer": {
+		"definition": "Eine Person, deren Geschlecht außerhalb des traditionellen binären Geschlechtersystems liegt.",
+		"definition_link": "https://nonbinary.wiki/wiki/Genderqueer",
+		"name": "Genderqueer"
+	},
+	"he_him": {
+		"name": "er/ihm"
+	},
+	"hijra": {
+		"definition": "Ein drittes Geschlecht in südasiatischen Kulturen.",
+		"definition_link": "https://nonbinary.wiki/wiki/Hijra",
+		"name": "Hijra"
+	},
+	"intersex": {
+		"definition": "Eine Person, die mit Geschlechtsmerkmalen geboren wurde, die nicht den typischen Definitionen männlicher oder weiblicher Körper entsprechen.",
+		"definition_link": "https://nonbinary.wiki/wiki/Intersex",
+		"name": "Intergeschlechtlich"
+	},
+	"man": {
+		"name": "Mann",
+		"plural": "Männer"
+	},
+	"nonbinary": {
+		"definition": "Eine Person, deren Geschlecht außerhalb der Zweigeschlechtlichkeit liegt.",
+		"definition_link": "https://nonbinary.wiki/wiki/Nonbinary",
+		"name": "Nichtbinär"
+	},
+	"other": {
+		"name": "Andere"
+	},
+	"pangender": {
+		"definition": "Eine Person, die sich mit mehreren oder allen Geschlechtern identifiziert.",
+		"definition_link": "https://nonbinary.wiki/wiki/Pangender",
+		"name": "Pangender"
+	},
+	"she_her": {
+		"name": "sie/ihr"
+	},
+	"they_them": {
+		"name": "they/them"
+	},
+	"trans_man": {
+		"definition": "Ein Mann, dem bei der Geburt das weibliche Geschlecht zugewiesen wurde.",
+		"definition_link": "https://nonbinary.wiki/wiki/Transgender_men",
+		"name": "Trans Mann"
+	},
+	"trans_woman": {
+		"definition": "Eine Frau, der bei der Geburt das männliche Geschlecht zugewiesen wurde.",
+		"definition_link": "https://nonbinary.wiki/wiki/Transgender_women",
+		"name": "Trans Frau"
+	},
+	"transfeminine": {
+		"definition": "Eine Person mit weiblicher Geschlechtsidentität, der bei der Geburt das männliche Geschlecht zugewiesen wurde.",
+		"definition_link": "https://nonbinary.wiki/wiki/Transfeminine",
+		"name": "Transfeminin"
+	},
+	"transgender": {
+		"definition": "Eine Person, deren Geschlechtsidentität nicht dem bei der Geburt zugewiesenen Geschlecht entspricht.",
+		"definition_link": "https://nonbinary.wiki/wiki/Transgender",
+		"name": "Transgender"
+	},
+	"transmasculine": {
+		"definition": "Eine Person mit männlicher Geschlechtsidentität, der bei der Geburt das weibliche Geschlecht zugewiesen wurde.",
+		"definition_link": "https://nonbinary.wiki/wiki/Transmasculine",
+		"name": "Transmaskulin"
+	},
+	"two_spirit": {
+		"definition": "Ein drittes Geschlecht in indigenen Kulturen Nordamerikas.",
+		"definition_link": "https://nonbinary.wiki/wiki/Two-spirit",
+		"name": "Two Spirit"
+	},
+	"woman": {
+		"name": "Frau",
+		"plural": "Frauen"
+	}
+}

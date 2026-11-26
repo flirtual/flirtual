@@ -1,0 +1,41 @@
+{
+	"advertising": {
+		"details": "Bitte reduzieren Sie Werbung und werbliche Inhalte in Ihrem Profil. Ihr Profil sollte in erster Linie dazu dienen, Dates oder Freunde zu finden.",
+		"name": "Werbung"
+	},
+	"be_kind": {
+		"details": "Aufgrund aktueller Meldung(en) bitten wir Sie, freundlich und respektvoll mit anderen Mitgliedern umzugehen.",
+		"name": "Freundlich & respektvoll sein"
+	},
+	"hateful_content": {
+		"details": "Bitte entfernen Sie hasserfüllte Inhalte aus Ihrem Profil, da diese gegen unsere Community-Richtlinien verstoßen.",
+		"name": "Hasserfüllte Inhalte"
+	},
+	"inactive": {
+		"details": "Bitte aktualisieren Sie Ihre Bio, wenn Sie zu {brand_name} zurückkehren. Wenn Sie eine Pause einlegen oder {brand_name} verlassen möchten, können Sie Ihr Konto in den Einstellungen vorübergehend deaktivieren oder dauerhaft löschen.",
+		"name": "Inaktives Konto"
+	},
+	"nsfw_bio": {
+		"details": "Bitte halten Sie explizite sexuelle Inhalte in Ihrer Bio auf ein Minimum und entfernen Sie drastische Beschreibungen oder Kinks. Dafür können Sie in den Einstellungen die Kink-Tags von {brand_name} oder eigene Interessen verwenden.",
+		"name": "Explizite Bio"
+	},
+	"nsfw_picture": {
+		"details": "Bilder mit Nacktheit oder expliziten sexuellen Inhalten wurden aus Ihrem Profil entfernt. Bitte laden Sie nur jugendfreie Bilder hoch.",
+		"name": "Explizites Bild entfernt"
+	},
+	"other": {
+		"name": "Sonstiges"
+	},
+	"soliciting": {
+		"details": "Bitte entfernen Sie alle Geldanfragen und kommerziellen Angebote aus Ihrem Profil. Bitten um Geld sowie Hinweise auf und Links zu kommerziellen Diensten sind auf {brand_name} nicht erlaubt.",
+		"name": "Betteln & kommerzielle Angebote"
+	},
+	"spam": {
+		"details": "Bitte aktualisieren Sie Ihre Bio und laden Sie eigene Bilder Ihres VR-Avatars hoch, damit Ihr Profil nicht als Spam markiert wird.",
+		"name": "Spam-Bio & -Bilder"
+	},
+	"upload_evidence": {
+		"details": "Bitte laden Sie weitere Beweise zu Ihrer kürzlichen Meldung hoch. Sie können unter https://hello.flirtu.al oder https://discord.gg/flirtual ein Ticket erstellen.",
+		"name": "Beweise hochladen"
+	}
+}

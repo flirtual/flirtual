@@ -1,0 +1,112 @@
+{
+	"agender": {
+		"definition": "Någon som inte identifierar sig med eller upplever något kön.",
+		"definition_link": "https://nonbinary.wiki/wiki/Agender",
+		"name": "Agender"
+	},
+	"androgynous": {
+		"definition": "Någon med en kombination av maskulina och feminina drag.",
+		"definition_link": "https://nonbinary.wiki/wiki/Androgyny",
+		"name": "Androgyn"
+	},
+	"bigender": {
+		"definition": "Någon som upplever två könsidentiteter.",
+		"definition_link": "https://nonbinary.wiki/wiki/Bigender",
+		"name": "Bigender"
+	},
+	"cis_man": {
+		"definition": "En man vars könsidentitet stämmer överens med det kön han tilldelades vid födseln.",
+		"definition_link": "https://nonbinary.wiki/wiki/Cisgender_men",
+		"name": "Cisman"
+	},
+	"cis_woman": {
+		"definition": "En kvinna vars könsidentitet stämmer överens med det kön hon tilldelades vid födseln.",
+		"definition_link": "https://nonbinary.wiki/wiki/Cisgender_women",
+		"name": "Ciskvinna"
+	},
+	"gender_nonconforming": {
+		"definition": "Någon som inte följer samhällets förväntningar eller normer kring kön.",
+		"definition_link": "https://nonbinary.wiki/wiki/Gender_nonconformity",
+		"name": "Könsnormbrytande"
+	},
+	"genderfluid": {
+		"definition": "Någon vars kön varierar över tid.",
+		"definition_link": "https://nonbinary.wiki/wiki/Genderfluid",
+		"name": "Genderfluid"
+	},
+	"genderqueer": {
+		"definition": "Någon vars kön ligger utanför den traditionella könsbinären.",
+		"definition_link": "https://nonbinary.wiki/wiki/Genderqueer",
+		"name": "Genderqueer"
+	},
+	"he_him": {
+		"name": "Han/honom"
+	},
+	"hijra": {
+		"definition": "Ett tredje kön i sydasiatiska kulturer.",
+		"definition_link": "https://nonbinary.wiki/wiki/Hijra",
+		"name": "Hijra"
+	},
+	"intersex": {
+		"definition": "Någon som är född med könskarakteristika som inte passar in i de typiska definitionerna av manliga eller kvinnliga kroppar.",
+		"definition_link": "https://nonbinary.wiki/wiki/Intersex",
+		"name": "Intersex"
+	},
+	"man": {
+		"name": "Man",
+		"plural": "Män"
+	},
+	"nonbinary": {
+		"definition": "Någon vars kön ligger utanför könsbinären.",
+		"definition_link": "https://nonbinary.wiki/wiki/Nonbinary",
+		"name": "Ickebinär"
+	},
+	"other": {
+		"name": "Annat"
+	},
+	"pangender": {
+		"definition": "Någon som identifierar sig med flera eller alla kön.",
+		"definition_link": "https://nonbinary.wiki/wiki/Pangender",
+		"name": "Pangender"
+	},
+	"she_her": {
+		"name": "Hon/henne"
+	},
+	"they_them": {
+		"name": "Hen/hen"
+	},
+	"trans_man": {
+		"definition": "En man som tilldelades kvinnligt kön vid födseln.",
+		"definition_link": "https://nonbinary.wiki/wiki/Transgender_men",
+		"name": "Transman"
+	},
+	"trans_woman": {
+		"definition": "En kvinna som tilldelades manligt kön vid födseln.",
+		"definition_link": "https://nonbinary.wiki/wiki/Transgender_women",
+		"name": "Transkvinna"
+	},
+	"transfeminine": {
+		"definition": "Någon med en feminin könsidentitet som tilldelades manligt kön vid födseln.",
+		"definition_link": "https://nonbinary.wiki/wiki/Transfeminine",
+		"name": "Transfeminin"
+	},
+	"transgender": {
+		"definition": "Någon vars könsidentitet inte stämmer överens med det kön som tilldelades vid födseln.",
+		"definition_link": "https://nonbinary.wiki/wiki/Transgender",
+		"name": "Transperson"
+	},
+	"transmasculine": {
+		"definition": "Någon med en maskulin könsidentitet som tilldelades kvinnligt kön vid födseln.",
+		"definition_link": "https://nonbinary.wiki/wiki/Transmasculine",
+		"name": "Transmaskulin"
+	},
+	"two_spirit": {
+		"definition": "Ett tredje kön i nordamerikanska urfolkskulturer.",
+		"definition_link": "https://nonbinary.wiki/wiki/Two-spirit",
+		"name": "Two Spirit"
+	},
+	"woman": {
+		"name": "Kvinna",
+		"plural": "Kvinnor"
+	}
+}

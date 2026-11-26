@@ -1,0 +1,35 @@
+{
+	"bad_matches": {
+		"name": "Неприятный опыт с собеседниками"
+	},
+	"low_quality": {
+		"name": "Низкое качество анкет и симпатий"
+	},
+	"not_enough_dates": {
+		"name": "Мало свиданий"
+	},
+	"not_enough_matches": {
+		"name": "Мало взаимных симпатий"
+	},
+	"other": {
+		"name": "Другое"
+	},
+	"prefer_in_person_apps": {
+		"name": "Предпочитаю приложения для знакомств вживую"
+	},
+	"prefer_vr_apps": {
+		"name": "Предпочитаю другие VR-приложения для знакомств"
+	},
+	"relationship_elsewhere": {
+		"name": "У меня появилась пара в другом месте"
+	},
+	"relationship_here": {
+		"name": "У меня появилась пара в {brand_name}"
+	},
+	"taking_a_break": {
+		"name": "Хочу сделать перерыв"
+	},
+	"technical_issues": {
+		"name": "Технические проблемы"
+	}
+}

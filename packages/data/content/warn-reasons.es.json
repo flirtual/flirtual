@@ -1,0 +1,41 @@
+{
+	"advertising": {
+		"details": "Por favor, reduzca el contenido publicitario o promocional de su perfil. El objetivo principal de su perfil debe ser encontrar citas o amistades.",
+		"name": "Publicidad"
+	},
+	"be_kind": {
+		"details": "Debido a uno o más reportes recientes, le pedimos que trate a los demás miembros con amabilidad y respeto.",
+		"name": "Amabilidad y respeto"
+	},
+	"hateful_content": {
+		"details": "Por favor, elimine el contenido de odio de su perfil, ya que infringe nuestras Normas de la comunidad.",
+		"name": "Contenido de odio"
+	},
+	"inactive": {
+		"details": "Si va a volver a {brand_name}, por favor, actualice su biografía. Si se está tomando un descanso o va a dejar {brand_name}, puede desactivar temporalmente su cuenta o eliminarla de forma permanente en la Configuración.",
+		"name": "Cuenta inactiva"
+	},
+	"nsfw_bio": {
+		"details": "Por favor, reduzca al mínimo el contenido sexual explícito de su biografía y elimine las descripciones gráficas o los kinks. Puede usar las etiquetas de kinks de {brand_name} o los intereses personalizados en la Configuración.",
+		"name": "Biografía explícita"
+	},
+	"nsfw_picture": {
+		"details": "Se han eliminado de su perfil una o más imágenes con desnudos o contenido sexual explícito. Por favor, suba únicamente imágenes sin este tipo de contenido.",
+		"name": "Foto explícita eliminada"
+	},
+	"other": {
+		"name": "Otro"
+	},
+	"soliciting": {
+		"details": "Por favor, elimine de su perfil cualquier tipo de solicitud. En {brand_name} no se permite pedir dinero ni incluir menciones o enlaces a servicios comerciales.",
+		"name": "Solicitudes comerciales"
+	},
+	"spam": {
+		"details": "Por favor, actualice su biografía y suba fotos originales de su avatar de VR para evitar que su perfil se marque como spam.",
+		"name": "Biografía y fotos spam"
+	},
+	"upload_evidence": {
+		"details": "Por favor, suba pruebas adicionales para su reporte reciente. Puede crear un ticket en https://hello.flirtu.al o en https://discord.gg/flirtual.",
+		"name": "Subir pruebas"
+	}
+}

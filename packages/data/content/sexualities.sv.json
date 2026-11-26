@@ -1,0 +1,61 @@
+{
+	"asexual": {
+		"definition": "Någon som upplever liten eller ingen sexuell attraktion.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Asexuality",
+		"name": "Asexuell"
+	},
+	"bisexual": {
+		"definition": "Någon som attraheras av flera kön.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Bisexuality",
+		"name": "Bisexuell"
+	},
+	"demisexual": {
+		"definition": "Någon som bara upplever sexuell attraktion efter att ha knutit ett känslomässigt band med någon.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Demisexuality_and_Gray-Asexuality",
+		"name": "Demisexuell"
+	},
+	"experimenting_in_vr": {
+		"definition": "Någon som utforskar sin sexuella läggning i VR eller vars sexualitet skiljer sig mellan VR och verkliga livet.",
+		"name": "Experimenterar i VR"
+	},
+	"gay": {
+		"definition": "Någon som attraheras av andra av samma kön.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Gay",
+		"name": "Gay"
+	},
+	"heteroflexible": {
+		"definition": "Någon som främst attraheras av det motsatta könet men ibland även av samma kön.",
+		"definition_link": "https://www.merriam-webster.com/words-at-play/homoflexible-heteroflexible-meaning-slang-definition",
+		"name": "Heteroflexibel"
+	},
+	"homoflexible": {
+		"definition": "Någon som främst attraheras av samma kön men ibland även av det motsatta könet.",
+		"definition_link": "https://www.merriam-webster.com/words-at-play/homoflexible-heteroflexible-meaning-slang-definition",
+		"name": "Homoflexibel"
+	},
+	"lesbian": {
+		"definition": "Någon som attraheras av andra kvinnor eller feminina personer.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Lesbian",
+		"name": "Lesbisk"
+	},
+	"pansexual": {
+		"definition": "Någon som attraheras av andra oavsett kön.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Pansexuality",
+		"name": "Pansexuell"
+	},
+	"queer": {
+		"definition": "Någon med en icke-normativ sexuell läggning.",
+		"definition_link": "https://en.wikipedia.org/wiki/Queer",
+		"name": "Queer"
+	},
+	"questioning": {
+		"definition": "Någon som håller på att utforska sin sexuella läggning.",
+		"definition_link": "https://en.wikipedia.org/wiki/Questioning_%28sexuality_and_gender%29",
+		"name": "Utforskande"
+	},
+	"straight": {
+		"definition": "Någon som attraheras av det motsatta könet.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Heterosexuality",
+		"name": "Hetero"
+	}
+}

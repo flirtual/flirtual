@@ -1,0 +1,112 @@
+{
+	"agender": {
+		"definition": "어떤 성별로도 정체화하지 않거나 성별을 느끼지 않는 사람.",
+		"definition_link": "https://nonbinary.wiki/wiki/Agender",
+		"name": "에이젠더"
+	},
+	"androgynous": {
+		"definition": "남성적인 특성과 여성적인 특성을 함께 지닌 사람.",
+		"definition_link": "https://nonbinary.wiki/wiki/Androgyny",
+		"name": "안드로진"
+	},
+	"bigender": {
+		"definition": "두 가지 성별 정체성을 지닌 사람.",
+		"definition_link": "https://nonbinary.wiki/wiki/Bigender",
+		"name": "바이젠더"
+	},
+	"cis_man": {
+		"definition": "성별 정체성이 출생 시 지정된 성별과 일치하는 남성.",
+		"definition_link": "https://nonbinary.wiki/wiki/Cisgender_men",
+		"name": "시스 남성"
+	},
+	"cis_woman": {
+		"definition": "성별 정체성이 출생 시 지정된 성별과 일치하는 여성.",
+		"definition_link": "https://nonbinary.wiki/wiki/Cisgender_women",
+		"name": "시스 여성"
+	},
+	"gender_nonconforming": {
+		"definition": "사회가 기대하는 성별 규범을 따르지 않는 사람.",
+		"definition_link": "https://nonbinary.wiki/wiki/Gender_nonconformity",
+		"name": "젠더 논컨포밍"
+	},
+	"genderfluid": {
+		"definition": "성별이 시간에 따라 달라지는 사람.",
+		"definition_link": "https://nonbinary.wiki/wiki/Genderfluid",
+		"name": "젠더플루이드"
+	},
+	"genderqueer": {
+		"definition": "전통적인 성별 이분법 바깥의 성별을 지닌 사람.",
+		"definition_link": "https://nonbinary.wiki/wiki/Genderqueer",
+		"name": "젠더퀴어"
+	},
+	"he_him": {
+		"name": "He/Him"
+	},
+	"hijra": {
+		"definition": "남아시아 문화권의 제3의 성.",
+		"definition_link": "https://nonbinary.wiki/wiki/Hijra",
+		"name": "히즈라"
+	},
+	"intersex": {
+		"definition": "남성 또는 여성 신체의 일반적인 정의에 들어맞지 않는 성 특징을 가지고 태어난 사람.",
+		"definition_link": "https://nonbinary.wiki/wiki/Intersex",
+		"name": "인터섹스"
+	},
+	"man": {
+		"name": "남성",
+		"plural": "남성"
+	},
+	"nonbinary": {
+		"definition": "성별 이분법 바깥의 성별을 지닌 사람.",
+		"definition_link": "https://nonbinary.wiki/wiki/Nonbinary",
+		"name": "논바이너리"
+	},
+	"other": {
+		"name": "기타"
+	},
+	"pangender": {
+		"definition": "여러 성별 또는 모든 성별로 정체화하는 사람.",
+		"definition_link": "https://nonbinary.wiki/wiki/Pangender",
+		"name": "팬젠더"
+	},
+	"she_her": {
+		"name": "She/Her"
+	},
+	"they_them": {
+		"name": "They/Them"
+	},
+	"trans_man": {
+		"definition": "출생 시 여성으로 지정된 남성.",
+		"definition_link": "https://nonbinary.wiki/wiki/Transgender_men",
+		"name": "트랜스 남성"
+	},
+	"trans_woman": {
+		"definition": "출생 시 남성으로 지정된 여성.",
+		"definition_link": "https://nonbinary.wiki/wiki/Transgender_women",
+		"name": "트랜스 여성"
+	},
+	"transfeminine": {
+		"definition": "출생 시 남성으로 지정되었고 여성적인 성별 정체성을 지닌 사람.",
+		"definition_link": "https://nonbinary.wiki/wiki/Transfeminine",
+		"name": "트랜스페미닌"
+	},
+	"transgender": {
+		"definition": "성별 정체성이 출생 시 지정된 성별과 다른 사람.",
+		"definition_link": "https://nonbinary.wiki/wiki/Transgender",
+		"name": "트랜스젠더"
+	},
+	"transmasculine": {
+		"definition": "출생 시 여성으로 지정되었고 남성적인 성별 정체성을 지닌 사람.",
+		"definition_link": "https://nonbinary.wiki/wiki/Transmasculine",
+		"name": "트랜스매스큘린"
+	},
+	"two_spirit": {
+		"definition": "북미 원주민 문화권의 제3의 성.",
+		"definition_link": "https://nonbinary.wiki/wiki/Two-spirit",
+		"name": "투 스피릿"
+	},
+	"woman": {
+		"name": "여성",
+		"plural": "여성"
+	}
+}

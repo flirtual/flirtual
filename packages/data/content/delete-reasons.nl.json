@@ -1,0 +1,35 @@
+{
+	"bad_matches": {
+		"name": "Slechte ervaring met matches"
+	},
+	"low_quality": {
+		"name": "Matches/profielen van lage kwaliteit"
+	},
+	"not_enough_dates": {
+		"name": "Te weinig dates"
+	},
+	"not_enough_matches": {
+		"name": "Te weinig matches"
+	},
+	"other": {
+		"name": "Anders"
+	},
+	"prefer_in_person_apps": {
+		"name": "Liever datingapps voor in het echt"
+	},
+	"prefer_vr_apps": {
+		"name": "Liever andere VR-datingapps"
+	},
+	"relationship_elsewhere": {
+		"name": "Ik heb ergens anders een relatie gevonden"
+	},
+	"relationship_here": {
+		"name": "Ik heb een relatie gevonden via {brand_name}"
+	},
+	"taking_a_break": {
+		"name": "Ik neem even pauze"
+	},
+	"technical_issues": {
+		"name": "Technische problemen"
+	}
+}

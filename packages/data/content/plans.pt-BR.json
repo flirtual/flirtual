@@ -1,0 +1,20 @@
+{
+	"early": {
+		"name": "Early Premium"
+	},
+	"lifetime": {
+		"name": "Vitalício"
+	},
+	"monthly": {
+		"name": "Premium (mensal)"
+	},
+	"promotional": {
+		"name": "Premium promocional"
+	},
+	"six_months": {
+		"name": "Premium (semestral)"
+	},
+	"three_months": {
+		"name": "Premium (trimestral)"
+	}
+}

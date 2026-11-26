@@ -1,0 +1,22 @@
+{
+	"friends": {
+		"internal": {
+			"curated": 4
+		}
+	},
+	"hookups": {
+		"internal": {
+			"curated": 3
+		}
+	},
+	"serious": {
+		"internal": {
+			"curated": 1
+		}
+	},
+	"vr": {
+		"internal": {
+			"curated": 2
+		}
+	}
+}

@@ -1,0 +1,14 @@
+{
+	"friends": {
+		"name": "Nouvelles amitiés"
+	},
+	"hookups": {
+		"name": "Plans d’un soir"
+	},
+	"serious": {
+		"name": "Rencontres sérieuses"
+	},
+	"vr": {
+		"name": "Rencontres légères"
+	}
+}

@@ -1,0 +1,14 @@
+{
+	"friends": {
+		"name": "Nieuwe vrienden"
+	},
+	"hookups": {
+		"name": "Hookups"
+	},
+	"serious": {
+		"name": "Serieus daten"
+	},
+	"vr": {
+		"name": "Casual daten"
+	}
+}

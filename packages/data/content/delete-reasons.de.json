@@ -1,0 +1,35 @@
+{
+	"bad_matches": {
+		"name": "Schlechte Erfahrungen mit Matches"
+	},
+	"low_quality": {
+		"name": "Niedrige Match-/Profilqualität"
+	},
+	"not_enough_dates": {
+		"name": "Nicht genug Dates"
+	},
+	"not_enough_matches": {
+		"name": "Nicht genug Matches"
+	},
+	"other": {
+		"name": "Sonstige"
+	},
+	"prefer_in_person_apps": {
+		"name": "Ich bevorzuge andere Dating-Apps, bei denen man sich persönlich trifft"
+	},
+	"prefer_vr_apps": {
+		"name": "Ich bevorzuge andere VR-Dating-Apps"
+	},
+	"relationship_elsewhere": {
+		"name": "Ich habe woanders eine Beziehung gefunden"
+	},
+	"relationship_here": {
+		"name": "Ich habe eine Beziehung auf {brand_name} gefunden"
+	},
+	"taking_a_break": {
+		"name": "Ich mache eine Pause"
+	},
+	"technical_issues": {
+		"name": "Technische Probleme"
+	}
+}

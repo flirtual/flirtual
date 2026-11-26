@@ -1,0 +1,35 @@
+{
+	"bad_matches": {
+		"name": "Dåliga erfarenheter av matchningar"
+	},
+	"low_quality": {
+		"name": "Låg kvalitet på matchningar/profiler"
+	},
+	"not_enough_dates": {
+		"name": "För få dejter"
+	},
+	"not_enough_matches": {
+		"name": "För få matchningar"
+	},
+	"other": {
+		"name": "Annat"
+	},
+	"prefer_in_person_apps": {
+		"name": "Föredrar andra appar för IRL-dejting"
+	},
+	"prefer_vr_apps": {
+		"name": "Föredrar andra VR-dejtingappar"
+	},
+	"relationship_elsewhere": {
+		"name": "Jag har träffat någon på annat håll"
+	},
+	"relationship_here": {
+		"name": "Jag har träffat någon på {brand_name}"
+	},
+	"taking_a_break": {
+		"name": "Jag tar en paus"
+	},
+	"technical_issues": {
+		"name": "Tekniska problem"
+	}
+}

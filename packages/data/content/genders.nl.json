@@ -1,0 +1,112 @@
+{
+	"agender": {
+		"definition": "Iemand die zich met geen enkel gender identificeert of geen gender ervaart.",
+		"definition_link": "https://nonbinary.wiki/wiki/Agender",
+		"name": "Agender"
+	},
+	"androgynous": {
+		"definition": "Iemand met een combinatie van mannelijke en vrouwelijke kenmerken.",
+		"definition_link": "https://nonbinary.wiki/wiki/Androgyny",
+		"name": "Androgyn"
+	},
+	"bigender": {
+		"definition": "Iemand die twee genderidentiteiten ervaart.",
+		"definition_link": "https://nonbinary.wiki/wiki/Bigender",
+		"name": "Bigender"
+	},
+	"cis_man": {
+		"definition": "Een man van wie de genderidentiteit overeenkomt met het geslacht dat bij de geboorte is toegekend.",
+		"definition_link": "https://nonbinary.wiki/wiki/Cisgender_men",
+		"name": "Cis man"
+	},
+	"cis_woman": {
+		"definition": "Een vrouw van wie de genderidentiteit overeenkomt met het geslacht dat bij de geboorte is toegekend.",
+		"definition_link": "https://nonbinary.wiki/wiki/Cisgender_women",
+		"name": "Cis vrouw"
+	},
+	"gender_nonconforming": {
+		"definition": "Iemand die zich niet houdt aan maatschappelijke genderverwachtingen of -normen.",
+		"definition_link": "https://nonbinary.wiki/wiki/Gender_nonconformity",
+		"name": "Gender-nonconform"
+	},
+	"genderfluid": {
+		"definition": "Iemand van wie het gender in de loop van de tijd verandert.",
+		"definition_link": "https://nonbinary.wiki/wiki/Genderfluid",
+		"name": "Genderfluïde"
+	},
+	"genderqueer": {
+		"definition": "Iemand van wie het gender buiten het traditionele binaire gendersysteem valt.",
+		"definition_link": "https://nonbinary.wiki/wiki/Genderqueer",
+		"name": "Genderqueer"
+	},
+	"he_him": {
+		"name": "Hij/hem"
+	},
+	"hijra": {
+		"definition": "Een derde gender in Zuid-Aziatische culturen.",
+		"definition_link": "https://nonbinary.wiki/wiki/Hijra",
+		"name": "Hijra"
+	},
+	"intersex": {
+		"definition": "Iemand die geboren is met geslachtskenmerken die niet passen binnen de gangbare definities van een mannelijk of vrouwelijk lichaam.",
+		"definition_link": "https://nonbinary.wiki/wiki/Intersex",
+		"name": "Intersekse"
+	},
+	"man": {
+		"name": "Man",
+		"plural": "Mannen"
+	},
+	"nonbinary": {
+		"definition": "Iemand van wie het gender buiten het binaire gendersysteem valt.",
+		"definition_link": "https://nonbinary.wiki/wiki/Nonbinary",
+		"name": "Non-binair"
+	},
+	"other": {
+		"name": "Anders"
+	},
+	"pangender": {
+		"definition": "Iemand die zich identificeert met meerdere of alle genders.",
+		"definition_link": "https://nonbinary.wiki/wiki/Pangender",
+		"name": "Pangender"
+	},
+	"she_her": {
+		"name": "Zij/haar"
+	},
+	"they_them": {
+		"name": "Hen/hun"
+	},
+	"trans_man": {
+		"definition": "Een man aan wie bij de geboorte het vrouwelijke geslacht is toegekend.",
+		"definition_link": "https://nonbinary.wiki/wiki/Transgender_men",
+		"name": "Trans man"
+	},
+	"trans_woman": {
+		"definition": "Een vrouw aan wie bij de geboorte het mannelijke geslacht is toegekend.",
+		"definition_link": "https://nonbinary.wiki/wiki/Transgender_women",
+		"name": "Trans vrouw"
+	},
+	"transfeminine": {
+		"definition": "Iemand met een vrouwelijke genderidentiteit aan wie bij de geboorte het mannelijke geslacht is toegekend.",
+		"definition_link": "https://nonbinary.wiki/wiki/Transfeminine",
+		"name": "Transfeminien"
+	},
+	"transgender": {
+		"definition": "Iemand van wie de genderidentiteit niet overeenkomt met het geslacht dat bij de geboorte is toegekend.",
+		"definition_link": "https://nonbinary.wiki/wiki/Transgender",
+		"name": "Transgender"
+	},
+	"transmasculine": {
+		"definition": "Iemand met een mannelijke genderidentiteit aan wie bij de geboorte het vrouwelijke geslacht is toegekend.",
+		"definition_link": "https://nonbinary.wiki/wiki/Transmasculine",
+		"name": "Transmasculien"
+	},
+	"two_spirit": {
+		"definition": "Een derde gender in inheemse Noord-Amerikaanse culturen.",
+		"definition_link": "https://nonbinary.wiki/wiki/Two-spirit",
+		"name": "Two Spirit"
+	},
+	"woman": {
+		"name": "Vrouw",
+		"plural": "Vrouwen"
+	}
+}

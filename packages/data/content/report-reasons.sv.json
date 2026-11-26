@@ -1,0 +1,38 @@
+{
+	"advertising": {
+		"name": "Reklam eller försäljning"
+	},
+	"harassment": {
+		"name": "Trakasserier"
+	},
+	"hateful_content": {
+		"name": "Hatiskt innehåll"
+	},
+	"illegal_content": {
+		"name": "Olagligt innehåll"
+	},
+	"impersonation": {
+		"name": "Utger sig för att vara mig eller någon annan"
+	},
+	"nsfw_pictures": {
+		"name": "Bilder med nakenhet eller explicit sexuellt innehåll"
+	},
+	"other": {
+		"name": "Annat"
+	},
+	"scam": {
+		"name": "Bedrägeri, skadlig kod eller skadliga länkar"
+	},
+	"self_harm": {
+		"name": "Innehåll om självskada"
+	},
+	"spam": {
+		"name": "Spamkonto eller troll"
+	},
+	"underage": {
+		"name": "Minderårig användare"
+	},
+	"violent_content": {
+		"name": "Våldsamt eller störande innehåll"
+	}
+}

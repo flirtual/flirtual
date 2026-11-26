@@ -1,0 +1,20 @@
+{
+	"early": {
+		"name": "Early Premium"
+	},
+	"lifetime": {
+		"name": "永久プレミアム"
+	},
+	"monthly": {
+		"name": "プレミアム（月額）"
+	},
+	"promotional": {
+		"name": "特典プレミアム"
+	},
+	"six_months": {
+		"name": "プレミアム（6か月ごと）"
+	},
+	"three_months": {
+		"name": "プレミアム（3か月ごと）"
+	}
+}

@@ -1,0 +1,2063 @@
+{
+	"3d_modeling": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "cqaodBdFdfeegFVzxuA3QB"
+		},
+		"strength": 1,
+		"synonyms": ["modelling", "3dcg", "animation", "blender"]
+	},
+	"3d_printing": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "eTSWVwrcAF6tzHDPDLvJAd"
+		},
+		"strength": 1
+	},
+	"420_friendly": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "NZjaoEMBizfYF2ScZbYAuG"
+		},
+		"strength": 1,
+		"synonyms": ["weed", "marijuana", "cannabis", "smoking"]
+	},
+	"acts_of_service": {
+		"category": "love_languages",
+		"internal": {
+			"legacy_id": "NpxR4mSbkKEo2ru79eboyS"
+		},
+		"strength": 1
+	},
+	"adventurer": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "siBAM5nerfTqbBT6JCa6wf"
+		}
+	},
+	"aesthetics": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "vHGjkMhPppZ5bhh8uded4G"
+		},
+		"synonyms": ["aesthetics"]
+	},
+	"airsoft": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "vsfvQqgYfRMqy9GcvYbSTF"
+		},
+		"strength": 1
+	},
+	"alternative": {
+		"category": "music",
+		"internal": {
+			"legacy_id": "iPWiK6ULojrRgUsMcQArYY"
+		},
+		"strength": 1,
+		"synonyms": ["alt rock"]
+	},
+	"always_in_dark_mode": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "eGP3EZe6r5NUwfpgFc9Mv6"
+		}
+	},
+	"among_us": {
+		"category": "games",
+		"internal": {
+			"legacy_id": "ZH7obevCWQmuLmHGQgaTF7"
+		},
+		"strength": 1,
+		"synonyms": ["amogus", "amongus"]
+	},
+	"animals": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "gD4Tp9YNXnyTctMQwGaijR"
+		},
+		"synonyms": ["pets"]
+	},
+	"anime": {
+		"category": "popular",
+		"internal": {
+			"legacy_id": "BTGLoHoCuPjvY2NrRKSWpb"
+		},
+		"strength": 1
+	},
+	"apex_legends": {
+		"category": "games",
+		"internal": {
+			"legacy_id": "sZZJLGtJX8MohZENZX9GdJ"
+		},
+		"strength": 1,
+		"synonyms": ["fps", "shooter", "shooting"]
+	},
+	"aquarius": {
+		"category": "astrology",
+		"internal": {
+			"legacy_id": "qmthjNQK6U6zxeUHWQWFEY"
+		}
+	},
+	"arc_raiders": {
+		"category": "games",
+		"internal": {
+			"legacy_id": "qdRj5abyaGBYsFaeXxaZ9P"
+		}
+	},
+	"aries": {
+		"category": "astrology",
+		"internal": {
+			"legacy_id": "3MJtyHPdUjvYhPsbEci58W"
+		}
+	},
+	"art": {
+		"category": "popular",
+		"internal": {
+			"legacy_id": "ZNXNaLMr85qQbKmX2TsrGQ"
+		},
+		"synonyms": ["artist", "drawing", "painting"]
+	},
+	"avakin_life": {
+		"category": "games",
+		"internal": {
+			"legacy_id": "y6mH6biHKb5u7DWiAx65t4"
+		},
+		"strength": 2
+	},
+	"avatar_creator": {
+		"category": "popular",
+		"internal": {
+			"legacy_id": "yfQMpqdsbfNqCKjzrJT4wR"
+		},
+		"synonyms": ["blender", "unity"]
+	},
+	"aviation": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "g2fAPyAgPKt7WaoVZYxPm2"
+		},
+		"strength": 1,
+		"synonyms": ["flight", "flying", "pilot"]
+	},
+	"bad_at_directions": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "Tc4uFhvgWvKjVssZhGAQuj"
+		}
+	},
+	"baldurs_gate_3": {
+		"category": "games",
+		"internal": {
+			"legacy_id": "GfBVjXqiaoeRyr8XHzehGo"
+		}
+	},
+	"baseball": {
+		"category": "sports",
+		"internal": {
+			"legacy_id": "UPLtrF5xLGLpnfWkfv8WDg"
+		},
+		"strength": 1
+	},
+	"basketball": {
+		"category": "sports",
+		"internal": {
+			"legacy_id": "wS9AhkYmx7jSgtoqwUw8oL"
+		},
+		"strength": 1
+	},
+	"battlefield": {
+		"category": "games",
+		"internal": {
+			"legacy_id": "TU3ZGBcDFWFbSmwMjjnEn9"
+		}
+	},
+	"biking": {
+		"category": "sports",
+		"internal": {
+			"legacy_id": "ufVyJtRHU6RpqVjnFdsRU9"
+		},
+		"strength": 1,
+		"synonyms": ["cycling", "biker"]
+	},
+	"board_games": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "ba58TDSPbjG9jtZixoneUn"
+		},
+		"synonyms": ["tabletop", "card"]
+	},
+	"booth_avatars": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "R9vN8EaDE7xTuUFMXA4bkP"
+		},
+		"strength": 2,
+		"synonyms": ["booth.pm"]
+	},
+	"caffeinated": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "8VvHQ63mBuCLdtc5bXcAdb"
+		}
+	},
+	"call_of_duty": {
+		"category": "games",
+		"internal": {
+			"legacy_id": "UXCy3bePW2WMDA6RCv6iZh"
+		},
+		"strength": 1,
+		"synonyms": ["cod", "fps", "shooter", "shooting"]
+	},
+	"camping": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "7nnemBz5mR5iHZNjw8E4aB"
+		},
+		"strength": 1
+	},
+	"cancer": {
+		"category": "astrology",
+		"internal": {
+			"legacy_id": "kYABzgDPzJeaU9TJez4JKc"
+		}
+	},
+	"capricorn": {
+		"category": "astrology",
+		"internal": {
+			"legacy_id": "F96TUKJtBt8UtbHEeDss8M"
+		}
+	},
+	"cars": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "Eu7WzNKBxcQKXhPWgAWAYW"
+		},
+		"synonyms": ["driving"]
+	},
+	"cartoons": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "nzy5prmodZfCQmkr6nMP5m"
+		},
+		"synonyms": ["animation"]
+	},
+	"cats": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "m9K2k5wXQrVdehe3KN9ZaY"
+		},
+		"synonyms": ["pets"]
+	},
+	"chaotic_evil": {
+		"category": "alignment",
+		"internal": {
+			"legacy_id": "TJeFyc6EQhdBmEoLGqpYDh"
+		}
+	},
+	"chaotic_good": {
+		"category": "alignment",
+		"internal": {
+			"legacy_id": "xSLzANhRAqr5h3sXqhoKvT"
+		}
+	},
+	"chaotic_neutral": {
+		"category": "alignment",
+		"internal": {
+			"legacy_id": "66TnRrCCPUeUdqjotUgReM"
+		}
+	},
+	"chess": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "JTnaqV7ZtSm7ecGmk9JbUN"
+		},
+		"strength": 1
+	},
+	"chillin_like_a_villain": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "pJfikJmWtJZnfKJbNXZqnE"
+		},
+		"synonyms": ["chilling", "relaxing"]
+	},
+	"chuunibyou": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "WpPJDKVjSHqLB5FhnYa6JQ"
+		}
+	},
+	"classical": {
+		"category": "music",
+		"internal": {
+			"legacy_id": "gjdYnF6jWBxtweAB3YmcLU"
+		},
+		"strength": 1
+	},
+	"clubbing": {
+		"category": "popular",
+		"internal": {
+			"legacy_id": "Hacqj4nYnvzcbCD8vxPniH"
+		},
+		"synonyms": ["clubs", "raving", "raves"]
+	},
+	"comedy": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "Qf69ZcHcgzrGyW8tVUSvkk"
+		}
+	},
+	"comics": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "PuMdJoFBdxvf8xWuSpDmP7"
+		},
+		"synonyms": ["books", "reading"]
+	},
+	"concerts": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "GcPbtTWyfDWqVeiNLzsV7c"
+		},
+		"synonyms": ["music"]
+	},
+	"content_creator": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "CrvLT7p3UtXCe3ZmG8dZt7"
+		},
+		"synonyms": ["streamer", "streaming", "twitch", "youtuber", "tiktok"]
+	},
+	"cooking": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "9HPT7wgAd7HJajQkAXMbrQ"
+		},
+		"synonyms": ["chef"]
+	},
+	"cosplay": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "4vTwGjfH9oEk6fLthm4HjX"
+		},
+		"strength": 1
+	},
+	"cottagecore": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "RNP3HRDvwVZnCZ28wZcYGf"
+		}
+	},
+	"counter_strike": {
+		"category": "games",
+		"internal": {
+			"legacy_id": "XESzLLYMMdaVqTQ8Tv6Qig"
+		},
+		"strength": 1,
+		"synonyms": ["csgo", "fps", "shooter", "shooting"]
+	},
+	"country": {
+		"category": "music",
+		"internal": {
+			"legacy_id": "3MbxP4iLYi6MC6FUbeqYbX"
+		},
+		"strength": 1
+	},
+	"cuddles": {
+		"category": "popular",
+		"internal": {
+			"legacy_id": "Bmkx6cmyU9kbuA3pdwv43o"
+		},
+		"strength": 1,
+		"synonyms": ["cuddling"]
+	},
+	"cyberpunk": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "th2ujgrqPcZifgaLYuv99Y"
+		}
+	},
+	"dad_jokester": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "EXYCJJeyc6JP5yKhkt2GoX"
+		},
+		"synonyms": ["comedy"]
+	},
+	"dancing": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "cEfjsZtYLiWDSMSeg7q8V5"
+		},
+		"synonyms": ["dancer"]
+	},
+	"dead_by_daylight": {
+		"category": "games",
+		"internal": {
+			"legacy_id": "JctyN5EwihD2pa9zVktx2o"
+		},
+		"strength": 1,
+		"synonyms": ["dbd"]
+	},
+	"deaf": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "Hge2bJA39qY7XSnqqrrY9Y"
+		},
+		"strength": 2,
+		"synonyms": ["sign", "asl"]
+	},
+	"destiny_2": {
+		"category": "games",
+		"internal": {
+			"legacy_id": "V7nnYFUmEahv69NVybWzrP"
+		},
+		"strength": 1
+	},
+	"disney": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "koZvXYA7RHi7hgPN7b3Vca"
+		},
+		"synonyms": ["movies"]
+	},
+	"diy": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "6bNZo7xhhuEXCekE5PyU2Z"
+		},
+		"strength": 1
+	},
+	"djing": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "b65XzJUEmhkGcs4X6HtQvD"
+		},
+		"strength": 1,
+		"synonyms": ["music"]
+	},
+	"documentaries": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "BB9qTGoqRiniinjxcy7jzn"
+		}
+	},
+	"dogs": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "xXDcmmB7yrZEMWi4ZLg6z3"
+		},
+		"synonyms": ["pets"]
+	},
+	"dota_2": {
+		"category": "games",
+		"internal": {
+			"legacy_id": "hh5U4kzyVvP2GWVwHUVjWS"
+		}
+	},
+	"drawing": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "RjqdzibeHN5ovVcvNuneSB"
+		}
+	},
+	"drinking_buddies": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "fM4o5U2ebgVDFEvsD66hEe"
+		}
+	},
+	"driving_sims": {
+		"category": "game_genres",
+		"internal": {
+			"legacy_id": "4THEgH4BLaftoQWAhYaFoM"
+		},
+		"synonyms": ["racing"]
+	},
+	"dungeons_and_dragons": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "rsdnj8EDHstxBCLX4Z7kEn"
+		},
+		"strength": 1,
+		"synonyms": ["dnd", "d&d", "rpgs", "roleplaying", "role playing", "tabletop games"]
+	},
+	"elden_ring": {
+		"category": "games",
+		"internal": {
+			"legacy_id": "LJ4cdsqKZVJDp5Gy6zBP7W"
+		}
+	},
+	"electronic": {
+		"category": "music",
+		"internal": {
+			"legacy_id": "FjZaJeuY5TD2KhzNB67Y5T"
+		},
+		"synonyms": ["edm"]
+	},
+	"emo": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "mNhUREva2s5sfkMxLfwqk3"
+		},
+		"strength": 1
+	},
+	"emotional_support_homie": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "ETXYWLwrk2BQD3mpvjXaN6"
+		},
+		"synonyms": ["mental health"]
+	},
+	"enfj": {
+		"category": "personality_types",
+		"internal": {
+			"legacy_id": "mTwcM4tfp49ronrVRbPvVK"
+		}
+	},
+	"enfp": {
+		"category": "personality_types",
+		"internal": {
+			"legacy_id": "PkuUGAJvgsGnkfeMcGg56J"
+		}
+	},
+	"entj": {
+		"category": "personality_types",
+		"internal": {
+			"legacy_id": "BkTRV57GEQdMUuYonoo3g4"
+		}
+	},
+	"entp": {
+		"category": "personality_types",
+		"internal": {
+			"legacy_id": "YBGsznRconrCoTa5YbQsBW"
+		}
+	},
+	"esfj": {
+		"category": "personality_types",
+		"internal": {
+			"legacy_id": "aWrMMCsArXZAbRqYqyXL8g"
+		}
+	},
+	"esfp": {
+		"category": "personality_types",
+		"internal": {
+			"legacy_id": "Upgh5qK8AzorVt6rgiWTR7"
+		}
+	},
+	"esports": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "XRjfs5BAZhgeKnofywDX8d"
+		}
+	},
+	"estj": {
+		"category": "personality_types",
+		"internal": {
+			"legacy_id": "PPeutfrRpwTs2v2CVNT6TR"
+		}
+	},
+	"estp": {
+		"category": "personality_types",
+		"internal": {
+			"legacy_id": "4q9oopWm8XNXoX7z4RnQE8"
+		}
+	},
+	"exploring_worlds": {
+		"category": "popular",
+		"internal": {
+			"legacy_id": "4UEEGvGvhyBTRWKUjVAMMe"
+		},
+		"synonyms": ["world hopping"]
+	},
+	"fan_fiction": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "mh6zGfyseAeUk82fuqu9VT"
+		},
+		"strength": 1,
+		"synonyms": ["fanfiction"]
+	},
+	"fantasy": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "fZEB4pAAHbst5B5dwnCFbS"
+		}
+	},
+	"fashion": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "La4WBQ9zBc7k6VCLJgEuDD"
+		}
+	},
+	"femboy": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "3jGAehpXeSjweUPwpTRvJZ"
+		},
+		"strength": 1,
+		"synonyms": ["femboys"]
+	},
+	"fighting_games": {
+		"category": "game_genres",
+		"internal": {
+			"legacy_id": "bR2veGptTAE4VHitxqZxJV"
+		},
+		"strength": 1
+	},
+	"final_fantasy_xiv": {
+		"category": "games",
+		"internal": {
+			"legacy_id": "xHBPtTXA6S5ptoJ9nH3GB7"
+		},
+		"strength": 1,
+		"synonyms": ["ffxiv", "mmos", "mmorpgs"]
+	},
+	"fishing": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "BrKGJW7c8TvnQh7zxbJNuQ"
+		}
+	},
+	"fitness": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "rG2FKKUdai8Gsn9U6cQp2T"
+		},
+		"synonyms": ["exercise", "working out", "gym"]
+	},
+	"five_nights_at_freddys": {
+		"category": "games",
+		"internal": {
+			"legacy_id": "wNLsMkCkrPbHHwpRbPrm7E"
+		},
+		"strength": 1,
+		"synonyms": ["fnaf"]
+	},
+	"flight_sims": {
+		"category": "game_genres",
+		"internal": {
+			"legacy_id": "jQD3WHErNsMnhtMeDgE6SE"
+		},
+		"strength": 1,
+		"synonyms": ["flying"]
+	},
+	"food": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "9zSDJJgBFsgxjHGYCcEQ43"
+		},
+		"synonyms": ["cooking", "eating"]
+	},
+	"football": {
+		"category": "sports",
+		"internal": {
+			"legacy_id": "y53Q79KXYjdqCJps7Nzn8e"
+		},
+		"strength": 1
+	},
+	"forklift_certified": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "658ffCwnSFxaY3hQSDvkGW"
+		}
+	},
+	"fortnite": {
+		"category": "games",
+		"internal": {
+			"legacy_id": "iH4ixES2RmvvG5F69eQjQe"
+		},
+		"strength": 1,
+		"synonyms": ["fps", "shooter", "shooting", "battle royales"]
+	},
+	"fps": {
+		"category": "game_genres",
+		"internal": {
+			"legacy_id": "3PrSVjk8jt594oPCrvDFvL"
+		},
+		"synonyms": ["first person shooters", "shooting"]
+	},
+	"furry": {
+		"category": "popular",
+		"internal": {
+			"legacy_id": "MTmW4A9pTEqZem2wZvGN3F"
+		},
+		"strength": 2
+	},
+	"gacha": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "VJfGs3Znz75RWK3nmWwaE5"
+		},
+		"synonyms": ["genshin"]
+	},
+	"game_dev": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "QSS6J4qhxDDiyWrbVoHxyY"
+		},
+		"strength": 1,
+		"synonyms": ["game development", "game developer"]
+	},
+	"gaming": {
+		"category": "popular",
+		"internal": {
+			"legacy_id": "PAepdb7ewc4GVEnpWDCbcK"
+		},
+		"synonyms": ["games", "gamer", "video games"]
+	},
+	"gardening": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "P8E5xJTRAgxycZMErjVMYa"
+		}
+	},
+	"gemini": {
+		"category": "astrology",
+		"internal": {
+			"legacy_id": "MneeWkir8YLxVNH2BxDtKR"
+		}
+	},
+	"genshin_impact": {
+		"category": "games",
+		"internal": {
+			"legacy_id": "vFjxVagULNzG4SQgncbcGN"
+		},
+		"strength": 1
+	},
+	"gifts": {
+		"category": "love_languages",
+		"internal": {
+			"legacy_id": "NxJszSBMm3vkbRaZmPd2gh"
+		},
+		"strength": 1
+	},
+	"golf": {
+		"category": "sports",
+		"internal": {
+			"legacy_id": "KUtsRJcw6NQPr8VCAbMaE2"
+		},
+		"strength": 1,
+		"synonyms": ["golfing", "golfer"]
+	},
+	"goth": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "7PSViCMY8iKswNUxAjDwiY"
+		},
+		"strength": 1
+	},
+	"grand_theft_auto": {
+		"category": "games",
+		"internal": {
+			"legacy_id": "Hnr8pBT5G3XxNmYgabRTVU"
+		},
+		"strength": 1,
+		"synonyms": ["gta"]
+	},
+	"guitar": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "JGwyrqtUfCC7HVNZ2ot8LV"
+		},
+		"synonyms": ["music"]
+	},
+	"guns": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "ftwVayAr6jTqmUw8A4RWMg"
+		}
+	},
+	"halo": {
+		"category": "games",
+		"internal": {
+			"legacy_id": "yuA96WnDtShVGMZYJXHbRc"
+		},
+		"strength": 1,
+		"synonyms": ["fps", "shooter", "shooting"]
+	},
+	"headpats": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "BJwi9ji9dCqrX6YwqVLb2X"
+		},
+		"synonyms": ["head pats"]
+	},
+	"helldivers_2": {
+		"category": "games",
+		"internal": {
+			"legacy_id": "BnehkvnigVVEAhAu6sPH25"
+		}
+	},
+	"hiking": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "Ka3JLErYVPJWHLLzQBT2WE"
+		},
+		"strength": 1,
+		"synonyms": ["walking", "walks"]
+	},
+	"hip_hop": {
+		"category": "music",
+		"internal": {
+			"legacy_id": "dumoS7nkPSh4vDaVCMNBYc"
+		}
+	},
+	"hippie": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "7xQwxvJ5MDtfjTEHtRcdm9"
+		},
+		"strength": 1
+	},
+	"history": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "xY4UQxjZP8Qb4ybKTvAka9"
+		}
+	},
+	"hockey": {
+		"category": "sports",
+		"internal": {
+			"legacy_id": "D9xPvsU52DEStz6gnJJewe"
+		},
+		"strength": 1
+	},
+	"honkai_star_rail": {
+		"category": "games",
+		"internal": {
+			"legacy_id": "ydnaNfxjyfW8gYSLnosMYN"
+		}
+	},
+	"horror": {
+		"category": "popular",
+		"internal": {
+			"legacy_id": "HVQvfazU9oX6qSeM8kXvaM"
+		}
+	},
+	"hunting": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "gAQLfYHHAQu7hhdBdBN35b"
+		}
+	},
+	"imvu": {
+		"category": "games",
+		"internal": {
+			"legacy_id": "u8ZKWRf3XK3ipbHo5cuArS"
+		},
+		"strength": 2
+	},
+	"indie": {
+		"category": "music",
+		"internal": {
+			"legacy_id": "brqEVFEEsMUdoAE5oabtAh"
+		},
+		"strength": 1
+	},
+	"indie_games": {
+		"category": "game_genres",
+		"internal": {
+			"legacy_id": "yZAPLKAMizp9ha78cErdkF"
+		}
+	},
+	"infj": {
+		"category": "personality_types",
+		"internal": {
+			"legacy_id": "daTRTaC6weg6cu9j6K5XZV"
+		}
+	},
+	"infp": {
+		"category": "personality_types",
+		"internal": {
+			"legacy_id": "4CgRETn3q2iwk3h8fzWzSQ"
+		}
+	},
+	"intj": {
+		"category": "personality_types",
+		"internal": {
+			"legacy_id": "WN28HaENtrSDwSgKxX8Xv7"
+		}
+	},
+	"intp": {
+		"category": "personality_types",
+		"internal": {
+			"legacy_id": "rD5R2Aqg5yVnK5QfF22R3Z"
+		}
+	},
+	"isfj": {
+		"category": "personality_types",
+		"internal": {
+			"legacy_id": "K9piJDTQhCoabBZR4k6TzB"
+		}
+	},
+	"isfp": {
+		"category": "personality_types",
+		"internal": {
+			"legacy_id": "EMiJ5kbdhDp6QtCr3P7pBV"
+		}
+	},
+	"istj": {
+		"category": "personality_types",
+		"internal": {
+			"legacy_id": "dzBoXKdvDJ77aoh9GLnusi"
+		}
+	},
+	"istp": {
+		"category": "personality_types",
+		"internal": {
+			"legacy_id": "jaJkU3XRMqRmxGZia74XB8"
+		}
+	},
+	"jazz": {
+		"category": "music",
+		"internal": {
+			"legacy_id": "ygSknA4rAWip5bDjXwawYd"
+		},
+		"strength": 1
+	},
+	"jpop": {
+		"category": "music",
+		"internal": {
+			"legacy_id": "VviV5H6FZMUUrmvpV8A9N6"
+		},
+		"strength": 1,
+		"synonyms": ["jpop"]
+	},
+	"jrpgs": {
+		"category": "game_genres",
+		"internal": {
+			"legacy_id": "KpHyxBddWuMZzhx8vPHUwj"
+		},
+		"strength": 1
+	},
+	"karaoke": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "K9MHU3GP3kVfW8yck8ZPdg"
+		},
+		"synonyms": ["singing"]
+	},
+	"kawaii": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "B4vkCyhTZJX5SvkQ7RWoJm"
+		}
+	},
+	"kdrama": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "ZwP6JmwP2Hk8PMpujmvGDY"
+		},
+		"strength": 1,
+		"synonyms": ["k dramas", "kdramas"]
+	},
+	"kingdom_hearts": {
+		"category": "games",
+		"internal": {
+			"legacy_id": "Ajo23jt7zDTZjJ85ib7uSS"
+		},
+		"strength": 1,
+		"synonyms": ["jrpgs"]
+	},
+	"kpop": {
+		"category": "music",
+		"internal": {
+			"legacy_id": "rY6Mf9bdYcpLbCWpVBnhym"
+		},
+		"strength": 1,
+		"synonyms": ["kpop"]
+	},
+	"language_learning": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "NMCLsa8AfCkuZBTqYSzEQm"
+		},
+		"strength": 1,
+		"synonyms": ["languages"]
+	},
+	"latin": {
+		"category": "music",
+		"internal": {
+			"legacy_id": "sYGiQ4XuHJihLvWMZGPApc"
+		},
+		"strength": 1
+	},
+	"lawful_evil": {
+		"category": "alignment",
+		"internal": {
+			"legacy_id": "JAVpr44XUBC5wkmxtKX4rW"
+		}
+	},
+	"lawful_good": {
+		"category": "alignment",
+		"internal": {
+			"legacy_id": "BTmeninByD4KaKKkQTiYga"
+		}
+	},
+	"lawful_neutral": {
+		"category": "alignment",
+		"internal": {
+			"legacy_id": "QqXRreYsKwxs38WyUPPWwi"
+		}
+	},
+	"league_of_legends": {
+		"category": "games",
+		"internal": {
+			"legacy_id": "ZA7gUc3YbdSdhSbwpnt8rm"
+		},
+		"strength": 1,
+		"synonyms": ["mobas", "lol"]
+	},
+	"leo": {
+		"category": "astrology",
+		"internal": {
+			"legacy_id": "fcHJKqULdrBvrAmPF4vuV9"
+		}
+	},
+	"lgbtq": {
+		"category": "popular",
+		"internal": {
+			"legacy_id": "guNDL9je3iot5XcYqaj9uS"
+		},
+		"strength": 1
+	},
+	"libra": {
+		"category": "astrology",
+		"internal": {
+			"legacy_id": "rDDDYYEjrdUWFjgaE4NSDM"
+		}
+	},
+	"literally_just_vibing": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "BMkKqLcXLZ7g77u47mHnza"
+		}
+	},
+	"lives_in_vr": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "tYzVk2i9uhMzVXuPXcXe2b"
+		},
+		"strength": 1
+	},
+	"long_walks_on_the_beach": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "r9YDRMbRwSsoFybfDo6jdG"
+		},
+		"synonyms": ["walking", "hiking"]
+	},
+	"looking_for_group": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "JAsmfUmdh2uL6ZLZTWp8dF"
+		},
+		"synonyms": ["lfg", "gamer", "gaming", "games"]
+	},
+	"magic_the_gathering": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "uDxAuTWV85Jr7r8YbnDxnd"
+		},
+		"strength": 1,
+		"synonyms": ["mtg"]
+	},
+	"manga": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "KsQnqSKQQKjhTvdHhYX86G"
+		},
+		"synonyms": ["books", "reading"]
+	},
+	"manhwa": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "wR9dYu4RUTPFwPtoKov2RB"
+		},
+		"strength": 1,
+		"synonyms": ["reading", "books"]
+	},
+	"martial_arts": {
+		"category": "sports",
+		"internal": {
+			"legacy_id": "J9HbxPqPYnCFPKHUyg8ece"
+		},
+		"strength": 1
+	},
+	"marvel": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "g7SwgV8y7JQNG4UrQUJUCP"
+		},
+		"synonyms": ["movies"]
+	},
+	"marvel_rivals": {
+		"category": "games",
+		"internal": {
+			"legacy_id": "Pg5LjgRVQTuZuXdG9aPPaD"
+		}
+	},
+	"mech_pilot": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "BmuNHSVwKnyyVMUqEMqpYg"
+		},
+		"synonyms": ["evangelion"]
+	},
+	"meditation": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "fAgh4qEey9okWzNjooerLG"
+		},
+		"strength": 1
+	},
+	"memelord": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "JTp3btTZgozbnvZoatpJwR"
+		},
+		"synonyms": ["memes"]
+	},
+	"metal": {
+		"category": "music",
+		"internal": {
+			"legacy_id": "9LGdoTTRR6eDXjTRqEwrxD"
+		},
+		"strength": 1,
+		"synonyms": ["heavy metal"]
+	},
+	"military": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "bz9jVSncDmgYzdBdg98NV3"
+		},
+		"strength": 1
+	},
+	"mind_explorer": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "g4VXtqWN8TKiCTxzBcWeRU"
+		},
+		"strength": 1
+	},
+	"mirror_dweller": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "QXAV9E84tkhjZKgKqgRjDA"
+		},
+		"strength": 1
+	},
+	"mmos": {
+		"category": "game_genres",
+		"internal": {
+			"legacy_id": "GH8sb9A9WRYBoKCurnTqFH"
+		},
+		"strength": 1,
+		"synonyms": ["mmorpgs"]
+	},
+	"mobas": {
+		"category": "game_genres",
+		"internal": {
+			"legacy_id": "hJoRPhWDwSDteA7nXarZ5i"
+		},
+		"synonyms": ["league of legends", "dota", "smite"]
+	},
+	"monster_hunter": {
+		"category": "games",
+		"internal": {
+			"legacy_id": "gbeLm6w9S7jTuHZ3b6jhCc"
+		},
+		"strength": 1
+	},
+	"motorcycles": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "uwhn9iPM4kntT2Bq2WDXKN"
+		},
+		"strength": 1,
+		"synonyms": ["bikes", "biking"]
+	},
+	"movies": {
+		"category": "popular",
+		"internal": {
+			"legacy_id": "Amq7oATgh6UcQx4SoeJdkD"
+		},
+		"synonyms": ["film"]
+	},
+	"music": {
+		"category": "popular",
+		"internal": {
+			"legacy_id": "fEnnW4XeNnNbqReCryY58R"
+		},
+		"strength": 1,
+		"synonyms": ["listening"]
+	},
+	"music_production": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "8kbF5HwfJBoBC4q324xHJT"
+		},
+		"strength": 1
+	},
+	"mute": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "qjjjMrjxZHuqVMuC9ADyiZ"
+		},
+		"synonyms": ["sign", "asl"]
+	},
+	"mystery": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "jxfxsraaBHshyVCEHhk2Qg"
+		}
+	},
+	"nature": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "6PobkXZnqFst2ZAZQWeS2D"
+		},
+		"synonyms": ["plants", "outdoors", "camping"]
+	},
+	"nerd": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "8T5dMoiNwZyQuiD6xJKMVH"
+		},
+		"synonyms": ["geek"]
+	},
+	"neutral_evil": {
+		"category": "alignment",
+		"internal": {
+			"legacy_id": "NdtkEKfWtyNqKux7gs5juV"
+		}
+	},
+	"neutral_good": {
+		"category": "alignment",
+		"internal": {
+			"legacy_id": "2oxVb7fbNxvorrXZk7bgv3"
+		}
+	},
+	"nintendo": {
+		"category": "games",
+		"internal": {
+			"legacy_id": "riLJvHysCVv2wbzjz34kbC"
+		},
+		"strength": 1,
+		"synonyms": [
+			"mario",
+			"pokemon",
+			"zelda",
+			"wii",
+			"donkey kong",
+			"animal crossing",
+			"super smash bros",
+			"smash bros",
+			"smash",
+			"kirby",
+			"splatoon",
+			"yoshi",
+			"metroid",
+			"fire emblem",
+			"xenoblade",
+			"pikmin"
+		]
+	},
+	"old_soul": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "7MxTQSH57TKECXfFJXjVea"
+		},
+		"strength": 1
+	},
+	"osu": {
+		"category": "games",
+		"internal": {
+			"legacy_id": "DBQsu388Xfn2KcE5oW2ae2"
+		},
+		"strength": 1
+	},
+	"otaku": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "vHWMgQ4fHUwUxY72vi5Sz7"
+		},
+		"synonyms": ["anime", "manga", "japan"]
+	},
+	"overwatch": {
+		"category": "games",
+		"internal": {
+			"legacy_id": "LNJB83mjPSFgWnjKuLBSEG"
+		},
+		"strength": 1,
+		"synonyms": ["fps", "shooter", "shooting"]
+	},
+	"paranormal_investigator": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "bTWW3iSkRQD8V3uQ9viWvN"
+		},
+		"strength": 1,
+		"synonyms": ["horror", "ghosts"]
+	},
+	"partner_in_crime": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "acyqyBz7FZQFSp8iHYWB5A"
+		}
+	},
+	"party_animal": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "bsKcuRDVC99WuWnBUiSEDN"
+		},
+		"strength": 1
+	},
+	"path_of_exile": {
+		"category": "games",
+		"internal": {
+			"legacy_id": "AGGf3KdZzJAqaZNGvNPcvM"
+		}
+	},
+	"persona": {
+		"category": "games",
+		"internal": {
+			"legacy_id": "A55Aw7nfXg2A75uwNJhwrh"
+		},
+		"strength": 1,
+		"synonyms": ["jrpgs"]
+	},
+	"phantom_sense": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "zoEgxZ7KoBNRCrgA3XbdDA"
+		}
+	},
+	"philosophy": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "2Wz4xFdHgY8PZf2mkqWpwa"
+		},
+		"strength": 1
+	},
+	"photography": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "PzXGL29kYUR8Tja6WQDDKT"
+		},
+		"synonyms": ["taking pictures"]
+	},
+	"physical_touch": {
+		"category": "love_languages",
+		"internal": {
+			"legacy_id": "mmkY4XtSERJYxeEfdmY68D"
+		},
+		"strength": 1
+	},
+	"piano": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "KqYcEh6DTSd62kVJUU2Aim"
+		},
+		"synonyms": ["music"]
+	},
+	"pisces": {
+		"category": "astrology",
+		"internal": {
+			"legacy_id": "qUavCrMx6HrR2v5wf7stFN"
+		}
+	},
+	"pokemon": {
+		"category": "games",
+		"internal": {
+			"legacy_id": "BBQbPpGQv5QA6tbm6qV8Vg"
+		},
+		"strength": 1,
+		"synonyms": ["nintendo"]
+	},
+	"politics": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "qDsrBajn8sdumFdSHNr4e2"
+		}
+	},
+	"pool": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "gHSLGNxhyjKKkarcNq9nBa"
+		},
+		"strength": 1,
+		"synonyms": ["billiards"]
+	},
+	"pop": {
+		"category": "music",
+		"internal": {
+			"legacy_id": "YQSAPjKy33ZRxaSZqbTxCk"
+		},
+		"strength": 1
+	},
+	"pretty_rave_girl": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "6UTLvYWp6y4Snv6hexijLD"
+		},
+		"strength": 1
+	},
+	"programming": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "2gBkrkuQN6PjTEeexms7nf"
+		},
+		"strength": 1,
+		"synonyms": ["coding", "developer", "development", "software"]
+	},
+	"psychology": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "zqjTVmpmDLmnWs2PhXYFoG"
+		},
+		"strength": 1
+	},
+	"pubg": {
+		"category": "games",
+		"internal": {
+			"legacy_id": "45Dmuuq5V8xdNTsivEEizE"
+		}
+	},
+	"punk": {
+		"category": "music",
+		"internal": {
+			"legacy_id": "dEWG2fauN29LXFiaGSAvK4"
+		},
+		"strength": 1
+	},
+	"puzzles": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "TuaoosdiDnHXC7FHVArkdW"
+		}
+	},
+	"quality_time": {
+		"category": "love_languages",
+		"internal": {
+			"legacy_id": "7N7jNvobkTyCBG9PWvcRUm"
+		},
+		"strength": 1
+	},
+	"rainbow_six_siege": {
+		"category": "games",
+		"internal": {
+			"legacy_id": "wp6pryLafKY7wrW3zjYaqE"
+		}
+	},
+	"reading": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "XJUTFqrF2avzVtHMA7AGzk"
+		},
+		"synonyms": ["books", "literature"]
+	},
+	"religious": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "is5SeEgzo3ZAH6GPTCX7ma"
+		}
+	},
+	"retro_games": {
+		"category": "game_genres",
+		"internal": {
+			"legacy_id": "crtnnE8akbJwwA9BdqUFRc"
+		},
+		"strength": 1
+	},
+	"rhythm_games": {
+		"category": "game_genres",
+		"internal": {
+			"legacy_id": "M9FwNtCEQT3xUNV4EsnQ3d"
+		},
+		"strength": 1,
+		"synonyms": ["music"]
+	},
+	"rnb": {
+		"category": "music",
+		"internal": {
+			"legacy_id": "VPhvhASscLY49xNFjw4o8n"
+		},
+		"strength": 1,
+		"synonyms": ["rhythm and blues"]
+	},
+	"rock": {
+		"category": "music",
+		"internal": {
+			"legacy_id": "pET4ZuyMW3ACUXzaYaxd3S"
+		},
+		"strength": 1,
+		"synonyms": ["rock n roll", "rock 'n' roll", "rock and roll"]
+	},
+	"rocket_league": {
+		"category": "games",
+		"internal": {
+			"legacy_id": "LpaAvRMRqT3yWQskovUta4"
+		},
+		"strength": 1
+	},
+	"roleplaying": {
+		"category": "popular",
+		"internal": {
+			"legacy_id": "znH7NHT6ysUrRHzVcqxNYQ"
+		},
+		"strength": 1,
+		"synonyms": ["rp"]
+	},
+	"rpgs": {
+		"category": "game_genres",
+		"internal": {
+			"legacy_id": "8t9ZxQYhZtPZSJM99pHqtB"
+		},
+		"synonyms": ["role playing games"]
+	},
+	"running": {
+		"category": "sports",
+		"internal": {
+			"legacy_id": "5XrzAmQSCM2onKyJBjbr6j"
+		},
+		"strength": 1
+	},
+	"rust": {
+		"category": "games",
+		"internal": {
+			"legacy_id": "kK3comfAcSAtJtQunqV6QZ"
+		}
+	},
+	"sagittarius": {
+		"category": "astrology",
+		"internal": {
+			"legacy_id": "jEf5ZYAU7SMbteXJbQydZJ"
+		}
+	},
+	"science": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "ZgUBUVj26rHvpPyoF6TF8c"
+		},
+		"strength": 1,
+		"synonyms": ["chemistry", "biology", "physics"]
+	},
+	"scifi": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "JS498WmSAassZnJU3dyvzj"
+		},
+		"synonyms": ["scifi", "science fiction"]
+	},
+	"scorpio": {
+		"category": "astrology",
+		"internal": {
+			"legacy_id": "o4MbotEvh3dhz2Symgvtbj"
+		}
+	},
+	"second_life": {
+		"category": "games",
+		"internal": {
+			"legacy_id": "uiEz3zZDfe7UaJgoodssZE"
+		},
+		"strength": 2
+	},
+	"seeking_a_third": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "AGheroLVRTz6DvXnDdMJh3"
+		},
+		"strength": 2,
+		"synonyms": ["3rd", "poly"]
+	},
+	"shy": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "f2BCBxugmR8H3dGdrJRmpV"
+		},
+		"strength": 1,
+		"synonyms": ["introvert", "quiet"]
+	},
+	"sign_language": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "EkGzXrWW5fEnC9HdJ9okWc"
+		},
+		"strength": 2,
+		"synonyms": ["asl", "deaf", "mute"]
+	},
+	"singing": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "Dr4VrjyyvH8kbdrozsMMFd"
+		},
+		"strength": 1,
+		"synonyms": ["music"]
+	},
+	"skateboarding": {
+		"category": "sports",
+		"internal": {
+			"legacy_id": "yNrG4wB8Et3kGTaofec3Be"
+		},
+		"strength": 1,
+		"synonyms": ["skating"]
+	},
+	"skating": {
+		"category": "sports",
+		"internal": {
+			"legacy_id": "k53DpziykEgW7M6engXhem"
+		},
+		"strength": 1
+	},
+	"sleep_calls": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "ibrUnfQBwhrzBdFPhxisp2"
+		},
+		"synonyms": ["sleeping"]
+	},
+	"sleeps_in_vr": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "dBCYhmt2vTLfw7DNgNmP53"
+		},
+		"strength": 1,
+		"synonyms": ["sleeping"]
+	},
+	"sneakers": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "8NWGrqWSzC5KQ6QDanNwgf"
+		},
+		"strength": 1,
+		"synonyms": ["shoes", "sneakerhead"]
+	},
+	"snowboarding": {
+		"category": "sports",
+		"internal": {
+			"legacy_id": "oYT4VenxFxNrBshwrsM2WH"
+		},
+		"strength": 1
+	},
+	"soccer": {
+		"category": "sports",
+		"internal": {
+			"legacy_id": "MDRvcQGDrY6VMbaGtPk89m"
+		},
+		"strength": 1,
+		"synonyms": ["football"]
+	},
+	"social_butterfly": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "UkC6H5qf7xGFtpueRQQWxS"
+		},
+		"strength": 1,
+		"synonyms": ["outgoing", "extrovert"]
+	},
+	"social_games": {
+		"category": "game_genres",
+		"internal": {
+			"legacy_id": "8ioURqcYyxmHCkcyKFiub2"
+		}
+	},
+	"socially_awkward": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "AyaSxEYUdjX4maBsTuhxS5"
+		},
+		"strength": 1,
+		"synonyms": ["introvert", "quiet", "shy"]
+	},
+	"space": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "svS7TMjzrzjmsh2X3Qe23e"
+		},
+		"strength": 1,
+		"synonyms": ["astronomy", "stars"]
+	},
+	"speedrunning": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "xLnre8baC2zsrWJog4ypjm"
+		},
+		"strength": 1,
+		"synonyms": ["speedrunner", "speed runner", "speed running"]
+	},
+	"spiritual": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "dQAeMiAqHwxcVbjHYkC6dC"
+		},
+		"strength": 1
+	},
+	"sports": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "wZBbZRUrr68X5CjVXmruKL"
+		}
+	},
+	"sports_games": {
+		"category": "game_genres",
+		"internal": {
+			"legacy_id": "GzLxoRQCmGWBjABNrCZWiD"
+		}
+	},
+	"star_wars": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "Z3JAwEM6n7wuc5dAXX36DQ"
+		},
+		"strength": 1,
+		"synonyms": ["sci-fi", "scifi", "science fiction"]
+	},
+	"stardew_valley": {
+		"category": "games",
+		"internal": {
+			"legacy_id": "ASpc5rzmzRBhGzoW4Dt7A2"
+		}
+	},
+	"strategy_games": {
+		"category": "game_genres",
+		"internal": {
+			"legacy_id": "NrsAVMm65UFBPsqEPkWgZT"
+		},
+		"synonyms": ["rts"]
+	},
+	"streaming": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "Y65RLPXEzBHsnZphF84Gnc"
+		},
+		"strength": 1,
+		"synonyms": ["livestreaming", "twitch"]
+	},
+	"student": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "gUm9n5xfnMzCVtxA9rCnLV"
+		},
+		"strength": 1,
+		"synonyms": ["school", "college", "university", "studying"]
+	},
+	"survival_games": {
+		"category": "game_genres",
+		"internal": {
+			"legacy_id": "VuojdaCuJQEAsPaxq26jmK"
+		}
+	},
+	"sweets": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "j6ZmBCoKutQZ2ABFjJvZoK"
+		},
+		"strength": 1,
+		"synonyms": ["baking", "food", "candy"]
+	},
+	"swimming": {
+		"category": "sports",
+		"internal": {
+			"legacy_id": "5FcuhkdAngzscEJK4DiWPo"
+		},
+		"strength": 1,
+		"synonyms": ["swimmer"]
+	},
+	"tattoos": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "iXKfPBmMRxKGzNZA38g3iS"
+		},
+		"strength": 1,
+		"synonyms": ["ink"]
+	},
+	"taurus": {
+		"category": "astrology",
+		"internal": {
+			"legacy_id": "vJsJJUXQXc4c9jaaTyzmBZ"
+		}
+	},
+	"team_fortress_2": {
+		"category": "games",
+		"internal": {
+			"legacy_id": "3b7sZwdYj6tNAziQQuCKEE"
+		},
+		"strength": 1,
+		"synonyms": ["tf2"]
+	},
+	"technology": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "7mfqhCUsniXPWXa6EK7Qqh"
+		},
+		"synonyms": ["computers"]
+	},
+	"tennis": {
+		"category": "sports",
+		"internal": {
+			"legacy_id": "WPUHPKAHLmHw2kcbzfA9tb"
+		},
+		"strength": 1
+	},
+	"terraria": {
+		"category": "games",
+		"internal": {
+			"legacy_id": "PKDvhwaZutvjysHXqsiURL"
+		}
+	},
+	"the_sims": {
+		"category": "games",
+		"internal": {
+			"legacy_id": "oYpeL2jBcwYoQfjs8gAHCN"
+		}
+	},
+	"theater": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "47vHoxVTRx5ZuV7aJmxm5N"
+		},
+		"strength": 1,
+		"synonyms": ["acting", "actor"]
+	},
+	"time_traveler": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "UCTar6EEZJDhncJtQtAjVC"
+		},
+		"strength": 1,
+		"synonyms": ["history"]
+	},
+	"touhou": {
+		"category": "games",
+		"internal": {
+			"legacy_id": "dQdjQyL9M8kCxrL9Si2zqM"
+		},
+		"strength": 1
+	},
+	"travel": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "fe2ysuwBXcZfCbbGNhbe3L"
+		},
+		"synonyms": ["traveling"]
+	},
+	"true_crime": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "KMrisZLkbq6VEeTqiAdSHc"
+		},
+		"strength": 1
+	},
+	"true_neutral": {
+		"category": "alignment",
+		"internal": {
+			"legacy_id": "YjvHypMDZzANaTkadS9apP"
+		}
+	},
+	"tsundere": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "pHU7w3PAb7fhcTDqFQWMKX"
+		},
+		"strength": 1
+	},
+	"tv": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "usxHtsoFwppLo787TfBvLF"
+		},
+		"synonyms": ["watching", "netflix"]
+	},
+	"twitch": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "aBheDEqVsh7iCgEVmNhsoE"
+		},
+		"strength": 1,
+		"synonyms": ["streamer", "streaming"]
+	},
+	"undertale": {
+		"category": "games",
+		"internal": {
+			"legacy_id": "YCg9tPA8V3bfbjDqoM79ei"
+		},
+		"strength": 1
+	},
+	"valorant": {
+		"category": "games",
+		"internal": {
+			"legacy_id": "p39ZFJiMxJoCGZNRjo4osC"
+		},
+		"strength": 1,
+		"synonyms": ["fps", "shooter", "shooting"]
+	},
+	"vaporwave": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "jMDdcShxVDc5cj2uX4ygyX"
+		}
+	},
+	"vegan": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "Qec82XHyZh6r2HpREWULv2"
+		}
+	},
+	"videography": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "QpsRiXnBWQMG5ZYtZd8BoR"
+		},
+		"strength": 1,
+		"synonyms": ["movies", "filmography"]
+	},
+	"virgo": {
+		"category": "astrology",
+		"internal": {
+			"legacy_id": "zp25zogqt2XWNG9v2wi4ET"
+		}
+	},
+	"virtual_nomad": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "Qm4yoeSbfnL9AoDZHwotWX"
+		},
+		"strength": 1
+	},
+	"visual_novels": {
+		"category": "game_genres",
+		"internal": {
+			"legacy_id": "rj3SPLcAwa6bkKSuBxsfsD"
+		},
+		"strength": 1,
+		"synonyms": ["vns"]
+	},
+	"vocaloid": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "V6dXwTJecCTbaUy4nbZip4"
+		},
+		"strength": 1
+	},
+	"voice_acting": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "XyLtoquzjjLdYyGHtojCo5"
+		},
+		"strength": 1
+	},
+	"volleyball": {
+		"category": "sports",
+		"internal": {
+			"legacy_id": "Uv5MM3vocd3asfdE2VErQk"
+		},
+		"strength": 1
+	},
+	"volunteering": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "6vPzqeBurT9AtnQcxG3knW"
+		}
+	},
+	"vtuber": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "jJmDX2sxgQ6YGVXN2CNJFV"
+		},
+		"synonyms": ["streaming", "streamer", "twitch", "youtuber"]
+	},
+	"warframe": {
+		"category": "games",
+		"internal": {
+			"legacy_id": "P3eB38Lh8ZegBq4KdBAF3n"
+		}
+	},
+	"warhammer": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "tqFRhDSaSL6m2d9YHGQdSA"
+		},
+		"strength": 1,
+		"synonyms": ["tabletop"]
+	},
+	"witchcraft": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "nZfksPK35VkxjtjBG5De7f"
+		}
+	},
+	"words_of_affirmation": {
+		"category": "love_languages",
+		"internal": {
+			"legacy_id": "uiFv8roivUuL7LFjXoPkiY"
+		},
+		"strength": 1
+	},
+	"world_creator": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "bSH9xxw4iBP736fUjxeMrX"
+		},
+		"strength": 1,
+		"synonyms": ["unity", "blender"]
+	},
+	"world_of_warcraft": {
+		"category": "games",
+		"internal": {
+			"legacy_id": "j7cbohAXG2oFtBJqpxhKmL"
+		},
+		"strength": 1,
+		"synonyms": ["wow", "mmos", "mmorpgs"]
+	},
+	"writing": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "WTw73CaXZ4AWmbiQpooJiQ"
+		},
+		"strength": 1,
+		"synonyms": ["writer"]
+	},
+	"wuthering_waves": {
+		"category": "games",
+		"internal": {
+			"legacy_id": "FXz9VcUhgQp6eexp25zkBX"
+		}
+	},
+	"yandere": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "WEnom9DcbnWrCepxx2PNnE"
+		},
+		"strength": 1
+	},
+	"yoga": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "neCdcEJXKyQdf4uSqd5Jig"
+		}
+	},
+	"youtube": {
+		"category": "general",
+		"internal": {
+			"legacy_id": "vDr4xQGTCNYMTMNUu8v5Wg"
+		},
+		"strength": 1,
+		"synonyms": ["streamer", "streaming"]
+	},
+	"zen_as_heck": {
+		"category": "identity",
+		"internal": {
+			"legacy_id": "mpS9oivuYqhZk99Vca5dHn"
+		},
+		"strength": 1
+	},
+	"zepeto": {
+		"category": "games",
+		"internal": {
+			"legacy_id": "cU8xQqQfNN6n8xDAHkpdN9"
+		},
+		"strength": 2
+	}
+}

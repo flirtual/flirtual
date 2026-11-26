@@ -1,0 +1,41 @@
+{
+	"advertising": {
+		"details": "Please reduce advertising/promotional content from your profile. The primary purpose of your profile should be finding dates or friends.",
+		"name": "Advertising"
+	},
+	"be_kind": {
+		"details": "Due to recent report(s), please be kind and respectful to other members.",
+		"name": "Be kind & respectful"
+	},
+	"hateful_content": {
+		"details": "Please remove hateful content from your profile, as this violates our Community Guidelines.",
+		"name": "Hateful content"
+	},
+	"inactive": {
+		"details": "Please update your bio if you are returning to {brand_name}. If you are taking a break or leaving {brand_name}, you can temporarily deactivate or permanently delete your account in the Settings.",
+		"name": "Inactive account"
+	},
+	"nsfw_bio": {
+		"details": "Please keep NSFW content in your bio to a minimum, and remove graphic descriptions or kinks. You can use {brand_name}'s kink tags or custom interests in the Settings.",
+		"name": "NSFW bio"
+	},
+	"nsfw_picture": {
+		"details": "NSFW image(s) have been removed from your profile. Please only upload SFW pictures.",
+		"name": "NSFW pic removed"
+	},
+	"other": {
+		"name": "Other"
+	},
+	"soliciting": {
+		"details": "Please remove any solicitation from your profile. Asking for money, references and links to commercial services are not allowed on {brand_name}.",
+		"name": "Soliciting"
+	},
+	"spam": {
+		"details": "Please update your bio and upload original VR avatar pictures to avoid being flagged as spam.",
+		"name": "Spam bio & pics"
+	},
+	"upload_evidence": {
+		"details": "Please upload additional evidence for your recent report. You can create a ticket at https://hello.flirtu.al or https://discord.gg/flirtual.",
+		"name": "Upload evidence"
+	}
+}

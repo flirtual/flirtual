@@ -1,0 +1,112 @@
+{
+	"agender": {
+		"definition": "Alguém que não se identifica com nenhum género nem o vivencia.",
+		"definition_link": "https://nonbinary.wiki/wiki/Agender",
+		"name": "Agénero"
+	},
+	"androgynous": {
+		"definition": "Alguém com uma combinação de traços masculinos e femininos.",
+		"definition_link": "https://nonbinary.wiki/wiki/Androgyny",
+		"name": "Andrógino"
+	},
+	"bigender": {
+		"definition": "Alguém que vivencia duas identidades de género.",
+		"definition_link": "https://nonbinary.wiki/wiki/Bigender",
+		"name": "Bigénero"
+	},
+	"cis_man": {
+		"definition": "Um homem cuja identidade de género corresponde ao sexo atribuído à nascença.",
+		"definition_link": "https://nonbinary.wiki/wiki/Cisgender_men",
+		"name": "Homem cis"
+	},
+	"cis_woman": {
+		"definition": "Uma mulher cuja identidade de género corresponde ao sexo atribuído à nascença.",
+		"definition_link": "https://nonbinary.wiki/wiki/Cisgender_women",
+		"name": "Mulher cis"
+	},
+	"gender_nonconforming": {
+		"definition": "Alguém que não segue as expectativas ou normas sociais de género.",
+		"definition_link": "https://nonbinary.wiki/wiki/Gender_nonconformity",
+		"name": "Género não conforme"
+	},
+	"genderfluid": {
+		"definition": "Alguém cujo género varia ao longo do tempo.",
+		"definition_link": "https://nonbinary.wiki/wiki/Genderfluid",
+		"name": "Género fluido"
+	},
+	"genderqueer": {
+		"definition": "Alguém cujo género fica fora do binarismo de género tradicional.",
+		"definition_link": "https://nonbinary.wiki/wiki/Genderqueer",
+		"name": "Genderqueer"
+	},
+	"he_him": {
+		"name": "Ele/Dele"
+	},
+	"hijra": {
+		"definition": "Um terceiro género nas culturas do Sul da Ásia.",
+		"definition_link": "https://nonbinary.wiki/wiki/Hijra",
+		"name": "Hijra"
+	},
+	"intersex": {
+		"definition": "Alguém que nasceu com características sexuais que não se enquadram nas definições típicas de corpos masculinos ou femininos.",
+		"definition_link": "https://nonbinary.wiki/wiki/Intersex",
+		"name": "Intersexo"
+	},
+	"man": {
+		"name": "Homem",
+		"plural": "Homens"
+	},
+	"nonbinary": {
+		"definition": "Alguém cujo género fica fora do binarismo de género.",
+		"definition_link": "https://nonbinary.wiki/wiki/Nonbinary",
+		"name": "Não binário"
+	},
+	"other": {
+		"name": "Outro"
+	},
+	"pangender": {
+		"definition": "Alguém que se identifica com vários ou com todos os géneros.",
+		"definition_link": "https://nonbinary.wiki/wiki/Pangender",
+		"name": "Pangénero"
+	},
+	"she_her": {
+		"name": "Ela/Dela"
+	},
+	"they_them": {
+		"name": "Elu/Delu"
+	},
+	"trans_man": {
+		"definition": "Um homem a quem foi atribuído o sexo feminino à nascença.",
+		"definition_link": "https://nonbinary.wiki/wiki/Transgender_men",
+		"name": "Homem trans"
+	},
+	"trans_woman": {
+		"definition": "Uma mulher a quem foi atribuído o sexo masculino à nascença.",
+		"definition_link": "https://nonbinary.wiki/wiki/Transgender_women",
+		"name": "Mulher trans"
+	},
+	"transfeminine": {
+		"definition": "Alguém com uma identidade de género feminina a quem foi atribuído o sexo masculino à nascença.",
+		"definition_link": "https://nonbinary.wiki/wiki/Transfeminine",
+		"name": "Transfeminina"
+	},
+	"transgender": {
+		"definition": "Alguém cuja identidade de género não corresponde ao sexo atribuído à nascença.",
+		"definition_link": "https://nonbinary.wiki/wiki/Transgender",
+		"name": "Transgénero"
+	},
+	"transmasculine": {
+		"definition": "Alguém com uma identidade de género masculina a quem foi atribuído o sexo feminino à nascença.",
+		"definition_link": "https://nonbinary.wiki/wiki/Transmasculine",
+		"name": "Transmasculino"
+	},
+	"two_spirit": {
+		"definition": "Um terceiro género nas culturas indígenas da América do Norte.",
+		"definition_link": "https://nonbinary.wiki/wiki/Two-spirit",
+		"name": "Dois Espíritos"
+	},
+	"woman": {
+		"name": "Mulher",
+		"plural": "Mulheres"
+	}
+}

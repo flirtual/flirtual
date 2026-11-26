@@ -1,0 +1,38 @@
+{
+	"advertising": {
+		"name": "Advertising or solicitation"
+	},
+	"harassment": {
+		"name": "Harassment"
+	},
+	"hateful_content": {
+		"name": "Hateful content"
+	},
+	"illegal_content": {
+		"name": "Illegal content"
+	},
+	"impersonation": {
+		"name": "Impersonating me or someone else"
+	},
+	"nsfw_pictures": {
+		"name": "Nude or NSFW pictures"
+	},
+	"other": {
+		"name": "Other"
+	},
+	"scam": {
+		"name": "Scam, malware, or harmful links"
+	},
+	"self_harm": {
+		"name": "Self-harm content"
+	},
+	"spam": {
+		"name": "Spam or troll account"
+	},
+	"underage": {
+		"name": "Underage user"
+	},
+	"violent_content": {
+		"name": "Violent or disturbing content"
+	}
+}

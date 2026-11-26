@@ -1,0 +1,662 @@
+{
+	"aa": {
+		"name": "Afar"
+	},
+	"ab": {
+		"name": "Abchazisch"
+	},
+	"af": {
+		"name": "Afrikaans"
+	},
+	"ak": {
+		"name": "Akan"
+	},
+	"am": {
+		"name": "Amhaars"
+	},
+	"an": {
+		"name": "Aragonees"
+	},
+	"ar": {
+		"name": "Arabisch"
+	},
+	"arn": {
+		"name": "Mapudungun"
+	},
+	"ary": {
+		"name": "Marokkaans Arabisch"
+	},
+	"as": {
+		"name": "Assamees"
+	},
+	"ase": {
+		"name": "Amerikaanse Gebarentaal"
+	},
+	"asf": {
+		"name": "Australische Gebarentaal (Auslan)"
+	},
+	"av": {
+		"name": "Avarisch"
+	},
+	"ay": {
+		"name": "Aymara"
+	},
+	"az": {
+		"name": "Azerbeidzjaans"
+	},
+	"ba": {
+		"name": "Basjkiers"
+	},
+	"be": {
+		"name": "Belarussisch"
+	},
+	"bfi": {
+		"name": "Britse Gebarentaal"
+	},
+	"bg": {
+		"name": "Bulgaars"
+	},
+	"bi": {
+		"name": "Bislama"
+	},
+	"bm": {
+		"name": "Bambara"
+	},
+	"bn": {
+		"name": "Bengaals"
+	},
+	"bo": {
+		"name": "Tibetaans"
+	},
+	"br": {
+		"name": "Bretons"
+	},
+	"bs": {
+		"name": "Bosnisch"
+	},
+	"bzs": {
+		"name": "Braziliaanse Gebarentaal"
+	},
+	"ca": {
+		"name": "Catalaans"
+	},
+	"ce": {
+		"name": "Tsjetsjeens"
+	},
+	"ceb": {
+		"name": "Cebuano"
+	},
+	"ch": {
+		"name": "Chamorro"
+	},
+	"ckb": {
+		"name": "Centraal-Koerdisch (Sorani)"
+	},
+	"cnr": {
+		"name": "Montenegrijns"
+	},
+	"co": {
+		"name": "Corsicaans"
+	},
+	"cr": {
+		"name": "Cree"
+	},
+	"cs": {
+		"name": "Tsjechisch"
+	},
+	"csl": {
+		"name": "Chinese Gebarentaal"
+	},
+	"cv": {
+		"name": "Tsjoevasjisch"
+	},
+	"cy": {
+		"name": "Welsh"
+	},
+	"da": {
+		"name": "Deens"
+	},
+	"de": {
+		"name": "Duits"
+	},
+	"dsb": {
+		"name": "Nedersorbisch"
+	},
+	"dse": {
+		"name": "Nederlandse Gebarentaal"
+	},
+	"dv": {
+		"name": "Divehi"
+	},
+	"dz": {
+		"name": "Dzongkha"
+	},
+	"ee": {
+		"name": "Ewe"
+	},
+	"el": {
+		"name": "Grieks"
+	},
+	"en": {
+		"name": "Engels"
+	},
+	"eo": {
+		"name": "Esperanto"
+	},
+	"es": {
+		"name": "Spaans"
+	},
+	"et": {
+		"name": "Estisch"
+	},
+	"eu": {
+		"name": "Baskisch"
+	},
+	"fa": {
+		"name": "Perzisch"
+	},
+	"ff": {
+		"name": "Fulah"
+	},
+	"fi": {
+		"name": "Fins"
+	},
+	"fil": {
+		"name": "Filipijns"
+	},
+	"fj": {
+		"name": "Fijisch"
+	},
+	"fo": {
+		"name": "Faeröers"
+	},
+	"fr": {
+		"name": "Frans"
+	},
+	"fsl": {
+		"name": "Franse Gebarentaal"
+	},
+	"fy": {
+		"name": "Fries"
+	},
+	"ga": {
+		"name": "Iers"
+	},
+	"gd": {
+		"name": "Schots-Gaelisch"
+	},
+	"gil": {
+		"name": "Gilbertees"
+	},
+	"gl": {
+		"name": "Galicisch"
+	},
+	"gn": {
+		"name": "Guaraní"
+	},
+	"gsg": {
+		"name": "Duitse Gebarentaal"
+	},
+	"gsw": {
+		"name": "Zwitserduits"
+	},
+	"gu": {
+		"name": "Gujarati"
+	},
+	"gv": {
+		"name": "Manx"
+	},
+	"ha": {
+		"name": "Hausa"
+	},
+	"haw": {
+		"name": "Hawaïaans"
+	},
+	"hbs": {
+		"name": "Servo-Kroatisch"
+	},
+	"he": {
+		"name": "Hebreeuws"
+	},
+	"hi": {
+		"name": "Hindi"
+	},
+	"hmn": {
+		"name": "Hmong"
+	},
+	"ho": {
+		"name": "Hiri Motu"
+	},
+	"hr": {
+		"name": "Kroatisch"
+	},
+	"hsb": {
+		"name": "Oppersorbisch"
+	},
+	"ht": {
+		"name": "Haïtiaans Creools"
+	},
+	"hu": {
+		"name": "Hongaars"
+	},
+	"hy": {
+		"name": "Armeens"
+	},
+	"hz": {
+		"name": "Herero"
+	},
+	"id": {
+		"name": "Indonesisch"
+	},
+	"ig": {
+		"name": "Igbo"
+	},
+	"ii": {
+		"name": "Sichuan Yi"
+	},
+	"ik": {
+		"name": "Inupiaq"
+	},
+	"inl": {
+		"name": "Indonesische Gebarentaal"
+	},
+	"ins": {
+		"name": "Indo-Pakistaanse Gebarentaal"
+	},
+	"io": {
+		"name": "Ido"
+	},
+	"is": {
+		"name": "IJslands"
+	},
+	"ise": {
+		"name": "Italiaanse Gebarentaal"
+	},
+	"isg": {
+		"name": "Ierse Gebarentaal"
+	},
+	"it": {
+		"name": "Italiaans"
+	},
+	"iu": {
+		"name": "Inuktitut"
+	},
+	"ja": {
+		"name": "Japans"
+	},
+	"jsl": {
+		"name": "Japanse Gebarentaal"
+	},
+	"jv": {
+		"name": "Javaans"
+	},
+	"ka": {
+		"name": "Georgisch"
+	},
+	"kg": {
+		"name": "Kongo"
+	},
+	"ki": {
+		"name": "Gikuyu"
+	},
+	"kj": {
+		"name": "Kuanyama"
+	},
+	"kk": {
+		"name": "Kazachs"
+	},
+	"kl": {
+		"name": "Groenlands"
+	},
+	"km": {
+		"name": "Khmer"
+	},
+	"kn": {
+		"name": "Kannada"
+	},
+	"ko": {
+		"name": "Koreaans"
+	},
+	"kok": {
+		"name": "Konkani"
+	},
+	"kr": {
+		"name": "Kanuri"
+	},
+	"ks": {
+		"name": "Kasjmiri"
+	},
+	"ku": {
+		"name": "Koerdisch"
+	},
+	"kv": {
+		"name": "Komi"
+	},
+	"kvk": {
+		"name": "Koreaanse Gebarentaal"
+	},
+	"kw": {
+		"name": "Cornish"
+	},
+	"ky": {
+		"name": "Kirgizisch"
+	},
+	"la": {
+		"name": "Latijn"
+	},
+	"lb": {
+		"name": "Luxemburgs"
+	},
+	"lg": {
+		"name": "Luganda"
+	},
+	"li": {
+		"name": "Limburgs"
+	},
+	"ln": {
+		"name": "Lingala"
+	},
+	"lo": {
+		"name": "Laotiaans"
+	},
+	"lt": {
+		"name": "Litouws"
+	},
+	"lu": {
+		"name": "Luba-Katanga"
+	},
+	"lv": {
+		"name": "Lets"
+	},
+	"mfs": {
+		"name": "Mexicaanse Gebarentaal"
+	},
+	"mg": {
+		"name": "Malagassisch"
+	},
+	"mh": {
+		"name": "Marshallees"
+	},
+	"mi": {
+		"name": "Maori"
+	},
+	"mk": {
+		"name": "Macedonisch"
+	},
+	"ml": {
+		"name": "Malayalam"
+	},
+	"mn": {
+		"name": "Mongools"
+	},
+	"moh": {
+		"name": "Mohawk"
+	},
+	"mr": {
+		"name": "Marathi"
+	},
+	"ms": {
+		"name": "Maleis"
+	},
+	"mt": {
+		"name": "Maltees"
+	},
+	"my": {
+		"name": "Birmaans"
+	},
+	"na": {
+		"name": "Nauruaans"
+	},
+	"nb": {
+		"name": "Noors - Bokmål"
+	},
+	"nd": {
+		"name": "Noord-Ndebele"
+	},
+	"ne": {
+		"name": "Nepalees"
+	},
+	"ng": {
+		"name": "Ndonga"
+	},
+	"nl": {
+		"name": "Nederlands"
+	},
+	"nn": {
+		"name": "Noors - Nynorsk"
+	},
+	"no": {
+		"name": "Noors"
+	},
+	"nr": {
+		"name": "Zuid-Ndebele"
+	},
+	"nv": {
+		"name": "Navajo"
+	},
+	"ny": {
+		"name": "Chichewa"
+	},
+	"nzs": {
+		"name": "Nieuw-Zeelandse Gebarentaal"
+	},
+	"oc": {
+		"name": "Occitaans"
+	},
+	"oj": {
+		"name": "Ojibwe"
+	},
+	"om": {
+		"name": "Afaan Oromo"
+	},
+	"or": {
+		"name": "Odia"
+	},
+	"os": {
+		"name": "Ossetisch"
+	},
+	"pa": {
+		"name": "Punjabi"
+	},
+	"pap": {
+		"name": "Papiaments"
+	},
+	"pl": {
+		"name": "Pools"
+	},
+	"prs": {
+		"name": "Dari"
+	},
+	"ps": {
+		"name": "Pasjtoe"
+	},
+	"psr": {
+		"name": "Portugese Gebarentaal"
+	},
+	"pt": {
+		"name": "Portugees"
+	},
+	"qu": {
+		"name": "Quechua"
+	},
+	"quc": {
+		"name": "Kʼicheʼ"
+	},
+	"rm": {
+		"name": "Reto-Romaans"
+	},
+	"rn": {
+		"name": "Kirundi"
+	},
+	"ro": {
+		"name": "Roemeens"
+	},
+	"rsl": {
+		"name": "Russische Gebarentaal"
+	},
+	"ru": {
+		"name": "Russisch"
+	},
+	"rw": {
+		"name": "Kinyarwanda"
+	},
+	"sah": {
+		"name": "Sacha (Jakoets)"
+	},
+	"sc": {
+		"name": "Sardijns"
+	},
+	"sd": {
+		"name": "Sindhi"
+	},
+	"se": {
+		"name": "Noord-Samisch"
+	},
+	"sg": {
+		"name": "Sango"
+	},
+	"si": {
+		"name": "Singalees"
+	},
+	"sk": {
+		"name": "Slowaaks"
+	},
+	"sl": {
+		"name": "Sloveens"
+	},
+	"sm": {
+		"name": "Samoaans"
+	},
+	"sma": {
+		"name": "Zuid-Samisch"
+	},
+	"smj": {
+		"name": "Lule-Samisch"
+	},
+	"smn": {
+		"name": "Inari-Samisch"
+	},
+	"sms": {
+		"name": "Skolt-Samisch"
+	},
+	"sn": {
+		"name": "Shona"
+	},
+	"so": {
+		"name": "Somalisch"
+	},
+	"sq": {
+		"name": "Albanees"
+	},
+	"sr": {
+		"name": "Servisch"
+	},
+	"ss": {
+		"name": "Swazi"
+	},
+	"ssp": {
+		"name": "Spaanse Gebarentaal"
+	},
+	"st": {
+		"name": "Zuid-Sotho"
+	},
+	"su": {
+		"name": "Soendanees"
+	},
+	"sv": {
+		"name": "Zweeds"
+	},
+	"sw": {
+		"name": "Swahili"
+	},
+	"ta": {
+		"name": "Tamil"
+	},
+	"te": {
+		"name": "Telugu"
+	},
+	"tg": {
+		"name": "Tadzjieks"
+	},
+	"th": {
+		"name": "Thai"
+	},
+	"ti": {
+		"name": "Tigrinya"
+	},
+	"tk": {
+		"name": "Turkmeens"
+	},
+	"tl": {
+		"name": "Tagalog"
+	},
+	"tn": {
+		"name": "Tswana"
+	},
+	"to": {
+		"name": "Tongaans"
+	},
+	"tr": {
+		"name": "Turks"
+	},
+	"ts": {
+		"name": "Tsonga"
+	},
+	"tt": {
+		"name": "Tataars"
+	},
+	"tw": {
+		"name": "Twi"
+	},
+	"ty": {
+		"name": "Tahitiaans"
+	},
+	"tzm": {
+		"name": "Centraal-Atlas-Tamazight"
+	},
+	"ug": {
+		"name": "Oeigoers"
+	},
+	"uk": {
+		"name": "Oekraïens"
+	},
+	"ur": {
+		"name": "Urdu"
+	},
+	"uz": {
+		"name": "Oezbeeks"
+	},
+	"ve": {
+		"name": "Venda"
+	},
+	"vi": {
+		"name": "Vietnamees"
+	},
+	"wa": {
+		"name": "Waals"
+	},
+	"wo": {
+		"name": "Wolof"
+	},
+	"xh": {
+		"name": "Xhosa"
+	},
+	"yi": {
+		"name": "Jiddisch"
+	},
+	"yo": {
+		"name": "Yoruba"
+	},
+	"yue": {
+		"name": "Kantonees"
+	},
+	"za": {
+		"name": "Zhuang"
+	},
+	"zh": {
+		"name": "Mandarijn"
+	},
+	"zu": {
+		"name": "Zoeloe"
+	}
+}

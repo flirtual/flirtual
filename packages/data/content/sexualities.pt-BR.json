@@ -1,0 +1,61 @@
+{
+	"asexual": {
+		"definition": "Alguém que sente pouca ou nenhuma atração sexual.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Asexuality",
+		"name": "Asexual"
+	},
+	"bisexual": {
+		"definition": "Alguém atraído por vários gêneros.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Bisexuality",
+		"name": "Bisexual"
+	},
+	"demisexual": {
+		"definition": "Alguém que só sente atração sexual depois de formar um vínculo emocional com alguém.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Demisexuality_and_Gray-Asexuality",
+		"name": "Demisexual"
+	},
+	"experimenting_in_vr": {
+		"definition": "Alguém que está explorando sua orientação sexual no VR ou cuja sexualidade difere no VR e pessoalmente.",
+		"name": "Experimentando no VR"
+	},
+	"gay": {
+		"definition": "Alguém atraído por outras pessoas do mesmo sexo.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Gay",
+		"name": "Gay"
+	},
+	"heteroflexible": {
+		"definition": "Alguém que se sente predominantemente atraído pelo sexo oposto, mas às vezes sente atração pelo mesmo sexo.",
+		"definition_link": "https://www.merriam-webster.com/words-at-play/homoflexible-heteroflexible-meaning-slang-definition",
+		"name": "Heteroflexível"
+	},
+	"homoflexible": {
+		"definition": "Alguém que se sente predominantemente atraído pelo mesmo sexo, mas às vezes sente atração pelo sexo oposto.",
+		"definition_link": "https://www.merriam-webster.com/words-at-play/homoflexible-heteroflexible-meaning-slang-definition",
+		"name": "Homoflexível"
+	},
+	"lesbian": {
+		"definition": "Alguém atraído por outras mulheres ou pessoas femininas.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Lesbian",
+		"name": "Lésbica"
+	},
+	"pansexual": {
+		"definition": "Alguém atraído por outras pessoas, independentemente do sexo.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Pansexuality",
+		"name": "Pansexual"
+	},
+	"queer": {
+		"definition": "Alguém com orientação sexual não normativa.",
+		"definition_link": "https://en.wikipedia.org/wiki/Queer",
+		"name": "Queer"
+	},
+	"questioning": {
+		"definition": "Alguém que está examinando sua orientação sexual.",
+		"definition_link": "https://en.wikipedia.org/wiki/Questioning_%28sexuality_and_gender%29",
+		"name": "Questionando"
+	},
+	"straight": {
+		"definition": "Alguém atraído pelo sexo oposto.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Heterosexuality",
+		"name": "Hétero"
+	}
+}

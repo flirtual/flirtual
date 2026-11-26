@@ -1,0 +1,35 @@
+{
+	"bad_matches": {
+		"name": "マッチングした相手と嫌な経験があった"
+	},
+	"low_quality": {
+		"name": "マッチングやプロフィールの質が低い"
+	},
+	"not_enough_dates": {
+		"name": "デートにつながらない"
+	},
+	"not_enough_matches": {
+		"name": "マッチングが少ない"
+	},
+	"other": {
+		"name": "その他"
+	},
+	"prefer_in_person_apps": {
+		"name": "リアル向けの他のマッチングアプリの方がいい"
+	},
+	"prefer_vr_apps": {
+		"name": "他のVRマッチングアプリの方がいい"
+	},
+	"relationship_elsewhere": {
+		"name": "Flirtual以外で恋人ができた"
+	},
+	"relationship_here": {
+		"name": "{brand_name}で恋人ができた"
+	},
+	"taking_a_break": {
+		"name": "しばらく休みたい"
+	},
+	"technical_issues": {
+		"name": "技術的な問題"
+	}
+}

@@ -1,0 +1,35 @@
+{
+	"bad_matches": {
+		"name": "Experiência ruim com matches"
+	},
+	"low_quality": {
+		"name": "Baixa taxa de matches/qualidade de perfis"
+	},
+	"not_enough_dates": {
+		"name": "Sem encontros suficientes"
+	},
+	"not_enough_matches": {
+		"name": "Sem pares suficientes"
+	},
+	"other": {
+		"name": "Outra"
+	},
+	"prefer_in_person_apps": {
+		"name": "Prefiro outros aplicativos de namoro em pessoa"
+	},
+	"prefer_vr_apps": {
+		"name": "Prefiro outros aplicativos de namoro de RV"
+	},
+	"relationship_elsewhere": {
+		"name": "Eu encontrei um relacionamento em outro lugar"
+	},
+	"relationship_here": {
+		"name": "Eu encontrei um relacionamento no {brand_name}"
+	},
+	"taking_a_break": {
+		"name": "Estou tomando uma pausa"
+	},
+	"technical_issues": {
+		"name": "Erros técnicos"
+	}
+}

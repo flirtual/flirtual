@@ -1,0 +1,38 @@
+{
+	"advertising": {
+		"name": "광고 또는 금전 요구"
+	},
+	"harassment": {
+		"name": "괴롭힘"
+	},
+	"hateful_content": {
+		"name": "혐오 콘텐츠"
+	},
+	"illegal_content": {
+		"name": "불법 콘텐츠"
+	},
+	"impersonation": {
+		"name": "나 또는 다른 사람 사칭"
+	},
+	"nsfw_pictures": {
+		"name": "노출이나 선정적인 사진"
+	},
+	"other": {
+		"name": "기타"
+	},
+	"scam": {
+		"name": "사기, 악성코드 또는 유해 링크"
+	},
+	"self_harm": {
+		"name": "자해 관련 콘텐츠"
+	},
+	"spam": {
+		"name": "스팸 또는 트롤 계정"
+	},
+	"underage": {
+		"name": "미성년자"
+	},
+	"violent_content": {
+		"name": "폭력적이거나 충격적인 콘텐츠"
+	}
+}

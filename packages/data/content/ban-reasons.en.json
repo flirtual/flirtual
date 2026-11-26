@@ -1,0 +1,61 @@
+{
+	"advertising": {
+		"details": "Advertising. Your profile appears to be primarily promoting an external account or service. You are welcome to mention your socials or work on your profile, but the primary purpose of your profile should be dating or finding friends. You can reply to this email to appeal your ban and update your profile to unban your account.",
+		"name": "Advertising"
+	},
+	"ban_evasion": {
+		"details": "Ban evasion. You appear to have created a new account or otherwise bypassed a past {brand_name} ban. If you would like to appeal a past ban and unban your account, you can reply to the original ban email.",
+		"name": "Ban evasion"
+	},
+	"duplicate_account": {
+		"details": "Duplicate account. Creating multiple {brand_name} accounts is not allowed. This account has been disabled but you can still use your other account. If you believe you have been banned in error, or you would like to have your other account disabled instead of this one, please reply to this email.",
+		"name": "Duplicate account"
+	},
+	"harassment": {
+		"details": "Harassment. If you would like to appeal your ban and unban your account, please reply to this email. Please note we are unable to share details of moderation reports, if any have been made.",
+		"name": "Harassment"
+	},
+	"hateful_content": {
+		"details": "Hateful content. Hateful profile content or messages are not welcome on {brand_name}. If you believe you have been banned in error, you can reply to this email to appeal and unban your account.",
+		"name": "Hateful content"
+	},
+	"illegal_content": {
+		"details": "Illegal content. Your profile or activity appears to violate Canadian or local law. If you believe you have been banned in error, you can reply to this email to appeal.",
+		"name": "Illegal content"
+	},
+	"impersonation": {
+		"details": "Impersonation. Your profile appears to be impersonating another person. If you believe you have been banned in error, you can reply to this email to appeal and unban your account.",
+		"name": "Impersonation"
+	},
+	"nsfw_content": {
+		"details": "Nude or Not Safe For Work content. NSFW images or overly obscene text is not allowed on {brand_name}. You can reply to this email to appeal your ban and update your profile to unban your account.",
+		"name": "NSFW content"
+	},
+	"other": {
+		"name": "Other"
+	},
+	"scam": {
+		"details": "Scam, malware, or harmful links. Your profile appears to contain malicious links or activity. If you believe you have been banned in error, you can reply to this email to appeal.",
+		"name": "Scam, malware, or harmful links"
+	},
+	"self_harm": {
+		"details": "Self-harm content. Your profile or activity has been flagged as containing self-harm references that may be disturbing to other users. We have some mental health resources at https://flirtu.al/mentalhealth that may be helpful. Please take care. If you would like to appeal this ban, please reply to this email.",
+		"name": "Self-harm content"
+	},
+	"soliciting_money": {
+		"details": "Soliciting. You may not ask for money on {brand_name}. You can reply to this email to appeal your ban and remove any solicitation from your profile to unban your account.",
+		"name": "Soliciting money"
+	},
+	"spam": {
+		"details": "Spam profile. Your profile content has been flagged as spam. You can reply to this email to appeal your ban and unban your account. We may ask you to update your profile with more information.",
+		"name": "Spam"
+	},
+	"underage": {
+		"details": "Underaged. You must be at least 18 years of age to use {brand_name}. If you believe you have been banned in error, you can log in to {brand_name} and securely verify your age to restore your account.",
+		"name": "Underaged"
+	},
+	"violent_content": {
+		"details": "Violent/disturbing content. Your profile appears to contain violent or disturbing content. If you would like to appeal this ban, please reply to this email.",
+		"name": "Violent/disturbing content"
+	}
+}

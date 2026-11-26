@@ -1,0 +1,41 @@
+{
+	"advertising": {
+		"details": "Por favor, reduza o conteúdo publicitário ou promocional do seu perfil. O propósito principal do seu perfil deve ser encontrar pares ou fazer amigos.",
+		"name": "Publicidade"
+	},
+	"be_kind": {
+		"details": "Devido a denúncias recentes, pedimos que você trate os outros membros com gentileza e respeito.",
+		"name": "Gentileza e respeito"
+	},
+	"hateful_content": {
+		"details": "Por favor, remova o conteúdo odioso do seu perfil, pois ele viola nossas Diretrizes da Comunidade.",
+		"name": "Conteúdo odioso"
+	},
+	"inactive": {
+		"details": "Por favor, atualize sua bio se estiver voltando ao {brand_name}. Se quiser dar um tempo ou sair do {brand_name}, você pode desativar sua conta temporariamente ou excluí-la permanentemente nas Configurações.",
+		"name": "Conta inativa"
+	},
+	"nsfw_bio": {
+		"details": "Por favor, reduza ao mínimo a nudez ou conteúdo sexual explícito na sua bio e remova descrições gráficas ou kinks. Você pode usar as tags de kinks do {brand_name} ou os interesses personalizados nas Configurações.",
+		"name": "Bio explícita"
+	},
+	"nsfw_picture": {
+		"details": "Removemos do seu perfil imagens com nudez ou conteúdo sexual explícito. Por favor, envie apenas fotos sem esse tipo de conteúdo.",
+		"name": "Foto explícita removida"
+	},
+	"other": {
+		"name": "Outro"
+	},
+	"soliciting": {
+		"details": "Por favor, remova qualquer solicitação do seu perfil. Não é permitido no {brand_name} pedir dinheiro, mencionar serviços comerciais ou incluir links para eles.",
+		"name": "Solicitação"
+	},
+	"spam": {
+		"details": "Por favor, atualize sua bio e envie fotos originais do seu avatar em RV para que seu perfil não seja marcado como spam.",
+		"name": "Bio e fotos com spam"
+	},
+	"upload_evidence": {
+		"details": "Por favor, envie mais provas sobre sua denúncia recente. Você pode abrir um ticket em https://hello.flirtu.al ou https://discord.gg/flirtual.",
+		"name": "Enviar provas"
+	}
+}

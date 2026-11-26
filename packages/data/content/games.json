@@ -1,0 +1,2835 @@
+{
+	"aces_of_thunder": {
+		"internal": {
+			"added": "2026-03-31",
+			"legacy_id": "vrs7Sim89hgFhCFBPYRzY7"
+		},
+		"pcvr": "https://store.steampowered.com/app/2754090/Aces_of_Thunder/",
+		"psvr": "https://store.playstation.com/product/UP4432-PPSA13700_00-0829819787050433"
+	},
+	"after_the_fall": {
+		"crossplay": ["pcvr", "horizon", "pico", "psvr"],
+		"horizon": "https://www.meta.com/experiences/after-the-fall/2160364850746031/",
+		"internal": {
+			"legacy_id": "XGUp3Ndoiy8Q8W2F6aazsd"
+		},
+		"pcvr": "https://store.steampowered.com/app/751630/After_the_Fall/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/3359",
+		"psvr": "https://store.playstation.com/product/UP3535-PPSA12449_00-4516048862547561"
+	},
+	"aim_xr": {
+		"horizon": "https://www.meta.com/experiences/aim-xr/4245506092131005/",
+		"internal": {
+			"added": "2024-12-06",
+			"legacy_id": "pcELDhFARwxuKVpGD3WcoA"
+		}
+	},
+	"alcove": {
+		"horizon": "https://www.meta.com/experiences/alcove/3895528293794893/",
+		"internal": {
+			"legacy_id": "K7mtqJmmJeKDMrzgmTGPiS"
+		},
+		"pcvr": "https://www.meta.com/experiences/pcvr/alcove/3895528293794893/"
+	},
+	"all_in_one_sports": {
+		"crossplay": ["pcvr", "horizon", "pico", "psvr"],
+		"horizon": "https://www.meta.com/experiences/all-in-one-sports/3840611616056575/",
+		"internal": {
+			"legacy_id": "xjNgcDvAwVVTuL9tGvGqf6"
+		},
+		"pcvr": "https://store.steampowered.com/app/1514840/AllInOne_Sports_VR/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7098225807675359237",
+		"psvr": "https://store.playstation.com/product/UP2564-CUSA36289_00-9430196387295720"
+	},
+	"all_on_board": {
+		"crossplay": ["pcvr", "horizon"],
+		"horizon": "https://www.meta.com/experiences/all-on-board/25569652079315833/",
+		"internal": {
+			"added": "2025-02-27",
+			"legacy_id": "BY6qhKjqy38q8qPFYVk8WS"
+		},
+		"pcvr": "https://store.steampowered.com/app/2192970/All_On_Board/"
+	},
+	"altair_breaker": {
+		"crossplay": ["pcvr", "horizon"],
+		"horizon": "https://www.meta.com/experiences/altair-breaker/4599090550122539/",
+		"internal": {
+			"legacy_id": "XRqn7WphUYq7v8CRTpUoBe"
+		},
+		"pcvr": "https://store.steampowered.com/app/1909820/ALTAIR_BREAKER/",
+		"psvr": "https://store.playstation.com/product/UP3363-PPSA09498_00-ALTAIRBREAKERUS0"
+	},
+	"alvo": {
+		"crossplay": ["pcvr", "horizon", "pico", "psvr"],
+		"horizon": "https://www.meta.com/experiences/alvo/6937410016334124/",
+		"internal": {
+			"legacy_id": "3x7zGb9ycfa8L2tERRiqKT"
+		},
+		"pcvr": "https://store.steampowered.com/app/2000590/Alvo_VR/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7106836987369340934",
+		"psvr": "https://store.playstation.com/product/UP5789-PPSA16435_00-0622671042969327"
+	},
+	"among_us_3d": {
+		"crossplay": ["pcvr", "horizon", "pico", "psvr"],
+		"horizon": "https://www.meta.com/experiences/among-us-3d/4948428055244413/",
+		"internal": {
+			"legacy_id": "9NttFgjqMQMCvxiRTNz99W"
+		},
+		"pcvr": "https://store.steampowered.com/app/1849900/Among_Us_3D_VR/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7257172372246020102",
+		"psvr": "https://store.playstation.com/product/UP7032-PPSA10946_00-AMONGUSVR0000001"
+	},
+	"ancient_dungeon": {
+		"crossplay": ["pcvr", "horizon", "frame"],
+		"frame": "https://store.steampowered.com/app/1125240/Ancient_Dungeon/",
+		"horizon": "https://www.meta.com/experiences/ancient-dungeon/5138511912885491/",
+		"internal": {
+			"legacy_id": "FrqmDa3JH6KU6JzTcU8Gkb"
+		},
+		"pcvr": "https://store.steampowered.com/app/1125240/Ancient_Dungeon/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7142799904660914182",
+		"psvr": "https://store.playstation.com/product/UP5843-PPSA19291_00-0612081269240921"
+	},
+	"animal_company": {
+		"horizon": "https://www.meta.com/experiences/animal-company/7190422614401072/",
+		"internal": {
+			"added": "2024-12-06",
+			"legacy_id": "QvZdYbJvPrW2ccQ7RbaoGh"
+		},
+		"pcvr": "https://store.steampowered.com/app/4551040/Animal_Company/"
+	},
+	"arcade_legend": {
+		"horizon": "https://www.meta.com/experiences/arcade-legend/4290234067753903/",
+		"internal": {
+			"legacy_id": "8YniapyDoD8DxRrK38rCgG"
+		},
+		"pcvr": "https://store.steampowered.com/app/1490600/Arcade_Legend/"
+	},
+	"arealm": {
+		"horizon": "https://www.meta.com/experiences/arealm/5924608274282696/",
+		"internal": {
+			"added": "2024-12-06",
+			"legacy_id": "s7vr9oFbvtPkCfCDau5J5S"
+		}
+	},
+	"arizona_sunshine_2": {
+		"androidxr": "https://play.google.com/store/apps/details?id=com.vertigogames.azs2",
+		"crossplay": ["pcvr", "horizon", "frame", "pico", "androidxr", "psvr"],
+		"frame": "https://store.steampowered.com/app/1540210/Arizona_Sunshine_VR_2/",
+		"horizon": "https://www.meta.com/experiences/arizona-sunshine-2/5245041552210029/",
+		"internal": {
+			"legacy_id": "KQWdxJu5HSuNMi5ECmFKeK"
+		},
+		"pcvr": "https://store.steampowered.com/app/1540210/Arizona_Sunshine_VR_2/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7282743732015923205",
+		"psvr": "https://store.playstation.com/product/UP3535-PPSA17012_00-0223307323988320"
+	},
+	"arizona_sunshine_remake": {
+		"androidxr": "https://play.google.com/store/apps/details?id=com.vertigogames.azs1hd",
+		"crossplay": ["pcvr", "horizon", "frame", "psvr"],
+		"frame": "https://store.steampowered.com/app/2897700/Arizona_Sunshine_VR_Remake/",
+		"horizon": "https://www.meta.com/experiences/arizona-sunshine-remake/7000275296693016/",
+		"internal": {
+			"legacy_id": "tNGaLaE29HH3jTDa9PTvJE"
+		},
+		"pcvr": "https://store.steampowered.com/app/2897700/Arizona_Sunshine_VR_Remake/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7415146365631856645",
+		"psvr": "https://store.playstation.com/product/UP3535-PPSA21737_00-0652790213867160"
+	},
+	"assetto_corsa": {
+		"internal": {
+			"legacy_id": "ACUnhMdbAtXCVPJmEsfqMY"
+		},
+		"pcvr": "https://store.steampowered.com/app/244210/Assetto_Corsa/"
+	},
+	"astro_hunters": {
+		"crossplay": ["pcvr", "horizon"],
+		"horizon": "https://www.meta.com/experiences/astro-hunters-vr/24397129266601725/",
+		"internal": {
+			"added": "2024-10-31",
+			"legacy_id": "Xzx6kokjFrpUiuiBwiHDKd"
+		},
+		"pcvr": "https://store.steampowered.com/app/2715910/Astro_Hunters_VR/"
+	},
+	"attack_on_titan_unbreakable": {
+		"horizon": "https://www.meta.com/experiences/attack-on-titan-vr-unbreakable/6103719433003732/",
+		"internal": {
+			"added": "2025-06-17",
+			"legacy_id": "3FGiekjjiqHUdyQD2e6Pxa"
+		},
+		"pico": "https://store-global.picoxr.com/global/detail/1/7413348269600047110"
+	},
+	"automobilista_2": {
+		"internal": {
+			"legacy_id": "LTDYaeVKTXiX6frTeNJykE"
+		},
+		"pcvr": "https://store.steampowered.com/app/1066890/Automobilista_2/"
+	},
+	"bait": {
+		"horizon": "https://www.meta.com/experiences/bait/2082595615120854/",
+		"internal": {
+			"legacy_id": "Mbd8zj52WrqmP6zmVeRCJm"
+		},
+		"pcvr": "https://www.meta.com/experiences/pcvr/bait/2082595615120854/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/1199"
+	},
+	"band_space": {
+		"horizon": "https://www.meta.com/experiences/band-space/26019802470968635/",
+		"internal": {
+			"added": "2024-12-06",
+			"legacy_id": "KxcYipcE3DtjmwFhZuUSAg"
+		},
+		"pcvr": "https://store.steampowered.com/app/2182070/Band_Space/"
+	},
+	"banter": {
+		"crossplay": ["pcvr", "horizon", "pico"],
+		"horizon": "https://www.meta.com/experiences/banter/5404906916283287/",
+		"internal": {
+			"legacy_id": "KArJvtkwvfDmijfb3rAfV6"
+		},
+		"pcvr": "https://store.steampowered.com/app/2564460/Banter/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7506103671378280504"
+	},
+	"barbaria": {
+		"horizon": "https://www.meta.com/experiences/barbaria/5296016923775393/",
+		"internal": {
+			"legacy_id": "ZGLXgRN6WxdFXtn7PbuoMg"
+		},
+		"pcvr": "https://store.steampowered.com/app/1984610/Barbaria/",
+		"psvr": "https://store.playstation.com/product/UP7916-PPSA13936_00-0063922375662149"
+	},
+	"basis": {
+		"internal": {
+			"added": "2025-11-14",
+			"legacy_id": "kACoE5h6cNfpe3YixemiHc"
+		},
+		"pcvr": "https://basisvr.org/"
+	},
+	"battle_talent": {
+		"horizon": "https://www.meta.com/experiences/battle-talent/8752849024786000/",
+		"internal": {
+			"added": "2025-06-17",
+			"legacy_id": "3ttAqMMQ6fJ7p5x9RdGJvJ"
+		},
+		"pcvr": "https://store.steampowered.com/app/1331510/Battle_Talent/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7275611313856921654"
+	},
+	"battlegroupvr": {
+		"horizon": "https://www.meta.com/experiences/battlegroupvr/4459505850829471/",
+		"internal": {
+			"legacy_id": "tLfA6XspAcvCaQK6XC8mfT"
+		},
+		"pcvr": "https://store.steampowered.com/app/1178780/BattleGroupVR/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7189390013812015109"
+	},
+	"battlezone": {
+		"internal": {
+			"legacy_id": "8PkWG2ACLwqjtfGxGxy262"
+		},
+		"pcvr": "https://store.steampowered.com/app/312650/Battlezone_Gold_Edition/",
+		"psvr": "https://store.playstation.com/product/UP4363-CUSA05174_00-BATTLEZONE000000"
+	},
+	"beat_saber": {
+		"crossplay": ["pcvr", "horizon", "frame"],
+		"frame": "https://store.steampowered.com/app/620980/Beat_Saber/",
+		"horizon": "https://www.meta.com/experiences/beat-saber/2448060205267927/",
+		"internal": {
+			"legacy_id": "JSyJfiSSzqm232nKidEDog"
+		},
+		"pcvr": "https://store.steampowered.com/app/620980/Beat_Saber/",
+		"psvr": "https://store.playstation.com/product/UP4882-PPSA14734_00-BEATSABERFULLPS5"
+	},
+	"beyond_sandbox": {
+		"horizon": "https://www.meta.com/experiences/beyond-sandbox/28171265179131088/",
+		"internal": {
+			"added": "2026-05-04",
+			"legacy_id": "CzQQspRYCmtxrRe5CG4a7i"
+		},
+		"pcvr": "https://store.steampowered.com/app/3385970/Beyond_Sandbox/"
+	},
+	"big_ballers": {
+		"horizon": "https://www.meta.com/experiences/big-ballers-26/3947713001963656/",
+		"internal": {
+			"legacy_id": "WaBNA7Z7WZv7K2vVJKmUdB"
+		}
+	},
+	"bigscreen": {
+		"horizon": "https://www.meta.com/experiences/bigscreen-beta/2497738113633933/",
+		"internal": {
+			"legacy_id": "GhScLf7QXNJa2GrZjWVk49"
+		},
+		"pcvr": "https://store.steampowered.com/app/457550/Bigscreen_Beta/"
+	},
+	"blackgate": {
+		"horizon": "https://www.meta.com/experiences/blackgate/7096111567178673/",
+		"internal": {
+			"added": "2025-11-14",
+			"legacy_id": "V6PQRzfDgge2zFMuvszDGL"
+		}
+	},
+	"blacktop_hoops": {
+		"crossplay": ["pcvr", "horizon", "pico"],
+		"horizon": "https://www.meta.com/experiences/blacktop-hoops/4416817901687071/",
+		"internal": {
+			"legacy_id": "GX8Uv5ydV2pojj6gkCy5Q8"
+		},
+		"pcvr": "https://store.steampowered.com/app/1945250/Blacktop_Hoops/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7325084116884553734",
+		"psvr": "https://store.playstation.com/product/UP8486-PPSA24420_00-0041594521010746"
+	},
+	"blaston": {
+		"crossplay": ["pcvr", "horizon", "pico"],
+		"horizon": "https://www.meta.com/experiences/blaston/2307085352735834/",
+		"internal": {
+			"legacy_id": "DSWMTYMW3BFnfJMVjftU8n"
+		},
+		"pcvr": "https://store.steampowered.com/app/1427890/Blaston/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7156213116114632710"
+	},
+	"blobtown": {
+		"horizon": "https://www.meta.com/experiences/blobtown/6366866460079568/",
+		"internal": {
+			"added": "2025-06-17",
+			"legacy_id": "U68EaBBwpXCHYYW5bGehs3"
+		}
+	},
+	"block_buster": {
+		"horizon": "https://www.meta.com/experiences/block-buster/4310142359062337/",
+		"internal": {
+			"legacy_id": "EaU8Vg4zaXw4h6BdAxqUCW"
+		},
+		"pcvr": "https://store.steampowered.com/app/2508100/Block_Buster/"
+	},
+	"bounce_shot": {
+		"horizon": "https://www.meta.com/experiences/bounce-shot/5315620021784200/",
+		"internal": {
+			"legacy_id": "uABBtPPKjhKhFm8jBWvPYK"
+		},
+		"pico": "https://store-global.picoxr.com/global/detail/1/7200144186786545669"
+	},
+	"boxing_underdog": {
+		"frame": "https://store.steampowered.com/app/2521800/Boxing_Underdog/",
+		"horizon": "https://www.meta.com/experiences/boxing-underdog/25383077251307938/",
+		"internal": {
+			"added": "2025-11-14",
+			"legacy_id": "asz3BpPmdocfFMUWgPFaB2"
+		},
+		"pcvr": "https://store.steampowered.com/app/2521800/Boxing_Underdog/",
+		"psvr": "https://store.playstation.com/concept/10009235"
+	},
+	"brass_tactics": {
+		"internal": {
+			"legacy_id": "owNcWMbrtQ7PCtY7qeMc8L"
+		},
+		"pcvr": "https://www.meta.com/experiences/pcvr/brass-tactics/1101975213197949/"
+	},
+	"brazen_blaze": {
+		"horizon": "https://www.meta.com/experiences/brazen-blaze-3vs3-brawl-arena/7109109785811976/",
+		"internal": {
+			"legacy_id": "j8VAyoKBqpAKLoGYZBpvA9"
+		},
+		"pcvr": "https://store.steampowered.com/app/2511050/Brazen_Blaze_3vs3_Brawl_Arena/"
+	},
+	"breachers": {
+		"crossplay": ["pcvr", "horizon", "pico", "psvr"],
+		"horizon": "https://www.meta.com/experiences/breachers/5740397619319389/",
+		"internal": {
+			"legacy_id": "xLssrjTmx5jC3rBwVgpeya"
+		},
+		"pcvr": "https://store.steampowered.com/app/1922010/Breachers/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7202981555575390214",
+		"psvr": "https://store.playstation.com/product/UP7117-PPSA19611_00-0963968143428156"
+	},
+	"brink_traveler": {
+		"androidxr": "https://play.google.com/store/apps/details?id=com.brink.vr.androidxr",
+		"crossplay": ["pcvr", "horizon", "frame", "pico", "androidxr"],
+		"frame": "https://store.steampowered.com/app/1462520/BRINK_Traveler/",
+		"horizon": "https://www.meta.com/experiences/brink-traveler/3635172946605196/",
+		"internal": {
+			"legacy_id": "uGripoFScoHnWvMsG7gxU2"
+		},
+		"pcvr": "https://store.steampowered.com/app/1462520/BRINK_Traveler/"
+	},
+	"broken_edge": {
+		"crossplay": ["pcvr", "horizon", "psvr"],
+		"horizon": "https://www.meta.com/experiences/broken-edge/5136958036416423/",
+		"internal": {
+			"legacy_id": "cbi5XAds9KWHcdQMdew9Eo"
+		},
+		"pcvr": "https://store.steampowered.com/app/1947070/Broken_Edge/",
+		"psvr": "https://store.playstation.com/product/UP4773-PPSA16771_00-0683240041941835"
+	},
+	"cards_and_tankards": {
+		"crossplay": ["pcvr", "horizon"],
+		"horizon": "https://www.meta.com/experiences/cards-tankards/3073319699437112/",
+		"internal": {
+			"legacy_id": "74Sjo5qywbL8q73QJ7FoqE"
+		},
+		"pcvr": "https://store.steampowered.com/app/1506850/Cards__Tankards/"
+	},
+	"carrier_command_2": {
+		"crossplay": ["pcvr"],
+		"internal": {
+			"legacy_id": "5vADCYUVFbgrmbMecFYyvn"
+		},
+		"pcvr": "https://store.steampowered.com/app/1489630/Carrier_Command_2/"
+	},
+	"catan": {
+		"horizon": "https://www.meta.com/experiences/catan-vr/3882524545155280/",
+		"internal": {
+			"legacy_id": "TSCWbVuxyUkZtra7atqPB9"
+		},
+		"pcvr": "https://store.steampowered.com/app/857680/Catan_VR/",
+		"psvr": "https://store.playstation.com/product/UP2294-CUSA14126_00-CATANVRPSVRE7001"
+	},
+	"chained_escape": {
+		"horizon": "https://www.meta.com/experiences/chained-escape/23907847868803362/",
+		"internal": {
+			"added": "2025-06-04",
+			"legacy_id": "UZ3RG3FEzmnAsBcnAwKnua"
+		},
+		"pico": "https://store-global.picoxr.com/global/detail/1/7542742464608616504"
+	},
+	"chess_club": {
+		"horizon": "https://www.meta.com/experiences/chess-club/5353996901307344/",
+		"internal": {
+			"legacy_id": "f5zwQJNjEHehfvaxmSL9Za"
+		},
+		"pico": "https://store-global.picoxr.com/global/detail/1/2601",
+		"psvr": "https://store.playstation.com/product/UP5992-PPSA17950_00-0771997188979743"
+	},
+	"chilloutvr": {
+		"internal": {
+			"curated": 3,
+			"legacy_id": "7EuDksBCySX5vnxzQLKx3e"
+		},
+		"pcvr": "https://store.steampowered.com/app/661130/ChilloutVR/"
+	},
+	"civilization_vii": {
+		"horizon": "https://www.meta.com/experiences/sid-meiers-civilization-vii-vr/5781689118524197/",
+		"internal": {
+			"added": "2025-06-04",
+			"legacy_id": "WBQuYRsPpGNX3b3GPwb5aX"
+		}
+	},
+	"clash_of_chefs": {
+		"crossplay": ["pcvr", "horizon", "pico", "vive"],
+		"horizon": "https://www.meta.com/experiences/clash-of-chefs-vr/3230671513714717/",
+		"internal": {
+			"legacy_id": "pRfEB2eSFTfwy6qQA9suWL"
+		},
+		"pcvr": "https://store.steampowered.com/app/960040/Clash_of_Chefs_VR/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/2403",
+		"vive": "https://www.viveport.com/apps/d71601a0-50dd-4d15-b18a-8f0c277540ca"
+	},
+	"clawball": {
+		"horizon": "https://www.meta.com/experiences/clawball/7890078401040025/",
+		"internal": {
+			"added": "2024-12-06",
+			"legacy_id": "ZMYGVNndf7PY8qzWFzYuTM"
+		}
+	},
+	"cleansheet_soccer": {
+		"crossplay": ["horizon", "pico", "psvr"],
+		"horizon": "https://www.meta.com/experiences/cleansheet-soccer/5005632286166834/",
+		"internal": {
+			"legacy_id": "AWr2CAxhJsY4GoNJZDZarC"
+		},
+		"pico": "https://store-global.picoxr.com/global/detail/1/7148076160038141958",
+		"psvr": "https://store.playstation.com/product/EB0723-PPSA21124_00-0672532591001697"
+	},
+	"climbey": {
+		"crossplay": ["pcvr", "frame", "vive"],
+		"frame": "https://store.steampowered.com/app/520010/Climbey/",
+		"internal": {
+			"legacy_id": "CUbsNRTRdjBYxk4nPSMePJ"
+		},
+		"pcvr": "https://store.steampowered.com/app/520010/Climbey/",
+		"vive": "https://www.viveport.com/apps/d3e9ff04-f646-471f-8602-21795e3045ad"
+	},
+	"cluster": {
+		"horizon": "https://www.meta.com/experiences/cluster/4178943235565629/",
+		"internal": {
+			"curated": 5,
+			"legacy_id": "V8i2C9REDa48BWhhZWdaEc"
+		},
+		"pcvr": "https://cluster.mu/en/downloads"
+	},
+	"contractors": {
+		"crossplay": ["pcvr", "horizon"],
+		"horizon": "https://www.meta.com/experiences/contractors/2436897736439055/",
+		"internal": {
+			"legacy_id": "ffrwQHFv2kN4uRRJCLYqVb"
+		},
+		"pcvr": "https://store.steampowered.com/app/963930/Contractors/"
+	},
+	"contractors_showdown": {
+		"internal": {
+			"legacy_id": "cQUv4XrTKKAcrak34Tvjpc"
+		},
+		"pcvr": "https://store.steampowered.com/app/2719160/Contractors_Showdown__ExfilZone/"
+	},
+	"cook_out": {
+		"crossplay": ["pcvr", "horizon", "frame", "pico"],
+		"frame": "https://store.steampowered.com/app/1523720/CookOut/",
+		"horizon": "https://www.meta.com/experiences/cook-out/2004774962957063/",
+		"internal": {
+			"legacy_id": "Uzpbh2WhLAdc7pGGLMNHnU"
+		},
+		"pcvr": "https://store.steampowered.com/app/1523720/CookOut/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7202940119765155845"
+	},
+	"crazy_kung_fu": {
+		"crossplay": ["pcvr", "horizon", "frame", "pico", "vive", "psvr"],
+		"frame": "https://store.steampowered.com/app/1340300/Crazy_Kung_Fu/",
+		"horizon": "https://www.meta.com/experiences/crazy-kung-fu/3846153838783795/",
+		"internal": {
+			"legacy_id": "Eni52PYzFJTMQrKDmhRaR6"
+		},
+		"pcvr": "https://store.steampowered.com/app/1340300/Crazy_Kung_Fu/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/1760",
+		"psvr": "https://store.playstation.com/product/UB0157-PPSA21554_00-0098384937175788",
+		"vive": "https://www.viveport.com/apps/42d4a4d3-6d41-4965-bc54-85e23311ac35"
+	},
+	"creed_rise_to_glory": {
+		"crossplay": ["pcvr"],
+		"horizon": "https://www.meta.com/experiences/creed-rise-to-glory-championship-edition/2366245336750543/",
+		"internal": {
+			"legacy_id": "38ziUfShQMNJvnB3sRZZuL"
+		},
+		"pcvr": "https://store.steampowered.com/app/804490/Creed_Rise_to_Glory/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7164450444939395077",
+		"psvr": "https://store.playstation.com/product/UP2292-CUSA12801_00-CR1RELEASE000001"
+	},
+	"crime_shop_simulator": {
+		"horizon": "https://www.meta.com/experiences/crime-shop-simulator-a-prison-boss-game/6710396435653866/",
+		"internal": {
+			"added": "2025-11-14",
+			"legacy_id": "6hVQLYgVA9nCNKzyAZWmT4"
+		},
+		"pcvr": "https://store.steampowered.com/app/2973830/Crime_Shop_Simulator_A_Prison_Boss_Game/"
+	},
+	"crisis_brigade_2_reloaded": {
+		"crossplay": ["pcvr", "horizon", "pico", "vive", "psvr"],
+		"horizon": "https://www.meta.com/experiences/crisis-brigade-2-reloaded/5081572398619813/",
+		"internal": {
+			"legacy_id": "EVJY9qA2nFem93cnhXuK9a"
+		},
+		"pcvr": "https://store.steampowered.com/app/1066180/Crisis_Brigade_2_reloaded/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/2038",
+		"psvr": "https://store.playstation.com/product/UP4654-PPSA15792_00-0294189142232583",
+		"vive": "https://www.viveport.com/apps/d499c486-bc27-4eb3-adbc-e1de769c369d"
+	},
+	"crossfire_sierra_squad": {
+		"crossplay": ["pcvr", "psvr"],
+		"internal": {
+			"legacy_id": "h5W9ayvbJp57SsvVqC6FpE"
+		},
+		"pcvr": "https://store.steampowered.com/app/1636030/Crossfire_Sierra_Squad/",
+		"psvr": "https://store.playstation.com/product/UP1219-PPSA09681_00-8309342652723350"
+	},
+	"crowbar_climber": {
+		"horizon": "https://www.meta.com/experiences/crowbar-climber/8724223334301159/",
+		"internal": {
+			"added": "2024-12-06",
+			"legacy_id": "cvZu8pfF247zdkenEfXNQn"
+		},
+		"pcvr": "https://store.steampowered.com/app/3285300/Crowbar_Climber/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7527200899484237830"
+	},
+	"cybrix": {
+		"horizon": "https://www.meta.com/experiences/cybrix/4625005897550253/",
+		"internal": {
+			"legacy_id": "Wohs97dMJJcgWim4Tgd2D3"
+		},
+		"pico": "https://store-global.picoxr.com/global/detail/1/4392"
+	},
+	"dance_eden": {
+		"horizon": "https://www.meta.com/experiences/dance-eden/8378725502157946/",
+		"internal": {
+			"added": "2024-12-06",
+			"legacy_id": "m4BH3mk5m6SLYQ8jPy8oMJ"
+		},
+		"pcvr": "https://store.steampowered.com/app/2934620/Dance_Eden/"
+	},
+	"darksword_battle_eternity": {
+		"crossplay": ["pcvr", "horizon"],
+		"horizon": "https://www.meta.com/experiences/darksword-battle-eternity/5912124212170208/",
+		"internal": {
+			"legacy_id": "mEbg8pTyZ82LZEkJboFJQF"
+		},
+		"pcvr": "https://store.steampowered.com/app/2485000/Darksword_Battle_Eternity/"
+	},
+	"davigo": {
+		"horizon": "https://www.meta.com/experiences/davigo/6244027602378363/",
+		"internal": {
+			"legacy_id": "rFXCdJEuaD5b6SiiQWdYgi"
+		},
+		"pcvr": "https://store.steampowered.com/app/1116540/DAVIGO_VR_vs_PC/"
+	},
+	"dcs_world": {
+		"internal": {
+			"legacy_id": "4vCKL6mzNRt5F89A2uDGEj"
+		},
+		"pcvr": "https://store.steampowered.com/app/223750/DCS_World_Steam_Edition/"
+	},
+	"deadly_delivery": {
+		"crossplay": ["pcvr", "horizon", "frame"],
+		"frame": "https://store.steampowered.com/app/3743090/Deadly_Delivery/",
+		"horizon": "https://www.meta.com/experiences/deadly-delivery/8778947438836641/",
+		"internal": {
+			"added": "2026-03-31",
+			"legacy_id": "iBhmMvafe3xZpDb3bjLTiM"
+		},
+		"pcvr": "https://store.steampowered.com/app/3743090/Deadly_Delivery/"
+	},
+	"death_horizon_reloaded": {
+		"crossplay": ["pcvr", "horizon", "pico", "psvr"],
+		"horizon": "https://www.meta.com/experiences/death-horizon-reloaded/2115015981923610/",
+		"internal": {
+			"legacy_id": "TfaA23SUr8UbigpDBS4iVk"
+		},
+		"pcvr": "https://store.steampowered.com/app/1829370/Death_Horizon_Reloaded/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/1510",
+		"psvr": "https://store.playstation.com/product/UB0081-PPSA32691_00-0024682326322696"
+	},
+	"death_lap": {
+		"horizon": "https://www.meta.com/experiences/death-lap/1954488057986071/",
+		"internal": {
+			"legacy_id": "gnZzXhApVnhpLH4SAAuxBR"
+		},
+		"pcvr": "https://www.meta.com/experiences/pcvr/death-lap/1801357889967877/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/1995"
+	},
+	"demeo": {
+		"androidxr": "https://play.google.com/store/apps/details?id=com.resolutiongames.demeo",
+		"crossplay": ["pcvr", "horizon", "pico", "androidxr", "vision", "psvr"],
+		"horizon": "https://www.meta.com/experiences/demeo/3634830803298285/",
+		"internal": {
+			"legacy_id": "p5YpamzGR5NfmvWWESpL6S"
+		},
+		"pcvr": "https://store.steampowered.com/app/1484280/Demeo/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/3565",
+		"psvr": "https://store.playstation.com/product/UP5430-PPSA10634_00-2489336427118944",
+		"vision": "https://apps.apple.com/app/demeo/id6463004635?platform=vision"
+	},
+	"demeo_battlemarked": {
+		"crossplay": ["pcvr", "horizon", "psvr"],
+		"horizon": "https://www.meta.com/experiences/demeo-x-dungeons-dragons-battlemarked/7239148276178939/",
+		"internal": {
+			"added": "2026-03-31",
+			"legacy_id": "6GVSUyEZHjx4pB86SozBXe"
+		},
+		"pcvr": "https://store.steampowered.com/app/3124340/Demeo_x_Dungeons__Dragons_Battlemarked/",
+		"psvr": "https://store.playstation.com/product/UP5430-PPSA28721_00-0359481320673204"
+	},
+	"demeo_battles": {
+		"crossplay": ["pcvr", "pico", "psvr"],
+		"horizon": "https://www.meta.com/experiences/demeo-battles/4189524851131699/",
+		"internal": {
+			"legacy_id": "8LA6Hcw65AShAruPjkGgkF"
+		},
+		"pcvr": "https://store.steampowered.com/app/1969310/Demeo_Battles/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7275999434113155077",
+		"psvr": "https://store.playstation.com/product/UP5430-PPSA25443_00-0784485994880593"
+	},
+	"devils_roulette": {
+		"internal": {
+			"added": "2025-06-04",
+			"legacy_id": "4ytmLJDHdr8SjShCUAgwTf"
+		},
+		"pico": "https://store-global.picoxr.com/global/detail/1/7555856865444462645"
+	},
+	"devour": {
+		"internal": {
+			"legacy_id": "bys8eVjiZjsuD3oBGeQ5Bb"
+		},
+		"pcvr": "https://store.steampowered.com/app/1274570/DEVOUR/"
+	},
+	"dig": {
+		"horizon": "https://www.meta.com/experiences/dig-vr/6128709557192619/",
+		"internal": {
+			"added": "2024-12-06",
+			"legacy_id": "5SGXVTtfPgy54ZuqviU9Ng"
+		},
+		"pcvr": "https://store.steampowered.com/app/2891460/DIG_VR/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7563693481906946101",
+		"psvr": "https://store.playstation.com/product/EP4382-PPSA18493_00-DIGVRKNUCKLES000"
+	},
+	"digigods": {
+		"horizon": "https://www.meta.com/experiences/digigods/6859397944122034/",
+		"internal": {
+			"added": "2024-12-16",
+			"legacy_id": "eCwp9ucY9TqcdjyFmujC5e"
+		},
+		"pcvr": "https://www.meta.com/experiences/pcvr/digigods/6859397944122034/"
+	},
+	"dimensional_double_shift": {
+		"frame": "https://store.steampowered.com/app/4738640/Dimensional_Double_Shift/",
+		"horizon": "https://www.meta.com/experiences/dimensional-double-shift/4449903565103159/",
+		"internal": {
+			"added": "2024-10-31",
+			"legacy_id": "DSUSXcT8CMQVYffYSvSPzh"
+		}
+	},
+	"dirt_rally_2": {
+		"internal": {
+			"legacy_id": "rqCACS8o3wrw6Hzu3jJSBU"
+		},
+		"pcvr": "https://store.steampowered.com/app/690790/DiRT_Rally_20/"
+	},
+	"downshot": {
+		"horizon": "https://www.meta.com/experiences/downshot/9166521666722742/",
+		"internal": {
+			"added": "2024-12-06",
+			"legacy_id": "SBE8Ka7nKpf5FKu2NxQiX2"
+		},
+		"pcvr": "https://www.meta.com/experiences/pcvr/downshot/5781916215250819/"
+	},
+	"downtown_club": {
+		"horizon": "https://www.meta.com/experiences/downtown-club/4051061284982373/",
+		"internal": {
+			"added": "2026-07-29",
+			"legacy_id": "m3Q3BcPd6m6NrXmHPJMSJN"
+		},
+		"pico": "https://store-global.picoxr.com/global/detail/1/4423"
+	},
+	"dragon_fist": {
+		"horizon": "https://www.meta.com/experiences/dragon-fist-vr-kung-fu/5075285115918784/",
+		"internal": {
+			"legacy_id": "dprz2Fy5RkZ9xMtv3u7hp5"
+		},
+		"pcvr": "https://store.steampowered.com/app/1481780/Dragon_Fist_VR_Kung_Fu/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/2429"
+	},
+	"dread_meridian": {
+		"horizon": "https://www.meta.com/experiences/dread-meridian/24017323877931160/",
+		"internal": {
+			"added": "2026-03-31",
+			"legacy_id": "KmFuVctFYXysnMPp6hMzn8"
+		},
+		"pcvr": "https://store.steampowered.com/app/3843700/Dread_Meridian/"
+	},
+	"drop_dead_dual_strike": {
+		"horizon": "https://www.meta.com/experiences/drop-dead-dual-strike-edition/1935017546592600/",
+		"internal": {
+			"legacy_id": "JMcgrsasKgQ4n5LiHNsaHG"
+		},
+		"pcvr": "https://www.meta.com/experiences/pcvr/drop-dead-dual-strike-edition/1935017546592600/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7114233932161236997"
+	},
+	"drop_dead_the_cabin": {
+		"crossplay": ["pcvr", "horizon", "pico"],
+		"horizon": "https://www.meta.com/experiences/drop-dead-the-cabin/4691479430874595/",
+		"internal": {
+			"legacy_id": "PWXhBhetZzxgsfyuTyWGvM"
+		},
+		"pcvr": "https://store.steampowered.com/app/3516890/Drop_Dead_The_Cabin/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7139825908231307269"
+	},
+	"drunkn_bar_fight": {
+		"androidxr": "https://play.google.com/store/apps/details?id=com.themunky.drunknbarfightAndroidXR",
+		"horizon": "https://www.meta.com/experiences/drunkn-bar-fight/2221553561229188/",
+		"internal": {
+			"legacy_id": "ibNMSB3mTjSqA4yVh424BG"
+		},
+		"pcvr": "https://store.steampowered.com/app/528550/Drunkn_Bar_Fight/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/1219",
+		"psvr": "https://store.playstation.com/product/UP3542-CUSA08359_00-0000000000000000"
+	},
+	"dungeons_of_eternity": {
+		"crossplay": ["pcvr", "horizon", "frame"],
+		"frame": "https://store.steampowered.com/app/3189340/Dungeons_of_Eternity/",
+		"horizon": "https://www.meta.com/experiences/dungeons-of-eternity/6341779295861881/",
+		"internal": {
+			"legacy_id": "Nx6QgkoRg3kkSQ93poStfY"
+		},
+		"pcvr": "https://store.steampowered.com/app/3189340/Dungeons_of_Eternity/"
+	},
+	"eagle_flight": {
+		"crossplay": ["pcvr", "psvr"],
+		"internal": {
+			"legacy_id": "GKPrtXp4v4kjusPN4Y7sBk"
+		},
+		"pcvr": "https://store.steampowered.com/app/408250/Eagle_Flight/",
+		"psvr": "https://store.playstation.com/product/UP0001-CUSA04900_00-EAGLEFLIGHTGAME0"
+	},
+	"electronauts": {
+		"horizon": "https://www.meta.com/experiences/electronauts/2022341094553436/",
+		"internal": {
+			"legacy_id": "W3smAUVVQSCEdvVLzqTn5Y"
+		},
+		"pcvr": "https://store.steampowered.com/app/691160/Electronauts__VR_Music/",
+		"psvr": "https://store.playstation.com/product/UP2292-CUSA11387_00-EN1RELEASE000001"
+	},
+	"elements_divided": {
+		"crossplay": ["pcvr", "horizon", "pico"],
+		"horizon": "https://www.meta.com/experiences/elements-divided/9471144046261462/",
+		"internal": {
+			"added": "2025-06-04",
+			"legacy_id": "d3ETHrHk5sPBnxVaVvyYPi"
+		},
+		"pcvr": "https://store.steampowered.com/app/2805770/Elements_Divided/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7649717671289798661"
+	},
+	"eleven_table_tennis": {
+		"crossplay": ["pcvr", "horizon", "frame", "pico"],
+		"frame": "https://store.steampowered.com/app/488310/Eleven_Table_Tennis/",
+		"horizon": "https://www.meta.com/experiences/eleven-table-tennis/1995434190525828/",
+		"internal": {
+			"legacy_id": "svg3V7m7PWFkcVMLHc4qP8"
+		},
+		"pcvr": "https://store.steampowered.com/app/488310/Eleven_Table_Tennis/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/2055"
+	},
+	"elite_dangerous": {
+		"internal": {
+			"legacy_id": "pMVwYrn8byRREG5zGxHfVC"
+		},
+		"pcvr": "https://store.steampowered.com/app/359320/Elite_Dangerous/"
+	},
+	"elsewhere_electric": {
+		"horizon": "https://www.meta.com/experiences/elsewhere-electric/27005720062352603/",
+		"internal": {
+			"added": "2025-11-14",
+			"legacy_id": "tQRQhebxJzXZt8wJXoQ2gU"
+		},
+		"pcvr": "https://store.steampowered.com/app/3439970/Elsewhere_Electric/"
+	},
+	"elven_assassin": {
+		"crossplay": ["pcvr"],
+		"horizon": "https://www.meta.com/experiences/elven-assassin/2325731427501921/",
+		"internal": {
+			"legacy_id": "KLwiCwcwgcmZXcLEJU5y4L"
+		},
+		"pcvr": "https://store.steampowered.com/app/503770/Elven_Assassin/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/2923"
+	},
+	"epic_roller_coasters": {
+		"crossplay": ["pcvr", "horizon", "pico", "psvr"],
+		"horizon": "https://www.meta.com/experiences/epic-roller-coasters/2299465166734471/",
+		"internal": {
+			"legacy_id": "7v4uz6en93khFT7xFXwc4e"
+		},
+		"pcvr": "https://store.steampowered.com/app/787790/Epic_Roller_Coasters/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/1444",
+		"psvr": "https://store.playstation.com/product/UP5207-PPSA09660_00-EPICROLLCOASTERS"
+	},
+	"espire_2_stealth_operatives": {
+		"horizon": "https://www.meta.com/experiences/espire-2-stealth-operatives/3529713943716002/",
+		"internal": {
+			"legacy_id": "gS7XC884NzMB4Lqk9ARMJX"
+		},
+		"pico": "https://store-global.picoxr.com/global/detail/1/7242566654469816326"
+	},
+	"exocars": {
+		"crossplay": ["pcvr", "psvr"],
+		"horizon": "https://www.meta.com/experiences/exocars/8057795767629913/",
+		"internal": {
+			"added": "2024-12-06",
+			"legacy_id": "9hEbEGxVtxjr8hCWKHFCPP"
+		},
+		"pcvr": "https://store.steampowered.com/app/2898310/EXOcars/",
+		"psvr": "https://store.playstation.com/product/UB0192-PPSA25239_00-0396234357474482"
+	},
+	"exploding_kittens": {
+		"horizon": "https://www.meta.com/experiences/exploding-kittens-vr/8200376096660353/",
+		"internal": {
+			"added": "2024-10-31",
+			"legacy_id": "tyxUgBtv2gcsqy9DEaKhQf"
+		}
+	},
+	"f1_24": {
+		"internal": {
+			"legacy_id": "zCGSieHB5EpxuHj7k63oim"
+		},
+		"pcvr": "https://store.steampowered.com/app/2488620/F1_24/"
+	},
+	"f1_25": {
+		"internal": {
+			"added": "2025-06-04",
+			"legacy_id": "URg2WeeE5dpsAvr7VSwVyF"
+		},
+		"pcvr": "https://store.steampowered.com/app/3059520/F1_25/"
+	},
+	"facetime": {
+		"internal": {
+			"legacy_id": "aMnbvaXq5RgSCxKRsqSSk2"
+		},
+		"vision": "https://support.apple.com/guide/apple-vision-pro/tan440238696/visionos"
+	},
+	"farpoint": {
+		"internal": {
+			"legacy_id": "2H2uaDpDTfUrDhZy7WBTVo"
+		},
+		"psvr": "https://store.playstation.com/product/UP9000-CUSA04179_00-0000000000000000"
+	},
+	"fast_and_low": {
+		"internal": {
+			"legacy_id": "AofXjSBRCDNwARLiUthS4B"
+		},
+		"pcvr": "https://store.steampowered.com/app/1097620/Fast_and_Low/"
+	},
+	"final_fury": {
+		"crossplay": ["pcvr", "horizon"],
+		"horizon": "https://www.meta.com/experiences/final-fury/5218982198148896/",
+		"internal": {
+			"added": "2025-06-04",
+			"legacy_id": "RxKhsUYASDYYSnSNnfcJ38"
+		},
+		"pcvr": "https://store.steampowered.com/app/1782760/FINAL_FURY/"
+	},
+	"firewall_zero_hour": {
+		"internal": {
+			"legacy_id": "ZmutKTykJx7wuW2ftpY3Qc"
+		},
+		"psvr": "https://store.playstation.com/product/UP9000-CUSA09831_00-FIREWALL00000000"
+	},
+	"first_person_tennis": {
+		"horizon": "https://www.meta.com/experiences/first-person-tennis-the-real-tennis-simulator/6119989094742166/",
+		"internal": {
+			"legacy_id": "YR6BMd4YhdY8prtgqiiYt4"
+		},
+		"pcvr": "https://store.steampowered.com/app/454140/First_Person_Tennis__The_Real_Tennis_Simulator/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/4122"
+	},
+	"fitxr": {
+		"androidxr": "https://play.google.com/store/apps/details?id=com.fitxr.boxvr",
+		"crossplay": ["pcvr", "horizon", "pico", "androidxr"],
+		"horizon": "https://www.meta.com/experiences/fitxr/2327205800645550/",
+		"internal": {
+			"legacy_id": "syWmXHYaQA8H2Nv3QQt7WX"
+		},
+		"pcvr": "https://www.meta.com/experiences/pcvr/fitxr/2327205800645550/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7126851144634253317"
+	},
+	"flatout_4": {
+		"internal": {
+			"added": "2026-07-29",
+			"legacy_id": "pbNNDAiUHR58E99kK8ZM8a"
+		},
+		"pcvr": "https://store.steampowered.com/app/3844750/FlatOut_4_Total_Insanity_VR/",
+		"psvr": "https://store.playstation.com/concept/10019969"
+	},
+	"fly_villa": {
+		"horizon": "https://www.meta.com/experiences/fly-villa-ai-world-travel-creation/4784171281624823/",
+		"internal": {
+			"legacy_id": "hgA8Uxk4J66NbdVnuUzUxf"
+		}
+	},
+	"forefront": {
+		"crossplay": ["pcvr", "horizon", "frame", "pico", "psvr"],
+		"frame": "https://store.steampowered.com/app/2981220/Forefront/",
+		"horizon": "https://www.meta.com/experiences/forefront/28816918137899319/",
+		"internal": {
+			"added": "2025-11-14",
+			"legacy_id": "fxn9zCdUu9LWthCGWL9NLZ"
+		},
+		"pcvr": "https://store.steampowered.com/app/2981220/Forefront/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7478245947567292421",
+		"psvr": "https://store.playstation.com/concept/10018044"
+	},
+	"forevr_bowl": {
+		"horizon": "https://www.meta.com/experiences/forevr-bowl/3420508614708029/",
+		"internal": {
+			"legacy_id": "Lp5SSmGdQbko5nLdtdsjPK"
+		},
+		"pcvr": "https://store.steampowered.com/app/2341530/ForeVR_Bowl_VR/",
+		"psvr": "https://store.playstation.com/product/UP7299-PPSA17111_00-0727158726101567"
+	},
+	"forevr_cornhole": {
+		"crossplay": ["pcvr", "horizon", "psvr"],
+		"horizon": "https://www.meta.com/experiences/forevr-cornhole/5011588462297991/",
+		"internal": {
+			"legacy_id": "Nrbx2Zhx2TnJefBR846nm6"
+		},
+		"pcvr": "https://store.steampowered.com/app/2417310/ForeVR_Cornhole_VR/",
+		"psvr": "https://store.playstation.com/product/UP7299-PPSA17109_00-0112085036425194"
+	},
+	"forevr_darts": {
+		"horizon": "https://www.meta.com/experiences/forevr-darts/3831620133609128/",
+		"internal": {
+			"legacy_id": "q2XrCRJGZEJRBkgzxxP4XL"
+		}
+	},
+	"forevr_pool": {
+		"horizon": "https://www.meta.com/experiences/forevr-pool/4760607174068295/",
+		"internal": {
+			"legacy_id": "ARJTLv5p7uxqtuJ4Zw3Vwn"
+		},
+		"pcvr": "https://store.steampowered.com/app/2363140/ForeVR_Pool_VR/",
+		"psvr": "https://store.playstation.com/product/UP7299-PPSA17107_00-0714546143048644"
+	},
+	"forewarned": {
+		"internal": {
+			"legacy_id": "4rGM6uz7KwSnSoDCSjtFMT"
+		},
+		"pcvr": "https://store.steampowered.com/app/1562420/FOREWARNED/"
+	},
+	"from_other_suns": {
+		"internal": {
+			"legacy_id": "sM28jmnyEAXyFoHMNTzE3G"
+		},
+		"pcvr": "https://www.meta.com/experiences/pcvr/from-other-suns/1226573594029268/"
+	},
+	"fros": {
+		"horizon": "https://www.meta.com/experiences/fros/8562631313821906/",
+		"internal": {
+			"added": "2025-02-27",
+			"legacy_id": "i5WtER6NUSe2MkocRH9RxD"
+		}
+	},
+	"frost_survival": {
+		"crossplay": ["pcvr", "horizon"],
+		"horizon": "https://www.meta.com/experiences/frost-survival-vr/9444959962255969/",
+		"internal": {
+			"added": "2025-11-14",
+			"legacy_id": "4tE5Wxg3oUsAYASriJrfrj"
+		},
+		"pcvr": "https://store.steampowered.com/app/3054950/Frost_Survival_VR/"
+	},
+	"fruit_ninja_2": {
+		"crossplay": ["pcvr", "horizon", "pico"],
+		"horizon": "https://www.meta.com/experiences/fruit-ninja-2/4917905281646450/",
+		"internal": {
+			"legacy_id": "hueUzWdLJzeQyGEgFiJa8D"
+		},
+		"pcvr": "https://store.steampowered.com/app/1575520/Fruit_Ninja_VR_2/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7196546393723666437"
+	},
+	"gambit": {
+		"crossplay": ["pcvr", "horizon"],
+		"horizon": "https://www.meta.com/experiences/gambit/3580009512106870/",
+		"internal": {
+			"legacy_id": "3vK9d6PQe6Cq7QYWp9b88C"
+		},
+		"pcvr": "https://store.steampowered.com/app/1736120/Gambit/"
+	},
+	"game_room": {
+		"internal": {
+			"legacy_id": "vyVWcqupmUg8SNHRJaY8xg"
+		},
+		"vision": "https://apps.apple.com/app/game-room/id1642897935?platform=vision"
+	},
+	"geronimo": {
+		"internal": {
+			"added": "2026-07-29",
+			"legacy_id": "Fu3wVRpyWQwiV7CKF7ErpG"
+		},
+		"pcvr": "https://store.steampowered.com/app/2019620/GERONIMO/"
+	},
+	"ghostbusters_rise_of_the_ghost_lord": {
+		"crossplay": ["horizon", "psvr"],
+		"horizon": "https://www.meta.com/experiences/ghostbusters-rise-of-the-ghost-lord/4746232908818706/",
+		"internal": {
+			"legacy_id": "yftjBC7ZRpf9kPYe4roahc"
+		},
+		"psvr": "https://store.playstation.com/product/UP8825-PPSA13333_00-0569954193530522"
+	},
+	"ghosts_of_tabor": {
+		"crossplay": ["pcvr", "horizon", "pico", "psvr"],
+		"horizon": "https://www.meta.com/experiences/ghosts-of-tabor/7614022262006379/",
+		"internal": {
+			"legacy_id": "bgxJhCTVuYKkmxMYwx4MSF"
+		},
+		"pcvr": "https://store.steampowered.com/app/1957780/Ghosts_of_Tabor/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7294560799153209349",
+		"psvr": "https://store.playstation.com/product/UP7408-PPSA24677_00-0720696502679415"
+	},
+	"glassbreakers_champions_of_moss": {
+		"crossplay": ["pcvr", "horizon", "frame", "vision"],
+		"frame": "https://store.steampowered.com/app/887330/Glassbreakers_Champions_of_Moss/",
+		"horizon": "https://www.meta.com/experiences/glassbreakers/24116732017937739/",
+		"internal": {
+			"added": "2025-11-14",
+			"legacy_id": "Fto5yNNXgPPVBKsnMRvW56"
+		},
+		"pcvr": "https://store.steampowered.com/app/887330/Glassbreakers_Champions_of_Moss/",
+		"vision": "https://apps.apple.com/app/glassbreakers/id6596780523?platform=vision"
+	},
+	"gods_of_gravity": {
+		"horizon": "https://www.meta.com/experiences/gods-of-gravity/3919415921458774/",
+		"internal": {
+			"legacy_id": "v8FF4MyiNWWjBMXeKpo4xE"
+		}
+	},
+	"golf_5": {
+		"horizon": "https://www.meta.com/experiences/golf-5/4113720305326115/",
+		"internal": {
+			"legacy_id": "UaYWH2QPYGbKGc4YVfkm9e"
+		},
+		"pcvr": "https://store.steampowered.com/app/2151960/Golf_5_eClub/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/3246"
+	},
+	"golf_it": {
+		"crossplay": ["pcvr"],
+		"internal": {
+			"legacy_id": "2B7KNoGh5iAEJsp5ADvZVG"
+		},
+		"pcvr": "https://store.steampowered.com/app/571740/Golf_It/"
+	},
+	"golf_plus": {
+		"horizon": "https://www.meta.com/experiences/golf/2412327085529357/",
+		"internal": {
+			"legacy_id": "DPe2yHXfMdTnKd6GuQi6BH"
+		},
+		"pcvr": "https://store.steampowered.com/app/4404180/GOLF/"
+	},
+	"gorilla_tag": {
+		"crossplay": ["pcvr", "horizon", "frame"],
+		"frame": "https://store.steampowered.com/app/1533390/Gorilla_Tag/",
+		"horizon": "https://www.meta.com/experiences/gorilla-tag/4979055762136823/",
+		"internal": {
+			"legacy_id": "bHF6sv68wCUEQ6VNEYEvGQ"
+		},
+		"pcvr": "https://store.steampowered.com/app/1533390/Gorilla_Tag/",
+		"psvr": "https://store.playstation.com/product/UP8371-PPSA18009_00-0778186169129717"
+	},
+	"grab": {
+		"crossplay": ["pcvr", "horizon", "pico"],
+		"horizon": "https://www.meta.com/experiences/grab/4104088956355944/",
+		"internal": {
+			"added": "2024-12-06",
+			"legacy_id": "8Y26fzhscP22EzUnTCmPJn"
+		},
+		"pcvr": "https://store.steampowered.com/app/1701130/GRAB/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/3605"
+	},
+	"grapple_tournament": {
+		"crossplay": ["pcvr", "horizon"],
+		"horizon": "https://www.meta.com/experiences/grapple-tournament/4195451623800286/",
+		"internal": {
+			"legacy_id": "MWStBEu5BFAD4CP5TsTTWB"
+		},
+		"pcvr": "https://store.steampowered.com/app/1384320/Grapple_Tournament/"
+	},
+	"green_hell": {
+		"androidxr": "https://play.google.com/store/apps/details?id=com.IncuvoSA.GreenHellVR",
+		"horizon": "https://www.meta.com/experiences/green-hell-vr/3815577785147028/",
+		"internal": {
+			"added": "2025-11-14",
+			"legacy_id": "GNSW4RVyHR2httyyUNeDh9"
+		},
+		"pcvr": "https://store.steampowered.com/app/1782330/Green_Hell_VR/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7112338120183431174",
+		"psvr": "https://store.playstation.com/concept/10004102",
+		"vive": "https://www.viveport.com/apps/a4e79cc3-dd6a-46f0-8679-587f77093b69"
+	},
+	"grid_legends": {
+		"horizon": "https://www.meta.com/experiences/grid-legends/7252497758125048/",
+		"internal": {
+			"legacy_id": "rYhoZL8MePT9piqyJHDWrH"
+		},
+		"pcvr": "https://store.steampowered.com/app/1307710/GRID_Legends/"
+	},
+	"grim": {
+		"crossplay": ["pcvr", "horizon", "frame"],
+		"frame": "https://store.steampowered.com/app/1403940/Grim/",
+		"horizon": "https://www.meta.com/experiences/grim/6488902397838458/",
+		"internal": {
+			"added": "2025-02-27",
+			"legacy_id": "QK9NxbH624bqndnd6km3C7"
+		},
+		"pcvr": "https://store.steampowered.com/app/1403940/Grim/"
+	},
+	"guardians_frontline": {
+		"crossplay": ["pcvr", "horizon"],
+		"horizon": "https://www.meta.com/experiences/guardians-frontline/5380153758692064/",
+		"internal": {
+			"legacy_id": "u5RJ22PRcNu3ToBpvNoyYM"
+		},
+		"pcvr": "https://store.steampowered.com/app/1481440/Guardians_Frontline/"
+	},
+	"gun_raiders": {
+		"horizon": "https://www.meta.com/experiences/gun-raiders/3982869578392875/",
+		"internal": {
+			"legacy_id": "vKBHWZMpiBHjcwGyjKDm88"
+		},
+		"pico": "https://store-global.picoxr.com/global/detail/1/7137077628036726789"
+	},
+	"gun_world": {
+		"horizon": "https://www.meta.com/experiences/gun-world-vr/4307257289362025/",
+		"internal": {
+			"legacy_id": "pJAc8ipKGh5AjxkccveUUQ"
+		},
+		"pico": "https://store-global.picoxr.com/global/detail/1/7146951653084725254"
+	},
+	"gym_class": {
+		"horizon": "https://www.meta.com/experiences/gym-class/3661420607275144/",
+		"internal": {
+			"legacy_id": "uXMtPXbrSvf8ReGAfKDXN7"
+		}
+	},
+	"half_plus_half": {
+		"horizon": "https://www.meta.com/experiences/half-half/2035353573194060/",
+		"internal": {
+			"legacy_id": "ZTJnqN7w9NDaeEcaRF2w3g"
+		},
+		"pcvr": "https://www.meta.com/experiences/pcvr/half-half/2127581660649280/"
+	},
+	"headspace_xr": {
+		"horizon": "https://www.meta.com/experiences/headspace-xr-mindfulness-meditation/24496870869957102/",
+		"internal": {
+			"legacy_id": "2eRxYQuuivHeVcZrCVZU8Q"
+		}
+	},
+	"hellsweeper": {
+		"crossplay": ["pcvr", "pico", "psvr"],
+		"horizon": "https://www.meta.com/experiences/hellsweeper-vr/3589244014451286/",
+		"internal": {
+			"legacy_id": "MtMqrQh8QcEXZH6vjnQ6rN"
+		},
+		"pcvr": "https://store.steampowered.com/app/1341490/Hellsweeper_VR/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7254913648009707525",
+		"psvr": "https://store.playstation.com/product/UP3535-PPSA14169_00-0325990934687311"
+	},
+	"holofit": {
+		"internal": {
+			"legacy_id": "zDc2judgDVSRZfr67njf9G"
+		},
+		"pico": "https://store-global.picoxr.com/global/detail/1/2876"
+	},
+	"home_sports": {
+		"horizon": "https://www.meta.com/experiences/home-sports/8975028309180826/",
+		"internal": {
+			"added": "2024-12-16",
+			"legacy_id": "EBREoy9sg5J2bi53rgXKR2"
+		}
+	},
+	"horizon_worlds": {
+		"horizon": "https://www.meta.com/experiences/worlds/2532035600194083/",
+		"internal": {
+			"legacy_id": "mkyAHUgKDWFiqkZcgZD6pS"
+		}
+	},
+	"horror_simulator": {
+		"horizon": "https://www.meta.com/experiences/horror-simulator/6847023095354894/",
+		"internal": {
+			"added": "2025-04-07",
+			"legacy_id": "Zsr4WCKg86vYoBZs6wCfR5"
+		},
+		"pcvr": "https://store.steampowered.com/app/3063780/Horror_Simulator_VR/"
+	},
+	"human_fall_flat": {
+		"horizon": "https://www.meta.com/experiences/human-fall-flat-vr/7274779852571833/",
+		"internal": {
+			"added": "2024-12-06",
+			"legacy_id": "ucUqJ2QE2KbTexoRduCjbf"
+		},
+		"pcvr": "https://store.steampowered.com/app/2777220/Human_Fall_Flat_VR/",
+		"psvr": "https://store.playstation.com/product/UP4395-PPSA22811_00-HUMANFALLFLAT0VR"
+	},
+	"hyper_dash": {
+		"crossplay": ["pcvr", "pico", "vive"],
+		"horizon": "https://www.meta.com/experiences/hyper-dash/3070239359662935/",
+		"internal": {
+			"legacy_id": "HiPFU76JUxsbmiFNjR5JXf"
+		},
+		"pcvr": "https://store.steampowered.com/app/1386890/Hyper_Dash/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/2129",
+		"vive": "https://www.viveport.com/apps/4fa85736-a429-4767-97a6-332615d48a49"
+	},
+	"i_am_cat": {
+		"horizon": "https://www.meta.com/experiences/i-am-cat/6061406827268889/",
+		"internal": {
+			"added": "2025-06-17",
+			"legacy_id": "CgnV68Gk32JuSFJHvyiwtM"
+		},
+		"pcvr": "https://store.steampowered.com/app/3016840/I_Am_Cat/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7475335600636198967",
+		"psvr": "https://store.playstation.com/product/UB1027-PPSA25041_00-0129055730840630"
+	},
+	"i_fetch_rocks": {
+		"crossplay": ["pcvr", "horizon"],
+		"horizon": "https://www.meta.com/experiences/i-fetch-rocks/4687614158014056/",
+		"internal": {
+			"added": "2025-11-14",
+			"legacy_id": "d7HmGChgsRKqu39iSkCCBG"
+		},
+		"pcvr": "https://store.steampowered.com/app/1543380/I_Fetch_Rocks/"
+	},
+	"ibcricket": {
+		"horizon": "https://www.meta.com/experiences/ib-cricket/5437449896288644/",
+		"internal": {
+			"legacy_id": "MUPA7cU49qWd2WQH8rjVc7"
+		},
+		"pcvr": "https://store.steampowered.com/app/957070/iB_Cricket/"
+	},
+	"il2_sturmovik": {
+		"internal": {
+			"legacy_id": "BPoQhJvNi32kbECipz4aWa"
+		},
+		"pcvr": "https://store.steampowered.com/app/307960/IL2_Sturmovik_Battle_of_Stalingrad/"
+	},
+	"ilysia": {
+		"crossplay": ["pcvr", "horizon"],
+		"horizon": "https://www.meta.com/experiences/ilysia/6486916504696133/",
+		"internal": {
+			"legacy_id": "JxrYt7MwvqrdTS5wu3YjbQ"
+		},
+		"pcvr": "https://store.steampowered.com/app/1154120/Ilysia/"
+	},
+	"innerworld": {
+		"horizon": "https://www.meta.com/experiences/innerworld-by-xrhealth/5406767536033508/",
+		"internal": {
+			"legacy_id": "zQ5bGpSqDs4oZj9NAMM5gF"
+		}
+	},
+	"inspaze": {
+		"internal": {
+			"legacy_id": "DmV7i9pb6UUyGiGkVeK88m"
+		},
+		"vision": "https://apps.apple.com/app/inspaze/id6473711864?platform=vision"
+	},
+	"into_black": {
+		"crossplay": ["pcvr", "horizon", "frame"],
+		"frame": "https://store.steampowered.com/app/3606610/Into_Black/",
+		"horizon": "https://www.meta.com/experiences/into-black/5289374691122516/",
+		"internal": {
+			"added": "2024-12-06",
+			"legacy_id": "3gTV9Yo95nXSjdqEa98q72"
+		},
+		"pcvr": "https://store.steampowered.com/app/3606610/Into_Black/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7509314492963258424",
+		"psvr": "https://store.playstation.com/product/EP4731-PPSA27338_00-0355163267291696"
+	},
+	"into_the_radius_2": {
+		"horizon": "https://www.meta.com/experiences/into-the-radius-2/6605328856182465/",
+		"internal": {
+			"legacy_id": "pJe2kkrcsrjypCr62eCi5i"
+		},
+		"pcvr": "https://store.steampowered.com/app/2307350/Into_the_Radius_2/"
+	},
+	"iracing": {
+		"internal": {
+			"legacy_id": "atanSTGZ9KMUtfkneQCrWa"
+		},
+		"pcvr": "https://store.steampowered.com/app/266410/iRacing/"
+	},
+	"iron_rebellion": {
+		"crossplay": ["pcvr", "horizon", "frame"],
+		"frame": "https://store.steampowered.com/app/1192900/IRON_REBELLION/",
+		"horizon": "https://www.meta.com/experiences/iron-rebellion/4076925385769824/",
+		"internal": {
+			"added": "2024-12-16",
+			"legacy_id": "282mLZMHmCQfBrLPhHBRkZ"
+		},
+		"pcvr": "https://store.steampowered.com/app/1192900/IRON_REBELLION/"
+	},
+	"ironlights": {
+		"crossplay": ["pcvr", "horizon"],
+		"horizon": "https://www.meta.com/experiences/ironlights/2449350021843569/",
+		"internal": {
+			"legacy_id": "B6NFLuwPrxgHFX6TQAB9B6"
+		},
+		"pcvr": "https://store.steampowered.com/app/1245950/Ironlights/"
+	},
+	"ironstrike": {
+		"crossplay": ["pcvr", "horizon"],
+		"horizon": "https://www.meta.com/experiences/ironstrike/6376559029122173/",
+		"internal": {
+			"legacy_id": "6ZBqAmK3V3PCp2dLxUTRB9"
+		},
+		"pcvr": "https://store.steampowered.com/app/3233230/IRONSTRIKE/"
+	},
+	"ironwolf": {
+		"crossplay": ["pcvr"],
+		"internal": {
+			"legacy_id": "ht3FF4tuWvsrSTwMXp5ujb"
+		},
+		"pcvr": "https://store.steampowered.com/app/552080/IronWolf_VR/"
+	},
+	"just_dance": {
+		"horizon": "https://www.meta.com/experiences/just-dance-vr-welcome-to-dancity/6646371635430939/",
+		"internal": {
+			"added": "2024-12-06",
+			"legacy_id": "sjhhNq7icXbzin6LWhfDcQ"
+		}
+	},
+	"just_hoops": {
+		"crossplay": ["pcvr", "horizon", "pico", "vision", "psvr"],
+		"horizon": "https://www.meta.com/experiences/just-hoops/4038407439503919/",
+		"internal": {
+			"added": "2024-12-21",
+			"legacy_id": "AsTgqKmfpLKyvfL3zhKQBT"
+		},
+		"pcvr": "https://store.steampowered.com/app/1633080/JUST_HOOPS/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/2657",
+		"psvr": "https://store.playstation.com/concept/10003253",
+		"vision": "https://apps.apple.com/app/just-hoops/id6474666203?platform=vision"
+	},
+	"killing_floor_incursion": {
+		"internal": {
+			"legacy_id": "jTzfNyE4ggw3WRyopj7dnb"
+		},
+		"pcvr": "https://store.steampowered.com/app/690810/Killing_Floor_Incursion/",
+		"psvr": "https://store.playstation.com/product/UP0115-CUSA11283_00-USKILLINGFLRPSVR"
+	},
+	"kingspray_graffiti": {
+		"horizon": "https://www.meta.com/experiences/kingspray-graffiti/2082941345119152/",
+		"internal": {
+			"legacy_id": "6jaR2MaS3zCefnHmLan6DV"
+		},
+		"pcvr": "https://store.steampowered.com/app/471660/Kingspray_Graffiti_VR/"
+	},
+	"labyrinthine": {
+		"crossplay": ["pcvr"],
+		"internal": {
+			"legacy_id": "SbJFuwK2uzPL3RD7gYWXbc"
+		},
+		"pcvr": "https://store.steampowered.com/app/1302240/Labyrinthine/"
+	},
+	"lavender": {
+		"internal": {
+			"legacy_id": "m7MYMFUx28taDwmjPHfX26"
+		},
+		"pcvr": "https://store.steampowered.com/app/886710/Lavender/"
+	},
+	"le_mans_ultimate": {
+		"internal": {
+			"added": "2025-11-14",
+			"legacy_id": "SoZoLdCVN6DBRSxpdKekr4"
+		},
+		"pcvr": "https://store.steampowered.com/app/2399420/Le_Mans_Ultimate/"
+	},
+	"legendary_tales": {
+		"crossplay": ["pcvr", "frame", "psvr"],
+		"frame": "https://store.steampowered.com/app/1465070/Legendary_Tales/",
+		"horizon": "https://www.meta.com/experiences/legendary-tales/7355622301195522/",
+		"internal": {
+			"legacy_id": "CirbzoyPbRnDS3vjmBf2Pe"
+		},
+		"pcvr": "https://store.steampowered.com/app/1465070/Legendary_Tales/",
+		"psvr": "https://store.playstation.com/product/UP7641-PPSA10684_00-0846602238623934"
+	},
+	"loco_dojo_unleashed": {
+		"horizon": "https://www.meta.com/experiences/loco-dojo-unleashed/2097356583640894/",
+		"internal": {
+			"legacy_id": "sHw3ZznXxeC9DSBNcAYa39"
+		},
+		"vive": "https://www.viveport.com/apps/5869fac4-d447-4518-b156-745a22773a9d"
+	},
+	"lumines_arise": {
+		"crossplay": ["pcvr", "psvr"],
+		"internal": {
+			"added": "2025-11-14",
+			"legacy_id": "s9BEJJCYmBEdvZot73DpU8"
+		},
+		"pcvr": "https://store.steampowered.com/app/2370000/Lumines_Arise/",
+		"psvr": "https://store.playstation.com/product/UP0751-PPSA27236_00-LUMINESARISE0001"
+	},
+	"mahjong_space": {
+		"internal": {
+			"legacy_id": "XDtbVnYqYaUq9DuMdxj5da"
+		},
+		"vision": "https://apps.apple.com/app/mahjong-space/id6474938032?platform=vision"
+	},
+	"mannequin": {
+		"crossplay": ["pcvr", "horizon"],
+		"horizon": "https://www.meta.com/experiences/mannequin/7028027297235918/",
+		"internal": {
+			"added": "2024-12-06",
+			"legacy_id": "PGtp8UjMRJdKDa3iRYMsX7"
+		},
+		"pcvr": "https://store.steampowered.com/app/2409260/Mannequin/"
+	},
+	"marineverse_sailing_club": {
+		"horizon": "https://www.meta.com/experiences/marineverse-sailing-club/2465388190184288/",
+		"internal": {
+			"legacy_id": "bQfJUMuUR2sR7mVcNCDk7a"
+		},
+		"pcvr": "https://store.steampowered.com/app/1035320/MarineVerse_Sailing_Club/"
+	},
+	"merlins_chess": {
+		"horizon": "https://www.meta.com/experiences/merlins-chess/8016743778416709/",
+		"internal": {
+			"added": "2025-06-17",
+			"legacy_id": "AWtxL8XbCq84edeXLjzkv9"
+		}
+	},
+	"minecraft": {
+		"crossplay": ["pcvr", "horizon"],
+		"horizon": "https://sidequestvr.com/app/7150",
+		"internal": {
+			"legacy_id": "d3ZV6rendJA86ejpCSaHBK"
+		},
+		"pcvr": "https://www.vivecraft.org/downloads/",
+		"psvr": "https://store.playstation.com/product/UP4433-CUSA00744_00-MINECRAFTPS40001"
+	},
+	"mini_motor_racing_x": {
+		"crossplay": ["pcvr", "horizon", "frame", "pico", "psvr"],
+		"frame": "https://store.steampowered.com/app/1303990/Mini_Motor_Racing_X/",
+		"horizon": "https://www.meta.com/experiences/mini-motor-racing-x/2371757336252737/",
+		"internal": {
+			"legacy_id": "SUYK8tfrWmbvpopJZsnPzJ"
+		},
+		"pcvr": "https://store.steampowered.com/app/1303990/Mini_Motor_Racing_X/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7090534628204888069",
+		"psvr": "https://store.playstation.com/product/UP4557-CUSA17842_00-MMRXPSUS20192010"
+	},
+	"miracle_pool": {
+		"horizon": "https://www.meta.com/experiences/miracle-pool/7067612163334384/",
+		"internal": {
+			"legacy_id": "nzbA5ahuw5cNWimAoxVetd"
+		}
+	},
+	"mlb_home_run_derby": {
+		"crossplay": ["pcvr", "horizon", "psvr"],
+		"horizon": "https://www.meta.com/experiences/mlb-home-run-derby-vr/4468078983226058/",
+		"internal": {
+			"added": "2025-06-17",
+			"legacy_id": "RNcBSJFVaz6kzVNKpRBVBH"
+		},
+		"pcvr": "https://store.steampowered.com/app/821370/MLB_Home_Run_Derby_VR/",
+		"psvr": "https://store.playstation.com/product/UP2121-CUSA11429_00-MLBHRDPSVR201800"
+	},
+	"monkey_doo": {
+		"crossplay": ["pcvr", "horizon", "pico"],
+		"horizon": "https://www.meta.com/experiences/monkey-doo/5635852399856124/",
+		"internal": {
+			"legacy_id": "veeBYrCZkHZdNnfDdvxtkH"
+		},
+		"pcvr": "https://store.steampowered.com/app/2233580/Monkey_Doo/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7381512518306545670"
+	},
+	"mothergunship_forge": {
+		"horizon": "https://www.meta.com/experiences/mothergunship-forge/4188843481174389/",
+		"internal": {
+			"legacy_id": "dXbVxiHPTDPRnCiyBnXWY3"
+		},
+		"pcvr": "https://store.steampowered.com/app/1931240/MOTHERGUNSHIP_FORGE/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7379996198284967942"
+	},
+	"motox": {
+		"horizon": "https://www.meta.com/experiences/motox/5754014731339882/",
+		"internal": {
+			"added": "2025-06-17",
+			"legacy_id": "YX8XwXs45gnHbLKEzDoUE3"
+		},
+		"pcvr": "https://store.steampowered.com/app/1787800/MotoX/"
+	},
+	"mozilla_hubs": {
+		"internal": {
+			"legacy_id": "nqUgzf7FGLFNUi5MfcpmV8"
+		},
+		"pcvr": "https://hubsfoundation.org/"
+	},
+	"museum_of_other_realities": {
+		"crossplay": ["pcvr"],
+		"internal": {
+			"legacy_id": "z6PXMo8JatbqCcYzjCaW9F"
+		},
+		"pcvr": "https://store.steampowered.com/app/613900/Museum_of_Other_Realities/"
+	},
+	"nature_treks_together": {
+		"internal": {
+			"legacy_id": "jE3i2DFKy7XbusiBR8PXGK"
+		},
+		"pcvr": "https://store.steampowered.com/app/1521040/Nature_Treks_Together/"
+	},
+	"nfl_pro_era": {
+		"androidxr": "https://play.google.com/store/apps/details?id=com.StatusPro.NFLProEra22",
+		"horizon": "https://www.meta.com/experiences/nfl-pro-era/4193975210678121/",
+		"internal": {
+			"legacy_id": "vHRknsmcE7YZcewUJUGUSa"
+		},
+		"pcvr": "https://store.steampowered.com/app/2165690/PRO_ERA/",
+		"psvr": "https://store.playstation.com/product/UP6514-PPSA06234_00-9783365361338862"
+	},
+	"nfl_pro_era_ii": {
+		"horizon": "https://www.meta.com/experiences/nfl-pro-era-ii/6025394477525637/",
+		"internal": {
+			"legacy_id": "33Tn42vj5imwGddPLnc8zP"
+		},
+		"pcvr": "https://store.steampowered.com/app/2313930/NFL_Pro_Era_II/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7249404673898250246",
+		"psvr": "https://store.playstation.com/product/UP6514-PPSA15236_00-0323940201017245"
+	},
+	"nhl_sense_arena": {
+		"horizon": "https://www.meta.com/experiences/nhl-sense-arena-26-vr-hockey/3454538864674405/",
+		"internal": {
+			"legacy_id": "3nhLdefwZxD4k5Y6WgWqHf"
+		}
+	},
+	"nightclub_simulator": {
+		"horizon": "https://www.meta.com/experiences/nightclub-simulator-vr/5332536576829015/",
+		"internal": {
+			"added": "2026-03-31",
+			"legacy_id": "wuJBKBouDtyXUdsRrKDGeP"
+		},
+		"pcvr": "https://store.steampowered.com/app/2729480/NightClub_Simulator/"
+	},
+	"no_more_rainbows": {
+		"androidxr": "https://play.google.com/store/apps/details?id=com.squido.nmr",
+		"crossplay": ["pcvr", "horizon", "pico", "androidxr", "psvr"],
+		"horizon": "https://www.meta.com/experiences/no-more-rainbows/5446476285387663/",
+		"internal": {
+			"legacy_id": "hZAgCtLnnR7gjuMDnt2Prh"
+		},
+		"pcvr": "https://store.steampowered.com/app/1634100/No_More_Rainbows/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7280605626210779141",
+		"psvr": "https://store.playstation.com/product/UP7413-PPSA19806_00-0634319425921388"
+	},
+	"nock": {
+		"horizon": "https://www.meta.com/experiences/nock-bow-arrow-soccer/5157404804284116/",
+		"internal": {
+			"legacy_id": "ynW2JCRLR4X9oU6Kqj7LKY"
+		},
+		"pcvr": "https://store.steampowered.com/app/2010000/Nock/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7118370277091819525",
+		"psvr": "https://store.playstation.com/product/UP3080-PPSA12770_00-NOCKNOCKNOCKNOCK"
+	},
+	"noclip": {
+		"horizon": "https://www.meta.com/experiences/noclip-vr/5407386572706843/",
+		"internal": {
+			"legacy_id": "RAkDhE4EzRgMCd6siRXHgY"
+		},
+		"pcvr": "https://www.meta.com/experiences/pcvr/noclip-vr/5407386572706843/"
+	},
+	"oktoberfest": {
+		"horizon": "https://www.meta.com/experiences/oktoberfest/6605242869557912/",
+		"internal": {
+			"added": "2024-10-31",
+			"legacy_id": "rLXRgj5mxaktUnoMEJHULP"
+		}
+	},
+	"omnicards": {
+		"internal": {
+			"added": "2025-02-27",
+			"legacy_id": "sFqtrBkyBXBMpKxyQ8CPtY"
+		},
+		"vision": "https://apps.apple.com/app/omnicards/id6503483694?platform=vision"
+	},
+	"onward": {
+		"crossplay": ["pcvr", "horizon"],
+		"horizon": "https://www.meta.com/experiences/onward/2677344882310094/",
+		"internal": {
+			"legacy_id": "uZMiTn4iySMVugZPDiK5LR"
+		},
+		"pcvr": "https://store.steampowered.com/app/496240/Onward/"
+	},
+	"orion_drift": {
+		"horizon": "https://www.meta.com/experiences/orion-drift/7181769438517329/",
+		"internal": {
+			"added": "2024-12-06",
+			"legacy_id": "F9mZg8TPw6gfyZVMVXv2Lk"
+		}
+	},
+	"overte": {
+		"internal": {
+			"legacy_id": "mpzedqNWE2JVPXpUfDuUkD"
+		},
+		"pcvr": "https://overte.org/"
+	},
+	"paintball_playground": {
+		"horizon": "https://www.meta.com/experiences/paintball-playground/5804418539661677/",
+		"internal": {
+			"added": "2024-12-06",
+			"legacy_id": "Md756VHbDQh8ytWLoMiU8B"
+		},
+		"pcvr": "https://store.steampowered.com/app/4930580/Paintball_Playground_VR/"
+	},
+	"painting": {
+		"horizon": "https://www.meta.com/experiences/painting-vr/3106117596158066/",
+		"internal": {
+			"legacy_id": "tr7gmQpLb4f2EUDGg4GdKL"
+		},
+		"pcvr": "https://store.steampowered.com/app/1905940/Painting_VR/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7091488835762159621"
+	},
+	"paradiddle": {
+		"horizon": "https://www.meta.com/experiences/paradiddle/5719805344724551/",
+		"internal": {
+			"legacy_id": "4TPmwvW8y9xw7AiUuWtp2m"
+		},
+		"pcvr": "https://store.steampowered.com/app/685240/Paradiddle/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/3049",
+		"vive": "https://www.viveport.com/apps/5ed04ebd-e925-4db6-a35d-62a4f463556d"
+	},
+	"party_versus": {
+		"horizon": "https://www.meta.com/experiences/party-versus/5590183961072680/",
+		"internal": {
+			"added": "2024-12-21",
+			"legacy_id": "V3TbT9XQkXCsrHyoQWps73"
+		}
+	},
+	"patchworld": {
+		"internal": {
+			"legacy_id": "ucFdaZAkrrAjRLkj7KDbPB"
+		},
+		"pcvr": "https://store.steampowered.com/app/2235310/PatchWorld/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7195596911028568070"
+	},
+	"path_of_the_warrior": {
+		"horizon": "https://www.meta.com/experiences/path-of-the-warrior/2032870023439846/",
+		"internal": {
+			"legacy_id": "ZCodFBajjKVX6xnq6zhesg"
+		},
+		"pcvr": "https://www.meta.com/experiences/pcvr/path-of-the-warrior/2030694353661802/"
+	},
+	"pavlov": {
+		"crossplay": ["pcvr", "psvr"],
+		"internal": {
+			"legacy_id": "eo2DSet8HVzi8RAHQSZooF"
+		},
+		"pcvr": "https://store.steampowered.com/app/555160/Pavlov/",
+		"psvr": "https://store.playstation.com/product/UP7106-PPSA08255_00-8943562685177973"
+	},
+	"pavlov_shack": {
+		"crossplay": ["horizon", "frame"],
+		"frame": "https://store.steampowered.com/app/3504270/Pavlov_Shack/",
+		"horizon": "https://www.meta.com/experiences/pavlov-shack/2443267419018232/",
+		"internal": {
+			"legacy_id": "yf4g49maWEZTnBAKwsEFSX"
+		}
+	},
+	"payday_2": {
+		"internal": {
+			"legacy_id": "mHF6zQZ3tbVe9iYjGuzAPK"
+		},
+		"pcvr": "https://store.steampowered.com/app/218620/PAYDAY_2/"
+	},
+	"penguin_paradise": {
+		"horizon": "https://www.meta.com/experiences/penguin-paradise/5817303821616533/",
+		"internal": {
+			"legacy_id": "NoP6ZmkDchkGudHjmDy4jQ"
+		}
+	},
+	"phasmophobia": {
+		"crossplay": ["pcvr", "psvr"],
+		"internal": {
+			"legacy_id": "MhWAgbFzmusLJyAdtSXfXV"
+		},
+		"pcvr": "https://store.steampowered.com/app/739630/Phasmophobia/",
+		"psvr": "https://store.playstation.com/product/EP7789-PPSA09030_00-5648706170853559"
+	},
+	"pianovision": {
+		"horizon": "https://www.meta.com/experiences/pianovision/5271074762922599/",
+		"internal": {
+			"added": "2025-02-27",
+			"legacy_id": "XC2evRR34Fu97V32osEvzd"
+		}
+	},
+	"pickle_pro": {
+		"internal": {
+			"added": "2025-11-14",
+			"legacy_id": "tp2FvZRmA2WxXJRh7vmQgf"
+		},
+		"vision": "https://apps.apple.com/app/pickle-pro/id6744969406?platform=vision"
+	},
+	"pillow": {
+		"horizon": "https://www.meta.com/experiences/pillow/5655932521164368/",
+		"internal": {
+			"legacy_id": "g6bfwzSasvtbNe3TV6oXxk"
+		}
+	},
+	"ping_pong_club": {
+		"internal": {
+			"added": "2025-02-27",
+			"legacy_id": "oSdX45iK42jPfXVXzrSsQH"
+		},
+		"vision": "https://apps.apple.com/app/table-tennis-x-ping-pong-game/id6739363110?platform=vision"
+	},
+	"pixel_dungeon": {
+		"crossplay": ["pcvr", "horizon"],
+		"horizon": "https://www.meta.com/experiences/pixel-dungeon/6743334779111805/",
+		"internal": {
+			"added": "2025-02-27",
+			"legacy_id": "XLKawY7JDwsWqR2PYsZBD6"
+		},
+		"pcvr": "https://store.steampowered.com/app/3063750/Pixel_Dungeon_VR/"
+	},
+	"planeta": {
+		"internal": {
+			"legacy_id": "7NjeRRK6XWcQ2VwamJFk4N"
+		},
+		"pcvr": "https://store.steampowered.com/app/1918590/PlanetA/"
+	},
+	"poker": {
+		"horizon": "https://www.meta.com/experiences/poker-vr-w-slots-and-blackjack/2257223740990488/",
+		"internal": {
+			"legacy_id": "6XHd53DTXKRJejTLkZCkES"
+		}
+	},
+	"poligonvr": {
+		"internal": {
+			"added": "2026-03-31",
+			"legacy_id": "QkQzYZB3uqgFFLkyK2TaiL"
+		},
+		"pcvr": "https://store.steampowered.com/app/2336430/PoligonVR/"
+	},
+	"population_one": {
+		"horizon": "https://www.meta.com/experiences/population-one/2564158073609422/",
+		"internal": {
+			"legacy_id": "HF4tppeRywmq9oWsR2GyMg"
+		},
+		"pcvr": "https://store.steampowered.com/app/691260/POPULATION_ONE/"
+	},
+	"powerwash_simulator": {
+		"horizon": "https://www.meta.com/experiences/powerwash-simulator-vr/3713270985434472/",
+		"internal": {
+			"legacy_id": "oysKPjuBR4cKeksTJBh5cm"
+		}
+	},
+	"premium_bowling": {
+		"crossplay": ["pcvr", "horizon"],
+		"horizon": "https://www.meta.com/experiences/premium-bowling/2773034772778845/",
+		"internal": {
+			"legacy_id": "pabRUaoeHixCrf7b3hARUj"
+		},
+		"pcvr": "https://store.steampowered.com/app/898580/Premium_Bowling/"
+	},
+	"project_terminus": {
+		"horizon": "https://www.meta.com/experiences/project-terminus-vr/4243111539050423/",
+		"internal": {
+			"legacy_id": "84LTttUvpxL9Qnp7SRRjcc"
+		},
+		"pcvr": "https://store.steampowered.com/app/1437280/Project_Terminus_VR/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7185519648882851845"
+	},
+	"pulsar_lost_colony": {
+		"crossplay": ["pcvr"],
+		"internal": {
+			"legacy_id": "3dXr7GXNjW7SBKNfMWgYJe"
+		},
+		"pcvr": "https://store.steampowered.com/app/252870/PULSAR_Lost_Colony/"
+	},
+	"puppet_fever": {
+		"horizon": "https://www.meta.com/experiences/puppet-fever/1756404784466105/",
+		"internal": {
+			"legacy_id": "TsoZ2PUcsbVJskcTr9qUjB"
+		},
+		"pcvr": "https://store.steampowered.com/app/800390/Puppet_Fever/"
+	},
+	"puzzling_places": {
+		"crossplay": ["pcvr", "horizon", "frame", "pico", "vive", "vision", "psvr"],
+		"frame": "https://store.steampowered.com/app/3530820/Puzzling_Places__3D_Jigsaw_Sim/",
+		"horizon": "https://www.meta.com/experiences/puzzling-places/3931148300302917/",
+		"internal": {
+			"legacy_id": "dCoCvVtwYXyjdR5oxswotL"
+		},
+		"pcvr": "https://store.steampowered.com/app/3530820/Puzzling_Places__3D_Jigsaw_Sim/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/2870",
+		"psvr": "https://store.playstation.com/product/UP6978-PPSA14219_00-0930814246230118",
+		"vision": "https://apps.apple.com/app/puzzling-places/id6473639841?platform=vision",
+		"vive": "https://www.viveport.com/apps/76aff4e5-6695-415f-a732-6526c03488fc"
+	},
+	"raccoon_lagoon": {
+		"horizon": "https://www.meta.com/experiences/raccoon-lagoon/1903584373052985/",
+		"internal": {
+			"legacy_id": "VAXHujeaGhwJspxF7WzkFA"
+		},
+		"pcvr": "https://www.meta.com/experiences/pcvr/raccoon-lagoon/1714408811965644/"
+	},
+	"racket_club": {
+		"crossplay": ["pcvr", "horizon", "pico"],
+		"horizon": "https://www.meta.com/experiences/racket-club/6022041731249559/",
+		"internal": {
+			"legacy_id": "nvLQ9yJhkPahct8pxMLuPA"
+		},
+		"pcvr": "https://store.steampowered.com/app/2407910/Racket_Club/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7267521334555525126"
+	},
+	"racket_fury": {
+		"crossplay": ["pcvr", "horizon", "frame"],
+		"frame": "https://store.steampowered.com/app/555050/Racket_Fury_Table_Tennis_VR/",
+		"horizon": "https://www.meta.com/experiences/racket-fury-table-tennis-vr/1952355814856769/",
+		"internal": {
+			"legacy_id": "QEfHerxPBkaLJzBeBZ6od8"
+		},
+		"pcvr": "https://store.steampowered.com/app/555050/Racket_Fury_Table_Tennis_VR/",
+		"psvr": "https://store.playstation.com/product/UP4138-CUSA11177_00-RF2017RELEASE001"
+	},
+	"racket_nx": {
+		"crossplay": ["pcvr", "horizon", "pico"],
+		"horizon": "https://www.meta.com/experiences/racket-nx/2255408847836468/",
+		"internal": {
+			"legacy_id": "b6zBfj9k9dAg4XzHRk8r9E"
+		},
+		"pcvr": "https://store.steampowered.com/app/428080/Racket_Nx/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/1405"
+	},
+	"ragnarock": {
+		"crossplay": ["pcvr", "horizon"],
+		"horizon": "https://www.meta.com/experiences/ragnarock/3749621795127676/",
+		"internal": {
+			"legacy_id": "WxbMUomENN2kERWMeLwn3Z"
+		},
+		"pcvr": "https://store.steampowered.com/app/1345820/Ragnarock/",
+		"psvr": "https://store.playstation.com/product/UP7137-PPSA14248_00-0492146559940438"
+	},
+	"rampage_agents": {
+		"crossplay": ["pcvr", "pico"],
+		"horizon": "https://www.meta.com/experiences/rampage-agents/24071664309084077/",
+		"internal": {
+			"added": "2024-10-31",
+			"legacy_id": "QzoPn654AmDFxP4dQvX5Zb"
+		},
+		"pcvr": "https://store.steampowered.com/app/2492600/Rampage_Agents/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7123513493034336262"
+	},
+	"real_vr_fishing": {
+		"crossplay": ["pcvr", "frame"],
+		"frame": "https://store.steampowered.com/app/1266470/Real_VR_Fishing/",
+		"horizon": "https://www.meta.com/experiences/real-vr-fishing/2582932495064035/",
+		"internal": {
+			"legacy_id": "GeUXPSsyL2sxwjrBfWUaHf"
+		},
+		"pcvr": "https://store.steampowered.com/app/1266470/Real_VR_Fishing/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7125747892752580614"
+	},
+	"remio": {
+		"horizon": "https://www.meta.com/experiences/remio/5120897861344596/",
+		"internal": {
+			"legacy_id": "tsA7n35LaiVm2iT5eAUcuS"
+		},
+		"vive": "https://www.viveport.com/apps/e1d7a44a-a199-409d-b21b-8f48dcac92e4"
+	},
+	"requisition": {
+		"crossplay": ["pcvr"],
+		"internal": {
+			"legacy_id": "eR5qPKfQ8answShFLd5Rj6"
+		},
+		"pcvr": "https://store.steampowered.com/app/1730650/REQUISITION_VR/"
+	},
+	"resonite": {
+		"internal": {
+			"curated": 2,
+			"legacy_id": "iAfAoJhthiMbk469A2Hdde"
+		},
+		"pcvr": "https://store.steampowered.com/app/2519830/Resonite/"
+	},
+	"rfactor_2": {
+		"internal": {
+			"legacy_id": "DSJqXZgmyaBknzvzpGYfrm"
+		},
+		"pcvr": "https://store.steampowered.com/app/365960/rFactor_2/"
+	},
+	"riff_xr": {
+		"crossplay": ["pcvr", "horizon"],
+		"horizon": "https://www.meta.com/experiences/riff-xr/4539807976043997/",
+		"internal": {
+			"legacy_id": "mRFA8QzpPFS3iGXPeESnin"
+		},
+		"pcvr": "https://store.steampowered.com/app/2182790/Riff_XR/"
+	},
+	"rival_stars_horse_racing": {
+		"horizon": "https://www.meta.com/experiences/rival-stars-horse-racing-vr-edition/7176684719116288/",
+		"internal": {
+			"added": "2025-06-04",
+			"legacy_id": "fQBRpZVN6R2hK9MhYxMqwL"
+		},
+		"pcvr": "https://store.steampowered.com/app/2937440/Rival_Stars_Horse_Racing_VR_Edition/"
+	},
+	"roblox": {
+		"horizon": "https://www.meta.com/experiences/roblox/5804350719675181/",
+		"internal": {
+			"curated": 4,
+			"legacy_id": "tEFPjkby9U6ZiTBkNeAqwA"
+		},
+		"pcvr": "https://help.roblox.com/hc/articles/208260046-Setting-up-VR-for-Roblox"
+	},
+	"roboquest": {
+		"horizon": "https://www.meta.com/experiences/roboquest-vr/9269393463181825/",
+		"internal": {
+			"added": "2026-07-29",
+			"legacy_id": "KGra6V96HYYoVtkjZusSq7"
+		},
+		"pcvr": "https://store.steampowered.com/app/3151760/Roboquest_VR/",
+		"psvr": "https://store.playstation.com/product/EB1267-PPSA28899_00-0454070817341208"
+	},
+	"rock_life": {
+		"internal": {
+			"legacy_id": "t7uir94ZfxS5UMXCBptHyh"
+		},
+		"pcvr": "https://store.steampowered.com/app/2056560/Rock_Life_The_Rock_Simulator/"
+	},
+	"rocking_legend": {
+		"internal": {
+			"legacy_id": "YyQVuUUPq9BnczPJQHUCmG"
+		},
+		"pcvr": "https://store.steampowered.com/app/1260800/Rocking_Legend/"
+	},
+	"rogue_pinatas": {
+		"crossplay": ["pcvr"],
+		"internal": {
+			"added": "2025-04-07",
+			"legacy_id": "Hd2ELM6GkRFfhBRYaKKuYR"
+		},
+		"pcvr": "https://store.steampowered.com/app/2700990/Rogue_Piatas_VRmageddon/"
+	},
+	"ruffnauts_planet_pals": {
+		"horizon": "https://www.meta.com/experiences/ruffnauts-planet-pals/8369406983071517/",
+		"internal": {
+			"added": "2025-11-14",
+			"legacy_id": "i6SNPhqv6RKUWgkiwJ8tMk"
+		}
+	},
+	"rumble": {
+		"crossplay": ["pcvr", "horizon", "frame"],
+		"frame": "https://store.steampowered.com/app/890550/RUMBLE/",
+		"horizon": "https://www.meta.com/experiences/rumble/24375141285456755/",
+		"internal": {
+			"legacy_id": "N87PbNYd4pP6L7EDa7RwnD"
+		},
+		"pcvr": "https://store.steampowered.com/app/890550/RUMBLE/"
+	},
+	"rush": {
+		"crossplay": ["pcvr", "horizon", "pico"],
+		"horizon": "https://www.meta.com/experiences/rush/1810693125705825/",
+		"internal": {
+			"legacy_id": "NsgH6QXSP8LGpF2PeRAcBc"
+		},
+		"pcvr": "https://store.steampowered.com/app/844040/RUSH/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7098225543304478725"
+	},
+	"sail": {
+		"horizon": "https://www.meta.com/experiences/sail/4861702420530349/",
+		"internal": {
+			"added": "2024-12-06",
+			"legacy_id": "VypaaCn8TP2P6dCSSNyHQZ"
+		},
+		"pcvr": "https://store.steampowered.com/app/1684010/Sail/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/4117"
+	},
+	"sairento": {
+		"horizon": "https://www.meta.com/experiences/sairento-vr-untethered/2299215130112875/",
+		"internal": {
+			"legacy_id": "pLvV7HCfHi5c5fuW8W9Dsk"
+		},
+		"pico": "https://store-global.picoxr.com/global/detail/1/1248",
+		"psvr": "https://store.playstation.com/product/UP3966-CUSA14557_00-SAIRENTOPSVR0001"
+	},
+	"sbox": {
+		"internal": {
+			"legacy_id": "nRygXu83WZ6cTocbYKPTd2"
+		},
+		"pcvr": "https://store.steampowered.com/app/590830/sbox/"
+	},
+	"scp_labrat": {
+		"internal": {
+			"legacy_id": "hDwNqLH89jVE5SeeHKQpXR"
+		},
+		"pcvr": "https://store.steampowered.com/app/1402020/SCP_Labrat/"
+	},
+	"sculptrvr": {
+		"horizon": "https://www.meta.com/experiences/sculptrvr/1978992975501648/",
+		"internal": {
+			"legacy_id": "skwQg7RzwQVPkKjYoonKQ9"
+		},
+		"pcvr": "https://store.steampowered.com/app/418520/SculptrVR/"
+	},
+	"shootout": {
+		"horizon": "https://www.meta.com/experiences/shootout/5555992527808989/",
+		"internal": {
+			"legacy_id": "tFd3LWWTn5zzRrkxKboBuh"
+		}
+	},
+	"silent_north": {
+		"crossplay": ["pcvr", "horizon"],
+		"horizon": "https://www.meta.com/experiences/silent-north/6245697225519539/",
+		"internal": {
+			"added": "2025-04-07",
+			"legacy_id": "TQ3DDwvnrJxnSGDkCmnEj4"
+		},
+		"pcvr": "https://store.steampowered.com/app/2440750/Silent_North/"
+	},
+	"sky_climb": {
+		"horizon": "https://www.meta.com/experiences/sky-climb/6439300372853604/",
+		"internal": {
+			"legacy_id": "wtg3f4JC58Nhw2SQh8jXjU"
+		},
+		"pico": "https://store-global.picoxr.com/global/detail/1/7366685398971564037",
+		"psvr": "https://store.playstation.com/product/UP0458-PPSA21638_00-SKYCLIMBSKYCLIMB"
+	},
+	"skystrikers": {
+		"horizon": "https://www.meta.com/experiences/skystrikers/6538347462860679/",
+		"internal": {
+			"added": "2024-12-06",
+			"legacy_id": "GQZ5uBNRELxD7Fh468yNm2"
+		},
+		"pcvr": "https://store.steampowered.com/app/2250690/SkyStrikers/"
+	},
+	"smash_drums": {
+		"horizon": "https://www.meta.com/experiences/smash-drums/3630025217090808/",
+		"internal": {
+			"legacy_id": "tJd8FV2qj77hvVrha4aiDC"
+		},
+		"pico": "https://store-global.picoxr.com/global/detail/1/2147",
+		"psvr": "https://store.playstation.com/product/EP7200-PPSA16086_00-0367806268342241"
+	},
+	"soul_covenant": {
+		"crossplay": ["pcvr", "horizon"],
+		"horizon": "https://www.meta.com/experiences/soul-covenant/6613144082114849/",
+		"internal": {
+			"legacy_id": "ujNkH68EgTUnBw89qnC4qf"
+		},
+		"pcvr": "https://store.steampowered.com/app/2237740/SOUL_COVENANT/",
+		"psvr": "https://store.playstation.com/product/UP3363-PPSA15696_00-VEGAUS0000000000"
+	},
+	"spaceteam": {
+		"crossplay": ["pcvr", "horizon"],
+		"horizon": "https://www.meta.com/experiences/spaceteam-vr/2531338473623578/",
+		"internal": {
+			"legacy_id": "BfCJdsQUAqVJDh6iNkN4A8"
+		},
+		"pcvr": "https://store.steampowered.com/app/866770/Spaceteam_VR/"
+	},
+	"spatial_ops": {
+		"horizon": "https://www.meta.com/experiences/spatial-ops/5503065683135424/",
+		"internal": {
+			"added": "2024-12-06",
+			"legacy_id": "gnNSNrNaVyLu9VNDkgNeqe"
+		},
+		"pico": "https://store-global.picoxr.com/global/detail/1/7392231734542090245"
+	},
+	"spectral_scream": {
+		"internal": {
+			"added": "2024-10-31",
+			"legacy_id": "d8vLzn2pPdm7gwPMQqCkwh"
+		},
+		"pcvr": "https://store.steampowered.com/app/2620240/Spectral_Scream/"
+	},
+	"sports_scramble": {
+		"horizon": "https://www.meta.com/experiences/sports-scramble/705576999566582/",
+		"internal": {
+			"legacy_id": "NDmNAPeGknzWeSMghLwCHW"
+		},
+		"pcvr": "https://www.meta.com/experiences/pcvr/sports-scramble/1644704682289199/"
+	},
+	"stabby": {
+		"horizon": "https://www.meta.com/experiences/stabby/4408993942471830/",
+		"internal": {
+			"legacy_id": "xxFBZfrRzWEUSTTXod3iig"
+		}
+	},
+	"stagetime": {
+		"horizon": "https://www.meta.com/experiences/stagetime/8938419752938126/",
+		"internal": {
+			"added": "2025-02-27",
+			"legacy_id": "BroUZJGPc6DeJu7UwzpTbB"
+		},
+		"pico": "https://store-global.picoxr.com/global/detail/1/7555535439181103157"
+	},
+	"stand_out": {
+		"internal": {
+			"legacy_id": "XPtLgbB63VUsPFqx5ELnLD"
+		},
+		"pcvr": "https://store.steampowered.com/app/748370/STAND_OUT_VR__VR_Battle_Royale/"
+	},
+	"star_wars_squadrons": {
+		"crossplay": ["pcvr", "psvr"],
+		"internal": {
+			"legacy_id": "zk8azbDyuxAXKmB7n78CC3"
+		},
+		"pcvr": "https://store.steampowered.com/app/1222730/STAR_WARS_Squadrons/",
+		"psvr": "https://store.playstation.com/product/UP0006-CUSA15080_00-STARWARSQUADRONS"
+	},
+	"starship_troopers_continuum": {
+		"horizon": "https://www.meta.com/experiences/starship-troopers-continuum/5848412461902615/",
+		"internal": {
+			"added": "2024-12-06",
+			"legacy_id": "xaiLnGEnWeT7WYFeoeJCAM"
+		},
+		"psvr": "https://store.playstation.com/product/UP8825-PPSA17331_00-0193753039164316"
+	},
+	"starvault": {
+		"horizon": "https://www.meta.com/experiences/starvault/7535945739825988/",
+		"internal": {
+			"added": "2026-07-29",
+			"legacy_id": "6oNQLSzz8AJW6HMSBgyi2e"
+		},
+		"pcvr": "https://store.steampowered.com/app/4020320/STARVAULT/"
+	},
+	"statik": {
+		"internal": {
+			"legacy_id": "2qjVbegePFWX6edLCDYbBE"
+		},
+		"psvr": "https://store.playstation.com/product/UP2598-CUSA06931_00-STATIKSIEA000001"
+	},
+	"stormland": {
+		"internal": {
+			"legacy_id": "PfdjveZpqqYCkSCRkVF3iA"
+		},
+		"pcvr": "https://www.meta.com/experiences/pcvr/stormland/1360938750683878/"
+	},
+	"stride": {
+		"horizon": "https://www.meta.com/experiences/stride/4901911359882668/",
+		"internal": {
+			"legacy_id": "FzP5g29sSgzrieSCrrXJed"
+		},
+		"pcvr": "https://store.steampowered.com/app/1292040/STRIDE/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/4029",
+		"psvr": "https://store.playstation.com/product/UP6195-CUSA25130_00-6556661881407173"
+	},
+	"survival_nation": {
+		"crossplay": ["pcvr", "horizon", "pico"],
+		"horizon": "https://www.meta.com/experiences/survival-nation/6198564290223186/",
+		"internal": {
+			"legacy_id": "xcJ4U35Qmbvna6373AEqMN"
+		},
+		"pcvr": "https://store.steampowered.com/app/2153780/Survival_Nation/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7142405533629349894"
+	},
+	"swarm": {
+		"horizon": "https://www.meta.com/experiences/swarm/2236053486488156/",
+		"internal": {
+			"legacy_id": "z7ynMsHUhvD9ri3criCzdj"
+		},
+		"pcvr": "https://www.meta.com/experiences/pcvr/swarm/3957610014306627/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/2307",
+		"vive": "https://www.viveport.com/apps/0656d9a0-b093-44fb-b6d5-7b2fd89e5857"
+	},
+	"swords_of_gargantua": {
+		"horizon": "https://www.meta.com/experiences/swords-of-gargantua/3064046640291676/",
+		"internal": {
+			"legacy_id": "n4kmKNpxtZa4wZu5CFQ52i"
+		},
+		"pcvr": "https://store.steampowered.com/app/895200/SWORDS_of_GARGANTUA/"
+	},
+	"synth_riders": {
+		"androidxr": "https://play.google.com/store/apps/details?id=com.kluge.SynthRiders",
+		"crossplay": ["pcvr", "horizon", "frame", "pico", "androidxr", "vision", "psvr"],
+		"frame": "https://store.steampowered.com/app/885000/Synth_Riders/",
+		"horizon": "https://www.meta.com/experiences/synth-riders/2436558143118760/",
+		"internal": {
+			"legacy_id": "qVyhnUw74xehwfAtH4Nb2D"
+		},
+		"pcvr": "https://store.steampowered.com/app/885000/Synth_Riders/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/1899",
+		"psvr": "https://store.playstation.com/product/UP5238-PPSA11406_00-0563726181923383",
+		"vision": "https://apps.apple.com/app/synth-riders/id6473729300?platform=vision"
+	},
+	"table_space": {
+		"crossplay": ["horizon", "frame", "vision"],
+		"frame": "https://store.steampowered.com/app/4299630/Table_Space_Board_and_Card_Game_Sandbox/",
+		"horizon": "https://www.meta.com/experiences/table-space-board-and-card-game-sandbox/7704631686261190/",
+		"internal": {
+			"added": "2024-10-31",
+			"legacy_id": "YLu6CmQXBuVFpmnReyz44g"
+		},
+		"vision": "https://apps.apple.com/app/table-space-by-boxtree/id6593709771?platform=vision"
+	},
+	"table_troopers": {
+		"horizon": "https://www.meta.com/experiences/table-troopers/8293950053976436/",
+		"internal": {
+			"added": "2025-11-14",
+			"legacy_id": "CAPjdrgaDx3jDDzSbEhfS2"
+		}
+	},
+	"tabletop_simulator": {
+		"internal": {
+			"legacy_id": "YChvDcFrBL2FjUYRs8Kn5E"
+		},
+		"pcvr": "https://store.steampowered.com/app/286160/Tabletop_Simulator/"
+	},
+	"tactical_assault": {
+		"horizon": "https://www.meta.com/experiences/tactical-assault-vr/5190911237633299/",
+		"internal": {
+			"legacy_id": "nmR9ZVp3jpMbqDG2fyoUnW"
+		},
+		"pcvr": "https://store.steampowered.com/app/2314160/Tactical_Assault_VR/"
+	},
+	"tennis_esports": {
+		"horizon": "https://www.meta.com/experiences/tennis-esports-fun-social-competitive/4872542182873415/",
+		"internal": {
+			"legacy_id": "QCi5obHsHQJaLYtdKbDhiP"
+		}
+	},
+	"tetris_effect_connected": {
+		"crossplay": ["pcvr", "horizon", "frame", "psvr"],
+		"frame": "https://store.steampowered.com/app/1003590/Tetris_Effect_Connected/",
+		"horizon": "https://www.meta.com/experiences/tetris-effect-connected/3386618894743567/",
+		"internal": {
+			"legacy_id": "mqoriULTqL2XcsbVjSrA8k"
+		},
+		"pcvr": "https://store.steampowered.com/app/1003590/Tetris_Effect_Connected/",
+		"psvr": "https://store.playstation.com/product/UP0751-CUSA13594_00-TETRISEFFECT0000"
+	},
+	"the_break_in": {
+		"crossplay": ["pcvr", "horizon", "vive"],
+		"horizon": "https://www.meta.com/experiences/the-break-in/6211388292305549/",
+		"internal": {
+			"legacy_id": "CF98VW77vLQVRaxJt6Kzu9"
+		},
+		"pcvr": "https://store.steampowered.com/app/1397390/The_BreakIn/",
+		"vive": "https://www.viveport.com/apps/9d352889-f85b-4ac0-bfc5-86bbcb75b11d"
+	},
+	"the_forest": {
+		"internal": {
+			"legacy_id": "oMVF6HtJ9NM39TgtduA36W"
+		},
+		"pcvr": "https://store.steampowered.com/app/242760/The_Forest/"
+	},
+	"the_green_spurt": {
+		"internal": {
+			"added": "2025-11-14",
+			"legacy_id": "5DZoaT2KGQ7n5Gd4kHkh3b"
+		},
+		"vision": "https://apps.apple.com/app/the-green-spurt/id6738046217?platform=vision"
+	},
+	"the_pirate_republic_of_nassau": {
+		"horizon": "https://www.meta.com/experiences/the-pirate-republic-of-nassau/7749043518464805/",
+		"internal": {
+			"added": "2025-11-14",
+			"legacy_id": "gpHDwNYqEuzfuqPY94a8Wj"
+		},
+		"pcvr": "https://store.steampowered.com/app/4467620/The_Pirate_Republic_of_Nassau/"
+	},
+	"the_thrill_of_the_fight_2": {
+		"crossplay": ["horizon", "frame"],
+		"frame": "https://store.steampowered.com/app/4884540/The_Thrill_of_the_Fight_2/",
+		"horizon": "https://www.meta.com/experiences/the-thrill-of-the-fight-2/5479643155418422/",
+		"internal": {
+			"added": "2024-12-06",
+			"legacy_id": "wRxAwYx3vHw7Xx3vXLEP22"
+		}
+	},
+	"the_under_presents": {
+		"crossplay": ["pcvr", "horizon"],
+		"horizon": "https://www.meta.com/experiences/the-under-presents/1917371471713228/",
+		"internal": {
+			"legacy_id": "wNBhTGiCSK5L4QFz9mMqK5"
+		},
+		"pcvr": "https://store.steampowered.com/app/1232940/The_Under_Presents/"
+	},
+	"the_unspoken": {
+		"internal": {
+			"legacy_id": "bFhFf6dKrnXwaob93HNGn2"
+		},
+		"pcvr": "https://www.meta.com/experiences/pcvr/the-unspoken/1070597869619581/"
+	},
+	"the_wizards_dark_times": {
+		"crossplay": ["pcvr", "horizon", "psvr"],
+		"horizon": "https://www.meta.com/experiences/the-wizards-dark-times-brotherhood/2441213515992073/",
+		"internal": {
+			"legacy_id": "V7PHWUz3MeobwTpFfQTutg"
+		},
+		"pcvr": "https://store.steampowered.com/app/1103860/The_Wizards__Dark_Times_Brotherhood/",
+		"psvr": "https://store.playstation.com/product/UP3535-PPSA18072_00-0798667884362511"
+	},
+	"titan_isles": {
+		"crossplay": ["pcvr", "horizon", "frame", "psvr"],
+		"frame": "https://store.steampowered.com/app/1839680/Titan_Isles/",
+		"horizon": "https://www.meta.com/experiences/titan-isles/8332853930089963/",
+		"internal": {
+			"added": "2025-11-14",
+			"legacy_id": "hExgYd785XP6SD2snsRSuN"
+		},
+		"pcvr": "https://store.steampowered.com/app/1839680/Titan_Isles/",
+		"psvr": "https://store.playstation.com/product/EP1499-PPSA07560_00-7658669899116124"
+	},
+	"tmnt_empire_city": {
+		"crossplay": ["pcvr", "horizon", "frame"],
+		"frame": "https://store.steampowered.com/app/3713650/Teenage_Mutant_Ninja_Turtles_Empire_City/",
+		"horizon": "https://www.meta.com/experiences/teenage-mutant-ninja-turtles-empire-city/6635073589916590/",
+		"internal": {
+			"added": "2026-05-04",
+			"legacy_id": "3RRbfo9ZSCYgCDhQ2E2JKn"
+		},
+		"pcvr": "https://store.steampowered.com/app/3713650/Teenage_Mutant_Ninja_Turtles_Empire_City/"
+	},
+	"toss": {
+		"crossplay": ["pcvr", "horizon", "pico", "vive", "psvr"],
+		"horizon": "https://www.meta.com/experiences/toss/5890261201026060/",
+		"internal": {
+			"legacy_id": "NkgQyWU9EznfYKjD7oNkyL"
+		},
+		"pcvr": "https://store.steampowered.com/app/1270460/TOSS/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7461920392140275718",
+		"psvr": "https://store.playstation.com/product/UP3535-PPSA16469_00-0384275468741037",
+		"vive": "https://www.viveport.com/apps/53b50c0e-de24-4474-94ed-cfa122a67140"
+	},
+	"totally_baseball": {
+		"crossplay": ["pcvr", "horizon", "pico"],
+		"horizon": "https://www.meta.com/experiences/totally-baseball/3256881337690839/",
+		"internal": {
+			"legacy_id": "2QGKkCnxpHNZ2ZaZZiGuFE"
+		},
+		"pcvr": "https://store.steampowered.com/app/1192380/TOTALLY_BASEBALL/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7151837424950231046"
+	},
+	"tower_tag": {
+		"crossplay": ["pcvr", "horizon", "pico", "vive"],
+		"horizon": "https://www.meta.com/experiences/tower-tag/3812563858803226/",
+		"internal": {
+			"added": "2026-03-31",
+			"legacy_id": "itAqFvzYvyQMDg8FpNwHmG"
+		},
+		"pcvr": "https://store.steampowered.com/app/1187330/Tower_Tag/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/2378",
+		"vive": "https://www.viveport.com/apps/81a188d9-7099-4158-9e59-aa9627b7fdb4"
+	},
+	"toyboom": {
+		"internal": {
+			"added": "2024-12-06",
+			"legacy_id": "8uLRNdpJXBfbp9k44keGmY"
+		},
+		"vision": "https://apps.apple.com/app/toyboom-playground/id6479555853?platform=vision"
+	},
+	"tracery_of_fate": {
+		"internal": {
+			"added": "2024-12-21",
+			"legacy_id": "iVguxBDaQodiS9KpWQBPni"
+		},
+		"pcvr": "https://store.steampowered.com/app/1710670/Tracery_of_Fate/"
+	},
+	"tribe_xr": {
+		"horizon": "https://www.meta.com/experiences/tribe-xr-dj-academy/2055718171162796/",
+		"internal": {
+			"legacy_id": "qGrgAzy3oieNmdaLmREjJb"
+		},
+		"pcvr": "https://store.steampowered.com/app/877850/Tribe_XR__DJ_Academy/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/2448"
+	},
+	"trickster": {
+		"internal": {
+			"legacy_id": "KKukj7BAw9d89TV7uUh2zk"
+		},
+		"pcvr": "https://store.steampowered.com/app/512220/Trickster_VR_Coop_Dungeon_Crawler/",
+		"psvr": "https://store.playstation.com/product/UP3657-CUSA11020_00-TRICKSTERVR00100"
+	},
+	"trivia_crack_world": {
+		"horizon": "https://www.meta.com/experiences/trivia-crack-world/8513502068745445/",
+		"internal": {
+			"added": "2024-12-06",
+			"legacy_id": "xLzD3wLfQto7sEivhuMNsG"
+		}
+	},
+	"uboat": {
+		"horizon": "https://www.meta.com/experiences/uboat-the-silent-wolf/4028925843825801/",
+		"internal": {
+			"legacy_id": "oGskRvhYEvF95B8V3th6pb"
+		},
+		"pcvr": "https://store.steampowered.com/app/1455390/UBOAT_The_Silent_Wolf_VR/"
+	},
+	"ug": {
+		"horizon": "https://www.meta.com/experiences/ug/8485526434899813/",
+		"internal": {
+			"added": "2025-11-14",
+			"legacy_id": "bDfv869veoXW8svb9Swaoe"
+		}
+	},
+	"ultimate_swing_golf": {
+		"horizon": "https://www.meta.com/experiences/ultimate-swing-golf-by-clap-hanz/5173957905975637/",
+		"internal": {
+			"legacy_id": "BUNcqvRSwo8aMQX69wgMHR"
+		}
+	},
+	"ultimechs": {
+		"crossplay": ["pcvr", "horizon", "pico"],
+		"horizon": "https://www.meta.com/experiences/ultimechs/5118731164870081/",
+		"internal": {
+			"legacy_id": "RzcEGH96sX9wANAxQFrMBS"
+		},
+		"pcvr": "https://store.steampowered.com/app/1657780/Ultimechs/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7127523622272565253"
+	},
+	"ultrawings_2": {
+		"crossplay": ["pcvr", "horizon"],
+		"horizon": "https://www.meta.com/experiences/ultrawings-2/3215828205181680/",
+		"internal": {
+			"legacy_id": "ju2kCVwEcSBMUoc5NChfMP"
+		},
+		"pcvr": "https://store.steampowered.com/app/1485140/Ultrawings_2/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/3973",
+		"psvr": "https://store.playstation.com/product/UP0067-PPSA13480_00-0966740944912751",
+		"vive": "https://www.viveport.com/apps/85d994a9-2658-4a53-b10e-27bf68bed52a"
+	},
+	"vail": {
+		"crossplay": ["pcvr", "horizon", "frame"],
+		"frame": "https://store.steampowered.com/app/801550/VAIL/",
+		"horizon": "https://www.meta.com/experiences/vail/6625826934127580/",
+		"internal": {
+			"legacy_id": "7WmVKjbTLEyNAMuGjr5Cj6"
+		},
+		"pcvr": "https://store.steampowered.com/app/801550/VAIL/"
+	},
+	"vampire_survivors": {
+		"horizon": "https://www.meta.com/experiences/vampire-survivors-vr/7991347610955592/",
+		"internal": {
+			"added": "2025-11-14",
+			"legacy_id": "i4MoruaWiSUBupnZHDaTJA"
+		}
+	},
+	"vegas_infinite": {
+		"crossplay": ["pcvr", "horizon", "psvr"],
+		"horizon": "https://www.meta.com/experiences/pokerstars-vegas-infinite/2370815932930055/",
+		"internal": {
+			"legacy_id": "aW7HoLx2pA3FvwWFRz3d3M"
+		},
+		"pcvr": "https://store.steampowered.com/app/886250/Vegas_Infinite_by_PokerStars/",
+		"psvr": "https://store.playstation.com/product/UP5501-PPSA09743_00-0624751739548719"
+	},
+	"vermillion": {
+		"crossplay": ["pcvr", "horizon", "frame"],
+		"frame": "https://store.steampowered.com/app/1608400/Vermillion__VR_Painting/",
+		"horizon": "https://www.meta.com/experiences/vermillion-vr-painting/4900967296622279/",
+		"internal": {
+			"legacy_id": "MnaGzup5TKirJqart6uVyn"
+		},
+		"pcvr": "https://store.steampowered.com/app/1608400/Vermillion__VR_Painting/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7164313187163095046"
+	},
+	"vircadia": {
+		"internal": {
+			"legacy_id": "Yg8zTiFYRTQZiKXxixvxKA"
+		},
+		"pcvr": "https://vircadia.com/"
+	},
+	"virtual_fighter_maneuvers": {
+		"crossplay": ["pcvr", "horizon", "frame"],
+		"frame": "https://store.steampowered.com/app/3952640/Virtual_Fighter_Maneuvers/",
+		"horizon": "https://www.meta.com/experiences/virtual-fighter-maneuvers/7949932551775863/",
+		"internal": {
+			"added": "2026-03-31",
+			"legacy_id": "rAsonTNGiQsWGe3V4snY7F"
+		},
+		"pcvr": "https://store.steampowered.com/app/3952640/Virtual_Fighter_Maneuvers/"
+	},
+	"virtual_hunter": {
+		"crossplay": ["pcvr", "horizon", "psvr"],
+		"horizon": "https://www.meta.com/experiences/virtual-hunter/10039970526115789/",
+		"internal": {
+			"added": "2025-02-27",
+			"legacy_id": "ZrpacaWqQTP27GzowYAEyc"
+		},
+		"pcvr": "https://store.steampowered.com/app/1549850/Virtual_Hunter/",
+		"psvr": "https://store.playstation.com/product/UP5099-PPSA29932_00-THEVIRTUALHUNTER"
+	},
+	"virtual_pool_irl": {
+		"internal": {
+			"added": "2024-12-21",
+			"legacy_id": "RV9xCBkJp8snVmT6S7SgJP"
+		},
+		"vision": "https://apps.apple.com/app/virtual-pool-irl/id6478832942?platform=vision"
+	},
+	"virtual_skate": {
+		"crossplay": ["pcvr", "horizon", "frame"],
+		"frame": "https://store.steampowered.com/app/3583790/Virtual_Skate/",
+		"horizon": "https://www.meta.com/experiences/virtual-skate/8978552905509626/",
+		"internal": {
+			"added": "2025-11-14",
+			"legacy_id": "WZLAJK99Due9AZgGjNfzB9"
+		},
+		"pcvr": "https://store.steampowered.com/app/3583790/Virtual_Skate/"
+	},
+	"virtualcast": {
+		"internal": {
+			"legacy_id": "UVnj5Tfm2MT7wKavrNUtUi"
+		},
+		"pcvr": "https://store.steampowered.com/app/947890/VirtualCast/"
+	},
+	"vket_cloud": {
+		"internal": {
+			"legacy_id": "p6rKSRtKpA2pQhDrbUXPKo"
+		},
+		"pcvr": "https://cloud.vket.com/en/"
+	},
+	"vmx": {
+		"horizon": "https://www.meta.com/experiences/vmx/9972621452774845/",
+		"internal": {
+			"added": "2026-03-31",
+			"legacy_id": "Rpkub7Hfj2wDvcHauR2mjZ"
+		},
+		"pcvr": "https://store.steampowered.com/app/3554630/VMX/"
+	},
+	"void_racer_extreme": {
+		"horizon": "https://www.meta.com/experiences/void-racer-extreme/2874244485968712/",
+		"internal": {
+			"legacy_id": "5rjs4rNHEXbP4AgTvEFXEn"
+		}
+	},
+	"vox_machinae": {
+		"crossplay": ["pcvr", "horizon"],
+		"horizon": "https://www.meta.com/experiences/vox-machinae/1968697563211639/",
+		"internal": {
+			"legacy_id": "Z65Epq7eSkG5AcCxSKiF5Y"
+		},
+		"pcvr": "https://store.steampowered.com/app/334540/Vox_Machinae/"
+	},
+	"vr_karts_sprint": {
+		"horizon": "https://www.meta.com/experiences/vr-karts-sprint/2267061756700952/",
+		"internal": {
+			"legacy_id": "YQk3mniA5hRS8k7uSa6vFN"
+		},
+		"psvr": "https://store.playstation.com/product/UP3027-CUSA09430_00-VRKARTS0USA00001"
+	},
+	"vr_regatta": {
+		"internal": {
+			"legacy_id": "LQj8ZkUMcA8Qw4Qb5Hv7sn"
+		},
+		"pcvr": "https://store.steampowered.com/app/468240/VR_Regatta__The_Sailing_Game/"
+	},
+	"vracer_hoverbike": {
+		"crossplay": ["pcvr", "horizon", "frame", "psvr"],
+		"frame": "https://store.steampowered.com/app/668430/VRacer_Hoverbike/",
+		"horizon": "https://www.meta.com/experiences/vracer-hoverbike/7046024582106993/",
+		"internal": {
+			"added": "2025-11-14",
+			"legacy_id": "BDzxHHaU3kMjU3X5qewkgM"
+		},
+		"pcvr": "https://store.steampowered.com/app/668430/VRacer_Hoverbike/",
+		"psvr": "https://store.playstation.com/product/EB1267-PPSA32341_00-0883501571420595"
+	},
+	"vrchat": {
+		"crossplay": ["pcvr", "horizon", "frame", "pico", "vive"],
+		"frame": "https://store.steampowered.com/app/438100/VRChat/",
+		"horizon": "https://www.meta.com/experiences/vrchat/1856672347794301/",
+		"internal": {
+			"curated": 1,
+			"legacy_id": "3nzcXDoMySRrPn6jHC8n3o"
+		},
+		"pcvr": "https://store.steampowered.com/app/438100/VRChat/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7288745304105664518",
+		"vive": "https://www.viveport.com/apps/4b5187b8-004c-473c-9219-258c3ea8e255"
+	},
+	"vrfs": {
+		"horizon": "https://www.meta.com/experiences/vrfs-football-soccer-simulator/8464137310294097/",
+		"internal": {
+			"added": "2024-12-06",
+			"legacy_id": "RKQufM5vt6bcF6Jbaen87o"
+		},
+		"pico": "https://store-global.picoxr.com/global/detail/1/7559641366834430005"
+	},
+	"vrider_sbk": {
+		"crossplay": ["pcvr", "horizon", "pico", "psvr"],
+		"horizon": "https://www.meta.com/experiences/vrider-sbk/7219828628138236/",
+		"internal": {
+			"legacy_id": "P36iExD7sxrtu4xyeCi6zA"
+		},
+		"pcvr": "https://store.steampowered.com/app/3145740/VRider_SBK/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7439788353949728824",
+		"psvr": "https://store.playstation.com/product/EP4200-PPSA28675_00-0371016237851868"
+	},
+	"vsekai": {
+		"internal": {
+			"legacy_id": "xxQjKi8CCJ6xinmfa8hpSH"
+		},
+		"pcvr": "https://v-sekai.org/"
+	},
+	"vzfit": {
+		"horizon": "https://www.meta.com/experiences/vzfit-explore-cycle-get-fit/2088366894520136/",
+		"internal": {
+			"legacy_id": "uSKh9xCtykee2xADbmrodC"
+		}
+	},
+	"walkabout_mini_golf": {
+		"androidxr": "https://play.google.com/store/apps/details?id=com.mightyCoconut.walkaboutMiniGolf",
+		"crossplay": ["pcvr", "horizon", "frame", "androidxr", "psvr"],
+		"frame": "https://store.steampowered.com/app/1408230/Walkabout_Mini_Golf_VR/",
+		"horizon": "https://www.meta.com/experiences/walkabout-mini-golf/2462678267173943/",
+		"internal": {
+			"legacy_id": "KtMvXwxoazna8HPayXUqMA"
+		},
+		"pcvr": "https://store.steampowered.com/app/1408230/Walkabout_Mini_Golf_VR/",
+		"psvr": "https://store.playstation.com/product/UP7438-PPSA12460_00-2352165465353670"
+	},
+	"wander": {
+		"horizon": "https://www.meta.com/experiences/wander/2078376005587859/",
+		"internal": {
+			"legacy_id": "o3ADHYL6zYENdDd6WrrzoT"
+		},
+		"pcvr": "https://www.meta.com/experiences/pcvr/wander/2078376005587859/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7135520979819790341"
+	},
+	"wands": {
+		"crossplay": ["pcvr", "horizon", "pico", "psvr"],
+		"horizon": "https://www.meta.com/experiences/wands/2096339947076151/",
+		"internal": {
+			"legacy_id": "zHprZ7YhXBe9KuZPoaHZeP"
+		},
+		"pcvr": "https://store.steampowered.com/app/741400/Wands/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/1801",
+		"psvr": "https://store.playstation.com/product/UP5579-CUSA17460_00-CORTOPIAWANDS001"
+	},
+	"wands_alliances": {
+		"horizon": "https://www.meta.com/experiences/wands-alliances/3637780062900902/",
+		"internal": {
+			"legacy_id": "RwfdcvqjWW6aK2Upo5wNt3"
+		},
+		"pcvr": "https://store.steampowered.com/app/1963450/Wands_Alliances/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7099364449781383174"
+	},
+	"war_of_wizards": {
+		"crossplay": ["pcvr", "horizon", "pico"],
+		"horizon": "https://www.meta.com/experiences/war-of-wizards/7865834933488042/",
+		"internal": {
+			"added": "2024-12-06",
+			"legacy_id": "vDrC4MLea9jjWsn9zvuh5C"
+		},
+		"pcvr": "https://store.steampowered.com/app/2009460/War_of_Wizards/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7265981042744459320"
+	},
+	"war_thunder": {
+		"internal": {
+			"legacy_id": "gNZZfj4cpvTBD2wyMKisDQ"
+		},
+		"pcvr": "https://store.steampowered.com/app/236390/War_Thunder/"
+	},
+	"warhammer_40k_battle_sister": {
+		"crossplay": ["pcvr", "horizon", "pico"],
+		"horizon": "https://www.meta.com/experiences/warhammer-40000-battle-sister/3231001163584154/",
+		"internal": {
+			"legacy_id": "ycxBiAbVpXKpHJwZmicB68"
+		},
+		"pcvr": "https://store.steampowered.com/app/1733890/Warhammer_40000_Battle_Sister/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7094553954985672710"
+	},
+	"warplanes_air_corp": {
+		"crossplay": ["pcvr", "horizon"],
+		"horizon": "https://www.meta.com/experiences/warplanes-air-corp/5014131998634540/",
+		"internal": {
+			"legacy_id": "HnxZtb4f4CeqPoayJSxdBc"
+		},
+		"pcvr": "https://store.steampowered.com/app/2583320/Warplanes_Air_Corp/"
+	},
+	"warplanes_battles_over_pacific": {
+		"crossplay": ["pcvr", "horizon", "pico", "vive"],
+		"horizon": "https://www.meta.com/experiences/warplanes-battles-over-pacific/3984056454948095/",
+		"internal": {
+			"legacy_id": "UUscPuE4Lw5Z9wu3WK6Xi6"
+		},
+		"pcvr": "https://store.steampowered.com/app/1930920/Warplanes_Battles_over_Pacific/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7099364453547819013",
+		"vive": "https://www.viveport.com/apps/b2ff6bb4-b1b9-4de8-81ca-ca1f34ddbd1c"
+	},
+	"warplanes_ww1_fighters": {
+		"crossplay": ["pcvr", "horizon", "pico", "vive"],
+		"horizon": "https://www.meta.com/experiences/warplanes-ww1-fighters/3922378427824210/",
+		"internal": {
+			"legacy_id": "Nog6kCqMmCviaa5tUfstaa"
+		},
+		"pcvr": "https://store.steampowered.com/app/1546500/Warplanes_WW1_Fighters/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7094857908936114181",
+		"vive": "https://www.viveport.com/apps/f09930a2-89a0-40a4-af0f-272143344e8b"
+	},
+	"wave": {
+		"horizon": "https://wavexr.com/joinbeta/",
+		"internal": {
+			"legacy_id": "XdotYY46M3coWWzYrgmaLA"
+		},
+		"pico": "https://store-global.picoxr.com/global/detail/1/7215604318534303750"
+	},
+	"we_are_soccer": {
+		"horizon": "https://www.meta.com/experiences/we-are-soccer/29030239516575272/",
+		"internal": {
+			"added": "2025-02-27",
+			"legacy_id": "bSQU3EAeCwZ9Ttx3Tt6MSo"
+		},
+		"pico": "https://store-global.picoxr.com/global/detail/1/7467241333862957062"
+	},
+	"werewolves_within": {
+		"crossplay": ["pcvr", "psvr"],
+		"internal": {
+			"legacy_id": "8ViWUMM3UrhJn2NgdZv8fL"
+		},
+		"pcvr": "https://store.steampowered.com/app/488950/Werewolves_Within/",
+		"psvr": "https://store.playstation.com/product/UP0001-CUSA05323_00-WEREWOLVSWTHIN01"
+	},
+	"windlands_2": {
+		"crossplay": ["pcvr", "horizon", "pico", "vive", "psvr"],
+		"horizon": "https://www.meta.com/experiences/windlands-2/5418402731545943/",
+		"internal": {
+			"legacy_id": "XeaDoiGzgCamCkedxGLUiS"
+		},
+		"pcvr": "https://store.steampowered.com/app/458580/Windlands_2/",
+		"pico": "https://store-global.picoxr.com/global/detail/1/7204839118201962502",
+		"psvr": "https://store.playstation.com/product/UP1512-PPSA20717_00-0WINDLANDS2PSVR2",
+		"vive": "https://www.viveport.com/apps/ad50ad89-c9fe-4187-9072-085a96c4e318"
+	},
+	"wipeout_omega_collection": {
+		"internal": {
+			"legacy_id": "eaaKrfePsG94RsmcwrHL3c"
+		},
+		"psvr": "https://store.playstation.com/product/UP9000-CUSA07671_00-WIPEOUTOMEGA00US"
+	},
+	"wooorld": {
+		"horizon": "https://www.meta.com/experiences/wooorld/4360608937312293/",
+		"internal": {
+			"legacy_id": "nxoQSyoCFXMZ7ceyAzLQSA"
+		}
+	},
+	"world_of_mechs": {
+		"horizon": "https://www.meta.com/experiences/world-of-mechs/4017841368311255/",
+		"internal": {
+			"legacy_id": "MpjcJ4U2VEriowWX3v2m2D"
+		},
+		"pico": "https://store-global.picoxr.com/global/detail/1/7466108990552899589"
+	},
+	"x8": {
+		"crossplay": ["pcvr", "horizon"],
+		"horizon": "https://www.meta.com/experiences/x8/4518172508241377/",
+		"internal": {
+			"legacy_id": "ggxR45ZsJLuv8dpN8qupUD"
+		},
+		"pcvr": "https://store.steampowered.com/app/1763510/X8/"
+	},
+	"xplane_11": {
+		"internal": {
+			"legacy_id": "bYsz5BcyuHQtBjKxxEdPiA"
+		},
+		"pcvr": "https://store.steampowered.com/app/269950/XPlane_11/"
+	},
+	"xplane_12": {
+		"internal": {
+			"legacy_id": "QDyydepJS4KNtDkxFUvRdC"
+		},
+		"pcvr": "https://store.steampowered.com/app/2014780/XPlane_12/"
+	},
+	"yeeps": {
+		"horizon": "https://www.meta.com/experiences/yeeps/7276525889052788/",
+		"internal": {
+			"legacy_id": "JS2xfAazDZXswSqR7AnMoB"
+		}
+	},
+	"zaccaria_pinball": {
+		"internal": {
+			"added": "2025-11-14",
+			"legacy_id": "CHtkc32XbfeBZMVWdsBwZ2"
+		},
+		"pcvr": "https://store.steampowered.com/app/444930/Zaccaria_Pinball/"
+	},
+	"zenith_nexus": {
+		"crossplay": ["pcvr", "horizon", "psvr"],
+		"horizon": "https://www.meta.com/experiences/zenith-nexus/3594982710558708/",
+		"internal": {
+			"legacy_id": "G9qwehfhnKZx2pE3WFwQw2"
+		},
+		"pcvr": "https://store.steampowered.com/app/1403370/Zenith_Nexus/",
+		"psvr": "https://store.playstation.com/product/UP5825-PPSA09408_00-5177623505461821"
+	},
+	"zero_caliber": {
+		"crossplay": ["pcvr", "horizon", "psvr"],
+		"horizon": "https://www.meta.com/experiences/zero-caliber-reloaded/3591949650852844/",
+		"internal": {
+			"legacy_id": "yJeA9FYJmykkceZPnZKdET"
+		},
+		"pcvr": "https://store.steampowered.com/app/877200/Zero_Caliber_VR/",
+		"psvr": "https://store.playstation.com/product/EP3886-PPSA30821_00-0872944045739260"
+	},
+	"zero_caliber_2": {
+		"horizon": "https://www.meta.com/experiences/zero-caliber-2/6072194326150034/",
+		"internal": {
+			"legacy_id": "RQVUFNkHrLcwLSzWwa5NPH"
+		},
+		"pcvr": "https://store.steampowered.com/app/2719740/Zero_Caliber_2_Remastered/"
+	},
+	"zero_caliber_reloaded": {
+		"crossplay": ["pcvr", "horizon", "psvr"],
+		"horizon": "https://www.meta.com/experiences/zero-caliber-reloaded/3591949650852844/",
+		"internal": {
+			"legacy_id": "gT8utkQESbYePEJ6yYVAxg"
+		},
+		"pcvr": "https://store.steampowered.com/app/877200/Zero_Caliber_VR/",
+		"psvr": "https://store.playstation.com/product/EP3886-PPSA30821_00-0872944045739260"
+	},
+	"zix": {
+		"horizon": "https://www.meta.com/experiences/zix/8582035711867299/",
+		"internal": {
+			"added": "2025-11-14",
+			"legacy_id": "bAV6YcniiCzS85ua6iNeaA"
+		},
+		"pcvr": "https://store.steampowered.com/app/635700/ZIX/"
+	}
+}

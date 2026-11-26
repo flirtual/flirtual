@@ -1,0 +1,61 @@
+{
+	"advertising": {
+		"details": "Reclame. Uw profiel lijkt vooral bedoeld om een extern account of een externe dienst te promoten. U mag uw sociale media of uw werk gerust op uw profiel vermelden, maar uw profiel moet in de eerste plaats bedoeld zijn om te daten of vrienden te maken. U kunt op deze e-mail reageren om bezwaar te maken tegen uw schorsing, en uw profiel aanpassen om uw account te laten herstellen.",
+		"name": "Reclame"
+	},
+	"ban_evasion": {
+		"details": "Schorsing omzeilen. Het lijkt erop dat u een nieuw account hebt aangemaakt of op een andere manier een eerdere schorsing op {brand_name} hebt omzeild. Wilt u bezwaar maken tegen een eerdere schorsing en uw account laten herstellen? Dan kunt u reageren op de oorspronkelijke e-mail over die schorsing.",
+		"name": "Schorsing omzeilen"
+	},
+	"duplicate_account": {
+		"details": "Dubbel account. Het is niet toegestaan om meerdere {brand_name}-accounts aan te maken. Dit account is uitgeschakeld, maar u kunt uw andere account gewoon blijven gebruiken. Denkt u dat u onterecht bent geschorst, of wilt u liever dat uw andere account wordt uitgeschakeld in plaats van dit account? Reageer dan op deze e-mail.",
+		"name": "Dubbel account"
+	},
+	"harassment": {
+		"details": "Intimidatie. Wilt u bezwaar maken tegen uw schorsing en uw account laten herstellen? Reageer dan op deze e-mail. Houd er rekening mee dat we geen details kunnen delen over eventuele meldingen bij de moderatie.",
+		"name": "Intimidatie"
+	},
+	"hateful_content": {
+		"details": "Haatdragende inhoud. Haatdragende profielinhoud of berichten zijn niet welkom op {brand_name}. Denkt u dat u onterecht bent geschorst? Dan kunt u op deze e-mail reageren om bezwaar te maken en uw account te laten herstellen.",
+		"name": "Haatdragende inhoud"
+	},
+	"illegal_content": {
+		"details": "Illegale inhoud. Uw profiel of activiteit lijkt in strijd te zijn met de Canadese of lokale wetgeving. Denkt u dat u onterecht bent geschorst? Dan kunt u op deze e-mail reageren om bezwaar te maken.",
+		"name": "Illegale inhoud"
+	},
+	"impersonation": {
+		"details": "Zich voordoen als een ander. Het lijkt erop dat u zich met uw profiel voordoet als iemand anders. Denkt u dat u onterecht bent geschorst? Dan kunt u op deze e-mail reageren om bezwaar te maken en uw account te laten herstellen.",
+		"name": "Zich voordoen als een ander"
+	},
+	"nsfw_content": {
+		"details": "Naakt of expliciet seksuele inhoud. Afbeeldingen met naakt of expliciet seksuele inhoud en overdreven obscene tekst zijn niet toegestaan op {brand_name}. U kunt op deze e-mail reageren om bezwaar te maken tegen uw schorsing, en uw profiel aanpassen om uw account te laten herstellen.",
+		"name": "Naakt of expliciet seksuele inhoud"
+	},
+	"other": {
+		"name": "Overig"
+	},
+	"scam": {
+		"details": "Oplichting, malware of schadelijke links. Uw profiel lijkt schadelijke links of activiteiten te bevatten. Denkt u dat u onterecht bent geschorst? Dan kunt u op deze e-mail reageren om bezwaar te maken.",
+		"name": "Oplichting, malware of schadelijke links"
+	},
+	"self_harm": {
+		"details": "Inhoud over zelfbeschadiging. Uw profiel of activiteit is gemarkeerd omdat het verwijzingen naar zelfbeschadiging bevat die voor andere gebruikers schokkend kunnen zijn. Op https://flirtu.al/mentalhealth vindt u hulpbronnen voor mentale gezondheid die u misschien verder kunnen helpen. Zorg goed voor uzelf. Wilt u bezwaar maken tegen deze schorsing? Reageer dan op deze e-mail.",
+		"name": "Inhoud over zelfbeschadiging"
+	},
+	"soliciting_money": {
+		"details": "Om geld vragen. Het is niet toegestaan om op {brand_name} om geld te vragen. U kunt op deze e-mail reageren om bezwaar te maken tegen uw schorsing. Verwijder alle verzoeken om geld uit uw profiel, zodat uw account kan worden hersteld.",
+		"name": "Om geld vragen"
+	},
+	"spam": {
+		"details": "Spamprofiel. De inhoud van uw profiel is gemarkeerd als spam. U kunt op deze e-mail reageren om bezwaar te maken tegen uw schorsing en uw account te laten herstellen. Mogelijk vragen we u om uw profiel aan te vullen met meer informatie.",
+		"name": "Spam"
+	},
+	"underage": {
+		"details": "Minderjarig. U moet minstens 18 jaar oud zijn om {brand_name} te gebruiken. Denkt u dat u onterecht bent geschorst? Log dan in op {brand_name} en verifieer veilig uw leeftijd om uw account te herstellen.",
+		"name": "Minderjarig"
+	},
+	"violent_content": {
+		"details": "Gewelddadige/schokkende inhoud. Uw profiel lijkt gewelddadige of schokkende inhoud te bevatten. Wilt u bezwaar maken tegen deze schorsing? Reageer dan op deze e-mail.",
+		"name": "Gewelddadige/schokkende inhoud"
+	}
+}

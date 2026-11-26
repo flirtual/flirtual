@@ -1,0 +1,74 @@
+{
+	"asexual": {
+		"internal": {
+			"curated": 6,
+			"legacy_id": "neMSEFPb9zvFRhoZLUobW9"
+		}
+	},
+	"bisexual": {
+		"internal": {
+			"curated": 4,
+			"legacy_id": "a29qas632KmMpQ8T6arLxa"
+		}
+	},
+	"demisexual": {
+		"internal": {
+			"curated": 7,
+			"legacy_id": "wPATvG4t9CJhW2goGmBznU"
+		}
+	},
+	"experimenting_in_vr": {
+		"internal": {
+			"curated": 12,
+			"legacy_id": "4yJadhjWkDN6WSxbDcp33G"
+		}
+	},
+	"gay": {
+		"internal": {
+			"curated": 3,
+			"legacy_id": "UxY3zSKrwKpts6cfZ3wYjM"
+		}
+	},
+	"heteroflexible": {
+		"internal": {
+			"curated": 8,
+			"legacy_id": "vu2pJzRmKRroA3GPZRsLxM"
+		}
+	},
+	"homoflexible": {
+		"internal": {
+			"curated": 9,
+			"legacy_id": "ndxSn4BdATmm5droBw6iQG"
+		}
+	},
+	"lesbian": {
+		"internal": {
+			"curated": 2,
+			"legacy_id": "gkKfqSoBJ7dUHtaKJ5Cfmk"
+		}
+	},
+	"pansexual": {
+		"internal": {
+			"curated": 5,
+			"legacy_id": "NC5wiUcxGavten9E8gw64n"
+		}
+	},
+	"queer": {
+		"internal": {
+			"curated": 10,
+			"legacy_id": "3cWT9ob4r7Zpikkd9kVPEg"
+		}
+	},
+	"questioning": {
+		"internal": {
+			"curated": 11,
+			"legacy_id": "rN7DERN6NdNQzNQ99pQUN4"
+		}
+	},
+	"straight": {
+		"internal": {
+			"curated": 1,
+			"legacy_id": "t5hhQahW7HQVKnhQX7xRqn"
+		}
+	}
+}

@@ -1,0 +1,48 @@
+{
+	"de": {
+		"enabled": false,
+		"name": "Deutsch"
+	},
+	"en": {
+		"default": true,
+		"enabled": true,
+		"name": "English"
+	},
+	"es": {
+		"enabled": false,
+		"name": "Español"
+	},
+	"fr": {
+		"enabled": false,
+		"name": "Français"
+	},
+	"ja": {
+		"enabled": false,
+		"name": "日本語"
+	},
+	"ko": {
+		"enabled": false,
+		"name": "한국어"
+	},
+	"nl": {
+		"enabled": false,
+		"name": "Nederlands"
+	},
+	"pt": {
+		"enabled": false,
+		"intl": "pt-PT",
+		"name": "Português"
+	},
+	"pt-BR": {
+		"enabled": false,
+		"name": "Português (Brasil)"
+	},
+	"ru": {
+		"enabled": false,
+		"name": "Русский"
+	},
+	"sv": {
+		"enabled": false,
+		"name": "Svenska"
+	}
+}

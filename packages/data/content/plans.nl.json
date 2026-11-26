@@ -1,0 +1,20 @@
+{
+	"early": {
+		"name": "Early Premium"
+	},
+	"lifetime": {
+		"name": "Levenslang"
+	},
+	"monthly": {
+		"name": "Premium (maandelijks)"
+	},
+	"promotional": {
+		"name": "Premium (promotie)"
+	},
+	"six_months": {
+		"name": "Premium (per 6 maanden)"
+	},
+	"three_months": {
+		"name": "Premium (per 3 maanden)"
+	}
+}

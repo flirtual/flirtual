@@ -1,0 +1,62 @@
+{
+	"album_on_repeat": {
+		"name": "I have this album on repeat"
+	},
+	"bet_you_cant": {
+		"name": "I bet you can't"
+	},
+	"favorite_character": {
+		"name": "My favorite fictional character"
+	},
+	"favorite_game": {
+		"name": "My favorite game ever"
+	},
+	"favorite_in_vr": {
+		"name": "My favorite thing to do in VR"
+	},
+	"favorite_movie": {
+		"name": "My favorite movie is"
+	},
+	"favorite_vrchat_world": {
+		"name": "My favorite VRChat world"
+	},
+	"getting_to_know_me": {
+		"name": "The secret to getting to know me is"
+	},
+	"irrational_fear": {
+		"name": "My most irrational fear"
+	},
+	"just_learned": {
+		"name": "I just learned that"
+	},
+	"life_goal": {
+		"name": "A life goal of mine is"
+	},
+	"looking_for": {
+		"name": "I'm looking for"
+	},
+	"nerd_out_on": {
+		"name": "I nerd out on"
+	},
+	"never_have_i_ever": {
+		"name": "Never have I ever"
+	},
+	"one_food": {
+		"name": "If I had to eat one food for the rest of my life, it would be"
+	},
+	"think_about": {
+		"name": "I think a lot about"
+	},
+	"together_we_could": {
+		"name": "Together we could"
+	},
+	"unpopular_opinion": {
+		"name": "Unpopular opinion, but"
+	},
+	"want_someone_who": {
+		"name": "I want someone who"
+	},
+	"wont_shut_up_about": {
+		"name": "I won't shut up about"
+	}
+}

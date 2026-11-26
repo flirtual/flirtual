@@ -1,0 +1,61 @@
+{
+	"asexual": {
+		"definition": "性的に惹かれることがほとんど、またはまったくない人。",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Asexuality",
+		"name": "アセクシュアル"
+	},
+	"bisexual": {
+		"definition": "複数の性別に惹かれる人。",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Bisexuality",
+		"name": "バイセクシュアル"
+	},
+	"demisexual": {
+		"definition": "相手と心のつながりができてから初めて性的に惹かれる人。",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Demisexuality_and_Gray-Asexuality",
+		"name": "デミセクシュアル"
+	},
+	"experimenting_in_vr": {
+		"definition": "VRで自分の性的指向を模索している人、またはVRと現実で性的指向が異なる人。",
+		"name": "VRで模索中"
+	},
+	"gay": {
+		"definition": "同性に惹かれる人。",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Gay",
+		"name": "ゲイ"
+	},
+	"heteroflexible": {
+		"definition": "主に異性に惹かれるが、同性に惹かれることもある人。",
+		"definition_link": "https://www.merriam-webster.com/words-at-play/homoflexible-heteroflexible-meaning-slang-definition",
+		"name": "ヘテロフレキシブル"
+	},
+	"homoflexible": {
+		"definition": "主に同性に惹かれるが、異性に惹かれることもある人。",
+		"definition_link": "https://www.merriam-webster.com/words-at-play/homoflexible-heteroflexible-meaning-slang-definition",
+		"name": "ホモフレキシブル"
+	},
+	"lesbian": {
+		"definition": "他の女性や女性的な人に惹かれる人。",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Lesbian",
+		"name": "レズビアン"
+	},
+	"pansexual": {
+		"definition": "性別を問わず惹かれる人。",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Pansexuality",
+		"name": "パンセクシュアル"
+	},
+	"queer": {
+		"definition": "規範にとらわれない性的指向を持つ人。",
+		"definition_link": "https://ja.wikipedia.org/wiki/%E3%82%AF%E3%82%A3%E3%82%A2",
+		"name": "クィア"
+	},
+	"questioning": {
+		"definition": "自分の性的指向を模索している途中の人。",
+		"definition_link": "https://en.wikipedia.org/wiki/Questioning_%28sexuality_and_gender%29",
+		"name": "クエスチョニング"
+	},
+	"straight": {
+		"definition": "異性に惹かれる人。",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Heterosexuality",
+		"name": "ストレート"
+	}
+}

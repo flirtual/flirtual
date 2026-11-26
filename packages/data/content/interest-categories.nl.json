@@ -1,0 +1,35 @@
+{
+	"alignment": {
+		"name": "Alignment"
+	},
+	"astrology": {
+		"name": "Astrologie"
+	},
+	"game_genres": {
+		"name": "Gamegenres"
+	},
+	"games": {
+		"name": "Games"
+	},
+	"general": {
+		"name": "Algemeen"
+	},
+	"identity": {
+		"name": "Identiteit"
+	},
+	"love_languages": {
+		"name": "Liefdestalen"
+	},
+	"music": {
+		"name": "Muziek"
+	},
+	"personality_types": {
+		"name": "Persoonlijkheidstypes"
+	},
+	"popular": {
+		"name": "Populair"
+	},
+	"sports": {
+		"name": "Sport"
+	}
+}

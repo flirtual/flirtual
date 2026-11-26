@@ -1,0 +1,61 @@
+{
+	"advertising": {
+		"details": "Reklam. Din profil verkar främst marknadsföra ett externt konto eller en extern tjänst. Du får gärna nämna dina sociala medier eller ditt jobb i profilen, men den ska i första hand handla om att dejta eller hitta vänner. Du kan överklaga avstängningen genom att svara på det här mejlet, och få ditt konto återaktiverat genom att uppdatera din profil.",
+		"name": "Reklam"
+	},
+	"ban_evasion": {
+		"details": "Kringgående av avstängning. Det verkar som att du har skapat ett nytt konto eller på annat sätt kringgått en tidigare avstängning från {brand_name}. Om du vill överklaga en tidigare avstängning och få ditt konto återaktiverat kan du svara på det ursprungliga mejlet om avstängningen.",
+		"name": "Kringgått avstängning"
+	},
+	"duplicate_account": {
+		"details": "Dubblettkonto. Det är inte tillåtet att skapa flera konton på {brand_name}. Det här kontot har inaktiverats, men du kan fortfarande använda ditt andra konto. Om du anser att avstängningen är ett misstag, eller hellre vill att ditt andra konto inaktiveras i stället för det här, svarar du bara på det här mejlet.",
+		"name": "Dubblettkonto"
+	},
+	"harassment": {
+		"details": "Trakasserier. Om du vill överklaga avstängningen och få ditt konto återaktiverat kan du svara på det här mejlet. Observera att vi inte kan dela information om eventuella rapporter som har gjorts.",
+		"name": "Trakasserier"
+	},
+	"hateful_content": {
+		"details": "Hatiskt innehåll. Hatiskt innehåll i profiler eller meddelanden är inte välkommet på {brand_name}. Om du anser att avstängningen är ett misstag kan du svara på det här mejlet för att överklaga och få ditt konto återaktiverat.",
+		"name": "Hatiskt innehåll"
+	},
+	"illegal_content": {
+		"details": "Olagligt innehåll. Din profil eller aktivitet verkar strida mot kanadensisk eller lokal lag. Om du anser att avstängningen är ett misstag kan du svara på det här mejlet för att överklaga.",
+		"name": "Olagligt innehåll"
+	},
+	"impersonation": {
+		"details": "Falsk identitet. Din profil verkar utge sig för att vara någon annan. Om du anser att avstängningen är ett misstag kan du svara på det här mejlet för att överklaga och få ditt konto återaktiverat.",
+		"name": "Falsk identitet"
+	},
+	"nsfw_content": {
+		"details": "Nakenhet eller explicit sexuellt innehåll. Sådana bilder och alltför oanständiga texter är inte tillåtna på {brand_name}. Du kan överklaga avstängningen genom att svara på det här mejlet, och få ditt konto återaktiverat genom att uppdatera din profil.",
+		"name": "Nakenhet eller explicit sexuellt innehåll"
+	},
+	"other": {
+		"name": "Annat"
+	},
+	"scam": {
+		"details": "Bedrägeri, skadlig kod eller skadliga länkar. Din profil verkar innehålla skadliga länkar eller skadlig aktivitet. Om du anser att avstängningen är ett misstag kan du svara på det här mejlet för att överklaga.",
+		"name": "Bedrägeri, skadlig kod eller skadliga länkar"
+	},
+	"self_harm": {
+		"details": "Innehåll om självskada. Din profil eller aktivitet har flaggats för innehåll om självskada som kan vara jobbigt för andra användare. På https://flirtu.al/mentalhealth har vi samlat resurser om psykisk hälsa som kanske kan hjälpa dig. Ta hand om dig. Om du vill överklaga avstängningen kan du svara på det här mejlet.",
+		"name": "Innehåll om självskada"
+	},
+	"soliciting_money": {
+		"details": "Pengatiggeri. Det är inte tillåtet att be om pengar på {brand_name}. Du kan överklaga avstängningen genom att svara på det här mejlet, och få ditt konto återaktiverat genom att ta bort alla förfrågningar om pengar från din profil.",
+		"name": "Ber om pengar"
+	},
+	"spam": {
+		"details": "Spamprofil. Innehållet i din profil har flaggats som spam. Du kan överklaga avstängningen och få ditt konto återaktiverat genom att svara på det här mejlet. Vi kan komma att be dig uppdatera din profil med mer information.",
+		"name": "Spam"
+	},
+	"underage": {
+		"details": "Minderårig. Du måste vara minst 18 år för att använda {brand_name}. Om du anser att avstängningen är ett misstag kan du logga in på {brand_name} och verifiera din ålder på ett säkert sätt för att återställa ditt konto.",
+		"name": "Minderårig"
+	},
+	"violent_content": {
+		"details": "Våldsamt eller störande innehåll. Din profil verkar innehålla våldsamt eller störande innehåll. Om du vill överklaga avstängningen kan du svara på det här mejlet.",
+		"name": "Våldsamt/störande innehåll"
+	}
+}

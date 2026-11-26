@@ -1,0 +1,195 @@
+{
+	"agender": {
+		"alias_of": "other",
+		"internal": {
+			"curated": 3,
+			"legacy_id": "879KtanHc548synGhcNE7J"
+		}
+	},
+	"androgynous": {
+		"alias_of": "other",
+		"internal": {
+			"curated": 4,
+			"legacy_id": "RdMpwqWGydDgk9X2u32BBW"
+		}
+	},
+	"bigender": {
+		"alias_of": "other",
+		"internal": {
+			"curated": 5,
+			"legacy_id": "YBkoUyfKJd6jJGwbekY3HN"
+		}
+	},
+	"cis_man": {
+		"alias_of": "man",
+		"conflicts": [
+			"woman",
+			"cis_woman",
+			"trans_woman",
+			"trans_man",
+			"transgender",
+			"transfeminine",
+			"transmasculine"
+		],
+		"internal": {
+			"curated": 7,
+			"legacy_id": "GJitRtRoYWT6DfVasptK7N"
+		}
+	},
+	"cis_woman": {
+		"alias_of": "woman",
+		"conflicts": [
+			"man",
+			"cis_man",
+			"trans_man",
+			"trans_woman",
+			"transgender",
+			"transfeminine",
+			"transmasculine"
+		],
+		"internal": {
+			"curated": 6,
+			"legacy_id": "2ETbJJJ3shADLphvncUwSL"
+		}
+	},
+	"gender_nonconforming": {
+		"alias_of": "other",
+		"internal": {
+			"curated": 10,
+			"legacy_id": "fAPzVgy7VyGPgAPhkwSkSU"
+		}
+	},
+	"genderfluid": {
+		"alias_of": "other",
+		"internal": {
+			"curated": 8,
+			"legacy_id": "aKEzfuPY6TaMkmnugQWLUd"
+		}
+	},
+	"genderqueer": {
+		"alias_of": "other",
+		"internal": {
+			"curated": 9,
+			"legacy_id": "zMta3qtGyqW4hFdcDFUHik"
+		}
+	},
+	"he_him": {
+		"internal": {
+			"curated": 23,
+			"legacy_id": "hv43aTXJZjMHfXRXvTcYiH"
+		},
+		"pronoun": true
+	},
+	"hijra": {
+		"alias_of": "other",
+		"internal": {
+			"curated": 11,
+			"legacy_id": "wJdnfUvuvACEWRSV4KBdzS"
+		}
+	},
+	"intersex": {
+		"alias_of": "other",
+		"internal": {
+			"curated": 12,
+			"legacy_id": "w3t9h2SyNhr2rBWouXim8c"
+		}
+	},
+	"man": {
+		"conflicts": ["woman", "cis_woman", "trans_woman"],
+		"internal": {
+			"curated": 2,
+			"legacy_id": "rhw3rcbheU7vc9vcSy6W6V"
+		},
+		"simple": true
+	},
+	"nonbinary": {
+		"alias_of": "other",
+		"internal": {
+			"curated": 13,
+			"legacy_id": "QwXvxjisosKeTP97ouczoZ"
+		}
+	},
+	"other": {
+		"default": true,
+		"internal": {
+			"curated": 21,
+			"legacy_id": "jAL62ePbibxaG4FPu7S8LG"
+		}
+	},
+	"pangender": {
+		"alias_of": "other",
+		"internal": {
+			"curated": 14,
+			"legacy_id": "PFEmTKdmxAoPuxttYPwFZb"
+		}
+	},
+	"she_her": {
+		"internal": {
+			"curated": 22,
+			"legacy_id": "mosDhQUt8JGumiup4yQWbZ"
+		},
+		"pronoun": true
+	},
+	"they_them": {
+		"internal": {
+			"curated": 24,
+			"legacy_id": "pAzAxxF4UYr3qN6F4tPYec"
+		},
+		"pronoun": true
+	},
+	"trans_man": {
+		"alias_of": "man",
+		"conflicts": ["woman", "cis_woman", "trans_woman", "cis_man"],
+		"internal": {
+			"curated": 17,
+			"legacy_id": "XTVsHQMWXiJGEc5xCf7RUb"
+		}
+	},
+	"trans_woman": {
+		"alias_of": "woman",
+		"conflicts": ["man", "cis_man", "trans_man", "cis_woman"],
+		"internal": {
+			"curated": 16,
+			"legacy_id": "HWte4cB6TUzzXZoJeuxJuf"
+		}
+	},
+	"transfeminine": {
+		"alias_of": "other",
+		"conflicts": ["cis_man", "cis_woman"],
+		"internal": {
+			"curated": 18,
+			"legacy_id": "rGFyY9WbvBBJSUAUpY5iUE"
+		}
+	},
+	"transgender": {
+		"alias_of": "other",
+		"conflicts": ["cis_man", "cis_woman"],
+		"internal": {
+			"curated": 15,
+			"legacy_id": "tyrdBY4Rbfitznr65hpRPR"
+		}
+	},
+	"transmasculine": {
+		"alias_of": "other",
+		"conflicts": ["cis_man", "cis_woman"],
+		"internal": {
+			"curated": 19,
+			"legacy_id": "CHkgoEoKzTSeVaLVByviBZ"
+		}
+	},
+	"two_spirit": {
+		"alias_of": "other",
+		"internal": {
+			"curated": 20,
+			"legacy_id": "JL8AaDCJMVApbEuAfwG86Y"
+		}
+	},
+	"woman": {
+		"conflicts": ["man", "cis_man", "trans_man"],
+		"internal": {
+			"curated": 1,
+			"legacy_id": "tpkW7r8PZ2RUuYGUSYi82N"
+		},
+		"simple": true
+	}
+}

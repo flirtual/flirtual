@@ -1,0 +1,69 @@
+{
+	"advertising": {
+		"internal": {
+			"curated": 4,
+			"legacy_id": "CnaCPAcsLptyUgVVugubdf"
+		},
+		"shadowban": true
+	},
+	"be_kind": {
+		"internal": {
+			"curated": 7,
+			"legacy_id": "KNJu36SMz87wA5DrJZyc4L"
+		}
+	},
+	"hateful_content": {
+		"internal": {
+			"curated": 6,
+			"legacy_id": "RdHQQqrswesTTwyh4QZqbH"
+		},
+		"shadowban": true
+	},
+	"inactive": {
+		"internal": {
+			"curated": 8,
+			"legacy_id": "dC6h3tWeZueVwHGKLhC2sk"
+		},
+		"shadowban": true
+	},
+	"nsfw_bio": {
+		"internal": {
+			"curated": 3,
+			"legacy_id": "MjxDKasduf9iHTctStGzYA"
+		},
+		"shadowban": true
+	},
+	"nsfw_picture": {
+		"internal": {
+			"curated": 2,
+			"legacy_id": "aUurnuPnvjTwU2W3K5Se7X"
+		}
+	},
+	"other": {
+		"default": true,
+		"internal": {
+			"curated": 10,
+			"legacy_id": "pDBkaykWpfYk9w7ZfPzMrb"
+		}
+	},
+	"soliciting": {
+		"internal": {
+			"curated": 5,
+			"legacy_id": "f8v44XrBausmXe6XybTVHd"
+		},
+		"shadowban": true
+	},
+	"spam": {
+		"internal": {
+			"curated": 1,
+			"legacy_id": "V7VcQEiYkiwHr5CHSVx5aS"
+		},
+		"shadowban": true
+	},
+	"upload_evidence": {
+		"internal": {
+			"curated": 9,
+			"legacy_id": "AhPZwBpeTm5HMf96bkVszj"
+		}
+	}
+}

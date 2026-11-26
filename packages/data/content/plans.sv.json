@@ -1,0 +1,20 @@
+{
+	"early": {
+		"name": "Early Premium"
+	},
+	"lifetime": {
+		"name": "Livstid"
+	},
+	"monthly": {
+		"name": "Premium (månadsvis)"
+	},
+	"promotional": {
+		"name": "Premium (kampanj)"
+	},
+	"six_months": {
+		"name": "Premium (var 6:e månad)"
+	},
+	"three_months": {
+		"name": "Premium (var 3:e månad)"
+	}
+}

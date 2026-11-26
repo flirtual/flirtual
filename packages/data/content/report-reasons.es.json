@@ -1,0 +1,38 @@
+{
+	"advertising": {
+		"name": "Publicidad o petición de dinero"
+	},
+	"harassment": {
+		"name": "Acoso"
+	},
+	"hateful_content": {
+		"name": "Contenido de odio"
+	},
+	"illegal_content": {
+		"name": "Contenido ilegal"
+	},
+	"impersonation": {
+		"name": "Se hace pasar por mí o por otra persona"
+	},
+	"nsfw_pictures": {
+		"name": "Fotos con desnudos o contenido sexual explícito"
+	},
+	"other": {
+		"name": "Otro"
+	},
+	"scam": {
+		"name": "Estafa, malware o enlaces peligrosos"
+	},
+	"self_harm": {
+		"name": "Contenido de autolesiones"
+	},
+	"spam": {
+		"name": "Cuenta de spam o trol"
+	},
+	"underage": {
+		"name": "Persona menor de edad"
+	},
+	"violent_content": {
+		"name": "Contenido violento o perturbador"
+	}
+}

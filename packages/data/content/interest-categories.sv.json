@@ -1,0 +1,35 @@
+{
+	"alignment": {
+		"name": "Alignment"
+	},
+	"astrology": {
+		"name": "Astrologi"
+	},
+	"game_genres": {
+		"name": "Spelgenrer"
+	},
+	"games": {
+		"name": "Spel"
+	},
+	"general": {
+		"name": "Allmänt"
+	},
+	"identity": {
+		"name": "Identitet"
+	},
+	"love_languages": {
+		"name": "Kärleksspråk"
+	},
+	"music": {
+		"name": "Musik"
+	},
+	"personality_types": {
+		"name": "Personlighetstyper"
+	},
+	"popular": {
+		"name": "Populärt"
+	},
+	"sports": {
+		"name": "Sport"
+	}
+}

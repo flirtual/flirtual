@@ -1,0 +1,884 @@
+{
+	"3d_modeling": {
+		"name": "Modelado 3D"
+	},
+	"3d_printing": {
+		"name": "Impresión 3D 🖨️"
+	},
+	"420_friendly": {
+		"name": "Fan del 420 🍁"
+	},
+	"acts_of_service": {
+		"name": "Actos de servicio 🤝"
+	},
+	"adventurer": {
+		"name": "Espíritu aventurero"
+	},
+	"aesthetics": {
+		"name": "E s t é t i c a ✨"
+	},
+	"airsoft": {
+		"name": "Airsoft"
+	},
+	"alternative": {
+		"name": "Rock alternativo 🎸"
+	},
+	"always_in_dark_mode": {
+		"name": "Siempre en modo oscuro 🌚"
+	},
+	"among_us": {
+		"name": "Among Us"
+	},
+	"animals": {
+		"name": "Animales"
+	},
+	"anime": {
+		"name": "Anime 🌸"
+	},
+	"apex_legends": {
+		"name": "Apex Legends"
+	},
+	"aquarius": {
+		"name": "Acuario ♒️"
+	},
+	"arc_raiders": {
+		"name": "ARC Raiders"
+	},
+	"aries": {
+		"name": "Aries ♈️"
+	},
+	"art": {
+		"name": "Arte 🎨"
+	},
+	"avakin_life": {
+		"name": "Avakin Life"
+	},
+	"avatar_creator": {
+		"name": "Creación de avatares 🛠️"
+	},
+	"aviation": {
+		"name": "Aviación ✈️"
+	},
+	"bad_at_directions": {
+		"name": "Cero sentido de la orientación 🧭"
+	},
+	"baldurs_gate_3": {
+		"name": "Baldur's Gate 3"
+	},
+	"baseball": {
+		"name": "Béisbol ⚾️"
+	},
+	"basketball": {
+		"name": "Baloncesto 🏀"
+	},
+	"battlefield": {
+		"name": "Battlefield"
+	},
+	"biking": {
+		"name": "Ciclismo 🚲"
+	},
+	"board_games": {
+		"name": "Juegos de mesa 🎲"
+	},
+	"booth_avatars": {
+		"name": "Avatares de Booth"
+	},
+	"caffeinated": {
+		"name": "A base de café ☕️"
+	},
+	"call_of_duty": {
+		"name": "Call of Duty"
+	},
+	"camping": {
+		"name": "Camping 🏕️"
+	},
+	"cancer": {
+		"name": "Cáncer ♋️"
+	},
+	"capricorn": {
+		"name": "Capricornio ♑️"
+	},
+	"cars": {
+		"name": "Autos 🚗"
+	},
+	"cartoons": {
+		"name": "Dibujos animados"
+	},
+	"cats": {
+		"name": "Gatos 🐈"
+	},
+	"chaotic_evil": {
+		"name": "Caótico malvado"
+	},
+	"chaotic_good": {
+		"name": "Caótico bueno"
+	},
+	"chaotic_neutral": {
+		"name": "Caótico neutral"
+	},
+	"chess": {
+		"name": "Ajedrez ♟️"
+	},
+	"chillin_like_a_villain": {
+		"name": "Tranqui y sin drama 😎"
+	},
+	"chuunibyou": {
+		"name": "Chuunibyou"
+	},
+	"classical": {
+		"name": "Música clásica 🎻"
+	},
+	"clubbing": {
+		"name": "Discotecas 🪩"
+	},
+	"comedy": {
+		"name": "Comedia"
+	},
+	"comics": {
+		"name": "Cómics"
+	},
+	"concerts": {
+		"name": "Conciertos"
+	},
+	"content_creator": {
+		"name": "Creación de contenido"
+	},
+	"cooking": {
+		"name": "Cocina 🍳"
+	},
+	"cosplay": {
+		"name": "Cosplay 👘"
+	},
+	"cottagecore": {
+		"name": "Cottagecore 🌻"
+	},
+	"counter_strike": {
+		"name": "Counter Strike"
+	},
+	"country": {
+		"name": "Country 🤠"
+	},
+	"cuddles": {
+		"name": "Mimos 🥰"
+	},
+	"cyberpunk": {
+		"name": "Cyberpunk"
+	},
+	"dad_jokester": {
+		"name": "Fan de los chistes malos"
+	},
+	"dancing": {
+		"name": "Baile 💃"
+	},
+	"dead_by_daylight": {
+		"name": "Dead by Daylight"
+	},
+	"deaf": {
+		"name": "Persona sorda"
+	},
+	"destiny_2": {
+		"name": "Destiny 2"
+	},
+	"disney": {
+		"name": "Disney"
+	},
+	"diy": {
+		"name": "Bricolaje 🛠️"
+	},
+	"djing": {
+		"name": "DJ 🎧"
+	},
+	"documentaries": {
+		"name": "Documentales"
+	},
+	"dogs": {
+		"name": "Perros 🐶"
+	},
+	"dota_2": {
+		"name": "Dota 2"
+	},
+	"drawing": {
+		"name": "Dibujo 🖋️"
+	},
+	"drinking_buddies": {
+		"name": "Amigos de copas 🍻"
+	},
+	"driving_sims": {
+		"name": "Simuladores de conducción 🏎️"
+	},
+	"dungeons_and_dragons": {
+		"name": "Dungeons & Dragons 🏰"
+	},
+	"elden_ring": {
+		"name": "Elden Ring"
+	},
+	"electronic": {
+		"name": "Electrónica 🎛️"
+	},
+	"emo": {
+		"name": "Emo 🖤"
+	},
+	"emotional_support_homie": {
+		"name": "Amistad de apoyo emocional"
+	},
+	"enfj": {
+		"name": "ENFJ (Protagonista)"
+	},
+	"enfp": {
+		"name": "ENFP (Activista)"
+	},
+	"entj": {
+		"name": "ENTJ (Comandante)"
+	},
+	"entp": {
+		"name": "ENTP (Innovador)"
+	},
+	"esfj": {
+		"name": "ESFJ (Cónsul)"
+	},
+	"esfp": {
+		"name": "ESFP (Animador)"
+	},
+	"esports": {
+		"name": "eSports"
+	},
+	"estj": {
+		"name": "ESTJ (Ejecutivo)"
+	},
+	"estp": {
+		"name": "ESTP (Emprendedor)"
+	},
+	"exploring_worlds": {
+		"name": "Explorar mundos 🗺️"
+	},
+	"fan_fiction": {
+		"name": "Fanfiction"
+	},
+	"fantasy": {
+		"name": "Fantasía 🐉"
+	},
+	"fashion": {
+		"name": "Moda"
+	},
+	"femboy": {
+		"name": "Femboy"
+	},
+	"fighting_games": {
+		"name": "Juegos de lucha 🥊"
+	},
+	"final_fantasy_xiv": {
+		"name": "Final Fantasy XIV"
+	},
+	"fishing": {
+		"name": "Pesca 🎣"
+	},
+	"fitness": {
+		"name": "Fitness 💪"
+	},
+	"five_nights_at_freddys": {
+		"name": "Five Nights at Freddy's"
+	},
+	"flight_sims": {
+		"name": "Simuladores de vuelo ✈️"
+	},
+	"food": {
+		"name": "Comida 🍕"
+	},
+	"football": {
+		"name": "Fútbol americano 🏈"
+	},
+	"forklift_certified": {
+		"name": "Licencia de montacargas 🦺"
+	},
+	"fortnite": {
+		"name": "Fortnite"
+	},
+	"fps": {
+		"name": "FPS 🔫"
+	},
+	"furry": {
+		"name": "Furry 🐾"
+	},
+	"gacha": {
+		"name": "Gacha 🎰"
+	},
+	"game_dev": {
+		"name": "Desarrollo de videojuegos"
+	},
+	"gaming": {
+		"name": "Videojuegos 🎮"
+	},
+	"gardening": {
+		"name": "Jardinería 🪴"
+	},
+	"gemini": {
+		"name": "Géminis ♊️"
+	},
+	"genshin_impact": {
+		"name": "Genshin Impact"
+	},
+	"gifts": {
+		"name": "Regalos 🎁"
+	},
+	"golf": {
+		"name": "Golf ⛳️"
+	},
+	"goth": {
+		"name": "Estilo gótico 🕷️"
+	},
+	"grand_theft_auto": {
+		"name": "Grand Theft Auto"
+	},
+	"guitar": {
+		"name": "Guitarra 🎸"
+	},
+	"guns": {
+		"name": "Armas de fuego"
+	},
+	"halo": {
+		"name": "Halo"
+	},
+	"headpats": {
+		"name": "Palmaditas en la cabeza"
+	},
+	"helldivers_2": {
+		"name": "Helldivers 2"
+	},
+	"hiking": {
+		"name": "Senderismo 🥾"
+	},
+	"hip_hop": {
+		"name": "Hip hop 💿"
+	},
+	"hippie": {
+		"name": "Hippie 🌼"
+	},
+	"history": {
+		"name": "Historia 📜"
+	},
+	"hockey": {
+		"name": "Hockey sobre hielo 🏒"
+	},
+	"honkai_star_rail": {
+		"name": "Honkai: Star Rail"
+	},
+	"horror": {
+		"name": "Terror 👻"
+	},
+	"hunting": {
+		"name": "Caza 🦌"
+	},
+	"imvu": {
+		"name": "IMVU"
+	},
+	"indie": {
+		"name": "Indie 📼"
+	},
+	"indie_games": {
+		"name": "Juegos indie 🕹️"
+	},
+	"infj": {
+		"name": "INFJ (Abogado)"
+	},
+	"infp": {
+		"name": "INFP (Mediador)"
+	},
+	"intj": {
+		"name": "INTJ (Arquitecto)"
+	},
+	"intp": {
+		"name": "INTP (Lógico)"
+	},
+	"isfj": {
+		"name": "ISFJ (Defensor)"
+	},
+	"isfp": {
+		"name": "ISFP (Aventurero)"
+	},
+	"istj": {
+		"name": "ISTJ (Logista)"
+	},
+	"istp": {
+		"name": "ISTP (Virtuoso)"
+	},
+	"jazz": {
+		"name": "Jazz 🎷"
+	},
+	"jpop": {
+		"name": "J-pop 🇯🇵"
+	},
+	"jrpgs": {
+		"name": "JRPG 🎌"
+	},
+	"karaoke": {
+		"name": "Karaoke 🎤"
+	},
+	"kawaii": {
+		"name": "Kawaii 💖"
+	},
+	"kdrama": {
+		"name": "K-dramas 🇰🇷"
+	},
+	"kingdom_hearts": {
+		"name": "Kingdom Hearts"
+	},
+	"kpop": {
+		"name": "K-pop 🇰🇷"
+	},
+	"language_learning": {
+		"name": "Aprender idiomas"
+	},
+	"latin": {
+		"name": "Música latina 💃"
+	},
+	"lawful_evil": {
+		"name": "Legal malvado"
+	},
+	"lawful_good": {
+		"name": "Legal bueno"
+	},
+	"lawful_neutral": {
+		"name": "Legal neutral"
+	},
+	"league_of_legends": {
+		"name": "League of Legends"
+	},
+	"leo": {
+		"name": "Leo ♌️"
+	},
+	"lgbtq": {
+		"name": "LGBTQ+ 🏳️‍🌈"
+	},
+	"libra": {
+		"name": "Libra ♎️"
+	},
+	"literally_just_vibing": {
+		"name": "Fluyendo y ya"
+	},
+	"lives_in_vr": {
+		"name": "Viviendo en VR 🥽"
+	},
+	"long_walks_on_the_beach": {
+		"name": "Largos paseos por la playa 🏖️"
+	},
+	"looking_for_group": {
+		"name": "Buscando grupo (LFG) 🎮"
+	},
+	"magic_the_gathering": {
+		"name": "Magic: The Gathering"
+	},
+	"manga": {
+		"name": "Manga 📚"
+	},
+	"manhwa": {
+		"name": "Manhwa 🇰🇷"
+	},
+	"martial_arts": {
+		"name": "Artes marciales 🥋"
+	},
+	"marvel": {
+		"name": "Marvel"
+	},
+	"marvel_rivals": {
+		"name": "Marvel Rivals"
+	},
+	"mech_pilot": {
+		"name": "Piloto de mechas 🤖"
+	},
+	"meditation": {
+		"name": "Meditación 🧘"
+	},
+	"memelord": {
+		"name": "Fábrica de memes"
+	},
+	"metal": {
+		"name": "Metal 🤘"
+	},
+	"military": {
+		"name": "Mundo militar"
+	},
+	"mind_explorer": {
+		"name": "Exploración de la conciencia 🧠"
+	},
+	"mirror_dweller": {
+		"name": "Habitante del espejo 🪞"
+	},
+	"mmos": {
+		"name": "MMO 🌐"
+	},
+	"mobas": {
+		"name": "MOBA ⚔️"
+	},
+	"monster_hunter": {
+		"name": "Monster Hunter"
+	},
+	"motorcycles": {
+		"name": "Motos 🏍️"
+	},
+	"movies": {
+		"name": "Cine 🍿"
+	},
+	"music": {
+		"name": "Música 🎵"
+	},
+	"music_production": {
+		"name": "Producción musical 🎧"
+	},
+	"mute": {
+		"name": "No verbal"
+	},
+	"mystery": {
+		"name": "Misterio 🔎"
+	},
+	"nature": {
+		"name": "Naturaleza 🌲"
+	},
+	"nerd": {
+		"name": "Nerd 🤓"
+	},
+	"neutral_evil": {
+		"name": "Neutral malvado"
+	},
+	"neutral_good": {
+		"name": "Neutral bueno"
+	},
+	"nintendo": {
+		"name": "Nintendo"
+	},
+	"old_soul": {
+		"name": "Alma vieja"
+	},
+	"osu": {
+		"name": "osu!"
+	},
+	"otaku": {
+		"name": "Otaku"
+	},
+	"overwatch": {
+		"name": "Overwatch"
+	},
+	"paranormal_investigator": {
+		"name": "Investigación paranormal 👻"
+	},
+	"partner_in_crime": {
+		"name": "Cómplice"
+	},
+	"party_animal": {
+		"name": "Alma de la fiesta 🎉"
+	},
+	"path_of_exile": {
+		"name": "Path of Exile"
+	},
+	"persona": {
+		"name": "Persona"
+	},
+	"phantom_sense": {
+		"name": "Sentido fantasma"
+	},
+	"philosophy": {
+		"name": "Filosofía"
+	},
+	"photography": {
+		"name": "Fotografía 📸"
+	},
+	"physical_touch": {
+		"name": "Contacto físico 🫂"
+	},
+	"piano": {
+		"name": "Piano 🎹"
+	},
+	"pisces": {
+		"name": "Piscis ♓️"
+	},
+	"pokemon": {
+		"name": "Pokémon"
+	},
+	"politics": {
+		"name": "Política"
+	},
+	"pool": {
+		"name": "Billar 🎱"
+	},
+	"pop": {
+		"name": "Pop 🌟"
+	},
+	"pretty_rave_girl": {
+		"name": "Pretty rave girl"
+	},
+	"programming": {
+		"name": "Programación ⌨️"
+	},
+	"psychology": {
+		"name": "Psicología"
+	},
+	"pubg": {
+		"name": "PUBG: Battlegrounds"
+	},
+	"punk": {
+		"name": "Punk 🧷"
+	},
+	"puzzles": {
+		"name": "Rompecabezas 🧩"
+	},
+	"quality_time": {
+		"name": "Tiempo de calidad ⏳"
+	},
+	"rainbow_six_siege": {
+		"name": "Rainbow Six Siege"
+	},
+	"reading": {
+		"name": "Lectura 📖"
+	},
+	"religious": {
+		"name": "Persona religiosa"
+	},
+	"retro_games": {
+		"name": "Juegos retro 👾"
+	},
+	"rhythm_games": {
+		"name": "Juegos de ritmo 🎼"
+	},
+	"rnb": {
+		"name": "R&B 🎤"
+	},
+	"rock": {
+		"name": "Rock 🥁"
+	},
+	"rocket_league": {
+		"name": "Rocket League"
+	},
+	"roleplaying": {
+		"name": "Rol 🎭"
+	},
+	"rpgs": {
+		"name": "RPG 🧙"
+	},
+	"running": {
+		"name": "Correr 🏃"
+	},
+	"rust": {
+		"name": "Rust"
+	},
+	"sagittarius": {
+		"name": "Sagitario ♐️"
+	},
+	"science": {
+		"name": "Ciencia 🔬"
+	},
+	"scifi": {
+		"name": "Ciencia ficción 👽"
+	},
+	"scorpio": {
+		"name": "Escorpio ♏️"
+	},
+	"second_life": {
+		"name": "Second Life"
+	},
+	"seeking_a_third": {
+		"name": "Buscando tercera persona"
+	},
+	"shy": {
+		"name": "Persona tímida 🙈"
+	},
+	"sign_language": {
+		"name": "Lengua de señas"
+	},
+	"singing": {
+		"name": "Cantar 🎤"
+	},
+	"skateboarding": {
+		"name": "Skate 🛹"
+	},
+	"skating": {
+		"name": "Patinaje ⛸️"
+	},
+	"sleep_calls": {
+		"name": "Llamadas para dormir"
+	},
+	"sleeps_in_vr": {
+		"name": "Durmiendo en VR"
+	},
+	"sneakers": {
+		"name": "Sneakers 👟"
+	},
+	"snowboarding": {
+		"name": "Snowboard 🏂"
+	},
+	"soccer": {
+		"name": "Fútbol ⚽️"
+	},
+	"social_butterfly": {
+		"name": "Muy sociable 🦋"
+	},
+	"social_games": {
+		"name": "Juegos sociales 💬"
+	},
+	"socially_awkward": {
+		"name": "Socialmente torpe"
+	},
+	"space": {
+		"name": "Espacio 🪐"
+	},
+	"speedrunning": {
+		"name": "Speedrunning"
+	},
+	"spiritual": {
+		"name": "Espiritual"
+	},
+	"sports": {
+		"name": "Deportes"
+	},
+	"sports_games": {
+		"name": "Juegos de deportes ⚽️"
+	},
+	"star_wars": {
+		"name": "Star Wars"
+	},
+	"stardew_valley": {
+		"name": "Stardew Valley"
+	},
+	"strategy_games": {
+		"name": "Juegos de estrategia ♟️"
+	},
+	"streaming": {
+		"name": "Hacer streaming 🎥"
+	},
+	"student": {
+		"name": "Estudiante 🎓"
+	},
+	"survival_games": {
+		"name": "Juegos de supervivencia 🏕️"
+	},
+	"sweets": {
+		"name": "Dulces 🍰"
+	},
+	"swimming": {
+		"name": "Natación 🏊"
+	},
+	"tattoos": {
+		"name": "Tatuajes"
+	},
+	"taurus": {
+		"name": "Tauro ♉️"
+	},
+	"team_fortress_2": {
+		"name": "Team Fortress 2"
+	},
+	"technology": {
+		"name": "Tecnología 💾"
+	},
+	"tennis": {
+		"name": "Tenis 🎾"
+	},
+	"terraria": {
+		"name": "Terraria"
+	},
+	"the_sims": {
+		"name": "Los Sims"
+	},
+	"theater": {
+		"name": "Teatro 🎭"
+	},
+	"time_traveler": {
+		"name": "Viajes en el tiempo ⏳"
+	},
+	"touhou": {
+		"name": "Touhou"
+	},
+	"travel": {
+		"name": "Viajes 🧳"
+	},
+	"true_crime": {
+		"name": "True crime 🕵️"
+	},
+	"true_neutral": {
+		"name": "Neutral auténtico"
+	},
+	"tsundere": {
+		"name": "Tsundere 💢"
+	},
+	"tv": {
+		"name": "TV 📺"
+	},
+	"twitch": {
+		"name": "Twitch"
+	},
+	"undertale": {
+		"name": "Undertale"
+	},
+	"valorant": {
+		"name": "Valorant"
+	},
+	"vaporwave": {
+		"name": "Vaporwave 🌊"
+	},
+	"vegan": {
+		"name": "Veganismo 🌱"
+	},
+	"videography": {
+		"name": "Videografía 🎥"
+	},
+	"virgo": {
+		"name": "Virgo ♍️"
+	},
+	"virtual_nomad": {
+		"name": "Nómada virtual"
+	},
+	"visual_novels": {
+		"name": "Novelas visuales 📖"
+	},
+	"vocaloid": {
+		"name": "Vocaloid"
+	},
+	"voice_acting": {
+		"name": "Doblaje 🎙️"
+	},
+	"volleyball": {
+		"name": "Voleibol 🏐"
+	},
+	"volunteering": {
+		"name": "Voluntariado 🤝"
+	},
+	"vtuber": {
+		"name": "VTuber"
+	},
+	"warframe": {
+		"name": "Warframe"
+	},
+	"warhammer": {
+		"name": "Warhammer"
+	},
+	"witchcraft": {
+		"name": "Brujería 🧙‍♀️"
+	},
+	"words_of_affirmation": {
+		"name": "Palabras de afirmación 💬"
+	},
+	"world_creator": {
+		"name": "Creación de mundos 🛠️"
+	},
+	"world_of_warcraft": {
+		"name": "World of Warcraft"
+	},
+	"writing": {
+		"name": "Escritura ✍️"
+	},
+	"wuthering_waves": {
+		"name": "Wuthering Waves"
+	},
+	"yandere": {
+		"name": "Yandere 😍"
+	},
+	"yoga": {
+		"name": "Yoga 🧘"
+	},
+	"youtube": {
+		"name": "YouTube"
+	},
+	"zen_as_heck": {
+		"name": "Más zen que un monje 🪷"
+	},
+	"zepeto": {
+		"name": "Zepeto"
+	}
+}

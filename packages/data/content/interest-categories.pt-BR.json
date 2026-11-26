@@ -1,0 +1,35 @@
+{
+	"alignment": {
+		"name": "Alinhamento"
+	},
+	"astrology": {
+		"name": "Astrologia"
+	},
+	"game_genres": {
+		"name": "Gêneros de jogo"
+	},
+	"games": {
+		"name": "Jogos"
+	},
+	"general": {
+		"name": "Geral"
+	},
+	"identity": {
+		"name": "Identidade"
+	},
+	"love_languages": {
+		"name": "Linguagem de amor"
+	},
+	"music": {
+		"name": "Música"
+	},
+	"personality_types": {
+		"name": "Tipos de personalidades"
+	},
+	"popular": {
+		"name": "Populares"
+	},
+	"sports": {
+		"name": "Esportes"
+	}
+}

@@ -1,0 +1,61 @@
+{
+	"asexual": {
+		"definition": "Alguém que sente pouca ou nenhuma atração sexual.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Asexuality",
+		"name": "Assexual"
+	},
+	"bisexual": {
+		"definition": "Alguém que sente atração por vários géneros.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Bisexuality",
+		"name": "Bissexual"
+	},
+	"demisexual": {
+		"definition": "Alguém que só sente atração sexual depois de criar um laço emocional com outra pessoa.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Demisexuality_and_Gray-Asexuality",
+		"name": "Demissexual"
+	},
+	"experimenting_in_vr": {
+		"definition": "Alguém que está a explorar a sua orientação sexual em RV ou cuja sexualidade é diferente em RV e na vida real.",
+		"name": "A experimentar em RV"
+	},
+	"gay": {
+		"definition": "Alguém que sente atração por pessoas do mesmo género.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Gay",
+		"name": "Gay"
+	},
+	"heteroflexible": {
+		"definition": "Alguém que sente atração sobretudo pelo género oposto, mas que por vezes também sente atração pelo mesmo género.",
+		"definition_link": "https://www.merriam-webster.com/words-at-play/homoflexible-heteroflexible-meaning-slang-definition",
+		"name": "Heteroflexível"
+	},
+	"homoflexible": {
+		"definition": "Alguém que sente atração sobretudo pelo mesmo género, mas que por vezes também sente atração pelo género oposto.",
+		"definition_link": "https://www.merriam-webster.com/words-at-play/homoflexible-heteroflexible-meaning-slang-definition",
+		"name": "Homoflexível"
+	},
+	"lesbian": {
+		"definition": "Alguém que sente atração por outras mulheres ou por pessoas femininas.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Lesbian",
+		"name": "Lésbica"
+	},
+	"pansexual": {
+		"definition": "Alguém que sente atração por outras pessoas, independentemente do seu género.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Pansexuality",
+		"name": "Pansexual"
+	},
+	"queer": {
+		"definition": "Alguém com uma orientação sexual fora da norma.",
+		"definition_link": "https://pt.wikipedia.org/wiki/Queer",
+		"name": "Queer"
+	},
+	"questioning": {
+		"definition": "Alguém que está a questionar a sua orientação sexual.",
+		"definition_link": "https://en.wikipedia.org/wiki/Questioning_%28sexuality_and_gender%29",
+		"name": "Em questionamento"
+	},
+	"straight": {
+		"definition": "Alguém que sente atração pelo género oposto.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Heterosexuality",
+		"name": "Heterossexual"
+	}
+}

@@ -1,0 +1,62 @@
+{
+	"album_on_repeat": {
+		"name": "最近ずっとリピートしているアルバム"
+	},
+	"bet_you_cant": {
+		"name": "できるものならやってみて"
+	},
+	"favorite_character": {
+		"name": "一番好きなキャラクター"
+	},
+	"favorite_game": {
+		"name": "人生で一番好きなゲーム"
+	},
+	"favorite_in_vr": {
+		"name": "VRで一番好きなこと"
+	},
+	"favorite_movie": {
+		"name": "一番好きな映画は"
+	},
+	"favorite_vrchat_world": {
+		"name": "お気に入りのVRChatワールド"
+	},
+	"getting_to_know_me": {
+		"name": "私と仲良くなる秘訣は"
+	},
+	"irrational_fear": {
+		"name": "理屈抜きで怖いもの"
+	},
+	"just_learned": {
+		"name": "最近知ったこと"
+	},
+	"life_goal": {
+		"name": "人生の目標のひとつは"
+	},
+	"looking_for": {
+		"name": "探しているのは"
+	},
+	"nerd_out_on": {
+		"name": "つい熱く語るのは"
+	},
+	"never_have_i_ever": {
+		"name": "まだやったことがないこと"
+	},
+	"one_food": {
+		"name": "一生ひとつしか食べられないなら、選ぶのは"
+	},
+	"think_about": {
+		"name": "よく考えているのは"
+	},
+	"together_we_could": {
+		"name": "一緒にやりたいのは"
+	},
+	"unpopular_opinion": {
+		"name": "少数派かもしれないけど"
+	},
+	"want_someone_who": {
+		"name": "こんな人がいい"
+	},
+	"wont_shut_up_about": {
+		"name": "語り出すと止まらないのは"
+	}
+}

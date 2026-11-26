@@ -1,0 +1,35 @@
+{
+	"bad_matches": {
+		"name": "매칭 상대와 안 좋은 경험을 했어요"
+	},
+	"low_quality": {
+		"name": "매칭이나 프로필의 질이 낮아요"
+	},
+	"not_enough_dates": {
+		"name": "데이트로 잘 이어지지 않아요"
+	},
+	"not_enough_matches": {
+		"name": "매칭이 너무 적어요"
+	},
+	"other": {
+		"name": "기타"
+	},
+	"prefer_in_person_apps": {
+		"name": "다른 일반 데이팅 앱이 더 좋아요"
+	},
+	"prefer_vr_apps": {
+		"name": "다른 VR 데이팅 앱이 더 좋아요"
+	},
+	"relationship_elsewhere": {
+		"name": "다른 곳에서 연인을 만났어요"
+	},
+	"relationship_here": {
+		"name": "{brand_name}에서 연인을 만났어요"
+	},
+	"taking_a_break": {
+		"name": "잠시 쉬려고 해요"
+	},
+	"technical_issues": {
+		"name": "기술적인 문제가 있어요"
+	}
+}

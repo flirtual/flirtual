@@ -1,0 +1,35 @@
+{
+	"alignment": {
+		"name": "属性"
+	},
+	"astrology": {
+		"name": "星座"
+	},
+	"game_genres": {
+		"name": "ゲームジャンル"
+	},
+	"games": {
+		"name": "ゲーム"
+	},
+	"general": {
+		"name": "一般"
+	},
+	"identity": {
+		"name": "アイデンティティ"
+	},
+	"love_languages": {
+		"name": "愛の言語"
+	},
+	"music": {
+		"name": "音楽"
+	},
+	"personality_types": {
+		"name": "性格タイプ"
+	},
+	"popular": {
+		"name": "人気"
+	},
+	"sports": {
+		"name": "スポーツ"
+	}
+}

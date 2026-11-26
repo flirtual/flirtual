@@ -1,0 +1,61 @@
+{
+	"asexual": {
+		"definition": "Человек, который испытывает слабое сексуальное влечение или не испытывает его вовсе.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Asexuality",
+		"name": "Асексуальность"
+	},
+	"bisexual": {
+		"definition": "Человек, которого привлекают люди нескольких гендеров.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Bisexuality",
+		"name": "Бисексуальность"
+	},
+	"demisexual": {
+		"definition": "Человек, который испытывает сексуальное влечение только после того, как возникла эмоциональная связь.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Demisexuality_and_Gray-Asexuality",
+		"name": "Демисексуальность"
+	},
+	"experimenting_in_vr": {
+		"definition": "Человек, который исследует свою сексуальную ориентацию в VR или чья сексуальность в VR и в реальной жизни различается.",
+		"name": "Эксперименты в VR"
+	},
+	"gay": {
+		"definition": "Человек, которого привлекают люди того же гендера.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Gay",
+		"name": "Гей"
+	},
+	"heteroflexible": {
+		"definition": "Человек, которого в основном привлекает противоположный гендер, но иногда и тот же.",
+		"definition_link": "https://www.merriam-webster.com/words-at-play/homoflexible-heteroflexible-meaning-slang-definition",
+		"name": "Гетерофлексибельность"
+	},
+	"homoflexible": {
+		"definition": "Человек, которого в основном привлекает тот же гендер, но иногда и противоположный.",
+		"definition_link": "https://www.merriam-webster.com/words-at-play/homoflexible-heteroflexible-meaning-slang-definition",
+		"name": "Гомофлексибельность"
+	},
+	"lesbian": {
+		"definition": "Человек, которого привлекают другие женщины или феминные люди.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Lesbian",
+		"name": "Лесбиянка"
+	},
+	"pansexual": {
+		"definition": "Человек, которого привлекают люди независимо от их гендера.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Pansexuality",
+		"name": "Пансексуальность"
+	},
+	"queer": {
+		"definition": "Человек, чья сексуальная ориентация выходит за рамки общепринятых норм.",
+		"definition_link": "https://en.wikipedia.org/wiki/Queer",
+		"name": "Квир"
+	},
+	"questioning": {
+		"definition": "Человек, который сейчас разбирается в своей сексуальной ориентации.",
+		"definition_link": "https://en.wikipedia.org/wiki/Questioning_%28sexuality_and_gender%29",
+		"name": "В поиске себя"
+	},
+	"straight": {
+		"definition": "Человек, которого привлекает противоположный гендер.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Heterosexuality",
+		"name": "Гетеро"
+	}
+}

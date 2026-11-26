@@ -1,0 +1,61 @@
+{
+	"asexual": {
+		"definition": "Person, die wenig oder keine sexuelle Anziehung empfindet.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Asexuality",
+		"name": "Asexuell"
+	},
+	"bisexual": {
+		"definition": "Person, die sich zu mehreren Geschlechtern hingezogen fühlt.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Bisexuality",
+		"name": "Bisexuell"
+	},
+	"demisexual": {
+		"definition": "Person, die sexuelle Anziehung erst empfindet, nachdem eine emotionale Bindung entstanden ist.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Demisexuality_and_Gray-Asexuality",
+		"name": "Demisexuell"
+	},
+	"experimenting_in_vr": {
+		"definition": "Person, die die eigene sexuelle Orientierung in VR erkundet oder deren Sexualität sich in VR und im echten Leben unterscheidet.",
+		"name": "Experimentiert in VR"
+	},
+	"gay": {
+		"definition": "Person, die sich zu Menschen des gleichen Geschlechts hingezogen fühlt.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Gay",
+		"name": "Gay"
+	},
+	"heteroflexible": {
+		"definition": "Person, die sich überwiegend zum anderen Geschlecht hingezogen fühlt, manchmal aber auch zum gleichen Geschlecht.",
+		"definition_link": "https://www.merriam-webster.com/words-at-play/homoflexible-heteroflexible-meaning-slang-definition",
+		"name": "Heteroflexibel"
+	},
+	"homoflexible": {
+		"definition": "Person, die sich überwiegend zum gleichen Geschlecht hingezogen fühlt, manchmal aber auch zum anderen Geschlecht.",
+		"definition_link": "https://www.merriam-webster.com/words-at-play/homoflexible-heteroflexible-meaning-slang-definition",
+		"name": "Homoflexibel"
+	},
+	"lesbian": {
+		"definition": "Person, die sich zu anderen Frauen oder femininen Menschen hingezogen fühlt.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Lesbian",
+		"name": "Lesbisch"
+	},
+	"pansexual": {
+		"definition": "Person, die sich zu anderen unabhängig von deren Geschlecht hingezogen fühlt.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Pansexuality",
+		"name": "Pansexuell"
+	},
+	"queer": {
+		"definition": "Person mit einer nicht-normativen sexuellen Orientierung.",
+		"definition_link": "https://de.wikipedia.org/wiki/Queer",
+		"name": "Queer"
+	},
+	"questioning": {
+		"definition": "Person, die gerade dabei ist, die eigene sexuelle Orientierung herauszufinden.",
+		"definition_link": "https://en.wikipedia.org/wiki/Questioning_%28sexuality_and_gender%29",
+		"name": "Questioning"
+	},
+	"straight": {
+		"definition": "Person, die sich zum anderen Geschlecht hingezogen fühlt.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Heterosexuality",
+		"name": "Hetero"
+	}
+}

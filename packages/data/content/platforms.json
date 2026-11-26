@@ -1,0 +1,93 @@
+{
+	"android_xr": {
+		"internal": {
+			"curated": 6,
+			"legacy_id": "Qb3Ar9wqh7mAMwdevJCfYS"
+		},
+		"kind": "headset"
+	},
+	"apple_vision": {
+		"internal": {
+			"curated": 7,
+			"legacy_id": "c255sGSiJpMNnm6NTUcvx6"
+		},
+		"kind": "headset"
+	},
+	"face_tracking": {
+		"internal": {
+			"curated": 11,
+			"legacy_id": "m4S2N4Jn2f3WDbJm7bcbgQ"
+		},
+		"kind": "accessory"
+	},
+	"full_body_tracking": {
+		"internal": {
+			"curated": 10,
+			"legacy_id": "MLWTjDZEuacyr2qwbXEw4K"
+		},
+		"kind": "accessory"
+	},
+	"haptic_suit": {
+		"internal": {
+			"curated": 12,
+			"legacy_id": "pzkBdEYqgAZiSEBZAcJMPZ"
+		},
+		"kind": "accessory"
+	},
+	"locomotion_treadmill": {
+		"internal": {
+			"curated": 13,
+			"legacy_id": "x5T9enPhP8WpYwnoottGDL"
+		},
+		"kind": "accessory"
+	},
+	"meta_quest": {
+		"internal": {
+			"curated": 2,
+			"legacy_id": "RNaigbGdB7H4ZMw5c8ysbi"
+		},
+		"kind": "headset"
+	},
+	"other_vr": {
+		"internal": {
+			"curated": 9,
+			"legacy_id": "aNGgneQH5YX4HyWpNEUpmQ"
+		},
+		"kind": "headset"
+	},
+	"pcvr": {
+		"internal": {
+			"curated": 1,
+			"legacy_id": "3Kagenz7boB64Ke6vEAKv6"
+		},
+		"kind": "headset"
+	},
+	"pico": {
+		"internal": {
+			"curated": 4,
+			"legacy_id": "FEX8jjr4P9aeBurRUTLhU7"
+		},
+		"kind": "headset"
+	},
+	"playstation_vr": {
+		"internal": {
+			"curated": 8,
+			"legacy_id": "n6sSShVCXahjazwqEraKCG"
+		},
+		"kind": "headset"
+	},
+	"steam_frame": {
+		"internal": {
+			"curated": 3,
+			"legacy_id": "Ry723pMCrWV4ptp8ywcorG"
+		},
+		"kind": "headset"
+	},
+	"vive_standalone": {
+		"internal": {
+			"curated": 5,
+			"legacy_id": "N458aYKyg6hweVbyDEMDAR"
+		},
+		"kind": "headset"
+	}
+}

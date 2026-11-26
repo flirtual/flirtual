@@ -1,0 +1,61 @@
+{
+	"asexual": {
+		"definition": "Someone who experiences little or no sexual attraction.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Asexuality",
+		"name": "Asexual"
+	},
+	"bisexual": {
+		"definition": "Someone attracted to multiple genders.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Bisexuality",
+		"name": "Bisexual"
+	},
+	"demisexual": {
+		"definition": "Someone who only experiences sexual attraction after forming an emotional bond with someone.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Demisexuality_and_Gray-Asexuality",
+		"name": "Demisexual"
+	},
+	"experimenting_in_vr": {
+		"definition": "Someone who is exploring their sexual orientation in VR or whose sexuality differs in VR and in person.",
+		"name": "Experimenting in VR"
+	},
+	"gay": {
+		"definition": "Someone attracted to others of the same gender.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Gay",
+		"name": "Gay"
+	},
+	"heteroflexible": {
+		"definition": "Someone who is predominantly attracted to the opposite gender but sometimes experiences attraction to the same gender.",
+		"definition_link": "https://www.merriam-webster.com/words-at-play/homoflexible-heteroflexible-meaning-slang-definition",
+		"name": "Heteroflexible"
+	},
+	"homoflexible": {
+		"definition": "Someone who is predominantly attracted to the same gender but sometimes experiences attraction to the opposite gender.",
+		"definition_link": "https://www.merriam-webster.com/words-at-play/homoflexible-heteroflexible-meaning-slang-definition",
+		"name": "Homoflexible"
+	},
+	"lesbian": {
+		"definition": "Someone attracted to other women or feminine people.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Lesbian",
+		"name": "Lesbian"
+	},
+	"pansexual": {
+		"definition": "Someone attracted to others regardless of their gender.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Pansexuality",
+		"name": "Pansexual"
+	},
+	"queer": {
+		"definition": "Someone with a non-normative sexual orientation.",
+		"definition_link": "https://en.wikipedia.org/wiki/Queer",
+		"name": "Queer"
+	},
+	"questioning": {
+		"definition": "Someone who is in the process of examining their sexual orientation.",
+		"definition_link": "https://en.wikipedia.org/wiki/Questioning_%28sexuality_and_gender%29",
+		"name": "Questioning"
+	},
+	"straight": {
+		"definition": "Someone attracted to the opposite gender.",
+		"definition_link": "https://nonbinary.wiki/wiki/Romantic_and_sexual_orientation#Heterosexuality",
+		"name": "Straight"
+	}
+}

@@ -1,0 +1,61 @@
+{
+	"advertising": {
+		"details": "Anúnciando. Seu perfil aparenta ser focado em promover uma conta ou serviço externo. Você é livre para mencionar suas redes sociais ou trabalho no seu perfil, mas o propósito principal do seu perfil deve ser encontrar amigos ou pares. Você pode responder esse email para apelar seu ban e atualizar seu perfil para desbanir sua conta.",
+		"name": "Anúnciando"
+	},
+	"ban_evasion": {
+		"details": "Evasão de Ban. Pareçe que você criou uma nova conta ou ignorou um banimento anterior. Se você gostaria de apelar seu ban anterior e ter sua conta desbanida, responda ao email do ban original.",
+		"name": "Evasão de Ban"
+	},
+	"duplicate_account": {
+		"details": "Conta duplicada. Criar múltiplas contas no {brand_name} não é permitido. Essa conta foi desativada mas você ainda pode usar sua outra conta. Se você acredita ter sido banido por erro, ou gostaria de ter a outra conta desativada ao invés desta, porfavor responda esse email.",
+		"name": "Conta duplicada"
+	},
+	"harassment": {
+		"details": "Assédio. Se você gostaria de apelar seu banimento, por favor responda este email. Por favor note que não podemos compartilhar detalhes de denúncias de moderação, caso alguma tenha sido feita.",
+		"name": "Assédio"
+	},
+	"hateful_content": {
+		"details": "Conteúdo odioso. Mensagens e conteúdo de ódio não são bem-vindos no {brand_name}. Se você acredita que este ban foi um erro responda este email para apelar e ter sua conta desbanida.",
+		"name": "Conteúdo Odioso"
+	},
+	"illegal_content": {
+		"details": "Conteúdo ilegal. Seu perfil ou atividade aparenta violar as leis Canadenses ou locais. Se você acredita ter sido banido por erro, responda este email para apelar.",
+		"name": "Conteúdo ilegal"
+	},
+	"impersonation": {
+		"details": "Personificação. Seu perfil aparenta estar se passando por outra pessoa. Se você acredita ter sido banido por erro responda este email para apelar e ter sua conta desbanida.",
+		"name": "Personificação"
+	},
+	"nsfw_content": {
+		"details": "Nudez ou conteúdo adulto. Imagens de conteúdo adulto ou texto excessivamente obsceno não são permitidos no {brand_name}. Você pode responder este email para apelar seu ban e atualizar seu perfil para desbanir sua conta.",
+		"name": "Conteúdo Adulto"
+	},
+	"other": {
+		"name": "Outro"
+	},
+	"scam": {
+		"details": "Golpe, malware, ou links maliciosos. Seu perfil aparenta conter links ou atividade maliciosa. Se você acredita ter sido banido por erro, poderá apelar respondendo este email.",
+		"name": "Golpe, malware, ou links maliciosos"
+	},
+	"self_harm": {
+		"details": "Automutilação. Seu perfil ou atividade foi marcado como contendo referências a automutilação que pode ser perturbante para outros usuários, Nós temos alguns recursos em https://flirtu.al/mentalhealth que podem ser úteis. Por favor se cuide. Se você quiser apelar este banimento, porfavor responda este email.",
+		"name": "Automutilação"
+	},
+	"soliciting_money": {
+		"details": "Solicitando. Você não pode solicitar dinheiro no {brand_name}. Você pode responder este email para apelar seu banimento e remover qualquer solicitação do seu perfil para desbanir sua conta.",
+		"name": "Solicitando dinheiro"
+	},
+	"spam": {
+		"details": "Perfil de spam. O conteúdo do seu perfil foi marcado como spam. Você pode responder esse email para apelar seu banimento e ter sua conta desbanida. Podemos pedir que você atualize seu perfil com mais informação.",
+		"name": "Spam"
+	},
+	"underage": {
+		"details": "Menor de idade. É preciso ter pelo menos 18 anos para usar o {brand_name}. Se você acredita que sua conta foi banida por engano, pode entrar no {brand_name} e verificar sua idade com segurança para recuperá-la.",
+		"name": "Menor de idade"
+	},
+	"violent_content": {
+		"details": "Conteúdo Violento/Perturbante. Seu perfil aparenta conter conteúdo violento ou perturbante. Se você quiser apelar este banimento, por favor responde este email.",
+		"name": "Conteúdo Violento/Perturbante"
+	}
+}

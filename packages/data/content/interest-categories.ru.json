@@ -1,0 +1,35 @@
+{
+	"alignment": {
+		"name": "Мировоззрение"
+	},
+	"astrology": {
+		"name": "Астрология"
+	},
+	"game_genres": {
+		"name": "Жанры игр"
+	},
+	"games": {
+		"name": "Игры"
+	},
+	"general": {
+		"name": "Общее"
+	},
+	"identity": {
+		"name": "Идентичность"
+	},
+	"love_languages": {
+		"name": "Языки любви"
+	},
+	"music": {
+		"name": "Музыка"
+	},
+	"personality_types": {
+		"name": "Типы личности"
+	},
+	"popular": {
+		"name": "Популярное"
+	},
+	"sports": {
+		"name": "Спорт"
+	}
+}

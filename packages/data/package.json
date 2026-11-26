@@ -3,11 +3,11 @@
 	"private": true,
 	"type": "module",
 	"exports": {
-		"./*.json": "./src/*.json"
+		"./*": "./content/*.json"
 	},
 	"scripts": {
-		"lint": "oxlint && oxfmt --check",
-		"fmt": "oxfmt"
+		"lint": "oxlint && oxfmt --check && node scripts/sort-keys.ts --check",
+		"fmt": "node scripts/sort-keys.ts && oxfmt"
 	},
 	"devDependencies": {
 		"@flirtual/config": "workspace:*",

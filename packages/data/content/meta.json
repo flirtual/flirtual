@@ -1,0 +1,526 @@
+{
+	"ban-reasons": {
+		"endpoint": {
+			"order": ["curated", "name"]
+		},
+		"schema": {
+			"additionalProperties": false,
+			"properties": {
+				"default": {
+					"type": "boolean"
+				},
+				"internal": {
+					"additionalProperties": false,
+					"properties": {
+						"curated": {
+							"minimum": 1,
+							"type": "integer"
+						},
+						"legacy_id": {
+							"type": "string"
+						}
+					},
+					"type": "object"
+				}
+			},
+			"type": "object"
+		},
+		"type": "ban-reason"
+	},
+	"countries": {
+		"endpoint": {
+			"order": ["curated", "name"]
+		},
+		"schema": {
+			"additionalProperties": false,
+			"properties": {
+				"internal": {
+					"additionalProperties": false,
+					"properties": {
+						"name": {
+							"type": "string"
+						}
+					},
+					"required": ["name"],
+					"type": "object"
+				}
+			},
+			"required": ["internal"],
+			"type": "object"
+		},
+		"type": "country"
+	},
+	"delete-reasons": {
+		"endpoint": {
+			"order": ["curated", "name"]
+		},
+		"schema": {
+			"additionalProperties": false,
+			"properties": {
+				"internal": {
+					"additionalProperties": false,
+					"properties": {
+						"curated": {
+							"minimum": 1,
+							"type": "integer"
+						},
+						"legacy_id": {
+							"type": "string"
+						}
+					},
+					"type": "object"
+				}
+			},
+			"type": "object"
+		},
+		"type": "delete-reason"
+	},
+	"games": {
+		"endpoint": {
+			"order": ["curated", "-popularity", "name"]
+		},
+		"schema": {
+			"additionalProperties": false,
+			"properties": {
+				"androidxr": {
+					"format": "uri",
+					"type": "string"
+				},
+				"crossplay": {
+					"items": {
+						"enum": ["androidxr", "frame", "horizon", "pcvr", "pico", "psvr", "vision", "vive"]
+					},
+					"type": "array",
+					"uniqueItems": true
+				},
+				"frame": {
+					"format": "uri",
+					"type": "string"
+				},
+				"horizon": {
+					"format": "uri",
+					"type": "string"
+				},
+				"internal": {
+					"additionalProperties": false,
+					"properties": {
+						"added": {
+							"format": "date",
+							"type": "string"
+						},
+						"curated": {
+							"minimum": 1,
+							"type": "integer"
+						},
+						"legacy_id": {
+							"type": "string"
+						}
+					},
+					"type": "object"
+				},
+				"pcvr": {
+					"format": "uri",
+					"type": "string"
+				},
+				"pico": {
+					"format": "uri",
+					"type": "string"
+				},
+				"psvr": {
+					"format": "uri",
+					"type": "string"
+				},
+				"vision": {
+					"format": "uri",
+					"type": "string"
+				},
+				"vive": {
+					"format": "uri",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"type": "game"
+	},
+	"genders": {
+		"endpoint": {
+			"order": ["curated", "name"]
+		},
+		"schema": {
+			"additionalProperties": false,
+			"properties": {
+				"alias_of": {
+					"type": "string"
+				},
+				"conflicts": {
+					"items": {
+						"type": "string"
+					},
+					"type": "array",
+					"uniqueItems": true
+				},
+				"default": {
+					"type": "boolean"
+				},
+				"internal": {
+					"additionalProperties": false,
+					"properties": {
+						"curated": {
+							"minimum": 1,
+							"type": "integer"
+						},
+						"legacy_id": {
+							"type": "string"
+						}
+					},
+					"type": "object"
+				},
+				"pronoun": {
+					"type": "boolean"
+				},
+				"simple": {
+					"type": "boolean"
+				}
+			},
+			"type": "object"
+		},
+		"type": "gender"
+	},
+	"interest-categories": {
+		"endpoint": {
+			"order": ["curated", "name"]
+		},
+		"schema": {
+			"additionalProperties": false,
+			"properties": {
+				"internal": {
+					"additionalProperties": false,
+					"properties": {
+						"curated": {
+							"minimum": 1,
+							"type": "integer"
+						},
+						"legacy_id": {
+							"type": "string"
+						}
+					},
+					"type": "object"
+				}
+			},
+			"type": "object"
+		},
+		"type": "interest-category"
+	},
+	"interests": {
+		"endpoint": {
+			"order": ["curated", "name"]
+		},
+		"schema": {
+			"additionalProperties": false,
+			"properties": {
+				"category": {
+					"type": "string"
+				},
+				"internal": {
+					"additionalProperties": false,
+					"properties": {
+						"curated": {
+							"minimum": 1,
+							"type": "integer"
+						},
+						"legacy_id": {
+							"type": "string"
+						}
+					},
+					"type": "object"
+				},
+				"strength": {
+					"enum": [1, 2]
+				},
+				"synonyms": {
+					"items": {
+						"type": "string"
+					},
+					"type": "array",
+					"uniqueItems": true
+				}
+			},
+			"required": ["category"],
+			"type": "object"
+		},
+		"type": "interest"
+	},
+	"kinks": {
+		"endpoint": {
+			"order": ["curated", "name"]
+		},
+		"schema": {
+			"additionalProperties": false,
+			"properties": {
+				"internal": {
+					"additionalProperties": false,
+					"properties": {
+						"curated": {
+							"minimum": 1,
+							"type": "integer"
+						},
+						"legacy_id": {
+							"type": "string"
+						}
+					},
+					"type": "object"
+				},
+				"kind": {
+					"enum": ["dominant", "submissive"]
+				},
+				"pair": {
+					"type": "string"
+				}
+			},
+			"required": ["pair"],
+			"type": "object"
+		},
+		"type": "kink"
+	},
+	"languages": {
+		"endpoint": {
+			"order": ["curated", "name"]
+		},
+		"schema": {
+			"additionalProperties": false,
+			"properties": {},
+			"type": "object"
+		},
+		"type": "language"
+	},
+	"locales": {
+		"schema": {
+			"additionalProperties": false,
+			"properties": {
+				"default": {
+					"type": "boolean"
+				},
+				"enabled": {
+					"type": "boolean"
+				},
+				"intl": {
+					"type": "string"
+				},
+				"name": {
+					"type": "string"
+				}
+			},
+			"required": ["enabled", "name"],
+			"type": "object"
+		},
+		"type": "locale"
+	},
+	"plans": {
+		"schema": {
+			"additionalProperties": false,
+			"properties": {
+				"apple_id": {
+					"type": "string"
+				},
+				"chargebee_id": {
+					"type": "string"
+				},
+				"google_id": {
+					"type": "string"
+				},
+				"internal": {
+					"additionalProperties": false,
+					"properties": {
+						"curated": {
+							"minimum": 1,
+							"type": "integer"
+						},
+						"legacy_id": {
+							"type": "string"
+						}
+					},
+					"type": "object"
+				},
+				"product": {
+					"enum": ["premium"]
+				},
+				"purchasable": {
+					"type": "boolean"
+				},
+				"recurring": {
+					"type": "boolean"
+				},
+				"revenuecat_id": {
+					"type": "string"
+				}
+			},
+			"required": ["product", "purchasable", "recurring"],
+			"type": "object"
+		},
+		"type": "plan"
+	},
+	"platforms": {
+		"endpoint": {
+			"order": ["curated", "name"]
+		},
+		"schema": {
+			"additionalProperties": false,
+			"properties": {
+				"internal": {
+					"additionalProperties": false,
+					"properties": {
+						"curated": {
+							"minimum": 1,
+							"type": "integer"
+						},
+						"legacy_id": {
+							"type": "string"
+						}
+					},
+					"type": "object"
+				},
+				"kind": {
+					"enum": ["accessory", "headset"]
+				}
+			},
+			"required": ["kind"],
+			"type": "object"
+		},
+		"type": "platform"
+	},
+	"prompts": {
+		"endpoint": {
+			"order": ["curated", "name"]
+		},
+		"schema": {
+			"additionalProperties": false,
+			"properties": {
+				"internal": {
+					"additionalProperties": false,
+					"properties": {
+						"curated": {
+							"minimum": 1,
+							"type": "integer"
+						},
+						"legacy_id": {
+							"type": "string"
+						}
+					},
+					"type": "object"
+				}
+			},
+			"type": "object"
+		},
+		"type": "prompt"
+	},
+	"relationships": {
+		"endpoint": {
+			"order": ["curated", "name"]
+		},
+		"schema": {
+			"additionalProperties": false,
+			"properties": {
+				"internal": {
+					"additionalProperties": false,
+					"properties": {
+						"curated": {
+							"minimum": 1,
+							"type": "integer"
+						},
+						"legacy_id": {
+							"type": "string"
+						}
+					},
+					"type": "object"
+				}
+			},
+			"type": "object"
+		},
+		"type": "relationship"
+	},
+	"report-reasons": {
+		"endpoint": {
+			"order": ["curated", "name"]
+		},
+		"schema": {
+			"additionalProperties": false,
+			"properties": {
+				"default": {
+					"type": "boolean"
+				},
+				"internal": {
+					"additionalProperties": false,
+					"properties": {
+						"curated": {
+							"minimum": 1,
+							"type": "integer"
+						},
+						"legacy_id": {
+							"type": "string"
+						}
+					},
+					"type": "object"
+				}
+			},
+			"type": "object"
+		},
+		"type": "report-reason"
+	},
+	"sexualities": {
+		"endpoint": {
+			"order": ["curated", "name"]
+		},
+		"schema": {
+			"additionalProperties": false,
+			"properties": {
+				"internal": {
+					"additionalProperties": false,
+					"properties": {
+						"curated": {
+							"minimum": 1,
+							"type": "integer"
+						},
+						"legacy_id": {
+							"type": "string"
+						}
+					},
+					"type": "object"
+				}
+			},
+			"type": "object"
+		},
+		"type": "sexuality"
+	},
+	"warn-reasons": {
+		"endpoint": {
+			"order": ["curated", "name"]
+		},
+		"schema": {
+			"additionalProperties": false,
+			"properties": {
+				"default": {
+					"type": "boolean"
+				},
+				"internal": {
+					"additionalProperties": false,
+					"properties": {
+						"curated": {
+							"minimum": 1,
+							"type": "integer"
+						},
+						"legacy_id": {
+							"type": "string"
+						}
+					},
+					"type": "object"
+				},
+				"shadowban": {
+					"type": "boolean"
+				}
+			},
+			"type": "object"
+		},
+		"type": "warn-reason"
+	}
+}

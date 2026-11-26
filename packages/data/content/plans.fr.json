@@ -1,0 +1,20 @@
+{
+	"early": {
+		"name": "Early Premium"
+	},
+	"lifetime": {
+		"name": "Premium à vie"
+	},
+	"monthly": {
+		"name": "Premium (mensuel)"
+	},
+	"promotional": {
+		"name": "Premium offert"
+	},
+	"six_months": {
+		"name": "Premium (tous les 6 mois)"
+	},
+	"three_months": {
+		"name": "Premium (tous les 3 mois)"
+	}
+}

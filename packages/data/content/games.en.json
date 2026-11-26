@@ -1,0 +1,1061 @@
+{
+	"aces_of_thunder": {
+		"name": "Aces of Thunder"
+	},
+	"after_the_fall": {
+		"name": "After the Fall"
+	},
+	"aim_xr": {
+		"name": "Aim XR"
+	},
+	"alcove": {
+		"name": "Alcove"
+	},
+	"all_in_one_sports": {
+		"name": "All-In-One Sports VR"
+	},
+	"all_on_board": {
+		"name": "All on Board!"
+	},
+	"altair_breaker": {
+		"name": "ALTAIR BREAKER"
+	},
+	"alvo": {
+		"name": "Alvo"
+	},
+	"among_us_3d": {
+		"name": "Among Us 3D"
+	},
+	"ancient_dungeon": {
+		"name": "Ancient Dungeon"
+	},
+	"animal_company": {
+		"name": "Animal Company"
+	},
+	"arcade_legend": {
+		"name": "Arcade Legend"
+	},
+	"arealm": {
+		"name": "ARealm"
+	},
+	"arizona_sunshine_2": {
+		"name": "Arizona Sunshine 2"
+	},
+	"arizona_sunshine_remake": {
+		"name": "Arizona Sunshine Remake"
+	},
+	"assetto_corsa": {
+		"name": "Assetto Corsa"
+	},
+	"astro_hunters": {
+		"name": "Astro Hunters VR"
+	},
+	"attack_on_titan_unbreakable": {
+		"name": "Attack on Titan VR: Unbreakable"
+	},
+	"automobilista_2": {
+		"name": "Automobilista 2"
+	},
+	"bait": {
+		"name": "Bait!"
+	},
+	"band_space": {
+		"name": "Band Space"
+	},
+	"banter": {
+		"name": "Banter"
+	},
+	"barbaria": {
+		"name": "Barbaria"
+	},
+	"basis": {
+		"name": "Basis"
+	},
+	"battle_talent": {
+		"name": "Battle Talent"
+	},
+	"battlegroupvr": {
+		"name": "BattleGroupVR"
+	},
+	"battlezone": {
+		"name": "Battlezone Gold Edition"
+	},
+	"beat_saber": {
+		"name": "Beat Saber"
+	},
+	"beyond_sandbox": {
+		"name": "Beyond Sandbox"
+	},
+	"big_ballers": {
+		"name": "BIG BALLERS VR"
+	},
+	"bigscreen": {
+		"name": "Bigscreen"
+	},
+	"blackgate": {
+		"name": "BlackGate"
+	},
+	"blacktop_hoops": {
+		"name": "Blacktop Hoops"
+	},
+	"blaston": {
+		"name": "Blaston"
+	},
+	"blobtown": {
+		"name": "Blobtown"
+	},
+	"block_buster": {
+		"name": "Block Buster"
+	},
+	"bounce_shot": {
+		"name": "Bounce Shot"
+	},
+	"boxing_underdog": {
+		"name": "Boxing Underdog"
+	},
+	"brass_tactics": {
+		"name": "Brass Tactics"
+	},
+	"brazen_blaze": {
+		"name": "Brazen Blaze"
+	},
+	"breachers": {
+		"name": "Breachers"
+	},
+	"brink_traveler": {
+		"name": "BRINK Traveler"
+	},
+	"broken_edge": {
+		"name": "Broken Edge"
+	},
+	"cards_and_tankards": {
+		"name": "Cards & Tankards"
+	},
+	"carrier_command_2": {
+		"name": "Carrier Command 2"
+	},
+	"catan": {
+		"name": "Catan VR"
+	},
+	"chained_escape": {
+		"name": "Chained Escape"
+	},
+	"chess_club": {
+		"name": "Chess Club"
+	},
+	"chilloutvr": {
+		"name": "ChilloutVR"
+	},
+	"civilization_vii": {
+		"name": "Sid Meier's Civilization VII - VR"
+	},
+	"clash_of_chefs": {
+		"name": "Clash of Chefs VR"
+	},
+	"clawball": {
+		"name": "Clawball"
+	},
+	"cleansheet_soccer": {
+		"name": "CleanSheet Soccer"
+	},
+	"climbey": {
+		"name": "Climbey"
+	},
+	"cluster": {
+		"name": "Cluster"
+	},
+	"contractors": {
+		"name": "Contractors"
+	},
+	"contractors_showdown": {
+		"name": "Contractors Showdown"
+	},
+	"cook_out": {
+		"name": "Cook-Out"
+	},
+	"crazy_kung_fu": {
+		"name": "Crazy Kung Fu"
+	},
+	"creed_rise_to_glory": {
+		"name": "Creed: Rise to Glory"
+	},
+	"crime_shop_simulator": {
+		"name": "Crime Shop Simulator"
+	},
+	"crisis_brigade_2_reloaded": {
+		"name": "Crisis Brigade 2 reloaded"
+	},
+	"crossfire_sierra_squad": {
+		"name": "Crossfire: Sierra Squad"
+	},
+	"crowbar_climber": {
+		"name": "Crowbar Climber"
+	},
+	"cybrix": {
+		"name": "Cybrix"
+	},
+	"dance_eden": {
+		"name": "Dance Eden"
+	},
+	"darksword_battle_eternity": {
+		"name": "Darksword: Battle Eternity"
+	},
+	"davigo": {
+		"name": "DAVIGO"
+	},
+	"dcs_world": {
+		"name": "DCS World"
+	},
+	"deadly_delivery": {
+		"name": "Deadly Delivery"
+	},
+	"death_horizon_reloaded": {
+		"name": "Death Horizon: Reloaded"
+	},
+	"death_lap": {
+		"name": "Death Lap"
+	},
+	"demeo": {
+		"name": "Demeo"
+	},
+	"demeo_battlemarked": {
+		"name": "Demeo x Dungeons & Dragons: Battlemarked"
+	},
+	"demeo_battles": {
+		"name": "Demeo Battles"
+	},
+	"devils_roulette": {
+		"name": "Devil's Roulette"
+	},
+	"devour": {
+		"name": "DEVOUR"
+	},
+	"dig": {
+		"name": "DIG VR"
+	},
+	"digigods": {
+		"name": "DigiGods"
+	},
+	"dimensional_double_shift": {
+		"name": "Dimensional Double Shift"
+	},
+	"dirt_rally_2": {
+		"name": "DiRT Rally 2.0"
+	},
+	"downshot": {
+		"name": "DOWNSHOT"
+	},
+	"downtown_club": {
+		"name": "Downtown Club"
+	},
+	"dragon_fist": {
+		"name": "Dragon Fist: VR Kung Fu"
+	},
+	"dread_meridian": {
+		"name": "Dread Meridian"
+	},
+	"drop_dead_dual_strike": {
+		"name": "Drop Dead: Dual Strike Edition"
+	},
+	"drop_dead_the_cabin": {
+		"name": "Drop Dead: The Cabin"
+	},
+	"drunkn_bar_fight": {
+		"name": "Drunkn Bar Fight"
+	},
+	"dungeons_of_eternity": {
+		"name": "Dungeons Of Eternity"
+	},
+	"eagle_flight": {
+		"name": "Eagle Flight"
+	},
+	"electronauts": {
+		"name": "Electronauts"
+	},
+	"elements_divided": {
+		"name": "Elements Divided"
+	},
+	"eleven_table_tennis": {
+		"name": "Eleven Table Tennis"
+	},
+	"elite_dangerous": {
+		"name": "Elite Dangerous"
+	},
+	"elsewhere_electric": {
+		"name": "Elsewhere Electric"
+	},
+	"elven_assassin": {
+		"name": "Elven Assassin"
+	},
+	"epic_roller_coasters": {
+		"name": "Epic Roller Coasters"
+	},
+	"espire_2_stealth_operatives": {
+		"name": "Espire 2: Stealth Operatives"
+	},
+	"exocars": {
+		"name": "EXOcars"
+	},
+	"exploding_kittens": {
+		"name": "Exploding Kittens VR"
+	},
+	"f1_24": {
+		"name": "F1 24"
+	},
+	"f1_25": {
+		"name": "F1 25"
+	},
+	"facetime": {
+		"name": "FaceTime"
+	},
+	"farpoint": {
+		"name": "Farpoint"
+	},
+	"fast_and_low": {
+		"name": "Fast and Low"
+	},
+	"final_fury": {
+		"name": "Final Fury"
+	},
+	"firewall_zero_hour": {
+		"name": "Firewall Zero Hour"
+	},
+	"first_person_tennis": {
+		"name": "First Person Tennis"
+	},
+	"fitxr": {
+		"name": "FitXR"
+	},
+	"flatout_4": {
+		"name": "FlatOut 4: Total Insanity VR"
+	},
+	"fly_villa": {
+		"name": "Fly Villa"
+	},
+	"forefront": {
+		"name": "Forefront"
+	},
+	"forevr_bowl": {
+		"name": "ForeVR Bowl"
+	},
+	"forevr_cornhole": {
+		"name": "ForeVR Cornhole"
+	},
+	"forevr_darts": {
+		"name": "ForeVR Darts"
+	},
+	"forevr_pool": {
+		"name": "ForeVR Pool"
+	},
+	"forewarned": {
+		"name": "FOREWARNED"
+	},
+	"from_other_suns": {
+		"name": "From Other Suns"
+	},
+	"fros": {
+		"name": "Fros"
+	},
+	"frost_survival": {
+		"name": "Frost Survival VR"
+	},
+	"fruit_ninja_2": {
+		"name": "Fruit Ninja 2"
+	},
+	"gambit": {
+		"name": "Gambit!"
+	},
+	"game_room": {
+		"name": "Game Room"
+	},
+	"geronimo": {
+		"name": "Geronimo"
+	},
+	"ghostbusters_rise_of_the_ghost_lord": {
+		"name": "Ghostbusters: Rise of the Ghost Lord"
+	},
+	"ghosts_of_tabor": {
+		"name": "Ghosts of Tabor"
+	},
+	"glassbreakers_champions_of_moss": {
+		"name": "Glassbreakers: Champions of Moss"
+	},
+	"gods_of_gravity": {
+		"name": "Gods of Gravity"
+	},
+	"golf_5": {
+		"name": "Golf 5"
+	},
+	"golf_it": {
+		"name": "Golf It!"
+	},
+	"golf_plus": {
+		"name": "GOLF+"
+	},
+	"gorilla_tag": {
+		"name": "Gorilla Tag"
+	},
+	"grab": {
+		"name": "GRAB"
+	},
+	"grapple_tournament": {
+		"name": "Grapple Tournament"
+	},
+	"green_hell": {
+		"name": "Green Hell VR"
+	},
+	"grid_legends": {
+		"name": "GRID Legends"
+	},
+	"grim": {
+		"name": "GRIM"
+	},
+	"guardians_frontline": {
+		"name": "Guardians Frontline"
+	},
+	"gun_raiders": {
+		"name": "Gun Raiders"
+	},
+	"gun_world": {
+		"name": "Gun World VR"
+	},
+	"gym_class": {
+		"name": "Gym Class"
+	},
+	"half_plus_half": {
+		"name": "Half + Half"
+	},
+	"headspace_xr": {
+		"name": "Headspace XR"
+	},
+	"hellsweeper": {
+		"name": "Hellsweeper VR"
+	},
+	"holofit": {
+		"name": "Holofit"
+	},
+	"home_sports": {
+		"name": "Home Sports"
+	},
+	"horizon_worlds": {
+		"name": "Horizon Worlds"
+	},
+	"horror_simulator": {
+		"name": "Horror Simulator"
+	},
+	"human_fall_flat": {
+		"name": "Human Fall Flat VR"
+	},
+	"hyper_dash": {
+		"name": "Hyper Dash"
+	},
+	"i_am_cat": {
+		"name": "I Am Cat"
+	},
+	"i_fetch_rocks": {
+		"name": "I Fetch Rocks"
+	},
+	"ibcricket": {
+		"name": "iB Cricket"
+	},
+	"il2_sturmovik": {
+		"name": "IL-2 Sturmovik: Battle of Stalingrad"
+	},
+	"ilysia": {
+		"name": "Ilysia"
+	},
+	"innerworld": {
+		"name": "Innerworld"
+	},
+	"inspaze": {
+		"name": "inSpaze"
+	},
+	"into_black": {
+		"name": "Into Black"
+	},
+	"into_the_radius_2": {
+		"name": "Into the Radius 2"
+	},
+	"iracing": {
+		"name": "iRacing"
+	},
+	"iron_rebellion": {
+		"name": "Iron Rebellion"
+	},
+	"ironlights": {
+		"name": "Ironlights"
+	},
+	"ironstrike": {
+		"name": "IRONSTRIKE"
+	},
+	"ironwolf": {
+		"name": "IronWolf VR"
+	},
+	"just_dance": {
+		"name": "Just Dance VR"
+	},
+	"just_hoops": {
+		"name": "Just Hoops"
+	},
+	"killing_floor_incursion": {
+		"name": "Killing Floor: Incursion"
+	},
+	"kingspray_graffiti": {
+		"name": "Kingspray Graffiti"
+	},
+	"labyrinthine": {
+		"name": "Labyrinthine"
+	},
+	"lavender": {
+		"name": "Lavender"
+	},
+	"le_mans_ultimate": {
+		"name": "Le Mans Ultimate"
+	},
+	"legendary_tales": {
+		"name": "Legendary Tales"
+	},
+	"loco_dojo_unleashed": {
+		"name": "Loco Dojo Unleashed"
+	},
+	"lumines_arise": {
+		"name": "Lumines Arise"
+	},
+	"mahjong_space": {
+		"name": "Mahjong Space"
+	},
+	"mannequin": {
+		"name": "Mannequin"
+	},
+	"marineverse_sailing_club": {
+		"name": "MarineVerse Sailing Club"
+	},
+	"merlins_chess": {
+		"name": "Merlin's Chess"
+	},
+	"minecraft": {
+		"name": "Minecraft VR"
+	},
+	"mini_motor_racing_x": {
+		"name": "Mini Motor Racing X"
+	},
+	"miracle_pool": {
+		"name": "MiRacle Pool"
+	},
+	"mlb_home_run_derby": {
+		"name": "MLB Home Run Derby VR"
+	},
+	"monkey_doo": {
+		"name": "Monkey Doo"
+	},
+	"mothergunship_forge": {
+		"name": "MOTHERGUNSHIP: FORGE"
+	},
+	"motox": {
+		"name": "MotoX"
+	},
+	"mozilla_hubs": {
+		"name": "Mozilla Hubs"
+	},
+	"museum_of_other_realities": {
+		"name": "Museum of Other Realities"
+	},
+	"nature_treks_together": {
+		"name": "Nature Treks: Together"
+	},
+	"nfl_pro_era": {
+		"name": "NFL PRO ERA"
+	},
+	"nfl_pro_era_ii": {
+		"name": "NFL PRO ERA II"
+	},
+	"nhl_sense_arena": {
+		"name": "NHL Sense Arena"
+	},
+	"nightclub_simulator": {
+		"name": "NightClub Simulator VR"
+	},
+	"no_more_rainbows": {
+		"name": "No More Rainbows"
+	},
+	"nock": {
+		"name": "Nock"
+	},
+	"noclip": {
+		"name": "Noclip VR"
+	},
+	"oktoberfest": {
+		"name": "Oktoberfest"
+	},
+	"omnicards": {
+		"name": "OmniCards"
+	},
+	"onward": {
+		"name": "Onward"
+	},
+	"orion_drift": {
+		"name": "Orion Drift"
+	},
+	"overte": {
+		"name": "Overte"
+	},
+	"paintball_playground": {
+		"name": "Paintball Playground"
+	},
+	"painting": {
+		"name": "Painting VR"
+	},
+	"paradiddle": {
+		"name": "Paradiddle"
+	},
+	"party_versus": {
+		"name": "Party Versus"
+	},
+	"patchworld": {
+		"name": "PatchWorld"
+	},
+	"path_of_the_warrior": {
+		"name": "Path of the Warrior"
+	},
+	"pavlov": {
+		"name": "Pavlov"
+	},
+	"pavlov_shack": {
+		"name": "Pavlov Shack"
+	},
+	"payday_2": {
+		"name": "PAYDAY 2"
+	},
+	"penguin_paradise": {
+		"name": "Penguin Paradise"
+	},
+	"phasmophobia": {
+		"name": "Phasmophobia"
+	},
+	"pianovision": {
+		"name": "PianoVision"
+	},
+	"pickle_pro": {
+		"name": "Pickle Pro"
+	},
+	"pillow": {
+		"name": "Pillow"
+	},
+	"ping_pong_club": {
+		"name": "Ping Pong Club"
+	},
+	"pixel_dungeon": {
+		"name": "Pixel Dungeon"
+	},
+	"planeta": {
+		"name": "Planeta"
+	},
+	"poker": {
+		"name": "Poker VR"
+	},
+	"poligonvr": {
+		"name": "PoligonVR"
+	},
+	"population_one": {
+		"name": "POPULATION: ONE"
+	},
+	"powerwash_simulator": {
+		"name": "PowerWash Simulator VR"
+	},
+	"premium_bowling": {
+		"name": "Premium Bowling"
+	},
+	"project_terminus": {
+		"name": "Project TERMINUS VR"
+	},
+	"pulsar_lost_colony": {
+		"name": "PULSAR: Lost Colony"
+	},
+	"puppet_fever": {
+		"name": "Puppet Fever"
+	},
+	"puzzling_places": {
+		"name": "Puzzling Places"
+	},
+	"raccoon_lagoon": {
+		"name": "Raccoon Lagoon"
+	},
+	"racket_club": {
+		"name": "Racket Club"
+	},
+	"racket_fury": {
+		"name": "Racket Fury"
+	},
+	"racket_nx": {
+		"name": "Racket: Nx"
+	},
+	"ragnarock": {
+		"name": "Ragnarock"
+	},
+	"rampage_agents": {
+		"name": "Rampage Agents"
+	},
+	"real_vr_fishing": {
+		"name": "Real VR Fishing"
+	},
+	"remio": {
+		"name": "Remio"
+	},
+	"requisition": {
+		"name": "Requisition VR"
+	},
+	"resonite": {
+		"name": "Resonite"
+	},
+	"rfactor_2": {
+		"name": "rFactor 2"
+	},
+	"riff_xr": {
+		"name": "Riff XR"
+	},
+	"rival_stars_horse_racing": {
+		"name": "Rival Stars Horse Racing"
+	},
+	"roblox": {
+		"name": "Roblox"
+	},
+	"roboquest": {
+		"name": "Roboquest VR"
+	},
+	"rock_life": {
+		"name": "Rock Life: The Rock Simulator"
+	},
+	"rocking_legend": {
+		"name": "Rocking Legend"
+	},
+	"rogue_pinatas": {
+		"name": "Rogue Piñatas: VRmageddon"
+	},
+	"ruffnauts_planet_pals": {
+		"name": "Ruffnauts: Planet Pals"
+	},
+	"rumble": {
+		"name": "RUMBLE"
+	},
+	"rush": {
+		"name": "RUSH"
+	},
+	"sail": {
+		"name": "Sail"
+	},
+	"sairento": {
+		"name": "Sairento VR: Untethered"
+	},
+	"sbox": {
+		"name": "s&box"
+	},
+	"scp_labrat": {
+		"name": "SCP: Labrat"
+	},
+	"sculptrvr": {
+		"name": "SculptrVR"
+	},
+	"shootout": {
+		"name": "SHOOTOUT"
+	},
+	"silent_north": {
+		"name": "Silent North"
+	},
+	"sky_climb": {
+		"name": "Sky Climb"
+	},
+	"skystrikers": {
+		"name": "SkyStrikers"
+	},
+	"smash_drums": {
+		"name": "Smash Drums"
+	},
+	"soul_covenant": {
+		"name": "SOUL COVENANT"
+	},
+	"spaceteam": {
+		"name": "Spaceteam VR"
+	},
+	"spatial_ops": {
+		"name": "Spatial Ops"
+	},
+	"spectral_scream": {
+		"name": "Spectral Scream"
+	},
+	"sports_scramble": {
+		"name": "Sports Scramble"
+	},
+	"stabby": {
+		"name": "Stabby"
+	},
+	"stagetime": {
+		"name": "StageTime"
+	},
+	"stand_out": {
+		"name": "STAND OUT: VR Battle Royale"
+	},
+	"star_wars_squadrons": {
+		"name": "STAR WARS: Squadrons"
+	},
+	"starship_troopers_continuum": {
+		"name": "Starship Troopers: Continuum"
+	},
+	"starvault": {
+		"name": "Starvault"
+	},
+	"statik": {
+		"name": "Statik"
+	},
+	"stormland": {
+		"name": "Stormland VR"
+	},
+	"stride": {
+		"name": "STRIDE"
+	},
+	"survival_nation": {
+		"name": "Survival Nation"
+	},
+	"swarm": {
+		"name": "Swarm"
+	},
+	"swords_of_gargantua": {
+		"name": "SWORDS of GARGANTUA"
+	},
+	"synth_riders": {
+		"name": "Synth Riders"
+	},
+	"table_space": {
+		"name": "Table Space"
+	},
+	"table_troopers": {
+		"name": "Table Troopers"
+	},
+	"tabletop_simulator": {
+		"name": "Tabletop Simulator"
+	},
+	"tactical_assault": {
+		"name": "Tactical Assault VR"
+	},
+	"tennis_esports": {
+		"name": "Tennis Esports"
+	},
+	"tetris_effect_connected": {
+		"name": "Tetris Effect: Connected"
+	},
+	"the_break_in": {
+		"name": "The Break-In"
+	},
+	"the_forest": {
+		"name": "The Forest"
+	},
+	"the_green_spurt": {
+		"name": "The Green Spurt"
+	},
+	"the_pirate_republic_of_nassau": {
+		"name": "The Pirate: Republic of Nassau"
+	},
+	"the_thrill_of_the_fight_2": {
+		"name": "The Thrill of the Fight 2"
+	},
+	"the_under_presents": {
+		"name": "The Under Presents"
+	},
+	"the_unspoken": {
+		"name": "The Unspoken"
+	},
+	"the_wizards_dark_times": {
+		"name": "The Wizards - Dark Times: Brotherhood"
+	},
+	"titan_isles": {
+		"name": "Titan Isles"
+	},
+	"tmnt_empire_city": {
+		"name": "Teenage Mutant Ninja Turtles: Empire City"
+	},
+	"toss": {
+		"name": "TOSS!"
+	},
+	"totally_baseball": {
+		"name": "TOTALLY BASEBALL"
+	},
+	"tower_tag": {
+		"name": "Tower Tag"
+	},
+	"toyboom": {
+		"name": "ToyBoom"
+	},
+	"tracery_of_fate": {
+		"name": "Tracery of Fate"
+	},
+	"tribe_xr": {
+		"name": "Tribe XR"
+	},
+	"trickster": {
+		"name": "Trickster VR: Co-op Dungeon Crawler"
+	},
+	"trivia_crack_world": {
+		"name": "Trivia Crack World"
+	},
+	"uboat": {
+		"name": "UBOAT: The Silent Wolf"
+	},
+	"ug": {
+		"name": "UG"
+	},
+	"ultimate_swing_golf": {
+		"name": "Ultimate Swing Golf"
+	},
+	"ultimechs": {
+		"name": "Ultimechs"
+	},
+	"ultrawings_2": {
+		"name": "Ultrawings 2"
+	},
+	"vail": {
+		"name": "VAIL"
+	},
+	"vampire_survivors": {
+		"name": "Vampire Survivors VR"
+	},
+	"vegas_infinite": {
+		"name": "Vegas Infinite"
+	},
+	"vermillion": {
+		"name": "Vermillion - VR Painting"
+	},
+	"vircadia": {
+		"name": "Vircadia"
+	},
+	"virtual_fighter_maneuvers": {
+		"name": "Virtual Fighter Maneuvers"
+	},
+	"virtual_hunter": {
+		"name": "Virtual Hunter"
+	},
+	"virtual_pool_irl": {
+		"name": "Virtual Pool IRL"
+	},
+	"virtual_skate": {
+		"name": "Virtual Skate"
+	},
+	"virtualcast": {
+		"name": "VirtualCast"
+	},
+	"vket_cloud": {
+		"name": "Vket Cloud"
+	},
+	"vmx": {
+		"name": "VMX"
+	},
+	"void_racer_extreme": {
+		"name": "Void Racer: Extreme"
+	},
+	"vox_machinae": {
+		"name": "Vox Machinae"
+	},
+	"vr_karts_sprint": {
+		"name": "VR Karts: Sprint"
+	},
+	"vr_regatta": {
+		"name": "VR Regatta"
+	},
+	"vracer_hoverbike": {
+		"name": "V-Racer Hoverbike"
+	},
+	"vrchat": {
+		"name": "VRChat"
+	},
+	"vrfs": {
+		"name": "VRFS"
+	},
+	"vrider_sbk": {
+		"name": "VRider SBK"
+	},
+	"vsekai": {
+		"name": "V-Sekai"
+	},
+	"vzfit": {
+		"name": "VZfit"
+	},
+	"walkabout_mini_golf": {
+		"name": "Walkabout Mini Golf"
+	},
+	"wander": {
+		"name": "Wander"
+	},
+	"wands": {
+		"name": "Wands"
+	},
+	"wands_alliances": {
+		"name": "Wands: Alliances"
+	},
+	"war_of_wizards": {
+		"name": "War of Wizards"
+	},
+	"war_thunder": {
+		"name": "War Thunder"
+	},
+	"warhammer_40k_battle_sister": {
+		"name": "Warhammer 40,000: Battle Sister"
+	},
+	"warplanes_air_corp": {
+		"name": "Warplanes: Air Corp"
+	},
+	"warplanes_battles_over_pacific": {
+		"name": "Warplanes: Battles over Pacific"
+	},
+	"warplanes_ww1_fighters": {
+		"name": "Warplanes: WW1 Fighters"
+	},
+	"wave": {
+		"name": "Wave"
+	},
+	"we_are_soccer": {
+		"name": "We Are Soccer"
+	},
+	"werewolves_within": {
+		"name": "Werewolves Within"
+	},
+	"windlands_2": {
+		"name": "Windlands 2"
+	},
+	"wipeout_omega_collection": {
+		"name": "WipEout Omega Collection"
+	},
+	"wooorld": {
+		"name": "Wooorld"
+	},
+	"world_of_mechs": {
+		"name": "World of Mechs"
+	},
+	"x8": {
+		"name": "X8"
+	},
+	"xplane_11": {
+		"name": "X-Plane 11"
+	},
+	"xplane_12": {
+		"name": "X-Plane 12"
+	},
+	"yeeps": {
+		"name": "Yeeps"
+	},
+	"zaccaria_pinball": {
+		"name": "Zaccaria Pinball"
+	},
+	"zenith_nexus": {
+		"name": "Zenith: Nexus"
+	},
+	"zero_caliber": {
+		"name": "Zero Caliber VR"
+	},
+	"zero_caliber_2": {
+		"name": "Zero Caliber 2"
+	},
+	"zero_caliber_reloaded": {
+		"name": "Zero Caliber: Reloaded"
+	},
+	"zix": {
+		"name": "ZIX"
+	}
+}

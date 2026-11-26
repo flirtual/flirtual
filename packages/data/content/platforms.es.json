@@ -1,0 +1,44 @@
+{
+	"android_xr": {
+		"example": "(Galaxy XR)",
+		"name": "Android XR"
+	},
+	"apple_vision": {
+		"name": "Apple Vision"
+	},
+	"face_tracking": {
+		"name": "Seguimiento facial"
+	},
+	"full_body_tracking": {
+		"name": "Seguimiento de cuerpo completo"
+	},
+	"haptic_suit": {
+		"name": "Traje háptico"
+	},
+	"locomotion_treadmill": {
+		"name": "Cinta omnidireccional"
+	},
+	"meta_quest": {
+		"name": "Meta Quest"
+	},
+	"other_vr": {
+		"name": "Otro visor VR"
+	},
+	"pcvr": {
+		"example": "(Quest Link, Index, Vive, etc.)",
+		"name": "PCVR"
+	},
+	"pico": {
+		"name": "Pico"
+	},
+	"playstation_vr": {
+		"name": "PlayStation VR"
+	},
+	"steam_frame": {
+		"name": "Steam Frame"
+	},
+	"vive_standalone": {
+		"example": "(Focus Vision, XR Elite)",
+		"name": "VIVE Standalone"
+	}
+}
