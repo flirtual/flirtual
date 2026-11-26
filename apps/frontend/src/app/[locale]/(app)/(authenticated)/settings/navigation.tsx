@@ -33,8 +33,8 @@ import { supportWidget, version } from "~/const";
 import { events, news, personality, press } from "~/features";
 import { useDevice } from "~/hooks/use-device";
 import { useDialog } from "~/hooks/use-dialog";
-import { useSupport } from "~/hooks/use-support";
 import { logout, revokeImpersonate, useSession } from "~/hooks/use-session";
+import { useSupport } from "~/hooks/use-support";
 import { urls } from "~/urls";
 
 import { NavigationCategory } from "./navigation-category";
