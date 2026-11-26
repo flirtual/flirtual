@@ -200,11 +200,18 @@ iframe {
   user-select: none;
 }
 
+/* Freshdesk's widgets draw their headers in the sRGB brand hex, so the safe-area padding uses
+   colors.pink, which doesn't get the wide-gamut boost like --light-theme-2. */
 @media only screen and (max-device-width: 667px), screen and (max-width: 450px) {
   #freshworks-frame-wrapper>iframe {
     @apply p-[var(--safe-area-inset-top)_var(--safe-area-inset-right)_var(--safe-area-inset-bottom)_var(--safe-area-inset-left)];
-    background-image: linear-gradient(to bottom, var(--light-theme-2) calc(var(--safe-area-inset-top, 0px) + 184px), #f5f7f9 0);
+    background-image: linear-gradient(to bottom, theme(colors.pink) calc(var(--safe-area-inset-top, 0px) + 184px), #f5f7f9 0);
   }
+}
+
+#fd_frame.fd-mobile-view.h-open-container {
+  @apply p-[var(--safe-area-inset-top)_var(--safe-area-inset-right)_var(--safe-area-inset-bottom)_var(--safe-area-inset-left)];
+  background-image: linear-gradient(to bottom, theme(colors.pink) calc(var(--safe-area-inset-top, 0px) + 72px), #fff 0);
 }
 
 #cb-container {

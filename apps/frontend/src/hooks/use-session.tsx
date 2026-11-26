@@ -22,6 +22,7 @@ import { throwRedirect } from "~/redirect";
 import { absoluteUrl, allowedOrigins, isInternalHref, toRelativeUrl, urls } from "~/urls";
 
 import { device } from "./use-device";
+import { clearWebChat } from "./use-support";
 
 export async function logout() {
 	await mutate(sessionKey(), null);
@@ -35,6 +36,7 @@ export async function logout() {
 
 	await evictQueries();
 	await invalidate();
+	clearWebChat();
 
 	window.location.reload();
 }

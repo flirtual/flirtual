@@ -9,7 +9,7 @@ import {
 	XIcon
 } from "~/components/icons";
 import type { IconComponent } from "~/components/icons";
-import { freshworksWidgetId, version } from "~/const";
+import { supportWidget, version } from "~/const";
 import { events, news, press } from "~/features";
 import { useDialog } from "~/hooks/use-dialog";
 import type { Theme } from "~/hooks/use-theme";
@@ -128,7 +128,7 @@ export const Footer: React.FC<FooterProps> = ({
 							<Logo className="w-36" theme={logoTheme} />
 						</Link>
 						<div className="flex items-center gap-4">
-							{freshworksWidgetId && <FooterIconSupportLink />}
+							{supportWidget && <FooterIconSupportLink />}
 							<FooterListIconLink
 								href={urls.socials.discord}
 								Icon={DiscordIcon}
@@ -152,7 +152,7 @@ export const Footer: React.FC<FooterProps> = ({
 				<div className="grid max-w-desktop grid-cols-3 gap-x-4 desktop:justify-center">
 					<ul>
 						{events && <FooterListLink href={urls.resources.events} label={t("events")} />}
-						{freshworksWidgetId && <FooterSupportLink />}
+						{supportWidget && <FooterSupportLink />}
 						{urls.socials.discord && (
 							<FooterListLink
 								label={t("ideas")}

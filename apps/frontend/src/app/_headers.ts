@@ -6,6 +6,7 @@ import {
 	commitId,
 	development,
 	embedOrigin,
+	freshdeskWebChat,
 	klipyAppKey,
 	posthogHost,
 	preview,
@@ -16,6 +17,7 @@ import { playlists } from "~/features";
 import { bucketOrigins } from "~/urls";
 
 const embedHost = embedOrigin && new URL(embedOrigin).host;
+const webChatHost = freshdeskWebChat && new URL(freshdeskWebChat.host).host;
 
 type Sources = Array<false | string | null | undefined>;
 
@@ -34,6 +36,8 @@ const contentSecurityPolicy: Record<string, Sources> = {
 		// https://developers.freshdesk.com/widget-api/
 		"*.freshworks.com",
 		"*.freshdesk.com",
+		// https://developers.freshdesk.com/web-chat-api/
+		webChatHost,
 		// https://developers.google.com/recaptcha/docs/faq (Freshworks captcha)
 		"www.google.com/recaptcha/",
 		"www.gstatic.com/recaptcha/",
@@ -53,6 +57,8 @@ const contentSecurityPolicy: Record<string, Sources> = {
 		// https://developers.freshdesk.com/widget-api/
 		"*.freshworks.com",
 		"*.freshdesk.com",
+		// https://developers.freshdesk.com/web-chat-api/
+		webChatHost,
 		// https://www.chargebee.com/docs/billing/2.0/hosted-capabilities/embedded-checkout
 		"*.chargebee.com",
 		// https://posthog.com/docs/advanced/content-security-policy
@@ -76,6 +82,8 @@ const contentSecurityPolicy: Record<string, Sources> = {
 		embedHost,
 		// https://docs.klipy.com/network-requirements
 		"*.klipy.com",
+		// https://developers.freshdesk.com/web-chat-api/
+		webChatHost,
 	],
 	"media-src": [
 		"'self'",
@@ -106,6 +114,8 @@ const contentSecurityPolicy: Record<string, Sources> = {
 		// https://developers.freshdesk.com/widget-api/
 		"*.freshworks.com",
 		"*.freshdesk.com",
+		// https://developers.freshdesk.com/web-chat-api/
+		webChatHost,
 		// https://developers.google.com/recaptcha/docs/faq (Freshworks captcha)
 		"www.google.com/recaptcha/",
 		// https://github.com/passkeydeveloper/passkey-authenticator-aaguids
@@ -150,6 +160,8 @@ const contentSecurityPolicy: Record<string, Sources> = {
 		"*.chargebee.com",
 		// https://docs.widgetbot.io/
 		"e.widgetbot.io",
+		// https://developers.freshdesk.com/web-chat-api/
+		webChatHost,
 		// Music platforms.
 		...(playlists ? playlistPlatforms.map(({ embed }) => new URL(embed("example", "light", "en")).host) : []),
 		// Chat embeds. Never a third party directly: apps/embed's frames hold each

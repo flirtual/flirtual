@@ -10,7 +10,7 @@ import { InlineLink } from "~/components/inline-link";
 import { InputLabel, InputSelect, InputText } from "~/components/inputs";
 import { InputTextArea } from "~/components/inputs/textarea";
 import { SupportButton } from "~/components/layout/support-button";
-import { freshworksWidgetId } from "~/const";
+import { supportWidget } from "~/const";
 import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
 import { useDevice } from "~/hooks/use-device";
 import { useSession } from "~/hooks/use-session";
@@ -126,7 +126,7 @@ export const DeleteForm: FC = () => {
 												{" "}
 											</p>
 										)
-									: field.props.value === "J3vVp9PWZQi5cEuk8G8wij" && freshworksWidgetId
+									: field.props.value === "J3vVp9PWZQi5cEuk8G8wij" && supportWidget
 										? (
 												<p>
 													{t("need_help")}

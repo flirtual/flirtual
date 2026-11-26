@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
 import { InlineThemeSelect } from "~/app/[locale]/(app)/(authenticated)/settings/(account)/appearance/theme-preview";
-import { freshworksWidgetId } from "~/const";
+import { supportWidget } from "~/const";
 import { useBack } from "~/hooks/use-back";
 import { useOptionalSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
@@ -113,7 +113,7 @@ export const ModelCard: React.FC<ModelCardProps> = ({
 				<footer className="mt-auto mb-[max(calc(var(--safe-area-inset-bottom,0rem)+1.5rem),2rem)] flex flex-wrap items-center justify-center gap-x-4 gap-y-2 px-8 desktop:mt-8 desktop:mb-0">
 					<InlineLanguageSelect />
 					<InlineThemeSelect />
-					{freshworksWidgetId && (
+					{supportWidget && (
 						<SupportButton className="flex items-center gap-0.5em whitespace-nowrap">
 							<Info className="inline-block size-em" />
 							{" "}

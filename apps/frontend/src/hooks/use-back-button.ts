@@ -3,6 +3,7 @@ import { Capacitor } from "@capacitor/core";
 import { useEffect, useEffectEvent, useSyncExternalStore } from "react";
 
 import { goBack } from "./use-history-tabs";
+import { webChatOpen } from "./use-support";
 
 // Dialogs, drawers, menus and listboxes that are open.
 export const openOverlays = ["dialog", "alertdialog", "menu", "listbox"].map((role) => `[role="${role}"][data-state="open"]`).join(", ");
@@ -26,6 +27,7 @@ const handlers: Array<() => void> = [];
 if (Capacitor.getPlatform() === "android") {
 	void App.addListener("backButton", ({ canGoBack }) => {
 		if (thirdPartyOverlays.some(visible)) return;
+		if (webChatOpen()) return window.fdWidget?.close();
 
 		const handler = handlers.at(-1);
 		if (handler) return handler();

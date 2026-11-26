@@ -64,7 +64,21 @@ invariant(embedOrigin !== new URL(siteOrigin).origin, "VITE_EMBED_ORIGIN must no
 export const klipyAppKey = import.meta.env.VITE_KLIPY_APP_KEY as string || undefined;
 
 // Miscellaneous
-export const freshworksWidgetId = import.meta.env.VITE_FRESHWORKS_WIDGET_ID as string;
+export const freshworksWidgetId = import.meta.env.VITE_FRESHWORKS_WIDGET_ID as string || undefined;
+
+const freshdeskWebChatHost = import.meta.env.VITE_FRESHDESK_WEB_CHAT_HOST as string || undefined;
+const freshdeskWebChatToken = import.meta.env.VITE_FRESHDESK_WEB_CHAT_TOKEN as string || undefined;
+const freshdeskWebChatWidgetId = import.meta.env.VITE_FRESHDESK_WEB_CHAT_WIDGET_ID as string || undefined;
+
+export const freshdeskWebChat = freshdeskWebChatHost && freshdeskWebChatToken && freshdeskWebChatWidgetId
+	? {
+			host: new URL(freshdeskWebChatHost).origin,
+			token: freshdeskWebChatToken,
+			widgetId: freshdeskWebChatWidgetId
+		}
+	: undefined;
+
+export const supportWidget = !!(freshdeskWebChat || freshworksWidgetId);
 
 export const chargebeeNamespace = import.meta.env.VITE_CHARGEBEE_NAMESPACE as string;
 export const rcAppleKey = import.meta.env.VITE_RC_APPL_PUBLIC_KEY as string;
