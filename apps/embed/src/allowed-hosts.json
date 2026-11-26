@@ -63,7 +63,7 @@
 	"github.com",
 	"*.github.com",
 	"play.google.com",
-	"*play.google.com",
+	"*.play.google.com",
 	"apps.microsoft.com",
 	"sidequestvr.com",
 	"*.sidequestvr.com",
