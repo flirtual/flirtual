@@ -189,7 +189,7 @@ export const NativeNavigation: FC<{ user: User }> = ({ user }) => {
 		: `${new Intl.NumberFormat(intlLocale(locale)).format(conversationCount)}${loadedAllUnreadConversations ? "" : "+"}`;
 
 	const tabs = useMemo(() => [
-		{ id: "dates", title: t("dates"), icon: "heart", href: urls.discover("dates") },
+		{ id: "dates", title: homieMode ? t("dates") : t("browse"), icon: "heart", href: urls.discover("dates") },
 		{ id: "homies", title: t("homies"), icon: "peace", href: urls.discover("homies") },
 		{ id: "matches", title: t("matches"), icon: "bubble.fill", href: urls.conversations.list(), badge },
 		{ id: "settings", title: t("settings"), icon: "gearshape.fill", href: isDesktop ? urls.settings.matchmaking() : urls.settings.list() },
