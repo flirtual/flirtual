@@ -124,13 +124,12 @@ final class TabBarController: UITabBarController, UITabBarControllerDelegate {
             return
         }
 
-        setTabBarHidden(!visible, animated: view.window != nil)
+        setTabBarHidden(!visible, animated: true)
         selectedViewController?.view.setNeedsLayout()
     }
 
     @objc private func restoreTabBar() {
-        guard showsTabBar, !isTabBarHidden, view.window != nil else { return }
-        guard tabBar.isHidden || tabBar.alpha == 0 || tabBar.window == nil || !view.bounds.intersects(tabBar.frame) else { return }
+        guard showsTabBar, !isTabBarHidden, tabBar.isHidden || tabBar.alpha == 0 else { return }
 
         setTabBarHidden(true, animated: false)
         setTabBarHidden(false, animated: false)
