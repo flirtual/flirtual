@@ -1,0 +1,14 @@
+{
+	"hookups": {
+		"name": "Encuentros casuales"
+	},
+	"serious": {
+		"name": "Citas serias"
+	},
+	"vr": {
+		"name": "Citas casuales"
+	},
+	"friends": {
+		"name": "Nuevas amistades"
+	}
+}

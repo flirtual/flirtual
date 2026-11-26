@@ -1,0 +1,41 @@
+{
+	"V7VcQEiYkiwHr5CHSVx5aS": {
+		"name": "Description et photos spam",
+		"details": "Veuillez mettre à jour votre description et importer des photos originales de votre avatar VR, afin que votre profil ne soit pas considéré comme du spam."
+	},
+	"aUurnuPnvjTwU2W3K5Se7X": {
+		"name": "Photo NSFW retirée",
+		"details": "Des images ont été retirées de votre profil pour nudité ou contenu sexuel explicite. Veuillez n’importer que des photos tous publics."
+	},
+	"MjxDKasduf9iHTctStGzYA": {
+		"name": "Description NSFW",
+		"details": "Veuillez garder le contenu NSFW de votre description à un minimum, et retirer des descriptions graphiques ou des phantasmes. Vous pouvez utiliser les tags de fantasmes de {brand_name} ou les intérêts personnalisés dans les options."
+	},
+	"CnaCPAcsLptyUgVVugubdf": {
+		"name": "Publicité",
+		"details": "Veuillez réduire le contenu publicitaire ou promotionnel de votre profil. Votre profil doit avant tout servir à trouver des rencontres ou des amis."
+	},
+	"f8v44XrBausmXe6XybTVHd": {
+		"name": "Incitation",
+		"details": "Veuillez retirer toute sollicitation de votre profil. Il est interdit sur {brand_name} de demander de l’argent, de mentionner des services commerciaux ou de partager des liens vers ceux-ci."
+	},
+	"RdHQQqrswesTTwyh4QZqbH": {
+		"name": "Contenu haineux",
+		"details": "Veuillez retirer tout contenu haineux de votre profil, car cela viole notre charte d'utilisation communautaire."
+	},
+	"KNJu36SMz87wA5DrJZyc4L": {
+		"name": "Soyez bons et respectueux",
+		"details": "À cause de précédents reports, veuillez être bon et respectueux envers les autres membres."
+	},
+	"dC6h3tWeZueVwHGKLhC2sk": {
+		"name": "Compte inactif",
+		"details": "Si vous revenez sur {brand_name}, veuillez mettre à jour votre description. Si vous faites une pause ou quittez {brand_name}, vous pouvez désactiver temporairement ou supprimer définitivement votre compte dans les Paramètres."
+	},
+	"AhPZwBpeTm5HMf96bkVszj": {
+		"name": "Preuves à fournir",
+		"details": "Veuillez fournir des preuves supplémentaires pour votre signalement récent. Vous pouvez ouvrir un ticket sur https://hello.flirtu.al ou https://discord.gg/flirtual."
+	},
+	"pDBkaykWpfYk9w7ZfPzMrb": {
+		"name": "Autre"
+	}
+}

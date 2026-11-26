@@ -1,0 +1,41 @@
+{
+	"V7VcQEiYkiwHr5CHSVx5aS": {
+		"name": "Spam bio & pics",
+		"details": "Please update your bio and upload original VR avatar pictures to avoid being flagged as spam."
+	},
+	"aUurnuPnvjTwU2W3K5Se7X": {
+		"name": "NSFW pic removed",
+		"details": "NSFW image(s) have been removed from your profile. Please only upload SFW pictures."
+	},
+	"MjxDKasduf9iHTctStGzYA": {
+		"name": "NSFW bio",
+		"details": "Please keep NSFW content in your bio to a minimum, and remove graphic descriptions or kinks. You can use {brand_name}'s kink tags or custom interests in the Settings."
+	},
+	"CnaCPAcsLptyUgVVugubdf": {
+		"name": "Advertising",
+		"details": "Please reduce advertising/promotional content from your profile. The primary purpose of your profile should be finding dates or friends."
+	},
+	"f8v44XrBausmXe6XybTVHd": {
+		"name": "Soliciting",
+		"details": "Please remove any solicitation from your profile. Asking for money, references and links to commercial services are not allowed on {brand_name}."
+	},
+	"RdHQQqrswesTTwyh4QZqbH": {
+		"name": "Hateful content",
+		"details": "Please remove hateful content from your profile, as this violates our Community Guidelines."
+	},
+	"KNJu36SMz87wA5DrJZyc4L": {
+		"name": "Be kind & respectful",
+		"details": "Due to recent report(s), please be kind and respectful to other members."
+	},
+	"dC6h3tWeZueVwHGKLhC2sk": {
+		"name": "Inactive account",
+		"details": "Please update your bio if you are returning to {brand_name}. If you are taking a break or leaving {brand_name}, you can temporarily deactivate or permanently delete your account in the Settings."
+	},
+	"AhPZwBpeTm5HMf96bkVszj": {
+		"name": "Upload evidence",
+		"details": "Please upload additional evidence for your recent report. You can create a ticket at https://hello.flirtu.al or https://discord.gg/flirtual."
+	},
+	"pDBkaykWpfYk9w7ZfPzMrb": {
+		"name": "Other"
+	}
+}

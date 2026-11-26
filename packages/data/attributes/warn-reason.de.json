@@ -1,0 +1,41 @@
+{
+	"V7VcQEiYkiwHr5CHSVx5aS": {
+		"name": "Spam-Bio & -Bilder",
+		"details": "Bitte aktualisieren Sie Ihre Bio und laden Sie eigene Bilder Ihres VR-Avatars hoch, damit Ihr Profil nicht als Spam markiert wird."
+	},
+	"aUurnuPnvjTwU2W3K5Se7X": {
+		"name": "Explizites Bild entfernt",
+		"details": "Bilder mit Nacktheit oder expliziten sexuellen Inhalten wurden aus Ihrem Profil entfernt. Bitte laden Sie nur jugendfreie Bilder hoch."
+	},
+	"MjxDKasduf9iHTctStGzYA": {
+		"name": "Explizite Bio",
+		"details": "Bitte halten Sie explizite sexuelle Inhalte in Ihrer Bio auf ein Minimum und entfernen Sie drastische Beschreibungen oder Kinks. Dafür können Sie in den Einstellungen die Kink-Tags von {brand_name} oder eigene Interessen verwenden."
+	},
+	"CnaCPAcsLptyUgVVugubdf": {
+		"name": "Werbung",
+		"details": "Bitte reduzieren Sie Werbung und werbliche Inhalte in Ihrem Profil. Ihr Profil sollte in erster Linie dazu dienen, Dates oder Freunde zu finden."
+	},
+	"f8v44XrBausmXe6XybTVHd": {
+		"name": "Betteln & kommerzielle Angebote",
+		"details": "Bitte entfernen Sie alle Geldanfragen und kommerziellen Angebote aus Ihrem Profil. Bitten um Geld sowie Hinweise auf und Links zu kommerziellen Diensten sind auf {brand_name} nicht erlaubt."
+	},
+	"RdHQQqrswesTTwyh4QZqbH": {
+		"details": "Bitte entfernen Sie hasserfüllte Inhalte aus Ihrem Profil, da diese gegen unsere Community-Richtlinien verstoßen.",
+		"name": "Hasserfüllte Inhalte"
+	},
+	"KNJu36SMz87wA5DrJZyc4L": {
+		"name": "Freundlich & respektvoll sein",
+		"details": "Aufgrund aktueller Meldung(en) bitten wir Sie, freundlich und respektvoll mit anderen Mitgliedern umzugehen."
+	},
+	"dC6h3tWeZueVwHGKLhC2sk": {
+		"name": "Inaktives Konto",
+		"details": "Bitte aktualisieren Sie Ihre Bio, wenn Sie zu {brand_name} zurückkehren. Wenn Sie eine Pause einlegen oder {brand_name} verlassen möchten, können Sie Ihr Konto in den Einstellungen vorübergehend deaktivieren oder dauerhaft löschen."
+	},
+	"AhPZwBpeTm5HMf96bkVszj": {
+		"name": "Beweise hochladen",
+		"details": "Bitte laden Sie weitere Beweise zu Ihrer kürzlichen Meldung hoch. Sie können unter https://hello.flirtu.al oder https://discord.gg/flirtual ein Ticket erstellen."
+	},
+	"pDBkaykWpfYk9w7ZfPzMrb": {
+		"name": "Sonstiges"
+	}
+}

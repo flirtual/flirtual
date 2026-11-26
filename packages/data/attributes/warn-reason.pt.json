@@ -1,0 +1,41 @@
+{
+	"V7VcQEiYkiwHr5CHSVx5aS": {
+		"name": "Bio e fotos de spam",
+		"details": "Por favor, atualize a bio e carregue fotos originais do seu avatar de RV para evitar que o perfil seja marcado como spam."
+	},
+	"aUurnuPnvjTwU2W3K5Se7X": {
+		"name": "Foto explícita removida",
+		"details": "Foram removidas do perfil uma ou mais imagens com nudez ou conteúdo sexual explícito. Por favor, carregue apenas imagens sem nudez nem conteúdo sexual."
+	},
+	"MjxDKasduf9iHTctStGzYA": {
+		"details": "Por favor, reduza ao mínimo o conteúdo sexual explícito na bio e remova descrições gráficas ou referências a kinks. Pode usar as tags de kinks do {brand_name} ou os interesses personalizados nas Definições.",
+		"name": "Bio explícita"
+	},
+	"CnaCPAcsLptyUgVVugubdf": {
+		"details": "Por favor, reduza o conteúdo publicitário ou promocional no perfil. O objetivo principal do perfil deve ser procurar encontros ou amizades.",
+		"name": "Publicidade"
+	},
+	"f8v44XrBausmXe6XybTVHd": {
+		"name": "Solicitação comercial",
+		"details": "Por favor, remova do perfil qualquer tipo de solicitação. Pedir dinheiro, bem como incluir referências e links para serviços comerciais, não é permitido no {brand_name}."
+	},
+	"RdHQQqrswesTTwyh4QZqbH": {
+		"name": "Conteúdo de ódio",
+		"details": "Por favor, remova do perfil o conteúdo de ódio, pois viola as nossas Diretrizes da Comunidade."
+	},
+	"KNJu36SMz87wA5DrJZyc4L": {
+		"name": "Gentileza e respeito",
+		"details": "Devido a denúncia(s) recente(s), pedimos gentileza e respeito para com os outros membros."
+	},
+	"dC6h3tWeZueVwHGKLhC2sk": {
+		"name": "Conta inativa",
+		"details": "Em caso de regresso ao {brand_name}, por favor atualize a bio. Para fazer uma pausa ou sair do {brand_name}, é possível desativar temporariamente ou eliminar permanentemente a conta nas Definições."
+	},
+	"AhPZwBpeTm5HMf96bkVszj": {
+		"name": "Enviar provas",
+		"details": "Por favor, envie provas adicionais relativas à denúncia recente. Pode abrir um pedido de suporte em https://hello.flirtu.al ou https://discord.gg/flirtual."
+	},
+	"pDBkaykWpfYk9w7ZfPzMrb": {
+		"name": "Outro"
+	}
+}

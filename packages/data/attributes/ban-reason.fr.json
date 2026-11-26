@@ -1,0 +1,61 @@
+{
+	"tUaxdXYAcyeb3G4Qc7gNLh": {
+		"name": "Spam",
+		"details": "Profil Spam. Le contenu de votre profil a été marqué comme spam. Vous pouvez répondre à ce courriel pour contester votre ban et réactiver votre compte. Il se peut que nous vous demandions de mettre à jour votre profil avec plus d'information."
+	},
+	"WSD2yPcs64FB27qpb4AGuT": {
+		"name": "Impersonation",
+		"details": "Impersonation. Votre profil semble usurper l'identité d'une autre personne. Si vous pensez avoir été banni par erreur, vous pouvez répondre à cet e-mail pour contester et demander la réactivation de votre compte."
+	},
+	"nupwCrjodUd4ZvPizEBc8L": {
+		"name": "Solicitation d'argent",
+		"details": "Solicitation. Il est interdit de solliciter de l'argent sur {brand_name}. Vous pouvez répondre à cet e-mail pour contester votre ban et retirer toute sollicitation de votre profil afin de réactiver votre compte."
+	},
+	"jBVZ29YcQ2dDXbURb6AxXk": {
+		"name": "Publicité",
+		"details": "Publicité. Votre profil semble principalement promouvoir un compte ou un service externe. Vous êtes libre de mentionner vos réseaux sociaux ou vos créations sur votre profil, mais l'objectif principal de votre profil doit être la rencontre ou la recherche d'amis. Vous pouvez répondre à cet e-mail pour contester votre ban et mettre à jour votre profil afin de réactiver votre compte."
+	},
+	"5H9nMhQacZBD9Zomu7Tbt9": {
+		"name": "Compte duplique",
+		"details": "Compte duplique. La création de plusieurs comptes {brand_name} n'est pas autorisée. Ce compte a été désactivé, mais vous pouvez toujours utiliser votre autre compte. Si vous pensez avoir été banni par erreur, ou si vous souhaitez que votre autre compte soit désactivé à la place de celui-ci, veuillez répondre à cet e-mail."
+	},
+	"VgQw2st96dZKZotsnYUEaN": {
+		"name": "Évasion de ban",
+		"details": "Contournement de ban. Il semble que vous ayez créé un nouveau compte ou trouvé un autre moyen d’échapper à un précédent ban sur {brand_name}. Pour contester ce ban et réactiver votre compte, vous pouvez répondre à l’e-mail qui vous l’avait notifié à l’époque."
+	},
+	"muXMqNjneKnwqxT8nqcy4d": {
+		"name": "Utilisateur mineur",
+		"details": "Âge insuffisant. Vous devez avoir au moins 18 ans pour utiliser {brand_name}. Si vous pensez qu’il s’agit d’une erreur, vous pouvez vous connecter à {brand_name} et vérifier votre âge en toute sécurité pour réactiver votre compte."
+	},
+	"dWDkcjmXQEQRVoXmNkutAB": {
+		"details": "Harcèlement. Pour contester votre ban et réactiver votre compte, répondez à cet e-mail. Notez que nous ne pouvons pas communiquer le détail d’éventuels signalements.",
+		"name": "Harcèlement"
+	},
+	"EVU7hHnv5u6eQwRBTW8aYU": {
+		"name": "Nudité ou contenu sexuel explicite",
+		"details": "Nudité ou contenu sexuel explicite. Les images de nudité ou à caractère sexuel explicite et les textes trop obscènes ne sont pas autorisés sur {brand_name}. Vous pouvez répondre à cet e-mail pour contester votre ban et mettre à jour votre profil afin de réactiver votre compte."
+	},
+	"YLsXz4iHn9yNLLLmuMHLCT": {
+		"details": "Contenu lié à l’automutilation. Nous avons relevé dans votre profil ou votre activité des références à l’automutilation qui peuvent heurter d’autres membres. Nous proposons quelques ressources en santé mentale sur https://flirtu.al/mentalhealth, qui pourraient vous aider. Prenez soin de vous. Pour contester ce ban, veuillez répondre à cet e-mail.",
+		"name": "Contenu lié à l’automutilation"
+	},
+	"Lfb829DEo36f54Uu3H3ybj": {
+		"name": "Arnaque, malware ou liens dangereux",
+		"details": "Arnaque, logiciel malveillant ou liens dangereux. Votre profil semble présenter des liens ou des activités malveillants. Si vous pensez qu’il s’agit d’une erreur, vous pouvez répondre à cet e-mail pour contester ce ban."
+	},
+	"HmF9W5yHfH3nLRYnt6F2cc": {
+		"details": "Contenu illégal. Votre profil ou votre activité semble enfreindre la législation canadienne ou locale. Si vous pensez qu’il s’agit d’une erreur, vous pouvez répondre à cet e-mail pour contester ce ban.",
+		"name": "Contenu illégal"
+	},
+	"hLwvdpKQiofFTCDHox75SY": {
+		"name": "Contenu haineux",
+		"details": "Contenu haineux. Les profils ou messages au contenu haineux n’ont pas leur place sur {brand_name}. Si vous pensez qu’il s’agit d’une erreur, vous pouvez répondre à cet e-mail pour contester votre ban et réactiver votre compte."
+	},
+	"KfFVwKB4DYMXx7foyqGUZM": {
+		"name": "Contenu violent ou choquant",
+		"details": "Contenu violent ou choquant. Votre profil semble comporter des éléments violents ou choquants. Pour contester ce ban, veuillez répondre à cet e-mail."
+	},
+	"8P2pi5232LTpzGTDWkBprc": {
+		"name": "Autre"
+	}
+}

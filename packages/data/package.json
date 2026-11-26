@@ -1,0 +1,17 @@
+{
+	"name": "@flirtual/data",
+	"private": true,
+	"type": "module",
+	"exports": {
+		"./attributes/*.json": "./attributes/*.json"
+	},
+	"scripts": {
+		"lint": "oxlint && oxfmt --check",
+		"fmt": "oxfmt"
+	},
+	"devDependencies": {
+		"@flirtual/config": "workspace:*",
+		"oxfmt": "catalog:",
+		"oxlint": "catalog:"
+	}
+}
