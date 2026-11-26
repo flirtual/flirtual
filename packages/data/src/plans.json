@@ -1,0 +1,43 @@
+{
+	"Wt4aFY7jVzvSNFK9qcYAr5": {
+		"product": "premium",
+		"recurring": true,
+		"purchasable": true,
+		"apple_id": "TFAXv2LRvbUxeBXqHHBRN4",
+		"google_id": "lvjvu5ye7pjujxvrkfsnmi:dsbwzivpxp2zeut24ydrjs",
+		"chargebee_id": "6mo",
+		"revenuecat_id": "$rc_six_month"
+	},
+	"fBDvWjdgvG6zEZMj6ZfyNG": {
+		"product": "premium",
+		"recurring": true,
+		"purchasable": true,
+		"apple_id": "fBDvWjdgvG6zEZMj6ZfyNG",
+		"google_id": "lvjvu5ye7pjujxvrkfsnmi:l2ffpq9p6u35azffkrubpd",
+		"chargebee_id": "3mo",
+		"revenuecat_id": "$rc_three_month"
+	},
+	"Di7Sypboma4ryhy6MUagyS": {
+		"product": "premium",
+		"recurring": false,
+		"purchasable": true,
+		"apple_id": "Di7Sypboma4ryhy6MUagyS",
+		"google_id": "di7sypboma4ryhy6muagys",
+		"chargebee_id": "lifetime",
+		"revenuecat_id": "$rc_lifetime"
+	},
+	"LVjvu5YE7PjUJxVrkfsnMi": {
+		"product": "premium",
+		"recurring": true,
+		"purchasable": true,
+		"apple_id": "LVjvu5YE7PjUJxVrkfsnMi",
+		"google_id": "lvjvu5ye7pjujxvrkfsnmi:mvue4eh24qfbj6zw5mfycc",
+		"chargebee_id": "1mo",
+		"revenuecat_id": "$rc_monthly"
+	},
+	"Duk5r7zeKUhqXv5L6P3m3Q": {
+		"product": "premium",
+		"recurring": false,
+		"purchasable": false
+	}
+}

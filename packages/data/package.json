@@ -3,7 +3,7 @@
 	"private": true,
 	"type": "module",
 	"exports": {
-		"./attributes/*.json": "./attributes/*.json"
+		"./*.json": "./src/*.json"
 	},
 	"scripts": {
 		"lint": "oxlint && oxfmt --check",
