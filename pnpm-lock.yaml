@@ -314,6 +314,9 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 26.6.6
+      cf:
+        specifier: 'catalog:'
+        version: 1.0.0-rc.1(@types/node@26.6.6)
       typescript:
         specifier: 'catalog:'
         version: '@typescript/typescript6@6.0.2'

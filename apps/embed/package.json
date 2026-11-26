@@ -7,12 +7,14 @@
 	"scripts": {
 		"dev": "wrangler dev --port 8787 --local-protocol https --https-key-path ../frontend/certificates/localhost-key.pem --https-cert-path ../frontend/certificates/localhost.pem",
 		"release": "wrangler deploy",
+		"build:cloudflare": "cf-wrangler build --mode development",
 		"canary": "wrangler deploy --env canary",
 		"tsc": "tsc",
 		"cf-typegen": "wrangler types --env-file .env.example"
 	},
 	"devDependencies": {
 		"@types/node": "catalog:",
+		"cf": "catalog:",
 		"typescript": "catalog:",
 		"wrangler": "catalog:"
 	}

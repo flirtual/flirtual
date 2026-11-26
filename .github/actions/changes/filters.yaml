@@ -41,6 +41,11 @@ tus-server:
   - *workspace
   - *self
 
+embed:
+  - apps/embed/**
+  - *workspace
+  - *self
+
 image-classification:
   - apps/image-classification/**
   - .github/workflows/deploy-classification.yaml
