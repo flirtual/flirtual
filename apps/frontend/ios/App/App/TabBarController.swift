@@ -72,6 +72,8 @@ final class TabBarController: UITabBarController, UITabBarControllerDelegate {
         tabs = [UITab(title: "", image: nil, identifier: placeholderId) { [unowned self] tab in
             self.container(for: tab.identifier)
         }]
+
+        NotificationCenter.default.addObserver(self, selector: #selector(restoreTabBar), name: UIScene.didActivateNotification, object: nil)
     }
 
     func update(visible: Bool, tabs newItems: [NavigationTab]?, badges: [String: String], selected: String?, tint: UIColor?, edgeToEdge: Bool = false) {
@@ -117,10 +119,27 @@ final class TabBarController: UITabBarController, UITabBarControllerDelegate {
 
     private func setVisible(_ visible: Bool) {
         showsTabBar = visible
-        guard visible == isTabBarHidden else { return }
+        guard visible == isTabBarHidden else {
+            restoreTabBar()
+            return
+        }
 
-        setTabBarHidden(!visible, animated: true)
+        setTabBarHidden(!visible, animated: view.window != nil)
         selectedViewController?.view.setNeedsLayout()
+    }
+
+    @objc private func restoreTabBar() {
+        guard showsTabBar, !isTabBarHidden, view.window != nil else { return }
+        guard tabBar.isHidden || tabBar.alpha == 0 || tabBar.window == nil || !view.bounds.intersects(tabBar.frame) else { return }
+
+        setTabBarHidden(true, animated: false)
+        setTabBarHidden(false, animated: false)
+        selectedViewController?.view.setNeedsLayout()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        restoreTabBar()
     }
 
     private func makeTab(_ item: NavigationTab) -> UITab {
