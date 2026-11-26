@@ -406,7 +406,7 @@ importers:
         version: 8.0.4
       '@formatjs/intl-listformat':
         specifier: ^9.0.0
-        version: 9.1.0
+        version: 9.1.1
       '@formatjs/intl-locale':
         specifier: ^5.3.10
         version: 5.5.1
@@ -418,7 +418,7 @@ importers:
         version: 7.1.1
       '@formatjs/intl-relativetimeformat':
         specifier: ^13.0.0
-        version: 13.0.3
+        version: 13.0.4
       '@heroicons/react':
         specifier: ^2.2.0
         version: 2.2.0(react@19.3.1)
@@ -2087,8 +2087,8 @@ packages:
   '@formatjs/intl-getcanonicallocales@3.4.1':
     resolution: {integrity: sha512-S8Im1Jq9F8/dY0698sC2Oil/Mtx+MOyS9HtceeyZ+t1TamAVbQ3eYiKNpQaeWvfu8pKhOD/MKpQUcHX3e6sj7g==}
 
-  '@formatjs/intl-listformat@9.1.0':
-    resolution: {integrity: sha512-Hh2kjuXQAsoadfb8ZR7+NRu6txiPJ7qo+3c87C/Ii55CO2lVPFjMp7uxsWUQECCfnuhD6D1HBVdUhmBv66MOwA==}
+  '@formatjs/intl-listformat@9.1.1':
+    resolution: {integrity: sha512-pbAoCuvgy2y5isHmroOJx0AMimbDxWyhnCaW9iyxV6ZCPIkCWN0fnIN+QNa9lxjpVtxyXnRP/+rI897DuoSHyg==}
 
   '@formatjs/intl-locale@5.5.1':
     resolution: {integrity: sha512-5cdwxJot7X9yESqkx492vB9DVrJLzgjAptPUvx7EO+NIROZp2LvdFKtSzoLJhXmcrI/NfmxRR+z5D+PAKudXyw==}
@@ -2105,8 +2105,8 @@ packages:
   '@formatjs/intl-pluralrules@7.1.1':
     resolution: {integrity: sha512-w4UWRJsAGB6ke79R3JWkAS5v57zzsNtp/hLDPsLYNR2Y5z1qJ7QySje405LzUSr5Ziomqd7V8qj0IgJ02UqYPA==}
 
-  '@formatjs/intl-relativetimeformat@13.0.3':
-    resolution: {integrity: sha512-5nyIp4F/59A5hcfU6lZphSslpildVSirqudWfygBENGdGSHmggZVjhoad458XWEgtUd6d0JoiwsiUBFLfbqJ9Q==}
+  '@formatjs/intl-relativetimeformat@13.0.4':
+    resolution: {integrity: sha512-zCk6exl/Xisk8Kn0+L6+7K7fUTfUsETe/K6nrl1bOELQMKfte9bQwBsK6Ym83NRgb89BKbMxEmbBmpbpOzeODQ==}
 
   '@formatjs/intl-supportedvaluesof@3.1.1':
     resolution: {integrity: sha512-LrpJ/SBLVTBTiw+3Y18n5fp3+pO/Fl07LaTHRbk3ZKRW04xljE0xqtpq5ZBvGWhsgzLqNVVrqQsPDlLDLVYK6g==}
@@ -10202,9 +10202,9 @@ snapshots:
 
   '@formatjs/intl-getcanonicallocales@3.4.1': {}
 
-  '@formatjs/intl-listformat@9.1.0':
+  '@formatjs/intl-listformat@9.1.1':
     dependencies:
-      '@formatjs/intl-localematcher': 0.10.1
+      '@formatjs/intl-localematcher': 0.10.2
 
   '@formatjs/intl-locale@5.5.1':
     dependencies:
@@ -10229,9 +10229,9 @@ snapshots:
       '@formatjs/bigdecimal': 0.2.11
       '@formatjs/intl-localematcher': 0.10.2
 
-  '@formatjs/intl-relativetimeformat@13.0.3':
+  '@formatjs/intl-relativetimeformat@13.0.4':
     dependencies:
-      '@formatjs/intl-localematcher': 0.10.1
+      '@formatjs/intl-localematcher': 0.10.2
 
   '@formatjs/intl-supportedvaluesof@3.1.1':
     dependencies:
