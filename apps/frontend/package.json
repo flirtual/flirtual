@@ -69,7 +69,7 @@
 		"@sableclient/twemoji-font": "1.0.4",
 		"@sentry/react-router": "^11.0.0",
 		"@shgysk8zer0/polyfills": "0.8.7",
-		"@talkjs/core": "1.12.1",
+		"@talkjs/core": "1.13.0",
 		"@talkjs/react-components": "0.3.14",
 		"@tanstack/react-query": "^5.101.2",
 		"@tanstack/react-query-devtools": "^5.101.2",
