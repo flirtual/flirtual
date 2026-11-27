@@ -85,7 +85,7 @@
 			"name": "Walkabout Mini Golf"
 		},
 		"GeUXPSsyL2sxwjrBfWUaHf": {
-			"name": "Real VR Pesca"
+			"name": "Real VR Fishing"
 		},
 		"Uzpbh2WhLAdc7pGGLMNHnU": {
 			"name": "Cook-Out"
@@ -2858,7 +2858,7 @@
 		},
 		"hLwvdpKQiofFTCDHox75SY": {
 			"details": "Contenido de odio. En {brand_name} no se admiten perfiles ni mensajes con contenido de odio. Si cree que se trata de un error, puede responder a este correo para apelar y recuperar su cuenta.",
-			"name": "Contenido de odio"
+			"name": "Contenido de promocion al odio"
 		},
 		"KfFVwKB4DYMXx7foyqGUZM": {
 			"details": "Contenido violento o perturbador. Su perfil parece incluir material violento o perturbador. Si desea apelar esta suspensión, responda a este correo.",
@@ -2873,7 +2873,7 @@
 			"details": "Suplantación de identidad. Su perfil parece estar suplantando la identidad de otra persona. Si cree que se trata de un error, puede responder a este correo para apelar y recuperar su cuenta."
 		},
 		"nupwCrjodUd4ZvPizEBc8L": {
-			"name": "Petición de dinero",
+			"name": "Solicitando dinero",
 			"details": "Petición de dinero. No está permitido pedir dinero en {brand_name}. Puede responder a este correo para apelar la suspensión y, una vez que haya eliminado de su perfil cualquier petición de dinero, recuperar su cuenta."
 		},
 		"jBVZ29YcQ2dDXbURb6AxXk": {
@@ -2881,7 +2881,7 @@
 			"name": "Publicidad"
 		},
 		"EVU7hHnv5u6eQwRBTW8aYU": {
-			"name": "Desnudos o contenido sexual explícito",
+			"name": "Contenido de material explicito",
 			"details": "Desnudos o contenido sexual explícito. En {brand_name} no se permiten imágenes de desnudos o sexualmente explícitas, ni textos excesivamente obscenos. Puede responder a este correo para apelar la suspensión y, una vez que haya actualizado su perfil, recuperar su cuenta."
 		},
 		"YLsXz4iHn9yNLLLmuMHLCT": {
@@ -2890,7 +2890,7 @@
 		},
 		"HmF9W5yHfH3nLRYnt6F2cc": {
 			"name": "Contenido ilegal",
-			"details": "Contenido ilegal. Su perfil o su actividad parecen infringir la legislación canadiense o local. Si cree que se trata de un error, puede responder a este correo para apelar."
+			"details": "Contenido ilegal. Su perfil o su actividad parecen infringir la legislación canadiense o local. Si crees que se puede tratar de un error, puedes responder a este correo para apelar la decision."
 		},
 		"VgQw2st96dZKZotsnYUEaN": {
 			"name": "Evasión de suspensión",
@@ -2918,7 +2918,7 @@
 			"name": "Pocos matches"
 		},
 		"TaqMV38Taxdz7ZNxEG4oEU": {
-			"name": "Pocas citas"
+			"name": "Pocas citas/No suficientes citas"
 		},
 		"3fm9o3onrqPiwKhceexRMZ": {
 			"name": "Malas experiencias con matches"
@@ -2930,7 +2930,7 @@
 			"name": "Problemas técnicos"
 		},
 		"sQcEHRLCffbLfcgM4zAELf": {
-			"name": "Me estoy tomando un descanso"
+			"name": "Me estoy tomando un descanso/Necesito un descanso"
 		},
 		"g4hPG9psXVxzKa4Tr9GjDN": {
 			"name": "Otro"
@@ -3173,7 +3173,7 @@
 		},
 		"aUurnuPnvjTwU2W3K5Se7X": {
 			"name": "Foto explícita eliminada",
-			"details": "Se han eliminado de su perfil una o más imágenes con desnudos o contenido sexual explícito. Por favor, suba únicamente imágenes sin este tipo de contenido."
+			"details": "Se han eliminado una o más imágenes con desnudos o contenido sexual explícito de su perfil . Por favor, únicamente suba imágenes sin este tipo de contenido."
 		},
 		"MjxDKasduf9iHTctStGzYA": {
 			"name": "Biografía explícita",
@@ -3189,11 +3189,11 @@
 		},
 		"RdHQQqrswesTTwyh4QZqbH": {
 			"name": "Contenido de odio",
-			"details": "Por favor, elimine el contenido de odio de su perfil, ya que infringe nuestras Normas de la comunidad."
+			"details": "Por favor, elimine el contenido de odio de su perfil, debido a que infringe nuestras Normas de la comunidad."
 		},
 		"KNJu36SMz87wA5DrJZyc4L": {
-			"name": "Amabilidad y respeto",
-			"details": "Debido a uno o más reportes recientes, le pedimos que trate a los demás miembros con amabilidad y respeto."
+			"name": "Sea amable y respetuoso",
+			"details": "Debido a una o más denuncias recientes, le pedimos que trate a los demás miembros con amabilidad y respeto."
 		},
 		"dC6h3tWeZueVwHGKLhC2sk": {
 			"name": "Cuenta inactiva",
@@ -3201,7 +3201,7 @@
 		},
 		"AhPZwBpeTm5HMf96bkVszj": {
 			"name": "Subir pruebas",
-			"details": "Por favor, suba pruebas adicionales para su reporte reciente. Puede crear un ticket en https://hello.flirtu.al o en https://discord.gg/flirtual."
+			"details": "Por favor, suba pruebas adicionales para su denuncia reciente. Puede crear un ticket en https://hello.flirtu.al o en https://discord.gg/flirtual."
 		},
 		"pDBkaykWpfYk9w7ZfPzMrb": {
 			"name": "Otro"
