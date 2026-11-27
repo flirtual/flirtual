@@ -167,7 +167,6 @@
 	"mod_queue": "モデレーションキュー",
 	"search": "検索",
 	"flags": "フラグ",
-	"attributes_admin": "属性",
 	"stats": "統計",
 	"hide": "非表示",
 	"yes": "はい",
@@ -1241,5 +1240,6 @@
 	"sms_consent": "電話番号の確認用コードをSMSでお送りします。メッセージ料金やデータ通信料がかかる場合があります。メッセージの送信頻度は利用状況によって異なります。ヘルプが必要な場合は「HELP」、配信を停止する場合は「STOP」と返信してください。",
 	"send_a_new_code": "新しいコードを送信",
 	"enter_phone_code_description": "{phoneNumber}にSMSで送信したコードを入力してください。",
-	"select_text": "選択"
+	"select_text": "選択",
+	"welcome_agreement": "「{create_account}」または「{log_in}」をタップすると、<terms>利用規約</terms>に同意し、18歳以上であることを確認したものとみなされます。データの取り扱いについては<privacy>プライバシーポリシー</privacy>をご覧ください。"
 }

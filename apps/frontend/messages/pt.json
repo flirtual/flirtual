@@ -347,7 +347,6 @@
 	"version": "{brand_name} {version}",
 	"mod_queue": "Fila de moderação",
 	"search": "Pesquisa",
-	"attributes_admin": "Atributos",
 	"unsudo": "Sair do sudo",
 	"next": "Seguinte",
 	"unsaved_settings": "Definições por guardar",
@@ -1241,5 +1240,6 @@
 	"enter_phone_code_description": "Introduz o código que enviámos por SMS para {phoneNumber}.",
 	"send_code": "Enviar código",
 	"send_a_new_code": "Enviar novo código",
-	"select_text": "Selecionar"
+	"select_text": "Selecionar",
+	"welcome_agreement": "Ao tocares em «{create_account}» ou «{log_in}», aceitas os nossos <terms>Termos de Serviço</terms> e confirmas que tens pelo menos 18 anos. Consulta a nossa <privacy>Política de Privacidade</privacy> para saberes como tratamos os teus dados."
 }

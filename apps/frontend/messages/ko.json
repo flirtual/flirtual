@@ -307,7 +307,6 @@
 	"terms_outdated": "서비스 이용약관(구 버전)",
 	"mod_queue": "모더레이션 대기열",
 	"search": "검색",
-	"attributes_admin": "속성",
 	"unsudo": "Unsudo",
 	"next": "다음",
 	"unsaved_settings": "저장하지 않은 설정",
@@ -1241,5 +1240,6 @@
 	"sms_consent": "번호 확인을 위해 인증번호를 문자로 보내 드려요. 메시지 및 데이터 요금이 부과될 수 있어요. 메시지 수신 빈도는 달라질 수 있어요. 도움이 필요하면 HELP를, 수신을 중단하려면 STOP을 답장으로 보내 주세요.",
 	"enter_phone_code_description": "{phoneNumber} 번호로 문자를 보냈어요. 문자에 적힌 인증번호를 입력해 주세요.",
 	"send_a_new_code": "인증번호 다시 받기",
-	"select_text": "텍스트 선택"
+	"select_text": "텍스트 선택",
+	"welcome_agreement": "“{create_account}” 또는 “{log_in}” 버튼을 탭하면 <terms>이용약관</terms>에 동의하고 만 18세 이상임을 확인하는 것으로 간주돼요. 개인정보 처리 방식은 <privacy>개인정보 처리방침</privacy>에서 확인할 수 있어요."
 }

@@ -354,7 +354,6 @@
 	"unsudo": "Avsluta sudo",
 	"next": "Nästa",
 	"unsaved_settings": "Osparade inställningar",
-	"attributes_admin": "Attribut",
 	"save_settings_confirmation": "Vill du spara dina val innan du fortsätter?",
 	"saved": "Sparat",
 	"submissive": "Undergiven",
@@ -1241,5 +1240,6 @@
 	"sms_consent": "Vi skickar en kod via sms för att bekräfta ditt nummer. Avgifter för meddelanden och data kan tillkomma. Antalet meddelanden varierar. Svara HELP för hjälp. Svara STOP för att avsluta.",
 	"enter_phone_code_description": "Ange koden vi skickade via sms till {phoneNumber}.",
 	"send_a_new_code": "Skicka en ny kod",
-	"select_text": "Markera"
+	"select_text": "Markera",
+	"welcome_agreement": "Genom att trycka på ”{create_account}” eller ”{log_in}” godkänner du våra <terms>användarvillkor</terms> och bekräftar att du är minst 18 år. Läs om hur vi behandlar dina personuppgifter i vår <privacy>integritetspolicy</privacy>."
 }
