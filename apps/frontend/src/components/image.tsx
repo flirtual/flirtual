@@ -12,11 +12,12 @@ export type ImageProps = {
 } & Omit<ComponentProps<"img">, "src">;
 
 export const Image: FC<ImageProps> = ({ src, priority, ...props }) => {
-	const { src: source, ...dimensions } = typeof src === "string" ? { src } : src;
+	const { src: source, width, height } = typeof src === "string" ? { src } : src;
 
 	return (
 		<img
-			{...dimensions}
+			height={height}
+			width={width}
 			{...props}
 			fetchPriority={priority ? "high" : "low"}
 			loading={priority ? "eager" : "lazy"}
