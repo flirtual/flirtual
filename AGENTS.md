@@ -125,7 +125,9 @@ vars, read separately by each app:
   loads it where `~/` doesn't resolve.
 - **Native**: xcodebuild doesn't read shell env vars, so `ios.yaml` passes brand and flag values
   as build settings (watchOS and visionOS read them from Info.plist); Android takes the brand
-  colour as a gradle `resValue`. Mobile workflows only see repository-level variables.
+  colour as a gradle `resValue`. Mobile workflows only see repository-level variables; per-channel
+  ones (`*_PRODUCTION`/`*_BETA`, e.g. `APP_SCHEME_*`, `APP_LINK_HOSTS_*`, `GOOGLE_SERVICES_JSON_*`)
+  override Flirtual's committed values when set.
 
 ## Development workflow
 

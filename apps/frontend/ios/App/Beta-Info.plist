@@ -91,13 +91,13 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.429260353104-shvoh4mfrgjppm77cpebjfd7bhkeu14j</string>
+				<string>$(GOOGLE_IOS_URL_SCHEME:default=com.googleusercontent.apps.429260353104-shvoh4mfrgjppm77cpebjfd7bhkeu14j)</string>
 			</array>
 		</dict>
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>flirtual-beta</string>
+				<string>$(APP_SCHEME:default=flirtual-beta)</string>
 			</array>
 		</dict>
 	</array>

@@ -20,10 +20,11 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 env:
-  VITE_ORIGIN: ${{ inputs.channel == 'production' && 'https://flirtu.al' || 'https://beta.flirtual.dev' }}
-  VITE_API_URL: ${{ inputs.channel == 'production' && 'https://api.flirtu.al/v1/' || 'https://beta-api.flirtual.dev/v1/' }}
+  VITE_ORIGIN: ${{ inputs.channel == 'production' && (vars.VITE_ORIGIN_PRODUCTION || 'https://flirtu.al') || (vars.VITE_ORIGIN_BETA || 'https://beta.flirtual.dev') }}
+  VITE_API_URL: ${{ inputs.channel == 'production' && (vars.VITE_API_URL_PRODUCTION || 'https://api.flirtu.al/v1/') || (vars.VITE_API_URL_BETA || 'https://beta-api.flirtual.dev/v1/') }}
   VITE_APP_BUNDLE_ID: ${{ inputs.channel == 'production' && (vars.APP_BUNDLE_ID_PRODUCTION || 'zone.homie.flirtual.pwa') || (vars.APP_BUNDLE_ID_BETA || 'zone.homie.flirtual.beta') }}
-  VITE_APP_STORE_ID: "6450485324"
+  APP_SCHEME: ${{ inputs.channel == 'production' && (vars.APP_SCHEME_PRODUCTION || 'flirtual') || (vars.APP_SCHEME_BETA || 'flirtual-beta') }}
+  APP_LINK_HOSTS: ${{ inputs.channel == 'production' && vars.APP_LINK_HOSTS_PRODUCTION || vars.APP_LINK_HOSTS_BETA }}
   VITE_BRAND_NAME: ${{ vars.VITE_BRAND_NAME }}
   VITE_BRAND_DATE_COLORS: ${{ vars.VITE_BRAND_DATE_COLORS }}
   FLAVOR: ${{ inputs.channel == 'production' && 'production' || 'beta' }}
@@ -84,6 +85,14 @@ jobs:
 
       - name: Sync native project
         run: pnpm cap sync android
+
+      - name: Write Firebase config
+        env:
+          GOOGLE_SERVICES_JSON: ${{ inputs.channel == 'production' && vars.GOOGLE_SERVICES_JSON_PRODUCTION || vars.GOOGLE_SERVICES_JSON_BETA }}
+        run: |
+          if [ -n "$GOOGLE_SERVICES_JSON" ]; then
+            printf '%s' "$GOOGLE_SERVICES_JSON" > "android/app/src/$FLAVOR/google-services.json"
+          fi
 
       - name: Build app bundle
         working-directory: apps/frontend/android

@@ -10,6 +10,31 @@ def brandAccentColor = {
 def brandName = System.getenv("VITE_BRAND_NAME") ?: brandDefaults.name
 
 def bundleId = { String fallback -> System.getenv("VITE_APP_BUNDLE_ID") ?: fallback }
+def appScheme = { String fallback -> System.getenv("APP_SCHEME") ?: fallback }
+
+def appLinkHosts = (System.getenv("APP_LINK_HOSTS") ?: "").split(",")*.trim().findAll { it }
+def appLinksManifest = file("build/generated/app-links/AndroidManifest.xml")
+if (appLinkHosts) {
+    def hosts = appLinkHosts.collect { "                <data android:scheme=\"https\" android:host=\"$it\" />" }.join("\n")
+    appLinksManifest.parentFile.mkdirs()
+    appLinksManifest.text = """<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <application>
+        <activity android:name=".MainActivity" android:exported="true">
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+$hosts
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>
+"""
+}
+def assetStatements = groovy.json.JsonOutput.toJson(
+    appLinkHosts.collect { [include: "https://$it/.well-known/assetlinks.json".toString()] }
+).replace('"', '\\"')
 
 android {
     namespace "zone.homie.flirtual.pwa"
@@ -41,13 +66,23 @@ android {
         production {
             dimension "environment"
             applicationId bundleId("zone.homie.flirtual.pwa")
+            resValue "string", "custom_url_scheme", appScheme("flirtual")
         }
         beta {
             dimension "environment"
             applicationId bundleId("zone.homie.flirtual.beta")
+            resValue "string", "custom_url_scheme", appScheme("flirtual-beta")
             resValue "string", "app_name", "$brandName Beta"
             resValue "string", "title_activity_main", "$brandName Beta"
         }
+    }
+
+    if (appLinkHosts) {
+        sourceSets {
+            production.manifest.srcFile appLinksManifest
+            beta.manifest.srcFile appLinksManifest
+        }
+        productFlavors.all { resValue "string", "asset_statements", assetStatements }
     }
 
     signingConfigs {
