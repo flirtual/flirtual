@@ -3,5 +3,6 @@
 	"dateColors": ["#ff8975", "#e9658b"],
 	"dateDarkColors": ["#b24592", "#e9658b"],
 	"homieColors": ["#82bf72", "#4d8888"],
-	"backgroundColor": "#fffaf0"
+	"backgroundColor": "#fffaf0",
+	"gifSearches": ["vrchat", "cats"]
 }

@@ -21,6 +21,10 @@ export const homieColors = colorPair(import.meta.env.VITE_BRAND_HOMIE_COLORS as 
 export const accentColor = dateColors[1];
 export const backgroundColor = import.meta.env.VITE_BRAND_BACKGROUND_COLOR as string || defaults.backgroundColor;
 
+// The GIF picker's pinned searches, comma-separated.
+const gifSearchList = ((import.meta.env.VITE_BRAND_GIF_SEARCHES as string) || "").split(",").map((search) => search.trim()).filter(Boolean);
+export const gifSearches: ReadonlyArray<string> = gifSearchList.length > 0 ? gifSearchList : defaults.gifSearches;
+
 // urls.media() serves the static bucket from static.<assetDomain>.
 export const assetDomain = import.meta.env.VITE_BRAND_ASSET_DOMAIN as string;
 invariant(assetDomain, "VITE_BRAND_ASSET_DOMAIN is required");

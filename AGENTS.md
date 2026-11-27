@@ -106,7 +106,7 @@ vars, read separately by each app:
 
 - **Brand**: `VITE_BRAND_*` → `apps/frontend/src/brand.ts` (defaults in `src/brand.defaults.json`,
   also read by tailwind, capacitor, gradle and watchOS); `BRAND_*` → `Flirtual.Brand`
-  (defaults in `config/runtime.exs`). Only the name, colours and background have defaults. `VITE_BRAND_ASSET_DOMAIN` and `VITE_BRAND_REPOSITORY_URL` (AGPL) are required; every
+  (defaults in `config/runtime.exs`). Only the name, colours, background and GIF searches have defaults. `VITE_BRAND_ASSET_DOMAIN` and `VITE_BRAND_REPOSITORY_URL` (AGPL) are required; every
   other value is optional, and whatever links to an unset one must disappear, not break.
 - **Flags**: `VITE_FEATURE_*` → `src/features.ts`; `FEATURE_*` → `Flirtual.Features`. Homie Mode,
   personality, VR tags (platform + game), VRChat, playlists, timezones, custom interests, advanced filters, the list of connection providers, and (frontend

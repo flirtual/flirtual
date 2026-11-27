@@ -7,13 +7,13 @@ import { useTranslation } from "react-i18next";
 
 import type { KlipyFile, KlipyGif, KlipyOptions, KlipySource } from "~/api/klipy";
 import { klipyCategories, klipyCustomerId, klipyGifs, klipyPreviewFile } from "~/api/klipy";
+import * as brand from "~/brand";
 import { useBackButton } from "~/hooks/use-back-button";
 import { useDevice } from "~/hooks/use-device";
 import { useLocale } from "~/i18n";
 import { queryClient } from "~/query";
 
 const columnWidth = 160;
-const pinnedQueries = ["vrchat", "cats"];
 
 // Inner ring, or else the scroll area clips it.
 const tile = "relative overflow-hidden rounded-lg outline-none after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:ring-theme-1 after:ring-inset focus-visible:after:ring-2";
@@ -117,7 +117,7 @@ const GifHome: FC<{
 
 	// Klipy's categories all show, as its terms require: our own tiles give way to ones they repeat.
 	const categoryQueries = new Set(categories.map(({ query }) => query));
-	const searches = [...new Set([...pinnedQueries, ...queries])].filter((query) => !categoryQueries.has(query));
+	const searches = [...new Set([...brand.gifSearches, ...queries])].filter((query) => !categoryQueries.has(query));
 
 	return (
 		<div className="grid grid-cols-2 gap-1.5">
