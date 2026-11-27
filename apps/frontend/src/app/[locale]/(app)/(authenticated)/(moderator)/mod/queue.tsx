@@ -1,4 +1,4 @@
-import { keepPreviousData, useInfiniteQuery } from "@tanstack/react-query";
+import { keepPreviousData, useInfiniteQuery, useSuspenseQueries } from "@tanstack/react-query";
 import { Search, X } from "lucide-react";
 import type { FC } from "react";
 import { Suspense, useDeferredValue, useLayoutEffect, useMemo, useState } from "react";
@@ -6,7 +6,7 @@ import { useInView } from "react-intersection-observer";
 import { useSearchParams } from "react-router";
 import { twMerge } from "tailwind-merge";
 
-import { attributeId } from "~/api/attributes";
+import { banReasonsOptions, deleteReasonsOptions, reportReasonsOptions, warnReasonsOptions } from "~/api/data";
 import {
 	ModerationEvent
 } from "~/api/moderation-event";
@@ -17,9 +17,9 @@ import { ModelCard } from "~/components/model-card";
 import { ModerationEntryCard, toModerationEntries } from "~/components/moderation-entry";
 import type { ModerationEntry } from "~/components/moderation-entry";
 import { Tabs } from "~/components/tabs";
-import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
+import { useLocale } from "~/i18n";
 import { invalidate } from "~/query";
 import type { ModerationQueueTab } from "~/urls";
 
@@ -133,21 +133,40 @@ const Toggle: FC<{ id: string; label: string; value: boolean; onChange: (value: 
 	</div>
 );
 
-function useReasonIds(search: string): Array<string> {
-	const tAttributes = useAttributeTranslation();
-	const banReasons = useAttributes("ban-reason");
-	const warnReasons = useAttributes("warn-reason");
-	const reportReasons = useAttributes("report-reason");
-	const deleteReasons = useAttributes("delete-reason");
+interface ReasonIds {
+	events: Array<string>;
+	reports: Array<string>;
+}
+
+// Events take reasons from three files whose ids can collide, and the API can't yet tell them apart.
+function useReasonIds(search: string): ReasonIds {
+	const [locale] = useLocale();
+	const [
+		{ data: banReasons },
+		{ data: warnReasons },
+		{ data: reportReasons },
+		{ data: deleteReasons }
+	] = useSuspenseQueries({
+		queries: [
+			banReasonsOptions({ locale }),
+			warnReasonsOptions({ locale }),
+			reportReasonsOptions({ locale }),
+			deleteReasonsOptions({ locale })
+		]
+	});
 
 	return useMemo(() => {
-		if (!search) return [];
+		if (!search) return { events: [], reports: [] };
 		const lowerSearch = search.toLowerCase();
+		const matching = (reasons: ReadonlyArray<{ id: string; name: string }>) => reasons
+			.filter(({ name }) => name.toLowerCase().includes(lowerSearch))
+			.map(({ id }) => id);
 
-		return [...banReasons, ...warnReasons, ...reportReasons, ...deleteReasons]
-			.map(attributeId)
-			.filter((id) => tAttributes[id]?.name.toLowerCase().includes(lowerSearch));
-	}, [search, banReasons, warnReasons, reportReasons, deleteReasons, tAttributes]);
+		return {
+			events: [...new Set([...matching(banReasons), ...matching(warnReasons), ...matching(deleteReasons)])],
+			reports: matching(reportReasons)
+		};
+	}, [search, banReasons, warnReasons, reportReasons, deleteReasons]);
 }
 
 interface QueueOptions {
@@ -155,7 +174,7 @@ interface QueueOptions {
 	eventId?: string;
 	includeReports: boolean;
 	search: string;
-	reasonIds: Array<string>;
+	reasonIds: ReasonIds;
 	excludedDuplicateTypes: Array<string>;
 	order: "asc" | "desc";
 	reviewed: boolean;
@@ -170,10 +189,10 @@ async function fetchQueuePage(
 ) {
 	const [events, reports] = await Promise.all([
 		types.length > 0
-			? ModerationEvent.search({ types, eventId, search, reasonIds, excludedDuplicateTypes, reviewed, order, limit: pageSize, cursor })
+			? ModerationEvent.search({ types, eventId, search, reasonIds: reasonIds.events, excludedDuplicateTypes, reviewed, order, limit: pageSize, cursor })
 			: [],
 		includeReports
-			? Report.list({ search, reasonIds, reviewed, indefShadowbanned, order, limit: pageSize, cursor })
+			? Report.list({ search, reasonIds: reasonIds.reports, reviewed, indefShadowbanned, order, limit: pageSize, cursor })
 			: []
 	]);
 
@@ -408,7 +427,7 @@ export const ModerationQueue: FC = () => {
 									reviewed,
 									indefShadowbanned,
 									search: deferredSearch,
-									reasonIds,
+									reasonIds: reasonIds.reports,
 									order,
 									...(targetId && { targetId }),
 									...(userId && { userId })

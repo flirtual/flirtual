@@ -1,6 +1,8 @@
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 
 import type { Session } from "~/api/auth";
+import { kinksOptions } from "~/api/data";
 import { Preferences } from "~/api/user/preferences";
 import { Profile, ProfileDomsubList } from "~/api/user/profile";
 import { Form } from "~/components/forms";
@@ -12,14 +14,9 @@ import {
 	InputSwitch
 } from "~/components/inputs";
 import { InputPrivacySelect } from "~/components/inputs/specialized";
-import {
-
-	useAttributes,
-	useAttributeTranslation
-} from "~/hooks/use-attribute";
-import type { AttributeTranslation } from "~/hooks/use-attribute";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
+import { useLocale } from "~/i18n";
 import { invalidate, mutate, sessionKey } from "~/query";
 
 export const NsfwForm: React.FC = () => {
@@ -27,8 +24,8 @@ export const NsfwForm: React.FC = () => {
 	const toasts = useToast();
 
 	const { t } = useTranslation();
-	const tAttribute = useAttributeTranslation();
-	const kinks = useAttributes("kink");
+	const [locale] = useLocale();
+	const { data: kinks } = useSuspenseQuery(kinksOptions({ locale }));
 
 	if (!session) return null;
 	const { user } = session;
@@ -38,14 +35,14 @@ export const NsfwForm: React.FC = () => {
 			fields={{
 				nsfw: user.preferences?.nsfw ?? false,
 				domsub: user.profile.domsub,
-				kinks: user.profile.attributes.kink ?? [],
+				kinks: user.profile.kinks ?? [],
 				kinksPrivacy: user.preferences?.privacy.kinks ?? "everyone"
 			}}
 			className="flex flex-col gap-8"
 			onSubmit={async ({ domsub, kinks, kinksPrivacy, nsfw }) => {
 				const [newProfile, newPreferences, newPrivacy] = await Promise.all([
 					Profile.update(user.id, {
-						domsub: domsub ?? "none",
+						domsub: domsub ?? null,
 						kinkId: kinks
 					}),
 					Preferences.update(user.id, { nsfw }),
@@ -110,13 +107,7 @@ export const NsfwForm: React.FC = () => {
 										<InputLabel {...field.labelProps}>{t("kinks")}</InputLabel>
 										<InputAutocomplete
 											{...field.props}
-											options={kinks.map(({ id, definitionLink }) => {
-												const { name } = (tAttribute[
-													id
-												] as AttributeTranslation<"kink">) ?? {
-													name: id
-												};
-
+											options={kinks.map(({ id, name, definitionLink }) => {
 												return {
 													key: id,
 													label: name,

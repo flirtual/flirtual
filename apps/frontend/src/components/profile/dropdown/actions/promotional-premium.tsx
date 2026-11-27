@@ -1,7 +1,6 @@
 import { Gift } from "lucide-react";
 import type { FC } from "react";
 
-import { promotionalPlanId } from "~/api/plan";
 import { activeEntitlements, User } from "~/api/user";
 import { DropdownMenuItem } from "~/components/dropdown";
 import { useOptionalSession } from "~/hooks/use-session";
@@ -17,11 +16,11 @@ export const PromotionalPremiumAction: FC<{ user: User }> = ({ user }) => {
 	const entitlements = activeEntitlements(user);
 
 	const hasPromotional = entitlements.some(
-		(entitlement) => entitlement.plan.id === promotionalPlanId
+		(entitlement) => entitlement.plan.id === "promotional"
 	);
 
 	const hasOtherActiveSubscription = entitlements.some(
-		(entitlement) => entitlement.plan.id !== promotionalPlanId
+		(entitlement) => entitlement.plan.id !== "promotional"
 	);
 
 	return (

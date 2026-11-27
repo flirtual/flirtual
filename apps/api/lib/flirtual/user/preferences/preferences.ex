@@ -4,7 +4,7 @@ defmodule Flirtual.User.Preferences do
 
   import Ecto.Changeset
 
-  alias Flirtual.Languages
+  alias Flirtual.Data.Locale
   alias Flirtual.User
   alias Flirtual.User.Preferences
   alias Flirtual.User.Preferences.{EmailNotifications, Privacy, PushNotifications}
@@ -14,7 +14,7 @@ defmodule Flirtual.User.Preferences do
 
     field(:nsfw, :boolean, default: false)
     field(:theme, Ecto.Enum, values: [:light, :dark, :system], default: :light)
-    field(:language, :string)
+    field(:language, Flirtual.Entry, of: Locale)
     field(:dismissed, {:array, :string}, default: [])
 
     has_one(:email_notifications, EmailNotifications,
@@ -46,11 +46,6 @@ defmodule Flirtual.User.Preferences do
       :language,
       :dismissed
     ])
-    |> validate_inclusion(
-      :language,
-      Languages.list(:preference),
-      message: "invalid_language"
-    )
   end
 end
 

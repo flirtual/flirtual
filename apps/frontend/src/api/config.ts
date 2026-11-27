@@ -1,13 +1,10 @@
 import type { WretchOptions } from "wretch";
 
-import type { AttributeType } from "./attributes";
 import { api } from "./common";
 import type { ConnectionType } from "./connections";
 
 export interface Config {
 	country: string | null;
-	// Digest per attribute type, versions attribute urls for cache busting
-	attributes: Partial<Record<AttributeType, string>>;
 	loginProviders: Array<LoginProvider>;
 }
 

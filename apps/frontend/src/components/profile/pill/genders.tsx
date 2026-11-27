@@ -1,38 +1,36 @@
+import { useSuspenseQuery } from "@tanstack/react-query";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { indexBy, prop } from "remeda";
 import { twMerge } from "tailwind-merge";
 
+import { gendersOptions } from "~/api/data";
 import { InlineLink } from "~/components/inline-link";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
-import {
-	useAttributes,
-	useAttributeTranslation
-} from "~/hooks/use-attribute";
+import { useLocale } from "~/i18n";
 
 import { Pill } from "./pill";
 
 export interface GenderPillsProps {
 	simple?: boolean;
-	attributes: Array<string>;
+	ids: Array<string>;
 	className?: string;
 	small?: boolean;
 }
 
 export const GenderPills: FC<GenderPillsProps> = ({
 	simple = false,
-	attributes,
+	ids,
 	className,
 	small
 }) => {
-	const genders = useAttributes("gender");
+	const [locale] = useLocale();
+	const { data: genders } = useSuspenseQuery(gendersOptions({ locale }));
 	const keyedGenders = indexBy(genders, prop("id"));
 
 	const { t } = useTranslation();
 
-	const tAttributes = useAttributeTranslation("gender");
-
-	const profileGenders = attributes
+	const profileGenders = ids
 		.map((id) => keyedGenders[id])
 		.filter(Boolean);
 
@@ -46,7 +44,7 @@ export const GenderPills: FC<GenderPillsProps> = ({
 								: gender
 						)
 						.filter((gender) => {
-							if (simple) return gender.simple || gender.fallback;
+							if (simple) return gender.simple || gender.default;
 							return true;
 						})
 				: profileGenders
@@ -59,14 +57,14 @@ export const GenderPills: FC<GenderPillsProps> = ({
 	);
 
 	if (visibleGenders.length === 0) {
-		const fallback = genders.find(({ fallback }) => fallback);
-		if (fallback) visibleGenders.push(fallback);
+		const defaultGender = genders.find((gender) => gender.default);
+		if (defaultGender) visibleGenders.push(defaultGender);
 	}
 
 	return (
 		<>
 			{visibleGenders.map((gender, genderIndex) => {
-				const { name, definition, definitionLink } = tAttributes[gender.id] ?? {};
+				const { name, definition, definitionLink } = gender;
 				if (!name) return null;
 
 				return (

@@ -35,7 +35,8 @@ config :flirtual, FlirtualWeb.Endpoint,
 
 config :flirtual, Flirtual.Repo, telemetry_prefix: [:flirtual, :repo]
 
-config :flirtual, Flirtual.Search, table: "profiles"
+# A new name whenever the columns change, so each deploy creates and fills its own table.
+config :flirtual, Flirtual.Search, table: "profiles_v2"
 
 config :flirtual, Oban,
   repo: Flirtual.Repo,

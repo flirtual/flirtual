@@ -1,6 +1,8 @@
+import { useSuspenseQuery } from "@tanstack/react-query";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 
+import { byId, gamesOptions } from "~/api/data";
 import { Profile } from "~/api/user/profile";
 import { ProfileImage } from "~/api/user/profile/images";
 import { Form } from "~/components/forms";
@@ -14,7 +16,6 @@ import {
 	InputLabelHint,
 	InputText
 } from "~/components/inputs";
-import { useAttributeTranslation } from "~/hooks/use-attribute";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import {
@@ -23,6 +24,7 @@ import {
 	contentLength,
 	html
 } from "~/html";
+import { useLocale } from "~/i18n";
 import { invalidate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
@@ -34,11 +36,12 @@ export const BiographyForm: FC = () => {
 	const toasts = useToast();
 
 	const { t } = useTranslation();
-	const tAttribute = useAttributeTranslation();
+	const [locale] = useLocale();
+	const { data: games } = useSuspenseQuery({ ...gamesOptions({ locale }), select: byId });
 
-	const favoriteGameId = (user.profile.attributes.game || []).filter(
-		(gameId) => gameId !== "3nzcXDoMySRrPn6jHC8n3o"
-	)[0] || "mkyAHUgKDWFiqkZcgZD6pS";
+	const favoriteGameId = (user.profile.games || []).filter(
+		(gameId) => gameId !== "vrchat"
+	)[0] || "horizon_worlds";
 
 	return (
 		<Form
@@ -119,7 +122,7 @@ export const BiographyForm: FC = () => {
 										inline
 										hint={(
 											<InputLabelHint>
-												{t("picture_upload_hint", { game: tAttribute[favoriteGameId]!.name })}
+												{t("picture_upload_hint", { game: games[favoriteGameId]?.name ?? favoriteGameId })}
 												<details>
 													<summary className="text-pink opacity-75 transition-opacity hover:cursor-pointer hover:opacity-100">
 														{t("guidelines")}

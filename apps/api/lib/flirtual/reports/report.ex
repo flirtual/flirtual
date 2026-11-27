@@ -5,14 +5,13 @@ defmodule Flirtual.Report do
   require Flirtual.Utilities
   import Flirtual.Utilities
 
-  import Flirtual.Attribute, only: [validate_attribute: 3]
-
   import Ecto.Changeset
   import Ecto.Query
   import Flirtual.Utilities.Changeset
 
-  alias Flirtual.{Attribute, Discord, ModerationCursor, ObanWorkers, Repo, Report, User}
+  alias Flirtual.{Discord, ModerationCursor, ObanWorkers, Repo, Report, User}
   alias Flirtual.User.Profile.Block
+  alias Flirtual.Data.ReportReason
 
   schema "reports" do
     field(:message, :string, default: "")
@@ -20,16 +19,14 @@ defmodule Flirtual.Report do
 
     belongs_to(:user, User)
     belongs_to(:target, User)
-    belongs_to(:reason, Attribute)
+    field(:reason_id, :string)
 
     field(:reviewed_at, :utc_datetime)
 
     timestamps(inserted_at: :created_at)
   end
 
-  def default_assoc() do
-    [:reason]
-  end
+  def default_assoc(), do: []
 
   def changeset(%Report{} = report, attrs) do
     cast(report, attrs, [:user_id, :target_id, :reason_id, :message, :images])
@@ -48,7 +45,7 @@ defmodule Flirtual.Report do
       end)
     )
     |> validate_required(:reason_id)
-    |> validate_attribute(:reason_id, "report-reason")
+    |> validate_entry(:reason_id, ReportReason)
     |> validate_length(:message, max: 10_000)
   end
 
@@ -186,7 +183,7 @@ defmodule Flirtual.Report do
       field(:reviewed, :boolean, default: false)
       field(:indef_shadowbanned, :boolean, default: false)
       field(:search, :string, default: "")
-      field(:reason_ids, {:array, Ecto.ShortUUID}, default: [])
+      field(:reason_ids, {:array, :string}, default: [])
       field(:order, :string, default: "desc")
       field(:limit, :integer)
       field(:cursor, :string)
@@ -197,7 +194,7 @@ defmodule Flirtual.Report do
       |> validate_inclusion(:order, ["asc", "desc"])
       |> validate_number(:limit, greater_than_or_equal_to: 1, less_than_or_equal_to: 1000)
       |> ModerationCursor.validate(:cursor)
-      |> validate_attribute(:reason_id, "report-reason")
+      |> validate_entry(:reason_id, ReportReason)
       |> validate_uid(:target_id)
       |> validate_uid(:user_id)
       |> validate_queries(

@@ -5,7 +5,7 @@ defmodule Flirtual.User.Push do
   alias Flirtual.User
 
   def deliver(%User{} = user, :daily_profiles_ready, reset_at) do
-    language = user.preferences.language || "en"
+    language = User.locale(user)
 
     Gettext.with_locale(language, fn ->
       %{
@@ -26,7 +26,7 @@ defmodule Flirtual.User.Push do
   end
 
   def deliver(%User{} = user, :new_match, options) do
-    language = user.preferences.language || "en"
+    language = User.locale(user)
 
     Gettext.with_locale(language, fn ->
       conversation_id = Keyword.fetch!(options, :conversation_id)
@@ -56,7 +56,7 @@ defmodule Flirtual.User.Push do
   end
 
   def deliver(%User{} = user, :like_digest, options) do
-    language = user.preferences.language || "en"
+    language = User.locale(user)
 
     Gettext.with_locale(language, fn ->
       like_count = Keyword.fetch!(options, :like_count)
@@ -83,7 +83,7 @@ defmodule Flirtual.User.Push do
   end
 
   def deliver(%User{} = user, :deletion_reminder, days: days) do
-    language = user.preferences.language || "en"
+    language = User.locale(user)
 
     Gettext.with_locale(language, fn ->
       {title, message} = get_reminder(days)

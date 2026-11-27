@@ -1,15 +1,16 @@
 import { SelectItemText } from "@radix-ui/react-select";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { useInView } from "react-intersection-observer";
 
+import { countriesOptions } from "~/api/data";
 import {
 	getCountryImage,
 	getCountryName
 } from "~/components/profile/pill/country";
-import { useAttributes } from "~/hooks/use-attribute";
-import { useDisplayLocale } from "~/i18n";
+import { useDisplayLocale, useLocale } from "~/i18n";
 import { intlLocale } from "~/i18n/languages";
 
 import { InputSelect, SelectItem } from "../select";
@@ -54,17 +55,16 @@ export function InputCountrySelect({ prefer = "us", ...props }: InputCountrySele
 
 	const { t } = useTranslation();
 
-	const countries = useAttributes("country");
+	const [appLocale] = useLocale();
+	const { data: countries } = useSuspenseQuery(countriesOptions({ locale: appLocale }));
 
 	const options = useMemo(
 		() =>
 			countries
-				.map((countryId) => {
-					return {
-						id: countryId,
-						name: getCountryName(locale, countryId) ?? countryId
-					};
-				})
+				.map(({ id }) => ({
+					id,
+					name: getCountryName(locale, id) ?? id
+				}))
 				.sort((a, b) => {
 					if (a.id === prefer) return -1;
 					if (b.id === prefer) return 1;

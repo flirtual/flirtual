@@ -1,7 +1,9 @@
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { CheckCircle2, MoveLeft } from "lucide-react";
 import type { FC } from "react";
 import { Trans, useTranslation } from "react-i18next";
 
+import { sexualitiesOptions } from "~/api/data";
 import {
 	Profile,
 	ProfileMonopolyList,
@@ -17,20 +19,18 @@ import {
 } from "~/components/inputs";
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
 import { InputLanguageAutocomplete } from "~/components/inputs/specialized";
-import type { AttributeTranslation } from "~/hooks/use-attribute";
-import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
 import { useOptionalSession } from "~/hooks/use-session";
-import { useNavigate } from "~/i18n";
+import { useLocale, useNavigate } from "~/i18n";
 import { mutate, sessionKey } from "~/query";
 
 import { nextFinishStepUrl, previousFinishStepUrl } from "../navigation";
 
 export const Finish2Form: FC = () => {
-	const sexualities = useAttributes("sexuality");
+	const [locale] = useLocale();
+	const { data: sexualities } = useSuspenseQuery(sexualitiesOptions({ locale }));
 
 	const session = useOptionalSession();
 	const { t } = useTranslation();
-	const tAttribute = useAttributeTranslation();
 
 	const navigate = useNavigate();
 
@@ -44,7 +44,7 @@ export const Finish2Form: FC = () => {
 				relationships: profile.relationships ?? [],
 				monopoly: profile.monopoly,
 				languages: user.profile.languages ?? [],
-				sexualityId: user.profile.attributes.sexuality || []
+				sexualityId: user.profile.sexualities || []
 			}}
 			className="flex flex-col gap-8"
 			requireChange={false}
@@ -52,7 +52,7 @@ export const Finish2Form: FC = () => {
 				const newProfile = await Profile.update(user.id, {
 					...values,
 					relationships: values.relationships ?? [],
-					monopoly: values.monopoly ?? "none",
+					monopoly: values.monopoly ?? null,
 					languages: values.languages
 				});
 
@@ -104,12 +104,7 @@ export const Finish2Form: FC = () => {
 								<InputAutocomplete
 									{...field.props}
 									options={sexualities.map((sexuality) => {
-										const { id, definitionLink } = typeof sexuality === "string" ? { id: sexuality } : sexuality;
-
-										const { name, definition }
-											= (tAttribute[
-												id
-											] as AttributeTranslation<"sexuality">) ?? {};
+										const { id, name, definition, definitionLink } = sexuality;
 
 										return {
 											key: id,

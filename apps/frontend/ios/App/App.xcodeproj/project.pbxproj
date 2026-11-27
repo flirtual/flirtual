@@ -52,6 +52,7 @@
 		5FBD1C300913B7F963096727 /* FlirtualApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95E749C94A3BB9B3F0EFC9E7 /* FlirtualApp.swift */; };
 		6295F7CEB2951BCFDA4031D6 /* MessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D90D76A172D628A8AD20D9A /* MessagesView.swift */; };
 		6307C2A1188B15A0462E111F /* messages in Resources */ = {isa = PBXBuildFile; fileRef = 1525C16BC241D3963F1B07B9 /* messages */; };
+		3C8F1A2B4D5E6F708192A3B4 /* locales.json in Resources */ = {isa = PBXBuildFile; fileRef = 7A1E0C3F5B2D4E6A8C9B0D12 /* locales.json */; };
 		662EC3CF382E820523C8D7D6 /* libwebp in Frameworks */ = {isa = PBXBuildFile; productRef = 90B1A32E7BAD5445F13B537E /* libwebp */; };
 		69554D378E05F9822264AE79 /* WatchSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47A99B0670C014DC30D2B5C /* WatchSession.swift */; };
 		69CF3E410146318E8115ED98 /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1BD4F20286164CFEB1AFF9 /* Users.swift */; };
@@ -85,6 +86,7 @@
 		F0A7844035D519FE73889D4A /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16B3D52D1E607D145B97334 /* Account.swift */; };
 		F271E6E89275CFBD2E7F4612 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00DFB61840269DB826C2E9 /* API.swift */; };
 		F36672B8842C3884BB44C313 /* messages in Resources */ = {isa = PBXBuildFile; fileRef = 1525C16BC241D3963F1B07B9 /* messages */; };
+		9E7D6C5B4A39281706F5E4D3 /* locales.json in Resources */ = {isa = PBXBuildFile; fileRef = 7A1E0C3F5B2D4E6A8C9B0D12 /* locales.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -131,6 +133,7 @@
 
 /* Begin PBXFileReference section */
 		1525C16BC241D3963F1B07B9 /* messages */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = messages; path = ../../messages; sourceTree = "<group>"; };
+		7A1E0C3F5B2D4E6A8C9B0D12 /* locales.json */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.json; name = locales.json; path = ../../../../packages/data/content/locales.json; sourceTree = "<group>"; };
 		1A0855D32F78F28AF59907D3 /* Safety.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Safety.swift; sourceTree = "<group>"; };
 		1C3DB2D4B4A4DFE6CFC9CADF /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		1F9225800E23916B7C8D825D /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -277,6 +280,7 @@
 				27D784942E8E23AC006DD767 /* Beta-Info.plist */,
 				0A5A6261468916311C3A7485 /* Watch */,
 				1525C16BC241D3963F1B07B9 /* messages */,
+				7A1E0C3F5B2D4E6A8C9B0D12 /* locales.json */,
 				78D57833C76F7B4CBCE3A168 /* brand.defaults.json */,
 			);
 			sourceTree = "<group>";
@@ -499,6 +503,7 @@
 				D5CC364EA00F10AC86690169 /* AppIcon.icon in Resources */,
 				C11E68242C2034A14F1770E5 /* Assets.xcassets in Resources */,
 				6307C2A1188B15A0462E111F /* messages in Resources */,
+				3C8F1A2B4D5E6F708192A3B4 /* locales.json in Resources */,
 				4624A885354FA6D875ABD057 /* brand.defaults.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -510,6 +515,7 @@
 				3256C7D20AC3E81721F845D8 /* Beta-AppIcon.icon in Resources */,
 				2D2981C89C59B59DCB2EE066 /* Assets.xcassets in Resources */,
 				F36672B8842C3884BB44C313 /* messages in Resources */,
+				9E7D6C5B4A39281706F5E4D3 /* locales.json in Resources */,
 				A35F616F9EDDE9D5E500BE54 /* brand.defaults.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

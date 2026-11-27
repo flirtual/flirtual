@@ -4,6 +4,7 @@ import { Trans, useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 import { withSuspense } from "with-suspense";
 
+import { countriesOptions, gamesOptions, gendersOptions, interestsOptions, kinksOptions, languagesOptions, platformsOptions, promptsOptions, relationshipsOptions, reportReasonsOptions, sexualitiesOptions } from "~/api/data";
 import { profileColors } from "~/colors";
 import { Html } from "~/components/html";
 import { timezones, vrTags } from "~/features";
@@ -11,7 +12,8 @@ import { usePreferences } from "~/hooks/use-preferences";
 import { useSession } from "~/hooks/use-session";
 import { useRelationship, useUser } from "~/hooks/use-user";
 import { collapseBlankLines } from "~/html";
-import { attributeFetcher, attributeKey, preload, relationshipFetcher, relationshipKey, userFetcher, userKey } from "~/query";
+import { i18n } from "~/i18n";
+import { preload, relationshipFetcher, relationshipKey, userFetcher, userKey } from "~/query";
 import { urls } from "~/urls";
 import { escapeHtml } from "~/utilities";
 
@@ -33,29 +35,29 @@ import { ProfileSkeleton } from "./skeleton";
 import { TimeDiff } from "./time-diff";
 import { ProfileVerificationBadge } from "./verification-badge";
 
-// eslint-disable-next-line react-refresh/only-export-components
-export async function preloadProfileAttributes() {
-	await Promise.all(([
-		"country",
-		"game",
-		"gender",
-		"interest",
-		"kink",
-		"language",
-		"platform",
-		"prompt",
-		"relationship",
-		"report-reason",
-		"sexuality"
-	] as const).map((type) => preload({ queryKey: attributeKey(type), queryFn: attributeFetcher })));
+export async function preloadProfileData() {
+	const locale = i18n.language;
+
+	await Promise.all([
+		preload(countriesOptions({ locale })),
+		preload(gamesOptions({ locale })),
+		preload(gendersOptions({ locale })),
+		preload(interestsOptions({ locale })),
+		preload(kinksOptions({ locale })),
+		preload(languagesOptions({ locale })),
+		preload(platformsOptions({ locale })),
+		preload(promptsOptions({ locale })),
+		preload(relationshipsOptions({ locale })),
+		preload(reportReasonsOptions({ locale })),
+		preload(sexualitiesOptions({ locale }))
+	]);
 }
 
-// eslint-disable-next-line react-refresh/only-export-components
 export async function preloadProfile(userId: string) {
 	await Promise.all([
 		preload({ queryKey: userKey(userId), queryFn: userFetcher }),
 		preload({ queryKey: relationshipKey(userId), queryFn: relationshipFetcher }),
-		preloadProfileAttributes()
+		preloadProfileData()
 	]);
 }
 
@@ -163,8 +165,8 @@ export const Profile = withSuspense(({
 						</div>
 						<div className="flex flex-wrap items-center gap-2 font-montserrat ">
 							<GenderPills
-								attributes={user.profile.attributes.gender ?? []}
 								className="bg-white-30/70! dark:bg-black-60/70!"
+								ids={user.profile.genders ?? []}
 							/>
 							{user.profile.country && (
 								<CountryPill

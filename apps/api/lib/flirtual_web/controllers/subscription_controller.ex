@@ -5,18 +5,20 @@ defmodule FlirtualWeb.SubscriptionController do
   import FlirtualWeb.Utilities
   import Phoenix.Controller
 
-  alias Flirtual.{Chargebee, Plan, Policy, Reconciliation, User}
+  alias Flirtual.{Chargebee, Reconciliation, User}
+  alias FlirtualWeb.DataJSON
   alias Flirtual.ObanWorkers.Reconcile
+  alias Flirtual.Data.Plan
 
   action_fallback(FlirtualWeb.FallbackController)
 
   @fifteen_minutes 900_000
 
-  def list_plans(conn, _) do
-    plans = Policy.transform(conn, Plan.list())
+  def list_plans(conn, params) do
+    plans = Enum.map(Plan.all(), &DataJSON.entry(&1, params["locale"]))
 
     conn
-    |> cache_control([:public, :immutable, {"max-age", [day: 1]}])
+    |> cache_control([:public, {"max-age", [day: 1]}])
     |> json_with_etag(plans)
   end
 

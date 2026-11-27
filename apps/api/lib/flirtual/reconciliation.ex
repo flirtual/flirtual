@@ -80,7 +80,7 @@ defmodule Flirtual.Reconciliation do
       end)
 
     after_rows =
-      untouched ++ Enum.map(updated ++ inserted, &Repo.preload(&1, :plan, force: true))
+      untouched ++ updated ++ inserted
 
     transition(user, was_premium, after_rows)
     schedule_lapse(user, after_rows)

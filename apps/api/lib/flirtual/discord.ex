@@ -5,9 +5,7 @@ defmodule Flirtual.Discord do
   import Flirtual.Utilities
 
   alias Flirtual.AgeVerification
-  alias Flirtual.Attribute
   alias Flirtual.Connection
-  alias Flirtual.Countries
   alias Flirtual.ObanWorkers
   alias Flirtual.Report
   alias Flirtual.RevenueCat
@@ -15,6 +13,7 @@ defmodule Flirtual.Discord do
   alias Flirtual.User
   alias Flirtual.User.Profile.Image
   alias Flirtual.User.Profile.Image.Moderation
+  alias Flirtual.Data.{BanReason, Country, DeleteReason, ReportReason, WarnReason}
 
   @default_color 8_421_504
   @destructive_color 16_711_680
@@ -463,10 +462,17 @@ defmodule Flirtual.Discord do
 
   defp age_verification_method(_), do: "Yoti"
 
+  defp country_name(code) do
+    case Country.get(code) do
+      %Country{internal: %{"name" => name}} -> name
+      _ -> nil
+    end
+  end
+
   def deliver_webhook(:suspended,
         user: %User{} = user,
         moderator: %User{} = moderator,
-        reason: %Attribute{type: "ban-reason"} = reason,
+        reason: %BanReason{} = reason,
         message: message,
         automatic: automatic
       ) do
@@ -484,7 +490,7 @@ defmodule Flirtual.Discord do
               [
                 %{
                   name: "Reason",
-                  value: Map.get(Attribute.ban_reasons(), reason.id),
+                  value: reason.name,
                   inline: true
                 }
               ] ++
@@ -632,7 +638,7 @@ defmodule Flirtual.Discord do
   def deliver_webhook(:warned,
         user: %User{} = user,
         moderator: %User{} = moderator,
-        reason: %Attribute{type: "warn-reason"} = reason,
+        reason: %WarnReason{} = reason,
         message: message,
         shadowbanned: shadowbanned,
         disabled: disabled,
@@ -650,7 +656,7 @@ defmodule Flirtual.Discord do
           fields: [
             %{
               name: "Reason",
-              value: Map.get(Attribute.warn_reasons(), reason.id),
+              value: reason.name,
               inline: true
             }
           ],
@@ -817,7 +823,8 @@ defmodule Flirtual.Discord do
               },
               %{
                 name: "Reason",
-                value: Map.get(Attribute.report_reasons(), report.reason.id),
+                value:
+                  with(%ReportReason{name: name} <- ReportReason.get(report.reason_id), do: name),
                 inline: true
               },
               if(not is_nil(report.target.shadowbanned_at),
@@ -1056,7 +1063,9 @@ defmodule Flirtual.Discord do
           fields: [
             %{
               name: "Country",
-              value: Countries.name(country) || String.upcase(country),
+              value:
+                country_name(country) ||
+                  String.upcase(country),
               inline: true
             },
             %{
@@ -1340,7 +1349,7 @@ defmodule Flirtual.Discord do
 
   def deliver_webhook(:exit_survey,
         user: %User{} = user,
-        reason: %Attribute{type: "delete-reason"} = reason,
+        reason: %DeleteReason{} = reason,
         comment: comment
       ) do
     webhook(:admin, %{
@@ -1363,11 +1372,10 @@ defmodule Flirtual.Discord do
                   %{
                     name: "Genders",
                     value:
-                      user.profile.attributes
-                      |> filter_by(:type, "gender")
+                      user.profile.genders
                       |> Enum.map_join(
                         ", \n",
-                        &if &1.metadata["simple"] do
+                        &if &1.simple do
                           "**" <> &1.id <> "**"
                         else
                           &1.id
@@ -1378,8 +1386,7 @@ defmodule Flirtual.Discord do
                   %{
                     name: "Looking for",
                     value:
-                      user.profile.preferences.attributes
-                      |> filter_by(:type, "gender")
+                      user.profile.preferences.genders
                       |> Enum.map_join(", \n", & &1.id),
                     inline: true
                   }

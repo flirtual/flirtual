@@ -5,7 +5,7 @@ defmodule Flirtual.AgeVerification do
   import Ecto.Changeset
   import Ecto.Query
 
-  alias Flirtual.{AgeVerification, Attribute, ModerationEvent, Repo, User, Users, Yoti}
+  alias Flirtual.{AgeVerification, ModerationEvent, Repo, User, Users, Yoti}
 
   @threshold 18
 
@@ -124,7 +124,7 @@ defmodule Flirtual.AgeVerification do
   def required?(_), do: false
 
   def required?(%ModerationEvent{reason_id: reason_id}, user_id) when is_binary(user_id),
-    do: reason_id === Attribute.underage_ban_reason_id() and not passed?(user_id)
+    do: reason_id === "underage" and not passed?(user_id)
 
   def required?(_, _), do: false
 

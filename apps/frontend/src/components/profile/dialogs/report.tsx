@@ -1,7 +1,9 @@
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import type { FC, PropsWithChildren } from "react";
 import { useTranslation } from "react-i18next";
 
+import { reportReasonsOptions } from "~/api/data";
 import { Report } from "~/api/report";
 import type { User } from "~/api/user";
 import { Button } from "~/components/button";
@@ -21,13 +23,10 @@ import {
 import type { ImageSetValue } from "~/components/forms/input-image-set";
 import { InputLabel, InputLabelHint, InputSelect, InputTextArea } from "~/components/inputs";
 import { UserThumbnail } from "~/components/user-avatar";
-import {
-	useAttributes,
-	useAttributeTranslation
-} from "~/hooks/use-attribute";
 import { invalidateMatch, useQueue } from "~/hooks/use-queue";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
+import { useLocale } from "~/i18n";
 
 export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 	user,
@@ -35,24 +34,24 @@ export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 }) => {
 	const session = useOptionalSession();
 	const { t } = useTranslation();
-	const tAttributes = useAttributeTranslation();
+	const [locale] = useLocale();
 
 	const toasts = useToast();
 
 	const { removeAll: removeFromQueue } = useQueue();
 
-	const reasons = useAttributes("report-reason");
+	const { data: reasons } = useSuspenseQuery(reportReasonsOptions({ locale }));
 	const defaultReason = reasons[0]!;
 
 	const [open, setOpen] = useState(false);
 
 	const detailsRequiredReasons = new Set([
-		"AFe9ijRg9MYGubm2Efi4Ki",
-		"Ec5fqqgVo5X3s4QCeFUJ6D",
-		"MyexHAyY8gzQjBQ6agCSx3",
-		"zu6HcxQxmJDDq4rmvJazkf",
-		"BtJvp62cJ5vm6CeuCPTP5H",
-		"9iwmQ8huhkngyY9BgLDE9W"
+		"harassment",
+		"impersonation",
+		"scam",
+		"underage",
+		"illegal_content",
+		"other"
 	]);
 
 	return (
@@ -122,13 +121,10 @@ export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 										{(field) => (
 											<InputSelect
 												{...field.props}
-												options={reasons.map((reason) => {
-													const id
-														= typeof reason === "object" ? reason.id : reason;
-
+												options={reasons.map(({ id, name }) => {
 													return {
 														id,
-														name: tAttributes[id]?.name || id
+														name: name || id
 													};
 												})}
 											/>

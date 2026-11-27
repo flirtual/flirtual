@@ -80,12 +80,12 @@ struct ReportView: View {
 
     // Mirrors detailsRequiredReasons in the web's report dialog.
     private static let detailsRequired: Set<String> = [
-        "AFe9ijRg9MYGubm2Efi4Ki",
-        "Ec5fqqgVo5X3s4QCeFUJ6D",
-        "MyexHAyY8gzQjBQ6agCSx3",
-        "zu6HcxQxmJDDq4rmvJazkf",
-        "BtJvp62cJ5vm6CeuCPTP5H",
-        "9iwmQ8huhkngyY9BgLDE9W"
+        "harassment",
+        "impersonation",
+        "scam",
+        "underage",
+        "illegal_content",
+        "other"
     ]
 
     var body: some View {
@@ -129,7 +129,9 @@ struct ReportView: View {
         loadFailed = false
 
         do {
-            reasons = try await api.attributes("report-reason").map(\.id)
+            async let names: Void = Translations.shared.loadNames()
+            reasons = try await api.entries("report-reasons").map(\.id)
+            await names
         } catch {
             if !API.isCancellation(error) { loadFailed = true }
         }
@@ -183,6 +185,6 @@ struct ReportView: View {
     }
 
     private static func name(_ id: String) -> String {
-        Translations.shared.attribute("report-reason", id) ?? id
+        Translations.shared.name("report-reasons", id) ?? id
     }
 }

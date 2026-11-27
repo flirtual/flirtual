@@ -130,12 +130,12 @@ struct ProfileView: View {
                         RichText(html: biography)
                     }
 
-                    ForEach(user.profile.prompts, id: \.promptId) { prompt in
+                    ForEach(user.profile.prompts, id: \.prompt) { answer in
                         VStack(alignment: .leading, spacing: 2) {
-                            Text(Translations.shared.attribute("prompt", prompt.promptId) ?? "")
+                            Text(Translations.shared.name("prompts", answer.prompt) ?? "")
                                 .font(.caption2)
                                 .foregroundStyle(.secondary)
-                            Text(prompt.response)
+                            Text(answer.response)
                                 .font(.footnote)
                         }
                     }
@@ -242,7 +242,7 @@ struct PhotoCarousel: View {
     @ViewBuilder
     private var summary: some View {
         let flag = user.profile.country.flatMap(Self.flag)
-        let genders = Users.shared.genderTags(of: user).compactMap { Translations.shared.attribute("gender", $0) }
+        let genders = Users.shared.genderTags(of: user).compactMap { Translations.shared.name("genders", $0) }
 
         // Separate items so wrapped lines break between them, joined by dots and commas.
         let items: [String] = {

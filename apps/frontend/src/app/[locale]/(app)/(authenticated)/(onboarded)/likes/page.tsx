@@ -10,7 +10,7 @@ import {
 } from "~/api/matchmaking";
 import { ButtonLink } from "~/components/button";
 import { ModelCard } from "~/components/model-card";
-import { preloadProfileAttributes, Profile } from "~/components/profile";
+import { preloadProfileData, Profile } from "~/components/profile";
 import { useLikesQueue } from "~/hooks/use-likes-queue";
 import { i18n } from "~/i18n";
 import { isLocale } from "~/i18n/languages";
@@ -35,7 +35,7 @@ export const meta: Route.MetaFunction = (options) => {
 };
 
 export const handle = {
-	preload: preloadProfileAttributes
+	preload: preloadProfileData
 };
 
 export const clientLoader = handle.preload;

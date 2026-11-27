@@ -14,7 +14,7 @@
 import { join } from "node:path";
 
 import type { ComponentName, Id, Message, TargetLocale } from "./common.ts";
-import { componentNames, components, hash, id, isMain, localesFlag, parseArguments, readJson, runDirectory, staging, targetLocales, weblateLanguage, writeJson } from "./common.ts";
+import { componentNames, components, hash, id, isMain, localesFlag, parseArguments, readJson, runDirectory, staging, targetLocales, weblateLanguage, weblateSlug, writeJson } from "./common.ts";
 import type { ContextEntry } from "./context.ts";
 import { loadContext } from "./context.ts";
 import type { GlossaryEntry } from "./validate.ts";
@@ -47,7 +47,7 @@ async function changes(component: string) {
 	const path = join(weblateDirectory, `changes-${component}.json`);
 	const cached = readJson<Array<Change>>(path, []);
 	const after = cached.at(-1)?.timestamp;
-	const fresh = await list<Change>(`components/${project}/${component}/changes/${after ? `?timestamp_after=${encodeURIComponent(after)}` : ""}`);
+	const fresh = await list<Change>(`components/${project}/${weblateSlug(component)}/changes/${after ? `?timestamp_after=${encodeURIComponent(after)}` : ""}`);
 	const seen = new Set(cached.map((change) => `${change.timestamp}|${change.unit}|${change.action}`));
 	const merged = [...cached, ...fresh.filter((change) => !seen.has(`${change.timestamp}|${change.unit}|${change.action}`))]
 		.sort((a, b) => a.timestamp.localeCompare(b.timestamp));
@@ -83,7 +83,7 @@ function humanAuthor(unit: Unit, texts: Map<string, string> | undefined) {
 }
 
 async function availableLocales(component: string) {
-	const translations = await list<{ language: { code: string } }>(`components/${project}/${component}/translations/`);
+	const translations = await list<{ language: { code: string } }>(`components/${project}/${weblateSlug(component)}/translations/`);
 	return new Set(translations.map((translation) => translation.language.code));
 }
 
@@ -91,7 +91,7 @@ async function pull(locales: Array<TargetLocale>) {
 	const explanations: Record<Id, string> = {};
 
 	for (const component of componentNames) {
-		const sources = await list<Unit>(`translations/${project}/${component}/en/units/`);
+		const sources = await list<Unit>(`translations/${project}/${weblateSlug(component)}/en/units/`);
 		for (const unit of sources) {
 			if (unit.explanation) explanations[id(component, unit.context)] = unit.explanation;
 		}
@@ -108,7 +108,7 @@ async function pull(locales: Array<TargetLocale>) {
 				console.log(`${component}/${locale}: not in Weblate`);
 				continue;
 			}
-			const units = await list<Unit>(`translations/${project}/${component}/${weblateLanguage(locale)}/units/`);
+			const units = await list<Unit>(`translations/${project}/${weblateSlug(component)}/${weblateLanguage(locale)}/units/`);
 			const pulled: Pulled = {};
 			for (const unit of units) {
 				pulled[id(component, unit.context)] = { unit: unit.id, target: unit.target, state: unit.state, human: humanAuthor(unit, human.get(unit.url)) };
@@ -155,7 +155,7 @@ async function locales(apply: boolean) {
 		for (const locale of missing) {
 			writes.push({
 				label: `${component}/${locale}`,
-				run: () => request("POST", `components/${project}/${component}/translations/`, { language_code: weblateLanguage(locale) })
+				run: () => request("POST", `components/${project}/${weblateSlug(component)}/translations/`, { language_code: weblateLanguage(locale) })
 			});
 		}
 	}
@@ -206,7 +206,7 @@ async function context(apply: boolean) {
 
 	for (const component of componentNames) {
 		// Fresh, so a rerun after a partial failure only writes what's still missing.
-		const units = await list<Unit>(`translations/${project}/${component}/en/units/`);
+		const units = await list<Unit>(`translations/${project}/${weblateSlug(component)}/en/units/`);
 		const sources = Object.fromEntries(units.map((unit) => [id(component, unit.context), { unit: unit.id, explanation: unit.explanation, extraFlags: unit.extra_flags }]));
 		for (const [key, source] of Object.entries(sources)) {
 			const entry = entries[key as Id];
@@ -255,7 +255,7 @@ async function glossary(apply: boolean) {
 	const entries = loadGlossary();
 	const component = "glossary";
 	const human = humanTexts(await changes(component));
-	const sources = await list<Unit>(`translations/${project}/${component}/en/units/`);
+	const sources = await list<Unit>(`translations/${project}/${weblateSlug(component)}/en/units/`);
 	const writes = [];
 	const plan: Array<string> = [];
 
@@ -267,8 +267,8 @@ async function glossary(apply: boolean) {
 			writes.push({
 				label: `add ${entry.en}`,
 				run: async () => {
-					await request("POST", `translations/${project}/${component}/en/units/`, { source: [entry.en], context: entry.id });
-					const [created] = await list<Unit>(`translations/${project}/${component}/en/units/?q=${encodeURIComponent(`source:="${entry.en}"`)}`);
+					await request("POST", `translations/${project}/${weblateSlug(component)}/en/units/`, { source: [entry.en], context: entry.id });
+					const [created] = await list<Unit>(`translations/${project}/${weblateSlug(component)}/en/units/?q=${encodeURIComponent(`source:="${entry.en}"`)}`);
 					await request("PATCH", `units/${created!.id}/`, { explanation: glossaryExplanation(entry), extra_flags: flags });
 				}
 			});
@@ -280,7 +280,7 @@ async function glossary(apply: boolean) {
 	}
 
 	for (const locale of targetLocales) {
-		const units = await list<Unit>(`translations/${project}/${component}/${weblateLanguage(locale)}/units/`);
+		const units = await list<Unit>(`translations/${project}/${weblateSlug(component)}/${weblateLanguage(locale)}/units/`);
 		for (const entry of entries) {
 			if (entry.untranslatable) continue;
 			const term = entry.terms?.[locale];
@@ -299,7 +299,7 @@ async function glossary(apply: boolean) {
 			writes.push({
 				label: `${locale} ${entry.en}`,
 				run: async () => {
-					const target = unit ?? (await list<Unit>(`translations/${project}/${component}/${weblateLanguage(locale)}/units/?q=${encodeURIComponent(`source:="${entry.en}"`)}`))[0];
+					const target = unit ?? (await list<Unit>(`translations/${project}/${weblateSlug(component)}/${weblateLanguage(locale)}/units/?q=${encodeURIComponent(`source:="${entry.en}"`)}`))[0];
 					if (!target) throw new Error("term not found in this language yet; run again after the source term is added");
 					await request("PATCH", `units/${target.id}/`, { target: [term.term], state });
 				}

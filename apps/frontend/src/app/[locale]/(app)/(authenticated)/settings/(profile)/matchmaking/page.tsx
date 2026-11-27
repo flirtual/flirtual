@@ -1,13 +1,16 @@
 import { useTranslation } from "react-i18next";
 import invariant from "tiny-invariant";
 
+import { gendersOptions } from "~/api/data";
 import { ModelCard } from "~/components/model-card";
+import { advancedFilters } from "~/features";
 import { i18n } from "~/i18n";
 import { isLocale } from "~/i18n/languages";
 import { metaMerge, rootMeta } from "~/meta";
-import { attributeFetcher, attributeKey, queryClient } from "~/query";
+import { queryClient } from "~/query";
 
 import type { Route } from "./+types/page";
+import { prefetchAdvancedFilters } from "./advanced-filters";
 import { MatchmakingForm } from "./form";
 
 export const meta: Route.MetaFunction = (options) => {
@@ -21,10 +24,10 @@ export const meta: Route.MetaFunction = (options) => {
 };
 
 export const handle = {
-	preload: () => queryClient.prefetchQuery({
-		queryKey: attributeKey("gender"),
-		queryFn: attributeFetcher
-	})
+	preload: () => Promise.all([
+		queryClient.prefetchQuery(gendersOptions({ locale: i18n.language })),
+		advancedFilters && prefetchAdvancedFilters(i18n.language)
+	])
 };
 
 export default function SettingsProfileMatchmakingPage() {

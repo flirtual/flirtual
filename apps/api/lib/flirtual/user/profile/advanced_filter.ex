@@ -4,8 +4,20 @@ defmodule Flirtual.User.Profile.AdvancedFilter do
   import Ecto.Changeset
   import Ecto.Query
 
-  alias Flirtual.{Attribute, Countries, Entitlement, Languages, Repo}
+  alias Flirtual.{Entitlement, Repo}
   alias Flirtual.User.Profile.AdvancedFilter
+
+  alias Flirtual.Data.{
+    Country,
+    Game,
+    Gender,
+    Interest,
+    Kink,
+    Language,
+    Platform,
+    Relationship,
+    Sexuality
+  }
 
   @categories [
     :gender,
@@ -21,36 +33,24 @@ defmodule Flirtual.User.Profile.AdvancedFilter do
     :language,
     :kink
   ]
-  @attribute_categories [
-    :gender,
-    :sexuality,
-    :interest,
-    :game,
-    :platform,
-    :kink
-  ]
-  @value_categories [
-    :country,
-    :language,
-    :relationships,
-    :monopoly,
-    :personality,
-    :domsub
-  ]
+  @entry_categories %{
+    gender: Gender,
+    sexuality: Sexuality,
+    interest: Interest,
+    game: Game,
+    platform: Platform,
+    kink: Kink
+  }
   @max_per_kind 30
 
-  @relationship_values ~w(serious vr hookups friends)
   @monopoly_values ~w(monogamous nonmonogamous)
   @personality_values ~w(openminded practical reliable freespirited friendly straightforward)
   @domsub_values ~w(dominant submissive switch)
 
-  @popular_interest_category "iiCe39JvGQAAtsrTqnLddb"
-
-  @derive {Jason.Encoder, only: [:kind, :category, :attribute_id, :value]}
+  @derive {Jason.Encoder, only: [:kind, :category, :value]}
 
   schema "profile_advanced_filters" do
     belongs_to(:profile, Flirtual.User.Profile, references: :user_id)
-    belongs_to(:attribute, Attribute)
 
     field(:kind, Ecto.Enum, values: [:include, :exclude])
     field(:category, Ecto.Enum, values: @categories)
@@ -62,6 +62,8 @@ defmodule Flirtual.User.Profile.AdvancedFilter do
   # Never shrinks, so existing filters still load.
   def categories, do: @categories
 
+  def entry_module(category), do: @entry_categories[category]
+
   def enabled_categories do
     if(Flirtual.Features.advanced_filters?(), do: @categories, else: [])
     |> reject_disabled(Flirtual.Features.vr_tags?(), [:game, :platform])
@@ -70,44 +72,22 @@ defmodule Flirtual.User.Profile.AdvancedFilter do
 
   defp reject_disabled(categories, true, _disabled), do: categories
   defp reject_disabled(categories, false, disabled), do: categories -- disabled
-  def attribute_categories, do: @attribute_categories
   def max_per_kind, do: @max_per_kind
 
   def list(profile_id: profile_id) do
     AdvancedFilter
     |> where(profile_id: ^profile_id)
     |> order_by(asc: :kind, asc: :category)
-    |> preload(:attribute)
     |> Repo.all()
   end
 
-  def changeset(%AdvancedFilter{} = filter, attrs, %{user: user, attributes: attributes}) do
+  def changeset(%AdvancedFilter{} = filter, attrs, %{user: user}) do
     filter
-    |> cast(attrs, [:kind, :category, :attribute_id, :value])
+    |> cast(attrs, [:kind, :category, :value])
     |> validate_required([:kind, :category])
-    |> validate_category_fields()
+    |> validate_required([:value])
     |> validate_value()
-    |> validate_attribute(attributes)
-    |> validate_premium(user, attributes)
-  end
-
-  defp validate_category_fields(changeset) do
-    category = get_field(changeset, :category)
-
-    cond do
-      category in @attribute_categories ->
-        changeset
-        |> validate_required([:attribute_id])
-        |> put_change(:value, nil)
-
-      category in @value_categories ->
-        changeset
-        |> validate_required([:value])
-        |> put_change(:attribute_id, nil)
-
-      true ->
-        changeset
-    end
+    |> validate_premium(user)
   end
 
   defp validate_value(changeset) do
@@ -115,17 +95,18 @@ defmodule Flirtual.User.Profile.AdvancedFilter do
 
     case get_field(changeset, :category) do
       :country ->
-        validate_inclusion(
-          changeset,
-          :value,
-          Countries.list(:iso_3166_1) |> Enum.map(&to_string/1)
-        )
+        validate_inclusion(changeset, :value, Country.ids())
 
       :language ->
-        validate_inclusion(changeset, :value, Languages.list(:bcp_47) |> Enum.map(&to_string/1))
+        validate_inclusion(changeset, :value, Language.ids())
+
+      category when is_map_key(@entry_categories, category) ->
+        if is_nil(@entry_categories[category].get(value)),
+          do: add_error(changeset, :value, "invalid_value"),
+          else: changeset
 
       :relationships ->
-        validate_inclusion(changeset, :value, @relationship_values)
+        validate_inclusion(changeset, :value, Relationship.ids())
 
       :monopoly ->
         validate_inclusion(changeset, :value, @monopoly_values)
@@ -140,37 +121,18 @@ defmodule Flirtual.User.Profile.AdvancedFilter do
         changeset
     end
     |> then(fn changeset ->
-      if is_nil(value), do: changeset, else: update_change(changeset, :value, &String.downcase/1)
+      if is_nil(value) or is_map_key(@entry_categories, get_field(changeset, :category)),
+        do: changeset,
+        else: update_change(changeset, :value, &String.downcase/1)
     end)
   end
 
-  defp validate_attribute(changeset, attributes) do
-    category = get_field(changeset, :category)
-    attribute_id = get_field(changeset, :attribute_id)
-
-    if category in @attribute_categories and not is_nil(attribute_id) do
-      case Map.get(attributes, attribute_id) do
-        %Attribute{type: type} ->
-          if type == to_string(category) do
-            changeset
-          else
-            add_error(changeset, :attribute_id, "invalid_attribute_category")
-          end
-
-        _ ->
-          add_error(changeset, :attribute_id, "invalid_attribute")
-      end
-    else
-      changeset
-    end
-  end
-
-  defp validate_premium(changeset, user, attributes) do
+  defp validate_premium(changeset, user) do
     if Entitlement.premium?(user.entitlements) do
       changeset
     else
       category = get_field(changeset, :category)
-      attribute_id = get_field(changeset, :attribute_id)
+      value = get_field(changeset, :value)
 
       allowed =
         case category do
@@ -181,11 +143,13 @@ defmodule Flirtual.User.Profile.AdvancedFilter do
             true
 
           :interest ->
-            attribute_metadata(attributes, attribute_id)["category"] ==
-              @popular_interest_category
+            match?(
+              %Interest{category: "popular"},
+              Interest.get(value)
+            )
 
           :platform ->
-            attribute_metadata(attributes, attribute_id)["kind"] == "headset"
+            match?(%Platform{kind: "headset"}, Platform.get(value))
 
           _ ->
             false
@@ -196,13 +160,6 @@ defmodule Flirtual.User.Profile.AdvancedFilter do
       else
         add_error(changeset, :category, "premium_required")
       end
-    end
-  end
-
-  defp attribute_metadata(attributes, attribute_id) do
-    case Map.get(attributes, attribute_id) do
-      %Attribute{metadata: metadata} -> metadata || %{}
-      _ -> %{}
     end
   end
 end

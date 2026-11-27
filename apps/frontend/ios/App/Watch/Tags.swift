@@ -20,10 +20,10 @@ struct Tag: Identifiable {
         let nsfw = me?.preferences?.nsfw ?? false
         let t = Translations.shared
 
-        func attributes(_ type: String, mine: [String]? = nil) -> [Tag] {
-            profile.attributes(type).compactMap { id in
-                guard let name = t.attribute(type, id) else { return nil }
-                return Tag(id: "\(type):\(id)", name: name, shared: other && (mine ?? []).contains(id))
+        func entries(_ file: String, mine: [String]? = nil) -> [Tag] {
+            profile.tags(file).compactMap { id in
+                guard let name = t.name(file, id) else { return nil }
+                return Tag(id: "\(file):\(id)", name: name, shared: other && (mine ?? []).contains(id))
             }
         }
 
@@ -35,9 +35,9 @@ struct Tag: Identifiable {
         let relationshipOrder = ["serious", "vr", "hookups", "friends"]
         add("relationship", profile.relationships
             .sorted { (relationshipOrder.firstIndex(of: $0) ?? .max) < (relationshipOrder.firstIndex(of: $1) ?? .max) }
-            .map { Tag(id: "relationship:\($0)", name: t.attribute("relationship", $0) ?? $0, shared: other && mine?.relationships.contains($0) == true) })
+            .map { Tag(id: "relationship:\($0)", name: t.name("relationships", $0) ?? $0, shared: other && mine?.relationships.contains($0) == true) })
 
-        add("sexuality", attributes("sexuality", mine: mine?.attributes("sexuality")))
+        add("sexuality", entries("sexualities", mine: mine?.tags("sexualities")))
 
         if Features.personality {
             let personality = personalityLabels(profile)
@@ -46,13 +46,13 @@ struct Tag: Identifiable {
         }
 
         let myCustom = Set((mine?.customInterests ?? []).map(normalize))
-        let interests = attributes("interest", mine: mine?.attributes("interest"))
+        let interests = entries("interests", mine: mine?.tags("interests"))
             .sorted { $0.name.localizedCompare($1.name) == .orderedAscending }
             + profile.customInterests.map { Tag(id: "custom:\($0)", name: $0, shared: other && myCustom.contains(normalize($0))) }
         add("interest", interests.filter(\.shared) + interests.filter { !$0.shared })
 
         if Features.vrTags {
-            add("game", attributes("game", mine: mine?.attributes("game")))
+            add("game", entries("games", mine: mine?.tags("games")))
         }
 
         if nsfw, let domsub = profile.domsub {
@@ -66,19 +66,19 @@ struct Tag: Identifiable {
         }
 
         if nsfw {
-            add("kink", attributes("kink"))
+            add("kink", entries("kinks"))
         }
 
         add("language", profile.languages.map { code in
             Tag(
                 id: "language:\(code)",
-                name: t.attribute("language", code) ?? Locale.current.localizedString(forIdentifier: code) ?? code,
+                name: t.name("languages", code) ?? Locale.current.localizedString(forIdentifier: code) ?? code,
                 shared: other && mine?.languages.contains(code) == true
             )
         })
 
         if Features.vrTags {
-            add("platform", attributes("platform", mine: mine?.attributes("platform")))
+            add("platform", entries("platforms", mine: mine?.tags("platforms")))
         }
         return groups
     }

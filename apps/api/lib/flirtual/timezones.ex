@@ -87,6 +87,23 @@ defmodule Flirtual.Timezones do
 
   def list, do: @timezones
 
+  def with_offsets do
+    now = DateTime.utc_now()
+
+    @timezones
+    |> Enum.map(fn id ->
+      {:ok, datetime} = DateTime.shift_zone(now, id)
+      {id, datetime.utc_offset + datetime.std_offset, id |> String.split("/") |> List.last()}
+    end)
+    |> Enum.sort_by(fn {_id, offset, city} -> {offset, city} end)
+    |> Enum.map(fn {id, offset, _city} ->
+      case aliases_of(id) do
+        [] -> %{id: id, offset: offset}
+        aliases -> %{id: id, offset: offset, aliases: aliases}
+      end
+    end)
+  end
+
   def listed?(timezone) when is_atom(timezone), do: listed?(Atom.to_string(timezone))
   def listed?(timezone) when is_binary(timezone), do: timezone in @timezones
 

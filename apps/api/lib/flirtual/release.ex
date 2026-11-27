@@ -3,16 +3,12 @@ defmodule Flirtual.Release do
   Used for executing DB release tasks when run in production without Mix
   installed.
   """
-  import Ecto.Query
 
   alias DBConnection.ConnectionError
 
   require Logger
 
   @app :flirtual
-
-  # The rows a new database starts with, by table, from priv/repo/exports.
-  @seeds ["attributes", "plans"]
 
   # A stopped database starts on the next connection, which has to wait for it.
   # https://fly.io/docs/postgres/managing/scale-to-zero/
@@ -30,20 +26,6 @@ defmodule Flirtual.Release do
     end
   end
 
-  # Seeds each table only while it's empty, so it runs on every deploy but fills a database once.
-  def seed do
-    load_app()
-
-    {:ok, _, _} =
-      retrying_disconnects(fn -> Ecto.Migrator.with_repo(Flirtual.Repo, &seed_empty_tables/1) end)
-  end
-
-  defp seed_empty_tables(repo) do
-    for table <- @seeds, not repo.exists?(from(row in table, select: 1)) do
-      {:ok, _} = repo.transaction(fn -> seed!(repo, table) end)
-    end
-  end
-
   @doc false
   def retrying_disconnects(task, pause \\ @pause_between_attempts, attempt \\ 1) do
     task.()
@@ -54,14 +36,6 @@ defmodule Flirtual.Release do
       Logger.warning("The database isn't up yet (#{error.message}); retrying.")
       Process.sleep(pause)
       retrying_disconnects(task, pause, attempt + 1)
-  end
-
-  # sobelow_skip ["SQL.Query", "Traversal.FileModule"]
-  defp seed!(repo, table) do
-    Application.app_dir(@app, "priv/repo/exports/#{table}.sql")
-    |> File.read!()
-    |> String.split(";\n", trim: true)
-    |> Enum.each(&Ecto.Adapters.SQL.query!(repo, &1))
   end
 
   def rollback(repo, version) do

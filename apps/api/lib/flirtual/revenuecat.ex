@@ -1,8 +1,9 @@
 defmodule Flirtual.RevenueCat do
   use Flirtual.Logger, :revenuecat
 
-  alias Flirtual.{Discord, ModerationEvent, Plan, Reconciliation, User}
+  alias Flirtual.{Discord, ModerationEvent, Plans, Reconciliation, User}
   alias Flirtual.ObanWorkers.Reconcile
+  alias Flirtual.Data.Plan
 
   defp config(key) do
     Application.get_env(:flirtual, FlirtualWeb.RevenueCatController)[key]
@@ -283,7 +284,7 @@ defmodule Flirtual.RevenueCat do
     |> Enum.flat_map(fn {product, purchases} ->
       with %{} = purchase <- List.last(purchases || []),
            store when not is_nil(store) <- store(purchase["store"]),
-           %Plan{} = plan <- Plan.get(revenuecat_id: product) do
+           %Plan{} = plan <- Plans.get(revenuecat_id: product) do
         [
           %{
             kind: :one_time,
@@ -314,8 +315,8 @@ defmodule Flirtual.RevenueCat do
   # id in the product identifier.
   defp subscription_plan(product, subscription) do
     case subscription["product_plan_identifier"] do
-      nil -> Plan.get(revenuecat_id: product)
-      base_plan -> Plan.get(revenuecat_id: "#{product}:#{base_plan}")
+      nil -> Plans.get(revenuecat_id: product)
+      base_plan -> Plans.get(revenuecat_id: "#{product}:#{base_plan}")
     end
   end
 

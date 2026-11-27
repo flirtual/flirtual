@@ -13,7 +13,6 @@ defmodule Flirtual.User do
 
   alias Flirtual.{
     AgeVerification,
-    Attribute,
     Connection,
     Discord,
     Flag,
@@ -27,6 +26,8 @@ defmodule Flirtual.User do
     Talkjs,
     User
   }
+
+  alias Flirtual.Data.{BanReason, Country, Locale, Plan}
 
   alias Flirtual.User.Profile.{Block, Image, LikesAndPasses, Prompt}
   alias Flirtual.User.{Login, Profile, Relationship}
@@ -166,6 +167,9 @@ defmodule Flirtual.User do
     url(user, :id)
   end
 
+  def locale(%User{preferences: %{language: %Locale{enabled: true, id: id}}}), do: id
+  def locale(%User{}), do: Locale.default().id
+
   def display_name(%User{} = user) do
     user.profile[:display_name] || user.slug
   end
@@ -185,43 +189,6 @@ defmodule Flirtual.User do
       possessive_pronoun: "theirs",
       reflexive: "themself"
     }
-
-    # masculine_genders = ["He/Him", "Man", "Cis Man", "Trans Man", "Transmasculine"]
-    # feminine_genders = ["She/Her", "Woman", "Cis Woman", "Trans Woman", "Transfeminine"]
-
-    # genders =
-    #   user.profile.attributes
-    #   |> filter_by(:type, "gender")
-    #   |> Enum.map(& &1.name)
-
-    # cond do
-    #   Enum.all?(genders, fn gender -> gender in masculine_genders end) or
-    #       ("He/Him" in genders and not ("They/Them" in genders or "She/Her" in genders)) ->
-    #     %{
-    #       subjective: "he",
-    #       objective: "him",
-    #       possessive_adjective: "his",
-    #       possessive_pronoun: "his",
-    #       reflexive: "himself"
-    #     }
-    #   Enum.all?(genders, fn gender -> gender in feminine_genders end) or
-    #       ("She/Her" in genders and not ("They/Them" in genders or "He/Him" in genders)) ->
-    #     %{
-    #       subjective: "she",
-    #       objective: "her",
-    #       possessive_adjective: "her",
-    #       possessive_pronoun: "hers",
-    #       reflexive: "herself"
-    #     }
-    #   true ->
-    #     %{
-    #       subjective: "they",
-    #       objective: "them",
-    #       possessive_adjective: "their",
-    #       possessive_pronoun: "theirs",
-    #       reflexive: "themself"
-    #     }
-    # end
   end
 
   def update_status(%User{} = user) do
@@ -246,18 +213,13 @@ defmodule Flirtual.User do
     %{profile: profile} = user
 
     not is_nil(user.born_at) and
+      not Enum.empty?(Profile.reject_pronouns(profile.genders)) and
+      (not Flirtual.Features.vr_tags?() or not Enum.empty?(profile.games)) and
       not Enum.empty?(
-        profile.attributes
-        |> filter_by(:type, "gender")
-        |> Attribute.reject_pronouns()
-      ) and
-      (not Flirtual.Features.vr_tags?() or
-         not Enum.empty?(filter_by(profile.attributes, :type, "game"))) and
-      not Enum.empty?(
-        filter_by(profile.attributes, :type, "interest") ++
+        profile.interests ++
           if(Flirtual.Features.custom_interests?(), do: profile.custom_interests, else: [])
       ) and
-      not Enum.empty?(filter_by(profile.preferences.attributes, :type, "gender"))
+      not Enum.empty?(profile.preferences.genders)
   end
 
   def finished_profile?(%User{} = user) do
@@ -289,23 +251,18 @@ defmodule Flirtual.User do
       age: get_years_since(user.born_at),
       dark: user.preferences.theme === :dark,
       avatar_url: avatar_url(user, "profile"),
-      attributes:
+      tags:
         [
           if(user.preferences.privacy.country === :everyone and user.profile.country,
-            do: Attribute.get(Atom.to_string(user.profile.country), "country"),
+            do: user.profile.country,
             else: nil
           )
-          | user.profile.attributes
-            |> Attribute.normalize_aliases()
-            |> Enum.filter(&(&1.type in ["gender", "sexuality", "interest"]))
-            |> Enum.map(
-              &%{
-                id: &1.id,
-                type: &1.type
-              }
+          | Profile.normalize_aliases(
+              user.profile.genders ++ user.profile.sexualities ++ user.profile.interests
             )
         ]
-        |> Enum.filter(&(not is_nil(&1)))
+        |> Enum.reject(&is_nil/1)
+        |> Enum.map(&%{id: &1.id, type: &1.__struct__.file()})
     }
   end
 
@@ -351,7 +308,7 @@ defmodule Flirtual.User do
     end
   end
 
-  @miles_countries [:us, :gb, :lr, :mm]
+  @miles_countries ~w(us gb lr mm)
   @miles_buckets [50, 100, 250, 500, 1000]
   @km_buckets [100, 250, 500, 1000, 1500, 2000]
 
@@ -364,7 +321,7 @@ defmodule Flirtual.User do
     if value <= (a + b) / 2, do: a, else: round_to_nearest(value, [b | rest])
   end
 
-  defp format_distance(meters, country) when country in @miles_countries do
+  defp format_distance(meters, %Country{id: country}) when country in @miles_countries do
     mi = meters / 1609.34
 
     if mi > @miles_max do
@@ -699,12 +656,13 @@ defmodule Flirtual.User do
   defp premium_condition(:promotional),
     do: premium_condition(dynamic([entitlement], entitlement.store == :promotional))
 
+  @premium_plans for %Plan{product: "premium", id: id} <- Plan.all(), do: id
+
   defp premium_condition(condition) do
     entitlements =
       from(entitlement in Entitlement,
-        join: plan in assoc(entitlement, :plan),
         where:
-          entitlement.user_id == parent_as(:user).id and plan.product == "premium" and
+          entitlement.user_id == parent_as(:user).id and entitlement.plan_id in ^@premium_plans and
             (is_nil(entitlement.entitled_until) or
                entitlement.entitled_until > ^DateTime.utc_now()),
         where: ^condition
@@ -907,21 +865,18 @@ defmodule Flirtual.User do
   def banned_underage?(%User{banned_at: nil}), do: false
 
   def banned_underage?(%User{id: user_id}),
-    do:
-      ModerationEvent.active_reason_id(user_id, :banned) ===
-        Attribute.underage_ban_reason_id()
+    do: ModerationEvent.active_reason_id(user_id, :banned) === "underage"
 
   def banned_underage?(_), do: false
 
   def suspend(
         %User{} = user,
-        %Attribute{type: "ban-reason"} = reason,
+        %BanReason{} = reason,
         message,
         %User{} = moderator,
         options \\ []
       ) do
     now = DateTime.utc_now() |> DateTime.truncate(:second)
-    message = message || reason.metadata["details"]
     automatic = Keyword.get(options, :automatic)
     {automatic?, automatic_details} = automatic_details(automatic)
 
@@ -953,7 +908,7 @@ defmodule Flirtual.User do
           user: user,
           moderator: moderator,
           reason: reason,
-          message: message || User.Email.ban_reason_details(reason),
+          message: message || User.Email.ban_reason_details(reason, nil),
           automatic: automatic
         )
 

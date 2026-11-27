@@ -489,11 +489,3 @@ msgstr "Bluesky"
 #, elixir-autogen, elixir-format, fuzzy
 msgid "instagram"
 msgstr "Instagram"
-
-#: lib/flirtual/user/email.ex:31
-#, elixir-autogen, elixir-format, fuzzy
-msgid "suspended.reason.underage"
-msgstr ""
-"Возраст младше 18 лет. Пользоваться %{brand_name} можно только с 18 лет. Если вы "
-"считаете, что вас заблокировали по ошибке, войдите в %{brand_name} и пройдите "
-"безопасную проверку возраста, чтобы восстановить аккаунт."

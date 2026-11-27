@@ -1,13 +1,10 @@
+import { queryOptions, useSuspenseQueries } from "@tanstack/react-query";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 
+import { byId, gamesOptions, interestsOptions, kinksOptions, languagesOptions, platformsOptions, relationshipsOptions, sexualitiesOptions } from "~/api/data";
 import type { User } from "~/api/user";
 import { customInterests, personality, playlists, vrTags } from "~/features";
-import {
-	useAttributeOrder,
-	useAttributes,
-	useAttributeTranslation
-} from "~/hooks/use-attribute";
 import { useGameStoreLinks, useSessionGameStores } from "~/hooks/use-game-stores";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useLocale } from "~/i18n";
@@ -15,7 +12,7 @@ import { intlLocale } from "~/i18n/languages";
 import { urls } from "~/urls";
 
 import { ProfilePlaylist } from "../playlist";
-import { PillAttributeList } from "./attribute-list";
+import { PillEntryList } from "./entry-list";
 import { Pill } from "./pill";
 import { PillRows } from "./rows";
 
@@ -37,20 +34,30 @@ export const PillCollection: FC<{ user: User }> = (props) => {
 	const session = useOptionalSession();
 
 	const { t } = useTranslation();
-	const tAttributes = useAttributeTranslation();
-	const relationshipOrder = useAttributeOrder("relationship");
-	const gameStoreLinks = useGameStoreLinks(useSessionGameStores());
-	const kinks = useAttributes("kink");
 	const [locale] = useLocale();
+	const [{ data: interestsById }, { data: languages }, { data: relationships }, { data: kinks }] = useSuspenseQueries({
+		queries: [
+			queryOptions({ ...interestsOptions({ locale }), select: byId }),
+			queryOptions({ ...languagesOptions({ locale }), select: byId }),
+			relationshipsOptions({ locale }),
+			kinksOptions({ locale })
+		]
+	});
+	const gameStoreLinks = useGameStoreLinks(useSessionGameStores());
 
 	if (!session) return null;
 
 	const editable = session.user.id === user.id;
 	const nsfw = session.user.preferences?.nsfw ?? false;
-	const kinkIds = nsfw ? user.profile.attributes.kink : undefined;
-	const activeKinkIds = (session.user.profile.attributes.kink || [])
+	const kinkIds = nsfw ? user.profile.kinks : undefined;
+	const activeKinkIds = (session.user.profile.kinks || [])
 		.map((id) => kinks.find((kink) => kink.id === id)?.pair)
 		.filter(Boolean);
+
+	const relationshipIndex = (id: string) => {
+		const index = relationships.findIndex((relationship) => relationship.id === id);
+		return index === -1 ? relationships.length : index;
+	};
 
 	const languageNames = new Intl.DisplayNames(intlLocale(locale), {
 		type: "language"
@@ -77,13 +84,13 @@ export const PillCollection: FC<{ user: User }> = (props) => {
 	);
 
 	const interests = [
-		...(user.profile.attributes.interest ?? [])
+		...(user.profile.interests ?? [])
 			.map((id) => ({
 				key: id,
-				name: tAttributes[id]?.name ?? id,
+				name: interestsById[id]?.name ?? id,
 				active:
 					session.user.id !== user.id
-					&& !!session.user.profile.attributes.interest?.includes(id)
+					&& !!session.user.profile.interests?.includes(id)
 			}))
 			.sort((a, b) => a.name.localeCompare(b.name)),
 		...(customInterests ? user.profile.customInterests : []).map((customInterest) => ({
@@ -99,18 +106,20 @@ export const PillCollection: FC<{ user: User }> = (props) => {
 
 	return (
 		<div className="flex flex-wrap gap-4">
-			<PillAttributeList
-				attributes={[...(user.profile.relationships ?? [])].sort(
-					relationshipOrder
+			<PillEntryList
+				ids={[...(user.profile.relationships ?? [])].sort(
+					(a, b) => relationshipIndex(a) - relationshipIndex(b)
 				)}
 				activeIds={session.user.profile.relationships}
 				href={editable ? urls.settings.matchmaking() : undefined}
+				options={relationshipsOptions}
 				user={user}
 			/>
-			<PillAttributeList
-				activeIds={session.user.profile.attributes.sexuality}
-				attributes={user.profile.attributes.sexuality}
+			<PillEntryList
+				activeIds={session.user.profile.sexualities}
 				href={editable ? urls.settings.info("sexuality") : undefined}
+				ids={user.profile.sexualities}
+				options={sexualitiesOptions}
 				user={user}
 			/>
 			{personalityLabels.length > 0 && (
@@ -141,10 +150,12 @@ export const PillCollection: FC<{ user: User }> = (props) => {
 				))}
 			</PillRows>
 			{vrTags && (
-				<PillAttributeList
-					attributes={user.profile.attributes.game}
+				<PillEntryList
+					activeIds={session.user.profile.games}
 					getLinks={gameStoreLinks}
 					href={editable ? urls.settings.info("game") : undefined}
+					ids={user.profile.games}
+					options={gamesOptions}
 					user={user}
 				/>
 			)}
@@ -175,23 +186,27 @@ export const PillCollection: FC<{ user: User }> = (props) => {
 					</Pill>
 				</div>
 			)}
-			<PillAttributeList
+			<PillEntryList
 				activeIds={activeKinkIds}
-				attributes={kinkIds}
 				href={editable ? urls.settings.nsfw : undefined}
+				ids={kinkIds}
+				options={kinksOptions}
 				user={user}
 			/>
-			<PillAttributeList
+			<PillEntryList
 				activeIds={session.user.profile.languages}
-				attributes={user.profile.languages}
-				getName={(id) => tAttributes[id]?.name ?? languageNames.of(id) ?? id}
+				getName={(id) => languages[id]?.name ?? languageNames.of(id) ?? id}
 				href={editable ? urls.settings.info("language") : undefined}
+				ids={user.profile.languages}
+				options={languagesOptions}
 				user={user}
 			/>
 			{vrTags && (
-				<PillAttributeList
-					attributes={user.profile.attributes.platform}
+				<PillEntryList
+					activeIds={session.user.profile.platforms}
 					href={editable ? urls.settings.info("platform") : undefined}
+					ids={user.profile.platforms}
+					options={platformsOptions}
 					user={user}
 				/>
 			)}

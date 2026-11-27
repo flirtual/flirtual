@@ -9,7 +9,7 @@ flow, and environment setup.
 - **Database**: PostgreSQL (Ecto)
 - **Matchmaking**: Manticore
 - **Jobs**: Oban
-- **i18n**: Gettext
+- **i18n**: Gettext for emails and push notifications (`priv/gettext`). The data's text is ICU MessageFormat, like the frontend's: `Flirtual.ICU` formats it with `ex_cldr_messages` and binds `brand_name` in every message, and `Flirtual.Cldr` installs only enabled locales.
 - **Auth**: token in the Plug session cookie; email/username+password, passkey (WebAuthn), OAuth; email verification for new login locations; JWT for confirmation links and Canny SSO.
 - **Push**: APNS + FCM via Pigeon; tokens synced to TalkJS (which sends message notifications).
 - **Integrations**: Chargebee (web pay), RevenueCat (mobile pay; Stripe deprecated), TalkJS (messaging), Listmonk (newsletters), VRChat (worlds/invites), OpenAI (bio moderation, translating mod messages).
@@ -48,7 +48,7 @@ Two modes, each with its own queue:
 
 ### Search (Manticore)
 
-`Flirtual.Search` (`lib/flirtual/search/`) runs over Manticore via the MySQL protocol (`Search.Repo`, Ecto/MyXQL, port 9306, `query_type: :text`; prepared-statement support is partial). One `profiles` table holds profile content only, created by `Search.bootstrap/0` on boot; `Search.reindex_all/0` rebuilds it from Postgres (nothing there needs preserving). Gotcha: Manticore `int` is unsigned, so any possibly-negative column must be a signed `bigint`.
+`Flirtual.Search` (`lib/flirtual/search/`) runs over Manticore via the MySQL protocol (`Search.Repo`, Ecto/MyXQL, port 9306, `query_type: :text`; prepared-statement support is partial). One table (`profiles_v2`, named in config) holds profile content only, created by `Search.bootstrap/0` on boot; `Search.reindex_all/0` rebuilds it from Postgres (nothing there needs preserving). Gotcha: Manticore `int` is unsigned, so any possibly-negative column must be a signed `bigint`.
 
 `Matchmaking.Query` builds the query as data (hard filters + weighted factors, no SQL); `Search.compile/1` emits one SphinxQL statement, centralizing id hashing and formatting. Factors match namespaced tokens in the `boosts` field (`attr:`, `lf:`, `cust:`, `lang:`, `rel:`, `country:`, `monopoly:`, `domsub:`).
 
@@ -72,7 +72,7 @@ Date primary query: gender is the only mutual filter (candidate matches my prefe
 
 ### Advanced filters (`profile_advanced_filters`, Date only, Premium-gated)
 
-Per-category include/exclude tag lists: gender, sexuality, interest, game, platform (attribute-backed), country, language (value-backed). The dropdown (`advanced-filter-select.tsx`) groups options under fixed-order headings (VR platforms, accessories, language, country, gender, sexuality, looking-for, relationship-type, popular interest, interest, game, personality, role, kink) with jump chevrons and a Premium badge on gated groups. Options keep their `order`; "only want to see" hoists the user's own tags to the top (except accessory/gender); typing flattens the list and appends the category per tag. "Popular interest" = the Popular interest-category; VR platforms/accessories split via platform `metadata.kind`. Looking-for (relationships), relationship-type (monopoly), personality (Big Five poles, from openness/conscientiousness/agreeableness signs) and role (domsub, NSFW) are value-backed, matched against `boosts` tokens; all four are Premium. Free users get genders, languages, Popular-category interests, and VR platforms (headset-kind); everything else is Premium. Editing bumps `queues.filters_updated_at` and refreshes both queues, keeping the current profile on top.
+Per-category include/exclude tag lists: gender, sexuality, interest, game, platform (an id from the data file of the same name), country, language (a code). The dropdown (`advanced-filter-select.tsx`) groups options under fixed-order headings (VR platforms, accessories, language, country, gender, sexuality, looking-for, relationship-type, popular interest, interest, game, personality, role, kink) with jump chevrons and a Premium badge on gated groups. Options keep their `order`; "only want to see" hoists the user's own tags to the top (except accessory/gender); typing flattens the list and appends the category per tag. "Popular interest" = the Popular interest-category; VR platforms/accessories split via the platform's `kind`. Looking-for (relationships), relationship-type (monopoly), personality (Big Five poles, from openness/conscientiousness/agreeableness signs) and role (domsub, NSFW) are value-backed, matched against `boosts` tokens; all four are Premium. Free users get genders, languages, Popular-category interests, and VR platforms (headset-kind); everything else is Premium. Editing bumps `queues.filters_updated_at` and refreshes both queues, keeping the current profile on top.
 
 ### Scoring factors (Date, base weight × Premium custom weight)
 
@@ -101,15 +101,12 @@ Likes-you 40, interests 3/5/20 by strength, custom interests 25, games 1, locati
 
 Key tables:
 - **users**: email, password hash, status, timestamps, platform tokens (APNS/FCM), activity.
-- **profiles** (1:1 users): display name, bio, custom interests, personality, queue counters.
+- **profiles** (1:1 users): display name, bio, custom interests, personality, queue counters, tags (`genders`, `interests`, `games`, `kinks`, ...: ids from packages/data; see the root AGENTS.md's Data catalog).
 - **profile_images**: image metadata + moderation status (R2-stored).
-- **profile_attributes**: profile ↔ attribute junction (gender, interests, games, kinks, ...).
-- **profile_preference_attributes**: "looking for" attributes.
 - **preferences** / **preferences_email_notifications** / **preferences_push_notifications** / **preferences_privacy**: account, email, push, privacy settings.
-- **profile_preferences**: matchmaking prefs (age range, etc.).
+- **profile_preferences**: matchmaking prefs (age range, "looking for" `genders` and `kinks`, etc.).
 - **profile_custom_weights**: per-factor importance multipliers.
 - **profile_advanced_filters**: per-category include/exclude filters.
-- **attributes**: lookup for all attributes (type, name, metadata).
 - **likes_and_passes**: responses (type like/pass, kind love/friend).
 - **prospects**: precomputed queue (position, completed_at, fallback).
 - **queues**: per-user-per-mode state (recompute timestamps, fallback notice, undo latch).
@@ -120,7 +117,8 @@ Key tables:
 - **moderation_events**: audit log of bans, shadowbans, warns, payments bans, flags and image actions; no user FK, so a banned account's record outlives it. Deleting an non-banned account (self, inactivity or admin) erases its events and retained images.
 - **age_verifications**: Yoti sessions and results, plus Apple/Google age-range reports.
 - **profile_prompts**: prompt responses.
-- **subscriptions**: Chargebee/RevenueCat data (Stripe deprecated). **plans**: available plans.
+- **entitlements**: Chargebee/RevenueCat data (Stripe deprecated); `plan_id` is a plan's id in
+  packages/data's `plans.json`.
 
 ## Production
 

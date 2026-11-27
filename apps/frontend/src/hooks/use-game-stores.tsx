@@ -1,25 +1,29 @@
+import { queryOptions, useSuspenseQueries, useSuspenseQuery } from "@tanstack/react-query";
 import { useCallback, useMemo } from "react";
 
-import type { GameStore, MinimalAttribute } from "~/api/attributes";
-import { attributeId, gameStores } from "~/api/attributes";
+import { byId, gamesOptions, platformsOptions } from "~/api/data";
+import type { DataEntry } from "~/api/data";
 import type { GameStoreLink } from "~/components/game-stores";
 import { GameStoreLinks } from "~/components/game-stores";
 import type { InputAutocompleteOption } from "~/components/inputs/autocomplete";
 import { useLocale } from "~/i18n";
 
-import { useAttributes, useAttributeTranslation } from "./use-attribute";
 import { useOptionalSession } from "./use-session";
 
-const storePlatforms: Record<GameStore, string> = {
-	pcvr: "3Kagenz7boB64Ke6vEAKv6",
-	horizon: "RNaigbGdB7H4ZMw5c8ysbi",
-	frame: "Ry723pMCrWV4ptp8ywcorG",
-	pico: "FEX8jjr4P9aeBurRUTLhU7",
-	vive: "N458aYKyg6hweVbyDEMDAR",
-	androidxr: "Qb3Ar9wqh7mAMwdevJCfYS",
-	vision: "c255sGSiJpMNnm6NTUcvx6",
-	psvr: "n6sSShVCXahjazwqEraKCG"
-};
+const storePlatforms = {
+	pcvr: "pcvr",
+	horizon: "meta_quest",
+	frame: "steam_frame",
+	pico: "pico",
+	vive: "vive_standalone",
+	androidxr: "android_xr",
+	vision: "apple_vision",
+	psvr: "playstation_vr"
+} as const satisfies Partial<Record<keyof DataEntry<"games">, string>>;
+
+export type GameStore = keyof typeof storePlatforms;
+
+export const gameStores = Object.keys(storePlatforms) as Array<GameStore>;
 
 const localizedStoreUrls: Record<string, Record<string, string>> = {
 	"https://cluster.mu/en/downloads": {
@@ -32,16 +36,6 @@ const localizedStoreUrls: Record<string, Record<string, string>> = {
 	}
 };
 
-function useGamesById(): Map<string, MinimalAttribute<"game">> {
-	const games = useAttributes("game");
-
-	return useMemo(
-		() => new Map(games.map((game) => [attributeId(game), game])),
-		[games]
-	);
-}
-
-// Stores belonging to a set of platform attributes, in canonical order.
 function useGameStores(platforms: Array<string> | undefined): Array<GameStore> {
 	return useMemo(
 		() => gameStores.filter((store) => platforms?.includes(storePlatforms[store])),
@@ -52,20 +46,24 @@ function useGameStores(platforms: Array<string> | undefined): Array<GameStore> {
 // Stores matching the platforms on the signed-in user's saved profile.
 export function useSessionGameStores(): Array<GameStore> {
 	const session = useOptionalSession();
-	return useGameStores(session?.user.profile.attributes.platform);
+	return useGameStores(session?.user.profile.platforms);
 }
 
 export function useGameStoreLinks(
 	stores: ReadonlyArray<GameStore> = gameStores
 ): (gameId: string) => Array<GameStoreLink> {
-	const games = useGamesById();
-	const tAttribute = useAttributeTranslation();
 	const [locale] = useLocale();
+	const [{ data: games }, { data: platforms }] = useSuspenseQueries({
+		queries: [
+			queryOptions({ ...gamesOptions({ locale }), select: byId }),
+			queryOptions({ ...platformsOptions({ locale }), select: byId })
+		]
+	});
 
 	return useCallback(
 		(gameId) => {
-			const game = games.get(gameId);
-			if (!game || typeof game === "string") return [];
+			const game = games[gameId];
+			if (!game) return [];
 
 			return stores
 				.map((store) => {
@@ -76,12 +74,12 @@ export function useGameStoreLinks(
 					return {
 						store,
 						href: localizedStoreUrls[href]?.[locale] ?? href,
-						name: tAttribute[platform]?.name ?? platform
+						name: platforms[platform]?.name ?? platform
 					};
 				})
 				.filter(Boolean);
 		},
-		[games, locale, stores, tAttribute]
+		[games, locale, stores, platforms]
 	);
 }
 
@@ -90,8 +88,8 @@ export function useGameStoreLinks(
 export function useGameOptions(
 	platforms: Array<string>
 ): Array<InputAutocompleteOption> {
-	const games = useAttributes("game");
-	const tAttribute = useAttributeTranslation();
+	const [locale] = useLocale();
+	const { data: games } = useSuspenseQuery(gamesOptions({ locale }));
 
 	const stores = useGameStores(platforms);
 	const allLinks = useGameStoreLinks();
@@ -100,16 +98,13 @@ export function useGameOptions(
 	return useMemo(
 		() =>
 			games
-				.map((game) => {
-					const id = attributeId(game);
-					return { id, supported: supportedLinks(id).length > 0 };
-				})
+				.map(({ id, name }) => ({ id, name, supported: supportedLinks(id).length > 0 }))
 				.sort((a, b) => Number(b.supported) - Number(a.supported))
-				.map(({ id }) => ({
+				.map(({ id, name }) => ({
 					key: id,
-					label: tAttribute[id]?.name ?? id,
+					label: name,
 					suffix: <GameStoreLinks links={allLinks(id)} />
 				})),
-		[games, tAttribute, allLinks, supportedLinks]
+		[games, allLinks, supportedLinks]
 	);
 }

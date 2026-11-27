@@ -1,39 +1,84 @@
 import Foundation
 
-// The watch's strings, attribute names and prompt names all live in the web app's translation
-// files (apps/frontend/messages), which are bundled as-is and translated in Weblate.
+// The watch's strings live in the web app's translation files (apps/frontend/messages), bundled
+// as-is. The names of genders, prompts and the rest come from the API in the watch's locale, so
+// they stay current between App Store releases; both are translated in Weblate.
 @MainActor
 final class Translations {
     static let shared = Translations()
 
     private var language: String?
-    private var attributes: [String: Any] = [:]
+    private var locale = Translations.defaultLocale
+    private var names: [String: [String: String]] = [:]
+    private var namesLocale: String?
     private var messages: [String: Any] = [:]
-    private lazy var english = Self.file("en") as? [String: Any] ?? [:]
+    private lazy var defaultMessages = Self.file(Self.defaultLocale, in: "messages") as? [String: Any] ?? [:]
 
-    func attribute(_ type: String, _ id: String) -> String? {
+    private static let files = [
+        "genders", "sexualities", "interests", "games", "platforms", "kinks", "prompts", "relationships",
+        "languages", "report-reasons",
+    ]
+
+    func name(_ file: String, _ id: String) -> String? {
         load()
-        return ((attributes[type] as? [String: Any])?[id] as? [String: Any])?["name"] as? String
+        return names[file]?[id]
+    }
+
+    func loadNames() async {
+        load()
+        guard namesLocale != locale, let api = Account.shared.api else { return }
+        let locale = locale
+
+        let loaded = await withTaskGroup(of: (String, [DataEntry])?.self) { group in
+            for file in Self.files where names[file] == nil {
+                group.addTask { (try? await api.entries(file, locale: locale)).map { (file, $0) } }
+            }
+            return await group.reduce(into: [String: [DataEntry]]()) { loaded, result in
+                if case let (file, entries)? = result { loaded[file] = entries }
+            }
+        }
+
+        guard locale == self.locale else { return }
+        for (file, entries) in loaded {
+            names[file] = Dictionary(entries.compactMap { entry in entry.name.map { (entry.id, $0) } }) { first, _ in first }
+        }
+        if Self.files.allSatisfy({ names[$0] != nil }) { namesLocale = locale }
     }
 
     // Dotted keys reach into nested objects, like "watch.sent".
     func message(_ key: String) -> String? {
         load()
-        return Self.lookup(key, in: messages) ?? Self.lookup(key, in: english)
+        return Self.lookup(key, in: messages) ?? Self.lookup(key, in: defaultMessages)
     }
 
-    // The locales the web app has enabled (src/i18n/languages.ts). Others ship in the bundle as
-    // unreviewed drafts, so anything else falls back to English rather than the device language.
-    private static let enabledLocales: Set<String> = ["en"]
+    // packages/data/content/locales.json, as on the web.
+    private static let locales: [String: [String: Any]] = {
+        guard let url = Bundle.main.url(forResource: "locales", withExtension: "json"),
+              let data = try? Data(contentsOf: url),
+              let locales = try? JSONSerialization.jsonObject(with: data) as? [String: [String: Any]]
+        else { preconditionFailure("locales.json is missing from the watch bundle") }
+        return locales
+    }()
+
+    // The enabled locales. Others ship in the bundle as unreviewed drafts, so anything else falls back
+    // to the default locale rather than the device language.
+    private static let enabledLocales = Set(locales.compactMap { code, locale in locale["enabled"] as? Bool == true ? code : nil })
+
+    private static let defaultLocale: String = {
+        guard let code = locales.first(where: { $0.value["default"] as? Bool == true })?.key
+        else { preconditionFailure("locales.json marks no default locale") }
+        return code
+    }()
 
     private func load() {
-        let preferred = Account.shared.user?.preferences?.language ?? Locale.preferredLanguages.first ?? "en"
+        let preferred = Account.shared.user?.preferences?.language ?? Locale.preferredLanguages.first ?? Self.defaultLocale
         guard preferred != language else { return }
         language = preferred
 
-        let locale = [preferred, String(preferred.prefix(2))].first { Self.enabledLocales.contains($0) } ?? "en"
-        attributes = Self.file("attributes.\(locale)") as? [String: Any] ?? [:]
-        messages = Self.file(locale) as? [String: Any] ?? [:]
+        locale = [preferred, String(preferred.prefix(2))].first { Self.enabledLocales.contains($0) } ?? Self.defaultLocale
+        names = [:]
+        namesLocale = nil
+        messages = Self.file(locale, in: "messages") as? [String: Any] ?? [:]
     }
 
     private static func lookup(_ key: String, in messages: [String: Any]) -> String? {
@@ -44,8 +89,8 @@ final class Translations {
         return value as? String
     }
 
-    private static func file(_ name: String) -> Any? {
-        guard let url = Bundle.main.url(forResource: name, withExtension: "json", subdirectory: "messages"),
+    private static func file(_ name: String, in directory: String) -> Any? {
+        guard let url = Bundle.main.url(forResource: name, withExtension: "json", subdirectory: directory),
               let data = try? Data(contentsOf: url) else { return nil }
         return try? JSONSerialization.jsonObject(with: data)
     }

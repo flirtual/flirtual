@@ -2,7 +2,6 @@ import { useState } from "react";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 
-import { lifetimePlanId } from "~/api/plan";
 import { activeEntitlements } from "~/api/user";
 import { useDevice } from "~/hooks/use-device";
 import { useOptionalSession } from "~/hooks/use-session";
@@ -21,7 +20,7 @@ export const PlanList: FC = () => {
 
 	if (
 		activeEntitlements(user).some(
-			(entitlement) => entitlement.plan.id === "Di7Sypboma4ryhy6MUagyS"
+			(entitlement) => entitlement.plan.id === "lifetime"
 		)
 	) {
 		return null;
@@ -31,22 +30,22 @@ export const PlanList: FC = () => {
 		<div className="grid grid-cols-1 gap-8 desktop:grid-cols-3 desktop:gap-4">
 			{[
 				{
-					id: "LVjvu5YE7PjUJxVrkfsnMi",
-					oneMonthId: "LVjvu5YE7PjUJxVrkfsnMi",
+					id: "monthly",
+					oneMonthId: "monthly",
 					duration: t("monthly"),
 					price: 14.99
 				},
 				{
-					id: "fBDvWjdgvG6zEZMj6ZfyNG",
-					oneMonthId: "LVjvu5YE7PjUJxVrkfsnMi",
+					id: "three_months",
+					oneMonthId: "monthly",
 					duration: t("every_number_months", { number: 3 }),
 					price: 29.99,
 					originalPrice: 44.97,
 					highlight: true
 				},
 				{
-					id: "Wt4aFY7jVzvSNFK9qcYAr5",
-					oneMonthId: "LVjvu5YE7PjUJxVrkfsnMi",
+					id: "six_months",
+					oneMonthId: "monthly",
 					duration: t("every_number_months", { number: 6 }),
 					price: 44.99,
 					originalPrice: 89.94
@@ -63,7 +62,7 @@ export const PlanList: FC = () => {
 			})}
 			<div className="col-span-full flex flex-col gap-2">
 				<PlanCard
-					id={lifetimePlanId}
+					id="lifetime"
 					disabled={purchasePending}
 					duration={t("lifetime")}
 					price={129.99}

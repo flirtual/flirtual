@@ -1,11 +1,13 @@
+import { useSuspenseQuery } from "@tanstack/react-query";
 import type { FC, ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
+import { byId, gendersOptions } from "~/api/data";
 import type { LikesYouGenderFilter, ProspectKind } from "~/api/matchmaking";
 import { HeartIcon } from "~/components/icons/gradient/heart";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
 import { homieMode } from "~/features";
-import { useAttributeTranslation } from "~/hooks/use-attribute";
+import { useLocale } from "~/i18n";
 
 interface FilterButtonProps {
 	active: boolean;
@@ -68,7 +70,8 @@ export const LikesFilters: FC<LikesFiltersProps> = ({
 	onKindChange,
 	onGenderChange
 }) => {
-	const tAttribute = useAttributeTranslation("gender");
+	const [locale] = useLocale();
+	const { data: genders } = useSuspenseQuery({ ...gendersOptions({ locale }), select: byId });
 
 	return (
 		<div className="grid grid-cols-3 flex-wrap gap-2 desktop:flex">
@@ -84,9 +87,9 @@ export const LikesFilters: FC<LikesFiltersProps> = ({
 			)}
 			<FilterGroup
 				options={[
-					{ key: "woman", label: tAttribute.tpkW7r8PZ2RUuYGUSYi82N?.plural ?? "Women" },
-					{ key: "man", label: tAttribute.rhw3rcbheU7vc9vcSy6W6V?.plural ?? "Men" },
-					{ key: "other", label: tAttribute.jAL62ePbibxaG4FPu7S8LG?.name ?? "Other" }
+					{ key: "woman", label: genders.woman?.plural ?? "Women" },
+					{ key: "man", label: genders.man?.plural ?? "Men" },
+					{ key: "other", label: genders.other?.name ?? "Other" }
 				]}
 				className={homieMode ? "col-span-2" : "col-span-3"}
 				value={gender}

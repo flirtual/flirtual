@@ -12,6 +12,7 @@ defmodule Flirtual.ScreenshotSeeds do
   alias Flirtual.Matchmaking
   alias Flirtual.Repo
   alias Flirtual.User
+  alias Flirtual.Data.{Game, Gender, Interest, Platform, Sexuality}
 
   @domain "screenshots.flirtual.test"
   @password "screenshots-only-password"
@@ -19,28 +20,28 @@ defmodule Flirtual.ScreenshotSeeds do
   @image_directory "screenshot-seeds"
   @font "/System/Library/Fonts/Supplemental/Arial Bold.ttf"
 
-  @woman "tpkW7r8PZ2RUuYGUSYi82N"
-  @man "rhw3rcbheU7vc9vcSy6W6V"
-  @other_gender "jAL62ePbibxaG4FPu7S8LG"
-  @games ["3nzcXDoMySRrPn6jHC8n3o", "JSyJfiSSzqm232nKidEDog", "MhWAgbFzmusLJyAdtSXfXV"]
-  @platforms ["RNaigbGdB7H4ZMw5c8ysbi", "3Kagenz7boB64Ke6vEAKv6"]
-  @sexualities ["a29qas632KmMpQ8T6arLxa", "NC5wiUcxGavten9E8gw64n"]
+  @woman "woman"
+  @man "man"
+  @other_gender "other"
+  @games ["vrchat", "beat_saber", "phasmophobia"]
+  @platforms ["meta_quest", "pcvr"]
+  @sexualities ["bisexual", "pansexual"]
   @interests %{
-    anime: "BTGLoHoCuPjvY2NrRKSWpb",
-    art: "ZNXNaLMr85qQbKmX2TsrGQ",
-    board_games: "ba58TDSPbjG9jtZixoneUn",
-    cats: "m9K2k5wXQrVdehe3KN9ZaY",
-    cooking: "9HPT7wgAd7HJajQkAXMbrQ",
-    dogs: "xXDcmmB7yrZEMWi4ZLg6z3",
-    gaming: "PAepdb7ewc4GVEnpWDCbcK",
-    hiking: "Ka3JLErYVPJWHLLzQBT2WE",
-    karaoke: "K9MHU3GP3kVfW8yck8ZPdg",
-    movies: "Amq7oATgh6UcQx4SoeJdkD",
-    music: "fEnnW4XeNnNbqReCryY58R",
-    puzzles: "TuaoosdiDnHXC7FHVArkdW",
-    reading: "XJUTFqrF2avzVtHMA7AGzk"
+    anime: "anime",
+    art: "art",
+    board_games: "board_games",
+    cats: "cats",
+    cooking: "cooking",
+    dogs: "dogs",
+    gaming: "gaming",
+    hiking: "hiking",
+    karaoke: "karaoke",
+    movies: "movies",
+    music: "music",
+    puzzles: "puzzles",
+    reading: "reading"
   }
-  @promotional_plan "7bd2c5d3-d5e2-4188-af26-b26f64f9101f"
+  @promotional_plan "promotional"
 
   # Personality answers: question0-2 openness, 3-5 conscientiousness, 6-8 agreeableness;
   # the third of each group counts against its trait.
@@ -237,7 +238,6 @@ defmodule Flirtual.ScreenshotSeeds do
   end
 
   defp short(binary), do: binary |> Ecto.UUID.load!() |> ShortUUID.encode!()
-  defp attribute(short_id), do: short_id |> ShortUUID.decode!() |> Ecto.UUID.dump!()
 
   defp accounts, do: @viewers ++ @targets
   defp account_ids, do: Enum.map(accounts(), &uuid("user:" <> &1.key))
@@ -293,13 +293,15 @@ defmodule Flirtual.ScreenshotSeeds do
   defp query!(sql, params), do: Repo.query!(sql, params)
 
   defp seed do
-    for attribute <-
-          [@woman, @man, @other_gender] ++
-            @games ++ @platforms ++ @sexualities ++ Map.values(@interests) do
-      %{rows: [[count]]} =
-        query!("select count(*) from attributes where id = $1", [attribute(attribute)])
-
-      if count != 1, do: raise("missing attribute #{attribute}; is the database seeded?")
+    for {module, ids} <- [
+          {Gender, [@woman, @man, @other_gender]},
+          {Game, @games},
+          {Platform, @platforms},
+          {Sexuality, @sexualities},
+          {Interest, Map.values(@interests)}
+        ],
+        id <- ids do
+      if is_nil(module.get(id)), do: raise("#{id} is not in #{module.file()}.json")
     end
 
     File.mkdir_p!(uploads_directory())
@@ -415,23 +417,23 @@ defmodule Flirtual.ScreenshotSeeds do
     interests =
       @interests |> Map.values() |> Enum.sort() |> Enum.drop(rem(index, 5)) |> Enum.take(5)
 
-    attributes =
-      [account.gender | @games |> Enum.take(2)] ++ @platforms ++ @sexualities ++ interests
-
-    Repo.insert_all(
-      "profile_attributes",
-      Enum.map(attributes, &%{profile_id: id, attribute_id: attribute(&1)})
+    query!(
+      """
+      update profiles
+      set genders = $1, games = $2, platforms = $3, sexualities = $4, interests = $5
+      where user_id = $6
+      """,
+      [[account.gender], Enum.take(@games, 2), @platforms, @sexualities, interests, id]
     )
 
-    Repo.insert_all("profile_preferences", [%{profile_id: id, agemin: 18, agemax: 60}])
-
-    Repo.insert_all(
-      "profile_preference_attributes",
-      Enum.map(
-        account[:looking_for] || [@woman, @man, @other_gender],
-        &%{preferences_id: id, attribute_id: attribute(&1)}
-      )
-    )
+    Repo.insert_all("profile_preferences", [
+      %{
+        profile_id: id,
+        agemin: 18,
+        agemax: 60,
+        genders: account[:looking_for] || [@woman, @man, @other_gender]
+      }
+    ])
   end
 
   defp insert_premium(account, id, now) do
@@ -443,7 +445,7 @@ defmodule Flirtual.ScreenshotSeeds do
       %{
         id: uuid("entitlement:" <> account.key),
         user_id: id,
-        plan_id: Ecto.UUID.dump!(@promotional_plan),
+        plan_id: @promotional_plan,
         kind: "one_time",
         store: "promotional",
         created_at: now,

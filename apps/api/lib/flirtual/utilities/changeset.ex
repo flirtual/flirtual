@@ -115,4 +115,42 @@ defmodule Flirtual.Utilities.Changeset do
     |> append_changeset_errors(changeset_b)
     |> change(changes_fn.(changeset_b.changes))
   end
+
+  def validate_entry(changeset, id_key, module, options \\ []) do
+    field = Keyword.get(options, :field, entry_field(id_key))
+
+    if not changeset.valid? or not changed?(changeset, id_key) do
+      changeset
+    else
+      case module.get(get_field(changeset, id_key)) do
+        nil ->
+          add_error(changeset, id_key, "does not exist")
+
+        entry ->
+          if Map.has_key?(changeset.types, field),
+            do: put_change(changeset, field, entry),
+            else: changeset
+      end
+    end
+  end
+
+  def validate_entries(changeset, id_key, module, options \\ []) do
+    field = Keyword.get(options, :field, entry_field(id_key))
+
+    if changed?(changeset, id_key) do
+      entries =
+        changeset
+        |> get_field(id_key)
+        |> Enum.map(&module.get/1)
+        |> Enum.reject(&is_nil/1)
+
+      put_change(changeset, field, entries)
+    else
+      changeset
+    end
+  end
+
+  defp entry_field(id_key),
+    do:
+      id_key |> Atom.to_string() |> String.replace_suffix("_id", "") |> String.to_existing_atom()
 end

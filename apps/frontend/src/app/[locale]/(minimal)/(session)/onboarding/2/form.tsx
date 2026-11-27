@@ -1,7 +1,9 @@
+import { useSuspenseQueries } from "@tanstack/react-query";
 import { MoveLeft } from "lucide-react";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 
+import { interestsOptions, platformsOptions } from "~/api/data";
 import { Profile } from "~/api/user/profile";
 import { ButtonLink } from "~/components/button";
 import { Form } from "~/components/forms";
@@ -14,17 +16,13 @@ import {
 	InputSwitch
 } from "~/components/inputs";
 import { vrTags } from "~/features";
-import {
-	useAttributes,
-	useAttributeTranslation
-} from "~/hooks/use-attribute";
 import { useSession } from "~/hooks/use-session";
-import { useNavigate } from "~/i18n";
+import { useLocale, useNavigate } from "~/i18n";
 import { useOptimisticRoute } from "~/preload";
 import { invalidate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
-const AttributeKeys = [...(["game", "interest", "platform"] as const)];
+const FormTypes = [...(["game", "interest", "platform"] as const)];
 
 export const Onboarding2Form: FC = () => {
 	const { user } = useSession();
@@ -33,10 +31,10 @@ export const Onboarding2Form: FC = () => {
 	const { t } = useTranslation();
 	const navigate = useNavigate();
 
-	const interests = useAttributes("interest");
-	const platforms = useAttributes("platform");
-
-	const tAttribute = useAttributeTranslation();
+	const [locale] = useLocale();
+	const [{ data: interests }, { data: platforms }] = useSuspenseQueries({
+		queries: [interestsOptions({ locale, order: ["name"] }), platformsOptions({ locale })]
+	});
 
 	useOptimisticRoute(urls.onboarding(3));
 
@@ -44,9 +42,9 @@ export const Onboarding2Form: FC = () => {
 		<Form
 			fields={{
 				new: profile.new ?? false,
-				game: profile.attributes.game || [],
-				interest: profile.attributes.interest || [],
-				platform: profile.attributes.platform || []
+				game: profile.games || [],
+				interest: profile.interests || [],
+				platform: profile.platforms || []
 			}}
 			className="flex flex-col gap-8"
 			requireChange={false}
@@ -54,7 +52,7 @@ export const Onboarding2Form: FC = () => {
 				await Profile.update(user.id, {
 					new: values.new,
 					...Object.fromEntries(
-						AttributeKeys.map((type) => [`${type}Id`, values[type]])
+						FormTypes.map((type) => [`${type}Id`, values[type]])
 					)
 				});
 
@@ -81,11 +79,11 @@ export const Onboarding2Form: FC = () => {
 										<InputAutocomplete
 											{...field.props}
 											options={platforms.map((platform) => {
-												const id = typeof platform === "string" ? platform : platform.id;
+												const { id, name, example } = platform;
 												return {
 													key: id,
-													label: tAttribute[id]?.name || id,
-													example: tAttribute[id]?.example
+													label: name || id,
+													example
 												};
 											})}
 											limit={8}
@@ -119,16 +117,12 @@ export const Onboarding2Form: FC = () => {
 									options={interests
 										.filter(
 											(interest) =>
-												interest.category === "iiCe39JvGQAAtsrTqnLddb"
+												interest.category === "popular"
 										)
 										.map((interest) => ({
 											key: interest.id,
-											label: tAttribute[interest.id]?.name ?? interest.id
-										}))
-										.sort((a, b) => {
-											if (a.label > b.label) return 1;
-											return -1;
-										})}
+											label: interest.name
+										}))}
 									limit={10}
 									placeholder={t("select_interests")}
 									value={field.props.value || []}

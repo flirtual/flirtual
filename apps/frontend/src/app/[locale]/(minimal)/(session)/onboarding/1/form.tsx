@@ -7,23 +7,16 @@ import { Profile } from "~/api/user/profile";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import {
-	InputAutocomplete,
 	InputDateSelect,
 	InputLabel,
 	InputLabelHint,
 	InputSwitch
 } from "~/components/inputs";
-import { InputCheckboxList } from "~/components/inputs/checkbox-list";
-import { InputCountrySelect } from "~/components/inputs/specialized";
+import { InputCountrySelect, InputGenderSelect } from "~/components/inputs/specialized";
 import { useApplyGeolocation } from "~/components/inputs/specialized/geolocation-input";
 import { InputTimezoneSelect } from "~/components/inputs/specialized/timezone-select";
 import { endOfYear, toLocalDateString } from "~/date";
 import { timezones } from "~/features";
-import {
-	useAttributes,
-	useAttributeTranslation
-} from "~/hooks/use-attribute";
-import type { AttributeTranslation } from "~/hooks/use-attribute";
 import { useConfig } from "~/hooks/use-config";
 import { useSession } from "~/hooks/use-session";
 import { useBrowserTimezone } from "~/hooks/use-timezone";
@@ -45,10 +38,7 @@ export const Onboarding1Form: FC = () => {
 
 	const applyGeolocation = useApplyGeolocation();
 
-	const genders = useAttributes("gender");
 	const browserTimezone = useBrowserTimezone();
-
-	const tAttribute = useAttributeTranslation();
 
 	useOptimisticRoute(urls.onboarding(2));
 
@@ -60,7 +50,7 @@ export const Onboarding1Form: FC = () => {
 					: new Date(),
 				country: user.profile.country ?? country ?? null,
 				timezone: profile.timezone ?? browserTimezone,
-				gender: profile.attributes.gender || [],
+				gender: profile.genders || [],
 				geolocation: true
 			}}
 			className="flex flex-col gap-8"
@@ -72,9 +62,9 @@ export const Onboarding1Form: FC = () => {
 						required: ["bornAt"]
 					}),
 					Profile.update(user.id, {
-						country: values.country ?? "none",
-						timezone: values.timezone ?? "none",
-						genderId: values.gender?.filter((id) => id !== "other")
+						country: values.country ?? null,
+						timezone: values.timezone ?? null,
+						genderId: values.gender
 					}),
 					applyGeolocation(geolocation).catch((reason) => {
 						if (isWretchError(reason)) return toasts.addError(t(`errors.${reason.json.error}` as any));
@@ -116,71 +106,12 @@ export const Onboarding1Form: FC = () => {
 						)}
 					</FormField>
 					<FormField name="gender">
-						{(field) => {
-							const simpleGenders = genders.filter((gender) => gender.simple);
-							const simpleGenderIds = new Set(
-								simpleGenders.map((gender) => gender.id)
-							);
-							const checkboxValue = field.props.value?.some(
-								(id) => !simpleGenderIds.has(id) && id !== "other"
-							)
-								? [...field.props.value, "other"]
-								: field.props.value;
-
-							// "other" checkbox isn't a gender, temporarily filter so it
-							// doesn't count towards the limit.
-							const otherGenders = (field.props.value ?? []).filter(
-								(id) => id !== "other"
-							);
-
-							return (
-								<>
-									<InputLabel {...field.labelProps}>{t("my_gender")}</InputLabel>
-									<InputCheckboxList
-										{...field.props}
-										items={[
-											...simpleGenders.map((gender) => ({
-												conflicts: gender.conflicts ?? [],
-												key: gender.id,
-												label: tAttribute[gender.id]?.name ?? gender.id
-											})),
-											{
-												key: "other",
-												label: t("other_genders")
-											}
-										]}
-										value={checkboxValue ?? []}
-									/>
-									{checkboxValue?.includes("other") && (
-										<InputAutocomplete
-											{...field.props}
-											options={genders.map((gender) => {
-												const { name, definition }
-													= (tAttribute[
-														gender.id
-													] as AttributeTranslation<"gender">) ?? {};
-
-												return {
-													definition,
-													definitionLink: gender.definitionLink,
-													hidden:
-														simpleGenderIds.has(gender.id)
-														|| (!otherGenders.includes(gender.id)
-															&& (gender.conflicts ?? []).some((conflict) =>
-																otherGenders.includes(conflict))),
-													key: gender.id,
-													label: name ?? gender.id
-												};
-											})}
-											limit={4}
-											placeholder={t("select_genders")}
-											value={otherGenders}
-											onChange={(value) => field.props.onChange([...value, "other"])}
-										/>
-									)}
-								</>
-							);
-						}}
+						{(field) => (
+							<>
+								<InputLabel {...field.labelProps}>{t("my_gender")}</InputLabel>
+								<InputGenderSelect {...field.props} />
+							</>
+						)}
 					</FormField>
 					<FormField name="country">
 						{(field) => (

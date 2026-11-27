@@ -1,7 +1,9 @@
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { MoveLeft } from "lucide-react";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 
+import { gendersOptions } from "~/api/data";
 import { Profile } from "~/api/user/profile";
 import { ButtonLink } from "~/components/button";
 import { Form } from "~/components/forms";
@@ -9,14 +11,8 @@ import { FormButton } from "~/components/forms/button";
 import { InputLabel } from "~/components/inputs";
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
 import { Slider } from "~/components/inputs/slider";
-import {
-
-	useAttributes,
-	useAttributeTranslation
-} from "~/hooks/use-attribute";
-import type { AttributeTranslation } from "~/hooks/use-attribute";
 import { useSession } from "~/hooks/use-session";
-import { useNavigate } from "~/i18n";
+import { useLocale, useNavigate } from "~/i18n";
 import { invalidate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
@@ -29,17 +25,17 @@ export const Onboarding3Form: FC = () => {
 
 	const navigate = useNavigate();
 
-	const genders = useAttributes("gender").filter(
-		({ simple, fallback }) => simple || fallback
+	const [locale] = useLocale();
+	const genders = useSuspenseQuery(gendersOptions({ locale })).data.filter(
+		(gender) => gender.simple || gender.default
 	);
 
 	const { t } = useTranslation();
-	const tAttribute = useAttributeTranslation();
 
 	return (
 		<Form
 			fields={{
-				gender: preferences?.attributes.gender || [],
+				genders: preferences?.genders || [],
 				age: [
 					preferences?.agemin ?? absMinAge,
 					preferences?.agemax ?? absMaxAge
@@ -49,17 +45,11 @@ export const Onboarding3Form: FC = () => {
 			requireChange={false}
 			onSubmit={async (values) => {
 				const [agemin, agemax] = values.age;
-				const { gender: _, ...preferenceAttributes }
-					= preferences?.attributes ?? {};
-
 				await Profile.updatePreferences(user.id, {
-					requiredAttributes: ["gender"],
+					required: ["genders"],
 					agemin: agemin === absMinAge ? null : agemin,
 					agemax: agemax === absMaxAge ? null : agemax,
-					attributes: [
-						...Object.values(preferenceAttributes).flat().filter(Boolean),
-						...values.gender
-					]
+					genders: values.genders
 				});
 
 				await invalidate({ queryKey: sessionKey() });
@@ -68,7 +58,7 @@ export const Onboarding3Form: FC = () => {
 		>
 			{({ FormField }) => (
 				<>
-					<FormField name="gender">
+					<FormField name="genders">
 						{(field) => (
 							<>
 								<InputLabel {...field.labelProps}>
@@ -77,15 +67,11 @@ export const Onboarding3Form: FC = () => {
 								<InputCheckboxList
 									{...field.props}
 									items={genders.map((gender) => {
-										const { name, plural } = (tAttribute[
-											gender.id
-										] as AttributeTranslation<"gender">) ?? {
-											name: gender.id
-										};
+										const { name, plural } = gender;
 
 										return {
 											key: gender.id,
-											label: gender.fallback
+											label: gender.default
 												? t("other_genders")
 												: (plural ?? name)
 										};

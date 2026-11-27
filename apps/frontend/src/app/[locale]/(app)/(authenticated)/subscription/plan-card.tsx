@@ -2,7 +2,6 @@ import type { Dispatch, FC, SetStateAction } from "react";
 import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
-import { lifetimePlanId } from "~/api/plan";
 import { activeEntitlements } from "~/api/user";
 import { usePlans } from "~/hooks/use-plans";
 import { usePurchase } from "~/hooks/use-purchase";
@@ -37,7 +36,7 @@ export const PlanCard: FC<PlanCardProps> = (props) => {
 	} = props;
 	const session = useOptionalSession();
 	const { t } = useTranslation();
-	const lifetime = id === lifetimePlanId;
+	const lifetime = id === "lifetime";
 
 	const { packages } = usePurchase();
 	const plans = usePlans();

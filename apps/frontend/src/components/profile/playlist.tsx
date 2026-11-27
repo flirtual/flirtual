@@ -40,7 +40,7 @@ export const playlistPlatforms = [
 				// sv: "se"
 			};
 
-			return `https://embed.music.apple.com/${locales[locale]}/playlist/${id}?theme=${theme}`;
+			return `https://embed.music.apple.com/${locales[locale as keyof typeof locales] ?? locales.en}/playlist/${id}?theme=${theme}`;
 		}
 	},
 	{

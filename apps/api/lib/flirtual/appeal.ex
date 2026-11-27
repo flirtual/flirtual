@@ -1,7 +1,8 @@
 defmodule Flirtual.Appeal do
   import Ecto.Query
 
-  alias Flirtual.{Attribute, Brand, Freshdesk, ModerationEvent, ObanWorkers, Repo, User}
+  alias Flirtual.{Brand, Freshdesk, ModerationEvent, ObanWorkers, Repo, User}
+  alias Flirtual.Data.BanReason
 
   def appealed?(user_id) when is_binary(user_id),
     do: appealed?(user_id, ModerationEvent.active(user_id, :banned))
@@ -71,7 +72,7 @@ defmodule Flirtual.Appeal do
         fields.profile => User.url(user, :id) |> URI.to_string(),
         fields.date => ban && DateTime.to_date(ban.created_at) |> Date.to_iso8601(),
         fields.moderator => moderator_name(ban),
-        fields.reason => ban && Map.get(Attribute.ban_reasons(), ban.reason_id),
+        fields.reason => reason_name(ban),
         fields.details => ban && ban.message
       }
     })
@@ -87,4 +88,10 @@ defmodule Flirtual.Appeal do
 
   defp moderator_name(%ModerationEvent{automatic: true}), do: "Automatic"
   defp moderator_name(_), do: nil
+
+  defp reason_name(%ModerationEvent{reason_id: id}) when is_binary(id) do
+    with %BanReason{name: name} <- BanReason.get(id), do: name
+  end
+
+  defp reason_name(_), do: nil
 end

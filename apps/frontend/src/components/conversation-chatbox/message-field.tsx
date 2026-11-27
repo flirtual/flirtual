@@ -51,8 +51,8 @@ export function MessageField({ common, referencedMessage, editor, voiceRecorder,
 	const { people } = common.themeCustom as ThemeCustom;
 	const me = people[currentUser.id];
 	const them = Object.values(people).find((user) => user.talkjsId !== currentUser.id);
-	const mine = new Set(me?.profile.attributes.interest);
-	const theirs = new Set(them?.profile.attributes.interest);
+	const mine = new Set(me?.profile.interests);
+	const theirs = new Set(them?.profile.interests);
 	const gifQueries = interestQueries
 		.filter(([id]) => mine.has(id) && theirs.has(id))
 		.map(([, query]) => query);

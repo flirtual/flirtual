@@ -34,7 +34,7 @@ export const Finish3Form: FC = () => {
 		<Form
 			fields={{
 				filter: "",
-				defaultInterests: profile.attributes.interest || [],
+				defaultInterests: profile.interests || [],
 				customInterests: customInterestsEnabled ? profile.customInterests : []
 			}}
 			className="flex flex-col gap-8"

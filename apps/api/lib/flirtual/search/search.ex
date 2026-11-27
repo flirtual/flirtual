@@ -14,7 +14,7 @@ defmodule Flirtual.Search do
   alias Flirtual.User
   alias Flirtual.User.Profile.LikesAndPasses
 
-  @columns "(id, uid, dob, active_at, agemin, agemax, openness, conscientiousness, agreeableness, attributes, attributes_lf, country, languages, boosts, nsfw, hidden_from_nonvisible, tz_norm, has_geo, lat, lon, like_multiplier)"
+  @columns "(id, uid, dob, active_at, agemin, agemax, openness, conscientiousness, agreeableness, tags, tags_lf, country, languages, boosts, nsfw, hidden_from_nonvisible, tz_norm, has_geo, lat, lon, like_multiplier)"
 
   # Timezone sentinel: the tz factor is zeroed at or above this, so a missing
   # timezone never earns a proximity boost.
@@ -103,7 +103,7 @@ defmodule Flirtual.Search do
       dob bigint, active_at bigint,
       agemin bigint, agemax bigint,
       openness bigint, conscientiousness bigint, agreeableness bigint,
-      attributes multi64, attributes_lf multi64,
+      tags multi64, tags_lf multi64,
       country bigint,
       languages multi64,
       boosts multi64,
@@ -154,8 +154,8 @@ defmodule Flirtual.Search do
       openness: doc.openness,
       conscientiousness: doc.conscientiousness,
       agreeableness: doc.agreeableness,
-      attributes: hashes(doc.attributes),
-      attributes_lf: hashes(doc.attributes_lf),
+      tags: hashes(doc.tags),
+      tags_lf: hashes(doc.tags_lf),
       country: (doc.country && h(to_string(doc.country))) || 0,
       languages: doc.languages |> Enum.map(&to_string/1) |> hashes(),
       boosts: hashes(doc.boosts),
@@ -171,7 +171,7 @@ defmodule Flirtual.Search do
   defp row_values(row) do
     "(#{row.id},'#{esc(row.uid)}',#{row.dob},#{row.active_at},#{row.agemin},#{row.agemax}," <>
       "#{row.openness},#{row.conscientiousness},#{row.agreeableness}," <>
-      "(#{Enum.join(row.attributes, ",")}),(#{Enum.join(row.attributes_lf, ",")}),#{row.country}," <>
+      "(#{Enum.join(row.tags, ",")}),(#{Enum.join(row.tags_lf, ",")}),#{row.country}," <>
       "(#{Enum.join(row.languages, ",")}),(#{Enum.join(row.boosts, ",")}),#{row.nsfw}," <>
       "#{row.hidden_from_nonvisible},#{row.tz_norm},#{row.has_geo},#{fl(row.lat)},#{fl(row.lon)}," <>
       "#{fl(row.like_multiplier)})"

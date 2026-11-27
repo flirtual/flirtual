@@ -5,7 +5,7 @@ defmodule Flirtual.ModerationEvent do
   import Ecto.Query
   import Flirtual.Utilities, only: [to_ilike_pattern: 1]
 
-  alias Flirtual.{Attribute, ModerationCursor, ModerationEvent, Repo, User}
+  alias Flirtual.{ModerationCursor, ModerationEvent, Repo, User}
   alias Flirtual.User.Profile.Image
 
   @types [
@@ -41,7 +41,7 @@ defmodule Flirtual.ModerationEvent do
 
     belongs_to(:user, User)
     belongs_to(:moderator, User)
-    belongs_to(:reason, Attribute)
+    field(:reason_id, :string)
 
     field(:message, :string)
     field(:automatic, :boolean, default: false)
@@ -98,7 +98,7 @@ defmodule Flirtual.ModerationEvent do
   def visible_types(%User{tags: tags}),
     do: if(:admin in tags, do: @types, else: @types -- @admin_types)
 
-  def default_assoc, do: [:reason]
+  def default_assoc, do: []
 
   @fields [
     :type,
@@ -121,7 +121,6 @@ defmodule Flirtual.ModerationEvent do
     |> validate_required([:type])
     |> foreign_key_constraint(:user_id)
     |> foreign_key_constraint(:moderator_id)
-    |> foreign_key_constraint(:reason_id)
     |> foreign_key_constraint(:reviewed_by)
     |> foreign_key_constraint(:revoked_by)
   end
@@ -288,7 +287,7 @@ defmodule Flirtual.ModerationEvent do
       field(:event_id, Ecto.ShortUUID)
       field(:search, :string, default: "")
       field(:types, {:array, :string})
-      field(:reason_ids, {:array, Ecto.ShortUUID}, default: [])
+      field(:reason_ids, {:array, :string}, default: [])
       field(:excluded_duplicate_types, {:array, :string}, default: [])
       field(:reviewed, :boolean, default: false)
       field(:order, :string, default: "desc")
@@ -577,7 +576,7 @@ defmodule Flirtual.ModerationEvent do
       |> Repo.all()
 
     duplicates =
-      if reason_id == Attribute.duplicate_ban_reason_id(),
+      if reason_id == "duplicate_account",
         do: duplicates,
         else: reject_unbanned_duplicates(duplicates)
 

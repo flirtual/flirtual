@@ -13,13 +13,13 @@ translate anything.
 
 You get a batch file (JSON array) under `apps/frontend/i18n/.staging/context/batches/`. Each item:
 
-- `id`: `component:key`. Components: `flirtual` (`apps/frontend/messages/en.json`), `attributes`
-  (`apps/frontend/messages/attributes.en.json`, profile attribute names by type), `notifications`
+- `id`: `component:key`. Components: `flirtual` (`apps/frontend/messages/en.json`), data
+  (`data/<name>`, from `packages/data/content/<name>.en.json`: names of genders, interests, games, reasons, plans and the rest), `notifications`
   (`apps/api/priv/gettext/en/LC_MESSAGES/notifications.po`, emails and push notifications,
   `%{name}` placeholders).
 - `en`: the English. Gettext plural entries are joined with " | " (singular | plural).
 - `usage`: code references (file, line, the line's code; `pattern` means it matched a template
-  like ``t(`errors.${code}`)``). For attributes, read `attribute-types.json` next to the batch.
+  like ``t(`errors.${code}`)``). For data keys, read `data-types.json` next to the batch.
 - `watch`: the watchOS app renders it too (plain text, `{name}` placeholders only).
 - `existingExplanation`: a maintainer's note already on Weblate. Trust it and keep its facts.
 - `previous`: an earlier context entry for this key, if the English changed since.
@@ -62,13 +62,13 @@ Fields:
 - `group` (required): feature/screen used to batch related strings for translation, as a short
   path like `settings/privacy`, `onboarding`, `profile/view`, `browse`, `matches`, `homepage`,
   `premium`, `legal/terms`, `news/<id>`, `errors`, `email/<template>`, `push`, `watch`,
-  `attributes/<type>`. Reuse names across keys of the same feature.
+  `data/<name>`. Reuse names across keys of the same feature.
 - `screens` (required): where it's visible. Use the URL route (`/settings/privacy`,
   `/browse`), or `dialog: <name>`, `toast`, `email: <subject>`, `push`, `watch: <screen>`,
   `homepage`. Be consistent: these names drive screenshot grouping.
 - `element` (required), one of: button, link, label, title, heading, tab, menu-item, option,
   badge, placeholder, tooltip, toast, error, dialog, notice, body, list-item, alt-text, meta,
-  email-subject, email-body, push, legal, news, attribute, other.
+  email-subject, email-body, push, legal, news, entry, other.
 - `description` (required): one or two sentences: what it is, where, what happens around it.
   Say if it's concatenated with other strings, or if one word fills a sentence slot elsewhere.
   Say what a verb applies to and who is addressed. Mention the sense of ambiguous words
@@ -86,8 +86,8 @@ Fields:
   can't answer (intent, product naming, whether a joke matters, legal stance). Offer the
   likely options. Omit otherwise.
 
-Attributes: write a wildcard default per type (`"attributes:game.*.name": {...}`) and override
-only the keys that need it. Notes on attribute types: game titles are proper nouns (keep
+Data files: write a wildcard default per file (`"data/games:*.name": {...}`) and override
+only the keys that need it. Notes on the files: game titles are proper nouns (keep
 official names, use an official localized title only when one exists); kinks are the opt-in
 adult (NSFW) feature; `definitionLink` values are URLs; languages are language names.
 

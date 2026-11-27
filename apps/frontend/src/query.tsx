@@ -1,14 +1,13 @@
 /* eslint-disable react-refresh/only-export-components */
 import type { QueryFunctionContext, QueryKey, QueryState, UseMutationOptions, UseQueryOptions } from "@tanstack/react-query";
 import { useMutation as _useMutation, useQuery as _useQuery, hashKey, MutationCache, QueryCache, QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import i18n from "i18next";
 import ms from "ms" with { type: "macro" };
 import type { Dispatch, PropsWithChildren } from "react";
 import { use, useDebugValue, useSyncExternalStore } from "react";
 
 import { getAgeRange } from "./age-range";
 import { AgeVerification } from "./api/age-verification";
-import type { AttributeType } from "./api/attributes";
-import { Attribute } from "./api/attributes";
 import { Authentication } from "./api/auth";
 import { isWretchError } from "./api/common";
 import type { Issue } from "./api/common";
@@ -17,6 +16,7 @@ import { Conversation } from "./api/conversations";
 import type { ProspectKind, QueueIssue } from "./api/matchmaking";
 import { Matchmaking } from "./api/matchmaking";
 import { Plan } from "./api/plan";
+import { listTimezones } from "./api/timezones";
 import { User } from "./api/user";
 import { Personality } from "./api/user/profile/personality";
 import { reportAppOutdated } from "./capacitor";
@@ -41,9 +41,9 @@ export const ageRangeFetcher = () => getAgeRange();
 export const ageVerificationKey = () => ["age-verification"] as const;
 export const ageVerificationFetcher = () => AgeVerification.get();
 
-export const attributeKey = <T extends AttributeType>(type: T, version?: string) => ["attribute", type, version ?? null] as const;
-export function attributeFetcher<T extends AttributeType>({ queryKey: [, type, version], signal }: QueryFunctionContext<ReturnType<typeof attributeKey<T>>>) {
-	return Attribute.list(type, version ?? undefined, { signal });
+export const timezonesKey = () => ["timezones"] as const;
+export function timezonesFetcher({ signal }: QueryFunctionContext<ReturnType<typeof timezonesKey>>) {
+	return listTimezones({ signal });
 }
 
 export const userKey = (userId?: string | null) => ["user", userId || null] as const;
@@ -83,8 +83,8 @@ export const conversationsKey = () => ["conversations"] as const;
 export const conversationKey = (conversationId: string) => ["conversation", conversationId] as const;
 export const conversationFetcher = async ({ queryKey: [, conversationId], signal }: QueryFunctionContext<ReturnType<typeof conversationKey>>) => Conversation.get(conversationId, { signal });
 
-export const plansKey = () => ["plans"] as const;
-export const plansFetcher = ({ signal }: QueryFunctionContext<ReturnType<typeof plansKey>>) => Plan.list({ signal });
+export const plansKey = (locale: string = i18n.language) => ["plans", locale] as const;
+export const plansFetcher = ({ queryKey: [, locale], signal }: QueryFunctionContext<ReturnType<typeof plansKey>>) => Plan.list(locale, { signal });
 
 export const personalityKey = (userId: string) => ["personality", userId] as const;
 export const personalityFetcher = ({ queryKey: [, userId], signal }: QueryFunctionContext<ReturnType<typeof personalityKey>>) => Personality.get(userId, { signal });
@@ -104,24 +104,7 @@ export async function preloadAll() {
 
 		preload({ queryKey: plansKey(), queryFn: plansFetcher }),
 
-		preload({ queryKey: ageRangeKey(), queryFn: ageRangeFetcher, staleTime: Number.POSITIVE_INFINITY }),
-
-		// ...([
-		// 	"country",
-		// 	"game",
-		// 	"gender",
-		// 	"interest",
-		// 	"interest-category",
-		// 	"kink",
-		// 	"language",
-		// 	"platform",
-		// 	"prompt",
-		// 	"relationship",
-		// 	"sexuality"
-		// ] as const).map((type) => preload({
-		// 	queryKey: attributeKey(type),
-		// 	queryFn: attributeFetcher
-		// }))
+		preload({ queryKey: ageRangeKey(), queryFn: ageRangeFetcher, staleTime: Number.POSITIVE_INFINITY })
 	]).catch((reason) => {
 		log("preloadAll() failed: %o", reason);
 	});

@@ -88,8 +88,11 @@ defmodule Flirtual.MixProject do
        github: "open-telemetry/opentelemetry-erlang-contrib",
        ref: "de90984094bebbe6f78d47c9204442dbc3bbae5a",
        sparse: "instrumentation/opentelemetry_finch"},
-      {:gettext, "~> 1.0.0"},
       {:jason, "~> 1.4"},
+      {:gettext, "~> 1.0.0"},
+      {:flirtual_data, path: "../../packages/data"},
+      {:ex_cldr_collation, "~> 1.1"},
+      {:ex_cldr_messages, "~> 2.0"},
       {:joken, "~> 2.5"},
       {:sentry, "~> 14.0"},
       {:bandit, "~> 1.6"},
@@ -115,7 +118,7 @@ defmodule Flirtual.MixProject do
   defp aliases do
     [
       setup: ["deps.get", "ecto.setup"],
-      "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
+      "ecto.setup": ["ecto.create", "ecto.migrate"],
       "ecto.reset": ["ecto.drop", "ecto.setup"]
     ]
   end

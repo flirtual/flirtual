@@ -401,15 +401,13 @@ config :flirtual, Flirtual.ObanWorkers,
         :prune_sessions,
         :prune_banned,
         :prune_inactive,
-        :update_attribute_order,
         :reconcile_entitlements,
         :refresh_connections
       ],
       else: [
         :like_digest,
         :update_disposable,
-        :prune_sessions,
-        :update_attribute_order
+        :prune_sessions
       ]
     ),
   email_rate_limit: Env.get("EMAIL_RATE_LIMIT", default: "1") |> String.to_integer()

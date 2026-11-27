@@ -25,7 +25,7 @@ import { basename, join } from "node:path";
 import type { Browser, BrowserContext } from "playwright-core";
 
 import type { ComponentName, Id } from "./common.ts";
-import { isMain, parseArguments, parseId, readJson, screenshotDirectory, staging, writeJson } from "./common.ts";
+import { isDataKey, isMain, parseArguments, parseId, readJson, screenshotDirectory, staging, weblateSlug, writeJson } from "./common.ts";
 import { loadContext } from "./context.ts";
 import type { Account, Scenario, ScreenContext } from "./screens.ts";
 import { accounts, defaultViewport, isManual, password, scenarios } from "./screens.ts";
@@ -85,8 +85,8 @@ function plan() {
 	for (let [name, keys] of byScreen) {
 		const flagged = keys.filter((key) => context[key].needsScreenshot);
 		if (flagged.length === 0 || staffOnly.test(name)) continue;
-		// Attribute values are picker options, not all on screen at once; link only the flagged ones.
-		keys = keys.filter((key) => !key.startsWith("attributes:") || context[key].needsScreenshot);
+		// Data entries are picker options, not all on screen at once; link only the flagged ones.
+		keys = keys.filter((key) => !isDataKey(key) || context[key].needsScreenshot);
 		const route = routable(name);
 		screens.push({ name, route, authenticated: !route || !publicRoutes.has(route), flagged, keys });
 	}
@@ -350,7 +350,7 @@ async function upload(session: string, apply: boolean) {
 			console.log(`${apply ? "uploading" : "would upload"} ${basename(path)} to ${component} as "${name}", linking ${keys.length} strings`);
 			if (!apply) continue;
 
-			const existing = (await list<{ id: number; name: string }>(`components/${project}/${component}/screenshots/`)).find((shot) => shot.name === name);
+			const existing = (await list<{ id: number; name: string }>(`components/${project}/${weblateSlug(component)}/screenshots/`)).find((shot) => shot.name === name);
 			const image = new Blob([readFileSync(path)], { type: "image/png" });
 			let id = existing?.id;
 			if (id) {
@@ -371,7 +371,7 @@ async function upload(session: string, apply: boolean) {
 				if (!id) throw new Error(`No screenshot id in ${JSON.stringify(created)}`);
 			}
 
-			const sources = await list<Unit>(`translations/${project}/${component}/en/units/`);
+			const sources = await list<Unit>(`translations/${project}/${weblateSlug(component)}/en/units/`);
 			for (const key of keys) {
 				const unit = sources.find((candidate) => candidate.context === key);
 				if (unit) await request("POST", `screenshots/${id}/units/`, { unit_id: unit.id });

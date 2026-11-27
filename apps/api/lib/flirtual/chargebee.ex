@@ -1,8 +1,9 @@
 defmodule Flirtual.Chargebee do
   use Flirtual.Logger, :chargebee
 
-  alias Flirtual.{Entitlement, Plan, Repo, User}
+  alias Flirtual.{Entitlement, Plans, Repo, User}
   alias Flirtual.ObanWorkers.Reconcile
+  alias Flirtual.Data.Plan
 
   import Ecto.Changeset
 
@@ -65,7 +66,7 @@ defmodule Flirtual.Chargebee do
 
   defp subscription_plan(subscription) do
     case subscription.subscription_items do
-      [%{"item_price_id" => item_price_id} | _] -> Plan.get(chargebee_id: item_price_id)
+      [%{"item_price_id" => item_price_id} | _] -> Plans.get(chargebee_id: item_price_id)
       _ -> nil
     end
   end
@@ -247,7 +248,7 @@ defmodule Flirtual.Chargebee do
             iframe_messaging: true,
             customer: %{
               id: chargebee_id,
-              locale: to_valid_locale(user.preferences.language)
+              locale: to_valid_locale(User.locale(user))
             },
             subscription: %{id: subscription.store_id},
             subscription_items: [
@@ -276,7 +277,7 @@ defmodule Flirtual.Chargebee do
             iframe_messaging: true,
             customer: %{
               id: chargebee_id,
-              locale: to_valid_locale(user.preferences.language)
+              locale: to_valid_locale(User.locale(user))
             },
             subscription_items: [
               %{item_price_id: plan.chargebee_id}
@@ -313,7 +314,7 @@ defmodule Flirtual.Chargebee do
             iframe_messaging: true,
             customer: %{
               id: chargebee_id,
-              locale: to_valid_locale(user.preferences.language)
+              locale: to_valid_locale(User.locale(user))
             },
             item_prices: [
               %{item_price_id: plan.chargebee_id}
@@ -344,7 +345,7 @@ defmodule Flirtual.Chargebee do
 
   def manage(%User{chargebee_id: chargebee_id} = user) do
     Chargebeex.PortalSession.create(%{
-      customer: %{id: chargebee_id, locale: to_valid_locale(user.preferences.language)}
+      customer: %{id: chargebee_id, locale: to_valid_locale(User.locale(user))}
     })
   end
 
@@ -353,7 +354,7 @@ defmodule Flirtual.Chargebee do
     with {:ok, customer} <-
            Chargebeex.Customer.create(%{
              email: user.email,
-             locale: to_valid_locale(user.preferences.language)
+             locale: to_valid_locale(User.locale(user))
            }),
          {:ok, _} <-
            change(user, %{chargebee_id: customer.id})
@@ -366,7 +367,7 @@ defmodule Flirtual.Chargebee do
   def update_customer(%User{chargebee_id: chargebee_id} = user) when is_binary(chargebee_id) do
     Chargebeex.Customer.update(chargebee_id, %{
       email: user.email,
-      locale: to_valid_locale(user.preferences.language)
+      locale: to_valid_locale(User.locale(user))
     })
   end
 
@@ -478,7 +479,7 @@ defmodule Flirtual.Chargebee do
         } = event
       ) do
     with %User{} = user <- User.get(chargebee_id: customer_chargebee_id),
-         %Plan{} = plan <- Plan.get(chargebee_id: "lifetime"),
+         %Plan{} = plan <- Plans.get(chargebee_id: "lifetime"),
          subscription =
            Entitlement.get(user_id: user.id, store: :chargebee, kind: :subscription),
          {:ok, _} <-

@@ -1,0 +1,14 @@
+*
+!apps/api
+!packages/data/mix.exs
+!packages/data/lib
+!packages/data/content
+
+apps/api/_build
+apps/api/deps
+apps/api/cover
+apps/api/doc
+apps/api/test
+apps/api/tmp
+apps/api/.elixir_ls
+**/erl_crash.dump

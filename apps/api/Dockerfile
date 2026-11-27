@@ -15,7 +15,7 @@ RUN apt-get update -y && apt-get install -y build-essential cmake git \
     && apt-get clean && rm -f /var/lib/apt/lists/*_*
 
 # prepare build dir
-WORKDIR /app
+WORKDIR /build/apps/api
 
 # install hex + rebar
 RUN mix local.hex --force && \
@@ -25,28 +25,31 @@ RUN mix local.hex --force && \
 ENV MIX_ENV="prod"
 
 # install mix dependencies
-COPY mix.exs mix.lock ./
+COPY apps/api/mix.exs apps/api/mix.lock ./
+COPY packages/data/mix.exs /build/packages/data/
 RUN mix deps.get --only $MIX_ENV
 RUN mkdir config
 
 # copy compile-time config files before we compile dependencies
 # to ensure any relevant config change will trigger the dependencies
 # to be re-compiled.
-COPY config/config.exs config/${MIX_ENV}.exs config/
-RUN mix deps.compile
+COPY apps/api/config/config.exs apps/api/config/${MIX_ENV}.exs config/
+RUN mix deps.compile --skip-local-deps
 
-COPY priv priv
+COPY apps/api/priv priv
 
-COPY lib lib
+COPY packages/data/lib /build/packages/data/lib
+COPY packages/data/content /build/packages/data/content
+COPY apps/api/lib lib
 
 # Compile the release
 RUN mix compile
 RUN mix sentry.package_source_code
 
 # Changes to config/runtime.exs don't require recompiling the code
-COPY config/runtime.exs config/
+COPY apps/api/config/runtime.exs config/
 
-COPY rel rel
+COPY apps/api/rel rel
 RUN mix release
 
 # start a new build stage so that the final image will only contain
@@ -70,7 +73,7 @@ RUN chown nobody /app
 ENV MIX_ENV="prod"
 
 # Only copy the final release from the build stage
-COPY --from=builder --chown=nobody:root /app/_build/${MIX_ENV}/rel/flirtual ./
+COPY --from=builder --chown=nobody:root /build/apps/api/_build/${MIX_ENV}/rel/flirtual ./
 
 USER nobody
 

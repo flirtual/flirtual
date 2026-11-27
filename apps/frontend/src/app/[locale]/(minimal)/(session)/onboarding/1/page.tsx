@@ -1,12 +1,13 @@
 import { useTranslation } from "react-i18next";
 import invariant from "tiny-invariant";
 
+import { countriesOptions, gendersOptions } from "~/api/data";
 import { ModelCard } from "~/components/model-card";
 import { timezones } from "~/features";
 import { i18n } from "~/i18n";
 import { isLocale } from "~/i18n/languages";
 import { metaMerge, rootMeta } from "~/meta";
-import { attributeFetcher, attributeKey, queryClient } from "~/query";
+import { queryClient, timezonesFetcher, timezonesKey } from "~/query";
 
 import type { Route } from "./+types/page";
 import { Onboarding1Form } from "./form";
@@ -22,14 +23,11 @@ export const meta: Route.MetaFunction = (options) => {
 };
 
 export const handle = {
-	preload: () => Promise.all(([
-		"gender",
-		"country",
-		...(timezones ? ["timezone" as const] : [])
-	] as const).map((type) => queryClient.prefetchQuery({
-		queryKey: attributeKey(type),
-		queryFn: attributeFetcher
-	})))
+	preload: () => Promise.all([
+		queryClient.prefetchQuery(gendersOptions({ locale: i18n.language })),
+		queryClient.prefetchQuery(countriesOptions({ locale: i18n.language })),
+		...(timezones ? [queryClient.prefetchQuery({ queryKey: timezonesKey(), queryFn: timezonesFetcher })] : [])
+	])
 };
 
 export const clientLoader = handle.preload;

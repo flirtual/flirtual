@@ -331,7 +331,7 @@ defmodule Flirtual.Mailer do
     subject = Keyword.fetch!(options, :subject)
     action_url = Keyword.get(options, :action_url)
     unsubscribe_token = Keyword.get(options, :unsubscribe_token)
-    language = Keyword.get(options, :language) || "en"
+    language = Keyword.get(options, :language) || Flirtual.Data.Locale.default().id
 
     Gettext.with_locale(language, fn ->
       email =

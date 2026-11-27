@@ -48,7 +48,7 @@ export function HavingIssues({ error }: { error?: unknown }) {
 	const { t } = useTranslation();
 	const [locale] = useLocale();
 
-	const t2 = translations[locale];
+	const t2 = translations[locale as keyof typeof translations] ?? translations.en;
 
 	const { native } = useDevice();
 	const [squishCount, setSquishCount] = useState(0);

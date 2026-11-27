@@ -1,12 +1,12 @@
 ---
 name: translate
-description: Localize Flirtual's user-facing strings (frontend messages, attributes, API notifications) with per-key code context, a shared style guide and glossary, Fable translator and reviewer agents, and Weblate sync (context, glossary, screenshots, draft translations). Modes - context, full, incremental (default). Use after adding or changing keys in messages/en.json, or to refresh translation context.
+description: Localize Flirtual's user-facing strings (frontend messages, data files, API notifications) with per-key code context, a shared style guide and glossary, Fable translator and reviewer agents, and Weblate sync (context, glossary, screenshots, draft translations). Modes - context, full, incremental (default). Use after adding or changing keys in messages/en.json, or to refresh translation context.
 argument-hint: "[context|full|incremental] [locales, e.g. ja,ko]"
 ---
 
 # /translate
 
-Localizes `apps/frontend/messages/en.json`, `apps/frontend/messages/attributes.en.json` and
+Localizes `apps/frontend/messages/en.json`, `packages/data/content/<name>.en.json` (genders, reasons, plans, …) and
 `apps/api/priv/gettext/en/LC_MESSAGES/notifications.po` into the target locales, and syncs
 everything through Weblate. Arguments: a mode (default `incremental`) and optional locales
 (default all ten: de, es, fr, ja, ko, nl, pt, pt-BR, ru, sv; never any other).
@@ -18,7 +18,7 @@ write to Weblate are dry runs unless given `--apply`.
 
 ## Ground rules
 
-- **Weblate owns translations.** Never edit `messages/<non-en>.json`, `attributes.<non-en>.json`
+- **Weblate owns translations.** Never edit `messages/<non-en>.json`, `packages/data/content/<name>.<non-en>.json` overlays
   or non-English `.po` files. All translation changes go through Weblate.
 - **Never overwrite people's work.** `weblate.ts drafts` writes "needs editing" only where the
   text is empty or wasn't written by a person (MT, add-ons, git imports); where a person wrote

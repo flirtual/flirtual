@@ -1,8 +1,8 @@
 defmodule Flirtual.Matchmaking.Query do
   import Ecto.Query
   import Flirtual.Utilities
+  alias Flirtual.Data.{Gender, Platform}
 
-  alias Flirtual.Attribute
   alias Flirtual.Features
   alias Flirtual.Matchmaking.Query
   alias Flirtual.Repo
@@ -14,7 +14,10 @@ defmodule Flirtual.Matchmaking.Query do
   alias Flirtual.User.Profile.LikesAndPasses
   alias Flirtual.User.Profile.Preferences
 
-  @simple_genders ["jAL62ePbibxaG4FPu7S8LG", "rhw3rcbheU7vc9vcSy6W6V", "tpkW7r8PZ2RUuYGUSYi82N"]
+  @everyone Gender.all()
+            |> Enum.filter(&(&1.simple == true or &1.default == true))
+            |> Enum.map(& &1.id)
+            |> Enum.sort()
 
   @default_size 31
 
@@ -119,19 +122,17 @@ defmodule Flirtual.Matchmaking.Query do
   end
 
   defp my_genders(%User{profile: profile}) do
-    profile.attributes
-    |> filter_by(:type, "gender")
-    |> Attribute.reject_pronouns()
-    |> Attribute.normalize_aliases()
+    profile.genders
+    |> Profile.reject_pronouns()
+    |> Profile.normalize_aliases()
     |> Enum.map(& &1.id)
     |> Enum.sort()
   end
 
   defp my_preferred_genders(%User{profile: profile}) do
-    profile.preferences.attributes
-    |> filter_by(:type, "gender")
-    |> Attribute.reject_pronouns()
-    |> Attribute.normalize_aliases()
+    profile.preferences.genders
+    |> Profile.reject_pronouns()
+    |> Profile.normalize_aliases()
     |> Enum.map(& &1.id)
     |> Enum.sort()
   end
@@ -140,10 +141,10 @@ defmodule Flirtual.Matchmaking.Query do
   defp filter_gender_one_way(user) do
     preferred = my_preferred_genders(user)
 
-    if preferred == @simple_genders or preferred == [] do
+    if preferred == @everyone or preferred == [] do
       []
     else
-      [{:terms, "attributes", preferred}]
+      [{:terms, "tags", Enum.map(preferred, &Search.Tokens.entry(Gender, &1))}]
     end
   end
 
@@ -152,10 +153,10 @@ defmodule Flirtual.Matchmaking.Query do
     genders = my_genders(user)
 
     reverse =
-      if genders == @simple_genders or genders == [] do
+      if genders == @everyone or genders == [] do
         []
       else
-        [{:terms, "attributes_lf", genders}]
+        [{:terms, "tags_lf", Enum.map(genders, &Search.Tokens.entry(Gender, &1))}]
       end
 
     filter_gender_one_way(user) ++ reverse
@@ -163,31 +164,29 @@ defmodule Flirtual.Matchmaking.Query do
 
   # Whether the target's gender preferences include one of the user's genders.
   def prefers_my_gender?(user_id, target_id) do
+    stored_genders =
+      Profile
+      |> where(user_id: ^user_id)
+      |> select([profile], profile.genders)
+      |> Repo.one()
+
     my_genders =
-      Attribute
-      |> join(:inner, [attribute], profile_attribute in Profile.Attributes,
-        on: profile_attribute.attribute_id == attribute.id
-      )
-      |> where(
-        [attribute, profile_attribute],
-        profile_attribute.profile_id == ^user_id and attribute.type == "gender"
-      )
-      |> Repo.all()
-      |> Attribute.reject_pronouns()
-      |> Attribute.normalize_aliases()
+      (stored_genders || [])
+      |> Profile.reject_pronouns()
+      |> Profile.normalize_aliases()
       |> Enum.map(& &1.id)
       |> Enum.uniq()
       |> Enum.sort()
 
-    if my_genders == @simple_genders or my_genders == [] do
+    if my_genders == @everyone or my_genders == [] do
       true
     else
-      Attribute
-      |> join(:inner, [attribute], preference in Preferences.Attributes,
-        on: preference.attribute_id == attribute.id
+      Preferences
+      |> where(profile_id: ^target_id)
+      |> where(
+        [preferences],
+        fragment("? && ?::text[]", preferences.genders, ^my_genders)
       )
-      |> where([attribute, preference], preference.preferences_id == ^target_id)
-      |> where([attribute], attribute.type == "gender" and attribute.id in ^my_genders)
       |> Repo.exists?()
     end
   end
@@ -234,33 +233,34 @@ defmodule Flirtual.Matchmaking.Query do
     include_filters ++ exclude_filters
   end
 
-  # VR platforms and accessories are one attribute category but two UI groups;
+  # VR platforms and accessories are one category but two UI groups;
   # splitting includes by kind ANDs them, so headset + accessory requires both.
-  defp include_group(%AdvancedFilter{
-         category: :platform,
-         attribute: %{metadata: %{"kind" => kind}}
-       }),
-       do: {:platform, kind}
+  defp include_group(%AdvancedFilter{category: :platform, value: value} = filter) do
+    case Platform.get(value) do
+      %Flirtual.Data.Platform{kind: kind} when not is_nil(kind) -> {:platform, kind}
+      _ -> filter.category
+    end
+  end
 
   defp include_group(%AdvancedFilter{category: category}), do: category
 
-  # Categories whose tags aren't attributes or dedicated document fields, but
-  # namespaced tokens matched against the candidate's `boosts` field.
   @boost_categories [:relationships, :monopoly, :domsub, :personality]
 
   defp category_field(:country), do: "country"
   defp category_field(:language), do: "languages"
   defp category_field(category) when category in @boost_categories, do: "boosts"
-  defp category_field(_), do: "attributes"
+  defp category_field(_), do: "tags"
 
   defp entry_value(%AdvancedFilter{category: category} = entry)
        when category in @boost_categories,
        do: boost_token(entry)
 
-  defp entry_value(%AdvancedFilter{attribute_id: attribute_id}) when not is_nil(attribute_id),
-    do: attribute_id
-
-  defp entry_value(%AdvancedFilter{value: value}), do: to_string(value)
+  defp entry_value(%AdvancedFilter{category: category, value: value}) do
+    case AdvancedFilter.entry_module(category) do
+      nil -> to_string(value)
+      module -> Search.Tokens.entry(module, value)
+    end
+  end
 
   defp boost_token(%AdvancedFilter{category: :relationships, value: value}),
     do: Search.Tokens.relationship(value)
@@ -334,15 +334,14 @@ defmodule Flirtual.Matchmaking.Query do
   defp interests(%User{profile: profile}, cw) do
     strength_boosts = %{0 => 3, 1 => 5, 2 => 20}
 
-    profile.attributes
-    |> filter_by(:type, "interest")
+    profile.interests
     |> Profile.group_interests_by_strength()
     |> Enum.flat_map(fn {strength, interests} ->
       boost = Map.get(strength_boosts, strength, 3)
 
       Enum.map(
         interests,
-        &{:token, Search.Tokens.attribute(&1.id), boost * weight(cw, :default_interests)}
+        &{:token, Search.Tokens.tag(&1), boost * weight(cw, :default_interests)}
       )
     end)
   end
@@ -358,9 +357,8 @@ defmodule Flirtual.Matchmaking.Query do
 
   defp games(%User{profile: profile}, cw) do
     if Features.vr_tags?() do
-      profile.attributes
-      |> filter_by(:type, "game")
-      |> Enum.map(&{:token, Search.Tokens.attribute(&1.id), 1 * weight(cw, :games)})
+      profile.games
+      |> Enum.map(&{:token, Search.Tokens.tag(&1), 1 * weight(cw, :games)})
     else
       []
     end
@@ -383,7 +381,7 @@ defmodule Flirtual.Matchmaking.Query do
   defp location(%User{profile: profile}, cw) do
     scale = location_scale(profile)
     w = weight(cw, :location)
-    country_token = profile.country && Search.Tokens.country(profile.country)
+    country_token = profile.country && Search.Tokens.country(profile.country.id)
 
     [
       if(country_token,
@@ -418,8 +416,8 @@ defmodule Flirtual.Matchmaking.Query do
 
   defp relationships(%User{profile: profile}, cw) do
     Enum.map(
-      profile.relationships || [],
-      &{:token, Search.Tokens.relationship(&1), 2 * weight(cw, :relationships)}
+      profile.relationships,
+      &{:token, Search.Tokens.relationship(&1.id), 2 * weight(cw, :relationships)}
     )
   end
 
@@ -434,8 +432,8 @@ defmodule Flirtual.Matchmaking.Query do
 
   defp languages(%User{profile: profile}, cw) do
     Enum.map(
-      profile.languages || [],
-      &{:token, Search.Tokens.language(&1), 1 * weight(cw, :languages)}
+      profile.languages,
+      &{:token, Search.Tokens.language(&1.id), 1 * weight(cw, :languages)}
     )
   end
 
@@ -443,14 +441,12 @@ defmodule Flirtual.Matchmaking.Query do
     w = 2 * weight(cw, :kinks)
 
     forward =
-      profile.preferences.attributes
-      |> filter_by(:type, "kink")
-      |> Enum.map(&{:token, Search.Tokens.attribute(&1.id), w})
+      profile.preferences.kinks
+      |> Enum.map(&{:token, Search.Tokens.tag(&1), w})
 
     reverse =
-      profile.attributes
-      |> filter_by(:type, "kink")
-      |> Enum.map(&{:token, Search.Tokens.attribute_lf(&1.id), w})
+      profile.kinks
+      |> Enum.map(&{:token, Search.Tokens.tag_lf(&1), w})
 
     forward ++ reverse
   end

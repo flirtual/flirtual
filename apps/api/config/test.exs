@@ -26,6 +26,9 @@ config :flirtual, FlirtualWeb.Endpoint,
 # In tests we don't run Oban jobs
 config :flirtual, Oban, testing: :inline
 
+# Tests rank on demand, inside their sandbox.
+config :flirtual, Flirtual.Popularity, refresh: false
+
 # In test we don't send emails.
 config :flirtual, Flirtual.Mailer, adapter: Swoosh.Adapters.Test
 

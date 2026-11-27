@@ -12,7 +12,7 @@ import { readdirSync, readFileSync, rmSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
 
 import type { Id, Message } from "./common.ts";
-import { hash, i18nRoot, id, isMain, loadSource, parseArguments, parseId, readJson, repositoryRoot, root, staging, watchIds, writeJson } from "./common.ts";
+import { dataComponent, dataFile, hash, i18nRoot, id, isDataKey, isMain, loadSource, parseArguments, parseId, readJson, repositoryRoot, root, staging, watchIds, writeJson } from "./common.ts";
 
 export const elements = [
 	"button",
@@ -39,13 +39,13 @@ export const elements = [
 	"push",
 	"legal",
 	"news",
-	"attribute",
+	"entry",
 	"other"
 ] as const;
 export type Element = (typeof elements)[number];
 
 // Elements where a long translation breaks the layout.
-export const compactElements = new Set<Element>(["button", "label", "title", "tab", "menu-item", "option", "badge", "placeholder", "attribute"]);
+export const compactElements = new Set<Element>(["button", "label", "title", "tab", "menu-item", "option", "badge", "placeholder", "entry"]);
 
 export interface ContextEntry {
 	// Hash of the English when this entry was written; a mismatch means it may be stale.
@@ -119,7 +119,7 @@ function indexUsage(source: Map<Id, Message>) {
 
 	const flirtualKeys = [...source.keys()].filter((key) => key.startsWith("flirtual:")).map((key) => parseId(key)[1]);
 	const literalKeys = new Set(flirtualKeys);
-	const attributeTypes = new Set([...source.keys()].filter((key) => key.startsWith("attributes:")).map((key) => parseId(key)[1].split(".")[0]!));
+	const dataFiles = new Set([...source.keys()].flatMap((key) => dataFile(parseId(key)[0]) ?? []));
 
 	const files = [
 		...walk(join(root, "src"), [".ts", ".tsx"]),
@@ -142,7 +142,15 @@ function indexUsage(source: Map<Id, Message>) {
 
 			for (const [, key] of code.matchAll(/["'`]([\w.-]+)["'`]/g)) {
 				if (literalKeys.has(key!)) add(id("flirtual", key!), at);
-				if (attributeTypes.has(key!) && /useAttribute|attributes?\(|tAttribute/.test(code)) add(id("attributes", key!), at);
+				// Data keys count as used by definition (the API serves every entry); this only points the
+				// context pass at code that shows a file's entries.
+				if (dataFiles.has(key!) && /name\(|tags\(|entries\(/.test(code)) add(id(dataComponent(key!), "*"), at);
+			}
+
+			// Code that shows a file's entries uses its options from `~/api/data`, as `gendersOptions`.
+			for (const [, name] of code.matchAll(/\b([a-z][A-Za-z]*)Options\b/g)) {
+				const file = name!.replaceAll(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`);
+				if (dataFiles.has(file)) add(id(dataComponent(file), "*"), at);
 			}
 
 			for (const [, template] of code.matchAll(/`([^`]*\$\{[^`]*)`/g)) {
@@ -171,7 +179,7 @@ function main() {
 		case "usage": {
 			const usage = indexUsage(source);
 			writeJson(usagePath, usage);
-			const unused = [...source.keys()].filter((key) => !key.startsWith("attributes:") && !usage[key]);
+			const unused = [...source.keys()].filter((key) => !isDataKey(key) && !usage[key]);
 			console.log(`Indexed ${Object.keys(usage).length} keys; ${unused.length} keys have no code reference.`);
 			break;
 		}
@@ -185,13 +193,14 @@ function main() {
 
 			const pending = [...source.entries()].filter(([key, value]) => all || context[key]?.hash !== hash(value));
 
-			// Attributes are batched per type: one type is one kind of thing (games, kinks, languages).
+			// Data entries are batched per file: one file is one kind of thing (games, kinks, languages).
 			const groups = new Map<string, Array<Id>>();
 			for (const [key] of pending) {
-				const [component, name] = parseId(key);
+				const [component] = parseId(key);
+				const file = dataFile(component);
 				const firstFile = usage[key]?.find((use) => !use.pattern)?.file ?? usage[key]?.[0]?.file ?? "unreferenced";
-				const group = component === "attributes"
-					? `attributes/${name.split(".")[0]}`
+				const group = file
+					? `data/${file}`
 					: component === "notifications" ? "notifications" : firstFile.split("/").slice(0, -1).join("/");
 				groups.set(group, [...(groups.get(group) ?? []), key]);
 			}
@@ -200,8 +209,8 @@ function main() {
 			const batches: Array<Array<Id>> = [];
 			let current: Array<Id> = [];
 			for (const [group, keys] of [...groups.entries()].sort(([a], [b]) => a.localeCompare(b))) {
-				const attributes = group.startsWith("attributes/");
-				if (current.length > 0 && (current.length + keys.length > size || attributes !== current[0]!.startsWith("attributes:"))) {
+				const data = group.startsWith("data/");
+				if (current.length > 0 && (current.length + keys.length > size || data !== isDataKey(current[0]!))) {
 					batches.push(current);
 					current = [];
 				}
@@ -216,12 +225,12 @@ function main() {
 					watch: watch.has(key) || undefined,
 					existingExplanation: explanations[key] || undefined,
 					previous: context[key],
-					usage: key.startsWith("attributes:") ? undefined : usage[key]?.slice(0, 12)
+					usage: isDataKey(key) ? undefined : usage[key]?.slice(0, 12)
 				})));
 			});
 
-			const attributeUsage = Object.fromEntries(Object.entries(usage).filter(([key]) => key.startsWith("attributes:")));
-			writeJson(join(batchDirectory, "attribute-types.json"), attributeUsage);
+			const dataUsage = Object.fromEntries(Object.entries(usage).filter(([key]) => isDataKey(key as Id)));
+			writeJson(join(batchDirectory, "data-types.json"), dataUsage);
 			console.log(`${pending.length} keys need context in ${batches.length} batches → ${relative(root, batchDirectory)}`);
 			break;
 		}
@@ -234,7 +243,7 @@ function main() {
 			for (const file of readdirSync(outputDirectory).filter((name) => name.endsWith(".json"))) {
 				const raw = readJson<Record<string, Omit<ContextEntry, "hash">>>(join(outputDirectory, file));
 
-				// "attributes:game.*.name" is a default for every matching key; exact keys override it.
+				// "data/games:*.name" is a default for every matching key; exact keys override it.
 				const entries: Record<string, Omit<ContextEntry, "hash">> = {};
 				for (const [pattern, entry] of Object.entries(raw)) {
 					if (!pattern.includes("*")) continue;

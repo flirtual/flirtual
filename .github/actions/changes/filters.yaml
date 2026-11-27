@@ -13,6 +13,7 @@ capacitor: &capacitor
 
 api:
   - apps/api/**
+  - packages/data/**
   - .github/workflows/api.yaml
   - *self
 
@@ -25,6 +26,7 @@ frontend:
   - apps/frontend/public/**
   - apps/frontend/messages/**
   - apps/frontend/*.{ts,js,mjs,cjs,json,yaml,yml}
+  - packages/data/**
   - .github/workflows/frontend.yaml
   - *workspace
   - *self
@@ -60,6 +62,7 @@ android:
 
 ios:
   - apps/frontend/ios/**
+  - packages/data/content/**
   - apps/frontend/capacitor.config.ts
   - .github/workflows/ios.yaml
   - *self

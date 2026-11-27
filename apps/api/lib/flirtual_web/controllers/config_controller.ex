@@ -5,7 +5,6 @@ defmodule FlirtualWeb.ConfigController do
   import Phoenix.Controller
   import FlirtualWeb.Utilities
 
-  alias Flirtual.Attribute.Cache
   alias Flirtual.User.Login
 
   action_fallback(FlirtualWeb.FallbackController)
@@ -31,7 +30,6 @@ defmodule FlirtualWeb.ConfigController do
 
     json_with_etag(conn, %{
       country: country,
-      attributes: Cache.digests(),
       login_providers: Login.providers()
     })
   end

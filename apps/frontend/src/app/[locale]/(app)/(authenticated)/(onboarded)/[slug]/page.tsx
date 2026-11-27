@@ -3,7 +3,7 @@ import type { FC } from "react";
 import { useParams } from "react-router";
 
 import NotFoundPage from "~/app/[locale]/not-found";
-import { preloadProfileAttributes, Profile } from "~/components/profile";
+import { preloadProfileData, Profile } from "~/components/profile";
 import { useSession } from "~/hooks/use-session";
 import { useRelationship, useUser } from "~/hooks/use-user";
 import { throwRedirect } from "~/redirect";
@@ -13,7 +13,7 @@ import { QueueActions } from "../discover/queue-actions";
 import { SplitLayout } from "../matches/split-layout";
 
 export const handle = {
-	preload: preloadProfileAttributes
+	preload: preloadProfileData
 };
 
 export const clientLoader = handle.preload;

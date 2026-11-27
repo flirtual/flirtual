@@ -19,6 +19,9 @@ export default defineConfig({
 						}
 					})
 				],
+				resolve: {
+					tsconfigPaths: true
+				},
 				test: {
 					name: "worker",
 					include: ["src/**/*.test.ts"],

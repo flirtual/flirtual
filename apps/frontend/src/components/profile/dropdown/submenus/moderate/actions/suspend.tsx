@@ -1,3 +1,4 @@
+import { queryOptions, useSuspenseQueries } from "@tanstack/react-query";
 import { Gavel, Languages } from "lucide-react";
 import { useMemo } from "react";
 import type { FC } from "react";
@@ -5,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router";
 import { withSuspense } from "with-suspense";
 
+import { banReasonsOptions, byId, languagesOptions } from "~/api/data";
 import type { ProspectKind } from "~/api/matchmaking";
 import { OpenAI } from "~/api/openai";
 import { User } from "~/api/user";
@@ -21,17 +23,12 @@ import { DropdownMenuItem } from "~/components/dropdown";
 import { Form, FormButton, FormMessage } from "~/components/forms";
 import { InputLabel, InputSelect, InputTextArea } from "~/components/inputs";
 import { UserThumbnail } from "~/components/user-avatar";
-import {
-	useAttributes,
-	useAttributeTranslation
-} from "~/hooks/use-attribute";
-import type { AttributeTranslation } from "~/hooks/use-attribute";
 import { useDialog } from "~/hooks/use-dialog";
 import { useQueue } from "~/hooks/use-queue";
 import { useToast } from "~/hooks/use-toast";
-import { defaultLocale, i18n, useLocale } from "~/i18n";
+import { defaultLocale, useLocale } from "~/i18n";
 import { intlLocale } from "~/i18n/languages";
-import { mutate, userKey } from "~/query";
+import { mutate, queryClient, userKey } from "~/query";
 
 const SuspendDialog: FC<{ user: User; onClose: () => void }> = withSuspense(({ user, onClose }) => {
 	const toasts = useToast();
@@ -48,13 +45,15 @@ const SuspendDialog: FC<{ user: User; onClose: () => void }> = withSuspense(({ u
 		[locale]
 	);
 
-	const reasons = useAttributes("ban-reason");
-	const defaultReason = reasons[0] as string;
+	const [{ data: reasons }, { data: languages }] = useSuspenseQueries({
+		queries: [banReasonsOptions({ locale }), queryOptions({ ...languagesOptions({ locale }), select: byId })]
+	});
+	const reasonsById = byId(reasons);
+	const defaultReason = reasons[0]?.id;
 	const { t } = useTranslation();
-	const tAttribute = useAttributeTranslation("ban-reason");
 
-	const expectedLanguageName = tAttribute[user.preferences?.language ?? "en"]?.name
-		?? languageNames.of(user.preferences?.language ?? "en")
+	const expectedLanguageName = languages[user.preferences?.language ?? defaultLocale]?.name
+		?? languageNames.of(user.preferences?.language ?? defaultLocale)
 		?? user.preferences?.language;
 
 	return (
@@ -75,21 +74,18 @@ const SuspendDialog: FC<{ user: User; onClose: () => void }> = withSuspense(({ u
 						fields={{
 							targetId: user.id,
 							reasonId: defaultReason,
-							message: tAttribute[defaultReason]!.details
+							message: (defaultReason && reasonsById[defaultReason]?.details) || ""
 						}}
 						className="flex flex-col gap-8"
 						requireChange={false}
 						onSubmit={async ({ targetId, reasonId, message }) => {
-							const messageChanged = message !== tAttribute[reasonId]?.details;
+							const messageChanged = message !== reasonsById[reasonId]?.details;
 
 							if (!messageChanged) {
 								const targetLocale = user.preferences?.language ?? defaultLocale;
-								await i18n.loadLanguages(targetLocale);
+								const reasons = await queryClient.fetchQuery(banReasonsOptions({ locale: targetLocale }));
 
-								const targetT = i18n.getFixedT(user.preferences?.language ?? defaultLocale);
-								const attributes = targetT("attributes", { returnObjects: true });
-
-								message = (attributes[reasonId] as AttributeTranslation<"ban-reason">)?.details || message;
+								message = reasons.find(({ id }) => id === reasonId)?.details || message;
 							}
 
 							const newTarget = await User.suspend(targetId, { reasonId, message });
@@ -126,17 +122,17 @@ const SuspendDialog: FC<{ user: User; onClose: () => void }> = withSuspense(({ u
 										<InputSelect
 											{...props}
 											options={reasons.map((reason) => {
-												const id = typeof reason === "string" ? reason : reason.id;
+												const { id, name } = reason;
 
 												return ({
 													id,
-													name: tAttribute[id]?.name || id
+													name: name || id
 												});
 											})}
 											onChange={(value) => {
 												props.onChange(value);
 												message.props.onChange(
-													tAttribute[value]?.details || ""
+													reasonsById[value]?.details || ""
 												);
 											}}
 										/>
@@ -154,7 +150,7 @@ const SuspendDialog: FC<{ user: User; onClose: () => void }> = withSuspense(({ u
 										</>
 									)}
 								</FormField>
-								{message.props.value !== tAttribute[reasonId.props.value]?.details
+								{message.props.value !== reasonsById[reasonId.props.value]?.details
 									&& user.preferences?.language && user.preferences?.language !== locale && (
 									<div className="flex flex-col gap-4">
 										<FormMessage size="sm" type="warning">
@@ -169,7 +165,7 @@ const SuspendDialog: FC<{ user: User; onClose: () => void }> = withSuspense(({ u
 											size="sm"
 											onClick={async () => {
 												const { text } = await OpenAI.translate({
-													language: user.preferences?.language ?? "en",
+													language: user.preferences?.language ?? defaultLocale,
 													text: message.props.value
 												});
 

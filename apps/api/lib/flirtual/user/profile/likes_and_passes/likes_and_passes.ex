@@ -5,7 +5,10 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
   import Ecto.Query
 
   alias Flirtual.{Matchmaking, ObanWorkers, Repo, User}
-  alias Flirtual.User.Profile.{Attributes, Block, LikesAndPasses}
+  alias Flirtual.Data.Gender
+
+  alias Flirtual.User.Profile
+  alias Flirtual.User.Profile.{Block, LikesAndPasses}
 
   schema "likes_and_passes" do
     belongs_to(:profile, Flirtual.User.Profile, references: :user_id, primary_key: true)
@@ -149,10 +152,6 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
     |> Repo.one()
   end
 
-  @gender_woman "tpkW7r8PZ2RUuYGUSYi82N"
-  @gender_man "rhw3rcbheU7vc9vcSy6W6V"
-  @gender_other "jAL62ePbibxaG4FPu7S8LG"
-
   defp unrequited(profile_id) do
     LikesAndPasses
     |> where(target_id: ^profile_id, type: :like)
@@ -180,27 +179,17 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
       end
 
     query =
-      if filters[:gender] do
-        alias_of =
-          case filters[:gender] do
-            :woman -> @gender_woman
-            :man -> @gender_man
-            :other -> @gender_other
-          end
-
-        gender_ids =
-          Flirtual.Attribute.list(type: "gender")
-          |> Enum.filter(&(&1.metadata["alias_of"] == alias_of or &1.id == alias_of))
+      if alias_of = filters[:gender] do
+        genders =
+          Gender.all()
+          |> Enum.filter(&(&1.alias_of == alias_of or &1.id == alias_of))
           |> Enum.map(& &1.id)
 
         query
-        |> join(:inner, [lap, _, _, _], pa in Attributes,
-          on: lap.profile_id == pa.profile_id and pa.attribute_id in ^gender_ids
-        )
-        |> distinct([lap, response],
-          asc: not is_nil(response.target_id),
-          desc: lap.created_at,
-          desc: lap.profile_id
+        |> join(:inner, [lap, _, _, _], profile in Profile,
+          on:
+            lap.profile_id == profile.user_id and
+              fragment("? && ?::text[]", profile.genders, ^genders)
         )
       else
         query

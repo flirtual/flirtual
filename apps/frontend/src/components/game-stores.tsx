@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { twMerge } from "tailwind-merge";
 
-import type { GameStore } from "~/api/attributes";
+import type { GameStore } from "~/hooks/use-game-stores";
 
 import type { IconComponent } from "./icons";
 import {

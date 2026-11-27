@@ -68,7 +68,7 @@ defmodule Flirtual.ObanWorkers.Email do
         reply_to: Map.get(args, "reply_to"),
         type: type,
         kind: Map.get(args, "kind"),
-        language: Map.get(args, "language", user.preferences.language),
+        language: Map.get(args, "language", User.locale(user)),
         subject: subject,
         action_url: Map.get(args, "action_url"),
         unsubscribe_token: if(type == "marketing", do: user.unsubscribe_token),

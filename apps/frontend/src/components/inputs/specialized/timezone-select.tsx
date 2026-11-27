@@ -4,9 +4,8 @@ import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 
 import { createOffsetTimeFormatter, millisecondsUntilNextMinute } from "~/date";
-import { useAttributes } from "~/hooks/use-attribute";
 import { useTimeout } from "~/hooks/use-interval";
-import { useBrowserTimezone } from "~/hooks/use-timezone";
+import { useBrowserTimezone, useTimezones } from "~/hooks/use-timezone";
 
 import { InputSelect, SelectItem } from "../select";
 import type { InputSelectProps } from "../select";
@@ -55,7 +54,7 @@ export type InputTimezoneSelectProps = {
 export function InputTimezoneSelect({ prefer, ...props }: InputTimezoneSelectProps) {
 	const { t } = useTranslation();
 
-	const timezones = useAttributes("timezone");
+	const timezones = useTimezones();
 
 	const browserTimezone = useBrowserTimezone();
 	const preferredTimezone = prefer ?? browserTimezone;

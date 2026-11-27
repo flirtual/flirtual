@@ -88,8 +88,8 @@ export const ProfileImagesCard = withSuspense<{
 					<GenderPills
 						simple
 						small
-						attributes={user.profile.attributes.gender ?? []}
 						className="bg-white-30/70! dark:bg-black-60/70!"
+						ids={user.profile.genders ?? []}
 					/>
 					{user.profile.country && (
 						<CountryPill

@@ -1,8 +1,10 @@
+import { useSuspenseQueries } from "@tanstack/react-query";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { fromEntries } from "remeda";
 
 import { isWretchError } from "~/api/common";
+import { platformsOptions, sexualitiesOptions } from "~/api/data";
 import { User } from "~/api/user";
 import { Profile } from "~/api/user/profile";
 import { Form } from "~/components/forms";
@@ -15,26 +17,22 @@ import {
 	InputLabelHint,
 	InputSwitch
 } from "~/components/inputs";
-import { InputCheckboxList } from "~/components/inputs/checkbox-list";
 import {
 	InputCountrySelect,
+	InputGenderSelect,
 	InputGeolocation,
 	InputLanguageAutocomplete,
 	InputTimezoneSelect
 } from "~/components/inputs/specialized";
 import { endOfYear, toLocalDateString } from "~/date";
 import { timezones, vrTags } from "~/features";
-import {
-	useAttributes,
-	useAttributeTranslation
-} from "~/hooks/use-attribute";
-import type { AttributeTranslation } from "~/hooks/use-attribute";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
+import { useLocale } from "~/i18n";
 import { mutate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
-const AttributeKeys = [
+const FormTypes = [
 	...(["gender", "sexuality", "platform", "game"] as const)
 ];
 
@@ -42,12 +40,12 @@ export const InfoForm: FC = () => {
 	const session = useOptionalSession();
 	const toasts = useToast();
 
-	const platforms = useAttributes("platform");
-	const sexualities = useAttributes("sexuality");
-	const genders = useAttributes("gender");
+	const [locale] = useLocale();
+	const [{ data: platforms }, { data: sexualities }] = useSuspenseQueries({
+		queries: [platformsOptions({ locale }), sexualitiesOptions({ locale })]
+	});
 
 	const { t } = useTranslation();
-	const tAttribute = useAttributeTranslation();
 
 	if (!session) return null;
 	const { user } = session;
@@ -64,10 +62,10 @@ export const InfoForm: FC = () => {
 				country: profile.country ?? null,
 				timezone: profile.timezone ?? null,
 				languages: profile.languages ?? [],
-				gender: profile.attributes.gender || [],
-				sexuality: profile.attributes.sexuality || [],
-				platform: profile.attributes.platform || [],
-				game: profile.attributes.game || []
+				gender: profile.genders || [],
+				sexuality: profile.sexualities || [],
+				platform: profile.platforms || [],
+				game: profile.games || []
 			}}
 			className="flex flex-col gap-8"
 			onSubmit={async ({ bornAt, country, timezone, ...values }) => {
@@ -77,17 +75,15 @@ export const InfoForm: FC = () => {
 					}),
 					Profile.update(user.id, {
 						required: ["new"],
-						country: country ?? "none",
-						timezone: timezone ?? "none",
+						country: country ?? null,
+						timezone: timezone ?? null,
 						languages: values.languages,
 						new: values.new,
 						...fromEntries(
-							AttributeKeys.map((type) => {
+							FormTypes.map((type) => {
 								return [
 									`${type}Id`,
-									type === "gender"
-										? values[type]?.filter((id) => id !== "other")
-										: values[type]
+									values[type]
 								] as const;
 							})
 						)
@@ -138,71 +134,12 @@ export const InfoForm: FC = () => {
 						)}
 					</FormField>
 					<FormField name="gender">
-						{(field) => {
-							const simpleGenders = genders.filter((gender) => gender.simple);
-							const simpleGenderIds = new Set(
-								simpleGenders.map((gender) => gender.id)
-							);
-							const checkboxValue = field.props.value?.some(
-								(id) => !simpleGenderIds.has(id) && id !== "other"
-							)
-								? [...field.props.value, "other"]
-								: field.props.value;
-
-							// "other" checkbox isn't a gender, temporarily filter so it
-							// doesn't count towards the limit.
-							const otherGenders = (field.props.value ?? []).filter(
-								(id) => id !== "other"
-							);
-
-							return (
-								<>
-									<InputLabel {...field.labelProps}>{t("gender")}</InputLabel>
-									<InputCheckboxList
-										{...field.props}
-										items={[
-											...simpleGenders.map((gender) => ({
-												key: gender.id,
-												label: tAttribute[gender.id]?.name ?? gender.id,
-												conflicts: gender.conflicts ?? []
-											})),
-											{
-												key: "other",
-												label: t("other_genders")
-											}
-										]}
-										value={checkboxValue ?? []}
-									/>
-									{checkboxValue?.includes("other") && (
-										<InputAutocomplete
-											{...field.props}
-											options={genders.map((gender) => {
-												const { name, definition }
-													= (tAttribute[
-														gender.id
-													] as AttributeTranslation<"gender">) ?? {};
-
-												return {
-													key: gender.id,
-													label: name ?? gender.id,
-													definition,
-													definitionLink: gender.definitionLink,
-													hidden:
-														simpleGenderIds.has(gender.id)
-														|| (!otherGenders.includes(gender.id)
-															&& (gender.conflicts ?? []).some((conflict) =>
-																otherGenders.includes(conflict)))
-												};
-											})}
-											limit={4}
-											placeholder={t("select_genders")}
-											value={otherGenders}
-											onChange={(value) => field.props.onChange([...value, "other"])}
-										/>
-									)}
-								</>
-							);
-						}}
+						{(field) => (
+							<>
+								<InputLabel {...field.labelProps}>{t("gender")}</InputLabel>
+								<InputGenderSelect {...field.props} />
+							</>
+						)}
 					</FormField>
 					<FormField name="sexuality">
 						{(field) => (
@@ -211,16 +148,11 @@ export const InfoForm: FC = () => {
 								<InputAutocomplete
 									{...field.props}
 									options={sexualities.map((sexuality) => {
-										const { id, definitionLink } = typeof sexuality === "string" ? { id: sexuality } : sexuality;
-
-										const { name, definition }
-											= (tAttribute[
-												id
-											] as AttributeTranslation<"sexuality">) ?? {};
+										const { id, name, definition, definitionLink } = sexuality;
 
 										return {
 											key: id,
-											label: name ?? id,
+											label: name,
 											definition,
 											definitionLink
 										};
@@ -284,11 +216,11 @@ export const InfoForm: FC = () => {
 										<InputAutocomplete
 											{...field.props}
 											options={platforms.map((platform) => {
-												const id = typeof platform === "string" ? platform : platform.id;
+												const { id, name, example } = platform;
 												return {
 													key: id,
-													label: tAttribute[id]?.name ?? id,
-													example: tAttribute[id]?.example
+													label: name,
+													example
 												};
 											})}
 											limit={8}

@@ -209,9 +209,7 @@ defmodule FlirtualWeb.MatchmakingController do
       end)
       |> then(fn filter ->
         case params["gender"] do
-          "woman" -> Map.put(filter, :gender, :woman)
-          "man" -> Map.put(filter, :gender, :man)
-          "other" -> Map.put(filter, :gender, :other)
+          gender when gender in ~w(woman man other) -> Map.put(filter, :gender, gender)
           _ -> filter
         end
       end)

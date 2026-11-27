@@ -16,7 +16,6 @@ import {
 	SlidersHorizontal,
 	Sparkles,
 	Tag,
-	Tags,
 	Users,
 	VenetianMask,
 	X
@@ -79,14 +78,9 @@ export const SettingsNavigation: FC = () => {
 								</>
 							)}
 							{user.tags?.includes("admin") && (
-								<>
-									<NavigationLink href={urls.admin.attributes} Icon={Tags}>
-										{t("attributes_admin")}
-									</NavigationLink>
-									<NavigationLink href={urls.admin.stats} Icon={LineChart}>
-										{t("stats")}
-									</NavigationLink>
-								</>
+								<NavigationLink href={urls.admin.stats} Icon={LineChart}>
+									{t("stats")}
+								</NavigationLink>
 							)}
 							{sudoerId && (
 								<NavigationLink

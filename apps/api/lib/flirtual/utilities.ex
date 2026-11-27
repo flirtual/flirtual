@@ -75,19 +75,19 @@ defmodule Flirtual.Utilities do
   end
 
   def filter_by(list, key, values) when is_list(values) do
-    Enum.filter(list, &(&1[key] in values))
+    Enum.filter(list, &(Map.get(&1, key) in values))
   end
 
   def filter_by(list, key, value) do
-    Enum.filter(list, &(&1[key] === value))
+    Enum.filter(list, &(Map.get(&1, key) === value))
   end
 
   def exclude_by(list, key, values) when is_list(values) do
-    Enum.filter(list, &(&1[key] not in values))
+    Enum.filter(list, &(Map.get(&1, key) not in values))
   end
 
   def exclude_by(list, key, value) do
-    Enum.filter(list, &(&1[key] !== value))
+    Enum.filter(list, &(Map.get(&1, key) !== value))
   end
 
   def clamp(number, minimum, maximum) do

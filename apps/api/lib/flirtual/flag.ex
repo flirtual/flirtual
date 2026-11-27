@@ -7,7 +7,6 @@ defmodule Flirtual.Flag do
   alias Flirtual.{
     Brand,
     Connection,
-    Countries,
     Discord,
     Disposable,
     Flag,
@@ -17,6 +16,8 @@ defmodule Flirtual.Flag do
     User,
     Users
   }
+
+  alias Flirtual.Data.Country
 
   alias Flirtual.User.Profile
   alias Flirtual.User.Profile.Preferences
@@ -40,7 +41,7 @@ defmodule Flirtual.Flag do
     |> unique_constraint(:flag, name: :flags_type_flag_index)
   end
 
-  @country_codes Enum.map(Countries.list(:iso_3166_1), &Atom.to_string/1)
+  @country_codes Country.ids()
 
   defp validate_country(changeset) do
     if get_field(changeset, :type) == "country" do
@@ -450,11 +451,8 @@ defmodule Flirtual.Flag do
   end
 
   def check_profile_country(_, nil), do: :ok
-  def check_profile_country(_, :none), do: :ok
-  def check_profile_country(%Profile{country: country}, country), do: :ok
-
-  def check_profile_country(profile, country),
-    do: check_country(profile.user_id, Atom.to_string(country), "profile")
+  def check_profile_country(%Profile{country: %{id: id}}, id), do: :ok
+  def check_profile_country(profile, id), do: check_country(profile.user_id, id, "profile")
 
   def check_profile_flags(profile, attrs) do
     with :ok <- check_profile_display_name(profile, attrs.display_name),

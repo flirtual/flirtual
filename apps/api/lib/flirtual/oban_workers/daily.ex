@@ -7,7 +7,6 @@ defmodule Flirtual.ObanWorkers.Daily do
   alias Flirtual.ObanWorkers.Reconcile
   alias Flirtual.ObanWorkers.RefreshConnection
   alias Flirtual.User.{Email, Login, Push, Session, SessionTransfer}
-  alias Flirtual.User.Profile.Attributes
 
   @reminders [
     {670, :reminder_670},
@@ -25,7 +24,6 @@ defmodule Flirtual.ObanWorkers.Daily do
     if :prune_banned in enabled, do: prune_banned()
     if :prune_inactive in enabled, do: prune_inactive()
     if :prune_sessions in enabled, do: prune_sessions()
-    if :update_attribute_order in enabled, do: update_attribute_order()
     if :reconcile_entitlements in enabled, do: reconcile_entitlements()
     if :refresh_connections in enabled, do: refresh_connections()
 
@@ -188,15 +186,5 @@ defmodule Flirtual.ObanWorkers.Daily do
     %{"user_id" => user_id}
     |> Flirtual.ObanWorkers.PruneAccount.new()
     |> Oban.insert()
-  end
-
-  defp update_attribute_order do
-    Attributes.update_order("game",
-      order_by: :trending,
-      recent_days: 90,
-      recent_boost: 10,
-      release_days: 180,
-      release_boost: 0.01
-    )
   end
 end

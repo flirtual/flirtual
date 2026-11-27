@@ -10,7 +10,7 @@ defmodule FlirtualWeb.UsersController do
 
   import FlirtualWeb.Utilities
   import Flirtual.Utilities
-  import Flirtual.Attribute, only: [validate_attribute: 3]
+  import Flirtual.Utilities.Changeset, only: [validate_entry: 3]
 
   alias Flirtual.{
     AgeVerification,
@@ -25,6 +25,8 @@ defmodule FlirtualWeb.UsersController do
     User,
     Users
   }
+
+  alias Flirtual.Data.{BanReason, WarnReason}
 
   alias Flirtual.User.Session
   alias Flirtual.User.Profile.Block
@@ -395,12 +397,12 @@ defmodule FlirtualWeb.UsersController do
       field(:message, :string)
 
       field(:reason_id, :string)
-      field(:reason, :map, virtual: true)
+      field(:reason, Flirtual.Entry, of: BanReason, virtual: true)
     end
 
     def changeset(value, _, _) do
       value
-      |> validate_attribute(:reason_id, "ban-reason")
+      |> validate_entry(:reason_id, BanReason)
       |> validate_length(:message, min: 8)
     end
   end
@@ -519,12 +521,12 @@ defmodule FlirtualWeb.UsersController do
       field(:disable, :boolean, default: false)
 
       field(:reason_id, :string)
-      field(:reason, :map, virtual: true)
+      field(:reason, Flirtual.Entry, of: WarnReason, virtual: true)
     end
 
     def changeset(value, _, _) do
       value
-      |> validate_attribute(:reason_id, "warn-reason")
+      |> validate_entry(:reason_id, WarnReason)
       |> update_change(:message, &String.trim/1)
       |> validate_length(:message, min: 8, max: 10_000)
     end

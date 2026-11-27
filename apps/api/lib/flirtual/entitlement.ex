@@ -8,15 +8,17 @@ defmodule Flirtual.Entitlement do
   import Ecto.Changeset
   import Ecto.Query
 
-  alias Flirtual.{Entitlement, Plan, Profiles, Repo, User}
+  alias Flirtual.{Entitlement, Profiles, Repo, User}
   alias Flirtual.ObanWorkers.Reconcile
+  alias Flirtual.Data.Plan
 
   @kinds [:subscription, :one_time, :consumable]
   @stores [:app_store, :play_store, :chargebee, :stripe, :promotional]
 
   schema "entitlements" do
     belongs_to(:user, User)
-    belongs_to(:plan, Plan)
+    # A plan's id in packages/data's `plans.json`.
+    field(:plan_id, :string)
 
     field(:active, :string, virtual: true)
 
@@ -34,11 +36,10 @@ defmodule Flirtual.Entitlement do
     timestamps()
   end
 
-  def default_assoc do
-    [
-      :plan
-    ]
-  end
+  def default_assoc, do: []
+
+  def plan(%Entitlement{plan_id: plan_id}) when is_binary(plan_id), do: Plan.get(plan_id)
+  def plan(_), do: nil
 
   # nil entitled_until is a one-time purchase. Consumables have quantity, not
   # activeness.
@@ -50,15 +51,14 @@ defmodule Flirtual.Entitlement do
 
   def active?(_), do: false
 
-  def promotional?(%Entitlement{plan_id: plan_id}), do: plan_id == Plan.promotional_id()
+  def promotional?(%Entitlement{plan_id: plan_id}), do: plan_id == "promotional"
   def promotional?(_), do: false
 
-  # Active rows whose plan grants premium. Required the plan preloaded.
   def premium?(entitlements) when is_list(entitlements),
     do: Enum.any?(entitlements, &premium?/1)
 
-  def premium?(%Entitlement{plan: %Plan{product: product}} = entitlement),
-    do: product == "premium" and active?(entitlement)
+  def premium?(%Entitlement{} = entitlement),
+    do: match?(%Plan{product: "premium"}, plan(entitlement)) and active?(entitlement)
 
   def premium?(nil), do: false
 
@@ -185,7 +185,7 @@ defmodule Flirtual.Entitlement do
   end
 
   defp set_promotional(user, entitlement) do
-    case Plan.promotional() do
+    case Plan.get("promotional") do
       %Plan{} = plan ->
         Repo.transaction(fn ->
           with {:ok, entitlement} <-
@@ -239,11 +239,11 @@ end
 defimpl Jason.Encoder, for: Flirtual.Entitlement do
   def encode(value, opts) do
     Jason.Encode.map(
-      Map.take(value, [
+      value
+      |> Map.take([
         :id,
         :kind,
         :store,
-        :plan,
         :active,
         :entitled_until,
         :renews,
@@ -252,10 +252,14 @@ defimpl Jason.Encoder, for: Flirtual.Entitlement do
         :updated_at,
         :created_at
       ])
+      |> Map.put(:plan, value |> Flirtual.Entitlement.plan() |> plan())
       |> Map.filter(fn {_, value} -> value !== nil end),
       opts
     )
   end
+
+  defp plan(nil), do: nil
+  defp plan(plan), do: FlirtualWeb.DataJSON.entry(plan, nil)
 end
 
 defmodule Flirtual.Entitlement.Policy do

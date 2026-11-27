@@ -8,10 +8,10 @@ import type { Locale } from "~/i18n";
 import { isUid } from "~/utilities";
 
 import type { AgeVerificationProvider } from "../age-verification";
-import type { Attribute } from "../attributes";
 import { api } from "../common";
 import type { DatedModel, Paginate, PaginateOptions, UuidModel } from "../common";
 import type { Connection } from "../connections";
+import type { DataType } from "../data";
 import { timeout } from "../middleware";
 import type { Entitlement } from "../subscription";
 import { Preferences } from "./preferences";
@@ -144,7 +144,7 @@ export interface UserPreview {
 	name: string;
 	age: number;
 	dark: boolean;
-	attributes: Array<Attribute>;
+	tags: Array<{ id: string; type: DataType }>;
 	avatarUrl: string;
 }
 

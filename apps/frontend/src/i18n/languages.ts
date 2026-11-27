@@ -1,21 +1,25 @@
+import localeData from "@flirtual/data/locales";
 import acceptLanguage from "accept-language";
 import { resolvePath } from "react-router";
 import type { Path, To } from "react-router";
 
-export const allLocales = ["en", "de", "es", "fr", "ja", "ko", "nl", "pt", "pt-BR", "ru", "sv"] as const;
-export type AnyLocale = (typeof allLocales)[number];
+export type AnyLocale = keyof typeof localeData;
+export const allLocales = Object.keys(localeData) as Array<AnyLocale>;
 
-// Our `pt` is European Portuguese, but CLDR reads `pt` as Brazilian.
+// `intl` names the locale for `Intl` where ours differs: our `pt` is European Portuguese, but CLDR
+// reads `pt` as Brazilian.
 export function intlLocale(locale: string) {
-	return locale === "pt" ? "pt-PT" : locale;
+	const entry = localeData[locale as AnyLocale];
+	return entry && "intl" in entry ? entry.intl : locale;
 }
 
-// Keep in sync with enabledLocales in ios/App/Watch/Translations.swift.
-export const locales = ["en"] as const;
-export type Locale = (typeof locales)[number];
+export type Locale = AnyLocale;
+export const locales = allLocales.filter((locale) => localeData[locale].enabled);
 
-export const defaultLocale = "en";
-// type DefaultLocale = typeof defaultLocale;
+export const defaultLocale: Locale = allLocales.find((locale) => {
+	const entry = localeData[locale];
+	return "default" in entry && entry.default;
+})!;
 
 export function isLocale(locale: string): locale is Locale {
 	return locales.includes(locale as Locale);
@@ -23,20 +27,9 @@ export function isLocale(locale: string): locale is Locale {
 
 export const localePathnameRegex = new RegExp(`^\/((${locales.join("|")})?(\/|$))?`);
 
-export const localeNames: Record<Locale, string> = {
-	en: "English",
-	// de: "Deutsch",
-	// es: "Español",
-	// fr: "Français",
-	// ja: "日本語",
-	// ko: "한국어",
-	// nl: "Nederlands",
-	// pt: "Português",
-	// "pt-BR": "Português (Brasil)",
-	// ru: "Русский",
-	// sv: "Svenska",
-	// cimode: "Test"
-};
+export const localeNames = Object.fromEntries(
+	allLocales.map((locale) => [locale, localeData[locale].name])
+) as Record<Locale, string>;
 
 export function getLocale(to: To, relativeTo: string = location.pathname): Locale | null {
 	const { pathname } = resolvePath(to, relativeTo);

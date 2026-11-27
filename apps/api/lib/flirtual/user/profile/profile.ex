@@ -6,17 +6,62 @@ defmodule Flirtual.User.Profile do
   import Ecto.Changeset
   import Ecto.Query
 
-  alias Flirtual.Countries
-  alias Flirtual.Languages
-  alias Flirtual.{Attribute, User}
+  alias Flirtual.User
   alias Flirtual.User.Profile
   alias Flirtual.User.Profile.{AdvancedFilter, CustomWeights, Image, Preferences, Prompt}
+
+  alias Flirtual.Data.{
+    Country,
+    Game,
+    Gender,
+    Interest,
+    Kink,
+    Language,
+    Platform,
+    Relationship,
+    Sexuality
+  }
 
   @derive {Inspect,
            only: [
              :user_id,
              :display_name
            ]}
+
+  @tags [
+    genders: Gender,
+    sexualities: Sexuality,
+    interests: Interest,
+    games: Game,
+    platforms: Platform,
+    kinks: Kink
+  ]
+  @tag_fields Keyword.keys(@tags)
+
+  def tag_fields, do: @tag_fields
+
+  def tags(%Profile{} = profile),
+    do: Enum.flat_map(@tag_fields, &Map.fetch!(profile, &1))
+
+  def pronoun?(%Flirtual.Data.Gender{pronoun: true}), do: true
+  def pronoun?(_), do: false
+
+  def reject_pronouns(tags) when is_list(tags), do: Enum.reject(tags, &pronoun?/1)
+
+  def normalize_aliases(tags) when is_list(tags), do: resolve(tags, :alias_of)
+
+  def normalize_pairs(tags) when is_list(tags), do: resolve(tags, :pair)
+
+  defp resolve(tags, field) do
+    tags
+    |> Enum.map(fn tag ->
+      case Map.get(tag, field) do
+        id when is_binary(id) -> tag.__struct__.get(id)
+        nil -> tag
+      end
+    end)
+    |> Enum.uniq_by(& &1.id)
+  end
 
   @personality_questions [
     :question0,
@@ -54,8 +99,7 @@ defmodule Flirtual.User.Profile do
 
   def group_interests_by_strength(interests) do
     interests
-    |> Enum.map(&if(!&1.metadata, do: %{&1 | metadata: %{"strength" => 0}}, else: &1))
-    |> Enum.group_by(& &1.metadata["strength"])
+    |> Enum.group_by(&(&1.strength || 0))
   end
 
   def fuzz_personality_key(profile, key) do
@@ -80,14 +124,15 @@ defmodule Flirtual.User.Profile do
     field(:biography, :string)
     field(:domsub, Ecto.Enum, values: @domsub_values)
     field(:monopoly, Ecto.Enum, values: @monopoly_values)
-    field(:country, Ecto.Enum, values: Countries.list(:iso_3166_1))
+    field(:country, Flirtual.Entry, of: Country)
     field(:openness, :integer)
     field(:conscientiousness, :integer)
     field(:agreeableness, :integer)
     Enum.map(@personality_questions, &field(&1, :boolean))
-    field(:relationships, {:array, :string})
+    field(:relationships, Flirtual.Entries, of: Relationship, default: [])
     field(:new, :boolean)
-    field(:languages, {:array, Ecto.Enum}, values: Languages.list(:bcp_47))
+
+    field(:languages, Flirtual.Entries, of: Language, default: [])
 
     field(:timezone, Ecto.Enum,
       values: TzExtra.time_zone_ids(include_aliases: true) |> Enum.map(&String.to_atom/1)
@@ -109,12 +154,7 @@ defmodule Flirtual.User.Profile do
     has_one(:preferences, Preferences, references: :user_id, foreign_key: :profile_id)
     has_one(:custom_weights, CustomWeights, references: :user_id, foreign_key: :profile_id)
 
-    many_to_many(:attributes, Attribute,
-      join_through: Flirtual.User.Profile.Attributes,
-      join_keys: [profile_id: :user_id, attribute_id: :id],
-      on_replace: :delete,
-      preload_order: [asc: :type, asc: :order, asc: :id]
-    )
+    for {field, module} <- @tags, do: field(field, Flirtual.Entries, of: module, default: [])
 
     has_many(:advanced_filters, AdvancedFilter, references: :user_id, foreign_key: :profile_id)
     has_many(:images, Image, references: :user_id, foreign_key: :profile_id)
@@ -142,8 +182,6 @@ defmodule Flirtual.User.Profile do
     [
       :custom_weights,
       :advanced_filters,
-      attributes:
-        from(attribute in Attribute, order_by: [attribute.type, attribute.order, attribute.id]),
       preferences: Preferences.default_assoc(),
       images: from(image in Image, order_by: image.order),
       prompts: Prompt.default_assoc()
@@ -192,7 +230,12 @@ defimpl Jason.Encoder, for: Flirtual.User.Profile do
       :openness,
       :conscientiousness,
       :agreeableness,
-      :attributes,
+      :genders,
+      :sexualities,
+      :interests,
+      :games,
+      :platforms,
+      :kinks,
       :languages,
       :timezone,
       :longitude,

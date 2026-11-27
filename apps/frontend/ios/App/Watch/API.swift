@@ -78,14 +78,19 @@ struct User: Decodable, Identifiable, Sendable {
 
 struct Profile: Decodable, Sendable {
     struct Prompt: Decodable, Sendable {
-        let promptId: String
+        let prompt: String
         let response: String
     }
 
     let displayName: String?
     let biography: String?
     let images: [ProfileImage]
-    let attributes: [String: [String]]
+    let genders: [String]
+    let sexualities: [String]
+    let interests: [String]
+    let games: [String]
+    let platforms: [String]
+    let kinks: [String]
     let customInterests: [String]
     let prompts: [Prompt]
     let relationships: [String]
@@ -101,7 +106,8 @@ struct Profile: Decodable, Sendable {
     let agreeableness: Int?
 
     private enum CodingKeys: String, CodingKey {
-        case displayName, biography, images, attributes, customInterests, prompts, relationships, languages
+        case displayName, biography, images, customInterests, prompts, relationships, languages
+        case genders, sexualities, interests, games, platforms, kinks
         case monopoly, domsub, country, discord, vrchat, vrchatName, openness, conscientiousness, agreeableness
     }
 
@@ -110,7 +116,12 @@ struct Profile: Decodable, Sendable {
         displayName = try container.decodeIfPresent(String.self, forKey: .displayName)
         biography = try container.decodeIfPresent(String.self, forKey: .biography)
         images = try container.decodeIfPresent([ProfileImage].self, forKey: .images) ?? []
-        attributes = (try? container.decodeIfPresent([String: [String]].self, forKey: .attributes)) ?? [:]
+        genders = (try? container.decodeIfPresent([String].self, forKey: .genders)) ?? []
+        sexualities = (try? container.decodeIfPresent([String].self, forKey: .sexualities)) ?? []
+        interests = (try? container.decodeIfPresent([String].self, forKey: .interests)) ?? []
+        games = (try? container.decodeIfPresent([String].self, forKey: .games)) ?? []
+        platforms = (try? container.decodeIfPresent([String].self, forKey: .platforms)) ?? []
+        kinks = (try? container.decodeIfPresent([String].self, forKey: .kinks)) ?? []
         customInterests = try container.decodeIfPresent([String].self, forKey: .customInterests) ?? []
         prompts = try container.decodeIfPresent([Prompt].self, forKey: .prompts) ?? []
         relationships = try container.decodeIfPresent([String].self, forKey: .relationships) ?? []
@@ -126,8 +137,16 @@ struct Profile: Decodable, Sendable {
         agreeableness = try? container.decodeIfPresent(Int.self, forKey: .agreeableness)
     }
 
-    func attributes(_ type: String) -> [String] {
-        attributes[type] ?? []
+    func tags(_ file: String) -> [String] {
+        switch file {
+        case "genders": genders
+        case "sexualities": sexualities
+        case "interests": interests
+        case "games": games
+        case "platforms": platforms
+        case "kinks": kinks
+        default: []
+        }
     }
 }
 
@@ -142,28 +161,9 @@ struct ProfileImage: Decodable, Identifiable, Sendable {
     let id: String
 }
 
-struct AttributeMetadata: Decodable, Identifiable, Sendable {
+struct DataEntry: Decodable, Identifiable, Sendable {
     let id: String
-    var aliasOf: String?
-    var simple: Bool?
-    var fallback: Bool?
-
-    private enum CodingKeys: String, CodingKey {
-        case id, aliasOf, simple, fallback
-    }
-
-    init(from decoder: Decoder) throws {
-        if let id = try? decoder.singleValueContainer().decode(String.self) {
-            self.id = id
-            return
-        }
-
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.decode(String.self, forKey: .id)
-        aliasOf = try container.decodeIfPresent(String.self, forKey: .aliasOf)
-        simple = try container.decodeIfPresent(Bool.self, forKey: .simple)
-        fallback = try container.decodeIfPresent(Bool.self, forKey: .fallback)
-    }
+    var name: String?
 }
 
 struct QueueLimits: Decodable, Sendable {
@@ -271,8 +271,8 @@ struct API: Sendable {
         try await request("users/\(userId)/relationship")
     }
 
-    func attributes(_ type: String) async throws -> [AttributeMetadata] {
-        try await request("attributes/\(type)")
+    func entries(_ file: String, locale: String? = nil) async throws -> [DataEntry] {
+        try await request(file, query: locale.map { ["locale": $0] } ?? [:])
     }
 
     func conversations(cursor: String? = nil) async throws -> ConversationList {

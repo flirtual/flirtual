@@ -395,6 +395,9 @@ importers:
       '@dnd-kit/sortable':
         specifier: ^10.0.0
         version: 10.0.0(@dnd-kit/core@6.3.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react@19.3.1)
+      '@flirtual/data':
+        specifier: workspace:*
+        version: link:../../packages/data
       '@fontsource-variable/montserrat':
         specifier: ^5.2.6
         version: 5.3.0

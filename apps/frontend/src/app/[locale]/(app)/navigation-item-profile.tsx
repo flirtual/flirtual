@@ -7,7 +7,6 @@ import {
 	Settings,
 	ShieldAlert,
 	Sparkles,
-	Tags,
 	VenetianMask
 } from "lucide-react";
 import { AnimatePresence, m } from "motion/react";
@@ -201,16 +200,10 @@ export const NavigationItemProfile: FC = () => {
 								</>
 							)}
 							{user.tags?.includes("admin") && (
-								<>
-									<ProfileNavigationItem href={urls.admin.attributes}>
-										<Tags className="size-6 shrink-0" />
-										<span className="whitespace-nowrap">{t("attributes_admin")}</span>
-									</ProfileNavigationItem>
-									<ProfileNavigationItem href={urls.admin.stats}>
-										<LineChart className="size-6 shrink-0" />
-										<span className="whitespace-nowrap">{t("stats")}</span>
-									</ProfileNavigationItem>
-								</>
+								<ProfileNavigationItem href={urls.admin.stats}>
+									<LineChart className="size-6 shrink-0" />
+									<span className="whitespace-nowrap">{t("stats")}</span>
+								</ProfileNavigationItem>
 							)}
 							{session.sudoerId && (
 								<ProfileNavigationItem

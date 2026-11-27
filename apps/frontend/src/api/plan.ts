@@ -1,15 +1,12 @@
 import type { WretchOptions } from "wretch";
 
-import { commitIdShort, development } from "~/const";
+import { development } from "~/const";
 
 import { api } from "./common";
 import type { DatedModel, UuidModel } from "./common";
 
 export const SubscriptionFeatures = ["custom_weights"] as const;
 export type SubscriptionFeature = (typeof SubscriptionFeatures)[number];
-
-export const promotionalPlanId = "Duk5r7zeKUhqXv5L6P3m3Q";
-export const lifetimePlanId = "Di7Sypboma4ryhy6MUagyS";
 
 export type Plan = {
 	name: string;
@@ -25,7 +22,7 @@ export type Plan = {
 
 export const Plan = {
 	api: api.url("plans"),
-	list(options: WretchOptions = {}) {
+	list(locale: string, options: WretchOptions = {}) {
 		return this.api
 			.options({
 				credentials: development ? "include" : "omit",
@@ -34,7 +31,7 @@ export const Plan = {
 				},
 				...options
 			})
-			.query({ v: commitIdShort })
+			.query({ locale })
 			.get()
 			.json<Array<Plan>>();
 	}

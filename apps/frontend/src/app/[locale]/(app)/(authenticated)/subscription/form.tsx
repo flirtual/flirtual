@@ -7,6 +7,7 @@ import { InlineLink } from "~/components/inline-link";
 import { advancedFilters } from "~/features";
 import { useDevice } from "~/hooks/use-device";
 import { useMountTime } from "~/hooks/use-mount-time";
+import { usePlans } from "~/hooks/use-plans";
 import { useSession } from "~/hooks/use-session";
 import { useUserCount } from "~/hooks/use-user";
 import { useLocale } from "~/i18n";
@@ -58,6 +59,8 @@ export const SubscriptionForm: FC = () => {
 	const { user } = useSession();
 	const userCount = useUserCount();
 	const { native } = useDevice();
+	const plans = usePlans();
+	const planNames = new Map(plans.map((plan) => [plan.id, plan.name]));
 
 	const entitlements = (user.entitlements ?? []).filter(
 		(entitlement) => entitlement.kind !== "consumable"
@@ -99,7 +102,7 @@ export const SubscriptionForm: FC = () => {
 								<div className="flex flex-col">
 									<div className="flex items-center gap-2">
 										<Sparkles className="inline size-5" />
-										<span>{t(`attributes.${entitlement.plan.id}.name` as any)}</span>
+										<span>{planNames.get(entitlement.plan.id) ?? entitlement.plan.name}</span>
 									</div>
 									<span className="ml-5 pl-2 text-sm text-black-30 dark:text-white-50 vision:text-white-50">
 										<EntitlementStatus entitlement={entitlement} />

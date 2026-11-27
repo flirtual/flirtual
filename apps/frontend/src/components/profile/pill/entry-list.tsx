@@ -1,22 +1,30 @@
-import type { FC } from "react";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import type { QueryKey, UseSuspenseQueryOptions } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
-import type { AttributeType, MinimalAttribute } from "~/api/attributes";
-import { attributeId } from "~/api/attributes";
+import { byId } from "~/api/data";
 import type { User } from "~/api/user";
 import type { GameStoreLink } from "~/components/game-stores";
 import { GameStoreLinks } from "~/components/game-stores";
 import { InlineLink } from "~/components/inline-link";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
-import { useAttributeTranslation } from "~/hooks/use-attribute";
 import { useOptionalSession } from "~/hooks/use-session";
+import { useLocale } from "~/i18n";
 
 import { Pill } from "./pill";
 import { PillRows } from "./rows";
 
-interface PillAttributeListProps {
-	attributes?: Array<MinimalAttribute<AttributeType>>;
+interface EntryText {
+	id: string;
+	name: string;
+	definition?: string;
+	definitionLink?: string;
+}
+
+interface PillEntryListProps<T extends EntryText, Key extends QueryKey> {
+	options: (parameters: { locale: string }) => UseSuspenseQueryOptions<Array<T>, Error, Array<T>, Key>;
+	ids?: Array<string>;
 	user: User;
 	href?: string;
 	activeIds?: Array<string>;
@@ -24,49 +32,43 @@ interface PillAttributeListProps {
 	getLinks?: (id: string) => Array<GameStoreLink>;
 }
 
-export const PillAttributeList: FC<PillAttributeListProps> = ({
+export function PillEntryList<T extends EntryText, Key extends QueryKey>({
+	options,
 	user,
-	attributes,
+	ids,
 	href,
 	activeIds,
 	getName,
 	getLinks
-}) => {
+}: PillEntryListProps<T, Key>) {
 	const session = useOptionalSession();
 	const { t } = useTranslation();
-	const tAttributes = useAttributeTranslation();
+	const [locale] = useLocale();
+	const { data: entries } = useSuspenseQuery({ ...options({ locale }), select: byId });
 
-	if (!attributes?.length) return null;
-	const highlightedIds = activeIds
-		?? Object.values(session?.user.profile.attributes || {})
-			.flat()
-			.filter(Boolean);
+	if (!ids?.length) return null;
+	const highlightedIds = activeIds ?? [];
 
-	const highlighted = (attribute: MinimalAttribute<AttributeType>) =>
+	const highlighted = (id: string) =>
 		!!session
 		&& session.user.id !== user.id
-		&& highlightedIds.includes(attributeId(attribute));
+		&& highlightedIds.includes(id);
 
 	const linksFor = (id: string) => (href ? [] : getLinks?.(id) ?? []);
 
 	// Tags you share rank first. For games, ones that support your platforms rank
 	// second.
-	const sortedAttributes = [...attributes].sort(
+	const sortedIds = [...ids].sort(
 		(a, b) =>
 			Number(highlighted(b)) - Number(highlighted(a))
-			|| Number(linksFor(attributeId(b)).length > 0)
-			- Number(linksFor(attributeId(a)).length > 0)
+			|| Number(linksFor(b).length > 0)
+			- Number(linksFor(a).length > 0)
 	);
 
 	return (
 		<PillRows editable={!!href}>
-			{sortedAttributes.map((attribute) => {
-				const id = attributeId(attribute);
-				const { name, definition, definitionLink } = (tAttributes[id] ?? {}) as {
-					name?: string;
-					definition?: string;
-					definitionLink?: string;
-				};
+			{sortedIds.map((id) => {
+				const { name, definition, definitionLink } = entries[id] ?? {};
 
 				const label = getName?.(id) || name || id;
 				const links = linksFor(id);
@@ -81,7 +83,7 @@ export const PillAttributeList: FC<PillAttributeListProps> = ({
 										links.length > 0
 										&& "cursor-pointer hocus-within:bg-brand-gradient hocus-within:text-theme-overlay"
 									)}
-									active={highlighted(attribute)}
+									active={highlighted(id)}
 									href={href}
 								>
 									{label}
@@ -108,4 +110,4 @@ export const PillAttributeList: FC<PillAttributeListProps> = ({
 			})}
 		</PillRows>
 	);
-};
+}

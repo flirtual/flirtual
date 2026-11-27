@@ -321,8 +321,3 @@ msgstr ""
 #, elixir-autogen, elixir-format
 msgid "instagram"
 msgstr ""
-
-#: lib/flirtual/user/email.ex:31
-#, elixir-autogen, elixir-format
-msgid "suspended.reason.underage"
-msgstr ""

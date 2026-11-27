@@ -1,9 +1,6 @@
 defmodule Flirtual.User.Profile.Policy do
   use Flirtual.Policy, reference_key: :profile
 
-  import Flirtual.Utilities
-
-  alias Flirtual.Attribute
   alias Flirtual.Entitlement
   alias Flirtual.Timezones
   alias Flirtual.User
@@ -53,6 +50,7 @@ defmodule Flirtual.User.Profile.Policy do
   # Any other action, or credentials are disallowed.
   def authorize(_, _, _), do: false
 
+  @tag_fields Profile.tag_fields()
   @personality_keys [:openness, :conscientiousness, :agreeableness]
   @nsfw_keys [:domsub]
   @connection_keys [:vrchat, :discord, :facetime]
@@ -203,7 +201,7 @@ defmodule Flirtual.User.Profile.Policy do
   end
 
   def transform(
-        :attributes,
+        field,
         %Plug.Conn{
           assigns: %{
             session: %{
@@ -219,23 +217,17 @@ defmodule Flirtual.User.Profile.Policy do
             preferences: %User.Preferences{} = preferences
           }
         } = profile
-      ) do
-    if me.id === profile.user_id do
-      profile.attributes
-    else
-      profile.attributes
-      |> then(
-        &if(me.preferences.nsfw and preferences.nsfw,
-          do: &1,
-          else: exclude_by(&1, :type, "kink")
-        )
       )
-      |> Enum.filter(&visible_to_others?(&1, preferences.privacy, matched))
-    end
-    |> Attribute.group()
-  end
+      when field in @tag_fields do
+    tags = Map.fetch!(profile, field)
 
-  def transform(:attributes, _, profile), do: Attribute.group(profile.attributes)
+    cond do
+      me.id === profile.user_id -> tags
+      field == :kinks and not (me.preferences.nsfw and preferences.nsfw) -> []
+      visible_to_others?(field, preferences.privacy, matched) -> tags
+      true -> []
+    end
+  end
 
   def transform(
         key,
@@ -313,11 +305,14 @@ defmodule Flirtual.User.Profile.Policy do
 
   def transform(key, _, _) when key in @own_property_keys, do: nil
 
-  defp visible_to_others?(%{type: "kink"}, privacy, matched),
-    do: privacy.kinks === :everyone or (privacy.kinks === :matches and matched)
+  defp visible_to_others?(:kinks, privacy, matched), do: visible?(privacy.kinks, matched)
 
-  defp visible_to_others?(%{type: "sexuality"}, privacy, matched),
-    do: privacy.sexuality === :everyone or (privacy.kinks === :matches and matched)
+  defp visible_to_others?(:sexualities, privacy, matched),
+    do: visible?(privacy.sexuality, matched)
 
-  defp visible_to_others?(_attribute, _privacy, _matched), do: true
+  defp visible_to_others?(_field, _privacy, _matched), do: true
+
+  defp visible?(:everyone, _matched), do: true
+  defp visible?(:matches, matched), do: matched
+  defp visible?(_, _matched), do: false
 end

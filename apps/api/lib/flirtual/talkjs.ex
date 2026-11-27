@@ -165,7 +165,7 @@ defmodule Flirtual.Talkjs do
           else: []
         ),
       photoUrl: User.avatar_url(user, "icon"),
-      locale: user.preferences.language,
+      locale: User.locale(user),
       role: "user"
     })
   end

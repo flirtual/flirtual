@@ -5,13 +5,22 @@ defmodule Flirtual.Faker do
   alias Flirtual.User.Profile.LikesAndPasses
   alias Flirtual.User.Profile.Prospect
   alias Flirtual.User
-  alias Flirtual.Attribute
-  alias Flirtual.Countries
-  alias Flirtual.Languages
   alias Flirtual.Matchmaking
   alias Flirtual.Profiles
   alias Flirtual.Users
   alias Flirtual.Repo
+
+  alias Flirtual.Data.{
+    Country,
+    Game,
+    Gender,
+    Interest,
+    Kink,
+    Language,
+    Platform,
+    Relationship,
+    Sexuality
+  }
 
   import Ecto.Changeset
   import Ecto.Query
@@ -93,13 +102,13 @@ defmodule Flirtual.Faker do
     email = (slug |> Recase.to_dot()) <> "@example.com"
     display_name = slug |> Recase.to_title() |> String.split(" ") |> List.first()
 
-    genders = Attribute.list(type: "gender")
-    simple_genders = genders |> Enum.filter(&(&1.metadata["simple"] === true))
-    sexualities = Attribute.list(type: "sexuality")
-    kinks = Attribute.list(type: "kink")
-    games = Attribute.list(type: "game")
-    platforms = Attribute.list(type: "platform")
-    interests = Attribute.list(type: "interest")
+    genders = Gender.all()
+    simple_genders = genders |> Enum.filter(&(&1.simple === true))
+    sexualities = Sexuality.all()
+    kinks = Kink.all()
+    games = Game.all()
+    platforms = Platform.all()
+    interests = Interest.all()
 
     Repo.transaction(fn ->
       with {:ok, user} <-
@@ -158,23 +167,25 @@ defmodule Flirtual.Faker do
              Profiles.update(user.profile, %{
                display_name: display_name,
                biography: generate_biography(display_name),
-               relationships: random_n_of(0..4, ["serious", "vr", "hookups", "friends"]),
+               relationships: random_n_of(0..4, Relationship.ids()),
                new: Enum.random([true, false, nil]),
                country:
                  if(Enum.random(1..10) === 1,
                    do: nil,
                    else:
                      if(Enum.random(1..2) === 1,
-                       do: :us,
-                       else: Enum.random(Countries.list(:iso_3166_1))
+                       do: "us",
+                       else: Enum.random(Country.ids())
                      )
                  ),
                domsub: Enum.random([nil | Ecto.Enum.values(Flirtual.User.Profile, :domsub)]),
                monopoly: Enum.random([nil | Ecto.Enum.values(Flirtual.User.Profile, :monopoly)]),
                languages:
                  if(Enum.random(1..5) === 1,
-                   do: random_n_of(1..3, Languages.list(:bcp_47)),
-                   else: [:en | random_n_of(0..2, Languages.list(:bcp_47) -- [:en])]
+                   do: random_n_of(1..3, Language.ids()),
+                   else: [
+                     "en" | random_n_of(0..2, Language.ids() -- ["en"])
+                   ]
                  ),
                custom_interests: random_n_of(0..3, @custom_interests),
                gender_id: random_gender_ids(genders),
@@ -184,7 +195,7 @@ defmodule Flirtual.Faker do
                platform_id:
                  if(Enum.random(1..2) === 1,
                    do: [
-                     "RNaigbGdB7H4ZMw5c8ysbi" | random_n_of(0..7, platforms |> Enum.map(& &1.id))
+                     "meta_quest" | random_n_of(0..7, platforms |> Enum.map(& &1.id))
                    ],
                    else: random_n_of(1..8, platforms |> Enum.map(& &1.id))
                  ),
@@ -220,7 +231,7 @@ defmodule Flirtual.Faker do
              Profiles.update_preferences(profile.preferences, %{
                agemin: agemin,
                agemax: agemax,
-               attributes: random_n_of(1..3, simple_genders |> Enum.map(& &1.id))
+               genders: random_n_of(1..3, simple_genders |> Enum.map(& &1.id))
              }),
            {:ok, _} <-
              create_profile_images(profile, image_source, images_to_use, now),
@@ -287,21 +298,25 @@ defmodule Flirtual.Faker do
     picked =
       case Enum.random(1..4) do
         1 ->
-          ["rhw3rcbheU7vc9vcSy6W6V"]
+          ["man"]
 
         2 ->
-          ["tpkW7r8PZ2RUuYGUSYi82N"]
+          ["woman"]
 
         3 ->
-          random_n_of(1..4, genders |> Enum.map(& &1.id))
+          [
+            genders |> Flirtual.User.Profile.reject_pronouns() |> Enum.random() |> Map.fetch!(:id)
+            | random_n_of(0..3, genders |> Enum.map(& &1.id))
+          ]
+          |> Enum.uniq()
 
         4 ->
           [
-            Enum.random(["rhw3rcbheU7vc9vcSy6W6V", "tpkW7r8PZ2RUuYGUSYi82N"])
+            Enum.random(["man", "woman"])
             | random_n_of(
                 1..3,
                 genders
-                |> Enum.reject(&(&1.id in ["rhw3rcbheU7vc9vcSy6W6V", "tpkW7r8PZ2RUuYGUSYi82N"]))
+                |> Enum.reject(&(&1.id in ["man", "woman"]))
                 |> Enum.map(& &1.id)
               )
           ]
@@ -310,7 +325,7 @@ defmodule Flirtual.Faker do
     genders_by_id = Map.new(genders, &{&1.id, &1})
 
     Enum.reduce(picked, [], fn id, kept ->
-      conflicts = List.wrap(genders_by_id[id].metadata["conflicts"])
+      conflicts = List.wrap(genders_by_id[id].conflicts)
       if Enum.any?(conflicts, &(&1 in kept)), do: kept, else: [id | kept]
     end)
   end

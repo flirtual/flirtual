@@ -65,8 +65,8 @@ export const LikeListItem: FC<LikeListItemProps> = withSuspense(({ kind, profile
 							<GenderPills
 								simple
 								small
-								attributes={user.profile.attributes.gender || []}
 								className="h-8 bg-white-20 dark:bg-black-40 vision:bg-white-30/70"
+								ids={user.profile.genders || []}
 							/>
 							{user.profile.country && (
 								<CountryPill id={user.profile.country} flagOnly className="bg-white-20 dark:bg-black-40" />

@@ -1,3 +1,4 @@
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { Loader2, Trash2 } from "lucide-react";
 import { useState } from "react";
 import type { FC } from "react";
@@ -5,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { capitalize } from "remeda";
 import { twMerge } from "tailwind-merge";
 
+import { gendersOptions } from "~/api/data";
 import { Matchmaking } from "~/api/matchmaking";
 import { activeEntitlements } from "~/api/user";
 import {
@@ -34,14 +36,9 @@ import { InputLabel, InputLabelHint, InputSelect } from "~/components/inputs";
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
 import { Slider } from "~/components/inputs/slider";
 import { advancedFilters, customInterests, personality, vrTags } from "~/features";
-import {
-
-	useAttributes,
-	useAttributeTranslation
-} from "~/hooks/use-attribute";
-import type { AttributeTranslation } from "~/hooks/use-attribute";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
+import { useLocale } from "~/i18n";
 import { invalidate, sessionKey } from "~/query";
 
 import { AdvancedFilterSelect } from "./advanced-filter-select";
@@ -63,10 +60,10 @@ export const MatchmakingForm: FC = () => {
 	const session = useSession();
 	const toasts = useToast();
 	const { t } = useTranslation();
-	const tAttribute = useAttributeTranslation();
+	const [locale] = useLocale();
 
-	const genders = useAttributes("gender").filter(
-		({ simple, fallback }) => simple || fallback
+	const genders = useSuspenseQuery(gendersOptions({ locale })).data.filter(
+		(gender) => gender.simple || gender.default
 	);
 
 	const [passesPending, setPassesPending] = useState(false);
@@ -92,7 +89,7 @@ export const MatchmakingForm: FC = () => {
 			fields={{
 				advancedIncludes: advancedFilterSelections.include,
 				advancedExcludes: advancedFilterSelections.exclude,
-				gender: preferences?.attributes.gender || [],
+				genders: preferences?.genders || [],
 				age: [
 					preferences?.agemin ?? absMinAge,
 					preferences?.agemax ?? absMaxAge
@@ -115,23 +112,17 @@ export const MatchmakingForm: FC = () => {
 			className="flex flex-col gap-8"
 			onSubmit={async (values) => {
 				const [agemin, agemax] = values.age;
-				const { gender: _, ...preferenceAttributes }
-					= preferences?.attributes ?? {};
-
 				await Promise.all([
 					Profile.update(user.id, {
 						required: ["relationships"],
 						relationships: values.relationships ?? [],
-						monopoly: values.monopoly ?? "none"
+						monopoly: values.monopoly ?? null
 					}),
 					Profile.updatePreferences(user.id, {
-						requiredAttributes: ["gender"],
+						required: ["genders"],
 						agemin: agemin === absMinAge ? null : agemin,
 						agemax: agemax === absMaxAge ? null : agemax,
-						attributes: [
-							...Object.values(preferenceAttributes).flat().filter(Boolean),
-							...values.gender
-						]
+						genders: values.genders
 					}),
 					Profile.updateCustomWeights(user.id, {
 						location: values.weightLocation,
@@ -158,22 +149,18 @@ export const MatchmakingForm: FC = () => {
 		>
 			{({ FormField, fields }) => (
 				<>
-					<FormField name="gender">
+					<FormField name="genders">
 						{(field) => (
 							<>
 								<InputLabel {...field.labelProps}>{t("want_to_meet")}</InputLabel>
 								<InputCheckboxList
 									{...field.props}
 									items={genders.map((gender) => {
-										const { name, plural } = (tAttribute[
-											gender.id
-										] as AttributeTranslation<"gender">) ?? {
-											name: gender.id
-										};
+										const { name, plural } = gender;
 
 										return {
 											key: gender.id,
-											label: gender.fallback
+											label: gender.default
 												? t("other_genders")
 												: (plural ?? name)
 										};

@@ -22,30 +22,6 @@ defmodule FlirtualWeb.FeedbackController do
         %{status: :visible, profile: profile} ->
           response = %{
             "bio" => profile.biography,
-            # "prompts" =>
-            #   profile.prompts
-            #   |> Enum.map(fn prompt ->
-            #     %{
-            #       "question" => prompt.prompt.name,
-            #       "answer" => prompt.response
-            #     }
-            #   end),
-            # "interests" =>
-            #   profile.attributes
-            #   |> Enum.filter(fn attr ->
-            #     attr.type == "interest"
-            #   end)
-            #   |> Enum.map(fn attr ->
-            #     attr.name
-            #   end),
-            # "games" =>
-            #   profile.attributes
-            #   |> Enum.filter(fn attr ->
-            #     attr.type == "game"
-            #   end)
-            #   |> Enum.map(fn attr ->
-            #     attr.name
-            #   end),
             "image_count" => length(profile.images),
             "image_url" => profile.images |> List.first() |> Image.url("profile")
           }

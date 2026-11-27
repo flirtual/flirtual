@@ -4,10 +4,11 @@ defmodule Flirtual.Search.Document do
 
   import Flirtual.Utilities
 
-  alias Flirtual.Attribute
+  alias Flirtual.Data.{Kink, Sexuality}
   alias Flirtual.Features
   alias Flirtual.Search.Tokens
   alias Flirtual.User
+  alias Flirtual.User.Profile
 
   # Far-away sentinel so candidates without a value never receive closeness
   # boosts (a missing trait would otherwise score as a perfect match).
@@ -20,26 +21,21 @@ defmodule Flirtual.Search.Document do
     nsfw = user.preferences.nsfw
     privacy = user.preferences.privacy
 
-    attributes =
-      (profile.attributes ++ Attribute.normalize_aliases(profile.attributes))
-      |> Enum.uniq_by(& &1.id)
-      |> then(&if(nsfw, do: &1, else: exclude_by(&1, :type, "kink")))
+    profile_tags = Profile.tags(profile)
 
-    attributes_lf =
-      profile.preferences.attributes
+    tags =
+      (profile_tags ++ Profile.normalize_aliases(profile_tags))
+      |> Enum.uniq()
+      |> then(&if(nsfw, do: &1, else: reject_kinks(&1)))
+
+    tags_lf =
+      Profile.Preferences.tags(profile.preferences)
       |> then(
         &if(nsfw,
-          do:
-            &1 ++
-              (profile.attributes
-               |> filter_by(:type, "kink")
-               |> Attribute.normalize_pairs()),
-          else: exclude_by(&1, :type, "kink")
+          do: &1 ++ Profile.normalize_pairs(profile.kinks),
+          else: reject_kinks(&1)
         )
       )
-
-    attribute_ids = attributes |> Enum.map(& &1.id) |> Enum.sort()
-    attribute_lf_ids = attributes_lf |> Enum.map(& &1.id) |> Enum.uniq() |> Enum.sort()
 
     %{
       id: user.id,
@@ -53,10 +49,14 @@ defmodule Flirtual.Search.Document do
       # Tags whose privacy isn't "everyone" are dropped from the filterable
       # fields, so advanced filters can't include or exclude by them. They stay
       # in `boosts` for scoring.
-      attributes: filterable_attribute_ids(attributes, privacy),
-      attributes_lf: attribute_lf_ids,
-      country: if(private?(privacy, :country), do: nil, else: profile.country),
-      languages: Enum.map(profile.languages || [], &to_string/1),
+      tags: filterable_tag_ids(tags, privacy),
+      tags_lf: tags_lf |> Enum.map(&Tokens.entry/1) |> Enum.uniq() |> Enum.sort(),
+      country:
+        if(private?(privacy, :country) or is_nil(profile.country),
+          do: nil,
+          else: profile.country.id
+        ),
+      languages: Enum.map(profile.languages, & &1.id),
       nsfw: nsfw,
       hidden_from_nonvisible:
         user.tns_discord_in_biography !== nil and :moderator not in user.tags and
@@ -67,39 +67,46 @@ defmodule Flirtual.Search.Document do
           do: {profile.latitude, profile.longitude},
           else: nil
         ),
-      boosts: boosts(user, attribute_ids, attribute_lf_ids, privacy)
+      boosts: boosts(user, tags, Enum.uniq(tags_lf), privacy)
     }
   end
+
+  defp reject_kinks(tags), do: Enum.reject(tags, &match?(%Kink{}, &1))
 
   # Whether a privacy-gated category is hidden from "everyone" (matches/me).
   defp private?(nil, _category), do: false
   defp private?(privacy, category), do: Map.get(privacy, category) != :everyone
 
-  defp filterable_attribute_ids(attributes, privacy) do
-    attributes
-    |> then(&if(private?(privacy, :sexuality), do: exclude_by(&1, :type, "sexuality"), else: &1))
-    |> then(&if(private?(privacy, :kinks), do: exclude_by(&1, :type, "kink"), else: &1))
-    |> Enum.map(& &1.id)
+  defp filterable_tag_ids(tags, privacy) do
+    tags
+    |> then(
+      &if(private?(privacy, :sexuality),
+        do: Enum.reject(&1, fn tag -> match?(%Sexuality{}, tag) end),
+        else: &1
+      )
+    )
+    |> then(&if(private?(privacy, :kinks), do: reject_kinks(&1), else: &1))
+    |> Enum.map(&Tokens.entry/1)
     |> Enum.sort()
   end
 
-  defp boosts(%User{} = user, attribute_ids, attribute_lf_ids, privacy) do
+  defp boosts(%User{} = user, tags, tags_lf, privacy) do
     profile = user.profile
     nsfw = user.preferences.nsfw
 
     [
-      Enum.map(attribute_ids, &Tokens.attribute/1),
-      Enum.map(attribute_lf_ids, &Tokens.attribute_lf/1),
+      Enum.map(tags, &Tokens.tag/1),
+      Enum.map(tags_lf, &Tokens.tag_lf/1),
       Enum.map(profile.custom_interests || [], &Tokens.custom_interest/1),
-      Enum.map(profile.languages || [], &Tokens.language/1),
-      Enum.map(profile.relationships || [], &Tokens.relationship/1),
+      Enum.map(profile.languages, &Tokens.language(&1.id)),
+      Enum.map(profile.relationships, &Tokens.relationship(&1.id)),
       if(profile.monopoly, do: [Tokens.monopoly(profile.monopoly)], else: []),
       if(nsfw && profile.domsub, do: [Tokens.domsub(profile.domsub)], else: []),
       if(nsfw && profile.domsub && not private?(privacy, :kinks),
         do: [Tokens.public_domsub(profile.domsub)],
         else: []
       ),
-      if(profile.country, do: [Tokens.country(profile.country)], else: []),
+      if(profile.country, do: [Tokens.country(profile.country.id)], else: []),
       # Personality poles are only filter tokens; hide them when private
       # (personality scoring factor reads the numeric traits, not these).
       personality_boosts(profile, privacy)

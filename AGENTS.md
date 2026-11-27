@@ -68,7 +68,95 @@ only in the root `package.json`.
   the root `catalog:` and are referenced as `"typescript": "catalog:"`. Bump them there, not in the
   apps.
 - `apps/image-classification`'s Fly image builds with the repo root as context so the shared
-  lockfile is in scope; its ignore rules live in `Dockerfile.dockerignore`.
+  lockfile is in scope; its ignore rules live in `Dockerfile.dockerignore`. The API's does too,
+  for `packages/data`.
+
+## Data catalog
+
+`packages/data` (`@flirtual/data`) holds Flirtual's reference data as JSON in the repo, not in the
+database. The API compiles it in and serves it (`GET /v1/<name>?locale=`, as `/v1/genders`);
+the frontend and the watch read it from there rather than bundling it, so a change is live
+everywhere once the API deploys. The frontend bundles only `locales.json`, which its routes need
+at build time, and takes the others' types from the package without their data. Each file sits
+flat under `content/`, named in the plural for what it holds. `meta.json` has a row for every
+file: its `type`, the singular for one of its entries (`genders.json` holds genders, each of type
+`gender`), the JSON Schema each entry follows, besides its id, and, for a file served at
+`GET /v1/<name>`, its `endpoint`: the default `order`, whose keys are the ones it accepts. Text
+fields aren't in it; the English overlays define those:
+
+- `genders.json`, `sexualities.json`, `interests.json`, `interest-categories.json`, `games.json`,
+  `platforms.json`, `kinks.json`, `prompts.json`, `relationships.json`, `countries.json`,
+  `languages.json`, and the reasons (`ban-reasons.json`, `warn-reasons.json`,
+  `report-reasons.json`, `delete-reasons.json`): what profiles are tagged with and moderation
+  picks from.
+- `plans.json`: the plans (`monthly`, `lifetime`, `promotional`, …), with each store's product
+  id. `Flirtual.Plans` looks them up by id or store id, entitlements hold the plan's id, and
+  `GET /v1/plans?locale=` lists them, named.
+- `locales.json`: every locale the app ships, its native name, and whether it is enabled.
+
+Every file is keyed by id. Ids are readable snake_case names (`woman`,
+`brat_tamer`, `underage`), as short as stays clear (`intp`, not `intp_logician`; no `_vr` on
+games), or codes where a standard gives one (`ca`, `en`); they are unique within their own file
+and never change, since stored rows reference them. Never use an integer-like id: JavaScript
+would move it to the front. Nothing depends on where an entry sits in its file, and every key
+is kept sorted: curated order is each entry's `internal.curated` (1 first), and entries without
+one follow, by name. Entries from before readable ids keep their old ShortUUID as `internal.legacy_id`, which the migration away from the `attributes` table maps
+from; new entries don't need one. The catch-all entry a picker preselects (`other`) has
+`"default": true`.
+
+Text lives beside each file in overlays, `<name>.<locale>.json`: the same ids, holding only what
+is shown to people (`name`, `details`, `definition`, …) and never a field of the base entry.
+English is an overlay too, and as the default locale (`"default": true` in `locales.json`) it
+fills in whatever another locale lacks. In Weblate each file is a component `data/<name>` under
+the `data` category, made by component discovery from the English overlays; Weblate owns every
+other locale. Text is ICU message format, as everywhere else (`{brand_name}`): the frontend formats
+it in `Data.list`, and the API with `Flirtual.ICU.format/3`.
+
+- **Adding**: append an entry under a new id and ship its English text in `<name>.en.json` with
+  it; it's live everywhere once the API deploys. A new field goes in the file's schema first.
+- **Deleting**: remove the entry. Stored rows that still hold its id drop it when they load.
+- **Fields**: everything besides `internal` is sent to clients; `internal` (curated order,
+  legacy ids, game release dates, country names) stays on the server.
+- **Checks**: `pnpm lint` in `packages/data` checks that every file is formatted, with keys
+  sorted and each key or list item on its own line (`pnpm fmt` does both). Every entry is checked
+  against its schema (with JSV) when the data compiles, so an entry that doesn't match fails the
+  API's build.
+
+### In the API
+
+`packages/data` is also a Mix project, `:flirtual_data`, which the API takes as a path dependency.
+`Flirtual.Data` compiles every file into a module named for its type (`ban-reasons.json` is
+`Flirtual.Data.BanReason`), and recompiles when one changes or Weblate adds a locale; the API's
+`mix format` covers its Elixir. `Data.modules()` lists them, and each one reads its file. Alias
+the ones a module uses (`alias Flirtual.Data.{BanReason, Gender}`) and call them by type:
+
+- `Gender.all()`, `Gender.ids()` and `Gender.get(id)` return entries as that module's structs,
+  holding `id`, `internal`, every field the file's schema declares, and its text (`name`,
+  `details`, …) in the default locale. `Gender.all(locale)` and `Gender.get(id, locale)` give the
+  text in a locale, filled in from the default locale's; the overlays themselves stay inside the
+  module. Match on the structs (`%BanReason{} = reason`, `gender.conflicts`) rather than on a
+  generic map, and reach an entry's file through its struct (`entry.__struct__.get(id)`,
+  `.file()` for its name). Text is ICU: format it with `Flirtual.ICU.format/3` before
+  sending it anywhere, as a ban email does with `reason.details`.
+
+A new file gets its struct and getters on the next compile.
+
+- **Storage**: every reference is text holding the entry's id. A profile keeps one `text[]` column
+  per file it draws from, named for it (`genders`, `sexualities`, `interests`, `games`,
+  `platforms`, `kinks`; preferences `genders` and `kinks`), declared as
+  `field :genders, Flirtual.Entries, of: Gender`, which loads that file's structs in display
+  order and refuses ids it doesn't have. Nothing stores a list that mixes files, and profile JSON
+  sends each field as its ids. `GET /v1/<name>` lists a file (`/v1/genders`), with its text
+  given `?locale=`, in the order `?order=` asks for (`Flirtual.Order`): a list of keys, each
+  breaking ties in the one before, `-` reversing one: `curated`, `name` (collated for the locale,
+  with `ex_cldr_collation`) and, for games, `popularity`. It defaults to the file's `endpoint`
+  order in `meta.json`.
+- **Game order** is the one runtime part: each API node scores games by popularity at boot and
+  then daily (`Flirtual.Popularity`, held in ETS, not the database), served as
+  `GET /v1/games?order=curated,-popularity`. Timezones are computed by the API, at `GET /v1/timezones`.
+- **Search index**: Manticore holds tags as the `tags`/`tags_lf` columns and `tag:`/`lf:` tokens.
+  Changing a column means a new table name (`config :flirtual, Flirtual.Search, table:`): each node
+  creates the table at boot and reindexes it while it's empty.
 
 ## Static assets
 

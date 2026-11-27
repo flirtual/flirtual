@@ -1,7 +1,7 @@
 /* eslint-disable react-refresh/only-export-components, no-restricted-imports */
 import deepmerge from "deepmerge";
 import i18n from "i18next";
-import type { BackendModule, ResourceKey } from "i18next";
+import type { BackendModule } from "i18next";
 import icu from "i18next-icu";
 import { useCallback, useSyncExternalStore } from "react";
 import { initReactI18next, useTranslation } from "react-i18next";
@@ -19,7 +19,6 @@ import type {
 	To
 } from "react-router";
 
-import * as brand from "~/brand";
 import { server } from "~/const";
 import { polyfillForLanguage } from "~/polyfill";
 import { isInternalHref } from "~/urls";
@@ -36,6 +35,7 @@ import {
 	replaceLanguage
 } from "./languages";
 import type { AnyLocale, Locale } from "./languages";
+import { messageVariables } from "./variables";
 
 const log = _log.extend("i18n");
 
@@ -67,20 +67,12 @@ declare module "i18next" {
 	}
 }
 
-function flat1<T extends Record<string, Record<string, ResourceKey>>>(value: T) {
-	return Object.values(value).reduce((previous, current) => {
-		return { ...previous, ...current };
-	}, {});
-}
-
 async function load(locale: AnyLocale) {
 	// Aries: Keep this in sync with `getManualChunk` from `vite.config.ts`.
 	// For performance, we bundle all translations into a single file per locale.
-	const [default_, attributes, uppy] = await Promise.all([
+	const [default_, uppy] = await Promise.all([
 		import(`../../messages/${locale}.json`)
 			.then(({ default: messages }) => messages) as unknown as typeof import("../../messages/en.json"),
-		import(`../../messages/attributes.${locale}.json`)
-			.then(({ default: attributes }) => flat1(attributes)),
 		(async () => {
 			// https://github.com/rollup/plugins/tree/master/packages/dynamic-import-vars#limitations
 			// Widened to string so cases for locales not yet enabled in `languages.ts` still type-check.
@@ -105,7 +97,6 @@ async function load(locale: AnyLocale) {
 	return {
 		[defaultNamespace]: {
 			...default_,
-			attributes,
 			uppy
 		},
 	};
@@ -217,7 +208,7 @@ i18n
 
 		interpolation: {
 			escapeValue: false,
-			defaultVariables: { brand_name: brand.name, legal_name: brand.legalName }
+			defaultVariables: messageVariables
 		},
 	});
 

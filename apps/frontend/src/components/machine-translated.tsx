@@ -1,14 +1,15 @@
 import type { FC } from "react";
 import { Trans } from "react-i18next";
 
-import { useLocale } from "~/i18n";
+import { defaultLocale, useLocale } from "~/i18n";
+import type { Locale } from "~/i18n";
 import { urls } from "~/urls";
 
 import { InlineLink } from "./inline-link";
 
 export const MachineTranslatedLegal: FC<{
-	intended?: string;
-}> = ({ intended = "en" }) => {
+	intended?: Locale;
+}> = ({ intended = defaultLocale }) => {
 	const [locale] = useLocale();
 
 	if (intended === locale.split("-")[0]) return null;
@@ -23,7 +24,7 @@ export const MachineTranslatedLegal: FC<{
 								className="underline"
 								highlight={false}
 								href="./"
-								hrefLang="en"
+								hrefLang={intended}
 							/>
 						)
 					}}

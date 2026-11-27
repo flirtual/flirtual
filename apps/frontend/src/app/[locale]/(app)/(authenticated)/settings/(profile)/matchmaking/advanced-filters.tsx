@@ -1,37 +1,37 @@
+import { useSuspenseQueries } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
+import { countriesOptions, gamesOptions, gendersOptions, interestsOptions, kinksOptions, languagesOptions, platformsOptions, sexualitiesOptions } from "~/api/data";
 import type { User } from "~/api/user";
 import type {
 	AdvancedFilter,
 	AdvancedFilterCategory,
 	ProfileAdvancedFilters
 } from "~/api/user/profile";
-import { advancedFilterValueCategories } from "~/api/user/profile";
 import { getCountryName } from "~/components/profile/pill/country";
 import { personality, vrTags } from "~/features";
-import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
-import { useDisplayLocale } from "~/i18n";
+import { useDisplayLocale, useLocale } from "~/i18n";
 import { intlLocale } from "~/i18n/languages";
+import { queryClient } from "~/query";
 
 import type { AdvancedFilterGroup, AdvancedFilterOption } from "./advanced-filter-select";
 
 export const maximumAdvancedFilters = 30;
 
 // "Popular" interest-category listed separately.
-const popularInterestCategory = "iiCe39JvGQAAtsrTqnLddb";
+const popularInterestCategory = "popular";
 
-// Selections are encoded as "<category>:<attribute id or value>" so a single
+// Selections are encoded as "<category>:<value>" so a single
 // select can hold every category.
 export function advancedFiltersToSelections(filters: ProfileAdvancedFilters | undefined) {
 	const include: Array<string> = [];
 	const exclude: Array<string> = [];
 
 	for (const filter of filters ?? []) {
-		const value = filter.attributeId ?? filter.value;
-		if (!value) continue;
+		if (!filter.value) continue;
 
-		(filter.kind === "include" ? include : exclude).push(`${filter.category}:${value}`);
+		(filter.kind === "include" ? include : exclude).push(`${filter.category}:${filter.value}`);
 	}
 
 	return { include, exclude };
@@ -48,9 +48,7 @@ export function selectionsToAdvancedFilters(
 		const category = selection.slice(0, separator) as AdvancedFilterCategory;
 		const value = selection.slice(separator + 1);
 
-		return (advancedFilterValueCategories as ReadonlyArray<string>).includes(category)
-			? { kind, category, value }
-			: { kind, category, attributeId: value };
+		return { kind, category, value };
 	};
 
 	return [
@@ -59,52 +57,65 @@ export function selectionsToAdvancedFilters(
 	].filter((filter): filter is AdvancedFilter => !!filter);
 }
 
-interface AttributeLike {
-	id: string;
-	category?: string;
-	kind?: string;
+export function advancedFilterQueries(locale: string) {
+	return [
+		gendersOptions({ locale }),
+		sexualitiesOptions({ locale }),
+		interestsOptions({ locale }),
+		gamesOptions({ locale }),
+		platformsOptions({ locale }),
+		kinksOptions({ locale }),
+		countriesOptions({ locale }),
+		languagesOptions({ locale, order: ["name"] })
+	] as const;
 }
 
-function normalize(attribute: unknown): AttributeLike {
-	return typeof attribute === "string"
-		? { id: attribute }
-		: (attribute as AttributeLike);
+// Each entry by name: TypeScript can't infer `prefetchQuery` over a list of differently typed options.
+export function prefetchAdvancedFilters(locale: string) {
+	const [genders, sexualities, interests, games, platforms, kinks, countries, languages] = advancedFilterQueries(locale);
+
+	return Promise.all([
+		queryClient.prefetchQuery(genders),
+		queryClient.prefetchQuery(sexualities),
+		queryClient.prefetchQuery(interests),
+		queryClient.prefetchQuery(games),
+		queryClient.prefetchQuery(platforms),
+		queryClient.prefetchQuery(kinks),
+		queryClient.prefetchQuery(countries),
+		queryClient.prefetchQuery(languages)
+	]);
 }
 
 export function useAdvancedFilterGroups(
 	{ nsfw }: { nsfw: boolean }
 ): Array<AdvancedFilterGroup> {
 	const { t } = useTranslation();
-	const tAttribute = useAttributeTranslation();
 	const locale = useDisplayLocale();
+	const [appLocale] = useLocale();
 
-	const genders = useAttributes("gender");
-	const sexualities = useAttributes("sexuality");
-	const interests = useAttributes("interest");
-	const games = useAttributes("game");
-	const platforms = useAttributes("platform");
-	const kinks = useAttributes("kink");
-	const countries = useAttributes("country");
-	const languages = useAttributes("language");
+	const [
+		{ data: genders },
+		{ data: sexualities },
+		{ data: interests },
+		{ data: games },
+		{ data: platforms },
+		{ data: kinks },
+		{ data: countries },
+		{ data: languages }
+	] = useSuspenseQueries({ queries: advancedFilterQueries(appLocale) });
 
 	return useMemo(() => {
-		const languageNames = new Intl.DisplayNames(intlLocale(locale), { type: "language" });
-
-		const attributeOptions = (
+		const entryOptions = (
 			category: AdvancedFilterCategory,
-			collection: ReadonlyArray<unknown>
+			collection: ReadonlyArray<{ id: string; name: string }>
 		): Array<AdvancedFilterOption> =>
 			collection
-				.map(normalize)
-				.map(({ id }) => ({
+				.map(({ id, name }) => ({
 					key: `${category}:${id}`,
-					label: tAttribute[id]?.name ?? id
+					label: name
 				}));
 
-		const allInterests = interests.map(normalize);
-		const allPlatforms = platforms.map(normalize);
-
-		// Country/language are static lists with no `order`, so sort by name.
+		// Countries are named here, by `Intl`, so only the client can sort them by name.
 		const byLabel = (a: AdvancedFilterOption, b: AdvancedFilterOption) =>
 			a.label.localeCompare(b.label, intlLocale(locale));
 
@@ -113,15 +124,15 @@ export function useAdvancedFilterGroups(
 				key: "gender",
 				label: t("genders"),
 				premium: false,
-				options: attributeOptions("gender", genders)
+				options: entryOptions("gender", genders)
 			},
 			{
 				key: "popular-interest",
 				label: t("popular_interests"),
 				premium: false,
-				options: attributeOptions(
+				options: entryOptions(
 					"interest",
-					allInterests.filter(({ category }) => category === popularInterestCategory)
+					interests.filter(({ category }) => category === popularInterestCategory)
 				)
 			},
 			{
@@ -129,22 +140,19 @@ export function useAdvancedFilterGroups(
 				label: t("languages"),
 				premium: false,
 				options: languages
-					.map((languageId) => ({
-						key: `language:${languageId}`,
-						label: tAttribute[languageId]?.name
-							?? languageNames.of(languageId)
-							?? languageId
+					.map(({ id, name }) => ({
+						key: `language:${id}`,
+						label: name
 					}))
-					.sort(byLabel)
 			},
 			vrTags
 				? {
 						key: "headset",
 						label: t("vr_platforms"),
 						premium: false,
-						options: attributeOptions(
+						options: entryOptions(
 							"platform",
-							allPlatforms.filter(({ kind }) => kind === "headset")
+							platforms.filter(({ kind }) => kind === "headset")
 						)
 					}
 				: null,
@@ -153,9 +161,9 @@ export function useAdvancedFilterGroups(
 						key: "accessory",
 						label: t("vr_accessories"),
 						premium: true,
-						options: attributeOptions(
+						options: entryOptions(
 							"platform",
-							allPlatforms.filter(({ kind }) => kind === "accessory")
+							platforms.filter(({ kind }) => kind === "accessory")
 						)
 					}
 				: null,
@@ -164,9 +172,9 @@ export function useAdvancedFilterGroups(
 				label: t("countries"),
 				premium: true,
 				options: countries
-					.map((countryId) => ({
-						key: `country:${countryId.toLowerCase()}`,
-						label: getCountryName(locale, countryId) ?? countryId
+					.map(({ id }) => ({
+						key: `country:${id.toLowerCase()}`,
+						label: getCountryName(locale, id) ?? id
 					}))
 					.sort(byLabel)
 			},
@@ -174,7 +182,7 @@ export function useAdvancedFilterGroups(
 				key: "sexuality",
 				label: t("sexualities"),
 				premium: true,
-				options: attributeOptions("sexuality", sexualities)
+				options: entryOptions("sexuality", sexualities)
 			},
 			{
 				key: "relationships",
@@ -200,9 +208,9 @@ export function useAdvancedFilterGroups(
 				key: "interest",
 				label: t("interests"),
 				premium: true,
-				options: attributeOptions(
+				options: entryOptions(
 					"interest",
-					allInterests.filter(({ category }) => category !== popularInterestCategory)
+					interests.filter(({ category }) => category !== popularInterestCategory)
 				)
 			},
 			vrTags
@@ -210,7 +218,7 @@ export function useAdvancedFilterGroups(
 						key: "game",
 						label: t("vr_apps_games"),
 						premium: true,
-						options: attributeOptions("game", games)
+						options: entryOptions("game", games)
 					}
 				: null,
 			personality
@@ -245,7 +253,7 @@ export function useAdvancedFilterGroups(
 						key: "kink",
 						label: t("kinks"),
 						premium: true,
-						options: attributeOptions("kink", kinks)
+						options: entryOptions("kink", kinks)
 					}
 				: null
 		];
@@ -253,14 +261,14 @@ export function useAdvancedFilterGroups(
 		return groups
 			.filter((group): group is AdvancedFilterGroup => !!group)
 			.filter(({ options }) => options.length > 0);
-	}, [genders, sexualities, interests, games, platforms, kinks, countries, languages, nsfw, tAttribute, locale, t]);
+	}, [genders, sexualities, interests, games, platforms, kinks, countries, languages, nsfw, locale, t]);
 }
 
 // The keys of the user's own tags, so the "I only want to see..." list can
 // show them first within each category.
 export function ownFilterKeys(user: User): Set<string> {
 	const { profile } = user;
-	const attribute = (category: AdvancedFilterCategory, ids: Array<string> | undefined) =>
+	const tagKeys = (category: AdvancedFilterCategory, ids: Array<string> | undefined) =>
 		(ids ?? []).map((id) => `${category}:${id}`);
 
 	const pole = (value: number | null | undefined, positive: string, negative: string) =>
@@ -269,11 +277,11 @@ export function ownFilterKeys(user: User): Set<string> {
 			: [`personality:${value > 0 ? positive : negative}`];
 
 	return new Set([
-		...attribute("sexuality", profile.attributes.sexuality),
-		...attribute("interest", profile.attributes.interest),
-		...attribute("game", profile.attributes.game),
-		...attribute("platform", profile.attributes.platform),
-		...attribute("kink", profile.attributes.kink),
+		...tagKeys("sexuality", profile.sexualities),
+		...tagKeys("interest", profile.interests),
+		...tagKeys("game", profile.games),
+		...tagKeys("platform", profile.platforms),
+		...tagKeys("kink", profile.kinks),
 		...(profile.languages ?? []).map((language) => `language:${language}`),
 		...(profile.country ? [`country:${profile.country.toLowerCase()}`] : []),
 		...(profile.relationships ?? []).map((value) => `relationships:${value}`),

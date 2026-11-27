@@ -64,14 +64,15 @@ Tailwind 4 with custom classes and variants. `src/app/index.css` loads `tailwind
 - **Components/hooks**: prefer ours in `src/components/`, `src/hooks/` (Form, InputText/InputLabel, Button, Link/InlineLink, Image, Dialog/DrawerOrDialog/useDialog, useToasts).
 - **Native**: use Capacitor APIs/plugins (preferences, clipboard, capacitor-datetime-picker).
 - **API**: clients in `src/api/` (wretch, auto case conversion).
+- **Data** (genders, games, reasons, …): fetched from the API's `/v1/<file>?locale=`, never bundled; each file has query options in `src/api/data.ts` (`gendersOptions({ locale, order })`) for `useSuspenseQuery` or a loader's `prefetchQuery`, its entries carrying their text in that locale; `select: byId` looks entries up by id. Types come from `@flirtual/data` as type-only imports (`src/api/data.ts`); only `locales.json` is imported at runtime.
 - **Auth**: session via TanStack Query (`useSession`, `useUser`).
 - **Routing**: import from `~/i18n`, not `react-router`, for locale-aware `Navigate`/`useNavigate`/`useMatch`/`redirect`.
 
 ### Translations (i18next)
 
 All user-facing text goes through i18next; add ICU keys to `messages/en.json` only. Weblate
-(project `flirtual`: components `flirtual`, `attributes`, `notifications`, `glossary`) owns every
-other locale's file, so never hand-edit `messages/<locale>.json`, `attributes.<locale>.json` or
+(project `flirtual`: components `flirtual`, `data/<name>` for each data file, `notifications`, `glossary`) owns every
+other locale's file, so never hand-edit `messages/<locale>.json`, `packages/data/content/<name>.<locale>.json` or
 non-English `.po` files. After adding or changing keys, run `/translate` (incremental mode): it
 writes context for the new keys, drafts translations with the translator agents, and uploads
 them to Weblate as "needs editing" or as suggestions, after you approve.
@@ -95,7 +96,7 @@ node --env-file=.env.weblate i18n/scripts/weblate.ts pull   # Weblate state → 
 
 Writes to Weblate (`weblate.ts`, `screenshots.ts upload`) are dry runs unless given `--apply`.
 
-The watch app bundles `messages/` and reads it at runtime: its own strings live under `watch`, but it also reuses top-level keys and attribute names. Grep `ios/App/Watch/` before renaming or removing a key. Its `t()` fills `{name}` placeholders, ICU `select` and empty `<name/>` tags, and drops other tags but keeps their contents, so strings it uses can't rely on ICU plurals.
+The watch app bundles `messages/` and reads it at runtime: its own strings live under `watch`, but it also reuses top-level keys and data entries' names. Grep `ios/App/Watch/` before renaming or removing a key. Its `t()` fills `{name}` placeholders, ICU `select` and empty `<name/>` tags, and drops other tags but keeps their contents, so strings it uses can't rely on ICU plurals.
 
 ```tsx
 const { t } = useTranslation();

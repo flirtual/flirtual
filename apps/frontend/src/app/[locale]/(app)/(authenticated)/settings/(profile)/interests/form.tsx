@@ -1,3 +1,4 @@
+import { useSuspenseQueries } from "@tanstack/react-query";
 import {
 	Brain,
 	Dices,
@@ -18,6 +19,7 @@ import { groupBy } from "remeda";
 import { twMerge } from "tailwind-merge";
 
 import type { Session } from "~/api/auth";
+import { interestCategoriesOptions, interestsOptions } from "~/api/data";
 import { Profile } from "~/api/user/profile";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
@@ -29,24 +31,24 @@ import {
 } from "~/components/inputs";
 import { Pill } from "~/components/profile/pill/pill";
 import { customInterests as customInterestsEnabled } from "~/features";
-import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
 import { useDevice } from "~/hooks/use-device";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
+import { useLocale } from "~/i18n";
 import { mutate, sessionKey } from "~/query";
 
 const categoryIcons: Record<string, React.ReactNode> = {
-	iiCe39JvGQAAtsrTqnLddb: <Star />,
-	TgrEr2C6DAcp69Winej5Q4: <Tags />,
-	aSCFm5P7awrqNKnknWuChQ: <User />,
-	"59oWHt4bZSdQ6tj8f4CWs9": <Gamepad2 />,
-	fQK3RUCYFW4WeSfLkzVP42: <Music />,
-	DAweztCvdXBa5cKvhgNsPY: <Trophy />,
-	"9os9Yxxr6zGR4k7kh5BKrB": <HeartHandshake />,
-	nFiqbX3n6aiEdKe3JbynBL: <MoonStar />,
-	"43i5J3VsKCvU4HGRJHjehn": <Brain />,
-	hR3X5w26ba6M98fVB2kVxX: <Dices />,
-	tmQbiXNw7d9Ys2DG9Ddg28: <Star />
+	popular: <Star />,
+	general: <Tags />,
+	identity: <User />,
+	games: <Gamepad2 />,
+	music: <Music />,
+	sports: <Trophy />,
+	love_languages: <HeartHandshake />,
+	astrology: <MoonStar />,
+	personality_types: <Brain />,
+	alignment: <Dices />,
+	game_genres: <Star />
 };
 
 const HighlightedText: FC<{ children: string; snippet: string }> = ({
@@ -77,38 +79,29 @@ export const InterestSelectList: FC<{
 	onSelected: Dispatch<Array<string>>;
 	maximum: number;
 }> = ({ filter, selected, onSelected, maximum }) => {
-	const interestCategories = useAttributes("interest-category");
-	const interests = useAttributes("interest");
+	const [locale] = useLocale();
+	const [{ data: interestCategories }, { data: interests }] = useSuspenseQueries({
+		queries: [interestCategoriesOptions({ locale }), interestsOptions({ locale, order: ["name"] })]
+	});
 
 	const categorizedInterests = groupBy(interests, ({ category }) => category);
 
-	const tAttribute = useAttributeTranslation();
-
 	return (
 		<div className="flex flex-col gap-8">
-			{interestCategories.map((categoryId) => {
-				const { name: categoryName } = tAttribute[categoryId] || {
-					name: categoryId
-				};
+			{interestCategories.map(({ id: categoryId, name: categoryName }) => {
 				const categoryIcon = categoryIcons[categoryId];
 
 				const filteredInterests = categorizedInterests[categoryId]
 					?.filter((interest) => {
 						if (!filter) return true;
 
-						const interestName = tAttribute[interest.id]?.name || interest.id;
+						const interestName = interest.name || interest.id;
 						return (
 							interestName.toLowerCase().includes(filter.toLowerCase())
 							|| interest.synonyms?.some((synonym) =>
 								synonym.toLowerCase().includes(filter.toLowerCase())
 							)
 						);
-					})
-					.sort(({ id: a }, { id: b }) => {
-						const aName = tAttribute[a]?.name || a;
-						const bName = tAttribute[b]?.name || b;
-
-						return aName.localeCompare(bName);
 					});
 
 				if (!filteredInterests || filteredInterests.length === 0) return null;
@@ -121,10 +114,7 @@ export const InterestSelectList: FC<{
 							{categoryName}
 						</InputLabel>
 						<div className="flex flex-wrap gap-2">
-							{filteredInterests.map(({ id: interestId }) => {
-								const { name: interestName } = tAttribute[interestId] || {
-									name: interestId
-								};
+							{filteredInterests.map(({ id: interestId, name: interestName }) => {
 								const active = selected.includes(interestId);
 
 								return (
@@ -245,7 +235,7 @@ export const InterestsForm: FC = () => {
 		<Form
 			fields={{
 				filter: "",
-				defaultInterests: profile.attributes.interest || [],
+				defaultInterests: profile.interests || [],
 				customInterests: customInterestsEnabled ? profile.customInterests : []
 			}}
 			className="flex flex-col gap-8"

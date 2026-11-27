@@ -5,9 +5,21 @@ defmodule Flirtual.Profiles do
   import Flirtual.Utilities
   import Flirtual.Utilities.Changeset
 
-  alias Flirtual.{Attribute, Features, Flag, ObanWorkers, Repo, User}
+  alias Flirtual.{Data, Features, Flag, ObanWorkers, Repo, User}
   alias Flirtual.User.Profile
   alias Flirtual.User.Profile.{Block, Image, Prompt}
+
+  alias Flirtual.Data.{
+    Country,
+    Game,
+    Gender,
+    Interest,
+    Kink,
+    Language,
+    Platform,
+    Relationship,
+    Sexuality
+  }
 
   def get_personality_by_user_id(user_id)
       when is_binary(user_id) do
@@ -37,15 +49,13 @@ defmodule Flirtual.Profiles do
     use Flirtual.EmbeddedSchema
 
     import Flirtual.Utilities
-    import Flirtual.Attribute, except: [create: 1]
+    import Flirtual.Utilities.Changeset, only: [validate_entries: 3]
 
-    alias Flirtual.Countries
     alias Flirtual.Features
-    alias Flirtual.Languages
     alias Flirtual.Profiles.Update
     alias Flirtual.User.Profile
 
-    @attribute_keys [
+    @tag_id_keys [
       :gender_id,
       :sexuality_id,
       :kink_id,
@@ -54,13 +64,13 @@ defmodule Flirtual.Profiles do
       :interest_id
     ]
 
-    @attribute_types @attribute_keys
-                     |> Enum.map(fn key ->
-                       key
-                       |> Atom.to_string()
-                       |> String.replace_suffix("_id", "")
-                       |> to_atom()
-                     end)
+    @tag_types @tag_id_keys
+               |> Enum.map(fn key ->
+                 key
+                 |> Atom.to_string()
+                 |> String.replace_suffix("_id", "")
+                 |> to_atom()
+               end)
 
     @optional [
                 :display_name,
@@ -78,7 +88,7 @@ defmodule Flirtual.Profiles do
                 :languages,
                 :timezone,
                 :custom_interests
-              ] ++ @attribute_keys ++ @attribute_types
+              ] ++ @tag_id_keys ++ @tag_types
 
     embedded_schema do
       field(:display_name, :string)
@@ -88,23 +98,22 @@ defmodule Flirtual.Profiles do
       field(:discord, :string, default: "")
       field(:facetime, :string, default: "")
       field(:playlist, :string, default: "")
-      field(:domsub, Ecto.Enum, values: [:none | Ecto.Enum.values(Profile, :domsub)])
-      field(:monopoly, Ecto.Enum, values: [:none | Ecto.Enum.values(Profile, :monopoly)])
-      field(:country, Ecto.Enum, values: [:none | Countries.list(:iso_3166_1)])
+      field(:domsub, Ecto.Enum, values: Ecto.Enum.values(Profile, :domsub))
+      field(:monopoly, Ecto.Enum, values: Ecto.Enum.values(Profile, :monopoly))
+
+      field(:country, :string)
+
       field(:relationships, {:array, :string})
       field(:new, :boolean)
-      field(:languages, {:array, Ecto.Enum}, values: Languages.list(:bcp_47))
 
-      field(:timezone, Ecto.Enum,
-        values: [
-          :none | TzExtra.time_zone_ids(include_aliases: true) |> Enum.map(&String.to_atom/1)
-        ]
-      )
+      field(:languages, {:array, :string})
+
+      field(:timezone, Ecto.Enum, values: Ecto.Enum.values(Profile, :timezone))
 
       field(:custom_interests, {:array, :string})
 
-      @attribute_keys |> Enum.map(fn key -> field(key, {:array, :string}) end)
-      @attribute_types |> Enum.map(fn key -> field(key, {:array, :string}, virtual: true) end)
+      @tag_id_keys |> Enum.map(fn key -> field(key, {:array, :string}) end)
+      @tag_types |> Enum.map(fn key -> field(key, {:array, :string}, virtual: true) end)
     end
 
     def create(%{profile: profile}) do
@@ -118,10 +127,10 @@ defmodule Flirtual.Profiles do
         playlist: profile.playlist,
         domsub: profile.domsub,
         monopoly: profile.monopoly,
-        country: profile.country,
-        relationships: profile.relationships,
+        country: profile.country && profile.country.id,
+        relationships: Enum.map(profile.relationships, & &1.id),
         new: profile.new,
-        languages: if(profile.languages === [], do: nil, else: profile.languages),
+        languages: Enum.map(profile.languages, & &1.id),
         timezone: profile.timezone,
         custom_interests: profile.custom_interests
       }
@@ -229,20 +238,23 @@ defmodule Flirtual.Profiles do
       |> validate_length(:display_name, min: 1, max: 32)
       |> validate_html(:biography)
       |> validate_html_length(:biography, min: 48, max: 10_000)
+      |> validate_inclusion(:country, Country.ids())
+      |> validate_subset(:languages, Language.ids())
+      |> validate_subset(:relationships, Relationship.ids())
       |> validate_length(:languages, max: 5)
-      |> validate_attributes(:gender_id, "gender")
+      |> validate_entries(:gender_id, Gender)
       |> validate_length(:gender, min: 1, max: 4)
       |> validate_gender()
       |> validate_gender_conflicts()
-      |> validate_attributes(:sexuality_id, "sexuality")
+      |> validate_entries(:sexuality_id, Sexuality)
       |> validate_length(:sexuality, max: 3)
-      |> validate_attributes(:kink_id, "kink")
+      |> validate_entries(:kink_id, Kink)
       |> validate_length(:kink, min: 0, max: 8)
-      |> validate_attributes(:game_id, "game")
+      |> validate_entries(:game_id, Game)
       |> validate_length(:game, min: 1, max: 5)
-      |> validate_attributes(:platform_id, "platform")
+      |> validate_entries(:platform_id, Platform)
       |> validate_length(:platform, min: 1, max: 8)
-      |> validate_attributes(:interest_id, "interest")
+      |> validate_entries(:interest_id, Interest)
       |> then(fn changeset ->
         if not changed?(changeset, :interest_id) and not changed?(changeset, :custom_interests) do
           changeset
@@ -267,7 +279,7 @@ defmodule Flirtual.Profiles do
     # Must have at least one non-pronoun gender for matchmaking.
     defp validate_gender(changeset) do
       validate_change(changeset, :gender, fn :gender, genders ->
-        if genders === [] or Enum.any?(genders, &(not pronoun?(&1))),
+        if genders === [] or Enum.any?(genders, &(not Profile.pronoun?(&1))),
           do: [],
           else: [gender: "must include a non-pronoun gender"]
       end)
@@ -279,7 +291,7 @@ defmodule Flirtual.Profiles do
 
         conflicting? =
           Enum.any?(genders, fn gender ->
-            gender.metadata["conflicts"]
+            gender.conflicts
             |> List.wrap()
             |> Enum.any?(&MapSet.member?(ids, &1))
           end)
@@ -341,35 +353,27 @@ defmodule Flirtual.Profiles do
       end
     end
 
-    def transform_value(value, default) do
-      if value === :none do
-        nil
-      else
-        if is_nil(value) do
-          default
-        else
-          value
-        end
-      end
-    end
+    # Interests may hold custom interests, which are strings and stored separately.
+    defp chosen(nil, current), do: current
+    defp chosen(tags, _), do: Enum.reject(tags, &is_binary/1)
 
     def transform(profile, attrs) do
       profile
       |> change(%{
-        display_name: transform_value(attrs.display_name, profile.display_name),
-        biography: transform_value(attrs.biography, profile.biography),
-        relationships: transform_value(attrs.relationships, profile.relationships),
-        vrchat: transform_value(attrs.vrchat, profile.vrchat),
-        vrchat_name: transform_value(attrs.vrchat_name, profile.vrchat_name),
-        discord: transform_value(attrs.discord, profile.discord),
-        facetime: transform_value(attrs.facetime, profile.facetime),
-        playlist: transform_value(attrs.playlist, profile.playlist),
-        new: transform_value(attrs.new, profile.new),
-        country: transform_value(attrs.country, profile.country),
-        domsub: transform_value(attrs.domsub, profile.domsub),
-        monopoly: transform_value(attrs.monopoly, profile.monopoly),
-        languages: transform_value(attrs.languages, profile.languages),
-        timezone: transform_value(attrs.timezone, profile.timezone),
+        display_name: attrs.display_name,
+        biography: attrs.biography,
+        relationships: Enum.map(attrs.relationships || [], &Relationship.get/1),
+        vrchat: attrs.vrchat,
+        vrchat_name: attrs.vrchat_name,
+        discord: attrs.discord,
+        facetime: attrs.facetime,
+        playlist: attrs.playlist,
+        new: attrs.new,
+        country: attrs.country && Country.get(attrs.country),
+        domsub: attrs.domsub,
+        monopoly: attrs.monopoly,
+        languages: Enum.map(attrs.languages || [], &Language.get/1),
+        timezone: attrs.timezone,
         custom_interests:
           if Features.custom_interests?() and not is_nil(attrs.interest) do
             attrs.interest
@@ -378,15 +382,12 @@ defmodule Flirtual.Profiles do
             nil
           end ||
             profile.custom_interests,
-        attributes:
-          [
-            @attribute_types
-            |> Enum.map(fn key ->
-              (attrs[key] || profile.attributes |> filter_by(:type, key |> Atom.to_string()))
-              |> Enum.filter(&(not is_binary(&1)))
-            end)
-          ]
-          |> List.flatten()
+        genders: chosen(attrs.gender, profile.genders),
+        sexualities: chosen(attrs.sexuality, profile.sexualities),
+        kinks: chosen(attrs.kink, profile.kinks),
+        games: chosen(attrs.game, profile.games),
+        platforms: chosen(attrs.platform, profile.platforms),
+        interests: chosen(attrs.interest, profile.interests)
       })
     end
   end
@@ -478,14 +479,7 @@ defmodule Flirtual.Profiles do
         do: Enum.filter(filters, &(advanced_filter_category(&1) in enabled)),
         else: []
 
-    attributes =
-      filters
-      |> Enum.map(&(&1["attribute_id"] || &1[:attribute_id]))
-      |> Enum.reject(&is_nil/1)
-      |> Attribute.list()
-      |> Map.new(&{&1.id, &1})
-
-    context = %{user: user, attributes: attributes}
+    context = %{user: user}
 
     changesets =
       filters
@@ -496,10 +490,7 @@ defmodule Flirtual.Profiles do
           context
         )
       )
-      |> Enum.uniq_by(
-        &{get_field(&1, :kind), get_field(&1, :category), get_field(&1, :attribute_id),
-         get_field(&1, :value)}
-      )
+      |> Enum.uniq_by(&{get_field(&1, :kind), get_field(&1, :category), get_field(&1, :value)})
 
     cond do
       not valid_kinds_categories? ->
@@ -749,25 +740,24 @@ defmodule Flirtual.Profiles do
       |> where(profile_id: ^profile_id)
       |> Repo.delete_all()
 
-      prompt_attributes =
-        prompts
-        |> Enum.map(&Map.get(&1, "prompt_id"))
-        |> Attribute.list("prompt")
-
-      prompt_attribute_ids = prompt_attributes |> Enum.map(& &1.id)
+      chosen =
+        for %{"prompt" => id, "response" => response} when is_binary(id) and is_binary(response) <-
+              prompts,
+            prompt = Data.Prompt.get(id),
+            prompt != nil,
+            do: {prompt, response}
 
       {_, prompts} =
         Repo.insert_all(
           Prompt,
-          prompts
-          |> Enum.filter(&(Map.get(&1, "prompt_id") in prompt_attribute_ids))
-          |> Enum.slice(0..4)
+          chosen
+          |> Enum.take(5)
           |> Enum.with_index()
-          |> Enum.map(fn {%{"prompt_id" => prompt_id, "response" => response}, index} ->
+          |> Enum.map(fn {{prompt, response}, index} ->
             [
               profile_id: profile_id,
-              prompt_id: prompt_id,
-              response: response |> String.slice(0..1499),
+              prompt: prompt,
+              response: String.slice(response, 0..1499),
               order: index
             ]
           end),
@@ -777,9 +767,6 @@ defmodule Flirtual.Profiles do
       Flag.check_flags(profile_id, Enum.join(Enum.map(prompts, & &1.response), " "))
 
       prompts
-      |> Enum.map(fn prompt ->
-        %{prompt | prompt: prompt_attributes |> Enum.find(&(&1.id === prompt.prompt_id))}
-      end)
     end)
   end
 

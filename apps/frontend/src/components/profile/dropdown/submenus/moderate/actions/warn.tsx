@@ -1,9 +1,11 @@
+import { queryOptions, useSuspenseQueries } from "@tanstack/react-query";
 import { Languages, MailWarning } from "lucide-react";
 import { useMemo } from "react";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { withSuspense } from "with-suspense";
 
+import { byId, languagesOptions, warnReasonsOptions } from "~/api/data";
 import { OpenAI } from "~/api/openai";
 import { User } from "~/api/user";
 import { Button } from "~/components/button";
@@ -19,17 +21,12 @@ import { DropdownMenuItem } from "~/components/dropdown";
 import { Form, FormButton, FormMessage } from "~/components/forms";
 import { InputCheckbox, InputLabel, InputSelect, InputTextArea } from "~/components/inputs";
 import { UserThumbnail } from "~/components/user-avatar";
-import {
-	useAttributes,
-	useAttributeTranslation
-} from "~/hooks/use-attribute";
-import type { AttributeTranslation } from "~/hooks/use-attribute";
 import { useDialog } from "~/hooks/use-dialog";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { defaultLocale, i18n, useLocale } from "~/i18n";
+import { defaultLocale, useLocale } from "~/i18n";
 import { intlLocale } from "~/i18n/languages";
-import { invalidate, userKey } from "~/query";
+import { invalidate, queryClient, userKey } from "~/query";
 
 export const WarnDialog: FC<{
 	user: User;
@@ -47,17 +44,16 @@ export const WarnDialog: FC<{
 		[locale]
 	);
 
-	const reasons = useAttributes("warn-reason");
-	const defaultReasonObject = reasons.find((reason) => {
-		if (typeof reason === "string") return false;
-		return reason.fallback === true;
-	}) as { id: string; fallback: boolean; shadowban?: boolean } | undefined;
-	const defaultReason = defaultReasonObject?.id ?? (reasons[0] as string);
-	const defaultShadowban = defaultReasonObject?.shadowban ?? false;
-	const tAttribute = useAttributeTranslation("warn-reason");
+	const [{ data: reasons }, { data: languages }] = useSuspenseQueries({
+		queries: [warnReasonsOptions({ locale }), queryOptions({ ...languagesOptions({ locale }), select: byId })]
+	});
+	const reasonsById = byId(reasons);
+	const defaultEntry = reasons.find((reason) => reason.default === true);
+	const defaultReason = defaultEntry?.id ?? reasons[0]?.id;
+	const defaultShadowban = defaultEntry?.shadowban ?? false;
 
-	const expectedLanguageName = tAttribute[user.preferences?.language ?? "en"]?.name
-		?? languageNames.of(user.preferences?.language ?? "en")
+	const expectedLanguageName = languages[user.preferences?.language ?? defaultLocale]?.name
+		?? languageNames.of(user.preferences?.language ?? defaultLocale)
 		?? user.preferences?.language;
 
 	return (
@@ -78,7 +74,7 @@ export const WarnDialog: FC<{
 						fields={{
 							targetId: user.id,
 							reasonId: initial?.reasonId ?? defaultReason,
-							message: initial?.message ?? (user.moderatorMessage || tAttribute[defaultReason]?.details || ""),
+							message: initial?.message ?? (user.moderatorMessage || (defaultReason && reasonsById[defaultReason]?.details) || ""),
 							shadowban: initial?.shadowban ?? defaultShadowban,
 							disable: initial?.disable ?? user.disabledUntilAcknowledged ?? false
 						}}
@@ -95,16 +91,13 @@ export const WarnDialog: FC<{
 								return;
 							}
 
-							const messageChanged = message !== tAttribute[reasonId]?.details;
+							const messageChanged = message !== reasonsById[reasonId]?.details;
 
 							if (!messageChanged) {
 								const targetLocale = user.preferences?.language ?? defaultLocale;
-								await i18n.loadLanguages(targetLocale);
+								const reasons = await queryClient.fetchQuery(warnReasonsOptions({ locale: targetLocale }));
 
-								const targetT = i18n.getFixedT(user.preferences?.language ?? defaultLocale);
-								const attributes = targetT("attributes", { returnObjects: true });
-
-								message = (attributes[reasonId] as AttributeTranslation<"warn-reason">)?.details || message;
+								message = reasons.find(({ id }) => id === reasonId)?.details || message;
 							}
 
 							await User.warn(targetId, { reasonId, message, shadowban, disable });
@@ -140,25 +133,22 @@ export const WarnDialog: FC<{
 										<InputSelect
 											{...props}
 											options={reasons.map((reason) => {
-												const id = typeof reason === "string" ? reason : reason.id;
+												const { id, name } = reason;
 
 												return ({
 													id,
-													name: tAttribute[id]?.name || id
+													name: name || id
 												});
 											})}
 											onChange={(value) => {
 												props.onChange(value);
 												message.props.onChange(
-													tAttribute[value]?.details || ""
+													reasonsById[value]?.details || ""
 												);
 
-												const selectedReason = reasons.find((r) => {
-													const id = typeof r === "string" ? r : r.id;
-													return id === value;
-												});
+												const selectedReason = reasons.find(({ id }) => id === value);
 
-												if (selectedReason && typeof selectedReason !== "string") {
+												if (selectedReason) {
 													shadowban.props.onChange(selectedReason.shadowban ?? false);
 												}
 												else {
@@ -180,7 +170,7 @@ export const WarnDialog: FC<{
 										</>
 									)}
 								</FormField>
-								{message.props.value !== tAttribute[reasonId.props.value]?.details
+								{message.props.value !== reasonsById[reasonId.props.value]?.details
 									&& user.preferences?.language && user.preferences?.language !== locale && (
 									<div className="flex flex-col gap-4">
 										<FormMessage size="sm" type="warning">
@@ -195,7 +185,7 @@ export const WarnDialog: FC<{
 											size="sm"
 											onClick={async () => {
 												const { text } = await OpenAI.translate({
-													language: user.preferences?.language ?? "en",
+													language: user.preferences?.language ?? defaultLocale,
 													text: message.props.value
 												});
 

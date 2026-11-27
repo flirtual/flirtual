@@ -260,7 +260,7 @@ function checkStyle(english: string, translation: string, locale: TargetLocale, 
 	if (locale === "ko" && translation.includes("당신")) result.warnings.push("당신: drop the pronoun if a native app would");
 
 	if (translation.trim() === "") result.errors.push("empty translation");
-	else if (translation === english && /\p{L}{3}/u.test(english) && !/^https?:/.test(english) && entry?.group !== "attributes/game")
+	else if (translation === english && /\p{L}{3}/u.test(english) && !/^https?:/.test(english) && entry?.group !== "data/games")
 		result.warnings.push("identical to English");
 
 	if (english.trim() !== english || translation.trim() !== translation) {

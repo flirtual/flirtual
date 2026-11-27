@@ -252,7 +252,6 @@ export const urls = {
 	},
 
 	admin: {
-		attributes: "/attributes",
 		stats: "/stats"
 	},
 

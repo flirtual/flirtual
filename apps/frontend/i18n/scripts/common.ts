@@ -4,6 +4,8 @@ import { homedir } from "node:os";
 import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
+import localeData from "@flirtual/data/locales" with { type: "json" };
+
 export const root = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 export const repositoryRoot = resolve(root, "../..");
 export const i18nRoot = join(root, "i18n");
@@ -14,8 +16,9 @@ export function runDirectory(name: string, locale: string) {
 	return join(staging, "translate", name, locale);
 }
 
-export const targetLocales = ["de", "es", "fr", "ja", "ko", "nl", "pt", "pt-BR", "ru", "sv"] as const;
-export type TargetLocale = (typeof targetLocales)[number];
+export type TargetLocale = Exclude<keyof typeof localeData, "en">;
+export const targetLocales = (Object.keys(localeData) as Array<keyof typeof localeData>)
+	.filter((locale): locale is TargetLocale => locale !== "en");
 
 export function isTargetLocale(value: string): value is TargetLocale {
 	return (targetLocales as ReadonlyArray<string>).includes(value);
@@ -40,12 +43,47 @@ export const gettextPluralCount: Record<TargetLocale, number> = {
 	sv: 2
 };
 
-export type ComponentName = "attributes" | "flirtual" | "notifications";
-export const componentNames: Array<ComponentName> = ["flirtual", "attributes", "notifications"];
+const dataDirectory = join(repositoryRoot, "packages/data/content");
+
+// The data package's translated files: every one with an English overlay. Each is its own Weblate
+// component, as a component holds one file per language: `data/<file>`, as `data/genders`.
+const dataSets = readdirSync(dataDirectory).flatMap((name) => {
+	const [, file] = /^([a-z-]+)\.en\.json$/.exec(name) ?? [];
+	return file ? [{ file, component: `data/${file}` as const }] : [];
+});
+
+export type DataComponentName = `data/${string}`;
+export type ComponentName = "flirtual" | "notifications" | DataComponentName;
+
+// The component of a data file, as "genders"; code and the watch name files the same way.
+export function dataComponent(file: string): DataComponentName {
+	const set = dataSets.find((candidate) => candidate.file === file);
+	if (!set) throw new Error(`Not a translated data file: ${file}`);
+	return set.component;
+}
+
+// The data file a data component holds, as "genders"; undefined for the app's own components.
+export function dataFile(component: ComponentName): string | undefined {
+	return dataSets.find((set) => set.component === component)?.file;
+}
+
+export function isDataKey(key: Id) {
+	return dataFile(parseId(key)[0]) !== undefined;
+}
+
+// Weblate's API takes a component inside categories as one path segment, its slashes encoded twice.
+export function weblateSlug(component: string) {
+	return component.replaceAll("/", "%252F");
+}
+
+export const componentNames: Array<ComponentName> = ["flirtual", ...dataSets.map((set) => set.component), "notifications"];
 
 export const components: Record<ComponentName, { format: "gettext" | "icu"; file: (locale: string) => string }> = {
 	flirtual: { format: "icu", file: (locale) => join(root, "messages", `${locale}.json`) },
-	attributes: { format: "icu", file: (locale) => join(root, "messages", `attributes.${locale}.json`) },
+	...Object.fromEntries(dataSets.map(({ file, component }) => [
+		component,
+		{ format: "icu", file: (locale: string) => join(dataDirectory, `${file}.${locale}.json`) }
+	])),
 	notifications: {
 		format: "gettext",
 		file: (locale) => join(repositoryRoot, "apps/api/priv/gettext", locale.replace("-", "_"), "LC_MESSAGES/notifications.po")
@@ -55,7 +93,7 @@ export const components: Record<ComponentName, { format: "gettext" | "icu"; file
 // A gettext plural entry carries one string per plural form.
 export type Message = Array<string> | string;
 
-// Keys are "component:key", e.g. "flirtual:tour_signature" or "attributes:game.<id>.name".
+// Keys are "component:key", e.g. "flirtual:tour_signature" or "data/games:<id>.name".
 export type Id = `${ComponentName}:${string}`;
 
 export function id(component: ComponentName, key: string): Id {
@@ -180,12 +218,12 @@ export function watchIds(source: Map<Id, Message>): Set<Id> {
 	const result = new Set<Id>();
 	for (const key of keys) if (source.has(id("flirtual", key))) result.add(id("flirtual", key));
 
-	const types = new Set([...swift.matchAll(/\battributes?\("([a-z-]+)"/g)].map(([, type]) => type!));
+	// A data file the watch names, as `"genders"`, has every entry's name shown there.
+	const files = new Set([...swift.matchAll(/"([a-z-]+)"/g)].map(([, file]) => file!));
 	for (const key of source.keys()) {
 		const [component, rest] = parseId(key);
-		if (component !== "attributes") continue;
-		const [type, , field] = rest.split(".");
-		if (types.has(type!) && field === "name") result.add(key);
+		const file = dataFile(component);
+		if (file && files.has(file) && rest.split(".")[1] === "name") result.add(key);
 	}
 	return result;
 }

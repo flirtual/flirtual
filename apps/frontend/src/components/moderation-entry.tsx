@@ -1,3 +1,4 @@
+import { queryOptions, useSuspenseQueries, useSuspenseQuery } from "@tanstack/react-query";
 import {
 	ArrowRightLeft,
 	AtSign,
@@ -39,12 +40,12 @@ import { capitalize, toSnakeCase } from "remeda";
 import { twMerge } from "tailwind-merge";
 import { withSuspense } from "with-suspense";
 
+import { banReasonsOptions, byId, deleteReasonsOptions, gendersOptions, reportReasonsOptions, warnReasonsOptions } from "~/api/data";
 import { Flag } from "~/api/flag";
 import { reviewableModerationEventTypes } from "~/api/moderation-event";
 import type { ModerationEvent, ModerationEventType } from "~/api/moderation-event";
 import type { Report } from "~/api/report";
 import type { ProfileImage } from "~/api/user/profile/images";
-import { useAttributeTranslation } from "~/hooks/use-attribute";
 import { useDialog } from "~/hooks/use-dialog";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
@@ -103,7 +104,7 @@ const entryTypes: Record<"report" | ModerationEventType, { title: string; Icon: 
 	exit_survey: { title: "New exit survey", Icon: DoorOpen, color: gray }
 };
 
-const attributeDetails: Record<string, string> = {
+const dataLabels: Record<string, string> = {
 	genderIds: "Genders",
 	lookingForIds: "Looking for"
 };
@@ -317,9 +318,10 @@ const Field: FC<{ label: string; children: ReactNode }> = ({ label, children }) 
 );
 
 const BanSummary: FC<{ ban?: ModerationEvent; url?: string }> = ({ ban, url }) => {
-	const tAttributes = useAttributeTranslation();
+	const [locale] = useLocale();
+	const { data: banReasons } = useSuspenseQuery({ ...banReasonsOptions({ locale }), select: byId });
 	const username = text(ban?.details.username);
-	const reason = ban && ((ban.reasonId && tAttributes[ban.reasonId]?.name) || text(ban.details.reasonText));
+	const reason = ban && ((ban.reasonId && banReasons[ban.reasonId]?.name) || text(ban.details.reasonText));
 
 	return (
 		<span className="flex flex-wrap items-center gap-x-1">
@@ -412,9 +414,32 @@ function entryStatus(entry: ModerationEntry): string | undefined {
 }
 
 function useEntry(entry: ModerationEntry) {
-	const tAttributes = useAttributeTranslation();
+	const [locale] = useLocale();
+	const [
+		{ data: banReasons },
+		{ data: warnReasons },
+		{ data: reportReasons },
+		{ data: deleteReasons }
+	] = useSuspenseQueries({
+		queries: [
+			queryOptions({ ...banReasonsOptions({ locale }), select: byId }),
+			queryOptions({ ...warnReasonsOptions({ locale }), select: byId }),
+			queryOptions({ ...reportReasonsOptions({ locale }), select: byId }),
+			queryOptions({ ...deleteReasonsOptions({ locale }), select: byId })
+		]
+	});
 
 	const type = entry.kind === "event" ? entry.event.type : "report";
+	// A reason's id is unique only within its own file, the one this kind of entry takes them from.
+	const reasons: Partial<Record<string, { name: string }>> = type === "banned"
+		? banReasons
+		: type === "warned"
+			? warnReasons
+			: type === "report"
+				? reportReasons
+				: type === "exit_survey"
+					? deleteReasons
+					: {};
 	const details = entry.kind === "event" ? entry.event.details : {};
 	const reasonId = entry.kind === "event" ? entry.event.reasonId : entry.report.reasonId;
 	const status = entryStatus(entry);
@@ -436,7 +461,7 @@ function useEntry(entry: ModerationEntry) {
 				: type === "warned" && entry.kind === "event" && entry.event.acknowledgedAt
 					? gray
 					: color,
-		reasonName: (reasonId && (tAttributes[reasonId]?.name ?? reasonId)) || text(details.reasonText),
+		reasonName: (reasonId && (reasons[reasonId]?.name ?? reasonId)) || text(details.reasonText),
 		summary: entry.kind === "event" ? eventSummary(entry.event) : undefined,
 		subjectId: entry.kind === "event" ? entry.event.userId : entry.report.targetId,
 		actorId: entry.kind === "event" ? entry.event.moderatorId : entry.report.userId,
@@ -692,7 +717,8 @@ const FlaggedCountry: FC<{ country: string; source: unknown }> = ({ country, sou
 
 function useEntryBody(entry: ModerationEntry, compact: boolean): { content: Array<ReactNode>; fields: Array<ReactNode> } {
 	const { reasonName, summary, actorId, message } = useEntry(entry);
-	const tAttributes = useAttributeTranslation();
+	const [locale] = useLocale();
+	const { data: genders } = useSuspenseQuery({ ...gendersOptions({ locale }), select: byId });
 	const images = entryImages(entry);
 	const content: Array<ReactNode> = [];
 	const fields: Array<ReactNode> = [];
@@ -901,10 +927,10 @@ function useEntryBody(entry: ModerationEntry, compact: boolean): { content: Arra
 			continue;
 		}
 
-		const attributeLabel = attributeDetails[name];
-		if (attributeLabel) {
-			const names = [value].flat().map(text).filter(Boolean).map((id) => tAttributes[id!]?.name ?? id);
-			fields.push(<Field key={name} label={attributeLabel}>{names.join(", ") || "None"}</Field>);
+		const dataLabel = dataLabels[name];
+		if (dataLabel) {
+			const names = [value].flat().map(text).filter(Boolean).map((id) => genders[id!]?.name ?? id);
+			fields.push(<Field key={name} label={dataLabel}>{names.join(", ") || "None"}</Field>);
 			continue;
 		}
 

@@ -1,3 +1,4 @@
+import { queryOptions, useSuspenseQueries } from "@tanstack/react-query";
 import { Eye, EyeOff, Headset } from "lucide-react";
 import { useMemo } from "react";
 import type { FC } from "react";
@@ -7,10 +8,10 @@ import { twMerge } from "tailwind-merge";
 import type { AgeVerificationProvider } from "~/api/age-verification";
 import { ConnectionMetadata } from "~/api/connections";
 import type { ConnectionType } from "~/api/connections";
+import { byId, gendersOptions, languagesOptions } from "~/api/data";
 import type { EntitlementStore } from "~/api/subscription";
 import type { UserAgeVerification } from "~/api/user";
 import { activeEntitlements, premium } from "~/api/user";
-import { useAttributeTranslation } from "~/hooks/use-attribute";
 import { useDialog } from "~/hooks/use-dialog";
 import { useMountTime } from "~/hooks/use-mount-time";
 import { usePreferences } from "~/hooks/use-preferences";
@@ -112,9 +113,14 @@ export const ProfileModeratorInfo: FC<{
 	const session = useOptionalSession();
 	const now = useMountTime();
 	const dialogs = useDialog();
-	const tAttributes = useAttributeTranslation();
 	const user = useUser(userId);
 	const [systemLanguage] = useLocale();
+	const [{ data: genders }, { data: languages }] = useSuspenseQueries({
+		queries: [
+			queryOptions({ ...gendersOptions({ locale: systemLanguage }), select: byId }),
+			queryOptions({ ...languagesOptions({ locale: systemLanguage }), select: byId })
+		]
+	});
 
 	const languageNames = useMemo(
 		() => new Intl.DisplayNames(intlLocale(systemLanguage), { type: "language" }),
@@ -508,8 +514,8 @@ export const ProfileModeratorInfo: FC<{
 							-
 							{user.profile.preferences?.agemax ?? "99+"}
 							{" "}
-							{user.profile.preferences?.attributes.gender
-								?.map((id) => tAttributes[id]?.name ?? id)
+							{user.profile.preferences?.genders
+								?.map((id) => genders[id]?.name ?? id)
 								.join(", ")}
 						</span>
 					</span>
@@ -519,7 +525,7 @@ export const ProfileModeratorInfo: FC<{
 						<span>
 							{
 								user.preferences?.language
-									? (tAttributes[user.preferences.language]?.name
+									? (languages[user.preferences.language]?.name
 										?? languageNames.of(user.preferences.language)
 										?? user.preferences.language)
 									: "None"

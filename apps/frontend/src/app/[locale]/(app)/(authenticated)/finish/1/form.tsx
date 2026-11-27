@@ -1,7 +1,9 @@
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { MoveLeft } from "lucide-react";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 
+import { byId, gamesOptions } from "~/api/data";
 import { Profile } from "~/api/user/profile";
 import { ButtonLink } from "~/components/button";
 import { Form } from "~/components/forms";
@@ -15,7 +17,6 @@ import {
 	InputLabelHint,
 	InputText
 } from "~/components/inputs";
-import { useAttributeTranslation } from "~/hooks/use-attribute";
 import { invalidateQueues } from "~/hooks/use-queue";
 import { useOptionalSession } from "~/hooks/use-session";
 import {
@@ -24,7 +25,7 @@ import {
 	contentLength,
 	html
 } from "~/html";
-import { useNavigate } from "~/i18n";
+import { useLocale, useNavigate } from "~/i18n";
 import { invalidate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
@@ -35,14 +36,15 @@ export const Finish1Form: FC = () => {
 	const navigate = useNavigate();
 
 	const { t } = useTranslation();
-	const tAttribute = useAttributeTranslation();
+	const [locale] = useLocale();
+	const { data: games } = useSuspenseQuery({ ...gamesOptions({ locale }), select: byId });
 
 	if (!session) return null;
 	const { user } = session;
 
-	const favoriteGameId = (user.profile.attributes.game || []).filter(
-		(gameId) => gameId !== "3nzcXDoMySRrPn6jHC8n3o"
-	)[0] || "mkyAHUgKDWFiqkZcgZD6pS";
+	const favoriteGameId = (user.profile.games || []).filter(
+		(gameId) => gameId !== "vrchat"
+	)[0] || "horizon_worlds";
 
 	return (
 		<Form
@@ -126,7 +128,7 @@ export const Finish1Form: FC = () => {
 										inline
 										hint={(
 											<InputLabelHint>
-												{t("picture_upload_hint", { game: tAttribute[favoriteGameId]!.name })}
+												{t("picture_upload_hint", { game: games[favoriteGameId]?.name ?? favoriteGameId })}
 												<details>
 													<summary className="text-pink opacity-75 transition-opacity hover:cursor-pointer hover:opacity-100">
 														{t("guidelines")}

@@ -18,7 +18,7 @@ import { existsSync, readdirSync, readFileSync, rmSync } from "node:fs";
 import { join } from "node:path";
 
 import type { Id, Message, TargetLocale } from "./common.ts";
-import { hash, i18nRoot, isMain, isTargetLocale, loadSource, localesFlag, parseArguments, parseId, readJson, runDirectory, targetLocales, writeJson, writeText } from "./common.ts";
+import { dataFile, hash, i18nRoot, isDataKey, isMain, isTargetLocale, loadSource, localesFlag, parseArguments, parseId, readJson, runDirectory, targetLocales, writeJson, writeText } from "./common.ts";
 import type { ContextEntry } from "./context.ts";
 import { loadContext } from "./context.ts";
 import type { GlossaryEntry } from "./validate.ts";
@@ -133,8 +133,8 @@ function catalogSelection(focus: Array<Id>, source: Map<Id, Message>, context: R
 	const focusText = focus.map((key) => englishText(source.get(key)!).toLowerCase()).join("\n");
 	const terms = loadGlossary().map((entry) => entry.en.toLowerCase()).filter((term) => focusText.includes(term));
 	const neighbourhoods = (key: Id) => {
-		const [component, name] = parseId(key);
-		if (component === "attributes") return [`type:${name.split(".")[0]}`];
+		const file = dataFile(parseId(key)[0]);
+		if (file) return [`file:${file}`];
 		const entry = context[key];
 		return entry ? [`group:${entry.group}`, ...entry.screens.map((screen) => `screen:${screen}`)] : [];
 	};
@@ -154,7 +154,7 @@ function catalogSelection(focus: Array<Id>, source: Map<Id, Message>, context: R
 	const perElement = new Map<string, number>();
 	let sampled = 0;
 	const candidates = [...source.keys()]
-		.filter((key) => !selected.has(key) && parseId(key)[0] !== "attributes" && context[key] && !context[key].readOnly && !isLongForm(context[key]) && englishText(source.get(key)!).length <= 120)
+		.filter((key) => !selected.has(key) && !isDataKey(key) && context[key] && !context[key].readOnly && !isLongForm(context[key]) && englishText(source.get(key)!).length <= 120)
 		.sort((a, b) => hash(a).localeCompare(hash(b)));
 	for (const key of candidates) {
 		if (sampled === sampleSize) break;
@@ -166,12 +166,12 @@ function catalogSelection(focus: Array<Id>, source: Map<Id, Message>, context: R
 		selected.add(key);
 		sampled++;
 	}
-	const types = new Map<string, Array<Id>>();
+	const files = new Map<string, Array<Id>>();
 	for (const key of source.keys()) {
-		const [component, name] = parseId(key);
-		if (component === "attributes") types.set(name.split(".")[0]!, [...(types.get(name.split(".")[0]!) ?? []), key]);
+		const file = dataFile(parseId(key)[0]);
+		if (file) files.set(file, [...(files.get(file) ?? []), key]);
 	}
-	for (const keys of types.values()) add(keys.sort((a, b) => hash(a).localeCompare(hash(b))).slice(0, 3), 3);
+	for (const keys of files.values()) add(keys.sort((a, b) => hash(a).localeCompare(hash(b))).slice(0, 3), 3);
 
 	return selected.size > source.size / 2 ? undefined : selected;
 }
@@ -203,7 +203,7 @@ function bundle(locale: TargetLocale, focus?: Array<Id>) {
 		"",
 		"# English catalog with context",
 		"",
-		"Use it to keep terminology and voice consistent across the whole app. App and notification strings have one line each: id, English, then a short note (element and the gist of where it's used). Attributes are listed per type under one shared note. The strings you translate come with their full notes in the batch.",
+		"Use it to keep terminology and voice consistent across the whole app. App and notification strings have one line each: id, English, then a short note (element and the gist of where it's used). Data entries are listed per file under one shared note. The strings you translate come with their full notes in the batch.",
 		...selection ? ["", "This run is small, so the catalog is a selection: strings from the same screens as yours, strings sharing words or glossary terms with them, and a fixed sample of the rest of the app."] : [],
 		"",
 		...catalog(source, context, selection)
@@ -219,13 +219,12 @@ function gist(description: string) {
 
 function catalog(source: Map<Id, Message>, context: Record<Id, ContextEntry>, selection?: Set<Id>) {
 	const lines: Array<string> = [];
-	const types = new Map<string, Array<Id>>();
+	const files = new Map<string, Array<Id>>();
 
 	for (const [key, value] of source) {
-		const [component, name] = parseId(key);
-		if (component === "attributes") {
-			const type = name.split(".")[0]!;
-			types.set(type, [...(types.get(type) ?? []), key]);
+		const file = dataFile(parseId(key)[0]);
+		if (file) {
+			files.set(file, [...(files.get(file) ?? []), key]);
 			continue;
 		}
 		if (selection && !selection.has(key)) continue;
@@ -236,14 +235,14 @@ function catalog(source: Map<Id, Message>, context: Record<Id, ContextEntry>, se
 		lines.push(`- \`${key}\`: ${JSON.stringify(shown)}${entry ? ` — ${entry.element}: ${gist(entry.description)}` : ""}`);
 	}
 
-	for (const [type, keys] of types) {
+	for (const [file, keys] of files) {
 		const shown = selection ? keys.filter((key) => selection.has(key)) : keys;
 		if (shown.length === 0) continue;
-		// The most common description in a type is its shared note; per-key notes stay in batches.
+		// The most common description in a file is its shared note; per-key notes stay in batches.
 		const counts = new Map<string, number>();
 		for (const key of keys) counts.set(context[key]?.description ?? "", (counts.get(context[key]?.description ?? "") ?? 0) + 1);
 		const shared = [...counts.entries()].sort(([, a], [, b]) => b - a)[0]![0];
-		lines.push("", `## attributes: ${type}`, "", shared, "");
+		lines.push("", `## data: ${file}`, "", shared, "");
 		for (const key of shown) lines.push(`- \`${key}\`: ${JSON.stringify(englishText(source.get(key)!))}`);
 	}
 	return lines;

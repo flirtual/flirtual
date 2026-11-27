@@ -1,3 +1,4 @@
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { Hash, X } from "lucide-react";
 import type { CSSProperties, Dispatch, FC } from "react";
 import { useEffect, useState } from "react";
@@ -6,6 +7,7 @@ import { Trans, useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
 import type { Session } from "~/api/auth";
+import { byId, languagesOptions } from "~/api/data";
 import { premium } from "~/api/user";
 import { PreferenceThemes } from "~/api/user/preferences";
 import { Profile } from "~/api/user/profile";
@@ -19,7 +21,6 @@ import { Slider } from "~/components/inputs/slider";
 import { InputLanguageSelect } from "~/components/inputs/specialized/language-select";
 import { useSnowfall } from "~/components/snowfall";
 import { fun } from "~/features";
-import { useAttributeTranslation } from "~/hooks/use-attribute";
 import { usePreferences } from "~/hooks/use-preferences";
 import { useSession } from "~/hooks/use-session";
 import { useTheme } from "~/hooks/use-theme";
@@ -326,7 +327,7 @@ export const AppearanceForm: FC = () => {
 	const { user: { tags } } = useSession();
 
 	const { t } = useTranslation();
-	const tAttribute = useAttributeTranslation();
+	const { data: languages } = useSuspenseQuery({ ...languagesOptions({ locale }), select: byId });
 
 	return (
 		<div className="flex flex-col gap-8">
@@ -341,7 +342,7 @@ export const AppearanceForm: FC = () => {
 										translateLink: <InlineLink href={urls.resources.translate(locale)} />
 									}}
 									i18nKey={locale === defaultLocale ? "help_translate_others" : "help_translate"}
-									values={{ language: tAttribute[locale]?.name || locale }}
+									values={{ language: languages[locale]?.name || locale }}
 								/>
 							</InputLabelHint>
 						)}

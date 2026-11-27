@@ -14,7 +14,7 @@ config :flirtual, Flirtual.Repo,
   queue_target: 15_000,
   queue_interval: 5000
 
-config :flirtual, Flirtual.Search, table: System.get_env("DEV_SEARCH_TABLE", "profiles")
+config :flirtual, Flirtual.Search, table: System.get_env("DEV_SEARCH_TABLE", "profiles_v2")
 
 # Configures the mailer
 #

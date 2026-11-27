@@ -1,7 +1,9 @@
 import { InAppReview } from "@capacitor-community/in-app-review";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import type { FC } from "react";
 import { Trans, useTranslation } from "react-i18next";
 
+import { deleteReasonsOptions } from "~/api/data";
 import { activeEntitlements, User } from "~/api/user";
 import { Form } from "~/components/forms";
 import { FormAlternativeActionLink } from "~/components/forms/alt-action-link";
@@ -11,17 +13,17 @@ import { InputLabel, InputSelect, InputText } from "~/components/inputs";
 import { InputTextArea } from "~/components/inputs/textarea";
 import { SupportButton } from "~/components/layout/support-button";
 import { supportWidget } from "~/const";
-import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
 import { useDevice } from "~/hooks/use-device";
 import { useSession } from "~/hooks/use-session";
+import { useLocale } from "~/i18n";
 import { invalidate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
 export const DeleteForm: FC = () => {
 	const { native } = useDevice();
 	const { t } = useTranslation();
-	const tAttribute = useAttributeTranslation();
-	const deleteReasons = useAttributes("delete-reason");
+	const [locale] = useLocale();
+	const { data: deleteReasons } = useSuspenseQuery(deleteReasonsOptions({ locale }));
 
 	const { user } = useSession();
 	const hasPassword = user.hasPassword === true;
@@ -97,24 +99,15 @@ export const DeleteForm: FC = () => {
 								<InputLabel>{t("reason")}</InputLabel>
 								<InputSelect
 									{...field.props}
-									options={deleteReasons.map((attribute) => {
-										const id
-											= typeof attribute === "object" ? attribute.id : attribute;
-										const { name } = tAttribute[id] ?? { name: id };
-
-										return {
-											id,
-											name
-										};
-									})}
+									options={deleteReasons.map(({ id, name }) => ({ id, name: name ?? id }))}
 									placeholder={t("select_a_reason")}
 									onChange={(value) => {
 										field.props.onChange(value);
-										if (value === "jrAqzBkasZwqfjSPAazNq3" && native)
+										if (value === "relationship_here" && native)
 											void InAppReview.requestReview();
 									}}
 								/>
-								{field.props.value === "sQcEHRLCffbLfcgM4zAELf"
+								{field.props.value === "taking_a_break"
 									? (
 											<p>
 												<Trans
@@ -126,7 +119,7 @@ export const DeleteForm: FC = () => {
 												{" "}
 											</p>
 										)
-									: field.props.value === "J3vVp9PWZQi5cEuk8G8wij" && supportWidget
+									: field.props.value === "technical_issues" && supportWidget
 										? (
 												<p>
 													{t("need_help")}
@@ -146,7 +139,7 @@ export const DeleteForm: FC = () => {
 								<InputTextArea
 									{...field.props}
 									placeholder={
-										fields.reasonId.props.value === "jrAqzBkasZwqfjSPAazNq3"
+										fields.reasonId.props.value === "relationship_here"
 											? t("delete_account_success_story")
 											: t("delete_account_comment")
 									}

@@ -50,7 +50,7 @@ export const Location2025: FC<{ onSaved?: () => void }> = ({ onSaved }) => {
 						onSubmit={async ({ timezone, weightLocation, geolocation }) => {
 							await Promise.all([
 								Profile.update(user.id, {
-									timezone: timezone ?? "none"
+									timezone: timezone ?? null
 								}),
 								Profile.updateCustomWeights(user.id, {
 									location: weightLocation

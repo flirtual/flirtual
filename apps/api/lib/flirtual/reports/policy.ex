@@ -2,7 +2,7 @@ defmodule Flirtual.Report.Policy do
   use Flirtual.Policy,
     only: [
       :id,
-      :reason,
+      :reason_id,
       :message,
       :images,
       :reviewed_at,
