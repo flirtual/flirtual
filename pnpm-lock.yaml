@@ -631,7 +631,7 @@ importers:
         version: 7.0.2(react@19.3.1)
       remeda:
         specifier: ^2.39.0
-        version: 2.62.2
+        version: 2.62.3
       sass:
         specifier: ^1.101.0
         version: 1.108.2
@@ -8090,8 +8090,8 @@ packages:
     resolution: {integrity: sha512-cnE+y8bz4NhMjISKbgeVJtqNbtf5QpjZP+Bslo+UqkIt9QPnX9q095eiRRASJG1/tz6dlNr6Z5NsBiWYokp6EQ==}
     hasBin: true
 
-  remeda@2.62.2:
-    resolution: {integrity: sha512-yhYfowrECXAgq0Izf4ucBIxBMUnHZQmqlV7h0483V2Ej8sjGwI2qivOvJB2Yiaqo16xP/okIhv7X9jjT0Vla2Q==}
+  remeda@2.62.3:
+    resolution: {integrity: sha512-7rebeLjgp2yBshmygFQ8OvXl1y9vL7iFdY/8yjjQod/8eRMnik/drFDAlcjKRS8uIGJmRzIBRC0j2ZWygct2jg==}
     engines: {node: '>=18.0.0'}
 
   require-directory@2.1.1:
@@ -16375,7 +16375,7 @@ snapshots:
     dependencies:
       jsesc: 3.0.2
 
-  remeda@2.62.2: {}
+  remeda@2.62.3: {}
 
   require-directory@2.1.1: {}
 
