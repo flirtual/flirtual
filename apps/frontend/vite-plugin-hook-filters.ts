@@ -23,8 +23,8 @@ export function withHookFilters(plugin: Plugin, filters: HookFilters): Plugin {
 }
 
 // Each filter matches the same modules as the early return at the top of its hook in
-// @react-router/dev's vite.js, or a superset of them. Hooks that need React Router's own state to
-// filter (its route files, the Vite command) are filtered in patches/@react-router__dev@8.5.1.patch.
+// @react-router/dev's vite.js, or a superset of them. React Router adds its own filters in
+// https://github.com/remix-run/react-router/pull/15476; drop this table once a release includes it.
 export const reactRouterHookFilters: Record<string, HookFilters> = {
 	"react-router": { transform: { id: /\.module\.(?:css|less|sass|scss|styl|stylus|pcss|postcss|sss)(?:$|\?)/ } },
 	"react-router:build-client-route": { transform: { id: /\?__react-router-build-client-route$/ } },
