@@ -11,7 +11,7 @@ import basicSsl from "@vitejs/plugin-basic-ssl";
 import sonda from "sonda/vite";
 import macros from "unplugin-macros/vite";
 import { defineConfig, loadEnv } from "vite";
-import type { UserConfig } from "vite";
+import type { Plugin, UserConfig } from "vite";
 import { imagetools } from "vite-imagetools";
 import { ViteImageOptimizer as imageOptimize } from "vite-plugin-image-optimizer";
 
@@ -116,6 +116,13 @@ export default defineConfig(async (config): Promise<UserConfig> => {
 			})
 		},
 		plugins: [
+			{
+				name: "empty-server-css",
+				apply: "build",
+				enforce: "pre",
+				applyToEnvironment: (environment) => environment.config.consumer === "server",
+				load: { filter: { id: /\.css$/ }, handler: () => "" }
+			} satisfies Plugin,
 			tailwindcss(),
 			hush([
 				"Can't resolve original location of error"
