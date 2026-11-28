@@ -415,7 +415,7 @@ defmodule Flirtual.Chat do
     end
   end
 
-  @gif_preview ~r/^https:\/\/static\d*\.klipy\.com\/\S+\.gif$/
+  @gif_preview ~r/\Ahttps:\/\/static\d*\.klipy\.com\/\S+\.gif\z/
 
   defp gif_preview(%{"preview" => preview})
        when is_binary(preview) and byte_size(preview) <= 500 do
@@ -631,9 +631,9 @@ defmodule Flirtual.Chat do
   end
 
   defp valid_emoji?(emoji) when is_binary(emoji) do
-    String.match?(emoji, ~r/^:\w{1,32}:$/) or
+    String.match?(emoji, ~r/\A:\w{1,32}:\z/) or
       (byte_size(emoji) <= 64 and String.length(emoji) == 1 and
-         not String.match?(emoji, ~r/^[\p{L}\p{N}\p{Z}\p{C}\p{P}]$/u))
+         not String.match?(emoji, ~r/\A[\p{L}\p{N}\p{Z}\p{C}\p{P}]\z/u))
   end
 
   defp valid_emoji?(_), do: false

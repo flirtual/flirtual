@@ -403,4 +403,13 @@ defmodule Flirtual.ChatTest do
     assert {:ok, _} =
              connect(FlirtualWeb.ChatSocket, %{"token" => FlirtualWeb.ChatSocket.token(other)})
   end
+
+  test "an emoji ending in a newline is refused", %{sender: sender} do
+    {:ok, message} = send_message(sender)
+
+    assert {:ok, _} = Chat.react(sender, @conversation, message.id, ":wave:", true)
+
+    assert Chat.react(sender, @conversation, message.id, ":wave:\n", true) ==
+             {:error, :invalid_emoji}
+  end
 end
