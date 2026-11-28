@@ -20,7 +20,6 @@ import type {
 } from "react-router";
 
 import { server } from "~/const";
-import { polyfillForLanguage } from "~/polyfill";
 import { isInternalHref } from "~/urls";
 
 import { log as _log } from "../log";
@@ -68,10 +67,7 @@ declare module "i18next" {
 }
 
 async function load(locale: AnyLocale) {
-	const [{ messages, uppy }] = await Promise.all([
-		import(`./locales/${locale}.ts`) as Promise<typeof import("./locales/en.ts")>,
-		polyfillForLanguage(locale),
-	]);
+	const { messages, uppy } = await (import(`./locales/${locale}.ts`) as Promise<typeof import("./locales/en.ts")>);
 
 	return {
 		[defaultNamespace]: {
