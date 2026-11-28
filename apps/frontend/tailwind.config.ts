@@ -1,17 +1,17 @@
 // See the Tailwind configuration guide for advanced usage
 // https://tailwindcss.com/docs/configuration
 
+import localeData from "@flirtual/data/locales" with { type: "json" };
 import forms from "@tailwindcss/forms";
 import typography from "@tailwindcss/typography";
 import animate from "tailwindcss-animate";
 import motion from "tailwindcss-motion";
 import plugin from "tailwindcss/plugin";
 
-import inlang from "./project.inlang/settings.json" with { type: "json" };
 import brandDefaults from "./src/brand.defaults.json" with { type: "json" };
 import { wideGamut } from "./src/colors.ts";
 
-const locales = inlang.languageTags;
+const locales = Object.keys(localeData);
 
 // Mirrors src/brand.ts. vite.config.ts copies .env's VITE_BRAND_* into process.env.
 function colorPair(name: string, fallback: Array<string>) {
