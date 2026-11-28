@@ -239,7 +239,7 @@ jobs:
 
   image:
     name: Build image
-    if: github.event_name != 'merge_group' && github.event_name != 'schedule' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
+    if: vars.CI_DEPLOY != '0' && github.event_name != 'merge_group' && github.event_name != 'schedule' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
     needs: [build, lint]
     runs-on: ubuntu-latest
     steps:

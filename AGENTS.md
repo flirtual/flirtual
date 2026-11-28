@@ -252,6 +252,9 @@ vars, read separately by each app:
   colour as a gradle `resValue`. Mobile workflows only see repository-level variables; per-channel
   ones (`*_PRODUCTION`/`*_BETA`, e.g. `APP_SCHEME_*`, `APP_LINK_HOSTS_*`, `GOOGLE_SERVICES_JSON_*`)
   override Flirtual's committed values when set.
+- **Deploys**: the repository variable `CI_DEPLOY=0` skips the image pushes and Fly and Cloudflare
+  deploys in the API, frontend and image classification workflows, for forks that deploy with
+  Pulumi; their builds and checks still run.
 
 ## Development workflow
 

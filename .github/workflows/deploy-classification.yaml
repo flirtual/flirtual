@@ -33,7 +33,7 @@ jobs:
     if: needs.changes.outputs.image-classification != 'false'
     runs-on: ubuntu-latest
     env:
-      PUBLISH: ${{ github.event_name == 'push' || github.event_name == 'workflow_dispatch' }}
+      PUBLISH: ${{ vars.CI_DEPLOY != '0' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch') }}
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
@@ -71,7 +71,7 @@ jobs:
 
   deploy:
     name: Deploy Image Classification
-    if: github.ref == 'refs/heads/production' && github.event_name == 'push'
+    if: vars.CI_DEPLOY != '0' && github.ref == 'refs/heads/production' && github.event_name == 'push'
     needs: [image]
     runs-on: ubuntu-latest
     steps:
