@@ -3,6 +3,7 @@ import ms from "ms" with { type: "macro" };
 import type { WretchOptions } from "wretch";
 
 import { development } from "~/const";
+import { configFetcher, configKey } from "~/query";
 import type { Expand } from "~/utilities";
 
 import { api } from "./common";
@@ -74,10 +75,10 @@ export function defaultOrder<T extends DataType>(type: T): DataOrder<T> {
 }
 
 export const Data = {
-	list<T extends DataType>(type: T, locale: string, order: DataOrder<T> = defaultOrder(type), options: WretchOptions = {}): Promise<Array<DataEntry<T>>> {
+	list<T extends DataType>(type: T, locale: string, order: DataOrder<T> = defaultOrder(type), version?: string | null, options: WretchOptions = {}): Promise<Array<DataEntry<T>>> {
 		return api
 			.url(type)
-			.query({ locale, order: order.join(",") })
+			.query({ locale, order: order.join(","), ...(version ? { v: version } : {}) })
 			.options({ credentials: development ? "include" : "omit", ...options })
 			.get()
 			.json<Array<DataEntry<T>>>();
@@ -87,8 +88,13 @@ export const Data = {
 function options<T extends DataType>(type: T) {
 	return ({ locale, order = defaultOrder(type) }: { locale: string; order?: DataOrder<T> }) => queryOptions({
 		queryKey: ["data", type, locale, order] as const,
-		queryFn: ({ signal }) => Data.list(type, locale, order, { signal }),
-		staleTime: ms("1d")
+		queryFn: async ({ client, signal }) => {
+			const version = await client.ensureQueryData({ queryKey: configKey(), queryFn: configFetcher })
+				.then(({ dataVersion }) => dataVersion)
+				.catch(() => null);
+			return Data.list(type, locale, order, version, { signal });
+		},
+		staleTime: order.some((key) => key.endsWith("popularity")) ? ms("1d") : Number.POSITIVE_INFINITY
 	});
 }
 

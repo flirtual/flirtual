@@ -18,4 +18,13 @@ defmodule Flirtual.Data do
             end)
 
   def modules, do: @modules
+
+  @version @paths
+           |> Enum.sort()
+           |> Enum.map(&[Path.basename(&1), File.read!(&1)])
+           |> then(&:crypto.hash(:sha256, &1))
+           |> Base.url_encode64(padding: false)
+           |> binary_part(0, 12)
+
+  def version, do: @version
 end

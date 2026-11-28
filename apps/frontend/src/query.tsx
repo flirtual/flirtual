@@ -26,8 +26,14 @@ import { getPreferences } from "./preferences";
 import { isUid } from "./utilities";
 
 export const configKey = () => ["config"] as const;
-export function configFetcher({ signal }: QueryFunctionContext<ReturnType<typeof configKey>>) {
-	return Config.get({ ...signal });
+export async function configFetcher({ signal }: QueryFunctionContext<ReturnType<typeof configKey>>) {
+	const previous = queryClient.getQueryData<Config>(configKey());
+	const config = await Config.get({ ...signal });
+
+	if (previous && previous.dataVersion !== config.dataVersion)
+		void queryClient.invalidateQueries({ queryKey: ["data"] });
+
+	return config;
 }
 
 export const sessionKey = () => ["session"] as const;

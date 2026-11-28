@@ -22,8 +22,18 @@ defmodule FlirtualWeb.DataController do
       entries = module.all() |> Order.sort(order, locale) |> Enum.map(&DataJSON.entry(&1, locale))
 
       conn
-      |> cache_control([:public, {"max-age", [day: 1]}])
+      |> cache_control([:public | lifetime(params["v"], order)])
       |> json_with_etag(entries)
+    end
+  end
+
+  defp lifetime(nil, _), do: [{"max-age", [day: 1]}]
+
+  defp lifetime(version, order) do
+    cond do
+      version != Flirtual.Data.version() -> [:"no-cache"]
+      Enum.any?(order, &match?({:popularity, _}, &1)) -> [{"max-age", [day: 1]}]
+      true -> [{"max-age", [day: 365]}, :immutable]
     end
   end
 

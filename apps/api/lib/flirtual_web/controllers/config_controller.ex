@@ -30,7 +30,8 @@ defmodule FlirtualWeb.ConfigController do
 
     json_with_etag(conn, %{
       country: country,
-      login_providers: Login.providers()
+      login_providers: Login.providers(),
+      data_version: Flirtual.Data.version()
     })
   end
 end

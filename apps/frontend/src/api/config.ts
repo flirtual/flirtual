@@ -6,6 +6,7 @@ import type { ConnectionType } from "./connections";
 export interface Config {
 	country: string | null;
 	loginProviders: Array<LoginProvider>;
+	dataVersion: string;
 }
 
 export type LoginProvider = "email" | ConnectionType;

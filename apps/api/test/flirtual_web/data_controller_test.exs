@@ -57,6 +57,21 @@ defmodule FlirtualWeb.DataControllerTest do
     end
   end
 
+  defp cache_control(path),
+    do: build_conn() |> get(path) |> Plug.Conn.get_resp_header("cache-control")
+
+  test "caches the current data version for good, but popularity and unversioned URLs for a day" do
+    version = Flirtual.Data.version()
+
+    assert cache_control("/v1/genders?v=#{version}") == ["public, max-age=31536000, immutable"]
+    assert cache_control("/v1/games?v=#{version}&order=-popularity") == ["public, max-age=86400"]
+    assert cache_control("/v1/genders") == ["public, max-age=86400"]
+  end
+
+  test "revalidates a data version it isn't serving" do
+    assert cache_control("/v1/genders?v=stale") == ["public, no-cache"]
+  end
+
   test "refuses a locale it doesn't ship" do
     assert build_conn() |> get("/v1/genders?locale=xx") |> json_response(400)
   end
