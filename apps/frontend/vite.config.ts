@@ -60,6 +60,11 @@ export default defineConfig(async (config): Promise<UserConfig> => {
 	if (!env.VITE_BRAND_ASSET_DOMAIN) throw new Error("VITE_BRAND_ASSET_DOMAIN is required: the static bucket is served from there");
 	if (!env.VITE_BRAND_REPOSITORY_URL) throw new Error("VITE_BRAND_REPOSITORY_URL is required: you must publish your source code to comply with the AGPL");
 
+	// Tailwind imports its config under a fresh `?id=` for every stylesheet, so the dev server sees edits
+	// (https://github.com/tailwindlabs/tailwindcss/blob/v4.3.5/packages/%40tailwindcss-node/src/compile.ts#L147).
+	// A build reads it once; this hook (L185, also set by Tailwind's standalone CLI) imports it plainly.
+	if (config.command === "build") Object.assign(globalThis, { __tw_load: (url: string) => import(url.replace(/\?id=\d+$/, "")) });
+
 	const commitId = execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim();
 
 	return {
