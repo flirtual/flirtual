@@ -80,6 +80,7 @@ export default defineConfig(async (config): Promise<UserConfig> => {
 			target: targets,
 			chunkSizeWarningLimit: 100,
 			rolldownOptions: {
+				experimental: { lazyBarrel: true },
 				// experimentalLogSideEffects: true,
 				treeshake: {
 					unknownGlobalSideEffects: false,
