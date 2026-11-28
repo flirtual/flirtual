@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="notification_reply">Svara</string>
+    <string name="notification_reply_failed">Det gick inte att skicka svaret. Öppna appen och försök igen.</string>
+</resources>

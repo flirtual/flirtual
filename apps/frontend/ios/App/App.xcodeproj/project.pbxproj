@@ -22,6 +22,10 @@
 		27B1A0062FC0000100A1B2C3 /* NativeNavigationPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B1A0042FC0000100A1B2C3 /* NativeNavigationPlugin.swift */; };
 		27B1A0082FC0000100A1B2C3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B1A0072FC0000100A1B2C3 /* SceneDelegate.swift */; };
 		27B1A0092FC0000100A1B2C3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B1A0072FC0000100A1B2C3 /* SceneDelegate.swift */; };
+		27C5A0112FD0000100A1B2C3 /* NotificationActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C5A0102FD0000100A1B2C3 /* NotificationActions.swift */; };
+		27C5A0122FD0000100A1B2C3 /* NotificationActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C5A0102FD0000100A1B2C3 /* NotificationActions.swift */; };
+		27C5A0212FD0000100A1B2C3 /* SessionCookies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C5A0202FD0000100A1B2C3 /* SessionCookies.swift */; };
+		27C5A0222FD0000100A1B2C3 /* SessionCookies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C5A0202FD0000100A1B2C3 /* SessionCookies.swift */; };
 		27D784832E8E23AC006DD767 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504EC3071FED79650016851F /* AppDelegate.swift */; };
 		27D784852E8E23AC006DD767 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2714E3592A426DBB00458704 /* StoreKit.framework */; };
 		27D784892E8E23AC006DD767 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 504EC3101FED79650016851F /* LaunchScreen.storyboard */; };
@@ -59,6 +63,8 @@
 		2060E8A5828E0D8568785ACF /* Likes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B51085962F4213BAE42949 /* Likes.swift */; };
 		7E9CA9344FB584C05CA61536 /* RelationActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BF20E2A3C22C1B531966AB /* RelationActions.swift */; };
 		6B13F90BFD3D4F5FF1EEC026 /* BrowseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EA95AF713E26EDAD869C7D /* BrowseView.swift */; };
+		27C5A0022FD0000100A1B2C3 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 27C5A0012FD0000100A1B2C3 /* Localizable.xcstrings */; };
+		27C5A0032FD0000100A1B2C3 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 27C5A0012FD0000100A1B2C3 /* Localizable.xcstrings */; };
 		7BA0FF9A757AC3403CF5AFB8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F5EF26315D080C97E77D5DE5 /* InfoPlist.strings */; };
 		83D2EEDA7EF8890D79A3B253 /* libwebp in Frameworks */ = {isa = PBXBuildFile; productRef = 9DEE9583DA3A47009E71556D /* libwebp */; };
 		86EFE4EDF8C28747052DAAD5 /* Inbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8463BA8005F4E6E2B764AD47 /* Inbox.swift */; };
@@ -87,6 +93,14 @@
 		F271E6E89275CFBD2E7F4612 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00DFB61840269DB826C2E9 /* API.swift */; };
 		F36672B8842C3884BB44C313 /* messages in Resources */ = {isa = PBXBuildFile; fileRef = 1525C16BC241D3963F1B07B9 /* messages */; };
 		9E7D6C5B4A39281706F5E4D3 /* locales.json in Resources */ = {isa = PBXBuildFile; fileRef = 7A1E0C3F5B2D4E6A8C9B0D12 /* locales.json */; };
+		F423515A1180E4EFBECEF745 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A413CBAA3D84C0153BEB082 /* NotificationService.swift */; };
+		9699FF2219F697A5B0220590 /* emoji in Resources */ = {isa = PBXBuildFile; fileRef = 02A8BB7C1CAAC4CBCEE63FD4 /* emoji */; };
+		847FFB8F753E38A6B731EECD /* mascot-hardhat.png in Resources */ = {isa = PBXBuildFile; fileRef = A75BB9C991DC8BB0515867F2 /* mascot-hardhat.png */; };
+		0F0AE290C10A8903B97DDE49 /* Flirtual Notifications.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8501EE8403C2D509CB589BEC /* Flirtual Notifications.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		17DFEC599E8BBC110800A9C8 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A413CBAA3D84C0153BEB082 /* NotificationService.swift */; };
+		F70DD2CF6C2AEA0087C07D62 /* emoji in Resources */ = {isa = PBXBuildFile; fileRef = 02A8BB7C1CAAC4CBCEE63FD4 /* emoji */; };
+		1C12B1D5178FDCA213BDB7AB /* mascot-hardhat.png in Resources */ = {isa = PBXBuildFile; fileRef = A75BB9C991DC8BB0515867F2 /* mascot-hardhat.png */; };
+		DEC01B6EA8DDA26B20C5D192 /* Flirtual Beta Notifications.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8067DD45185EE38FB0875977 /* Flirtual Beta Notifications.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,6 +117,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = D5F4A4C3BA51D4425E61333D;
 			remoteInfo = "Flirtual Beta Watch";
+		};
+		2D23E5B2E005E57344C96CB0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 504EC2FC1FED79650016851F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DCDDC385928EB6752AE5E0F6;
+			remoteInfo = "Flirtual Notifications";
+		};
+		4DCB742434060634581807E1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 504EC2FC1FED79650016851F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A3146C3484BE20797E681300;
+			remoteInfo = "Flirtual Beta Notifications";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -129,12 +157,35 @@
 			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		19DC188A50D0F1349B8B9488 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				0F0AE290C10A8903B97DDE49 /* Flirtual Notifications.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B2826A170F435AC6A3C6BE24 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				DEC01B6EA8DDA26B20C5D192 /* Flirtual Beta Notifications.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1525C16BC241D3963F1B07B9 /* messages */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = messages; path = ../../messages; sourceTree = "<group>"; };
 		7A1E0C3F5B2D4E6A8C9B0D12 /* locales.json */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.json; name = locales.json; path = ../../../../packages/data/content/locales.json; sourceTree = "<group>"; };
 		1A0855D32F78F28AF59907D3 /* Safety.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Safety.swift; sourceTree = "<group>"; };
+		27C5A0012FD0000100A1B2C3 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		1C3DB2D4B4A4DFE6CFC9CADF /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		1F9225800E23916B7C8D825D /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2714E3582A426D6600458704 /* Flirtual.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Flirtual.entitlements; sourceTree = "<group>"; };
@@ -154,6 +205,8 @@
 		4EA68EF4F50A69167C140A3F /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		50379B222058CBB4000EE86E /* capacitor.config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = capacitor.config.json; sourceTree = "<group>"; };
 		504EC3041FED79650016851F /* Flirtual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flirtual.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		27C5A0102FD0000100A1B2C3 /* NotificationActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationActions.swift; sourceTree = "<group>"; };
+		27C5A0202FD0000100A1B2C3 /* SessionCookies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionCookies.swift; sourceTree = "<group>"; };
 		504EC3071FED79650016851F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		504EC30C1FED79650016851F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		504EC30E1FED79650016851F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -185,6 +238,12 @@
 		FC420A76906D28B65EA08A53 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FD8F8B0384FDBB989AC8E8F1 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FF96C077105A9B97C9B311B8 /* Tags.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Tags.swift; sourceTree = "<group>"; };
+		0A413CBAA3D84C0153BEB082 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		A3863397F9AB6DA289381BF7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		02A8BB7C1CAAC4CBCEE63FD4 /* emoji */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = emoji; path = ../../../../static/emoji; sourceTree = "<group>"; };
+		A75BB9C991DC8BB0515867F2 /* mascot-hardhat.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "mascot-hardhat.png"; path = "../../../../static/mascot-hardhat.png"; sourceTree = "<group>"; };
+		8501EE8403C2D509CB589BEC /* Flirtual Notifications.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Flirtual Notifications.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8067DD45185EE38FB0875977 /* Flirtual Beta Notifications.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Flirtual Beta Notifications.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -219,6 +278,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				83D2EEDA7EF8890D79A3B253 /* libwebp in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		505146F0CC2E15765A12AF05 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CD4DB39FD06344CE9EC37E5F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -279,6 +352,9 @@
 				27E2DDA53C4D2A4D1A88CE4A /* Frameworks */,
 				27D784942E8E23AC006DD767 /* Beta-Info.plist */,
 				0A5A6261468916311C3A7485 /* Watch */,
+				F5E0611346147A8FB9BB0716 /* Notifications */,
+				02A8BB7C1CAAC4CBCEE63FD4 /* emoji */,
+				A75BB9C991DC8BB0515867F2 /* mascot-hardhat.png */,
 				1525C16BC241D3963F1B07B9 /* messages */,
 				7A1E0C3F5B2D4E6A8C9B0D12 /* locales.json */,
 				78D57833C76F7B4CBCE3A168 /* brand.defaults.json */,
@@ -292,6 +368,8 @@
 				27D784932E8E23AC006DD767 /* Flirtual Beta.app */,
 				7B106A6C5A875A6B1136E84B /* Flirtual Watch.app */,
 				6EA75B3F555A36D5878ADFAB /* Flirtual Beta Watch.app */,
+				8501EE8403C2D509CB589BEC /* Flirtual Notifications.appex */,
+				8067DD45185EE38FB0875977 /* Flirtual Beta Notifications.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -304,12 +382,15 @@
 				27B1A0042FC0000100A1B2C3 /* NativeNavigationPlugin.swift */,
 				50379B222058CBB4000EE86E /* capacitor.config.json */,
 				504EC3071FED79650016851F /* AppDelegate.swift */,
+				27C5A0202FD0000100A1B2C3 /* SessionCookies.swift */,
+				27C5A0102FD0000100A1B2C3 /* NotificationActions.swift */,
 				27B1A0072FC0000100A1B2C3 /* SceneDelegate.swift */,
 				504EC30B1FED79650016851F /* Main.storyboard */,
 				504EC30E1FED79650016851F /* Assets.xcassets */,
 				504EC3101FED79650016851F /* LaunchScreen.storyboard */,
 				504EC3131FED79650016851F /* Info.plist */,
 				F5EF26315D080C97E77D5DE5 /* InfoPlist.strings */,
+				27C5A0012FD0000100A1B2C3 /* Localizable.xcstrings */,
 				2FAD9762203C412B000D30F8 /* config.xml */,
 				50B271D01FEDC1A000F3C39B /* public */,
 				F47A99B0670C014DC30D2B5C /* WatchSession.swift */,
@@ -324,6 +405,15 @@
 			name = iOS;
 			sourceTree = "<group>";
 		};
+		F5E0611346147A8FB9BB0716 /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				0A413CBAA3D84C0153BEB082 /* NotificationService.swift */,
+				A3863397F9AB6DA289381BF7 /* Info.plist */,
+			);
+			path = Notifications;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -335,11 +425,13 @@
 				27D784842E8E23AC006DD767 /* Frameworks */,
 				27D784872E8E23AC006DD767 /* Resources */,
 				D7BAF6287F38AFB18DE658F0 /* Embed Watch Content */,
+				B2826A170F435AC6A3C6BE24 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				71D5EDF8D075B943363F609C /* PBXTargetDependency */,
+				434345B36E3F2B080246F949 /* PBXTargetDependency */,
 			);
 			name = "Flirtual Beta";
 			packageProductDependencies = (
@@ -357,11 +449,13 @@
 				504EC3011FED79650016851F /* Frameworks */,
 				504EC3021FED79650016851F /* Resources */,
 				3298A7F605A53C3D73BBDFC4 /* Embed Watch Content */,
+				19DC188A50D0F1349B8B9488 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				F8B16E8D45890977A5ACA820 /* PBXTargetDependency */,
+				3CB442447C4C0320525C5FFC /* PBXTargetDependency */,
 			);
 			name = Flirtual;
 			packageProductDependencies = (
@@ -410,6 +504,40 @@
 			productName = "Flirtual Beta Watch";
 			productReference = 6EA75B3F555A36D5878ADFAB /* Flirtual Beta Watch.app */;
 			productType = "com.apple.product-type.application";
+		};
+		DCDDC385928EB6752AE5E0F6 /* Flirtual Notifications */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 862B11951475EB745EAA95B7 /* Build configuration list for PBXNativeTarget "Flirtual Notifications" */;
+			buildPhases = (
+				4A864AF326A63B0F983B2798 /* Sources */,
+				505146F0CC2E15765A12AF05 /* Frameworks */,
+				97A412CA46EED7F1FE173A39 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Flirtual Notifications";
+			productName = "Flirtual Notifications";
+			productReference = 8501EE8403C2D509CB589BEC /* Flirtual Notifications.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		A3146C3484BE20797E681300 /* Flirtual Beta Notifications */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 965D0330C652A68B7CA9513D /* Build configuration list for PBXNativeTarget "Flirtual Beta Notifications" */;
+			buildPhases = (
+				61D494339579FF7E67B89BB1 /* Sources */,
+				CD4DB39FD06344CE9EC37E5F /* Frameworks */,
+				CECD85E89CBD98BD39BC2BD2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Flirtual Beta Notifications";
+			productName = "Flirtual Beta Notifications";
+			productReference = 8067DD45185EE38FB0875977 /* Flirtual Beta Notifications.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -461,6 +589,8 @@
 				27D784802E8E23AC006DD767 /* Flirtual Beta */,
 				C9A0525423FEE31B2A0A42B3 /* Flirtual Watch */,
 				D5F4A4C3BA51D4425E61333D /* Flirtual Beta Watch */,
+				DCDDC385928EB6752AE5E0F6 /* Flirtual Notifications */,
+				A3146C3484BE20797E681300 /* Flirtual Beta Notifications */,
 			);
 		};
 /* End PBXProject section */
@@ -471,6 +601,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A9A271B99321E2F15A90EACD /* InfoPlist.strings in Resources */,
+				27C5A0022FD0000100A1B2C3 /* Localizable.xcstrings in Resources */,
 				27D784892E8E23AC006DD767 /* LaunchScreen.storyboard in Resources */,
 				27D7848A2E8E23AC006DD767 /* public in Resources */,
 				27D7849A2E8E50B1006DD767 /* Beta-AppIcon.icon in Resources */,
@@ -486,6 +617,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7BA0FF9A757AC3403CF5AFB8 /* InfoPlist.strings in Resources */,
+				27C5A0032FD0000100A1B2C3 /* Localizable.xcstrings in Resources */,
 				27F9569B2E8B4D33009ED19C /* AppIcon.icon in Resources */,
 				504EC3121FED79650016851F /* LaunchScreen.storyboard in Resources */,
 				50B271D11FEDC1A000F3C39B /* public in Resources */,
@@ -520,6 +652,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		97A412CA46EED7F1FE173A39 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9699FF2219F697A5B0220590 /* emoji in Resources */,
+				847FFB8F753E38A6B731EECD /* mascot-hardhat.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CECD85E89CBD98BD39BC2BD2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F70DD2CF6C2AEA0087C07D62 /* emoji in Resources */,
+				1C12B1D5178FDCA213BDB7AB /* mascot-hardhat.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -533,6 +683,8 @@
 				27B1A0022FC0000100A1B2C3 /* TabBarController.swift in Sources */,
 				27B1A0052FC0000100A1B2C3 /* NativeNavigationPlugin.swift in Sources */,
 				DEC0D82BBAE4FC4D2F0C9507 /* WatchSession.swift in Sources */,
+				27C5A0212FD0000100A1B2C3 /* SessionCookies.swift in Sources */,
+				27C5A0112FD0000100A1B2C3 /* NotificationActions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -546,6 +698,8 @@
 				27B1A0032FC0000100A1B2C3 /* TabBarController.swift in Sources */,
 				27B1A0062FC0000100A1B2C3 /* NativeNavigationPlugin.swift in Sources */,
 				69554D378E05F9822264AE79 /* WatchSession.swift in Sources */,
+				27C5A0222FD0000100A1B2C3 /* SessionCookies.swift in Sources */,
+				27C5A0122FD0000100A1B2C3 /* NotificationActions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -597,6 +751,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		4A864AF326A63B0F983B2798 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F423515A1180E4EFBECEF745 /* NotificationService.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		61D494339579FF7E67B89BB1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				17DFEC599E8BBC110800A9C8 /* NotificationService.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -611,6 +781,18 @@
 			name = "Flirtual Watch";
 			target = C9A0525423FEE31B2A0A42B3 /* Flirtual Watch */;
 			targetProxy = 39D1739AF78B23A074D85A2D /* PBXContainerItemProxy */;
+		};
+		3CB442447C4C0320525C5FFC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Flirtual Notifications";
+			target = DCDDC385928EB6752AE5E0F6 /* Flirtual Notifications */;
+			targetProxy = 2D23E5B2E005E57344C96CB0 /* PBXContainerItemProxy */;
+		};
+		434345B36E3F2B080246F949 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Flirtual Beta Notifications";
+			target = A3146C3484BE20797E681300 /* Flirtual Beta Notifications */;
+			targetProxy = 4DCB742434060634581807E1 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -972,6 +1154,102 @@
 			};
 			name = Release;
 		};
+		14AB91579F8080E26846D406 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "$(APPLE_TEAM_ID:default=997W5KLYVR)";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Notifications/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "$(VITE_BRAND_NAME:default=Flirtual)";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MARKETING_VERSION = 1.4.4;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(VITE_APP_BUNDLE_ID:default=zone.homie.flirtual.pwa).notifications";
+				PRODUCT_MODULE_NAME = FlirtualNotifications;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		39FC410C61540AA0DB5C8D74 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "$(APPLE_TEAM_ID:default=997W5KLYVR)";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Notifications/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "$(VITE_BRAND_NAME:default=Flirtual)";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MARKETING_VERSION = 1.4.4;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(VITE_APP_BUNDLE_ID:default=zone.homie.flirtual.pwa).notifications";
+				PRODUCT_MODULE_NAME = FlirtualNotifications;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "$(VITE_BRAND_NAME:default=Flirtual) Notifications App Store";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F4D408B7EB07598633ECEF21 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "$(APPLE_TEAM_ID:default=997W5KLYVR)";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Notifications/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "$(VITE_BRAND_NAME:default=Flirtual)";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MARKETING_VERSION = 1.4.4;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(VITE_APP_BUNDLE_ID:default=zone.homie.flirtual.beta).notifications";
+				PRODUCT_MODULE_NAME = FlirtualNotifications;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A5963F2BC8BE7163FBD4C235 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "$(APPLE_TEAM_ID:default=997W5KLYVR)";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Notifications/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "$(VITE_BRAND_NAME:default=Flirtual)";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MARKETING_VERSION = 1.4.4;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(VITE_APP_BUNDLE_ID:default=zone.homie.flirtual.beta).notifications";
+				PRODUCT_MODULE_NAME = FlirtualNotifications;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "$(VITE_BRAND_NAME:default=Flirtual) Beta Notifications App Store";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1016,6 +1294,24 @@
 			buildConfigurations = (
 				728847512D378426564A7EA9 /* Release */,
 				3E4668562CF9E3BFBF0D8189 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		862B11951475EB745EAA95B7 /* Build configuration list for PBXNativeTarget "Flirtual Notifications" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				14AB91579F8080E26846D406 /* Debug */,
+				39FC410C61540AA0DB5C8D74 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		965D0330C652A68B7CA9513D /* Build configuration list for PBXNativeTarget "Flirtual Beta Notifications" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F4D408B7EB07598633ECEF21 /* Debug */,
+				A5963F2BC8BE7163FBD4C235 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

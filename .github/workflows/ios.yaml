@@ -224,9 +224,10 @@ jobs:
         env:
           APP_PROFILE: ${{ inputs.channel == 'production' && secrets.APPLE_PROFILE_PRODUCTION || secrets.APPLE_PROFILE_BETA }}
           WATCH_PROFILE: ${{ inputs.channel == 'production' && secrets.APPLE_PROFILE_WATCH_PRODUCTION || secrets.APPLE_PROFILE_WATCH_BETA }}
+          NOTIFICATIONS_PROFILE: ${{ inputs.channel == 'production' && secrets.APPLE_PROFILE_NOTIFICATIONS_PRODUCTION || secrets.APPLE_PROFILE_NOTIFICATIONS_BETA }}
         run: |
           mkdir -p "$HOME/Library/MobileDevice/Provisioning Profiles"
-          for PROFILE in "$APP_PROFILE" "$WATCH_PROFILE"; do
+          for PROFILE in "$APP_PROFILE" "$WATCH_PROFILE" "$NOTIFICATIONS_PROFILE"; do
             printf '%s' "$PROFILE" | base64 --decode > "$RUNNER_TEMP/profile.mobileprovision"
             PLIST=$(security cms -D -i "$RUNNER_TEMP/profile.mobileprovision")
             UUID=$(printf '%s' "$PLIST" | plutil -extract UUID raw -o - -)
@@ -294,6 +295,8 @@ jobs:
               <string>$PROFILE_PREFIX App Store</string>
               <key>$VITE_APP_BUNDLE_ID.watch</key>
               <string>$PROFILE_PREFIX Watch App Store</string>
+              <key>$VITE_APP_BUNDLE_ID.notifications</key>
+              <string>$PROFILE_PREFIX Notifications App Store</string>
             </dict>
             <key>teamID</key>
             <string>$APPLE_TEAM_ID</string>

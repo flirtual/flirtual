@@ -1,6 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="default_notification_channel_id">flirtual</string>
+    <string name="default_notification_channel_id" translatable="false">flirtual</string>
+    <string name="notification_reply">Reply</string>
+    <string name="notification_reply_failed">Couldn\'t send your reply. Open the app to try again.</string>
     <string name="asset_statements" translatable="false">
         [{
             \"include\": \"https://flirtu.al/.well-known/assetlinks.json\"

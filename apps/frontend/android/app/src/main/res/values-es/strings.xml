@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="notification_reply">Responder</string>
+    <string name="notification_reply_failed">No se pudo enviar la respuesta. Abre la app para volver a intentarlo.</string>
+</resources>

@@ -9,14 +9,15 @@ final class WatchSession: NSObject, WCSessionDelegate, WKHTTPCookieStoreObserver
     private var pending: DispatchWorkItem?
 
     func activate() {
+        DispatchQueue.main.async {
+            self.cookieStore.add(self)
+            self.scheduleUpdate()
+        }
+
         guard WCSession.isSupported() else { return }
 
         WCSession.default.delegate = self
         WCSession.default.activate()
-
-        DispatchQueue.main.async {
-            self.cookieStore.add(self)
-        }
     }
 
     static let apiURL: URL? = {
@@ -41,7 +42,10 @@ final class WatchSession: NSObject, WCSessionDelegate, WKHTTPCookieStoreObserver
 
     private func scheduleUpdate() {
         pending?.cancel()
-        let work = DispatchWorkItem { [weak self] in self?.sendContext() }
+        let work = DispatchWorkItem { [weak self] in
+            self?.context { SessionCookies.store($0["cookies"] as? [[String: Any]] ?? []) }
+            self?.sendContext()
+        }
         pending = work
         DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: work)
     }
@@ -58,6 +62,8 @@ final class WatchSession: NSObject, WCSessionDelegate, WKHTTPCookieStoreObserver
     }
 
     private func sendContext() {
+        guard WCSession.isSupported() else { return }
+
         let session = WCSession.default
         guard session.activationState == .activated, session.isPaired, session.isWatchAppInstalled else { return }
 

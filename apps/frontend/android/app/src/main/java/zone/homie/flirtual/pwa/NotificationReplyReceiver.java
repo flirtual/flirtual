@@ -91,7 +91,7 @@ public class NotificationReplyReceiver extends BroadcastReceiver {
   private static void showErrorNotification(Context context, int notificationId) {
     NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "flirtual")
         .setSmallIcon(R.drawable.ic_stat_notification)
-        .setContentText("Couldn't send reply, please try again in-app.");
+        .setContentText(context.getString(R.string.notification_reply_failed));
 
     NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
     if (notificationManager.areNotificationsEnabled()) {

@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="notification_reply">Ответить</string>
+    <string name="notification_reply_failed">Не удалось отправить ответ. Откройте приложение и попробуйте ещё раз.</string>
+</resources>

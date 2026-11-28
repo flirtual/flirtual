@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Map;
 import java.util.regex.Pattern;
 import org.json.JSONObject;
 import org.json.JSONException;
@@ -52,13 +53,16 @@ public class NotificationService extends FirebaseMessagingService {
   public void onMessageReceived(RemoteMessage remoteMessage) {
     super.onMessageReceived(remoteMessage);
 
-    String jsonString = remoteMessage.getData().get("talkjs");
-    if (jsonString != null) {
+    Map<String, String> data = remoteMessage.getData();
+    String jsonString = data.get("talkjs");
+    if ("message".equals(data.get("type"))) {
+      showMessage(data.get("sender_name"), data.get("sender_avatar"), data.get("text"), data.get("gif"), data.get("conversation_id"), sentAt(data.get("sent_at")));
+    } else if (jsonString != null) {
       handleTalkjsNotification(jsonString);
     } else {
       String title = remoteMessage.getNotification().getTitle();
       String body = remoteMessage.getNotification().getBody();
-      String url = remoteMessage.getData().get("url");
+      String url = data.get("url");
       sendNotification(title, body, null, url);
     }
   }
@@ -72,24 +76,35 @@ public class NotificationService extends FirebaseMessagingService {
       String photoUrl = senderObject.getString("photoUrl");
       String message = messageObject.getString("text");
       String conversationId = messageObject.getString("conversationId");
-      String url = "flirtual://matches/" + conversationId;
 
-      Media media = null;
-      if (KLIPY_MEDIA.matcher(message.trim()).matches()) {
-        media = downloadMedia(message.trim());
-        message = "GIF";
-      }
-
-      Bitmap downloaded = downloadImage(photoUrl);
-      Bitmap circularImage = getCircleBitmap(downloaded != null ? downloaded : getDefaultProfileBitmap());
-      Person sender = new Person.Builder()
-          .setName(name)
-          .setIcon(IconCompat.createWithBitmap(circularImage))
-          .build();
-      sendNotification(name, message, media, sender, url, conversationId, circularImage);
+      String text = message.trim();
+      boolean gif = KLIPY_MEDIA.matcher(text).matches();
+      showMessage(name, photoUrl, gif ? "GIF" : message, gif ? text : null, conversationId, System.currentTimeMillis());
     } catch (JSONException e) {
       e.printStackTrace();
     }
+  }
+
+  private static long sentAt(String value) {
+    try {
+      return Long.parseLong(value);
+    } catch (NumberFormatException e) {
+      return System.currentTimeMillis();
+    }
+  }
+
+  private void showMessage(String name, String photoUrl, String message, String gifUrl, String conversationId, long sentAt) {
+    if (name == null || message == null || conversationId == null) return;
+
+    Media media = gifUrl != null && KLIPY_MEDIA.matcher(gifUrl).matches() ? downloadMedia(gifUrl) : null;
+
+    Bitmap downloaded = downloadImage(photoUrl);
+    Bitmap circularImage = getCircleBitmap(downloaded != null ? downloaded : getDefaultProfileBitmap());
+    Person sender = new Person.Builder()
+        .setName(name)
+        .setIcon(IconCompat.createWithBitmap(circularImage))
+        .build();
+    sendNotification(name, message, media, sender, "flirtual://matches/" + conversationId, conversationId, circularImage, sentAt);
   }
 
   // onMessageReceived already runs off the main thread, and the service may be
@@ -211,7 +226,7 @@ public class NotificationService extends FirebaseMessagingService {
     return BitmapFactory.decodeResource(getResources(), R.drawable.ic_stat_notification);
   }
 
-  private void sendNotification(String title, String message, Media media, Person sender, String url, String conversationId, Bitmap profileImage) {
+  private void sendNotification(String title, String message, Media media, Person sender, String url, String conversationId, Bitmap profileImage, long sentAt) {
     int notificationId = conversationId != null ? conversationId.hashCode() : 0;
 
     if (conversationId != null && sender != null) {
@@ -224,12 +239,12 @@ public class NotificationService extends FirebaseMessagingService {
     if (previousNotification != null && sender != null) {
       style = NotificationCompat.MessagingStyle.extractMessagingStyleFromNotification(previousNotification);
       if (style != null) {
-        style.addMessage(createMessage(sender, message, media));
+        style.addMessage(createMessage(sender, message, media, sentAt));
       } else {
-        style = createMessagingStyle(sender, message, media);
+        style = createMessagingStyle(sender, message, media, sentAt);
       }
     } else if (sender != null) {
-      style = createMessagingStyle(sender, message, media);
+      style = createMessagingStyle(sender, message, media, sentAt);
     } else {
       style = null;
     }
@@ -271,7 +286,7 @@ public class NotificationService extends FirebaseMessagingService {
 
   private NotificationCompat.Action createReplyAction(int notificationId, String conversationId) {
     RemoteInput remoteInput = new RemoteInput.Builder(NotificationReplyReceiver.getReplyKey())
-        .setLabel("Reply")
+        .setLabel(getString(R.string.notification_reply))
         .build();
 
     Intent replyIntent = new Intent(this, NotificationReplyReceiver.class);
@@ -287,21 +302,21 @@ public class NotificationService extends FirebaseMessagingService {
 
     return new NotificationCompat.Action.Builder(
         R.drawable.ic_stat_notification,
-        "Reply",
+        getString(R.string.notification_reply),
         replyPendingIntent)
         .addRemoteInput(remoteInput)
         .build();
   }
 
-  private NotificationCompat.MessagingStyle createMessagingStyle(Person sender, String message, Media media) {
+  private NotificationCompat.MessagingStyle createMessagingStyle(Person sender, String message, Media media, long sentAt) {
     NotificationCompat.MessagingStyle style = new NotificationCompat.MessagingStyle(sender);
-    style.addMessage(createMessage(sender, message, media));
+    style.addMessage(createMessage(sender, message, media, sentAt));
     return style;
   }
 
-  private NotificationCompat.MessagingStyle.Message createMessage(Person sender, String message, Media media) {
+  private NotificationCompat.MessagingStyle.Message createMessage(Person sender, String message, Media media, long sentAt) {
     NotificationCompat.MessagingStyle.Message notificationMessage =
-        new NotificationCompat.MessagingStyle.Message(message, System.currentTimeMillis(), sender);
+        new NotificationCompat.MessagingStyle.Message(message, sentAt, sender);
     if (media != null) notificationMessage.setData(media.type, media.uri);
     return notificationMessage;
   }
@@ -341,6 +356,6 @@ public class NotificationService extends FirebaseMessagingService {
   }
 
   private void sendNotification(String title, String message, Person sender, String url) {
-    sendNotification(title, message, null, sender, url, null, null);
+    sendNotification(title, message, null, sender, url, null, null, System.currentTimeMillis());
   }
 }

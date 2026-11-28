@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="notification_reply">답장</string>
+    <string name="notification_reply_failed">답장을 보내지 못했어요. 앱을 열어 다시 시도해 주세요.</string>
+</resources>

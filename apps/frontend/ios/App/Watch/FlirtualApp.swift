@@ -114,7 +114,8 @@ final class AppDelegate: NSObject, WKApplicationDelegate, UNUserNotificationCent
             talkjs = nil
         }
 
-        return (talkjs?["message"] as? [String: Any])?["conversationId"] as? String
+        return userInfo["conversation_id"] as? String
+            ?? (talkjs?["message"] as? [String: Any])?["conversationId"] as? String
             ?? (talkjs?["conversation"] as? [String: Any])?["id"] as? String
     }
 }

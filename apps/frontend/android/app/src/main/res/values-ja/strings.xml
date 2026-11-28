@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="notification_reply">返信</string>
+    <string name="notification_reply_failed">返信を送信できませんでした。アプリを開いて、もう一度お試しください。</string>
+</resources>

@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="notification_reply">Beantwoorden</string>
+    <string name="notification_reply_failed">Je antwoord kon niet worden verstuurd. Open de app om het opnieuw te proberen.</string>
+</resources>
