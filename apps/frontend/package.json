@@ -172,7 +172,7 @@
 		"tailwindcss": "4.3.5",
 		"tailwindcss-motion": "1.1.1",
 		"typescript": "catalog:",
-		"unplugin-macros": "npm:@ariesclark/unplugin-macros@0.20.3",
+		"unplugin-macros": "0.23.4",
 		"vite": "8.4.0",
 		"vite-imagetools": "12.0.2",
 		"vite-plugin-checker": "1.1.0",
