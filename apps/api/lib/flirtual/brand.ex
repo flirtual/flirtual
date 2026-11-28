@@ -16,6 +16,8 @@ defmodule Flirtual.Brand do
     |> Enum.reject(fn {_, url} -> is_nil(url) end)
   end
 
+  def app_url(path), do: Application.fetch_env!(:flirtual, :app_scheme) <> "://" <> path
+
   defp frontend_url(path),
     do: Application.fetch_env!(:flirtual, :frontend_origin) |> URI.merge(path) |> URI.to_string()
 

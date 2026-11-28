@@ -1,6 +1,7 @@
 defmodule Flirtual.User.Push do
   use Gettext, backend: Flirtual.Gettext
 
+  alias Flirtual.Brand
   alias Flirtual.Entitlement
   alias Flirtual.User
 
@@ -14,7 +15,7 @@ defmodule Flirtual.User.Push do
         "title" => dgettext("notifications", "daily_profiles_ready"),
         # "We've worked our matchmaking magic on a fresh batch of profiles just for you. Tap to check them out!",
         "message" => dgettext("notifications", "daily_profiles_ready_message"),
-        "url" => "flirtual://browse",
+        "url" => Brand.app_url("browse"),
         "daily_profiles_ready_notification" => true
       }
       |> Flirtual.ObanWorkers.Push.new(
@@ -47,7 +48,7 @@ defmodule Flirtual.User.Push do
             do: dgettext("notifications", "liked_you", name: target_display_name),
             else: dgettext("notifications", "homied_you", name: target_display_name)
           ),
-        "url" => "flirtual://matches/" <> conversation_id,
+        "url" => Brand.app_url("matches/" <> conversation_id),
         "match_notification" => true
       }
       |> Flirtual.ObanWorkers.Push.new(unique: [period: 60 * 60, states: :successful])
@@ -75,7 +76,7 @@ defmodule Flirtual.User.Push do
             # else: "Browse profiles to see if it's a match."
             else: dgettext("notifications", "browse_profiles_to_see_if_its_a_match")
           ),
-        "url" => if(is_premium?, do: "flirtual://likes", else: "flirtual://browse")
+        "url" => if(is_premium?, do: Brand.app_url("likes"), else: Brand.app_url("browse"))
       }
       |> Flirtual.ObanWorkers.Push.new(priority: 2, unique: [period: 60 * 60 * 24 * 6])
       |> Oban.insert()
@@ -92,7 +93,7 @@ defmodule Flirtual.User.Push do
         "user_id" => user.id,
         "title" => title,
         "message" => message,
-        "url" => "flirtual://browse"
+        "url" => Brand.app_url("browse")
       }
       |> Flirtual.ObanWorkers.Push.new()
       |> Oban.insert()

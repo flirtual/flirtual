@@ -88,7 +88,7 @@ defmodule Flirtual.PushNotification do
 
     name = User.display_name(sender)
     avatar = User.avatar_url(sender, "icon")
-    url = "flirtual://matches/" <> message.conversation_id
+    url = Flirtual.Brand.app_url("matches/" <> message.conversation_id)
 
     Enum.each(user.apns_tokens, fn token ->
       apns_push(

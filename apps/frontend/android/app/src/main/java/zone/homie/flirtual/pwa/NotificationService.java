@@ -104,7 +104,7 @@ public class NotificationService extends FirebaseMessagingService {
         .setName(name)
         .setIcon(IconCompat.createWithBitmap(circularImage))
         .build();
-    sendNotification(name, message, media, sender, "flirtual://matches/" + conversationId, conversationId, circularImage, sentAt);
+    sendNotification(name, message, media, sender, getString(R.string.custom_url_scheme) + "://matches/" + conversationId, conversationId, circularImage, sentAt);
   }
 
   // onMessageReceived already runs off the main thread, and the service may be
