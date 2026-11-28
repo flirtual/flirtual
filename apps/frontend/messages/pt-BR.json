@@ -390,7 +390,6 @@
 	"ideas": "Ideias",
 	"copyright": "© {year} {legal_name}",
 	"version": "{brand_name} {version}",
-	"attributes_admin": "Atributos",
 	"unsudo": "Sair do sudo",
 	"next": "Próximo",
 	"save_settings_confirmation": "Salvar suas escolhas antes de continuar?",
@@ -1241,5 +1240,6 @@
 	"sms_consent": "Vamos enviar um código por SMS para confirmar seu número. Podem ser cobradas tarifas de mensagens e dados. A frequência das mensagens varia. Responda HELP para obter ajuda. Responda STOP para cancelar.",
 	"enter_phone_code_description": "Digite o código que enviamos por SMS para {phoneNumber}.",
 	"send_a_new_code": "Enviar novo código",
-	"select_text": "Selecionar"
+	"select_text": "Selecionar",
+	"welcome_agreement": "Ao tocar em “{create_account}” ou “{log_in}”, você concorda com nossos <terms>Termos de Serviço</terms> e confirma ter pelo menos 18 anos. Saiba como tratamos seus dados na nossa <privacy>Política de Privacidade</privacy>."
 }

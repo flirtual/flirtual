@@ -347,7 +347,6 @@
 	"mod_queue": "Cola de moderación",
 	"version": "{brand_name} {version}",
 	"search": "Búsqueda",
-	"attributes_admin": "Atributos",
 	"unsudo": "Salir de sudo",
 	"next": "Siguiente",
 	"unsaved_settings": "Cambios sin guardar",
@@ -1241,5 +1240,6 @@
 	"sms_consent": "Te enviaremos un código por SMS para confirmar tu número. Pueden aplicarse tarifas por mensajes y datos. La frecuencia de los mensajes varía. Responde HELP para obtener ayuda. Responde STOP para cancelar.",
 	"enter_phone_code_description": "Escribe el código que enviamos por SMS al {phoneNumber}.",
 	"send_a_new_code": "Enviar un código nuevo",
-	"select_text": "Seleccionar"
+	"select_text": "Seleccionar",
+	"welcome_agreement": "Al tocar “{create_account}” o “{log_in}”, aceptas nuestros <terms>Términos del servicio</terms> y confirmas que tienes al menos 18 años. Consulta cómo tratamos tus datos en nuestra <privacy>Política de privacidad</privacy>."
 }

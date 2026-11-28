@@ -366,7 +366,6 @@
 	"mod_queue": "Mod-Warteschlange",
 	"search": "Suche",
 	"unsudo": "Unsudo",
-	"attributes_admin": "Attribute",
 	"next": "Weiter",
 	"unsaved_settings": "Nicht gespeicherte Einstellungen",
 	"save_settings_confirmation": "Deine Auswahl vor dem Fortfahren speichern?",
@@ -1241,5 +1240,6 @@
 	"sms_consent": "Wir schicken dir per SMS einen Code, um deine Nummer zu bestätigen. Es können Gebühren für SMS und Datenübertragung anfallen. Die Häufigkeit der Nachrichten variiert. Antworte mit HELP, um Hilfe zu erhalten. Antworte mit STOP, um dich abzumelden.",
 	"enter_phone_code_description": "Gib den Code ein, den wir dir per SMS an {phoneNumber} geschickt haben.",
 	"send_a_new_code": "Neuen Code senden",
-	"select_text": "Auswählen"
+	"select_text": "Auswählen",
+	"welcome_agreement": "Wenn du auf „{create_account}“ oder „{log_in}“ tippst, stimmst du unseren <terms>Nutzungsbedingungen</terms> zu und bestätigst, dass du mindestens 18 Jahre alt bist. Wie wir deine Daten verarbeiten, erfährst du in unserer <privacy>Datenschutzerklärung</privacy>."
 }

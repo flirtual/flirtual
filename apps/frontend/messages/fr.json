@@ -347,7 +347,6 @@
 	"version": "{brand_name} {version}",
 	"mod_queue": "File de modération",
 	"search": "Recherche",
-	"attributes_admin": "Attributs",
 	"unsudo": "Quitter le sudo",
 	"next": "Suivant",
 	"unsaved_settings": "Paramètres non enregistrés",
@@ -1241,5 +1240,6 @@
 	"enter_phone_code_description": "Saisis le code envoyé par SMS au {phoneNumber}.",
 	"send_a_new_code": "Envoyer un nouveau code",
 	"select_text": "Sélectionner",
-	"sms_consent": "Nous t’enverrons un code par SMS pour confirmer ton numéro. Des frais de SMS et de données mobiles peuvent s’appliquer. La fréquence des messages varie. Réponds HELP pour obtenir de l’aide. Réponds STOP pour annuler."
+	"sms_consent": "Nous t’enverrons un code par SMS pour confirmer ton numéro. Des frais de SMS et de données mobiles peuvent s’appliquer. La fréquence des messages varie. Réponds HELP pour obtenir de l’aide. Réponds STOP pour annuler.",
+	"welcome_agreement": "En appuyant sur « {create_account} » ou « {log_in} », tu acceptes nos <terms>Conditions d’utilisation</terms> et confirmes avoir au moins 18 ans. Découvre comment nous traitons tes données dans notre <privacy>Politique de confidentialité</privacy>."
 }
