@@ -50,7 +50,7 @@ export default defineConfig(async (config): Promise<UserConfig> => {
 	if (!env.VITE_ORIGIN) process.env.VITE_ORIGIN = origin;
 	if (!env.VITE_API_URL) process.env.VITE_API_URL = apiUrl;
 
-	// tailwind.config.js reads process.env.
+	// tailwind.config.ts reads process.env.
 	for (const [key, value] of Object.entries(env))
 		if (key.startsWith("VITE_BRAND_") && !process.env[key]) process.env[key] = value;
 

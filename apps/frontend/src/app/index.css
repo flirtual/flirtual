@@ -1,6 +1,6 @@
 @import 'tailwindcss' source("../");
 
-@config '../../tailwind.config.js';
+@config '../../tailwind.config.ts';
 
 @theme {
   --breakpoint-*: initial;
@@ -138,7 +138,7 @@
 }
 
 body {
-  /* Light, dark, and friend theme variables come from tailwind.config.js. */
+  /* Light, dark, and friend theme variables come from tailwind.config.ts. */
 
   --arc-theme-1: var(--arc-background-gradient-color0, var(--arc-background-simple-color));
   --arc-theme-2: var(--arc-background-gradient-color1, var(--arc-background-simple-color));

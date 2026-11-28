@@ -1,14 +1,20 @@
 // See the Tailwind configuration guide for advanced usage
 // https://tailwindcss.com/docs/configuration
 
-const plugin = require("tailwindcss/plugin");
+import forms from "@tailwindcss/forms";
+import typography from "@tailwindcss/typography";
+import animate from "tailwindcss-animate";
+import motion from "tailwindcss-motion";
+import plugin from "tailwindcss/plugin";
 
-const { languageTags } = require("./project.inlang/settings.json");
-const brandDefaults = require("./src/brand.defaults.json");
-const { wideGamut } = require("./src/colors.ts");
+import inlang from "./project.inlang/settings.json" with { type: "json" };
+import brandDefaults from "./src/brand.defaults.json" with { type: "json" };
+import { wideGamut } from "./src/colors.ts";
+
+const locales = inlang.languageTags;
 
 // Mirrors src/brand.ts. vite.config.ts copies .env's VITE_BRAND_* into process.env.
-function colorPair(name, fallback) {
+function colorPair(name: string, fallback: Array<string>) {
 	const parts = (process.env[name] || "").split(",").map((part) => part.trim()).filter(Boolean);
 	return parts.length === 2 ? parts : fallback;
 }
@@ -60,8 +66,7 @@ const colors = {
 	}
 };
 
-/** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
 	content: ["./src/**/*.{js,jsx,ts,tsx}"],
 	darkMode: ["class", "[data-theme=\"dark\"]"],
 	theme: {
@@ -176,8 +181,8 @@ module.exports = {
 		}
 	},
 	plugins: [
-		require("@tailwindcss/forms"),
-		require("@tailwindcss/typography"),
+		forms,
+		typography,
 		plugin(({ addVariant, matchVariant }) => {
 			// Hover, focus or press. A tap leaves :hover and :focus behind, so hover needs a pointer that
 			// can hover, focus must be visible, and touch comes from data-pressed (src/press.ts).
@@ -190,8 +195,8 @@ module.exports = {
 				}, { values: { DEFAULT: "" } });
 			}
 		}),
-		require("tailwindcss-animate"),
-		require("tailwindcss-motion"),
+		animate,
+		motion,
 		plugin(({ addBase, addVariant, addComponents }) => {
 			addBase({
 				body: {
@@ -231,8 +236,8 @@ module.exports = {
 				addVariant(platform, `:is([data-platform="${platform}"] &)`);
 
 			// Language specific variants
-			for (const language of languageTags)
-				addVariant(language, `:is([lang="${language}"] &)`);
+			for (const locale of locales)
+				addVariant(locale, `:is([lang="${locale}"] &)`);
 
 			addComponents({
 				".focused": {
@@ -295,10 +300,7 @@ module.exports = {
 
 							return {
 								"@supports (corner-shape: superellipse(1))": {
-									...properties.reduce((accumulator, property) => {
-										accumulator[property] = `${sizeValue} !important`;
-										return accumulator;
-									}, {}),
+									...Object.fromEntries(properties.map((property) => [property, `${sizeValue} !important`])),
 									"corner-shape": cornerShape
 								}
 							};
