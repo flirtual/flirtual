@@ -15,7 +15,7 @@ export const customInterests = import.meta.env.VITE_FEATURE_CUSTOM_INTERESTS !==
 export const advancedFilters = import.meta.env.VITE_FEATURE_ADVANCED_FILTERS !== "0";
 
 export const connectionProviders = (
-	import.meta.env.VITE_FEATURE_CONNECTIONS as string || "discord,vrchat,google,apple,meta"
+	import.meta.env.VITE_FEATURE_CONNECTIONS as string | undefined ?? "discord,vrchat,google,apple,meta"
 ).split(",").map((type) => type.trim()).filter(Boolean);
 
 export const fun = (
@@ -25,3 +25,5 @@ export const fun = (
 export function connectionProvider(type: string) {
 	return connectionProviders.includes(type) && (type !== "vrchat" || vrchat);
 }
+
+export const connectionSettings = connectionProviders.some(connectionProvider) || playlists;

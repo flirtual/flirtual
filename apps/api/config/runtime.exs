@@ -118,7 +118,7 @@ config :flirtual, :buckets, %{
 }
 
 feature_list = fn name, default ->
-  Env.get(name, default: default)
+  (System.get_env(name) || default)
   |> String.split(",")
   |> Enum.map(&String.trim/1)
   |> Enum.reject(&(&1 == ""))

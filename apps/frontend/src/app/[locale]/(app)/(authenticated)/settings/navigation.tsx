@@ -29,7 +29,7 @@ import { useEmailLogin } from "~/app/[locale]/(minimal)/(guest)/login/last-conne
 import { InlineLink } from "~/components/inline-link";
 import { IdeasDialog } from "~/components/modals/ideas";
 import { supportWidget, version } from "~/const";
-import { events, news, personality, press } from "~/features";
+import { connectionSettings, events, news, personality, press } from "~/features";
 import { useDevice } from "~/hooks/use-device";
 import { useDialog } from "~/hooks/use-dialog";
 import { logout, revokeImpersonate, useSession } from "~/hooks/use-session";
@@ -117,13 +117,15 @@ export const SettingsNavigation: FC = () => {
 						<NavigationLink href={urls.settings.nsfw} Icon={Flame}>
 							{t("nsfw")}
 						</NavigationLink>
-						<NavigationLink
-							newBadge
-							href={urls.settings.connections}
-							Icon={Users}
-						>
-							{t("connections")}
-						</NavigationLink>
+						{connectionSettings && (
+							<NavigationLink
+								newBadge
+								href={urls.settings.connections}
+								Icon={Users}
+							>
+								{t("connections")}
+							</NavigationLink>
+						)}
 					</NavigationCategory>
 					<NavigationCategory name={t("account")}>
 						{/* <NavigationLink href={urls.settings.referral} Icon={Gift}>
