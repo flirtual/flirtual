@@ -1,13 +1,7 @@
-import {
-	sha as commitId,
-	abbreviatedSha as commitIdShort,
-	github as gitUrl
-} from "~build/git";
 import invariant from "tiny-invariant";
 
+import { repositoryUrl } from "./brand";
 import type { DevicePlatform } from "./hooks/use-device";
-
-export { default as builtAt } from "~build/time";
 
 export const siteOrigin = import.meta.env.VITE_ORIGIN as string;
 invariant(siteOrigin, "VITE_ORIGIN is required");
@@ -102,10 +96,11 @@ export const maintenance = false;
 export const server = import.meta.env.SSR;
 export const client = !server;
 
-export { commitId, commitIdShort };
+export const commitId = __COMMIT_ID__;
+export const commitIdShort = commitId.slice(0, 7);
 
-export const commitUrl = `${gitUrl}/commit/${commitId}`;
+export const commitUrl = `${repositoryUrl}/commit/${commitId}`;
 
 // Like "2026.10.30-beta.1+656d3d3", from the Version resource in the pulumi submodule
 // (src/resources/version.ts).
-export const version = import.meta.env.VITE_RELEASE_NAME as string || commitId.slice(0, 7);
+export const version = import.meta.env.VITE_RELEASE_NAME as string || commitIdShort;

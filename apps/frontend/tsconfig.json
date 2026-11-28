@@ -24,8 +24,7 @@
 		},
 		"resolveJsonModule": true,
 		"types": [
-			"vite/client",
-			"unplugin-info/client"
+			"vite/client"
 		],
 		"allowImportingTsExtensions": true,
 		"strict": true,

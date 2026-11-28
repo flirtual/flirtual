@@ -1,3 +1,4 @@
+import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
 import { hostname as osHostname } from "node:os";
 
@@ -6,7 +7,6 @@ import { reactRouter } from "@react-router/dev/vite";
 import tailwindcss from "@tailwindcss/vite";
 import basicSsl from "@vitejs/plugin-basic-ssl";
 import sonda from "sonda/vite";
-import info from "unplugin-info/vite";
 import macros from "unplugin-macros/vite";
 import { defineConfig, loadEnv } from "vite";
 import type { UserConfig } from "vite";
@@ -57,8 +57,13 @@ export default defineConfig(async (config): Promise<UserConfig> => {
 	if (!env.VITE_BRAND_ASSET_DOMAIN) throw new Error("VITE_BRAND_ASSET_DOMAIN is required: the static bucket is served from there");
 	if (!env.VITE_BRAND_REPOSITORY_URL) throw new Error("VITE_BRAND_REPOSITORY_URL is required: you must publish your source code to comply with the AGPL");
 
+	const commitId = execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim();
+
 	return {
 		appType: "mpa",
+		define: {
+			__COMMIT_ID__: JSON.stringify(commitId)
+		},
 		ssr: {
 			noExternal: ["posthog-js"]
 		},
@@ -112,7 +117,6 @@ export default defineConfig(async (config): Promise<UserConfig> => {
 				"Can't resolve original location of error"
 			]),
 			macros(),
-			info(),
 			servesHttps && !mkcertExists && basicSsl({
 				name: "flirtual",
 				domains: [hostname],

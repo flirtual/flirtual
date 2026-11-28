@@ -12,8 +12,5 @@
 	],
 	"ignoreBinaries": [
 		"adb"
-	],
-	"ignoreUnresolved": [
-		"~build/*"
 	]
 }
