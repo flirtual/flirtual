@@ -110,49 +110,25 @@ defmodule FlirtualWeb.VRChatController do
     with {:world_id, false} <- {:world_id, is_nil(world_id) or String.trim(world_id) == ""},
          {:conversation_id, false} <-
            {:conversation_id, is_nil(conversation_id) or String.trim(conversation_id) == ""},
-         user when not is_nil(user) <- conn.assigns[:session].user do
+         user when not is_nil(user) <- conn.assigns[:session].user,
+         :ok <- invite_rate_limit(user) do
       case Flirtual.VRChat.with_session(&Flirtual.VRChat.create_instance(&1, world_id)) do
         {:ok, instance} ->
           short_name = Map.get(instance, "shortName", "")
 
-          # Send the TalkJS message from backend as a regular message from the user
-          messages = [
-            %{
-              text: "https://vrch.at/#{short_name}",
-              sender: ShortUUID.decode!(user.id)
-            }
-          ]
+          response = %{
+            instanceId: Map.get(instance, "id", Map.get(instance, "instanceId", "")),
+            shortName: short_name,
+            worldId: world_id
+          }
 
-          # Note: create_messages only returns {:ok, _} on success, crashes on error
-          try do
-            result =
-              if Flirtual.Chat.enabled?(),
-                do:
-                  Flirtual.Chat.send_message(user, conversation_id, %{
-                    "text" => "https://vrch.at/#{short_name}"
-                  }),
-                else: Flirtual.Talkjs.create_messages(conversation_id, messages)
+          case send_invite(user, conversation_id, "https://vrch.at/#{short_name}") do
+            {:ok, _} ->
+              json(conn, response)
 
-            case result do
-              {:ok, _} ->
-                # Response should include shortName field
-                json(conn, %{
-                  instanceId: Map.get(instance, "id", Map.get(instance, "instanceId", "")),
-                  shortName: short_name,
-                  worldId: world_id
-                })
-            end
-          rescue
-            error ->
-              Logger.error("Failed to send TalkJS message: #{inspect(error)}")
-
-              # Still return success for instance creation, but log the message failure
-              json(conn, %{
-                instanceId: Map.get(instance, "id", Map.get(instance, "instanceId", "")),
-                shortName: short_name,
-                worldId: world_id,
-                messageError: true
-              })
+            {:error, reason} ->
+              Logger.error("Failed to send VRChat invite message: #{inspect(reason)}")
+              json(conn, Map.put(response, :messageError, true))
           end
       end
     else
@@ -170,7 +146,26 @@ defmodule FlirtualWeb.VRChatController do
         conn
         |> put_status(:unauthorized)
         |> json(%{error: "Invalid credentials"})
+
+      {:error, :rate_limited} ->
+        {:error, {:too_many_requests, :rate_limited}}
     end
+  end
+
+  defp invite_rate_limit(user) do
+    if Flirtual.Chat.enabled?(), do: Flirtual.Chat.rate_limit(:send, user.id), else: :ok
+  end
+
+  defp send_invite(user, conversation_id, text) do
+    if Flirtual.Chat.enabled?() do
+      Flirtual.Chat.send_message(user, conversation_id, %{"text" => text})
+    else
+      Flirtual.Talkjs.create_messages(conversation_id, [
+        %{text: text, sender: ShortUUID.decode!(user.id)}
+      ])
+    end
+  rescue
+    error -> {:error, error}
   end
 
   def create_random_instance(conn, _params) do
