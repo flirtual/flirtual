@@ -474,11 +474,11 @@ importers:
         specifier: 0.8.7
         version: 0.8.7
       '@talkjs/core':
-        specifier: 1.12.1
-        version: 1.12.1(patch_hash=13d832bb2d7ce5b1734bdfa91817a3ee9d227e3f4a643458f4ff4bb5a3f3ab2b)
+        specifier: 1.13.0
+        version: 1.13.0(patch_hash=13d832bb2d7ce5b1734bdfa91817a3ee9d227e3f4a643458f4ff4bb5a3f3ab2b)
       '@talkjs/react-components':
         specifier: 0.3.14
-        version: 0.3.14(@talkjs/core@1.12.1(patch_hash=13d832bb2d7ce5b1734bdfa91817a3ee9d227e3f4a643458f4ff4bb5a3f3ab2b))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        version: 0.3.14(@talkjs/core@1.13.0(patch_hash=13d832bb2d7ce5b1734bdfa91817a3ee9d227e3f4a643458f4ff4bb5a3f3ab2b))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@tanstack/react-query':
         specifier: ^5.101.2
         version: 5.101.4(react@19.3.1)
@@ -4588,8 +4588,8 @@ packages:
     peerDependencies:
       vite: ^5.2.0 || ^6 || ^7 || ^8
 
-  '@talkjs/core@1.12.1':
-    resolution: {integrity: sha512-pBMIXz+7O217O4jiunLR/duLhjUvZHm+nLmQ1vjM5/K3r7+uDqM+KSR8yn9xkB+0R3d5ntvxiNWOMCS98tH/ag==}
+  '@talkjs/core@1.13.0':
+    resolution: {integrity: sha512-AWZSAX8ATzghLhexIl4HOIXY8e44dm8OSHZtZTpg0657FS6KkbMhZ1sIA79dkZh81zc3+GSi06pNJ8svNKgIzg==}
 
   '@talkjs/react-components@0.3.14':
     resolution: {integrity: sha512-o+b6wrK2+/7qhEgQyjXi2ldMJIcHpNjOce/TTctkfWEN7oZRBnatOz0DeDbgciHwxOIi14+vr1BQ/8Q/sMqklw==}
@@ -12226,11 +12226,11 @@ snapshots:
       tailwindcss: 4.3.5
       vite: 8.3.8(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.108.2)(tsx@4.23.12)(yaml@2.9.1)
 
-  '@talkjs/core@1.12.1(patch_hash=13d832bb2d7ce5b1734bdfa91817a3ee9d227e3f4a643458f4ff4bb5a3f3ab2b)': {}
+  '@talkjs/core@1.13.0(patch_hash=13d832bb2d7ce5b1734bdfa91817a3ee9d227e3f4a643458f4ff4bb5a3f3ab2b)': {}
 
-  '@talkjs/react-components@0.3.14(@talkjs/core@1.12.1(patch_hash=13d832bb2d7ce5b1734bdfa91817a3ee9d227e3f4a643458f4ff4bb5a3f3ab2b))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
+  '@talkjs/react-components@0.3.14(@talkjs/core@1.13.0(patch_hash=13d832bb2d7ce5b1734bdfa91817a3ee9d227e3f4a643458f4ff4bb5a3f3ab2b))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
     dependencies:
-      '@talkjs/core': 1.12.1(patch_hash=13d832bb2d7ce5b1734bdfa91817a3ee9d227e3f4a643458f4ff4bb5a3f3ab2b)
+      '@talkjs/core': 1.13.0(patch_hash=13d832bb2d7ce5b1734bdfa91817a3ee9d227e3f4a643458f4ff4bb5a3f3ab2b)
       react: 19.3.1
       react-dom: 19.3.1(react@19.3.1)
 
