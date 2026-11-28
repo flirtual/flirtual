@@ -91,3 +91,30 @@ it("still replaces a cluster whose size changes", async () => {
 		),
 	).toEqual({ changes: true, replaces: ["memory"] });
 });
+
+it("creates an always-on cluster without scale-to-zero", async () => {
+	const { outs } = await provider.create({ ...inputs, alwaysOn: true });
+
+	expect(commands).toEqual([
+		"pg create --flex --name flirtual-latest-postgres --org flirtual --network flirtual-latest --region iad --password password --initial-cluster-size 1 --volume-size 10 --vm-cpu-kind shared --vm-cpus 1 --vm-memory 1024",
+	]);
+	expect(outs).toEqual({ ...inputs, alwaysOn: true, idleTimeout: "" });
+});
+
+it("keeps a cluster that scales to zero running once it's always on", async () => {
+	const olds = { ...inputs, idleTimeout: "1h" };
+	const news = { ...inputs, alwaysOn: true };
+
+	expect(await provider.diff!("flirtual-latest-postgres", olds, news)).toEqual({
+		changes: true,
+		replaces: [],
+	});
+
+	const { outs } = await provider.update!("flirtual-latest-postgres", olds, news);
+
+	expect(commands).toEqual([
+		"machines list --app flirtual-latest-postgres",
+		"machine update 148e1234 --app flirtual-latest-postgres --env FLY_SCALE_TO_ZERO= --autostart=true --restart on-failure --yes",
+	]);
+	expect(outs).toEqual({ ...news, idleTimeout: "" });
+});

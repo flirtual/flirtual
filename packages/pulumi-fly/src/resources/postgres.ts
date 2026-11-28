@@ -12,6 +12,7 @@ interface PostgresInputs {
 	clusterSize: number;
 	volumeSize: number;
 	memory: number;
+	alwaysOn?: boolean;
 }
 
 interface PostgresOutputs extends PostgresInputs {
@@ -30,13 +31,16 @@ interface FlyMachine {
 // interactive prompt: https://github.com/superfly/flyctl/blob/master/flypg/launcher.go
 const idleTimeout = "1h";
 
-async function scaleToZero(app: string) {
+// An empty value fails to parse, which postgres-flex takes as "never stop"; flyctl can't unset it.
+const timeoutFor = ({ alwaysOn }: PostgresInputs) => (alwaysOn ? "" : idleTimeout);
+
+async function setIdleTimeout(app: string, timeout: string) {
 	const machines = await flyJson<Array<FlyMachine>>`machines list --app ${app}`;
 
 	await Promise.all(
 		machines.map(
 			({ id }) =>
-				fly`machine update ${id} --app ${app} --env ${`FLY_SCALE_TO_ZERO=${idleTimeout}`}
+				fly`machine update ${id} --app ${app} --env ${`FLY_SCALE_TO_ZERO=${timeout}`}
           --autostart=true --restart on-failure --yes`,
 		),
 	);
@@ -74,7 +78,7 @@ export const provider: pulumi.dynamic.ResourceProvider<PostgresInputs, PostgresO
 			] as const
 		).filter((key) => olds[key] !== news[key]);
 
-		return { changes: replaces.length > 0 || olds.idleTimeout !== idleTimeout, replaces };
+		return { changes: replaces.length > 0 || olds.idleTimeout !== timeoutFor(news), replaces };
 	},
 
 	async create(inputs) {
@@ -86,15 +90,17 @@ export const provider: pulumi.dynamic.ResourceProvider<PostgresInputs, PostgresO
       --initial-cluster-size ${String(clusterSize)} --volume-size ${String(volumeSize)}
       --vm-cpu-kind shared --vm-cpus 1 --vm-memory ${String(memory)}`;
 
-		await scaleToZero(name);
+		const timeout = timeoutFor(inputs);
+		if (timeout) await setIdleTimeout(name, timeout);
 
-		return { id: name, outs: { ...inputs, idleTimeout } };
+		return { id: name, outs: { ...inputs, idleTimeout: timeout } };
 	},
 
 	async update(_id, olds, news) {
-		if (olds.idleTimeout !== idleTimeout) await scaleToZero(news.name);
+		const timeout = timeoutFor(news);
+		if (olds.idleTimeout !== timeout) await setIdleTimeout(news.name, timeout);
 
-		return { outs: { ...news, idleTimeout } };
+		return { outs: { ...news, idleTimeout: timeout } };
 	},
 
 	async read(id, props) {
@@ -117,6 +123,8 @@ export interface PostgresArgs extends AppArgs {
 	clusterSize: pulumi.Input<number>;
 	volumeSize: pulumi.Input<number>;
 	memory: pulumi.Input<number>;
+	// Keeps the cluster running instead of stopping it after an idle hour.
+	alwaysOn?: pulumi.Input<boolean>;
 }
 
 export class Postgres extends App {
