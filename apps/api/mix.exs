@@ -34,7 +34,7 @@ defmodule Flirtual.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:bcrypt_elixir, "~> 3.0"},
+      {:bcrypt_elixir, "~> 4.0"},
       {:phoenix, "~> 1.8.0"},
       {:phoenix_view, "~> 2.0"},
       {:phoenix_live_dashboard, "~> 0.9.0"},
