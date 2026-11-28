@@ -3,13 +3,13 @@ import { hostname as osHostname } from "node:os";
 
 import reactCompiler from "@acusti/vite-plugin-react-compiler";
 import { reactRouter } from "@react-router/dev/vite";
-import { sentryReactRouter } from "@sentry/react-router/vite";
 import tailwindcss from "@tailwindcss/vite";
 import basicSsl from "@vitejs/plugin-basic-ssl";
 import sonda from "sonda/vite";
 import info from "unplugin-info/vite";
 import macros from "unplugin-macros/vite";
 import { defineConfig, loadEnv } from "vite";
+import type { UserConfig } from "vite";
 import { imagetools } from "vite-imagetools";
 import { ViteImageOptimizer as imageOptimize } from "vite-plugin-image-optimizer";
 
@@ -33,7 +33,7 @@ function getManualChunk(moduleId: string) {
 	return null;
 }
 
-export default defineConfig((config) => {
+export default defineConfig(async (config): Promise<UserConfig> => {
 	const { mode } = config;
 
 	// eslint-disable-next-line unicorn/prevent-abbreviations
@@ -156,7 +156,7 @@ export default defineConfig((config) => {
 			!!env.ANALYZE && sonda({
 				open: false
 			}),
-			useSentry && sentryReactRouter({
+			useSentry && (await import("@sentry/react-router/vite")).sentryReactRouter({
 				org: sentryOrganization,
 				project: sentryProjectId,
 				authToken: sentryAuthToken,
