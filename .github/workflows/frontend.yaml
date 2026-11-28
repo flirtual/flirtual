@@ -130,6 +130,9 @@ jobs:
       - name: Build
         run: pnpm build
 
+      - name: Generate types
+        run: pnpm typegen
+
       - name: TypeScript
         run: |
           ./node_modules/.bin/tsc --pretty false --noEmit | sed -E "s#^.+\(.+\): error TS.+\$#$PWD/\0#"

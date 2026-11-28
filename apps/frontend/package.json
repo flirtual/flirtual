@@ -8,7 +8,7 @@
 		"dev:portless": "../../shims/portless run react-router dev",
 		"typegen": "wrangler types --include-runtime false && react-router typegen",
 		"typecheck:worker": "tsc -p src/worker/tsconfig.json",
-		"build": "rm -rf .sonda && pnpm typegen && NODE_COMPILE_CACHE=node_modules/.cache/node-compile-cache react-router build",
+		"build": "rm -rf .sonda && NODE_COMPILE_CACHE=node_modules/.cache/node-compile-cache react-router build",
 		"build:preview": "sh -c 'name=${1:-$(whoami)} && VITE_PREVIEW=\"$name\" pnpm --loglevel silent build --mode=\"$name\"' --",
 		"build:cloudflare": "cf-wrangler build --mode development",
 		"production": "pnpm --loglevel silent build --mode=production && wrangler deploy --env=production --old-asset-ttl=7776000",
