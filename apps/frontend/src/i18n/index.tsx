@@ -68,36 +68,15 @@ declare module "i18next" {
 }
 
 async function load(locale: AnyLocale) {
-	// Aries: Keep this in sync with `getManualChunk` from `vite.config.ts`.
-	// For performance, we bundle all translations into a single file per locale.
-	const [default_, uppy] = await Promise.all([
-		import(`../../messages/${locale}.json`)
-			.then(({ default: messages }) => messages) as unknown as typeof import("../../messages/en.json"),
-		(async () => {
-			// https://github.com/rollup/plugins/tree/master/packages/dynamic-import-vars#limitations
-			// Widened to string so cases for locales not yet enabled in `languages.ts` still type-check.
-			switch (locale as string) {
-				case "en": return (await import("@uppy/locales/lib/en_US.js")).default.strings;
-				case "de": return (await import("@uppy/locales/lib/de_DE.js")).default.strings;
-				case "es": return (await import("@uppy/locales/lib/es_ES.js")).default.strings;
-				case "fr": return (await import("@uppy/locales/lib/fr_FR.js")).default.strings;
-				case "ja": return (await import("@uppy/locales/lib/ja_JP.js")).default.strings;
-				case "ko": return (await import("@uppy/locales/lib/ko_KR.js")).default.strings;
-				case "nl": return (await import("@uppy/locales/lib/nl_NL.js")).default.strings;
-				case "pt": return (await import("@uppy/locales/lib/pt_PT.js")).default.strings;
-				case "pt-BR": return (await import("@uppy/locales/lib/pt_BR.js")).default.strings;
-				case "ru": return (await import("@uppy/locales/lib/ru_RU.js")).default.strings;
-				case "sv": return (await import("@uppy/locales/lib/sv_SE.js")).default.strings;
-				default: return {};
-			}
-		})(),
+	const [{ messages, uppy }] = await Promise.all([
+		import(`./locales/${locale}.ts`) as Promise<typeof import("./locales/en.ts")>,
 		polyfillForLanguage(locale),
 	]);
 
 	return {
 		[defaultNamespace]: {
-			...default_,
-			uppy
+			...messages,
+			uppy: uppy.strings
 		},
 	};
 }

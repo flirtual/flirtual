@@ -77,6 +77,9 @@ non-English `.po` files. After adding or changing keys, run `/translate` (increm
 writes context for the new keys, drafts translations with the translator agents, and uploads
 them to Weblate as "needs editing" or as suggestions, after you approve.
 
+Each locale loads from `src/i18n/locales/<locale>.ts`, which re-exports its `messages/<locale>.json`
+and Uppy's strings for it, so both arrive as one chunk. A new locale needs one of these modules.
+
 `apps/frontend/.env.weblate` (git-ignored) holds `WEBLATE_URL`, `WEBLATE_PROJECT` and
 `WEBLATE_TOKEN` (a project-scoped `wlp_` token). Translation tooling lives in `i18n/`:
 `context.json` (per-key context), `style/` (style guide per locale, `glossary.json`),
