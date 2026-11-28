@@ -1,21 +1,15 @@
 /* eslint-disable react-refresh/only-export-components */
 import type { FC } from "react";
 import { twMerge } from "tailwind-merge";
+import { flagUrl } from "virtual:flag-icons";
 
 import { useDisplayLocale } from "~/i18n";
 import { intlLocale } from "~/i18n/languages";
 
 import { Pill } from "./pill";
 
-const countryFlags = import.meta.glob("./*.svg", {
-	base: "../../../../node_modules/flag-icons/flags/4x3",
-	eager: true,
-	import: "default",
-	query: "?no-inline"
-});
-
-export function getCountryImage(countryId: string): string {
-	return countryFlags[`./${countryId}.svg`] as string;
+export function getCountryImage(countryId: string): string | undefined {
+	return flagUrl(countryId);
 }
 
 const shortFormCountries = new Set(["HK", "MO", "MM", "PS"]);

@@ -1,8 +1,10 @@
 import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
 import { hostname as osHostname } from "node:os";
+import { fileURLToPath } from "node:url";
 
 import reactCompiler from "@acusti/vite-plugin-react-compiler";
+import { svgDir } from "@ffaubert/twemoji";
 import { reactRouter } from "@react-router/dev/vite";
 import tailwindcss from "@tailwindcss/vite";
 import basicSsl from "@vitejs/plugin-basic-ssl";
@@ -16,7 +18,7 @@ import { ViteImageOptimizer as imageOptimize } from "vite-plugin-image-optimizer
 import { targets } from "./src/targets.ts";
 import { reactRouterHookFilters, withHookFilters } from "./vite-plugin-hook-filters.ts";
 import { hush } from "./vite-plugin-hush.ts";
-import { twemoji } from "./vite-plugin-twemoji.ts";
+import { packageSvgs } from "./vite-plugin-package-svgs.ts";
 
 const mkcertPaths = {
 	cert: "./certificates/localhost.pem",
@@ -127,7 +129,28 @@ export default defineConfig(async (config): Promise<UserConfig> => {
 			withHookFilters(reactCompiler({ compiler: { reportDiagnostics: true } }), {
 				transform: { id: { include: /\.[jt]sx?(?:\?|$)/, exclude: /[/\\]node_modules[/\\]/ } }
 			}),
-			twemoji(),
+			packageSvgs({
+				name: "twemoji",
+				directory: svgDir,
+				moduleId: "virtual:twemoji",
+				exportName: "twemojiUrl"
+			}),
+			packageSvgs({
+				name: "flag-icons",
+				directory: fileURLToPath(new URL("node_modules/flag-icons/flags/4x3", import.meta.url)),
+				moduleId: "virtual:flag-icons",
+				exportName: "flagUrl",
+				knownNamesOnly: true,
+				// vite-plugin-image-optimizer's own SVGO defaults, which these flags went through as bundled assets.
+				svgo: {
+					multipass: true,
+					plugins: [
+						{ name: "preset-default", params: { overrides: { cleanupNumericValues: false, cleanupIds: { minify: false, remove: false }, convertPathData: false } } },
+						"sortAttrs",
+						{ name: "addAttributesToSVGElement", params: { attributes: [{ xmlns: "http://www.w3.org/2000/svg" }] } }
+					]
+				}
+			}),
 			imageOptimize({
 				cache: true,
 				cacheLocation: "./node_modules/.cache/vite-image-optimizer",
