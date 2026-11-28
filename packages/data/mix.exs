@@ -11,5 +11,5 @@ defmodule Flirtual.Data.MixProject do
   end
 
   # Only `Flirtual.Data`'s compile uses JSV.
-  defp deps, do: [{:jsv, "~> 0.27", runtime: false}]
+  defp deps, do: [{:jsv, "~> 0.28", runtime: false}]
 end
