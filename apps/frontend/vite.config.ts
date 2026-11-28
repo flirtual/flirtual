@@ -24,15 +24,6 @@ const mkcertPaths = {
 
 const mkcertExists = existsSync(mkcertPaths.cert) && existsSync(mkcertPaths.key);
 
-function getManualChunk(moduleId: string) {
-	const [, language] = /(?:\/@uppy\/locales\/lib\/|\/messages\/)([a-z-_]+)\.(?:json|js)$/i.exec(moduleId) || [];
-	if (language) return `languages/${language === "pt_BR" ? "pt-BR" : language.split("_")[0]}`;
-
-	if (/node_modules\/@?(?:react|react-dom|react-router|react-error-boundary)\//i.test(moduleId)) return "react";
-
-	return null;
-}
-
 export default defineConfig(async (config): Promise<UserConfig> => {
 	const { mode } = config;
 
@@ -80,7 +71,7 @@ export default defineConfig(async (config): Promise<UserConfig> => {
 			sourcemap: true,
 			target: targets,
 			chunkSizeWarningLimit: 100,
-			rollupOptions: {
+			rolldownOptions: {
 				// experimentalLogSideEffects: true,
 				treeshake: {
 					unknownGlobalSideEffects: false,
@@ -91,7 +82,9 @@ export default defineConfig(async (config): Promise<UserConfig> => {
 					entryFileNames: "static/[hash:16].js",
 					chunkFileNames: "static/[hash:16].js",
 					assetFileNames: "static/[hash:16].[ext]",
-					manualChunks: getManualChunk
+					codeSplitting: {
+						groups: [{ name: "react", test: /[\\/]node_modules[\\/](?:react|react-dom|react-router|react-error-boundary)[\\/]/ }]
+					}
 				}
 			}
 		},
