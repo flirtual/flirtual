@@ -78,11 +78,13 @@ async function deploy(
 		const secretsFile = path.join(directory, "secrets.json");
 		await writeFile(secretsFile, JSON.stringify(inputs.secrets), { mode: 0o600 });
 
-		// Always passing a secrets file keeps the Worker's other secrets (cloudflare/cf#72).
+		// Always passing a secrets file keeps the Worker's other secrets (cloudflare/cf#72). The program
+		// owns the Worker, so it overrides changes made elsewhere instead of refusing to deploy.
 		await cf(
 			[
 				"deploy",
 				"--prebuilt",
+				"--force",
 				...(buildContext?.mode ? ["--mode", buildContext.mode] : []),
 				...(record.directory === defaultWorkerDirectory ? [] : ["--worker", worker.name]),
 				"--secrets-file",

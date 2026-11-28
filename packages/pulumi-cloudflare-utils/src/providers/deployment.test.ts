@@ -99,6 +99,7 @@ it("deploys a copy of the project's build carrying the given config, leaving the
 	expect(deploys[0]!.args).toStrictEqual([
 		"deploy",
 		"--prebuilt",
+		"--force",
 		"--mode",
 		"development",
 		"--secrets-file",
@@ -237,6 +238,7 @@ it("deploys another Worker in the Build Output by the name it's deployed under",
 	expect(deploys[0]!.args).toStrictEqual([
 		"deploy",
 		"--prebuilt",
+		"--force",
 		"--mode",
 		"development",
 		"--worker",
