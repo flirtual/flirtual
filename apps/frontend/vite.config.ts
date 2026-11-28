@@ -14,6 +14,7 @@ import { imagetools } from "vite-imagetools";
 import { ViteImageOptimizer as imageOptimize } from "vite-plugin-image-optimizer";
 
 import { targets } from "./src/targets.ts";
+import { reactRouterHookFilters, withHookFilters } from "./vite-plugin-hook-filters.ts";
 import { hush } from "./vite-plugin-hush.ts";
 import { twemoji } from "./vite-plugin-twemoji.ts";
 
@@ -116,14 +117,16 @@ export default defineConfig(async (config): Promise<UserConfig> => {
 			hush([
 				"Can't resolve original location of error"
 			]),
-			macros(),
+			withHookFilters(macros(), { transform: { code: /type:\s*["']macro["']/ } }),
 			servesHttps && !mkcertExists && basicSsl({
 				name: "flirtual",
 				domains: [hostname],
 				certDir: "./certificates",
 			}),
-			reactRouter(),
-			reactCompiler({ compiler: { reportDiagnostics: true } }),
+			reactRouter().map((plugin) => withHookFilters(plugin, reactRouterHookFilters[plugin.name] ?? {})),
+			withHookFilters(reactCompiler({ compiler: { reportDiagnostics: true } }), {
+				transform: { id: { include: /\.[jt]sx?(?:\?|$)/, exclude: /[/\\]node_modules[/\\]/ } }
+			}),
 			twemoji(),
 			imageOptimize({
 				cache: true,
