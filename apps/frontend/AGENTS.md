@@ -96,6 +96,12 @@ node --env-file=.env.weblate i18n/scripts/weblate.ts pull   # Weblate state → 
 
 Writes to Weblate (`weblate.ts`, `screenshots.ts upload`) are dry runs unless given `--apply`.
 
+A few strings live outside Weblate and are edited by hand in every language: the notification
+strings the OS shows by device language (`ios/App/App/Localizable.xcstrings`, Android's
+`res/values-*/strings.xml`), and the chat emoji picker's Korean and Swedish interface text
+(`src/components/chat/emoji-i18n/`). The picker's other languages come from `emoji-picker-element`,
+and `emoji-locale.ts` maps each app locale to its text and emoji data.
+
 The watch app bundles `messages/` and reads it at runtime: its own strings live under `watch`, but it also reuses top-level keys and data entries' names. Grep `ios/App/Watch/` before renaming or removing a key. Its `t()` fills `{name}` placeholders, ICU `select` and empty `<name/>` tags, and drops other tags but keeps their contents, so strings it uses can't rely on ICU plurals.
 
 ```tsx
