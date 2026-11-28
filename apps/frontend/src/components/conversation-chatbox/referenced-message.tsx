@@ -4,9 +4,9 @@
 import type { ReferencedMessageProps } from "@talkjs/react-components";
 import { Reply } from "lucide-react";
 
+import { highlightMessage } from "../chat/replying";
+import { revealOffset } from "../chat/scroll-anchor";
 import { ReplyPreview } from "./reply-preview";
-import { highlightMessage } from "./replying";
-import { revealOffset } from "./scroll-anchor";
 
 const scrollEndFallback = 700;
 const gap = 16;

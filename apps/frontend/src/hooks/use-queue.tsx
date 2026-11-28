@@ -25,7 +25,7 @@ import { emptyArray, newConversationId } from "~/utilities";
 
 import { useDialog } from "./use-dialog";
 import { useSession } from "./use-session";
-import { useUnreadConversations } from "./use-talkjs";
+import { useUnreadConversations } from "./use-unread-conversations";
 
 export const invalidateQueue = (mode: ProspectKind = "love") => invalidate({ queryKey: queueKey(mode) });
 

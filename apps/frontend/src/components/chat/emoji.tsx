@@ -3,8 +3,8 @@ import type { FC } from "react";
 import { twMerge } from "tailwind-merge";
 import { twemojiUrl } from "virtual:twemoji";
 
+import { customEmojis } from "~/components/chat/custom-emojis";
 import { Image } from "~/components/image";
-import { customEmojis } from "~/hooks/use-talkjs";
 
 // One size for every emoji, Twemoji and custom alike, centred on the text around it.
 const emojiImage = "mx-[0.05em] inline-block size-[1.375em] align-[-0.3em]";

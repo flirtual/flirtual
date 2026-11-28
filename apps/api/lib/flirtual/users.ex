@@ -557,6 +557,7 @@ defmodule Flirtual.Users do
              :ok <- Hash.delete(user.id),
              :ok <- ModerationEvent.delete_user_events(user.id),
              :ok <- Image.delete_user_objects(user.id),
+             {:ok, conversations} <- Flirtual.Chat.delete_user_conversations(user.id),
              {:ok, user} <- Repo.delete(user, timeout: @delete_timeout),
              :ok <- Flirtual.Search.delete_users([user.id]),
              {:ok, _} <- Talkjs.delete_user(user),
@@ -577,7 +578,7 @@ defmodule Flirtual.Users do
                  reason: attrs.reason,
                  comment: attrs.comment
                ) do
-          {:ok, user}
+          {{:ok, user}, conversations}
         else
           {:error, %Ecto.Changeset{} = changeset} -> Repo.rollback(changeset)
           _ -> Repo.rollback({:service_unavailable, :account_deletion_failed})
@@ -585,6 +586,7 @@ defmodule Flirtual.Users do
       end,
       timeout: @delete_timeout
     )
+    |> announce_deleted_conversations(user.id)
   end
 
   defp exit_survey_details(%User{} = user) do
@@ -606,6 +608,7 @@ defmodule Flirtual.Users do
              :ok <- delete_events(user),
              :ok <- Image.delete_user_objects(user.id),
              :ok <- retain_image_hashes(user),
+             {:ok, conversations} <- Flirtual.Chat.delete_user_conversations(user.id),
              {:ok, user} <- Repo.delete(user, timeout: @delete_timeout),
              :ok <- Flirtual.Search.delete_users([user.id]),
              {:ok, _} <- Talkjs.delete_user(user),
@@ -614,7 +617,7 @@ defmodule Flirtual.Users do
              :ok <- RevenueCat.cancel_subscriptions(user),
              :ok <- RevenueCat.delete_customer(user),
              :ok <- enqueue_revocations(user) do
-          {:ok, user}
+          {{:ok, user}, conversations}
         else
           {:error, %Ecto.Changeset{} = changeset} -> Repo.rollback(changeset)
           _ -> Repo.rollback({:service_unavailable, :account_deletion_failed})
@@ -622,7 +625,15 @@ defmodule Flirtual.Users do
       end,
       timeout: @delete_timeout
     )
+    |> announce_deleted_conversations(user.id)
   end
+
+  defp announce_deleted_conversations({:ok, {result, conversations}}, user_id) do
+    Flirtual.Chat.announce_deleted_conversations(user_id, conversations)
+    {:ok, result}
+  end
+
+  defp announce_deleted_conversations(error, _), do: error
 
   defp delete_hashes(%User{banned_at: nil} = user), do: Hash.delete(user.id)
   defp delete_hashes(%User{}), do: :ok

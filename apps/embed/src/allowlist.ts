@@ -1,5 +1,5 @@
-import defaultHosts from "./allowed-hosts.json";
-import defaultMatches from "./allowed-matches.json";
+import defaultHosts from "../../api/priv/chat/allowed-hosts.json";
+import defaultMatches from "../../api/priv/chat/allowed-matches.json";
 
 const escape = (value: string) => value.replace(/[.+?^${}()|[\]\\/]/g, "\\$&");
 

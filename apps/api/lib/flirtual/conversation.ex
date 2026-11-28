@@ -5,12 +5,11 @@ defmodule Flirtual.Conversation do
 
   require Flirtual.Utilities
   import Flirtual.Utilities
-  import Ecto.Query
 
+  alias Flirtual.Chat
   alias Flirtual.Conversation
   alias Flirtual.Conversation.Message
   alias Flirtual.Conversation.Cursor
-  alias Flirtual.Matchmaking
   alias Flirtual.Talkjs
   alias Flirtual.User.Profile.LikesAndPasses
 
@@ -23,6 +22,7 @@ defmodule Flirtual.Conversation do
     field :is_unread, :boolean, virtual: false
 
     field :user_id, :binary_id, virtual: true
+    field :active_at, :utc_datetime_usec, virtual: true
 
     timestamps(updated_at: false)
   end
@@ -150,7 +150,41 @@ defmodule Flirtual.Conversation do
     end
   end
 
-  def get(conversation_id) when is_binary(conversation_id) do
+  def get(conversation_id, viewer_id \\ nil)
+
+  def get(conversation_id, viewer_id) when is_binary(conversation_id) do
+    if Chat.enabled?(),
+      do: get_from_chat(conversation_id, viewer_id),
+      else: get_from_talkjs(conversation_id)
+  end
+
+  defp get_from_chat(conversation_id, viewer_id) do
+    case Chat.get_conversation(conversation_id) do
+      %Chat.Conversation{} = conversation -> {:ok, from_chat(conversation, viewer_id)}
+      nil -> {:error, :not_found}
+    end
+  end
+
+  def from_chat(%Chat.Conversation{} = conversation, viewer_id, active_at \\ nil) do
+    participants = Enum.filter(conversation.participants, &is_nil(&1.left_at))
+    viewer = Enum.find(participants, &(&1.user_id == viewer_id))
+
+    %Conversation{
+      id: conversation.id,
+      kind: conversation.kind,
+      participants: Enum.map(participants, & &1.user_id),
+      last_message:
+        case conversation.last_message do
+          %Chat.Message{deleted_at: nil} = message -> Message.from_chat(message, participants)
+          _ -> nil
+        end,
+      is_unread: !!viewer and viewer.unread_count > 0,
+      active_at: active_at,
+      created_at: conversation.created_at
+    }
+  end
+
+  defp get_from_talkjs(conversation_id) do
     with {:ok, %Req.Response{body: body}} <-
            Talkjs.fetch(
              :get,
@@ -168,36 +202,47 @@ defmodule Flirtual.Conversation do
       %{"errorCode" => "CONVERSATION_NOT_FOUND"} ->
         {:error, :not_found}
 
-      {:error, :not_configured} ->
-        get_from_conversation_id(conversation_id)
-
       reason ->
         log(:error, [:get], reason: reason)
         {:error, :upstream}
     end
   end
 
-  # Fallback when TalkJS is not configured
-  defp get_from_conversation_id(conversation_id) do
-    LikesAndPasses
-    |> where(type: :like)
-    |> Flirtual.Repo.all()
-    |> Enum.find_value(fn lap ->
-      if Talkjs.new_conversation_id(lap.profile_id, lap.target_id) == conversation_id do
-        {:ok,
-         %Conversation{
-           id: conversation_id,
-           kind: lap.kind,
-           participants: [lap.profile_id, lap.target_id],
-           last_message: nil,
-           is_unread: false,
-           created_at: lap.created_at
-         }}
-      end
-    end) || {:error, :not_found}
+  def list(user_id, token \\ nil) do
+    if Chat.enabled?(), do: list_from_chat(user_id, token), else: list_from_talkjs(user_id, token)
   end
 
-  def list(user_id, token \\ nil) do
+  defp list_from_chat(user_id, token) do
+    cursor = Cursor.decode(token)
+
+    data =
+      user_id
+      |> Chat.list_conversations(
+        limit: cursor.limit,
+        before: cursor.before && DateTime.from_unix!(cursor.before, :microsecond)
+      )
+      |> Enum.map(&from_chat(&1.conversation, user_id, &1.active_at))
+
+    next =
+      if length(data) == cursor.limit do
+        %Cursor{
+          before: data |> List.last() |> Map.fetch!(:active_at) |> DateTime.to_unix(:microsecond),
+          last_before: cursor.before,
+          page: cursor.page + 1
+        }
+      end
+
+    {:ok,
+     {data,
+      %{
+        previous: cursor |> Cursor.previous(data) |> Cursor.encode(),
+        next: Cursor.encode(next),
+        page: cursor.page
+      }
+      |> exclude_nil()}}
+  end
+
+  defp list_from_talkjs(user_id, token) do
     cursor = Cursor.decode(token)
 
     query =
@@ -223,10 +268,6 @@ defmodule Flirtual.Conversation do
       %{"errorCode" => "LIMIT_OUT_OF_BOUNDS"} ->
         {:error, :invalid_limit}
 
-      {:error, :not_configured} ->
-        data = list_from_matches(user_id)
-        {:ok, {data, Cursor.map(cursor, data)}}
-
       reason ->
         log(:error, [:list], reason: reason)
         {:error, :upstream}
@@ -234,6 +275,35 @@ defmodule Flirtual.Conversation do
   end
 
   def list_messages(conversation_id, before \\ nil) do
+    if Chat.enabled?(),
+      do: list_messages_from_chat(conversation_id, before),
+      else: list_messages_from_talkjs(conversation_id, before)
+  end
+
+  defp list_messages_from_chat(conversation_id, before) do
+    with %Chat.Conversation{} = conversation <- Chat.get_conversation(conversation_id),
+         {:ok, before} <- before_seq(conversation_id, before) do
+      {messages, _} = Chat.list_messages(conversation_id, before: before)
+
+      {:ok,
+       messages
+       |> Enum.reverse()
+       |> Enum.map(&Message.from_chat(&1, conversation.participants))}
+    else
+      _ -> {:error, :not_found}
+    end
+  end
+
+  defp before_seq(_, nil), do: {:ok, nil}
+
+  defp before_seq(conversation_id, message_id) do
+    case Chat.get_message(conversation_id, message_id) do
+      %Chat.Message{seq: seq} -> {:ok, seq}
+      nil -> :error
+    end
+  end
+
+  defp list_messages_from_talkjs(conversation_id, before) do
     query =
       %{
         limit: 30,
@@ -260,20 +330,6 @@ defmodule Flirtual.Conversation do
     end
   end
 
-  defp list_from_matches(user_id) do
-    LikesAndPasses.list_matches(profile_id: user_id)
-    |> Enum.map(fn lap ->
-      %Conversation{
-        id: Talkjs.new_conversation_id(user_id, lap.target_id),
-        kind: Matchmaking.reduce_kind(lap.kind, lap.opposite.kind),
-        participants: [user_id, lap.target_id],
-        last_message: nil,
-        is_unread: false,
-        created_at: lap.created_at
-      }
-    end)
-  end
-
   defimpl Jason.Encoder do
     use Flirtual.Encoder,
       only: [
@@ -281,6 +337,7 @@ defmodule Flirtual.Conversation do
         :subject,
         :kind,
         :user_id,
+        :participants,
         :last_message,
         :is_unread,
         :created_at
@@ -300,19 +357,25 @@ defmodule Flirtual.Conversation do
           %Plug.Conn{
             assigns: %{
               session: %Session{
-                user_id: user_id
+                user_id: user_id,
+                user: %User{} = user
               }
             }
           } = conn,
           %Conversation{participants: participants}
         )
         when action in [:read, :send_message] do
-      with true <- user_id in participants,
-           [other_id] <- Enum.reject(participants, &(&1 === user_id)),
-           %User{} = target <- Users.get(other_id, []) do
-        Policy.can?(conn, :read, target)
+      if Chat.enabled?() do
+        action = if action == :send_message, do: :write, else: :read
+        match?({:ok, _, _}, Chat.authorize(user, participants, action))
       else
-        _ -> false
+        with true <- user_id in participants,
+             [other_id] <- Enum.reject(participants, &(&1 === user_id)),
+             %User{} = target <- Users.get(other_id, []) do
+          Policy.can?(conn, :read, target)
+        else
+          _ -> false
+        end
       end
     end
 
@@ -345,6 +408,7 @@ defmodule Flirtual.Conversation do
 
       field :seen_by, {:array, :binary_id}
       field :system, :boolean
+      field :kind, Ecto.Enum, values: [:match]
 
       field :viewed, :boolean, virtual: true
 
@@ -368,11 +432,30 @@ defmodule Flirtual.Conversation do
           end,
         seen_by: data["readBy"] |> Enum.map(&ShortUUID.encode!/1),
         system: data["type"] === "SystemMessage",
+        kind:
+          if(data["type"] === "SystemMessage" and data["text"] === Chat.match_message(),
+            do: :match
+          ),
         created_at: DateTime.from_unix!(data["createdAt"], :millisecond)
       }
     end
 
     def decode(_), do: nil
+
+    def from_chat(%Flirtual.Chat.Message{} = message, participants) do
+      %Message{
+        id: message.id,
+        content: Flirtual.Chat.text(message),
+        sender_id: message.sender_id,
+        seen_by:
+          participants
+          |> Enum.filter(&(&1.last_read_seq >= message.seq))
+          |> Enum.map(& &1.user_id),
+        system: message.system,
+        kind: message.kind,
+        created_at: message.created_at
+      }
+    end
 
     defimpl Jason.Encoder do
       use Flirtual.Encoder,
@@ -382,6 +465,7 @@ defmodule Flirtual.Conversation do
           :sender_id,
           :viewed,
           :system,
+          :kind,
           :created_at
         ]
     end

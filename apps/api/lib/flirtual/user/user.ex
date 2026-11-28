@@ -195,9 +195,17 @@ defmodule Flirtual.User do
     user = Repo.preload(user, User.default_assoc())
     new_status = get_status(user)
 
-    user
-    |> change(%{status: new_status})
-    |> Repo.update()
+    hidden? = user.status == :visible and new_status != :visible
+
+    if hidden? or not is_nil(user.banned_at) or not is_nil(user.deactivated_at),
+      do: Flirtual.Chat.disconnect(user.id)
+
+    with {:ok, updated} <- user |> change(%{status: new_status}) |> Repo.update() do
+      if user.status == :visible != (new_status == :visible),
+        do: Flirtual.Chat.visibility_changed(user.id)
+
+      {:ok, updated}
+    end
   end
 
   def get_status(%User{} = user) do

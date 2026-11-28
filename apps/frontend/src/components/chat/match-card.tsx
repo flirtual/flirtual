@@ -1,4 +1,3 @@
-import type { MessageProps } from "@talkjs/react-components";
 import type { FC } from "react";
 import { Trans, useTranslation } from "react-i18next";
 
@@ -16,7 +15,7 @@ export interface Match {
 }
 
 // The conversation's first message, drawn like the dialog shown when the match happened (ItsAMatch).
-export const MatchCard: FC<{ match: Match; message: MessageProps["message"] }> = ({ match: { kind, me, participant }, message }) => {
+export const MatchCard: FC<{ match: Match; message: { createdAt: number | string } }> = ({ match: { kind, me, participant }, message }) => {
 	const { t } = useTranslation();
 	const Icon = kind === "love" ? HeartIcon : PeaceIcon;
 

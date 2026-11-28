@@ -1,5 +1,5 @@
 import { CheckCheck } from "lucide-react";
-import { Fragment, Suspense, useLayoutEffect, useState } from "react";
+import { Fragment, Suspense, useEffect, useLayoutEffect, useState } from "react";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { useInView } from "react-intersection-observer";
@@ -7,9 +7,11 @@ import { twMerge } from "tailwind-merge";
 
 import { Conversation } from "~/api/conversations";
 import { Button } from "~/components/button";
+import { preloadChat } from "~/components/chat";
+import { talkjsAppId } from "~/const";
 import { useConversations } from "~/hooks/use-conversations";
-import { useUnreadConversations } from "~/hooks/use-talkjs";
 import { useToast } from "~/hooks/use-toast";
+import { useUnreadConversations } from "~/hooks/use-unread-conversations";
 
 import { LikesYouButton } from "./likes-you-button";
 import {
@@ -32,6 +34,10 @@ export const ConversationAside: FC<ConversationAsideProps> = (props) => {
 
 	const { unreadConversations } = useUnreadConversations();
 	const [markingRead, setMarkingRead] = useState(false);
+
+	useEffect(() => {
+		if (!talkjsAppId) preloadChat();
+	}, []);
 
 	useLayoutEffect(() => {
 		if (!loadMoreInView) return;

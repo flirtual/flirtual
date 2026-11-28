@@ -5,10 +5,14 @@ import { twMerge } from "tailwind-merge";
 import { withSuspense } from "with-suspense";
 
 import { ButtonLink } from "~/components/button";
+import { Chat } from "~/components/chat";
+import { frame } from "~/components/chat/frame";
+import { ChatSkeleton } from "~/components/chat/skeleton";
 import { ConversationChatbox } from "~/components/conversation-chatbox";
 import { InlineLink } from "~/components/inline-link";
 import { ProfileDropdown } from "~/components/profile/dropdown";
 import { UserAvatar } from "~/components/user-avatar";
+import { talkjsAppId } from "~/const";
 import { vrchat } from "~/features";
 import { useBack } from "~/hooks/use-back";
 import { useConversation } from "~/hooks/use-conversations";
@@ -43,10 +47,12 @@ export const Conversation = withSuspense<{ id: string }>(({ id: conversationId }
 
 	const conversation = useConversation(conversationId);
 	const user = useUser(conversation?.userId);
+	const observed = conversation?.participants && !conversation.participants.includes(me.id);
+	const other = useUser(observed ? conversation.participants?.find((id) => id !== conversation.userId) : undefined);
 
 	if (!conversation || !user) {
 		return (
-			<div className="mt-0 h-fit w-full shrink-0 bg-brand-gradient vision:bg-none desktop:max-w-152 desktop:shrink desktop:rounded-2xl desktop:p-1 desktop:shadow-brand-1">
+			<div className="mt-0 h-fit w-full shrink-0 bg-brand-gradient vision:bg-none desktop:max-w-152 desktop:shrink desktop:rounded-2xl desktop:p-1 desktop:pt-0 desktop:shadow-brand-1">
 				<div data-dark-backdrop className={twMerge(headerClassName, "min-h-16 justify-center")}>
 					<span className="text-center font-montserrat text-2xl font-semibold text-white-20 desktop:font-extrabold">
 						{t("chat_unavailable")}
@@ -65,7 +71,7 @@ export const Conversation = withSuspense<{ id: string }>(({ id: conversationId }
 	}
 
 	return (
-		<div className="mt-0 h-fit w-full shrink-0 bg-brand-gradient vision:bg-none desktop:max-w-152 desktop:shrink desktop:rounded-2xl desktop:p-1 desktop:shadow-brand-1">
+		<div className="mt-0 h-fit w-full shrink-0 bg-brand-gradient vision:bg-none desktop:max-w-152 desktop:shrink desktop:rounded-2xl desktop:p-1 desktop:pt-0 desktop:shadow-brand-1">
 			<div data-dark-backdrop className={headerClassName}>
 				<BackButton />
 				<InlineLink
@@ -95,18 +101,26 @@ export const Conversation = withSuspense<{ id: string }>(({ id: conversationId }
 						)}
 				</div>
 			</div>
-			<ConversationChatbox conversationId={conversationId} kind={conversation.kind} participant={user} />
+			{talkjsAppId
+				? <ConversationChatbox conversationId={conversationId} kind={conversation.kind} participant={user} />
+				: <Chat conversationId={conversationId} kind={conversation.kind} participants={other ? [user, other] : [user]} />}
 		</div>
 	);
 }, {
 	fallback: (
-		<div className="mt-0 size-full shrink-0 bg-brand-gradient vision:bg-none desktop:max-w-152 desktop:shrink desktop:rounded-2xl desktop:p-1 desktop:shadow-brand-1">
+		<div className={twMerge("mt-0 w-full shrink-0 bg-brand-gradient vision:bg-none desktop:max-w-152 desktop:shrink desktop:rounded-2xl desktop:p-1 desktop:pt-0 desktop:shadow-brand-1", talkjsAppId ? "h-full" : "h-fit")}>
 			<div data-dark-backdrop className={headerClassName}>
 				<BackButton />
 				<div className="size-10 animate-pulse rounded-full bg-white-20"></div>
 				<div className="ml-4 h-6 w-32 animate-pulse rounded-sm bg-white-20"></div>
 			</div>
-			<div className="h-full rounded-xl bg-white-20 shadow-brand-inset" />
+			{talkjsAppId
+				? <div className="h-full rounded-xl bg-white-20 shadow-brand-inset" />
+				: (
+						<div className={frame}>
+							<ChatSkeleton />
+						</div>
+					)}
 		</div>
 	)
 });

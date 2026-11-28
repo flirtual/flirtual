@@ -8,7 +8,7 @@ import { twMerge } from "tailwind-merge";
 import { useBackButton } from "~/hooks/use-back-button";
 import { useSafeArea } from "~/hooks/use-safe-area";
 
-import { Emoji } from "./emoji";
+import { Emoji } from "../chat/emoji";
 import { minPickerHeight } from "./reaction-picker";
 
 export interface MessageMenuItem {

@@ -1,3 +1,5 @@
+import { messageList } from "./selectors";
+
 const slop = 10;
 
 export function hideKeyboardOnScroll(container: HTMLElement): () => void {
@@ -5,7 +7,7 @@ export function hideKeyboardOnScroll(container: HTMLElement): () => void {
 
 	const onTouchStart = (event: TouchEvent) => {
 		const [touch] = event.touches;
-		const inList = event.target instanceof Element && event.target.closest(".t-message-list");
+		const inList = event.target instanceof Element && event.target.closest(messageList);
 		start = event.touches.length === 1 && touch && inList ? { x: touch.clientX, y: touch.clientY } : null;
 	};
 
@@ -19,7 +21,7 @@ export function hideKeyboardOnScroll(container: HTMLElement): () => void {
 
 		start = null;
 		const active = document.activeElement;
-		if (active instanceof HTMLElement && active.matches("input, textarea, [contenteditable='true']")) active.blur();
+		if (active instanceof HTMLElement && (active.isContentEditable || active.matches("input, textarea"))) active.blur();
 	};
 
 	container.addEventListener("touchstart", onTouchStart, { capture: true, passive: true });

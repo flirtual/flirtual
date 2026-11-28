@@ -170,3 +170,15 @@ export function escapeHtml(value: string): string {
 		.replace(/"/g, "&quot;")
 		.replace(/'/g, "&#39;");
 }
+
+export function prefersReducedMotion(): boolean {
+	return matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
+export function scrollBehavior(): ScrollBehavior {
+	return prefersReducedMotion() ? "auto" : "smooth";
+}
+
+export function opensKeyboard(): boolean {
+	return !matchMedia("(hover: hover) and (pointer: fine)").matches;
+}

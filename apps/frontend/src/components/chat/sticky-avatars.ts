@@ -1,3 +1,5 @@
+import { messageList } from "./selectors";
+
 // An avatar sticks to the top of the messages it heads, so it stays in view while you scroll
 // through them (see Message). CSS can only make it stick within its TalkJS message group, which
 // TalkJS ends after 60 seconds between messages, so this stretches each avatar's sticky area to the
@@ -62,7 +64,7 @@ export function followStickyAvatars(container: HTMLElement): () => void {
 
 // The avatar beside a message, which may be stickied there from an earlier message by the same sender.
 export function avatarBeside(message: HTMLElement): HTMLElement | null {
-	const container = message.closest(".t-message-list");
+	const container = message.closest(messageList);
 	if (!container) return null;
 
 	const messages = [...container.querySelectorAll<HTMLElement>(".chat-message")].reverse();

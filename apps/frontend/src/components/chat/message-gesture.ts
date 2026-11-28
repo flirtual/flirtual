@@ -1,7 +1,10 @@
 import { useEffect, useEffectEvent, useRef, useState } from "react";
-import type { PointerEvent as ReactPointerEvent } from "react";
+import type { PointerEvent as ReactPointerEvent, RefObject } from "react";
 
 import { claimSwipes } from "~/hooks/use-back-button";
+
+import { messageList, popover } from "./selectors";
+import { avatarBeside } from "./sticky-avatars";
 
 // A touch on a message either holds still (opening its actions) or slides right (replying to it).
 // Moving any other way, or the browser taking over to scroll, abandons it.
@@ -82,13 +85,40 @@ export function nextGesture(gesture: Gesture, event: GestureEvent): [Gesture, Ar
 	}
 }
 
-export function useMessageGesture({ onHold, onReply }: {
+export function useMessageGesture({ root, movesAvatar, onHold, onReply }: {
+	root: RefObject<HTMLElement | null>;
+	movesAvatar: boolean;
 	onHold?: () => void;
 	onReply?: () => void;
 }) {
 	const gesture = useRef<Gesture>(idle);
 	const held = useRef(false);
-	const [distance, setDistance] = useState(0);
+	const [sliding, setSliding] = useState(false);
+	const avatar = useRef<HTMLElement>(null);
+
+	const releaseAvatar = () => {
+		avatar.current?.style.removeProperty("transition");
+		avatar.current?.style.removeProperty("transform");
+		avatar.current = null;
+	};
+	useEffect(() => releaseAvatar, []);
+
+	function slide(distance: number) {
+		setSliding(distance > 0);
+		if (!distance) return releaseAvatar();
+
+		const element = root.current;
+		if (!element) return;
+
+		element.style.setProperty("--slide", `${distance}px`);
+		element.style.setProperty("--slide-progress", String(Math.min(distance / replyDistance, 1)));
+
+		if (movesAvatar) avatar.current ??= avatarBeside(element);
+		if (!avatar.current) return;
+
+		avatar.current.style.transition = "none";
+		avatar.current.style.transform = `translateX(${distance}px)`;
+	}
 	const presses = useRef(0);
 	const [holdPending, setHoldPending] = useState<number | null>(null);
 	const releaseSwipes = useRef<() => void>(null);
@@ -96,7 +126,7 @@ export function useMessageGesture({ onHold, onReply }: {
 	function dispatch(event: GestureEvent, element?: Element) {
 		const [next, effects] = nextGesture(gesture.current, event);
 		gesture.current = next;
-		setDistance(next.state === "sliding" ? next.distance : 0);
+		slide(next.state === "sliding" ? next.distance : 0);
 
 		for (const effect of effects) {
 			switch (effect) {
@@ -139,16 +169,16 @@ export function useMessageGesture({ onHold, onReply }: {
 	const enabled = !!onHold || !!onReply;
 	// A reaction picker opened from the message is inside it, but its touches aren't the message's.
 	const fromTouch = (event: ReactPointerEvent) => enabled && event.pointerType === "touch"
-		&& !(event.target instanceof Element && event.target.closest("[t-popover-content]"));
+		&& !(event.target instanceof Element && event.target.closest(popover));
 
 	return {
-		distance,
+		sliding,
 		handlers: {
 			onPointerDown: (event: ReactPointerEvent) => {
 				held.current = false;
 				if (!fromTouch(event) || nearSelection(event.clientX, event.clientY)) return;
 
-				const chat = event.currentTarget.closest(".t-message-list")?.getBoundingClientRect();
+				const chat = event.currentTarget.closest(messageList)?.getBoundingClientRect();
 				const slides = !!onReply && event.clientX - (chat?.left ?? 0) >= edgeWidth;
 				release();
 				if (slides) releaseSwipes.current = claimSwipes();

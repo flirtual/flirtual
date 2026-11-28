@@ -11,33 +11,32 @@ import {
 } from "@talkjs/react-components";
 import type { MessageProps, ReactionsSummarySnapshot } from "@talkjs/react-components";
 import { Copy, Link2, Pencil, Reply, SmilePlus, TextSelect, Trash2 } from "lucide-react";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
 import { isKlipyMedia } from "~/api/embed";
+import { customEmojiNames } from "~/components/chat/custom-emojis";
 import { Link } from "~/components/link";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 import { useCopy } from "~/hooks/use-copy";
 import { useDevice } from "~/hooks/use-device";
-import { customEmojiNames } from "~/hooks/use-talkjs";
 import { useLocale } from "~/i18n";
 import { intlLocale } from "~/i18n/languages";
 import { urls } from "~/urls";
 
+import { isJumboEmoji, splitEmoji } from "../chat/custom-emoji";
+import { Emoji } from "../chat/emoji";
+import { countEmojiUse, frequentEmojiCount, frequentReactions, pickerDefaults, reactionEmojiVersion } from "../chat/emoji-favorites";
+import { soleLink } from "../chat/links";
+import { MatchCard } from "../chat/match-card";
+import { nearSelection, useMessageGesture } from "../chat/message-gesture";
+import { useBeingRepliedTo, useHighlighted } from "../chat/replying";
+import { revealOffset } from "../chat/scroll-anchor";
 import { textContent } from "./content";
-import { isJumboEmoji, splitEmoji } from "./custom-emoji";
-import { Emoji } from "./emoji";
-import { countEmojiUse, frequentReactions } from "./emoji-favorites";
-import { soleLink } from "./links";
-import { MatchCard } from "./match-card";
 import { isMatchMessage } from "./match-message";
-import { nearSelection, replyDistance, useMessageGesture } from "./message-gesture";
 import type { MessageMenuItem } from "./message-menu";
 import { MessageMenu } from "./message-menu";
-import { useBeingRepliedTo, useHighlighted } from "./replying";
-import { revealOffset } from "./scroll-anchor";
-import { avatarBeside } from "./sticky-avatars";
 import type { ThemeCustom } from "./theme";
 
 type Sender = "currentUser" | "other" | "system";
@@ -61,7 +60,6 @@ const gifSurface = twMerge(bareSurface, "[&_img]:mt-0");
 
 const hoverButton = "flex size-7 items-center justify-center rounded-full text-black-80! opacity-75 hocus:opacity-100 dark:text-white-20! vision:text-black-80! [&>svg]:size-5 [&>svg]:fill-none!";
 const chip = "flex items-center rounded-2xl px-2 py-1 shadow-brand-1 hocus:bg-brand-gradient hocus:text-white-10!";
-const frequentEmojiCount = 6;
 const revealMargin = 8;
 const letGoDelay = 500;
 
@@ -105,42 +103,20 @@ export function Message({ message, messageStatus, permissions, common }: Message
 		common.chatbox.focusMessageField();
 	};
 
-	const { distance, handlers } = useMessageGesture({
+	const { sliding, handlers } = useMessageGesture({
+		root,
+		movesAvatar: sender === "currentUser",
 		onHold: (hasActions || hasText) && !selecting
 			? () => {
 					const container = root.current?.closest("[data-chatbox]");
 					if (!container) return;
 
 					void Haptics.impact({ style: ImpactStyle.Medium }).catch(() => {});
-					void frequentReactions(common.t.locale, frequentEmojiCount).then((frequent) => setMenu({ container, frequent, link: pressedLink.current }));
+					void frequentReactions(common.t.locale, frequentEmojiCount, { newestVersion: reactionEmojiVersion, fallback: pickerDefaults }).then((frequent) => setMenu({ container, frequent, link: pressedLink.current }));
 				}
 			: undefined,
 		onReply: canReply && !selecting ? reply : undefined
 	});
-
-	const slidingAvatar = useRef<HTMLElement>(null);
-	useLayoutEffect(() => {
-		if (distance && sender === "currentUser" && !slidingAvatar.current && root.current)
-			slidingAvatar.current = avatarBeside(root.current);
-
-		const avatar = slidingAvatar.current;
-		if (!avatar) return;
-
-		if (distance) {
-			avatar.style.transition = "none";
-			avatar.style.transform = `translateX(${distance}px)`;
-		}
-		else {
-			avatar.style.removeProperty("transition");
-			avatar.style.removeProperty("transform");
-			slidingAvatar.current = null;
-		}
-	}, [distance, sender]);
-
-	useEffect(() => () => {
-		slidingAvatar.current?.style.removeProperty("transition");
-		slidingAvatar.current?.style.removeProperty("transform");
-	}, []);
 
 	// Keeps the replied-to message in view as the reply bar and keyboard shrink the chat.
 	useEffect(() => {
@@ -288,19 +264,16 @@ export function Message({ message, messageStatus, permissions, common }: Message
 					<div
 						className={twMerge(
 							"relative flex max-w-[calc(100%-3.5rem)] min-w-0 flex-col",
-							!distance && "transition-transform",
+							!sliding && "transition-transform",
 							sender === "currentUser" ? "items-end" : "items-start",
 							sender === "system" && "w-full max-w-full"
 						)}
-						style={distance ? { transform: `translateX(${distance}px)` } : undefined}
+						style={sliding ? { transform: "translateX(var(--slide))" } : undefined}
 					>
-						{distance > 0 && (
+						{sliding && (
 							<Reply
-								style={{
-									left: `${-distance / 2 - 12}px`,
-									opacity: Math.min(distance / replyDistance, 1)
-								}}
 								className="absolute top-1/2 size-6 -translate-y-1/2 fill-none! text-black-80! dark:text-white-20! vision:text-black-80!"
+								style={{ left: "calc(var(--slide) / -2 - 12px)", opacity: "var(--slide-progress)" }}
 							/>
 						)}
 						{hasActions && (

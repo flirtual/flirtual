@@ -17,6 +17,13 @@ defmodule Flirtual.User.Profile.Block do
   end
 
   def create(user: %User{} = user, target: %User{id: target_id}) do
+    with {:ok, item} <- insert(user, target_id) do
+      Flirtual.Chat.close_between(user.id, target_id)
+      {:ok, item}
+    end
+  end
+
+  defp insert(%User{} = user, target_id) do
     Repo.transaction(fn repo ->
       pass_kinds =
         Prospect
@@ -64,6 +71,16 @@ defmodule Flirtual.User.Profile.Block do
   def exists?(user_id: user_id, target_id: target_id) do
     Block
     |> where(profile_id: ^user_id, target_id: ^target_id)
+    |> Repo.exists?()
+  end
+
+  def between?(user_id, target_id) do
+    Block
+    |> where(
+      [block],
+      (block.profile_id == ^user_id and block.target_id == ^target_id) or
+        (block.profile_id == ^target_id and block.target_id == ^user_id)
+    )
     |> Repo.exists?()
   end
 

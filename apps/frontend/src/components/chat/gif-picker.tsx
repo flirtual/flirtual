@@ -26,6 +26,8 @@ interface Klipy {
 	options: () => Promise<KlipyOptions>;
 }
 
+const scroller = "[data-gif-scroller]";
+
 function sourceKey(source: KlipySource) {
 	return source.kind === "search" ? `search:${source.query}` : source.kind;
 }
@@ -38,7 +40,7 @@ function useSeen(): [RefCallback<HTMLElement>, boolean] {
 
 		const observer = new IntersectionObserver(([entry]) => {
 			if (entry.isIntersecting) setSeen(true);
-		}, { rootMargin: "100px" });
+		}, { root: element.closest(scroller), rootMargin: "100px" });
 
 		observer.observe(element);
 		return () => observer.disconnect();
@@ -169,7 +171,7 @@ const GifResults: FC<{
 	const { t } = useTranslation();
 	const sentinel = useRef<HTMLDivElement>(null);
 
-	const { data, status, hasNextPage, isFetchingNextPage, fetchNextPage } = useInfiniteQuery({
+	const { data, status, hasNextPage, isFetchingNextPage, isFetchNextPageError, fetchNextPage } = useInfiniteQuery({
 		queryKey: ["klipy", "gifs", sourceKey(source), ...klipy.key],
 		queryFn: async ({ pageParam, signal }) => klipyGifs(source, pageParam, 24, await klipy.options(), signal),
 		initialPageParam: 1,
@@ -182,15 +184,15 @@ const GifResults: FC<{
 
 	useEffect(() => {
 		const element = sentinel.current;
-		if (!element || !hasNextPage) return;
+		if (!element || !hasNextPage || isFetchNextPageError) return;
 
 		const observer = new IntersectionObserver(([entry]) => {
 			if (entry.isIntersecting && !isFetchingNextPage) void fetchNextPage();
-		}, { rootMargin: "200px" });
+		}, { root: element.closest(scroller), rootMargin: "200px" });
 
 		observer.observe(element);
 		return () => observer.disconnect();
-	}, [hasNextPage, isFetchingNextPage, fetchNextPage]);
+	}, [hasNextPage, isFetchingNextPage, isFetchNextPageError, fetchNextPage]);
 
 	const [width, setWidth] = useState(0);
 	const measure = useCallback((element: HTMLDivElement | null) => {
@@ -234,7 +236,7 @@ const GifResults: FC<{
 						{items.map(({ gif, preview, ratio }) => (
 							<button
 								key={gif.id}
-								aria-label={gif.title}
+								aria-label={gif.title || t("send_gif")}
 								className={`${tile} w-full bg-black-90/5 dark:bg-white-10/5`}
 								style={{ aspectRatio: `1 / ${ratio}` }}
 								title={gif.title}
@@ -256,6 +258,11 @@ const GifResults: FC<{
 					</div>
 				))}
 			</div>
+			{isFetchNextPageError && (
+				<button className="mx-auto mt-2 block cursor-pointer rounded-full px-4 py-2 underline opacity-75 hocus:opacity-100" type="button" onClick={() => void fetchNextPage()}>
+					{t("try_again")}
+				</button>
+			)}
 			<div className="h-px" ref={sentinel} />
 		</>
 	);
@@ -343,6 +350,7 @@ export const GifPicker: FC<{
 			</div>
 
 			<div
+				data-gif-scroller
 				className="min-h-0 grow overflow-y-auto overscroll-contain pb-2.5"
 				ref={scroller}
 				onScroll={(event) => {

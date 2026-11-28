@@ -45,6 +45,7 @@ tus-server:
 
 embed:
   - apps/embed/**
+  - apps/api/priv/chat/**
   - *workspace
   - *self
 

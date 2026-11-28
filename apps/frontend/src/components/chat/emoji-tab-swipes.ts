@@ -1,11 +1,12 @@
 import type Picker from "emoji-picker-element/picker";
 
 import { claimSwipes } from "~/hooks/use-back-button";
+import { prefersReducedMotion } from "~/utilities";
 
 const lockDistance = 10;
 const switchDistance = 50;
 const resistance = 0.3;
-const settle = { duration: 200, easing: "ease-out" };
+const settle = () => ({ duration: prefersReducedMotion() ? 0 : 200, easing: "ease-out" });
 
 interface Swipe {
 	x: number;
@@ -21,7 +22,7 @@ interface Swipe {
 }
 
 // The picker only renders one category, so the outgoing one is a copy.
-export function followTabSwipes(picker: Picker) {
+export function followTabSwipes(picker: Picker): () => void {
 	// Its own event map leaves out touches.
 	const element: HTMLElement = picker;
 	let swipe: Swipe | null = null;
@@ -30,9 +31,9 @@ export function followTabSwipes(picker: Picker) {
 	const holdSwipes = (target: EventTarget) => {
 		unclaim ??= claimSwipes();
 		const letGo = (event: Event) => {
+			if ((event as TouchEvent).touches.length > 0) return;
 			target.removeEventListener("touchend", letGo);
 			target.removeEventListener("touchcancel", letGo);
-			if ((event as TouchEvent).touches.length > 0) return;
 			unclaim?.();
 			unclaim = undefined;
 		};
@@ -125,7 +126,7 @@ export function followTabSwipes(picker: Picker) {
 		if (!ghost || direction === undefined) {
 			panel.style.translate = "";
 			swipe = null;
-			await panel.animate([{ translate: `${offset}px 0` }, { translate: "0 0" }], settle).finished.catch(() => {});
+			await panel.animate([{ translate: `${offset}px 0` }, { translate: "0 0" }], settle()).finished.catch(() => {});
 			return;
 		}
 
@@ -135,8 +136,8 @@ export function followTabSwipes(picker: Picker) {
 		const panelTo = switching ? 0 : direction * width;
 
 		const animations = [
-			ghost.animate([{ translate: `${offset}px 0` }, { translate: `${ghostTo}px 0` }], { ...settle, fill: "forwards" }),
-			panel.animate([{ translate: `${offset + direction * width}px 0` }, { translate: `${panelTo}px 0` }], { ...settle, fill: "forwards" })
+			ghost.animate([{ translate: `${offset}px 0` }, { translate: `${ghostTo}px 0` }], { ...settle(), fill: "forwards" }),
+			panel.animate([{ translate: `${offset + direction * width}px 0` }, { translate: `${panelTo}px 0` }], { ...settle(), fill: "forwards" })
 		];
 		panel.style.translate = "";
 		await Promise.all(animations.map(({ finished }) => finished)).catch(() => {});
@@ -172,4 +173,9 @@ export function followTabSwipes(picker: Picker) {
 
 		swipe = { x: touch.clientX, y: touch.clientY, panel, release, offset: 0, from, scrollTop: panel.scrollTop };
 	}, { passive: true });
+
+	return () => {
+		unclaim?.();
+		unclaim = undefined;
+	};
 }

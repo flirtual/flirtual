@@ -3,7 +3,7 @@ defmodule Flirtual.ObanWorkers.Unmatch do
 
   import Ecto.Query
 
-  alias Flirtual.{Repo, Talkjs}
+  alias Flirtual.{Chat, Repo, Talkjs}
   alias Flirtual.User.Profile.LikesAndPasses
 
   @impl Oban.Worker
@@ -12,7 +12,11 @@ defmodule Flirtual.ObanWorkers.Unmatch do
     if matched?(user_id, target_id) do
       :ok
     else
-      with {:ok, _} <- Talkjs.delete_participants(user_id: user_id, target_id: target_id) do
+      with {:ok, _} <-
+             if(Chat.enabled?(),
+               do: Chat.unmatch(user_id, target_id),
+               else: Talkjs.delete_participants(user_id: user_id, target_id: target_id)
+             ) do
         :ok
       end
     end

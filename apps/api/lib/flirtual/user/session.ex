@@ -128,8 +128,9 @@ defmodule Flirtual.User.Session do
   end
 
   def delete_all(query) do
-    query
-    |> Repo.delete_all()
+    {count, user_ids} = query |> select([session], session.user_id) |> Repo.delete_all()
+    user_ids |> Enum.uniq() |> Enum.each(&Flirtual.Chat.disconnect/1)
+    {count, nil}
   end
 
   def where_token(query, encoded_token) do

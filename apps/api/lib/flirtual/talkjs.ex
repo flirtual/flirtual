@@ -11,6 +11,10 @@ defmodule Flirtual.Talkjs do
     Application.get_env(:flirtual, Flirtual.Talkjs)[key]
   end
 
+  def configured? do
+    config(:access_token) not in [nil, ""] and config(:app_id) not in [nil, ""]
+  end
+
   def new_url(pathname, query) do
     URI.parse("https://api.talkjs.com/v1/" <> config(:app_id) <> "/" <> pathname)
     |> then(&if(is_nil(query), do: &1, else: Map.put(&1, :query, URI.encode_query(query))))

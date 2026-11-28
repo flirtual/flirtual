@@ -1,18 +1,19 @@
-import type { TextNode } from "@talkjs/core";
 import { parse } from "@twemoji/parser";
 import type { CustomEmoji, EmojiClickEventDetail } from "emoji-picker-element/shared";
 
-export type EmojiSegment
+import type { MarkupLike } from "./markup";
+
+export type EmojiSegment<Node extends MarkupLike = MarkupLike>
 	= | { type: "emoji"; name: string }
-		| { type: "text"; children: Array<TextNode> }
+		| { type: "text"; children: Array<Node | string> }
 		| { type: "twemoji"; text: string; codepoints: string };
 
 const shortcode = /(:\w+:)/;
 
 // Splits the top level of a text block so custom emoji and Twemoji can render as images between
 // runs of ordinary text. Emoji nested in formatting (bold, links, lists) stay as text.
-export function splitEmoji(children: Array<TextNode>, names: ReadonlySet<string>): Array<EmojiSegment> {
-	const segments: Array<EmojiSegment> = [];
+export function splitEmoji<Node extends MarkupLike>(children: Array<Node>, names: ReadonlySet<string>): Array<EmojiSegment<Node>> {
+	const segments: Array<EmojiSegment<Node>> = [];
 
 	const pushString = (text: string) => {
 		let offset = 0;
@@ -29,7 +30,7 @@ export function splitEmoji(children: Array<TextNode>, names: ReadonlySet<string>
 		pushText(text.slice(offset));
 	};
 
-	const pushText = (node: TextNode) => {
+	const pushText = (node: Node | string) => {
 		if (node === "") return;
 
 		const last = segments.at(-1);
@@ -53,7 +54,7 @@ export function splitEmoji(children: Array<TextNode>, names: ReadonlySet<string>
 			continue;
 		}
 
-		if (node.type === "customEmoji" && names.has(node.text)) {
+		if (node.type === "customEmoji" && node.text && names.has(node.text)) {
 			segments.push({ type: "emoji", name: node.text });
 			continue;
 		}
@@ -81,7 +82,7 @@ export function pickedCustomEmoji({ emoji }: EmojiClickEventDetail): string | nu
 const jumboEmojiLimit = 3;
 
 // A message of only a few emoji shows them large, like a sticker.
-export function isJumboEmoji(segments: Array<EmojiSegment>): boolean {
+export function isJumboEmoji<Node extends MarkupLike>(segments: Array<EmojiSegment<Node>>): boolean {
 	const emoji = segments.filter(({ type }) => type !== "text");
 	const onlySpaces = segments.every((segment) => segment.type !== "text" || segment.children.every((child) => typeof child === "string" && child.trim() === ""));
 
@@ -89,6 +90,6 @@ export function isJumboEmoji(segments: Array<EmojiSegment>): boolean {
 }
 
 // Message text keeps its whitespace as typed, which around a jumbo emoji pads the sticker.
-export function jumboEmojiSegments(segments: Array<EmojiSegment>): Array<EmojiSegment> {
+export function jumboEmojiSegments<Node extends MarkupLike>(segments: Array<EmojiSegment<Node>>): Array<EmojiSegment<Node>> {
 	return isJumboEmoji(segments) ? segments.filter(({ type }) => type !== "text") : segments;
 }

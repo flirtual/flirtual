@@ -20,5 +20,5 @@ export function lazy<T extends object>(load: LoadFunction<ComponentType<T>>, { s
 		if (server) return <FallbackComponent {...props} />;
 
 		return <LazyComponent {...props} />;
-	}, suspenseOptions);
+	}, { fallback, ...suspenseOptions });
 }

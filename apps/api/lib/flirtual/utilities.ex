@@ -96,6 +96,25 @@ defmodule Flirtual.Utilities do
     |> min(maximum)
   end
 
+  def utf16_length(text) when is_binary(text) do
+    for <<codepoint::utf8 <- text>>, reduce: 0 do
+      length -> if codepoint > 0xFFFF, do: length + 2, else: length + 1
+    end
+  end
+
+  def truncate_bytes(text, max_bytes) when byte_size(text) <= max_bytes, do: text
+
+  def truncate_bytes(text, max_bytes) do
+    text
+    |> String.slice(0, max_bytes)
+    |> String.graphemes()
+    |> Enum.reduce_while("", fn grapheme, kept ->
+      if byte_size(kept) + byte_size(grapheme) <= max_bytes,
+        do: {:cont, kept <> grapheme},
+        else: {:halt, kept}
+    end)
+  end
+
   def truncate(text, max_length, ellipsis \\ "…")
 
   def truncate(nil, _, _), do: nil

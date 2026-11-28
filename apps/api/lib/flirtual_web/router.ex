@@ -430,6 +430,7 @@ defmodule FlirtualWeb.Router do
           pipe_through([:require_authenticated_user, :require_valid_user])
 
           get("/", ConversationController, :list)
+          get("/token", ConversationController, :token)
           delete("/unread", ConversationController, :mark_read)
           post("/observe", ConversationController, :observe)
 

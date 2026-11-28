@@ -4,8 +4,8 @@
 import type { ReplyBarProps } from "@talkjs/react-components";
 import { Reply, X } from "lucide-react";
 
+import { useReplyingTo } from "../chat/replying";
 import { ReplyPreview } from "./reply-preview";
-import { useReplyingTo } from "./replying";
 
 export function ReplyBar({ common, referencedMessage }: ReplyBarProps) {
 	const { chatbox, t } = common;

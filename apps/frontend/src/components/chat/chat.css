@@ -1,0 +1,44 @@
+@import "@sableclient/twemoji-font";
+@reference "../../app/index.css";
+
+/* https://github.com/nolanlawson/emoji-picker-element#css-variables */
+emoji-picker[data-chat-picker] {
+	--emoji-font-family: Twemoji;
+	--emoji-size: 1.625rem;
+	--emoji-padding: 0.375rem;
+	--category-emoji-size: 1.25rem;
+	--indicator-color: var(--theme-2);
+	--indicator-height: 3px;
+	--border-size: 0;
+	--outline-color: var(--theme-2);
+	--input-background: --theme(--color-white-40);
+	--background: --theme(--color-white-20);
+	--border-color: --theme(--color-white-40);
+	--button-hover-background: --theme(--color-white-30);
+	--button-active-background: --theme(--color-white-40);
+	--input-font-color: --theme(--color-black-80);
+	--input-placeholder-color: --theme(--color-black-30);
+	--category-font-color: --theme(--color-black-80);
+
+	@apply size-full;
+
+	@variant dark {
+		--input-background: --theme(--color-black-60);
+		--background: --theme(--color-black-70);
+		--border-color: --theme(--color-black-60);
+		--button-hover-background: --theme(--color-black-60);
+		--button-active-background: --theme(--color-black-50);
+		--input-font-color: --theme(--color-white-20);
+		--input-placeholder-color: --theme(--color-white-50);
+		--category-font-color: --theme(--color-white-20);
+	}
+}
+
+emoji-picker[data-chat-picker="reaction"] {
+	--num-columns: 8;
+}
+
+[data-chat] {
+	font-family: "Nunito Variable", Twemoji, sans-serif;
+	line-height: var(--chat-line-height);
+}

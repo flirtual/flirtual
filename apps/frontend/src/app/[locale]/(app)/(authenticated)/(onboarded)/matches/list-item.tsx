@@ -6,13 +6,13 @@ import { twMerge } from "tailwind-merge";
 import type { Conversation } from "~/api/conversations";
 import { isKlipyMedia } from "~/api/embed";
 import { Badge } from "~/components/badge";
+import { customEmojis } from "~/components/chat/custom-emojis";
 import { HeartIcon } from "~/components/icons/gradient/heart";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
 import { Image } from "~/components/image";
 import { Link } from "~/components/link";
 import { TimeRelative } from "~/components/time-relative";
 import { UserAvatar } from "~/components/user-avatar";
-import { customEmojis } from "~/hooks/use-talkjs";
 import { useRelationship, useUser } from "~/hooks/use-user";
 import { urls } from "~/urls";
 
@@ -108,7 +108,7 @@ export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
 					</div>
 					<div className="flex items-baseline justify-between gap-4">
 						<span data-mask className="w-full truncate text-black-50 dark:text-white-40">
-							{lastMessage && !(lastMessage.system && lastMessage.content === "It's a match!")
+							{lastMessage && lastMessage.kind !== "match"
 								? (
 										<>
 											{replaceEmojis((lastMessage?.senderId !== userId && !lastMessage.system)

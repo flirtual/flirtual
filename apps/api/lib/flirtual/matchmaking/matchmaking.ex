@@ -723,6 +723,12 @@ defmodule Flirtual.Matchmaking do
   end
 
   def create_match_conversation(user_a, user_b, kind) do
+    if Flirtual.Chat.enabled?(),
+      do: Flirtual.Chat.open_conversation([user_a.id, user_b.id], kind),
+      else: create_talkjs_conversation(user_a, user_b, kind)
+  end
+
+  defp create_talkjs_conversation(user_a, user_b, kind) do
     conversation_id = Talkjs.new_conversation_id(user_a, user_b)
 
     with {:ok, conversation} <-
@@ -736,7 +742,7 @@ defmodule Flirtual.Matchmaking do
          {:ok, _} <-
            Talkjs.create_messages(conversation_id, [
              %{
-               text: "It's a match!",
+               text: Flirtual.Chat.match_message(),
                type: "SystemMessage"
              }
            ]) do

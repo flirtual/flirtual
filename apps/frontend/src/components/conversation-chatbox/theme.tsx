@@ -4,16 +4,16 @@ import type { FC } from "react";
 
 import { isKlipyMedia } from "~/api/embed";
 import type { User } from "~/api/user";
+import { customEmojiNames } from "~/components/chat/custom-emojis";
 import { UserImage } from "~/components/user-avatar";
-import { customEmojiNames } from "~/hooks/use-talkjs";
 
-import { jumboEmojiSegments, splitEmoji } from "./custom-emoji";
-import type { EmojiSegment } from "./custom-emoji";
-import { CustomEmoji, Twemoji } from "./emoji";
-import { JumpToLatest } from "./jump-to-latest";
-import { LinkEmbeds } from "./link-embed";
-import { messageLinks, soleLink } from "./links";
-import type { Match } from "./match-card";
+import { jumboEmojiSegments, splitEmoji } from "../chat/custom-emoji";
+import type { EmojiSegment } from "../chat/custom-emoji";
+import { CustomEmoji, Twemoji } from "../chat/emoji";
+import { JumpToLatest } from "../chat/jump-to-latest";
+import { LinkEmbeds } from "../chat/link-embed";
+import { messageLinks, soleLink } from "../chat/links";
+import type { Match } from "../chat/match-card";
 import { isMatchMessage } from "./match-message";
 import { Message } from "./message";
 import { MessageDivider } from "./message-divider";
@@ -36,7 +36,7 @@ const Avatar: FC<AvatarProps> = ({ photoUrl }) => (
 const textBlock = "contents [&_.t-emoji]:inline-block [&_.t-emoji]:size-[1.15em] [&_.t-emoji]:align-middle [&_.t-text]:inline [&_.t-text]:whitespace-pre-wrap [&_li]:mb-1 [&_li]:ml-4 [&_li:last-child]:mb-0 [&_ul]:m-0 [&_ul]:pl-0";
 
 // Custom emoji only exist in the Classic SDKs: https://talkjs.com/docs/Features/Messages/Emojis/
-const Segment: FC<{ segment: EmojiSegment; message: TextBlockProps["message"] }> = ({ segment, message }) => {
+const Segment: FC<{ segment: EmojiSegment<TextBlockProps["block"]["children"][number]>; message: TextBlockProps["message"] }> = ({ segment, message }) => {
 	switch (segment.type) {
 		case "emoji":
 			return <CustomEmoji name={segment.name} />;
@@ -79,6 +79,6 @@ const TextBlock: FC<TextBlockProps> = ({ block, message, common }) => {
 };
 
 // Replaces the typing indicator.
-const AfterMessages = JumpToLatest;
+const AfterMessages = () => <JumpToLatest />;
 
 export const theme: Partial<Theme> = { AfterMessages, Avatar, Message, MessageDivider, MessageField, ReferencedMessage, ReplyBar, TextBlock };

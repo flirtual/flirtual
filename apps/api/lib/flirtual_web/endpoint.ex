@@ -5,6 +5,11 @@ defmodule FlirtualWeb.Endpoint do
     websocket: [connect_info: [session: {FlirtualWeb.Session, :options, []}]]
   )
 
+  socket("/chat", FlirtualWeb.ChatSocket,
+    websocket: [check_origin: {FlirtualWeb.ChatSocket, :allowed_origin?, []}],
+    longpoll: false
+  )
+
   use Sentry.PlugCapture
 
   if Code.ensure_loaded?(Tidewave) do

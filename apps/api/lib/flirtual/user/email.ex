@@ -223,6 +223,50 @@ defmodule Flirtual.User.Email do
     end)
   end
 
+  def deliver(%User{} = user, :new_message, options) do
+    language = user.preferences.language || "en"
+
+    Gettext.with_locale(language, fn ->
+      conversation_id = Keyword.fetch!(options, :conversation_id)
+      sender = Keyword.fetch!(options, :sender)
+      sender_thumbnail = User.avatar_url(sender, "icon")
+      sender_name = User.display_name(sender)
+      sender_name_html = sender_name |> Plug.HTML.html_escape()
+      name_html = User.display_name(user) |> Plug.HTML.html_escape()
+
+      action_url =
+        Application.fetch_env!(:flirtual, :frontend_origin)
+        |> URI.merge("/matches/" <> conversation_id)
+        |> URI.to_string()
+
+      %{
+        "user_id" => user.id,
+        "type" => "marketing",
+        "kind" => "new_message",
+        "subject" =>
+          dgettext("notifications", "new_message.subject", name: sender_name, app: Brand.name()),
+        "action_url" => action_url,
+        "body_text" => """
+        #{dgettext("notifications", "new_message.body", name: User.display_name(user), sender: sender_name, app: Brand.name())}
+
+        #{action_url}
+        """,
+        "body_html" => """
+        <p>#{dgettext("notifications", "new_message.body", name: name_html, sender: sender_name_html, app: Brand.name()) |> String.replace("\n", "<br />")}</p>
+
+        <p>
+          <a href="#{action_url}" class="btn" style="display: inline-block; padding: 12px 16px; font-size: 18px">
+            <img src="#{sender_thumbnail}" style="margin-right: 10px; width: 38px; height: 38px; border-radius: 50%; vertical-align: middle" />
+            <span style="vertical-align: middle">#{dgettext("notifications", "new_message.action")}</span>
+          </a>
+        </p>
+        """
+      }
+      |> Flirtual.ObanWorkers.Email.new()
+      |> Oban.insert()
+    end)
+  end
+
   def deliver(%User{} = user, :like_digest, options) do
     language = User.locale(user)
 

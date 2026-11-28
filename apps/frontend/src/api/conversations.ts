@@ -9,6 +9,7 @@ export type Message = {
 	content: string;
 	viewed: boolean;
 	system: boolean;
+	kind?: "match";
 	senderId: string;
 } & CreatedAtModel;
 
@@ -18,6 +19,7 @@ export type Conversation = {
 	lastMessage?: Message;
 	isUnread: boolean;
 	userId: string;
+	participants?: Array<string>;
 } & CreatedAtModel;
 
 export type ConversationList = CursorPaginate<Conversation>;
@@ -38,6 +40,9 @@ export const Conversation = {
 			.options(options)
 			.get()
 			.json<ConversationList>();
+	},
+	token(options: WretchOptions = {}) {
+		return this.api.url("/token").options(options).get().json<{ token: string; expiresIn: number }>();
 	},
 	markRead() {
 		return this.api.url("/unread").delete().res();

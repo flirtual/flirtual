@@ -1,4 +1,4 @@
-import { customEmojis } from "~/hooks/use-talkjs";
+import { customEmojis } from "~/components/chat/custom-emojis";
 
 // Subset of TalkJS's ProseMirror editor.
 interface Node {

@@ -1,7 +1,7 @@
 import { ChatBubbleLeftRightIcon } from "@heroicons/react/24/solid";
 import type { FC, MouseEventHandler } from "react";
 
-import { useUnreadConversations } from "~/hooks/use-talkjs";
+import { useUnreadConversations } from "~/hooks/use-unread-conversations";
 import { useLocale } from "~/i18n";
 import { intlLocale } from "~/i18n/languages";
 import { urls } from "~/urls";

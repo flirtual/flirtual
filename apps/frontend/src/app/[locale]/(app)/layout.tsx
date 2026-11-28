@@ -2,15 +2,19 @@ import { Suspense } from "react";
 import { Outlet } from "react-router";
 
 import { Footer } from "~/components/layout/footer";
+import { talkjsAppId } from "~/const";
+import { ChatProvider } from "~/hooks/use-chat";
 import { TalkjsProvider } from "~/hooks/use-talkjs";
 import { RedirectBoundary } from "~/redirect";
 
 import { AppBanner } from "./banner";
 import { Navigation } from "./navigation";
 
+const ConversationsProvider = talkjsAppId ? TalkjsProvider : ChatProvider;
+
 export default function AppLayout() {
 	return (
-		<TalkjsProvider>
+		<ConversationsProvider>
 			<>
 				<Suspense>
 					<AppBanner />
@@ -26,6 +30,6 @@ export default function AppLayout() {
 				</div>
 				<Footer desktopOnly />
 			</>
-		</TalkjsProvider>
+		</ConversationsProvider>
 	);
 }

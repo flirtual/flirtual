@@ -1,3 +1,7 @@
+import { scrollBehavior } from "~/utilities";
+
+import { messageList } from "./selectors";
+
 const momentumIdle = 150;
 
 interface Position {
@@ -25,7 +29,7 @@ export function anchorMessageLists(container: HTMLElement): () => void {
 			if (!position) continue;
 
 			if (list.clientHeight !== position.height && !scrolling()) {
-				if (position.following) list.scrollTo({ top: 0, behavior: "smooth" });
+				if (position.following) list.scrollTo({ top: 0, behavior: scrollBehavior() });
 				else list.scrollTop = position.scrollTop;
 			}
 			position.height = list.clientHeight;
@@ -54,7 +58,7 @@ export function anchorMessageLists(container: HTMLElement): () => void {
 			resize.unobserve(list);
 		}
 
-		for (const list of container.querySelectorAll<HTMLElement>(".t-message-list")) {
+		for (const list of container.querySelectorAll<HTMLElement>(messageList)) {
 			const newest = list.querySelector(".chat-message");
 			const position = positions.get(list);
 			if (!position) {
@@ -70,18 +74,21 @@ export function anchorMessageLists(container: HTMLElement): () => void {
 
 			position.scrollTop = 0;
 			position.following = Math.abs(list.scrollTop) >= 1;
-			list.scrollTo({ top: 0, behavior: "smooth" });
+			list.scrollTo({ top: 0, behavior: scrollBehavior() });
 		}
 	};
 
 	const added = new MutationObserver(follow);
 	added.observe(container, { childList: true, subtree: true });
-	const onTouchStart = () => {
-		dragging = false;
+	const stopFollowing = () => {
 		for (const position of positions.values()) position.following = false;
 	};
+	const onTouchStart = () => {
+		dragging = false;
+		stopFollowing();
+	};
 	const onTouchMove = ({ target }: TouchEvent) => {
-		if (target instanceof Element && target.closest(".t-message-list")) dragging = true;
+		if (target instanceof Element && target.closest(messageList)) dragging = true;
 	};
 	const onTouchEnd = () => {
 		if (dragging) momentumUntil = performance.now() + momentumIdle;
@@ -94,6 +101,7 @@ export function anchorMessageLists(container: HTMLElement): () => void {
 	container.addEventListener("touchmove", onTouchMove, options);
 	container.addEventListener("touchend", onTouchEnd, options);
 	container.addEventListener("touchcancel", onTouchEnd, options);
+	container.addEventListener("wheel", stopFollowing, options);
 	follow();
 
 	return () => {
@@ -104,6 +112,7 @@ export function anchorMessageLists(container: HTMLElement): () => void {
 		container.removeEventListener("touchmove", onTouchMove, options);
 		container.removeEventListener("touchend", onTouchEnd, options);
 		container.removeEventListener("touchcancel", onTouchEnd, options);
+		container.removeEventListener("wheel", stopFollowing, options);
 	};
 }
 

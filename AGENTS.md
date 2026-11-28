@@ -28,8 +28,9 @@ domain rules adapted from Iframely, then oEmbed, then `twitter:player`/`og:video
 X and Bluesky posts skip all of that: `src/posts.ts` reads them from X's syndication endpoint and
 Bluesky's public API, and the app draws them itself, without either site's scripts.
 
-- **Allowlist**: `src/allowed-hosts.json` mirrors the TalkJS role's "Allowed hostnames" under link
-  suppression, and `src/allowed-matches.json` its "Suppression exceptions"; keep them in step. Hosts
+- **Allowlist**: `apps/api/priv/chat/allowed-hosts.json` mirrors the TalkJS role's "Allowed hostnames"
+  under link suppression, and `allowed-matches.json` beside it its "Suppression exceptions"; keep them
+  in step. The embed worker imports both, and the built-in chat masks every other link with them. Hosts
   are checked on the link and again where its redirects end; an exception covers its own redirects.
 - **Isolation**: players run in `/frame` on the embed origin, whose own CSP holds `frame-src` and
   `script-src` to the allowlist and `frame-ancestors` to `ALLOWED_ORIGINS`. The app's CSP only ever
@@ -40,6 +41,40 @@ Bluesky's public API, and the app draws them itself, without either site's scrip
 - **Klipy** (the GIF picker, `VITE_KLIPY_APP_KEY`): its terms require API calls and media loads
   from the person's own client, unproxied and uncached, with results in the order returned. The
   worker never fetches Klipy URLs; the app renders them itself.
+
+## Chat
+
+With `TALKJS_APP_ID` (API) and `VITE_TALKJS_APP_ID` (frontend) unset, the built-in chat replaces
+TalkJS, on our own tables and Phoenix Channels. `Flirtual.Chat.enabled?/0` is the switch on the
+API; the frontend picks `components/chat` over `components/conversation-chatbox`, which share their
+TalkJS-free helpers.
+
+- **Storage**: `conversations` (id is `Talkjs.new_conversation_id/2`, so links and a later history
+  import line up), `conversation_participants` (unread count, read position, `left_at`), `messages`,
+  `message_reactions`. A conversation only ever closes for both people (`Chat.disband/1`). A match
+  lists once it has a conversation row: new matches and the faker create one, nothing backfills
+  older ones.
+- **Ordering**: every change takes the next `conversations.seq` under its row lock: a message's `seq`
+  orders it, its `version` is the seq of its last change, and a deleted message stays as an empty
+  tombstone so clients can catch up by version.
+- **Realtime**: socket `/chat` (`FlirtualWeb.ChatSocket`), signed in with a token from
+  `GET /v1/conversations/token`. `user:<id>` carries unread state; `conversation:<id>` is joined only
+  while that chat is on screen. Who is viewing is tracked on a `viewing:<id>` topic no client can
+  join, so a push is skipped for someone already reading without their match seeing it.
+- **Access**: `Flirtual.Chat` is the only write path and `Chat.authorize/3` the only access rule, for
+  channels and REST alike (`Conversation.Policy` delegates to it).
+- **Links**: text is stored as sent and masked when rendered (`Flirtual.Chat.Links`); moderators read
+  it unmasked. The API alone decides what a link is: each message carries the UTF-16 positions of its
+  allowed links in the masked text, and the app links only those. `Flirtual.Chat.Tlds` fetches the
+  IANA TLD list at boot and weekly to recognise bare domains; until it loads, any alphabetic ending
+  counts, so the API over-masks.
+- **Notifications**: `ObanWorkers.ChatPush` and `ChatEmail` are enqueued with the message. APNs
+  payloads are mutable and handled by the `Notifications` extension (GIF attachment, sender avatar,
+  custom emoji from `static/emoji`); FCM payloads are data-only and drawn by `NotificationService.java`.
+  iOS can't attach the animated WebP a GIF message holds, so the client sends Klipy's small GIF
+  rendition with the message (`gif.preview`) and it rides in the push job, never stored. A reply from
+  an iOS notification is posted natively with the session cookies `WatchSession` caches in the Keychain,
+  since the web view's cookie store doesn't answer in the background.
 
 ## Data flow
 

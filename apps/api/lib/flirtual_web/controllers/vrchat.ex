@@ -123,10 +123,17 @@ defmodule FlirtualWeb.VRChatController do
             }
           ]
 
-          # Send system message via TalkJS API
           # Note: create_messages only returns {:ok, _} on success, crashes on error
           try do
-            case Flirtual.Talkjs.create_messages(conversation_id, messages) do
+            result =
+              if Flirtual.Chat.enabled?(),
+                do:
+                  Flirtual.Chat.send_message(user, conversation_id, %{
+                    "text" => "https://vrch.at/#{short_name}"
+                  }),
+                else: Flirtual.Talkjs.create_messages(conversation_id, messages)
+
+            case result do
               {:ok, _} ->
                 # Response should include shortName field
                 json(conn, %{

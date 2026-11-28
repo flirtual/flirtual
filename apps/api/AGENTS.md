@@ -11,9 +11,9 @@ flow, and environment setup.
 - **Jobs**: Oban
 - **i18n**: Gettext for emails and push notifications (`priv/gettext`). The data's text is ICU MessageFormat, like the frontend's: `Flirtual.ICU` formats it with `ex_cldr_messages` and binds `brand_name` in every message, and `Flirtual.Cldr` installs only enabled locales.
 - **Auth**: token in the Plug session cookie; email/username+password, passkey (WebAuthn), OAuth; email verification for new login locations; JWT for confirmation links and Canny SSO.
-- **Push**: APNS + FCM via Pigeon; tokens synced to TalkJS (which sends message notifications).
+- **Push**: APNS + FCM via Pigeon; tokens synced to TalkJS, which sends message notifications unless TalkJS is unset and `Flirtual.Chat` sends them (see the root AGENTS.md).
 - **Integrations**: Chargebee (web pay), RevenueCat (mobile pay; Stripe deprecated), TalkJS (messaging), Listmonk (newsletters), VRChat (worlds/invites), OpenAI (bio moderation, translating mod messages).
-- **Key contexts**: `User.*`/`Users`/`Profiles` (profiles, auth, notifications); `Matchmaking`/`Search` (queue, Manticore via Ecto/MyXQL); `Talkjs`/`Conversation` (messaging); `Flag`/`Hash`/`Disposable`/`IpAddress`/`OpenAI`/`Turnstile` (moderation/security); `Subscription`/`Plan`/`Chargebee`/`RevenueCat` (payments); `Connection` (OAuth).
+- **Key contexts**: `User.*`/`Users`/`Profiles` (profiles, auth, notifications); `Matchmaking`/`Search` (queue, Manticore via Ecto/MyXQL); `Talkjs`/`Conversation`/`Chat` (messaging); `Flag`/`Hash`/`Disposable`/`IpAddress`/`OpenAI`/`Turnstile` (moderation/security); `Subscription`/`Plan`/`Chargebee`/`RevenueCat` (payments); `Connection` (OAuth).
 
 ## Commands
 
@@ -111,6 +111,7 @@ Key tables:
 - **prospects**: precomputed queue (position, completed_at, fallback).
 - **queues**: per-user-per-mode state (recompute timestamps, fallback notice, undo latch).
 - **blocks**: user blocks.
+- **conversations** / **conversation_participants** / **messages** / **message_reactions**: the built-in chat (see the root AGENTS.md).
 - **connections**: OAuth connection metadata (Discord, VRChat, Google, Apple, ...).
 - **sessions**: active sessions + tokens. **user_passkeys**: WebAuthn credentials. **logins**: attempt history. **verifications**: email codes for new login locations.
 - **reports**: reasons, messages, evidence images. **flags**: keyword/domain patterns. **hashes**: historical hashes for duplicate detection.

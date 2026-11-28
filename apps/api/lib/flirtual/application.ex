@@ -89,6 +89,7 @@ defmodule Flirtual.Application do
          name: Flirtual.FinchInternal,
          pools: %{default: [conn_opts: [transport_opts: [tcp_module: :inet6_tcp]]]}}},
        {2, {Phoenix.PubSub, name: Flirtual.PubSub}},
+       {2, FlirtualWeb.Presence},
        {2, Flirtual.Disposable},
        {2, Flirtual.Popularity},
        {3, FlirtualWeb.Endpoint},

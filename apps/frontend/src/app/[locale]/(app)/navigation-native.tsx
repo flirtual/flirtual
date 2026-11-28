@@ -11,7 +11,7 @@ import { useBreakpoint } from "~/hooks/use-breakpoint";
 import { useHasConversations } from "~/hooks/use-conversations";
 import { goUp, knownInTab, previousInTab, useUpTarget } from "~/hooks/use-history-tabs";
 import { restoreScroll, useTabMemory } from "~/hooks/use-tab-memory";
-import { useUnreadConversations } from "~/hooks/use-talkjs";
+import { useUnreadConversations } from "~/hooks/use-unread-conversations";
 import { replaceLanguage, useLocale, useMatch, useNavigate } from "~/i18n";
 import { intlLocale } from "~/i18n/languages";
 import { NativeNavigationPlugin } from "~/native-navigation";

@@ -1,7 +1,7 @@
-import type { TextNode } from "@talkjs/core";
 import { describe, expect, it } from "vitest";
 
 import { customEmojiPickerEntries, isJumboEmoji, jumboEmojiSegments, pickedCustomEmoji, splitEmoji } from "./custom-emoji";
+import type { MarkupLike } from "./markup";
 
 const names = new Set([":bonk:", ":pat:"]);
 
@@ -21,7 +21,7 @@ describe("splitEmoji", () => {
 	});
 
 	it("turns known customEmoji nodes into emoji and keeps unknown ones", () => {
-		const unknown: TextNode = { type: "customEmoji", text: ":nope:" };
+		const unknown: MarkupLike = { type: "customEmoji", text: ":nope:" };
 
 		expect(splitEmoji([{ type: "customEmoji", text: ":pat:" }, unknown], names)).toEqual([
 			{ type: "emoji", name: ":pat:" },
@@ -30,7 +30,7 @@ describe("splitEmoji", () => {
 	});
 
 	it("keeps other nodes in the surrounding text run", () => {
-		const bold: TextNode = { type: "bold", children: ["loud :bonk:"] };
+		const bold: MarkupLike = { type: "bold", children: ["loud :bonk:"] };
 
 		expect(splitEmoji(["a ", bold, " b:pat:"], names)).toEqual([
 			{ type: "text", children: ["a ", bold, " b"] },
@@ -117,7 +117,7 @@ describe("pickedCustomEmoji", () => {
 });
 
 describe("isJumboEmoji", () => {
-	const jumbo = (...children: Array<TextNode>) => isJumboEmoji(splitEmoji(children, names));
+	const jumbo = (...children: Array<MarkupLike>) => isJumboEmoji(splitEmoji(children, names));
 
 	it("enlarges one to three emoji, standard or custom, with only spaces between", () => {
 		expect(jumbo("😀")).toBe(true);

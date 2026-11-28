@@ -105,6 +105,7 @@ const contentSecurityPolicy: Record<string, Sources> = {
 		"'self'",
 		"blob:",
 		new URL(apiOrigin).host,
+		`wss://${new URL(apiOrigin).host}`,
 		...bucketOrigins.map((origin) => new URL(origin).host),
 		// https://talkjs.com/docs/Features/Security_Settings/Content_Security_Policy/
 		"*.talkjs.com",

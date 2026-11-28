@@ -4,12 +4,12 @@ import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 
 import { isKlipyMedia } from "~/api/embed";
+import { customEmojiNames } from "~/components/chat/custom-emojis";
 import { UserAvatar, UserImage } from "~/components/user-avatar";
-import { customEmojiNames } from "~/hooks/use-talkjs";
 
-import { splitEmoji } from "./custom-emoji";
-import { CustomEmoji, Twemoji } from "./emoji";
-import { soleLink } from "./links";
+import { splitEmoji } from "../chat/custom-emoji";
+import { CustomEmoji, Twemoji } from "../chat/emoji";
+import { soleLink } from "../chat/links";
 import type { ThemeCustom } from "./theme";
 
 const emoji = "size-[1.2em]";

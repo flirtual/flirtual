@@ -78,6 +78,8 @@ const EmbedFrame: FC<{ player: NonNullable<Embed["player"]>; title: string }> = 
 	const colorScheme = vision ? "dark" : theme;
 	const [height, setHeight] = useState(player.height);
 
+	useEffect(() => reference.current?.focus(), []);
+
 	useEffect(() => {
 		if (!player.resizes) return;
 
@@ -276,7 +278,7 @@ const EmbedPost: FC<{ embed: Embed; post: NonNullable<Embed["post"]> }> = ({ emb
 						{embed.siteName === "X" ? <span aria-label="X" role="img">𝕏</span> : embed.siteName}
 					</span>
 				</span>
-				{text && <span className="mt-2 line-clamp-12 block whitespace-pre-wrap">{text}</span>}
+				{text && <span className="mt-2 line-clamp-12 whitespace-pre-wrap">{text}</span>}
 			</a>
 			{media.length > 0 && (
 				<span className={twMerge("mx-3 grid gap-0.5 overflow-hidden rounded-lg", media.length > 1 && "grid-cols-2")}>

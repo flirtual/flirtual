@@ -5,12 +5,24 @@ defmodule FlirtualWeb.ConversationController do
   import FlirtualWeb.Utilities
   import Phoenix.Controller
 
-  alias Flirtual.{Conversation, Policy, Report, Talkjs}
+  alias Flirtual.{Chat, Conversation, Policy, Report, Talkjs}
 
   action_fallback(FlirtualWeb.FallbackController)
 
+  def token(conn, _) do
+    if Chat.enabled?() do
+      json(conn, %{
+        token: FlirtualWeb.ChatSocket.token(conn.assigns[:session].user),
+        expires_in: FlirtualWeb.ChatSocket.token_max_age()
+      })
+    else
+      {:error, {:not_found, :chat_disabled}}
+    end
+  end
+
   def get(conn, %{"conversation_id" => conversation_id}) do
-    with {:ok, conversation} <- Conversation.get(conversation_id),
+    with {:ok, conversation} <-
+           Conversation.get(conversation_id, conn.assigns[:session].user_id),
          :ok <- Policy.can(conn, :read, conversation),
          conversation <- Policy.transform(conn, conversation) do
       conn
@@ -75,18 +87,11 @@ defmodule FlirtualWeb.ConversationController do
     end
   end
 
-  def send_message(conn, %{"conversation_id" => conversation_id, "text" => text}) do
+  def send_message(conn, %{"conversation_id" => conversation_id, "text" => text} = params) do
     with user <- conn.assigns[:session].user,
          {:ok, conversation} <- Conversation.get(conversation_id),
          :ok <- Policy.can(conn, :send_message, conversation),
-         {:ok, result} <-
-           Talkjs.create_messages(conversation_id, [
-             %{
-               "text" => text,
-               "sender" => ShortUUID.decode!(user.id),
-               "type" => "UserMessage"
-             }
-           ]) do
+         {:ok, result} <- create_message(user, conversation_id, text, params) do
       conn |> json(result)
     else
       {:error, :not_found} ->
@@ -95,6 +100,12 @@ defmodule FlirtualWeb.ConversationController do
       {:error, {:unauthorized, _}} ->
         {:error, {:not_found, :conversation_not_found}}
 
+      {:error, :rate_limited} ->
+        {:error, {:too_many_requests, :rate_limited}}
+
+      {:error, reason} when is_atom(reason) ->
+        {:error, {:bad_request, reason}}
+
       reason ->
         reason
     end
@@ -102,10 +113,43 @@ defmodule FlirtualWeb.ConversationController do
 
   def send_message(_conn, _params), do: {:error, {:bad_request, :missing_text}}
 
+  defp create_message(user, conversation_id, text, params) do
+    if Chat.enabled?() do
+      with :ok <- Chat.rate_limit(:send, user.id),
+           {:ok, message} <-
+             Chat.send_message(user, conversation_id, %{
+               "text" => text,
+               "client_id" => params["client_id"]
+             }) do
+        {:ok, Chat.render(message)}
+      end
+    else
+      Talkjs.create_messages(conversation_id, [
+        %{
+          "text" => text,
+          "sender" => ShortUUID.decode!(user.id),
+          "type" => "UserMessage"
+        }
+      ])
+    end
+  end
+
+  defp mark_all_read(user_id) do
+    if Chat.enabled?(),
+      do: Chat.mark_all_read(user_id),
+      else: Talkjs.mark_conversations_read(user_id)
+  end
+
+  defp mark_one_read(conversation_id, user_id) do
+    if Chat.enabled?(),
+      do: Chat.mark_read(user_id, conversation_id),
+      else: Talkjs.mark_conversation_read(conversation_id, user_id)
+  end
+
   def mark_read(conn, _) do
     user = conn.assigns[:session].user
 
-    with {:ok, _} <- Talkjs.mark_conversations_read(user.id) do
+    with {:ok, _} <- mark_all_read(user.id) do
       conn |> json(%{success: true})
     end
   end
@@ -114,7 +158,7 @@ defmodule FlirtualWeb.ConversationController do
     with user <- conn.assigns[:session].user,
          {:ok, conversation} <- Conversation.get(conversation_id),
          :ok <- Policy.can(conn, :read, conversation),
-         {:ok, _} <- Talkjs.mark_conversation_read(conversation_id, user.id) do
+         {:ok, _} <- mark_one_read(conversation_id, user.id) do
       conn |> json(%{success: true})
     else
       {:error, :not_found} ->
@@ -133,19 +177,44 @@ defmodule FlirtualWeb.ConversationController do
 
   def leave(conn, %{"conversation_id" => conversation_id}) do
     with user <- conn.assigns[:session].user,
-         {:ok, _conversation} <- Conversation.get(conversation_id),
-         {:ok, _} <- Talkjs.delete_participant(conversation_id, user.id) do
+         {:ok, conversation} <- Conversation.get(conversation_id),
+         true <- user.id in conversation.participants,
+         {:ok, _} <-
+           if(Chat.enabled?(),
+             do: Chat.disband(conversation_id),
+             else: Talkjs.delete_participant(conversation_id, user.id)
+           ) do
       conn
       |> json(%{success: true})
     else
+      false ->
+        {:error, {:not_found, :conversation_not_found}}
+
+      {:error, :not_found} ->
+        {:error, {:not_found, :conversation_not_found}}
+
       reason ->
         reason
     end
   end
 
   def observe(conn, %{"user_id" => user_id, "target_id" => target_id}) do
-    with user <- conn.assigns[:session].user,
-         conversation_id <- Talkjs.new_conversation_id(user_id, target_id),
+    user = conn.assigns[:session].user
+
+    cond do
+      not Chat.enabled?() ->
+        observe_talkjs(conn, user, user_id, target_id)
+
+      :moderator in user.tags ->
+        json(conn, %{success: true})
+
+      true ->
+        {:error, {:forbidden, :missing_permission, %{user_id: user_id, target_id: target_id}}}
+    end
+  end
+
+  defp observe_talkjs(conn, user, user_id, target_id) do
+    with conversation_id <- Talkjs.new_conversation_id(user_id, target_id),
          true <- :admin in user.tags,
          %Report{reviewed_at: nil} <- Report.get(user_id, target_id),
          {:ok, _} <-

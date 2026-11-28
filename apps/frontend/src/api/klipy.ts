@@ -94,6 +94,11 @@ export async function shareKlipyGif(slug: string, query: string, { customerId }:
 	});
 }
 
+export function klipyNotificationFile(gif: KlipyGif): KlipyFile | undefined {
+	const { sm, md } = gif.file ?? {};
+	return sm?.gif ?? md?.gif;
+}
+
 // What goes in the message: animated WebP at Klipy's medium size, falling back through the rest.
 export function klipyMessageFile(gif: KlipyGif): KlipyFile | undefined {
 	const { md, sm, hd } = gif.file ?? {};

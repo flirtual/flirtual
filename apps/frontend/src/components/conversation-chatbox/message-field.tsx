@@ -16,8 +16,8 @@ import { klipyAppKey } from "~/const";
 import { useBackButton } from "~/hooks/use-back-button";
 import { useToast } from "~/hooks/use-toast";
 
-import { interestQueries } from "./gif-interests";
-import { GifPicker } from "./gif-picker";
+import { interestQueries } from "../chat/gif-interests";
+import { GifPicker } from "../chat/gif-picker";
 import type { ThemeCustom } from "./theme";
 
 // Shadow above only; clipping 1px inside keeps a fractional pixel from showing below.

@@ -73,20 +73,26 @@ input.search:focus {
 	@apply rounded-b-none;
 }
 
-[data-has-mouse] .nav-button:hover {
-	background: var(--button-hover-background);
+@media (hover: hover) and (pointer: fine) {
+	.nav-button:hover {
+		background: var(--button-hover-background);
+	}
+
+	.nav-emoji:hover {
+		background: none;
+	}
 }
 
 .nav-button:active {
 	background: var(--button-active-background);
 }
 
-[data-has-mouse] .nav-emoji:hover,
 .nav-emoji:active {
 	background: none;
 }
 
 .favorites {
+	border-top: 1px solid var(--border-color);
 	padding-bottom: var(--favorites-padding-bottom, var(--emoji-padding));
 }
 
@@ -109,4 +115,8 @@ input.search:focus {
 	&.onscreen .custom-emoji::after {
 		@apply size-[calc(100%-var(--emoji-padding)*2)];
 	}
+}
+
+:host([data-chat-picker]) .emoji-menu:not(.favorites, :has(> :not(.custom-emoji))) {
+	padding: var(--emoji-padding);
 }
