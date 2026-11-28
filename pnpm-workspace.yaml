@@ -93,6 +93,8 @@ minimumReleaseAgeExclude:
   - svgo@4.1.0
   # Renovate security update: sharp@0.35.4
   - sharp@0.35.4
+  # Rolldown 1.3 makes asset reference ids deterministic, so dist is identical between builds.
+  - vite@8.4.0
   # cf is in prerelease and ships fixes daily; a 3-day delay pins it to stale ones.
   # Its exact-pinned dependencies release with it, including the runtime
   # Wrangler shares.
