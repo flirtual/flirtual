@@ -64,6 +64,8 @@ defmodule Flirtual.Conversation do
     @derive [{Jason.Encoder, only: [:page, :limit]}]
     defstruct before: nil, last_before: nil, page: 0, limit: 10
 
+    @max_limit 100
+
     defguardp is_position(value)
               when is_nil(value) or is_integer(value) or
                      (is_tuple(value) and tuple_size(value) == 2 and is_integer(elem(value, 0)) and
@@ -116,7 +118,7 @@ defmodule Flirtual.Conversation do
           before: before,
           last_before: last_before,
           page: page,
-          limit: limit
+          limit: limit |> max(1) |> min(@max_limit)
         }
       else
         _ -> first()
@@ -136,7 +138,8 @@ defmodule Flirtual.Conversation do
             (last_conversation[:last_message] || last_conversation)[:created_at]
             |> DateTime.to_unix(:millisecond),
           last_before: self.before,
-          page: self.page + 1
+          page: self.page + 1,
+          limit: self.limit
         }
       else
         nil
@@ -149,7 +152,8 @@ defmodule Flirtual.Conversation do
       %Cursor{
         before: self.last_before,
         last_before: nil,
-        page: self.page - 1
+        page: self.page - 1,
+        limit: self.limit
       }
     end
   end
@@ -234,7 +238,8 @@ defmodule Flirtual.Conversation do
         %Cursor{
           before: {DateTime.to_unix(last.active_at, :microsecond), last.id},
           last_before: cursor.before,
-          page: cursor.page + 1
+          page: cursor.page + 1,
+          limit: cursor.limit
         }
       end
 

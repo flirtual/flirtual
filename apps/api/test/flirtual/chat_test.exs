@@ -446,6 +446,17 @@ defmodule Flirtual.ChatTest do
     assert Enum.sort(Enum.map(first ++ second, & &1.id)) == Enum.sort([@conversation | ids])
   end
 
+  test "a page size outside 1 to 100 is clamped, and kept on the next page", %{sender: sender} do
+    alias Flirtual.Conversation.Cursor
+
+    assert %Cursor{limit: 1} = Cursor.decode(page_cursor(0))
+    assert %Cursor{limit: 1} = Cursor.decode(page_cursor(-5))
+    assert %Cursor{limit: 100} = Cursor.decode(page_cursor(1_000_000))
+
+    {:ok, {[_], %{next: next}}} = Flirtual.Conversation.list(sender.id, page_cursor(0))
+    assert %Cursor{limit: 1, page: 1} = Cursor.decode(next)
+  end
+
   defp page_cursor(limit) do
     {nil, nil, 0, limit} |> :erlang.term_to_binary() |> Base.url_encode64()
   end
