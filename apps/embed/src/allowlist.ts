@@ -29,10 +29,11 @@ export class Allowlist {
 		this.#matches = matches.map(literal);
 	}
 
-	// The exceptions belong to the default hosts' TalkJS app, so another app's hosts go without them.
-	static fromEnv(value: string | undefined) {
-		const hosts = list(value);
-		return hosts.length > 0 ? new Allowlist(hosts) : new Allowlist(defaultHosts, defaultMatches);
+	// Each replaces its committed list.
+	static fromEnv(hostsValue: string | undefined, matchesValue: string | undefined) {
+		const hosts = list(hostsValue);
+		const matches = matchesValue ? JSON.parse(matchesValue) as Array<string> : defaultMatches;
+		return new Allowlist(hosts.length > 0 ? hosts : defaultHosts, matches);
 	}
 
 	allows(url: URL | string): boolean {

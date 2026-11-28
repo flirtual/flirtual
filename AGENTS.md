@@ -32,6 +32,9 @@ Bluesky's public API, and the app draws them itself, without either site's scrip
   under link suppression, and `allowed-matches.json` beside it its "Suppression exceptions"; keep them
   in step. The embed worker imports both, and the built-in chat masks every other link with them. Hosts
   are checked on the link and again where its redirects end; an exception covers its own redirects.
+  A fork replaces them with `CHAT_ALLOWED_HOSTS` and `CHAT_ALLOWED_MATCHES` on the API and
+  `ALLOWED_HOSTS` and `ALLOWED_MATCHES` on the worker, set by Pulumi's `chatAllowedHosts` and
+  `chatAllowedMatches`.
 - **Isolation**: players run in `/frame` on the embed origin, whose own CSP holds `frame-src` and
   `script-src` to the allowlist and `frame-ancestors` to `ALLOWED_ORIGINS`. The app's CSP only ever
   names the embed origin. The app frames it with `allow-scripts allow-same-origin` and no top

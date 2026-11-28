@@ -29,7 +29,7 @@ function context(request: Request, env: Env): UnfurlContext & { ancestors: Origi
 	const ancestors = new OriginList(list(env.ALLOWED_ORIGINS));
 
 	return {
-		allowlist: Allowlist.fromEnv(env.ALLOWED_HOSTS),
+		allowlist: Allowlist.fromEnv(env.ALLOWED_HOSTS, env.ALLOWED_MATCHES),
 		ancestors,
 		fetcher: (request) => fetch(request),
 		userAgent: env.USER_AGENT,

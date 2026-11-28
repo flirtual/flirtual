@@ -15,24 +15,9 @@ defmodule Flirtual.Chat.Links do
     "(?:https?://|www\\.)#{@url_character}+|(?<![a-z0-9_@.\\-/])(?:[a-z0-9](?:[a-z0-9\\-]*[a-z0-9])?\\.)+(?:#{tlds})(?![a-z0-9_\\-])(?:[/?#]#{@url_character}*)?"
   end
 
-  @hosts @hosts_path
-         |> File.read!()
-         |> Jason.decode!()
-         |> Enum.map(fn host ->
-           host
-           |> String.downcase()
-           |> String.split("*")
-           |> Enum.map_join("[a-z0-9.-]*", &Regex.escape/1)
-           |> then(&"^#{&1}$")
-         end)
+  @hosts @hosts_path |> File.read!() |> Jason.decode!()
 
-  @matches @matches_path
-           |> File.read!()
-           |> Jason.decode!()
-           |> Enum.map(fn literal ->
-             [_, source, flags] = Regex.run(~r/^\/(.*)\/([a-z]*)$/s, literal)
-             {source, flags}
-           end)
+  @matches @matches_path |> File.read!() |> Jason.decode!()
 
   def use_tlds(tlds) when is_list(tlds) do
     pattern =
@@ -52,20 +37,33 @@ defmodule Flirtual.Chat.Links do
     end
   end
 
+  defp configured_hosts, do: Application.get_env(:flirtual, __MODULE__, [])[:hosts]
+  defp configured_matches, do: Application.get_env(:flirtual, __MODULE__, [])[:matches]
+
+  defp host_regex(host) do
+    host
+    |> String.downcase()
+    |> String.split("*")
+    |> Enum.map_join("[a-z0-9.-]*", &Regex.escape/1)
+    |> then(&Regex.compile!("^#{&1}$"))
+  end
+
   defp host_regexes do
     with nil <- :persistent_term.get({__MODULE__, :hosts}, nil) do
-      regexes = Enum.map(@hosts, &Regex.compile!/1)
+      regexes = Enum.map(configured_hosts() || @hosts, &host_regex/1)
       :persistent_term.put({__MODULE__, :hosts}, regexes)
       regexes
     end
   end
 
+  defp match_regex(literal) do
+    [_, source, flags] = Regex.run(~r/^\/(.*)\/([a-z]*)$/s, literal)
+    Regex.compile!(source, String.replace(flags, ~r/[^imsu]/, ""))
+  end
+
   defp match_regexes do
     with nil <- :persistent_term.get({__MODULE__, :matches}, nil) do
-      regexes =
-        Enum.map(@matches, fn {source, flags} ->
-          Regex.compile!(source, String.replace(flags, ~r/[^imsu]/, ""))
-        end)
+      regexes = Enum.map(configured_matches() || @matches, &match_regex/1)
 
       :persistent_term.put({__MODULE__, :matches}, regexes)
       regexes

@@ -18,6 +18,38 @@ defmodule Flirtual.Chat.LinksTest do
     assert Links.mask("https://hello.vrchat.com/") == "https://hello.vrchat.com/"
   end
 
+  describe "with CHAT_ALLOWED_HOSTS" do
+    setup do
+      Application.put_env(:flirtual, Links, hosts: ["*.example.com"])
+      Enum.each([:hosts, :matches], &:persistent_term.erase({Links, &1}))
+
+      on_exit(fn ->
+        Application.delete_env(:flirtual, Links)
+        Enum.each([:hosts, :matches], &:persistent_term.erase({Links, &1}))
+      end)
+    end
+
+    test "allows only those hosts" do
+      assert Links.mask("https://hello.example.com/") == "https://hello.example.com/"
+      assert Links.mask("https://www.youtube.com/watch") == @blocked
+    end
+
+    test "keeps the committed exceptions" do
+      link = "https://forms.gle/SqMKyKBwhTFNNuPw8"
+      assert Links.mask(link) == link
+    end
+
+    test "allows CHAT_ALLOWED_MATCHES links on any host" do
+      Application.put_env(:flirtual, Links,
+        hosts: ["*.example.com"],
+        matches: ["/^https:\\/\\/example\\.org\\/invite$/"]
+      )
+
+      assert Links.mask("https://example.org/invite") == "https://example.org/invite"
+      assert Links.mask("https://example.org/other") == @blocked
+    end
+  end
+
   test "masks a link to any other host" do
     assert Links.mask("see https://evil.example.com/login now") == "see #{@blocked} now"
   end

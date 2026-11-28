@@ -305,6 +305,18 @@ if fcm_project_id do
     auth: Flirtual.Goth
 end
 
+chat_allowed_hosts = Env.get("CHAT_ALLOWED_HOSTS")
+
+if chat_allowed_hosts do
+  config :flirtual, Flirtual.Chat.Links, hosts: String.split(chat_allowed_hosts, ",", trim: true)
+end
+
+chat_allowed_matches = Env.get("CHAT_ALLOWED_MATCHES")
+
+if chat_allowed_matches do
+  config :flirtual, Flirtual.Chat.Links, matches: JSON.decode!(chat_allowed_matches)
+end
+
 talkjs_app_id = Env.get("TALKJS_APP_ID")
 
 if talkjs_app_id do
