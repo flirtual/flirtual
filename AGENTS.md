@@ -58,7 +58,7 @@ TalkJS-free helpers.
   orders it, its `version` is the seq of its last change, and a deleted message stays as an empty
   tombstone so clients can catch up by version.
 - **Realtime**: socket `/chat` (`FlirtualWeb.ChatSocket`), signed in with a token from
-  `GET /v1/conversations/token`. `user:<id>` carries unread state; `conversation:<id>` is joined only
+  `GET /v1/conversations/token`, which is bound to the session and refused once that session is gone. `user:<id>` carries unread state; `conversation:<id>` is joined only
   while that chat is on screen. Who is viewing is tracked on a `viewing:<id>` topic no client can
   join, so a push is skipped for someone already reading without their match seeing it.
 - **Access**: `Flirtual.Chat` is the only write path and `Chat.authorize/3` the only access rule, for

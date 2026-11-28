@@ -9,6 +9,7 @@ defmodule Flirtual.ChatTest do
   alias Flirtual.{Chat, Repo, User, Users}
   alias Flirtual.Chat.{Conversation, Participant}
   alias Flirtual.User.Profile.Block
+  alias Flirtual.User.Session
 
   @conversation "chattest"
 
@@ -367,5 +368,27 @@ defmodule Flirtual.ChatTest do
 
     refute_receive %Phoenix.Socket.Broadcast{event: "closed"}
     assert {:ok, _} = send_message(sender)
+  end
+
+  test "a socket token stops working once its session is gone", %{sender: sender} do
+    [session, other] =
+      for _ <- 1..2 do
+        Repo.insert!(%Session{
+          user_id: sender.id,
+          hashed_token: Session.hash_token(Session.new_token()),
+          expire_at: Session.new_expire_at()
+        })
+      end
+
+    token = FlirtualWeb.ChatSocket.token(session)
+
+    assert {:ok, _} = connect(FlirtualWeb.ChatSocket, %{"token" => token})
+
+    Session.delete(id: session.id)
+
+    assert :error = connect(FlirtualWeb.ChatSocket, %{"token" => token})
+
+    assert {:ok, _} =
+             connect(FlirtualWeb.ChatSocket, %{"token" => FlirtualWeb.ChatSocket.token(other)})
   end
 end

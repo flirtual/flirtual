@@ -12,7 +12,7 @@ defmodule FlirtualWeb.ConversationController do
   def token(conn, _) do
     if Chat.enabled?() do
       json(conn, %{
-        token: FlirtualWeb.ChatSocket.token(conn.assigns[:session].user),
+        token: FlirtualWeb.ChatSocket.token(conn.assigns[:session]),
         expires_in: FlirtualWeb.ChatSocket.token_max_age()
       })
     else

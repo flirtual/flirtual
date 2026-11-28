@@ -2,6 +2,7 @@ defmodule FlirtualWeb.ChatSocket do
   use Phoenix.Socket
 
   alias Flirtual.{Chat, User, Users}
+  alias Flirtual.User.Session
 
   @token_salt "chat"
   @token_max_age 60 * 60
@@ -9,16 +10,17 @@ defmodule FlirtualWeb.ChatSocket do
   channel("user:*", FlirtualWeb.UserChannel)
   channel("conversation:*", FlirtualWeb.ConversationChannel)
 
-  def token(%User{id: user_id}),
-    do: Phoenix.Token.sign(FlirtualWeb.Endpoint, @token_salt, user_id)
+  def token(%Session{id: session_id, user_id: user_id}),
+    do: Phoenix.Token.sign(FlirtualWeb.Endpoint, @token_salt, {user_id, session_id})
 
   def token_max_age, do: @token_max_age
 
   @impl true
   def connect(%{"token" => token}, socket, _connect_info) when is_binary(token) do
     with true <- Chat.enabled?(),
-         {:ok, user_id} <-
+         {:ok, {user_id, session_id}} <-
            Phoenix.Token.verify(FlirtualWeb.Endpoint, @token_salt, token, max_age: @token_max_age),
+         true <- Session.active?(id: session_id, user_id: user_id),
          %User{banned_at: nil, deactivated_at: nil} <- Users.get(user_id, []) do
       {:ok, assign(socket, :user_id, user_id)}
     else
