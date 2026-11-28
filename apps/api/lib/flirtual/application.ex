@@ -91,6 +91,7 @@ defmodule Flirtual.Application do
        {2, {Phoenix.PubSub, name: Flirtual.PubSub}},
        {2, FlirtualWeb.Presence},
        {2, Flirtual.Disposable},
+       {2, Flirtual.Chat.Tlds},
        {2, Flirtual.Popularity},
        {3, FlirtualWeb.Endpoint},
        {9, {Oban, Application.fetch_env!(:flirtual, Oban)}}

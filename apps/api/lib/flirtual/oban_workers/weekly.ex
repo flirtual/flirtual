@@ -11,7 +11,6 @@ defmodule Flirtual.ObanWorkers.Weekly do
     enabled = Application.get_env(:flirtual, Flirtual.ObanWorkers)[:enabled_cron_tasks]
 
     if :like_digest in enabled, do: like_digest()
-    if :update_disposable in enabled, do: Flirtual.Disposable.update()
 
     :ok
   end

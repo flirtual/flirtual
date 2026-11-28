@@ -397,7 +397,6 @@ config :flirtual, Flirtual.ObanWorkers,
     if(prod?,
       do: [
         :like_digest,
-        :update_disposable,
         :prune_sessions,
         :prune_banned,
         :prune_inactive,
@@ -406,7 +405,6 @@ config :flirtual, Flirtual.ObanWorkers,
       ],
       else: [
         :like_digest,
-        :update_disposable,
         :prune_sessions
       ]
     ),
