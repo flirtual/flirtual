@@ -127,6 +127,13 @@ jobs:
           runtime: node@26.13.1
           cache: true
 
+      - name: Cache build caches
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: apps/frontend/node_modules/.cache
+          key: frontend-build-cache-${{ github.run_id }}
+          restore-keys: frontend-build-cache-
+
       - name: Build
         run: pnpm build
 
@@ -180,12 +187,12 @@ jobs:
           runtime: node@26.13.1
           cache: true
 
-      - name: Cache build caches
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+      - name: Restore build caches
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
         with:
           path: apps/frontend/node_modules/.cache
-          key: build-cache-${{ github.ref_name }}-${{ github.run_id }}
-          restore-keys: build-cache-${{ github.ref_name }}-
+          key: frontend-build-cache-${{ github.run_id }}
+          restore-keys: frontend-build-cache-
 
       - name: Deploy production
         if: github.ref == 'refs/heads/production'
