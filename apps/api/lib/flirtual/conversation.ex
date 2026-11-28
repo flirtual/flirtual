@@ -64,6 +64,11 @@ defmodule Flirtual.Conversation do
     @derive [{Jason.Encoder, only: [:page, :limit]}]
     defstruct before: nil, last_before: nil, page: 0, limit: 10
 
+    defguardp is_position(value)
+              when is_nil(value) or is_integer(value) or
+                     (is_tuple(value) and tuple_size(value) == 2 and is_integer(elem(value, 0)) and
+                        is_binary(elem(value, 1)))
+
     def map(self, data) do
       %{
         previous: self |> previous(data) |> encode(),
@@ -104,8 +109,7 @@ defmodule Flirtual.Conversation do
              page,
              limit
            }
-           when (is_nil(last_before) or is_integer(last_before)) and
-                  (is_nil(before) or is_integer(before)) and is_integer(page) and
+           when is_position(last_before) and is_position(before) and is_integer(page) and
                   is_integer(limit) <-
              :erlang.binary_to_term(binary, [:safe]) do
         %Cursor{
@@ -219,14 +223,16 @@ defmodule Flirtual.Conversation do
       user_id
       |> Chat.list_conversations(
         limit: cursor.limit,
-        before: cursor.before && DateTime.from_unix!(cursor.before, :microsecond)
+        before: chat_position(cursor.before)
       )
       |> Enum.map(&from_chat(&1.conversation, user_id, &1.active_at))
 
     next =
       if length(data) == cursor.limit do
+        last = List.last(data)
+
         %Cursor{
-          before: data |> List.last() |> Map.fetch!(:active_at) |> DateTime.to_unix(:microsecond),
+          before: {DateTime.to_unix(last.active_at, :microsecond), last.id},
           last_before: cursor.before,
           page: cursor.page + 1
         }
@@ -242,13 +248,22 @@ defmodule Flirtual.Conversation do
       |> exclude_nil()}}
   end
 
+  defp chat_position({microseconds, conversation_id}) do
+    case DateTime.from_unix(microseconds, :microsecond) do
+      {:ok, active_at} -> {active_at, conversation_id}
+      _ -> nil
+    end
+  end
+
+  defp chat_position(_), do: nil
+
   defp list_from_talkjs(user_id, token) do
     cursor = Cursor.decode(token)
 
     query =
       %{
         limit: cursor.limit,
-        lastMessageBefore: cursor.before
+        lastMessageBefore: if(is_integer(cursor.before), do: cursor.before)
       }
       |> exclude_nil()
 

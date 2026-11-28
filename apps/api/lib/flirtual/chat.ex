@@ -237,8 +237,17 @@ defmodule Flirtual.Chat do
     |> where([participant], participant.user_id == ^user_id and is_nil(participant.left_at))
     |> then(fn query ->
       case Keyword.get(options, :before) do
-        %DateTime{} = before -> where(query, [participant], participant.active_at < ^before)
-        _ -> query
+        {%DateTime{} = active_at, conversation_id} when is_binary(conversation_id) ->
+          where(
+            query,
+            [participant],
+            participant.active_at < ^active_at or
+              (participant.active_at == ^active_at and
+                 participant.conversation_id < ^conversation_id)
+          )
+
+        _ ->
+          query
       end
     end)
     |> order_by([participant], desc: participant.active_at, desc: participant.conversation_id)

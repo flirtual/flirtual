@@ -412,4 +412,41 @@ defmodule Flirtual.ChatTest do
     assert Chat.react(sender, @conversation, message.id, ":wave:\n", true) ==
              {:error, :invalid_emoji}
   end
+
+  test "conversations active at the same moment aren't skipped between pages", %{
+    sender: sender
+  } do
+    ids =
+      for name <- ["a", "b", "c"] do
+        other =
+          Repo.insert!(%User{
+            email: "#{name}@chat.test",
+            slug: "chattest#{name}",
+            status: :visible,
+            password_hash: "x"
+          })
+
+        {:ok, conversation} =
+          Chat.open_conversation([sender.id, other.id], :love, match_message: false)
+
+        conversation.id
+      end
+
+    active_at = DateTime.utc_now()
+
+    Participant
+    |> where([participant], participant.user_id == ^sender.id)
+    |> Repo.update_all(set: [active_at: active_at])
+
+    {:ok, {first, %{next: next}}} =
+      Flirtual.Conversation.list(sender.id, page_cursor(2))
+
+    {:ok, {second, _}} = Flirtual.Conversation.list(sender.id, next)
+
+    assert Enum.sort(Enum.map(first ++ second, & &1.id)) == Enum.sort([@conversation | ids])
+  end
+
+  defp page_cursor(limit) do
+    {nil, nil, 0, limit} |> :erlang.term_to_binary() |> Base.url_encode64()
+  end
 end
