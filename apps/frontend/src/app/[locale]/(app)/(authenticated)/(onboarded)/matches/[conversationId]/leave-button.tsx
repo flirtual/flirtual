@@ -3,17 +3,18 @@ import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 
 import { Conversation } from "~/api/conversations";
+import { invalidateMatch } from "~/hooks/use-queue";
 import { useToast } from "~/hooks/use-toast";
 import { useNavigate } from "~/i18n";
-import { conversationsKey, invalidate } from "~/query";
 import { urls } from "~/urls";
 
 export interface LeaveButtonProps {
 	conversationId: string;
+	userId: string;
 }
 
 export const LeaveButton: FC<LeaveButtonProps> = (props) => {
-	const { conversationId } = props;
+	const { conversationId, userId } = props;
 	const navigate = useNavigate();
 	const toasts = useToast();
 	const { t } = useTranslation();
@@ -26,7 +27,7 @@ export const LeaveButton: FC<LeaveButtonProps> = (props) => {
 				await Conversation.leave(conversationId)
 					.catch(toasts.addError);
 
-				await invalidate({ queryKey: conversationsKey() });
+				await invalidateMatch(userId);
 				await navigate(urls.conversations.list());
 			}}
 		>

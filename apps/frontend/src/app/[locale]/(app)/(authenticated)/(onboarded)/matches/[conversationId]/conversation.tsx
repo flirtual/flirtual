@@ -94,7 +94,7 @@ export const Conversation = withSuspense<{ id: string }>(({ id: conversationId }
 					{(me.tags?.includes("moderator") || me.tags?.includes("admin")) && <ProfileDropdown userId={user.id} />}
 					{user.tags?.includes("official")
 						? (
-								<LeaveButton conversationId={conversationId} />
+								<LeaveButton conversationId={conversationId} userId={user.id} />
 							)
 						: vrchat && me.tags?.includes("debugger") && (
 							<VRChatButton conversationId={conversationId} user={user} />

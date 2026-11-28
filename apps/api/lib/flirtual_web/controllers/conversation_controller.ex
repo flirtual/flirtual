@@ -6,6 +6,7 @@ defmodule FlirtualWeb.ConversationController do
   import Phoenix.Controller
 
   alias Flirtual.{Chat, Conversation, Policy, Report, Talkjs}
+  alias Flirtual.User.Profile.LikesAndPasses
 
   action_fallback(FlirtualWeb.FallbackController)
 
@@ -179,11 +180,7 @@ defmodule FlirtualWeb.ConversationController do
     with user <- conn.assigns[:session].user,
          {:ok, conversation} <- Conversation.get(conversation_id),
          true <- user.id in conversation.participants,
-         {:ok, _} <-
-           if(Chat.enabled?(),
-             do: Chat.disband(conversation_id),
-             else: Talkjs.delete_participant(conversation_id, user.id)
-           ) do
+         {:ok, _} <- leave_conversation(conversation, user.id) do
       conn
       |> json(%{success: true})
     else
@@ -195,6 +192,18 @@ defmodule FlirtualWeb.ConversationController do
 
       reason ->
         reason
+    end
+  end
+
+  defp leave_conversation(%Conversation{id: conversation_id, participants: participants}, user_id) do
+    if Chat.enabled?() do
+      [target_id] = participants -- [user_id]
+
+      with {:ok, _} <- LikesAndPasses.delete_all(profile_id: user_id, target_id: target_id) do
+        Chat.disband(conversation_id)
+      end
+    else
+      Talkjs.delete_participant(conversation_id, user_id)
     end
   end
 

@@ -8,7 +8,7 @@ defmodule Flirtual.ChatTest do
 
   alias Flirtual.{Chat, Repo, User, Users}
   alias Flirtual.Chat.{Conversation, Participant}
-  alias Flirtual.User.Profile.Block
+  alias Flirtual.User.Profile.{Block, LikesAndPasses}
   alias Flirtual.User.Session
 
   @conversation "chattest"
@@ -332,12 +332,24 @@ defmodule Flirtual.ChatTest do
     FlirtualWeb.Endpoint.subscribe(Chat.conversation_topic(@conversation))
     FlirtualWeb.Endpoint.subscribe(Chat.user_topic(sender.id))
 
+    for {profile, target} <- [{sender, recipient}, {recipient, sender}] do
+      Repo.insert!(%LikesAndPasses{
+        profile_id: profile.id,
+        target_id: target.id,
+        type: :like,
+        kind: :love
+      })
+    end
+
     conn =
       Plug.Test.conn(:delete, "/v1/conversations/" <> @conversation)
       |> Plug.Conn.assign(:session, %{user: recipient, user_id: recipient.id})
 
     assert %Plug.Conn{status: 200} =
              FlirtualWeb.ConversationController.leave(conn, %{"conversation_id" => @conversation})
+
+    assert [%LikesAndPasses{profile_id: profile_id}] = Repo.all(LikesAndPasses)
+    assert profile_id == sender.id
 
     {_, participants} = state()
     assert Enum.all?(Map.values(participants), &(&1.left_at && &1.unread_count == 0))

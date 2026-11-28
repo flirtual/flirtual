@@ -51,7 +51,8 @@ TalkJS-free helpers.
 
 - **Storage**: `conversations` (id is `Talkjs.new_conversation_id/2`, so links and a later history
   import line up), `conversation_participants` (unread count, read position, `left_at`), `messages`,
-  `message_reactions`. A conversation only ever closes for both people (`Chat.disband/1`). A match
+  `message_reactions`. A conversation only ever closes for both people (`Chat.disband/1`), so removing one
+  (`DELETE /v1/conversations/:id`) unmatches too. A match
   lists once it has a conversation row: new matches and the faker create one, nothing backfills
   older ones.
 - **Ordering**: every change takes the next `conversations.seq` under its row lock: a message's `seq`
