@@ -1,5 +1,4 @@
 import type { Config } from "@react-router/dev/config";
-import { sentryOnBuildEnd } from "@sentry/react-router/vite";
 
 import { locales } from "./src/i18n/languages";
 
@@ -14,10 +13,10 @@ export default {
 	},
 	appDirectory: "src",
 	buildDirectory: "dist",
-	buildEnd: (build) => {
+	buildEnd: async (build) => {
 		// Sentry is optional, so we check if the config is present before calling the function.
 		// https://github.com/getsentry/sentry-javascript/blob/develop/packages/react-router/src/vite/buildEnd/handleOnBuildEnd.ts#L13
-		if ("sentryConfig" in build.viteConfig) sentryOnBuildEnd(build);
+		if ("sentryConfig" in build.viteConfig) await (await import("@sentry/react-router/vite")).sentryOnBuildEnd(build);
 	},
 	prerender: [
 		...[
