@@ -9,6 +9,7 @@ export const news = import.meta.env.VITE_FEATURE_NEWS !== "0";
 export const press = import.meta.env.VITE_FEATURE_PRESS !== "0";
 export const apk = import.meta.env.VITE_FEATURE_APK !== "0";
 export const landing = import.meta.env.VITE_FEATURE_LANDING !== "0";
+export const profileSharing = import.meta.env.VITE_FEATURE_PROFILE_SHARING !== "0";
 export const playlists = import.meta.env.VITE_FEATURE_PLAYLISTS !== "0";
 export const timezones = import.meta.env.VITE_FEATURE_TIMEZONES !== "0";
 export const customInterests = import.meta.env.VITE_FEATURE_CUSTOM_INTERESTS !== "0";

@@ -239,7 +239,8 @@ vars, read separately by each app:
   personality, VR tags (platform + game), VRChat, playlists, timezones, custom interests, advanced filters, the list of connection providers (empty, with playlists off, removes the
   connections page), and (frontend
   only) the events, news and press pages, the APK download link, the landing page, without
-  which `/` is a welcome screen with sign-up and login, and the list of fun features
+  which `/` is a welcome screen with sign-up and login, the Share button on your own profile,
+  and the list of fun features
   (`VITE_FEATURE_FUN`: snowfall, assistant, ranked; empty removes the fun settings page). Login methods are API-only
   (`FEATURE_LOGIN`): the frontend renders what `/v1/config`'s `login_providers` lists, minus any
   method not configured.

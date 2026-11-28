@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import type { Session } from "~/api/auth";
 import { User } from "~/api/user";
 import { shortHost } from "~/const";
+import { profileSharing } from "~/features";
 import { useSession } from "~/hooks/use-session";
 import { useShare } from "~/hooks/use-share";
 import { useToast } from "~/hooks/use-toast";
@@ -30,7 +31,7 @@ export const PersonalActions: React.FC<{ user: User }> = ({ user }) => {
 	const [profileLink, setProfileLink] = useState(session.user.slug);
 
 	return (
-		<div className="grid grid-cols-2 gap-4">
+		<div className={profileSharing ? "grid grid-cols-2 gap-4" : "grid gap-4"}>
 			<ButtonLink
 				className="text-theme-overlay"
 				href={urls.settings.bio}
@@ -125,14 +126,16 @@ export const PersonalActions: React.FC<{ user: User }> = ({ user }) => {
 					</DialogBody>
 				</>
 			</DrawerOrDialog>
-			<Button
-				className="text-theme-overlay"
-				Icon={ShareIcon}
-				size="sm"
-				onClick={() => setShareVisible(true)}
-			>
-				{t("share")}
-			</Button>
+			{profileSharing && (
+				<Button
+					className="text-theme-overlay"
+					Icon={ShareIcon}
+					size="sm"
+					onClick={() => setShareVisible(true)}
+				>
+					{t("share")}
+				</Button>
+			)}
 		</div>
 	);
 };
